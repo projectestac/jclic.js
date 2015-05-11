@@ -42,11 +42,13 @@ define([
   Font.prototype = {
     constructor: Font,
     family: 'Arial',
+    // 
     // Warning: Do not change `size` directly. Instead, use the `setSize` method
     size: 17,
     bold: 0,
     italic: 0,
     variant: '',
+    // 
     // Vertical font metrics calculated in `calcHeight`
     _ascent: -1,
     _descent: -1,
@@ -76,12 +78,30 @@ define([
         this._height = -1;
     },
     //
-    //
+    // Gets the font height
     getHeight: function () {
-      if (this._height < 0)
-        this.calcHeight();
+      if (this._height < 0) {
+        // Look for an equivalent font already calculed
+        for (var i = 0; i < Font.prototype._ALREADY_CALCULED_FONTS.length; i++) {
+          var font = Font.prototype._ALREADY_CALCULED_FONTS[i];
+          if (font.equals(this)) {
+            this._height = font._height;
+            this._ascent = font._ascent;
+            this._descent = font._descent;
+            break;
+          }
+        }
+        if (this._height < 0) {
+          this._calcHeight();
+          if (this._height > 0)
+            Font.prototype._ALREADY_CALCULED_FONTS.push(this);
+        }
+      }
       return this._height;
     },
+    //
+    // Array of font objects with already calculed heights, always stored on the prototype
+    _ALREADY_CALCULED_FONTS: [],
     //
     // Copies the properties into an object with CSS attributes
     // When `css` is null or undefined, a new object will be created and returned
@@ -116,7 +136,8 @@ define([
     // has an excellent response by Daniel Earwicker explaining how to measure the
     // vertical dimension of rendered text using a `span` element.
     // The code has been slighty adapted to deal with Font objects.
-    calcHeight: function () {
+    // Warning: Do not call this method direcly. Use `getHeight` instead
+    _calcHeight: function () {
       var text = $('<span>Hg</span>').css(this.toCss());
       var block = $('<div style="display: inline-block; width: 1px; height: 0px;"></div>');
       var div = $('<div></div>');
@@ -137,6 +158,15 @@ define([
         div.remove();
       }
       return this;
+    },
+    //
+    // Check if two Font objects are equivalent
+    equals: function (font) {
+      return this.family === font.family &&
+          this.size === font.size &&
+          this.bold === font.bold &&
+          this.italic === font.italic &&
+          this.variant === font.variant;
     }
   };
 
@@ -435,7 +465,7 @@ define([
     }
     else if (pos instanceof Point) {
       pos = new Point(pos.x, pos.y);
-      if(dim instanceof Dimension)
+      if (dim instanceof Dimension)
         dim = new Dimension(dim.width, dim.height);
     }
     else if (typeof w === 'number' && typeof h === 'number') {
@@ -528,9 +558,9 @@ define([
     },
     //
     // Checks if this rectangle is empty
-    isEmpty: function(){
-      return this.getSurface()===0;
-    }    
+    isEmpty: function () {
+      return this.getSurface() === 0;
+    }
   };
   // Rectangle extends Shape
   Rectangle.prototype = $.extend(Object.create(Shape.prototype), Rectangle.prototype);

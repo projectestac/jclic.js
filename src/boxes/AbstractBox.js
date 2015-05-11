@@ -98,11 +98,21 @@ define([
         ab = ab.parent;
       return ab.container;
     },
+    //
+    // Invalidates the AWT.container zone corresponding to this AbstractBox
+    invalidate: function(rect){
+      if(!rect)
+        rect = this;
+      var cnt = this.getContainerResolve();
+      if(cnt)
+        cnt.invalidate(rect);
+    },
+    //
     // 
     // Sets the [BoxBase](BoxBase.html) of this box
     setBoxBase: function (boxBase) {
       this.boxBase = boxBase;
-      this.repaint();
+      this.invalidate();
     },
     //
     // Gets the real [BoxBase](BoxBase.html) associated to this box, scanning down
@@ -118,9 +128,9 @@ define([
     setShape: function (sh) {
       this.shape = sh;
       this.specialShape = true;
-      this.repaint();
+      this.invalidate();
       AWT.Rectangle.prototype.setBounds.call(this, sh.getBounds());
-      this.repaint();
+      this.invalidate();
     },
     getShape: function () {
       return this.shape;
@@ -174,10 +184,10 @@ define([
     },
     setBorder: function (newVal) {
       if (!newVal)
-        this.repaint();
+        this.invalidate();
       this.border = newVal;
       if (newVal)
-        this.repaint();
+        this.invalidate();
     },
     //
     // Getter and setter methods for `visible`
@@ -186,7 +196,7 @@ define([
     },
     setVisible: function (newVal) {
       this.visible = newVal;
-      this.repaint();
+      this.invalidate();
     },
     //
     // Getter and setter methods for `temporaryHidden`
@@ -203,7 +213,7 @@ define([
     },
     setInactive: function (newVal) {
       this.inactive = newVal;
-      this.repaint();
+      this.invalidate();
     },
     //
     // Getter and setter methods for `inverted`
@@ -212,7 +222,7 @@ define([
     },
     setInverted: function (newVal) {
       this.inverted = newVal;
-      this.repaint();
+      this.invalidate();
     },
     //
     // Getter and setter methods for `marked`
@@ -221,10 +231,10 @@ define([
     },
     setMarked: function (newVal) {
       if (!newVal)
-        this.repaint();
+        this.invalidate();
       this.marked = newVal;
       if (newVal)
-        this.repaint();
+        this.invalidate();
     },
     //
     // Getter and setter methods for `focused`
@@ -233,10 +243,10 @@ define([
     },
     setFocused: function (newVal) {
       if (!newVal)
-        this.repaint();
+        this.invalidate();
       this.focused = newVal;
       if (newVal)
-        this.repaint();
+        this.invalidate();
     },
     //
     // Getter and setter methods for `alternative`
@@ -245,7 +255,7 @@ define([
     },
     setAlternative: function (newVal) {
       this.alternative = newVal;
-      this.repaint();
+      this.invalidate();
     },
     //
     // TODO: functions to be implemented by subclasses

@@ -63,13 +63,6 @@ module.exports = function (grunt) {
           layout: 'parallel'
         }
       }
-    },
-    groc: {
-      // See: http://tech.gilt.com/post/57089759513/rock-your-doc-with-groc-our-favorite-automated
-      javascript: ['src/**/*.js'],
-      options: {
-        out: 'groc/'
-      }
     }
   });
 
@@ -94,7 +87,7 @@ module.exports = function (grunt) {
   grunt.registerTask(
       'doc',
       'Generates the project documentation in "doc"',
-      ['clean:doc', 'docco:dist', 'groc']
+      ['clean:doc', 'docco:dist']
       );
 
   grunt.registerTask(

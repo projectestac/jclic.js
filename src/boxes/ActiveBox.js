@@ -87,7 +87,7 @@ define([
       //if (!this.hasHostedComponent)
       //  this.setHostedComponent(null);
       //this.setHostedMediaPlayer(null);
-      this.repaint();
+      this.invalidate();
     },
     //
     // Checks if two ActiveBox objects have equivalent content
@@ -206,7 +206,7 @@ define([
       else
         this.clear();
       
-      this.repaint();
+      this.invalidate();
     },
     //
     // Checks if the ActiveBox has a [MediaContent](MediaContent.html) in 
@@ -244,7 +244,7 @@ define([
         this.setAltContent(abc);
       else
         this.setContent(abc);
-      this.repaint();
+      this.invalidate();
     },
     // 
     // Puts this ActiveBox in "alternative" mode, meaning that `altContent` will

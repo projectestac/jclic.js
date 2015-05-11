@@ -692,12 +692,6 @@ define([
     },
     //
     // Sets the current main message
-    // 
-    // @method setMsg
-    // @public
-    // 
-    // @param {[ActiveBoxContent](boxes/ActiveBoxContent.html)} abc The content to be shown
-    // @returns {[ActiveBox](boxes/ActiveBox.html)} The ActiveBox receiving the message
     setMsg: function (abc) {
       var ab = null;
       if (this.skin)
@@ -705,6 +699,7 @@ define([
       if (ab !== null) {
         ab.clear();
         ab.setContent(abc ? abc : ActiveBoxContent.prototype.EMPTY_CONTENT);
+        ab.repaint();
       }
     },
     //
