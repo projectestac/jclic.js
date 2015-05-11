@@ -1,0 +1,48 @@
+{
+  "name": "jclic",
+  "version": "0.0.0",
+  "description": "HTML5 player for JClic activities (under construction!)",
+  "homepage": "https://github.com/projectestac/jclic.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/projectestac/jclic.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/projectestac/jclic.js/issues"
+  },
+  "licenses": [
+    {
+      "type": "GPL-3.0",
+      "url": "https://spdx.org/licenses/GPL-3.0.html"
+    }
+  ],
+  "main": "src/JClic.js",
+  "scripts": {
+    "build": "grunt build"
+  },
+  "keywords": [
+    "jclic",
+    "education",
+    "game",
+    "puzzle",
+    "activities"
+  ],
+  "author": "Francesc Busquets <fbusquets@xtec.cat>",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "requirejs": "~2.1.17",
+    "grunt": "~0.4.5",
+    "browserify": "~9.0.4",
+    "deamdify": "~0.1.1",
+    "load-grunt-tasks": "~3.1.0",
+    "grunt-browserify": "~3.6.0",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-jshint": "~0.11.1",
+    "grunt-contrib-uglify": "~0.8.1",
+    "grunt-docco": "~0.3.3",
+    "grunt-groc": "~0.6.0"
+  },
+  "dependencies": {
+    "jquery": "~2.1.3"
+  }
+}

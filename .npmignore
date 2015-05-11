@@ -1,0 +1,8 @@
+doc
+groc
+build
+node_modules
+npm-debug.log
+nbproject
+bower_components
+test/jclic-demo
