@@ -56,7 +56,7 @@ define([
     this.history = new PlayerHistory(this);
     this.audioEnabled = this.options.AUDIO_ENABLED;
     this.navButtonsAlways = this.options.NAV_BUTTONS_ALWAYS;
-    this.defaultSkin = Skin.prototype.getSkin(this, null, this.$topDiv);
+    this.defaultSkin = Skin.prototype.getSkin(null, this, this.$topDiv);
     this.setSkin(this.defaultSkin);
     this.createEventSounds();
     this.initTimers();

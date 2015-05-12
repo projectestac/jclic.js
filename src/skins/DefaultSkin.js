@@ -14,28 +14,22 @@
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define([
-  "require",
   "jquery",
   "../AWT",
-  "./Skin"
-], function (require, $, AWT, nullSkin) {
-
-  // Definition of [Skin](Skin.html) class delegated to a later call to
-  // `require`, to avoid circular references
-  var Skin;
-  require(["./Skin"], function (aRealSkin) {
-    Skin = aRealSkin;
-  });
+  "./Skin",
+  "../boxes/ActiveBox",
+  "../boxes/Counter"
+], function ($, AWT, Skin, ActiveBox, Counter) {
 
   //
   // This is the default [Skin](Skin.html) used by jclic.js
   // $div (a JQuery `<div/>` object) - The `div` to be used as a recipient for
   // this skin. When `null` or `undefined`, a new one will be created.  
   var DefaultSkin = function (ps, name, $div) {
-    
+
     // DefaultSkin extends [Skin](Skin.html)
-    Skin.call(this, ps, name, $div);    
-    
+    Skin.call(this, ps, name, $div);
+
     this.$msgBoxDiv = $div.children('.JClicMsgBox').first();
     if (this.$msgBoxDiv === null || this.$msgBoxDiv.length === 0) {
       this.$msgBoxDiv = $('<div class="JClicMsgBox"/>');
@@ -45,26 +39,22 @@ define([
     this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
     this.msgBox = new ActiveBox();
 
-    /*
     var thisSkin = this;
-    this.buttons.prev = $('<object type="image/svg+xml"/>').on('click',
-    function(evt){
-      if(thisSkin.ps)
-        // TODO: Check if we need to pass the action in action's method
-        thisSkin.ps.actions.prev.processEvent(thisSkin.ps.actions.prev, evt);
-    });
-    this.buttons.prev.data = this.resources.prevBtn;
+    this.buttons.prev = $('<object type="image/svg+xml" data="' + this.resources.prevBtn + '"/>').on('click',
+        function (evt) {
+          if (thisSkin.ps)
+            // TODO: Check if we need to pass the action in action's method
+            thisSkin.ps.actions.prev.processEvent(thisSkin.ps.actions.prev, evt);
+        });
     this.$div.append(this.buttons.prev);
-    
-    this.buttons.next = $('<object type="image/svg+xml"/>').on('click',
-    function(evt){
-      if(thisSkin.ps)
-        // TODO: Check if we need to pass the action in action's method
-        thisSkin.ps.actions.next.processEvent(thisSkin.ps.actions.next, evt);
-    });
-    this.buttons.next.data = this.resources.nextBtn;
-    this.$div.append(this.buttons.next);    
-    */
+
+    this.buttons.next = $('<object type="image/svg+xml" data ="' + this.resources.nextBtn + '" />').on('click',
+        function (evt) {
+          if (thisSkin.ps)
+            // TODO: Check if we need to pass the action in action's method
+            thisSkin.ps.actions.next.processEvent(thisSkin.ps.actions.next, evt);
+        });
+    this.$div.append(this.buttons.next);
   };
 
   DefaultSkin.prototype = {
@@ -83,7 +73,7 @@ define([
     // Main method used to build the contents
     // Resizes and places internal objects
     doLayout: function () {
-      
+
       // Basic layout, just for testing:
 
       var margin = 20;
@@ -97,7 +87,9 @@ define([
 
       var actualSize = new AWT.Dimension(this.$div.width(), this.$div.height());
 
+      var btnWidth = 42;
       var w = Math.max(100, actualSize.width - 2 * margin);
+      var wMsgBox = w - 2*margin - 2*btnWidth;
       var h = 60;
       var playerHeight = Math.max(100, actualSize.height - 3 * margin - 60);
 
@@ -118,22 +110,34 @@ define([
 
       this.$msgBoxDiv.css({
         position: 'absolute',
-        width: w + 'px',
+        width: wMsgBox + 'px',
         height: h + 'px',
         top: 2 * margin + playerHeight + 'px',
-        left: margin + 'px',
+        left: 2*margin + btnWidth + 'px',
         'background-color': 'lightblue'
       });
+      
+      this.buttons.prev.css({
+        position: 'absolute',
+        top: 2 * margin + playerHeight + 'px',
+        left: margin + 'px'        
+      });
 
-      this.$msgBoxDivCanvas = $('<canvas width="' + w + '" height="' + h + '"/>');
+      this.buttons.next.css({
+        position: 'absolute',
+        top: 2 * margin + playerHeight + 'px',
+        left: w + margin - btnWidth + 'px'        
+      });
+      
+      this.$msgBoxDivCanvas = $('<canvas width="' + wMsgBox + '" height="' + h + '"/>');
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
-      this.msgBox.setBounds(new AWT.Rectangle(0, 0, w, h));
+      this.msgBox.setBounds(new AWT.Rectangle(0, 0, wMsgBox, h));
       this.msgBox.ctx = this.$msgBoxDivCanvas.get(0).getContext('2d');
       this.msgBox.repaint();
     },
     //
     // Gets the [ActiveBox](ActiveBox.html) used by activities to display the main message
-    getMsgBox: function(){
+    getMsgBox: function () {
       return this.msgBox;
     },
     //
@@ -213,12 +217,11 @@ define([
     }
   };
 
-  return function () {
-    
-    // DefaultSkin extends [Skin](Skin.html)
-    DefaultSkin.prototype = $.extend(Object.create(Skin.prototype), DefaultSkin.prototype);
-    
-    return DefaultSkin;
-  };
+  // DefaultSkin extends [Skin](Skin.html)
+  DefaultSkin.prototype = $.extend(Object.create(Skin.prototype), DefaultSkin.prototype);
 
+  // Register this class in the list of available skins
+  Skin.prototype.availableSkins.DefaultSkin = DefaultSkin;
+
+  return DefaultSkin;
 });

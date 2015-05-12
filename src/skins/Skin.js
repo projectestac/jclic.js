@@ -14,24 +14,10 @@
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define([
-  "require",
   "jquery",
   "../Utils",
-  "../boxes/ActiveBox",
-  "../boxes/Counter",
-  "../AWT",
-  "./DefaultSkin"
-], function (require, $, Utils, ActiveBox, Counter, AWT, fakeDefaultSkin) {
-  
-  
-    // Definition of [Skin](Skin.html) class delegated to a later call to
-  // `require`, to avoid circular references
-  var DefaultSkin;
-  require(["./DefaultSkin"], function (aRealSkin) {
-    DefaultSkin = aRealSkin;
-  });
-
-  
+  "../AWT"
+], function ($, Utils, AWT) {
 
   //
   // This abstract class manages the layout, position ans size of the visual components
@@ -39,10 +25,10 @@ define([
   // the appareance of the main container.
   // The basic implementation of Skin is [DefaultSkin](DefaultSkin.html)
   var Skin = function (ps, name, $div) {
-    
+
     // Skin extends [AWT.Container](AWT.html)
     AWT.Container.call(this);
-        
+
     this.$div = $div ? $div : $('<div class="JClic"/>');
     this.buttons = Utils.cloneObject(Skin.prototype.buttons);
     this.counters = Utils.cloneObject(Skin.prototype.counters);
@@ -56,6 +42,9 @@ define([
 
   Skin.prototype = {
     constructor: Skin,
+    //
+    // Object containing all registered skin classes
+    availableSkins: {},
     //
     // The HTML div object used by this Skin
     $div: null,
@@ -149,23 +138,28 @@ define([
     getSkin: function (skinName, ps, $div, $xml) {
       var sk = null;
       // look for the skin in the stack of realized skins
-      for (var i = 0; i < Skin.prototype.skinStack; i++) {
-        sk = Skin.prototype.skinStack[i];
-        if (sk.name === skinName && sk.ps === ps)
-          return sk;
+      if (skinName && ps) {
+        for (var i = 0; i < Skin.prototype.skinStack; i++) {
+          sk = Skin.prototype.skinStack[i];
+          if (sk.name === skinName && sk.ps === ps)
+            return sk;
+        }
       }
 
       // TODO: Read the class of the requested skin in $xml, and
       // build the appropiate object
       //sk = new DefaultSkin(ps, skinName, $div);
-      sk = Object.create(DefaultSkin.prototype);
-      DefaultSkin.prototype.constructor.call(sk, ps, skinName, $div);
+      if (!skinName)
+        skinName = 'DefaultSkin';
+      var skinClass = Skin.prototype.availableSkins[skinName];
+      if (skinClass) {
+        sk = Object.create(skinClass.prototype);
+        skinClass.prototype.constructor.call(sk, ps, skinName, $div);
+        if ($xml)
+          sk.setproperties($xml);
 
-      if ($xml)
-        sk.setproperties($xml);
-
-      Skin.prototype.skinStack.push(sk);
-
+        Skin.prototype.skinStack.push(sk);
+      }
       return sk;
     },
     //
@@ -218,7 +212,7 @@ define([
     // Shows a window with information about ths results obtained in the activities
     // tabName (string) - The about window can have multiple tabs. This parameter indicates
     // what tab must be shown by default. When `null`, the window must be closed.
-    showAbout: function(tabName){
+    showAbout: function (tabName) {
       // TODO: Implement showAbout      
     },
     // Enables or disables a specific counter
@@ -228,7 +222,7 @@ define([
     },
     // 
     // Main method, to be implemented by subclasses
-    doLayout: function(){      
+    doLayout: function () {
     },
     //
     // Compares two Skin objects
@@ -239,13 +233,13 @@ define([
     },
     //
     // Gets the [ActiveBox](ActiveBox.html) used to display the main messages of activities
-    getMsgBox: function(){
+    getMsgBox: function () {
       // Method to be implemented by subclasses
-      return null;      
+      return null;
     },
     //
     // Gets the JQuery top component, usually the `$div` object enclosing this skin
-    $getTopComponent: function(){
+    $getTopComponent: function () {
       return this.$div;
     }
 

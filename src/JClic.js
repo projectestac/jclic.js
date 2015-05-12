@@ -16,7 +16,8 @@
 define([
   "jquery",
   "./project/JClicProject",
-  "./JClicPlayer"
+  "./JClicPlayer",
+  "./skins/DefaultSkin"
 ], function ($, JClicProject, JClicPlayer) {
 
   // Execute on document ready
