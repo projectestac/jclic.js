@@ -56,7 +56,7 @@ define([
     this.history = new PlayerHistory(this);
     this.audioEnabled = this.options.AUDIO_ENABLED;
     this.navButtonsAlways = this.options.NAV_BUTTONS_ALWAYS;
-    this.defaultSkin = new Skin(this, null, this.$topDiv);
+    this.defaultSkin = Skin.prototype.getSkin(this, null, this.$topDiv);
     this.setSkin(this.defaultSkin);
     this.createEventSounds();
     this.initTimers();
@@ -295,18 +295,17 @@ define([
     // Closes the help dialog window
     closeHelpWindow: function () {
       if (this.skin) {
-        if (this.skin.currentHelpWindow)
-          this.skin.currentHelpWindow.$div.hide();
-        if (this.skin.currentAboutWindow)
-          this.skin.currentAboutWindow.$div.hide();
+        this.skin.showHelp(null);
+        this.skin.showAbout(null);
       }
     },
     //
     // Returns the JQuery DOM top component (usually, the [Skin](Skin.html) `$div` member)
     getTopComponent: function () {
-      if (this.skin !== null)
-        return this.skin.$div;
-      return this.$div;
+      if (this.skin)
+        return this.skin.$getTopComponent();
+      else
+        return this.$div;
     },
     //
     // Sets the current [Skin](Skin.html)
@@ -695,7 +694,7 @@ define([
     setMsg: function (abc) {
       var ab = null;
       if (this.skin)
-        ab = this.skin.msgBox;
+        ab = this.skin.getMsgBox();
       if (ab !== null) {
         ab.clear();
         ab.setContent(abc ? abc : ActiveBoxContent.prototype.EMPTY_CONTENT);
@@ -814,9 +813,9 @@ define([
     },
     //
     // Shows the help info provided by the activity
-    showHelp: function (hlpComponent, hlpMsg) {
+    showHelp: function ($hlpComponent) {
       if (this.skin) {
-        this.skin.showHelp(hlpComponent, hlpMsg);
+        this.skin.showHelp($hlpComponent);
         return true;
       }
       return false;

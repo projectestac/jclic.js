@@ -14,36 +14,39 @@
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define([
+  "require",
   "jquery",
   "../Utils",
   "../boxes/ActiveBox",
   "../boxes/Counter",
-  "../AWT"
-], function ($, Utils, ActiveBox, Counter, AWT) {
+  "../AWT",
+  "./DefaultSkin"
+], function (require, $, Utils, ActiveBox, Counter, AWT, fakeDefaultSkin) {
+  
+  
+    // Definition of [Skin](Skin.html) class delegated to a later call to
+  // `require`, to avoid circular references
+  var DefaultSkin;
+  require(["./DefaultSkin"], function (aRealSkin) {
+    DefaultSkin = aRealSkin;
+  });
+
+  
 
   //
-  // This class manages the layout, position ans size of the visual components
+  // This abstract class manages the layout, position ans size of the visual components
   // of JClic: player window, message box, counters, buttons, status... and also
   // the appareance of the main container.
-  // $div (a JQuery `<div/>` object) - The `div` to be used as a recipient for
-  // this skin. When `null` or `undefined`, a new one will be created.
+  // The basic implementation of Skin is [DefaultSkin](DefaultSkin.html)
   var Skin = function (ps, name, $div) {
     
-    // Skin extends AWT.Container
+    // Skin extends [AWT.Container](AWT.html)
     AWT.Container.call(this);
         
+    this.$div = $div ? $div : $('<div class="JClic"/>');
     this.buttons = Utils.cloneObject(Skin.prototype.buttons);
     this.counters = Utils.cloneObject(Skin.prototype.counters);
     this.msgArea = Utils.cloneObject(Skin.prototype.msgArea);
-    this.$div = $div ? $div : $('<div class="JClic"/>');
-    this.$msgBoxDiv = $div.children('.JClicMsgBox').first();
-    if (this.$msgBoxDiv === null || this.$msgBoxDiv.length === 0) {
-      this.$msgBoxDiv = $('<div class="JClicMsgBox"/>');
-      this.$div.append(this.$msgBoxDiv);
-    }
-    this.$msgBoxDivCanvas = $('<canvas />');
-    this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
-    this.msgBox = new ActiveBox();
     if (ps)
       this.ps = ps;
     if (name)
@@ -93,20 +96,9 @@ define([
     // The [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
     // used by this Skin. Usually, the same as `player` 
     ps: null,
-    //
-    // An object of type [ActiveBox](ActiveBox.html) used to display the main
-    // messages of each JClic [Activity](Activity.html)
-    msgBox: null,
-    $msgBoxDiv: null,
-    $msgBoxDivCanvas: null,
-    //
     // Miscellaneous boolean flags    
     waitCursorCount: 0,
     readyToPaint: false,
-    //
-    // Objects used as _help_ and _about_ windows
-    currentHelpWindow: null,
-    currentAboutWindow: null,
     //
     // Numbers and boolean flags used to display progess bars
     progressMax: 100,
@@ -165,7 +157,9 @@ define([
 
       // TODO: Read the class of the requested skin in $xml, and
       // build the appropiate object
-      sk = new Skin(ps, skinName, $div);
+      //sk = new DefaultSkin(ps, skinName, $div);
+      sk = Object.create(DefaultSkin.prototype);
+      DefaultSkin.prototype.constructor.call(sk, ps, skinName, $div);
 
       if ($xml)
         sk.setproperties($xml);
@@ -215,70 +209,26 @@ define([
     },
     //
     // Shows a window with clues or help for the current activity
-    // $solution - A JQuery DOM element with the information to be shown. It can
-    // also be a string or number.
-    showHelp: function ($solution) {
+    // $hlpComponent - A JQuery DOM element with the information to be shown. It can
+    // also be a string or number. When is `null`, the help window (if any) must be closed.
+    showHelp: function ($hlpComponent) {
       // TODO: Implement HelpWindow
     },
     //
+    // Shows a window with information about ths results obtained in the activities
+    // tabName (string) - The about window can have multiple tabs. This parameter indicates
+    // what tab must be shown by default. When `null`, the window must be closed.
+    showAbout: function(tabName){
+      // TODO: Implement showAbout      
+    },
     // Enables or disables a specific counter
     enableCounter: function (counter, bEnabled) {
       if (this.counters[counter])
         this.counters[counter].setEnabled(bEnabled);
     },
     // 
-    // Places each component at the right position
-    doLayout: function () {
-      // TODO: Implement a real skin!
-      // 
-      // Basic layout, just for testing:
-
-      var margin = 20;
-
-      this.$div.css({
-        position: 'relative',
-        width: '100%',
-        height: '600px',
-        'background-color': 'salmon'
-      });
-
-      var actualSize = new AWT.Dimension(this.$div.width(), this.$div.height());
-
-      var w = Math.max(100, actualSize.width - 2 * margin);
-      var h = 60;
-      var playerHeight = Math.max(100, actualSize.height - 3 * margin - 60);
-
-      this.player.$div.css({
-        position: 'absolute',
-        width: w + 'px',
-        height: playerHeight + 'px',
-        top: margin + 'px',
-        left: margin + 'px',
-        'background-color': 'olive'
-      });
-
-      this.player.doLayout();
-
-      this.msgBox.ctx = null;
-      this.$msgBoxDivCanvas.remove();
-      this.$msgBoxDivCanvas = null;
-      
-      this.$msgBoxDiv.css({
-        position: 'absolute',
-        width: w + 'px',
-        height: h + 'px',
-        top: 2 * margin + playerHeight + 'px',
-        left: margin + 'px',
-        'background-color': 'lightblue'
-      });
-      
-      this.$msgBoxDivCanvas = $('<canvas width="' + w + '" height="' + h + '"/>');
-      this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
-      this.msgBox.setBounds(new AWT.Rectangle(0, 0, w, h));
-      this.msgBox.ctx = this.$msgBoxDivCanvas.get(0).getContext('2d');
-      window.ctx = this.msgBox.ctx;
-      this.msgBox.repaint();
-
+    // Main method, to be implemented by subclasses
+    doLayout: function(){      
     },
     //
     // Compares two Skin objects
@@ -286,11 +236,22 @@ define([
       return skin &&
           this.name === skin.name &&
           this.ps === skin.ps;
+    },
+    //
+    // Gets the [ActiveBox](ActiveBox.html) used to display the main messages of activities
+    getMsgBox: function(){
+      // Method to be implemented by subclasses
+      return null;      
+    },
+    //
+    // Gets the JQuery top component, usually the `$div` object enclosing this skin
+    $getTopComponent: function(){
+      return this.$div;
     }
 
   };
 
-  // JClicPlayer extends AWT.Container
+  // Skin extends [AWT.Container](AWT.html)
   Skin.prototype = $.extend(Object.create(AWT.Container.prototype), Skin.prototype);
 
   return Skin;
