@@ -288,12 +288,12 @@ define([
               this.inverted ? bb.textColor : bb.backColor;
           // TODO: Implement fill shape!        
           //g2.fill(shape);
-          this.fill(ctx);
+          this.shape.fill(ctx);
           ctx.fillStyle = 'black';
         }
         if (bb.bgGradient !== null) {
           ctx.fillStyle = bb.bgGradient.getGradient(ctx, this.shape.getBounds());
-          this.shape.paint(ctx);
+          this.shape.fill(ctx);
         }
       }
       this.updateContent(ctx, dirtyRegion);

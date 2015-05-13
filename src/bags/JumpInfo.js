@@ -68,7 +68,7 @@ define([], function () {
     // Loads the object settings from a specific JQuery XML element 
     setProperties: function ($xml) {
       this.id = $xml.attr('id');
-      this.action = $xml.attr('action') | 'JUMP';
+      this.action = $xml.attr('action') ? $xml.attr('action') : 'JUMP';
       this.sequence = $xml.attr('tag');
       this.projectPath = $xml.attr('project');
       return this;

@@ -154,7 +154,8 @@ define([
       var skinClass = Skin.prototype.availableSkins[skinName];
       if (skinClass) {
         sk = Object.create(skinClass.prototype);
-        skinClass.prototype.constructor.call(sk, ps, skinName, $div);
+        //skinClass.prototype.constructor.call(sk, ps, skinName, $div);        
+        skinClass.call(sk, ps, skinName, $div);
         if ($xml)
           sk.setproperties($xml);
 

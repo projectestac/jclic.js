@@ -103,12 +103,12 @@ define([
             break;
 
           case 'color':
-            bb.textColor = Utils.checkColor($node.attr('foreground'), null);
-            bb.backColor = Utils.checkColor($node.attr('background'), null);
-            bb.shadowColor = Utils.checkColor($node.attr('shadow'), null);
-            bb.inactiveColor = Utils.checkColor($node.attr('inactive'), null);
-            bb.alternativeColor = Utils.checkColor($node.attr('alternative'), null);
-            bb.borderColor = Utils.checkColor($node.attr('border'), null);
+            bb.textColor = Utils.checkColor($node.attr('foreground'), bb.textColor);
+            bb.backColor = Utils.checkColor($node.attr('background'), bb.backColor);
+            bb.shadowColor = Utils.checkColor($node.attr('shadow'), bb.shadowColor);
+            bb.inactiveColor = Utils.checkColor($node.attr('inactive'), bb.inactiveColor);
+            bb.alternativeColor = Utils.checkColor($node.attr('alternative'), bb.alternativeColor);
+            bb.borderColor = Utils.checkColor($node.attr('border'), bb.borderColor);
             break;
         }
       });

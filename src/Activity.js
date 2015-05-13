@@ -289,6 +289,10 @@ define([
             break;
         }
       });
+      
+      if(act.name === 'menupuz.ass'){
+        console.log('ep');
+      }
 
       // Read specific nodes
       $xml.children().each(function () {
@@ -365,7 +369,7 @@ define([
                 case 'window':
                   // Read settings related to the 'window'
                   // (the panel where the activity deploys its content)
-                  act.activityBgColor = Utils.checkColor($node.attr('bgColor'));
+                  act.activityBgColor = Utils.checkColor($node.attr('bgColor'), K.DEFAULT_BG_COLOR);
                   act.transparentBg = Utils.getBoolean($node.attr('transparent'), false);
                   act.border = Utils.getBoolean($node.attr('border'), true);
                   $node.children().each(function () {

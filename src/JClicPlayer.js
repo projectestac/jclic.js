@@ -15,6 +15,7 @@
 
 define([
   "jquery",
+  "./Utils",
   "./AWT",
   "./PlayerHistory",
   "./media/ActiveMediaBag",
@@ -23,8 +24,8 @@ define([
   "./project/JClicProject",
   "./bags/JumpInfo",
   "./boxes/ActiveBoxContent"
-], function ($, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds,
-    JClicProject, JumpInfo, ActiveBoxContent) {
+], function ($, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds, JClicProject, 
+             JumpInfo, ActiveBoxContent) {
 
 //
 //  JClicPlayer is one of the the main classes of the JClic system. It implements
@@ -503,6 +504,7 @@ define([
           this.actions['info'].setEnabled(this.actPanel.act.hasInfo());
         }
         this.setSystemMessage('activity ready');
+        this.doLayout();
         this.initActivity();
       }
       this.skin.setWaitCursor(false);
@@ -560,9 +562,11 @@ define([
     // 
     // Configures the layout and visual aspect of the player area
     doLayout: function () {
+      
+      // Main player area settings
       var width = this.$div.width();
       var height = this.$div.height();
-      var css = {
+      var mainCss = {
         'background-color': this.actPanel ? this.actPanel.act.bgColor : 'azure',
         'background-image': ''
       };
@@ -570,21 +574,41 @@ define([
         var act = this.actPanel.act;
         if (act.bgGradient)
           // Canvas version also available
-          css['background-image'] = act.bgGradient.getCss();
+          mainCss['background-image'] = act.bgGradient.getCss();
 
         if (act.bgImageFile) {
           var bgImageUrl = this.project.mediaBag.elements[act.bgImageFile].fileName;
           var repeat = act.tiledBgImg ? 'repeat' : 'no-repeat';
-          css['background-image'] = 'url(\'' + bgImageUrl + '\')';
-          css['background-repeat'] = repeat;
+          mainCss['background-image'] = 'url(\'' + bgImageUrl + '\')';
+          mainCss['background-repeat'] = repeat;
           if (repeat === 'no-repeat')
-            css['background-position'] = 'center center';
+            mainCss['background-position'] = 'center center';
           else
             bgImageUrl = '';
         }
-
+        
+        // Activity panel settings
+        var m = Utils.settings.BoxBase.AC_MARGIN;
+        var proposedRect = new AWT.Rectangle(m, m, width-2*m, height-2*m);
+        // TODO: Move paint atributes to Activity.Panel
+        var cssAct = {
+          display: 'block',
+          'background-color': act.transparentBg ? 'transparent' : act.activityBgColor,
+          // TODO: bevel border?
+          border: act.border ? 'solid' : 'none'
+        };
+        if(act.activityBgGradient){
+          cssAct['background-image'] = act.activityBgGradient.getCss();
+        }
+        
+        // Continuar aquí!
+        
+        
       }
-      this.$div.css(css);
+      this.$div.css(mainCss);
+      
+      
+      
     },
     //
     // Plays the specified media

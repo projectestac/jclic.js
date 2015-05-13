@@ -77,15 +77,27 @@ define([
 
       // Check for Alpha value
       if (col.charAt(0) === '#' && col.length > 7) {
+        var alpha = parseInt(col.substring(1, 3), 16) / 255.0;
         col = 'rgba(' +
             parseInt(col.substring(3, 5), 16) + ',' +
             parseInt(col.substring(5, 7), 16) + ',' +
             parseInt(col.substring(7, 9), 16) + ',' +
-            (parseInt(col.substring(1, 3), 16) / 255.0) + ')';
+            alpha + ')';
       }
       return col;
     },
     //
+    // Checks if the provided color (a String) has alpha value less than one
+    colorHasTransparency: function(color){
+      var result = false;
+      if (color.indexOf('rgba(')===0){
+        var p = color.lastIndexOf(',');
+        var alpha = parseint(color.substr(p));
+        result = (typeof alpha === 'number') && alpha < 1.0;
+      }
+      return result;
+    },
+    // 
     // Clone object
     cloneObject: function (obj) {
       return $.extend(true, {}, obj);

@@ -40,20 +40,21 @@ define([
     this.msgBox = new ActiveBox();
 
     var thisSkin = this;
-    this.buttons.prev = $('<object type="image/svg+xml" data="' + this.resources.prevBtn + '"/>').on('click',
+    this.buttons.prev = $('<img />').on('click',
         function (evt) {
           if (thisSkin.ps)
             // TODO: Check if we need to pass the action in action's method
             thisSkin.ps.actions.prev.processEvent(thisSkin.ps.actions.prev, evt);
         });
+    this.buttons.prev.get(0).src = this.resources.prevBtn;
     this.$div.append(this.buttons.prev);
 
-    this.buttons.next = $('<object type="image/svg+xml" data ="' + this.resources.nextBtn + '" />').on('click',
+    this.buttons.next = $('<img />').on('click',
         function (evt) {
           if (thisSkin.ps)
-            // TODO: Check if we need to pass the action in action's method
-            thisSkin.ps.actions.next.processEvent(thisSkin.ps.actions.next, evt);
+            thisSkin.ps.actions.next.processEvent(evt);
         });
+    this.buttons.next.get(0).src = this.resources.nextBtn;
     this.$div.append(this.buttons.next);
   };
 

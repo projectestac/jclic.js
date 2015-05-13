@@ -202,8 +202,8 @@ define([
     //
     // Loads the object settings from a specific JQuery XML element 
     setProperties: function ($xml) {
-      this.c1 = Utils.checkColor($xml.attr('source'));
-      this.c2 = Utils.checkColor($xml.attr('dest'));
+      this.c1 = Utils.checkColor($xml.attr('source'), 'black');
+      this.c2 = Utils.checkColor($xml.attr('dest'), 'white');
       this.angle = Number($xml.attr('angle') || 0) % 360;
       this.cycles = Number($xml.attr('cycles') || 1);
       return this;
@@ -216,7 +216,7 @@ define([
       var p2 = rect.getOppositeVertex();
       var gradient = ctx.createLinearGradient(rect.pos.x, rect.pos.y, p2.x, p2.y);
       var step = 1 / Math.max(this.cycles, 1);
-      for (var i = 0; i <= cycles; i++)
+      for (var i = 0; i <= this.cycles; i++)
         gradient.addColorStop(i * step, i % 2 ? this.c1 : this.c2);
       return gradient;
     },
@@ -232,6 +232,11 @@ define([
       }
       result += ')';
       return result;
+    },
+    //
+    // Checks if the gradient colors have transparency
+    hasTransparency: function(){
+      return Utils.colorHasTransparency(this.c1) || Utils.colorHasTransparency(this.c2);
     }
   };
 
@@ -766,7 +771,7 @@ define([
   // other objects
   var Action = function (name, actionPerformed) {
     this.name = name;
-    this.thisAction = this;
+    this.actionPerformed = actionPerformed;
   };
 
   Action.prototype = {
@@ -778,7 +783,7 @@ define([
     //
     // Action status `true`: enabled, `false`: disabled
     enabled: false,
-    //
+    // 
     // Here is where subclasses must define the function to be performed 
     // when this Action object is called.
     // thisAction - Pointer to this Action object
@@ -787,8 +792,8 @@ define([
     },
     //
     // This is the method to be passed to event triggers
-    processEvent: function (thisAction, event) {
-      return thisAction.actionPerformed(thisAction, event);
+    processEvent: function (event) {
+      return this.actionPerformed(this, event);
     },
     // Enables/disables the action
     setEnabled: function (enabled) {

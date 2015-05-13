@@ -111,7 +111,7 @@ define([
         this.players[i].clear();
       // Empty the `players` array
       this.players.length = 0;
-      ActiveMediaPlayer.clearAllAudioBuffers();
+      ActiveMediaPlayer.prototype.clearAllAudioBuffers();
     }
   };
 

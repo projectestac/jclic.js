@@ -121,12 +121,12 @@ define([], function () {
               this.player.exit(ji.sequence);
             break;
           case 'JUMP':
-            if (ji.sequence === null && ji.projectPath === null) {
+            if (!ji.sequence  && !ji.projectPath) {
               var ase = this.player.project.activitySequence.getElement(ji.actNum, true);
               if (ase !== null) {
                 if (allowReturn)
                   this.push();
-                this.player.load(null, null, ase.getActivityName(), null);
+                this.player.load(null, null, ase.activityName, null);
                 result = true;
               }
             }

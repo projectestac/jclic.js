@@ -30,14 +30,12 @@ define([
   var ActiveMediaPlayer = function (mc, mb, ps) {
     this.mc = mc;
     this.ps = ps;
-    // buffers for recording and playing audio are common to all instances
-    this.audioBuffer = this.prototype.audioBuffer;
     switch (mc.mediaType) {
       case 'RECORD_AUDIO':
-        clearAudioBuffer(mc.recBuffer);
-        this.audioBuffer[mc.recBuffer] = this.createAudioBuffer(mc.length);
+        this.clearAudioBuffer(mc.recBuffer);
+        ActiveMediaPlayer.prototype._audioBuffer[mc.recBuffer] = this.createAudioBuffer(mc.length);
       case 'PLAY_RECORDED_AUDIO':
-        useAudioBuffer = true;
+        this.useAudioBuffer = true;
         break;
       default:
         break;
@@ -49,7 +47,7 @@ define([
     //
     // The AudioBuffer is common to all ActiveMediaPlayer instances, so
     // it's stored in the prototype
-    audioBuffer: [],
+    _audioBuffer: [],
     //
     // The [MediaContent](MediaContent.html) associated to this player
     mc: null,
@@ -104,30 +102,30 @@ define([
     setTimeRanges: function () {
     },
     clearAudioBuffer: function (buffer) {
-      if (buffer >= 0 && buffer < this.audioBuffer.length && this.audioBuffer[buffer] !== null) {
-        this.audioBuffer[buffer].clear();
-        this.audioBuffer[buffer] = null;
+      if (buffer >= 0 && buffer < ActiveMediaPlayer.prototype._audioBuffer.length && ActiveMediaPlayer.prototype._audioBuffer[buffer] !== null) {
+        ActiveMediaPlayer.prototype._audioBuffer[buffer].clear();
+        ActiveMediaPlayer.prototype._audioBuffer[buffer] = null;
       }
     },
     clearAllAudioBuffers: function () {
-      for (var i = 0; i < this.audioBuffer.length; i++)
+      for (var i = 0; i < ActiveMediaPlayer.prototype._audioBuffer.length; i++)
         this.clearAudioBuffer(i);
     },
     countActiveBuffers: function () {
       var c = 0;
-      for (var i = 0; i < this.audioBuffer.length; i++)
-        if (this.audioBuffer[i])
+      for (var i = 0; i < ActiveMediaPlayer.prototype._audioBuffer.length; i++)
+        if (ActiveMediaPlayer.prototype._audioBuffer[i])
           c++;
       return c;
     },
     stopAllAudioBuffers: function () {
-      for (var i = 0; i < this.audioBuffer.length; i++)
-        if (this.audioBuffer[i])
-          this.audioBuffer[i].stop();
+      for (var i = 0; i < ActiveMediaPlayer.prototype._audioBuffer.length; i++)
+        if (ActiveMediaPlayer.prototype._audioBuffer[i])
+          ActiveMediaPlayer.prototype._audioBuffer[i].stop();
     },
     stopAudioBuffer: function (buffer) {
-      if (buffer >= 0 && buffer < this.audioBuffer.length && this.audioBuffer[buffer] !== null)
-        this.audioBuffer[buffer].stop();
+      if (buffer >= 0 && buffer < ActiveMediaPlayer.prototype._audioBuffer.length && ActiveMediaPlayer.prototype._audioBuffer[buffer] !== null)
+        ActiveMediaPlayer.prototype._audioBuffer[buffer].stop();
     },
     checkVisualComponentBounds: function (bxi) {
     },
