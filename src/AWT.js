@@ -310,10 +310,17 @@ define([
     },
     //
     // Moves this Point to a new position
-    // newPos (Point): The new position
-    moveTo: function (newPos) {
-      this.x = newPos.x;
-      this.y = newPos.y;
+    // newPos (Point): The new position, or a x co-ordinate
+    // y (number): null if newPos is a Point
+    moveTo: function (newPos, y) {
+      if (typeof newPos === 'number') {
+        this.x = newPos;
+        this.y = y;
+      }
+      else {
+        this.x = newPos.x;
+        this.y = newPos.y;
+      }
       return this;
     },
     // 

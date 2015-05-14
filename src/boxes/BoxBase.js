@@ -186,9 +186,9 @@ define([
           }
           if (lastOK > 0) {
             // Add a new line with the tail of the line
-            lines.splice(p + 1, 0, line.substr(lastOK + 1, line.length));
+            lines.splice(l + 1, 0, line.substr(lastOK + 1).trim());
             // Adjust the current line
-            line = lines[l] = line.substr(0, p).trim();
+            line = lines[l] = line.substr(0, lastOK).trim();
             width = lastOKWidth;
           }
           else {

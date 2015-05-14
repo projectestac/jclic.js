@@ -289,8 +289,8 @@ define([
             break;
         }
       });
-      
-      if(act.name === 'menupuz.ass'){
+
+      if (act.name === 'menupuz.ass') {
         console.log('ep');
       }
 
@@ -588,42 +588,37 @@ define([
     // to produce specific panels.
     // ps (PlayStation) - See the description of the parameter `ps` in `Panel`
     getActivityPanel: function (ps) {
-      return new this.PanelClass(this, ps);
+      return new this.Panel(this, ps);
     },
     //
-    // The Activity.Panel class to be used with this activity
-    // (defined at the end of the script)
-    PanelClass: null
+    // Activity.Panel is the object responsible for rendering the contents of the
+    // activity on the screen and managing user's interaction.
+    // Each type of activity must implement its own `Activity.Panel`.
+    // In JClic, [Activity.Panel](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html)
+    // extends [javax.swing.JPanel](http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html).
+    // In this implementation, the JPanel will be replaced by an HTML DIV tag.
+    // The constructor takes two arguments:
+    // act (Activity) - The Activity this Panel belongs to
+    // ps (currently a [JClicPlayer](JClicPlayer.html) object) - Any object implementing
+    // the methods defined in the 
+    // [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) 
+    // Java interface.
+    Panel: function (act, ps, $div) {
+      this.act = act;
+      this.ps = ps;
+      this.minimumSize = new AWT.Dimension(100, 100);
+      this.preferredSize = new AWT.Dimension(500, 400);
+      this.events = ['mousedown', 'mousemove', 'mouseup', 'keydown'];
+      if ($div)
+        this.$div = $div;
+      else
+        this.$div = $('<div class="JClicActivity"/>');
+      this.act.initAutoContentProvider();
+    }
   };
 
-//
-// Activity.Panel is the object responsible for rendering the contents of the
-// activity on the screen and managing user's interaction.
-// Each type of activity must implement its own `Activity.Panel`.
-// In JClic, [Activity.Panel](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html)
-// extends [javax.swing.JPanel](http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html).
-// In this implementation, the JPanel will be replaced by an HTML DIV tag.
-// The constructor takes two arguments:
-// act (Activity) - The Activity this Panel belongs to
-// ps (currently a [JClicPlayer](JClicPlayer.html) object) - Any object implementing
-// the methods defined in the 
-// [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) 
-// Java interface.
-  var Panel = function (act, ps, $div) {
-    this.act = act;
-    this.ps = ps;
-    this.minimumSize = new AWT.Dimension(100, 100);
-    this.preferredSize = new AWT.Dimension(500, 400);
-    this.events = ['mousedown', 'mousemove', 'mouseup', 'keydown'];
-    if ($div)
-      this.$div = $div;
-    else
-      this.$div = $('<div class="JClicActivity"/>');
-    this.act.initAutoContentProvider();
-  };
-
-  Panel.prototype = {
-    constructor: Panel,
+  Activity.prototype.Panel.prototype = {
+    constructor: Activity.Panel,
     // 
     // The Activity this panel is related to
     act: null,
@@ -662,8 +657,16 @@ define([
     backgroundColor: null,
     backgroundTransparent: false,
     border: null,
+    //
+    // Sets the size and position of this activity panel
     setBounds: function (rect) {
-      // TODO: Implement setBounds
+      this.$div.css({
+        position: 'relative',
+        left: rect.pos.x,
+        top: rect.pos.y,
+        width: rect.dim.width,
+        height: rect.dim.height
+      });
     },
     //
     // Prepares the visual components of the activity
@@ -676,8 +679,9 @@ define([
 
       this.bgImage = null;
       if (this.act.bgImageFile && this.act.bgImageFile.length > 0) {
-        var mbe = this.act.project.mediaBag.getImageElement(this.act.bgImageFile);
-        this.bgImage = mbe.getImage();
+        var mbe = this.act.project.mediaBag.elements[this.act.bgImageFile];
+        if (mbe)
+          this.bgImage = mbe.data;
       }
 
       this.backgroundColor = this.act.activityBgColor;
@@ -688,6 +692,17 @@ define([
       // TODO: fix bevel-border type
       if (this.act.border)
         this.border = true;
+
+      var cssAct = {
+        display: 'block',
+        'background-color': this.backgroundTransparent ? 'transparent' : this.backgroundColor,
+        // TODO: bevel border?
+        border: this.border ? 'solid' : 'none'
+      };
+      if (this.act.activityBgGradient) {
+        cssAct['background-image'] = this.act.activityBgGradient.getCss();
+      }
+      this.$div.css(cssAct);
     },
     //
     // Plays the specified event sound
@@ -703,7 +718,7 @@ define([
         this.playing = false;
         this.ps.reportEndActivity(this.act, this.solved);
       }
-      this.solved = false;      
+      this.solved = false;
       this.ps.reportNewActivity(this.act, 0);
       this.ps.startActivity();
       this.enableCounters();
@@ -713,7 +728,7 @@ define([
     // (to be overrided by subclasses)
     startActivity: function () {
       var msg = this.act.messages['initial'];
-      if(msg)
+      if (msg)
         this.ps.setMsg(msg);
     },
     // 
@@ -722,23 +737,14 @@ define([
     showHelp: function () {
     },
     //
-    // Draws the content of the activity
-    // (to be overrided by subclasses)
-    // ctx (Canvas context 2D) - The context used to draw
-    // dirtyRegion (AWT.Rectangle) - The rectangular area to be repainted
-    render: function (ctx, dirtyRegion) {
-      ctx.font = "bold 24pt sans";
-      ctx.fillStyle = 'navy';
-      ctx.textBaseline = "hanging";
-      ctx.fillText("Activity not yet implemented", 20, 20);
-    },
-    //
     // Sets the real dimension of the Activity.Panel
     // (to be overrided by subclasses)
     // maxSize(AWT.Dimension)
     // Returns AWT.Dimension
     setDimension: function (maxSize) {
-      return new AWT.Dimension(new AWT.Point(), maxSize);
+      return new AWT.Dimension(
+          Math.min(maxSize.width, this.preferredSize.width),
+          Math.min(maxSize.height, this.preferredSize.height));
     },
     //
     // Generic handlers to process mouse and key events
@@ -747,13 +753,13 @@ define([
     processKey: function (event) {
     },
     //
-    // Fits the panel into the `proposed` rectangle, not surpassing
+    // Fits the panel into the `proposed` rectangle, not surpassing the
     // `bounds` rectangle.
     fitTo: function (proposed, bounds) {
       var origin = new AWT.Point();
       if (this.act.absolutePositioned && this.act.absolutePosition !== null) {
-        origin.x = Math.max(0, this.act.absolutePosition.x + proposed.x);
-        origin.y = Math.max(0, this.act.absolutePosition.y + proposed.y);
+        origin.x = Math.max(0, this.act.absolutePosition.x + proposed.pos.x);
+        origin.y = Math.max(0, this.act.absolutePosition.y + proposed.pos.y);
         proposed.dim.width -= this.act.absolutePosition.x;
         proposed.dim.height -= this.act.absolutePosition.y;
       }
@@ -761,7 +767,7 @@ define([
           Math.max(2 * this.act.margin + Utils.settings.MINIMUM_WIDTH, proposed.dim.width),
           Math.max(2 * this.act.margin + Utils.settings.MINIMUM_HEIGHT, proposed.dim.height)));
       if (!this.act.absolutePositioned) {
-        origin.setLocation(
+        origin.moveTo(
             Math.max(0, proposed.pos.x + (proposed.dim.width - d.width) / 2),
             Math.max(0, proposed.pos.y + (proposed.dim.height - d.height) / 2));
       }
@@ -769,21 +775,7 @@ define([
         origin.x = Math.max(0, bounds.dim.width - d.width);
       if (origin.y + d.height > bounds.dim.height)
         origin.y = Math.max(0, bounds.dim.height - d.height);
-      this.setBounds(origin.x, origin.y, d.width, d.height);
-    },
-    //
-    // Paints this component
-    paintComponent: function (ctx, dirtyRegion) {
-      if (!this.act.transparentBg) {
-        if (this.act.activityBgGradient === null || this.act.activityBgGradient.hasTransparency()) {
-          // TODO: Fill the background with color
-        }
-        if (this.act.activityBgGradient !== null)
-          this.act.activityBgGradient.paint(ctx, dirtyRegion);
-      }
-
-      this.render(ctx, dirtyRegion);
-      // TODO: Repeat repaint if font was reduced
+      this.setBounds(new AWT.Rectangle(origin.x, origin.y, d.width, d.height));
     },
     //
     // Forces the end of the activity
@@ -867,7 +859,7 @@ define([
       while (i > 0) {
         var k = i > steps ? steps : i;
         for (var b = 0; b < bg.length; b++) {
-          abb = bg[b];
+          var abb = bg[b];
           if (abb !== null)
             abb.scrambleCells(k, fitInArea);
         }
@@ -875,8 +867,6 @@ define([
       }
     }
   };
-
-  Activity.prototype.PanelClass = Panel;
 
   return Activity;
 });

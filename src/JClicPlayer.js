@@ -564,8 +564,9 @@ define([
     doLayout: function () {
       
       // Main player area settings
-      var width = this.$div.width();
-      var height = this.$div.height();
+      var width = this.dim.width = this.$div.width();
+      var height = this.dim.height = this.$div.height();
+      
       var mainCss = {
         'background-color': this.actPanel ? this.actPanel.act.bgColor : 'azure',
         'background-image': ''
@@ -588,27 +589,28 @@ define([
         }
         
         // Activity panel settings
+        // Calc the maximum rectangle available for the activity panel
         var m = Utils.settings.BoxBase.AC_MARGIN;
         var proposedRect = new AWT.Rectangle(m, m, width-2*m, height-2*m);
-        // TODO: Move paint atributes to Activity.Panel
-        var cssAct = {
-          display: 'block',
-          'background-color': act.transparentBg ? 'transparent' : act.activityBgColor,
-          // TODO: bevel border?
-          border: act.border ? 'solid' : 'none'
-        };
-        if(act.activityBgGradient){
-          cssAct['background-image'] = act.activityBgGradient.getCss();
+        
+        if(this.actPanel.bgImage && !act.tiledBgImg && act.absolutePositioned){
+          // Special case: when the activity has a background image not tiled, and an absolute
+          // position has been specified, the Activity.Panel must be placed at this absolute
+          // position, relative to the background image
+          this.bgImageOrigin.x = (width - this.actPanel.bgImage.width)/2;
+          this.bgImageOrigin.y = (height - this.actPanel.bgImage.height)/2;
+          proposedRect.pos.moveTo(this.bgImageOrigin);
+          proposedRect.dim.width -= (this.bgImageOrigin.x - m);
+          proposedRect.dim.height -= (this.bgImageOrigin.y - m);
+          proposedRect.dim.width = Math.min(proposedRect.dim.width, width);
+          proposedRect.dim.height = Math.min(proposedRect.dim.height, height);
         }
         
-        // Continuar aquí!
-        
-        
+        // Activity.Panel will calc and set its position and size based on the maximum and optimal
+        // available space
+        this.actPanel.fitTo(proposedRect, this);
       }
       this.$div.css(mainCss);
-      
-      
-      
     },
     //
     // Plays the specified media
