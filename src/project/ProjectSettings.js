@@ -15,8 +15,9 @@
 
 
 define([
+  "jquery",
   "../media/EventSounds"
-], function (EventSounds) {
+], function ($, EventSounds) {
 
 
 // This class encapsulates miscellaneous settings of JClic projects
