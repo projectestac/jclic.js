@@ -13,12 +13,21 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
+// Main JClic method  
+// 
+// Looks for the first DOM element in the document with class "JClic", builds a new
+// [JClicPlayer](JClicPlayer.html) object attached to this DOM element and loads the
+// project file specified in the `data-project` attribute.  
+// 
+// Example: `<div class ="JClic" data-project="my-project.jclic"></div>`  
+// This JClic `div` must preferabily be empty. Inner content may become overlapped by other objects.
+//
 define([
   "jquery",
   "./project/JClicProject",
   "./JClicPlayer",
   "./skins/DefaultSkin"
-], function ($, JClicProject, JClicPlayer) {
+], function ($, JClicProject, JClicPlayer, ds) {
 
   // Execute on document ready
   $(function () {
@@ -41,8 +50,11 @@ define([
 });
 
 /* global exports */
+// Testing function for npm
+// TODO: Remove npm testing function
 if (typeof exports !== "undefined") {
   exports.printMsg = function () {
     console.log("This is a message from JClic");
   };
 };
+

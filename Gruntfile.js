@@ -1,3 +1,4 @@
+/* global module */
 module.exports = function (grunt) {
 
   "use-strict";
@@ -38,7 +39,7 @@ module.exports = function (grunt) {
           debug: true,
           //exclude: ['../lib/jcanvas.js'],
           transform: ['deamdify'],
-          banner: '<%= meta.banner %>',
+          banner: '<%= meta.banner %>'
         }
       }
     },

@@ -16,3 +16,4 @@
 
 # Local netbeans config files #
 /nbproject/private/
+/deploy/
