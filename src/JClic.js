@@ -26,8 +26,9 @@ define([
   "jquery",
   "./project/JClicProject",
   "./JClicPlayer",
-  "./skins/DefaultSkin"
-], function ($, JClicProject, JClicPlayer, ds) {
+  "./skins/DefaultSkin",
+  "./activities/text/TextActivityBase"
+], function ($, JClicProject, JClicPlayer, ds, tab) {
 
   // Execute on document ready
   $(function () {

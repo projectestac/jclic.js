@@ -78,7 +78,7 @@ define([
       var $node = $xml.children('activities');
       var $acts = $node.children('activity');
       $acts.each(function () {
-        var act = Activity.prototype.getActivity($(this), prj);
+        var act = Activity.prototype._getActivity($(this), prj);
         prj.activities[act.name] = act;
       });
       return this;

@@ -49,39 +49,39 @@ define([
 
   Activity.prototype = {
     constructor: Activity,
+    // 
+    // `Activity.prototype._CLASSES` contains the list of classes derived from Activity. It
+    // should be read-only and updated by real activity classes at creation.
+    // TODO: When all activities are created, initialize _CLASSES as an empty object
+    _CLASSES: {
+      '@panels.Explore': Activity,
+      '@panels.Identify': Activity,
+      '@panels.InformationScreen': Activity,
+      '@panels.Menu': Activity,
+      '@puzzles.ExchangePuzzle': Activity,
+      '@puzzles.DoublePuzzle': Activity,
+      '@puzzles.HolePuzzle': Activity,
+      '@associations.SimpleAssociation': Activity,
+      '@associations.ComplexAssociation': Activity,
+      '@memory.MemoryGame': Activity,
+      '@text.WrittenAnswer': Activity,
+      '@textGrid.CrossWord': Activity,
+      '@textGrid.WordSearch': Activity
+    },
     //
     // Dynamic constructor that returns a specific type of Activity
-    // based on the `class` attribute in $xml
-    getActivity: function ($xml, project) {
+    // based on the `class` attribute declared in the $xml element  
+    // Should be called only from Activity.constructor
+    _getActivity: function ($xml, project) {
       var act = null;
       var className = $xml.attr('class');
-      switch (className) {
-        case '@panels.Explore':
-        case '@panels.Identify':
-        case '@panels.InformationScreen':
-        case '@panels.Menu':
-        case '@puzzles.ExchangePuzzle':
-        case '@puzzles.DoublePuzzle':
-        case '@puzzles.HolePuzzle':
-        case '@associations.SimpleAssociation':
-        case '@associations.ComplexAssociation':
-        case '@memory.MemoryGame':
-        case '@text.Complete':
-        case '@text.FillInBlanks':
-        case '@text.Identify':
-        case '@text.Order':
-        case '@text.WrittenAnswer':
-        case '@textGrid.CrossWord':
-        case '@textGrid.WordSearch':
-          act = new Activity(project);
-          break;
-
-        default:
-          console.log('Unknown activity class: ' + className);
-      }
-
-      if (act)
+      var cl = Activity.prototype._CLASSES[className];
+      if(cl){
+        act = new cl(project);
         act.setProperties($xml);
+      }
+      else
+        console.log('Unknown activity class: ' + className);
 
       return act;
     },
