@@ -142,11 +142,42 @@ define([
     },
     //
     // Returns an image to be used as icon for representing this media content
-    getIcon: function(){
+    getIcon: function () {
+
+      var icon = null;
+
       // TODO: implement the creation of SVG icons for each media type
-      return null;
-    }
+      switch (this.mediaType) {
+        default:
+          icon = 'default';
+          break;
+      }
+      return icon ? this._icoImg[icon] : null;
+    },
+    //
+    // Default icons for the different media types
+    // Should be accessed only via `MediaContent.prototype`
+    _icoData: {
+      default: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGhlaWdodD0iNDgiIHZp' +
+          'ZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAw' +
+          'MC9zdmciPjxwYXRoIGQ9Ik0yOC44IDEyTDI4IDhIMTB2MzRoNFYyOGgxMS4ybC44IDRoMTRWMTJ6' +
+          'Ij48L3BhdGg+PC9zdmc+Cg=='
+    },
+    //
+    // Icon `ImageData` objects
+    _icoImg: {}
   };
+
+  // Load icons
+  $.each(MediaContent.prototype._icoData, function (key, value) {
+    var img = new Image();
+    // Assign an empty image
+    MediaContent.prototype._icoImg[key] = img;
+    $(img).attr('src', value);
+    $(img).load();
+    // TODO: Provide a callback function to track the loading process of the media icon
+  });
 
   return MediaContent;
 });

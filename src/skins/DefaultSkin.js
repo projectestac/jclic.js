@@ -43,8 +43,7 @@ define([
     this.buttons.prev = $('<img />').on('click',
         function (evt) {
           if (thisSkin.ps)
-            // TODO: Check if we need to pass the action in action's method
-            thisSkin.ps.actions.prev.processEvent(thisSkin.ps.actions.prev, evt);
+            thisSkin.ps.actions.prev.processEvent(evt);
         });
     this.buttons.prev.get(0).src = this.resources.prevBtn;
     this.$div.append(this.buttons.prev);
@@ -71,28 +70,33 @@ define([
     currentHelpWindow: null,
     currentAboutWindow: null,
     //
+    // Background, margin and height of the messageBox
+    background: '#3F51B5',
+    margin: 18,
+    msgBoxHeight: 60,
     // Main method used to build the contents
     // Resizes and places internal objects
     doLayout: function () {
 
       // Basic layout, just for testing:
 
-      var margin = 20;
+      var margin = this.margin;
+      var prv = this.resources.prevBtnSize;
+      var nxt = this.resources.nextBtnSize;
 
       this.$div.css({
         position: 'relative',
         width: '100%',
         height: '600px',
-        'background-color': 'salmon'
+        'background-color': this.background
       });
 
       var actualSize = new AWT.Dimension(this.$div.width(), this.$div.height());
 
-      var btnWidth = 42;
       var w = Math.max(100, actualSize.width - 2 * margin);
-      var wMsgBox = w - 2*margin - 2*btnWidth;
-      var h = 60;
-      var playerHeight = Math.max(100, actualSize.height - 3 * margin - 60);
+      var wMsgBox = w - 2 * margin - prv.w - nxt.w;
+      var h = this.msgBoxHeight;
+      var playerHeight = Math.max(100, actualSize.height - 3 * margin - h);
 
       this.player.$div.css({
         position: 'absolute',
@@ -114,22 +118,22 @@ define([
         width: wMsgBox + 'px',
         height: h + 'px',
         top: 2 * margin + playerHeight + 'px',
-        left: 2*margin + btnWidth + 'px',
+        left: 2 * margin + prv.w + 'px',
         'background-color': 'lightblue'
       });
-      
+
       this.buttons.prev.css({
         position: 'absolute',
-        top: 2 * margin + playerHeight + 'px',
-        left: margin + 'px'        
+        top: 2 * margin + playerHeight + (h - prv.h) / 2 + 'px',
+        left: margin + 'px'
       });
 
       this.buttons.next.css({
         position: 'absolute',
-        top: 2 * margin + playerHeight + 'px',
-        left: w + margin - btnWidth + 'px'        
+        top: 2 * margin + playerHeight + (h - nxt.h) / 2 + 'px',
+        left: w + margin - nxt.w + 'px'
       });
-      
+
       this.$msgBoxDivCanvas = $('<canvas width="' + wMsgBox + '" height="' + h + '"/>');
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
       this.msgBox.setBounds(new AWT.Rectangle(0, 0, wMsgBox, h));
@@ -148,73 +152,42 @@ define([
       // SVG image for the 'previous activity' button
       // See `/misc/skin/default` for original Inkscape images
       prevBtn: 'data:image/svg+xml;base64,' +
-          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGhlaWdodD0iNjAiIGlk' +
-          'PSJzdmczMDk4IiB2ZXJzaW9uPSIxLjEiIHdpZHRoPSI0MiIgeG1sbnM9Imh0dHA6Ly93d3cudzMu' +
-          'b3JnLzIwMDAvc3ZnIiB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIiB4' +
-          'bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnJkZj0iaHR0' +
-          'cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIgeG1sbnM6c3ZnPSJodHRw' +
-          'Oi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnMgaWQ9ImRlZnMzMTAwIj48L2RlZnM+PG1ldGFk' +
-          'YXRhIGlkPSJtZXRhZGF0YTMxMDMiPjxyZGY6UkRGPjxjYzpXb3JrIHJkZjphYm91dD0iIj48ZGM6' +
-          'Zm9ybWF0PmltYWdlL3N2Zyt4bWw8L2RjOmZvcm1hdD48ZGM6dHlwZSByZGY6cmVzb3VyY2U9Imh0' +
-          'dHA6Ly9wdXJsLm9yZy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIj48L2RjOnR5cGU+PGRjOnRpdGxl' +
-          'PjwvZGM6dGl0bGU+PC9jYzpXb3JrPjwvcmRmOlJERj48L21ldGFkYXRhPjxnIGlkPSJsYXllcjEi' +
-          'IHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsLTQpIj48cGF0aCBkPSJtIDM5Ljg5MTcyMSw4LjYyMjA0' +
-          'NzEgYyAyLjc3MDI1NSwyLjYxNzIxMTkgMi4zNTY3NzMsMTUuMDg1NjMwOSAyLjQ2NDk5MSwxOC44' +
-          'OTUxNDQ5IDAuMTA4MjE3LDMuODA5NTEzIDEuMjI4ODQ2LDE2LjIzNDM1MiAtMS4zODgzNjYsMTku' +
-          'MDA0NjA3IC0yLjYxNzIxMiwyLjc3MDI1NCAtMTUuMDg1NjMxLDIuMzU2NzczIC0xOC44OTUxNDQs' +
-          'Mi40NjQ5OSBDIDE4LjI2MzY4OCw0OS4wOTUwMDYgNS44Mzg4NDg2LDUwLjIxNTYzNSAzLjA2ODU5' +
-          'NDIsNDcuNTk4NDIzIDAuMjk4MzM5ODcsNDQuOTgxMjEyIDAuNzExODIxNTUsMzIuNTEyNzkzIDAu' +
-          'NjAzNjA0MDcsMjguNzAzMjc5IDAuNDk1Mzg2NTgsMjQuODkzNzY1IC0wLjYyNTI0MTk3LDEyLjQ2' +
-          'ODkyNiAxLjk5MTk2OTgsOS42OTg2NzE2IDQuNjA5MTgxNSw2LjkyODQxNzIgMTcuMDc3Niw3LjM0' +
-          'MTg5ODkgMjAuODg3MTE0LDcuMjMzNjgxNCAyNC42OTY2MjgsNy4xMjU0NjM5IDM3LjEyMTQ2Nyw2' +
-          'LjAwNDgzNTQgMzkuODkxNzIxLDguNjIyMDQ3MSB6IiBpZD0iZm9ucyIgc3R5bGU9Im9wYWNpdHk6' +
-          'MC44O2ZpbGw6I2U3ZDNkMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6I2QzMmIzZDtzdHJva2Utb3Bh' +
-          'Y2l0eToxIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjk2MTQyMTY1LDAsMCwwLjk2MTQyMTY1LDAuMzc0' +
-          'MTIzNjUsNi42Mjk5MDExKSI+PC9wYXRoPjxwYXRoIGQ9Ik0gMjAuNjg1OTQsNi4xMTg4MjY0IDIw' +
-          'Ljk3NjUyNiwzNS43NjA2NDggLTQuODM5MzM4LDIxLjE5MTM5MyB6IiBpZD0iZmxldHhhIiBvbm1v' +
-          'dXNlb3V0PSJldnQudGFyZ2V0LnNldEF0dHJpYnV0ZSgnc3R5bGUnLCBldnQudGFyZ2V0LmdldEF0' +
-          'dHJpYnV0ZSgnc3R5bGUnKS5yZXBsYWNlKC9vcGFjaXR5OlxkKyhcLlxkKykvZywgJ29wYWNpdHk6' +
-          'MC41JykpOyIgb25tb3VzZW92ZXI9ImV2dC50YXJnZXQuc2V0QXR0cmlidXRlKCdzdHlsZScsIGV2' +
-          'dC50YXJnZXQuZ2V0QXR0cmlidXRlKCdzdHlsZScpLnJlcGxhY2UoL29wYWNpdHk6XGQrKFwuXGQr' +
-          'KS9nLCAnb3BhY2l0eToxLjAnKSk7IiBzdHlsZT0ib3BhY2l0eTowLjU7ZmlsbDojMDEzMzk3O2Zp' +
-          'bGwtb3BhY2l0eToxO3N0cm9rZTpub25lIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMS4wOTA5MDks' +
-          'MTIuMzYzNjM3KSI+PC9wYXRoPjwvZz48L3N2Zz4K',
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGhlaWdodD0iNDgiIGlk' +
+          'PSJzdmcyIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiB4bWxu' +
+          'cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVj' +
+          'b21tb25zLm9yZy9ucyMiIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4x' +
+          'LyIgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMj' +
+          'IiB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48bWV0YWRhdGEgaWQ9Im1l' +
+          'dGFkYXRhMTIiPjxyZGY6UkRGPjxjYzpXb3JrIHJkZjphYm91dD0iIj48ZGM6Zm9ybWF0PmltYWdl' +
+          'L3N2Zyt4bWw8L2RjOmZvcm1hdD48ZGM6dHlwZSByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9y' +
+          'Zy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIj48L2RjOnR5cGU+PGRjOnRpdGxlPjwvZGM6dGl0bGU+' +
+          'PC9jYzpXb3JrPjwvcmRmOlJERj48L21ldGFkYXRhPjxkZWZzIGlkPSJkZWZzMTAiPjwvZGVmcz48' +
+          'cGF0aCBkPSJNIDAsMCBIIDQ4IFYgNDggSCAwIHoiIGlkPSJwYXRoNCIgc3R5bGU9ImZpbGw6bm9u' +
+          'ZSI+PC9wYXRoPjxwYXRoIGQ9Ik0gMjQsNCBDIDM1LjA1LDQgNDQsMTIuOTUgNDQsMjQgNDQsMzUu' +
+          'MDUgMzUuMDUsNDQgMjQsNDQgMTIuOTUsNDQgNCwzNS4wNSA0LDI0IDQsMTIuOTUgMTIuOTUsNCAy' +
+          'NCw0IHogbSA0LDI5IFYgMTUgbCAtMTIsOSAxMiw5IHoiIGlkPSJwYXRoNiIgc3R5bGU9ImZpbGw6' +
+          'I2ZmZmZmZiI+PC9wYXRoPjwvc3ZnPgo=',
+      prevBtnSize: {w: 48, h: 48},
       //
       // SVG image for the 'next activity' button
       // See `/misc/skin/default` for original Inkscape images
       nextBtn: 'data:image/svg+xml;base64,' +
-          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGhlaWdodD0iNjAiIGlk' +
-          'PSJzdmczMDk4IiB2ZXJzaW9uPSIxLjEiIHdpZHRoPSI0MiIgeG1sbnM9Imh0dHA6Ly93d3cudzMu' +
-          'b3JnLzIwMDAvc3ZnIiB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIiB4' +
-          'bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnJkZj0iaHR0' +
-          'cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIgeG1sbnM6c3ZnPSJodHRw' +
-          'Oi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnMgaWQ9ImRlZnMzMTAwIj48L2RlZnM+PG1ldGFk' +
-          'YXRhIGlkPSJtZXRhZGF0YTMxMDMiPjxyZGY6UkRGPjxjYzpXb3JrIHJkZjphYm91dD0iIj48ZGM6' +
-          'Zm9ybWF0PmltYWdlL3N2Zyt4bWw8L2RjOmZvcm1hdD48ZGM6dHlwZSByZGY6cmVzb3VyY2U9Imh0' +
-          'dHA6Ly9wdXJsLm9yZy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIj48L2RjOnR5cGU+PGRjOnRpdGxl' +
-          'PjwvZGM6dGl0bGU+PC9jYzpXb3JrPjwvcmRmOlJERj48L21ldGFkYXRhPjxnIGlkPSJsYXllcjEi' +
-          'IHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsLTQpIj48cGF0aCBkPSJtIDM5Ljg5MTcyMSw4LjYyMjA0' +
-          'NzEgYyAyLjc3MDI1NSwyLjYxNzIxMTkgMi4zNTY3NzMsMTUuMDg1NjMwOSAyLjQ2NDk5MSwxOC44' +
-          'OTUxNDQ5IDAuMTA4MjE3LDMuODA5NTEzIDEuMjI4ODQ2LDE2LjIzNDM1MiAtMS4zODgzNjYsMTku' +
-          'MDA0NjA3IC0yLjYxNzIxMiwyLjc3MDI1NCAtMTUuMDg1NjMxLDIuMzU2NzczIC0xOC44OTUxNDQs' +
-          'Mi40NjQ5OSBDIDE4LjI2MzY4OCw0OS4wOTUwMDYgNS44Mzg4NDg2LDUwLjIxNTYzNSAzLjA2ODU5' +
-          'NDIsNDcuNTk4NDIzIDAuMjk4MzM5ODcsNDQuOTgxMjEyIDAuNzExODIxNTUsMzIuNTEyNzkzIDAu' +
-          'NjAzNjA0MDcsMjguNzAzMjc5IDAuNDk1Mzg2NTgsMjQuODkzNzY1IC0wLjYyNTI0MTk3LDEyLjQ2' +
-          'ODkyNiAxLjk5MTk2OTgsOS42OTg2NzE2IDQuNjA5MTgxNSw2LjkyODQxNzIgMTcuMDc3Niw3LjM0' +
-          'MTg5ODkgMjAuODg3MTE0LDcuMjMzNjgxNCAyNC42OTY2MjgsNy4xMjU0NjM5IDM3LjEyMTQ2Nyw2' +
-          'LjAwNDgzNTQgMzkuODkxNzIxLDguNjIyMDQ3MSB6IiBpZD0iZm9ucyIgc3R5bGU9Im9wYWNpdHk6' +
-          'MC44O2ZpbGw6I2U3ZDNkMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6I2QzMmIzZDtzdHJva2Utb3Bh' +
-          'Y2l0eToxIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjk2MTc0NDM5LDAuMDI4NjQ1MDksLTAuMDI4Mzk1' +
-          'MjIsMC45NjAyNTMyOSwxLjE2NTM4NzQsNi4wNDc0NDMyKSI+PC9wYXRoPjxwYXRoIGQ9Ik0gMjAu' +
-          'Njg1OTQsNi4xMTg4MjY0IDIwLjk3NjUyNiwzNS43NjA2NDggLTQuODM5MzM4LDIxLjE5MTM5MyB6' +
-          'IiBpZD0iZmxldHhhIiBvbm1vdXNlb3V0PSJldnQudGFyZ2V0LnNldEF0dHJpYnV0ZSgnc3R5bGUn' +
-          'LCBldnQudGFyZ2V0LmdldEF0dHJpYnV0ZSgnc3R5bGUnKS5yZXBsYWNlKC9vcGFjaXR5OlxkKyhc' +
-          'LlxkKykvZywgJ29wYWNpdHk6MC41JykpOyIgb25tb3VzZW92ZXI9ImV2dC50YXJnZXQuc2V0QXR0' +
-          'cmlidXRlKCdzdHlsZScsIGV2dC50YXJnZXQuZ2V0QXR0cmlidXRlKCdzdHlsZScpLnJlcGxhY2Uo' +
-          'L29wYWNpdHk6XGQrKFwuXGQrKS9nLCAnb3BhY2l0eToxLjAnKSk7IiBzdHlsZT0ib3BhY2l0eTow' +
-          'LjU7ZmlsbDojMDEzMzk3O2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lIiB0cmFuc2Zvcm09Im1h' +
-          'dHJpeCgwLjQ0NTg4NzUxLDAuODk1MDg5MDEsLTAuODk1MDg5MDEsMC40NDU4ODc1MSwzMi40NjEw' +
-          'NjQsMTIuNzA3NDUxKSI+PC9wYXRoPjwvZz48L3N2Zz4K'
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGhlaWdodD0iNDgiIGlk' +
+          'PSJzdmcyIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiB4bWxu' +
+          'cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVj' +
+          'b21tb25zLm9yZy9ucyMiIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4x' +
+          'LyIgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMj' +
+          'IiB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48bWV0YWRhdGEgaWQ9Im1l' +
+          'dGFkYXRhMTIiPjxyZGY6UkRGPjxjYzpXb3JrIHJkZjphYm91dD0iIj48ZGM6Zm9ybWF0PmltYWdl' +
+          'L3N2Zyt4bWw8L2RjOmZvcm1hdD48ZGM6dHlwZSByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9y' +
+          'Zy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIj48L2RjOnR5cGU+PGRjOnRpdGxlPjwvZGM6dGl0bGU+' +
+          'PC9jYzpXb3JrPjwvcmRmOlJERj48L21ldGFkYXRhPjxkZWZzIGlkPSJkZWZzMTAiPjwvZGVmcz48' +
+          'cGF0aCBkPSJNIDAsMCBIIDQ4IFYgNDggSCAwIHoiIGlkPSJwYXRoNCIgc3R5bGU9ImZpbGw6bm9u' +
+          'ZSI+PC9wYXRoPjxwYXRoIGQ9Ik0gMjQsNCBDIDEyLjk1LDQgNCwxMi45NSA0LDI0IDQsMzUuMDUg' +
+          'MTIuOTUsNDQgMjQsNDQgMzUuMDUsNDQgNDQsMzUuMDUgNDQsMjQgNDQsMTIuOTUgMzUuMDUsNCAy' +
+          'NCw0IHogTSAyMCwzMyBWIDE1IGwgMTIsOSAtMTIsOSB6IiBpZD0icGF0aDYiIHN0eWxlPSJmaWxs' +
+          'OiNmZmZmZmYiPjwvcGF0aD48L3N2Zz4K',
+      nextBtnSize: {w: 48, h: 48}
     }
   };
 

@@ -4242,7 +4242,7 @@
        <text>The valley of Núria is on the southern side of the Eastern Pyrenees </text>
       </target>
       <text>, </text>
-      <cell width="20" height="20" border="false" image="minialt.gif">
+      <cell width="20" height="20" border="false">
        <style>
         <color foreground="0x000080" background="0xFFFFFF" inactive="0x000000" alternative="0x000000" />
        </style>
