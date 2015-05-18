@@ -28,8 +28,8 @@ define([
 // pointing to a [BoxBase](BoxBase.html) object.
   var ActiveBoxContent = function (id) {
     this.id = id;
-    this.imgAlign = ['middle', 'middle'];
-    this.txtAlign = ['middle', 'middle'];
+    this.imgAlign = {h: 'middle', v: 'middle'};
+    this.txtAlign = {h: 'middle', v: 'middle'};
   };
 
   ActiveBoxContent.prototype = {
@@ -80,8 +80,9 @@ define([
     // ActiveMediaPlayer
     amp: null,
     // Loads the object settings from a specific JQuery XML element 
-    // $xml: The XML element to parse
-    setProperties: function ($xml) {
+    // $xml (JQuery XML element) - The XML element to parse
+    // mediaBag ([MediaBag](MediaBag.html)) - The media bag used to retrieve images and other media
+    setProperties: function ($xml, mediaBag) {
       var content = this;
       //
       // Read attributes
@@ -105,7 +106,13 @@ define([
           case 'imgAlign':
             content[name] = content.readAlign(val);
             break;
-
+            
+          case 'hAlign':
+            // Old style
+            content['txtAlign'] = content.readAlign(val+',center');
+            content['imgAlign'] = content.readAlign(val+',center');
+            break;
+            
           case 'border':
           case 'avoidOverlapping':
             content [name] = Utils.getBoolean(val);
@@ -138,6 +145,9 @@ define([
             break;
         }
       });
+      
+      if(mediaBag)
+        this.realizeContent(mediaBag);
 
       return this;
     },
@@ -146,7 +156,7 @@ define([
     // in the form: "(left|middle|right),(top|middle|bottom)"
     readAlign: function (str) {
       var align = {h: 'center', v: 'center'};
-      if (!Utils.isNullOrUndef(str)) {
+      if (str) {
         var v = str.split(',');
         align.h = v[0].replace('middle', 'center');
         align.v = v[1].replace('middle', 'center');
@@ -213,14 +223,33 @@ define([
     },
     //
     // Prepares media content
-    prepareMedia: function(playStation){
+    prepareMedia: function (playStation) {
       // TODO: Implement ActiveBoxContent.prepareMedia()
     },
-    //
+    // 
+    // Reads and initializes the image
+    // mediaBag ([MediaBag](MediaBag.html)) - The MediaBag of the current project
+    realizeContent: function (mediaBag) {
+      var thisContent = this;
+      if (this.imgName !== null) {
+        var mbe = mediaBag.elements[this.imgName];
+        if (mbe !== null) {
+          mbe.build(function() {
+            thisContent.img = mbe.data;
+          });
+        }
+      }
+      if (this.mediaContent !== null) {
+        if (this.imgName === null && (this.text === null || this.text.length === 0)) {
+          this.img = this.mediaContent.getIcon();
+        }
+      }
+      this.checkHtmlText(mediaBag);
+    },
     // Gets an empty ActiveBoxContent
     EMPTY_CONTENT: null
   };
-  
+
   ActiveBoxContent.prototype.EMPTY_CONTENT = new ActiveBoxContent();
 
   return ActiveBoxContent;

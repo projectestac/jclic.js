@@ -197,7 +197,7 @@ define([
       if (abc !== null) {
         if (abc.bb !== this.boxBase)
           this.setBoxBase(abc.bb);
-        if (abc.hasOwnProperty('border') && this.hasBorder() !== abc.border.booleanValue())
+        if (abc.hasOwnProperty('border') && this.hasBorder() !== abc.border)
           this.setBorder(abc.border);
         this.setInactive(false);
         this.checkHostedComponent();
@@ -283,7 +283,7 @@ define([
               : this.isAlternative() ? bb.alternativeColor : bb.textColor;
           css['color'] = foreColor;
 
-          css['text-align'] = abc.txtAlign[0].replace('middle', 'center');
+          css['text-align'] = abc.txtAlign.h.replace('middle', 'center');
 
           var divHtml = '<div xmlns="http://www.w3.org/1999/xhtml" style="' +
               Utils.cssToString(css) + '">' +
@@ -311,6 +311,24 @@ define([
       }
     },
     //
+    // Creates a new cell inside a JQuery DOM element.  
+    // Should be invoked throught `ActiveBox.prototype`
+    // $dom (JQuery DOM element) - The element that will act as a container
+    // abc ([ActiveBoxContent](ActiveBoxContent.html)) - The cell's content. Must not be null and
+    // have the `dimension` member initialized.  
+    // returns: The newly created ActiveBox
+    _createCell: function($dom, abc){
+      if(abc && abc.dimension){
+        var box = new ActiveBox();
+        box.setContent(abc);
+        var $canvas = $('<canvas width="'+ abc.dimension.width +'" height="'+ abc.dimension.height + '"/>');
+        box.setBounds(new AWT.Rectangle(0, 0, abc.dimension.width, abc.dimension.height));
+        $dom.append($canvas);
+        box.ctx = $canvas.get(0).getContext('2d');
+        box.repaint();
+        return box;
+      }            
+    },
     // Draws the content of this Activebox to the specified canvas context
     updateContent: function (ctx, dirtyRegion) {
 
@@ -350,11 +368,11 @@ define([
             imgh *= scale;
             compress = true;
           }
-          var xs = (abc.imgAlign[0] === 'left' ? 0
-              : abc.imgAlign[0] === 'right' ? this.dim.width - imgw
+          var xs = (abc.imgAlign.h === 'left' ? 0
+              : abc.imgAlign.h === 'right' ? this.dim.width - imgw
               : (this.dim.width - imgw) / 2);
-          var ys = (abc.imgAlign[1] === 'top' ? 0
-              : abc.imgAlign[1] === 'bottom' ? this.dim.height - imgh
+          var ys = (abc.imgAlign.v === 'top' ? 0
+              : abc.imgAlign.v === 'bottom' ? this.dim.height - imgh
               : (this.dim.height - imgh) / 2);
           if (compress) {
             ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys, imgw, imgh);
@@ -402,13 +420,13 @@ define([
                 var b = false;
                 switch (i) {
                   case 1:
-                    b = (abc.txtAlign[1] === 'bottom');
+                    b = (abc.txtAlign.v === 'bottom');
                     break;
                   case 2:
-                    b = (abc.txtAlign[0] === 'left');
+                    b = (abc.txtAlign.h === 'left');
                     break;
                   case 3:
-                    b = (abc.txtAlign[0] === 'right');
+                    b = (abc.txtAlign.h === 'right');
                     break;
                 }
                 if (!b)
@@ -433,21 +451,22 @@ define([
         var lines = bb.prepareText(ctx, abc.text, availWidth, availHeight);
 
         ctx.font = bb.font.cssFont();
+        ctx.textBaseline = 'hanging';
         var lineHeight = bb.font.getHeight();
         var totalHeight = lineHeight * lines.length;
 
         // Calc the vertical co-ordinate of the first line
         // Default is 'middle'
 
-        var y = py + bb.textMargin + (abc.txtAlign[1] === 'top' ? 0
-            : abc.txtAlign[1] === 'bottom' ?
+        var y = py + bb.textMargin + (abc.txtAlign.v === 'top' ? 0
+            : abc.txtAlign.v === 'bottom' ?
             availHeight - totalHeight : (availHeight - totalHeight) / 2);
 
         for (var l = 0; l < lines.length; l++, y += lineHeight) {
           // Calc the horizontal position of each line
           // Default is 'middle'
-          var x = px + bb.textMargin + (abc.txtAlign[0] === 'left' ? 0
-              : abc.txtAlign[0] === 'right' ?
+          var x = px + bb.textMargin + (abc.txtAlign.h === 'left' ? 0
+              : abc.txtAlign.h === 'right' ?
               availWidth - lines[l].size.width
               : (availWidth - lines[l].size.width) / 2);
 
@@ -460,7 +479,6 @@ define([
           // Render text
           ctx.fillStyle = this.isInverted() ? bb.backColor
               : this.isAlternative() ? bb.alternativeColor : bb.textColor;
-          ctx.textBaseline = 'hanging';
           ctx.fillText(lines[l].text, x, y);
         }
       }

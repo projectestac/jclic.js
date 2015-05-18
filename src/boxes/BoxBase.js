@@ -193,7 +193,7 @@ define([
           }
           else {
             // No solution found. Try resizing down the font.
-            if (this.font.size > Utils.BoxBase.MIN_FONT_SIZE) {
+            if (this.font.size > defaultValues.MIN_FONT_SIZE) {
               this.font.setSize(this.font.size - 1);
               this.flagFontReduced = true;
               return this.prepareText(ctx, text, maxWidth, maxHeight);
@@ -209,7 +209,7 @@ define([
 
         totalHeight += height;
 
-        if (totalHeight > maxHeight && this.font.size > Utils.BoxBase.MIN_FONT_SIZE) {
+        if (totalHeight > maxHeight && this.font.size > defaultValues.MIN_FONT_SIZE) {
           // Max height exceeded. Try resizing down the font
           this.font.setSize(this.font.size - 1);
           this.flagFontReduced = true;

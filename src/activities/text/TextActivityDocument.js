@@ -39,7 +39,7 @@ define([
     p: null,
     //
     // Loads the object settings from a specific JQuery XML element 
-    setProperties: function ($xml) {
+    setProperties: function ($xml, mediaBag) {
 
       var doc = this;
 
@@ -76,7 +76,7 @@ define([
           switch (this.nodeName) {
 
             case 'cell':
-              obj = new ActiveBoxContent().setProperties($child);
+              obj = new ActiveBoxContent().setProperties($child, mediaBag);
               break;
 
             case 'text':
@@ -125,10 +125,10 @@ define([
                     $child.children('cell:first').each(function () {
                       switch (this.nodeName) {
                         case 'cell':
-                          obj.info.cell = new ActiveBoxContent().setProperties($(this));
+                          obj.info.cell = new ActiveBoxContent().setProperties($(this), mediaBag);
                           break;
                         case 'media':
-                          obj.info.media = new MediaContent.setProperties($(this));
+                          obj.info.media = new MediaContent.setProperties($(this), mediaBag);
                           break;
                       }
                     });

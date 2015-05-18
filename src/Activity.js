@@ -414,7 +414,7 @@ define([
             // Settings specific to panel-type activities (puzzles, associations...)           
           case 'cells':
             // Read the [ActiveBagContent](ActiveBagContent.html) objects
-            var cellSet = new ActiveBagContent().setProperties($node);
+            var cellSet = new ActiveBagContent().setProperties($node, act.project.mediaBag);
             // Valid ids:
             // - Panel activities: 'primary', 'secondary', solvedPrimary'
             // - Textpanel activities: 'acrossClues', 'downClues', 'answers'
@@ -488,7 +488,7 @@ define([
 
           case 'document':
             // Read main document of text activities
-            act.document = new TextActivityDocument().setProperties($node);
+            act.document = new TextActivityDocument().setProperties($node, act.project.mediaBag);
             break;
         }
       });
@@ -499,7 +499,7 @@ define([
     // 
     // Read an activity message from an XML element
     readMessage: function ($xml) {
-      var msg = new ActiveBoxContent().setProperties($xml);
+      var msg = new ActiveBoxContent().setProperties($xml, this.project.mediaBag);
       // 
       // Allowed types are: `initial`, `final`, `previous`, `finalError`
       msg.type = $xml.attr('type');
@@ -695,6 +695,7 @@ define([
 
       var cssAct = {
         display: 'block',
+        overflow: 'auto',
         'background-color': this.backgroundTransparent ? 'transparent' : this.backgroundColor,
         // TODO: bevel border?
         border: this.border ? 'solid' : 'none'
@@ -743,8 +744,8 @@ define([
     // Returns AWT.Dimension
     setDimension: function (maxSize) {
       return new AWT.Dimension(
-          Math.min(maxSize.width, this.preferredSize.width),
-          Math.min(maxSize.height, this.preferredSize.height));
+          Math.min(maxSize.width, this.act.windowSize.width),
+          Math.min(maxSize.height, this.act.windowSize.height));
     },
     //
     // Generic handlers to process mouse and key events

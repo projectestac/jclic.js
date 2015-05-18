@@ -69,7 +69,7 @@ define([
     defaultIdValue: -1,
     //
     // Loads the object settings from a specific JQuery XML element 
-    setProperties: function ($xml) {
+    setProperties: function ($xml, mediaBag) {
 
       var cellSet = this;
 
@@ -118,7 +118,7 @@ define([
               cellSet.activeBoxContentArray[i] = new ActiveBoxContent(ids[i]);
             break;
           case 'cell':
-            var abc = new ActiveBoxContent().setProperties($node);
+            var abc = new ActiveBoxContent().setProperties($node, mediaBag);
             cellSet.activeBoxContentArray.push(abc);
             break;
         }

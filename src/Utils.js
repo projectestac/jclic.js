@@ -121,7 +121,8 @@ define([
       DEFAULT_SHUFFLES: 31,
       DEFAULT_GRID_ELEMENT_SIZE: 20,
       MIN_CELL_SIZE: 10,
-      DEFAULT_BG_COLOR: '#D3D3D3', // LightGray
+      //DEFAULT_BG_COLOR: '#D3D3D3', // LightGray
+      DEFAULT_BG_COLOR: '#C0C0C0', // LightGray
       ACTIONS: {ACTION_MATCH: 'MATCH', ACTION_PLACE: 'PLACE',
         ACTION_WRITE: 'WRITE', ACTION_SELECT: 'SELECT', ACTION_HELP: 'HELP'},
       PREVIOUS: 0, MAIN: 1, END: 2, END_ERROR: 3, NUM_MSG: 4,
@@ -135,7 +136,8 @@ define([
         MIN_FONT_SIZE: 8,
         STROKE: 1,
         AC_MARGIN: 6,
-        BACK_COLOR: 'lightgray',
+        //BACK_COLOR: 'lightgray',
+        BACK_COLOR: '#C0C0C0',
         TEXT_COLOR: 'black',
         SHADOW_COLOR: 'gray',
         INACTIVE_COLOR: 'gray',

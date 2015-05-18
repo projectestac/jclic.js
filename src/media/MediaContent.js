@@ -139,6 +139,12 @@ define([
           this.from === mc.from &&
           this.to === mc.to &&
           this.recBuffer === mc.recBuffer;
+    },
+    //
+    // Returns an image to be used as icon for representing this media content
+    getIcon: function(){
+      // TODO: implement the creation of SVG icons for each media type
+      return null;
     }
   };
 

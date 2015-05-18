@@ -33,6 +33,7 @@ define([
       this.ext = this.fileName.toLowerCase().split('.').pop();
       this.type = this.getFileType(this.ext);
     }
+    this._whenReady = [];
   };
 
   MediaBagElement.prototype = {
@@ -49,6 +50,9 @@ define([
     //
     // Flag to indicate that `data` is ready to be used
     ready: false,
+    //
+    // Array of callback methods to be called when the resource becomes ready
+    _whenReady: null,
     //
     // Normalized extension of `fileName`, useful to determine the kind of media
     ext: '',
@@ -90,78 +94,88 @@ define([
     // The optional `callback` method is called when the referred resource is ready
     build: function (callback) {
       var media = this;
-      switch (this.type) {
-        case 'font':
-          var format = this.ext === 'ttf' ? 'truetype'
-              : this.ext === 'otf' ? 'embedded-opentype'
-              : this.ext;
-          $('head').prepend(
-              '<style type="text/css">' +
-              '@font-face{font-family:"' + this.name + '";' +
-              'src:url(' + this.fileName + ') format("' + format + '");}' +
-              '</style>');
-          this.data = new AWT.Font(this.name);
-          this.ready = true;
-          break;
-
-        case 'image':
-          this.data = new Image();
-          $(this.data).attr('src', this.fileName);
-          if (this.data.complete || this.data.readyState === 4 || this.data.readyState === 'complete')
-            // Image was in cache
+      
+      if(callback)
+        this._whenReady.push(callback);
+      
+      if (!this.data) {
+        switch (this.type) {
+          case 'font':
+            var format = this.ext === 'ttf' ? 'truetype'
+                : this.ext === 'otf' ? 'embedded-opentype'
+                : this.ext;
+            $('head').prepend(
+                '<style type="text/css">' +
+                '@font-face{font-family:"' + this.name + '";' +
+                'src:url(' + this.fileName + ') format("' + format + '");}' +
+                '</style>');
+            this.data = new AWT.Font(this.name);
             this.ready = true;
-          else
-            $(this.data).load(function (response, status, xhr) {
-              if (status !== 'error') {
-                this.ready = true;
-                if (callback)
-                  callback.apply(media);
-              }
-            });
-          break;
+            break;
 
-        case 'audio':
-          this.data = new Audio(this.fileName);
-          if (this.data.complete || this.data.readyState === 4 || this.data.readyState === 'complete')
-            // Audio was in cache
-            this.ready = true;
-          else
-            $(this.data).load(function (response, status, xhr) {
-              if (status !== 'error') {
-                this.ready = true;
-                if (callback)
-                  callback.apply(media);
-              }
-            });
-          break;
-
-        case 'xml':
-          this.data = '';
-          $.get(this.fileName, function (response, status, xhr) {
-            if (status !== 'error') {
-              this.data = response;
+          case 'image':
+            this.data = new Image();
+            $(this.data).attr('src', this.fileName);
+            if (this.data.complete || this.data.readyState === 4 || this.data.readyState === 'complete')
+              // Image was in cache
               this.ready = true;
-              if (callback)
-                callback.apply(media);
-            }
-          }, 'xml');
-          break;
+            else
+              $(this.data).load(function (response, status, xhr) {
+                if (status !== 'error') {
+                  media._onReady();
+                }
+              });
+            break;
 
-        default:
-          // Always simulate resource ready
-          // TODO: Load the real resource
-          this.ready = true;
-          return;
+          case 'audio':
+            this.data = new Audio(this.fileName);
+            if (this.data.complete || this.data.readyState === 4 || this.data.readyState === 'complete')
+              // Audio was in cache
+              this.ready = true;
+            else
+              $(this.data).load(function (response, status, xhr) {
+                if (status !== 'error') {
+                  media._onReady();
+                }
+              });
+            break;
 
+          case 'xml':
+            this.data = '';
+            $.get(this.fileName, function (response, status, xhr) {
+              if (status !== 'error') {
+                media.data = response;
+                media._onReady();
+              }
+            }, 'xml');
+            break;
+
+          default:
+            // Always simulate resource ready
+            // TODO: Load the real resource
+            this.ready = true;
+            return;
+
+        }        
       }
 
-      console.log('loading ' + this.name);
-
-      if (this.ready && callback)
-        callback.apply(media);
+      if (this.ready)
+        this._onReady();
 
       return this;
+    },
+    //
+    // Notify listeners that the resource is ready
+    _onReady: function(){
+      this.ready = true;
+      for(var i=0; i<this._whenReady.length; i++){
+        var callback = this._whenReady[i];
+        callback.apply(this);        
+      }
+      this._whenReady.length=0;
     }
+    
+    
   };
 
   return MediaBagElement;
