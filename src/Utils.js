@@ -106,6 +106,10 @@ define([
     isSeparator: function (ch) {
       return ' .,;-|'.indexOf(ch) >= 0;
     },
+    // Rounds `v` to the nearest multiple of `n`
+    roundTo: function(v, n){
+        return (Math.round(v/n))*n;
+    },
     // 
     // Global constants
     settings: {
