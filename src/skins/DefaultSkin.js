@@ -195,7 +195,8 @@ define([
   DefaultSkin.prototype = $.extend(Object.create(Skin.prototype), DefaultSkin.prototype);
 
   // Register this class in the list of available skins
-  Skin.prototype.availableSkins.DefaultSkin = DefaultSkin;
+  // Register class in Activity.prototype
+  Skin.prototype._CLASSES['DefaultSkin'] = DefaultSkin;
 
   return DefaultSkin;
 });

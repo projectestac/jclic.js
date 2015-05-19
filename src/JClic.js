@@ -24,11 +24,9 @@
 //
 define([
   "jquery",
-  "./project/JClicProject",
   "./JClicPlayer",
-  "./skins/DefaultSkin",
-  "./activities/text/TextActivityBase"
-], function ($, JClicProject, JClicPlayer, ds, tab) {
+  "./Deps"
+], function ($, JClicPlayer, deps) {
 
   // Execute on document ready
   $(function () {
@@ -47,7 +45,7 @@ define([
     }
   });
 
-  return JClicProject;
+  return 'JClic armed';
 });
 
 /* global exports */

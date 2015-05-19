@@ -56,7 +56,6 @@ define([
     _CLASSES: {
       '@panels.Explore': Activity,
       '@panels.Identify': Activity,
-      '@panels.InformationScreen': Activity,
       '@panels.Menu': Activity,
       '@puzzles.ExchangePuzzle': Activity,
       '@puzzles.DoublePuzzle': Activity,
@@ -201,7 +200,7 @@ define([
     // Flags used to display or not the 'time', 'score' and 'actions' counters
     bTimeCounter: true, bScoreCounter: true, bActionsCounter: true,
     // 
-    // Number of times to shuffle the cells at the beggining of the activity
+    // Number of times to shuffle the cells at the beginning of the activity
     shuffles: K.DEFAULT_SHUFFLES,
     // 
     // Object of class [AutoContentProvider](AutoContentProvider.html) used
@@ -249,7 +248,7 @@ define([
     ev: null,
     // Text activities can have a 'check' button, with a specific label
     checkButtonText: null,
-    // Optional text to be shown before the beggining of the activity
+    // Optional text to be shown before the beginning of the activity
     // The field `prevScreenStyle` is of type [BoxBase](BoxBase.html)
     prevScreenText: null, prevScreenStyle: null, prevScreenMaxTime: -1,
     // Jump to the next target when solved the current one

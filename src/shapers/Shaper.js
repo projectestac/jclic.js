@@ -15,23 +15,24 @@
 
 define([
   "jquery",
-  "../Utils"
-], function ($, Utils) {
+  "../Utils",
+  "../AWT"
+], function ($, Utils, AWT) {
 
 //
 // This class (and its derivatives) draws a set of "shapes" used to place the
 // [ActiveBox](ActiveBox.html) objects in a specific position, and to determine
 // its dimension and appareance.
-  var Shaper = function (className) {
-    this.className = className;
-    this.shapeData = [];
+  var Shaper = function (nx, ny) {
+    this.reset(nx, ny);
   };
 
   Shaper.prototype = {
     constructor: Shaper,
-    //
-    // Shaper class name
-    className: null,
+    // 
+    // `Shaper.prototype._CLASSES` contains the list of classes derived from Shaper. It
+    // should be read-only and updated by real shaper classes.
+    _CLASSES: {},
     // 
     // Number of columns (nCols) and rows (nRows)
     nCols: 0, nRows: 0, nCells: 0,
@@ -51,6 +52,17 @@ define([
     scaleX: 1.0, scaleY: 1.0,
     enclosing: null,
     showEnclosure: false,
+    // 
+    // Initialises this Shaper to default values
+    reset: function(nCols, nRows){        
+        this.nCols=nCols;
+        this.nRows=nRows;
+        this.nCells=nRows * nCols;
+        this.initiated=false;
+        this.shapeData=[this.nCells];
+        for(var i=0; i<this.nCells; i++)
+            this.shapeData[i]=new AWT.Shape();
+    },
     // 
     // Loads the object settings from a specific JQuery XML element 
     setProperties: function ($xml) {
@@ -105,34 +117,36 @@ define([
     readShapeData: function ($xml) {
       var shd = [];
       $.each($xml.textContent.split('|'), function () {
-        var stroke = {};
         var sd = this.split(':');
         // Possible strokes are: `rectangle`, `ellipse`, `M`, `L`, `Q`, `B`, `X`
         // Also possible, but not currently used in JClic: `roundRectangle` and `pie`
-        stroke.action = sd[0];
-        if (sd.length > 1) {
-          stroke.data = sd[1].split(',');
-        }
-        shd.push(stroke);
+        var data = sd.length > 1 ? sd[1].split(',') : null;
+        switch(sd[0]){
+          case 'rectangle':
+            return new AWT.Rectangle(data);
+            break;
+          case 'ellipse':
+            return new AWT.Ellipse(data);
+            break;          
+          default:
+            // It's an `AWT.PathStroke`
+            shd.push(new AWT.PathStroke(sd[0], data));
+            break;          
+        }        
       });
-      return shd;
+      return new AWT.Path(shd);
     },
     //
     // Returns a Shaper of the requested class
-    getShaper: function (className) {
-      var shaper = null;
-      // TODO: Create classes for each shaper type    
-      switch (className) {
-        case '@Holes':
-        case '@ClassicJigSaw':
-        case '@JigSaw':
-        case '@TriangularJigSaw':
-        case '@Rectangular':
-          shaper = new Shaper(className);
-          break;
-        default:
-          console.log('unknown shaper: ' + className);
+    // Should be called by `Shaper.prototype._getShaper`
+    _getShaper: function (className, nx, ny) {
+      var shaper = null;      
+      var cl = Shaper.prototype._CLASSES[className];
+      if(cl){
+        shaper = new cl(nx, ny);
       }
+      else
+        console.log('Unknown shaper: ' + className);
 
       return shaper;
     },
@@ -140,7 +154,11 @@ define([
     // Function to be implemented in derivatives:
     buildShapes: function () {
     }
+  };
 
+  // TODO: Remove this statement when all Shaper classes are created
+  Shaper.prototype._CLASSES = {
+    '@Holes': Shaper
   };
 
   return Shaper;

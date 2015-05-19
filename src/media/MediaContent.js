@@ -49,7 +49,7 @@ define([
     externalParam: null,
     //
     // Special settings used to play only a fragment of media. `-1` means
-    // not used (plays full length, from the beggining)
+    // not used (plays full length, from the beginning)
     from: -1,
     to: -1,
     //

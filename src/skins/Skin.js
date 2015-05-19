@@ -37,14 +37,22 @@ define([
       this.ps = ps;
     if (name)
       this.name = name;
-    Skin.prototype.skinStack.push(this);
+
+    // Registers this Skin in the list of realized Skin objects
+    Skin.prototype._skinStack.push(this);
+
   };
 
   Skin.prototype = {
     constructor: Skin,
+    // 
+    // `Skin.prototype._CLASSES` contains the list of classes derived from Skin. It
+    // should be read-only and updated by real skin classes at creation time.
+    _CLASSES: {},
     //
-    // Object containing all registered skin classes
-    availableSkins: {},
+    // The prototype stores a collection of realized __Skin__ objects:
+    // Is important to access always this member as a `Skin.prototype.skinStack`
+    _skinStack: [],
     //
     // The HTML div object used by this Skin
     $div: null,
@@ -96,15 +104,6 @@ define([
     progressActive: false,
     progressStartTime: 0,
     //
-    // The prototype stores a collection of realized __Skin__ objects:
-    // Is important to access always this member as a `Skin.prototype.skinStack`
-    skinStack: [],
-    //
-    // Clears the skin stack
-    emptySkinStack: function () {
-      this.prototype.skinStack.length = 0;
-    },
-    //
     // Attaches a [JClicPlayer](JClicPlayer.html) object to this Skin    
     attach: function (player) {
       if (this.player !== null)
@@ -139,28 +138,24 @@ define([
       var sk = null;
       // look for the skin in the stack of realized skins
       if (skinName && ps) {
-        for (var i = 0; i < Skin.prototype.skinStack; i++) {
-          sk = Skin.prototype.skinStack[i];
+        for (var i = 0; i < Skin.prototype._skinStack; i++) {
+          sk = Skin.prototype._skinStack[i];
           if (sk.name === skinName && sk.ps === ps)
             return sk;
         }
       }
 
-      // TODO: Read the class of the requested skin in $xml, and
-      // build the appropiate object
-      //sk = new DefaultSkin(ps, skinName, $div);
-      if (!skinName)
-        skinName = 'DefaultSkin';
-      var skinClass = Skin.prototype.availableSkins[skinName];
-      if (skinClass) {
-        sk = Object.create(skinClass.prototype);
-        //skinClass.prototype.constructor.call(sk, ps, skinName, $div);        
-        skinClass.call(sk, ps, skinName, $div);
+      // Locates the class of the requested Skin (or [DefaultSkin](DefaultSkin.html)
+      // if not specified), creates and registers it on `skinStack`
+      var cl = Skin.prototype._CLASSES[skinName ? skinName : 'DefaultSkin'];
+      if (cl) {
+        sk = new cl(ps, skinName, $div);
         if ($xml)
-          sk.setproperties($xml);
-
-        Skin.prototype.skinStack.push(sk);
+          sk.setProperties($xml);
       }
+      else
+        console.log('Unknown skin class: ' + skinName);
+
       return sk;
     },
     //

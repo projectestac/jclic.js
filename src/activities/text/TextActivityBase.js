@@ -27,6 +27,8 @@ define([
 
   TextActivityBase.prototype = {
     constructor: TextActivityBase,
+    //
+    // Constructor of this Activity.Panel object
     Panel: function (act, ps, $div) {
       Activity.prototype.Panel.call(this, act, ps, $div);
       this.boxes = [];
@@ -41,7 +43,7 @@ define([
   TextActivityBase.prototype = $.extend(Object.create(Activity.prototype), TextActivityBase.prototype);
 
   // 
-  // Properties and methods specific to textAvtivityBase.Panel
+  // Properties and methods specific to TextAvtivityBase.Panel
   var ActPanelAncestor = Activity.prototype.Panel.prototype;
   TextActivityBase.prototype.Panel.prototype = {
     constructor: TextActivityBase.prototype.Panel,

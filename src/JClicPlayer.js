@@ -75,7 +75,7 @@ define([
       INFO_URL_FRAME: '_blank',
       // URL where to navigate to on exit
       EXIT_URL: null,
-      // At the beggining, audio should be enabled or disabled
+      // At the beginning, audio should be enabled or disabled
       AUDIO_ENABLED: true,
       // Navigation buttons are always visible (for debugging purposes)
       NAV_BUTTONS_ALWAYS: true

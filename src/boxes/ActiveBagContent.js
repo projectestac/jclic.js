@@ -109,7 +109,10 @@ define([
             break;
           case 'shaper':
             var shaperClassName = $node.attr('class');
-            cellSet.shaper = Shaper.prototype.getShaper(shaperClassName).setProperties($node);
+            var nCols = Math.max(1, $node.attr('cols'));
+            var nRows = Math.max(1, $node.attr('rows'));
+            cellSet.shaper = Shaper.prototype._getShaper(shaperClassName, nCols, nRows);
+            cellSet.shaper.setProperties($node);
             break;
           case 'ids':
             // Used in special cases where all cells have empty content with only 'ids'
@@ -136,7 +139,7 @@ define([
     },
     //
     // Prepares the media content of all elements
-    prepareMedia: function(playStation){
+    prepareMedia: function (playStation) {
       // TODO: Implement ActiveBagContent.prepareMedia      
     }
   };

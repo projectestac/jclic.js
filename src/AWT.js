@@ -18,14 +18,14 @@ define([
   "./Utils"
 ], function ($, Utils) {
 
-//
-// This object encapsulates utility clases for painting graphics and images,
-// as found in the Java [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html)
-//
+  //
+  // This object encapsulates utility clases for painting graphics and images,
+  // as found in the Java [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html)
+  //
 
-//
-// Font
-// Encapsulates properties and provides methotds to manage fonts
+  //
+  // Font
+  // Encapsulates properties and provides methotds to manage fonts
   var Font = function (family, size, bold, italic, variant) {
     if (family)
       this.family = family;
@@ -170,10 +170,10 @@ define([
     }
   };
 
-//
-// Gradient
-// Encapsulates parametres and methods to draw complex color gradients
-//
+  //
+  // Gradient
+  // Encapsulates parametres and methods to draw complex color gradients
+  //
   var Gradient = function (c1, c2, angle, cycles) {
     if (c1)
       this.c1 = c1;
@@ -235,15 +235,15 @@ define([
     },
     //
     // Checks if the gradient colors have transparency
-    hasTransparency: function(){
+    hasTransparency: function () {
       return Utils.colorHasTransparency(this.c1) || Utils.colorHasTransparency(this.c2);
     }
   };
 
-//
-// Stroke
-// Encapsulates the properties used to draw lines in `canvas` elements
-// See: http://bucephalus.org/text/CanvasHandbook/CanvasHandbook.html#line-caps-and-joins
+  //
+  // Stroke
+  // Encapsulates the properties used to draw lines in `canvas` elements
+  // See: http://bucephalus.org/text/CanvasHandbook/CanvasHandbook.html#line-caps-and-joins
   var Stroke = function (lineWidth, lineCap, lineJoin, miterLimit) {
     if (lineWidth)
       this.lineWidth = lineWidth;
@@ -274,9 +274,9 @@ define([
     }
   };
 
-//
-// Point
-//
+  //
+  // Point
+  //
   var Point = function (x, y) {
     // Special case: constructor passing another point as unique parameter
     if (x instanceof Point) {
@@ -338,9 +338,9 @@ define([
     }
   };
 
-//
-// Dimension
-//
+  //
+  // Dimension
+  //
   var Dimension = function (width, height) {
     this.width = width ? width : 0;
     this.height = height ? height : 0;
@@ -388,9 +388,9 @@ define([
     }
   };
 
-//
-// Shape is a generic class for rectangles, ellipses and stroke-free shapes
-// pos (Point) - Indicates the shape top-left coordinates
+  //
+  // Shape is a generic class for rectangles, ellipses and stroke-free shapes
+  // pos (Point) - Indicates the shape top-left coordinates
   var Shape = function (pos) {
     this.pos = pos ? pos : new Point();
   };
@@ -462,13 +462,13 @@ define([
 
   };
 
-//
-// Rectangle
-//
-// pos: Object of type Position 
-// dim: Object of type Dimension or Point (if it's of type `Point`, the dimension
-// of the rectangle will be calculated substracting co-ordinates)
-// w and h: when defined, `pos` and `dim` will be treated as `x` and `y` co-ordinates
+  //
+  // Rectangle
+  //
+  // pos: Object of type Position 
+  // dim: Object of type Dimension or Point (if it's of type `Point`, the dimension
+  // of the rectangle will be calculated substracting co-ordinates)
+  // w and h: when defined, `pos` and `dim` will be treated as `x` and `y` co-ordinates
   var Rectangle = function (pos, dim, w, h) {
     // Special case: constructor with a Rectangle as a unique parameter
     if (pos instanceof Rectangle) {
@@ -479,6 +479,11 @@ define([
       pos = new Point(pos.x, pos.y);
       if (dim instanceof Dimension)
         dim = new Dimension(dim.width, dim.height);
+    }
+    else if (pos instanceof Array){
+      // Assume `pos` is an array of numbers indicating: x0, y0, x1, y1
+      pos = new Point(pos[0], pos[1]);
+      dim = new Dimension(pos[2]-pos[0], pos[3]-pos[1]);
     }
     else if (typeof w === 'number' && typeof h === 'number') {
       // width and height passed. Treat all parameters as co-ordinates:
@@ -577,11 +582,11 @@ define([
   // Rectangle extends Shape
   Rectangle.prototype = $.extend(Object.create(Shape.prototype), Rectangle.prototype);
 
-//
-// Ellipse
-//
-// pos (Point) - Upper left corner of the enclosing rectangle 
-// dim (Dimension or Point) - Dimension of the enclosing rectangle
+  //
+  // Ellipse
+  //
+  // pos (Point) - Upper left corner of the enclosing rectangle 
+  // dim (Dimension or Point) - Dimension of the enclosing rectangle
   var Ellipse = function (pos, dim) {
     Rectangle.call(this, pos, dim);
   };
@@ -615,9 +620,9 @@ define([
   Ellipse.prototype = $.extend(Object.create(Rectangle.prototype), Ellipse.prototype);
 
 
-//
-// A `Path` is formed by a serie of strokes, represented by `PathStroke`objects
-//
+  //
+  // A `Path` is formed by a serie of strokes, represented by `PathStroke`objects
+  //
   var Path = function (strokes) {
     // Deep copy of the array of strokes
     if (strokes) {
@@ -728,9 +733,9 @@ define([
   Path.prototype = $.extend(Object.create(Shape.prototype), Path.prototype);
 
 
-//
-// PathStrokes are basic elements of Paths
-//
+  //
+  // PathStrokes are basic elements of Paths
+  //
   var PathStroke = function (type, points) {
     this.type = type;
     // Points are deep cloned, to avoid change the original values
