@@ -52,6 +52,9 @@ define([
     scaleX: 1.0, scaleY: 1.0,
     enclosing: null,
     showEnclosure: false,
+    //
+    // Flag indicating if this shaper organizes its cells in rows and columns
+    rectangularShapes: false,
     // 
     // Initialises this Shaper to default values
     reset: function(nCols, nRows){        
@@ -96,6 +99,8 @@ define([
       $xml.children('enclosing:first').each(function () {
         $(this).children('shape:first').each(function (data) {
           shaper.enclosing = shaper.readShapeData(this)[0];
+          shaper.showEnclosure = true;
+          shaper.hasRemainder = true;
         });
       });
       // Read the shape elements
@@ -121,6 +126,13 @@ define([
         // Possible strokes are: `rectangle`, `ellipse`, `M`, `L`, `Q`, `B`, `X`
         // Also possible, but not currently used in JClic: `roundRectangle` and `pie`
         var data = sd.length > 1 ? sd[1].split(',') : null;
+        //
+        // Data should be always divided by the scale (X or Y)
+        if(data){
+          for(var i=0; i<data.length; i++){
+            data[i] /= (i % 2 ? this.scaleY : this.scaleX);
+          }
+        }
         switch(sd[0]){
           case 'rectangle':
             return new AWT.Rectangle(data);
@@ -153,12 +165,50 @@ define([
     //
     // Function to be implemented in derivatives:
     buildShapes: function () {
+    },
+    //
+    // Gets a clone of the nth Shape object, scaled and located into a Rectangle
+    getShape: function(n, rect){
+        if(!this.initiated)
+            this.buildShapes();
+        if(n>=this.nCells || this.shapeData[n]===null)
+            return null;
+        return this.shapeData[n].getShape(rect);
+    },
+    //
+    // Gets the nth Shape object
+    getShapeData: function(n){
+        return (n>=0 && n<this.shapeData.length) ? this.shapeData[n] : null;
+    },
+    //
+    // Gets the AWT.Rectangle that contains all shapes
+    // This method should be overwrited by objects derived from Shape
+    getEnclosingShapeData: function(){
+        return new AWT.Rectangle(0, 0, 1, 1);
+    },
+    //
+    // Flag indicating if this Shaper deploys over a surface biggest than the rectangle enclosing
+    // all its shapes
+    hasRemainder: false,
+    //
+    // When `hasRemainder` is true, this method gets the rectangle containing the full surface on
+    // which the Shaper develops.
+    // rect (AWT.Rectangle) - The frame where to move and scale all the shapes
+    getRemainderShape: function(rect){
+      var r = new AWT.Rectangle;
+      
+        if(!this.hasRemainder)
+            return null;
+        
+        if(!this.initiated)
+            this.buildShapes();
+        
+        for(var i=0; i<this.nCells; i++){
+            if(this.shapeData[i])
+                r.add(shapeData[i].getShape(rect), false);
+        }
+        return r;
     }
-  };
-
-  // TODO: Remove this statement when all Shaper classes are created
-  Shaper.prototype._CLASSES = {
-    '@Holes': Shaper
   };
 
   return Shaper;

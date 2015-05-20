@@ -28,6 +28,9 @@ define([
   Rectangular.prototype = {
     constructor: Rectangular,
     //
+    // Overwrites the `rectangularShapes` flag of [Shaper](Shaper.html)
+    rectangularShapes: true,
+    //
     // Builds the rectangular shapes
     buildShapes: function () {
       var w = 1 / this.nCols;

@@ -258,6 +258,11 @@ define([
       this.invalidate();
     },
     //
+    // Sets the CanvasRenderingContext2D to be used by this box
+    setContext2D: function(ctx){
+      this.ctx = ctx;
+    },
+    //
     // TODO: functions to be implemented by subclasses
     repaint: function () {
       if(this.ctx)

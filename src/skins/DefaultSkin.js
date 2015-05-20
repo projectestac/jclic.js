@@ -137,7 +137,7 @@ define([
       this.$msgBoxDivCanvas = $('<canvas width="' + wMsgBox + '" height="' + h + '"/>');
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
       this.msgBox.setBounds(new AWT.Rectangle(0, 0, wMsgBox, h));
-      this.msgBox.ctx = this.$msgBoxDivCanvas.get(0).getContext('2d');
+      this.msgBox.setContext2D(this.$msgBoxDivCanvas.get(0).getContext('2d'));
       this.msgBox.repaint();
     },
     //

@@ -76,6 +76,7 @@ define([
       this.size = size;
       if (currentSize !== size)
         this._height = -1;
+      return this;
     },
     //
     // Gets the font height
@@ -271,6 +272,7 @@ define([
       ctx.lineCap = this.lineCap;
       ctx.lineJoin = this.lineJoin;
       ctx.miterLimit = this.miterLimit;
+      return this;
     }
   };
 
@@ -380,6 +382,7 @@ define([
       }
       this.width = width;
       this.height = height;
+      return this;
     },
     //
     // Calcs the area of a rectangle with this dimension
@@ -429,9 +432,17 @@ define([
     //
     // Multiplies the dimension of the Shape by the specified `delta` amount
     // (method to be overrided by subclasses)
+    // delta (`AWT.Point` or `AWT.Dimension`) - Object containing the X and Y ratio to be scaled.
     scaleBy: function (delta) {
       // Nothing to scale in abstract shapes
       return this;
+    },
+    //
+    // Gets a clone of this shape moved to the `pos` component of the rectangle, and scaled
+    // by the `dim` values.
+    // rect (`AWT.Rectangle`)
+    getShape: function (rect) {
+      return $.extend(true, {}, this).moveTo(rect.pos).scaleBy(rect.dim);
     },
     //
     // Check if the provided Point `p` is inside this shape
@@ -451,13 +462,15 @@ define([
     fill: function (ctx) {
       // Nothing to do in abstract shapes
       // (to be implemented in subclasses)
+      return this;
     },
     //
     // Draws the Shape with the current style in the provided canvas context
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
     stroke: function (ctx) {
       // Nothing to do in abstract shapes
-      // (to be implemented in subclasses)
+      // (to be implemented in subclasses
+     return this;
     }
 
   };
@@ -480,10 +493,10 @@ define([
       if (dim instanceof Dimension)
         dim = new Dimension(dim.width, dim.height);
     }
-    else if (pos instanceof Array){
+    else if (pos instanceof Array) {
       // Assume `pos` is an array of numbers indicating: x0, y0, x1, y1
       pos = new Point(pos[0], pos[1]);
-      dim = new Dimension(pos[2]-pos[0], pos[3]-pos[1]);
+      dim = new Dimension(pos[2] - pos[0], pos[3] - pos[1]);
     }
     else if (typeof w === 'number' && typeof h === 'number') {
       // width and height passed. Treat all parameters as co-ordinates:
@@ -510,10 +523,13 @@ define([
     //
     // Sets the position and dimension of another Rectangle
     setBounds: function (rect) {
+      if(!rect)
+        rect = new Rectangle();
       this.pos.x = rect.pos.x;
       this.pos.y = rect.pos.y;
       this.dim.width = rect.dim.width;
       this.dim.height = rect.dim.height;
+      return this;
     },
     //
     // Check if two Rectangles are equivalent
@@ -532,16 +548,17 @@ define([
     },
     //
     // Adds another `Rectangle` to the current one
-    add: function (rect) {
+    add: function (shape) {
       var myP2 = this.getOppositeVertex();
-      var rectP2 = rect.getOppositeVertex();
+      var rectP2 = shape.getBounds().getOppositeVertex();
 
       this.pos.moveTo(
-          Math.min(this.pos.x, rect.pos.x),
-          Math.min(this.pos.y, rect.pos.y));
+          Math.min(this.pos.x, shape.getBounds().pos.x),
+          Math.min(this.pos.y, shape.getBounds().pos.y));
       this.dim.setDimension(
           Math.max(myP2.x, rectP2.x) - this.pos.x,
           Math.max(myP2.y, rectP2.y) - this.pos.y);
+      return this;
     },
     //
     // Check if the provided point `p` is inside this Rectangle
@@ -561,12 +578,14 @@ define([
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
     fill: function (ctx) {
       ctx.fillRect(this.pos.x, this.pos.y, this.dim.width, this.dim.height);
+      return this;
     },
     //
     // Draws the Rectangle with the current style in the provided canvas context
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
     stroke: function (ctx) {
       ctx.strokeRect(this.pos.x, this.pos.y, this.dim.width, this.dim.height);
+      return this;
     },
     //
     // Calcs the area of a rectangle with this dimension
@@ -603,14 +622,14 @@ define([
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
     fill: function (ctx) {
       // TODO: Implement filling ellipses
-      Rectangle.prototype.fill.call(this, ctx);
+      return Rectangle.prototype.fill.call(this, ctx);
     },
     //
     // Draws the ellipse with the current style in the provided canvas context
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
     stroke: function (ctx) {
       // TODO: Implement filling ellipses
-      Rectangle.prototype.stroke.call(this, ctx);
+      return Rectangle.prototype.stroke.call(this, ctx);
     }
     //
     // TODO: Implement `contains` and ìntersects` methods for Ellipse
@@ -719,14 +738,14 @@ define([
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
     fill: function (ctx) {
       // TODO: Implement filling paths
-      this.enclosing.fill(ctx);
+      return this.enclosing.fill(ctx);
     },
     //
     // Draws the path with the current style in the provided canvas context
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
     stroke: function (ctx) {
       // TODO: Implement filling paths
-      this.enclosing.stroke(ctx);
+      return this.enclosing.stroke(ctx);
     }
   };
   // Path extends Shape
@@ -801,6 +820,7 @@ define([
     // thisAction - Pointer to this Action object
     // event - The ActionEvent originating this action
     actionPerformed: function (thisAction, event) {
+      return this;
     },
     //
     // This is the method to be passed to event triggers
@@ -811,6 +831,7 @@ define([
     setEnabled: function (enabled) {
       this.enabled = enabled;
       // TODO: Notify listeners
+      return this;
     }
   };
 
@@ -843,6 +864,7 @@ define([
     // thisTimer - Pointer to this Timer object
     // event - The ActionEvent originating this action
     actionPerformed: function (thisTimer) {
+      return this;
     },
     //
     // This is the method to be called by setInterval
@@ -876,6 +898,7 @@ define([
           this.timer = null;
         }
       }
+      return this;
     },
     //
     // Checks if the timer is running
@@ -912,6 +935,7 @@ define([
       if (!rect)
         rect = this;
       this.invalidatedRect.add(rect);
+      return this;
     },
     //
     // Updates the invalid area
@@ -921,11 +945,13 @@ define([
         this.invalidatedRect.dim.width = 0;
         this.invalidatedRect.dim.height = 0;
       }
+      return this;
     },
     //
     // Function to be overrided by subclasses
     updateContent: function (rect) {
       // Does nothing      
+      return this;
     }
   };
   // Container extends Rectangle

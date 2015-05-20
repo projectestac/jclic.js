@@ -28,10 +28,12 @@ define([
 //  of determining the position and shape of each [ActiveBox](ActiveBox.html), 
 //  and the [BoxBase](BoxBase.html) (field `bb`), provider of a common visual style.
 //
-  var ActiveBagContent = function (id) {
-    if (!Utils.isNullOrUndef(id))
+  var ActiveBagContent = function (id, ncw, nch) {
+    if (id)
       this.id = id;
     this.activeBoxContentArray = [];
+    this.ncw = Math.max(1, ncw);
+    this.nch = Math.max(1, nch);
   };
 
   ActiveBagContent.prototype = {
@@ -44,10 +46,11 @@ define([
     imgName: null,
     //
     // Number of columns (ncw) and rows (nch) when cells are distributed in a table
-    ncw: 0, nch: 0,
+    ncw: 1, nch: 1,
     //
     // Optimal cell width (w) and height (h)
-    w: 0, h: 0,
+    w: Utils.settings.DEFAULT_GRID_ELEMENT_SIZE,
+    h: Utils.settings.DEFAULT_GRID_ELEMENT_SIZE,
     //
     // Cells have/don't have borders
     border: true,
@@ -141,9 +144,107 @@ define([
     // Prepares the media content of all elements
     prepareMedia: function (playStation) {
       // TODO: Implement ActiveBagContent.prepareMedia      
-    }
+    },
+    //
+    // Gets the estimated total width and height of this bag
+    getTotalWidth: function () {
+      return this.w * this.ncw;
+    },
+    getTotalHeight: function () {
+      return this.h * this.nch;
+    },
+    getNumCells: function(){
+        return this.activeBoxContentArray.length;
+    },    
+    isEmpty: function(){
+        return this.activeBoxContentArray.length === 0;
+    },
+    //
+    // Retrieves the bag [Shaper](Shaper.html), building a new one if needed
+    getShaper: function () {
+      if (this.shaper === null)
+        this.shaper = Shaper.prototype._getShaper('@Rectangular', this.ncw, this.nch);
+      return this.shaper;
+    },
+    //
+    // Adds the provided [ActiveBoxContent](ActiveBoxContent.html) to this bag
+    // ab (ActiveBoxContent)
+    addActiveBoxContent: function(ab){
+        this.activeBoxContentArray.push(ab);
+        if(this.ncw===0 || this.nch===0){
+            this.ncw=1; 
+            this.nch=1;
+        }
+    },
+    //
+    // Gets the nth [ActiveBoxContent](ActiveBoxContent.html)
+    getActiveBoxContent: function (i) {
+      if (i >= this.activeBoxContentArray.length) {
+        for (var j = this.activeBoxContentArray.length; j <= i; j++)
+          this.activeBoxContentArray.push(new ActiveBoxContent());
+      }
+      return this.activeBoxContentArray[i];
+    },
+    //
+    // Finds the [ActiveBoxContent](ActiveBoxContent.html) with a specific `id` and `item` values
+    getActiveBoxContentWith: function (id, item) {
+      var result = null;
+      for (var i = 0; i < this.activeBoxContentArray.length; i++) {
+        var abxcnt = this.activeBoxContentArray[i];
+        if (abxcnt.id === id && abxcnt.item === item) {
+          result = abxcnt;
+          break;
+        }
+      }
+      return result;
+    },
+    //
+    // Sets an array of strings as content of this bag
+    // txt (Array of String)
+    // setNcw (number)
+    // setNch (number)
+    setTextContent: function (txt, setNcw, setNch) {
+      this.ncw = Math.max(1, setNcw);
+      this.nch = Math.max(1, setNch);
+      var n = ncw * nch;
+      for (var i = 0; i < n; i++) {
+        this.getActiveBoxContent(i).setTextContent(
+            (i >= txt.length || txt[i] === null) ? '' : txt[i]);
+      }
+    },
+    //
+    // Sets `id` values to a all [ActiveBoxContent](ActiveBoxContent,html) elements
+    // ids (Array of Number)
+    setIds: function (ids) {
+      for (var i = 0; i < this.activeBoxContentArray.length; i++)
+        if (i < ids.length)
+          this.getActiveBoxContent(i).id = ids[i];
+    },
+    //
+    // Resets all `id` values to the specified    
+    setAllIdsTo: function (id) {
+      for (var i = 0; i < this.activeBoxContentArray.length; i++)
+        this.getActiveBoxContent(i).id = id;
+    },
+    //
+    //
+    avoidAllIdsNull: function (maxId) {
+      var allIdsNull = true;
+      var numCells = this.activeBoxContentArray.length;
+      for (var i = 0; i < numCells; i++) {
+        if (this.getActiveBoxContent(i).id !== -1) {
+          allIdsNull = false;
+          break;
+        }
+      }
+      if (allIdsNull) {
+        maxId = Math.max(1, maxId);
+        for (var i = 0; i < numCells; i++) {
+          this.getActiveBoxContent(i).id = i % maxId;
+        }
+      }
+    }    
   };
 
   return ActiveBagContent;
-
 });

@@ -16,14 +16,18 @@
 define([
   "jquery",
   "../../Activity",
-  "../../boxes/ActiveBox"
-], function ($, Activity, ActiveBox) {
+  "../../boxes/ActiveBoxGrid",
+  "../../AWT"
+], function ($, Activity, ActiveBoxGrid, AWT) {
 
   //
   // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
   // objects.
   var InformationScreen = function (project) {
     Activity.call(this, project);
+    // This kind of activities are not reported
+    this.includeInReports = false;
+    this.reportActions = false;
   };
 
   InformationScreen.prototype = {
@@ -46,9 +50,34 @@ define([
   InformationScreen.prototype.Panel.prototype = {
     constructor: InformationScreen.prototype.Panel,
     //
+    // The [ActiveBoxBag](ActiveBoxBag.html) containing the information to be displayed.
+    bg: null,
     // Prepares the text panel
     buildVisualComponents: function () {
-      ActPanelAncestor.buildVisualComponents.call(this);
+
+      if (this.firstRun)
+        ActPanelAncestor.buildVisualComponents.call(this);
+
+      this.clear();
+      this.$div.empty();
+      var size = new AWT.Dimension(this.$div.width(), this.$div.height());
+      this.$canvas = $('<canvas width="' + size.width + '" height="' + size.height + '"/>');
+      this.$div.append(this.$canvas);
+      this.ctx = this.$canvas.get(0).getContext('2d');
+
+      var abc = this.act.abc['primary'];
+      if (abc) {
+        if (this.act.acp !== null)
+          this.act.acp.generateContent(
+            new this.act.acp.ActiveBagContentKit(abc.nch, abc.ncw, [abc], false), this.ps);
+        this.bg = ActiveBoxGrid.prototype._createEmptyGrid(null, this,
+            this.act.margin, this.act.margin,
+            abc);
+        this.bg.setContext2D(this.ctx);
+        this.bg.setContent(abc);
+        this.bg.setVisible(true);
+        this.invalidate();
+      }
     }
   };
 

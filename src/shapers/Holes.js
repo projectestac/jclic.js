@@ -1,5 +1,5 @@
-//    File    : Deps.js  
-//    Created : 19/05/2015  
+//    File    : Holes.js  
+//    Created : 20/05/2015  
 //    By      : fbusquet  
 //
 //    JClic.js  
@@ -13,17 +13,39 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
-
-// 
-// The purpose of this file is to ensure that certain classes derived from the main objects of 
-// JClic ([Activity](Activity.html), [Shaper](Shaper.html), [Skin](Skin.html) and
-// [AutoContentProvider](AutoContentProvider.html)) are loaded at the beginning.
 define([
-  "./skins/DefaultSkin",
-  "./shapers/Rectangular",
-  "./shapers/Holes",
-  "./activities/text/TextActivityBase",
-  "./activities/panels/InformationScreen"
-], function(a, b ,c, d, e){  
-  return 'Deep classes loaded!';
+  "jquery",
+  "./Shaper",
+  "../AWT"
+], function ($, Shaper, AWT) {
+
+  //
+  // This [Shaper](Shaper.html) returns a set of rectangular shapes
+  var Holes = function (nx, ny) {
+    Shaper.call(this, 1, 1);
+    this.nCols = nx;
+    this.nRows = ny;
+    this.showEnclosure = true;
+  };
+
+  Holes.prototype = {
+    constructor: Holes,
+    //
+    // Shapes are already loaded by [Shaper](Shaper.html)
+    buildShapes: function () {
+      if (this.nCells > 0)
+        this.initiated = true;
+    }
+  };
+
+  // Rectangular extends Shaper
+  Holes.prototype = $.extend(Object.create(Shaper.prototype), Holes.prototype);
+
+  Shaper.prototype._CLASSES['@Holes'] = Holes;
+
+  return Holes;
+
 });
+
+
+

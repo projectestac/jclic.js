@@ -603,6 +603,8 @@ define([
     // [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) 
     // Java interface.
     Panel: function (act, ps, $div) {
+      // Activity.Panel extends AWT.Container
+      AWT.Container.call(this);
       this.act = act;
       this.ps = ps;
       this.minimumSize = new AWT.Dimension(100, 100);
@@ -624,6 +626,10 @@ define([
     //
     // The JQuery div element used by this panel
     $div: null,
+    //
+    // The [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+    // used in this panel
+    ctx: null,
     //
     // The realized skin
     skin: null,
@@ -659,6 +665,7 @@ define([
     //
     // Sets the size and position of this activity panel
     setBounds: function (rect) {
+      AWT.Container.prototype.setBounds.call(this, rect);
       this.$div.css({
         position: 'relative',
         left: rect.pos.x,
@@ -867,6 +874,8 @@ define([
       }
     }
   };
+  
+  Activity.prototype.Panel.prototype = $.extend(Object.create(AWT.Container.prototype), Activity.prototype.Panel.prototype);
 
   return Activity;
 });

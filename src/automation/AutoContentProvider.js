@@ -15,6 +15,20 @@
 
 define([], function () {
 
+  //
+  // Utility object, useful for encapsulating multiple sets of box contents
+  // nRows (number) - Number of rows to be processed
+  // nCols (number) - Number of columns to be processed
+  // content (array of [ActiveBagContent](ActiveBagContent.html)) - One or more containers of
+  // [ActiveBoxContent](ActiveBoxContent.html) objects
+  // useIds (boolean) - When `true`, the `id` field of the ActiveBoxContent objects is significative.
+  var ActiveBagContentKit = function (nRows, nCols, content, useIds) {
+    this.nRows = nRows;
+    this.nCols = nCols;
+    this.content = content;
+    this.useIds = useIds;
+  };
+
 //
 // This abstract class is the base for all the classes that provide contents to
 // JClic activities, usually based on random values. Activities linked to an
@@ -26,6 +40,7 @@ define([], function () {
 
   AutoContentProvider.prototype = {
     constructor: AutoContentProvider,
+    ActiveBagContentKit: ActiveBagContentKit,
     //
     // The class name of the object.
     // Currently, only two content providers are defined: `@arith.Arith` and `@tagreplace.TagReplace`
@@ -49,14 +64,14 @@ define([], function () {
       return acp;
     },
     //
-    // Functions all `AutoContentProvider` objects must implement:
+    // Functions to be implemented by real automatic content providers:
     //
     init: function (resourceBridge, fileSystem) {
     },
     //
     generateContent: function (kit, resourceBridge) {
       return false;
-    }
+    }    
   };
 
   return AutoContentProvider;

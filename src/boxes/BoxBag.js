@@ -149,8 +149,8 @@ define([
           bx = this.getBox(i);
           p = new AWT.Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y);
           bx.setBounds(
-              dx + this.pos.x + scaleW * p.pos.x,
-              dy + this.pos.y + scaleH * p.pos.y,
+              dx + this.pos.x + scaleW * p.x,
+              dy + this.pos.y + scaleH * p.y,
               scaleW * bx.dim.width,
               scaleH * bx.dim.height);
         }
@@ -158,13 +158,22 @@ define([
           bx = this.backgroundBox;
           p = new AWT.Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y);
           bx.setBounds(
-              dx + this.pos.x + scaleW * p.pos.x,
-              dy + this.pos.y + scaleH * p.pos.y,
+              dx + this.pos.x + scaleW * p.x,
+              dy + this.pos.y + scaleH * p.y,
               scaleW * bx.dim.width,
               scaleH * bx.dim.height);
         }
       }
       AbstractBox.prototype.setBounds.call(this, rect);
+    },
+    //
+    // Sets the CanvasRenderingContext2D to be used by this box
+    // Overwrites same function in [AbstractBox](AbstractBox.html)
+    setContext2D: function(ctx){
+      this.ctx = ctx;
+      for (var i = 0; i < this.cells.length; i++) {
+        this.getBox(i).setContext2D(ctx);
+      }
     },
     //
     // Graphics operations based on a Canvas context ctx

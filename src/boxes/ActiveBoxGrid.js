@@ -30,31 +30,44 @@ define([
   //  take an argument of type [Shaper](Shaper.html) to build all its [ActiveBox](ActiveBox.html)
   //  elements. It also mantains information about the number of "rows" and "columns", useful to
   //  compute appropiate (integer) values when resizing or moving the its components.
+  //  
+  //  parent (AbstractBox)
+  //  container (AWT.Container)
+  //  boxBase (BoxBase)
+  //  px (number)
+  //  py (number)
+  //  setWidth (number)
+  //  setHeight (number)
+  //  sh (Shaper)
   var ActiveBoxGrid = function (parent, container, boxBase, px, py, setWidth, setHeight, sh) {
+    // ActiveBoxGrid derives from ActiveBoxBag
     ActiveBoxBag.call(this, parent, container, boxBase);
 
-    this.nCols = sh.getNumColumns();
-    this.nRows = sh.getNumRows();
+    this.nCols = sh.nCols;
+    this.nRows = sh.nRows;
 
+    // This will be the enclosing rectangle of this ActiveBox bag
     var r = new AWT.Rectangle(
         new AWT.Point(px, py),
         new AWT.Dimension(
             Math.round(setWidth / this.nCols) * this.nCols,
             Math.round(setHeight / this.nRows) * this.nRows));
 
-    this.ensureCapacity(sh.getNumCells());
-
-    for (var i = 0; i < sh.getNumCells(); i++) {
+    // Create all the [ActiveBox](ActiveBox.html) objects based on the
+    // shapes provided by the [Shaper](Shaper.html)
+    for (var i = 0; i < sh.nCells; i++) {
       var tmpSh = sh.getShape(i, r);
-      var bx = new ActiveBox(this, container, boxBase, i, tmpSh.getBounds2D());
-      if (!sh.rectangularShapes())
+      var bx = new ActiveBox(this, container, boxBase, i, tmpSh.getBounds());
+      if (!sh.rectangularShapes)
         bx.setShape(tmpSh);
       this.addActiveBox(bx);
     }
 
-    if (sh.hasRemainder()) {
+    // If the Shaper has `remainder` (extra space), set the background box of this
+    // [BoxBag](BoxBag.html)
+    if (sh.hasRemainder) {
       var tmpSh = sh.getRemainderShape(r);
-      var bx = new ActiveBox(this, container, boxBase, 0, tmpSh.getBounds2D());
+      var bx = new ActiveBox(this, container, boxBase, 0, tmpSh.getBounds());
       bx.setShape(tmpSh);
       this.setBackgroundBox(bx);
     }
@@ -79,6 +92,49 @@ define([
       return new AWT.Dimension(
           Utils.roundTo(scale * this.preferredBounds.getWidth(), this.nCols),
           Utils.roundTo(scale * this.preferredBounds.getHeight(), this.nRows));
+    },
+    //
+    // This prototype method creates a new grid with the number of cells indicated by the provided
+    // [ActiveBagContent](ActiveBagContent.html), but without filling the cells with its contents.
+    // parent (AbstractBox)
+    // container (AWT.Container)
+    // px (number)
+    // py (number)
+    // abc (ActiveBagContent)
+    // sh (Shaper)
+    // boxBase (BoxBase)
+    // Returns: the resulting ActiveBoxGrid
+    _createEmptyGrid: function (parent, container, px, py, abc, sh, boxBase) {
+      var result = null;
+      if (abc) {
+        result = new ActiveBoxGrid(parent, container,
+            boxBase ? boxBase : abc.bb,
+            px, py,
+            abc.getTotalWidth(), abc.getTotalHeight(),
+            sh ? sh : abc.getShaper());
+
+        result.setBorder(abc.border);
+      }
+      return result;
+    },
+    // Returns the 'logical' co-ordinates of the provided ActiveBox
+    // Resulting units are not pixels, but ordinal numbers of columns and rows in the grid
+    // bx (ActiveBox)
+    // returns: AWT.Point
+    getCoord: function (bx) {
+      var py = bx.idLoc / this.nCols;
+      var px = bx.idLoc % this.nCols;
+      return new AWT.Point(px, py);
+    },
+    // Calculates the 'logical' distance between two ActiveBox objects
+    // Resulting units are not pixels, but ordinal numbers columns and rows in the grid
+    // src (ActiveBox)
+    // dest (ActiveBox)
+    // returns: AWT.Point
+    getCoordDist: function (src, dest) {
+      var ptSrc = this.getCoord(src);
+      var ptDest = this.getCoord(dest);
+      return new AWT.Point(ptDest.x - ptSrc.x, ptDest.y - ptSrc.y);
     }
   };
 

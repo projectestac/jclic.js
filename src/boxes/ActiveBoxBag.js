@@ -35,7 +35,7 @@ define([
     //
     // Adds an (ActiveBox)[ActiveBox.html] to this bag
     addActiveBox: function (bx) {
-      bx.idLoc = this.cells.size();
+      bx.idLoc = this.cells.length;
       bx.idOrder = bx.idLoc;
       return this.addBox(bx);
     },
