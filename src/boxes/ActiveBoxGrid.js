@@ -90,8 +90,8 @@ define([
     // Gets a scaled size
     getScaledSize: function (scale) {
       return new AWT.Dimension(
-          Utils.roundTo(scale * this.preferredBounds.getWidth(), this.nCols),
-          Utils.roundTo(scale * this.preferredBounds.getHeight(), this.nRows));
+          Utils.roundTo(scale * this.preferredBounds.dim.width, this.nCols),
+          Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
     },
     //
     // This prototype method creates a new grid with the number of cells indicated by the provided

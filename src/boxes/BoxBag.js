@@ -26,6 +26,7 @@ define([
 // implements methods to add, remove and retrieve boxes, and to manage some of 
 // its properties like visibility, status, location and size.
   var BoxBag = function (parent, container, boxBase) {
+    // BoxBag extends AbstractBox
     AbstractBox.call(this, parent, container, boxBase);
     this.preferredBounds = new AWT.Rectangle();
     this.cells = [];
@@ -138,10 +139,13 @@ define([
     //
     // Overrides the `setBounds` method of [AbstractBox](AbstractBox.html)
     // adjusting the position and size of all cells
-    setBounds: function (rect) {
-      if (rect.dim.getSurface() > 0 && !rect.equals(this)) {
-        var scaleW = rect.dim.width / this.width;
-        var scaleH = rect.dim.height / this.height;
+    setBounds: function (rect, y, w, h) {
+      if(typeof rect === 'number')
+        // Arguments are co-ordinates and size
+        rect = new AWT.Rectangle(rect, y, w, h);
+      if (rect.getSurface() > 0 && !rect.equals(this)) {
+        var scaleW = rect.dim.width / this.dim.width;
+        var scaleH = rect.dim.height / this.dim.height;
         var dx = rect.pos.x - this.pos.x;
         var dy = rect.pos.y - this.pos.y;
         var p, bx;

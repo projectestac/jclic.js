@@ -144,7 +144,10 @@ define([
     },
     //
     // Sets a new size and/or dimension
-    setBounds: function (rect) {
+    setBounds: function (rect, y, w, h) {
+      if(typeof rect === 'number')
+        // arguments are co-ordinates and size
+        rect = new AWT.Rectangle(rect, y, w, h);
       // Rectangle comparision
       if (this.equals(rect))
         return;
@@ -159,6 +162,8 @@ define([
       }
       else
         AWT.Rectangle.prototype.setBounds.call(this, rect);
+      
+      return this;
     },
     //
     // Set a new location of this AbstractBox

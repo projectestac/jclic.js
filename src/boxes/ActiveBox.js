@@ -471,7 +471,7 @@ define([
               : (availWidth - lines[l].size.width) / 2);
 
           if (bb.shadow) {
-            // Rennder text shadow
+            // Render text shadow
             var d = Math.max(1, bb.font.size / 10);
             ctx.fillStyle = bb.shadowColor;
             ctx.fillText(lines[l].text, x + d, y + d);

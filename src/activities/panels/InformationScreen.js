@@ -17,8 +17,9 @@ define([
   "jquery",
   "../../Activity",
   "../../boxes/ActiveBoxGrid",
+  "../../boxes/BoxBag",
   "../../AWT"
-], function ($, Activity, ActiveBoxGrid, AWT) {
+], function ($, Activity, ActiveBoxGrid, BoxBag, AWT) {
 
   //
   // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
@@ -60,24 +61,36 @@ define([
 
       this.clear();
       this.$div.empty();
-      var size = new AWT.Dimension(this.$div.width(), this.$div.height());
-      this.$canvas = $('<canvas width="' + size.width + '" height="' + size.height + '"/>');
-      this.$div.append(this.$canvas);
-      this.ctx = this.$canvas.get(0).getContext('2d');
 
       var abc = this.act.abc['primary'];
       if (abc) {
         if (this.act.acp !== null)
           this.act.acp.generateContent(
-            new this.act.acp.ActiveBagContentKit(abc.nch, abc.ncw, [abc], false), this.ps);
+              new this.act.acp.ActiveBagContentKit(abc.nch, abc.ncw, [abc], false), this.ps);
         this.bg = ActiveBoxGrid.prototype._createEmptyGrid(null, this,
             this.act.margin, this.act.margin,
             abc);
+            
+        var size = new AWT.Dimension(this.$div.width(), this.$div.height());
+        this.$canvas = $('<canvas width="' + size.width + '" height="' + size.height + '"/>');
+        this.$div.append(this.$canvas);
+        this.ctx = this.$canvas.get(0).getContext('2d');
+
         this.bg.setContext2D(this.ctx);
         this.bg.setContent(abc);
         this.bg.setVisible(true);
         this.invalidate();
+        this.bg.update(this.ctx);
       }
+    },
+    render: function (ctx, dirtyRegion) {
+      if (this.bg)
+        this.bg.update(ctx, dirtyRegion, this);
+    },
+    setDimension: function (preferredMaxSize) {
+      if (this.getBounds().equals(preferredMaxSize))
+        return preferredMaxSize;
+      return BoxBag.prototype.layoutSingle(preferredMaxSize, this.bg, this.act.margin);
     }
   };
 

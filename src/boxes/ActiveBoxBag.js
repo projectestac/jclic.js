@@ -27,6 +27,7 @@ define([
 // members of `ActiveBox` like its "ids" (`idOrder`, `idLoc` and `idAss`).
 //
   var ActiveBoxBag = function (parent, container, boxBase) {
+    // ActiveBoxBag extends BoxBag
     BoxBag.call(this, parent, container, boxBase);
   };
 
