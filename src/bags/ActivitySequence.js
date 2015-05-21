@@ -88,7 +88,7 @@ define([
             result = el;
             resultIndex = index;
           }
-          return resultIndex === -1;
+          return resultIndex !== -1;
         });
         if (resultIndex !== -1 && updateCurrentAct)
           this.currentAct = resultIndex;

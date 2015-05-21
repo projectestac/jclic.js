@@ -63,12 +63,13 @@ define([
     addBox: function (bx) {
       this.cells.push(bx);
       bx.setParent(this);
-      if (this.cells.length === 1) {
-        this.setBounds(bx);
-      }
-      else {
+      
+      //if (this.cells.length === 1) {
+      //  this.setBounds(bx);
+      //}
+      //else {
         this.add(bx);
-      }
+      //}
       this.preferredBounds.setBounds(this.getBounds());
     },
     //

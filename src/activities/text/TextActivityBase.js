@@ -72,8 +72,10 @@ define([
       // 
       // Empties the conainer of any pre-existing content
       // and sets the background and other attributes indicated by the main
-      // style of the document
-      $dom.empty().css(doc.style['default'].css);
+      // style of the document.
+      // It also sets the 'overflow' CSS attribute to 'auto', which will display a
+      // vertical scroll bar when needed
+      $dom.empty().css(doc.style['default'].css).css('overflow', 'auto');
       
       var $html = $('<div/>').css({'padding': 4});
       

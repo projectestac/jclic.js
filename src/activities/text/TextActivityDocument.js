@@ -80,7 +80,7 @@ define([
               break;
 
             case 'text':
-              obj = {text: this.textContent};
+              obj = {text: this.textContent.replace(/\t/g, '&emsp;')};
               var attr = doc.readDocAttributes($child);
               if (!$.isEmptyObject(attr)) {
                 obj.attr = attr;
@@ -88,7 +88,7 @@ define([
               break;
 
             case 'target':
-              obj = {text: this.textContent};
+              obj = {text: this.textContent.replace(/\t/g, '&emsp;')};
 
               $child.children().each(function () {
                 var $child = $(this);

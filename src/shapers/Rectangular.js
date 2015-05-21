@@ -37,7 +37,7 @@ define([
       var h = 1 / this.nRows;
       for (var y = 0; y < this.nRows; y++) {
         for (var x = 0; x < this.nCols; x++) {
-          this.shapeData[y * this.nCols + x] = new AWT.Rectangle(new AWT.Point(x, y), new AWT.Dimension(w, h));
+          this.shapeData[y * this.nCols + x] = new AWT.Rectangle(new AWT.Point(x*w, y*h), new AWT.Dimension(w, h));
         }
       }
       this.initiated = true;

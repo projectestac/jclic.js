@@ -701,7 +701,6 @@ define([
 
       var cssAct = {
         display: 'block',
-        overflow: 'auto',
         'background-color': this.backgroundTransparent ? 'transparent' : this.backgroundColor,
         // TODO: bevel border?
         border: this.border ? 'solid' : 'none'

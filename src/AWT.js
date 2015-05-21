@@ -442,7 +442,7 @@ define([
     // by the `dim` values.
     // rect (`AWT.Rectangle`)
     getShape: function (rect) {
-      return $.extend(true, {}, this).moveTo(rect.pos).scaleBy(rect.dim);
+      return $.extend(true, {}, this).scaleBy(rect.dim).moveBy(rect.pos);
     },
     //
     // Check if the provided Point `p` is inside this shape
@@ -540,6 +540,7 @@ define([
     // Multiplies the rectangle dimensions by the values supplied in `delta`
     // delta (Point or Dimension)
     scaleBy: function (delta) {
+      this.pos.multBy(delta);
       this.dim.multBy(delta);
       return this;
     },
@@ -714,12 +715,14 @@ define([
     // Multiplies the shape dimension by the values supplied in `delta`
     // delta (Point or Dimension)
     scaleBy: function (delta) {
-      var pos0 = new Point(this.pos);
-      this.moveTo(new Point('0, 0'));
+      //var pos0 = new Point(this.pos);
+      //this.moveTo(new Point('0, 0'));
       for (var str in this.strokes)
         str.multBy(delta);
-      this.enclosing.dim.multBy(delta);
-      return this.moveTo(pos0);
+      //this.enclosing.dim.multBy(delta);
+      this.enclosing.multBy(delta);
+      //this.moveTo(pos0);
+      return this;
     },
     //
     // Check if the provided point `p` is inside the Path rectangle

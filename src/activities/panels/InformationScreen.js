@@ -53,14 +53,14 @@ define([
     //
     // The [ActiveBoxBag](ActiveBoxBag.html) containing the information to be displayed.
     bg: null,
-    // Prepares the text panel
+    // 
+    // Prepares the activity panel
     buildVisualComponents: function () {
 
       if (this.firstRun)
         ActPanelAncestor.buildVisualComponents.call(this);
 
       this.clear();
-      this.$div.empty();
 
       var abc = this.act.abc['primary'];
       if (abc) {
@@ -70,27 +70,34 @@ define([
         this.bg = ActiveBoxGrid.prototype._createEmptyGrid(null, this,
             this.act.margin, this.act.margin,
             abc);
-            
-        var size = new AWT.Dimension(this.$div.width(), this.$div.height());
-        this.$canvas = $('<canvas width="' + size.width + '" height="' + size.height + '"/>');
-        this.$div.append(this.$canvas);
-        this.ctx = this.$canvas.get(0).getContext('2d');
-
-        this.bg.setContext2D(this.ctx);
         this.bg.setContent(abc);
         this.bg.setVisible(true);
-        this.invalidate();
-        this.bg.update(this.ctx);
       }
     },
     render: function (ctx, dirtyRegion) {
       if (this.bg)
         this.bg.update(ctx, dirtyRegion, this);
     },
+    //
+    // Calculates the optimal dimension of this panel
     setDimension: function (preferredMaxSize) {
       if (this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
       return BoxBag.prototype.layoutSingle(preferredMaxSize, this.bg, this.act.margin);
+    },
+    //
+    // Sets the size and position of this activity panel
+    setBounds: function (rect) {
+      this.$div.empty();
+      ActPanelAncestor.setBounds.call(this, rect);
+      if (this.bg) {
+        this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>');
+        this.$div.append(this.$canvas);
+        this.ctx = this.$canvas.get(0).getContext('2d');
+        this.bg.setContext2D(this.ctx);
+        this.invalidate();
+        this.bg.update(this.ctx);
+      }
     }
   };
 

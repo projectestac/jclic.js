@@ -6,7 +6,8 @@
   <descriptors />
  </settings>
  <sequence>
-  <item id="demo.pac" name="pres0.ass" delay="50">
+  <!-- item id="demo.pac" name="pres0.ass" delay="50" -->
+  <item id="demo.pac" name="pres0.ass">
    <jump tag="menu0.pac" id="forward" />
    <jump action="STOP" id="back" />
   </item>

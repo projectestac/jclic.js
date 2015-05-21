@@ -609,6 +609,7 @@ define([
         // Activity.Panel will calc and set its position and size based on the maximum and optimal
         // available space
         this.actPanel.fitTo(proposedRect, this);
+        this.actPanel.buildVisualComponents();
       }
       this.$div.css(mainCss);
     },
