@@ -86,11 +86,14 @@ define([
           case 'image':
             cellSet.imgName = val;
             break;
+          // JClic wrongly stores the number of columns (__ncw__, meaning _**n**umber of **c**ells **w**idth_)
+          // labeled as "_rows_", and the number of rows (__nch__, meaning _**n**umber of **c**ells **h**eight_)
+          // labeled as "_columns_". So we must read the values in accordance with this mistake.
           case 'rows':
-            cellSet.nch = Number(val);
+            cellSet.ncw = Number(val);
             break;
           case 'columns':
-            cellSet.ncw = Number(val);
+            cellSet.nch = Number(val);
             break;
           case 'cellWidth':
             cellSet.w = Number(val);
