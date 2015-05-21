@@ -229,7 +229,7 @@ define([
           this.c1 + ', ' +
           this.c2;
       for (var i = 1; i < this.cycles; i++) {
-        result += ', ' + (i % 2 > 0 ? this.C1 : this.C2);
+        result += ', ' + (i % 2 > 0 ? this.c1 : this.c2);
       }
       result += ')';
       return result;
