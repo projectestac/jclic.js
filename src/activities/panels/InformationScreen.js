@@ -98,6 +98,22 @@ define([
         this.invalidate();
         this.bg.update(this.ctx);
       }
+    },
+    // 
+    // Main handler to receive mouse and key events
+    // Overrides same function in Activity.Panel
+    processEvent: function (event) {      
+      if (this.playing) {
+        var p = new AWT.Point(
+            event.pageX - this.$div.offset().left,
+            event.pageY - this.$div.offset().top);
+        this.ps.stopMedia(1);
+        var bx = this.bg.findActiveBox(p);
+        if (bx) {
+          if (!bx.playMedia(this.ps))
+            this.playEvent('click');
+        }
+      }
     }
   };
 

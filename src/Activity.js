@@ -75,7 +75,7 @@ define([
       var act = null;
       var className = $xml.attr('class');
       var cl = Activity.prototype._CLASSES[className];
-      if(cl){
+      if (cl) {
         act = new cl(project);
         act.setProperties($xml);
       }
@@ -609,7 +609,6 @@ define([
       this.ps = ps;
       this.minimumSize = new AWT.Dimension(100, 100);
       this.preferredSize = new AWT.Dimension(500, 400);
-      this.events = ['mousedown', 'mousemove', 'mouseup', 'keydown'];
       if ($div)
         this.$div = $div;
       else
@@ -658,7 +657,10 @@ define([
     // Fields used to simulate the basic JPanel operation
     minimumSize: null,
     preferredSize: null,
-    events: null,
+    //
+    // Possible events are: 'keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'click',
+    // 'dblclick', 'mousemove', 'mouseenter', 'mouseleave', 'mouseover', 'mouseout'
+    events: ['click', 'keypress'],
     backgroundColor: null,
     backgroundTransparent: false,
     border: null,
@@ -726,6 +728,7 @@ define([
       }
       this.solved = false;
       this.ps.reportNewActivity(this.act, 0);
+      this.attachEvents();
       this.ps.startActivity();
       this.enableCounters();
     },
@@ -736,6 +739,7 @@ define([
       var msg = this.act.messages['initial'];
       if (msg)
         this.ps.setMsg(msg);
+      this.playing = true;
     },
     // 
     // Displays help
@@ -753,10 +757,19 @@ define([
           Math.min(maxSize.height, this.act.windowSize.height));
     },
     //
-    // Generic handlers to process mouse and key events
-    processMouse: function (event) {
+    // Attaches the events specified in the `events` member (an array of String) to the `$div` member
+    attachEvents: function () {
+      for (var i = 0; i < this.events.length; i++) {
+        this.$div.on(this.events[i], this, function(event){
+          event.data.processEvent.call(event.data, event);
+        });
+      }
     },
-    processKey: function (event) {
+    // 
+    // Main handler to receive mouse and key events
+    processEvent: function (event) {
+      if(this.playing)
+        console.log('Event fired: ' + event.type);
     },
     //
     // Fits the panel into the `proposed` rectangle, not surpassing the
@@ -824,8 +837,8 @@ define([
     end: function () {
       this.forceFinishActivity();
       if (this.playing) {
-        if (this.act.bc !== null)
-          this.act.bc.end();
+        if (this.bc !== null)
+          this.bc.end();
         this.ps.reportEndActivity(this.act, this.solved);
         this.playing = false;
         this.solved = false;
@@ -873,7 +886,7 @@ define([
       }
     }
   };
-  
+
   Activity.prototype.Panel.prototype = $.extend(Object.create(AWT.Container.prototype), Activity.prototype.Panel.prototype);
 
   return Activity;

@@ -483,6 +483,17 @@ define([
         }
       }
       return true;
+    },
+    //
+    // Plays the action or media associated with this ActiveBox
+    // ps (PlayStation) - Usually, a [JClicPlayer](JClicPlayer,html)
+    playMedia: function (ps) {
+      var abc = this.getCurrentContent();
+      if (abc && abc.mediaContent) {
+        ps.playMedia(abc.mediaContent, this);
+        return true;
+      }
+      return false;
     }
   };
 
