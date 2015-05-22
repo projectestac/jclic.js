@@ -92,7 +92,7 @@ define([
       if (bx !== null) {
         bx.setParent(this);
       }
-      this.preferredBounds.setRect(this.getBounds());
+      this.preferredBounds.setBounds(this.getBounds());
     },
     //
     // Recalculates the total size of this BoxBag

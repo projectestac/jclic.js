@@ -446,7 +446,7 @@ define([
 
       // Step three: load the activity
       if (activity) {
-        var act = this.project.activities[activity];
+        var act = this.project.getActivity(activity);
         if (act) {
           // Success! We have a real [Activity](Activity.html)
           this.setSystemMessage('Loading activity', activity);

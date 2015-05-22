@@ -73,15 +73,16 @@ define([
     // Should be called only from Activity.constructor
     _getActivity: function ($xml, project) {
       var act = null;
-      var className = $xml.attr('class');
-      var cl = Activity.prototype._CLASSES[className];
-      if (cl) {
-        act = new cl(project);
-        act.setProperties($xml);
+      if ($xml && project) {
+        var className = $xml.attr('class');
+        var cl = Activity.prototype._CLASSES[className];
+        if (cl) {
+          act = new cl(project);
+          act.setProperties($xml);
+        }
+        else
+          console.log('Unknown activity class: ' + className);
       }
-      else
-        console.log('Unknown activity class: ' + className);
-
       return act;
     },
     // 
@@ -532,38 +533,57 @@ define([
       return true;
     },
     //
-    // Methods to be overrided by real activities
+    // The activity permits the user to display the solution
     helpSolutionAllowed: function () {
       return false;
     },
+    //
+    // The activity allows to pop-up a help window
     helpWindowAllowed: function () {
       return this.helpWindow &&
           ((this.helpSolutionAllowed() && this.showSolution) ||
               this.helpMsg !== null);
     },
+    //
+    // Retrieves the minimum number of actions needed to solve this activity
     getMinNumActions: function () {
       return 0;
     },
+    //
+    // When this method returns `true`, the automatic jump to the next activity must be paused
+    // at this activity.
     mustPauseSequence: function () {
       return this.getMinNumActions() !== 0;
     },
+    //
+    // Activity can be reinitiated
     canReinit: function () {
       return true;
     },
+    //
+    // The activity has additional information to be shown
     hasInfo: function () {
       return(
           (this.infoUrl !== null && this.infoUrl.length > 0) ||
           (this.infoCmd !== null && this.infoCmd.length > 0));
     },
+    //
+    // The activity uses random to scramble internal components
     hasRandom: function () {
       return false;
     },
+    //
+    // The activity mut always be scrambled
     shuffleAlways: function () {
       return false;
     },
+    //
+    // The activity uses the keyboard
     needsKeyboard: function () {
       return false;
     },
+    //
+    // Called when the activity must be disposed
     end: function () {
       if (this.eventSounds !== null) {
         this.eventSounds.close();
@@ -571,6 +591,8 @@ define([
       }
       this.clear();
     },
+    //
+    // Called when the activity must reinit its internal components    
     clear: function () {
     },
     //
@@ -715,11 +737,11 @@ define([
     //
     // Plays the specified event sound
     playEvent: function (event) {
-      if (this.act.eventSounds !== null)
+      if (this.act.eventSounds)
         this.act.eventSounds.play(event);
     },
     //
-    // Basic init process common to all activities
+    // Basic init procedure common to all activities
     // (to be overrided by subclasses)
     initActivity: function () {
       if (this.playing) {

@@ -23,7 +23,8 @@ define([
   "./shapers/Rectangular",
   "./shapers/Holes",
   "./activities/text/TextActivityBase",
-  "./activities/panels/InformationScreen"
-], function(a, b ,c, d, e){  
+  "./activities/panels/InformationScreen",
+  "./activities/puzzles/DoublePuzzle"
+], function(a, b ,c, d, e, f){  
   return 'Deep classes loaded!';
 });

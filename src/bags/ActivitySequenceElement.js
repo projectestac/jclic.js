@@ -36,7 +36,7 @@ define([
     description: null,
     //
     // Name of the [Activity](Activity.html) this element points to. Activities
-    // are stored in the [ActivityBag](ActivityBag.html) object.
+    // are stored in the [JClicProject](JClicProject.html).
     activityName: '',
     // 
     // ActivitySequenceJump elements:

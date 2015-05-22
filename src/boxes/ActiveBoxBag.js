@@ -176,18 +176,18 @@ define([
         var i, bx;
         for (i = 0; i < nc; i++) {
           bx = this.getActiveBox(i);
-          pos[i] = new AWT.Point(bx.getLocation());
+          pos[i] = new AWT.Point(bx.pos);
           idLoc[i] = bx.idLoc;
         }
         var p = new AWT.Point();
         var j;
         for (i = 0; i < times; i++) {
-          var r1 = Math.random() * nc;
-          var r2 = Math.random() * nc;
+          var r1 = Math.floor(Math.random() * nc);
+          var r2 = Math.floor(Math.random() * nc);
           if (r1 !== r2) {
-            p.setLocation(pos[r1]);
-            pos[r1].setLocation(pos[r2]);
-            pos[r2].setLocation(p);
+            p.moveTo(pos[r1]);
+            pos[r1].moveTo(pos[r2]);
+            pos[r2].moveTo(p);
             j = idLoc[r1];
             idLoc[r1] = idLoc[r2];
             idLoc[r2] = j;
@@ -204,7 +204,7 @@ define([
             px = Math.min(Math.max(px, this.pos.x), maxX - bx.dim.width);
             py = Math.min(Math.max(py, this.pos.y), maxY - bx.dim.height);
           }
-          bx.setLocation(px, py);
+          bx.moveTo(px, py);
           bx.idLoc = idLoc[i];
         }
       }

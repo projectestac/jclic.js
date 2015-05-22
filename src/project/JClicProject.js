@@ -23,17 +23,16 @@ define([
 
 // JClicProject encapsulates all the components of a JClic project:
 // activities, sequences, media files, descriptors and metadata.  
-// This encapsulation is achieved by four auxiliary objects:
+// This encapsulation is achieved by three auxiliary objects:
 // - ProjectSettings: stores metadata like full tiltle, description,
 // authors, languages, educational topics...
-// - ActivityBag: is where the activities are stored
 // - ActivitySequence: defines the order in which the activities must be shown
 // - MediaBag: contains the full list of media files used by the activities    
 //
   var JClicProject = function () {
     this.settings = new ProjectSettings();
     this.activitySequence = new ActivitySequence(this);
-    this.activities = {};
+    this._activities = {};
     this.mediaBag = new MediaBag();
   };
 
@@ -51,8 +50,8 @@ define([
     // ActivitySequence
     activitySequence: null,
     // 
-    // ActivityBag
-    activities: null,
+    // Activities stored as JQuery xml elements
+    _activities: null,
     // 
     // MediaBag
     mediaBag: null,
@@ -78,10 +77,14 @@ define([
       var $node = $xml.children('activities');
       var $acts = $node.children('activity');
       $acts.each(function () {
-        var act = Activity.prototype._getActivity($(this), prj);
-        prj.activities[act.name] = act;
+        prj._activities[$(this).attr('name')] = $(this);
       });
       return this;
+    },
+    // 
+    // Returns the [Activity](Activity.html) object named as requested
+    getActivity: function(name){
+      return Activity.prototype._getActivity(this._activities[name], this);
     },
     //
     // Builds skin, eventSounds and mediaBag fonts

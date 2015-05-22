@@ -129,8 +129,8 @@ define([
       this.setInactive(bx.isInactive());
       this.setInverted(bx.isInverted());
       this.setAlternative(bx.isAlternative());
-      this.setHostedComponent(bx.getHostedComponent());
-      this.hasHostedComponent = bx.hasHostedComponent;
+      //this.setHostedComponent(bx.getHostedComponent());
+      //this.hasHostedComponent = bx.hasHostedComponent;
       //this.setHostedMediaPlayer(bx.hostedMediaPlayer);
       //if(this.hostedMediaPlayer!=null)
       //    this.hostedMediaPlayer.setVisualComponentVisible(!isInactive() && isVisible());

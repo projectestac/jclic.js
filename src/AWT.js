@@ -694,7 +694,7 @@ define([
     // Moves the Path by a specified `delta` Point or Dimension
     moveBy: function (delta) {
       for (var str in this.strokes)
-        str.moveBy(delta);
+        this.strokes[str].moveBy(delta);
       this.enclosing.moveBy(delta);
       Shape.prototype.moveBy.call(this, delta);
       return this;
@@ -718,9 +718,9 @@ define([
       //var pos0 = new Point(this.pos);
       //this.moveTo(new Point('0, 0'));
       for (var str in this.strokes)
-        str.multBy(delta);
+        this.strokes[str].multBy(delta);
       //this.enclosing.dim.multBy(delta);
-      this.enclosing.multBy(delta);
+      this.enclosing.scaleBy(delta);
       //this.moveTo(pos0);
       return this;
     },

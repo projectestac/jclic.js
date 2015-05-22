@@ -205,7 +205,7 @@ define([
         
         for(var i=0; i<this.nCells; i++){
             if(this.shapeData[i])
-                r.add(shapeData[i].getShape(rect), false);
+                r.add(this.shapeData[i].getShape(rect), false);
         }
         return r;
     }

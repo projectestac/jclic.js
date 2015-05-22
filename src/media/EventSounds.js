@@ -67,6 +67,9 @@ define([
     // See: [edu.xtec.jclic.media.EventSounds.java](https://github.com/projectestac/jclic/blob/master/src/core/edu/xtec/jclic/media/EventSounds.java)
     realize: function(mediaBag){
       // TODO: Implement EventSounds.realize      
+    },
+    play: function(eventName){
+      // TODO: Implement EventSounds.play      
     }
   };
   
