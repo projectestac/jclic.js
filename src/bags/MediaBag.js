@@ -54,7 +54,7 @@ define([
     // Gets a [MediaBagElement](MediaBagElement.html) by file name
     getElementByFileName: function (fileName) {
       var result = null;
-      if (fileName !== null) {
+      if (fileName) {
         for (var name in this.elements) {
           if (this.elements[name].fileName === fileName) {
             result = this.elements[name];

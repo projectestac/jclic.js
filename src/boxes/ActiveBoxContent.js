@@ -222,6 +222,15 @@ define([
       }
     },
     //
+    // Sets a fragment of a main image as graphic content of this cell.
+    // Cells cannot have two graphic contents, so `imgName` (the specific image of this cell, if any)
+    // should be cleared.
+    setImgContent: function(img, imgClip){
+        this.img=img;
+        this.imgName=null;
+        this.imgClip=imgClip;
+    },
+    //
     // Prepares media content
     prepareMedia: function (playStation) {
       // TODO: Implement ActiveBoxContent.prepareMedia()

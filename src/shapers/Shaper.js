@@ -62,7 +62,7 @@ define([
         this.nRows=nRows;
         this.nCells=nRows * nCols;
         this.initiated=false;
-        this.shapeData=[this.nCells];
+        this.shapeData=[];
         for(var i=0; i<this.nCells; i++)
             this.shapeData[i]=new AWT.Shape();
     },
@@ -108,7 +108,7 @@ define([
         shaper.shapeData[i] = shaper.readShapeData(data);
       });
       // Correction needed for '@Holes' shaper
-      if (shaper.shapeData.length > 0) {
+      if (shaper.shapeData.length > 0 && shaper.shapeData.length !== shaper.nRows * shaper.nCols) {
         shaper.nRows = shaper.shapeData.length;
         shaper.nCols = 1;
       }

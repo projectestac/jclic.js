@@ -18,8 +18,9 @@ define([
   "./BoxBase",
   "../Utils",
   "./ActiveBoxContent",
-  "../shapers/Shaper"
-], function ($, BoxBase, Utils, ActiveBoxContent, Shaper) {
+  "../shapers/Shaper",
+  "../AWT"
+], function ($, BoxBase, Utils, ActiveBoxContent, Shaper, AWT) {
 
 //
 //  This class stores a collection of [ActiveBoxContent](ActiveBoxContent.html)
@@ -42,8 +43,9 @@ define([
     // The global identifier of this object: `primary`, `secondary`...
     id: 'primary',
     //
-    // The filename of the main image of the bag
+    // The filename of the main image of the bag, and the realized Image object
     imgName: null,
+    img: null,
     //
     // Number of columns (ncw) and rows (nch) when cells are distributed in a table
     ncw: 1, nch: 1,
@@ -86,9 +88,9 @@ define([
           case 'image':
             cellSet.imgName = val;
             break;
-          // JClic wrongly stores the number of columns (__ncw__, meaning _**n**umber of **c**ells **w**idth_)
-          // labeled as "_rows_", and the number of rows (__nch__, meaning _**n**umber of **c**ells **h**eight_)
-          // labeled as "_columns_". So we must read the values in accordance with this mistake.
+            // JClic wrongly stores the number of columns (__ncw__, meaning _**n**umber of **c**ells **w**idth_)
+            // labeled as "_rows_", and the number of rows (__nch__, meaning _**n**umber of **c**ells **h**eight_)
+            // labeled as "_columns_". So we must read the values in accordance with this mistake.
           case 'rows':
             cellSet.ncw = Number(val);
             break;
@@ -156,11 +158,11 @@ define([
     getTotalHeight: function () {
       return this.h * this.nch;
     },
-    getNumCells: function(){
-        return this.activeBoxContentArray.length;
-    },    
-    isEmpty: function(){
-        return this.activeBoxContentArray.length === 0;
+    getNumCells: function () {
+      return this.activeBoxContentArray.length;
+    },
+    isEmpty: function () {
+      return this.activeBoxContentArray.length === 0;
     },
     //
     // Retrieves the bag [Shaper](Shaper.html), building a new one if needed
@@ -172,12 +174,12 @@ define([
     //
     // Adds the provided [ActiveBoxContent](ActiveBoxContent.html) to this bag
     // ab (ActiveBoxContent)
-    addActiveBoxContent: function(ab){
-        this.activeBoxContentArray.push(ab);
-        if(this.ncw===0 || this.nch===0){
-            this.ncw=1; 
-            this.nch=1;
-        }
+    addActiveBoxContent: function (ab) {
+      this.activeBoxContentArray.push(ab);
+      if (this.ncw === 0 || this.nch === 0) {
+        this.ncw = 1;
+        this.nch = 1;
+      }
     },
     //
     // Gets the nth [ActiveBoxContent](ActiveBoxContent.html)
@@ -200,6 +202,41 @@ define([
         }
       }
       return result;
+    },
+    //
+    // Sets the content of the cells based on a image spliced by a shaper
+    // mb ([MediaBag](MediaBag.html)) - The MediaBag used to retrieve the image
+    // sh ([Shaper](Shaper.html)) - The Shaper used to splice the image
+    // roundSizes (boolean) - When `true`, the cells size and coordinates will be rounded to its
+    // nearest integer values.
+    setImgContent: function (mb, sh, roundSizes) {
+      if(sh)
+        this.setShaper(sh);
+      this.ncw = this.shaper.nCols;
+      this.nch = this.shaper.nRows;
+      if (mb && this.imgName && mb.elements[this.imgName] && mb.elements[this.imgName].ready) {
+        this.img = mb.elements[this.imgName].data;
+        this.w = this.img.width / this.ncw;
+        this.h = this.img.height / this.nch;
+        if (roundSizes) {
+          this.w = Math.round(this.w);
+          this.h = Math.round(this.h);
+        }
+      }
+      else {
+        this.img = null;
+        this.w = Math.max(this.w, 10);
+        this.h = Math.max(this.h, 10);
+      }
+
+      var r = new AWT.Rectangle(0, 0, this.w * this.ncw, this.h * this.nch);
+      for (var i = 0; i < this.shaper.nCells; i++) {
+        this.getActiveBoxContent(i).setImgContent(this.img, this.shaper.getShape(i, r));
+      }
+      if (this.shaper.hasRemainder) {
+        this.backgroundContent = new ActiveBoxContent();
+        this.backgroundContent.setImgContent(this.img, this.shaper.getRemainderShape(r));
+      }
     },
     //
     // Sets an array of strings as content of this bag
@@ -246,7 +283,7 @@ define([
           this.getActiveBoxContent(i).id = i % maxId;
         }
       }
-    }    
+    }
   };
 
   return ActiveBagContent;

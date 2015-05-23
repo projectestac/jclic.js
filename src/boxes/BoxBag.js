@@ -64,12 +64,12 @@ define([
       this.cells.push(bx);
       bx.setParent(this);
       
-      //if (this.cells.length === 1) {
-      //  this.setBounds(bx);
-      //}
-      //else {
+      if (this.cells.length === 1) {
+        AWT.Rectangle.prototype.setBounds.call(this, bx);
+      }
+      else {
         this.add(bx);
-      //}
+      }
       this.preferredBounds.setBounds(this.getBounds());
     },
     //
@@ -327,7 +327,7 @@ define([
       // minimal dimensions
       var minSizeA = rsA.getMinimumSize();
       var minSizeB = rsB.getMinimumSize();
-      var minSize = new Dimension(
+      var minSize = new AWT.Dimension(
           isHLayout ? minSizeA.width + minSizeB.width : Math.max(minSizeA.width, minSizeB.width),
           isHLayout ? Math.max(minSizeA.height, minSizeB.height) : minSizeA.height + minSizeB.height
           );

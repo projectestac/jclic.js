@@ -442,7 +442,9 @@ define([
     // by the `dim` values.
     // rect (`AWT.Rectangle`)
     getShape: function (rect) {
-      return $.extend(true, {}, this).scaleBy(rect.dim).moveBy(rect.pos);
+      //return $.extend(true, {}, this).scaleBy(rect.dim).moveBy(rect.pos);
+      var newShape = this.clone();
+      return newShape.scaleBy(rect.dim).moveBy(rect.pos);
     },
     //
     // Check if the provided Point `p` is inside this shape
@@ -537,6 +539,11 @@ define([
       return r instanceof Rectangle && this.pos.equals(r.pos) && this.dim.equals(r.dim);
     },
     //
+    // Clones this Rectangle
+    clone: function(){
+      return new Rectangle(this);
+    },
+    //
     // Multiplies the rectangle dimensions by the values supplied in `delta`
     // delta (Point or Dimension)
     scaleBy: function (delta) {
@@ -619,6 +626,11 @@ define([
       return e instanceof Ellipse && Rectangle.prototype.equals.call(this, e);
     },
     //
+    // Clones this Ellipse
+    clone: function(){
+      return new Ellipse(this.pos, this.dim);
+    },
+    //
     // Fills the ellipse with the current style in the provided canvas context
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
     fill: function (ctx) {
@@ -664,6 +676,14 @@ define([
     constructor: Path,
     strokes: [],
     enclosing: new Rectangle(),
+    //
+    // Clones this Path
+    clone: function(){
+      var str = [];
+      for(var i=0; i<this.strokes.length; i++)
+        str[i]=this.strokes[i].clone();
+      return new Path(str);
+    },
     //
     // Calculates the rectangle that (approximately) encloses the shape, taking
     // in consideration only the co-ordinates of the master points. Bezier and 
@@ -784,6 +804,14 @@ define([
     // `B` (bezier to) and `X` (close path)
     type: 'X',
     points: null,
+    //
+    // Clones this PathStroke
+    clone: function(){
+      // The constructors of PathStroke always make a deep copy of the `points` array
+      return new PathStroke(this.type, this.points);
+    },
+    //
+    // Multiplies by `delta` the x and y coordinates of all points
     moveBy: function (delta) {
       if (this.points)
         for (var p in this.points)

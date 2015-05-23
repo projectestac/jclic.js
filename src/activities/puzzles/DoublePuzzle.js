@@ -95,6 +95,10 @@ define([
 
       var abc = this.act.abc['primary'];
       if (abc) {
+        
+        if(abc.imgName)
+          abc.setImgContent(this.act.project.mediaBag, null, false);
+        
         if (this.act.acp !== null)
           this.act.acp.generateContent(
               new this.act.acp.ActiveBagContentKit(abc.nch, abc.ncw, [abc], false), this.ps);
@@ -145,7 +149,7 @@ define([
     //
     // Calculates the optimal dimension of this panel
     setDimension: function (preferredMaxSize) {
-      if (this.bgA || this.bgB || this.getBounds().equals(preferredMaxSize))
+      if (!this.bgA || !this.bgB || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
       return BoxBag.prototype.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
     },
