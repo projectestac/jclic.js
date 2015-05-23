@@ -36,7 +36,7 @@ define([
       var projectName = $div[0].getAttribute('data-project');
 
       var player = new JClicPlayer($div);
-      player.load(projectName, 5);
+      player.load(projectName, 9);
 
       $(window).resize(function () {
         if (player.skin)

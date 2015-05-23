@@ -220,7 +220,7 @@ define([
     tgc: null,
     // 
     // Position of the text grid (uses the same position codes as box grids)
-    boxGridPos: K.AB,
+    boxGridPos: 'AB',
     // 
     // Object that indicates if box grids A and B must be scrambled, and the number
     // of times to scramble.

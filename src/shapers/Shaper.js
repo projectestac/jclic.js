@@ -57,14 +57,14 @@ define([
     rectangularShapes: false,
     // 
     // Initialises this Shaper to default values
-    reset: function(nCols, nRows){        
-        this.nCols=nCols;
-        this.nRows=nRows;
-        this.nCells=nRows * nCols;
-        this.initiated=false;
-        this.shapeData=[];
-        for(var i=0; i<this.nCells; i++)
-            this.shapeData[i]=new AWT.Shape();
+    reset: function (nCols, nRows) {
+      this.nCols = nCols;
+      this.nRows = nRows;
+      this.nCells = nRows * nCols;
+      this.initiated = false;
+      this.shapeData = [];
+      for (var i = 0; i < this.nCells; i++)
+        this.shapeData[i] = new AWT.Shape();
     },
     // 
     // Loads the object settings from a specific JQuery XML element 
@@ -86,11 +86,11 @@ define([
           case 'toothHeightFactor':
           case 'scaleX':
           case 'scaleY':
-            shaper [this.name] = Number(this.value);
+            shaper[this.name] = Number(this.value);
             break;
           case 'randomLines':
           case 'showEnclosure':
-            shaper [this.name] = Utils.getBoolean(this.value, true);
+            shaper[this.name] = Utils.getBoolean(this.value, true);
             break;
         }
       });
@@ -98,14 +98,14 @@ define([
       // (main shape area where the other shape elements are placed)
       $xml.children('enclosing:first').each(function () {
         $(this).children('shape:first').each(function (data) {
-          shaper.enclosing = shaper.readShapeData(this)[0];
+          shaper.enclosing = shaper.readShapeData(this, shaper.scaleX, shaper.scaleY)[0];
           shaper.showEnclosure = true;
           shaper.hasRemainder = true;
         });
       });
       // Read the shape elements
       $xml.children('shape').each(function (i, data) {
-        shaper.shapeData[i] = shaper.readShapeData(data);
+        shaper.shapeData[i] = shaper.readShapeData(data, shaper.scaleX, shaper.scaleY);
       });
       // Correction needed for '@Holes' shaper
       if (shaper.shapeData.length > 0 && shaper.shapeData.length !== shaper.nRows * shaper.nCols) {
@@ -119,7 +119,7 @@ define([
     // Shapes are arrays of `stroke` objects
     // Each `stroke` has an `action` (_move to_, _line to_, _quad to_, etc.)
     // and corresponding `data`.
-    readShapeData: function ($xml) {
+    readShapeData: function ($xml, scaleX, scaleY) {
       var shd = [];
       $.each($xml.textContent.split('|'), function () {
         var sd = this.split(':');
@@ -128,23 +128,23 @@ define([
         var data = sd.length > 1 ? sd[1].split(',') : null;
         //
         // Data should be always divided by the scale (X or Y)
-        if(data){
-          for(var i=0; i<data.length; i++){
-            data[i] /= (i % 2 ? this.scaleY : this.scaleX);
+        if (data) {
+          for (var i = 0; i < data.length; i++) {
+            data[i] /= (i % 2 ? scaleY : scaleX);
           }
         }
-        switch(sd[0]){
+        switch (sd[0]) {
           case 'rectangle':
             return new AWT.Rectangle(data);
             break;
           case 'ellipse':
             return new AWT.Ellipse(data);
-            break;          
+            break;
           default:
             // It's an `AWT.PathStroke`
             shd.push(new AWT.PathStroke(sd[0], data));
-            break;          
-        }        
+            break;
+        }
       });
       return new AWT.Path(shd);
     },
@@ -152,9 +152,9 @@ define([
     // Returns a Shaper of the requested class
     // Should be called by `Shaper.prototype._getShaper`
     _getShaper: function (className, nx, ny) {
-      var shaper = null;      
+      var shaper = null;
       var cl = Shaper.prototype._CLASSES[className];
-      if(cl){
+      if (cl) {
         shaper = new cl(nx, ny);
       }
       else
@@ -168,23 +168,23 @@ define([
     },
     //
     // Gets a clone of the nth Shape object, scaled and located into a Rectangle
-    getShape: function(n, rect){
-        if(!this.initiated)
-            this.buildShapes();
-        if(n>=this.nCells || this.shapeData[n]===null)
-            return null;
-        return this.shapeData[n].getShape(rect);
+    getShape: function (n, rect) {
+      if (!this.initiated)
+        this.buildShapes();
+      if (n >= this.nCells || this.shapeData[n] === null)
+        return null;
+      return this.shapeData[n].getShape(rect);
     },
     //
     // Gets the nth Shape object
-    getShapeData: function(n){
-        return (n>=0 && n<this.shapeData.length) ? this.shapeData[n] : null;
+    getShapeData: function (n) {
+      return (n >= 0 && n < this.shapeData.length) ? this.shapeData[n] : null;
     },
     //
     // Gets the AWT.Rectangle that contains all shapes
     // This method should be overwrited by objects derived from Shape
-    getEnclosingShapeData: function(){
-        return new AWT.Rectangle(0, 0, 1, 1);
+    getEnclosingShapeData: function () {
+      return new AWT.Rectangle(0, 0, 1, 1);
     },
     //
     // Flag indicating if this Shaper deploys over a surface biggest than the rectangle enclosing
@@ -194,20 +194,20 @@ define([
     // When `hasRemainder` is true, this method gets the rectangle containing the full surface on
     // which the Shaper develops.
     // rect (AWT.Rectangle) - The frame where to move and scale all the shapes
-    getRemainderShape: function(rect){
+    getRemainderShape: function (rect) {
       var r = new AWT.Rectangle;
-      
-        if(!this.hasRemainder)
-            return null;
-        
-        if(!this.initiated)
-            this.buildShapes();
-        
-        for(var i=0; i<this.nCells; i++){
-            if(this.shapeData[i])
-                r.add(this.shapeData[i].getShape(rect), false);
-        }
-        return r;
+
+      if (!this.hasRemainder)
+        return null;
+
+      if (!this.initiated)
+        this.buildShapes();
+
+      for (var i = 0; i < this.nCells; i++) {
+        if (this.shapeData[i])
+          r.add(this.shapeData[i].getShape(rect), false);
+      }
+      return r;
     }
   };
 

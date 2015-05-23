@@ -659,12 +659,15 @@ define([
     // Deep copy of the array of strokes
     if (strokes) {
       this.strokes = [];
-      for (var str in strokes)
-        this.strokes.push(new PathStroke(
+      for (var n in strokes) {
+        var str = strokes[n];
+        str = new PathStroke(
             // In [Shaper](Shaper.html) objects, strokes have `action`, not `type`
             str.type ? str.type : str.action,
             // In [Shaper](Shaper.html) objects, strokes have `data`, not `points`
-            str.points ? str.points : str.data));
+            str.points ? str.points : str.data);
+        this.strokes.push(str);
+      }
     }
     // Calculate the enclosing rectangle
     this.enclosing = new Rectangle();
@@ -691,9 +694,11 @@ define([
     calcEnclosingRect: function () {
       var p0 = new Point();
       var p1 = new Point();
-      for (var str in this.strokes) {
+      for (var n in this.strokes) {
+        var str = this.strokes[n];
         if (str.points)
-          for (var p in str.points) {
+          for (var m in str.points) {
+            var p = str.points[m];
             // Check if `p` is at left or above `p0`
             p0.x = Math.min(p.x, p0.x);
             p0.y = Math.min(p.y, p0.y);
@@ -786,7 +791,7 @@ define([
       // Check if 'points' is an array of objects of type 'Point'
       if (points[0] instanceof Point) {
         for (var p in points)
-          this.points.push(new Point(p.x, p.y));
+          this.points.push(new Point(points[p].x, points[p].y));
       }
       // otherwise assume that 'points' contains just numbers
       // to be readed in pairs of x and y co-ordinates
@@ -815,7 +820,7 @@ define([
     moveBy: function (delta) {
       if (this.points)
         for (var p in this.points)
-          p.moveBy(delta);
+          this.points[p].moveBy(delta);
       return this;
     },
     //
@@ -823,7 +828,7 @@ define([
     multBy: function (delta) {
       if (this.points)
         for (var p in this.points)
-          p.multBy(delta);
+          this.points[p].multBy(delta);
       return this;
     }
   };
