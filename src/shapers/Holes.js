@@ -46,6 +46,3 @@ define([
   return Holes;
 
 });
-
-
-

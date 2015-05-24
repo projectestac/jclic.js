@@ -272,7 +272,7 @@ define([
       ctx.lineCap = this.lineCap;
       ctx.lineJoin = this.lineJoin;
       ctx.miterLimit = this.miterLimit;
-      return this;
+      return ctx;
     }
   };
 
@@ -342,10 +342,17 @@ define([
 
   //
   // Dimension
-  //
-  var Dimension = function (width, height) {
-    this.width = width ? width : 0;
-    this.height = height ? height : 0;
+  // w (number or Point) - The width of this Dimension, or the upper-left vertex of a virtual rectangle
+  // h (number or Point) - The height of this Dimension, or the bottom-right vertex of a virtual rectangle
+  var Dimension = function (w, h) {
+    if (w instanceof Point && h instanceof Point) {
+      this.width = h.x - w.x;
+      this.height = h.y - w.y;
+    }
+    else {
+      this.width = w ? w : 0;
+      this.height = h ? h : 0;
+    }
   };
 
   Dimension.prototype = {
@@ -462,19 +469,36 @@ define([
     // Fills the Shape with the current style in the provided canvas context
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
     fill: function (ctx) {
-      // Nothing to do in abstract shapes
-      // (to be implemented in subclasses)
-      return this;
+      this.preparePath(ctx);
+      ctx.fill();
+      return ctx;
     },
     //
     // Draws the Shape with the current style in the provided canvas context
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
     stroke: function (ctx) {
+      this.preparePath(ctx);
+      ctx.stroke();
+      return ctx;
+    },
+    //
+    // Prepares CanvasRenderingContext2D with a path that can be used to stroke a line, to fill a
+    // surface or to define a clipping region.
+    // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+    preparePath: function (ctx) {
       // Nothing to do in abstract shapes
       // (to be implemented in subclasses
-     return this;
+      return ctx;
+    },
+    //
+    // Creates a clipping region in the provided canvas context
+    // ctx ([CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+    // fillRule (String) - Can be 'nonzero' (default value when undefined) or 'evenodd'
+    clip: function (ctx, fillRule) {
+      this.preparePath(ctx);
+      ctx.clip(fillRule ? fillRule : 'nonzero');
+      return ctx;
     }
-
   };
 
   //
@@ -485,31 +509,32 @@ define([
   // of the rectangle will be calculated substracting co-ordinates)
   // w and h: when defined, `pos` and `dim` will be treated as `x` and `y` co-ordinates
   var Rectangle = function (pos, dim, w, h) {
+    var p = pos, d = dim;
     // Special case: constructor with a Rectangle as a unique parameter
     if (pos instanceof Rectangle) {
-      dim = new Dimension(pos.dim.width, pos.dim.height);
-      pos = new Point(pos.pos.x, pos.pos.y);
+      d = new Dimension(pos.dim.width, pos.dim.height);
+      p = new Point(pos.pos.x, pos.pos.y);
     }
     else if (pos instanceof Point) {
-      pos = new Point(pos.x, pos.y);
+      p = new Point(pos.x, pos.y);
       if (dim instanceof Dimension)
-        dim = new Dimension(dim.width, dim.height);
+        d = new Dimension(dim.width, dim.height);
     }
     else if (pos instanceof Array) {
       // Assume `pos` is an array of numbers indicating: x0, y0, x1, y1
-      pos = new Point(pos[0], pos[1]);
-      dim = new Dimension(pos[2] - pos[0], pos[3] - pos[1]);
+      p = new Point(pos[0], pos[1]);
+      d = new Dimension(pos[2] - pos[0], pos[3] - pos[1]);
     }
     else if (typeof w === 'number' && typeof h === 'number') {
       // width and height passed. Treat all parameters as co-ordinates:
-      pos = new Point(pos, dim);
-      dim = new Dimension(w, h);
+      p = new Point(pos, dim);
+      d = new Dimension(w, h);
     }
-    Shape.call(this, pos);
-    if (dim instanceof Dimension)
-      this.dim = dim;
-    else if (dim instanceof Point)
-      this.dim = new Dimension(dim.x - this.pos.x, dim.y - this.pos.y);
+    Shape.call(this, p);
+    if (d instanceof Dimension)
+      this.dim = d;
+    else if (d instanceof Point)
+      this.dim = new Dimension(d.x - this.pos.x, d.y - this.pos.y);
     else
       this.dim = new Dimension();
   };
@@ -525,7 +550,7 @@ define([
     //
     // Sets the position and dimension of another Rectangle
     setBounds: function (rect) {
-      if(!rect)
+      if (!rect)
         rect = new Rectangle();
       this.pos.x = rect.pos.x;
       this.pos.y = rect.pos.y;
@@ -540,7 +565,7 @@ define([
     },
     //
     // Clones this Rectangle
-    clone: function(){
+    clone: function () {
       return new Rectangle(this);
     },
     //
@@ -581,19 +606,14 @@ define([
       var r1 = r.pos, r2 = r.getOppositeVertex();
       return r2.x >= p1.x && r1.x <= p2.x && r2.y >= p1.y && r1.y <= p2.y;
     },
-    //
-    // Fills the Rectangle with the current style in the provided canvas context
+    // 
+    // Prepares CanvasRenderingContext2D with a path that can be used to stroke a line, to fill a
+    // surface or to define a clipping region.
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-    fill: function (ctx) {
-      ctx.fillRect(this.pos.x, this.pos.y, this.dim.width, this.dim.height);
-      return this;
-    },
-    //
-    // Draws the Rectangle with the current style in the provided canvas context
-    // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-    stroke: function (ctx) {
-      ctx.strokeRect(this.pos.x, this.pos.y, this.dim.width, this.dim.height);
-      return this;
+    preparePath: function (ctx) {
+      ctx.beginPath();
+      ctx.rect(this.pos.x, this.pos.y, this.dim.width, this.dim.height);
+      return ctx;
     },
     //
     // Calcs the area of a rectangle with this dimension
@@ -627,25 +647,10 @@ define([
     },
     //
     // Clones this Ellipse
-    clone: function(){
+    clone: function () {
       return new Ellipse(this.pos, this.dim);
-    },
-    //
-    // Fills the ellipse with the current style in the provided canvas context
-    // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-    fill: function (ctx) {
-      // TODO: Implement filling ellipses
-      return Rectangle.prototype.fill.call(this, ctx);
-    },
-    //
-    // Draws the ellipse with the current style in the provided canvas context
-    // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-    stroke: function (ctx) {
-      // TODO: Implement filling ellipses
-      return Rectangle.prototype.stroke.call(this, ctx);
     }
-    //
-    // TODO: Implement `contains` and ìntersects` methods for Ellipse
+    // TODO: Implement `preparePath`, `contains` and ìntersects` methods for Ellipse
     // (currently using the Rectangle method)
   };
   // Ellipse extends Rectangle
@@ -681,10 +686,10 @@ define([
     enclosing: new Rectangle(),
     //
     // Clones this Path
-    clone: function(){
+    clone: function () {
       var str = [];
-      for(var i=0; i<this.strokes.length; i++)
-        str[i]=this.strokes[i].clone();
+      for (var i = 0; i < this.strokes.length; i++)
+        str[i] = this.strokes[i].clone();
       return new Path(str);
     },
     //
@@ -692,19 +697,24 @@ define([
     // in consideration only the co-ordinates of the master points. Bezier and 
     // Quadratic curves can get out of this enclosing box.
     calcEnclosingRect: function () {
-      var p0 = new Point();
-      var p1 = new Point();
+      var p0, p1;
       for (var n in this.strokes) {
         var str = this.strokes[n];
         if (str.points)
           for (var m in str.points) {
             var p = str.points[m];
-            // Check if `p` is at left or above `p0`
-            p0.x = Math.min(p.x, p0.x);
-            p0.y = Math.min(p.y, p0.y);
-            // Check if `p` is at right or below `p0`
-            p1.x = Math.max(p.x, p0.x);
-            p1.y = Math.max(p.y, p0.y);
+            if (!p0 || !p1) {
+              p0 = new Point(p);
+              p1 = new Point(p);
+            }
+            else {
+              // Check if `p` is at left or above `p0`
+              p0.x = Math.min(p.x, p0.x);
+              p0.y = Math.min(p.y, p0.y);
+              // Check if `p` is at right or below `p1`
+              p1.x = Math.max(p.x, p0.x);
+              p1.y = Math.max(p.y, p0.y);
+            }
           }
       }
       this.enclosing.setBounds(new Rectangle(p0, new Dimension(p0, p1)));
@@ -762,18 +772,15 @@ define([
       return this.enclosing.intersects(r);
     },
     //
-    // Fills the path with the current style in the provided canvas context
+    // Prepares CanvasRenderingContext2D with a path that can be used to stroke a line, to fill a
+    // surface or to define a clipping region.
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-    fill: function (ctx) {
+    preparePath: function (ctx) {
       // TODO: Implement filling paths
-      return this.enclosing.fill(ctx);
-    },
-    //
-    // Draws the path with the current style in the provided canvas context
-    // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-    stroke: function (ctx) {
-      // TODO: Implement filling paths
-      return this.enclosing.stroke(ctx);
+      ctx.beginPath();
+      for (n in this.strokes)
+        this.strokes[n].stroke(ctx);
+      return ctx;
     }
   };
   // Path extends Shape
@@ -811,7 +818,7 @@ define([
     points: null,
     //
     // Clones this PathStroke
-    clone: function(){
+    clone: function () {
       // The constructors of PathStroke always make a deep copy of the `points` array
       return new PathStroke(this.type, this.points);
     },
@@ -830,6 +837,34 @@ define([
         for (var p in this.points)
           this.points[p].multBy(delta);
       return this;
+    },
+    //
+    // Draws the PathStroke in the provided canvas context
+    // ctx: ([CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D))
+    stroke: function (ctx) {
+      switch (this.type) {
+        case 'M':
+          ctx.moveTo(this.points[0].x, this.points[0].y);
+          break;
+        case 'L':
+          ctx.lineTo(this.points[0].x, this.points[0].y);
+          break;
+        case 'Q':
+          ctx.quadraticCurveTo(
+              this.points[0].x, this.points[0].y,
+              this.points[1].x, this.points[1].y);
+          break;
+        case 'B':
+          ctx.bezierCurveTo(
+              this.points[0].x, this.points[0].y,
+              this.points[1].x, this.points[1].y,
+              this.points[2].x, this.points[2].y);
+          break;
+        case 'X':
+          ctx.closePath();
+          break;
+      }
+      return ctx;
     }
   };
 

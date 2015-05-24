@@ -329,6 +329,7 @@ define([
         return box;
       }            
     },
+    // 
     // Draws the content of this Activebox to the specified canvas context
     updateContent: function (ctx, dirtyRegion) {
 

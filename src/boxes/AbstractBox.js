@@ -158,7 +158,7 @@ define([
         if (!this.pos.equals(rect.pos)) {
           this.shape.moveTo(rect.pos);
         }
-        setShape(this.shape);
+        this.setShape(this.shape);
       }
       else
         AWT.Rectangle.prototype.setBounds.call(this, rect);
@@ -293,21 +293,23 @@ define([
       var bb = this.getBoxBaseResolve();
       if (!bb.transparent) {
         if (bb.bgGradient === null || bb.bgGradient.hasTransparency()) {
+          // Prepare the rendering context
           ctx.fillStyle = this.inactive ?
               bb.inactiveColor :
-              this.inverted ? bb.textColor : bb.backColor;
-          // TODO: Implement fill shape!        
-          //g2.fill(shape);
-          this.shape.fill(ctx);
-          ctx.fillStyle = 'black';
+              this.inverted ? bb.textColor : bb.backColor;          
+          // Fill the shape
+          this.shape.fill(ctx);          
         }
         if (bb.bgGradient !== null) {
           ctx.fillStyle = bb.bgGradient.getGradient(ctx, this.shape.getBounds());
           this.shape.fill(ctx);
         }
+        // Reset the canvas context
+        ctx.fillStyle = 'black';
       }
+            
       this.updateContent(ctx, dirtyRegion);
-      //g2.setClip(saveClip);        
+            
       this.drawBorder(ctx);
       return true;
     },
@@ -320,11 +322,17 @@ define([
     drawBorder: function (ctx) {
       if (this.border || this.marked || this.focused) {
         var bb = this.getBoxBaseResolve();
+        
+        // Prepare stroke settings
         ctx.strokeStyle = bb.borderColor;
         bb[(this.marked || this.focused) ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
         if (this.marked || this.focused)
           ctx.globalCompositeOperation = 'xor';
+        
+        // Draw border
         this.shape.stroke(ctx);
+        
+        // Reset ctx default values
         if (this.marked || this.focused)
           ctx.globalCompositeOperation = 'source-over';
         ctx.strokeStyle = 'black';

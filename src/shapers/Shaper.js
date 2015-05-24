@@ -98,7 +98,7 @@ define([
       // (main shape area where the other shape elements are placed)
       $xml.children('enclosing:first').each(function () {
         $(this).children('shape:first').each(function (data) {
-          shaper.enclosing = shaper.readShapeData(this, shaper.scaleX, shaper.scaleY)[0];
+          shaper.enclosing = shaper.readShapeData(this, shaper.scaleX, shaper.scaleY);
           shaper.showEnclosure = true;
           shaper.hasRemainder = true;
         });
@@ -111,6 +111,7 @@ define([
       if (shaper.shapeData.length > 0 && shaper.shapeData.length !== shaper.nRows * shaper.nCols) {
         shaper.nRows = shaper.shapeData.length;
         shaper.nCols = 1;
+        shaper.nCells = shaper.nCols * shaper.nRows;
       }
       return this;
     },
@@ -120,7 +121,7 @@ define([
     // Each `stroke` has an `action` (_move to_, _line to_, _quad to_, etc.)
     // and corresponding `data`.
     readShapeData: function ($xml, scaleX, scaleY) {
-      var shd = [];
+      var shd = [], result=null;
       $.each($xml.textContent.split('|'), function () {
         var sd = this.split(':');
         // Possible strokes are: `rectangle`, `ellipse`, `M`, `L`, `Q`, `B`, `X`
@@ -135,10 +136,10 @@ define([
         }
         switch (sd[0]) {
           case 'rectangle':
-            return new AWT.Rectangle(data);
+            result = new AWT.Rectangle(data[0], data[1], data[2], data[3]);
             break;
           case 'ellipse':
-            return new AWT.Ellipse(data);
+            result = new AWT.Ellipse(data[0], data[1], data[2], data[3]);
             break;
           default:
             // It's an `AWT.PathStroke`
@@ -146,7 +147,11 @@ define([
             break;
         }
       });
-      return new AWT.Path(shd);
+      
+      if(!result && shd.length>0)
+        result = new AWT.Path(shd);
+      
+      return result;
     },
     //
     // Returns a Shaper of the requested class
