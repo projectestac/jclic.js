@@ -92,6 +92,8 @@ define([
       if (bx !== null) {
         bx.setParent(this);
       }
+      // Add the `backgroundbox` rectangle to the global BoxBag rectangle
+      AWT.Rectangle.prototype.add.call(this, bx);
       this.preferredBounds.setBounds(this.getBounds());
     },
     //

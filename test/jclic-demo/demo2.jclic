@@ -1808,7 +1808,7 @@
     <style borderStroke="1.5">
      <color background="white" shadow="0x000000" inactive="white" alternative="white" border="gray" />
     </style>
-    <shaper class="@ClassicJigSaw" cols="4" rows="3" />
+    <shaper class="@ClassicJigSaw" cols="3" rows="3" />
    </cells>
    <scramble times="31" />
    <layout position="AB" />

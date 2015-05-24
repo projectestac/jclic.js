@@ -49,11 +49,6 @@ define([
 
   Shaper.prototype._CLASSES['@Rectangular'] = Rectangular;
   
-  // TODO: Assign specific classes to JigSaw shapers!
-  Shaper.prototype._CLASSES['@ClassicJigSaw'] = Rectangular;
-  Shaper.prototype._CLASSES['@JigSaw'] = Rectangular;
-  Shaper.prototype._CLASSES['@TriangularJigSaw'] = Rectangular;
-
   return Rectangular;
 
 });

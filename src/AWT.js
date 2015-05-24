@@ -634,8 +634,8 @@ define([
   //
   // pos (Point) - Upper left corner of the enclosing rectangle 
   // dim (Dimension or Point) - Dimension of the enclosing rectangle
-  var Ellipse = function (pos, dim) {
-    Rectangle.call(this, pos, dim);
+  var Ellipse = function (pos, dim, w, h) {
+    Rectangle.call(this, pos, dim, w, h);
   };
 
   Ellipse.prototype = {
@@ -693,6 +693,12 @@ define([
       return new Path(str);
     },
     //
+    // Adds a PathStroke element to `strokes`
+    addStroke: function(stroke){
+      this.strokes.push(stroke);
+      return this;      
+    },
+    //
     // Calculates the rectangle that (approximately) encloses the shape, taking
     // in consideration only the co-ordinates of the master points. Bezier and 
     // Quadratic curves can get out of this enclosing box.
@@ -712,12 +718,13 @@ define([
               p0.x = Math.min(p.x, p0.x);
               p0.y = Math.min(p.y, p0.y);
               // Check if `p` is at right or below `p1`
-              p1.x = Math.max(p.x, p0.x);
-              p1.y = Math.max(p.y, p0.y);
+              p1.x = Math.max(p.x, p1.x);
+              p1.y = Math.max(p.y, p1.y);
             }
           }
       }
       this.enclosing.setBounds(new Rectangle(p0, new Dimension(p0, p1)));
+      
       return this.enclosing;
     },
     //

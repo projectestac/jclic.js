@@ -22,9 +22,10 @@ define([
   "./skins/DefaultSkin",
   "./shapers/Rectangular",
   "./shapers/Holes",
+  "./shapers/JigSaw",
   "./activities/text/TextActivityBase",
   "./activities/panels/InformationScreen",
   "./activities/puzzles/DoublePuzzle"
-], function(a, b ,c, d, e, f){  
+], function(a, b ,c, d, e, f, g){  
   return 'Deep classes loaded!';
 });

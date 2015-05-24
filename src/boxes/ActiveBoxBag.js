@@ -80,7 +80,7 @@ define([
       if (abc.backgroundContent !== null && (this.getBackgroundActiveBox() !== null)) {
         bx = this.getBackgroundActiveBox();
         bx.setContent(abc.backgroundContent);
-        if (abc.bb !== bx.getBoxBaseX())
+        if (abc.bb !== bx.boxBase)
           bx.setBoxBase(abc.bb);
       }
     },

@@ -704,8 +704,8 @@ define([
       this.playing = false;
 
       this.skin = null;
-      if (this.act.skinFileName && this.act.skinFileName.length() > 0)
-        this.skin = this.act.project.mediaBag.getSkinElement(this.act.skinFileName, ps);
+      if (this.act.skinFileName && this.act.skinFileName.length > 0)
+        this.skin = this.act.project.mediaBag.getSkinElement(this.act.skinFileName);
 
       this.bgImage = null;
       if (this.act.bgImageFile && this.act.bgImageFile.length > 0) {
