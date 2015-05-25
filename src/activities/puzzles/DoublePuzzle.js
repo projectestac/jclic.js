@@ -151,7 +151,7 @@ define([
     setDimension: function (preferredMaxSize) {
       if (!this.bgA || !this.bgB || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
-      return BoxBag.prototype.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
+      return BoxBag.prototype._layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
     },
     //
     // Sets the size and position of this activity panel

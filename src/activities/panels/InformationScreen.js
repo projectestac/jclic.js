@@ -83,7 +83,7 @@ define([
     setDimension: function (preferredMaxSize) {
       if (this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
-      return BoxBag.prototype.layoutSingle(preferredMaxSize, this.bg, this.act.margin);
+      return BoxBag.prototype._layoutSingle(preferredMaxSize, this.bg, this.act.margin);
     },
     //
     // Sets the size and position of this activity panel

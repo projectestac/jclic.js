@@ -142,10 +142,12 @@ define([
     //
     // Overrides the `setBounds` method of [AbstractBox](AbstractBox.html)
     // adjusting the position and size of all cells
-    setBounds: function (rect, y, w, h) {
-      if(typeof rect === 'number')
+    setBounds: function (rect, ry, rw, rh) {
+      if(typeof rect === 'number'){
         // Arguments are co-ordinates and size
-        rect = new AWT.Rectangle(rect, y, w, h);
+        var rx = rect;
+        rect = new AWT.Rectangle(rx, ry, rw, rh);
+      }
       if (rect.getSurface() > 0 && !rect.equals(this)) {
         var scaleW = rect.dim.width / this.dim.width;
         var scaleH = rect.dim.height / this.dim.height;
@@ -250,7 +252,10 @@ define([
     // interface of JClic) - The object to be positioned and resized.
     // margin (number) - The margin between the available area and the BoxBag
     // Returns: an AWT.Dimension object with the final size of the container
-    layoutSingle: function (preferredMaxSize, rs, margin) {
+    //
+    // This is a static function and should be called directly from prototype as:
+    // `BoxBag.prototype._layoutSingle(...)`
+    _layoutSingle: function (preferredMaxSize, rs, margin) {
 
       // Avoid exceptions when rs is null
       if (!rs)
@@ -288,7 +293,7 @@ define([
 
       return d;
     },
-    //
+    // 
     // Sets the position and dimension of two Resizable objects based on a preferred 
     // maximum size, a layout schema and a margin.
     // desiredMaxSize (AWT.Dimension) - The preferred maximum size
@@ -299,7 +304,10 @@ define([
     // boxGridPos (string) - The layout schema (_AB_, _BA_, _AUB_ or _BUA_)
     // margin (number) - The margin between the available area and the BoxBag
     // Returns: an AWT.Dimension object with the final size of the container
-    layoutDouble: function (desiredMaxSize, rsA, rsB, boxGridPos, margin) {
+    //
+    // This is a static function and should be called directly from prototype as:
+    // `BoxBag.prototype._layoutDouble(...)`
+    _layoutDouble: function (desiredMaxSize, rsA, rsB, boxGridPos, margin) {
       // number of horizontal and vertical grid lines
       var isHLayout = false;
       var nbh = 1, nbv = 1;
@@ -358,7 +366,7 @@ define([
       da = rsA.getScaledSize(scale);
       db = rsB.getScaledSize(scale);
 
-      // margins to center one box relative to the other
+      // set margins to center one box relative to the other
       var dah, dav, dbh, dbv;
       dah = db.width > da.width ? (db.width - da.width) / 2 : 0;
       dbh = da.width > db.width ? (da.width - db.width) / 2 : 0;

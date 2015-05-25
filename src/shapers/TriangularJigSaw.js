@@ -1,5 +1,5 @@
-//    File    : JigSaw.js  
-//    Created : 24/05/2015  
+//    File    : TriangularJigSaw.js  
+//    Created : 25/05/2015  
 //    By      : fbusquet  
 //
 //    JClic.js  
@@ -15,73 +15,21 @@
 
 define([
   "jquery",
-  "./Shaper",
+  "./JigSaw",
   "../AWT"
-], function ($, Shaper, AWT) {
+], function ($, JigSaw, AWT) {
 
   //
   // This [Shaper](Shaper.html) returns a set of rectangular shapes with teeth and slots that fit
   // between them.
-  var JigSaw = function (nx, ny) {
-    Shaper.call(this, nx, ny);
+  var TriangularJigSaw = function (nx, ny) {
+    JigSaw.call(this, nx, ny);
   };
 
-  JigSaw.prototype = {
-    constructor: JigSaw,
+  TriangularJigSaw.prototype = {
+    constructor: TriangularJigSaw,
     //
-    // Overwrites the `rectangularShapes` flag of [Shaper](Shaper.html)
-    rectangularShapes: false,
-    //
-    // Builds the rectangular shapes
-    buildShapes: function () {
-      // Create two two-dimension arrays for storing the type of horizontal and vertical lines
-      var hLineType = [];
-      var vLineType = [];
-      for (var i = 0; i <= this.nRows; i++) {
-        hLineType[i] = [];
-        vLineType[i] = [];
-      }
-
-      for (var row = 0; row < this.nRows; row++) {
-        for (var col = 0; col < this.nCols; col++) {
-          if (row === 0) {
-            hLineType[row][col] = 0;
-          } else {
-            hLineType[row][col] = 1 + ((this.randomLines ? Math.round(Math.random() * 9) : row + col) % 2);
-          }
-          if (col === 0) {
-            vLineType[row][col] = 0;
-          } else {
-            vLineType[row][col] = 1 + ((this.randomLines ? Math.round(Math.random() * 9) : col + row + 1) % 2);
-          }
-          if (col === this.nCols - 1)
-            vLineType[row][col + 1] = 0;
-          if (row === this.nRows - 1)
-            hLineType[row + 1][col] = 0;
-        }
-      }
-
-      var w = 1 / this.nCols;
-      var h = 1 / this.nRows;
-
-      for (var r = 0; r < this.nRows; r++) {
-        for (var c = 0; c < this.nCols; c++) {
-          var x = w * c;
-          var y = h * r;
-          var sd = new AWT.Path([new AWT.PathStroke('M', [x, y])]);
-          this.hLine(sd, hLineType[r][c], x + 0, y + 0, w, h, false);
-          this.vLine(sd, vLineType[r][c + 1], x + w, y + 0, w, h, false);
-          this.hLine(sd, hLineType[r + 1][c], x + w, y + h, w, h, true);
-          this.vLine(sd, vLineType[r][c], x + 0, y + h, w, h, true);
-          sd.addStroke(new AWT.PathStroke('X'));
-          sd.calcEnclosingRect();
-          // Save the Path in `shapeData`
-          this.shapeData[r * this.nCols + c] = sd;
-        }
-      }
-      this.initiated = true;
-    },
-    //
+    // Overrides `hLine` in [JigSaw](JigSaw.html)
     // Adds an horizontal line to the provided path
     // sd (AWT.Path) - The Path where the line will be added
     // type (number) - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, 2 means tooth down
@@ -103,14 +51,14 @@ define([
         sd.addStroke(new AWT.PathStroke('L', [x0, y]));
         // This is the tooth:
         var hb = (h * this.toothHeightFactor) * ky;
-        sd.addStroke(new AWT.PathStroke('L', [x0, y + hb]));
-        sd.addStroke(new AWT.PathStroke('L', [x0 + wb, y + hb]));
+        sd.addStroke(new AWT.PathStroke('L', [x0 + wb / 2, y + hb]));
         sd.addStroke(new AWT.PathStroke('L', [x0 + wb, y]));
         // Draw the remaining line
         sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
       }
     },
     //
+    // Overrides `vLine` in [JigSaw](JigSaw.html)
     // Adds an vertical line to the provided path
     // sd (AWT.Path) - The Path where the line will be added
     // type (number) - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, 2 means tooth left
@@ -132,8 +80,7 @@ define([
         sd.addStroke(new AWT.PathStroke('L', [x, y0]));
         // This is the tooth:
         var wb = w * this.toothHeightFactor * kx;
-        sd.addStroke(new AWT.PathStroke('L', [x + wb, y0]));
-        sd.addStroke(new AWT.PathStroke('L', [x + wb, y0 + hb]));
+        sd.addStroke(new AWT.PathStroke('L', [x + wb, y0 + hb / 2]));
         sd.addStroke(new AWT.PathStroke('L', [x, y0 + hb]));
         // Draw the remaining line
         sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
@@ -141,11 +88,10 @@ define([
     }
   };
 
-  // JigSaw extends Shaper
-  JigSaw.prototype = $.extend(Object.create(Shaper.prototype), JigSaw.prototype);
+  // TriangularJigSaw extends JigSaw
+  TriangularJigSaw.prototype = $.extend(Object.create(JigSaw.prototype), TriangularJigSaw.prototype);
 
-  Shaper.prototype._CLASSES['@JigSaw'] = JigSaw;
+  JigSaw.prototype._CLASSES['@TriangularJigSaw'] = TriangularJigSaw;
 
-  return JigSaw;
-
+  return TriangularJigSaw;
 });

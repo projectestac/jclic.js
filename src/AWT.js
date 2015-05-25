@@ -738,7 +738,6 @@ define([
       for (var str in this.strokes)
         this.strokes[str].moveBy(delta);
       this.enclosing.moveBy(delta);
-      Shape.prototype.moveBy.call(this, delta);
       return this;
     },
     //
@@ -757,13 +756,9 @@ define([
     // Multiplies the shape dimension by the values supplied in `delta`
     // delta (Point or Dimension)
     scaleBy: function (delta) {
-      //var pos0 = new Point(this.pos);
-      //this.moveTo(new Point('0, 0'));
       for (var str in this.strokes)
         this.strokes[str].multBy(delta);
-      //this.enclosing.dim.multBy(delta);
       this.enclosing.scaleBy(delta);
-      //this.moveTo(pos0);
       return this;
     },
     //
