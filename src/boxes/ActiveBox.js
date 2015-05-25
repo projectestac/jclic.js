@@ -35,10 +35,10 @@ define([
 // the `hostedMediaPlayer` member.
 
   var ActiveBox = function (parent, container, boxBase, setIdLoc, rect) {
-    
+
     // ActiveBox extends AbstractBox
     AbstractBox.call(this, parent, container, boxBase);
-    
+
     if (setIdLoc)
       this.idLoc = setIdLoc;
     if (rect)
@@ -205,7 +205,7 @@ define([
       }
       else
         this.clear();
-      
+
       this.invalidate();
     },
     //
@@ -317,17 +317,17 @@ define([
     // abc ([ActiveBoxContent](ActiveBoxContent.html)) - The cell's content. Must not be null and
     // have the `dimension` member initialized.  
     // returns: The newly created ActiveBox
-    _createCell: function($dom, abc){
-      if(abc && abc.dimension){
+    _createCell: function ($dom, abc) {
+      if (abc && abc.dimension) {
         var box = new ActiveBox();
         box.setContent(abc);
-        var $canvas = $('<canvas width="'+ abc.dimension.width +'" height="'+ abc.dimension.height + '"/>');
+        var $canvas = $('<canvas width="' + abc.dimension.width + '" height="' + abc.dimension.height + '"/>');
         box.setBounds(new AWT.Rectangle(0, 0, abc.dimension.width, abc.dimension.height));
         $dom.append($canvas);
         box.ctx = $canvas.get(0).getContext('2d');
         box.repaint();
         return box;
-      }            
+      }
     },
     // 
     // Draws the content of this Activebox to the specified canvas context
@@ -347,7 +347,22 @@ define([
       if (abc.img !== null) {
         if (abc.imgClip !== null) {
           var r = abc.imgClip.getBounds();
-          ctx.drawImage(abc.img,
+          var img = abc.img;
+          if (!(abc.imgClip instanceof AWT.Rectangle)) {
+            // Prepare a temporary `canvas` object that will contain the clipped image
+            var tmpCanvas = document.createElement('canvas');
+            tmpCanvas.width = r.pos.x + r.dim.width;
+            tmpCanvas.height = r.pos.y + r.dim.height;
+            var tmpCtx = tmpCanvas.getContext('2d');
+            // Set the clipping region
+            abc.imgClip.clip(tmpCtx);
+            // Draw the original image
+            tmpCtx.drawImage(abc.img, 0, 0);
+            // Use the temporary canvas as a source image
+            // (as seen on: [http://stackoverflow.com/questions/7242006/html5-copy-a-canvas-to-image-and-back])
+            img = tmpCanvas;
+          }
+          ctx.drawImage(img,
               r.pos.x, r.pos.y, r.dim.width, r.dim.height,
               this.pos.x, this.pos.y, this.dim.width, this.dim.height);
         }
@@ -392,7 +407,7 @@ define([
         var py = this.pos.y;
         var pWidth = this.dim.width;
         var pHeight = this.dim.height;
-          if (imgRect !== null) {
+        if (imgRect !== null) {
           // There is an image in the ActiveBox
           // Try to compute the current space available for text
           var prx = [0, imgRect.pos.x, imgRect.pos.x + imgRect.dim.width, pWidth];

@@ -128,7 +128,7 @@ define([
       else
         this.firstRun = false;
 
-      this.setAndPlayMsg('main', 'start');
+      //this.setAndPlayMsg('main', 'start');
       if (this.bgA && this.bgB) {
         this.shuffle([this.bgA], true, true);
         if (this.useOrder)

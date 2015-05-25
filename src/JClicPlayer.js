@@ -608,8 +608,9 @@ define([
         
         // Activity.Panel will calc and set its position and size based on the maximum and optimal
         // available space
+        /* Try with a computed rect instead of "this", to avoid the loss of the right margin
+         * in narrow displays */
         this.actPanel.fitTo(proposedRect, this);
-        //this.actPanel.buildVisualComponents();
       }
       this.$div.css(mainCss);
     },

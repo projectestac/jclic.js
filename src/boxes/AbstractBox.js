@@ -154,6 +154,7 @@ define([
       if (this.specialShape) {
         if (!this.dim.equals(rect.dim)) {
           this.shape.scaleBy(new AWT.Dimension(rect.dim.width / this.dim.width, rect.dim.height / this.dim.height));
+          this.setShape(this.shape);
         }
         if (!this.pos.equals(rect.pos)) {
           this.shape.moveTo(rect.pos);
