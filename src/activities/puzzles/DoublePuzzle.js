@@ -95,19 +95,19 @@ define([
 
       var abc = this.act.abc['primary'];
       if (abc) {
-        
-        if(abc.imgName)
+
+        if (abc.imgName)
           abc.setImgContent(this.act.project.mediaBag, null, false);
-        
+
         if (this.act.acp !== null)
           this.act.acp.generateContent(
               new this.act.acp.ActiveBagContentKit(abc.nch, abc.ncw, [abc], false), this.ps);
-          
+
         this.bgA = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
         this.bgB = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
 
         this.bgA.setContent(abc);
-        
+
         this.bgA.setVisible(true);
         this.bgB.setVisible(true);
 
@@ -134,17 +134,29 @@ define([
         if (this.useOrder)
           this.currentItem = this.bgA.getNextItem(-1);
         this.playing = true;
+        this.invalidate().update();
       }
     },
     //
-    // Draws the panel content
-    render: function (ctx, dirtyRegion) {
-      if (this.bgA)
+    // Overrides `Activity.Panel.updateContent`
+    // Updates the graphic contents of its panel.
+    // The method should be called from `Activity.Panel.update`
+    // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
+    updateContent: function (dirtyRegion) {
+      if (this.bgA && this.bgB && this.$canvas) {
+        var canvas = this.$canvas.get(0);
+        var ctx = canvas.getContext('2d');
+        if(!dirtyRegion)
+          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
+        this.bgA.setContext2D(ctx);
         this.bgA.update(ctx, dirtyRegion, this);
-      if (this.bgB)
+        this.bgB.setContext2D(ctx);
         this.bgB.update(ctx, dirtyRegion, this);
-      if (this.bc && this.bc.active)
-        this.bc.update(ctx, dirtyRegion, this);      
+        if (this.bc && this.bc.active)
+          this.bc.update(ctx, dirtyRegion, this);
+      }
+      return ActPanelAncestor.updateContent.call(this, dirtyRegion);
     },
     //
     // Calculates the optimal dimension of this panel
@@ -161,12 +173,7 @@ define([
       if (this.bgA || this.bgB) {
         this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>');
         this.$div.append(this.$canvas);
-        this.ctx = this.$canvas.get(0).getContext('2d');
-        this.bgA.setContext2D(this.ctx);
-        this.bgB.setContext2D(this.ctx);
-        this.invalidate();
-        this.bgA.update(this.ctx);
-        this.bgB.update(this.ctx);
+        this.invalidate().update();
       }
     },
     // 
@@ -179,7 +186,7 @@ define([
             event.pageY - this.$div.offset().top);
         this.ps.stopMedia(1);
         var bx = this.bgA.findActiveBox(p);
-        if(!bx)
+        if (!bx)
           bx = this.bgB.findActiveBox(p);
         if (bx) {
           if (!bx.playMedia(this.ps))

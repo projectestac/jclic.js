@@ -204,7 +204,7 @@ define([
             px = Math.min(Math.max(px, this.pos.x), maxX - bx.dim.width);
             py = Math.min(Math.max(py, this.pos.y), maxY - bx.dim.height);
           }
-          bx.moveTo(px, py);
+          bx.moveTo(new AWT.Point(px, py));
           bx.idLoc = idLoc[i];
         }
       }

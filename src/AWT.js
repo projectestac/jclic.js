@@ -1021,9 +1021,12 @@ define([
       return this;
     },
     //
-    // Function to be overrided by subclasses
-    updateContent: function (rect) {
-      // Does nothing      
+    // Containers should implement this method to update its graphic contents.
+    // This method should be called from `AWT.Container.update`
+    // dirtyRegion (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the
+    // whole Container.
+    updateContent: function (dirtyRegion) {
+      // To be overrided. Here does nothing.
       return this;
     }
   };

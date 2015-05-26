@@ -74,9 +74,22 @@ define([
         this.bg.setVisible(true);
       }
     },
-    render: function (ctx, dirtyRegion) {
-      if (this.bg)
+    //
+    // Overrides `Activity.Panel.updateContent`
+    // Updates the graphic contents of its panel.
+    // The method should be called from `Activity.Panel.update`
+    // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
+    updateContent: function(dirtyRegion){
+      if (this.bg && this.$canvas){
+        var canvas = this.$canvas.get(0);
+        var ctx = canvas.getContext('2d');
+        if(!dirtyRegion)
+          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
+        this.bg.setContext2D(ctx);
         this.bg.update(ctx, dirtyRegion, this);
+      }
+      return ActPanelAncestor.updateContent.call(this, dirtyRegion);
     },
     //
     // Calculates the optimal dimension of this panel
@@ -93,10 +106,8 @@ define([
       if (this.bg) {
         this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>');
         this.$div.append(this.$canvas);
-        this.ctx = this.$canvas.get(0).getContext('2d');
-        this.bg.setContext2D(this.ctx);
         this.invalidate();
-        this.bg.update(this.ctx);
+        this.update();
       }
     },
     // 

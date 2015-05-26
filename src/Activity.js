@@ -648,10 +648,6 @@ define([
     // The JQuery div element used by this panel
     $div: null,
     //
-    // The [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-    // used in this panel
-    ctx: null,
-    //
     // The realized skin
     skin: null,
     //
@@ -686,7 +682,7 @@ define([
     backgroundColor: null,
     backgroundTransparent: false,
     border: null,
-    //
+    // 
     // Sets the size and position of this activity panel
     setBounds: function (rect) {
       AWT.Container.prototype.setBounds.call(this, rect);
@@ -733,6 +729,16 @@ define([
         cssAct['background-image'] = this.act.activityBgGradient.getCss();
       }
       this.$div.css(cssAct);
+    },
+    //
+    // Overrides `AWT.Container.updateContent`
+    // Activities should implement this method to update the graphic contents of its panel.
+    // The method should be called from AWT.Container.update
+    // dirtyRegion (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the
+    // whole panel.
+    updateContent: function(dirtyRegion){
+      // To be overrided by subclasses. Does nothing.
+      return AWT.Container.prototype.updateContent.call(this, dirtyRegion);      
     },
     //
     // Plays the specified event sound
