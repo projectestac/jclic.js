@@ -40,10 +40,6 @@ define([
   AbstractBox.prototype = {
     constructor: AbstractBox,
     //
-    // The [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-    // used to draw this box
-    ctx: null,
-    //
     // The parent AbstractBox (can be `null`)
     parent: null,
     //
@@ -262,17 +258,6 @@ define([
     setAlternative: function (newVal) {
       this.alternative = newVal;
       this.invalidate();
-    },
-    //
-    // Sets the CanvasRenderingContext2D to be used by this box
-    setContext2D: function(ctx){
-      this.ctx = ctx;
-    },
-    //
-    // TODO: functions to be implemented by subclasses
-    repaint: function () {
-      if(this.ctx)
-        this.update(this.ctx);
     },
     //
     // Graphics operations based on a Canvas context ctx

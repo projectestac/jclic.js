@@ -164,6 +164,15 @@ define([
     setProperties: function ($xml) {
     },
     //
+    // Overrides `AWT.Container.updateContent`
+    // Updates the graphic contents of this skin.
+    // The method should be called from `Skin.update`
+    // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
+    updateContent: function (dirtyRegion) {
+      // To be overrided. Does nothing in abstract Skin.
+      return AWT.Container.prototype.updateContent.call(this);
+    },    
+    //
     // Reset all counters
     // bEnabled (boolean) - Leave it enabled/disabled
     resetAllCounters: function (bEnabled) {

@@ -322,10 +322,10 @@ define([
         var box = new ActiveBox();
         box.setContent(abc);
         var $canvas = $('<canvas width="' + abc.dimension.width + '" height="' + abc.dimension.height + '"/>');
-        box.setBounds(new AWT.Rectangle(0, 0, abc.dimension.width, abc.dimension.height));
+        var rect = new AWT.Rectangle(0, 0, abc.dimension.width, abc.dimension.height);
+        box.setBounds(rect);
         $dom.append($canvas);
-        box.ctx = $canvas.get(0).getContext('2d');
-        box.repaint();
+        box.update($canvas.get(0).getContext('2d'), rect);
         return box;
       }
     },

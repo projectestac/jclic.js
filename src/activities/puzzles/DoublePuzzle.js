@@ -149,9 +149,7 @@ define([
         if(!dirtyRegion)
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
-        this.bgA.setContext2D(ctx);
         this.bgA.update(ctx, dirtyRegion, this);
-        this.bgB.setContext2D(ctx);
         this.bgB.update(ctx, dirtyRegion, this);
         if (this.bc && this.bc.active)
           this.bc.update(ctx, dirtyRegion, this);

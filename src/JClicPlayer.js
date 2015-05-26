@@ -726,7 +726,8 @@ define([
       if (ab !== null) {
         ab.clear();
         ab.setContent(abc ? abc : ActiveBoxContent.prototype.EMPTY_CONTENT);
-        ab.repaint();
+        // TODO: Transfer this method to Skin
+        this.skin.invalidate().update();
       }
     },
     //

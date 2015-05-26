@@ -44,7 +44,7 @@ define([
     // Enables or disables this counter
     setEnabled: function (bEnabled) {
       this.enabled = bEnabled;
-      this.repaint();
+      this.container.invalidate(this.getBounds()).update();
     },
     //
     // Checks if the counter is enabled    
@@ -55,7 +55,7 @@ define([
     // Sets the initial value of the counter
     setCountDown: function (maxValue) {
       this.countDown = maxValue;
-      this.repaint();
+      this.container.invalidate(this.getBounds()).update();
     },
     //
     // Sets the image to be used as a source for drawing the counters
@@ -66,21 +66,21 @@ define([
       this.img = setImg;
       this.origin = setOrigin;
       this.dSize = setDigitSize;
-      this.repaint();
+      this.container.invalidate(this.getBounds()).update();
     },
     //
     // Increments the value of this counter    
     incValue: function () {
       this.value++;
       if (this.enabled)
-        this.repaint();
+        this.container.invalidate(this.getBounds()).update();
     },
     //
     // Sets/ Gets the value of this counter
     setValue: function (newValue) {
       this.value = newValue;
       if (this.enabled)
-        this.repaint();
+        this.container.invalidate(this.getBounds()).update();
     },
     getValue: function () {
       return this.value;

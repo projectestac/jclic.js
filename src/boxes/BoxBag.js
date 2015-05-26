@@ -176,15 +176,6 @@ define([
       AbstractBox.prototype.setBounds.call(this, rect);
     },
     //
-    // Sets the CanvasRenderingContext2D to be used by this box
-    // Overwrites same function in [AbstractBox](AbstractBox.html)
-    setContext2D: function(ctx){
-      this.ctx = ctx;
-      for (var i = 0; i < this.cells.length; i++) {
-        this.getBox(i).setContext2D(ctx);
-      }
-    },
-    //
     // Graphics operations based on a Canvas context ctx
     // Overrides same method in [AbstractBox](AbstractBox.html)
     update: function (ctx, dirtyRegion) {

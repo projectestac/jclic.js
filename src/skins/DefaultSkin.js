@@ -74,6 +74,17 @@ define([
     background: '#3F51B5',
     margin: 18,
     msgBoxHeight: 60,
+    //
+    // Overrides `Skin.updateContent`
+    // Updates the graphic contents of this skin.
+    // The method should be called from `Skin.update`
+    // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
+    updateContent: function (dirtyRegion) {
+      if(this.$msgBoxDivCanvas)
+        this.msgBox.update(this.$msgBoxDivCanvas.get(0).getContext('2d'), dirtyRegion);
+      return Skin.prototype.updateContent.call(this);
+    },    
+    // 
     // Main method used to build the contents
     // Resizes and places internal objects
     doLayout: function () {
@@ -112,33 +123,39 @@ define([
       this.msgBox.ctx = null;
       this.$msgBoxDivCanvas.remove();
       this.$msgBoxDivCanvas = null;
+      
+      var msgBoxRect = new AWT.Rectangle(2 * margin + prv.w, 2 * margin + playerHeight, wMsgBox, h);
 
       this.$msgBoxDiv.css({
         position: 'absolute',
-        width: wMsgBox + 'px',
-        height: h + 'px',
-        top: 2 * margin + playerHeight + 'px',
-        left: 2 * margin + prv.w + 'px',
+        width: msgBoxRect.dim.width + 'px',
+        height: msgBoxRect.dim.height + 'px',
+        top: msgBoxRect.pos.y + 'px',
+        left: msgBoxRect.pos.x + 'px',
         'background-color': 'lightblue'
       });
 
       this.buttons.prev.css({
         position: 'absolute',
-        top: 2 * margin + playerHeight + (h - prv.h) / 2 + 'px',
+        top: msgBoxRect.pos.y + (h - prv.h) / 2 + 'px',
         left: margin + 'px'
       });
 
       this.buttons.next.css({
         position: 'absolute',
-        top: 2 * margin + playerHeight + (h - nxt.h) / 2 + 'px',
+        top: msgBoxRect.pos.y + (h - nxt.h) / 2 + 'px',
         left: w + margin - nxt.w + 'px'
       });
 
       this.$msgBoxDivCanvas = $('<canvas width="' + wMsgBox + '" height="' + h + '"/>');
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
+      // Internal bounds, relative to the origin of `$msgBoxDivCanvas`
       this.msgBox.setBounds(new AWT.Rectangle(0, 0, wMsgBox, h));
-      this.msgBox.setContext2D(this.$msgBoxDivCanvas.get(0).getContext('2d'));
-      this.msgBox.repaint();
+      this.add(msgBoxRect);
+      
+      // Invalidates the msgBox area and calls `Container.update` to paint it
+      this.invalidate(msgBoxRect);
+      this.update();
     },
     //
     // Gets the [ActiveBox](ActiveBox.html) used by activities to display the main message
