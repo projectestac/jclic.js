@@ -86,10 +86,171 @@ define([
         this.linePainted = true;
       }
       return true;
-    }
+    },
+    //
+    //
+    moveBy: function (dx, dy) {
+      this.moveTo(AWT.Point(this.dest.x + dx, this.dest.y + dy));
+    },
+    //
+    // tp (AWT.Point)
+    // forcePaint (boolean)
+    moveTo: function (pt, forcePaint) {
+      var clipRect;
 
-    
-    
+      if (!this.active || (!forcePaint && this.dest.equals(pt)))
+        return;
+
+      if (this.bx !== null) {
+        clipRect = new AWT.Rectangle(
+            Math.floor(pt.x - this.relativePos.x),
+            Math.floor(pt.y - this.relativePos.y),
+            Math.ceil(this.bx.dim.width),
+            Math.ceil(this.bx.dim.height));
+        clipRect.add(this.bx);
+        this.bx.moveTo(new AWT.Point(pt.x - this.relativePos.x,
+            pt.y - this.relativePos.y));
+      }
+      else {
+        if (forcePaint || !this.USE_XOR) {
+          clipRect = new AWT.Rectangle(Math.floor(this.origin.x), Math.floor(this.origin.y), 0, 0);
+          clipRect.add(pt);
+          clipRect.add(this.dest);
+          this.dest.moveTo(pt);
+        }
+        else {
+          if (this.linePainted) {
+            drawLine();
+          }
+          this.dest.moveTo(pt);
+          this.drawLine();
+          this.linePainted = true;
+          return;
+        }
+      }
+      clipRect.grow(this.arrow ? this.arrow_l : 1, this.arrow ? this.arrow_l : 1);
+      this.parent.invalidate(clipRect).update();
+    },
+    //
+    // pt (AWT.Point) - Starting point
+    // box (ActiveBox) - Only when the BoxConnector runs in drag&drop mode
+    begin: function (pt, box) {
+      if (!box) {
+        if (this.active)
+          this.end();
+        this.origin.moveTo(pt);
+        this.dest.moveTo(pt);
+        this.linePainted = false;
+        this.active = true;
+        //this.parent.setCursor('HAND_CURSOR');
+      }
+      else {
+        this.begin(pt);
+        this.bx = box;
+        this.relativePos.moveTo(pt.x - box.pos.x, pt.y - box.pos.y);
+        this.bx.setTemporaryHidden(true);
+        var r = new AWT.Rectangle(this.bx.getBounds());
+        r.grow(1, 1);
+        this.linePainted = false;
+        this.parent.invalidate(r).update();
+      }
+    },
+    //
+    //    
+    end: function () {
+      if (!this.active)
+        return;
+      if (this.bx) {
+        var r = new AWT.Rectangle(this.bx.getBounds());
+        r.grow(1, 1);
+        this.parent.invalidate(r).update();
+        this.bx.moveTo(this.origin.x - this.relativePos.x,
+            this.y - this.relativePos.y);
+        this.bx.setTemporaryHidden(false);
+        r.setBounds(this.bx.getBounds());
+        r.grow(1, 1);
+        this.parent.invalidate(r).update();
+        this.bx = null;
+        this.relativePos.moveTo(0, 0);
+      }
+      else {
+        this.moveTo(dest, true);
+      }
+      this.active = false;
+      this.linePainted = false;
+      //this.parent.setCursor(null);
+    },
+    //
+    // origin (AWT.Point)
+    // dest (AWT.Point)
+    // arrow (boolean)
+    // color (string)
+    // xorColor (string)
+    // arrow_l (number)
+    // arrowAngle (number)
+    // strokeWidth (number)
+    drawLine: function (ctx, origin, dest, arrow, color, xorColor, arrow_l, arrowAngle, strokeWidth) {
+      
+      if (!origin)
+        origin = this.origin;
+
+      if (!dest)
+        dest = this.dest;
+
+      if (typeof arrow === 'undefined')
+        arrow = this.arrow;
+
+      if (!color)
+        color = this.lineColor;
+
+      if (!xorColor)
+        color = this.xorColor;
+
+      if (typeof arrow_l === 'undefined')
+        arrow_l = this.arrow_l;
+
+      if (typeof arrowAngle === 'undefined')
+        arrowAngle = this.arrow_angle;
+
+
+      if (typeof strokeWidth === 'undefined')
+        strokeWidth = this.line_width;
+
+      ctx.strokeStyle = color;
+      if (this.USE_XOR && xorColor !== null) {
+        // TODO: xorColor never used!
+        ctx.globalCompositeOperation = 'xor';
+      }
+      ctx.lineWidth = strokeWidth;
+
+      ctx.beginPath();
+      ctx.moveTo(origin.x, origin.y);
+      ctx.lineTo(dest.x, dest.y);
+      //ctx.closePath();
+      ctx.stroke();
+      if (arrow) {
+        var beta = Math.atan2(origin.x - dest.x, dest.x - origin.x);
+        var arp = new AWT.Point(dest.x - arrow_l * Math.cos(beta + arrowAngle),
+            dest.y + arrow_l * Math.sin(beta + arrowAngle));
+        ctx.beginPath();
+        ctx.moveTo(dest.x, dest.y);
+        ctx.lineTo(arp.x, arp.y);
+        // ctx.closePath();
+        ctx.stroke();
+
+        arp.moveTo(dest.x - arrow_l * Math.cos(beta - arrowAngle),
+            dest.y + arrow_l * Math.sin(beta - arrowAngle));
+        ctx.beginPath();
+        ctx.moveTo(dest.x, dest.y);
+        ctx.lineTo(arp.x, arp.y);
+        // ctx.closePath();
+        ctx.stroke();
+      }
+      if (this.USE_XOR && xorColor) {
+        // reset default settings
+        ctx.globalCompositeOperation = 'source-over';
+      }
+    }
   };
 
   return BoxConnector;

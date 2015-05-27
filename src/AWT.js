@@ -576,6 +576,17 @@ define([
       this.dim.multBy(delta);
       return this;
     },
+    //
+    // Expands the boundaries of the rectangle. This affects the current position
+    // and the dimension
+    grow: function(dx, dy){
+      this.pos.x-=dx;
+      this.pos.y-=dy;
+      this.dim.width+=2*dx;
+      this.dim.height+=2*dy;
+    },
+    //
+    // Gets the AWT.Point correspondinf to the lower-right vertex of the rectangle.
     getOppositeVertex: function () {
       return new Point(this.pos.x + this.dim.width, this.pos.y + this.dim.height);
     },

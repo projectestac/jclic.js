@@ -18,8 +18,9 @@ define([
   "../../Activity",
   "../../boxes/ActiveBoxGrid",
   "../../boxes/BoxBag",
+  "../../boxes/BoxConnector",
   "../../AWT"
-], function ($, Activity, ActiveBoxGrid, BoxBag, AWT) {
+], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT) {
 
   //
   // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
@@ -54,8 +55,7 @@ define([
     // Activity.Panel constructor
     Panel: function (act, ps, $div) {
       Activity.prototype.Panel.call(this, act, ps, $div);
-      //TODO: Build the BoxConnector object
-
+      this.bc = new BoxConnector(this);
     }
   };
 
@@ -72,6 +72,10 @@ define([
     // The [ActiveBoxBag](ActiveBoxBag.html) objects containing the information to be displayed.
     bgA: null,
     bgB: null,
+    //
+    // Possible events are: 'keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'click',
+    // 'dblclick', 'mousemove', 'mouseenter', 'mouseleave', 'mouseover', 'mouseout'
+    events: ['mousedown', 'mouseup', 'mousemove'],
     //
     // Clears the realized objects
     clear: function () {
@@ -107,6 +111,7 @@ define([
         this.bgB = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
 
         this.bgA.setContent(abc);
+        this.bgB.setInactive(true);
 
         this.bgA.setVisible(true);
         this.bgB.setVisible(true);
@@ -146,13 +151,13 @@ define([
       if (this.bgA && this.bgB && this.$canvas) {
         var canvas = this.$canvas.get(0);
         var ctx = canvas.getContext('2d');
-        if(!dirtyRegion)
+        if (!dirtyRegion)
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
         this.bgA.update(ctx, dirtyRegion, this);
         this.bgB.update(ctx, dirtyRegion, this);
         if (this.bc && this.bc.active)
-          this.bc.update(ctx, dirtyRegion, this);
+          this.bc.update(ctx, dirtyRegion);
       }
       return ActPanelAncestor.updateContent.call(this, dirtyRegion);
     },
@@ -169,8 +174,23 @@ define([
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bgA || this.bgB) {
-        this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>');
+        this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
+          position: 'absolute',
+          top: 0,
+          left: 0
+        });
         this.$div.append(this.$canvas);
+        // Create an additional Canvas for the BoxConnector
+        /*
+        this.$bcCanvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
+          position: 'absolute',
+          top: 0,
+          left: 0
+        });
+        this.$div.append(this.$bcCanvas);
+        this.bc.ctx = this.$bcCanvas.get(0).getContext('2d');
+        */
+
         this.invalidate().update();
       }
     },
@@ -179,16 +199,58 @@ define([
     // Overrides same function in Activity.Panel
     processEvent: function (event) {
       if (this.playing) {
+
+        var bx1, bx2;
         var p = new AWT.Point(
             event.pageX - this.$div.offset().left,
             event.pageY - this.$div.offset().top);
-        this.ps.stopMedia(1);
-        var bx = this.bgA.findActiveBox(p);
-        if (!bx)
-          bx = this.bgB.findActiveBox(p);
-        if (bx) {
-          if (!bx.playMedia(this.ps))
-            this.playEvent('click');
+
+        switch (event.type) {
+          case 'mousedown':
+            this.ps.stopMedia(1);
+            if (this.bc.active) {
+              if (this.act.dragCells)
+                bx1 = this.bc.bx;
+              else
+                bx1 = this.bgA.findActiveBox(this.bc.origin);
+              this.bc.end();
+              bx2 = this.bgB.findActiveBox(p);
+              if (bx1 && bx2 && bx2.isInactive()) {
+                var ok = false;
+                var src = bx1.getDescription() + " (" + bx1.idOrder + ")";
+                var dest = "(" + bx2.idOrder + ")";
+                if (bx1.getContent().isEquivalent(this.act.abc['primary'].getActiveBoxContent(bx2.idOrder), true)) {
+                  ok = true;
+                  bx1.exchangeContent(bx2);
+                  bx1.setVisible(false);
+                  if (this.act.useOrder)
+                    this.currentItem = this.bgA.getNextItem(this.currentItem);
+                }
+                var cellsAtPlace = this.bgA.countInactiveCells();
+                this.ps.reportNewAction(this.act, 'PLACE', src, dest, ok, cellsAtPlace);
+                if (ok && cellsAtPlace === this.bgA.getNumCells())
+                  this.finishActivity(true);
+                else
+                  this.playEvent(ok ? 'actionOk' : 'actionError');
+              }
+              this.update();
+            }
+            else {
+              bx1 = this.bgA.findActiveBox(p);
+              if (bx1 && !bx1.isInactive() && (!this.act.useOrder || bx1.idOrder === this.currentItem)) {
+                if (this.act.dragCells)
+                  this.bc.begin(p, bx1);
+                else
+                  this.bc.begin(p);
+                if (!bx1.playMedia(this.ps))
+                  this.playEvent('click');
+              }
+            }
+            break;
+
+          case 'mousemove':
+            this.bc.moveTo(p);
+            break;
         }
       }
     }

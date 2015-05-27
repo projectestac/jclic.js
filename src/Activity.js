@@ -58,7 +58,6 @@ define([
       '@panels.Identify': Activity,
       '@panels.Menu': Activity,
       '@puzzles.ExchangePuzzle': Activity,
-      '@puzzles.DoublePuzzle': Activity,
       '@puzzles.HolePuzzle': Activity,
       '@associations.SimpleAssociation': Activity,
       '@associations.ComplexAssociation': Activity,
@@ -666,7 +665,7 @@ define([
     // Currently selected item. Used in some types of activities.
     currentItem: 0,
     //
-    // The Box connector object
+    // A [BoxConnector](BoxConnector.html) object
     bc: null,
     //
     // The PlayStation used to display this activity
