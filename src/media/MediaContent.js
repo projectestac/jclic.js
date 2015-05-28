@@ -141,6 +141,24 @@ define([
           this.recBuffer === mc.recBuffer;
     },
     //
+    // Gets a string representing this media content, useful for checking if two different elements
+    // are in fact equivalent
+    getDescription: function () {
+      var result = '';
+      result += this.mediaType;
+      if (this.mediaFileName) {
+        result += ' ' + this.mediaFileName;
+        if (this.from >= 0)
+          result += ' from:' + this.from;
+        if (to >= 0)
+          result += ' to:' + this.to;
+      }
+      else if (this.externalParam) {
+        result += ' ' + this.externalParam;
+      }
+      return result;
+    },
+    //
     // Returns an image to be used as icon for representing this media content
     getIcon: function () {
 

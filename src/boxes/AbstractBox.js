@@ -25,10 +25,10 @@ define([
 // that determine how it must be drawn on screen. Some types of boxes can act as
 // containers for other boxes, establishing a hierarchy of dependences.
   var AbstractBox = function (parent, container, boxBase) {
-    
+
     // AbstractBox extends AWT.Rectangle
     AWT.Rectangle.call(this);
-    
+
     this.container = container;
     this.parent = parent;
     this.boxBase = boxBase;
@@ -96,11 +96,11 @@ define([
     },
     //
     // Invalidates the AWT.container zone corresponding to this AbstractBox
-    invalidate: function(rect){
-      if(!rect)
+    invalidate: function (rect) {
+      if (!rect)
         rect = this;
       var cnt = this.getContainerResolve();
-      if(cnt)
+      if (cnt)
         cnt.invalidate(rect);
     },
     //
@@ -141,7 +141,7 @@ define([
     //
     // Sets a new size and/or dimension
     setBounds: function (rect, y, w, h) {
-      if(typeof rect === 'number')
+      if (typeof rect === 'number')
         // arguments are co-ordinates and size
         rect = new AWT.Rectangle(rect, y, w, h);
       // Rectangle comparision
@@ -159,13 +159,15 @@ define([
       }
       else
         AWT.Rectangle.prototype.setBounds.call(this, rect);
-      
+
       return this;
     },
     //
     // Set a new location of this AbstractBox
     // In JClic this method was named 'setLocation'
-    moveTo: function (newPos) {
+    moveTo: function (newPos, y) {
+      if (typeof newPos === 'number')
+        newPos = new AWT.Point(newPos, y);
       this.setBounds((new AWT.Rectangle(this)).moveTo(newPos));
     },
     // 
@@ -278,24 +280,24 @@ define([
 
       var bb = this.getBoxBaseResolve();
       if (!bb.transparent) {
-        if (bb.bgGradient === null || bb.bgGradient.hasTransparency()) {
+        if (!bb.bgGradient || bb.bgGradient.hasTransparency()) {
           // Prepare the rendering context
           ctx.fillStyle = this.inactive ?
               bb.inactiveColor :
-              this.inverted ? bb.textColor : bb.backColor;          
+              this.inverted ? bb.textColor : bb.backColor;
           // Fill the shape
-          this.shape.fill(ctx);          
+          this.shape.fill(ctx);
         }
-        if (bb.bgGradient !== null) {
+        if (bb.bgGradient) {
           ctx.fillStyle = bb.bgGradient.getGradient(ctx, this.shape.getBounds());
           this.shape.fill(ctx);
         }
         // Reset the canvas context
         ctx.fillStyle = 'black';
       }
-            
+
       this.updateContent(ctx, dirtyRegion);
-            
+
       this.drawBorder(ctx);
       return true;
     },
@@ -308,16 +310,16 @@ define([
     drawBorder: function (ctx) {
       if (this.border || this.marked || this.focused) {
         var bb = this.getBoxBaseResolve();
-        
+
         // Prepare stroke settings
         ctx.strokeStyle = bb.borderColor;
         bb[(this.marked || this.focused) ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
         if (this.marked || this.focused)
           ctx.globalCompositeOperation = 'xor';
-        
+
         // Draw border
         this.shape.stroke(ctx);
-        
+
         // Reset ctx default values
         if (this.marked || this.focused)
           ctx.globalCompositeOperation = 'source-over';

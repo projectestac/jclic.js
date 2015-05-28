@@ -111,7 +111,6 @@ define([
         this.bgB = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
 
         this.bgA.setContent(abc);
-        this.bgB.setInactive(true);
 
         this.bgA.setVisible(true);
         this.bgB.setVisible(true);
@@ -219,7 +218,8 @@ define([
                 var ok = false;
                 var src = bx1.getDescription() + " (" + bx1.idOrder + ")";
                 var dest = "(" + bx2.idOrder + ")";
-                if (bx1.getContent().isEquivalent(this.act.abc['primary'].getActiveBoxContent(bx2.idOrder), true)) {
+                var target = this.act.abc['primary'].getActiveBoxContent(bx2.idOrder);
+                if (bx1.getContent().isEquivalent(target, true)) {
                   ok = true;
                   bx1.exchangeContent(bx2);
                   bx1.setVisible(false);

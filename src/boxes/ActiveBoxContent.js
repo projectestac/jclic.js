@@ -106,13 +106,13 @@ define([
           case 'imgAlign':
             content[name] = content.readAlign(val);
             break;
-            
+
           case 'hAlign':
             // Old style
-            content['txtAlign'] = content.readAlign(val+',center');
-            content['imgAlign'] = content.readAlign(val+',center');
+            content['txtAlign'] = content.readAlign(val + ',center');
+            content['imgAlign'] = content.readAlign(val + ',center');
             break;
-            
+
           case 'border':
           case 'avoidOverlapping':
             content [name] = Utils.getBoolean(val);
@@ -145,8 +145,8 @@ define([
             break;
         }
       });
-      
-      if(mediaBag)
+
+      if (mediaBag)
         this.realizeContent(mediaBag);
 
       return this;
@@ -225,10 +225,10 @@ define([
     // Sets a fragment of a main image as graphic content of this cell.
     // Cells cannot have two graphic contents, so `imgName` (the specific image of this cell, if any)
     // should be cleared.
-    setImgContent: function(img, imgClip){
-        this.img=img;
-        this.imgName=null;
-        this.imgClip=imgClip;
+    setImgContent: function (img, imgClip) {
+      this.img = img;
+      this.imgName = null;
+      this.imgClip = imgClip;
     },
     //
     // Prepares media content
@@ -243,7 +243,7 @@ define([
       if (this.imgName !== null) {
         var mbe = mediaBag.elements[this.imgName];
         if (mbe !== null) {
-          mbe.build(function() {
+          mbe.build(function () {
             thisContent.img = mbe.data;
           });
         }
@@ -255,6 +255,27 @@ define([
       }
       this.checkHtmlText(mediaBag);
     },
+    //
+    // Gets a string representing this content, useful for checking if two different contents are
+    // in fact equivalent
+    getDescription: function () {
+      var result = '';
+      if (this.text && this.text.length > 0)
+        result += text;
+      else if (this.imgName)
+        result += 'IMG:' + this.imgName;
+      else if (this.imgClip) {
+        var r = this.imgClip.getBounds();
+        result += '[' + r.x + ',' + r.y + ',' + r.width + ',' + r.height + ']';
+      }
+
+      if (this.mediaContent) {
+        if (result.length > 0)
+          result += ' ';
+        result += this.mediaContent.getDescription();
+      }
+      return result;
+    },
     // Gets an empty ActiveBoxContent
     EMPTY_CONTENT: null
   };
@@ -262,5 +283,4 @@ define([
   ActiveBoxContent.prototype.EMPTY_CONTENT = new ActiveBoxContent();
 
   return ActiveBoxContent;
-
 });

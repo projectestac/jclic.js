@@ -24,8 +24,8 @@ define([
   "./project/JClicProject",
   "./bags/JumpInfo",
   "./boxes/ActiveBoxContent"
-], function ($, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds, JClicProject, 
-             JumpInfo, ActiveBoxContent) {
+], function ($, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds, JClicProject,
+    JumpInfo, ActiveBoxContent) {
 
 //
 //  JClicPlayer is one of the the main classes of the JClic system. It implements
@@ -487,13 +487,13 @@ define([
           this.setSkin(this.project.skin);
         else
           this.setSkin(null);
-        
+
         if (this.skin) {
           // Enable or disable actions
           var hasReturn = this.history.storedElementsCount() > 0;
-          var navBtnFlag = this.navButtonsAlways ? 
-          'both' : this.navButtonsDisabled ? 
-          'none' : this.project.activitySequence.getNavButtonsFlag();
+          var navBtnFlag = this.navButtonsAlways ?
+              'both' : this.navButtonsDisabled ?
+              'none' : this.project.activitySequence.getNavButtonsFlag();
           this.actions['next'].setEnabled((navBtnFlag === 'fwd' || navBtnFlag === 'both') &&
               this.project.activitySequence.hasNextAct(hasReturn));
           this.actions['prev'].setEnabled((navBtnFlag === 'back' || navBtnFlag === 'both') &&
@@ -562,11 +562,11 @@ define([
     // 
     // Configures the layout and visual aspect of the player area
     doLayout: function () {
-      
+
       // Main player area settings
       var width = this.dim.width = this.$div.width();
       var height = this.dim.height = this.$div.height();
-      
+
       var mainCss = {
         'background-color': this.actPanel ? this.actPanel.act.bgColor : 'azure',
         'background-image': ''
@@ -587,25 +587,25 @@ define([
           else
             bgImageUrl = '';
         }
-        
+
         // Activity panel settings
         // Calc the maximum rectangle available for the activity panel
         var m = Utils.settings.BoxBase.AC_MARGIN;
-        var proposedRect = new AWT.Rectangle(m, m, width-2*m, height-2*m);
-        
-        if(this.actPanel.bgImage && !act.tiledBgImg && act.absolutePositioned){
+        var proposedRect = new AWT.Rectangle(m, m, width - 2 * m, height - 2 * m);
+
+        if (this.actPanel.bgImage && !act.tiledBgImg && act.absolutePositioned) {
           // Special case: when the activity has a background image not tiled, and an absolute
           // position has been specified, the Activity.Panel must be placed at this absolute
           // position, relative to the background image
-          this.bgImageOrigin.x = (width - this.actPanel.bgImage.width)/2;
-          this.bgImageOrigin.y = (height - this.actPanel.bgImage.height)/2;
+          this.bgImageOrigin.x = (width - this.actPanel.bgImage.width) / 2;
+          this.bgImageOrigin.y = (height - this.actPanel.bgImage.height) / 2;
           proposedRect.pos.moveTo(this.bgImageOrigin);
           proposedRect.dim.width -= (this.bgImageOrigin.x - m);
           proposedRect.dim.height -= (this.bgImageOrigin.y - m);
           proposedRect.dim.width = Math.min(proposedRect.dim.width, width);
           proposedRect.dim.height = Math.min(proposedRect.dim.height, height);
         }
-        
+
         // Activity.Panel will calc and set its position and size based on the maximum and optimal
         // available space
         /* Try with a computed rect instead of "this", to avoid the loss of the right margin
@@ -697,7 +697,7 @@ define([
     // Called from [Activity](Activity.html) when finishing
     // * completedOK (boolean) - The user has successful completed the activity
     activityFinished: function (completedOK) {
-      this.closehelpWindow();
+      this.closeHelpWindow();
       this.setSystemMessage('activity finished');
       this.timer.stop();
       this.startAutoPassTimer();

@@ -29,7 +29,7 @@ define([
   var Font = function (family, size, bold, italic, variant) {
     if (family)
       this.family = family;
-    if (size)
+    if (typeof size === 'number')
       this.size = size;
     if (bold)
       this.bold = bold;
@@ -180,9 +180,9 @@ define([
       this.c1 = c1;
     if (c2)
       this.c2 = c2;
-    if (angle)
+    if (typeof angle === 'number')
       this.angle = angle % 360;
-    if (cycles)
+    if (typeof cycles === 'number')
       this.cycles = cycles;
   };
 
@@ -246,13 +246,13 @@ define([
   // Encapsulates the properties used to draw lines in `canvas` elements
   // See: http://bucephalus.org/text/CanvasHandbook/CanvasHandbook.html#line-caps-and-joins
   var Stroke = function (lineWidth, lineCap, lineJoin, miterLimit) {
-    if (lineWidth)
+    if (typeof lineWidth === 'number')
       this.lineWidth = lineWidth;
     if (lineCap)
       this.lineCap = lineCap;
     if (lineJoin)
       this.lineJoin = lineJoin;
-    if (miterLimit)
+    if (typeof miterLimit === 'number')
       this.miterLimit = miterLimit;
   };
 

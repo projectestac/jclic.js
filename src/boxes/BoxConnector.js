@@ -108,8 +108,7 @@ define([
             Math.ceil(this.bx.dim.width),
             Math.ceil(this.bx.dim.height));
         clipRect.add(this.bx);
-        this.bx.moveTo(new AWT.Point(pt.x - this.relativePos.x,
-            pt.y - this.relativePos.y));
+        this.bx.moveTo(new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y));
       }
       else {
         if (forcePaint || !this.USE_XOR) {
@@ -163,9 +162,8 @@ define([
       if (this.bx) {
         var r = new AWT.Rectangle(this.bx.getBounds());
         r.grow(1, 1);
-        this.parent.invalidate(r).update();
-        this.bx.moveTo(this.origin.x - this.relativePos.x,
-            this.y - this.relativePos.y);
+        this.parent.invalidate(r).update;
+        this.bx.moveTo(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y);
         this.bx.setTemporaryHidden(false);
         r.setBounds(this.bx.getBounds());
         r.grow(1, 1);

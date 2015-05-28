@@ -38,11 +38,12 @@ define([
 
     // ActiveBox extends AbstractBox
     AbstractBox.call(this, parent, container, boxBase);
-
-    if (setIdLoc)
+    
+    this.clear();
+    if (typeof setIdLoc === 'number')
       this.idLoc = setIdLoc;
     if (rect)
-      this.setBounds(rect);
+      this.setBounds(rect);    
   };
 
   ActiveBox.prototype = {
@@ -71,7 +72,7 @@ define([
     //
     // Returns the current content
     getContent: function () {
-      if (this.content === null)
+      if (!this.content)
         this.setContent(new ActiveBoxContent());
       return this.content;
     },
@@ -120,8 +121,8 @@ define([
       this.idAss = bx.idAss;
       this.content = bx.content;
       this.altContent = bx.altContent;
-      if (this.content !== null) {
-        if (this.content.bb !== null)
+      if (this.content) {
+        if (this.content.bb)
           this.setBoxBase(this.content.bb);
         if (this.content.border !== null && bx.hasBorder() !== this.content.border)
           this.setBorder(this.content.border);
@@ -147,9 +148,9 @@ define([
     // Sets the text content of this ActiveBox
     setTextContent: function (tx) {
       // only plain text!
-      if (tx === null)
+      if (!tx)
         tx = '';
-      if (this.content === null)
+      if (!this.content)
         this.content = new ActiveBoxContent();
       this.content.rawText = tx;
       this.content.text = tx;
@@ -194,7 +195,7 @@ define([
       // TODO: Implement hosted media player
       // this.setHostedMediaPlayer(null);
       this.content = abc;
-      if (abc !== null) {
+      if (abc) {
         if (abc.bb !== this.boxBase)
           this.setBoxBase(abc.bb);
         if (abc.hasOwnProperty('border') && this.hasBorder() !== abc.border)
@@ -213,8 +214,7 @@ define([
     // `autostart` mode
     checkAutoStartMedia: function () {
       var cnt = this.getContent();
-      if (cnt !== null && cnt.mediaContent !== null &&
-          cnt.mediaContent.autoStart && cnt.amp !== null) {
+      if (cnt && cnt.mediaContent && cnt.mediaContent.autoStart && cnt.amp) {
         cnt.amp.play(this);
       }
     },
@@ -234,7 +234,7 @@ define([
       }
       this.altContent = abc;
       this.checkHostedComponent();
-      if (this.isAlternative() && this.hostedMediaPlayer !== null)
+      if (this.isAlternative() && this.hostedMediaPlayer)
         this.setHostedMediaPlayer(null);
     },
     //
@@ -250,7 +250,7 @@ define([
     // Puts this ActiveBox in "alternative" mode, meaning that `altContent` will
     // be used in place of `content`
     switchToAlt: function () {
-      if (this.isAlternative() || this.altContent === null || this.altContent.isEmpty())
+      if (this.isAlternative() || !this.altContent || this.altContent.isEmpty())
         return false;
       this.setHostedComponent(null);
       this.setHostedMediaPlayer(null);
@@ -270,9 +270,9 @@ define([
       var abc = this.getCurrentContent();
       var bb = this.getBoxBaseResolve();
       var jc = null;
-      if (!this.isInactive() && abc !== null && abc.htmlText !== null) {
+      if (!this.isInactive() && abc && abc.htmlText) {
         var s = abc.htmlText;
-        if (abc.innerHtmlText !== null) {
+        if (abc.innerHtmlText) {
           var css = bb.getCSS();
 
           var backColor = this.isInactive() ? bb.inactiveColor
@@ -336,7 +336,7 @@ define([
       var abc = this.getCurrentContent();
       var bb = this.getBoxBaseResolve();
 
-      if (this.isInactive() || abc === null || this.dim.width < 2 || this.dim.height < 2)
+      if (this.isInactive() || !abc || this.dim.width < 2 || this.dim.height < 2)
         return true;
 
       if (dirtyRegion && !this.intersects(dirtyRegion))
@@ -344,8 +344,8 @@ define([
 
       var imgRect = null;
 
-      if (abc.img !== null) {
-        if (abc.imgClip !== null) {
+      if (abc.img) {
+        if (abc.imgClip) {
           var r = abc.imgClip.getBounds();
           var img = abc.img;
           if (!(abc.imgClip instanceof AWT.Rectangle)) {
@@ -396,18 +396,18 @@ define([
           else
             ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys);
 
-          if (abc.avoidOverlapping && abc.text !== null)
+          if (abc.avoidOverlapping && abc.text)
             imgRect = new AWT.Rectangle(
                 Math.max(0, xs), Math.max(0, ys),
                 Math.min(this.dim.width, imgw), Math.min(this.dim.height, imgh));
         }
       }
-      if (abc.text !== null && abc.text.length > 0) {
+      if (abc.text && abc.text.length > 0) {
         var px = this.pos.x;
         var py = this.pos.y;
         var pWidth = this.dim.width;
         var pHeight = this.dim.height;
-        if (imgRect !== null) {
+        if (imgRect) {
           // There is an image in the ActiveBox
           // Try to compute the current space available for text
           var prx = [0, imgRect.pos.x, imgRect.pos.x + imgRect.dim.width, pWidth];
@@ -499,6 +499,11 @@ define([
         }
       }
       return true;
+    },
+    //
+    // Gets the `description` field of the current [ActiveBoxContent](ActiveBoxContent.html)
+    getDescription: function(){
+        return this.content ? this.content.getDescription() : '';
     },
     //
     // Plays the action or media associated with this ActiveBox
