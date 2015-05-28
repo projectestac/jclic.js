@@ -26,6 +26,11 @@ define([
     getBoolean: function (val, defaultValue) {
       return Number(val === 'true' | defaultValue ? 1 : 0);
     },
+    //
+    // Gets a number from a string or another number
+    getNumber: function(val, defaultValue){
+      return (val === '' || val===null || typeof val === 'undefined') ? defaultValue : Number(val);
+    },
     // 
     // Gets a tri-state value (0, 1 or 2) from a set of 'false', 'true' and
     // 'default' possible values.

@@ -289,10 +289,6 @@ define([
         }
       });
 
-      if (act.name === 'menupuz.ass') {
-        console.log('ep');
-      }
-
       // Read specific nodes
       $xml.children().each(function () {
         var $node = $(this);
