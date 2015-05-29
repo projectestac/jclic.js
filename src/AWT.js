@@ -1005,7 +1005,7 @@ define([
   //
   var Container = function (pos, dim, w, h) {
     Rectangle.call(this, pos, dim, w, h);
-    this.invalidatedRect = new Rectangle(new Point(), this.dim);
+    //this.invalidatedRect = new Rectangle(new Point(), this.dim);
   };
 
   Container.prototype = {
@@ -1018,16 +1018,20 @@ define([
     invalidate: function (rect) {
       if (!rect)
         rect = this;
-      this.invalidatedRect.add(rect);
+      if(this.invalidatedRect === null)
+        this.invalidatedRect = rect.clone();
+      else
+        this.invalidatedRect.add(rect);
       return this;
     },
     //
     // Updates the invalid area
     update: function () {
-      if (this.invalidatedRect.dim.getSurface() > 0) {
+      if (this.invalidatedRect!== null && this.invalidatedRect.dim.getSurface() > 0) {
         this.updateContent(this.invalidatedRect);
-        this.invalidatedRect.dim.width = 0;
-        this.invalidatedRect.dim.height = 0;
+        this.invalidatedRect = null;
+        //this.invalidatedRect.dim.width = 0;
+        //this.invalidatedRect.dim.height = 0;
       }
       return this;
     },

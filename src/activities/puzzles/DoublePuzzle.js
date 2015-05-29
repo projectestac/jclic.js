@@ -147,6 +147,7 @@ define([
     // The method should be called from `Activity.Panel.update`
     // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
     updateContent: function (dirtyRegion) {
+      ActPanelAncestor.updateContent.call(this, dirtyRegion);
       if (this.bgA && this.bgB && this.$canvas) {
         var canvas = this.$canvas.get(0);
         var ctx = canvas.getContext('2d');
@@ -156,9 +157,9 @@ define([
         this.bgA.update(ctx, dirtyRegion, this);
         this.bgB.update(ctx, dirtyRegion, this);
         if (this.bc && this.bc.active)
-          this.bc.update(ctx, dirtyRegion);
+          this.bc.update(ctx, dirtyRegion);        
       }
-      return ActPanelAncestor.updateContent.call(this, dirtyRegion);
+      return this;
     },
     //
     // Calculates the optimal dimension of this panel

@@ -91,6 +91,7 @@ define([
       this.backgroundBox = bx;
       if (bx !== null) {
         bx.setParent(this);
+        bx.isBackground = true;
       }
       // Add the `backgroundbox` rectangle to the global BoxBag rectangle
       AWT.Rectangle.prototype.add.call(this, bx);

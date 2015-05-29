@@ -64,7 +64,10 @@ define([
     //
     // The media player (usually an HTML5 media tag) containing
     hostedMediaPlayer: null,
-    //
+    // 
+    // This box is used as a background. When drawing, must resppect the clipping region
+    isBackground: false,
+    // 
     // Returns the current media content used by the box
     getCurrentContent: function () {
       return this.isAlternative() ? this.altContent : this.content;
@@ -341,7 +344,7 @@ define([
 
       if (dirtyRegion && !this.intersects(dirtyRegion))
         return false;
-
+      
       var imgRect = null;
 
       if (abc.img) {
