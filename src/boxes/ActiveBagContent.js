@@ -246,7 +246,7 @@ define([
     setTextContent: function (txt, setNcw, setNch) {
       this.ncw = Math.max(1, setNcw);
       this.nch = Math.max(1, setNch);
-      var n = ncw * nch;
+      var n = this.ncw * this.nch;
       for (var i = 0; i < n; i++) {
         this.getActiveBoxContent(i).setTextContent(
             (i >= txt.length || txt[i] === null) ? '' : txt[i]);

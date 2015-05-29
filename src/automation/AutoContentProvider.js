@@ -34,34 +34,47 @@ define([], function () {
 // JClic activities, usually based on random values. Activities linked to an
 // `AutoContentProvider` object rely on it to build its contents on every
 // start.
-  var AutoContentProvider = function (className) {
-    this.className = className;
+  var AutoContentProvider = function (project) {
+    this.project = project;
   };
 
   AutoContentProvider.prototype = {
     constructor: AutoContentProvider,
+    // 
+    // `AutoContentProvider.prototype._CLASSES` contains the list of classes derived from
+    // AutoContentProvider. It should be read-only and updated by real automation classes at creation.
+    // Currently, only two content providers are defined: `@arith.Arith` and `@tagreplace.TagReplace`
+    // TODO: When all automation engines are created, initialize _CLASSES as an empty object
+    _CLASSES: {
+      '@tagreplace.TagReplace': AutoContentProvider
+    },
     ActiveBagContentKit: ActiveBagContentKit,
     //
-    // The class name of the object.
-    // Currently, only two content providers are defined: `@arith.Arith` and `@tagreplace.TagReplace`
-    className: null,
+    // The [JClicProject](JClicProject.html) this AutoContentProvider belongs to
+    project: null,
     // 
     // Loads the object settings from a specific JQuery XML element 
     setProperties: function ($xml) {
       this.className = $xml.attr('class');
       return this;
     },
-    // 
-    // TODO: Read and implement real 'automation' objects
-    readAutomation: function ($xml) {
-      var className = $xml.attr('class');
-      var acp = null;
-      switch (className) {
-        case '@arith.Arith':
-        case '@tagreplace.TagReplace':
-          acp = new AutoContentProvider(className).setProperties($xml);
+    //
+    // Dynamic constructor that returns a specific type of AutoContentProvider based on the `class`
+    // attribute declared in the $xml element  
+    // Should be called only from Activity.setProperties()
+    _readAutomation: function ($xml, project) {
+      var automation = null;
+      if ($xml && project) {
+        var className = $xml.attr('class');
+        var cl = AutoContentProvider.prototype._CLASSES[className];
+        if (cl) {
+          automation = new cl(project);
+          automation.setProperties($xml);
+        }
+        else
+          console.log('Unknown AutoContentProvider class: ' + className);
       }
-      return acp;
+      return automation;
     },
     //
     // Functions to be implemented by real automatic content providers:

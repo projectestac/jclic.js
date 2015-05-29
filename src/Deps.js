@@ -24,10 +24,11 @@ define([
   "./shapers/Holes",
   "./shapers/JigSaw",
   "./shapers/TriangularJigSaw",
-  "./shapers/ClassicJigSaw",  
+  "./shapers/ClassicJigSaw",
+  "./automation/arith/Arith",
   "./activities/text/TextActivityBase",
   "./activities/panels/InformationScreen",
   "./activities/puzzles/DoublePuzzle"
-], function(a, b ,c, d, e, f, g, h, i){  
+], function(a, b ,c, d, e, f, g, h, i, j){  
   return 'Deep classes loaded!';
 });

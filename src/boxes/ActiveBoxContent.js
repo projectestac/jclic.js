@@ -261,7 +261,7 @@ define([
     getDescription: function () {
       var result = '';
       if (this.text && this.text.length > 0)
-        result += text;
+        result += this.text;
       else if (this.imgName)
         result += 'IMG:' + this.imgName;
       else if (this.imgClip) {
