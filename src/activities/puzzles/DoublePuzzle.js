@@ -55,7 +55,7 @@ define([
     // Activity.Panel constructor
     Panel: function (act, ps, $div) {
       Activity.prototype.Panel.call(this, act, ps, $div);
-      this.bc = new BoxConnector(this);
+      //this.bc = new BoxConnector(this);
     }
   };
 
@@ -156,8 +156,8 @@ define([
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
         this.bgA.update(ctx, dirtyRegion, this);
         this.bgB.update(ctx, dirtyRegion, this);
-        if (this.bc && this.bc.active)
-          this.bc.update(ctx, dirtyRegion);        
+        //if (this.bc && this.bc.active)
+        //  this.bc.update(ctx, dirtyRegion);        
       }
       return this;
     },
@@ -174,22 +174,22 @@ define([
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bgA || this.bgB) {
+        // Create the main canvas
         this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
           position: 'absolute',
           top: 0,
           left: 0
         });
         this.$div.append(this.$canvas);
-        // Create an additional Canvas for the BoxConnector
-        /*
+        // 
+        // Add a canvas layer for the BoxConnector
         this.$bcCanvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
           position: 'absolute',
           top: 0,
           left: 0
         });
         this.$div.append(this.$bcCanvas);
-        this.bc.ctx = this.$bcCanvas.get(0).getContext('2d');
-        */
+        this.bc = new BoxConnector(this, this.$bcCanvas.get(0).getContext('2d'));
 
         this.invalidate().update();
       }
@@ -198,7 +198,7 @@ define([
     // Main handler to receive mouse and key events
     // Overrides same function in Activity.Panel
     processEvent: function (event) {
-      if (this.playing) {
+      if (this.bc && this.playing) {
 
         var bx1, bx2;
         var p = new AWT.Point(

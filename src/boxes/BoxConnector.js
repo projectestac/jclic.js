@@ -24,8 +24,10 @@ define([
   // destination point, or dragging the ActiveBox from one location to another. The connecting
   // lines can have arrowheads at its endings.
   // parent (AWT.Container) - The Container this BoxConnector belongs to
-  var BoxConnector = function (parent) {
+  var BoxConnector = function (parent, ctx) {
     this.parent = parent;
+    this.ctx = ctx;
+    this.dim = new AWT.Dimension(ctx.canvas.width, ctx.canvas.height);
     this.origin = new AWT.Point();
     this.dest = new AWT.Point();
     this.relativePos = new AWT.Point();
@@ -63,6 +65,10 @@ define([
     // 
     // The ActiveBox to be moved
     bx: null,
+    //
+    // The Graphics context where the BoxConnector will paint, and its dimension
+    ctx: null,
+    dim: null,
     // 
     // The AWT.Container this connector belongs to
     parent: null,
@@ -73,6 +79,7 @@ define([
     // Updates the BoxConnector area
     // ctx (CanvasRenderingContext2D) The rendering context where the BoxConnector must draw
     // dirtyRegion (AWT.Rectangle)
+    /*
     update: function (ctx, dirtyRegion) {
       if (!this.active)
         return false;
@@ -86,7 +93,7 @@ define([
         this.linePainted = true;
       }
       return true;
-    },
+    },*/
     //
     //
     moveBy: function (dx, dy) {
@@ -96,86 +103,100 @@ define([
     // tp (AWT.Point)
     // forcePaint (boolean)
     moveTo: function (pt, forcePaint) {
-      var clipRect;
+      //var clipRect;
 
       if (!this.active || (!forcePaint && this.dest.equals(pt)))
         return;
+      
+      this.ctx.clearRect(0, 0, this.dim.width, this.dim.height);
 
       if (this.bx !== null) {
-        clipRect = new AWT.Rectangle(
-            Math.floor(pt.x - this.relativePos.x),
-            Math.floor(pt.y - this.relativePos.y),
-            Math.ceil(this.bx.dim.width),
-            Math.ceil(this.bx.dim.height));
-        clipRect.add(this.bx);
+        //clipRect = new AWT.Rectangle(
+        //    Math.floor(pt.x - this.relativePos.x),
+        //    Math.floor(pt.y - this.relativePos.y),
+        //    Math.ceil(this.bx.dim.width),
+        //    Math.ceil(this.bx.dim.height));
+        //clipRect.add(this.bx);
         this.bx.moveTo(new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y));
+        this.bx.setTemporaryHidden(false);
+        this.bx.update(this.ctx, null);
+        this.bx.setTemporaryHidden(true);        
       }
       else {
+        
+          this.dest.moveTo(pt);
+          this.drawLine();
+          this.linePainted = true;
+
+        /*
         if (forcePaint || !this.USE_XOR) {
-          clipRect = new AWT.Rectangle(Math.floor(this.origin.x), Math.floor(this.origin.y), 0, 0);
-          clipRect.add(pt);
-          clipRect.add(this.dest);
+          //clipRect = new AWT.Rectangle(Math.floor(this.origin.x), Math.floor(this.origin.y), 0, 0);
+          //clipRect.add(pt);
+          //clipRect.add(this.dest);
           this.dest.moveTo(pt);
         }
         else {
           if (this.linePainted) {
-            drawLine();
+            this.drawLine();
           }
           this.dest.moveTo(pt);
           this.drawLine();
           this.linePainted = true;
           return;
         }
+        */
       }
-      clipRect.grow(this.arrow ? this.arrow_l : 1, this.arrow ? this.arrow_l : 1);
-      this.parent.invalidate(clipRect).update();
+      //clipRect.grow(this.arrow ? this.arrow_l : 1, this.arrow ? this.arrow_l : 1);
+      //this.parent.invalidate(clipRect).update();
     },
     //
     // pt (AWT.Point) - Starting point
     // box (ActiveBox) - Only when the BoxConnector runs in drag&drop mode
     begin: function (pt, box) {
-      if (!box) {
-        if (this.active)
-          this.end();
-        this.origin.moveTo(pt);
-        this.dest.moveTo(pt);
-        this.linePainted = false;
-        this.active = true;
-        //this.parent.setCursor('HAND_CURSOR');
-      }
-      else {
-        this.begin(pt);
+      if (this.active)
+        this.end();
+      this.origin.moveTo(pt);
+      this.dest.moveTo(pt);
+      this.linePainted = false;
+      this.active = true;
+      //this.parent.setCursor('HAND_CURSOR');
+
+      if (box) {
         this.bx = box;
         this.relativePos.moveTo(pt.x - box.pos.x, pt.y - box.pos.y);
         this.bx.setTemporaryHidden(true);
-        var r = new AWT.Rectangle(this.bx.getBounds());
-        r.grow(1, 1);
+        //var r = new AWT.Rectangle(this.bx.getBounds());
+        //r.grow(1, 1);
         this.linePainted = false;
-        this.parent.invalidate(r).update();
+        this.parent.invalidate().update();
       }
+      this.moveTo(pt, true);      
     },
     //
     //    
     end: function () {
       if (!this.active)
         return;
+      
+      this.active = false;
+      this.linePainted = false;
+      this.ctx.clearRect(0, 0, this.dim.width, this.dim.height);
+
       if (this.bx) {
-        var r = new AWT.Rectangle(this.bx.getBounds());
-        r.grow(1, 1);
-        this.parent.invalidate(r).update;
+        //var r = new AWT.Rectangle(this.bx.getBounds());
+        //r.grow(1, 1);
+        //this.parent.invalidate(r).update;
         this.bx.moveTo(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y);
         this.bx.setTemporaryHidden(false);
-        r.setBounds(this.bx.getBounds());
-        r.grow(1, 1);
-        this.parent.invalidate(r).update();
+        //r.setBounds(this.bx.getBounds());
+        //r.grow(1, 1);
         this.bx = null;
         this.relativePos.moveTo(0, 0);
       }
-      else {
-        this.moveTo(dest, true);
-      }
-      this.active = false;
-      this.linePainted = false;
+      //else {
+      //  this.moveTo(dest, true);
+      //}
+      this.parent.invalidate().update();              
       //this.parent.setCursor(null);
     },
     //

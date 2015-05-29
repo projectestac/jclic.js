@@ -1016,23 +1016,20 @@ define([
     //
     // Invalidates the specified rectangle
     invalidate: function (rect) {
-      if (!rect)
-        rect = this;
-      if(this.invalidatedRect === null)
-        this.invalidatedRect = rect.clone();
+      if (rect) {
+        if (this.invalidatedRect === null)
+          this.invalidatedRect = rect.clone();
+        else
+          this.invalidatedRect.add(rect);
+      }
       else
-        this.invalidatedRect.add(rect);
+        this.invalidatedRect = null;
       return this;
     },
     //
     // Updates the invalid area
     update: function () {
-      if (this.invalidatedRect!== null && this.invalidatedRect.dim.getSurface() > 0) {
-        this.updateContent(this.invalidatedRect);
-        this.invalidatedRect = null;
-        //this.invalidatedRect.dim.width = 0;
-        //this.invalidatedRect.dim.height = 0;
-      }
+      this.updateContent(this.invalidatedRect);
       return this;
     },
     //

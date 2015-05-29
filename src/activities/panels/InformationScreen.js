@@ -105,8 +105,7 @@ define([
       if (this.bg) {
         this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>');
         this.$div.append(this.$canvas);
-        this.invalidate();
-        this.update();
+        this.invalidate().update();
       }
     },
     // 

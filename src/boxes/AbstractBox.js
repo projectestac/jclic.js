@@ -97,8 +97,8 @@ define([
     //
     // Invalidates the AWT.container zone corresponding to this AbstractBox
     invalidate: function (rect) {
-      if (!rect)
-        rect = this;
+      //if (!rect)
+      //  rect = this;
       var cnt = this.getContainerResolve();
       if (cnt)
         cnt.invalidate(rect);
