@@ -27,7 +27,8 @@ define([
 // shadow, margins, etc.) are specified in the `bb` attribute, always
 // pointing to a [BoxBase](BoxBase.html) object.
   var ActiveBoxContent = function (id) {
-    this.id = id;
+    if(typeof id !== 'undefined')
+      this.id = id;
     this.imgAlign = {h: 'middle', v: 'middle'};
     this.txtAlign = {h: 'middle', v: 'middle'};
   };

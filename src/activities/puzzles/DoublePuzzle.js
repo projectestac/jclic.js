@@ -156,8 +156,6 @@ define([
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
         this.bgA.update(ctx, dirtyRegion, this);
         this.bgB.update(ctx, dirtyRegion, this);
-        //if (this.bc && this.bc.active)
-        //  this.bc.update(ctx, dirtyRegion);        
       }
       return this;
     },

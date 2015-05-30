@@ -135,8 +135,24 @@ define([
         }
       });
 
-      // Link [BoxBase](BoxBase.html) objects of `activeBoxContentArray` elements
-      // to `bb`
+      // Assign ids when cells have empty content (they are just shapes)
+      var n = this.activeBoxContentArray.length;
+      if (n > 0) {
+        var empty = true;
+        for (var i = 0; i < n; i++) {
+          var bxc = this.getActiveBoxContent(i);
+          if (bxc.id !== -1 || bxc.item !== -1 || !bxc.isEmpty()) {
+            empty = false;
+            break;
+          }
+        }
+        if (empty) {
+          for (var i = 0; i < n; i++)
+            this.getActiveBoxContent(i).id = i;
+        }
+      }
+
+      // Link [BoxBase](BoxBase.html) objects of `activeBoxContentArray` elements to `bb`
       if (cellSet.bb) {
         $.each(cellSet.activeBoxContentArray, function (i, cellContent) {
           if (cellContent.bb)
@@ -210,7 +226,7 @@ define([
     // roundSizes (boolean) - When `true`, the cells size and coordinates will be rounded to its
     // nearest integer values.
     setImgContent: function (mb, sh, roundSizes) {
-      if(sh)
+      if (sh)
         this.setShaper(sh);
       this.ncw = this.shaper.nCols;
       this.nch = this.shaper.nRows;
