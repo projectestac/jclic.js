@@ -28,7 +28,8 @@ define([
   "./automation/arith/Arith",
   "./activities/text/TextActivityBase",
   "./activities/panels/InformationScreen",
-  "./activities/puzzles/DoublePuzzle"
-], function(a, b ,c, d, e, f, g, h, i, j){  
+  "./activities/puzzles/DoublePuzzle",
+  "./activities/puzzles/ExchangePuzzle"
+], function(a, b ,c, d, e, f, g, h, i, j, k){  
   return 'Deep classes loaded!';
 });

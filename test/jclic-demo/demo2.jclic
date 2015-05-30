@@ -1836,7 +1836,7 @@
     <window transparent="true" border="false" />
    </settings>
    <cells rows="1" columns="1" cellWidth="229.0" cellHeight="300.0" border="true">
-    <style borderStroke="1.5">
+    <style borderStroke="2.5">
      <color background="gray" inactive="white" border="black" />
     </style>
     <shaper class="@Holes" cols="1" rows="1" showEnclosure="false" scaleX="229.0" scaleY="300.0">
