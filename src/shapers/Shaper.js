@@ -207,6 +207,10 @@ define([
 
       if (!this.initiated)
         this.buildShapes();
+      
+      var sh = this.getEnclosingShapeData();
+      if(sh)
+        r.add(sh.getShape(rect), false);
 
       for (var i = 0; i < this.nCells; i++) {
         if (this.shapeData[i])

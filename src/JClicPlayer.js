@@ -417,7 +417,7 @@ define([
           this.reporter.newSession(project.name, this);
 
         // If none specified, start with the first element of the sequence
-        if (!sequence)
+        if (!sequence && !activity)
           sequence = '0';
       }
 

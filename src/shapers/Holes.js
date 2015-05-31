@@ -35,7 +35,14 @@ define([
     buildShapes: function () {
       if (this.nCells > 0)
         this.initiated = true;
-    }
+    },
+    //
+    // Gets the AWT.Rectangle that contains all shapes
+    // overrides same function in [Shaper](Shaper.html)
+    getEnclosingShapeData: function () {
+      if(!this.showEnclosure) return null;
+      return this.enclosing ? this.enclosing : Shaper.prototype.getEnclosingShapeData.call(this);
+    },
   };
 
   // Rectangular extends Shaper
