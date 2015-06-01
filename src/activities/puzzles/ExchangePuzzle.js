@@ -72,6 +72,9 @@ define([
     // The [ActiveBoxBag](ActiveBoxBag.html) object containing the information to be displayed.
     bg: null,
     //
+    // The [BoxConnector](BoxConnector.html) obect
+    bc: null,
+    //
     // Possible events are: 'keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'click',
     // 'dblclick', 'mousemove', 'mouseenter', 'mouseleave', 'mouseover', 'mouseout'
     events: ['mousedown', 'mouseup', 'mousemove'],

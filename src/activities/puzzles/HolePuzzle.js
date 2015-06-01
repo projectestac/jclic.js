@@ -19,8 +19,9 @@ define([
   "../../boxes/ActiveBoxGrid",
   "../../boxes/BoxBag",
   "../../boxes/BoxConnector",
-  "../../AWT"
-], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT) {
+  "../../AWT",
+  "../../shapers/Rectangular"
+], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT, Rectangular) {
 
   //
   // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
@@ -77,11 +78,11 @@ define([
     //
     // The hidden cell and its index on the ActiveBagContent
     hiddenBox: null,
-    hiddenBoxIndex: -1,    
+    hiddenBoxIndex: -1,
     //
     // Possible events are: 'keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'click',
     // 'dblclick', 'mousemove', 'mouseenter', 'mouseleave', 'mouseover', 'mouseout'
-    events: ['mousedown', 'mouseup', 'mousemove'],
+    events: ['mousedown'],
     //
     // Clears the realized objects
     clear: function () {
@@ -92,7 +93,7 @@ define([
       if (this.parkBg) {
         this.parkBg.end();
         this.parkBg = null;
-      }      
+      }
     },
     // 
     // Prepares the activity panel
@@ -116,15 +117,15 @@ define([
         this.bg = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
         this.bg.setContent(abc);
         this.bg.setVisible(true);
-        
-        this.hiddenBoxIndex=Math.ceil(Math.random()*this.bg.getNumCells());
-        this.hiddenBox=this.bg.getActiveBox(this.hiddenBoxIndex);
+
+        this.hiddenBoxIndex = Math.floor(Math.random() * this.bg.getNumCells());
+        this.hiddenBox = this.bg.getActiveBox(this.hiddenBoxIndex);
         this.hiddenBox.setVisible(false);
-        this.parkBg=new ActiveBoxGrid(null, this, abc.bb, this.margin, this.margin,
-          this.hiddenBox.dim.width, this.hiddenBox.dim.height, new AWT.Rectangle(0, 0, 1, 1));
-        this.parkBg.setContent(abc, null, hiddenBoxIndex, 0, 1);
+        this.parkBg = new ActiveBoxGrid(null, this, abc.bb, this.act.margin, this.act.margin,
+            this.hiddenBox.dim.width, this.hiddenBox.dim.height, new Rectangular(1, 1));
+        this.parkBg.setContent(abc, null, this.hiddenBoxIndex, 0, 1);
         this.parkBg.setBorder(this.bg.hasBorder());
-        this.parkBg.setVisible(true);        
+        this.parkBg.setVisible(true);
       }
     },
     // 
@@ -140,30 +141,27 @@ define([
       //this.setAndPlayMsg('main', 'start');
       if (this.bg) {
         this.shuffle([this.bg], true, true);
-        // This activity has an special shuffle. Cells can follow only logic movements
-        if(this.act.shuffles % 2 !==1)
+        // 
+        // This activity has an special shuffle method. Cells can move only to places near the 'hole'
+        if (this.act.shuffles % 2 !== 1)
           this.act.shuffles++;
-        for(var i=0; i<this.act.shuffles; i++){
-        var pth = this.bg.getCoord(this.hiddenBox);
-        var v=(Math.ceil(Math.random() * 2))===0 ? 1 : -1;
-        //
-        // Continuar aquí...
-                    if(random.nextBoolean()){
-                        pth.x+=v;
-                        if(pth.x<0 || pth.x>=bg.nCols)
-                            pth.x-=2*v;
-                    } else{
-                        pth.y+=v;
-                        if(pth.y<0 || pth.y>=bg.nRows)
-                            pth.y-=2*v;
-                    }
-                    ActiveBox dstBx=bg.getActiveBoxWithIdLoc(pth.y*bg.nCols+pth.x);
-                    if(dstBx!=null)
-                        hiddenBox.exchangeLocation(dstBx);
-                }
+        for (var i = 0; i < this.act.shuffles; i++) {
+          var pth = this.bg.getCoord(this.hiddenBox);
+          var v = (Math.floor(Math.random() * 2)) === 0 ? 1 : -1;
 
-        
-        
+          if ((Math.floor(Math.random() * 2)) === 0) {
+            pth.x += v;
+            if (pth.x < 0 || pth.x >= this.bg.nCols)
+              pth.x -= 2 * v;
+          } else {
+            pth.y += v;
+            if (pth.y < 0 || pth.y >= this.bg.nRows)
+              pth.y -= 2 * v;
+          }
+          var dstBx = this.bg.getActiveBoxWithIdLoc(pth.y * this.bg.nCols + pth.x);
+          if (dstBx !== null)
+            this.hiddenBox.exchangeLocation(dstBx);
+        }
         this.playing = true;
         this.invalidate().update();
       }
@@ -175,29 +173,30 @@ define([
     // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
     updateContent: function (dirtyRegion) {
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
-      if (this.bg && this.$canvas) {
+      if (this.bg && this.parkBg && this.$canvas) {
         var canvas = this.$canvas.get(0);
         var ctx = canvas.getContext('2d');
         if (!dirtyRegion)
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
         this.bg.update(ctx, dirtyRegion, this);
+        this.parkBg.update(ctx, dirtyRegion, this);
       }
       return this;
     },
     //
     // Calculates the optimal dimension of this panel
     setDimension: function (preferredMaxSize) {
-      if (!this.bg || this.getBounds().equals(preferredMaxSize))
+      if (!this.bg || !this.parkBg || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
-      return BoxBag.prototype._layoutSingle(preferredMaxSize, this.bg, this.act.margin);
+      return BoxBag.prototype._layoutDouble(preferredMaxSize, this.bg, this.parkBg, this.act.boxGridPos, this.act.margin);
     },
     //
     // Sets the size and position of this activity panel
     setBounds: function (rect) {
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
-      if (this.bg) {
+      if (this.bg && this.parkBg) {
         // Create the main canvas
         this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
           position: 'absolute',
@@ -205,15 +204,6 @@ define([
           left: 0
         });
         this.$div.append(this.$canvas);
-        // 
-        // Add a canvas layer for the BoxConnector
-        this.$bcCanvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
-          position: 'absolute',
-          top: 0,
-          left: 0
-        });
-        this.$div.append(this.$bcCanvas);
-        this.bc = new BoxConnector(this, this.$bcCanvas.get(0).getContext('2d'));
 
         this.invalidate().update();
       }
@@ -222,9 +212,9 @@ define([
     // Main handler to receive mouse and key events
     // Overrides same function in Activity.Panel
     processEvent: function (event) {
-      if (this.bc && this.playing) {
+      if (this.playing) {
 
-        var bx1, bx2;
+        var bx;
         var p = new AWT.Point(
             event.pageX - this.$div.offset().left,
             event.pageY - this.$div.offset().top);
@@ -232,44 +222,35 @@ define([
         switch (event.type) {
           case 'mousedown':
             this.ps.stopMedia(1);
-            if (this.bc.active) {
-              if (this.act.dragCells)
-                bx1 = this.bc.bx;
-              else
-                bx1 = this.bg.findActiveBox(this.bc.origin);
-              this.bc.end();
-              bx2 = this.bg.findActiveBox(p);
-              if (bx1 && bx2) {
-                var ok = false;
-                var src = bx1.getDescription() + " (" + bx1.idOrder + ")";
-                var dest = "(" + bx2.idLoc + ")";
-                ok=(bx1.idOrder===bx2.idLoc);
-                bx1.exchangeLocation(bx2);
-                var cellsAtPlace = this.bg.countCellsAtEquivalentPlace(true);
-                this.ps.reportNewAction(this.act, 'PLACE', src, dest, ok, cellsAtPlace);
-                if (ok && cellsAtPlace === this.bg.getNumCells())
-                  this.finishActivity(true);
-                else
-                  this.playEvent(ok ? 'actionOk' : 'actionError');
+            bx = this.bg.findActiveBox(p);
+            if (bx) {
+              if (bx.isVisible()) {
+                var pt = this.bg.getCoordDist(bx, this.hiddenBox);
+                if (Math.abs(pt.x) + Math.abs(pt.y) === 1) {
+                  var m = bx.playMedia(this.ps);
+                  var src = bx.getDescription() + '(' + bx.idOrder + ')';
+                  var dest = '(' + this.hiddenBox.idLoc + ')';
+                  bx.exchangeLocation(this.hiddenBox);
+                  var ok = (bx.idOrder === bx.idLoc);
+                  var cellsAtPlace = this.bg.countCellsAtEquivalentPlace(true);
+                  this.ps.reportNewAction(this.act, 'SELECT', src, dest, ok, cellsAtPlace);
+                  if (ok && cellsAtPlace === this.bg.getNumCells()) {
+                    this.hiddenBox.setVisible(true);
+                    this.parkBg.setVisible(false);
+                    this.finishActivity(true);
+                  }
+                  else
+                  if (!m)
+                    this.playEvent('click');
+                }
+                this.update();                
               }
-              this.update();
-            }
-            else {
-              bx1 = this.bg.findActiveBox(p);
-              if (bx1) {
-                if (this.act.dragCells)
-                  this.bc.begin(p, bx1);
-                else
-                  this.bc.begin(p);
-                if (!bx1.playMedia(this.ps))
-                  this.playEvent('click');
+              else {
+                this.playEvent('actionError');
               }
             }
             break;
 
-          case 'mousemove':
-            this.bc.moveTo(p);
-            break;
         }
       }
     }
@@ -282,9 +263,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-
-  // TODO: Uncomment this when finished
-  //Activity.prototype._CLASSES['@puzzles.HolePuzzle'] = HolePuzzle;
+  Activity.prototype._CLASSES['@puzzles.HolePuzzle'] = HolePuzzle;
 
   return HolePuzzle;
 
