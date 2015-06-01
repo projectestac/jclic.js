@@ -57,7 +57,6 @@ define([
       '@panels.Explore': Activity,
       '@panels.Identify': Activity,
       '@panels.Menu': Activity,
-      '@puzzles.ExchangePuzzle': Activity,
       '@puzzles.HolePuzzle': Activity,
       '@associations.SimpleAssociation': Activity,
       '@associations.ComplexAssociation': Activity,

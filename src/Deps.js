@@ -29,7 +29,8 @@ define([
   "./activities/text/TextActivityBase",
   "./activities/panels/InformationScreen",
   "./activities/puzzles/DoublePuzzle",
-  "./activities/puzzles/ExchangePuzzle"
-], function(a, b ,c, d, e, f, g, h, i, j, k){  
+  "./activities/puzzles/ExchangePuzzle",
+  "./activities/puzzles/HolePuzzle"
+], function(a, b ,c, d, e, f, g, h, i, j, k, l){  
   return 'Deep classes loaded!';
 });
