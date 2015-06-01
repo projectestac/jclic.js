@@ -200,7 +200,7 @@ define([
     // which the Shaper develops.
     // rect (AWT.Rectangle) - The frame where to move and scale all the shapes
     getRemainderShape: function (rect) {
-      var r = new AWT.Rectangle;
+      var r = null;
 
       if (!this.hasRemainder)
         return null;
@@ -210,7 +210,9 @@ define([
       
       var sh = this.getEnclosingShapeData();
       if(sh)
-        r.add(sh.getShape(rect), false);
+        r=sh.getShape(rect);
+      else
+        r=new AWT.Rectangle();
 
       for (var i = 0; i < this.nCells; i++) {
         if (this.shapeData[i])
