@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<JClicProject name="demo" version="0.1.3">
+<JClicProject name="demo2" version="0.1.3">
  <settings>
   <title>untitled</title>
   <revision description="created" date="2/1/02" />
   <descriptors />
  </settings>
  <sequence>
-  <!-- item id="demo.pac" name="pres0.ass" delay="50" -->
+  <item id="start" name="shape4" />
   <item id="demo.pac" name="pres0.ass">
    <jump tag="menu0.pac" id="forward" />
-   <jump action="STOP" id="back" />
   </item>
   <item id="menu0.pac" name="menu0.ass">
    <jump action="STOP" id="forward" />
@@ -2496,6 +2495,44 @@
      <media type="RUN_CLIC_PACKAGE" level="1" file="menu0.pac" />
      <p>JClic 1.0 demo activities</p>
     </cell>
+   </cells>
+  </activity>
+  <activity class="@panels.InformationScreen" name="provashape" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0xFFFFFF" />
+     </style>
+     <p>The shaper "Holes" allows to define any kind of polygon, as well as circles, ellipses and Bézier curves.</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color background="0xFFFFFF" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" dragCells="true" report="true" reportActions="false">
+    <container bgColor="0xFFFFFF">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" transparent="true" border="false" />
+   </settings>
+   <cells rows="1" cols="1" border="true" image="foto.jpg">
+    <style>
+     <color background="0xFFFFFF" inactive="0xFFFFFF" />
+    </style>
+    <shaper class="@Holes" cols="1" rows="1" scaleX="360.0" scaleY="270.0">
+     <enclosing>
+      <shape>rectangle:0,0,360,270</shape>
+     </enclosing>
+     <shape comment="circle">ellipse:45,15,70,70</shape>
+     <shape comment="triangle">M:35,172|L:35,90|L:106,131|X</shape>
+     <shape comment="rectangle">rectangle:268,20,48,137</shape>
+     <shape comment="ellipse">ellipse:150,190,130,60</shape>
+     <shape comment="pentagon">M:178,77|L:216,106|L:201,154|L:154,154|L:139,106|X</shape>
+     <shape comment="star">M:78,191|L:87,216|L:116,216|L:93,232|L:101,257|L:78,242|L:54,257|L:64,232|L:40,216|L:69,216|X</shape>
+    </shaper>
    </cells>
   </activity>
   <activity class="@puzzles.DoublePuzzle" name="puz01.puz">

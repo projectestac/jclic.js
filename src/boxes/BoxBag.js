@@ -59,6 +59,7 @@ define([
       var d = this.getPreferredSize();
       return new AWT.Dimension(Math.round(scale * d.width), Math.round(scale * d.height));
     },
+    // 
     // Adds an [AbstractBox](AbstractBox.html) to the collection of cells
     addBox: function (bx) {
       this.cells.push(bx);
@@ -101,11 +102,17 @@ define([
     // Recalculates the total size of this BoxBag
     // (useful after direct additions o deletions of elemnts in the `cells` array
     recalcSize: function () {
-      var r = new AWT.Rectangle(this.pos.x, this.pos.y, 0, 0);
-      if (this.backgroundBox !== null)
-        r.add(backgroundBox);
-      for (var i = 0; i < this.cells.length; i++)
-        r.add(this.cells[i]);
+      var r = null;
+      if (this.backgroundBox)
+        r = new AWT.Rectangle(this.backgroundBox.pos, this.backgroundBox.dim);
+      for (var i = 0; i < this.cells.length; i++){
+        if(!r)
+          r =new AWT.Rectangle(this.cells[i].pos, this.cells[i].dim);
+        else
+          r.add(this.cells[i]);
+      }
+      if(!r)
+        r = new AWT.Rectangle(this.pos.x, this.pos.y, 0, 0);
       this.preferredBounds.setRect(r);
       this.x = r.pos.x;
       this.y = r.pos.y;
