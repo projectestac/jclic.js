@@ -351,7 +351,7 @@ define([
         if (abc.imgClip) {
           var r = abc.imgClip.getBounds();
           var img = abc.img;
-          if (!(abc.imgClip instanceof AWT.Rectangle)) {
+          if (!abc.imgClip.isRect()) {
             // Prepare a temporary `canvas` object that will contain the clipped image
             var tmpCanvas = document.createElement('canvas');
             tmpCanvas.width = r.pos.x + r.dim.width;

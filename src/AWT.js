@@ -498,6 +498,11 @@ define([
       this.preparePath(ctx);
       ctx.clip(fillRule ? fillRule : 'nonzero');
       return ctx;
+    },
+    //
+    // Shorthand method for determining if a Shape is a Rectangle
+    isRect: function(){
+      return false;
     }
   };
 
@@ -635,6 +640,11 @@ define([
     // Checks if this rectangle is empty
     isEmpty: function () {
       return this.getSurface() === 0;
+    },
+    //
+    // Shorthand method for determining if a Shape is a Rectangle
+    isRect: function(){
+      return true;
     }
   };
   // Rectangle extends Shape
@@ -650,7 +660,40 @@ define([
   };
 
   Ellipse.prototype = {
-    constructor: Ellipse,
+    constructor: Ellipse,    
+    // 
+    // Prepares CanvasRenderingContext2D with a path that can be used to stroke a line, to fill a
+    // surface or to define a clipping region.
+    // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+    preparePath: function (ctx) {
+      
+      // Using the solution 'drawEllipseWithBezier' proposed by Steve Tranby in:
+      // http://jsbin.com/sosugenegi/1/edit as a response to:
+      // http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
+      // Thanks Steve!!
+                 
+      var kappa = .5522848,
+          ox = (this.dim.width / 2) * kappa,    // control point offset horizontal
+          oy = (this.dim.height / 2) * kappa,   // control point offset vertical
+          xe = this.pos.x + this.dim.width,     // x-end
+          ye = this.pos.y + this.dim.height,    // y-end
+          xm = this.pos.x + this.dim.width / 2, // x-middle
+          ym = this.pos.y + this.dim.height / 2;// y-middle
+
+      ctx.beginPath();
+      ctx.moveTo(this.pos.x, ym);
+      ctx.bezierCurveTo(this.pos.x, ym - oy, xm - ox, this.pos.y, xm, this.pos.y);
+      ctx.bezierCurveTo(xm + ox, this.pos.y, xe, ym - oy, xe, ym);
+      ctx.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
+      ctx.bezierCurveTo(xm - ox, ye, this.pos.x, ym + oy, this.pos.x, ym);
+      ctx.closePath();
+      return ctx;
+    },
+    //
+    // Calcs the area of a ellipse with this dimension
+    getSurface: function () {
+      return Math.PI * this.dim.width/2 * this.dim.height/2;
+    },
     //
     // Check if two Rectangles are equivalent
     equals: function (e) {
@@ -660,9 +703,12 @@ define([
     // Clones this Ellipse
     clone: function () {
       return new Ellipse(this.pos, this.dim);
+    },
+    //
+    // Shorthand method for determining if a Shape is a Rectangle
+    isRect: function(){
+      return false;
     }
-    // TODO: Implement `preparePath`, `contains` and ìntersects` methods for Ellipse
-    // (currently using the Rectangle method)
   };
   // Ellipse extends Rectangle
   Ellipse.prototype = $.extend(Object.create(Rectangle.prototype), Ellipse.prototype);
