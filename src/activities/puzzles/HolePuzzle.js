@@ -82,7 +82,7 @@ define([
     //
     // Possible events are: 'keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'click',
     // 'dblclick', 'mousemove', 'mouseenter', 'mouseleave', 'mouseover', 'mouseout'
-    events: ['mousedown'],
+    events: ['click'],
     //
     // Clears the realized objects
     clear: function () {
@@ -140,7 +140,6 @@ define([
 
       //this.setAndPlayMsg('main', 'start');
       if (this.bg) {
-        this.shuffle([this.bg], true, true);
         // 
         // This activity has an special shuffle method. Cells can move only to places near the 'hole'
         if (this.act.shuffles % 2 !== 1)
@@ -220,7 +219,7 @@ define([
             event.pageY - this.$div.offset().top);
 
         switch (event.type) {
-          case 'mousedown':
+          case 'click':
             this.ps.stopMedia(1);
             bx = this.bg.findActiveBox(p);
             if (bx) {

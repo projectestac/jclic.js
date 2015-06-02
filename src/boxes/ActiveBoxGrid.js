@@ -118,7 +118,7 @@ define([
     // bx (ActiveBox)
     // returns: AWT.Point
     getCoord: function (bx) {
-      var py = bx.idLoc / this.nCols;
+      var py = Math.floor(bx.idLoc / this.nCols);
       var px = bx.idLoc % this.nCols;
       return new AWT.Point(px, py);
     },

@@ -198,9 +198,6 @@ define([
     // Flags used to display or not the 'time', 'score' and 'actions' counters
     bTimeCounter: true, bScoreCounter: true, bActionsCounter: true,
     // 
-    // Number of times to shuffle the cells at the beginning of the activity
-    shuffles: K.DEFAULT_SHUFFLES,
-    // 
     // Object of class [AutoContentProvider](AutoContentProvider.html) used
     // to generate random content in activities.
     acp: null,
@@ -219,9 +216,11 @@ define([
     // Position of the text grid (uses the same position codes as box grids)
     boxGridPos: 'AB',
     // 
-    // Object that indicates if box grids A and B must be scrambled, and the number
-    // of times to scramble.
-    scramble: {times: 31, primary: true, secondary: true},
+    // Number of times to shuffle the cells at the beginning of the activity
+    shuffles: K.DEFAULT_SHUFFLES,
+    // 
+    // Object that indicates if box grids A and B must be scrambled.
+    scramble: {primary: true, secondary: true},
     // 
     // Flag to indicate "inverse resolution" of complex associations
     invAss: false,
@@ -416,11 +415,9 @@ define([
 
           case 'scramble':
             // Read the 'scramble' mode
-            act.scramble = {
-              times: Number($node.attr('times')),
-              primary: Utils.getBoolean($node.attr('primary')),
-              secondary: Utils.getBoolean($node.attr('secondary'))
-            };
+            act.shuffles = Number($node.attr('times'));
+            act.scramble.primary = Utils.getBoolean($node.attr('primary'));
+            act.scramble.secondary = Utils.getBoolean($node.attr('secondary'));
             break;
 
           case 'layout':
