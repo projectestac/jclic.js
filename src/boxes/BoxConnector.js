@@ -36,12 +36,15 @@ define([
   BoxConnector.prototype = {
     constructor: BoxConnector,
     // 
+    // The background image, saved and redrawn on each movement
+    bgImg: null,
+    bgRect: null,
     // `origin` and `dest` are objects of type [AWT](AWT.html).Point 
     origin: null,
     dest: null,
     // 
     // The connector ends in an arrowhead
-    arrow: true,
+    arrow: false,
     // 
     // The connector is active
     active: false,
@@ -87,8 +90,18 @@ define([
       if (!this.active || (!forcePaint && this.dest.equals(pt)))
         return;
 
-      this.ctx.clearRect(0, 0, this.dim.width, this.dim.height);
-
+      if(this.bgRect && this.bgImg)
+        this.ctx.putImageData(this.bgImg, this.bgRect.pos.x, this.bgRect.pos.y);
+        
+      //this.ctx.clearRect(0, 0, this.dim.width, this.dim.height);
+      var pt1 = new AWT.Point(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y);
+      this.bgRect = new AWT.Rectangle(pt1, this.bx ? this.bx.dim : new AWT.Dimension());
+      var pt2 = new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y);      
+      this.bgRect.add(new AWT.Rectangle(pt2, this.bx ? this.bx.dim : new AWT.Dimension()));
+      // Include border
+      this.bgRect.grow(10, 10);
+      this.bgImg = this.ctx.getImageData(this.bgRect.pos.x, this.bgRect.pos.y, this.bgRect.dim.width, this.bgRect.dim.height);
+      
       if (this.bx !== null) {
         this.bx.moveTo(new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y));
         this.bx.setTemporaryHidden(false);
@@ -120,6 +133,10 @@ define([
         this.linePainted = false;
         this.parent.invalidate().update();
       }
+      
+      this.bgImg = null;
+      this.bgRect = null;
+      
       this.moveTo(pt, true);
     },
     //
@@ -130,7 +147,12 @@ define([
 
       this.active = false;
       this.linePainted = false;
-      this.ctx.clearRect(0, 0, this.dim.width, this.dim.height);
+      
+      if(this.bgRect && this.bgImg)
+        this.ctx.putImageData(this.bgImg, this.bgRect.pos.x, this.bgRect.pos.y);
+      this.bgRect = null;
+      this.bgImg = null;
+      //this.ctx.clearRect(0, 0, this.dim.width, this.dim.height);
 
       if (this.bx) {
         this.bx.moveTo(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y);
@@ -184,16 +206,17 @@ define([
         'destination-over','destination-in','destination-out','destination-atop',
         'lighter','darker','copy','xor'];
 
-      if (this.USE_XOR && xorColor) {
+      //if (this.USE_XOR && xorColor) {
         // TODO: xorColor never used!
-        ctx.strokeStyle = 'blue';
-        ctx.globalCompositeOperation = 'lighter';
-      }
-      ctx.lineWidth = 4*strokeWidth;
+        ctx.strokeStyle = 'white';
+        ctx.globalCompositeOperation = 'difference';      
+      //}
+      ctx.lineWidth = strokeWidth;
 
       ctx.beginPath();
       ctx.moveTo(origin.x, origin.y);
       ctx.lineTo(dest.x, dest.y);
+      
       ctx.stroke();
 
       if (arrow) {

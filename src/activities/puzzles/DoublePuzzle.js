@@ -183,13 +183,14 @@ define([
         this.$div.append(this.$canvas);
         // 
         // Add a canvas layer for the BoxConnector
-        this.$bcCanvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
-          position: 'absolute',
-          top: 0,
-          left: 0
-        });
-        this.$div.append(this.$bcCanvas);
-        this.bc = new BoxConnector(this, this.$bcCanvas.get(0).getContext('2d'));
+        //this.$bcCanvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
+        //  position: 'absolute',
+        //  top: 0,
+        //  left: 0
+        //});
+        //this.$div.append(this.$bcCanvas);
+        //this.bc = new BoxConnector(this, this.$bcCanvas.get(0).getContext('2d'));
+        this.bc = new BoxConnector(this, this.$canvas.get(0).getContext('2d'));
 
         this.invalidate().update();
       }
