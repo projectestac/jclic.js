@@ -150,7 +150,7 @@ define([
         result += ' ' + this.mediaFileName;
         if (this.from >= 0)
           result += ' from:' + this.from;
-        if (to >= 0)
+        if (this.to >= 0)
           result += ' to:' + this.to;
       }
       else if (this.externalParam) {

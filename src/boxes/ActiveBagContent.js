@@ -77,6 +77,7 @@ define([
     setProperties: function ($xml, mediaBag) {
 
       var cellSet = this;
+      var bug = false;
 
       $.each($xml.get(0).attributes, function () {
         var name = this.name;
@@ -88,15 +89,15 @@ define([
           case 'image':
             cellSet.imgName = val;
             break;
-            // JClic wrongly stores the number of columns (__ncw__, meaning _**n**umber of **c**ells **w**idth_)
-            // labeled as "_rows_", and the number of rows (__nch__, meaning _**n**umber of **c**ells **h**eight_)
-            // labeled as "_columns_". So we must read the values in accordance with this mistake.
+            // Bug in JClic beta 1: "columns" is number of rows, and "rows" is number of columns.
+            // Was corrected in beta 2: If "cols" is specified, "rows" are rows and "cols" are columns.
           case 'rows':
-            cellSet.ncw = Number(val);
+            cellSet.nch = Number(val);
             break;
           case 'columns':
+            bug=true;          
           case 'cols':
-            cellSet.nch = Number(val);
+            cellSet.ncw = Number(val);
             break;
           case 'cellWidth':
             cellSet.w = Number(val);
@@ -109,6 +110,12 @@ define([
             break;
         }
       });
+      
+      if(bug){
+        var n = cellSet.ncw;
+        cellSet.ncw = cellSet.nch;
+        cellSet.nch = n;
+      }
 
       $xml.children().each(function () {
         var $node = $(this);

@@ -41,7 +41,7 @@ define([
     dest: null,
     // 
     // The connector ends in an arrowhead
-    arrow: false,
+    arrow: true,
     // 
     // The connector is active
     active: false,
@@ -167,7 +167,7 @@ define([
         color = this.lineColor;
 
       if (!xorColor)
-        color = this.xorColor;
+        xorColor = this.xorColor;
 
       if (typeof arrow_l === 'undefined')
         arrow_l = this.arrow_l;
@@ -179,12 +179,17 @@ define([
         strokeWidth = this.line_width;
 
       ctx.strokeStyle = color;
+      
+      var compositeTypes = ['source-over','source-in','source-out','source-atop',
+        'destination-over','destination-in','destination-out','destination-atop',
+        'lighter','darker','copy','xor'];
 
-      if (this.USE_XOR && xorColor !== null) {
+      if (this.USE_XOR && xorColor) {
         // TODO: xorColor never used!
-        ctx.globalCompositeOperation = 'xor';
+        ctx.strokeStyle = 'blue';
+        ctx.globalCompositeOperation = 'lighter';
       }
-      ctx.lineWidth = strokeWidth;
+      ctx.lineWidth = 4*strokeWidth;
 
       ctx.beginPath();
       ctx.moveTo(origin.x, origin.y);

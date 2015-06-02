@@ -40,8 +40,11 @@ define([
     AbstractBox.call(this, parent, container, boxBase);
     
     this.clear();
-    if (typeof setIdLoc === 'number')
+    if (typeof setIdLoc === 'number'){
       this.idLoc = setIdLoc;
+      this.idAss = 0;
+      this.idOrder = 0;
+    }
     if (rect)
       this.setBounds(rect);    
   };
@@ -213,15 +216,6 @@ define([
       this.invalidate();
     },
     //
-    // Checks if the ActiveBox has a [MediaContent](MediaContent.html) in 
-    // `autostart` mode
-    checkAutoStartMedia: function () {
-      var cnt = this.getContent();
-      if (cnt && cnt.mediaContent && cnt.mediaContent.autoStart && cnt.amp) {
-        cnt.amp.play(this);
-      }
-    },
-    //
     // Sets the [ActiveBoxContent](ActiveBoxContent.html) that will act as a
     // alternative content (`altContent` field) of this ActiveBox
     // The parpameter `abc` can be an [ActiveBoxContent](ActiveBoxContent.html)
@@ -255,8 +249,8 @@ define([
     switchToAlt: function () {
       if (this.isAlternative() || !this.altContent || this.altContent.isEmpty())
         return false;
-      this.setHostedComponent(null);
-      this.setHostedMediaPlayer(null);
+      //this.setHostedComponent(null);
+      //this.setHostedMediaPlayer(null);
       this.setAlternative(true);
       this.checkHostedComponent();
       this.checkAutoStartMedia();
@@ -314,6 +308,15 @@ define([
       }
     },
     //
+    // Checks if the call has a [MediaContent](MediaContent.html) set to `autostart`, and
+    // launches it
+    checkAutoStartMedia: function(){
+        var cnt=this.getContent();
+        if(cnt && cnt.mediaContent && cnt.mediaContent.autoStart && cnt.amp){
+          // TODO: Play the media
+        }
+    },    
+    // 
     // Creates a new cell inside a JQuery DOM element.  
     // Should be invoked throught `ActiveBox.prototype`
     // $dom (JQuery DOM element) - The element that will act as a container

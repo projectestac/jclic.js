@@ -248,8 +248,8 @@ define([
                 if (bx1.idOrder === bx2.idOrder
                     || (bx2.getContent().isEquivalent(this.act.abc['primary'].getActiveBoxContent(bx1.idOrder), true))) {
                   ok = true;
-                  bx1.setIdAss(-1);
-                  bx2.setIdAss(-1);
+                  bx1.idAss = -1;
+                  bx2.idAss = -1;
                   if (this.act.abc['solvedPrimary']) {
                     bx1.switchToAlt(this.ps);
                     m |= bx1.playMedia(this.ps);
