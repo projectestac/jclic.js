@@ -95,6 +95,7 @@ define([
             cellSet.ncw = Number(val);
             break;
           case 'columns':
+          case 'cols':
             cellSet.nch = Number(val);
             break;
           case 'cellWidth':
