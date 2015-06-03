@@ -213,7 +213,6 @@ define([
     // Overrides same function in Activity.Panel
     processEvent: function (event) {
       if (this.playing) {
-
         var bx;
         var p = new AWT.Point(
             event.pageX - this.$div.offset().left,
@@ -255,7 +254,6 @@ define([
               }
             }
             break;
-
         }
       }
     }

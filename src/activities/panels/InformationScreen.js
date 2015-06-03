@@ -79,11 +79,11 @@ define([
     // Updates the graphic contents of its panel.
     // The method should be called from `Activity.Panel.update`
     // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
-    updateContent: function(dirtyRegion){
-      if (this.bg && this.$canvas){
+    updateContent: function (dirtyRegion) {
+      if (this.bg && this.$canvas) {
         var canvas = this.$canvas.get(0);
         var ctx = canvas.getContext('2d');
-        if(!dirtyRegion)
+        if (!dirtyRegion)
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
         this.bg.update(ctx, dirtyRegion, this);
@@ -111,7 +111,7 @@ define([
     // 
     // Main handler to receive mouse and key events
     // Overrides same function in Activity.Panel
-    processEvent: function (event) {      
+    processEvent: function (event) {
       if (this.playing) {
         var p = new AWT.Point(
             event.pageX - this.$div.offset().left,

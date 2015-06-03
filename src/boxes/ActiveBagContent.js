@@ -134,7 +134,7 @@ define([
             // Used in special cases where all cells have empty content with only 'ids'
             var ids = this.textContent.split(' ');
             for (var i = 0; i < ids.length; i++)
-              cellSet.activeBoxContentArray[i] = new ActiveBoxContent(ids[i]);
+              cellSet.activeBoxContentArray[i] = new ActiveBoxContent(Number(ids[i]));
             break;
           case 'cell':
             var abc = new ActiveBoxContent().setProperties($node, mediaBag);

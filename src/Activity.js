@@ -55,7 +55,6 @@ define([
     // TODO: When all activities are created, initialize _CLASSES as an empty object
     _CLASSES: {
       '@panels.Explore': Activity,
-      '@panels.Identify': Activity,
       '@panels.Menu': Activity,
       '@memory.MemoryGame': Activity,
       '@text.WrittenAnswer': Activity,

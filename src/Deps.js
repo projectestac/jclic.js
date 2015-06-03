@@ -28,11 +28,12 @@ define([
   "./automation/arith/Arith",
   "./activities/text/TextActivityBase",
   "./activities/panels/InformationScreen",
+  "./activities/panels/Identify",
   "./activities/puzzles/DoublePuzzle",
   "./activities/puzzles/ExchangePuzzle",
   "./activities/puzzles/HolePuzzle",
   "./activities/associations/SimpleAssociation",
   "./activities/associations/ComplexAssociation"
-], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n){  
+], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o){  
   return 'Deep classes loaded!';
 });
