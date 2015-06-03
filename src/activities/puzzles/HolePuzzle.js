@@ -204,6 +204,7 @@ define([
         });
         this.$div.append(this.$canvas);
 
+        // Repaint all
         this.invalidate().update();
       }
     },
@@ -221,19 +222,24 @@ define([
         switch (event.type) {
           case 'click':
             this.ps.stopMedia(1);
+            // Find the box behind the clicked point
             bx = this.bg.findActiveBox(p);
             if (bx) {
               if (bx.isVisible()) {
+                // Check if it's a valid move
                 var pt = this.bg.getCoordDist(bx, this.hiddenBox);
                 if (Math.abs(pt.x) + Math.abs(pt.y) === 1) {
+                  // Ok, the cell is adjacent to the hole. Complete the move.
                   var m = bx.playMedia(this.ps);
                   var src = bx.getDescription() + '(' + bx.idOrder + ')';
                   var dest = '(' + this.hiddenBox.idLoc + ')';
                   bx.exchangeLocation(this.hiddenBox);
                   var ok = (bx.idOrder === bx.idLoc);
+                  // Check results and notify action
                   var cellsAtPlace = this.bg.countCellsAtEquivalentPlace(true);
                   this.ps.reportNewAction(this.act, 'SELECT', src, dest, ok, cellsAtPlace);
                   if (ok && cellsAtPlace === this.bg.getNumCells()) {
+                    // Activity completed!
                     this.hiddenBox.setVisible(true);
                     this.parkBg.setVisible(false);
                     this.finishActivity(true);
@@ -242,7 +248,7 @@ define([
                   if (!m)
                     this.playEvent('click');
                 }
-                this.update();                
+                this.update();
               }
               else {
                 this.playEvent('actionError');

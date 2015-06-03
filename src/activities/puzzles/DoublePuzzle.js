@@ -75,11 +75,11 @@ define([
     //
     // The [BoxConnector](BoxConnector.html) obect
     bc: null,
-    // Possible events are: 'keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'click',
-    // 'dblclick', 'mousemove', 'mouseenter', 'mouseleave', 'mouseover', 'mouseout'
+    // 
+    // Mouse events intercepted by this panel
     events: ['mousedown', 'mouseup', 'mousemove'],
     //
-    // Clears the realized objects
+    // Clear the realized objects
     clear: function () {
       if (this.bgA) {
         this.bgA.end();
@@ -91,7 +91,7 @@ define([
       }
     },
     // 
-    // Prepares the activity panel
+    // Prepare the activity panel
     buildVisualComponents: function () {
 
       if (this.firstRun)
@@ -121,7 +121,6 @@ define([
         var bgbB = this.bgB.getBackgroundActiveBox();
         if (bgbA && bgbB)
           bgbB.exchangeContent(bgbA);
-
       }
     },
     // 
@@ -181,17 +180,11 @@ define([
           left: 0
         });
         this.$div.append(this.$canvas);
-        // 
-        // Add a canvas layer for the BoxConnector
-        //this.$bcCanvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
-        //  position: 'absolute',
-        //  top: 0,
-        //  left: 0
-        //});
-        //this.$div.append(this.$bcCanvas);
-        //this.bc = new BoxConnector(this, this.$bcCanvas.get(0).getContext('2d'));
+        
+        // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context        
         this.bc = new BoxConnector(this, this.$canvas.get(0).getContext('2d'));
-
+        
+        // Repaint all
         this.invalidate().update();
       }
     },
@@ -209,44 +202,59 @@ define([
         switch (event.type) {
           case 'mousedown':
             this.ps.stopMedia(1);
-            if (this.bc.active) {
+            if(!this.bc.active) {
+              // New pairing starts
+              //
+              // Find the ActiveBox behind the clicked point
+              bx1 = this.bgA.findActiveBox(p);
+              if (bx1 && !bx1.isInactive() && (!this.act.useOrder || bx1.idOrder === this.currentItem)) {
+                // Start the [BoxConnector](BoxConnector.html)
+                if (this.act.dragCells)
+                  this.bc.begin(p, bx1);
+                else
+                  this.bc.begin(p);
+                // Play cell media or event sound
+                if (!bx1.playMedia(this.ps))
+                  this.playEvent('click');
+              }
+            }
+            else {
+              // Pairing completed
+              //
+              // Find the active boxes behind `bc.origin` and `p`
               if (this.act.dragCells)
                 bx1 = this.bc.bx;
               else
-                bx1 = this.bgA.findActiveBox(this.bc.origin);
-              this.bc.end();
+                bx1 = this.bgA.findActiveBox(this.bc.origin);                            
               bx2 = this.bgB.findActiveBox(p);
+              
+              // BoxConnector ends here
+              this.bc.end();
+              
+              // Check if the pairing was OK
               if (bx1 && bx2 && bx2.isInactive()) {
                 var ok = false;
                 var src = bx1.getDescription() + " (" + bx1.idOrder + ")";
                 var dest = "(" + bx2.idOrder + ")";
                 var target = this.act.abc['primary'].getActiveBoxContent(bx2.idOrder);
                 if (bx1.getContent().isEquivalent(target, true)) {
+                  // Pairing OK
                   ok = true;
                   bx1.exchangeContent(bx2);
                   bx1.setVisible(false);
                   if (this.act.useOrder)
                     this.currentItem = this.bgA.getNextItem(this.currentItem);
                 }
+                // Check results and notify action
                 var cellsAtPlace = this.bgA.countInactiveCells();
                 this.ps.reportNewAction(this.act, 'PLACE', src, dest, ok, cellsAtPlace);
+                // Finish activity or play event sound
                 if (ok && cellsAtPlace === this.bgA.getNumCells())
                   this.finishActivity(true);
                 else
                   this.playEvent(ok ? 'actionOk' : 'actionError');
               }
               this.update();
-            }
-            else {
-              bx1 = this.bgA.findActiveBox(p);
-              if (bx1 && !bx1.isInactive() && (!this.act.useOrder || bx1.idOrder === this.currentItem)) {
-                if (this.act.dragCells)
-                  this.bc.begin(p, bx1);
-                else
-                  this.bc.begin(p);
-                if (!bx1.playMedia(this.ps))
-                  this.playEvent('click');
-              }
             }
             break;
 

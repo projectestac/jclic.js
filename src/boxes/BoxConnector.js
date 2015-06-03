@@ -33,12 +33,15 @@ define([
     this.relativePos = new AWT.Point();
   };
 
+  var DEFAULT_COMPOSITE_OP = 'source-over';
+
   BoxConnector.prototype = {
     constructor: BoxConnector,
     // 
     // The background image, saved and redrawn on each movement
     bgImg: null,
     bgRect: null,
+    // 
     // `origin` and `dest` are objects of type [AWT](AWT.html).Point 
     origin: null,
     dest: null,
@@ -53,15 +56,16 @@ define([
     linePainted: false,
     // 
     // The arrowhead length (in pixels)
-    arrow_l: 10,
+    arrowLength: 10,
     // 
     // The arrowhead angle
-    arrow_angle: Math.PI / 6,
+    arrowAngle: Math.PI / 6,
     // 
     // The main color and a complementary color used for XOR operations
     lineColor: 'black',
     xorColor: 'white',
-    USE_XOR: true,
+    compositeOp: 'difference',
+    DEFAULT_COMPOSITE_OP: DEFAULT_COMPOSITE_OP,
     // 
     // Relative position of point B respeect to A (AWT.Point)
     relativePos: null,
@@ -76,8 +80,8 @@ define([
     // The AWT.Container this connector belongs to
     parent: null,
     // 
-    // The width of the connecor line
-    line_width: 1.5,
+    // The width of the connector line
+    lineWidth: 1.5,
     //
     //
     moveBy: function (dx, dy) {
@@ -90,25 +94,34 @@ define([
       if (!this.active || (!forcePaint && this.dest.equals(pt)))
         return;
 
-      if(this.bgRect && this.bgImg)
-        this.ctx.putImageData(this.bgImg, this.bgRect.pos.x, this.bgRect.pos.y);
-        
-      //this.ctx.clearRect(0, 0, this.dim.width, this.dim.height);
+      // Restore the background
+      if (this.bgRect && this.bgImg) {
+        this.ctx.putImageData(
+            this.bgImg,
+            0, 0,
+            this.bgRect.pos.x, this.bgRect.pos.y,
+            this.bgRect.dim.width, this.bgRect.dim.height);
+      }
+
+      // Calculate the bounds of the invalidated area after the move:
+      // Start with the origin point or box area
       var pt1 = new AWT.Point(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y);
       this.bgRect = new AWT.Rectangle(pt1, this.bx ? this.bx.dim : new AWT.Dimension());
-      var pt2 = new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y);      
+      //  Add the destination point or box area
+      var pt2 = new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y);
       this.bgRect.add(new AWT.Rectangle(pt2, this.bx ? this.bx.dim : new AWT.Dimension()));
-      // Include border
+      // Add a generous border around the area
       this.bgRect.grow(10, 10);
-      this.bgImg = this.ctx.getImageData(this.bgRect.pos.x, this.bgRect.pos.y, this.bgRect.dim.width, this.bgRect.dim.height);
-      
+
       if (this.bx !== null) {
+        // Move the ActiveBox
         this.bx.moveTo(new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y));
         this.bx.setTemporaryHidden(false);
         this.bx.update(this.ctx, null);
         this.bx.setTemporaryHidden(true);
       }
       else {
+        // Draw the connecting line
         this.dest.moveTo(pt);
         this.drawLine();
         this.linePainted = true;
@@ -127,17 +140,21 @@ define([
       //this.parent.setCursor('HAND_CURSOR');
 
       if (box) {
+        // Remember what box will be moved, hide it from the panel and repaint all
         this.bx = box;
         this.relativePos.moveTo(pt.x - box.pos.x, pt.y - box.pos.y);
         this.bx.setTemporaryHidden(true);
         this.linePainted = false;
         this.parent.invalidate().update();
       }
-      
-      this.bgImg = null;
+
+      // Save the full image currently displayed on the panel (with the box hidden)
+      this.bgImg = this.ctx.getImageData(0, 0, this.dim.width, this.dim.height);
       this.bgRect = null;
-      
-      this.moveTo(pt, true);
+
+      // Make a first movement to make the box appear
+      if (box)
+        this.moveTo(pt, true);
     },
     //
     //    
@@ -147,97 +164,59 @@ define([
 
       this.active = false;
       this.linePainted = false;
-      
-      if(this.bgRect && this.bgImg)
-        this.ctx.putImageData(this.bgImg, this.bgRect.pos.x, this.bgRect.pos.y);
+
       this.bgRect = null;
       this.bgImg = null;
-      //this.ctx.clearRect(0, 0, this.dim.width, this.dim.height);
 
       if (this.bx) {
+        // Restore the original position and attributes of the box
         this.bx.moveTo(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y);
         this.bx.setTemporaryHidden(false);
         this.bx = null;
         this.relativePos.moveTo(0, 0);
       }
+
+      // Repaint all
+      this.ctx.clearRect(0, 0, this.dim.width, this.dim.height);
       this.parent.invalidate().update();
     },
     //
-    // origin (AWT.Point)
-    // dest (AWT.Point)
-    // arrow (boolean)
-    // color (string)
-    // xorColor (string)
-    // arrow_l (number)
-    // arrowAngle (number)
-    // strokeWidth (number)
-    drawLine: function (ctx, origin, dest, arrow, color, xorColor, arrow_l, arrowAngle, strokeWidth) {
-
-      if (!ctx)
-        ctx = this.ctx;
-
-      if (!origin)
-        origin = this.origin;
-
-      if (!dest)
-        dest = this.dest;
-
-      if (typeof arrow === 'undefined')
-        arrow = this.arrow;
-
-      if (!color)
-        color = this.lineColor;
-
-      if (!xorColor)
-        xorColor = this.xorColor;
-
-      if (typeof arrow_l === 'undefined')
-        arrow_l = this.arrow_l;
-
-      if (typeof arrowAngle === 'undefined')
-        arrowAngle = this.arrow_angle;
-
-      if (typeof strokeWidth === 'undefined')
-        strokeWidth = this.line_width;
-
-      ctx.strokeStyle = color;
-      
-      var compositeTypes = ['source-over','source-in','source-out','source-atop',
-        'destination-over','destination-in','destination-out','destination-atop',
-        'lighter','darker','copy','xor'];
-
-      //if (this.USE_XOR && xorColor) {
-        // TODO: xorColor never used!
-        ctx.strokeStyle = 'white';
-        ctx.globalCompositeOperation = 'difference';      
-      //}
-      ctx.lineWidth = strokeWidth;
-
-      ctx.beginPath();
-      ctx.moveTo(origin.x, origin.y);
-      ctx.lineTo(dest.x, dest.y);
-      
-      ctx.stroke();
-
-      if (arrow) {
-        var beta = Math.atan2(origin.x - dest.x, dest.x - origin.x);
-        var arp = new AWT.Point(dest.x - arrow_l * Math.cos(beta + arrowAngle),
-            dest.y + arrow_l * Math.sin(beta + arrowAngle));
-        ctx.beginPath();
-        ctx.moveTo(dest.x, dest.y);
-        ctx.lineTo(arp.x, arp.y);
-        ctx.stroke();
-
-        arp.moveTo(dest.x - arrow_l * Math.cos(beta - arrowAngle),
-            dest.y + arrow_l * Math.sin(beta - arrowAngle));
-        ctx.beginPath();
-        ctx.moveTo(dest.x, dest.y);
-        ctx.lineTo(arp.x, arp.y);
-        ctx.stroke();
+    // 
+    drawLine: function () {
+      if (this.compositeOp !== DEFAULT_COMPOSITE_OP) {
+        this.ctx.strokeStyle = this.xorColor;
+        this.ctx.globalCompositeOperation = this.compositeOp;
       }
-      if (this.USE_XOR && xorColor) {
+      else
+        this.ctx.strokeStyle = this.lineColor;
+
+      this.ctx.lineWidth = this.lineWidth;
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.origin.x, this.origin.y);
+      this.ctx.lineTo(this.dest.x, this.dest.y);
+      this.ctx.stroke();
+
+      if (this.arrow) {
+        // Draws the arrow head
+        var beta = Math.atan2(this.origin.x - this.dest.x, this.dest.x - this.origin.x);
+        var arp = new AWT.Point(this.dest.x - this.arrowLength * Math.cos(beta + this.arrowAngle),
+            this.dest.y + this.arrowLength * Math.sin(beta + this.arrowAngle));
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.dest.x, this.dest.y);
+        this.ctx.lineTo(arp.x, arp.y);
+        this.ctx.stroke();
+
+        arp.moveTo(this.dest.x - this.arrowLength * Math.cos(beta - this.arrowAngle),
+            this.dest.y + this.arrowLength * Math.sin(beta - this.arrowAngle));
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.dest.x, this.dest.y);
+        this.ctx.lineTo(arp.x, arp.y);
+        this.ctx.stroke();
+      }
+      if (this.compositeOp !== DEFAULT_COMPOSITE_OP) {
         // reset default settings
-        ctx.globalCompositeOperation = 'source-over';
+        this.ctx.globalCompositeOperation = DEFAULT_COMPOSITE_OP;
       }
     }
   };

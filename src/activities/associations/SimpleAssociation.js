@@ -77,8 +77,8 @@ define([
     //
     // The [BoxConnector](BoxConnector.html) obect
     bc: null,
-    // Possible events are: 'keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'click',
-    // 'dblclick', 'mousemove', 'mouseenter', 'mouseleave', 'mouseover', 'mouseout'
+    // 
+    // Mouse events intercepted by this panel
     events: ['mousedown', 'mouseup', 'mousemove'],
     //
     // Clears the realized objects
@@ -129,7 +129,6 @@ define([
 
         this.bgA.setVisible(true);
         this.bgB.setVisible(true);
-
       }
     },
     // 
@@ -187,7 +186,7 @@ define([
       return BoxBag.prototype._layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
     },
     //
-    // Sets the size and position of this activity panel
+    // Set the size and position of this activity panel
     setBounds: function (rect) {
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
@@ -199,17 +198,11 @@ define([
           left: 0
         });
         this.$div.append(this.$canvas);
-        // 
-        // Add a canvas layer for the BoxConnector
-        //this.$bcCanvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
-        //  position: 'absolute',
-        //  top: 0,
-        //  left: 0
-        //});
-        //this.$div.append(this.$bcCanvas);
-        //this.bc = new BoxConnector(this, this.$bcCanvas.get(0).getContext('2d'));
+
+        // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context
         this.bc = new BoxConnector(this, this.$canvas.get(0).getContext('2d'));
 
+        // Repaint all
         this.invalidate().update();
       }
     },
@@ -229,7 +222,29 @@ define([
         switch (event.type) {
           case 'mousedown':
             this.ps.stopMedia(1);
-            if (this.bc.active) {
+            if (!this.bc.active) {
+              // New pairing starts
+              //
+              // Determine if click was done on panel A or panel B
+              bx1 = this.bgA.findActiveBox(p);
+              bx2 = this.bgB.findActiveBox(p);
+              if ((bx1 && (!this.act.useOrder || bx1.idOrder === this.currentItem))
+                  || (!this.act.useOrder && bx2) && bx2.idAss !== -1) {
+                // Start the [BoxConnector](BoxConnector.html)
+                if (this.act.dragCells)
+                  this.bc.begin(p, bx1 ? bx1 : bx2);
+                else
+                  this.bc.begin(p);
+                // Play cell media or event sound
+                m = bx1.playMedia(this.ps);
+                if (!m)
+                  this.playEvent('click');
+              }
+            }
+            else {
+              // Pairing completed
+              //
+              // Find the active boxes behind `bc.origin` and `p`
               bx1 = this.bgA.findActiveBox(this.bc.origin);
               if (bx1) {
                 bx2 = this.bgB.findActiveBox(p);
@@ -241,13 +256,18 @@ define([
                   clickOnBg0 = true;
                 }
               }
+              
+              // BoxConnector task ends here
               this.bc.end();
+              
+              // Check if the pairing was correct
               if (bx1 && bx2 && bx1.idAss !== -1 && bx2.idAss !== -1) {
                 var ok = false;
                 var src = bx1.getDescription();
                 var dest = bx2.getDescription();
-                if (bx1.idOrder === bx2.idOrder
-                    || (bx2.getContent().isEquivalent(this.act.abc['primary'].getActiveBoxContent(bx1.idOrder), true))) {
+                var matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idOrder);
+                if (bx1.idOrder === bx2.idOrder || bx2.getContent().isEquivalent(matchingDest, true)) {
+                  // Pairing is OK. Play media and disable involved cells
                   ok = true;
                   bx1.idAss = -1;
                   bx2.idAss = -1;
@@ -263,33 +283,21 @@ define([
                     bx1.clear();
                   }
                   bx2.clear();
-
+                  
                   if (this.act.useOrder)
+                    // Load next item
                     this.currentItem = this.bgA.getNextItem(this.currentItem);
                 }
-
+                // Check results and notify action
                 var cellsPlaced = this.bgB.countCellsWithIdAss(-1);
                 this.ps.reportNewAction(this.act, 'MATCH', src, dest, ok, cellsPlaced);
+                // End activity or play event sound
                 if (ok && cellsPlaced === this.bgB.getNumCells())
                   this.finishActivity(true);
                 else if (!m)
                   this.playEvent(ok ? 'actionOk' : 'actionError');
               }
               this.update();
-            }
-            else {
-              bx1 = this.bgA.findActiveBox(p);
-              bx2 = this.bgB.findActiveBox(p);
-              if ((bx1 && (!this.act.useOrder || bx1.idOrder === this.currentItem))
-                  || (!this.act.useOrder && bx2) && bx2.idAss !== -1) {
-                if (this.act.dragCells)
-                  this.bc.begin(p, bx1 ? bx1 : bx2);
-                else
-                  this.bc.begin(p);
-                m = bx1.playMedia(this.ps);
-                if (!m)
-                  this.playEvent('click');
-              }
             }
             break;
 
@@ -313,6 +321,3 @@ define([
   return SimpleAssociation;
 
 });
-
-
-
