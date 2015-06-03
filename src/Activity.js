@@ -57,7 +57,6 @@ define([
       '@panels.Explore': Activity,
       '@panels.Identify': Activity,
       '@panels.Menu': Activity,
-      '@associations.ComplexAssociation': Activity,
       '@memory.MemoryGame': Activity,
       '@text.WrittenAnswer': Activity,
       '@textGrid.CrossWord': Activity,

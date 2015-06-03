@@ -113,6 +113,9 @@ define([
         if (abcB.imgName)
           abcB.setImgContent(this.act.project.mediaBag, null, false);
 
+        if (solved && solved.imgName)
+          solved.setImgContent(this.act.project.mediaBag, null, false);
+        
         if (this.act.acp !== null) {
           var contentKit = [abcA, abcB];
           if (solved)
@@ -245,21 +248,19 @@ define([
               // Pairing completed
               //
               // Find the active boxes behind `bc.origin` and `p`
-              bx1 = this.bgA.findActiveBox(this.bc.origin);
+              var origin = this.bc.origin;
+              this.bc.end();              
+              bx1 = this.bgA.findActiveBox(origin);
               if (bx1) {
                 bx2 = this.bgB.findActiveBox(p);
               }
               else {
-                bx2 = this.bgB.findActiveBox(this.bc.origin);
+                bx2 = this.bgB.findActiveBox(origin);
                 if (bx2) {
                   bx1 = this.bgA.findActiveBox(p);
                   clickOnBg0 = true;
                 }
-              }
-              
-              // BoxConnector task ends here
-              this.bc.end();
-              
+              }                            
               // Check if the pairing was correct
               if (bx1 && bx2 && bx1.idAss !== -1 && bx2.idAss !== -1) {
                 var ok = false;
