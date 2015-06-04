@@ -157,12 +157,12 @@ define([
         // bgB will be used only as a placeholder for `$textField`
         this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1));
         this.$textField = $('<input type="text" size="200"/>').css(abcB.bb.getCSS()).css({
-          position: 'absolute',
-          top: 0,
-          left: 0
+          position: 'absolute', top: 0, left: 0,
+          border: 0, padding: 0, margin: 0,
+          'text-align': 'center'
         });
-        ;
-        this.attachEvent(this.$textField, 'input');
+
+        this.attachEvent(this.$textField, 'keypress');
 
         this.bgA.setContent(abcA, solved ? solved : null);
         this.currentCell = 0;
@@ -244,6 +244,7 @@ define([
           top: 0,
           left: 0
         });
+        this.$div.append(this.$canvas);
 
         if (this.$textField) {
           this.$textField.css({
@@ -254,8 +255,6 @@ define([
           });
           this.$div.append(this.$textField);
         }
-
-        this.$div.append(this.$canvas);
 
         // Repaint all
         this.invalidate().update();
@@ -347,8 +346,8 @@ define([
         this.currentCell = bx.idLoc;
       this.$textField.val('');
       this.$textField.focus();
-      
-      this.update();
+
+      this.invalidate().update();
 
       if (bx)
         bx.playMedia(this.ps);
@@ -372,9 +371,11 @@ define([
             }
             break;
 
-          case 'input':
-            if (event.keyCode === 13 && this.currentCell !== -1)
+          case 'keypress':
+            if (event.keyCode === 13 && this.currentCell !== -1) {
+              event.preventDefault();
               this.setCurrentCell(this.currentCell);
+            }
             break;
         }
       }
