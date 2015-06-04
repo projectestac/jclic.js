@@ -1,5 +1,5 @@
-//    File    : ExchangePuzzle.js  
-//    Created : 30/05/2015  
+//    File    : MemoryGame.js  
+//    Created : 04/06/2015  
 //    By      : fbusquet  
 //
 //    JClic.js  
@@ -19,18 +19,19 @@ define([
   "../../boxes/ActiveBoxGrid",
   "../../boxes/BoxBag",
   "../../boxes/BoxConnector",
-  "../../AWT"
-], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT) {
+  "../../AWT",
+  "../../shapers/Rectangular"
+], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT, Rectangular) {
 
   //
   // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
   // objects.
-  var ExchangePuzzle = function (project) {
+  var MemoryGame = function (project) {
     Activity.call(this, project);
   };
 
-  ExchangePuzzle.prototype = {
-    constructor: ExchangePuzzle,
+  MemoryGame.prototype = {
+    constructor: MemoryGame,
     //
     // Retrieves the minimum number of actions needed to solve this activity
     getMinNumActions: function () {
@@ -47,11 +48,6 @@ define([
       return true;
     },
     //
-    // The activity permits the user to display the solution
-    helpSolutionAllowed: function () {
-      return true;
-    },
-    //
     // Activity.Panel constructor
     Panel: function (act, ps, $div) {
       Activity.prototype.Panel.call(this, act, ps, $div);
@@ -60,13 +56,13 @@ define([
 
   // 
   // InformationScreen extends Activity
-  ExchangePuzzle.prototype = $.extend(Object.create(Activity.prototype), ExchangePuzzle.prototype);
+  MemoryGame.prototype = $.extend(Object.create(Activity.prototype), MemoryGame.prototype);
 
   // 
   // Properties and methods specific to InformationScreen.Panel
   var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  ExchangePuzzle.prototype.Panel.prototype = {
-    constructor: ExchangePuzzle.prototype.Panel,
+  MemoryGame.prototype.Panel.prototype = {
+    constructor: MemoryGame.prototype.Panel,
     //
     // The [ActiveBoxBag](ActiveBoxBag.html) object containing the information to be displayed.
     bg: null,
@@ -87,24 +83,52 @@ define([
     // 
     // Prepares the activity panel
     buildVisualComponents: function () {
-
       if (this.firstRun)
         ActPanelAncestor.buildVisualComponents.call(this);
 
       this.clear();
 
-      var abc = this.act.abc['primary'];
-      if (abc) {
+      var abcA = this.act.abc['primary'];
+      var abcB = this.act.abc['secondary'];
 
-        if (abc.imgName)
-          abc.setImgContent(this.act.project.mediaBag, null, false);
+      if (abcA) {
 
-        if (this.act.acp !== null)
+        if (abcA.imgName)
+          abcA.setImgContent(this.act.project.mediaBag, null, false);
+        if (abcB && abcB.imgName)
+          abcB.setImgContent(this.act.project.mediaBag, null, false);
+
+
+        if (this.act.acp !== null) {
+          var contentKit = [abcA];
+          if (abcB)
+            contentKit.push(abcB);
           this.act.acp.generateContent(
-              new this.act.acp.ActiveBagContentKit(abc.nch, abc.ncw, [abc], false), this.ps);
+              new this.act.acp.ActiveBagContentKit(abcA.nch, abcA.ncw, contentKit, false), this.ps);
+        }
 
-        this.bg = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
-        this.bg.setContent(abc);
+        var ncw = abcA.ncw;
+        var nch = abcA.nch;
+        if (this.act.boxGridPos === 'AB' || this.act.boxGridPos === 'BA')
+          ncw *= 2;
+        else
+          nch *= 2;
+
+        this.bg = new ActiveBoxGrid(null, this, abcA.bb,
+            this.act.margin, this.act.margin,
+            abcA.w * ncw, abcA.h * nch, new Rectangular(ncw, nch));
+
+        var nc = abcA.getNumCells();
+        this.bg.setBorder(abcA.border);
+        this.bg.setContent(abcA, null, 0, 0, nc);
+        this.bg.setContent((abcB ? abcB : abcA), null, 0, nc, nc);
+        for (var i = 0; i < 2; i++) {
+          for (var j = 0; j < nc; j++) {
+            var bx = this.bg.getActiveBox(i * nc + j);
+            bx.idAss = j;
+            bx.setInactive(true);
+          }
+        }
         this.bg.setVisible(true);
       }
     },
@@ -121,8 +145,6 @@ define([
       //this.setAndPlayMsg('main', 'start');
       if (this.bg) {
         this.shuffle([this.bg], true, true);
-        if (this.useOrder)
-          this.currentItem = this.bg.getNextItem(-1);
         this.playing = true;
         this.invalidate().update();
       }
@@ -191,15 +213,17 @@ define([
               //
               // Find the ActiveBox behind the clicked point              
               bx1 = this.bg.findActiveBox(p);
-              if (bx1) {
+              if (bx1 && bx1.idAss !== -1) {
+                // Play cell media or event sound
+                if (!bx1.playMedia(this.ps))
+                  this.playEvent('click');
+                bx1.setInactive(false);
                 // Start the [BoxConnector](BoxConnector.html)
+                this.update();
                 if (this.act.dragCells)
                   this.bc.begin(p, bx1);
                 else
                   this.bc.begin(p);
-                // Play cell media or event sound
-                if (!bx1.playMedia(this.ps))
-                  this.playEvent('click');
               }
             }
             else {
@@ -214,22 +238,48 @@ define([
               bx2 = this.bg.findActiveBox(p);
               //
               // Check if the pairing was OK
-              if (bx1 && bx2) {
-                var ok = false;
-                var src = bx1.getDescription() + " (" + bx1.idOrder + ")";
-                var dest = "(" + bx2.idLoc + ")";
-                ok = (bx1.idOrder === bx2.idLoc);
-                bx1.exchangeLocation(bx2);
-                // Check results and notify action
-                var cellsAtPlace = this.bg.countCellsAtEquivalentPlace(true);
-                this.ps.reportNewAction(this.act, 'PLACE', src, dest, ok, cellsAtPlace);
-                // End activity or play event sound
-                if (ok && cellsAtPlace === this.bg.getNumCells())
-                  this.finishActivity(true);
-                else
-                  this.playEvent(ok ? 'actionOk' : 'actionError');
+              if (bx1 && bx1.idAss !== -1 && bx2 && bx2.idAss !== -1) {
+                if (bx1 !== bx2) {
+                  var ok = false;
+                  if (bx1.idAss === bx2.idAss
+                      || bx1.getContent().isEquivalent(bx2.getContent(), true)) {
+                    ok = true;
+                    bx1.idAss = -1;
+                    bx1.setInactive(false);
+                    bx2.idAss = -1;
+                    bx2.setInactive(false);
+                  }
+                  else {
+                    bx1.setInactive(true);
+                    if (this.act.dragCells)
+                      bx2.setInactive(true);
+                    else {
+                      bx2.setInactive(false);
+                      // Start the [BoxConnector](BoxConnector.html)
+                      this.update();
+                      if (this.act.dragCells)
+                        this.bc.begin(p, bx1);
+                      else
+                        this.bc.begin(p);
+                    }
+                  }
+                  var m = bx2.playMedia(this.ps);
+                  var cellsAtPlace = this.bg.countCellsWithIdAss(-1);
+                  this.ps.reportNewAction(this.act, 'MATCH', bx1.getDescription(), bx2.getDescription(), ok, cellsAtPlace / 2);
+                  if (ok && cellsAtPlace === this.bg.getNumCells())
+                    this.finishActivity(true);
+                  else if (!m)
+                    this.playEvent(ok ? 'actionOk' : 'actionError');
+                }
+                else {
+                  this.playEvent('CLICK');
+                  bx1.setInactive(true);
+                }
               }
-              this.update();
+              else if (bx1 !== null) {
+                bx1.setInactive(true);
+              }
+              this.invalidate().update();
             }
             break;
 
@@ -241,15 +291,15 @@ define([
     }
   };
 
-  // DoublePuzzle.Panel extends Activity.Panel
-  ExchangePuzzle.prototype.Panel.prototype = $.extend(
+  // MemoryGame.Panel extends Activity.Panel
+  MemoryGame.prototype.Panel.prototype = $.extend(
       Object.create(ActPanelAncestor),
-      ExchangePuzzle.prototype.Panel.prototype);
+      MemoryGame.prototype.Panel.prototype);
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@puzzles.ExchangePuzzle'] = ExchangePuzzle;
+  Activity.prototype._CLASSES['@memory.MemoryGame'] = MemoryGame;
 
-  return ExchangePuzzle;
+  return MemoryGame;
 
 });

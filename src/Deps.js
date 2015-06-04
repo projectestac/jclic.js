@@ -33,8 +33,9 @@ define([
   "./activities/puzzles/DoublePuzzle",
   "./activities/puzzles/ExchangePuzzle",
   "./activities/puzzles/HolePuzzle",
+  "./activities/memory/MemoryGame",
   "./activities/associations/SimpleAssociation",
   "./activities/associations/ComplexAssociation"
-], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p){  
+], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p, q){  
   return 'Deep classes loaded!';
 });
