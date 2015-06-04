@@ -95,9 +95,6 @@ define([
     bgA: null,
     bgB: null,
     //
-    // The [BoxConnector](BoxConnector.html) obect
-    bc: null,
-    // 
     // The currently selected cell
     currentCell: -1,
     // 
@@ -255,7 +252,7 @@ define([
             width: this.bgB.dim.width,
             height: this.bgB.dim.height
           });
-          this.$canvas.append(this.$textField);
+          this.$div.append(this.$textField);
         }
 
         this.$div.append(this.$canvas);
@@ -350,6 +347,8 @@ define([
         this.currentCell = bx.idLoc;
       this.$textField.val('');
       this.$textField.focus();
+      
+      this.update();
 
       if (bx)
         bx.playMedia(this.ps);
@@ -358,17 +357,14 @@ define([
     // Main handler to receive mouse and key events
     // Overrides same function in Activity.Panel
     processEvent: function (event) {
-      if (this.bc && this.playing) {
-
-        var bx;
-        var p = new AWT.Point(
-            event.pageX - this.$div.offset().left,
-            event.pageY - this.$div.offset().top);
-
+      if (this.playing) {
         switch (event.type) {
-          case 'mousedown':
+          case 'click':
             this.ps.stopMedia(1);
-            bx = this.bgA.findActiveBox(p);
+            var p = new AWT.Point(
+                event.pageX - this.$div.offset().left,
+                event.pageY - this.$div.offset().top);
+            var bx = this.bgA.findActiveBox(p);
             if (bx) {
               if (bx.getContent() && bx.getContent().mediaContent === null)
                 this.playEvent('CLICK');
@@ -377,7 +373,7 @@ define([
             break;
 
           case 'input':
-            if (this.currentCell !== -1)
+            if (event.keyCode === 13 && this.currentCell !== -1)
               this.setCurrentCell(this.currentCell);
             break;
         }
