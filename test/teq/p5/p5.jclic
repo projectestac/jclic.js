@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JClicProject name="p5" version="0.1.3">
+ <settings>
+  <title>TEQ - Conceptes bàsics</title>
+  <revision description="Creació del paquet d'activitats en Clic 3.0" date="9/25/00" />
+  <revision description="Conversió de Clic3 a JClic" date="8/9/02">
+   <author name="Equip Clic" mail="clic@pie.xtec.es" organization="Subdirecció General de Tecnologies de la Informació (SGTI)" />
+  </revision>
+  <author name="Maria Borrell" mail="mborrel6@pie.xtec.es" />
+  <author name="Enric J. López" mail="elopez22@pie.xtec.es" />
+  <author name="Imma Palahí" mail="mpalahi@pie.xtec.es" />
+  <author name="Nil López" rol="veu" />
+  <organization name="CEIP Pau Casals" mail="a8022011@centres.xtec.es" url="http://www.xtec.es/centres/a8022011" city="Montmeló" state="Catalunya" />
+  <organization name="CEIP Salvador Espriu" mail="a8021880@centres.xtec.es" url="http://www.xtec.es/centres/a8021880" city="Montgat" state="Catalunya" />
+  <language>Català</language>
+  <description>
+   <p>El TEQ és un clic de conceptes bàsics de Temps, Espai i Quantitat o comparació. Està adreçat a nens i nenes de 3, 4 i 5 anys i opcionalment a educació especial. Creat a base d'imatge fotogràfica i suport sonor, que donen molt atractiu a les activitats.</p>
+   <p>L'aplicació té com a objectiu fixar els conceptes bàsics que es treballen i iniciar-se a la lectoescriptura de paraules a través del so. També pretén que els nens i nenes relacionin la imatge amb el so.</p>
+   <p>Els conceptes treballats en els 9 paquets d'activitats són:</p>
+   <p>&lt;TABLE BORDER=1 CELLPADDING=5 CELLSPACING=0 STYLE="font-size: 9pt;"&gt;</p>
+   <p>&lt;TR&gt;&lt;TD&gt;&amp;nbsp;&lt;/TD&gt;&lt;TD&gt;&lt;B&gt;Temps&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;&lt;B&gt;Espai&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;&lt;B&gt;Quantitat&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;</p>
+   <p>&lt;TR&gt;&lt;TD&gt;&lt;B&gt;3 anys&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;dia/nit&lt;BR&gt;sempre/mai&lt;/TD&gt;&lt;TD&gt;dalt/baix&lt;BR&gt;dins/fora&lt;/TD&gt;&lt;TD&gt;ple/buit&lt;BR&gt;igual/diferent&lt;/TD&gt;&lt;/TR&gt;</p>
+   <p>&lt;TR&gt;&lt;TD&gt;&lt;B&gt;4 anys&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;primera/última&lt;BR&gt;ràpid/lent&lt;/TD&gt;&lt;TD&gt;a sobre/a sota&lt;BR&gt;amunt/avall&lt;BR&gt;davant/darrere&lt;/TD&gt;&lt;TD&gt;gran/mitjana/petit&lt;BR&gt;moltes/poques&lt;BR&gt;més que/menys que&lt;/TD&gt;&lt;/TR&gt;</p>
+   <p>&lt;TR&gt;&lt;TD&gt;&lt;B&gt;5 anys&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;matí/tarda&lt;BR&gt;ahir/avui/demà&lt;BR&gt;abans/després&lt;/TD&gt;&lt;TD&gt;dreta/esquerra&lt;BR&gt;al voltant/al mig&lt;BR&gt;més a prop/més lluny&lt;/TD&gt;&lt;TD&gt;llarg/curt&lt;BR&gt;meitat/sencera&lt;BR&gt;ampla/estreta&lt;/TD&gt;&lt;/TR&gt;</p>
+   <p>&lt;/TABLE&gt;</p>
+  </description>
+  <descriptors area="Diversos" level="Infantil">lectoescriptura</descriptors>
+ </settings>
+ <sequence>
+  <item id="p5.pac" name="mp5teq.ass">
+   <jump action="RETURN" id="forward" />
+   <jump action="RETURN" id="back" />
+  </item>
+ </sequence>
+ <activities>
+  <activity class="@panels.InformationScreen" name="mp5teq.ass">
+   <messages>
+    <cell type="initial">
+     <style />
+    </cell>
+    <cell type="final">
+     <style />
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0x29A5FF">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0x29A5FF" border="false" />
+   </settings>
+   <cells rows="1" cols="3" cellWidth="336.0" cellHeight="212.0" border="false">
+    <style>
+     <color background="0x29A5FF" />
+    </style>
+    <shaper class="@Rectangular" cols="3" rows="1" />
+    <cell image="temps.jpg">
+     <media type="RUN_CLIC_PACKAGE" params="p5_t.jclic" level="1" file="p5t.pac" />
+    </cell>
+    <cell image="espai.jpg">
+     <media params="p5_e.jclic" type="RUN_CLIC_PACKAGE" level="1" file="p5e.pac" />
+    </cell>
+    <cell image="quantitat.jpg">
+     <media params="p5_q.jclic" type="RUN_CLIC_PACKAGE" level="1" file="p5q.pac" />
+    </cell>
+   </cells>
+  </activity>
+ </activities>
+ <mediaBag>
+  <media name="espai.jpg" file="espai.jpg" />
+  <media name="quantitat.jpg" file="quantitat.jpg" />
+  <media name="temps.jpg" file="temps.jpg" />
+ </mediaBag>
+</JClicProject>
+

@@ -64,9 +64,14 @@ define([
 
       var abc = this.act.abc['primary'];
       if (abc) {
+        
+        if (abc.imgName)
+          abc.setImgContent(this.act.project.mediaBag, null, false);
+  
         if (this.act.acp !== null)
           this.act.acp.generateContent(
               new this.act.acp.ActiveBagContentKit(abc.nch, abc.ncw, [abc], false), this.ps);
+          
         this.bg = ActiveBoxGrid.prototype._createEmptyGrid(null, this,
             this.act.margin, this.act.margin,
             abc);
