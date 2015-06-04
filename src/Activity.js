@@ -55,7 +55,6 @@ define([
     // TODO: When all activities are created, initialize _CLASSES as an empty object
     _CLASSES: {
       '@panels.Menu': Activity,
-      '@text.WrittenAnswer': Activity,
       '@textGrid.CrossWord': Activity,
       '@textGrid.WordSearch': Activity
     },
@@ -773,10 +772,21 @@ define([
     // Attaches the events specified in the `events` member (an array of String) to the `$div` member
     attachEvents: function () {
       for (var i = 0; i < this.events.length; i++) {
-        this.$div.on(this.events[i], this, function(event){
+        this.attachEvent(this.$div, this.events[i]);
+        
+        //this.$div.on(this.events[i], this, function(event){
+        //  event.data.processEvent.call(event.data, event);
+        //});
+      }
+    },
+    //
+    // Attaches a single event to the specified object
+    // $obj - The JQuery object where the event is produced
+    // evt - String with the event name
+    attachEvent: function ($obj, evt) {
+        $obj.on(evt, this, function(event){
           event.data.processEvent.call(event.data, event);
         });
-      }
     },
     // 
     // Main handler to receive mouse and key events

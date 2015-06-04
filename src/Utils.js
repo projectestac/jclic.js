@@ -28,8 +28,8 @@ define([
     },
     //
     // Gets a number from a string or another number
-    getNumber: function(val, defaultValue){
-      return (val === '' || val===null || typeof val === 'undefined') ? defaultValue : Number(val);
+    getNumber: function (val, defaultValue) {
+      return (val === '' || val === null || typeof val === 'undefined') ? defaultValue : Number(val);
     },
     // 
     // Gets a tri-state value (0, 1 or 2) from a set of 'false', 'true' and
@@ -93,9 +93,9 @@ define([
     },
     //
     // Checks if the provided color (a String) has alpha value less than one
-    colorHasTransparency: function(color){
+    colorHasTransparency: function (color) {
       var result = false;
-      if (color.indexOf('rgba(')===0){
+      if (color.indexOf('rgba(') === 0) {
         var p = color.lastIndexOf(',');
         var alpha = parseint(color.substr(p));
         result = (typeof alpha === 'number') && alpha < 1.0;
@@ -112,8 +112,31 @@ define([
       return ' .,;-|'.indexOf(ch) >= 0;
     },
     // Rounds `v` to the nearest multiple of `n`
-    roundTo: function(v, n){
-        return (Math.round(v/n))*n;
+    roundTo: function (v, n) {
+      return (Math.round(v / n)) * n;
+    },
+    //
+    // Compares the provided answer against multiple valid options. These valid options are
+    // concatenated in a string, separed by pipe chars (`|`). The comparision can be case sensitive.
+    // answer (String) - The text to check against to
+    // check (String) - String containing one or multiple options, separed by `|`
+    // checkCase (Boolean) - When true, the comparision must be case sensitive    
+    compareMultipleOptions: function (answer, check, checkCase) {
+      if (answer === null || answer.length === 0 || check === null || check.length === 0)
+        return false;
+
+      if (!checkCase)
+        answer = answer.toUpperCase();
+      
+      answer = answer.trim();
+
+      var tokens = check.split('|');
+      for (var i = 0; i < tokens.length; i++) {
+        var s = checkCase ? tokens[i] : tokens[i].toUpperCase();
+        if (s.trim() === answer)
+          return true;
+      }
+      return false;
     },
     // 
     // Global constants
