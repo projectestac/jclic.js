@@ -376,8 +376,10 @@ define([
             
           this.setSystemMessage('loading project', project);          
           var tp = this;
-          $.get(fullPath, null, 'xml')
+          $.get(fullPath, {dataType: 'xml'})
               .done(function (data) {
+                if(typeof data === 'string')
+                  console.log('WARNING: Project loaded as plain text, not XML!');
                 var prj = new JClicProject();
                 prj.setProperties($(data).find('JClicProject'), fullPath);
                 tp.setSystemMessage('Project file loaded and parsed', project);

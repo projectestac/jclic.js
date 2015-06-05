@@ -8,17 +8,17 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     meta: {
       banner:
-          '// JSClic version <%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>)\n' +
-          '// A JavaScript player of JClic activities\n' +
+          '// JClic.js version <%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>)\n' +
+          '// JavaScript player for JClic activities\n' +
           '// (c) 2000-<%= grunt.template.today("yyyy") %> Educational Telematic Network of Catalonia (XTEC)\n' +
           '// This program can be freely redistributed under the terms of the GNU General Public License\n' +
-          '// This is a minified script. Full, commented source code available at:\n' +
-          '// <%= pkg.homepage %>\n'
+          '// WARNING: You are reading a minimized, uglifyed version of jclic.js. Full, readable source\n' +
+          '// code is freely available at: <%= pkg.homepage %>\n'
     },
     jshint: {
       files: ['src/**/*.js'],
       options: {
-          sub: true
+        sub: true
       }
     },
     clean: {
@@ -64,6 +64,24 @@ module.exports = function (grunt) {
           layout: 'parallel'
         }
       }
+    },
+    express: {
+      all: {
+        options: {
+          bases: ['.'],     
+          port: 8080,
+          hostname: '0.0.0.0',
+          livereload: true
+        }
+      }
+    },
+    watch: {
+      all: {
+        files: ['src/**/*.js', 'dist/*.js', 'build/*.js'],
+        options: {
+          livereload: true
+        }
+      }
     }
   });
 
@@ -73,6 +91,12 @@ module.exports = function (grunt) {
   require("load-grunt-tasks")(grunt);
 
   // define the tasks
+  grunt.registerTask(
+      'server',
+      'Starts a test server',
+      ['express', 'watch']
+      );
+  
   grunt.registerTask(
       'lint',
       'Checks the JS code',
