@@ -365,21 +365,21 @@ define([
       // step one: load the project
       if (project) {
         if (typeof project === 'string') {
-          
+
           // Param `project` is a file name or URL (otherwise, is a realized `JClicProject` object)
           var fullPath = Utils.getPath(this.basePath, project);
-          
+
           // Zip files are not supported in jclic.js. Remove the '.zip' extension and try to load
           // the `.jclic` file
-          if(Utils.endsWith(fullPath, '.jclic.zip'))
+          if (Utils.endsWith(fullPath, '.jclic.zip'))
             fullPath = fullPath.substring(0, fullPath.length - 4);
-            
-          this.setSystemMessage('loading project', project);          
+
+          this.setSystemMessage('loading project', project);
           var tp = this;
-          $.get(fullPath, {dataType: 'xml'})
+          $.get(fullPath, null, null, 'xml')
               .done(function (data) {
-                if(typeof data === 'string')
-                  console.log('WARNING: Project loaded as plain text, not XML!');
+                if (typeof data !== 'object')
+                  console.log('Project not loaded. Bad data!')
                 var prj = new JClicProject();
                 prj.setProperties($(data).find('JClicProject'), fullPath);
                 tp.setSystemMessage('Project file loaded and parsed', project);
@@ -634,7 +634,7 @@ define([
         switch (mediaContent.mediaType) {
           case 'RUN_CLIC_PACKAGE':
             ji = new JumpInfo('JUMP', fn);
-            if(mediaContent.externalParam)
+            if (mediaContent.externalParam)
               ji.projectPath = Utils.getPath(thisPlayer.project.basePath, mediaContent.externalParam);
             thisPlayer.history.processJump(ji, true);
             break;
