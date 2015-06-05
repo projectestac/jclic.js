@@ -89,6 +89,9 @@ define([
     // 
     // The [JClicProject](JclicProject.html) currently hosted in this player
     project: null,
+    //
+    // Relative path or absolute URL to be used as a base to access files
+    basePath: '',
     // 
     // Object of type [Activity.Panel](Activity.html) linked to the `Activity`
     // currently running in this player.
@@ -196,18 +199,7 @@ define([
         })
       };
     },
-    //
-    // Starts the player loading a JClic project (if specified). When the
-    // `sequence` parameter is not `null` or `undefined` the session will start 
-    // at the specified sequence element tag (or at the nth element of the list
-    // if `sequence` is a number)
-    start: function (path, sequence) {
-      this.initReporter();
-      if (path !== null)
-        return this.load(path, sequence);
-      else
-        return false;
-    },
+    // 
     // This method is called when the container gains the focus for the first
     // time or when losts it. Currently not used.
     activate: function () {
@@ -373,13 +365,21 @@ define([
       // step one: load the project
       if (project) {
         if (typeof project === 'string') {
-          // Should be a file name or URL
-          this.setSystemMessage('loading project', project);
+          
+          // Param `project` is a file name or URL (otherwise, is a realized `JClicProject` object)
+          var fullPath = Utils.getPath(this.basePath, project);
+          
+          // Zip files are not supported in jclic.js. Remove the '.zip' extension and try to load
+          // the `.jclic` file
+          if(Utils.endsWith(fullPath, '.jclic.zip'))
+            fullPath = fullPath.substring(0, fullPath.length - 4);
+            
+          this.setSystemMessage('loading project', project);          
           var tp = this;
-          $.get(project, null, 'xml')
+          $.get(fullPath, null, 'xml')
               .done(function (data) {
                 var prj = new JClicProject();
-                prj.setProperties($(data).find('JClicProject'), project);
+                prj.setProperties($(data).find('JClicProject'), fullPath);
                 tp.setSystemMessage('Project file loaded and parsed', project);
                 prj.mediaBag.buildAll();
                 var loops = 0;
@@ -632,7 +632,8 @@ define([
         switch (mediaContent.mediaType) {
           case 'RUN_CLIC_PACKAGE':
             ji = new JumpInfo('JUMP', fn);
-            ji.projectPath = mediaContent.externalParam;
+            if(mediaContent.externalParam)
+              ji.projectPath = Utils.getPath(thisPlayer.project.basePath, mediaContent.externalParam);
             thisPlayer.history.processJump(ji, true);
             break;
 

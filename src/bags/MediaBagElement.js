@@ -26,7 +26,9 @@ define([
 // into the [JClicProject](JClicProject.html) file or just mantained as a 
 // reference to an external file.
 //
-  var MediaBagElement = function (fileName) {
+  var MediaBagElement = function (basePath, fileName) {
+    if (basePath)
+      this.basePath = basePath;
     if (fileName) {
       this.fileName = fileName;
       this.name = fileName;
@@ -44,6 +46,9 @@ define([
     //
     // The file this element points to
     fileName: '',
+    //
+    // The path to be used as base to access this media element
+    basePath: '',
     //
     // When loaded, this field will store the realized media object
     data: null,
@@ -94,11 +99,12 @@ define([
     // The optional `callback` method is called when the referred resource is ready
     build: function (callback) {
       var media = this;
-      
-      if(callback)
+
+      if (callback)
         this._whenReady.push(callback);
-      
+
       if (!this.data) {
+        var fullPath = Utils.getPath(this.basePath, this.fileName);
         switch (this.type) {
           case 'font':
             var format = this.ext === 'ttf' ? 'truetype'
@@ -107,7 +113,7 @@ define([
             $('head').prepend(
                 '<style type="text/css">' +
                 '@font-face{font-family:"' + this.name + '";' +
-                'src:url(' + this.fileName + ') format("' + format + '");}' +
+                'src:url(' + fullPath + ') format("' + format + '");}' +
                 '</style>');
             this.data = new AWT.Font(this.name);
             this.ready = true;
@@ -115,7 +121,7 @@ define([
 
           case 'image':
             this.data = new Image();
-            $(this.data).attr('src', this.fileName);
+            $(this.data).attr('src', fullPath);
             if (this.data.complete || this.data.readyState === 4 || this.data.readyState === 'complete')
               // Image was in cache
               this.ready = true;
@@ -128,7 +134,7 @@ define([
             break;
 
           case 'audio':
-            this.data = new Audio(this.fileName);
+            this.data = new Audio(fullPath);
             if (this.data.complete || this.data.readyState === 4 || this.data.readyState === 'complete')
               // Audio was in cache
               this.ready = true;
@@ -142,7 +148,7 @@ define([
 
           case 'xml':
             this.data = '';
-            $.get(this.fileName, function (response, status, xhr) {
+            $.get(fullPath, function (response, status, xhr) {
               if (status !== 'error') {
                 media.data = response;
                 media._onReady();
@@ -156,7 +162,7 @@ define([
             this.ready = true;
             return;
 
-        }        
+        }
       }
 
       if (this.ready)
@@ -166,16 +172,16 @@ define([
     },
     //
     // Notify listeners that the resource is ready
-    _onReady: function(){
+    _onReady: function () {
       this.ready = true;
-      for(var i=0; i<this._whenReady.length; i++){
+      for (var i = 0; i < this._whenReady.length; i++) {
         var callback = this._whenReady[i];
-        callback.apply(this);        
+        callback.apply(this);
       }
-      this._whenReady.length=0;
+      this._whenReady.length = 0;
     }
-    
-    
+
+
   };
 
   return MediaBagElement;

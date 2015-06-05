@@ -138,6 +138,39 @@ define([
       }
       return false;
     },
+    //
+    // Checks if the given string ends with the specified expression
+    // text (String) - The string where to find the expression
+    // expr (String) - The expression to search for
+    endsWith: function(text, expr){
+      return text.indexOf(expr, text.length - expr.length) !== -1;
+    },
+    // 
+    // Checks if the given expressin is an absolute URL
+    // expr (String) - The expression to be checked
+    isURL: function(exp){
+      var path = /^(https?|file|ftps?):\/\//i;
+      return path.test(exp);
+    },
+    //
+    // Get the base path of the given file path (absolute or full URL)
+    // This base path always ends with `/`, meaning it can be concatenated with relative paths
+    // without adding a separator.
+    getBasePath: function(exp){
+      var result = '';
+      var p = exp.lastIndexOf('/');
+      if(p>=0)
+        result = exp.substring(0, p+1);
+      return result;
+    },
+    //
+    // Get the complete path of a relative or absolute URL, using the provided `basePath`
+    getPath: function(basePath, path){
+      if(Utils.isURL(path))
+        return path;
+      else
+        return basePath + path;
+    },
     // 
     // Global constants
     settings: {

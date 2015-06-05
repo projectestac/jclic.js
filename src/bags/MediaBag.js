@@ -43,10 +43,10 @@ define([
     //
     // Loads the object settings from a specific JQuery XML element 
     setProperties: function ($xml) {
-      var elements = this.elements;
+      var thisMediaBag = this;
       $xml.children('media').each(function () {
-        var mbe = new MediaBagElement().setProperties($(this));
-        elements[mbe.name] = mbe;
+        var mbe = new MediaBagElement(thisMediaBag.project.basePath).setProperties($(this));
+        thisMediaBag.elements[mbe.name] = mbe;
       });
       return this;
     },

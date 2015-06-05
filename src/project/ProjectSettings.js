@@ -21,13 +21,17 @@ define([
 
 
 // This class encapsulates miscellaneous settings of JClic projects
-  var ProjectSettings = function () {
-    this.languages = [];
+  var ProjectSettings = function (project) {
+    this.project = project;
+    this.languages = [];    
   };
 
   ProjectSettings.prototype = {
     constructor: ProjectSettings,
-    //
+    // 
+    // The JClicProject this settings belongs to
+    project: null,
+    // 
     // The project title
     title: 'Untitled',
     // 

@@ -18,8 +18,9 @@ define([
   "./ProjectSettings",
   "../bags/ActivitySequence",
   "../bags/MediaBag",
-  "../Activity"
-], function ($, ProjectSettings, ActivitySequence, MediaBag, Activity) {
+  "../Activity",
+  "../Utils"
+], function ($, ProjectSettings, ActivitySequence, MediaBag, Activity, Utils) {
 
 // JClicProject encapsulates all the components of a JClic project:
 // activities, sequences, media files, descriptors and metadata.  
@@ -30,10 +31,10 @@ define([
 // - MediaBag: contains the full list of media files used by the activities    
 //
   var JClicProject = function () {
-    this.settings = new ProjectSettings();
+    this.settings = new ProjectSettings(this);
     this.activitySequence = new ActivitySequence(this);
     this._activities = {};
-    this.mediaBag = new MediaBag();
+    this.mediaBag = new MediaBag(this);
   };
 
   JClicProject.prototype = {
@@ -59,13 +60,19 @@ define([
     // Skin
     skin: null,
     //
+    // Relative path or absolute URL to be used as a base to access files
+    // (usually in conjunction with [JClicPlayer.basePath](JClicPlayer.html))
+    basePath: '',
+    //
     // Full path of this project
     path: null,
     // 
     // Loads the project settings from a main JQuery XML element 
     setProperties: function ($xml, path) {
-      if (path)
+      if (path){
         this.path = path;
+        this.basePath = Utils.getBasePath(path);
+      }
       this.name = $xml.attr('name');
       this.version = $xml.attr('version');
       this.type = $xml.attr('type');
