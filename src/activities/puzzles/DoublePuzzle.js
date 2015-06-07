@@ -76,8 +76,8 @@ define([
     // The [BoxConnector](BoxConnector.html) obect
     bc: null,
     // 
-    // Mouse events intercepted by this panel
-    events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchmove', 'touchend', 'touchcancel'],
+    // Mouse and touch events intercepted by this panel
+    events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
     //
     // Clear the realized objects
     clear: function () {
@@ -195,15 +195,27 @@ define([
       if (this.bc && this.playing) {
 
         var bx1, bx2;
-        var mouseup = false;
-        var p = new AWT.Point(
-            event.pageX - this.$div.offset().left,
-            event.pageY - this.$div.offset().top);
+        var up = false, p = null;
+        // Touch end, cancel and leave events don't provide pageX-Y information
+        if (event.type === 'touchend') {
+          p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
+        }
+        else {
+          // Touch events can have more than one touch
+          var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
+          var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+          p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
+        }
 
         switch (event.type) {
+          case 'touchcancel':
+            if (this.bc.active)
+              this.bc.end();
+            break;
+
           case 'mouseup':
+            up = true;
           case 'touchend':
-            mouseup = true;
           case 'touchstart':
           case 'mousedown':
             this.ps.stopMedia(1);
@@ -224,7 +236,8 @@ define([
               }
             }
             else {
-              if (mouseup && p.distanceTo(this.bc.origin) <= 3) {
+              if (up && p.distanceTo(this.bc.origin) <= 3) {
+                // Don't consider drag moves below 3 pixels. Can be a "trembling click"
                 break;
               }
               // Pairing completed
@@ -270,7 +283,7 @@ define([
           case 'touchmove':
             this.bc.moveTo(p);
             break;
-        }        
+        }
         event.preventDefault();
       }
     }

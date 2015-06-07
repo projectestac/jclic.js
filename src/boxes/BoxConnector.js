@@ -103,6 +103,8 @@ define([
             this.bgRect.dim.width, this.bgRect.dim.height);
       }
 
+      this.dest.moveTo(pt);
+
       // Calculate the bounds of the invalidated area after the move:
       // Start with the origin point or box area
       var pt1 = new AWT.Point(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y);
@@ -122,7 +124,6 @@ define([
       }
       else {
         // Draw the connecting line
-        this.dest.moveTo(pt);
         this.drawLine();
         this.linePainted = true;
       }

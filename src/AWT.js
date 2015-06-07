@@ -343,6 +343,11 @@ define([
     // point (Point)
     distanceTo: function (point) {
       return Math.sqrt(Math.pow(this.x - point.x, 2), Math.pow(this.y - point.y, 2));
+    },
+    //
+    // Clones this point
+    clone: function(){
+      return new Point(this);
     }
   };
 
