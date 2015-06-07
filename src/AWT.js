@@ -337,6 +337,12 @@ define([
     // Check if two points are the same
     equals: function (p) {
       return this.x === p.x && this.y === p.y;
+    },
+    //
+    // Calculates the distance between two points
+    // point (Point)
+    distanceTo: function (point) {
+      return Math.sqrt(Math.pow(this.x - point.x, 2), Math.pow(this.y - point.y, 2));
     }
   };
 
@@ -501,7 +507,7 @@ define([
     },
     //
     // Shorthand method for determining if a Shape is a Rectangle
-    isRect: function(){
+    isRect: function () {
       return false;
     }
   };
@@ -584,11 +590,11 @@ define([
     //
     // Expands the boundaries of the rectangle. This affects the current position
     // and the dimension
-    grow: function(dx, dy){
-      this.pos.x-=dx;
-      this.pos.y-=dy;
-      this.dim.width+=2*dx;
-      this.dim.height+=2*dy;
+    grow: function (dx, dy) {
+      this.pos.x -= dx;
+      this.pos.y -= dy;
+      this.dim.width += 2 * dx;
+      this.dim.height += 2 * dy;
     },
     //
     // Gets the AWT.Point correspondinf to the lower-right vertex of the rectangle.
@@ -643,7 +649,7 @@ define([
     },
     //
     // Shorthand method for determining if a Shape is a Rectangle
-    isRect: function(){
+    isRect: function () {
       return true;
     }
   };
@@ -660,23 +666,23 @@ define([
   };
 
   Ellipse.prototype = {
-    constructor: Ellipse,    
+    constructor: Ellipse,
     // 
     // Prepares CanvasRenderingContext2D with a path that can be used to stroke a line, to fill a
     // surface or to define a clipping region.
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
     preparePath: function (ctx) {
-      
+
       // Using the solution 'drawEllipseWithBezier' proposed by Steve Tranby in:
       // http://jsbin.com/sosugenegi/1/edit as a response to:
       // http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
       // Thanks Steve!!
-                 
+
       var kappa = .5522848,
-          ox = (this.dim.width / 2) * kappa,    // control point offset horizontal
-          oy = (this.dim.height / 2) * kappa,   // control point offset vertical
-          xe = this.pos.x + this.dim.width,     // x-end
-          ye = this.pos.y + this.dim.height,    // y-end
+          ox = (this.dim.width / 2) * kappa, // control point offset horizontal
+          oy = (this.dim.height / 2) * kappa, // control point offset vertical
+          xe = this.pos.x + this.dim.width, // x-end
+          ye = this.pos.y + this.dim.height, // y-end
           xm = this.pos.x + this.dim.width / 2, // x-middle
           ym = this.pos.y + this.dim.height / 2;// y-middle
 
@@ -692,7 +698,7 @@ define([
     //
     // Calcs the area of a ellipse with this dimension
     getSurface: function () {
-      return Math.PI * this.dim.width/2 * this.dim.height/2;
+      return Math.PI * this.dim.width / 2 * this.dim.height / 2;
     },
     //
     // Check if two Rectangles are equivalent
@@ -706,7 +712,7 @@ define([
     },
     //
     // Shorthand method for determining if a Shape is a Rectangle
-    isRect: function(){
+    isRect: function () {
       return false;
     }
   };
@@ -751,9 +757,9 @@ define([
     },
     //
     // Adds a PathStroke element to `strokes`
-    addStroke: function(stroke){
+    addStroke: function (stroke) {
       this.strokes.push(stroke);
-      return this;      
+      return this;
     },
     //
     // Calculates the rectangle that (approximately) encloses the shape, taking
@@ -781,7 +787,7 @@ define([
           }
       }
       this.enclosing.setBounds(new Rectangle(p0, new Dimension(p0, p1)));
-      
+
       return this.enclosing;
     },
     //

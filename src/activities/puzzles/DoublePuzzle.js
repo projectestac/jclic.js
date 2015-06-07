@@ -77,7 +77,7 @@ define([
     bc: null,
     // 
     // Mouse events intercepted by this panel
-    events: ['mousedown', 'mouseup', 'mousemove'],
+    events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchmove', 'touchend', 'touchcancel'],
     //
     // Clear the realized objects
     clear: function () {
@@ -180,10 +180,10 @@ define([
           left: 0
         });
         this.$div.append(this.$canvas);
-        
+
         // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context        
         this.bc = new BoxConnector(this, this.$canvas.get(0).getContext('2d'));
-        
+
         // Repaint all
         this.invalidate().update();
       }
@@ -195,14 +195,19 @@ define([
       if (this.bc && this.playing) {
 
         var bx1, bx2;
+        var mouseup = false;
         var p = new AWT.Point(
             event.pageX - this.$div.offset().left,
             event.pageY - this.$div.offset().top);
 
         switch (event.type) {
+          case 'mouseup':
+          case 'touchend':
+            mouseup = true;
+          case 'touchstart':
           case 'mousedown':
             this.ps.stopMedia(1);
-            if(!this.bc.active) {
+            if (!this.bc.active) {
               // New pairing starts
               //
               // Find the ActiveBox behind the clicked point
@@ -219,18 +224,21 @@ define([
               }
             }
             else {
+              if (mouseup && p.distanceTo(this.bc.origin) <= 3) {
+                break;
+              }
               // Pairing completed
               //
               // Find the active boxes behind `bc.origin` and `p`
               if (this.act.dragCells)
                 bx1 = this.bc.bx;
               else
-                bx1 = this.bgA.findActiveBox(this.bc.origin);                            
+                bx1 = this.bgA.findActiveBox(this.bc.origin);
               bx2 = this.bgB.findActiveBox(p);
-              
+
               // BoxConnector ends here
               this.bc.end();
-              
+
               // Check if the pairing was OK
               if (bx1 && bx2 && bx2.isInactive()) {
                 var ok = false;
@@ -259,9 +267,11 @@ define([
             break;
 
           case 'mousemove':
+          case 'touchmove':
             this.bc.moveTo(p);
             break;
-        }
+        }        
+        event.preventDefault();
       }
     }
   };
