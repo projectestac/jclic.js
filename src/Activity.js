@@ -786,7 +786,7 @@ define([
     // evt - String with the event name
     attachEvent: function ($obj, evt) {
         $obj.on(evt, this, function(event){
-          event.data.processEvent.call(event.data, event);
+          return event.data.processEvent.call(event.data, event);
         });
     },
     // 
@@ -794,6 +794,7 @@ define([
     processEvent: function (event) {
       if(this.playing)
         console.log('Event fired: ' + event.type);
+      return false;
     },
     //
     // Fits the panel into the `proposed` rectangle, not surpassing the

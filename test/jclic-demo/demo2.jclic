@@ -6,7 +6,7 @@
   <descriptors />
  </settings>
  <sequence>
-  <item id="start" name="puz01.puz" />
+  <item id="start" name="ass08.ass" />
   <item id="demo.pac" name="pres0.ass">
    <jump tag="menu0.pac" id="forward" />
   </item>

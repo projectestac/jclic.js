@@ -156,13 +156,39 @@ define([
         // 
         // bgB will be used only as a placeholder for `$textField`
         this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1));
+        
+        this.$form = $('<form id="form1" action="#"/>');
+        
+        var thisPanel = this;
+        this.$form.submit(function(event){
+          event.preventDefault();
+          if(thisPanel.playing){
+            thisPanel.setCurrentCell(thisPanel.currentCell);
+          }
+        });
+        
         this.$textField = $('<input type="text" size="200"/>').css(abcB.bb.getCSS()).css({
           position: 'absolute', top: 0, left: 0,
           border: 0, padding: 0, margin: 0,
           'text-align': 'center'
         });
+        /*
+        this.$textField.blur(function(event){
+          console.log('Focus lost!');
+          event.preventDefault();
+        });
+        */
+       
+       /*
+        this.$textField.change(function(event){
+          console.log('Text changed!');
+          event.preventDefault();
+        });
+        */
+        this.$form.append(this.$textField);
+        
 
-        this.attachEvent(this.$textField, 'input');
+        //this.attachEvent(this.$textField, 'edit');
 
         this.bgA.setContent(abcA, solved ? solved : null);
         //this.currentCell = 0;
@@ -258,9 +284,9 @@ define([
             left: this.bgB.pos.x,
             width: this.bgB.dim.width,
             height: this.bgB.dim.height,
-            zIndex: 99
+            zIndex: 9
           });
-          this.$div.append(this.$textField);
+          this.$div.append(this.$form);
         }
 
         // Repaint all
@@ -364,6 +390,9 @@ define([
     // Overrides same function in Activity.Panel
     processEvent: function (event) {
       if (this.playing) {
+        
+        console.log('Event: '+event.type);
+
         switch (event.type) {
           case 'click':
             event.preventDefault();
@@ -386,12 +415,11 @@ define([
             }
             break;
 
-          case 'input':
-            console.log('Input: '+this.$textField.val()+ ' ' + event);
+          case 'edit':            
+            event.preventDefault();
+            this.setCurrentCell(this.currentCell);
+            return false;
             
-            //event.preventDefault();
-            //this.setCurrentCell(this.currentCell);
-            break;
         }
       }
     }
