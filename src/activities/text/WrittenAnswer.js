@@ -372,13 +372,11 @@ define([
                 event.pageX - this.$div.offset().left,
                 event.pageY - this.$div.offset().top);
                                 
-            // Avoid clicks done on the textfield
+            // Avoid clicks on the text field
             if(this.bgB.contains(p)){              
-              console.log('DISCARDED click on '+p.x + ','+p.y);
               this.$textField.focus();
               break;
             }
-            console.log('click on '+p.x + ','+p.y);
             
             var bx = this.bgA.findActiveBox(p);
             if (bx) {
@@ -389,13 +387,10 @@ define([
             break;
 
           case 'input':
-            console.log('Input: '+this.$textField.val());
-            /*
-            if(key === 13) {
-              event.preventDefault();
-              this.setCurrentCell(this.currentCell);
-            }
-            */
+            console.log('Input: '+this.$textField.val()+ ' ' + event);
+            
+            //event.preventDefault();
+            //this.setCurrentCell(this.currentCell);
             break;
         }
       }
