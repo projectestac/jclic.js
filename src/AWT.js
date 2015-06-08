@@ -20,11 +20,15 @@ define([
 
   //
   // This object encapsulates utility clases for painting graphics and images,
-  // as found in the Java [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html)
-  //
+  // as found in the Java [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html)  
+  // 
+  // The objects defined here are: [Font](#Font), [Gradient](#Gradient), [Stroke](#Stroke),
+  // [Point](#Point), [Dimension](#Dimension), [Shape](#Shape), [Rectangle](#Rectangle),
+  // [Ellipse](#Ellipse), [Path](#Path), [PathStroke](#PathStroke), [Action](#Action), [Timer](#Timer)
+  // and [Container](#Container)
 
   //
-  // Font
+  // #### <a name="Font">Font</a> ####
   // Encapsulates properties and provides methotds to manage fonts
   var Font = function (family, size, bold, italic, variant) {
     if (family)
@@ -172,7 +176,7 @@ define([
   };
 
   //
-  // Gradient
+  // #### <a name="Gradient">Gradient</a> ####
   // Encapsulates parametres and methods to draw complex color gradients
   //
   var Gradient = function (c1, c2, angle, cycles) {
@@ -242,7 +246,7 @@ define([
   };
 
   //
-  // Stroke
+  // #### <a name="Stroke">Stroke</a> ####
   // Encapsulates the properties used to draw lines in `canvas` elements
   // See: http://bucephalus.org/text/CanvasHandbook/CanvasHandbook.html#line-caps-and-joins
   var Stroke = function (lineWidth, lineCap, lineJoin, miterLimit) {
@@ -277,8 +281,10 @@ define([
   };
 
   //
-  // Point
-  //
+  // #### <a name="Point">Point</a> ####
+  // Encapsulates the `x` andy `y` coordinates of a point, and provides some useful methods.  
+  // x (Number or Point) - When `x` is a `Point` object, a clone of it will be generated
+  // y (Number) - Not used when `x` is a `Point`
   var Point = function (x, y) {
     // Special case: constructor passing another point as unique parameter
     if (x instanceof Point) {
@@ -312,8 +318,8 @@ define([
     },
     //
     // Moves this Point to a new position
-    // newPos (Point): The new position, or a x co-ordinate
-    // y (number): null if newPos is a Point
+    // newPos (Number or Point) - The new position, or a x co-ordinate
+    // y (Number) - null if newPos is a Point
     moveTo: function (newPos, y) {
       if (typeof newPos === 'number') {
         this.x = newPos;
@@ -352,7 +358,7 @@ define([
   };
 
   //
-  // Dimension
+  // #### <a name="Dimension">Dimension</a> ####
   // w (number or Point) - The width of this Dimension, or the upper-left vertex of a virtual rectangle
   // h (number or Point) - The height of this Dimension, or the bottom-right vertex of a virtual rectangle
   var Dimension = function (w, h) {
@@ -410,6 +416,7 @@ define([
   };
 
   //
+  // #### <a name="Shape">Shape</a> ####
   // Shape is a generic class for rectangles, ellipses and stroke-free shapes
   // pos (Point) - Indicates the shape top-left coordinates
   var Shape = function (pos) {
@@ -518,8 +525,7 @@ define([
   };
 
   //
-  // Rectangle
-  //
+  // #### <a name="Rectangle">Rectangle</a> ####
   // pos: Object of type Position 
   // dim: Object of type Dimension or Point (if it's of type `Point`, the dimension
   // of the rectangle will be calculated substracting co-ordinates)
@@ -662,7 +668,7 @@ define([
   Rectangle.prototype = $.extend(Object.create(Shape.prototype), Rectangle.prototype);
 
   //
-  // Ellipse
+  // #### <a name="Ellipse">Ellipse</a> ####
   //
   // pos (Point) - Upper left corner of the enclosing rectangle 
   // dim (Dimension or Point) - Dimension of the enclosing rectangle
@@ -726,6 +732,8 @@ define([
 
 
   //
+  // #### <a name="Path">Path</a> ####
+  // 
   // A `Path` is formed by a serie of strokes, represented by `PathStroke`objects
   //
   var Path = function (strokes) {
@@ -858,6 +866,7 @@ define([
 
 
   //
+  // #### <a name="PathStroke">PathStroke</a> ####
   // PathStrokes are basic elements of Paths
   //
   var PathStroke = function (type, points) {
@@ -939,6 +948,7 @@ define([
   };
 
   // 
+  // #### <a name="Action">Action</a> ####
   // This class encapsulates actions that will be linked to buttons, menus and
   // other objects
   var Action = function (name, actionPerformed) {
@@ -977,6 +987,7 @@ define([
   };
 
   // 
+  // #### <a name="Timer">Timer</a> ####
   // This class encapsulates actions that will be linked to buttons, menus and
   // other objects
   var Timer = function (actionPerformed, interval, enabled) {
@@ -1058,7 +1069,8 @@ define([
     }
   };
 
-  // Description
+  // 
+  // #### <a name="Container">Container</a> ####
   //
   var Container = function (pos, dim, w, h) {
     Rectangle.call(this, pos, dim, w, h);

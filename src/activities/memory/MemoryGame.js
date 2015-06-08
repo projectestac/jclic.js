@@ -70,8 +70,8 @@ define([
     // The [BoxConnector](BoxConnector.html) obect
     bc: null,
     //
-    // Mouse events intercepted by this panel
-    events: ['mousedown', 'mouseup', 'mousemove'],
+    // Mouse and touch events intercepted by this panel
+    events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
     //
     // Clears the realized objects
     clear: function () {
@@ -199,17 +199,47 @@ define([
     // Overrides same function in Activity.Panel
     processEvent: function (event) {
       if (this.bc && this.playing) {
-
+        // 
+        // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
+        var p = null;
+        // 
+        // Two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
+        // `origin` and `dest` points.
         var bx1, bx2;
-        var p = new AWT.Point(
-            event.pageX - this.$div.offset().left,
-            event.pageY - this.$div.offset().top);
+        // 
+        // _touchend_ event don't provide pageX nor pageY information
+        if (event.type === 'touchend') {
+          p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
+        }
+        else {
+          // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
+          var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
+          var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+          p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
+        }
+
+        // Flag for tracking `mouseup` events
+        var up = false;
 
         switch (event.type) {
+          case 'touchcancel':
+            // Canvel movement
+            if (this.bc.active)
+              this.bc.end();
+            break;
+
+          case 'mouseup':
+          case 'touchend':
+            up = true;
+          case 'touchstart':
           case 'mousedown':
             this.ps.stopMedia(1);
             if (!this.bc.active) {
               // New pairing starts
+              //
+              // Pairings can never start with a `mouseup` event
+              if (up)
+                break;
               //
               // Find the ActiveBox behind the clicked point              
               bx1 = this.bg.findActiveBox(p);
@@ -227,6 +257,10 @@ define([
               }
             }
             else {
+              // Don't consider drag moves below 3 pixels. Can be a "trembling click"
+              if (up && p.distanceTo(this.bc.origin) <= 3) {
+                break;
+              }
               // Pairing completed
               //
               // Find the active boxes behind `bc.origin` and `p`              
@@ -284,9 +318,11 @@ define([
             break;
 
           case 'mousemove':
+          case 'touchmove':
             this.bc.moveTo(p);
             break;
         }
+        event.preventDefault();
       }
     }
   };

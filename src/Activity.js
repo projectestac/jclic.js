@@ -660,8 +660,9 @@ define([
     minimumSize: null,
     preferredSize: null,
     //
-    // Possible events are: 'keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'click',
-    // 'dblclick', 'mousemove', 'mouseenter', 'mouseleave', 'mouseover', 'mouseout'
+    // current events are: 'keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'click',
+    // 'dblclick', 'mousemove', 'mouseenter', 'mouseleave', 'mouseover', 'mouseout',
+    // 'touchstart', 'touchend', 'touchmove', 'touchcancel'
     events: ['click', 'keypress'],
     backgroundColor: null,
     backgroundTransparent: false,

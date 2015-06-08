@@ -143,7 +143,7 @@ define([
 
       //this.setAndPlayMsg('main', 'start');
       if (this.bg) {
-        if(this.act.scramble['primary'])
+        if (this.act.scramble['primary'])
           this.shuffle([this.bg], true, true);
         if (this.useOrder)
           this.currentItem = this.bg.getNextItem(-1);
@@ -231,6 +231,7 @@ define([
             }
             break;
         }
+        event.preventDefault();
       }
     }
   };

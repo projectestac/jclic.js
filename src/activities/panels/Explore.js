@@ -217,6 +217,7 @@ define([
             }
             break;
         }
+        event.preventDefault();
       }
     }
   };

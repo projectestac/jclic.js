@@ -80,8 +80,7 @@ define([
     hiddenBox: null,
     hiddenBoxIndex: -1,
     //
-    // Possible events are: 'keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'click',
-    // 'dblclick', 'mousemove', 'mouseenter', 'mouseleave', 'mouseover', 'mouseout'
+    // Mouse and touch events intercepted by this panel
     events: ['click'],
     //
     // Clears the realized objects
@@ -255,6 +254,7 @@ define([
             }
             break;
         }
+        event.preventDefault();
       }
     }
   };

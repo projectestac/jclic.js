@@ -53,6 +53,9 @@ define([
     //
     // The [ActiveBoxBag](ActiveBoxBag.html) containing the information to be displayed.
     bg: null,
+    //
+    // Mouse events intercepted by this panel
+    events: ['click'],
     // 
     // Prepares the activity panel
     buildVisualComponents: function () {
@@ -127,6 +130,7 @@ define([
           if (!bx.playMedia(this.ps))
             this.playEvent('click');
         }
+        event.preventDefault();        
       }
     }
   };

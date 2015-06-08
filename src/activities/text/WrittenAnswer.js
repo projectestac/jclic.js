@@ -162,10 +162,10 @@ define([
           'text-align': 'center'
         });
 
-        this.attachEvent(this.$textField, 'keypress');
+        this.attachEvent(this.$textField, 'input');
 
         this.bgA.setContent(abcA, solved ? solved : null);
-        this.currentCell = 0;
+        //this.currentCell = 0;
 
         this.bgA.setDefaultIdAss();
 
@@ -238,8 +238,14 @@ define([
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bgA || this.bgB) {
+        var r = rect.clone();
+        if(this.act.boxGridPos === 'AUB')
+          r.height -= (this.bgB.pos.y + this.act.margin/2);
+        else if(this.act.boxGridPos === 'AB')
+          r.width -= (this.bgB.pos.x + this.act.margin/2);
+                  
         // Create the main canvas
-        this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
+        this.$canvas = $('<canvas width="' + r.dim.width + '" height="' + r.dim.height + '"/>').css({
           position: 'absolute',
           top: 0,
           left: 0
@@ -251,7 +257,8 @@ define([
             top: this.bgB.pos.y,
             left: this.bgB.pos.x,
             width: this.bgB.dim.width,
-            height: this.bgB.dim.height
+            height: this.bgB.dim.height,
+            zIndex: 99
           });
           this.$div.append(this.$textField);
         }
@@ -359,10 +366,20 @@ define([
       if (this.playing) {
         switch (event.type) {
           case 'click':
+            event.preventDefault();
             this.ps.stopMedia(1);
             var p = new AWT.Point(
                 event.pageX - this.$div.offset().left,
                 event.pageY - this.$div.offset().top);
+                                
+            // Avoid clicks done on the textfield
+            if(this.bgB.contains(p)){              
+              console.log('DISCARDED click on '+p.x + ','+p.y);
+              this.$textField.focus();
+              break;
+            }
+            console.log('click on '+p.x + ','+p.y);
+            
             var bx = this.bgA.findActiveBox(p);
             if (bx) {
               if (bx.getContent() && bx.getContent().mediaContent === null)
@@ -371,11 +388,14 @@ define([
             }
             break;
 
-          case 'keypress':
-            if (event.keyCode === 13 && this.currentCell !== -1) {
+          case 'input':
+            console.log('Input: '+this.$textField.val());
+            /*
+            if(key === 13) {
               event.preventDefault();
               this.setCurrentCell(this.currentCell);
             }
+            */
             break;
         }
       }

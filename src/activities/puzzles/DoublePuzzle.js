@@ -193,22 +193,31 @@ define([
     // Overrides same function in Activity.Panel
     processEvent: function (event) {
       if (this.bc && this.playing) {
-
+        // 
+        // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
+        var p = null;
+        // 
+        // Two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
+        // `origin` and `dest` points.
         var bx1, bx2;
-        var up = false, p = null;
-        // Touch end, cancel and leave events don't provide pageX-Y information
+        // 
+        // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
         }
         else {
-          // Touch events can have more than one touch
+          // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
           var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
           p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 
+        // Flag for tracking `mouseup` events
+        var up = false;
+
         switch (event.type) {
           case 'touchcancel':
+            // Canvel movement
             if (this.bc.active)
               this.bc.end();
             break;
@@ -220,7 +229,12 @@ define([
           case 'mousedown':
             this.ps.stopMedia(1);
             if (!this.bc.active) {
-              // New pairing starts
+              // 
+              // A new pairing starts
+              //              
+              // Pairings can never start with a `mouseup` event
+              if (up)
+                break;
               //
               // Find the ActiveBox behind the clicked point
               bx1 = this.bgA.findActiveBox(p);
@@ -236,8 +250,8 @@ define([
               }
             }
             else {
+              // Don't consider drag moves below 3 pixels. Can be a "trembling click"
               if (up && p.distanceTo(this.bc.origin) <= 3) {
-                // Don't consider drag moves below 3 pixels. Can be a "trembling click"
                 break;
               }
               // Pairing completed
