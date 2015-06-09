@@ -62,6 +62,9 @@ define([
     name: 'default',
     fileName: '',
     //
+    // Waiting panel, displayed while loading resources
+    $waitPanel: null,
+    //
     // The collection of buttons
     buttons: {
       'prev': null,
@@ -171,7 +174,7 @@ define([
     updateContent: function (dirtyRegion) {
       // To be overrided. Does nothing in abstract Skin.
       return AWT.Container.prototype.updateContent.call(this);
-    },    
+    },
     //
     // Reset all counters
     // bEnabled (boolean) - Leave it enabled/disabled
@@ -196,7 +199,10 @@ define([
     // activated or deactivated
     setWaitCursor: function (status) {
       if (typeof status === 'undefined') {
-        // TODO: Enable/disable the wait state based on the value of `waitCursorCount`
+        if (this.$waitPanel)
+          this.$waitPanel.css({
+            display: this.waitCursorCount > 0 ? 'inherit' : 'none'
+          });
       }
       else {
         if (status)

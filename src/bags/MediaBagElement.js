@@ -134,34 +134,30 @@ define([
             break;
 
           case 'audio':
-            this.data = new Audio(fullPath);
-            if (this.data.complete || this.data.readyState === 4 || this.data.readyState === 'complete')
-              // Audio was in cache
-              this.ready = true;
-            else
-              $(this.data).load(function (response, status, xhr) {
-                if (status !== 'error') {
-                  media._onReady();
-                }
-              });
+            this.data = $('<audio />').attr('src', fullPath);
+            this.ready = true;
             break;
 
+          case 'video':
+            this.data = $('<video />').attr('src', fullPath);
+            this.ready = true;
+            break;
+            
           case 'xml':
             this.data = '';
-            $.get(fullPath, function (response, status, xhr) {
-              if (status !== 'error') {
-                media.data = response;
-                media._onReady();
-              }
-            }, 'xml');
+            $.get(fullPath, null, null, 'xml')
+                .done(function (data) {
+                  media.data = data;
+                  media._onReady();
+                }).fail(function(){
+                  console.log('Error loading '+media.name);
+                  media.data = null;
+                });
             break;
 
           default:
-            // Always simulate resource ready
             // TODO: Load the real resource
-            this.ready = true;
             return;
-
         }
       }
 

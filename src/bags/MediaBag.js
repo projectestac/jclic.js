@@ -83,16 +83,15 @@ define([
     // Check if there are media waiting to be loaded
     isWaiting: function () {            
       var result = false;
-      /*
       // Only for debug purposes: return always 'false'
       // TODO: Check loading process!
       $.each(this.elements, function (name, element) {
         if (element.data && !element.ready) {
+          console.log('... waiting for '+name);
           result = true;
           return false;
         }
       });
-      */
       return result;
     },
     //

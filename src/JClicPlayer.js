@@ -386,15 +386,18 @@ define([
                 prj.mediaBag.buildAll();
                 var loops = 0;
                 var interval = 500;
+                tp.skin.setWaitCursor(true);
                 var checkMedia = window.setInterval(function () {
                   // Wait for a maximum time of two minutes
                   if (++loops > tp.options.MAX_WAIT_TIME / interval) {
                     window.clearInterval(checkMedia);
+                    tp.skin.setWaitCursor(false);
                     tp.setSystemMessage('Error loading media!');
                     // alert?                    
                   }
                   if (!prj.mediaBag.isWaiting()) {
                     window.clearInterval(checkMedia);
+                    tp.skin.setWaitCursor(false);
                     // Call again `load`, passing the loaded [JClicProject](JClicProject.html) object
                     tp.load(prj, sequence, activity);
                   }
