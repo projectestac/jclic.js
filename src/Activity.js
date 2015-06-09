@@ -357,7 +357,7 @@ define([
                   // (the panel where the activity deploys its content)
                   act.activityBgColor = Utils.checkColor($node.attr('bgColor'), K.DEFAULT_BG_COLOR);
                   act.transparentBg = Utils.getBoolean($node.attr('transparent'), false);
-                  act.border = Utils.getBoolean($node.attr('border'), true);
+                  act.border = Utils.getBoolean($node.attr('border'), false);
                   $node.children().each(function () {
                     var $child = $(this);
                     switch (this.nodeName) {
@@ -707,9 +707,15 @@ define([
       var cssAct = {
         display: 'block',
         'background-color': this.backgroundTransparent ? 'transparent' : this.backgroundColor,
-        // TODO: bevel border?
-        border: this.border ? 'solid' : 'none'
       };
+      
+      // Border shadow style Material Design, inspired in http://codepen.io/Stenvh/pen/EaeWqW
+      if (this.border) {
+        cssAct['box-shadow'] = '0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)';
+        cssAct['border-radius'] = '2px';
+        cssAct['color'] = '#272727';
+      }
+      
       if (this.act.activityBgGradient) {
         cssAct['background-image'] = this.act.activityBgGradient.getCss();
       }
@@ -721,9 +727,9 @@ define([
     // The method should be called from AWT.Container.update
     // dirtyRegion (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the
     // whole panel.
-    updateContent: function(dirtyRegion){
+    updateContent: function (dirtyRegion) {
       // To be overrided by subclasses. Does nothing.
-      return AWT.Container.prototype.updateContent.call(this, dirtyRegion);      
+      return AWT.Container.prototype.updateContent.call(this, dirtyRegion);
     },
     //
     // Plays the specified event sound
@@ -774,7 +780,7 @@ define([
     attachEvents: function () {
       for (var i = 0; i < this.events.length; i++) {
         this.attachEvent(this.$div, this.events[i]);
-        
+
         //this.$div.on(this.events[i], this, function(event){
         //  event.data.processEvent.call(event.data, event);
         //});
@@ -785,14 +791,14 @@ define([
     // $obj - The JQuery object where the event is produced
     // evt - String with the event name
     attachEvent: function ($obj, evt) {
-        $obj.on(evt, this, function(event){
-          return event.data.processEvent.call(event.data, event);
-        });
+      $obj.on(evt, this, function (event) {
+        return event.data.processEvent.call(event.data, event);
+      });
     },
     // 
     // Main handler to receive mouse and key events
     processEvent: function (event) {
-      if(this.playing)
+      if (this.playing)
         console.log('Event fired: ' + event.type);
       return false;
     },
