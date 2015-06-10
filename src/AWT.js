@@ -29,7 +29,7 @@ define([
 
   //
   // #### <a name="Font">Font</a> ####
-  // Encapsulates properties and provides methotds to manage fonts
+  // Encapsulates properties and provides methotds to manage fonts.
   var Font = function (family, size, bold, italic, variant) {
     if (family)
       this.family = family;
@@ -53,7 +53,7 @@ define([
     italic: 0,
     variant: '',
     // 
-    // Vertical font metrics calculated in `calcHeight`
+    // Vertical font metrics are calculated in `calcHeight`
     _ascent: -1,
     _descent: -1,
     _height: -1,
@@ -86,9 +86,9 @@ define([
     // Gets the font height
     getHeight: function () {
       if (this._height < 0) {
-        // Look for an equivalent font already calculed
-        for (var i = 0; i < Font.prototype._ALREADY_CALCULED_FONTS.length; i++) {
-          var font = Font.prototype._ALREADY_CALCULED_FONTS[i];
+        // Look for an equivalent font already calculated
+        for (var i = 0; i < Font.prototype._ALREADY_CALCULATED_FONTS.length; i++) {
+          var font = Font.prototype._ALREADY_CALCULATED_FONTS[i];
           if (font.equals(this)) {
             this._height = font._height;
             this._ascent = font._ascent;
@@ -99,17 +99,18 @@ define([
         if (this._height < 0) {
           this._calcHeight();
           if (this._height > 0)
-            Font.prototype._ALREADY_CALCULED_FONTS.push(this);
+            Font.prototype._ALREADY_CALCULATED_FONTS.push(this);
         }
       }
       return this._height;
     },
     //
-    // Array of font objects with already calculed heights, always stored on the prototype
-    _ALREADY_CALCULED_FONTS: [],
+    // Array of font objects with already calculated heights, always stored on the prototype
+    _ALREADY_CALCULATED_FONTS: [],
     //
-    // Copies the properties into an object with CSS attributes
-    // When `css` is null or undefined, a new object will be created and returned
+    // Translates the Font properties into CSS statements  
+    // css (Object or null) - The object where to add CSS properties. When null or undefined, a new
+    // object will be created and returned.
     toCss: function (css) {
       if (!css)
         css = {};
