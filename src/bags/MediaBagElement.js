@@ -134,7 +134,7 @@ define([
             break;
 
           case 'audio':
-            this.data = $('<audio />').attr('src', fullPath);
+            this.data = new $('<audio />').attr('src', fullPath);
             this.ready = true;
             break;
 

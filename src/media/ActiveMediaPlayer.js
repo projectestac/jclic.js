@@ -37,6 +37,17 @@ define([
       case 'PLAY_RECORDED_AUDIO':
         this.useAudioBuffer = true;
         break;
+      case 'PLAY_AUDIO':
+      case 'PLAY_VIDEO':
+        var fn = mc.mediaFileName;
+        if (mc.from > 0 || mc.to > 0) {
+          // TODO: Check media ranges. Currently not running always as expected.
+          fn = fn + '#t=' + (mc.from > 0 ? mc.from / 1000 : 0) + ',' + (mc.to > 0 ? mc.to / 1000 : 9999);
+        }
+        this.mbe = mb.getElementByFileName(fn, true);
+        break;
+      case 'PLAY_MIDI':
+        // TODO: Implement MIDI playing
       default:
         break;
     }
@@ -64,6 +75,12 @@ define([
     // Indicates that this player uses a recording audio buffer
     useAudioBuffer: false,
     //
+    // The [MediaBagElement] containing the reference to the data to be played
+    mbe: null,
+    //
+    // The JQuery object with the realized media controller
+    $media: null,
+    // 
     // Creates a new AudioBuffer
     createAudioBuffer: function (seconds) {
       //TODO: Implement AudioBuffer      
@@ -71,14 +88,30 @@ define([
     //
     // Generates the real objects capable of playing media
     realize: function () {
-      // TODO: Implement realize
+      if(this.mbe && !this.mbe.data)
+        this.mbe.build();        
     },
     //
     // Realizes and plays the media
     // setBx ([ActiveBox](ActiveBox.html) - The active box where this media
     // will be placed    
     playNow: function (setBx) {
-      // TODO: Implement it
+      if(this.mbe){
+        var thisMP = this;
+        this.mbe.build(function(){          
+          thisMP.mbe.data.trigger('pause');
+          var t = thisMP.mc.from > 0 ? thisMP.mc.from/1000 : 0;
+          thisMP.mbe.data.prop('currentTime', t);
+          console.log('requested  time: ' + t + ' current time: ' + thisMP.mbe.data.prop('currentTime'));
+          thisMP.mbe.data.trigger('play');
+          /*
+          thisMP.mbe.data.bind('canplay', function(){
+            this.currentTime = thisMP.mc.from > 0 ? thisMP.mc.from/1000 : 0;
+            this.play();            
+          });
+          */
+        });        
+      }
     },
     //
     // Plays the media when available, without blocking the current thread

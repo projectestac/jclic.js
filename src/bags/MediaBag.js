@@ -52,7 +52,10 @@ define([
     },
     // 
     // Gets a [MediaBagElement](MediaBagElement.html) by file name
-    getElementByFileName: function (fileName) {
+    // fileName (String) - The file name to search for
+    // create (Boolean or `null`) - When `true`, a new [MediaBagElement](MediaBagElement.html) will 
+    // be created in case of not found.
+    getElementByFileName: function (fileName, create) {
       var result = null;
       if (fileName) {
         for (var name in this.elements) {
@@ -60,6 +63,14 @@ define([
             result = this.elements[name];
             break;
           }
+        }
+        if (!result && create) {
+          result = new MediaBagElement(this.project.basePath);
+          result.name = fileName;
+          result.fileName = fileName;
+          result.ext = fileName.toLowerCase().split('#')[0].split('.').pop();
+          result.type = result.getFileType(result.ext);
+          this.elements[result.name] = result;
         }
       }
       return result;

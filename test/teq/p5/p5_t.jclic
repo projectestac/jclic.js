@@ -1,0 +1,1245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JClicProject name="p5_t" version="0.1.3">
+ <settings>
+  <title>TEQ - Conceptes bàsics</title>
+  <revision description="Creació del paquet d'activitats en Clic 3.0" date="9/25/00" />
+  <revision description="Conversió de Clic3 a JClic" date="8/9/02">
+   <author name="Equip Clic" mail="clic@pie.xtec.es" organization="Subdirecció General de Tecnologies de la Informació (SGTI)" />
+  </revision>
+  <author name="Maria Borrell" mail="mborrel6@pie.xtec.es" />
+  <author name="Enric J. López" mail="elopez22@pie.xtec.es" />
+  <author name="Imma Palahí" mail="mpalahi@pie.xtec.es" />
+  <author name="Nil López" rol="veu" />
+  <organization name="CEIP Pau Casals" mail="a8022011@centres.xtec.es" url="http://www.xtec.es/centres/a8022011" city="Montmeló" state="Catalunya" />
+  <organization name="CEIP Salvador Espriu" mail="a8021880@centres.xtec.es" url="http://www.xtec.es/centres/a8021880" city="Montgat" state="Catalunya" />
+  <language>Català</language>
+  <description>
+   <p>El TEQ és un clic de conceptes bàsics de Temps, Espai i Quantitat o comparació. Està adreçat a nens i nenes de 3, 4 i 5 anys i opcionalment a educació especial. Creat a base d'imatge fotogràfica i suport sonor, que donen molt atractiu a les activitats.</p>
+   <p>L'aplicació té com a objectiu fixar els conceptes bàsics que es treballen i iniciar-se a la lectoescriptura de paraules a través del so. També pretén que els nens i nenes relacionin la imatge amb el so.</p>
+   <p>Els conceptes treballats en els 9 paquets d'activitats són:</p>
+   <p>&lt;TABLE BORDER=1 CELLPADDING=5 CELLSPACING=0 STYLE="font-size: 9pt;"&gt;</p>
+   <p>&lt;TR&gt;&lt;TD&gt;&amp;nbsp;&lt;/TD&gt;&lt;TD&gt;&lt;B&gt;Temps&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;&lt;B&gt;Espai&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;&lt;B&gt;Quantitat&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;</p>
+   <p>&lt;TR&gt;&lt;TD&gt;&lt;B&gt;3 anys&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;dia/nit&lt;BR&gt;sempre/mai&lt;/TD&gt;&lt;TD&gt;dalt/baix&lt;BR&gt;dins/fora&lt;/TD&gt;&lt;TD&gt;ple/buit&lt;BR&gt;igual/diferent&lt;/TD&gt;&lt;/TR&gt;</p>
+   <p>&lt;TR&gt;&lt;TD&gt;&lt;B&gt;4 anys&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;primera/última&lt;BR&gt;ràpid/lent&lt;/TD&gt;&lt;TD&gt;a sobre/a sota&lt;BR&gt;amunt/avall&lt;BR&gt;davant/darrere&lt;/TD&gt;&lt;TD&gt;gran/mitjana/petit&lt;BR&gt;moltes/poques&lt;BR&gt;més que/menys que&lt;/TD&gt;&lt;/TR&gt;</p>
+   <p>&lt;TR&gt;&lt;TD&gt;&lt;B&gt;5 anys&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;matí/tarda&lt;BR&gt;ahir/avui/demà&lt;BR&gt;abans/després&lt;/TD&gt;&lt;TD&gt;dreta/esquerra&lt;BR&gt;al voltant/al mig&lt;BR&gt;més a prop/més lluny&lt;/TD&gt;&lt;TD&gt;llarg/curt&lt;BR&gt;meitat/sencera&lt;BR&gt;ampla/estreta&lt;/TD&gt;&lt;/TR&gt;</p>
+   <p>&lt;/TABLE&gt;</p>
+  </description>
+  <descriptors area="Diversos" level="Infantil">lectoescriptura</descriptors>
+ </settings>
+ <sequence>
+  <item id="p5t.pac" name="p5t1.ass">
+   <jump action="RETURN" id="back" />
+  </item>
+  <item name="p5t3.puz" />
+  <item name="p5t2.ass" />
+  <item name="p5t4.ass" />
+  <item name="p5t5.ass" />
+  <item name="p5t6.sop" />
+  <item name="p5t7.ass" />
+  <item name="p5t9.puz" />
+  <item name="p5t8.ass" />
+  <item name="p5t10a.ass" />
+  <item name="p5t10b.ass" />
+  <item name="p5t11a.puz" />
+  <item name="p5t11b.puz" />
+  <item name="p5t12.sop" />
+  <item name="p5t13.txa" />
+  <item name="p5t14.txa" />
+  <item name="p5t15.txa" />
+  <item name="p5t16.txa" />
+  <item name="p5t17.txa" />
+  <item name="p5t18.txa" />
+  <item name="p5t19.txa" />
+  <item name="fi.ass">
+   <jump action="RETURN" id="forward" />
+  </item>
+ </sequence>
+ <activities>
+  <activity class="@panels.InformationScreen" name="fi.ass">
+   <messages>
+    <cell type="initial">
+     <style>
+      <font family="Arial" size="45" />
+      <color background="0x29A5FF" inactive="0x29A5FF" alternative="0x29A5FF" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="fi.wav" />
+     <p>FI !!!</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <font family="Arial" size="45" />
+      <color background="0x29A5FF" inactive="0x29A5FF" alternative="0x29A5FF" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0x29A5FF">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0x74CFED" transparent="true" border="false" />
+   </settings>
+   <cells rows="3" cols="4" border="false" image="fi.jpg">
+    <style>
+     <color background="0xFFFFFF" inactive="0x29A5FF" alternative="0x29A5FF" />
+    </style>
+    <shaper class="@Rectangular" cols="4" rows="3" />
+   </cells>
+  </activity>
+  <activity class="@associations.ComplexAssociation" name="p5t1.ass">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="altaveus.wav" />
+     <p>CLICA ELS ALTAVEUS</p>
+    </cell>
+    <cell image="finalp5.jpg" type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <cells rows="2" cols="1" cellWidth="200.0" cellHeight="250.0" border="false" id="primary">
+    <style>
+     <font family="Arial" size="25" bold="true" />
+     <color background="0xABFCDA" inactive="0x000000" alternative="0x000000" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="2" />
+    <cell id="0">
+     <media type="PLAY_AUDIO" level="1" file="p5t1.wav" to="1500" />
+    </cell>
+    <cell id="1">
+     <media type="PLAY_AUDIO" level="1" file="p5t1.wav" from="1500" />
+    </cell>
+   </cells>
+   <cells rows="1" cols="2" cellWidth="400.0" cellHeight="500.0" border="false" id="secondary">
+    <style>
+     <color background="0xBDBDFF" />
+    </style>
+    <shaper class="@Rectangular" cols="2" rows="1" />
+    <cell image="mati.jpg" />
+    <cell image="tarda.jpg" />
+   </cells>
+   <cells rows="2" cols="1" cellWidth="200.0" cellHeight="250.0" border="false" id="solvedPrimary">
+    <shaper class="@Rectangular" cols="1" rows="2" />
+    <cell>
+     <p>MATI</p>
+    </cell>
+    <cell>
+     <p>TARDA</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="true" secondary="false" />
+   <layout position="AB" />
+  </activity>
+  <activity class="@associations.ComplexAssociation" name="p5t10a.ass">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="altaveus.wav" />
+     <p>CLICA ELS ALTAVEUS</p>
+    </cell>
+    <cell image="finalp5.jpg" type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="true" score="true" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <cells rows="4" cols="1" cellWidth="200.0" cellHeight="250.0" border="false" id="primary">
+    <style>
+     <font family="Arial" size="25" bold="true" />
+     <color background="0xABFCDA" inactive="0x000000" alternative="0x000000" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="4" />
+    <cell id="0">
+     <media type="PLAY_AUDIO" level="1" file="p5t1.wav" to="1600" />
+    </cell>
+    <cell id="1">
+     <media type="PLAY_AUDIO" level="1" file="p5t4.wav" to="3000" />
+    </cell>
+    <cell id="2">
+     <media type="PLAY_AUDIO" level="1" file="p5t2.wav" to="2700" />
+    </cell>
+    <cell id="3">
+     <media type="PLAY_AUDIO" level="1" file="p5t3.wav" to="3400" />
+    </cell>
+   </cells>
+   <cells rows="2" cols="2" cellWidth="450.0" cellHeight="500.0" border="false" id="secondary">
+    <style>
+     <color background="0xBDBDFF" />
+    </style>
+    <shaper class="@Rectangular" cols="2" rows="2" />
+    <cell image="mati1.jpg" />
+    <cell image="dema1.jpg" />
+    <cell image="ahir1.jpg" />
+    <cell image="abans1.jpg" />
+   </cells>
+   <cells rows="4" cols="1" cellWidth="200.0" cellHeight="250.0" border="false" id="solvedPrimary">
+    <shaper class="@Rectangular" cols="1" rows="4" />
+    <cell>
+     <p>MATI</p>
+    </cell>
+    <cell>
+     <p>DEMÀ</p>
+    </cell>
+    <cell>
+     <p>AHIR</p>
+    </cell>
+    <cell>
+     <p>ABANS</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="true" secondary="true" />
+   <layout position="AB" />
+  </activity>
+  <activity class="@associations.ComplexAssociation" name="p5t10b.ass">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="altaveus.wav" />
+     <p>CLICA ELS ALTAVEUS</p>
+    </cell>
+    <cell image="finalp5.jpg" type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="true" score="true" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <cells rows="1" cols="3" cellWidth="520.0" cellHeight="250.0" border="false" id="primary">
+    <style>
+     <font family="Arial" size="25" bold="true" />
+     <color background="0xABFCDA" inactive="0x000000" alternative="0x000000" />
+    </style>
+    <shaper class="@Rectangular" cols="3" rows="1" />
+    <cell id="0">
+     <media type="PLAY_AUDIO" level="1" file="p5t1.wav" from="1500" />
+    </cell>
+    <cell id="1">
+     <media type="PLAY_AUDIO" level="1" file="p5t2.wav" from="3000" to="6000" />
+    </cell>
+    <cell id="2">
+     <media type="PLAY_AUDIO" level="1" file="p5t3.wav" from="3400" />
+    </cell>
+   </cells>
+   <cells rows="1" cols="3" cellWidth="520.0" cellHeight="500.0" border="false" id="secondary">
+    <style>
+     <color background="0xBDBDFF" />
+    </style>
+    <shaper class="@Rectangular" cols="3" rows="1" />
+    <cell image="tarda1.jpg" />
+    <cell image="avui1.jpg" />
+    <cell image="despres1.jpg" />
+   </cells>
+   <cells rows="1" cols="3" cellWidth="520.0" cellHeight="250.0" border="false" id="solvedPrimary">
+    <shaper class="@Rectangular" cols="3" rows="1" />
+    <cell>
+     <p>TARDA</p>
+    </cell>
+    <cell>
+     <p>AVUI</p>
+    </cell>
+    <cell>
+     <p>DESPRÉS</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="false" secondary="false" />
+   <layout position="AUB" />
+  </activity>
+  <activity class="@memory.MemoryGame" name="p5t11a.puz">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="parelles.wav" />
+     <p>BUSCA LES PARELLES</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <p>VISCA !!!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <cells rows="2" cols="2" cellWidth="200.0" cellHeight="250.0" border="true" id="primary">
+    <style>
+     <font family="Arial" size="25" bold="true" />
+     <color background="0xABFCDA" inactive="0x008A00" alternative="0x008A00" />
+    </style>
+    <shaper class="@Rectangular" cols="2" rows="2" />
+    <cell image="mati1.jpg" />
+    <cell image="dema1.jpg" />
+    <cell image="ahir1.jpg" />
+    <cell image="abans1.jpg" />
+   </cells>
+   <scramble times="31" />
+   <layout position="AB" />
+  </activity>
+  <activity class="@memory.MemoryGame" name="p5t11b.puz">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="parelles.wav" />
+     <p>BUSCA LES PARELLES</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <p>VISCA !!!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <cells rows="1" cols="3" cellWidth="200.0" cellHeight="250.0" border="true" id="primary">
+    <style>
+     <font family="Arial" size="25" bold="true" />
+     <color background="0xABFCDA" inactive="0x008A00" alternative="0x008A00" />
+    </style>
+    <shaper class="@Rectangular" cols="3" rows="1" />
+    <cell image="tarda1.jpg" />
+    <cell image="avui1.jpg" />
+    <cell image="despres1.jpg" />
+   </cells>
+   <scramble times="31" />
+   <layout position="AUB" />
+  </activity>
+  <activity class="@textGrid.WordSearch" name="p5t12.sop">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="paraules.wav" />
+     <p>BUSCA LES PARAULES TREBALLADES</p>
+    </cell>
+    <cell image="finalp5.jpg" type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <helpWindow showSolution="true" />
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <textGrid rows="8" columns="8" cellWidth="400.0" cellHeight="500.0" border="true">
+    <style>
+     <font family="Arial" size="25" bold="true" />
+     <color background="0xABFCDA" inactive="0x008A00" alternative="0x008A00" />
+    </style>
+    <text>
+     <row>***AVUI*</row>
+     <row>MATI****</row>
+     <row>**DEMA**</row>
+     <row>********</row>
+     <row>*ABANS**</row>
+     <row>***TARDA</row>
+     <row>*AHIR***</row>
+     <row>DESPRES*</row>
+    </text>
+   </textGrid>
+   <clues>
+    <clue id="0">AVUI</clue>
+    <clue id="1">MATI</clue>
+    <clue id="2">DEMA</clue>
+    <clue id="3">ABANS</clue>
+    <clue id="4">TARDA</clue>
+    <clue id="5">AHIR</clue>
+    <clue id="6">DESPRES</clue>
+   </clues>
+   <cells rows="7" cols="1" cellWidth="500.0" cellHeight="500.0" border="false" id="secondary">
+    <style>
+     <color background="0xBDBDFF" inactive="0x008A00" alternative="0x008A00" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="7" />
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t2.wav" from="3000" to="6000" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t1.wav" to="1500" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t4.wav" to="2880" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t3.wav" to="3400" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t1.wav" from="1500" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t2.wav" to="3000" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t3.wav" from="3400" />
+    </cell>
+   </cells>
+   <layout position="AB" />
+  </activity>
+  <activity class="@text.FillInBlanks" name="p5t13.txa" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <p>FES CLIC A LA FOTO...</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <p>VISCA !!!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <helpWindow showSolution="true" />
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true">
+     <size width="540" height="330" />
+    </window>
+   </settings>
+   <document>
+    <style name="targetError" base="target" foreground="0xFFFFFF" background="0xFF0000" />
+    <style name="target" base="default" target="true" background="0xC0C0C0" foreground="0x0000FF" />
+    <style name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16" />
+    <section>
+     <p name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">
+      <cell txtAlign="left,middle" imgAlign="left,middle" width="200" height="245" border="false" image="mati1.jpg">
+       <style>
+        <color background="0xABFCDA" />
+       </style>
+       <media type="PLAY_AUDIO" level="1" file="p5t1.wav" to="1500" />
+      </cell>
+     </p>
+     <p name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16" />
+     <p name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">
+      <text name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">               ARA ÉS EL </text>
+      <target>
+       <answer>MATÍ</answer>
+       <answer>MATI</answer>
+       <response fill="_" length="4" maxLength="4" />
+       <text>MATÍ</text>
+      </target>
+      <text name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">.</text>
+     </p>
+    </section>
+   </document>
+   <evaluator class="@ComplexEvaluator" />
+  </activity>
+  <activity class="@text.FillInBlanks" name="p5t14.txa" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <p>FES CLIC A LA FOTO...</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <p>VISCA !!!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <helpWindow showSolution="true" />
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true">
+     <size width="540" height="330" />
+    </window>
+   </settings>
+   <document>
+    <style name="targetError" base="target" foreground="0xFFFFFF" background="0xFF0000" />
+    <style name="target" base="default" target="true" background="0xC0C0C0" foreground="0x0000FF" />
+    <style name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16" />
+    <section>
+     <p name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">
+      <cell txtAlign="left,middle" imgAlign="left,middle" width="215" height="200" border="false" image="tarda1.jpg">
+       <style>
+        <color background="0xABFCDA" />
+       </style>
+       <media type="PLAY_AUDIO" level="1" file="p5t1.wav" from="1500" />
+      </cell>
+     </p>
+     <p name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16" />
+     <p name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16" />
+     <p name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">
+      <text name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">                 ARA ÉS LA </text>
+      <target>
+       <answer>TARDA</answer>
+       <response fill="_" length="5" maxLength="5" />
+       <text>TARDA</text>
+      </target>
+      <text name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">.</text>
+     </p>
+    </section>
+   </document>
+   <evaluator class="@ComplexEvaluator" />
+  </activity>
+  <activity class="@text.FillInBlanks" name="p5t15.txa" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <p>FES CLIC A LA FOTO...</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <p>VISCA !!!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <helpWindow showSolution="true" />
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true">
+     <size width="540" height="330" />
+    </window>
+   </settings>
+   <document>
+    <style name="targetError" base="target" foreground="0xFFFFFF" background="0xFF0000" />
+    <style name="target" base="default" target="true" background="0xC0C0C0" foreground="0x0000FF" />
+    <style name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16" />
+    <section>
+     <p name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">
+      <cell txtAlign="left,middle" imgAlign="left,middle" width="210" height="210" border="false" image="ahir1.jpg">
+       <style>
+        <color background="0xABFCDA" />
+       </style>
+       <media type="PLAY_AUDIO" level="1" file="p5t2.wav" to="3000" />
+      </cell>
+     </p>
+     <p name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16" />
+     <p name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">
+      <target>
+       <answer>AHIR</answer>
+       <response fill="_" length="4" maxLength="4" />
+       <text>AHIR</text>
+      </target>
+      <text name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16"> VA SER DIMARTS.</text>
+     </p>
+    </section>
+   </document>
+   <evaluator class="@ComplexEvaluator" />
+  </activity>
+  <activity class="@text.FillInBlanks" name="p5t16.txa" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <p>FES CLIC A LA FOTO...</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <p>VISCA !!!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <helpWindow showSolution="true" />
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true">
+     <size width="540" height="330" />
+    </window>
+   </settings>
+   <document>
+    <style name="targetError" base="target" foreground="0xFFFFFF" background="0xFF0000" />
+    <style name="target" base="default" target="true" background="0xC0C0C0" foreground="0x0000FF" />
+    <style name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16" />
+    <section>
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false">
+      <cell txtAlign="left,middle" imgAlign="left,middle" width="200" height="210" border="false" image="avui1.jpg">
+       <style>
+        <color background="0xABFCDA" />
+       </style>
+       <media type="PLAY_AUDIO" level="1" file="p5t2.wav" from="3000" to="6000" />
+      </cell>
+     </p>
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" />
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false">
+      <target>
+       <answer>AVUI</answer>
+       <response fill="_" length="4" maxLength="4" />
+       <text>AVUI</text>
+      </target>
+      <text family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false"> ÉS DIMECRES.</text>
+     </p>
+    </section>
+   </document>
+   <evaluator class="@ComplexEvaluator" />
+  </activity>
+  <activity class="@text.FillInBlanks" name="p5t17.txa" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <p>FES CLIC A LA FOTO...</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <p>VISCA !!!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <helpWindow showSolution="true" />
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true">
+     <size width="540" height="330" />
+    </window>
+   </settings>
+   <document>
+    <style name="targetError" base="target" foreground="0xABFCDA" background="0xFF0000" />
+    <style name="target" base="default" target="true" background="0xC0C0C0" foreground="0x0000FF" />
+    <style name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16" />
+    <section>
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" />
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false">
+      <cell width="218" height="230" border="false" image="dema1.jpg">
+       <style>
+        <color background="0xABFCDA" />
+       </style>
+       <media type="PLAY_AUDIO" level="1" file="p5t4.wav" />
+      </cell>
+     </p>
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" />
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false">
+      <target>
+       <answer>DEMÀ</answer>
+       <answer>DEMA</answer>
+       <response fill="_" length="4" maxLength="4" />
+       <text>DEMÀ</text>
+      </target>
+      <text family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false"> SERÀ DIJOUS.</text>
+     </p>
+    </section>
+   </document>
+   <evaluator class="@ComplexEvaluator" />
+  </activity>
+  <activity class="@text.FillInBlanks" name="p5t18.txa" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <p>FES CLIC A LA FOTO...</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <p>VISCA !!!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <helpWindow showSolution="true" />
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true">
+     <size width="540" height="330" />
+    </window>
+   </settings>
+   <document>
+    <style name="targetError" base="target" foreground="0xFFFFFF" background="0xFF0000" />
+    <style name="target" base="default" target="true" background="0xC0C0C0" foreground="0x0000FF" />
+    <style name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16" />
+    <section>
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false">
+      <cell width="210" height="220" border="false" image="abans1.jpg">
+       <style>
+        <color background="0xABFCDA" />
+       </style>
+       <media type="PLAY_AUDIO" level="1" file="p5t3.wav" to="3500" />
+      </cell>
+     </p>
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" />
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false">
+      <text family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false"> EL MEU DIBUIX </text>
+      <target>
+       <answer>ABANS</answer>
+       <response fill="_" length="5" maxLength="5" />
+       <text>ABANS</text>
+      </target>
+      <text family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false"> DE PINTAR.</text>
+     </p>
+    </section>
+   </document>
+   <evaluator class="@ComplexEvaluator" />
+  </activity>
+  <activity class="@text.FillInBlanks" name="p5t19.txa" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <p>FES CLIC A LA FOTO...</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <p>VISCA !!!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <helpWindow showSolution="true" />
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true">
+     <size width="540" height="330" />
+    </window>
+   </settings>
+   <document>
+    <style name="targetError" base="target" foreground="0xFFFFFF" background="0xFF0000" />
+    <style name="target" base="default" target="true" background="0xC0C0C0" foreground="0x0000FF" />
+    <style name="default" family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16" />
+    <section>
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false">
+      <cell width="200" height="240" border="false" image="despres1.jpg">
+       <style>
+        <color background="0xABFCDA" />
+       </style>
+       <media type="PLAY_AUDIO" level="1" file="p5t3.wav" from="3500" />
+      </cell>
+     </p>
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false" />
+     <p family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false">
+      <text family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false">EL MEU DIBUIX </text>
+      <target>
+       <answer>DESPRÉS</answer>
+       <answer>DESPRES</answer>
+       <response fill="_" length="7" maxLength="7" />
+       <text>DESPRÉS</text>
+      </target>
+      <text family="Arial" background="0xABFCDA" size="25" bold="true" foreground="0x000000" italic="false"> DE PINTAR.</text>
+     </p>
+    </section>
+   </document>
+   <evaluator class="@ComplexEvaluator" />
+  </activity>
+  <activity class="@associations.ComplexAssociation" name="p5t2.ass">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="llegeix.wav" />
+     <p>LLEGEIX I RELACIONA</p>
+    </cell>
+    <cell image="finalp5.jpg" type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <cells rows="2" cols="1" cellWidth="200.0" cellHeight="250.0" border="false" id="primary">
+    <style>
+     <font family="Arial" size="25" bold="true" />
+     <color background="0xABFCDA" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="2" />
+    <cell id="0">
+     <p>MATI</p>
+    </cell>
+    <cell id="1">
+     <p>TARDA</p>
+    </cell>
+   </cells>
+   <cells rows="1" cols="2" cellWidth="400.0" cellHeight="500.0" border="false" id="secondary">
+    <style>
+     <color background="0xBDBDFF" />
+    </style>
+    <shaper class="@Rectangular" cols="2" rows="1" />
+    <cell image="mati.jpg" />
+    <cell image="tarda.jpg" />
+   </cells>
+   <cells rows="2" cols="1" cellWidth="200.0" cellHeight="250.0" border="false" id="solvedPrimary">
+    <shaper class="@Rectangular" cols="1" rows="2" />
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t1.wav" to="1500" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t1.wav" from="1500" />
+    </cell>
+   </cells>
+   <scramble times="31" primary="true" secondary="true" />
+   <layout position="BA" />
+  </activity>
+  <activity class="@puzzles.ExchangePuzzle" name="p5t3.puz">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="puzzle.wav" />
+     <p>FES EL PUZZLE</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <p>VISCA !!! </p>
+    </cell>
+   </messages>
+   <settings margin="8" dragCells="true" report="true" reportActions="false">
+    <helpWindow showSolution="true" />
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <cells rows="3" cols="3" border="false" image="matard.jpg">
+    <style>
+     <font family="Arial" size="28" bold="true" />
+     <color background="0xABFCDA" />
+    </style>
+    <shaper class="@Rectangular" cols="3" rows="3" />
+   </cells>
+   <scramble times="31" />
+  </activity>
+  <activity class="@associations.ComplexAssociation" name="p5t4.ass">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="altaveus.wav" />
+     <p>CLICA ELS ALTAVEUS</p>
+    </cell>
+    <cell image="finalp5.jpg" type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <cells rows="1" cols="3" cellWidth="410.0" cellHeight="200.0" border="false" id="primary">
+    <style>
+     <font family="Arial" size="25" bold="true" />
+     <color background="0xABFCDA" inactive="0x000000" alternative="0x000000" />
+    </style>
+    <shaper class="@Rectangular" cols="3" rows="1" />
+    <cell id="0">
+     <media type="PLAY_AUDIO" level="1" file="p5t2.wav" to="3000" />
+    </cell>
+    <cell id="1">
+     <media type="PLAY_AUDIO" level="1" file="p5t2.wav" from="3000" to="6000" />
+    </cell>
+    <cell id="2">
+     <media type="PLAY_AUDIO" level="1" file="p5t4.wav" />
+    </cell>
+   </cells>
+   <cells rows="1" cols="3" cellWidth="600.0" cellHeight="500.0" border="false" id="secondary">
+    <style>
+     <color background="0xBDBDFF" />
+    </style>
+    <shaper class="@Rectangular" cols="3" rows="1" />
+    <cell image="ahir.jpg" />
+    <cell image="avui.jpg" />
+    <cell image="dema.jpg" />
+   </cells>
+   <cells rows="1" cols="3" cellWidth="410.0" cellHeight="200.0" border="false" id="solvedPrimary">
+    <shaper class="@Rectangular" cols="3" rows="1" />
+    <cell>
+     <p>AHIR</p>
+    </cell>
+    <cell>
+     <p>AVUI</p>
+    </cell>
+    <cell>
+     <p>DEMÀ</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="true" secondary="false" />
+   <layout position="AUB" />
+  </activity>
+  <activity class="@associations.ComplexAssociation" name="p5t5.ass">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="llegeix.wav" />
+     <p>LLEGEIX I RELACIONA</p>
+    </cell>
+    <cell image="finalp5.jpg" type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <cells rows="1" cols="3" cellWidth="410.0" cellHeight="200.0" border="false" id="primary">
+    <style>
+     <font family="Arial" size="25" bold="true" />
+     <color background="0xABFCDA" inactive="0x000000" alternative="0x000000" />
+    </style>
+    <shaper class="@Rectangular" cols="3" rows="1" />
+    <cell id="0">
+     <p>AHIR</p>
+    </cell>
+    <cell id="1">
+     <p>AVUI</p>
+    </cell>
+    <cell id="2">
+     <p>DEMÀ</p>
+    </cell>
+   </cells>
+   <cells rows="1" cols="3" cellWidth="600.0" cellHeight="500.0" border="false" id="secondary">
+    <style>
+     <color background="0xBDBDFF" />
+    </style>
+    <shaper class="@Rectangular" cols="3" rows="1" />
+    <cell image="ahir.jpg" />
+    <cell image="avui.jpg" />
+    <cell image="dema.jpg" />
+   </cells>
+   <cells rows="1" cols="3" cellWidth="410.0" cellHeight="200.0" border="false" id="solvedPrimary">
+    <shaper class="@Rectangular" cols="3" rows="1" />
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t2.wav" to="3000" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t2.wav" from="3000" to="6000" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t4.wav" />
+    </cell>
+   </cells>
+   <scramble times="31" primary="true" secondary="true" />
+   <layout position="BUA" />
+  </activity>
+  <activity class="@textGrid.WordSearch" name="p5t6.sop">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="paraules.wav" />
+     <p>BUSCA LES PARAULES TREBALLADES</p>
+    </cell>
+    <cell image="finalp5.jpg" type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <helpWindow showSolution="true" />
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <textGrid rows="8" columns="7" cellWidth="260.0" cellHeight="250.0" border="true">
+    <style>
+     <font family="Arial" size="25" bold="true" />
+     <color background="0xABFCDA" inactive="0x008A00" alternative="0x008A00" />
+    </style>
+    <text>
+     <row>*MATI***</row>
+     <row>***AHIR*</row>
+     <row>****DEMA</row>
+     <row>********</row>
+     <row>AVUI****</row>
+     <row>***TARDA</row>
+     <row>********</row>
+    </text>
+   </textGrid>
+   <clues>
+    <clue id="0">AHIR</clue>
+    <clue id="1">AVUI</clue>
+    <clue id="2">DEMA</clue>
+    <clue id="3">MATI</clue>
+    <clue id="4">TARDA</clue>
+   </clues>
+   <cells rows="5" cols="1" cellWidth="400.0" cellHeight="500.0" border="false" id="secondary">
+    <style>
+     <color background="0xBDBDFF" inactive="0x008A00" alternative="0x008A00" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="5" />
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t2.wav" to="3000" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t2.wav" from="3000" to="6000" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t4.wav" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t1.wav" to="1500" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t1.wav" from="1500" />
+    </cell>
+   </cells>
+   <layout position="AB" />
+  </activity>
+  <activity class="@associations.ComplexAssociation" name="p5t7.ass">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" inactive="0x000000" alternative="0x000000" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="altaveus.wav" />
+     <p>CLICA ELS ALTAVEUS</p>
+    </cell>
+    <cell image="finalp5.jpg" type="final">
+     <style>
+      <color background="0x80FF80" inactive="0x000000" alternative="0x000000" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <cells rows="2" cols="1" cellWidth="200.0" cellHeight="250.0" border="false" id="primary">
+    <style>
+     <font family="Arial" size="25" bold="true" />
+     <color background="0xABFCDA" inactive="0x000000" alternative="0x000000" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="2" />
+    <cell id="0">
+     <media type="PLAY_AUDIO" level="1" file="p5t3.wav" to="3400" />
+    </cell>
+    <cell id="1">
+     <media type="PLAY_AUDIO" level="1" file="p5t3.wav" from="3400" />
+    </cell>
+   </cells>
+   <cells rows="1" cols="2" border="false" image="abansde.jpg" id="secondary">
+    <style>
+     <color background="0xBDBDFF" />
+    </style>
+    <shaper class="@Rectangular" cols="2" rows="1" />
+   </cells>
+   <cells rows="2" cols="1" cellWidth="200.0" cellHeight="250.0" border="false" id="solvedPrimary">
+    <shaper class="@Rectangular" cols="1" rows="2" />
+    <cell>
+     <p>ABANS</p>
+    </cell>
+    <cell>
+     <p>DESPRÉS</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="true" secondary="false" />
+   <layout position="AB" />
+  </activity>
+  <activity class="@associations.ComplexAssociation" name="p5t8.ass">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="llegeix.wav" />
+     <p>LLEGEIX I RELACIONA</p>
+    </cell>
+    <cell image="finalp5.jpg" type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <cells rows="2" cols="1" cellWidth="200.0" cellHeight="250.0" border="false" id="primary">
+    <style>
+     <font family="Arial" size="25" bold="true" />
+     <color background="0xABFCDA" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="2" />
+    <cell id="0">
+     <p>ABANS</p>
+    </cell>
+    <cell id="1">
+     <p>DESPRÉS</p>
+    </cell>
+   </cells>
+   <cells rows="1" cols="2" border="false" image="abansde.jpg" id="secondary">
+    <style>
+     <color background="0xBDBDFF" />
+    </style>
+    <shaper class="@Rectangular" cols="2" rows="1" />
+   </cells>
+   <cells rows="2" cols="1" cellWidth="200.0" cellHeight="250.0" border="false" id="solvedPrimary">
+    <shaper class="@Rectangular" cols="1" rows="2" />
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t3.wav" to="3400" />
+    </cell>
+    <cell>
+     <media type="PLAY_AUDIO" level="1" file="p5t3.wav" from="3400" />
+    </cell>
+   </cells>
+   <scramble times="31" primary="true" secondary="false" />
+   <layout position="BA" />
+  </activity>
+  <activity class="@puzzles.ExchangePuzzle" name="p5t9.puz">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="puzzle.wav" />
+     <p>FES EL PUZZLE</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color background="0x80FF80" />
+     </style>
+     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <p>VISCA !!! </p>
+    </cell>
+   </messages>
+   <settings margin="8" dragCells="true" report="true" reportActions="false">
+    <helpWindow showSolution="true" />
+    <container bgColor="0xFFFF86">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xBDBDFF" border="true" />
+   </settings>
+   <cells rows="3" cols="4" border="false" image="abansde.jpg">
+    <style>
+     <font family="Arial" size="28" bold="true" />
+     <color background="0xABFCDA" />
+    </style>
+    <shaper class="@Rectangular" cols="4" rows="3" />
+   </cells>
+   <scramble times="31" />
+  </activity>
+ </activities>
+ <mediaBag>
+  <media name="abans1.jpg" file="abans1.jpg" />
+  <media name="abansde.jpg" file="abansde.jpg" />
+  <media name="ahir.jpg" file="ahir.jpg" />
+  <media name="ahir1.jpg" file="ahir1.jpg" />
+  <media name="avui.jpg" file="avui.jpg" />
+  <media name="avui1.jpg" file="avui1.jpg" />
+  <media name="dema.jpg" file="dema.jpg" />
+  <media name="dema1.jpg" file="dema1.jpg" />
+  <media name="despres1.jpg" file="despres1.jpg" />
+  <media name="fi.jpg" file="fi.jpg" />
+  <media name="finalp5.jpg" file="finalp5.jpg" />
+  <media name="matard.jpg" file="matard.jpg" />
+  <media name="mati.jpg" file="mati.jpg" />
+  <media name="mati1.jpg" file="mati1.jpg" />
+  <media name="tarda.jpg" file="tarda.jpg" />
+  <media name="tarda1.jpg" file="tarda1.jpg" />
+  <media name="altaveus.wav" file="altaveus.wav" />
+  <media name="fesclic.wav" file="fesclic.wav" />
+  <media name="fi.wav" file="fi.wav" />
+  <media name="llegeix.wav" file="llegeix.wav" />
+  <media name="p5t1.wav" file="p5t1.wav" />
+  <media name="p5t2.wav" file="p5t2.wav" />
+  <media name="p5t3.wav" file="p5t3.wav" />
+  <media name="p5t4.wav" file="p5t4.wav" />
+  <media name="paraules.wav" file="paraules.wav" />
+  <media name="parelles.wav" file="parelles.wav" />
+  <media name="puzzle.wav" file="puzzle.wav" />
+  <media name="visca.wav" file="visca.wav" />
+ </mediaBag>
+</JClicProject>
+
