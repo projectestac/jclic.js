@@ -57,7 +57,7 @@ define([
     this.$div.append(this.buttons.next);
 
     this.$waitPanel = $('<div />').css({
-      'background-color': 'rgba(64, 64, 64, .3)',
+      'background-color': 'rgba(255, 255, 255, .60)',
       'background-image': 'url(' + this.resources.waitImg + ')',
       'background-repeat': 'no-repeat',
       'background-size': '20%',
