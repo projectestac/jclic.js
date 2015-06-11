@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Testing keystrokes on document</title>        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">                
+        <script type="text/javascript" src="../../node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+  console.log('starting...');
+  // See: http://stackoverflow.com/questions/1599660/which-html-elements-can-receive-focus
+  //$(document)
+  $('#base').keydown(function(e) {
+    $('#log').append('<p>which: '+e.which+' - keyCode: '+e.keyCode+'</p>');
+   });
+});
+</script>
+    </head>
+    <body>
+        <p>Testing keystrokes</p>
+        <div id="base" style="width:300px;height:200px;background-color:lightgray;"></div>
+        <div id="another" style="width:300px;height:200px;background-color:yellow;"></div>
+        <div id="log"></div>
+    </body>
+</html>
