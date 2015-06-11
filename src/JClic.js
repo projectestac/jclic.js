@@ -33,9 +33,12 @@ define([
     var $div = $('.JClic');
 
     if ($div.length) {
-      var projectName = $div[0].getAttribute('data-project');
+      var projectName = $div.data('project');
+      var options = $div.data('options');
+      if(options)
+        console.log(options + ' | maxWidth: '+options.maxWidth+' maxHeight: '+options.maxHeight);
 
-      var player = new JClicPlayer($div);
+      var player = new JClicPlayer($div, options);
       player.load(projectName);
 
       $(window).resize(function () {

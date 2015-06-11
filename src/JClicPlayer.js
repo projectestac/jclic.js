@@ -35,12 +35,15 @@ define([
 //  resources: media bags (to load and realize images and other media contents),
 //  sequence control, management of the report system, user interface, displaying 
 //  of system messages, etc.
-  var JClicPlayer = function ($topDiv, $div) {
+  var JClicPlayer = function ($topDiv, options, $div) {
 
     // JClicPlayer extends AWT.Container
     AWT.Container.call(this);
 
     this.$topDiv = $topDiv;
+    
+    if(options)      
+      this.options = $.extend(Object.create(this.options), options);
 
     // $div usually is `undefined`
     this.$div = $div;
@@ -55,8 +58,8 @@ define([
     this.bgImageOrigin = new AWT.Point();
     this.buildActions();
     this.history = new PlayerHistory(this);
-    this.audioEnabled = this.options.AUDIO_ENABLED;
-    this.navButtonsAlways = this.options.NAV_BUTTONS_ALWAYS;
+    this.audioEnabled = this.options.audioEnabled;
+    this.navButtonsAlways = this.options.navButtonsAlways;
     this.defaultSkin = Skin.prototype.getSkin(null, this, this.$topDiv);
     this.setSkin(this.defaultSkin);
     this.createEventSounds();
@@ -70,15 +73,18 @@ define([
     // Miscellaneous options to be stored in the prototype
     options: {
       // Max waiting time to have all media loaded (milliseconds)
-      MAX_WAIT_TIME: 120000,
+      maxWaitTime: 120000,
       // Name of the frame where to open links
-      INFO_URL_FRAME: '_blank',
+      infoUrlFrame: '_blank',
       // URL where to navigate to on exit
-      EXIT_URL: null,
+      exitUrl: null,
       // At the beginning, audio should be enabled or disabled
-      AUDIO_ENABLED: true,
+      audioEnabled: true,
       // Navigation buttons are always visible (for debugging purposes)
-      NAV_BUTTONS_ALWAYS: true
+      navButtonsAlways: true,
+      // Max and min window size
+      maxWidth: 9999, minWidth: 300,
+      maxHeight: 9999, minHeight: 300
     },
     //
     // The JQuery "div" element used by this player.
@@ -389,7 +395,7 @@ define([
                 tp.skin.setWaitCursor(true);
                 var checkMedia = window.setInterval(function () {
                   // Wait for a maximum time of two minutes
-                  if (++loops > tp.options.MAX_WAIT_TIME / interval) {
+                  if (++loops > tp.options.maxWaitTime / interval) {
                     window.clearInterval(checkMedia);
                     tp.skin.setWaitCursor(false);
                     tp.setSystemMessage('Error loading media!');
@@ -862,16 +868,16 @@ define([
     displayURL: function (url, inFrame) {
       if (url) {
         if (inFrame)
-          window.open(url, this.options.INFO_URL_FRAME);
+          window.open(url, this.options.infoUrlFrame);
         else
           window.location.href = url;
       }
     },
     //
-    // Exit function. Has effect only if `EXIT_URL` has been specified in `options`
+    // Exit function. Has effect only if `exitUrlL` has been specified in `options`
     exit: function (url) {
       if (!url)
-        url = this.options.EXIT_URL;
+        url = this.options.exitUrl;
       if (url)
         displayURL(url, false);
     },
