@@ -58,7 +58,7 @@
       <font family="Arial" size="45" />
       <color background="0x29A5FF" inactive="0x29A5FF" alternative="0x29A5FF" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="fi.wav" />
+     <media type="PLAY_AUDIO" level="2" file="fi.mp3" />
      <p>FI !!!</p>
     </cell>
     <cell type="final">
@@ -87,14 +87,14 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="altaveus.wav" />
+     <media type="PLAY_AUDIO" level="2" file="altaveus.mp3" />
      <p>CLICA ELS ALTAVEUS</p>
     </cell>
     <cell type="final">
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <media type="PLAY_AUDIO" level="2" file="visca.mp3" />
      <p>VISCA !!! </p>
     </cell>
    </messages>
@@ -111,10 +111,10 @@
     </style>
     <shaper class="@Rectangular" cols="1" rows="2" />
     <cell id="0">
-     <media type="PLAY_AUDIO" level="1" file="p4e1.wav" to="3700" />
+     <media type="PLAY_AUDIO" level="1" file="p4e1.mp3" to="3700" />
     </cell>
     <cell id="1">
-     <media type="PLAY_AUDIO" level="1" file="p4e1.wav" from="3800" />
+     <media type="PLAY_AUDIO" level="1" file="p4e1.mp3" from="3800" />
     </cell>
    </cells>
    <cells rows="2" cols="1" border="false" image="sobresot.jpg" id="secondary">
@@ -141,7 +141,7 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="altaveus.wav" />
+     <media type="PLAY_AUDIO" level="2" file="altaveus.mp3" />
      <p>CLICA ELS ALTAVEUS</p>
     </cell>
     <cell image="finalp4.jpg" type="final">
@@ -163,22 +163,22 @@
     </style>
     <shaper class="@Rectangular" cols="1" rows="6" />
     <cell id="0">
-     <media type="PLAY_AUDIO" level="1" file="p4e1.wav" to="3700" />
+     <media type="PLAY_AUDIO" level="1" file="p4e1.mp3" to="3700" />
     </cell>
     <cell id="1">
-     <media type="PLAY_AUDIO" level="1" file="p4e1.wav" from="3800" />
+     <media type="PLAY_AUDIO" level="1" file="p4e1.mp3" from="3800" />
     </cell>
     <cell id="2">
-     <media type="PLAY_AUDIO" level="1" file="p4e2.wav" to="2000" />
+     <media type="PLAY_AUDIO" level="1" file="p4e2.mp3" to="2000" />
     </cell>
     <cell id="3">
-     <media type="PLAY_AUDIO" level="1" file="p4e2.wav" from="2000" />
+     <media type="PLAY_AUDIO" level="1" file="p4e2.mp3" from="2000" />
     </cell>
     <cell id="4">
-     <media type="PLAY_AUDIO" level="1" file="p4e3.wav" to="3000" />
+     <media type="PLAY_AUDIO" level="1" file="p4e3.mp3" to="3000" />
     </cell>
     <cell id="5">
-     <media type="PLAY_AUDIO" level="1" file="p4e3.wav" from="3100" />
+     <media type="PLAY_AUDIO" level="1" file="p4e3.mp3" from="3100" />
     </cell>
    </cells>
    <cells rows="3" cols="2" cellWidth="400.0" cellHeight="400.0" border="false" id="secondary">
@@ -223,14 +223,14 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="parelles.wav" />
+     <media type="PLAY_AUDIO" level="2" file="parelles.mp3" />
      <p>BUSCA LES PARELLES</p>
     </cell>
     <cell type="final">
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <media type="PLAY_AUDIO" level="2" file="visca.mp3" />
      <p>VISCA !!! </p>
     </cell>
    </messages>
@@ -263,14 +263,14 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <media type="PLAY_AUDIO" level="2" file="fesclic.mp3" />
      <p>FES CLIC A LA FOTO...</p>
     </cell>
     <cell type="final">
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <media type="PLAY_AUDIO" level="2" file="visca.mp3" />
      <p>VISCA !!!</p>
     </cell>
    </messages>
@@ -293,7 +293,7 @@
        <style>
         <color background="0x408080" inactive="0xD1A4FF" alternative="0xD1A4FF" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="p4e2.wav" to="2000" />
+       <media type="PLAY_AUDIO" level="1" file="p4e2.mp3" to="2000" />
       </cell>
       <text name="default" family="Arial" background="0x4BF891" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">    AMUNT</text>
      </p>
@@ -319,14 +319,14 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <media type="PLAY_AUDIO" level="2" file="fesclic.mp3" />
      <p>FES CLIC A LA FOTO...</p>
     </cell>
     <cell type="final">
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <media type="PLAY_AUDIO" level="2" file="visca.mp3" />
      <p>VISCA !!!</p>
     </cell>
    </messages>
@@ -349,7 +349,7 @@
        <style>
         <color background="0x408080" inactive="0xD1A4FF" alternative="0xD1A4FF" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="p4e2.wav" from="2000" />
+       <media type="PLAY_AUDIO" level="1" file="p4e2.mp3" from="2000" />
       </cell>
       <text name="default" family="Arial" background="0x4BF891" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">     AVALL</text>
      </p>
@@ -375,14 +375,14 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <media type="PLAY_AUDIO" level="2" file="fesclic.mp3" />
      <p>FES CLIC A LA FOTO...</p>
     </cell>
     <cell type="final">
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <media type="PLAY_AUDIO" level="2" file="visca.mp3" />
      <p>VISCA !!!</p>
     </cell>
    </messages>
@@ -405,7 +405,7 @@
        <style>
         <color background="0x408080" inactive="0xD1A4FF" alternative="0xD1A4FF" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="p4e3.wav" from="3100" />
+       <media type="PLAY_AUDIO" level="1" file="p4e3.mp3" from="3100" />
       </cell>
       <text name="default" family="Arial" background="0x4BF891" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">  DARRERE</text>
      </p>
@@ -431,14 +431,14 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <media type="PLAY_AUDIO" level="2" file="fesclic.mp3" />
      <p>FES CLIC A LA FOTO...</p>
     </cell>
     <cell type="final">
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <media type="PLAY_AUDIO" level="2" file="visca.mp3" />
      <p>VISCA !!!</p>
     </cell>
    </messages>
@@ -461,7 +461,7 @@
        <style>
         <color background="0x408080" inactive="0xD1A4FF" alternative="0xD1A4FF" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="p4e3.wav" to="3000" />
+       <media type="PLAY_AUDIO" level="1" file="p4e3.mp3" to="3000" />
       </cell>
       <text name="default" family="Arial" background="0x4BF891" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">   DAVANT</text>
      </p>
@@ -487,14 +487,14 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <media type="PLAY_AUDIO" level="2" file="fesclic.mp3" />
      <p>FES CLIC A LA FOTO...</p>
     </cell>
     <cell type="final">
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <media type="PLAY_AUDIO" level="2" file="visca.mp3" />
      <p>VISCA !!!</p>
     </cell>
    </messages>
@@ -517,7 +517,7 @@
        <style>
         <color background="0x408080" inactive="0xD1A4FF" alternative="0xD1A4FF" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="p4e1.wav" to="3700" />
+       <media type="PLAY_AUDIO" level="1" file="p4e1.mp3" to="3700" />
       </cell>
       <text name="default" family="Arial" background="0x4BF891" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">    A SOBRE</text>
      </p>
@@ -543,14 +543,14 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="fesclic.wav" />
+     <media type="PLAY_AUDIO" level="2" file="fesclic.mp3" />
      <p>FES CLIC A LA FOTO...</p>
     </cell>
     <cell type="final">
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <media type="PLAY_AUDIO" level="2" file="visca.mp3" />
      <p>VISCA !!!</p>
     </cell>
    </messages>
@@ -573,7 +573,7 @@
        <style>
         <color background="0x408080" inactive="0xD1A4FF" alternative="0xD1A4FF" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="p4e1.wav" from="3800" />
+       <media type="PLAY_AUDIO" level="1" file="p4e1.mp3" from="3800" />
       </cell>
       <text name="default" family="Arial" background="0x4BF891" size="25" bold="true" foreground="0x000000" italic="false" tabWidth="16">    A SOTA</text>
      </p>
@@ -598,7 +598,7 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="llegeix.wav" />
+     <media type="PLAY_AUDIO" level="2" file="llegeix.mp3" />
      <p>LLEGEIX I RELACIONA</p>
     </cell>
     <cell image="finalp4.jpg" type="final">
@@ -635,10 +635,10 @@
    <cells rows="2" cols="1" cellWidth="140.0" cellHeight="100.0" border="false" id="solvedPrimary">
     <shaper class="@Rectangular" cols="1" rows="2" />
     <cell>
-     <media type="PLAY_AUDIO" level="1" file="p4e1.wav" to="3700" />
+     <media type="PLAY_AUDIO" level="1" file="p4e1.mp3" to="3700" />
     </cell>
     <cell>
-     <media type="PLAY_AUDIO" level="1" file="p4e1.wav" from="3800" />
+     <media type="PLAY_AUDIO" level="1" file="p4e1.mp3" from="3800" />
     </cell>
    </cells>
    <scramble times="31" primary="false" secondary="false" />
@@ -650,14 +650,14 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="puzzle.wav" />
+     <media type="PLAY_AUDIO" level="2" file="puzzle.mp3" />
      <p>FES EL PUZZLE</p>
     </cell>
     <cell type="final">
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <media type="PLAY_AUDIO" level="2" file="visca.mp3" />
      <p>VISCA !!! </p>
     </cell>
    </messages>
@@ -684,7 +684,7 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="altaveus.wav" />
+     <media type="PLAY_AUDIO" level="2" file="altaveus.mp3" />
      <p>CLICA ELS ALTAVEUS</p>
     </cell>
     <cell image="finalp4.jpg" type="final">
@@ -706,10 +706,10 @@
     </style>
     <shaper class="@Rectangular" cols="1" rows="2" />
     <cell id="0">
-     <media type="PLAY_AUDIO" level="1" file="p4e2.wav" to="2000" />
+     <media type="PLAY_AUDIO" level="1" file="p4e2.mp3" to="2000" />
     </cell>
     <cell id="1">
-     <media type="PLAY_AUDIO" level="1" file="p4e2.wav" from="2000" />
+     <media type="PLAY_AUDIO" level="1" file="p4e2.mp3" from="2000" />
      <p />
     </cell>
    </cells>
@@ -737,7 +737,7 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="llegeix.wav" />
+     <media type="PLAY_AUDIO" level="2" file="llegeix.mp3" />
      <p>LLEGEIX I RELACIONA</p>
     </cell>
     <cell image="finalp4.jpg" type="final">
@@ -774,10 +774,10 @@
    <cells rows="2" cols="1" cellWidth="140.0" cellHeight="100.0" border="false" id="solvedPrimary">
     <shaper class="@Rectangular" cols="1" rows="2" />
     <cell>
-     <media type="PLAY_AUDIO" level="1" file="p4e2.wav" to="2000" />
+     <media type="PLAY_AUDIO" level="1" file="p4e2.mp3" to="2000" />
     </cell>
     <cell>
-     <media type="PLAY_AUDIO" level="1" file="p4e2.wav" from="2000" />
+     <media type="PLAY_AUDIO" level="1" file="p4e2.mp3" from="2000" />
      <p />
     </cell>
    </cells>
@@ -790,14 +790,14 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="puzzle.wav" />
+     <media type="PLAY_AUDIO" level="2" file="puzzle.mp3" />
      <p>FES EL PUZZLE</p>
     </cell>
     <cell type="final">
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <media type="PLAY_AUDIO" level="2" file="visca.mp3" />
      <p>VISCA !!! </p>
     </cell>
    </messages>
@@ -824,7 +824,7 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="altaveus.wav" />
+     <media type="PLAY_AUDIO" level="2" file="altaveus.mp3" />
      <p>CLICA ELS ALTAVEUS</p>
     </cell>
     <cell image="finalp4.jpg" type="final">
@@ -846,10 +846,10 @@
     </style>
     <shaper class="@Rectangular" cols="1" rows="2" />
     <cell id="0">
-     <media type="PLAY_AUDIO" level="1" file="p4e3.wav" to="3000" />
+     <media type="PLAY_AUDIO" level="1" file="p4e3.mp3" to="3000" />
     </cell>
     <cell id="1">
-     <media type="PLAY_AUDIO" level="1" file="p4e3.wav" from="3100" />
+     <media type="PLAY_AUDIO" level="1" file="p4e3.mp3" from="3100" />
     </cell>
    </cells>
    <cells rows="1" cols="2" border="false" image="davantda.jpg" id="secondary">
@@ -876,7 +876,7 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="llegeix.wav" />
+     <media type="PLAY_AUDIO" level="2" file="llegeix.mp3" />
      <p>LLEGEIX I RELACIONA</p>
     </cell>
     <cell image="finalp4.jpg" type="final">
@@ -913,10 +913,10 @@
    <cells rows="2" cols="1" cellWidth="200.0" cellHeight="200.0" border="false" id="solvedPrimary">
     <shaper class="@Rectangular" cols="1" rows="2" />
     <cell>
-     <media type="PLAY_AUDIO" level="1" file="p4e3.wav" to="3000" />
+     <media type="PLAY_AUDIO" level="1" file="p4e3.mp3" to="3000" />
     </cell>
     <cell>
-     <media type="PLAY_AUDIO" level="1" file="p4e3.wav" from="3100" />
+     <media type="PLAY_AUDIO" level="1" file="p4e3.mp3" from="3100" />
     </cell>
    </cells>
    <scramble times="31" primary="true" secondary="false" />
@@ -928,14 +928,14 @@
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="puzzle.wav" />
+     <media type="PLAY_AUDIO" level="2" file="puzzle.mp3" />
      <p>FES EL PUZZLE</p>
     </cell>
     <cell type="final">
      <style>
       <color background="0xFFFF80" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="visca.wav" />
+     <media type="PLAY_AUDIO" level="2" file="visca.mp3" />
      <p>VISCA !!! </p>
     </cell>
    </messages>
@@ -969,16 +969,16 @@
   <media name="sobra.jpg" file="sobra.jpg" />
   <media name="sobresot.jpg" file="sobresot.jpg" />
   <media name="sota.jpg" file="sota.jpg" />
-  <media name="altaveus.wav" file="altaveus.wav" />
-  <media name="fesclic.wav" file="fesclic.wav" />
-  <media name="fi.wav" file="fi.wav" />
-  <media name="llegeix.wav" file="llegeix.wav" />
-  <media name="p4e1.wav" file="p4e1.wav" />
-  <media name="p4e2.wav" file="p4e2.wav" />
-  <media name="p4e3.wav" file="p4e3.wav" />
-  <media name="parelles.wav" file="parelles.wav" />
-  <media name="puzzle.wav" file="puzzle.wav" />
-  <media name="visca.wav" file="visca.wav" />
+  <media name="altaveus.mp3" file="altaveus.mp3" />
+  <media name="fesclic.mp3" file="fesclic.mp3" />
+  <media name="fi.mp3" file="fi.mp3" />
+  <media name="llegeix.mp3" file="llegeix.mp3" />
+  <media name="p4e1.mp3" file="p4e1.mp3" />
+  <media name="p4e2.mp3" file="p4e2.mp3" />
+  <media name="p4e3.mp3" file="p4e3.mp3" />
+  <media name="parelles.mp3" file="parelles.mp3" />
+  <media name="puzzle.mp3" file="puzzle.mp3" />
+  <media name="visca.mp3" file="visca.mp3" />
  </mediaBag>
 </JClicProject>
 

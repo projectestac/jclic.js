@@ -14,8 +14,9 @@
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define([
+  "jquery",
   "../AWT"
-], function (AWT) {
+], function ($, AWT) {
 
   //
   // This kind of object encapsulates a realized [MediaContent](MediaContent.html)
@@ -40,10 +41,10 @@ define([
       case 'PLAY_AUDIO':
       case 'PLAY_VIDEO':
         var fn = mc.mediaFileName;
-        if (mc.from > 0 || mc.to > 0) {
+        //if (mc.from > 0 || mc.to > 0) {
           // TODO: Check media ranges. Currently not running always as expected.
-          fn = fn + '#t=' + (mc.from > 0 ? mc.from / 1000 : 0) + ',' + (mc.to > 0 ? mc.to / 1000 : 9999);
-        }
+        //  fn = fn + '#t=' + (mc.from > 0 ? mc.from / 1000 : 0) + ',' + (mc.to > 0 ? mc.to / 1000 : 9999);
+        //}
         this.mbe = mb.getElementByFileName(fn, true);
         break;
       case 'PLAY_MIDI':
@@ -77,9 +78,6 @@ define([
     //
     // The [MediaBagElement] containing the reference to the data to be played
     mbe: null,
-    //
-    // The JQuery object with the realized media controller
-    $media: null,
     // 
     // Creates a new AudioBuffer
     createAudioBuffer: function (seconds) {
@@ -88,29 +86,84 @@ define([
     //
     // Generates the real objects capable of playing media
     realize: function () {
-      if(this.mbe && !this.mbe.data)
-        this.mbe.build();        
+      if (this.mbe) {
+        this.mbe.build(function () {
+          this.data.trigger('pause');
+        });
+      }
     },
     //
     // Realizes and plays the media
     // setBx ([ActiveBox](ActiveBox.html) - The active box where this media
     // will be placed    
+    // TODO: Check error setting currentTime on Audio objects
     playNow: function (setBx) {
-      if(this.mbe){
+      if (this.mbe) {
+        //if (this.mbe.data)
+        //  this.mbe.data.trigger('pause');
         var thisMP = this;
-        this.mbe.build(function(){          
-          thisMP.mbe.data.trigger('pause');
-          var t = thisMP.mc.from > 0 ? thisMP.mc.from/1000 : 0;
-          thisMP.mbe.data.prop('currentTime', t);
-          console.log('requested  time: ' + t + ' current time: ' + thisMP.mbe.data.prop('currentTime'));
-          thisMP.mbe.data.trigger('play');
-          /*
-          thisMP.mbe.data.bind('canplay', function(){
-            this.currentTime = thisMP.mc.from > 0 ? thisMP.mc.from/1000 : 0;
-            this.play();            
-          });
-          */
-        });        
+        console.log(this.mbe.name + ' from: ' + this.mc.from + ' to:' + this.mc.to);
+        this.mbe.build(function () {
+          // `this` points here to the [MediaBagElement](MediaBagElement)
+          
+          var armed = false;
+          var playing = false;
+          
+          // Clear previous event handlers and prepare the media to start playing when seeked
+          this.data.off(); //.on('seeked', function () {
+            // `this` points here to the HTML audio element
+          //  console.log('seeked event fired! - armed: ' + armed + ' currentTime: ' + this.currentTime + ' readyState: ' + this.readyState);
+          //  console.log('seeking: ' + this.seeking);
+          //  if(armed && this.readyState === 4){
+              //$(this).off('seeked');              
+          //    if(!playing){
+          //      playing = true;
+          //      this.play();
+          //    }
+          //  }
+          //});
+          // 
+          // If there is a time fragment specified, prepare to stop when the `to` position is reached
+          if (thisMP.mc.to > 0) {
+            this.data.on('timeupdate', function () {
+              console.log('timeupdate event fired: ' + this.currentTime + ' armed: ' + armed);
+              // `this` points here to the HTML audio element
+              if (armed && this.currentTime >= thisMP.mc.to/1000) {
+                $(this).off('timeupdate');
+                this.pause();
+              }
+            });
+          }
+          //
+          // Seek the media position. This will launch the `seeked` event
+          var t = thisMP.mc.from > 0 ? thisMP.mc.from / 1000 : 0;
+          console.log('readyState: ' + this.data.prop('readyState'));
+          // CAN_PLAY_THROUGH is always 4 ?
+          if (this.data[0].readyState >= 4) {
+            console.log('seeking to ' + t);
+            armed = true;
+            this.data[0].pause();
+            this.data[0].currentTime = t;
+            this.data[0].play();
+            //this.data[0].fastSeek(t);
+            console.log('readyState after seeking: ' + this.data[0].readyState);            
+            //this.data.prop('currentTime', t);
+          }
+          else{
+            this.data[0].load();
+            this.data.on('canplaythrough', function () {
+              $(this).off('canplaythrough');
+              console.log('readyState: ' + this.readyState);
+              console.log('seeking to ' + t);
+              armed = true;
+              this.pause();
+              this.currentTime = t;
+              this.play();
+              //this.fastSeek(t);
+              console.log('readyState after seeking: ' + this.readyState);            
+            });
+          }
+        });
       }
     },
     //
@@ -126,11 +179,18 @@ define([
     stop: function () {
       if (this.useAudioBuffer)
         this.stopAudioBuffer(this.mc.recBuffer);
+      //else if(this.mbe && this.mbe.data)
+      //  this.mbe.data.trigger('pause');
     },
     clear: function () {
       this.stop();
       if (this.useAudioBuffer)
         this.clearAudioBuffer(this.mc.recBuffer);
+      //else if(this.mbe && this.mbe.data){
+      //  this.mbe.data.prop('src', '');
+      //  this.mbe.data = null;
+      //  this.mbe.ready = false;
+      //}
     },
     setTimeRanges: function () {
     },
@@ -180,5 +240,3 @@ define([
   return ActiveMediaPlayer;
 
 });
-
-
