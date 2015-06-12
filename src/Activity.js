@@ -780,10 +780,6 @@ define([
     attachEvents: function () {
       for (var i = 0; i < this.events.length; i++) {
         this.attachEvent(this.$div, this.events[i]);
-
-        //this.$div.on(this.events[i], this, function(event){
-        //  event.data.processEvent.call(event.data, event);
-        //});
       }
     },
     //

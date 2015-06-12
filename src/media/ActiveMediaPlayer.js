@@ -42,7 +42,7 @@ define([
       case 'PLAY_VIDEO':
         var fn = mc.mediaFileName;
         //if (mc.from > 0 || mc.to > 0) {
-          // TODO: Check media ranges. Currently not running always as expected.
+        // TODO: Check media ranges. Currently not running always as expected.
         //  fn = fn + '#t=' + (mc.from > 0 ? mc.from / 1000 : 0) + ',' + (mc.to > 0 ? mc.to / 1000 : 9999);
         //}
         this.mbe = mb.getElementByFileName(fn, true);
@@ -102,65 +102,42 @@ define([
         //if (this.mbe.data)
         //  this.mbe.data.trigger('pause');
         var thisMP = this;
-        console.log(this.mbe.name + ' from: ' + this.mc.from + ' to:' + this.mc.to);
         this.mbe.build(function () {
-          // `this` points here to the [MediaBagElement](MediaBagElement)
-          
           var armed = false;
-          var playing = false;
           
-          // Clear previous event handlers and prepare the media to start playing when seeked
-          this.data.off(); //.on('seeked', function () {
-            // `this` points here to the HTML audio element
-          //  console.log('seeked event fired! - armed: ' + armed + ' currentTime: ' + this.currentTime + ' readyState: ' + this.readyState);
-          //  console.log('seeking: ' + this.seeking);
-          //  if(armed && this.readyState === 4){
-              //$(this).off('seeked');              
-          //    if(!playing){
-          //      playing = true;
-          //      this.play();
-          //    }
-          //  }
-          //});
-          // 
+          // `this` points here to the [MediaBagElement](MediaBagElement) object `mbe`
+          
+          // Clear previous event handlers
+          this.data.off();
+
           // If there is a time fragment specified, prepare to stop when the `to` position is reached
           if (thisMP.mc.to > 0) {
             this.data.on('timeupdate', function () {
-              console.log('timeupdate event fired: ' + this.currentTime + ' armed: ' + armed);
               // `this` points here to the HTML audio element
-              if (armed && this.currentTime >= thisMP.mc.to/1000) {
+              if (armed && this.currentTime >= thisMP.mc.to / 1000) {
                 $(this).off('timeupdate');
                 this.pause();
               }
             });
           }
           //
-          // Seek the media position. This will launch the `seeked` event
+          // Seek the media position
           var t = thisMP.mc.from > 0 ? thisMP.mc.from / 1000 : 0;
-          console.log('readyState: ' + this.data.prop('readyState'));
           // CAN_PLAY_THROUGH is always 4 ?
           if (this.data[0].readyState >= 4) {
-            console.log('seeking to ' + t);
             armed = true;
             this.data[0].pause();
             this.data[0].currentTime = t;
             this.data[0].play();
-            //this.data[0].fastSeek(t);
-            console.log('readyState after seeking: ' + this.data[0].readyState);            
-            //this.data.prop('currentTime', t);
           }
-          else{
+          else {
             this.data[0].load();
             this.data.on('canplaythrough', function () {
               $(this).off('canplaythrough');
-              console.log('readyState: ' + this.readyState);
-              console.log('seeking to ' + t);
               armed = true;
               this.pause();
               this.currentTime = t;
               this.play();
-              //this.fastSeek(t);
-              console.log('readyState after seeking: ' + this.readyState);            
             });
           }
         });
@@ -179,8 +156,9 @@ define([
     stop: function () {
       if (this.useAudioBuffer)
         this.stopAudioBuffer(this.mc.recBuffer);
-      //else if(this.mbe && this.mbe.data)
-      //  this.mbe.data.trigger('pause');
+      else if(this.mbe && this.mbe.data && this.mbe.data.length>0 && this.mbe.data[0].paused === false){
+        this.mbe.data[0].pause();
+      }
     },
     clear: function () {
       this.stop();

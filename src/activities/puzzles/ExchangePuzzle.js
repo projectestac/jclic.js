@@ -208,6 +208,10 @@ define([
             break;
 
           case 'mouseup':
+            // Don't consider drag moves below 3 pixels. Can be a "trembling click"
+            if (this.bc.active && p.distanceTo(this.bc.origin) <= 3) {
+              break;
+            }
             up = true;
           case 'touchend':
           case 'touchstart':
@@ -233,10 +237,6 @@ define([
               }
             }
             else {
-              if (up && p.distanceTo(this.bc.origin) <= 3) {
-                // Don't consider drag moves below 3 pixels. Can be a "trembling click"
-                break;
-              }
               // Pairing completed
               //
               // Find the active boxes behind `bc.origin` and `p`              

@@ -690,14 +690,17 @@ define([
             thisPlayer.setSystemMessage('unknown media type', mediaContent.mediaType);
             break;
         }
-      }, 0);
+      }, 1);
     },
     //
     // Stops currently playing media
-    stopMedia: function (level) {
+    stopMedia: function (level) {      
       if (typeof level !== 'number')
         level = -1;
-      this.activeMediaBag.stopAll(level);
+      var thisPlayer = this;
+      //window.setTimeout(function () {      
+        thisPlayer.activeMediaBag.stopAll(level);
+      //}, 0);
     },
     //
     // Launches the specified external command
