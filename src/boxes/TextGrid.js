@@ -22,7 +22,7 @@ define([
   //
   // This class is a special type of [AbstractBox](AbstractBox.html) that displays a grid of single
   // characters. It is used in activities like crosswords and scrambled letters. 
-  var TextGrid = function (parent, container, boxBase, x, x, ncw, nch, cellW, cellH, border) {
+  var TextGrid = function (parent, container, boxBase, x, y, ncw, nch, cellW, cellH, border) {
     AbstractBox.call(this, parent, container, boxBase);
 
     this.pos.x = x;
@@ -160,8 +160,391 @@ define([
                 this.flags.HIDDEN) :
             this.flags.NORMAL;
       }
+    },
+    //
+    // rx (Number)
+    // ry (Number)
+    // Returns AWT.Point
+    getItemFor: function (rx, ry) {
+      if (!this.isValidCell(rx, ry))
+        return null;
+      var point = new AWT.Point();
+      var inBlack = false;
+      var startCount = false;
+      for (var px = 0; px < rx; px++) {
+        if ((this.attributes[ry][px] & this.flags.LOCKED) !== 0) {
+          if (!inBlack) {
+            if (startCount)
+              point.x++;
+            inBlack = true;
+          }
+        } else {
+          startCount = true;
+          inBlack = false;
+        }
+      }
+      inBlack = false;
+      startCount = false;
+      for (var py = 0; py < ry; py++) {
+        if ((this.attributes[py][rx] & this.flags.LOCKED) !== 0) {
+          if (!inBlack) {
+            if (startCount)
+              point.y++;
+            inBlack = true;
+          }
+        } else {
+          startCount = true;
+          inBlack = false;
+        }
+      }
+      return point;
+    },
+    //
+    // status (Boolean)
+    setCursorEnabled: function (status) {
+      this.cursorEnabled = status;
+      if (status === true)
+        this.startCursorBlink();
+      else
+        this.stopCursorBlink();
+    },
+    //
+    //
+    startCursorBlink: function () {
+      if (this.useCursor && this.cursorEnabled && this.cursorTimer && !this.cursorTimer.isRunning()) {
+        this.blink(1);
+        this.cursorTimer.start();
+      }
+    },
+    //
+    //
+    stopCursorBlink: function () {
+      if (this.cursorTimer && this.cursorTimer.isRunning()) {
+        this.cursorTimer.stop();
+        blink(-1);
+      }
+    },
+    //
+    // dx(Number)
+    // dy (Number)
+    // skipLocked (Boolean)
+    moveCursor: function (dx, dy, skipLocked) {
+      if (this.useCursor) {
+        var point = this.findNextCellWithAttr(this.cursor.x, this.cursor.y,
+            skipLocked ? this.flags.LOCKED : this.flags.NORMAL,
+            dx, dy, false);
+        if (!this.cursor.equals(point))
+          this.setCursorAt(point.x, point.y, skipLocked);
+      }
+    },
+    //
+    // from (AWT.Point)
+    // dx (Number)
+    // dy (Number)
+    // returns: AWT.Point
+    findFreeCell: function (from, dx, dy) {
+      var result = null;
+      if (from && (dx !== 0 || dy !== 0)) {
+        var scan = new AWT.Point(from);
+        while (result === null) {
+          scan.x += dx;
+          scan.y += dy;
+          if (scan.x < 0 || scan.x >= this.nCols || scan.y < 0 || scan.y >= this.nRows)
+            break;
+          if (!this.getCellAttribute(scan.x, scan.y, this.flags.LOCKED))
+            result = scan;
+        }
+      }
+      return result;
+    },
+    //
+    // pt (AWT.Point)
+    // checkHorizontal (Boolean)
+    // returns: Boolean
+    isIntoBlacks: function (pt, checkHorizontal) {
+      var result = false;
+      if (checkHorizontal) {
+        result = (pt.x <= 0 || this.getCellAttribute(pt.x - 1, pt.y, this.flags.LOCKED))
+            && (pt.x >= this.nCols - 1 || this.getCellAttribute(pt.x + 1, pt.y, this.flags.LOCKED));
+      }
+      else {
+        result = (pt.y <= 0 || this.getCellAttribute(pt.x, pt.y - 1, this.flags.LOCKED))
+            && (pt.y >= this.nRows - 1 || this.getCellAttribute(pt.x, pt.y + 1, this.flags.LOCKED));
+      }
+      return result;
+    },
+    //
+    // pt (AWT.Point)
+    // checkHorizontal (Boolean)
+    // returns: Boolean    
+    isIntoWhites: function (pt, checkHorizontal) {
+      var result = false;
+      if (checkHorizontal) {
+        result = (pt.x > 0 && !this.getCellAttribute(pt.x - 1, pt.y, this.flags.LOCKED))
+            && (pt.x < this.nCols - 1 && !this.getCellAttribute(pt.x + 1, pt.y, this.flags.LOCKED));
+      }
+      else {
+        result = (pt.y > 0 && !this.getCellAttribute(pt.x, pt.y - 1, this.flags.LOCKED))
+            && (pt.y < this.nRows - 1 && !this.getCellAttribute(pt.x, pt.y + 1, this.flags.LOCKED));
+      }
+      return result;
+    },
+    //
+    // startX (Number)
+    // startY (Number)
+    // attr (Nuber)
+    // dx (Number)
+    // dy (Number)
+    // attrState (Boolean)
+    // returns: AWT.Point   
+    findNextCellWithAttr: function (startX, startY, attr, dx, dy, attrState) {
+      var point = new AWT.Point(startX + dx, startY + dy);
+      while (true) {
+        if (point.x < 0) {
+          point.x = this.nCols - 1;
+          if (point.y > 0)
+            point.y--;
+          else
+            point.y = this.nRows - 1;
+        }
+        else if (point.x >= this.nCols) {
+          point.x = 0;
+          if (point.y < this.nRows - 1)
+            point.y++;
+          else
+            point.y = 0;
+        }
+        if (point.y < 0) {
+          point.y = this.nRows - 1;
+          if (point.x > 0)
+            point.x--;
+          else
+            point.x = this.nCols - 1;
+        }
+        else if (point.y >= this.nRows) {
+          point.y = 0;
+          if (point.x < this.nCols - 1)
+            point.x++;
+          else
+            point.x = 0;
+        }
+        if ((point.x === startX && point.y === startY) ||
+            this.getCellAttribute(point.x, point.y, attr) === attrState)
+          break;
+        point.x += dx;
+        point.y += dy;
+      }
+      return point;
+    },
+    //
+    // px (Number)
+    // py (Number)
+    // skipLocked (Boolean)
+    setCursorAt: function (px, py, skipLocked) {
+      this.stopCursorBlink();
+      if (this.isValidCell(px, py)) {
+        this.cursor.x = px;
+        this.cursor.y = py;
+        this.useCursor = true;
+        if (skipLocked && this.getCellAttribute(px, py, this.flags.LOCKED)) {
+          this.moveCursor(1, 0, skipLocked);
+        }
+        else {
+          if (this.cursorEnabled)
+            this.startCursorBlink();
+        }
+      }
+    },
+    //
+    // value (Boolean)
+    setUseCursor: function (value) {
+      this.useCursor = value;
+    },
+    //
+    // returns AWT.Point
+    getCursor: function () {
+      return cursor;
+    },
+    //
+    // ch (char)
+    // returns: Number
+    countCharsLike: function (ch) {
+      var result = 0;
+      for (var py = 0; py < this.nRows; py++)
+        for (var px = 0; px < this.nCols; px++)
+          if (this.chars[py][px] === ch)
+            result++;
+      return result;
+    },
+    //
+    // returns: Number   
+    getNumCells: function () {
+      return this.nRows * this.nCols;
+    },
+    //
+    // checkCase (Boolean)
+    // returns: Number    
+    countCoincidences: function (checkCase) {
+      var result = 0;
+      if (this.answers)
+        for (var py = 0; py < this.nRows; py++)
+          for (var px = 0; px < this.nCols; px++)
+            if (this.isCellOk(px, py, checkCase))
+              result++;
+      return result;
+    },
+    //
+    // px (Number)
+    // py (Number)
+    // checkCase (boolean)
+    // returns: Boolean
+    isCellOk: function (px, py, checkCase) {
+      var result = false;
+      if (this.isValidCell(px, py)) {
+        var ch = this.chars[py][px];
+        if (ch !== this.wild) {
+          var ch2 = this.answers[py][px];
+          if (ch === ch2 ||
+              (!checkCase && ch.toUpperCase() === ch2.toUpperCase()))
+            result = true;
+        }
+      }
+      return result;
+    },
+    //
+    // devicePoint (AWT.Point)
+    // returns: AWT.Point
+    getLogicalCoords: function (devicePoint) {
+      if (!this.contains(devicePoint))
+        return null;
+      var px = Math.round((devicePoint.x - this.pos.x) / this.cellWidth);
+      var py = Math.round((devicePoint.y - this.pos.y) / this.cellHeight);
+      if (this.isValidCell(px, py)) {
+        return new AWT.Point(px, py);
+      }
+      else
+        return null;
+    },
+    //
+    // px (Number)
+    // py (Number)
+    // Returns: Boolean
+    isValidCell: function (px, py) {
+      return px < this.nCols && py < this.nRows && px >= 0 && py >= 0;
+    },
+    //
+    // px (Number)
+    // py (Number)
+    // ch (char)
+    setCharAt: function (px, py, ch) {
+      if (this.isValidCell(px, py)) {
+        this.chars[py][px] = ch;
+        this.repaintCell(px, py);
+      }
+    },
+    //
+    // px (Number)
+    // py (Number)
+    // Returns: char   
+    getCharAt: function (px, py) {
+      if (this.isValidCell(px, py))
+        return this.chars[py][px];
+      else
+        return ' ';
+    },
+    //
+    // x0 and y0 (Number)
+    // x1 and y1 (Number)
+    // Returns: String
+    getStringBetween: function (x0, y0, x1, y1) {
+      var sb = '';
+      if (this.isValidCell(x0, y0) && this.isValidCell(x1, y1)) {
+        var dx = x1 - x0;
+        var dy = y1 - y0;
+        if (dx === 0 || dy === 0 || Math.abs(dx) === Math.abs(dy)) {
+          var steps = Math.max(Math.abs(dx), Math.abs(dy));
+          if (steps > 0) {
+            dx /= steps;
+            dy /= steps;
+          }
+          for (var i = 0; i <= steps; i++)
+            sb += this.getCharAt(x0 + dx * i, y0 + dy * i);
+        }
+      }
+      return sb;
+    },
+    //
+    // x0 and y0 (Number)
+    // x1 and y1 (Number)
+    // atribute (Number)
+    // value (Boolean)
+    setAttributeBetween: function (x0, y0, x1, y1, attribute, value) {
+      if (this.isValidCell(x0, y0) && this.isValidCell(x1, y1)) {
+        var dx = x1 - x0;
+        var dy = y1 - y0;
+        if (dx === 0 || dy === 0 || Math.abs(dx) === Math.abs(dy)) {
+          var steps = Math.max(Math.abs(dx), Math.abs(dy));
+          if (steps > 0) {
+            dx /= steps;
+            dy /= steps;
+          }
+          for (var i = 0; i <= steps; i++)
+            this.setAttribute(x0 + dx * i, y0 + dy * i, attribute, value);
+        }
+      }
+    },
+    //
+    // px and py (Number)
+    // attribute (Number)
+    // state (Boolean)
+    setAttribute: function (px, py, attribute, state) {
+      if (this.isValidCell(px, py)) {
+        if (this.attribute === this.flags.MARKED && !state)
+          this.repaintCell(px, py);
+        this.attributes[py][px] &= ~attribute;
+        this.attributes[py][px] |= (state ? attribute : 0);
+        if (attribute !== this.flags.MARKED || state)
+          this.repaintCell(px, py);
+      }
+    },
+    //
+    // attribute (Number)
+    // state (Boolean)
+    setAllCellsAttribute: function (attribute, state) {
+      for (var py = 0; py < this.nRows; py++)
+        for (var px = 0; px < this.nCols; px++)
+          this.setAttribute(px, py, attribute, state);
+    },
+    //
+    // px and py (Number)
+    // attribute (Number)
+    // returns Boolean
+    getCellAttribute: function (px, py, attribute) {
+      if (this.isValidCell(px, py))
+        return (this.attributes[py][px] & attribute) !== 0;
+      else
+        return false;
+    },
+    //
+    // px and py (Number)
+    // Returns: AWT.Rectangle
+    getCellRect: function (px, py) {
+      return new AWT.Rectangle(this.pos.x + px * this.cellWidth, this.pos.y + py * this.cellHeight, this.cellWidth, this.cellHeight);
+    },
+    //
+    // px and py (Number)
+    // Returns: AWT.Rectangle    
+    getCellBorderBounds: function (px, py) {
+      var isMarked = this.getCellAttribute(px, py, this.flags.MARKED);
+      if (!this.border && !isMarked)
+        return this.getCellRect(px, py);
+      var bb = this.getBoxBaseResolve();
+      var strk = isMarked ? bb.markerStroke : bb.borderStroke;
+      return  this.getCellRect(px, py).grow(strk.lineWidth, strk.lineWidth);
     }
-    // TODO: Continue here with getItemFor
+    
+    // TODO: Continue at repaintCell
+
   };
 
   // TextGrid extends AbstractBox
