@@ -96,9 +96,36 @@ define([
         textGrid.text.push(this.textContent);
       });
 
+      for (var i = textGrid.text.length; i < textGrid.nch; i++)
+        textGrid.text[i] = '';
+
       return this;
+    },
+    //
+    // Counts the noumber of wildchars present in this TextGrid
+    countWildChars: function () {
+      var result = 0;
+      if (this.text)
+        for (var y = 0; y < this.nch; y++)
+          for (var x = 0; x < this.ncw; x++)
+            if (this.text[y].charAt(x) === this.wild)
+              result++;
+      return result;
+    },
+    //
+    // Counts the total number of characters, including wildcards    
+    getNumChars: function () {
+      return this.ncw * this.nch;
+    },
+    //
+    // Sets the provided character as a content of the cell located at the x & y coordinates
+    // x (Number) - The X coordinate of the cell
+    // y (Number) - The y coordinate of the cell
+    // ch (String) - The character to place into the specified cell
+    setCharAt: function (x, y, ch) {
+      if (x >= 0 && x < this.ncw && y >= 0 && y < this.nch)
+        this.text[y] = this.text[y].substring(0, x) + ch + this.text[y].substring(x + 1);
     }
-    // TODO: Implement TextGridContent functions
   };
 
   return TextGridContent;
