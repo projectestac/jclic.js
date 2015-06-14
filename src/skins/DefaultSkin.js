@@ -56,13 +56,15 @@ define([
         });
     this.buttons.next.get(0).src = this.resources.nextBtn;
     this.$div.append(this.buttons.next);
-    
+
     this.buttons.fullscreen = $('<img />').on('click',
         function () {
           if (screenfull.enabled)
             screenfull.toggle(thisSkin.$div[0]);
+            thisSkin.buttons.fullscreen.get(0).src = thisSkin.resources[
+              screenfull.isFullscreen ? 'fullScreenExit' : 'fullScreen'];
         });
-    this.buttons.fullscreen.get(0).src = this.resources.nextBtn;
+    this.buttons.fullscreen.get(0).src = this.resources.fullScreen;
     this.$div.append(this.buttons.fullscreen);
 
     this.$waitPanel = $('<div />').css({
@@ -114,7 +116,7 @@ define([
       var margin = this.margin;
       var prv = this.resources.prevBtnSize;
       var nxt = this.resources.nextBtnSize;
-      var full = this.resources.nextBtnSize;
+      var full = this.resources.fullScreenSize;
 
       this.$div.css({
         position: 'relative',
@@ -172,13 +174,13 @@ define([
         top: msgBoxRect.pos.y + (h - nxt.h) / 2 + 'px',
         left: msgBoxRect.pos.x + msgBoxRect.dim.width + margin + 'px'
       });
-      
+
       this.buttons.fullscreen.css({
         position: 'absolute',
         top: msgBoxRect.pos.y + (h - full.h) / 2 + 'px',
         left: msgBoxRect.pos.x + msgBoxRect.dim.width + margin + nxt.w + margin + 'px'
       });
-      
+
       this.$msgBoxDivCanvas = $('<canvas width="' + wMsgBox + '" height="' + h + '"/>');
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
       // Internal bounds, relative to the origin of `$msgBoxDivCanvas`
@@ -298,7 +300,24 @@ define([
           'bSBhdHRyaWJ1dGVOYW1lPSJ0cmFuc2Zvcm0iIGF0dHJpYnV0ZVR5cGU9InhtbCIgZHVyPSIwLjZz' +
           'IiBmcm9tPSIwIDQwIDQwIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgdG89Ii0zNjAgNDAgNDAi' +
           'IHR5cGU9InJvdGF0ZSI+PC9hbmltYXRlVHJhbnNmb3JtPjwvcGF0aD48L3N2Zz4K',
-      waitImgSize: {w: 80, h: 80}
+      waitImgSize: {w: 80, h: 80},
+      //
+      // SVG images for 'fullscreen' and 'fullscreen extit' actions.
+      // By **Google Material design Icons**:
+      // https://google.github.io/material-design-icons/
+      fullScreen: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
+          'PjwvcGF0aD48cGF0aCBkPSJNNyAxNEg1djVoNXYtMkg3di0zem0tMi00aDJWN2gzVjVINXY1em0x' +
+          'MiA3aC0zdjJoNXYtNWgtMnYzek0xNCA1djJoM3YzaDJWNWgtNXoiPjwvcGF0aD48L3N2Zz4K',
+      fullScreenSize: {w: 36, h: 36},
+      fullScreenExit: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
+          'PjwvcGF0aD48cGF0aCBkPSJNNSAxNmgzdjNoMnYtNUg1djJ6bTMtOEg1djJoNVY1SDh2M3ptNiAx' +
+          'MWgydi0zaDN2LTJoLTV2NXptMi0xMVY1aC0ydjVoNVY4aC0zeiI+PC9wYXRoPjwvc3ZnPgo='
     }
   };
 
