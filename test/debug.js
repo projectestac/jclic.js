@@ -8,7 +8,8 @@ requirejs.config({
   // baseURl is relative to the HTML file path
   baseUrl: '../../src/',
   paths: {
-    jquery: '../node_modules/jquery/dist/jquery'
+    jquery: '../node_modules/jquery/dist/jquery',
+    screenfull: '../node_modules/screenfull/dist/screenfull'
   }
 });
 

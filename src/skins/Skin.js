@@ -74,7 +74,9 @@ define([
       'info': null,
       'help': null,
       'audio': null,
-      'about': null},
+      'about': null,
+      'fullscreen': null
+    },
     //
     // The collection of counters
     counters: {

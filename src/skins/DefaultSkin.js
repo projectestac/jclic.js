@@ -15,11 +15,12 @@
 
 define([
   "jquery",
+  "screenfull",
   "../AWT",
   "./Skin",
   "../boxes/ActiveBox",
   "../boxes/Counter"
-], function ($, AWT, Skin, ActiveBox, Counter) {
+], function ($, screenfull, AWT, Skin, ActiveBox, Counter) {
 
   //
   // This is the default [Skin](Skin.html) used by jclic.js
@@ -55,6 +56,14 @@ define([
         });
     this.buttons.next.get(0).src = this.resources.nextBtn;
     this.$div.append(this.buttons.next);
+    
+    this.buttons.fullscreen = $('<img />').on('click',
+        function () {
+          if (screenfull.enabled)
+            screenfull.toggle(thisSkin.$div[0]);
+        });
+    this.buttons.fullscreen.get(0).src = this.resources.nextBtn;
+    this.$div.append(this.buttons.fullscreen);
 
     this.$waitPanel = $('<div />').css({
       'background-color': 'rgba(255, 255, 255, .60)',
@@ -105,6 +114,7 @@ define([
       var margin = this.margin;
       var prv = this.resources.prevBtnSize;
       var nxt = this.resources.nextBtnSize;
+      var full = this.resources.nextBtnSize;
 
       this.$div.css({
         position: 'relative',
@@ -116,7 +126,7 @@ define([
       var actualSize = new AWT.Dimension(this.$div.width(), this.$div.height());
 
       var w = Math.max(100, actualSize.width - 2 * margin);
-      var wMsgBox = w - 2 * margin - prv.w - nxt.w;
+      var wMsgBox = w - 3 * margin - prv.w - nxt.w - full.w;
       var h = this.msgBoxHeight;
       var playerHeight = Math.max(100, actualSize.height - 3 * margin - h);
 
@@ -160,9 +170,15 @@ define([
       this.buttons.next.css({
         position: 'absolute',
         top: msgBoxRect.pos.y + (h - nxt.h) / 2 + 'px',
-        left: w + margin - nxt.w + 'px'
+        left: msgBoxRect.pos.x + msgBoxRect.dim.width + margin + 'px'
       });
-
+      
+      this.buttons.fullscreen.css({
+        position: 'absolute',
+        top: msgBoxRect.pos.y + (h - full.h) / 2 + 'px',
+        left: msgBoxRect.pos.x + msgBoxRect.dim.width + margin + nxt.w + margin + 'px'
+      });
+      
       this.$msgBoxDivCanvas = $('<canvas width="' + wMsgBox + '" height="' + h + '"/>');
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
       // Internal bounds, relative to the origin of `$msgBoxDivCanvas`
