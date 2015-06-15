@@ -121,11 +121,15 @@ define([
       // Set the appropiate fullScreen icon
       this.buttons.fullscreen.get(0).src = this.resources[
           screenfull.isFullscreen ? 'fullScreenExit' : 'fullScreen'];
+        
+      var autoFit = this.ps.options.autoFit | screenfull.isFullscreen;
+      var mainWidth = autoFit ? $(window).width() : this.ps.options.width;
+      var mainHeight = autoFit ? $(window).height() : this.ps.options.height;
 
       this.$div.css({
         position: 'relative',
-        width: Math.max(this.ps.options.minWidth, Math.min(this.ps.options.maxWidth, $(window).width())),
-        height: Math.max(this.ps.options.minHeight, Math.min(this.ps.options.maxHeight, $(window).height())),
+        width: Math.max(this.ps.options.minWidth, Math.min(this.ps.options.maxWidth, mainWidth)),
+        height: Math.max(this.ps.options.minHeight, Math.min(this.ps.options.maxHeight, mainHeight)),
         'background-color': this.background
       });
 

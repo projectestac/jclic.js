@@ -39,11 +39,18 @@ define([
 
     // JClicPlayer extends AWT.Container
     AWT.Container.call(this);
+    
+    if(!options)
+      options = {};
 
     this.$topDiv = $topDiv;
     
-    if(options)      
-      this.options = $.extend(Object.create(this.options), options);
+    if(!options.height && !options.width && $topDiv.height() > 0){
+      options.height = $topDiv.height();
+      options.width = $topDiv.width();
+    }
+        
+    this.options = $.extend(Object.create(this.options), options);
 
     // $div usually is `undefined`
     this.$div = $div;
@@ -72,19 +79,34 @@ define([
     //
     // Miscellaneous options to be stored in the prototype
     options: {
+      // 
       // Max waiting time to have all media loaded (milliseconds)
       maxWaitTime: 120000,
+      // 
       // Name of the frame where to open links
       infoUrlFrame: '_blank',
+      // 
       // URL where to navigate to on exit
       exitUrl: null,
-      // At the beginning, audio should be enabled or disabled
+      // 
+      // At the beginning, the audio should be enabled or disabled
       audioEnabled: true,
+      // 
       // Navigation buttons are always visible (for debugging purposes)
       navButtonsAlways: true,
-      // Max and min window size
+      // 
+      // Initial witdh and height of the JClicPlayer. When not specified, the size of the 
+      // `div` element acting as a container will be used.
+      width: 900, height: 600,
+      //
+      // When `true`, the JClicPlayer div element will try to take up all the available surface on
+      // the browser's window.
+      autoFit: false,
+      //
+      // Maximum and minimal size of the JClicPlayer element
       maxWidth: 9999, minWidth: 300,
       maxHeight: 9999, minHeight: 300,
+      // 
       // Time (milliseconds) of the fade-in animation of the activity panel. When 0, no animation
       // is performed
       fade: 300
