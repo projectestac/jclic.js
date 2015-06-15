@@ -45,9 +45,13 @@ define([
 
     this.$topDiv = $topDiv;
     
-    if(!options.height && !options.width && $topDiv.height() > 0){
-      options.height = $topDiv.height();
-      options.width = $topDiv.width();
+    if (!options.height && !options.width) {
+      if ($topDiv.height() > 0) {
+        options.height = $topDiv.height();
+        options.width = $topDiv.width();
+      }
+      else if(typeof options.autoFit === 'undefined')
+        options.autoFit = true;
     }
         
     this.options = $.extend(Object.create(this.options), options);

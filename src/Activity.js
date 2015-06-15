@@ -55,8 +55,7 @@ define([
     // TODO: When all activities are created, initialize _CLASSES as an empty object
     _CLASSES: {
       '@panels.Menu': Activity,
-      '@textGrid.CrossWord': Activity,
-      '@textGrid.WordSearch': Activity
+      '@textGrid.CrossWord': Activity
     },
     //
     // Dynamic constructor that returns a specific type of Activity

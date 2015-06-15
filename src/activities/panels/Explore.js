@@ -18,10 +18,9 @@ define([
   "../../Activity",
   "../../boxes/ActiveBoxGrid",
   "../../boxes/BoxBag",
-  "../../boxes/BoxConnector",
   "../../AWT",
   "../../shapers/Rectangular"
-], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT, Rectangular) {
+], function ($, Activity, ActiveBoxGrid, BoxBag, AWT, Rectangular) {
 
   //
   // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)

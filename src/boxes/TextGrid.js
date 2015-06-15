@@ -16,14 +16,17 @@
 define([
   "jquery",
   "../AWT",
+  "../Utils",
   "./AbstractBox",
   "./TextGridContent"
-], function ($, AWT, AbstractBox, TextGridContent) {
+], function ($, AWT, Utils, AbstractBox, TextGridContent) {
   //
   // This class is a special type of [AbstractBox](AbstractBox.html) that displays a grid of single
   // characters. It is used in activities like crosswords and scrambled letters. 
   var TextGrid = function (parent, container, boxBase, x, y, ncw, nch, cellW, cellH, border) {
     AbstractBox.call(this, parent, container, boxBase);
+
+    var thisTG = this;
 
     this.pos.x = x;
     this.pos.y = y;
@@ -36,7 +39,7 @@ define([
     this.preferredBounds = new AWT.Rectangle(this.pos, this.dim);
     this.setBorder(border);
     this.cursorTimer = new AWT.Timer(function () {
-      // TODO: Implement method to be called by cursorTimer
+      thisTG.blink(0);
     }, 500, false);
     this.cursorEnabled = false;
     this.useCursor = false;
@@ -541,10 +544,132 @@ define([
       var bb = this.getBoxBaseResolve();
       var strk = isMarked ? bb.markerStroke : bb.borderStroke;
       return  this.getCellRect(px, py).grow(strk.lineWidth, strk.lineWidth);
-    }
-    
-    // TODO: Continue at repaintCell
+    },
+    //
+    // px and py (Number)
+    repaintCell: function (px, py) {
+      if (this.container)
+        this.container.invalidate(this.getCellBorderBounds(px, py));
+    },
+    //
+    // Returns: AWT.Dimension
+    getPreferredSize: function () {
+      return this.preferredBounds.dim;
+    },
+    //
+    // Returns: AWT.Dimension
+    getMinimumSize: function () {
+      return new AWT.Dimension(this.defaults.MIN_CELL_SIZE * this.nCols, this.defaults.MIN_CELL_SIZE * this.nRows);
+    },
+    // scale (Number)
+    // Returns: AWT.Dimension
+    getScaledSize: function (scale) {
+      return new AWT.Dimension(
+          Utils.roundTo(scale * this.preferredBounds.dim.width, nCols),
+          Utils.roundTo(scale * this.preferredBounds.dim.height, nRows));
+    },
+    //
+    // Overrides SetBounds in AWT.Rectangle
+    // r (AWT.Rectangle)
+    setBounds: function (r) {
+      AWT.Rectangle.setBounds.call(this, r);
+      this.cellWidth = this.dim.width / this.nCols;
+      this.cellHeight = this.dim.height / nRows;
+    },
+    //
+    // Overrides updateContent in AbstractBox
+    // ctx - Canvas graphic context
+    // dirtyRegion (Rectangle)
+    updateContent: function (ctx, dirtyRegion) {
 
+      var bb = this.getBoxBaseResolve();
+
+      // test font size        
+      ctx.font = bb.font.cssFont();
+      ctx.textBaseline = 'hanging';
+      bb.prepareText(ctx, 'W',
+          this.cellWidth - 2 * this.defaults.MIN_INTERNAL_MARGIN,
+          this.cellHeight - 2 * this.defaults.MIN_INTERNAL_MARGIN);
+
+
+      var ch = [];
+      var attr;
+      var isMarked, isInverted, isCursor;
+      var boxBounds;
+      var dx, dy;
+      var ry = (this.cellHeight - bb.font.getHeight()) / 2;
+
+      for (var py = 0; py < this.nRows; py++) {
+        for (var px = 0; px < this.nCols; px++) {
+          var bxr = this.getCellBorderBounds(px, py);
+          if (bxr.intersects(dirtyRegion)) {
+            attr = this.attributes[py][px];
+            if ((attr & this.flags.TRANSPARENT) === 0) {
+              isInverted = (attr & this.flags.INVERTED) !== 0;
+              isMarked = (attr & this.flags.MARKED) !== 0;
+              isCursor = (this.useCursor && this.cursor.x === px && this.cursor.y === py);
+              boxBounds = this.getCellRect(px, py);
+              ctx.fillStyle = (isCursor && this.cursorBlink) ?
+                  bb.inactiveColor :
+                  isInverted ? bb.textColor : bb.backColor;
+              boxBounds.fill(ctx);
+              ctx.strokeStyle('black');
+              if ((attr & this.flags.HIDDEN) === 0) {
+                ch[0] = this.chars[py][px];
+                if (ch[0]) {
+                  dx = boxBounds.pos.x + (this.cellWidth - ctx.measureText(ch[0]).width) / 2;
+                  dy = boxBounds.pos.y + ry;
+
+                  if (bb.shadow) {
+                    // Render text shadow
+                    var d = Math.max(1, bb.font.size / 10);
+                    ctx.fillStyle = bb.shadowColor;
+                    ctx.fillText(ch[0], dx + d, dy + d);
+                  }
+                  // Render text
+                  ctx.fillStyle = this.isInverted() ? bb.backColor
+                      : this.isAlternative() ? bb.alternativeColor : bb.textColor;
+                  ctx.fillText(ch[0], dx, dy);
+                }
+              }
+              if (this.border || isMarked) {
+                ctx.strokeStyle = bb.borderColor;
+                bb[isMarked ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
+                if (isMarked)
+                  ctx.globalCompositeOperation = 'xor';
+
+                // Draw border
+                boxBounds.stroke(ctx);
+
+                // Reset ctx default values
+                if (isMarked)
+                  ctx.globalCompositeOperation = 'source-over';
+
+              }
+              ctx.strokeStyle = 'black';
+              AWT.Stroke.prototype.setStroke(ctx);
+            }
+          }
+        }
+      }
+      return true;
+    },
+    //
+    // TODO: Move blink and timer to Activity.Panel
+    blink: function (status) {
+      if (this.useCursor) {
+        this.cursorBlink = status === 1 ? true : status === -1 ? false : !this.cursorBlink;
+        this.repaintCell(this.cursor.x, this.cursor.y);
+      }
+    },
+    //
+    //
+    end: function () {
+      if (this.cursorTimer) {
+        this.cursorTimer.stop();
+        this.cursorTimer = null;
+      }
+    }
   };
 
   // TextGrid extends AbstractBox
