@@ -22,6 +22,10 @@ define([
   "../boxes/Counter"
 ], function ($, screenfull, AWT, Skin, ActiveBox, Counter) {
 
+  // In some cases, require.js does not return a valid value for screenfull. Check it:
+  if (!screenfull)
+    screenfull = window.screenfull;
+
   //
   // This is the default [Skin](Skin.html) used by jclic.js
   // $div (a JQuery `<div/>` object) - The `div` to be used as a recipient for
@@ -61,8 +65,6 @@ define([
         function () {
           if (screenfull.enabled)
             screenfull.toggle(thisSkin.$div[0]);
-            thisSkin.buttons.fullscreen.get(0).src = thisSkin.resources[
-              screenfull.isFullscreen ? 'fullScreenExit' : 'fullScreen'];
         });
     this.buttons.fullscreen.get(0).src = this.resources.fullScreen;
     this.$div.append(this.buttons.fullscreen);
@@ -111,12 +113,14 @@ define([
     // Resizes and places internal objects
     doLayout: function () {
 
-      // Basic layout, just for testing:
-
       var margin = this.margin;
       var prv = this.resources.prevBtnSize;
       var nxt = this.resources.nextBtnSize;
       var full = this.resources.fullScreenSize;
+
+      // Set the appropiate fullScreen icon
+      this.buttons.fullscreen.get(0).src = this.resources[
+          screenfull.isFullscreen ? 'fullScreenExit' : 'fullScreen'];
 
       this.$div.css({
         position: 'relative',
@@ -128,7 +132,7 @@ define([
       var actualSize = new AWT.Dimension(this.$div.width(), this.$div.height());
 
       var w = Math.max(100, actualSize.width - 2 * margin);
-      var wMsgBox = w - 3 * margin - prv.w - nxt.w - full.w;
+      var wMsgBox = w - prv.w - nxt.w - full.w;
       var h = this.msgBoxHeight;
       var playerHeight = Math.max(100, actualSize.height - 3 * margin - h);
 
@@ -152,7 +156,7 @@ define([
       this.$msgBoxDivCanvas.remove();
       this.$msgBoxDivCanvas = null;
 
-      var msgBoxRect = new AWT.Rectangle(2 * margin + prv.w, 2 * margin + playerHeight, wMsgBox, h);
+      var msgBoxRect = new AWT.Rectangle(margin + prv.w, 2 * margin + playerHeight, wMsgBox, h);
 
       this.$msgBoxDiv.css({
         position: 'absolute',
@@ -172,13 +176,13 @@ define([
       this.buttons.next.css({
         position: 'absolute',
         top: msgBoxRect.pos.y + (h - nxt.h) / 2 + 'px',
-        left: msgBoxRect.pos.x + msgBoxRect.dim.width + margin + 'px'
+        left: msgBoxRect.pos.x + msgBoxRect.dim.width + 'px'
       });
 
       this.buttons.fullscreen.css({
         position: 'absolute',
         top: msgBoxRect.pos.y + (h - full.h) / 2 + 'px',
-        left: msgBoxRect.pos.x + msgBoxRect.dim.width + margin + nxt.w + margin + 'px'
+        left: msgBoxRect.pos.x + msgBoxRect.dim.width + nxt.w + 'px'
       });
 
       this.$msgBoxDivCanvas = $('<canvas width="' + wMsgBox + '" height="' + h + '"/>');
@@ -203,42 +207,22 @@ define([
       // SVG image for the 'previous activity' button
       // See `/misc/skin/default` for original Inkscape images
       prevBtn: 'data:image/svg+xml;base64,' +
-          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGhlaWdodD0iNDgiIGlk' +
-          'PSJzdmcyIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiB4bWxu' +
-          'cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVj' +
-          'b21tb25zLm9yZy9ucyMiIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4x' +
-          'LyIgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMj' +
-          'IiB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48bWV0YWRhdGEgaWQ9Im1l' +
-          'dGFkYXRhMTIiPjxyZGY6UkRGPjxjYzpXb3JrIHJkZjphYm91dD0iIj48ZGM6Zm9ybWF0PmltYWdl' +
-          'L3N2Zyt4bWw8L2RjOmZvcm1hdD48ZGM6dHlwZSByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9y' +
-          'Zy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIj48L2RjOnR5cGU+PGRjOnRpdGxlPjwvZGM6dGl0bGU+' +
-          'PC9jYzpXb3JrPjwvcmRmOlJERj48L21ldGFkYXRhPjxkZWZzIGlkPSJkZWZzMTAiPjwvZGVmcz48' +
-          'cGF0aCBkPSJNIDAsMCBIIDQ4IFYgNDggSCAwIHoiIGlkPSJwYXRoNCIgc3R5bGU9ImZpbGw6bm9u' +
-          'ZSI+PC9wYXRoPjxwYXRoIGQ9Ik0gMjQsNCBDIDM1LjA1LDQgNDQsMTIuOTUgNDQsMjQgNDQsMzUu' +
-          'MDUgMzUuMDUsNDQgMjQsNDQgMTIuOTUsNDQgNCwzNS4wNSA0LDI0IDQsMTIuOTUgMTIuOTUsNCAy' +
-          'NCw0IHogbSA0LDI5IFYgMTUgbCAtMTIsOSAxMiw5IHoiIGlkPSJwYXRoNiIgc3R5bGU9ImZpbGw6' +
-          'I2ZmZmZmZiI+PC9wYXRoPjwvc3ZnPgo=',
-      prevBtnSize: {w: 48, h: 48},
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xNS40MSA3LjQxTDE0IDZsLTYgNiA2IDYg' +
+          'MS40MS0xLjQxTDEwLjgzIDEyeiI+PC9wYXRoPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9' +
+          'Im5vbmUiPjwvcGF0aD48L3N2Zz4K',
+      prevBtnSize: {w: 36, h: 36},
       //
       // SVG image for the 'next activity' button
       // See `/misc/skin/default` for original Inkscape images
       nextBtn: 'data:image/svg+xml;base64,' +
-          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGhlaWdodD0iNDgiIGlk' +
-          'PSJzdmcyIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiB4bWxu' +
-          'cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVj' +
-          'b21tb25zLm9yZy9ucyMiIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4x' +
-          'LyIgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMj' +
-          'IiB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48bWV0YWRhdGEgaWQ9Im1l' +
-          'dGFkYXRhMTIiPjxyZGY6UkRGPjxjYzpXb3JrIHJkZjphYm91dD0iIj48ZGM6Zm9ybWF0PmltYWdl' +
-          'L3N2Zyt4bWw8L2RjOmZvcm1hdD48ZGM6dHlwZSByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9y' +
-          'Zy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIj48L2RjOnR5cGU+PGRjOnRpdGxlPjwvZGM6dGl0bGU+' +
-          'PC9jYzpXb3JrPjwvcmRmOlJERj48L21ldGFkYXRhPjxkZWZzIGlkPSJkZWZzMTAiPjwvZGVmcz48' +
-          'cGF0aCBkPSJNIDAsMCBIIDQ4IFYgNDggSCAwIHoiIGlkPSJwYXRoNCIgc3R5bGU9ImZpbGw6bm9u' +
-          'ZSI+PC9wYXRoPjxwYXRoIGQ9Ik0gMjQsNCBDIDEyLjk1LDQgNCwxMi45NSA0LDI0IDQsMzUuMDUg' +
-          'MTIuOTUsNDQgMjQsNDQgMzUuMDUsNDQgNDQsMzUuMDUgNDQsMjQgNDQsMTIuOTUgMzUuMDUsNCAy' +
-          'NCw0IHogTSAyMCwzMyBWIDE1IGwgMTIsOSAtMTIsOSB6IiBpZD0icGF0aDYiIHN0eWxlPSJmaWxs' +
-          'OiNmZmZmZmYiPjwvcGF0aD48L3N2Zz4K',
-      nextBtnSize: {w: 48, h: 48},
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMCA2TDguNTkgNy40MSAxMy4xNyAxMmwt' +
+          'NC41OCA0LjU5TDEwIDE4bDYtNnoiPjwvcGF0aD48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxs' +
+          'PSJub25lIj48L3BhdGg+PC9zdmc+Cg==',
+      nextBtnSize: {w: 36, h: 36},
       //
       // Animated image to be shown when loading resources
       // Thanks to Ryan Allen: http://articles.dappergentlemen.com/2015/01/13/svg-spinner/
@@ -311,13 +295,13 @@ define([
           'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
           'PjwvcGF0aD48cGF0aCBkPSJNNyAxNEg1djVoNXYtMkg3di0zem0tMi00aDJWN2gzVjVINXY1em0x' +
           'MiA3aC0zdjJoNXYtNWgtMnYzek0xNCA1djJoM3YzaDJWNWgtNXoiPjwvcGF0aD48L3N2Zz4K',
-      fullScreenSize: {w: 36, h: 36},
       fullScreenExit: 'data:image/svg+xml;base64,' +
           'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
           'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
           'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
           'PjwvcGF0aD48cGF0aCBkPSJNNSAxNmgzdjNoMnYtNUg1djJ6bTMtOEg1djJoNVY1SDh2M3ptNiAx' +
-          'MWgydi0zaDN2LTJoLTV2NXptMi0xMVY1aC0ydjVoNVY4aC0zeiI+PC9wYXRoPjwvc3ZnPgo='
+          'MWgydi0zaDN2LTJoLTV2NXptMi0xMVY1aC0ydjVoNVY4aC0zeiI+PC9wYXRoPjwvc3ZnPgo=',
+      fullScreenSize: {w: 36, h: 36}
     }
   };
 

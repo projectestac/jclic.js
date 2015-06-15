@@ -84,7 +84,10 @@ define([
       navButtonsAlways: true,
       // Max and min window size
       maxWidth: 9999, minWidth: 300,
-      maxHeight: 9999, minHeight: 300
+      maxHeight: 9999, minHeight: 300,
+      // Time (milliseconds) of the fade-in animation of the activity panel. When 0, no animation
+      // is performed
+      fade: 300
     },
     //
     // The JQuery "div" element used by this player.
@@ -362,6 +365,8 @@ define([
     // activity (String or `null`) - Name of the activity to be loaded (usually `null`)
     load: function (project, sequence, activity) {
 
+      var tp = this;
+          
       this.forceFinishActivity();
       this.skin.setWaitCursor(true);
 
@@ -381,11 +386,10 @@ define([
             fullPath = fullPath.substring(0, fullPath.length - 4);
 
           this.setSystemMessage('loading project', project);
-          var tp = this;
           $.get(fullPath, null, null, 'xml')
               .done(function (data) {
                 if (typeof data !== 'object')
-                  console.log('Project not loaded. Bad data!')
+                  console.log('Project not loaded. Bad data!');
                 var prj = new JClicProject();
                 prj.setProperties($(data).find('JClicProject'), fullPath);
                 tp.setSystemMessage('Project file loaded and parsed', project);
@@ -477,7 +481,7 @@ define([
       // Remove the current Activity.Panel
       if (this.actPanel !== null) {
         this.actPanel.end();
-        this.actPanel.$div.detach();
+        this.actPanel.$div.detach();          
         this.actPanel = null;
         this.setCounterValue('time', 0);
       }
@@ -486,6 +490,11 @@ define([
       if (actp) {
         // Sets the actPanel member to this Activity.Panel
         this.actPanel = actp;
+        
+        if(this.options.fade > 0){
+          this.actPanel.$div.css('display', 'none');
+        }
+        
         // Places the JQuery DOM element of actPanel into the player's one
         this.$div.prepend(this.actPanel.$div);
         if (this.skin)
@@ -517,6 +526,10 @@ define([
         this.setSystemMessage('activity ready');
         this.doLayout();
         this.initActivity();
+        
+        if(this.options.fade > 0){
+          this.actPanel.$div.fadeIn(this.options.fade);
+        }
       }
       this.skin.setWaitCursor(false);
     },
