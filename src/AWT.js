@@ -572,9 +572,10 @@ define([
     },
     //
     // Sets the position and dimension of another Rectangle
+    // rect (AWT.Rectangle)
     setBounds: function (rect) {
       if (!rect)
-        rect = new Rectangle();
+        rect = new AWT.Rectangle();
       this.pos.x = rect.pos.x;
       this.pos.y = rect.pos.y;
       this.dim.width = rect.dim.width;
@@ -607,6 +608,7 @@ define([
       this.pos.y -= dy;
       this.dim.width += 2 * dx;
       this.dim.height += 2 * dy;
+      return this;
     },
     //
     // Gets the AWT.Point correspondinf to the lower-right vertex of the rectangle.

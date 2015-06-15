@@ -45,6 +45,7 @@ define([
     this.useCursor = false;
     this.wildTransparent = false;
     this.cursor = new AWT.Point();
+    this.setChars(' ');
   };
 
   TextGrid.prototype = {
@@ -524,7 +525,7 @@ define([
     // returns Boolean
     getCellAttribute: function (px, py, attribute) {
       if (this.isValidCell(px, py))
-        return (this.attributes[py][px] & attribute) !== 0;
+        return (this.attributes[px][py] & attribute) !== 0;
       else
         return false;
     },
@@ -565,16 +566,16 @@ define([
     // Returns: AWT.Dimension
     getScaledSize: function (scale) {
       return new AWT.Dimension(
-          Utils.roundTo(scale * this.preferredBounds.dim.width, nCols),
-          Utils.roundTo(scale * this.preferredBounds.dim.height, nRows));
+          Utils.roundTo(scale * this.preferredBounds.dim.width, this.nCols),
+          Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
     },
     //
     // Overrides SetBounds in AWT.Rectangle
     // r (AWT.Rectangle)
-    setBounds: function (r) {
-      AWT.Rectangle.setBounds.call(this, r);
+    setBounds: function (r, y, w, h) {
+      AbstractBox.prototype.setBounds.call(this, r, y, w, h);
       this.cellWidth = this.dim.width / this.nCols;
-      this.cellHeight = this.dim.height / nRows;
+      this.cellHeight = this.dim.height / this.nRows;
     },
     //
     // Overrides updateContent in AbstractBox
@@ -613,7 +614,7 @@ define([
                   bb.inactiveColor :
                   isInverted ? bb.textColor : bb.backColor;
               boxBounds.fill(ctx);
-              ctx.strokeStyle('black');
+              ctx.strokeStyle='black';
               if ((attr & this.flags.HIDDEN) === 0) {
                 ch[0] = this.chars[py][px];
                 if (ch[0]) {

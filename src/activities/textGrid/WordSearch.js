@@ -21,9 +21,8 @@ define([
   "../../boxes/BoxBag",
   "../../boxes/BoxConnector",
   "../../AWT",
-  "../../shapers/Rectangular",
   "../../boxes/TextGrid"
-], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT, Rectangular, TextGrid) {
+], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT, TextGrid) {
 
   //
   // 
@@ -116,7 +115,7 @@ define([
 
       if (tgc) {
 
-        this.grid = TextGrid._createEmptyGrid(null, this, this.act.margin, this.act.margin, tgc, false);
+        this.grid = TextGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, tgc, false);
 
         if (abcAlt)
           this.bgAlt = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abcAlt);
@@ -146,9 +145,10 @@ define([
 
         if (this.bgAlt) {
           this.bgAlt.setContent(this.act.abc['secondary']);
-          if (this.act.scramble[0])
+          if (this.act.scramble[0]){
             var scrambleArray = [this.bgAlt];
-          this.act.shuffle(scrambleArray, true, true);
+            this.act.shuffle(scrambleArray, true, true);
+          }
           this.bgAlt.setVisible(false);
         }
 
@@ -157,42 +157,40 @@ define([
       }
     },
     //
-    //
-    // CONTINUAR AQUÍ
-    //
-    //
-    //
-    //
     // Overrides `Activity.Panel.updateContent`
     // Updates the graphic contents of its panel.
     // The method should be called from `Activity.Panel.update`
     // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
     updateContent: function (dirtyRegion) {
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
-      if (this.bgA && this.bgB && this.$canvas) {
+      if (this.grid && this.$canvas) {
         var canvas = this.$canvas.get(0);
         var ctx = canvas.getContext('2d');
         if (!dirtyRegion)
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
-        this.bgA.update(ctx, dirtyRegion, this);
-        this.bgB.update(ctx, dirtyRegion, this);
+        this.grid.update(ctx, dirtyRegion, this);
+        if (this.bgAlt)
+          this.bgAlt.update(ctx, dirtyRegion, this);
       }
       return this;
     },
     //
     // Calculates the optimal dimension of this panel
     setDimension: function (preferredMaxSize) {
-      if (!this.bgA || !this.bgB || this.getBounds().equals(preferredMaxSize))
+      if (!this.grid || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
-      return BoxBag.prototype._layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
+      if (this.bgAlt)
+        return BoxBag.prototype._layoutDouble(preferredMaxSize, this.grid, this.bgAlt, this.act.boxGridPos, this.act.margin);
+      else
+        return BoxBag.prototype._layoutSingle(preferredMaxSize, this.grid, this.act.margin);
     },
     //
     // Set the size and position of this activity panel
     setBounds: function (rect) {
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
-      if (this.bgA || this.bgB) {
+      if (this.grid) {
         // Create the main canvas
         this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
           position: 'absolute',
@@ -207,6 +205,16 @@ define([
         // Repaint all
         this.invalidate().update();
       }
+    },
+    // 
+    // 
+    getCurrentScore: function () {
+      var result = 0;
+      if (this.actclues)
+        for (var i = 0; i < this.act.clues.length; i++)
+          if (this.resolvedClues[i])
+            result++;
+      return result;
     },
     // 
     // Main handler to receive mouse and key events
@@ -237,7 +245,7 @@ define([
         // Flag for assuring that only one media plays per event (avoid event sounds overlapping
         // cell's media sounds)
         var m = false;
-        // Flag for tracking clicks on the background of grid A        
+        // Flag for tracking media played from `bgAlt`        
         var clickOnBg0 = false;
 
         switch (event.type) {
@@ -258,82 +266,65 @@ define([
           case 'mousedown':
             this.ps.stopMedia(1);
             if (!this.bc.active) {
-              // A new pairing starts
+              // A new word selection starts
               // 
-              // Pairings can never start with a `mouseup` event
+              // Selection of words can never start with a `mouseup` event
               if (up)
                 break;
-              // 
-              // Determine if click was done on panel A or panel B
-              bx1 = this.bgA.findActiveBox(p);
-              bx2 = this.bgB.findActiveBox(p);
-              if ((bx1 && (!this.act.useOrder || bx1.idOrder === this.currentItem))
-                  || (!this.act.useOrder && bx2) && bx2.idAss !== -1) {
-                // Start the [BoxConnector](BoxConnector.html)
-                if (this.act.dragCells)
-                  this.bc.begin(p, bx1 ? bx1 : bx2);
-                else
-                  this.bc.begin(p);
-                // Play cell media or event sound
-                m = bx1.playMedia(this.ps);
-                if (!m)
-                  this.playEvent('click');
+
+              if (this.grid.contains(p)) {
+                this.playEvent('click');
+                this.bc.begin(p);
               }
+
             }
             else {
-              // Pairing completed
+              // Word selection completed
               //
               // Find the active boxes behind `bc.origin` and `p`
-              var origin = this.bc.origin;
-              this.bc.end();
-              bx1 = this.bgA.findActiveBox(origin);
-              if (bx1) {
-                bx2 = this.bgB.findActiveBox(p);
-              }
-              else {
-                bx2 = this.bgB.findActiveBox(origin);
-                if (bx2) {
-                  bx1 = this.bgA.findActiveBox(p);
-                  clickOnBg0 = true;
-                }
-              }
-              // Check if the pairing was correct
-              if (bx1 && bx2 && bx1.idAss !== -1 && bx2.idAss !== -1) {
-                var ok = false;
-                var src = bx1.getDescription();
-                var dest = bx2.getDescription();
-                var matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idOrder);
-                if (bx1.idOrder === bx2.idOrder || bx2.getContent().isEquivalent(matchingDest, true)) {
-                  // Pairing is OK. Play media and disable involved cells
-                  ok = true;
-                  bx1.idAss = -1;
-                  bx2.idAss = -1;
-                  if (this.act.abc['solvedPrimary']) {
-                    bx1.switchToAlt(this.ps);
-                    m |= bx1.playMedia(this.ps);
-                  }
-                  else {
-                    if (clickOnBg0)
-                      m |= bx1.playMedia(this.ps);
-                    else
-                      m |= bx2.playMedia(this.ps);
-                    bx1.clear();
-                  }
-                  bx2.clear();
+              var pt1 = this.grid.getLogicalCoords(this.bc.origin);
+              var pt2 = this.grid.getLogicalCoords(this.bc.dest);
 
-                  if (this.act.useOrder)
-                    // Load next item
-                    this.currentItem = this.bgA.getNextItem(this.currentItem);
+              this.bc.end();
+
+              var s = this.grid.getStringBetween(pt1.x, pt1.y, pt2.x, pt2.y);
+              if (s !== null && s.length > 0) {
+                var ok = false;
+                for (var c = 0; c < this.act.clues.length; c++) {
+                  if (s === this.act.clues[c]) {
+                    ok = true;
+                    break;
+                  }
                 }
-                // Check results and notify action
-                var cellsPlaced = this.bgB.countCellsWithIdAss(-1);
-                this.ps.reportNewAction(this.act, 'MATCH', src, dest, ok, cellsPlaced);
-                // End activity or play event sound
-                if (ok && cellsPlaced === this.bgB.getNumCells())
-                  this.finishActivity(true);
-                else if (!m)
-                  this.playEvent(ok ? 'actionOk' : 'actionError');
+                var repeated = this.resolvedClues[c];
+                if (ok && !repeated) {
+                  this.resolvedClues[c] = true;
+                  this.grid.setAttributeBetween(pt1.x, pt1.y, pt2.x, pt2.y, TextGrid.prototype.flags.INVERTED, true);
+                  if (this.bgAlt !== null) {
+                    var k = this.clueItems[c];
+                    if (k >= 0 && k < this.bgAlt.getNumCells()) {
+                      var bx = this.bgAlt.getActiveBox(this.clueItems[c]);
+                      if (bx) {
+                        bx.setVisible(true);
+                        m = bx.playMedia(this.ps);
+                      }
+                    }
+                  }
+                }
+                if (!repeated) {
+                  var r = this.getCurrentScore();
+                  this.ps.reportNewAction(getActivity(), 'ACTION_SELECT', s, null, ok, r);
+                  if (r === this.act.clues.length)
+                    this.finishActivity(true);
+                  else if (!m)
+                    this.playEvent(ok ? 'actionOK' : 'actionError');
+                }
+                else if (!ok && !m)
+                  this.playEvent('actionError');
               }
+              else
+                this.playEvent('actionError');
+
               this.update();
             }
             break;
