@@ -205,6 +205,30 @@ define([
       return this.msgBox;
     },
     //
+    // Method used to notify this skin that a specific action has changed its enabled/disabled status
+    // act (AWT.Action)
+    actionStatusChanged: function(act){
+      switch(act.name){
+        case 'next':
+          this.setEnabled(this.buttons.next, act.enabled);
+          break;        
+        case 'prev':
+          this.setEnabled(this.buttons.prev, act.enabled);
+          break;        
+        default:
+          break;
+      }
+    },
+    //
+    // Enables or disables an object changing its opacity
+    // $object (A JQuery element)
+    // enabled (boolean)
+    setEnabled: function($object, enabled){
+      $object.css('opacity', enabled ? 1.0 : 0.3);      
+    },
+    
+    
+    //
     // Graphical resources used by this skin
     resources: {
       //

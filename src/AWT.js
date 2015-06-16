@@ -957,6 +957,7 @@ define([
   var Action = function (name, actionPerformed) {
     this.name = name;
     this.actionPerformed = actionPerformed;
+    this._statusListeners = [];
   };
 
   Action.prototype = {
@@ -968,6 +969,9 @@ define([
     //
     // Action status `true`: enabled, `false`: disabled
     enabled: false,
+    //
+    // Listeners of changes on this Action status
+    _statusListeners: null,
     // 
     // Here is where subclasses must define the function to be performed 
     // when this Action object is called.
@@ -981,10 +985,23 @@ define([
     processEvent: function (event) {
       return this.actionPerformed(this, event);
     },
+    //
+    // Add a status listener
+    addStatusListener: function(listener){
+      this._statusListeners.push(listener);
+    },
+    //
+    // Remove a status listener
+    removeStatusListener: function(listener){
+      this._statusListeners = $.grep(_statusListeners, function(item){
+        return item!== listener;
+      });
+    },    
     // Enables/disables the action
     setEnabled: function (enabled) {
       this.enabled = enabled;
-      // TODO: Notify listeners
+      for(var i=0; i<this._statusListeners.length; i++)
+        this._statusListeners[i].call(this);
       return this;
     }
   };

@@ -233,6 +233,15 @@ define([
           EventSounds.prototype.globalEnabled = tp.audioEnabled;
         })
       };
+      
+      var thisPlayer = this;
+      $.each(this.actions, function(key, value){
+        value.addStatusListener(function(){
+          // `this` points here to the [AWT.Action](AWT.html#Action) object
+          if(thisPlayer.skin)
+            thisPlayer.skin.actionStatusChanged(this);
+        });
+      });
     },
     // 
     // This method is called when the container gains the focus for the first

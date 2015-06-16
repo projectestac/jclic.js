@@ -254,8 +254,13 @@ define([
     // Gets the JQuery top component, usually the `$div` object enclosing this skin
     $getTopComponent: function () {
       return this.$div;
+    },
+    //
+    // Method used to notify this skin that a specific action has changed its enabled/disabled status
+    // act (AWT.Action)
+    actionStatusChanged: function(act){
+      // To be implemented in subclasses      
     }
-
   };
 
   // Skin extends [AWT.Container](AWT.html)
