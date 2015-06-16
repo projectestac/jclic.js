@@ -61,13 +61,15 @@ define([
     this.buttons.next.get(0).src = this.resources.nextBtn;
     this.$div.append(this.buttons.next);
 
-    this.buttons.fullscreen = $('<img />').on('click',
-        function () {
-          if (screenfull.enabled)
-            screenfull.toggle(thisSkin.$div[0]);
-        });
-    this.buttons.fullscreen.get(0).src = this.resources.fullScreen;
-    this.$div.append(this.buttons.fullscreen);
+    if (screenfull && screenfull.enabled) {
+      this.buttons.fullscreen = $('<img />').on('click',
+          function () {
+            if (screenfull && screenfull.enabled)
+              screenfull.toggle(thisSkin.$div[0]);
+          });
+      this.buttons.fullscreen.get(0).src = this.resources.fullScreen;
+      this.$div.append(this.buttons.fullscreen);
+    }
 
     this.$waitPanel = $('<div />').css({
       'background-color': 'rgba(255, 255, 255, .60)',
@@ -119,10 +121,14 @@ define([
       var full = this.resources.fullScreenSize;
 
       // Set the appropiate fullScreen icon
-      this.buttons.fullscreen.get(0).src = this.resources[
+      if(this.buttons.fullscreen){
+        this.buttons.fullscreen.get(0).src = this.resources[
           screenfull.isFullscreen ? 'fullScreenExit' : 'fullScreen'];
+      } else {
+        full = {w:0, h:0};
+      }
         
-      var autoFit = this.ps.options.autoFit | screenfull.isFullscreen;
+      var autoFit = this.ps.options.autoFit | (screenfull && screenfull.enabled && screenfull.isFullscreen);
       var mainWidth = autoFit ? $(window).width() : this.ps.options.width;
       var mainHeight = autoFit ? $(window).height() : this.ps.options.height;
 
@@ -183,11 +189,13 @@ define([
         left: msgBoxRect.pos.x + msgBoxRect.dim.width + 'px'
       });
 
-      this.buttons.fullscreen.css({
-        position: 'absolute',
-        top: msgBoxRect.pos.y + (h - full.h) / 2 + 'px',
-        left: msgBoxRect.pos.x + msgBoxRect.dim.width + nxt.w + 'px'
-      });
+      if (this.buttons.fullscreen){
+        this.buttons.fullscreen.css({
+          position: 'absolute',
+          top: msgBoxRect.pos.y + (h - full.h) / 2 + 'px',
+          left: msgBoxRect.pos.x + msgBoxRect.dim.width + nxt.w + 'px'
+        });
+      }
 
       this.$msgBoxDivCanvas = $('<canvas width="' + wMsgBox + '" height="' + h + '"/>');
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);

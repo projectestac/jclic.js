@@ -35,9 +35,6 @@ define([
     if ($div.length) {
       var projectName = $div.data('project');
       var options = $div.data('options');
-      if(options)
-        console.log(options + ' | maxWidth: '+options.maxWidth+' maxHeight: '+options.maxHeight);
-
       var player = new JClicPlayer($div, options);
       player.load(projectName);
 
