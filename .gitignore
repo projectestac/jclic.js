@@ -17,3 +17,8 @@
 # Local netbeans config files #
 /nbproject/private/
 /deploy/
+
+# Exclude all test suites except jclic-demo
+/test/*/
+!/test/jclic-demo/
+
