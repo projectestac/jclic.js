@@ -114,7 +114,6 @@ define([
       }
 
       if (tgc) {
-
         this.grid = TextGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, tgc, false);
 
         if (abcAlt)
@@ -210,7 +209,7 @@ define([
     // 
     getCurrentScore: function () {
       var result = 0;
-      if (this.actclues)
+      if (this.act.clues)
         for (var i = 0; i < this.act.clues.length; i++)
           if (this.resolvedClues[i])
             result++;
@@ -245,8 +244,6 @@ define([
         // Flag for assuring that only one media plays per event (avoid event sounds overlapping
         // cell's media sounds)
         var m = false;
-        // Flag for tracking media played from `bgAlt`        
-        var clickOnBg0 = false;
 
         switch (event.type) {
           case 'touchcancel':
@@ -301,9 +298,9 @@ define([
                   this.resolvedClues[c] = true;
                   this.grid.setAttributeBetween(pt1.x, pt1.y, pt2.x, pt2.y, TextGrid.prototype.flags.INVERTED, true);
                   if (this.bgAlt !== null) {
-                    var k = this.clueItems[c];
+                    var k = this.act.clueItems[c];
                     if (k >= 0 && k < this.bgAlt.getNumCells()) {
-                      var bx = this.bgAlt.getActiveBox(this.clueItems[c]);
+                      var bx = this.bgAlt.getActiveBox(this.act.clueItems[c]);
                       if (bx) {
                         bx.setVisible(true);
                         m = bx.playMedia(this.ps);
@@ -311,13 +308,14 @@ define([
                     }
                   }
                 }
-                if (!repeated) {
+                if (!repeated) {                  
                   var r = this.getCurrentScore();
-                  this.ps.reportNewAction(getActivity(), 'ACTION_SELECT', s, null, ok, r);
+                  this.ps.reportNewAction(this.act, 'ACTION_SELECT', s, null, ok, r);
                   if (r === this.act.clues.length)
                     this.finishActivity(true);
                   else if (!m)
                     this.playEvent(ok ? 'actionOK' : 'actionError');
+                  this.invalidate();
                 }
                 else if (!ok && !m)
                   this.playEvent('actionError');

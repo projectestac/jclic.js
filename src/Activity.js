@@ -229,6 +229,10 @@ define([
     // In [WordSearch](WordSearch.html), a String array containing all
     // valid clues.
     clues: null,
+    // Also in [WordSearch](WordSearch.html), a array of integers containing *for each clue* the index
+    // of an associated [ActiveBoxContent](ActiveBoxContent.html) located on the secondary
+    // [ActiveBoxBag](ActiveBoxBag.html). This associated element is optional.
+    clueItems: null,
     //
     // Settings specific of text activities:
     // 
@@ -440,8 +444,12 @@ define([
           case 'clues':
             // Read the array of clues
             act.clues = [];
+            act.clueItems = [];
+            var i = 0;
             $node.children('clue').each(function () {
-              act.clues[Number($(this).attr('id'))] = this.textContent;
+              act.clueItems[i] = Number($(this).attr('id'));
+              act.clues[i] = this.textContent;
+              i++;
             });
             break;
 
@@ -707,14 +715,14 @@ define([
         display: 'block',
         'background-color': this.backgroundTransparent ? 'transparent' : this.backgroundColor,
       };
-      
+
       // Border shadow style Material Design, inspired in http://codepen.io/Stenvh/pen/EaeWqW
       if (this.border) {
         cssAct['box-shadow'] = '0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)';
         cssAct['border-radius'] = '2px';
         cssAct['color'] = '#272727';
       }
-      
+
       if (this.act.activityBgGradient) {
         cssAct['background-image'] = this.act.activityBgGradient.getCss();
       }

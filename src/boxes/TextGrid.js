@@ -36,6 +36,7 @@ define([
     this.cellHeight = Math.max(cellH, this.defaults.MIN_CELL_SIZE);
     this.dim.width = cellW * this.nCols;
     this.dim.height = cellH * this.nRows;
+    this.setChars(' ');
     this.preferredBounds = new AWT.Rectangle(this.pos, this.dim);
     this.setBorder(border);
     this.cursorTimer = new AWT.Timer(function () {
@@ -45,7 +46,6 @@ define([
     this.useCursor = false;
     this.wildTransparent = false;
     this.cursor = new AWT.Point();
-    this.setChars(' ');
   };
 
   TextGrid.prototype = {
@@ -421,8 +421,8 @@ define([
     getLogicalCoords: function (devicePoint) {
       if (!this.contains(devicePoint))
         return null;
-      var px = Math.round((devicePoint.x - this.pos.x) / this.cellWidth);
-      var py = Math.round((devicePoint.y - this.pos.y) / this.cellHeight);
+      var px = Math.floor((devicePoint.x - this.pos.x) / this.cellWidth);
+      var py = Math.floor((devicePoint.y - this.pos.y) / this.cellHeight);
       if (this.isValidCell(px, py)) {
         return new AWT.Point(px, py);
       }
@@ -525,7 +525,7 @@ define([
     // returns Boolean
     getCellAttribute: function (px, py, attribute) {
       if (this.isValidCell(px, py))
-        return (this.attributes[px][py] & attribute) !== 0;
+        return (this.attributes[py][px] & attribute) !== 0;
       else
         return false;
     },
@@ -598,7 +598,7 @@ define([
       var isMarked, isInverted, isCursor;
       var boxBounds;
       var dx, dy;
-      var ry = (this.cellHeight - bb.font.getHeight()) / 2;
+      var ry = (this.cellHeight - bb.font.getHeight() + bb.font._descent / 2) / 2;
 
       for (var py = 0; py < this.nRows; py++) {
         for (var px = 0; px < this.nCols; px++) {
@@ -628,7 +628,7 @@ define([
                     ctx.fillText(ch[0], dx + d, dy + d);
                   }
                   // Render text
-                  ctx.fillStyle = this.isInverted() ? bb.backColor
+                  ctx.fillStyle = isInverted ? bb.backColor
                       : this.isAlternative() ? bb.alternativeColor : bb.textColor;
                   ctx.fillText(ch[0], dx, dy);
                 }

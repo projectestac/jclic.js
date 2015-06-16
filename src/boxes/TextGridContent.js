@@ -66,10 +66,12 @@ define([
         var val = this.value;
         switch (name) {
           case 'rows':
-            textGrid.nch = Number(val);
+            // WARNING: Due to a bug in JClic, the meaning of "rows" and "columns" must be
+            // interchanged:
+            textGrid.ncw = Number(val);
             break;
           case 'columns':
-            textGrid.ncw = Number(val);
+            textGrid.nch = Number(val);
             break;
           case 'cellWidth':
             textGrid.w = Number(val);
