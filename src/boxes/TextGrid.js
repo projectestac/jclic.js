@@ -24,10 +24,11 @@ define([
   // This class is a special type of [AbstractBox](AbstractBox.html) that displays a grid of single
   // characters. It is used in activities like crosswords and scrambled letters. 
   var TextGrid = function (parent, container, boxBase, x, y, ncw, nch, cellW, cellH, border) {
+
+    // *TextGrid* extends [AbstractBox](AbstractBox.html)
     AbstractBox.call(this, parent, container, boxBase);
 
     var thisTG = this;
-
     this.pos.x = x;
     this.pos.y = y;
     this.nCols = Math.max(1, ncw);
@@ -121,26 +122,27 @@ define([
       //this.repaint();
     },
     //
-    // Substitutes wild characters with randomly selected others
+    // Substitutes the current content of all cells with wildcards with a randomly generated char
     randomize: function () {
       for (var py = 0; py < this.nRows; py++)
         for (var px = 0; px < this.nCols; px++)
           if (this.chars[py][px] === this.wild)
             this.chars[py][px] = this.randomChars.charAt(
                 Math.floor(Math.random() * this.randomChars.length));
-      //this.repaint();
     },
-    //
-    // lockWild (Boolean)
-    // clearChars (Boolean)
+    // 
+    // Clears or sets global attributes to all cells
+    // lockWild (Boolean) - When `true`, the wildcard cells will be marked with special attributes.
+    // (used in CrossWords to mark black cells)
+    // clearChars (Boolean) - When `true`, the current content of the cell will be erased.
     setCellAttributes: function (lockWild, clearChars) {
       var atr = this.flags.LOCKED;
       if (this.wildTransparent)
         atr |= this.flags.TRANSPARENT;
       else
         atr |= this.flags.INVERTED | this.flags.HIDDEN;
-      for (var py = 0; py < this.nRows; py++)
-        for (var px = 0; px < this.nCols; px++)
+      for (var py = 0; py < this.nRows; py++){
+        for (var px = 0; px < this.nCols; px++){
           if (lockWild && this.chars[py][px] === this.wild)
             this.attributes[py][px] = atr;
           else {
@@ -148,12 +150,13 @@ define([
             if (clearChars)
               this.chars[py][px] = ' ';
           }
-      //this.repaint();
+        }
+      }
     },
     //
-    // px (Number)
-    // py (Number)
-    // locked (Boolean)
+    // Sets or unsets the `locked` properties (black cell) to a specific cell
+    // px and py (Number) - The logicat coordinates of the cell
+    // locked (Boolean) - When true, the `locked` attributes will be on. Otherwise, off.
     setCellLocked: function (px, py, locked) {
       if (px >= 0 && px < this.nCols && py >= 0 && py < this.nRows) {
         this.attributes[py][px] = locked ?
@@ -165,10 +168,10 @@ define([
             this.flags.NORMAL;
       }
     },
-    //
+    // 
     // rx (Number)
     // ry (Number)
-    // Returns AWT.Point
+    // Returns: AWT.Point
     getItemFor: function (rx, ry) {
       if (!this.isValidCell(rx, ry))
         return null;
@@ -225,7 +228,7 @@ define([
     stopCursorBlink: function () {
       if (this.cursorTimer && this.cursorTimer.isRunning()) {
         this.cursorTimer.stop();
-        blink(-1);
+        this.blink(-1);
       }
     },
     //
@@ -618,7 +621,7 @@ define([
                   bb.inactiveColor :
                   isInverted ? bb.textColor : bb.backColor;
               boxBounds.fill(ctx);
-              ctx.strokeStyle='black';
+              ctx.strokeStyle = 'black';
               if ((attr & this.flags.HIDDEN) === 0) {
                 ch[0] = this.chars[py][px];
                 if (ch[0]) {

@@ -107,7 +107,6 @@ define([
 
       var sb = new AbstractBox(bxb, null, null);
       sb.setBounds(0, 0, this.LABEL_WIDTH, this.act.abc[type].h);
-      sb.setBorder(true);
 
       //JToggleButton tgbtn=new JToggleButton(edu.xtec.util.ResourceManager.getImageIcon(n== 0 ? "buttons/textright.png":"buttons/textdown.png"));
       //tgbtn.addActionListener(this);
@@ -116,7 +115,7 @@ define([
       //tgbtn.setBorder(border);
       bxb.addBox(sb);
 
-      var ab = new ActiveBox(bxb, null, type, new AWT.Rectangle(this.LABEL_WIDTH, 0, this.act.abc[type].w, this.act.abc[type].h), null);
+      var ab = new ActiveBox(bxb, null, null, type, new AWT.Rectangle(this.LABEL_WIDTH + this.act.margin, 0, this.act.abc[type].w, this.act.abc[type].h));
       bxb.addBox(ab);
       bxb.setBoxBase(this.act.abc[type].bb);
 
@@ -250,14 +249,13 @@ define([
     // Main handler to receive mouse and key events
     // Overrides same function in Activity.Panel
     processEvent: function (event) {
-      if (this.bc && this.playing) {
+      if (this.playing) {
         // 
         // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
         // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
         var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
         var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
         var p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
-
 
         switch (event.type) {
           case 'click':
@@ -272,6 +270,8 @@ define([
               this.hClue.playMedia(ps);
             else if (this.vClue.contains(p))
               this.vClue.playMedia(ps);
+            else
+              break;
 
             this.update();
             break;
