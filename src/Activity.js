@@ -54,8 +54,7 @@ define([
     // should be read-only and updated by real activity classes at creation.
     // TODO: When all activities are created, initialize _CLASSES as an empty object
     _CLASSES: {
-      '@panels.Menu': Activity,
-      '@textGrid.CrossWord': Activity
+      '@panels.Menu': Activity
     },
     //
     // Dynamic constructor that returns a specific type of Activity

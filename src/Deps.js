@@ -37,7 +37,8 @@ define([
   "./activities/memory/MemoryGame",
   "./activities/associations/SimpleAssociation",
   "./activities/associations/ComplexAssociation",
-  "./activities/textGrid/WordSearch"
-], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s){  
+  "./activities/textGrid/WordSearch",
+  "./activities/textGrid/CrossWord"
+], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t){  
   return 'Deep classes loaded!';
 });

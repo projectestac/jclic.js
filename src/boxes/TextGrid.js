@@ -367,7 +367,7 @@ define([
     //
     // returns AWT.Point
     getCursor: function () {
-      return cursor;
+      return this.cursor;
     },
     //
     // ch (char)
@@ -598,7 +598,11 @@ define([
       var isMarked, isInverted, isCursor;
       var boxBounds;
       var dx, dy;
-      var ry = (this.cellHeight - bb.font.getHeight() + bb.font._descent / 2) / 2;
+      // 
+      // TODO: Check in different browsers and devices what is the real font height.
+      // In Chrome on Linux (Gnome), substracting `bb.font._descent / 4` produces
+      // good results, but in iPad this correction places the character at the bottom of the cell.
+      var ry = (this.cellHeight - bb.font.getHeight()) / 2;
 
       for (var py = 0; py < this.nRows; py++) {
         for (var px = 0; px < this.nCols; px++) {
