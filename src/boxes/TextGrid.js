@@ -552,8 +552,9 @@ define([
     //
     // px and py (Number)
     repaintCell: function (px, py) {
-      if (this.container)
-        this.container.invalidate(this.getCellBorderBounds(px, py));
+      if (this.container){
+        this.container.invalidate(this.getCellBorderBounds(px, py)).update();
+      }
     },
     //
     // Returns: AWT.Dimension

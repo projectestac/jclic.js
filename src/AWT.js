@@ -487,9 +487,18 @@ define([
     //
     // Fills the Shape with the current style in the provided canvas context
     // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-    fill: function (ctx) {
+    fill: function (ctx, dirtyRegion) {
+      ctx.save();
+      if(dirtyRegion && dirtyRegion.getSurface()>0){
+        // Clip the dirty region
+        ctx.beginPath();
+        ctx.rect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
+        ctx.clip();
+      }
+      // Prepare shape path and fill      
       this.preparePath(ctx);
-      ctx.fill();
+      ctx.fill();      
+      ctx.restore();
       return ctx;
     },
     //

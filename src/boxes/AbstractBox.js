@@ -286,11 +286,11 @@ define([
               bb.inactiveColor :
               this.inverted ? bb.textColor : bb.backColor;
           // Fill the shape
-          this.shape.fill(ctx);
+          this.shape.fill(ctx, dirtyRegion);
         }
         if (bb.bgGradient) {
           ctx.fillStyle = bb.bgGradient.getGradient(ctx, this.shape.getBounds());
-          this.shape.fill(ctx);
+          this.shape.fill(ctx, dirtyRegion);
         }
         // Reset the canvas context
         ctx.fillStyle = 'black';
