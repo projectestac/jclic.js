@@ -261,7 +261,7 @@ define([
       this.closeHelpWindow();
       if (this.actPanel) {
         this.actPanel.end();
-        this.actPanel.$div.detach();
+        this.actPanel.$div.remove();
         this.actPanel = null;
       }
       if (this.eventSounds) {
@@ -516,7 +516,7 @@ define([
       // Remove the current Activity.Panel
       if (this.actPanel !== null) {
         this.actPanel.end();
-        this.actPanel.$div.detach();          
+        this.actPanel.$div.remove();          
         this.actPanel = null;
         this.setCounterValue('time', 0);
       }
@@ -586,7 +586,7 @@ define([
       this.forceFinishActivity();
       if (this.actPanel) {
         this.actPanel.end();
-        this.actPanel.$div.detach();
+        this.actPanel.$div.remove();
         this.actPanel = null;
         this.setMsg(null);
         this.setBackgroundSettings(null);

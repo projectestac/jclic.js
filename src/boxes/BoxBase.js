@@ -132,15 +132,23 @@ define([
     flagFontReduced: false,
     //
     // Get properties as a collection of CSS attributes
-    getCSS: function (css) {
-      // (css will ne created by [AWT.Font.toCss](AWT.html) if null or undefined)
+    // css (Object, optional) - An optional set of initial CSS properties
+    // inactive (Boolean, optional) - When `true`, get the CSS for an inactive cell
+    // inverse (Boolean, optional) - When `true`, get the CSS for an inverse (negative image) cell
+    // alternative (Boolean, optional) - When `true`, get the CSS for a cell in `alternative` status
+    getCSS: function (css, inactive, inverse, alternative) {
+      // (css will be created by [AWT.Font.toCss](AWT.html) if null or undefined)
       var font = this.get('font');
       css = font.toCss(css);
 
-      css['color'] = this.get('textColor');
+      css['color'] = inverse ? this.get('backColor')
+          : alternative ? this.get('alternativeColor')
+          : this.get('textColor');
 
       var transparent = this.get('transparent');
-      css['background-color'] = transparent ? 'transparent' : this.get('backColor');
+      css['background-color'] = transparent ? 'transparent'
+          : inactive ? this.get('inactiveColor')
+          : inverse ? this.get('textColor') : this.get('backColor');
 
       var bgGradient = this.get('bgGradient');
       if (bgGradient && !transparent)
@@ -151,7 +159,6 @@ define([
         var color = this.get('shadowColor');
         css['text-shadow'] = delta + 'px ' + delta + 'px 3px ' + color;
       }
-
       return css;
     },
     // Utility methods used to display text on HTML Canvas elements

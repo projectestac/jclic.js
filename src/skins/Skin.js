@@ -123,7 +123,7 @@ define([
     // Detaches the `player` element from this Skin
     detach: function () {
       if (this.player !== null) {
-        this.player.$div.detach();
+        this.player.$div.remove();
         this.player = null;
       }
       if (this.currentHelpWindow !== null)

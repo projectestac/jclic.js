@@ -108,15 +108,23 @@ define([
 
       var bxb = new BoxBag(null, this, null);
 
-      var sb = new AbstractBox(bxb, null, null);
+      var sb = new AbstractBox(bxb, this, null);
       sb.setBounds(0, 0, this.LABEL_WIDTH, this.act.abc[type].h);
-
+      bxb.addBox(sb);
+      
+      var $btn=$('<div/>').css({
+        'background-image': 'url(' + type === 'acrossClues' ? this.hIcon : this.vIcon + ')',
+        'background-repeat': 'no-repeat',
+        'background-position': 'center'
+      });
+      
+      sb.setHostedComponent($btn);
+      
       //JToggleButton tgbtn=new JToggleButton(edu.xtec.util.ResourceManager.getImageIcon(n== 0 ? "buttons/textright.png":"buttons/textdown.png"));
       //tgbtn.addActionListener(this);
       //javax.swing.border.Border border=tgbtn.getBorder();
       //sb.setHostedComponent(tgbtn);
       //tgbtn.setBorder(border);
-      bxb.addBox(sb);
 
       var ab = new ActiveBox(bxb, null, null, type, new AWT.Rectangle(this.LABEL_WIDTH + this.act.margin, 0, this.act.abc[type].w, this.act.abc[type].h));
       bxb.addBox(ab);

@@ -38,15 +38,15 @@ define([
 
     // ActiveBox extends AbstractBox
     AbstractBox.call(this, parent, container, boxBase);
-    
+
     this.clear();
-    if (typeof setIdLoc === 'number'){
+    if (typeof setIdLoc === 'number') {
       this.idLoc = setIdLoc;
       this.idAss = 0;
       this.idOrder = 0;
     }
     if (rect)
-      this.setBounds(rect);    
+      this.setBounds(rect);
   };
 
   ActiveBox.prototype = {
@@ -89,11 +89,9 @@ define([
       this.altContent = null;
       this.idOrder = -1;
       this.setInactive(true);
-      //
-      //TODO: Implement hosted components
-      //if (!this.hasHostedComponent)
-      //  this.setHostedComponent(null);
-      //this.setHostedMediaPlayer(null);
+      if (!this.hasHostedComponent)
+        this.setHostedComponent(null);
+      this.setHostedMediaPlayer(null);
       this.invalidate();
     },
     //
@@ -136,11 +134,11 @@ define([
       this.setInactive(bx.isInactive());
       this.setInverted(bx.isInverted());
       this.setAlternative(bx.isAlternative());
-      //this.setHostedComponent(bx.getHostedComponent());
-      //this.hasHostedComponent = bx.hasHostedComponent;
-      //this.setHostedMediaPlayer(bx.hostedMediaPlayer);
-      //if(this.hostedMediaPlayer!=null)
-      //    this.hostedMediaPlayer.setVisualComponentVisible(!isInactive() && isVisible());
+      this.setHostedComponent(bx.getHostedComponent());
+      this.hasHostedComponent = bx.hasHostedComponent;
+      this.setHostedMediaPlayer(bx.hostedMediaPlayer);
+      if (this.hostedMediaPlayer)
+        this.hostedMediaPlayer.setVisualComponentVisible(!isInactive() && isVisible());
     },
     // 
     // Exhange the content of this ActiveBox with another
@@ -196,10 +194,8 @@ define([
         // `abc` is now an [ActiveBoxContent](ActiveBoxContent.html)
         abc = abc.getActiveBoxContent(i);
       }
-      // TODO: Implement hosted component
-      // this.setHostedComponent(null);
-      // TODO: Implement hosted media player
-      // this.setHostedMediaPlayer(null);
+      this.setHostedComponent(null);
+      this.setHostedMediaPlayer(null);
       this.content = abc;
       if (abc) {
         if (abc.bb !== this.boxBase)
@@ -249,8 +245,8 @@ define([
     switchToAlt: function () {
       if (this.isAlternative() || !this.altContent || this.altContent.isEmpty())
         return false;
-      //this.setHostedComponent(null);
-      //this.setHostedMediaPlayer(null);
+      this.setHostedComponent(null);
+      this.setHostedMediaPlayer(null);
       this.setAlternative(true);
       this.checkHostedComponent();
       this.checkAutoStartMedia();
@@ -271,51 +267,20 @@ define([
         var s = abc.htmlText;
         if (abc.innerHtmlText) {
           var css = bb.getCSS();
-
-          var backColor = this.isInactive() ? bb.inactiveColor
-              : this.isInverted() ? bb.textColor : bb.backColor;
-          css['background-color'] = backColor;
-
-          var foreColor = this.isInverted() ? bb.backColor
-              : this.isAlternative() ? bb.alternativeColor : bb.textColor;
-          css['color'] = foreColor;
-
           css['text-align'] = abc.txtAlign.h.replace('middle', 'center');
 
-          var divHtml = '<div xmlns="http://www.w3.org/1999/xhtml" style="' +
-              Utils.cssToString(css) + '">' +
-              abc.innerHtmlText + '</div>';
-
-          var svgData = '<svg xmlns="http://www.w3.org/2000/svg" width="' +
-              this.dim.width + '" height="' + this.dim.height + '">' +
-              '<foreignObject width="100%" height="100%">' +
-              divHtml +
-              '</foreignObject>' +
-              '</svg>';
-
-          var DOMURL = window.URL || window.webkitURL || window;
-
-          var img = new Image();
-          var svg = new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'});
-          var url = DOMURL.createObjectURL(svg);
-
-          img.onload = function () {
-            ctx.drawImage(img, 0, 0);
-            DOMURL.revokeObjectURL(url);
-          };
-          img.src = url;
         }
       }
     },
     //
     // Checks if the call has a [MediaContent](MediaContent.html) set to `autostart`, and
     // launches it
-    checkAutoStartMedia: function(){
-        var cnt=this.getContent();
-        if(cnt && cnt.mediaContent && cnt.mediaContent.autoStart && cnt.amp){
-          // TODO: Play the media
-        }
-    },    
+    checkAutoStartMedia: function () {
+      var cnt = this.getContent();
+      if (cnt && cnt.mediaContent && cnt.mediaContent.autoStart && cnt.amp) {
+        // TODO: Play the media
+      }
+    },
     // 
     // Creates a new cell inside a JQuery DOM element.  
     // Should be invoked throught `ActiveBox.prototype`
@@ -347,7 +312,7 @@ define([
 
       if (dirtyRegion && !this.intersects(dirtyRegion))
         return false;
-      
+
       var imgRect = null;
 
       if (abc.img) {
@@ -508,8 +473,8 @@ define([
     },
     //
     // Gets the `description` field of the current [ActiveBoxContent](ActiveBoxContent.html)
-    getDescription: function(){
-        return this.content ? this.content.getDescription() : '';
+    getDescription: function () {
+      return this.content ? this.content.getDescription() : '';
     },
     //
     // Plays the action or media associated with this ActiveBox
@@ -521,6 +486,28 @@ define([
         return true;
       }
       return false;
+    },
+    // Sets the hosted media player
+    // amp (ActiveMediaPlayer)
+    setHostedMediaPlayer: function (amp) {
+      var old = this.hostedMediaPlayer;
+      this.hostedMediaPlayer = amp;
+      if (old && old !== amp)
+        old.linkTo(null);
+    },
+    //
+    // Sets a new size and/or dimension
+    // Overrides setBounds in [AbstractBox](AbstractBox.html)
+    setBounds: function (rect, y, w, h) {
+      if (typeof rect === 'number')
+        // arguments are co-ordinates and size
+        rect = new AWT.Rectangle(rect, y, w, h);
+      // Rectangle comparision
+      if (this.equals(rect))
+        return;
+      AbstractBox.prototype.setBounds.call(this, rect);
+      if (this.hostedMediaPlayer)
+        this.hostedMediaPlayer.checkVisualComponentBounds(this);
     }
   };
 

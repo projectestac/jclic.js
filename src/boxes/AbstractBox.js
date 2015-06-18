@@ -67,6 +67,9 @@ define([
     marked: false,
     focused: false,
     //
+    // An optional JQuery DOM element hosted by this AbstractBox
+    $hostedComponent: null,
+    //
     // Setter and getter methods for `parent`
     setParent: function (parent) {
       this.parent = parent;
@@ -84,6 +87,10 @@ define([
     // (overrided by subclasses)
     setContainer: function (newContainer) {
       this.container = newContainer;
+      if(this.$hostedComponent && this.container && this.container.$div){
+        this.$hostedComponent.detach();
+        this.container.$div.append(this.$hostedComponent);
+      }
     },
     getContainerX: function () {
       return this.container;
@@ -200,7 +207,16 @@ define([
     },
     setVisible: function (newVal) {
       this.visible = newVal;
+      this.setHostedComponentVisible();
       this.invalidate();
+    },
+    setHostedComponentVisible: function(val){
+      if(this.$hostedComponent){
+        if(val===false)
+          this.$hostedComponent.css('visibility', 'hidden');
+        else
+          this.$hostedComponent.css('visibility', this.visible ? 'visible' :'hidden');
+      }
     },
     //
     // Getter and setter methods for `temporaryHidden`
@@ -264,7 +280,7 @@ define([
     //
     // Graphics operations based on a Canvas context ctx
     update: function (ctx, dirtyRegion) {
-      if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
+      if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden() || this.$hostedComponent)
         return false;
 
       if (dirtyRegion && !this.shape.intersects(dirtyRegion))
@@ -339,6 +355,56 @@ define([
         result.dim.height += w;
       }
       return result;
+    },
+    //
+    // Sets the `$hostedComponent`
+    // jc: A JQuery DOM element
+    setHostedComponent: function (jc) {
+      if (this.$hostedComponent !== null) {
+        this.$hostedComponent.detach();
+      }
+      this.$hostedComponent = jc;
+      if (this.$hostedComponent) {
+        if (!this.$hostedComponent.parent() && this.container && this.container.$div)
+          this.container.$div.append(this.$hostedComponent);
+        this.setHostedComponentVisible(false);
+        this.setHostedComponentColors();
+        this.setHostedComponentBorder();
+        this.setHostedComponentBounds();
+        this.setHostedComponentVisible();
+      }
+    },
+    //
+    // Gets the current `$hostedComponent` member    
+    getHostedComponent: function () {
+      return this.$hostedComponent;
+    },
+    //
+    // Sets `$hostedComponent` colors and other css properties
+    setHostedComponentColors: function () {
+      if (this.$hostedComponent) {
+        var bb = this.getBoxBaseResolve();
+        this.$hostedComponent.css(bb.getCSS(null, this.inactive, this.inverted, this.alternative));
+      }
+    },
+    //
+    // Sets `$hostedComponent` border
+    setHostedComponentBorder: function () {
+      // TODO: Implement $hostedComponent border
+    },
+    //
+    // Places and resizes the `$hostedComponent`
+    setHostedComponentBounds: function () {
+      if (this.$hostedComponent) {
+        var r = this.getBounds();
+        this.$hostedComponent.css({
+          position: 'absolute',
+          width: r.dim.width + 'px',
+          height: r.dim.height + 'px',
+          top: r.pos.y + 'px',
+          left: r.pos.x + 'px'
+        });
+      }
     }
   };
 
