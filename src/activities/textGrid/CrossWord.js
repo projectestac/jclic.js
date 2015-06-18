@@ -20,8 +20,11 @@ define([
   "../../boxes/TextGrid",
   "../../boxes/AbstractBox",
   "../../boxes/ActiveBox",
-  "../../AWT"
-], function ($, Activity, BoxBag, TextGrid, AbstractBox, ActiveBox, AWT) {
+  "../../AWT",
+  "../../Utils"
+], function ($, Activity, BoxBag, TextGrid, AbstractBox, ActiveBox, AWT, Utils) {
+
+  var K = Utils.settings;
 
   //
   // 
@@ -83,7 +86,7 @@ define([
     hClueBtn: null, vClueBtn: null,
     // 
     // Mouse and touch events intercepted by this panel
-    events: ['click'],
+    events: ['click', 'keydown', 'keypress'],
     //
     // Clears the realized objects
     clear: function () {
@@ -190,10 +193,11 @@ define([
         this.advance = 'ADVANCE_RIGHT';
         //this.hClueBtn.setSelected(true);
 
-        //this.requestFocus();
-
         this.playing = true;
         this.invalidate().update();
+
+        this.$div.attr("tabindex", 0);
+        this.$div.focus();
       }
     },
     //
@@ -250,33 +254,71 @@ define([
     // Overrides same function in Activity.Panel
     processEvent: function (event) {
       if (this.playing) {
-        // 
-        // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
-        // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
-        var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
-        var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
-        var p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
-
         switch (event.type) {
           case 'click':
+            // 
+            // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
+            // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
+            var x = (event.originalEvent && event.originalEvent.touches) ? event.originalEvent.touches[0].pageX : event.pageX;
+            var y = (event.originalEvent && event.originalEvent.touches) ? event.originalEvent.touches[0].pageY : event.pageY;
+            var p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
+
             this.ps.stopMedia(1);
             if (this.grid.contains(p)) {
               var pt = this.grid.getLogicalCoords(p);
               if (pt !== null) {
                 this.setCursorAt(pt.x, pt.y);
+                if (K.TOUCH_DEVICE) {
+                  // We are in a touch device, so prompt user to write text:
+                  var d = (this.advance === 'ADVANCE_DOWN');
+                  var txt = window.prompt((d ? 'Vertical' : 'Horizontal') + ' word:', '');
+                  this.writeChars(txt);
+                }
               }
             }
             else if (this.hClue.contains(p))
-              this.hClue.playMedia(ps);
+              this.hClue.playMedia(this.ps);
             else if (this.vClue.contains(p))
-              this.vClue.playMedia(ps);
+              this.vClue.playMedia(this.ps);
             else
               break;
 
             this.update();
             break;
+
+          case 'keypress':
+            var code = event.charCode || event.keyCode;
+            var cur = this.grid.getCursor();
+            if (code && cur) {
+              event.preventDefault();
+              var ch = String.fromCharCode(code);
+              this.writeChars(ch);
+            }
+            break;
+
+          case 'keydown':
+            var dx = 0, dy = 0;
+            switch (event.keyCode) {
+              case K.VK.RIGHT:
+                dx = 1;
+                break;
+              case K.VK.LEFT:
+                dx = -1;
+                break;
+              case K.VK.DOWN:
+                dy = 1;
+                break;
+              case K.VK.UP:
+                dy = -1;
+                break;
+            }
+            if (dx || dy) {
+              event.preventDefault();
+              this.moveCursor(dx, dy);
+              this.update();
+            }
+            break;
         }
-        event.preventDefault();
       }
     },
     //
@@ -306,8 +348,58 @@ define([
           this.vClue.setContent(this.act.abc['downClues'].getActiveBoxContentWith(pt.x, items.y));
         }
       }
-    }
-
+    },
+    //
+    // Writes a string on the grid
+    writeChars: function (txt, x, y) {
+      if (txt && txt.length > 0) {
+        for (var i = 0; i < txt.length; i++) {
+          var cur = this.grid.getCursor();
+          var ch = txt.charAt(i);
+          if (this.act.upperCase)
+            ch = ch.toLocaleUpperCase();
+          this.grid.setCharAt(cur.x, cur.y, ch);
+          var ok = this.grid.isCellOk(cur.x, cur.y, this.act.checkCase);
+          var r = this.getCurrentScore();
+          this.ps.reportNewAction(this.act, 'WRITE', ch, 'X:' + cur.x + ' Y:' + cur.y, ok, r);
+          // End activity or play event sound
+          if (r === this.numLetters) {
+            this.grid.setCursorEnabled(false);
+            this.grid.stopCursorBlink();
+            this.finishActivity(true);
+          }
+          else {
+            this.playEvent('click');
+            if (this.advance === 'ADVANCE_RIGHT')
+              this.moveCursor(1, 0);
+            else if (this.advance === 'ADVANCE_DOWN')
+              this.moveCursor(0, 1);
+          }
+        }
+      }
+      this.update();
+    },
+    //
+    // Icons for horizontal and vertical directions:
+    hIcon: 'data:image/svg+xml;base64,' +
+        'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+        'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+        'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
+        'PjwvcGF0aD48cGF0aCBkPSJNNiAxMGMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTIt' +
+        'LjktMi0yLTJ6bTEyIDBjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyIDItLjkgMi0yLS45LTItMi0y' +
+        'em0tNiAwYy0xLjEgMC0yIC45LTIgMnMuOSAyIDIgMiAyLS45IDItMi0uOS0yLTItMnoiPjwvcGF0' +
+        'aD48L3N2Zz4K',
+    vIcon: 'data:image/svg+xml;base64,' +
+        'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+        'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+        'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
+        'PjwvcGF0aD48cGF0aCBkPSJNMTIgOGMxLjEgMCAyLS45IDItMnMtLjktMi0yLTItMiAuOS0yIDIg' +
+        'LjkgMiAyIDJ6bTAgMmMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6' +
+        'bTAgNmMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6Ij48L3BhdGg+' +
+        'PC9zdmc+Cg==',
+    icoSize: {w:36, h:36},
+    icoBgOff: '#70A2F6',
+    icoBgOn: '#4285F4'
   };
 
   // CrossWord.Panel extends Activity.Panel

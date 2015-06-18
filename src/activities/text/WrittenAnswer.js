@@ -389,10 +389,7 @@ define([
     // Main handler to receive mouse and key events
     // Overrides same function in Activity.Panel
     processEvent: function (event) {
-      if (this.playing) {
-        
-        console.log('Event: '+event.type);
-
+      if (this.playing) {        
         switch (event.type) {
           case 'click':
             event.preventDefault();

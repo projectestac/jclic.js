@@ -221,7 +221,16 @@ define([
         xml: 'xml'
       },
       // Global settings susceptible to be modified
-      COMPRESS_IMAGES: true
+      COMPRESS_IMAGES: true,
+      // Keyboard key codes
+      VK: {
+        LEFT: 37,
+        UP: 38,
+        RIGHT: 39,
+        DOWN: 40        
+      },
+      // Flag to indicate if we are running on a touch device
+      TOUCH_DEVICE: false
     }
   };
 

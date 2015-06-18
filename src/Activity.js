@@ -28,7 +28,11 @@ define([
     $, Utils, AWT, EventSounds, ActiveBoxContent, ActiveBagContent,
     BoxBase, AutoContentProvider, TextGridContent, Evaluator, TextActivityDocument) {
 
+  // Direct access to global setings
   var K = Utils.settings;
+
+  // Event used for detecting touch devices
+  var TOUCH_TEST_EVENT = 'touchstart';
 
 // Activity is the abstract base class for JClic activities. It defines also
 // the inner class [ActivityPanel](ActivityPanel.html), wich is
@@ -70,7 +74,7 @@ define([
           act.setProperties($xml);
         }
         else
-          console.log('Unknown activity class: ' + className);
+          console.log('[JClic] Unknown activity class: ' + className);
       }
       return act;
     },
@@ -669,7 +673,7 @@ define([
     // current events are: 'keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'click',
     // 'dblclick', 'mousemove', 'mouseenter', 'mouseleave', 'mouseover', 'mouseout',
     // 'touchstart', 'touchend', 'touchmove', 'touchcancel'
-    events: ['click', 'keypress'],
+    events: ['click'],
     backgroundColor: null,
     backgroundTransparent: false,
     border: null,
@@ -787,13 +791,26 @@ define([
       for (var i = 0; i < this.events.length; i++) {
         this.attachEvent(this.$div, this.events[i]);
       }
+      // Prepare handler to check if we are in a touch devide
+      if (!K.TOUCH_DEVICE && $.inArray(TOUCH_TEST_EVENT, this.events) === -1)
+        this.attachEvent(this.$div, TOUCH_TEST_EVENT);
     },
     //
     // Attaches a single event to the specified object
     // $obj - The JQuery object where the event is produced
     // evt - String with the event name
     attachEvent: function ($obj, evt) {
+      var thisAct = this;
       $obj.on(evt, this, function (event) {
+        if (event.type === TOUCH_TEST_EVENT) {
+          if (!K.TOUCH_DEVICE)
+            K.TOUCH_DEVICE = true;
+          if ($.inArray(TOUCH_TEST_EVENT, thisAct.events) === -1) {
+            // Disconnect handler
+            $obj.off(TOUCH_TEST_EVENT);
+            return;
+          }
+        }
         return event.data.processEvent.call(event.data, event);
       });
     },
@@ -801,7 +818,7 @@ define([
     // Main handler to receive mouse and key events
     processEvent: function (event) {
       if (this.playing)
-        console.log('Event fired: ' + event.type);
+        console.log('[JClic] Event fired: ' + event.type);
       return false;
     },
     //
