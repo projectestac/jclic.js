@@ -24,6 +24,11 @@ define([
 // describes an Area (an AWT.Rectangle by default) with some special properties
 // that determine how it must be drawn on screen. Some types of boxes can act as
 // containers for other boxes, establishing a hierarchy of dependences.
+// 
+// parent (*AbstractBox* or null) - The AbstractBox this box belongs to.  
+// container ([AWT.Container](AWT.html#Container)) - The AWT.Container where this AbstractBox is placed.  
+// boxBase ([BoxBase](BoxBase.html)) - The objct difining colors, fonts, border and other graphic
+// properties of this box.
   var AbstractBox = function (parent, container, boxBase) {
 
     // AbstractBox extends AWT.Rectangle
@@ -43,7 +48,7 @@ define([
     // The parent AbstractBox (can be `null`)
     parent: null,
     //
-    // The container object this AbstractBox belongs to
+    // The AWT.Container object this AbstractBox belongs to
     container: null,
     // 
     // The [BoxBase](BoxBase.html) used to draw this AbstractBox
@@ -166,6 +171,9 @@ define([
       }
       else
         AWT.Rectangle.prototype.setBounds.call(this, rect);
+      
+      if(this.$hostedComponent)
+        this.setHostedComponentBounds();
 
       return this;
     },
@@ -229,11 +237,14 @@ define([
     //
     // Getter and setter methods for `inactive`
     isInactive: function () {
-      return this.inactive;
+      return this.inactive;      
     },
     setInactive: function (newVal) {
       this.inactive = newVal;
-      this.invalidate();
+      if(this.$hostedComponent)
+        this.setHostedComponentColors();
+      else
+        this.invalidate();
     },
     //
     // Getter and setter methods for `inverted`
@@ -242,7 +253,10 @@ define([
     },
     setInverted: function (newVal) {
       this.inverted = newVal;
-      this.invalidate();
+      if(this.$hostedComponent)
+        this.setHostedComponentColors();
+      else
+        this.invalidate();
     },
     //
     // Getter and setter methods for `marked`
@@ -253,7 +267,9 @@ define([
       if (!newVal)
         this.invalidate();
       this.marked = newVal;
-      if (newVal)
+      if(this.$hostedComponent)
+        this.setHostedComponentColors();
+      else if(newVal)
         this.invalidate();
     },
     //
@@ -359,14 +375,9 @@ define([
     //
     // Sets the `$hostedComponent`
     // jc: A JQuery DOM element
-    setHostedComponent: function (jc) {
-      if (this.$hostedComponent !== null) {
-        this.$hostedComponent.detach();
-      }
-      this.$hostedComponent = jc;
+    setHostedComponent: function ($hc) {
+      this.$hostedComponent = $hc;
       if (this.$hostedComponent) {
-        if (!this.$hostedComponent.parent() && this.container && this.container.$div)
-          this.container.$div.append(this.$hostedComponent);
         this.setHostedComponentVisible(false);
         this.setHostedComponentColors();
         this.setHostedComponentBorder();

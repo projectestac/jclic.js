@@ -16,13 +16,14 @@
 define([
   "jquery",
   "../../Activity",
+  "../../boxes/BoxBase",
   "../../boxes/BoxBag",
   "../../boxes/TextGrid",
   "../../boxes/AbstractBox",
   "../../boxes/ActiveBox",
   "../../AWT",
   "../../Utils"
-], function ($, Activity, BoxBag, TextGrid, AbstractBox, ActiveBox, AWT, Utils) {
+], function ($, Activity, BoxBase, BoxBag, TextGrid, AbstractBox, ActiveBox, AWT, Utils) {
 
   var K = Utils.settings;
 
@@ -108,23 +109,21 @@ define([
 
       var bxb = new BoxBag(null, this, null);
 
-      var sb = new AbstractBox(bxb, this, null);
+      var sb = new AbstractBox(bxb, this, this.icoBB);
       sb.setBounds(0, 0, this.LABEL_WIDTH, this.act.abc[type].h);
-      bxb.addBox(sb);
-      
-      var $btn=$('<div/>').css({
-        'background-image': 'url(' + type === 'acrossClues' ? this.hIcon : this.vIcon + ')',
+
+      var $btn = $('<div/>').css({
+        'width': this.LABEL_WIDTH,
+        'height': this.act.abc[type].h,
+        'background-image': 'url(' + (type === 'acrossClues' ? this.hIcon : this.vIcon) + ')',
         'background-repeat': 'no-repeat',
-        'background-position': 'center'
-      });
-      
+        'background-position': 'center',
+        'border-radius': 6,
+        'z-index': 10
+      }).appendTo(this.$div);
+
       sb.setHostedComponent($btn);
-      
-      //JToggleButton tgbtn=new JToggleButton(edu.xtec.util.ResourceManager.getImageIcon(n== 0 ? "buttons/textright.png":"buttons/textdown.png"));
-      //tgbtn.addActionListener(this);
-      //javax.swing.border.Border border=tgbtn.getBorder();
-      //sb.setHostedComponent(tgbtn);
-      //tgbtn.setBorder(border);
+      bxb.addBox(sb);
 
       var ab = new ActiveBox(bxb, null, null, type, new AWT.Rectangle(this.LABEL_WIDTH + this.act.margin, 0, this.act.abc[type].w, this.act.abc[type].h));
       bxb.addBox(ab);
@@ -132,11 +131,11 @@ define([
 
       if (type === 'acrossClues') { // Horizontal
         this.hClue = ab;
-        //this.hClueBtn=tgbtn;
+        this.hClueBtn = sb;
       }
       else {
         this.vClue = ab;
-        //this.vClueBtn=tgbtn;
+        this.vClueBtn = sb;
       }
       return bxb;
     },
@@ -199,8 +198,7 @@ define([
         this.grid.setCursorEnabled(true);
         this.setCursorAt(0, 0);
         this.advance = 'ADVANCE_RIGHT';
-        //this.hClueBtn.setSelected(true);
-
+        this.setBtnStatus();
         this.playing = true;
         this.invalidate().update();
 
@@ -242,7 +240,12 @@ define([
     //
     // Set the size and position of this activity panel
     setBounds: function (rect) {
-      this.$div.empty();
+
+      if (this.$canvas) {
+        this.$canvas.remove();
+        this.$canvas = null;
+      }
+
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.grid) {
         // Create the main canvas
@@ -288,6 +291,20 @@ define([
               this.hClue.playMedia(this.ps);
             else if (this.vClue.contains(p))
               this.vClue.playMedia(this.ps);
+            else if(this.hClueBtn.contains(p)){
+              if(this.advance === 'ADVANCE_RIGHT')
+                this.advance = 'NO_ADVANCE';
+              else
+                this.advance = 'ADVANCE_RIGHT';
+              this.setBtnStatus();
+            }
+            else if(this.vClueBtn.contains(p)){
+              if(this.advance === 'ADVANCE_DOWN')
+                this.advance = 'NO_ADVANCE';
+              else
+                this.advance = 'ADVANCE_DOWN';
+              this.setBtnStatus();              
+            }
             else
               break;
 
@@ -378,14 +395,22 @@ define([
           }
           else {
             this.playEvent('click');
-            if (this.advance === 'ADVANCE_RIGHT')
-              this.moveCursor(1, 0);
-            else if (this.advance === 'ADVANCE_DOWN')
+            if (this.advance === 'ADVANCE_DOWN')
               this.moveCursor(0, 1);
+            else
+              this.moveCursor(1, 0);
           }
         }
       }
       this.update();
+    },
+    //
+    // Sets the status of horizontal and vertical buttons based on the value of `advance`
+    setBtnStatus: function(){      
+      if(this.hClueBtn)
+        this.hClueBtn.setInactive(this.advance !==  'ADVANCE_RIGHT');      
+      if(this.vClueBtn)
+        this.vClueBtn.setInactive(this.advance !==  'ADVANCE_DOWN');      
     },
     //
     // Icons for horizontal and vertical directions:
@@ -405,9 +430,8 @@ define([
         'LjkgMiAyIDJ6bTAgMmMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6' +
         'bTAgNmMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6Ij48L3BhdGg+' +
         'PC9zdmc+Cg==',
-    icoSize: {w:36, h:36},
-    icoBgOff: '#70A2F6',
-    icoBgOn: '#4285F4'
+    icoSize: {w: 36, h: 36},
+    icoBB: new BoxBase().set('backColor', '#4285F4').set('inactiveColor', '#70A2F6')
   };
 
   // CrossWord.Panel extends Activity.Panel

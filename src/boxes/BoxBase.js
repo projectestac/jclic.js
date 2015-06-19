@@ -125,6 +125,12 @@ define([
         return this.parent.get(property);
     },
     //
+    // Setter
+    set: function(property, value){
+      this[property] = value;
+      return this;
+    },
+    //
     // Default values
     default: defaultValues,
     // Global static variables. Modify it only through `BoxBase.prototype`
