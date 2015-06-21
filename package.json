@@ -30,7 +30,7 @@
   "author": "Francesc Busquets <fbusquets@xtec.cat>",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "browserify": "~10.2.3",
+    "browserify": "~10.2.4",
     "deamdify": "~0.1.1",
     "grunt": "~0.4.5",
     "grunt-browserify": "~3.8.0",

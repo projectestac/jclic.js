@@ -16,13 +16,140 @@
 define([
   "jquery",
   "../../Activity",
-  "../../boxes/ActiveBox"
-], function ($, Activity, ActiveBox) {
+  "../../Utils",
+  "../../media/MediaContent",
+  "../../boxes/ActiveBox",
+  "../../boxes/ActiveBoxContent",
+], function ($, Activity, Utils, MediaContent, ActiveBox, ActiveBoxContent) {
 
   //
   // This class acts as a base for all text activities
   var TextActivityBase = function (project) {
     Activity.call(this, project);
+  };
+  // TextActivityBase.prototype implemented after TextTarget. See below.
+
+  // TextTarget is the hearth of most actions in text activities
+  var TextTarget = function (text) {
+    this.numIniChars = text.length;
+    this.answer = [text];
+    this.maxLenResp = this.numIniChars;
+  };
+
+  TextTarget.prototype = {
+    constructor: TextTarget,
+    // 
+    // Target is a drop-down list
+    isList: false,
+    //
+    // Number of characters initially displayed on the text field
+    numIniChars: 1,
+    //
+    // Character used to fill-in the text field
+    iniChar: '_',
+    //
+    // Maximum length of the answer
+    maxLenResp: 0,
+    //
+    // Array of valid answers
+    answer: null,
+    //
+    // Array of specific options
+    options: null,
+    //
+    // Initial text
+    iniText: null,
+    //
+    // Type of additional information offered to the user. Valid values are:
+    // `no_info`, `always`, `onError`, `onDemand`
+    infoMode: 'no_info',
+    //
+    // An optional [ActiveBoxContent](ActiveBoxContent.html) with information about this TextTarget
+    popupContent: null,
+    //
+    // Time to wait before showing the additional information
+    popupDelay: 0,
+    //
+    // Maximum amount of time the additional inforation will be shown
+    popupMaxTime: 0,
+    //
+    // When this flag is `true` and `popupContent` contains audio, no visual feedback will be provided
+    // (the audio will be just played)
+    onlyPlay: false,
+    //
+    // TRANSIENT PROPERTIES
+    //
+    // The drop-down list showing the options
+    $comboList: null,
+    //
+    // Current target status. Valid values are: `NOT_EDITED`, `EDITED`, `SOLVED` and `WITH_ERROR`
+    targetStatus: 'NOT_EDITED',
+    //
+    // Flag to control if the initial content of this TextTarget has been mofifed
+    flagModified: false,
+    //
+    // Pointer to the TextActivityBase.Panel containing this TextTarget
+    parentPane: null,
+    //
+    // Resets the TextTarget status
+    reset: function () {
+      this.targetStatus = 'NOT_EDITED';
+      this.flagModified = false;
+      if (this.$comboList !== null)
+        // TODO: Implement $comboList.checkColors
+        this.$comboList.checkColors();
+    },
+    //
+    // Loads the object settings from a specific JQuery XML element 
+    setProperties: function ($xml, mediaBag) {
+      var tt = this;
+      // Read specific nodes
+      $xml.children().each(function () {
+        var $node = $(this);
+        switch (this.nodeName) {
+          case 'answer':
+            if (tt.answer === null)
+              tt.answer = [];
+            tt.answer.push(this.text);
+            break;
+
+          case 'optionList':
+            $node.children('option').each(function () {
+              tt.isList = true;
+              if (tt.options === null)
+                tt.options = [];
+              tt.options.push(this.text);
+            });
+            break;
+
+          case 'response':
+            tt.iniChar = Utils.getVal($node.attr('fill'), tt.iniChar).charAt(0);
+            tt.numIniChars = Utils.getNumber($node.attr('length'), tt.numIniChars);
+            tt.maxLenResp = Utils.getNumber($node.attr('maxLength'), tt.maxLenResp);
+            tt.iniText = Utils.getVal($node.attr('show'), tt.iniText);
+            break;
+
+          case 'info':
+            tt.infoMode = Utils.getVal($node.attr('mode'), 'always');
+            tt.popupDelay = Utils.getNumber($node.attr('delay'), tt.popupDelay);
+            tt.popupMaxTime = Utils.getNumber($node.attr('maxTime'), tt.popupMaxTime);
+            $node.children('media').each(function () {
+              tt.onlyPlay = true;
+              tt.popupContent = new ActiveBoxContent();
+              tt.popupContent.mediaContent = new MediaContent().setProperties($(this));
+            });
+            if (!tt.popupContent) {
+              $node.children('cell').each(function () {
+                tt.popupContent = new ActiveBoxContent().setProperties($(this, mediaBag));
+              });
+            }
+            break;
+
+          default:
+            break;
+        }
+      });
+    }
   };
 
   TextActivityBase.prototype = {
@@ -34,7 +161,6 @@ define([
       this.boxes = [];
       this.popups = [];
       this.targets = [];
-
     }
   };
 
@@ -76,9 +202,9 @@ define([
       // It also sets the 'overflow' CSS attribute to 'auto', which will display a
       // vertical scroll bar when needed
       $dom.empty().css(doc.style['default'].css).css('overflow', 'auto');
-      
+
       var $html = $('<div/>').css({'padding': 4});
-      
+
       // 
       // Sets the default style
       $html.css(doc.style['default'].css);
@@ -134,7 +260,9 @@ define([
 
             case 'target':
               // TODO: Create a TextTarget object
-              thisPanel.targets.push(this);
+              //var target = new TextTarget(this.text);
+              //target.setProperties($(this), thisPanel.act.project.mediaBag);
+              
               $span.html(this.text);
               if (this.attr) {
                 // Default style name for targets is 'target'
@@ -146,6 +274,7 @@ define([
                   $span.css(this.attr.css);
               }
               $p.append($span);
+              //thisPanel.targets.push(target);
               break;
           }
           empty = false;
@@ -158,7 +287,7 @@ define([
         // Adds the paragraph to the DOM element
         $html.append($p);
       });
-      
+
       $dom.append($html);
       return $dom;
     }
@@ -168,13 +297,6 @@ define([
   TextActivityBase.prototype.Panel.prototype = $.extend(
       Object.create(ActPanelAncestor),
       TextActivityBase.prototype.Panel.prototype);
-
-  // 
-  // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@text.Complete'] = TextActivityBase;
-  Activity.prototype._CLASSES['@text.FillInBlanks'] = TextActivityBase;
-  Activity.prototype._CLASSES['@text.Identify'] = TextActivityBase;
-  Activity.prototype._CLASSES['@text.Order'] = TextActivityBase;
 
   return TextActivityBase;
 

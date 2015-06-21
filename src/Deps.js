@@ -27,6 +27,10 @@ define([
   "./shapers/ClassicJigSaw",
   "./automation/arith/Arith",
   "./activities/text/TextActivityBase",
+  "./activities/text/FillInBlanks",
+  "./activities/text/Order",
+  "./activities/text/Complete",
+  "./activities/text/Identify",
   "./activities/text/WrittenAnswer",
   "./activities/panels/InformationScreen",
   "./activities/panels/Identify",
@@ -39,6 +43,6 @@ define([
   "./activities/associations/ComplexAssociation",
   "./activities/textGrid/WordSearch",
   "./activities/textGrid/CrossWord"
-], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t){  
+], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x){
   return 'Deep classes loaded!';
 });

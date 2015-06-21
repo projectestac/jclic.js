@@ -27,9 +27,14 @@ define([
       return Number(val === 'true' | defaultValue ? 1 : 0);
     },
     //
+    // Gets a value from an given expression that can bel null, empty or undefined
+    getVal: function (val, defaultValue) {
+      return (val === '' || val === null || typeof val === 'undefined') ? defaultValue : val;
+    },
+    //
     // Gets a number from a string or another number
     getNumber: function (val, defaultValue) {
-      return (val === '' || val === null || typeof val === 'undefined') ? defaultValue : Number(val);
+      return Number(this.getVal(val, defaultValue));
     },
     // 
     // Gets a tri-state value (0, 1 or 2) from a set of 'false', 'true' and
@@ -127,7 +132,7 @@ define([
 
       if (!checkCase)
         answer = answer.toUpperCase();
-      
+
       answer = answer.trim();
 
       var tokens = check.split('|');
@@ -142,13 +147,13 @@ define([
     // Checks if the given string ends with the specified expression
     // text (String) - The string where to find the expression
     // expr (String) - The expression to search for
-    endsWith: function(text, expr){
+    endsWith: function (text, expr) {
       return text.indexOf(expr, text.length - expr.length) !== -1;
     },
     // 
     // Checks if the given expressin is an absolute URL
     // expr (String) - The expression to be checked
-    isURL: function(exp){
+    isURL: function (exp) {
       var path = /^(https?|file|ftps?):\/\//i;
       return path.test(exp);
     },
@@ -156,17 +161,17 @@ define([
     // Get the base path of the given file path (absolute or full URL)
     // This base path always ends with `/`, meaning it can be concatenated with relative paths
     // without adding a separator.
-    getBasePath: function(exp){
+    getBasePath: function (exp) {
       var result = '';
       var p = exp.lastIndexOf('/');
-      if(p>=0)
-        result = exp.substring(0, p+1);
+      if (p >= 0)
+        result = exp.substring(0, p + 1);
       return result;
     },
     //
     // Get the complete path of a relative or absolute URL, using the provided `basePath`
-    getPath: function(basePath, path){
-      if(Utils.isURL(path))
+    getPath: function (basePath, path) {
+      if (Utils.isURL(path))
         return path;
       else
         return basePath + path;
@@ -227,7 +232,7 @@ define([
         LEFT: 37,
         UP: 38,
         RIGHT: 39,
-        DOWN: 40        
+        DOWN: 40
       },
       // Flag to indicate if we are running on a touch device
       TOUCH_DEVICE: false
