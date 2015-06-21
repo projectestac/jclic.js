@@ -17,12 +17,151 @@ define([
   "jquery",
   "../../Utils",
   "../../boxes/ActiveBoxContent",
-  "../../media/MediaContent"
-], function ($, Utils, ActiveBoxContent, MediaContent) {
+  "../../media/MediaContent",
+  "../../boxes/ActiveBoxContent"
+], function ($, Utils, ActiveBoxContent, MediaContent, ActiveBoxContent) {
 
-//
-// This class encapsulates the main document of text activities
-//
+  // _TextTarget_ encapsulates the properties and methods of the document elements that are the 
+  // real targets of user actions in text activities
+  var TextTarget = function (text) {
+    this.text = text;
+    this.numIniChars = text.length;
+    this.answer = [text];
+    this.maxLenResp = this.numIniChars;
+  };
+
+  TextTarget.prototype = {
+    constructor: TextTarget,
+    objectType: 'target',
+    //
+    // The current text displayed by this TextTarget
+    text: null,
+    //
+    // A set of optional attributes for `text`
+    attr: null,
+    // 
+    // Target is a drop-down list
+    isList: false,
+    //
+    // Number of characters initially displayed on the text field
+    numIniChars: 1,
+    //
+    // Character used to fill-in the text field
+    iniChar: '_',
+    //
+    // Maximum length of the answer
+    maxLenResp: 0,
+    //
+    // Array of valid answers
+    answer: null,
+    //
+    // Array of specific options
+    options: null,
+    //
+    // Initial text
+    iniText: null,
+    //
+    // Type of additional information offered to the user. Valid values are:
+    // `no_info`, `always`, `onError`, `onDemand`
+    infoMode: 'no_info',
+    //
+    // An optional [ActiveBoxContent](ActiveBoxContent.html) with information about this TextTarget
+    popupContent: null,
+    //
+    // Time to wait before showing the additional information
+    popupDelay: 0,
+    //
+    // Maximum amount of time the additional inforation will be shown
+    popupMaxTime: 0,
+    //
+    // When this flag is `true` and `popupContent` contains audio, no visual feedback will be provided
+    // (the audio will be just played)
+    onlyPlay: false,
+    //
+    // TRANSIENT PROPERTIES
+    //
+    // The drop-down list showing the options
+    $comboList: null,
+    //
+    // Current target status. Valid values are: `NOT_EDITED`, `EDITED`, `SOLVED` and `WITH_ERROR`
+    targetStatus: 'NOT_EDITED',
+    //
+    // Flag to control if the initial content of this TextTarget has been mofifed
+    flagModified: false,
+    //
+    // Pointer to the TextActivityBase.Panel containing this TextTarget
+    parentPane: null,
+    //
+    // Resets the TextTarget status
+    reset: function () {
+      this.targetStatus = 'NOT_EDITED';
+      this.flagModified = false;
+      if (this.$comboList !== null)
+        // TODO: Implement $comboList.checkColors
+        this.$comboList.checkColors();
+    },
+    //
+    // Loads the object settings from a specific JQuery XML element 
+    setProperties: function ($xml, mediaBag) {
+      var tt = this;
+      // Read specific nodes
+      $xml.children().each(function () {
+        var $node = $(this);
+        switch (this.nodeName) {
+          case 'answer':
+            if (tt.answer === null)
+              tt.answer = [];
+            tt.answer.push(this.text);
+            break;
+
+          case 'optionList':
+            $node.children('option').each(function () {
+              tt.isList = true;
+              if (tt.options === null)
+                tt.options = [];
+              tt.options.push(this.text);
+            });
+            break;
+
+          case 'response':
+            tt.iniChar = Utils.getVal($node.attr('fill'), tt.iniChar).charAt(0);
+            tt.numIniChars = Utils.getNumber($node.attr('length'), tt.numIniChars);
+            tt.maxLenResp = Utils.getNumber($node.attr('maxLength'), tt.maxLenResp);
+            tt.iniText = Utils.getVal($node.attr('show'), tt.iniText);
+            break;
+
+          case 'info':
+            tt.infoMode = Utils.getVal($node.attr('mode'), 'always');
+            tt.popupDelay = Utils.getNumber($node.attr('delay'), tt.popupDelay);
+            tt.popupMaxTime = Utils.getNumber($node.attr('maxTime'), tt.popupMaxTime);
+            $node.children('media').each(function () {
+              tt.onlyPlay = true;
+              tt.popupContent = new ActiveBoxContent();
+              tt.popupContent.mediaContent = new MediaContent().setProperties($(this));
+            });
+            if (!tt.popupContent) {
+              $node.children('cell').each(function () {
+                tt.popupContent = new ActiveBoxContent().setProperties($(this, mediaBag));
+              });
+            }
+            break;
+
+          case 'text':
+            tt.text = this.textContent.replace(/\t/g, '&emsp;');
+            var attr = TextActivityDocument.prototype.readDocAttributes($(this));
+            if (!$.isEmptyObject(attr))
+              tt.attr = attr;
+            break;
+
+          default:
+            break;
+        }
+      });
+    }
+  };
+
+  //
+  // TextActivityDocument encapsulates the main document of text activities
   var TextActivityDocument = function () {
     // Make a deep clone of the default style
     this.style = {'default': $.extend(true, {}, this.DEFAULT_DOC_STYLE)};
@@ -88,67 +227,12 @@ define([
               break;
 
             case 'target':
-              obj = {text: this.textContent.replace(/\t/g, '&emsp;')};
-
-              $child.children().each(function () {
-                var $child = $(this);
-                switch (this.nodeName) {                  
-                  case 'answer':
-                    obj.answer = this.textContent;
-                    break;
-
-                  case 'optionList':
-                    obj.optionList = [];
-                    $child.children('option').each(function () {
-                      obj.optionList.push(this.textContent);
-                    });
-                    break;
-
-                  case 'response':
-                    obj.response = {};
-                    $.each(this.attributes, function () {
-                      switch (this.name) {
-                        case 'fill':
-                        case 'show':
-                          obj.response[this.name] = this.value;
-                          break;
-                        case 'length':
-                        case 'maxLenght':
-                          obj[this.name] = Number(this.value);
-                          break;
-                      }
-                    });
-                    break;
-
-                  case 'info':
-                    obj.info = {};
-                    $child.children('cell:first').each(function () {
-                      switch (this.nodeName) {
-                        case 'cell':
-                          obj.info.cell = new ActiveBoxContent().setProperties($(this), mediaBag);
-                          break;
-                        case 'media':
-                          obj.info.media = new MediaContent.setProperties($(this), mediaBag);
-                          break;
-                      }
-                    });
-                    obj.info.mode = $child.attr('mode');
-                    obj.info.delay = Number($child.attr('delay') | 0);
-                    obj.info.maxTime = Number($child.attr('maxTime') | 0);
-                    break;
-
-                  case 'text':
-                    obj.text = this.textContent;
-                    var attr = doc.readDocAttributes($child);
-                    if (!$.isEmptyObject(attr))
-                      obj.attr = attr;
-                    break;
-                }
-              });
+              obj = new TextTarget(this.textContent.replace(/\t/g, '&emsp;'));
+              obj.setProperties($child, mediaBag);
               break;
 
             default:
-              console.log('Unknown object in activity document: ' + this.nodeName);
+              console.log('[JClic] - Unknown object in activity document: ' + this.nodeName);
           }
           if (obj) {
             obj.objectType = this.nodeName;
@@ -226,7 +310,10 @@ define([
       family: 'Arial', size: 17,
       css: {'font-family': 'Arial,Helvetica,sans-serif', 'font-size': '17px',
         'margin': '0px', padding: '0px', 'text-align': 'center', 'vertical-align': 'middle'}
-    }
+    },
+    // 
+    // A reference to the TextTarget class
+    TextTarget: TextTarget
   };
 
   return TextActivityDocument;

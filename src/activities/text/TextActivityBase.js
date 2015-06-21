@@ -16,140 +16,14 @@
 define([
   "jquery",
   "../../Activity",
-  "../../Utils",
-  "../../media/MediaContent",
   "../../boxes/ActiveBox",
   "../../boxes/ActiveBoxContent",
-], function ($, Activity, Utils, MediaContent, ActiveBox, ActiveBoxContent) {
+], function ($, Activity, ActiveBox, ActiveBoxContent) {
 
   //
   // This class acts as a base for all text activities
   var TextActivityBase = function (project) {
     Activity.call(this, project);
-  };
-  // TextActivityBase.prototype implemented after TextTarget. See below.
-
-  // TextTarget is the hearth of most actions in text activities
-  var TextTarget = function (text) {
-    this.numIniChars = text.length;
-    this.answer = [text];
-    this.maxLenResp = this.numIniChars;
-  };
-
-  TextTarget.prototype = {
-    constructor: TextTarget,
-    // 
-    // Target is a drop-down list
-    isList: false,
-    //
-    // Number of characters initially displayed on the text field
-    numIniChars: 1,
-    //
-    // Character used to fill-in the text field
-    iniChar: '_',
-    //
-    // Maximum length of the answer
-    maxLenResp: 0,
-    //
-    // Array of valid answers
-    answer: null,
-    //
-    // Array of specific options
-    options: null,
-    //
-    // Initial text
-    iniText: null,
-    //
-    // Type of additional information offered to the user. Valid values are:
-    // `no_info`, `always`, `onError`, `onDemand`
-    infoMode: 'no_info',
-    //
-    // An optional [ActiveBoxContent](ActiveBoxContent.html) with information about this TextTarget
-    popupContent: null,
-    //
-    // Time to wait before showing the additional information
-    popupDelay: 0,
-    //
-    // Maximum amount of time the additional inforation will be shown
-    popupMaxTime: 0,
-    //
-    // When this flag is `true` and `popupContent` contains audio, no visual feedback will be provided
-    // (the audio will be just played)
-    onlyPlay: false,
-    //
-    // TRANSIENT PROPERTIES
-    //
-    // The drop-down list showing the options
-    $comboList: null,
-    //
-    // Current target status. Valid values are: `NOT_EDITED`, `EDITED`, `SOLVED` and `WITH_ERROR`
-    targetStatus: 'NOT_EDITED',
-    //
-    // Flag to control if the initial content of this TextTarget has been mofifed
-    flagModified: false,
-    //
-    // Pointer to the TextActivityBase.Panel containing this TextTarget
-    parentPane: null,
-    //
-    // Resets the TextTarget status
-    reset: function () {
-      this.targetStatus = 'NOT_EDITED';
-      this.flagModified = false;
-      if (this.$comboList !== null)
-        // TODO: Implement $comboList.checkColors
-        this.$comboList.checkColors();
-    },
-    //
-    // Loads the object settings from a specific JQuery XML element 
-    setProperties: function ($xml, mediaBag) {
-      var tt = this;
-      // Read specific nodes
-      $xml.children().each(function () {
-        var $node = $(this);
-        switch (this.nodeName) {
-          case 'answer':
-            if (tt.answer === null)
-              tt.answer = [];
-            tt.answer.push(this.text);
-            break;
-
-          case 'optionList':
-            $node.children('option').each(function () {
-              tt.isList = true;
-              if (tt.options === null)
-                tt.options = [];
-              tt.options.push(this.text);
-            });
-            break;
-
-          case 'response':
-            tt.iniChar = Utils.getVal($node.attr('fill'), tt.iniChar).charAt(0);
-            tt.numIniChars = Utils.getNumber($node.attr('length'), tt.numIniChars);
-            tt.maxLenResp = Utils.getNumber($node.attr('maxLength'), tt.maxLenResp);
-            tt.iniText = Utils.getVal($node.attr('show'), tt.iniText);
-            break;
-
-          case 'info':
-            tt.infoMode = Utils.getVal($node.attr('mode'), 'always');
-            tt.popupDelay = Utils.getNumber($node.attr('delay'), tt.popupDelay);
-            tt.popupMaxTime = Utils.getNumber($node.attr('maxTime'), tt.popupMaxTime);
-            $node.children('media').each(function () {
-              tt.onlyPlay = true;
-              tt.popupContent = new ActiveBoxContent();
-              tt.popupContent.mediaContent = new MediaContent().setProperties($(this));
-            });
-            if (!tt.popupContent) {
-              $node.children('cell').each(function () {
-                tt.popupContent = new ActiveBoxContent().setProperties($(this, mediaBag));
-              });
-            }
-            break;
-
-          default:
-            break;
-        }
-      });
-    }
   };
 
   TextActivityBase.prototype = {
@@ -188,6 +62,7 @@ define([
       ActPanelAncestor.buildVisualComponents.call(this);
       this.setDocContent(this.$div, this.act.document);
     },
+    // 
     // Fills a DOM element with the specified document
     // $dom (JQuery DOM object) - The DOM objject to be filled with the document
     // doc ([TextActivityDocument](TextActivityDocument.html)) - The document
@@ -203,7 +78,7 @@ define([
       // vertical scroll bar when needed
       $dom.empty().css(doc.style['default'].css).css('overflow', 'auto');
 
-      var $html = $('<div/>').css({'padding': 4});
+      var $html = $('<div class="JClicTextDocument"/>').css({'padding': 4});
 
       // 
       // Sets the default style
@@ -259,28 +134,27 @@ define([
               break;
 
             case 'target':
-              // TODO: Create a TextTarget object
-              //var target = new TextTarget(this.text);
-              //target.setProperties($(this), thisPanel.act.project.mediaBag);
-              
-              $span.html(this.text);
-              if (this.attr) {
+              // TODO: Use the methods and properties of TextTarget
+              var target = this;
+              thisPanel.targets.push(target);
+
+              $span.html(target.text);
+              if (target.attr) {
                 // Default style name for targets is 'target'
-                if (!this.attr.style)
-                  this.attr.style = 'target';
-                $span.css(doc.style[this.attr.style].css);
+                if (!target.attr.style)
+                  target.attr.style = 'target';
+                $span.css(doc.style[target.attr.style].css);
                 // Check if target has specific attributes
-                if (this.attr.css)
-                  $span.css(this.attr.css);
+                if (target.attr.css)
+                  $span.css(target.attr.css);
               }
               $p.append($span);
-              //thisPanel.targets.push(target);
               break;
           }
           empty = false;
         });
         if (empty) {
-          // Don't leave the empty paragraphs
+          // Don't leave paragraphs empty
           $p.html('&nbsp;');
         }
 
