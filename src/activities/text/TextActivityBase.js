@@ -133,12 +133,9 @@ define([
               $p.append($span);
               break;
 
-            case 'target':
-              // TODO: Use the methods and properties of TextTarget
+            case 'target':              
               var target = this;
-              thisPanel.targets.push(target);
-
-              $span.html(target.text);
+              $span = thisPanel.$createTarget(target, $span);              
               if (target.attr) {
                 // Default style name for targets is 'target'
                 if (!target.attr.style)
@@ -164,6 +161,17 @@ define([
 
       $dom.append($html);
       return $dom;
+    },
+    //
+    // Creates the target DOM element
+    // Function to be overrided in derivative classes to create specific types of targets
+    // target (TextTarget) - The target related to the DOM object to be created
+    // $span (JQuery DOM object) - An initial DOM object (usually a `span`) that can be used to
+    // store the target, or replaced by another type of object.
+    $createTarget: function(target, $span){
+      this.targets.push(target);
+      $span.html(target.text);
+      return $span;      
     }
   };
 

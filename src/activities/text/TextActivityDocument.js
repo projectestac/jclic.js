@@ -18,8 +18,8 @@ define([
   "../../Utils",
   "../../boxes/ActiveBoxContent",
   "../../media/MediaContent",
-  "../../boxes/ActiveBoxContent"
-], function ($, Utils, ActiveBoxContent, MediaContent, ActiveBoxContent) {
+  "../../boxes/ActiveBagContent"
+], function ($, Utils, ActiveBoxContent, MediaContent, ActiveBagContent) {
 
   // _TextTarget_ encapsulates the properties and methods of the document elements that are the 
   // real targets of user actions in text activities
@@ -111,7 +111,7 @@ define([
           case 'answer':
             if (tt.answer === null)
               tt.answer = [];
-            tt.answer.push(this.text);
+            tt.answer.push(this.textContent);
             break;
 
           case 'optionList':
@@ -119,7 +119,7 @@ define([
               tt.isList = true;
               if (tt.options === null)
                 tt.options = [];
-              tt.options.push(this.text);
+              tt.options.push(this.textContent);
             });
             break;
 
@@ -163,7 +163,6 @@ define([
     getAnswers: function(){
       return this.answers ? this.answers.join('|') : '';
     }
-    
   };
 
   //
@@ -172,10 +171,30 @@ define([
     // Make a deep clone of the default style
     this.style = {'default': $.extend(true, {}, this.DEFAULT_DOC_STYLE)};
     this.p = [];
+    //this.tmb=new TargetMarkerBag();
+    this.boxesContent=new ActiveBagContent();
+    this.popupsContent=new ActiveBagContent();    
   };
 
   TextActivityDocument.prototype = {
     constructor: TextActivityDocument,
+    //
+    // Blank spaces between tabulators
+    tabSpc: 12,
+    //
+    // Last ActiveBox activated
+    lastBoxId: 0,
+    //
+    // A bag of TargetMarker objects
+    tmb: null,
+    //
+    // Type of targets used in this activity.
+    // Valid values are: `TT_FREE`, `TT_CHAR`, `TT_WORD`, `TT_PARAGRAPH`
+    targetType: 'TT_FREE',
+    //
+    // Two [ActiveBagContent](ActiveBagContent.html) objects with the content of boxes and pop-ups
+    boxesContent: null,
+    popupsContent: null,
     //
     // Collection of named styles of the document
     style: null,
