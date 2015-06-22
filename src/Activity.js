@@ -477,7 +477,7 @@ define([
             break;
 
           case 'evaluator':
-            act.ev = new Evaluator().setProperties($node);
+            act.ev = Evaluator.prototype._getEvaluator($node);
             break;
 
           case 'document':

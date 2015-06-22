@@ -157,7 +157,13 @@ define([
             break;
         }
       });
+    },
+    //
+    // Gets a string with all valid answers of this Texttarget. Useful for reporting users activity.
+    getAnswers: function(){
+      return this.answers ? this.answers.join('|') : '';
     }
+    
   };
 
   //
