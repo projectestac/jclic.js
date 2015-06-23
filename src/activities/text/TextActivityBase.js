@@ -83,6 +83,9 @@ define([
       // 
       // Sets the default style
       $html.css(doc.style['default'].css);
+      
+      var currentPStyle = null;
+      
       // 
       // Process paragraphs
       $.each(doc.p, function () {
@@ -92,8 +95,11 @@ define([
 
         // Check if the paragraph has its own style
         if (this.style) {
-          $p.css(doc.style[this.style].css);
+          currentPStyle = doc.style[this.style].css;
+          $p.css(currentPStyle);
         }
+        else
+          currentPStyle = null;
 
         // Check if the paragraph has a special alignment
         if (this.Alignment) {
@@ -110,7 +116,7 @@ define([
             case 'text':
               if (this.attr) {
                 // Text uses a specific style and/or individual attributes
-                $span.html(this.text);
+                $span.html(this.text.replace(/ /g, '&nbsp;'));
                 if (this.attr.style) {
                   $span.css(doc.style[this.attr.style].css);
                 }
@@ -135,7 +141,10 @@ define([
 
             case 'target':              
               var target = this;
-              $span = thisPanel.$createTarget(target, $span);              
+              $span = thisPanel.$createTarget(target, $span); 
+              $span.css(doc.style['default'].css);
+              if(currentPStyle)
+                $span.css(currentPStyle);
               if (target.attr) {
                 // Default style name for targets is 'target'
                 if (!target.attr.style)

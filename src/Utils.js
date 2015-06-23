@@ -34,7 +34,7 @@ define([
     //
     // Gets a number from a string or another number
     getNumber: function (val, defaultValue) {
-      return Number(this.getVal(val, defaultValue));
+      return Number(Utils.getVal(val, defaultValue));
     },
     // 
     // Gets a tri-state value (0, 1 or 2) from a set of 'false', 'true' and
@@ -44,8 +44,8 @@ define([
     'TRUE': 1,
     'DEFAULT': 2,
     getTriState: function (val) {
-      return Number(val === 'true' ? this.TRUE
-          : val === 'false' ? this.FALSE : this.DEFAULT);
+      return Number(val === 'true' ? Utils.TRUE
+          : val === 'false' ? Utils.FALSE : Utils.DEFAULT);
     },
     // 
     // Checks if the provided variable name is 'null' or 'undefined'.
@@ -80,7 +80,7 @@ define([
       if (typeof color === 'undefined' || color === null) {
         color = defaultColor;
         if (typeof color === 'undefined' || color === null)
-          color = this.settings.BoxBase.BACK_COLOR;
+          color = Utils.settings.BoxBase.BACK_COLOR;
       }
 
       var col = color.replace('0x', '#');
@@ -236,7 +236,87 @@ define([
       },
       // Flag to indicate if we are running on a touch device
       TOUCH_DEVICE: false
-    }
+    },
+    //
+    // Functions useful to deal with caret position in `contentEditable` DOM elements
+    //
+    // Gets the caret position within the given element
+    // Thanks to [Tim Down](http://stackoverflow.com/users/96100/tim-down) answers in:
+    // http://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container
+    // http://stackoverflow.com/questions/6240139/highlight-text-range-using-javascript/6242538
+    getCaretCharacterOffsetWithin: function (element) {
+      var caretOffset = 0;
+      var doc = element.ownerDocument || element.document;
+      var win = doc.defaultView || doc.parentWindow;
+      var sel;
+      if (typeof win.getSelection !== "undefined") {
+        sel = win.getSelection();
+        if (sel.rangeCount > 0) {
+          var range = win.getSelection().getRangeAt(0);
+          var preCaretRange = range.cloneRange();
+          preCaretRange.selectNodeContents(element);
+          preCaretRange.setEnd(range.endContainer, range.endOffset);
+          caretOffset = preCaretRange.toString().length;
+        }
+      } else if ((sel = doc.selection) && sel.type !== "Control") {
+        var textRange = sel.createRange();
+        var preCaretTextRange = doc.body.createTextRange();
+        preCaretTextRange.moveToElementText(element);
+        preCaretTextRange.setEndPoint("EndToEnd", textRange);
+        caretOffset = preCaretTextRange.text.length;
+      }
+      return caretOffset;
+    },
+    //
+    getTextNodesIn: function (node) {
+      var textNodes = [];
+      if (node.nodeType === 3) {
+        textNodes.push(node);
+      } else {
+        var children = node.childNodes;
+        for (var i = 0, len = children.length; i < len; ++i) {
+          textNodes.push.apply(textNodes, Utils.getTextNodesIn(children[i]));
+        }
+      }
+      return textNodes;
+    },
+    //
+    // Sets the selection range (or the cursor position, when `start` and `end` are the same)
+    // into a specific DOM element `el`:
+    setSelectionRange: function (el, start, end) {
+      if (document.createRange && window.getSelection) {
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        var textNodes = Utils.getTextNodesIn(el);
+        var foundStart = false;
+        var charCount = 0, endCharCount;
+
+        for (var i = 0, textNode; textNode = textNodes[i++]; ) {
+          endCharCount = charCount + textNode.length;
+          if (!foundStart && start >= charCount
+              && (start < endCharCount ||
+                  (start === endCharCount && i <= textNodes.length))) {
+            range.setStart(textNode, start - charCount);
+            foundStart = true;
+          }
+          if (foundStart && end <= endCharCount) {
+            range.setEnd(textNode, end - charCount);
+            break;
+          }
+          charCount = endCharCount;
+        }
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      } else if (document.selection && document.body.createTextRange) {
+        var textRange = document.body.createTextRange();
+        textRange.moveToElementText(el);
+        textRange.collapse(true);
+        textRange.moveEnd("character", end);
+        textRange.moveStart("character", start);
+        textRange.select();
+      }
+    }    
   };
 
   return Utils;
