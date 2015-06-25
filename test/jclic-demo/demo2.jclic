@@ -3677,19 +3677,19 @@
       <text family="Arial" background="0xFFFFFF" size="17" foreground="0x000000" bold="false" italic="false">     </text>
       <target>
        <answer>lemon</answer>
-       <response fill="_" length="5" maxLength="7" />
+       <response fill="_" length="5" maxLength="5" />
        <text>lemon</text>
       </target>
       <text family="Arial" background="0xFFFFFF" size="17" foreground="0x000000" bold="false" italic="false">	    </text>
       <target>
        <answer>watermelon</answer>
-       <response fill="_" length="10" maxLength="7" />
+       <response fill="_" length="10" maxLength="10" />
        <text>watermelon</text>
       </target>
       <text family="Arial" background="0xFFFFFF" size="17" foreground="0x000000" bold="false" italic="false">	    </text>
       <target>
        <answer>grapes</answer>
-       <response fill="_" length="6" maxLength="4" />
+       <response fill="_" length="6" maxLength="6" />
        <text>grapes</text>
       </target>
      </p>

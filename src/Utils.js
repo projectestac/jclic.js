@@ -47,6 +47,16 @@ define([
       return Number(val === 'true' ? Utils.TRUE
           : val === 'false' ? Utils.FALSE : Utils.DEFAULT);
     },
+    //
+    // Returns a string with the given `tag` repeated n times
+    // tag (String) - The tag to be repeated
+    // repeats (Number) - The number of times to repeat the tag
+    fillString: function (tag, repeats) {
+      var s = '';
+      for (var i = 0; i < repeats; i++)
+        s += tag;
+      return s;
+    },
     // 
     // Checks if the provided variable name is 'null' or 'undefined'.
     // - variable: The variable name to be examined.
@@ -316,7 +326,7 @@ define([
         textRange.moveStart("character", start);
         textRange.select();
       }
-    }    
+    }
   };
 
   return Utils;

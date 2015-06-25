@@ -716,7 +716,7 @@ define([
 
       var cssAct = {
         display: 'block',
-        'background-color': this.backgroundTransparent ? 'transparent' : this.backgroundColor,
+        'background-color': this.backgroundTransparent ? 'transparent' : this.backgroundColor
       };
 
       // Border shadow style Material Design, inspired in http://codepen.io/Stenvh/pen/EaeWqW

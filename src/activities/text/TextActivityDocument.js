@@ -21,12 +21,14 @@ define([
   "../../boxes/ActiveBagContent"
 ], function ($, Utils, ActiveBoxContent, MediaContent, ActiveBagContent) {
 
-  // _TextTarget_ encapsulates the properties and methods of the document elements that are the 
-  // real targets of user actions in text activities
+  //   // #### <a name="TextTarget">TextTarget</a> ####
+  // This class encapsulates the properties and methods of the document elements that are the 
+  // real targets of user actions in text activities.
+  //
   var TextTarget = function (text) {
     this.text = text;
     this.numIniChars = text.length;
-    this.answer = [text];
+    this.answers = [text];
     this.maxLenResp = this.numIniChars;
   };
 
@@ -53,7 +55,7 @@ define([
     maxLenResp: 0,
     //
     // Array of valid answers
-    answer: null,
+    answers: null,
     //
     // Array of specific options
     options: null,
@@ -80,8 +82,15 @@ define([
     //
     // TRANSIENT PROPERTIES
     //
-    // The drop-down list showing the options
+    // The drop-down list or span element associated to this target
     $comboList: null,
+    $span: null,
+    // 
+    // Current text in the $span element
+    currentText: '',
+    //
+    // Ordinal number of this target into the activity collection of targets
+    num: 0,
     //
     // Current target status. Valid values are: `NOT_EDITED`, `EDITED`, `SOLVED` and `WITH_ERROR`
     targetStatus: 'NOT_EDITED',
@@ -96,22 +105,24 @@ define([
     reset: function () {
       this.targetStatus = 'NOT_EDITED';
       this.flagModified = false;
-      if (this.$comboList !== null)
-        // TODO: Implement $comboList.checkColors
-        this.$comboList.checkColors();
     },
     //
     // Loads the object settings from a specific JQuery XML element 
     setProperties: function ($xml, mediaBag) {
       var tt = this;
+      var firstAnswer = true;
       // Read specific nodes
       $xml.children().each(function () {
         var $node = $(this);
         switch (this.nodeName) {
           case 'answer':
-            if (tt.answer === null)
-              tt.answer = [];
-            tt.answer.push(this.textContent);
+            if (firstAnswer) {
+              firstAnswer = false;
+              tt.answers = [];
+            }
+            if (tt.answers === null)
+              tt.answers = [];
+            tt.answers.push(this.textContent);
             break;
 
           case 'optionList':
@@ -160,7 +171,7 @@ define([
     },
     //
     // Gets a string with all valid answers of this Texttarget. Useful for reporting users activity.
-    getAnswers: function(){
+    getAnswers: function () {
       return this.answers ? this.answers.join('|') : '';
     }
   };
@@ -172,8 +183,8 @@ define([
     this.style = {'default': $.extend(true, {}, this.DEFAULT_DOC_STYLE)};
     this.p = [];
     //this.tmb=new TargetMarkerBag();
-    this.boxesContent=new ActiveBagContent();
-    this.popupsContent=new ActiveBagContent();    
+    this.boxesContent = new ActiveBagContent();
+    this.popupsContent = new ActiveBagContent();
   };
 
   TextActivityDocument.prototype = {

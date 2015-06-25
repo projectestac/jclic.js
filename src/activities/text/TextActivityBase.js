@@ -16,9 +16,9 @@
 define([
   "jquery",
   "../../Activity",
-  "../../boxes/ActiveBox",
-  "../../boxes/ActiveBoxContent",
-], function ($, Activity, ActiveBox, ActiveBoxContent) {
+  "../../AWT",
+  "../../boxes/ActiveBox"
+], function ($, Activity, AWT, ActiveBox) {
 
   //
   // This class acts as a base for all text activities
@@ -83,9 +83,9 @@ define([
       // 
       // Sets the default style
       $html.css(doc.style['default'].css);
-      
+
       var currentPStyle = null;
-      
+
       // 
       // Process paragraphs
       $.each(doc.p, function () {
@@ -139,11 +139,13 @@ define([
               $p.append($span);
               break;
 
-            case 'target':              
+            case 'target':
               var target = this;
-              $span = thisPanel.$createTarget(target, $span); 
+              $span = thisPanel.$createTarget(target, $span);
+              target.num = thisPanel.targets.length;
+              thisPanel.targets.push(target);
               $span.css(doc.style['default'].css);
-              if(currentPStyle)
+              if (currentPStyle)
                 $span.css(currentPStyle);
               if (target.attr) {
                 // Default style name for targets is 'target'
@@ -177,10 +179,33 @@ define([
     // target (TextTarget) - The target related to the DOM object to be created
     // $span (JQuery DOM object) - An initial DOM object (usually a `span`) that can be used to
     // store the target, or replaced by another type of object.
-    $createTarget: function(target, $span){
-      this.targets.push(target);
+    $createTarget: function (target, $span) {
       $span.html(target.text);
-      return $span;      
+      target.$span = $span;
+      return $span;
+    },
+    // 
+    // Main handler to receive mouse and key events
+    // Overrides same function in Activity.Panel
+    processEvent: function (event) {
+      if (this.playing) {
+        switch (event.type) {
+          case 'click':
+            var p = new AWT.Point(
+                event.pageX - this.$div.offset().left,
+                event.pageY - this.$div.offset().top);
+            for (var i = 0; i < this.boxes.length; i++) {
+              if (this.boxes[i].contains(p)) {
+                event.preventDefault();
+                this.ps.stopMedia(1);
+                this.boxes[i].playMedia(this.ps);
+                return false;
+              }
+            }
+        }
+        return true;
+      }
+      return false;
     }
   };
 
