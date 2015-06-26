@@ -86,7 +86,7 @@ define([
     name: K.DEFAULT_NAME,
     // 
     // The activity class name:
-    class: null,
+    className: null,
     // 
     // Code used in reports to filter queries. Default is `null`.
     code: null,

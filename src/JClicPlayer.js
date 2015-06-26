@@ -481,7 +481,7 @@ define([
           ase = this.project.activitySequence.getElementByTag(sequence, true);
         if (ase === null) {
           // Try to treat 'sequence' as a number
-          var n = parseInt(sequence);
+          var n = parseInt(sequence, 10);
           if (typeof n === 'number')
             ase = this.project.activitySequence.getElement(n, true);
         }
@@ -937,7 +937,7 @@ define([
       if (!url)
         url = this.options.exitUrl;
       if (url)
-        displayURL(url, false);
+        this.displayURL(url, false);
     },
     //
     // Sets a title in a specific HTML element, if provided
