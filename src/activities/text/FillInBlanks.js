@@ -55,15 +55,13 @@ define([
     // Flag indicating if the activity is open or locked
     locked: true,
     //
-    // The TextActivityDocument used in this Panel
-    tad: null,
-    //
-    // Creates the target DOM element
+    // Creates a JQuery DOM element associated with the given [TextTarget](TextActivityDocument.html#TextTarget)
     // Function to be overrided in derivative classes to create specific types of targets
-    // target (TextTarget) - The target related to the DOM object to be created
+    // target ([TextTarget](TextActivityDocument.html#TextTarget)) - The target related to the DOM object to be created
     // $span (JQuery DOM object) - An initial DOM object (usually a `span`) that can be used to
     // store the target, or replaced by another type of object.
-    $createTarget: function (target, $span) {
+    // Overrides `$createTargetElement` in [TextActivityBase](TextActivityBase.html)
+    $createTargetElement: function (target, $span) {
 
       var id = this.targets.length - 1;
       var idLabel = 'target' + ('000' + id).slice(-3);
@@ -74,7 +72,7 @@ define([
         $span = $('<select/>').attr({id: idLabel, name: idLabel});
         for (var i = 0; i < target.options.length; i++)
           $('<option/>', {value: target.options[i], text: target.options[i]}).appendTo($span);
-        target.$comboList = $span.bind('change', function (event) {
+        target.$comboList = $span.bind('focus change', function (event) {
           event.textTarget = target;
           thisPanel.processEvent(event);
         });
@@ -88,7 +86,7 @@ define([
           contenteditable: 'true',
           id: idLabel,
           autocomplete: 'off'
-        }).bind('input', function (event) {
+        }).bind('focus input blur', function (event) {
           event.textTarget = target;
           thisPanel.processEvent(event);
         });
@@ -101,7 +99,7 @@ define([
     // target (TextTarget) - The target to be checked
     // onlyCheck (boolean) - When `true`, the cursor will no be re-positioned
     // Returns: Boolean - `true` when the target has a valid answer
-    checkTarget: function (target, onlyCheck, jumpTo) {
+    checkTarget: function (target, onlyCheck, jumpDirection) {
 
       var result = this.act.ev.evalText(target.currentText, target.answers);
       var ok = this.act.ev.isOk(result);
@@ -109,6 +107,8 @@ define([
 
       if (onlyCheck)
         return ok;
+
+      this.markTarget(target, result);
 
       var targetsOk = this.countSolvedTargets(false);
 
@@ -122,11 +122,8 @@ define([
       else if (target.currentText.length > 0)
         this.playEvent(ok ? 'actionOk' : 'actionError');
 
-      if (!ok)
-        this.markTarget(target);
-
-      if (jumpTo && jumpTo !== 0) {
-        var p = target.num + jumpTo;
+      if (jumpDirection && jumpDirection !== 0) {
+        var p = target.num + jumpDirection;
         if (p >= this.targets.length)
           p = 0;
         else if (p < 0)
@@ -166,8 +163,40 @@ define([
     //
     // Visually marks the target as 'solved OK' or 'with errors'.
     // target ([TextTarget](TextActivityDocument.html#TextTarget)) - The text target to be marked.
-    markTarget: function (target) {
-      // TODO: Implement markTarget
+    // attributes (Array of Number) - Array of flags indicating the status (OK or error) of each
+    // character in `target.currentText`.
+    markTarget: function (target, attributes) {
+      if (target.$comboList || this.act.ev.isOk(attributes))
+        target.checkColors();
+      else if (target.$span) {
+        // Identify text fragments
+        var txt = target.currentText;
+        var fragments = [];
+        var currentStatus = -1;
+        var currentFragment = -1;
+        var i = 0;
+        for (; i < attributes.length && i < txt.length; i++) {
+          if (attributes[i] !== currentStatus) {
+            fragments[++currentFragment] = '';
+            currentStatus = attributes[i];
+          }
+          fragments[currentFragment] += txt.charAt(i);
+        }
+        if (i < txt.length)
+          fragments[currentFragment] += txt.substr(i);
+        // Empty and re-fill $span
+        target.$span.empty();
+        currentStatus = attributes[0];
+        for (var i = 0; i < fragments.length; i++) {
+          $('<span/>')
+              .html(fragments[i])
+              .css(target.doc.style[currentStatus === 0 ? 'target' : 'targetError'].css)
+              .appendTo(target.$span);
+          currentStatus ^= 1;
+        }
+      }
+      // Target has been marked, so clear the 'modified' flag
+      target.flagModified = false;
     },
     //
     // Regular ending of the activity
@@ -193,12 +222,37 @@ define([
       var target = event.textTarget;
 
       switch (event.type) {
+        case 'focus':
+          if (target) {
+            if (target.$span && target.$span.children().length > 0) {
+              // Clear inner spans used to mark errors
+              var $span = target.$span;
+              var pos = Math.min(
+                  target.currentText.length,
+                  Utils.getCaretCharacterOffsetWithin($span.get(0)));
+              $span.empty();
+              $span.html(target.currentText);
+              Utils.setSelectionRange($span.get(0), pos, pos);
+              target.flagModified = true;
+            }
+            else if (target.$comboList) {
+              target.$comboList.css(target.doc.style['target'].css);
+            }
+          }
+          break;
+
+        case 'blur':
+          if (target.flagModified)
+            this.checkTarget(target, false, 1);
+          break;
+
         case 'input':
           if (target && target.$span) {
             var $span = target.$span;
             var txt = $span.html();
             if (txt !== target.currentText) {
               // Span text has changed!
+              target.flagModified = true;
               var added = txt.length - target.currentText.length;
               if (added > 0) {
                 // Check for `enter` key
@@ -234,6 +288,11 @@ define([
                   Utils.setSelectionRange($span.get(0), pos, pos);
                 }
               }
+              else if (txt === '') {
+                txt = target.iniChar;
+                $span.html(txt);
+                Utils.setSelectionRange($span.get(0), 0, 0);
+              }
               target.currentText = txt;
             }
           }
@@ -242,6 +301,7 @@ define([
         case 'change':
           if (target && target.$comboList) {
             target.currentText = target.$comboList.val();
+            target.flagModified = true;
             return this.checkTarget(target, false, 1);
           }
           break;

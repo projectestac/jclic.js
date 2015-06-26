@@ -22,12 +22,12 @@ define([
 
   //
   // TODO: Implement Identify text activities
-  var Identify = function (project) {
+  var IdentifyText = function (project) {
     TextActivityBase.call(this, project);
   };
 
-  Identify.prototype = {
-    constructor: Identify,
+  IdentifyText.prototype = {
+    constructor: IdentifyText,
     //
     // Constructor of this Activity.Panel object
     Panel: function (act, ps, $div) {
@@ -37,25 +37,27 @@ define([
 
   // 
   // Identify extends TextActivityBase
-  Identify.prototype = $.extend(Object.create(TextActivityBase.prototype), Identify.prototype);
+  IdentifyText.prototype = $.extend(Object.create(TextActivityBase.prototype), IdentifyText.prototype);
 
   // 
   // Properties and methods specific to Identify.Panel
   var ActPanelAncestor = TextActivityBase.prototype.Panel.prototype;
-  Identify.prototype.Panel.prototype = {
-    constructor: Identify.prototype.Panel
+  IdentifyText.prototype.Panel.prototype = {
+    constructor: IdentifyText.prototype.Panel,
+    //
+    // Flag indicating if targets must be visually marked when the activity begins.
+    // Here is `false` to avoid revealing the items that must be found
+    targetsMarked: false    
   };
 
   // Identify.Panel extends TextActivityBase.Panel
-  Identify.prototype.Panel.prototype = $.extend(
+  IdentifyText.prototype.Panel.prototype = $.extend(
       Object.create(ActPanelAncestor),
-      Identify.prototype.Panel.prototype);
+      IdentifyText.prototype.Panel.prototype);
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@text.Identify'] = Identify;
+  Activity.prototype._CLASSES['@text.Identify'] = IdentifyText;
 
-  return Identify;
+  return IdentifyText;
 });
-
-

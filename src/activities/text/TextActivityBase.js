@@ -57,6 +57,10 @@ define([
     // Array of target elements    
     targets: null,
     //
+    // Flag indicating if targets must be visually marked when the activity begins.
+    // Should be `true` except for [IdentifyText](IdentifyText.html) activities
+    targetsMarked: true,
+    //
     // Prepares the text panel
     buildVisualComponents: function () {
       ActPanelAncestor.buildVisualComponents.call(this);
@@ -141,20 +145,24 @@ define([
 
             case 'target':
               var target = this;
-              $span = thisPanel.$createTarget(target, $span);
+              $span = thisPanel.$createTargetElement(target, $span);
               target.num = thisPanel.targets.length;
               thisPanel.targets.push(target);
               $span.css(doc.style['default'].css);
               if (currentPStyle)
                 $span.css(currentPStyle);
-              if (target.attr) {
-                // Default style name for targets is 'target'
-                if (!target.attr.style)
-                  target.attr.style = 'target';
-                $span.css(doc.style[target.attr.style].css);
-                // Check if target has specific attributes
-                if (target.attr.css)
-                  $span.css(target.attr.css);
+              if (thisPanel.targetsMarked) {
+                if (target.attr) {
+                  // Default style name for targets is 'target'
+                  if (!target.attr.style)
+                    target.attr.style = 'target';
+                  $span.css(doc.style[target.attr.style].css);
+                  // Check if target has specific attributes
+                  if (target.attr.css)
+                    $span.css(target.attr.css);
+                }
+                else if (doc.style['target'])
+                  $span.css(doc.style['target'].css);
               }
               $p.append($span);
               break;
@@ -179,7 +187,7 @@ define([
     // target (TextTarget) - The target related to the DOM object to be created
     // $span (JQuery DOM object) - An initial DOM object (usually a `span`) that can be used to
     // store the target, or replaced by another type of object.
-    $createTarget: function (target, $span) {
+    $createTargetElement: function (target, $span) {
       $span.html(target.text);
       target.$span = $span;
       return $span;

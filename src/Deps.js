@@ -30,7 +30,7 @@ define([
   "./activities/text/FillInBlanks",
   "./activities/text/Order",
   "./activities/text/Complete",
-  "./activities/text/Identify",
+  "./activities/text/IdentifyText",
   "./activities/text/WrittenAnswer",
   "./activities/panels/InformationScreen",
   "./activities/panels/Identify",

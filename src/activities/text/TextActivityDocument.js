@@ -25,7 +25,8 @@ define([
   // This class encapsulates the properties and methods of the document elements that are the 
   // real targets of user actions in text activities.
   //
-  var TextTarget = function (text) {
+  var TextTarget = function (doc, text) {
+    this.doc = doc;
     this.text = text;
     this.numIniChars = text.length;
     this.answers = [text];
@@ -34,7 +35,8 @@ define([
 
   TextTarget.prototype = {
     constructor: TextTarget,
-    objectType: 'target',
+    // The TextActivityDocument this target belongs to
+    doc: null,
     //
     // The current text displayed by this TextTarget
     text: null,
@@ -173,6 +175,17 @@ define([
     // Gets a string with all valid answers of this Texttarget. Useful for reporting users activity.
     getAnswers: function () {
       return this.answers ? this.answers.join('|') : '';
+    },
+    //
+    // Sets specific colors to the target JQuery element, based on its `targetStatus` value.
+    checkColors: function () {
+      var $element = this.$comboList ? this.$comboList : this.$span;
+      if ($element) {
+        var style = this.doc.style[this.targetStatus === 'WITH_ERROR' ? 'targetError' : 'target'];
+        if (style && style.css) {
+          $element.css(style.css);
+        }
+      }
     }
   };
 
@@ -263,7 +276,7 @@ define([
               break;
 
             case 'target':
-              obj = new TextTarget(this.textContent.replace(/\t/g, '&emsp;'));
+              obj = new TextTarget(doc, this.textContent.replace(/\t/g, '&emsp;'));
               obj.setProperties($child, mediaBag);
               break;
 

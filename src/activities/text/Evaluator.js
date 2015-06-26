@@ -256,7 +256,7 @@ define([
       return sb;
     }
   };
-  
+
   // 
   // BasicEvaluator extends Evaluator
   BasicEvaluator.prototype = $.extend(Object.create(Evaluator.prototype), BasicEvaluator.prototype);
@@ -365,7 +365,7 @@ define([
             var i = 0, j, is2, iok2, ls2, lok2, jmax;
             for (j = 0; j < lbloc; j++) {
               itcoinc[j] = 0;
-              i = iok + ((j + 1) / 2) * ((j & 1) !== 0 ? 1 : -1);
+              i = iok + Math.floor((j + 1) / 2) * ((j & 1) !== 0 ? 1 : -1);
               if (i >= lok)
                 continue;
               is2 = (i < 0 ? is - i : is);
@@ -387,10 +387,9 @@ define([
               for (j = 0; j < lbloc; j++)
                 if (itcoinc[j] > itcoinc[jmax])
                   jmax = j;
-              i = iok + ((jmax + 1) / 2) * ((jmax & 1) !== 0 ? 1 : -1);
+              i = iok + Math.floor((jmax + 1) / 2) * ((jmax & 1) !== 0 ? 1 : -1);
             } else if (itcoinc[j] > 0)
               coinci++;
-
             iok = i;
             lastiok = false;
           }
@@ -403,7 +402,7 @@ define([
       return result;
     }
   };
-  
+
   // 
   // ComplexEvaluator extends BasicEvaluator
   ComplexEvaluator.prototype = $.extend(Object.create(BasicEvaluator.prototype), ComplexEvaluator.prototype);
