@@ -770,6 +770,12 @@ define([
         this.ps.setMsg(msg);
       this.playing = true;
     },
+    //
+    // Called by [JClicPlayer](JClicPlayer.html) when this activity panel is fully visible, after
+    // the initialization process.
+    activityReady: function(){
+      // To be overrided by subclasses
+    },
     // 
     // Displays help
     // (to be overrided by subclasses)

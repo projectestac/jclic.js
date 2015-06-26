@@ -558,12 +558,11 @@ define([
           this.actions['reset'].setEnabled(this.actPanel.act.canReinit());
           this.actions['info'].setEnabled(this.actPanel.act.hasInfo());
         }
-        this.setSystemMessage('activity ready');
         this.doLayout();
         this.initActivity();
         
         if(this.options.fade > 0){
-          this.actPanel.$div.fadeIn(this.options.fade);
+          this.actPanel.$div.fadeIn(this.options.fade, function(){tp.activityReady();});
         }
       }
       this.skin.setWaitCursor(false);
@@ -609,6 +608,14 @@ define([
         this.setSystemMessage('Activity running', this.actPanel.act.name);
       }
       this.setWaitCursor(false);
+    },
+    //
+    // Called by `load` when the Activity.Panel is full visible after the JQuery animation effect
+    activityReady: function(){
+      if(this.actPanel){
+        this.actPanel.activityReady();
+        this.setSystemMessage('Activity ready');
+      }
     },
     // 
     // Just starts the activity (called from Text activities, when in prev screen)

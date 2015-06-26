@@ -199,6 +199,15 @@ define([
       target.flagModified = false;
     },
     //
+    // Called by [JClicPlayer](JClicPlayer.html) when this activity panel is fully visible, after
+    // the initialization process.
+    activityReady: function(){
+      ActPanelAncestor.activityReady.call(this);      
+      if(this.targets.length>0 && this.targets[0].$span){
+        this.targets[0].$span.focus();
+      }
+    },    
+    //
     // Regular ending of the activity
     // reault (boolean) - Indicates if the activity was successfully done by the user
     finishActivity: function (result) {

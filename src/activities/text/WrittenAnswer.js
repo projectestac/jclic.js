@@ -228,11 +228,17 @@ define([
         if (this.useOrder)
           this.currentItem = this.bgA.getNextItem(-1);
 
-        this.playing = true;
-        this.setCurrentCell(0);
         this.invalidate().update();
+        this.playing = true;
       }
     },
+    //
+    // Called by [JClicPlayer](JClicPlayer.html) when this activity panel is fully visible, after
+    // the initialization process.
+    activityReady: function(){
+      ActPanelAncestor.activityReady.call(this);
+      this.setCurrentCell(0);
+    },    
     //
     // Overrides `Activity.Panel.updateContent`
     // Updates the graphic contents of its panel.
