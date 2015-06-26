@@ -267,11 +267,14 @@ define([
         switch (name) {
           // Generic attributes:
           case 'name':
-          case 'class':
           case 'code':
           case 'type':
           case 'description':
             act[name] = val;
+            break;
+            
+          case 'class':
+            act.className = val;
             break;
 
           case 'inverse':
