@@ -26,7 +26,7 @@ define([
 // into the [JClicProject](JClicProject.html) file or just mantained as a 
 // reference to an external file.
 //
-  var MediaBagElement = function (basePath, fileName) {
+  var MediaBagElement = function (basePath, fileName, zip) {
     if (basePath)
       this.basePath = basePath;
     if (fileName) {
@@ -35,6 +35,8 @@ define([
       this.ext = this.fileName.toLowerCase().split('.').pop();
       this.type = this.getFileType(this.ext);
     }
+    if (zip)
+      this.zip = zip;
     this._whenReady = [];
   };
 
@@ -49,6 +51,9 @@ define([
     //
     // The path to be used as base to access this media element
     basePath: '',
+    //
+    // An optional JSZip object that can act as a container of this media
+    zip: null,
     //
     // When loaded, this field will store the realized media object
     data: null,
@@ -104,7 +109,7 @@ define([
         this._whenReady.push(callback);
 
       if (!this.data) {
-        var fullPath = Utils.getPath(this.basePath, this.fileName);
+        var fullPath = Utils.getPath(this.basePath, this.fileName, this.zip);
         switch (this.type) {
           case 'font':
             var format = this.ext === 'ttf' ? 'truetype'
@@ -142,17 +147,17 @@ define([
             this.data = $('<video />').attr('src', fullPath);
             this.ready = true;
             break;
-            
+
           case 'xml':
             this.data = '';
             $.get(fullPath, null, null, 'xml')
                 .done(function (data) {
                   media.data = data;
                   media._onReady();
-                }).fail(function(){
-                  console.log('Error loading '+media.name);
-                  media.data = null;
-                });
+                }).fail(function () {
+              console.log('Error loading ' + media.name);
+              media.data = null;
+            });
             break;
 
           default:

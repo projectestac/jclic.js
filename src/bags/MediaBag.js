@@ -45,7 +45,8 @@ define([
     setProperties: function ($xml) {
       var thisMediaBag = this;
       $xml.children('media').each(function () {
-        var mbe = new MediaBagElement(thisMediaBag.project.basePath).setProperties($(this));
+        var mbe = new MediaBagElement(thisMediaBag.project.basePath, null, thisMediaBag.project.zip);
+        mbe.setProperties($(this));
         thisMediaBag.elements[mbe.name] = mbe;
       });
       return this;

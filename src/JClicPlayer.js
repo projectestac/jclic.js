@@ -15,6 +15,8 @@
 
 define([
   "jquery",
+  "jszip",
+  "jsziputils",
   "./Utils",
   "./AWT",
   "./PlayerHistory",
@@ -24,7 +26,7 @@ define([
   "./project/JClicProject",
   "./bags/JumpInfo",
   "./boxes/ActiveBoxContent"
-], function ($, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds, JClicProject,
+], function ($, JSZip, JSZipUtils, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds, JClicProject,
     JumpInfo, ActiveBoxContent) {
 
 //
@@ -39,21 +41,21 @@ define([
 
     // JClicPlayer extends AWT.Container
     AWT.Container.call(this);
-    
-    if(!options)
+
+    if (!options)
       options = {};
 
     this.$topDiv = $topDiv;
-    
+
     if (!options.height && !options.width) {
       if ($topDiv.height() > 0) {
         options.height = $topDiv.height();
         options.width = $topDiv.width();
       }
-      else if(typeof options.autoFit === 'undefined')
+      else if (typeof options.autoFit === 'undefined')
         options.autoFit = true;
     }
-        
+
     this.options = $.extend(Object.create(this.options), options);
 
     // $div usually is `undefined`
@@ -233,12 +235,12 @@ define([
           EventSounds.prototype.globalEnabled = tp.audioEnabled;
         })
       };
-      
+
       var thisPlayer = this;
-      $.each(this.actions, function(key, value){
-        value.addStatusListener(function(){
+      $.each(this.actions, function (key, value) {
+        value.addStatusListener(function () {
           // `this` points here to the [AWT.Action](AWT.html#Action) object
-          if(thisPlayer.skin)
+          if (thisPlayer.skin)
             thisPlayer.skin.actionStatusChanged(this);
         });
       });
@@ -387,6 +389,8 @@ define([
       if (this.project.skin !== null)
         this.defaultSkin = this.project.skin;
     },
+    // The JSZip object
+    zip: null,
     //
     // Loads the specified project and starts playing at the specified activity
     // or sequence tag.
@@ -401,7 +405,7 @@ define([
     load: function (project, sequence, activity) {
 
       var tp = this;
-          
+
       this.forceFinishActivity();
       this.skin.setWaitCursor(true);
 
@@ -417,16 +421,54 @@ define([
 
           // Zip files are not supported in jclic.js. Remove the '.zip' extension and try to load
           // the `.jclic` file
-          if (Utils.endsWith(fullPath, '.jclic.zip'))
-            fullPath = fullPath.substring(0, fullPath.length - 4);
+          //if (Utils.endsWith(fullPath, '.jclic.zip'))
+          //  fullPath = fullPath.substring(0, fullPath.length - 4);
 
+          // Step 0: Check if `project` points to a ZIP file
+          if (Utils.endsWith(fullPath, '.jclic.zip')) {
+            tp.zip = null;
+            tp.setSystemMessage('Loading ZIP file', fullPath);
+
+            JSZipUtils.getBinaryContent(fullPath, function (err, data) {
+              if (err) {
+                tp.setSystemMessage('Error loading ZIP file: ', err);
+                return;
+              }
+              try {
+                tp.zip = new JSZip(data);
+                // Find first file with extension '.jclic' inside the zip file
+                var fileName = null;
+                for (var fn in tp.zip.files) {
+                  if (Utils.endsWith(fn, '.jclic')) {
+                    fileName = fn;
+                    break;
+                  }
+                }
+                if (fileName) {
+                  tp.load(fileName, sequence, activity);
+                }
+                else
+                  tp.setSystemMessage('Error: ZIP does not contain any valid jclic file!');
+              } catch (e) {
+                tp.setSystemMessage('Error reading ZIP file: ', e);
+              }
+            });
+            this.skin.setWaitCursor(false);
+            return;
+          }
+          
+          // Step 1: Load the project
           this.setSystemMessage('loading project', project);
-          $.get(fullPath, null, null, 'xml')
+          var fp = fullPath;
+          if (tp.zip && tp.zip.files[project])
+            fp = 'data:text/xml;charset=UTF-8,' + tp.zip.file(project).asText();
+
+          $.get(fp, null, null, 'xml')
               .done(function (data) {
                 if (typeof data !== 'object')
                   console.log('Project not loaded. Bad data!');
                 var prj = new JClicProject();
-                prj.setProperties($(data).find('JClicProject'), fullPath);
+                prj.setProperties($(data).find('JClicProject'), fullPath, tp.zip);
                 tp.setSystemMessage('Project file loaded and parsed', project);
                 prj.mediaBag.buildAll();
                 var loops = 0;
@@ -516,7 +558,7 @@ define([
       // Remove the current Activity.Panel
       if (this.actPanel !== null) {
         this.actPanel.end();
-        this.actPanel.$div.remove();          
+        this.actPanel.$div.remove();
         this.actPanel = null;
         this.setCounterValue('time', 0);
       }
@@ -525,11 +567,11 @@ define([
       if (actp) {
         // Sets the actPanel member to this Activity.Panel
         this.actPanel = actp;
-        
-        if(this.options.fade > 0){
+
+        if (this.options.fade > 0) {
           this.actPanel.$div.css('display', 'none');
         }
-        
+
         // Places the JQuery DOM element of actPanel into the player's one
         this.$div.prepend(this.actPanel.$div);
         if (this.skin)
@@ -560,9 +602,11 @@ define([
         }
         this.doLayout();
         this.initActivity();
-        
-        if(this.options.fade > 0){
-          this.actPanel.$div.fadeIn(this.options.fade, function(){tp.activityReady();});
+
+        if (this.options.fade > 0) {
+          this.actPanel.$div.fadeIn(this.options.fade, function () {
+            tp.activityReady();
+          });
         }
       }
       this.skin.setWaitCursor(false);
@@ -611,8 +655,8 @@ define([
     },
     //
     // Called by `load` when the Activity.Panel is full visible after the JQuery animation effect
-    activityReady: function(){
-      if(this.actPanel){
+    activityReady: function () {
+      if (this.actPanel) {
         this.actPanel.activityReady();
         this.setSystemMessage('Activity ready');
       }
@@ -749,12 +793,12 @@ define([
     },
     //
     // Stops currently playing media
-    stopMedia: function (level) {      
+    stopMedia: function (level) {
       if (typeof level !== 'number')
         level = -1;
       var thisPlayer = this;
       //window.setTimeout(function () {      
-        thisPlayer.activeMediaBag.stopAll(level);
+      thisPlayer.activeMediaBag.stopAll(level);
       //}, 0);
     },
     //

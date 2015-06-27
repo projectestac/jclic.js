@@ -9,7 +9,9 @@ requirejs.config({
   baseUrl: '../../src/',
   paths: {
     jquery: '../node_modules/jquery/dist/jquery',
-    screenfull: '../node_modules/screenfull/dist/screenfull'
+    screenfull: '../node_modules/screenfull/dist/screenfull',
+    jszip: '../bower_components/jszip/dist/jszip',
+    jsziputils: '../bower_components/jszip-utils/dist/jszip-utils'
   }
 });
 

@@ -67,12 +67,19 @@ define([
     // Full path of this project
     path: null,
     // 
+    // The JSZip object where this project is stored (can be `null`)
+    zip: null,
+    // 
     // Loads the project settings from a main JQuery XML element 
-    setProperties: function ($xml, path) {
+    setProperties: function ($xml, path, zip) {
       if (path){
         this.path = path;
-        this.basePath = Utils.getBasePath(path);
+        if(path.file)
+          this.basePath = path;
+        else
+          this.basePath = Utils.getBasePath(path);
       }
+      this.zip = zip;
       this.name = $xml.attr('name');
       this.version = $xml.attr('version');
       this.type = $xml.attr('type');
