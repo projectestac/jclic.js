@@ -18,7 +18,9 @@
 /nbproject/private/
 /deploy/
 
-# Exclude all test suites except jclic-demo
+# Exclude all test suites except 'jclic-demo'
 /test/*/
 !/test/jclic-demo/
+# Include also 'test/lib', needed for debug.js
+!/test/lib/
 

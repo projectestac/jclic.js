@@ -243,7 +243,7 @@ define([
       var thisContent = this;
       if (this.imgName !== null) {
         var mbe = mediaBag.elements[this.imgName];
-        if (mbe !== null) {
+        if (mbe) {
           mbe.build(function () {
             thisContent.img = mbe.data;
           });

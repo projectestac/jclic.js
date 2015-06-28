@@ -10,8 +10,8 @@ requirejs.config({
   paths: {
     jquery: '../node_modules/jquery/dist/jquery',
     screenfull: '../node_modules/screenfull/dist/screenfull',
-    jszip: '../bower_components/jszip/dist/jszip',
-    jsziputils: '../bower_components/jszip-utils/dist/jszip-utils'
+    jszip: '../test/lib/jszip/jszip',
+    'jszip-utils': '../test/lib/jszip-utils/jszip-utils'
   }
 });
 

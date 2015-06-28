@@ -16,7 +16,7 @@
 define([
   "jquery",
   "jszip",
-  "jsziputils",
+  "jszip-utils",
   "./Utils",
   "./AWT",
   "./PlayerHistory",
@@ -419,13 +419,9 @@ define([
           // Param `project` is a file name or URL (otherwise, is a realized `JClicProject` object)
           var fullPath = Utils.getPath(this.basePath, project);
 
-          // Zip files are not supported in jclic.js. Remove the '.zip' extension and try to load
-          // the `.jclic` file
-          //if (Utils.endsWith(fullPath, '.jclic.zip'))
-          //  fullPath = fullPath.substring(0, fullPath.length - 4);
-
           // Step 0: Check if `project` points to a ZIP file
           if (Utils.endsWith(fullPath, '.jclic.zip')) {
+            // TODO: Implement register of zip files in PlayerHistory
             tp.zip = null;
             tp.setSystemMessage('Loading ZIP file', fullPath);
 
