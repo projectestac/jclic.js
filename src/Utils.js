@@ -184,17 +184,17 @@ define([
     // path (String) - The filename
     // zip (JSZip or `null`) - An optional JSZip object to look for
     getPath: function (basePath, path, zip) {
-      if(zip && zip.files[path]){        
+      console.log('Path requested - base: '+basePath+' path: '+path+' zip: '+(zip!==null && typeof(zip) !=='undefined'));
+      if(Utils.isURL(path))
+        return path;
+      else if(zip && zip.files[path]){
         var ext = path.toLowerCase().split('.').pop();
         var mime = (ext === 'gif' ? 'image/gif'
         : ext === 'jpg' ? 'image/jpeg' 
         : ext === 'png' ? 'image/png' 
         : 'text/xml');
-        // TODO: get zip content as Base64, not text!
         return 'data:'+ mime + ';base64,' + window.btoa(zip.file(path).asBinary());
       }
-      else if(Utils.isURL(path))
-        return path;
       else
         return basePath + path;      
     },
