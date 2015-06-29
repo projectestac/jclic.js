@@ -703,7 +703,7 @@ define([
 
       this.bgImage = null;
       if (this.act.bgImageFile && this.act.bgImageFile.length > 0) {
-        var mbe = this.act.project.mediaBag.elements[this.act.bgImageFile];
+        var mbe = this.act.project.mediaBag.getElementByFileName(this.act.bgImageFile, true);
         if (mbe)
           this.bgImage = mbe.data;
       }

@@ -130,6 +130,13 @@ define([
     // Relative path or absolute URL to be used as a base to access files
     basePath: '',
     // 
+    // A [JSZip](https://stuk.github.io/jszip/https://stuk.github.io/jszip/) object pointing to
+    // a `jclic.zip` file containing the current project.
+    // Two extra properties will be added to this object when loaded:
+    // zip.fullZipPath (String) - The full path of the ZIP file
+    // zipBasePath (String) - The path to the folder containing the ZIP file
+    zip: null,
+    // 
     // Object of type [Activity.Panel](Activity.html) linked to the `Activity`
     // currently running in this player.
     actPanel: null,
@@ -389,8 +396,6 @@ define([
       if (this.project.skin !== null)
         this.defaultSkin = this.project.skin;
     },
-    // The JSZip object
-    zip: null,
     //
     // Loads the specified project and starts playing at the specified activity
     // or sequence tag.
@@ -432,6 +437,8 @@ define([
               }
               try {
                 tp.zip = new JSZip(data);
+                tp.zip.fullZipPath = fullPath;
+                tp.zip.zipBasePath = Utils.getBasePath(fullPath);
                 // Find first file with extension '.jclic' inside the zip file
                 var fileName = null;
                 for (var fn in tp.zip.files) {
@@ -441,7 +448,7 @@ define([
                   }
                 }
                 if (fileName) {
-                  tp.load(fileName, sequence, activity);
+                  tp.load(Utils.getPath(tp.zip.zipBasePath, fileName), sequence, activity);
                 }
                 else
                   tp.setSystemMessage('Error: ZIP does not contain any valid jclic file!');
@@ -456,9 +463,14 @@ define([
           // Step 1: Load the project
           this.setSystemMessage('loading project', project);
           var fp = fullPath;
-          if (tp.zip && tp.zip.files[project])
-            fp = 'data:text/xml;charset=UTF-8,' + tp.zip.file(project).asText();
-
+          
+          if (tp.zip) {
+            var fName = Utils.getRelativePath(fp, tp.zip.zipBasePath);
+            if (tp.zip.files[fName]) {
+              fp = 'data:text/xml;charset=UTF-8,' + tp.zip.file(fName).asText();
+            }
+          }
+          
           $.get(fp, null, null, 'xml')
               .done(function (data) {
                 if (typeof data !== 'object')
@@ -683,8 +695,8 @@ define([
           // Canvas version also available
           mainCss['background-image'] = act.bgGradient.getCss();
 
-        if (act.bgImageFile) {
-          var bgImageUrl = this.project.mediaBag.elements[act.bgImageFile].fileName;
+        if (act.bgImageFile && act.bgImageFile.length > 0) {
+          var bgImageUrl = this.project.mediaBag.getElementByFileName(act.bgImageFile, true).getFullPath();
           var repeat = act.tiledBgImg ? 'repeat' : 'no-repeat';
           mainCss['background-image'] = 'url(\'' + bgImageUrl + '\')';
           mainCss['background-repeat'] = repeat;

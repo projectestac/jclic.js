@@ -48,10 +48,11 @@ define([], function () {
     },
     // 
     // Inner class used to store history elements.
-    HistoryElement: function (projectPath, sequence, activity) {
+    HistoryElement: function (projectPath, sequence, activity, fullZipPath) {
       this.projectPath = projectPath;
       this.sequence = sequence;
       this.activity = activity;
+      this.fullZipPath = fullZipPath;
     },
     //
     // Adds the current project and activity to the top of the
@@ -70,7 +71,8 @@ define([], function () {
               new this.HistoryElement(
                   this.player.project.path,
                   ase.getSequenceForElement(act),
-                  act));
+                  act,
+                  this.player.zip ? this.player.zip.fullZipPath : null));
         }
       }
     },
@@ -89,7 +91,8 @@ define([], function () {
             console.log('At this point, a jump to ' + e.projectPath + ' should be performed.');
           }
           else {
-            this.player.load(e.projectPath, e.activity, null, null);
+            var prj = e.fullZipPath ? e.fullZipPath : e.projectPath;
+            this.player.load(prj, e.activity, null, null);
           }
         }
       }

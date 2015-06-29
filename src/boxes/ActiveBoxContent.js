@@ -241,8 +241,8 @@ define([
     // mediaBag ([MediaBag](MediaBag.html)) - The MediaBag of the current project
     realizeContent: function (mediaBag) {
       var thisContent = this;
-      if (this.imgName !== null) {
-        var mbe = mediaBag.elements[this.imgName];
+      if (this.imgName !== null && this.imgName.length > 0) {
+        var mbe = mediaBag.getElementByFileName(this.imgName, true); 
         if (mbe) {
           mbe.build(function () {
             thisContent.img = mbe.data;

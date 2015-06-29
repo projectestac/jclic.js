@@ -55,7 +55,7 @@ define([
     // Gets a [MediaBagElement](MediaBagElement.html) by file name
     // fileName (String) - The file name to search for
     // create (Boolean or `null`) - When `true`, a new [MediaBagElement](MediaBagElement.html) will 
-    // be created in case of not found.
+    // be created if not found.
     getElementByFileName: function (fileName, create) {
       var result = null;
       if (fileName) {
@@ -66,7 +66,7 @@ define([
           }
         }
         if (!result && create) {
-          result = new MediaBagElement(this.project.basePath);
+          result = new MediaBagElement(this.project.basePath, null, this.project.zip);
           result.name = fileName;
           result.fileName = fileName;
           result.ext = fileName.toLowerCase().split('#')[0].split('.').pop();

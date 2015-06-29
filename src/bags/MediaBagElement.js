@@ -109,7 +109,7 @@ define([
         this._whenReady.push(callback);
 
       if (!this.data) {
-        var fullPath = Utils.getPath(this.basePath, this.fileName, this.zip);
+        var fullPath = this.getFullPath();
         switch (this.type) {
           case 'font':
             var format = this.ext === 'ttf' ? 'truetype'
@@ -180,9 +180,12 @@ define([
         callback.apply(this);
       }
       this._whenReady.length = 0;
+    },
+    //
+    // Gets the full path of the file associated to this element
+    getFullPath: function(){
+      return Utils.getPath(this.basePath, this.fileName, this.zip);      
     }
-
-
   };
 
   return MediaBagElement;

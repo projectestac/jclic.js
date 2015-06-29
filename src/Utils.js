@@ -168,35 +168,43 @@ define([
       return path.test(exp);
     },
     //
-    // Get the base path of the given file path (absolute or full URL)
+    // Gets the base path of the given file path (absolute or full URL)
     // This base path always ends with `/`, meaning it can be concatenated with relative paths
     // without adding a separator.
-    getBasePath: function (exp) {
+    getBasePath: function (path) {
       var result = '';
-      var p = exp.lastIndexOf('/');
+      var p = path.lastIndexOf('/');
       if (p >= 0)
-        result = exp.substring(0, p + 1);
+        result = path.substring(0, p + 1);
       return result;
     },
     //
-    // Get the complete path of a relative or absolute URL, using the provided `basePath`
+    // Gets the relative path of `file` to `basePath`
+    getRelativePath: function(file, path){
+      if(!path || path === '' | file.indexOf(path)!==0)
+        return file;
+      else 
+        return file.substr(path.length);      
+    },
+    //
+    // Gets the complete path of a relative or absolute URL, using the provided `basePath`
     // basePath (String) - The base URL
     // path (String) - The filename
     // zip (JSZip or `null`) - An optional JSZip object to look for
     getPath: function (basePath, path, zip) {
-      console.log('Path requested - base: '+basePath+' path: '+path+' zip: '+(zip!==null && typeof(zip) !=='undefined'));
       if(Utils.isURL(path))
         return path;
-      else if(zip && zip.files[path]){
-        var ext = path.toLowerCase().split('.').pop();
-        var mime = (ext === 'gif' ? 'image/gif'
-        : ext === 'jpg' ? 'image/jpeg' 
-        : ext === 'png' ? 'image/png' 
-        : 'text/xml');
-        return 'data:'+ mime + ';base64,' + window.btoa(zip.file(path).asBinary());
-      }
-      else
-        return basePath + path;      
+      else if(zip){
+        var fName = Utils.getRelativePath(basePath+path, zip.zipBasePath);
+        if(zip.files[fName]){
+          var ext = path.toLowerCase().split('.').pop();
+          var mime = Utils.settings.MIME_TYPES[ext];
+          if(!mime)
+            mime = 'application/octet-stream';
+          return 'data:'+ mime + ';base64,' + window.btoa(zip.file(fName).asBinary());
+        }
+      }      
+      return basePath + path;      
     },
     // 
     // Global constants
@@ -246,6 +254,29 @@ define([
         midi: 'mid,midi',
         // Used in custom skins
         xml: 'xml'
+      },
+      MIME_TYPES: {
+        xml: 'text/xml',
+        gif: 'image/gif',
+        jpg: 'image/jpeg',
+        jpeg: 'image/jpeg',
+        png: 'image/png',
+        bmp: 'image/bmp',
+        svg: 'image/svg+xml',
+        ico: 'image/x-icon',
+        wav: 'audio/wav',
+        mp3: 'audio/mpeg',
+        ogg: 'audio/ogg',
+        au: 'audio/basic',
+        aiff: 'audio/x-aiff',
+        avi: 'video/avi',
+        mov: 'video/quicktime',
+        mpeg: 'video/mpeg',
+        ttf: 'application/font-sfnt',
+        otf: 'application/font-sfnt',
+        eot: ' application/vnd.ms-fontobject',
+        woff: 'application/font-woff',
+        woff2: 'application/font-woff2'
       },
       // Global settings susceptible to be modified
       COMPRESS_IMAGES: true,
@@ -313,7 +344,7 @@ define([
         var foundStart = false;
         var charCount = 0, endCharCount;
 
-        for (var i = 0, textNode; textNode = textNodes[i++]; ) {
+        for (var i = 0, textNode; (textNode = textNodes[i++]); ) {
           endCharCount = charCount + textNode.length;
           if (!foundStart && start >= charCount
               && (start < endCharCount ||
