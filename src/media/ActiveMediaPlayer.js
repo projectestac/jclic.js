@@ -45,7 +45,7 @@ define([
         // TODO: Check media ranges. Currently not running always as expected.
         //  fn = fn + '#t=' + (mc.from > 0 ? mc.from / 1000 : 0) + ',' + (mc.to > 0 ? mc.to / 1000 : 9999);
         //}
-        this.mbe = mb.getElementByFileName(fn, true);
+        this.mbe = mb.getElement(fn, true);
         break;
       case 'PLAY_MIDI':
         // TODO: Implement MIDI playing

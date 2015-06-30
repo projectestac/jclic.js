@@ -696,7 +696,7 @@ define([
           mainCss['background-image'] = act.bgGradient.getCss();
 
         if (act.bgImageFile && act.bgImageFile.length > 0) {
-          var bgImageUrl = this.project.mediaBag.getElementByFileName(act.bgImageFile, true).getFullPath();
+          var bgImageUrl = this.project.mediaBag.getElement(act.bgImageFile, true).getFullPath();
           var repeat = act.tiledBgImg ? 'repeat' : 'no-repeat';
           mainCss['background-image'] = 'url(\'' + bgImageUrl + '\')';
           mainCss['background-repeat'] = repeat;

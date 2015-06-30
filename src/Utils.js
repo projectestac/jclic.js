@@ -63,6 +63,13 @@ define([
     isNullOrUndef: function (variable) {
       return (typeof variable === 'undefined' || variable === null);
     },
+    //
+    // Checks if two expressions are equivalent
+    // Returns `true` when both parameters are `null` or undefined, and also when both have equal values
+    isEquivalent: function (a, b) {
+      return ((typeof a === 'undefined' || a === null) && (typeof b === 'undefined' || b === null)) ||
+          a === b;
+    },
     // 
     // Reads 'p' blocks inside XML elements
     getXmlText: function (xml) {
@@ -180,11 +187,11 @@ define([
     },
     //
     // Gets the relative path of `file` to `basePath`
-    getRelativePath: function(file, path){
-      if(!path || path === '' | file.indexOf(path)!==0)
+    getRelativePath: function (file, path) {
+      if (!path || path === '' | file.indexOf(path) !== 0)
         return file;
-      else 
-        return file.substr(path.length);      
+      else
+        return file.substr(path.length);
     },
     //
     // Gets the complete path of a relative or absolute URL, using the provided `basePath`
@@ -192,19 +199,19 @@ define([
     // path (String) - The filename
     // zip (JSZip or `null`) - An optional JSZip object to look for
     getPath: function (basePath, path, zip) {
-      if(Utils.isURL(path))
+      if (Utils.isURL(path))
         return path;
-      else if(zip){
-        var fName = Utils.getRelativePath(basePath+path, zip.zipBasePath);
-        if(zip.files[fName]){
+      else if (zip) {
+        var fName = Utils.getRelativePath(basePath + path, zip.zipBasePath);
+        if (zip.files[fName]) {
           var ext = path.toLowerCase().split('.').pop();
           var mime = Utils.settings.MIME_TYPES[ext];
-          if(!mime)
+          if (!mime)
             mime = 'application/octet-stream';
-          return 'data:'+ mime + ';base64,' + window.btoa(zip.file(fName).asBinary());
+          return 'data:' + mime + ';base64,' + window.btoa(zip.file(fName).asBinary());
         }
-      }      
-      return basePath + path;      
+      }
+      return basePath + path;
     },
     // 
     // Global constants

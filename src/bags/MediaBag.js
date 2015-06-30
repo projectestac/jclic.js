@@ -51,6 +51,17 @@ define([
       });
       return this;
     },
+        // 
+    // Gets a [MediaBagElement](MediaBagElement.html) by its name
+    // name (String) - The name to search for
+    // create (Boolean or `null`) - When `true`, a new [MediaBagElement](MediaBagElement.html) will 
+    // be created if not found, using 'name' as fileName.
+    getElement: function (name, create) {
+      var result = this.elements[name];
+      if(create && !result)
+        result = this.getElementByFileName(name, create);
+      return  result;
+    },
     // 
     // Gets a [MediaBagElement](MediaBagElement.html) by file name
     // fileName (String) - The file name to search for
@@ -86,7 +97,7 @@ define([
       $.each(this.elements, function (name, element) {
         if (!type || element.name === type) {
           element.build(function () {
-            console.log(this.name + ' ready');
+            //console.log(this.name + ' ready');
           });
         }
       });

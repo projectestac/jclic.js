@@ -13,7 +13,9 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
-define([], function () {
+define([
+  "./Utils"
+], function (Utils) {
 
   //
   // PlayerHistory uses an array to store the list of projects and activities
@@ -84,7 +86,8 @@ define([], function () {
       // todo: check return value
       if (this.sequenceStack.length > 0) {
         var e = this.sequenceStack.pop();
-        if (e.projectPath === this.player.project.path)
+        if (e.projectPath === this.player.project.path
+            && Utils.isEquivalent(e.fullZipPath, (this.player.zip ? this.player.zip.fullZipPath : null)))
           this.player.load(null, e.activity, null, null);
         else {
           if (this.testMode && e.projectPath !== null && e.projectPath.length > 0) {

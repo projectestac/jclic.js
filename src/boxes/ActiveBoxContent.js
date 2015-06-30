@@ -242,7 +242,7 @@ define([
     realizeContent: function (mediaBag) {
       var thisContent = this;
       if (this.imgName !== null && this.imgName.length > 0) {
-        var mbe = mediaBag.getElementByFileName(this.imgName, true); 
+        var mbe = mediaBag.getElement(this.imgName, true); 
         if (mbe) {
           mbe.build(function () {
             thisContent.img = mbe.data;
