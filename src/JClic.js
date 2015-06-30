@@ -34,7 +34,13 @@ define([
 
     if ($div.length) {
       var projectName = $div.data('project');
+      if (!projectName)
+        projectName = (typeof JClicDataProject === 'undefined' ? null : JClicDataProject);
+      
       var options = $div.data('options');
+      if (!options)
+        options = (typeof JClicDataOptions === 'undefined' ? null : JClicDataOptions);
+      
       var player = new JClicPlayer($div, options);
       player.load(projectName);
 
@@ -48,12 +54,13 @@ define([
   return 'JClic armed';
 });
 
-/* global exports */
 // Testing function for npm
 // TODO: Remove npm testing function
 if (typeof exports !== "undefined") {
   exports.printMsg = function () {
     console.log("This is a message from JClic");
   };
-};
+}
+;
 
+/* global exports, JClicDataProject, JClicDataOptions */
