@@ -67,6 +67,8 @@ define([
       var idLabel = 'target' + ('000' + id).slice(-3);
       var thisPanel = this;
 
+      $span.addClass('JClicTextTarget');
+
       if (target.isList && target.options) {
         // Use a `select` element
         $span = $('<select/>').attr({id: idLabel, name: idLabel});
@@ -202,12 +204,17 @@ define([
     //
     // Called by [JClicPlayer](JClicPlayer.html) when this activity panel is fully visible, after
     // the initialization process.
-    activityReady: function(){
-      ActPanelAncestor.activityReady.call(this);      
-      if(this.targets.length>0 && this.targets[0].$span){
+    activityReady: function () {
+      ActPanelAncestor.activityReady.call(this);
+
+      // Prevent strange behavior with GoogleChrome when `white-space` CSS attribute is set to
+      // `pre-wrap` (needed for tabulated texts)
+      $('.JClicTextTarget').css('white-space', 'normal');
+
+      if (this.targets.length > 0 && this.targets[0].$span) {
         this.targets[0].$span.focus();
       }
-    },    
+    },
     //
     // Regular ending of the activity
     // reault (boolean) - Indicates if the activity was successfully done by the user
