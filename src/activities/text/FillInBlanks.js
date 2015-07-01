@@ -85,7 +85,8 @@ define([
         target.$span = $span.html(target.currentText).attr({
           contenteditable: 'true',
           id: idLabel,
-          autocomplete: 'off'
+          autocomplete: 'off',
+          spellcheck: 'false'
         }).bind('focus input blur', function (event) {
           event.textTarget = target;
           thisPanel.processEvent(event);
