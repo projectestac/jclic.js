@@ -106,8 +106,11 @@ define([
     // The method should be called from `Skin.update`
     // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
     updateContent: function (dirtyRegion) {
-      if (this.$msgBoxDivCanvas)
-        this.msgBox.update(this.$msgBoxDivCanvas.get(0).getContext('2d'), dirtyRegion);
+      if (this.$msgBoxDivCanvas){
+        var ctx = this.$msgBoxDivCanvas.get(0).getContext('2d');
+        ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
+        this.msgBox.update(ctx, dirtyRegion);
+      }
       return Skin.prototype.updateContent.call(this);
     },
     // 

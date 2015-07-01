@@ -276,7 +276,8 @@ define([
                 else
                   this.bc.begin(p);
                 // Play cell media or event sound
-                m = bx1.playMedia(this.ps);
+                if(bx1)
+                  m = bx1.playMedia(this.ps);
                 if (!m)
                   this.playEvent('click');
               }

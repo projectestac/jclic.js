@@ -847,9 +847,10 @@ define([
         ab = this.skin.getMsgBox();
       if (ab !== null) {
         ab.clear();
+        this.skin.invalidate(ab).update();
         ab.setContent(abc ? abc : ActiveBoxContent.prototype.EMPTY_CONTENT);
         // TODO: Transfer this method to Skin
-        this.skin.invalidate().update();
+        this.skin.invalidate(ab).update();
       }
     },
     //
