@@ -334,7 +334,7 @@ define([
             img = tmpCanvas;
           }
           ctx.drawImage(img,
-              r.pos.x, r.pos.y, r.dim.width, r.dim.height,
+              Math.max(0, r.pos.x), Math.max(0, r.pos.y), Math.min(img.width, r.dim.width), Math.min(img.height, r.dim.height),
               this.pos.x, this.pos.y, this.dim.width, this.dim.height);
         }
         else {
