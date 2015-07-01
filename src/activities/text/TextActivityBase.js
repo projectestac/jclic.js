@@ -120,7 +120,7 @@ define([
             case 'text':
               if (this.attr) {
                 // Text uses a specific style and/or individual attributes
-                $span.html(this.text.replace(/ /g, '&nbsp;'));
+                $span.html(this.text);
                 if (this.attr.style) {
                   $span.css(doc.style[this.attr.style].css);
                 }

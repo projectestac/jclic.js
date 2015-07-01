@@ -160,7 +160,7 @@ define([
             break;
 
           case 'text':
-            tt.text = this.textContent.replace(/\t/g, '&emsp;');
+            tt.text = this.textContent.replace(/\t/g, '&#9;');
             var attr = TextActivityDocument.prototype.readDocAttributes($(this));
             if (!$.isEmptyObject(attr))
               tt.attr = attr;
@@ -236,7 +236,7 @@ define([
         var attr = doc.readDocAttributes($(this));
         doc.style[attr.name] = attr;
       });
-
+      
       // Read paragraphs
       $xml.find('section > p').each(function () {
 
@@ -268,7 +268,7 @@ define([
               break;
 
             case 'text':
-              obj = {text: this.textContent.replace(/\t/g, '&emsp;')};
+              obj = {text: this.textContent.replace(/\t/g, '&#9;')};
               var attr = doc.readDocAttributes($child);
               if (!$.isEmptyObject(attr)) {
                 obj.attr = attr;
@@ -276,7 +276,7 @@ define([
               break;
 
             case 'target':
-              obj = new TextTarget(doc, this.textContent.replace(/\t/g, '&emsp;'));
+              obj = new TextTarget(doc, this.textContent.replace(/\t/g, '&#9;'));
               obj.setProperties($child, mediaBag);
               break;
 
@@ -299,6 +299,7 @@ define([
     readDocAttributes: function ($xml) {
       var attr = {};
       var css = {};
+      var thisDoc = this;
       $.each($xml.get(0).attributes, function () {
         var name = this.name;
         var val = this.value;
@@ -339,7 +340,11 @@ define([
             css['font-size'] = val + 'px';
             break;
           case 'tabWidth':
-            attr[name] = Number(val);
+            // `tab-size` CSS attribute is only set when the document has a specific `tabWidth`
+            // setting. It must be accompained of `white-space:pre` to successfully work.
+            thisDoc.tabSpc = val;
+            css['tab-size'] = thisDoc.tabSpc;
+            css['white-space'] = 'pre-wrap';
             break;
           default:
             console.log('Unknown text attribute: ' + name + ': ' + val);
