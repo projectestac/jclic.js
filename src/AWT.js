@@ -402,7 +402,7 @@ define([
     // width can be a number or a Dimension object
     setDimension: function (width, height) {
       if (width instanceof Dimension) {
-        height = width.heigth;
+        height = width.height;
         width = width.width;
       }
       this.width = width;

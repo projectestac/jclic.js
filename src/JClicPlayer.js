@@ -430,47 +430,55 @@ define([
             tp.zip = null;
             tp.setSystemMessage('Loading ZIP file', fullPath);
 
-            JSZipUtils.getBinaryContent(fullPath, function (err, data) {
-              if (err) {
-                tp.setSystemMessage('Error loading ZIP file: ', err);
-                return;
-              }
-              try {
-                tp.zip = new JSZip(data);
-                tp.zip.fullZipPath = fullPath;
-                tp.zip.zipBasePath = Utils.getBasePath(fullPath);
-                // Find first file with extension '.jclic' inside the zip file
-                var fileName = null;
-                for (var fn in tp.zip.files) {
-                  if (Utils.endsWith(fn, '.jclic')) {
-                    fileName = fn;
-                    break;
+            // Launch loading of ZIP file in a separated thread
+            window.setTimeout(function () {
+              tp.skin.setWaitCursor(true);
+
+              JSZipUtils.getBinaryContent(fullPath, function (err, data) {
+                if (err) {
+                  tp.setSystemMessage('Error loading ZIP file: ', err);
+                  return;
+                }
+                try {
+                  tp.zip = new JSZip(data);
+                  tp.zip.fullZipPath = fullPath;
+                  tp.zip.zipBasePath = Utils.getBasePath(fullPath);
+                  // Find first file with extension '.jclic' inside the zip file
+                  var fileName = null;
+                  for (var fn in tp.zip.files) {
+                    if (Utils.endsWith(fn, '.jclic')) {
+                      fileName = fn;
+                      break;
+                    }
                   }
+                  if (fileName) {
+                    tp.load(Utils.getPath(tp.zip.zipBasePath, fileName), sequence, activity);
+                  }
+                  else
+                    tp.setSystemMessage('Error: ZIP does not contain any valid jclic file!');
+                } catch (e) {
+                  tp.setSystemMessage('Error reading ZIP file: ', e);
                 }
-                if (fileName) {
-                  tp.load(Utils.getPath(tp.zip.zipBasePath, fileName), sequence, activity);
-                }
-                else
-                  tp.setSystemMessage('Error: ZIP does not contain any valid jclic file!');
-              } catch (e) {
-                tp.setSystemMessage('Error reading ZIP file: ', e);
-              }
-            });
+              });
+              
+              tp.skin.setWaitCursor(false);
+
+            }, 100);
             this.skin.setWaitCursor(false);
             return;
           }
-          
+
           // Step 1: Load the project
           this.setSystemMessage('loading project', project);
           var fp = fullPath;
-          
+
           if (tp.zip) {
             var fName = Utils.getRelativePath(fp, tp.zip.zipBasePath);
             if (tp.zip.files[fName]) {
               fp = 'data:text/xml;charset=UTF-8,' + tp.zip.file(fName).asText();
             }
           }
-          
+
           $.get(fp, null, null, 'xml')
               .done(function (data) {
                 if (typeof data !== 'object')
@@ -522,7 +530,7 @@ define([
       }
 
       // Step two: load the ActivitySequenceElement
-      if (sequence) {
+      if (!Utils.isNullOrUndef(sequence)) {
         this.setSystemMessage('Loading sequence', sequence);
         this.navButtonsDisabled = false;
         // Try to load sequence by tag

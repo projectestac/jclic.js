@@ -88,14 +88,14 @@ define([
         var e = this.sequenceStack.pop();
         if (e.projectPath === this.player.project.path
             && Utils.isEquivalent(e.fullZipPath, (this.player.zip ? this.player.zip.fullZipPath : null)))
-          this.player.load(null, e.activity, null, null);
+          this.player.load(null, e.activity, null);
         else {
           if (this.testMode && e.projectPath !== null && e.projectPath.length > 0) {
             console.log('At this point, a jump to ' + e.projectPath + ' should be performed.');
           }
           else {
             var prj = e.fullZipPath ? e.fullZipPath : e.projectPath;
-            this.player.load(prj, e.activity, null, null);
+            this.player.load(prj, e.activity, null);
           }
         }
       }
@@ -132,7 +132,7 @@ define([
               if (ase !== null) {
                 if (allowReturn)
                   this.push();
-                this.player.load(null, null, ase.activityName, null);
+                this.player.load(null, null, ase.activityName);
                 result = true;
               }
             }
@@ -157,13 +157,13 @@ define([
     // allowReturn (boolean) - When this param is `true`, the jump will be recorded,
     // thus allowing to go back returning to the current activity.    
     jumpToSequence: function (sequence, path, allowReturn) {
-      if (sequence === null && path === null)
+      if (Utils.isNullOrUndef(sequence) && Utils.isNullOrUndef(path))
         return false;
-      if (path === null)
+      if (Utils.isNullOrUndef(path))
         path = this.player.project.path;
       if (this.sequenceStack.length > 0) {
         var e = this.sequenceStack[this.sequenceStack.length - 1];
-        if (sequence !== null && path === e.projectPath) {
+        if (!Utils.isNullOrUndef(sequence) && path === e.projectPath) {
           var same = sequence === e.sequence;
           if (path === this.player.project.path) {
             var ase = this.player.project.activitySequence.getElement(e.activity, false);
@@ -176,9 +176,9 @@ define([
       if (allowReturn)
         this.push();
       if (path === this.player.project.path)
-        this.player.load(null, sequence, null, null);
+        this.player.load(null, sequence, null);
       else
-        this.player.load(path, sequence, null, null);
+        this.player.load(path, sequence, null);
       return true;
     }
   };
