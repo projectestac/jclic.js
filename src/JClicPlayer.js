@@ -851,6 +851,7 @@ define([
         ab.setContent(abc ? abc : ActiveBoxContent.prototype.EMPTY_CONTENT);
         // TODO: Transfer this method to Skin
         this.skin.invalidate(ab).update();
+        ab.playMedia(this);
       }
     },
     //

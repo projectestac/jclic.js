@@ -33,6 +33,9 @@ define([
     // `Shaper.prototype._CLASSES` contains the list of classes derived from Shaper. It
     // should be read-only and updated by real shaper classes.
     _CLASSES: {},
+    //
+    // This shaper class name
+    className: 'Shaper',
     // 
     // Number of columns (nCols) and rows (nRows)
     nCols: 0, nRows: 0, nCells: 0,

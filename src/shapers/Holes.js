@@ -40,9 +40,10 @@ define([
     // Gets the AWT.Rectangle that contains all shapes
     // overrides same function in [Shaper](Shaper.html)
     getEnclosingShapeData: function () {
-      if(!this.showEnclosure) return null;
+      if(!this.showEnclosure)
+        return null;
       return this.enclosing ? this.enclosing : Shaper.prototype.getEnclosingShapeData.call(this);
-    },
+    }
   };
 
   // Rectangular extends Shaper

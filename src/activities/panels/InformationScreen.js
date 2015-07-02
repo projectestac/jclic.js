@@ -75,9 +75,7 @@ define([
           this.act.acp.generateContent(
               new this.act.acp.ActiveBagContentKit(abc.nch, abc.ncw, [abc], false), this.ps);
           
-        this.bg = ActiveBoxGrid.prototype._createEmptyGrid(null, this,
-            this.act.margin, this.act.margin,
-            abc);
+        this.bg = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
         this.bg.setContent(abc);
         this.bg.setVisible(true);
       }
@@ -88,6 +86,8 @@ define([
     // The method should be called from `Activity.Panel.update`
     // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
     updateContent: function (dirtyRegion) {
+      ActPanelAncestor.updateContent.call(this, dirtyRegion);
+      
       if (this.bg && this.$canvas) {
         var canvas = this.$canvas.get(0);
         var ctx = canvas.getContext('2d');
@@ -96,7 +96,7 @@ define([
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
         this.bg.update(ctx, dirtyRegion, this);
       }
-      return ActPanelAncestor.updateContent.call(this, dirtyRegion);
+      return this;
     },
     //
     // Calculates the optimal dimension of this panel
@@ -111,7 +111,11 @@ define([
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bg) {
-        this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>');
+        this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
+          position: 'absolute',
+          top: 0,
+          left: 0
+        });
         this.$div.append(this.$canvas);
         this.invalidate().update();
       }

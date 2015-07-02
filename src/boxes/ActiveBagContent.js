@@ -236,6 +236,10 @@ define([
     setImgContent: function (mb, sh, roundSizes) {
       if (sh)
         this.setShaper(sh);
+      
+      if(this.shaper.className === '@Holes')
+        this.shaper.hasRemainder = true;
+      
       this.ncw = this.shaper.nCols;
       this.nch = this.shaper.nRows;
       if (mb && this.imgName && mb.elements[this.imgName] && mb.elements[this.imgName].ready) {
