@@ -30,28 +30,41 @@ define([
 
   // Execute on document ready
   $(function () {
-    var $div = $('.JClic');
 
-    if ($div.length) {
-      var projectName = $div.data('project');
-      if (!projectName)
-        projectName = (typeof JClicDataProject === 'undefined' ? null : JClicDataProject);
-      
-      var options = $div.data('options');
-      if (!options)
-        options = (typeof JClicDataOptions === 'undefined' ? null : JClicDataOptions);
-      
-      var player = new JClicPlayer($div, options);
-      player.load(projectName);
+    // If defined, load the global variable `JClicDataOptions`
+    var options = (typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions);
+    
+    if (!options.noInit) {
+      // If defined, load the global variable `JClicDataProject`
+      var projectName = (typeof JClicDataProject === 'undefined' ? null : JClicDataProject);
 
-      $(window).resize(function () {
-        if (player.skin)
-          player.skin.doLayout();
+      // Search `div` elements with class "JClic"
+      var $JClicDivs = $('.JClic');
+
+      // Iterate over all JClic divs initializing players
+      $JClicDivs.each(function () {
+        var $div = $(this);
+
+        var prj = $div.data('project');
+        if (prj)
+          projectName = prj;
+
+        var opt = $div.data('options');
+        if (opt)
+          options = $.extend(Object.create(options), opt);
+
+        var player = new JClicPlayer($div, options);
+        if (projectName)
+          player.load(projectName);
+
+        $(window).resize(function () {
+          if (player.skin)
+            player.skin.doLayout();
+        });
       });
     }
   });
-
-  return 'JClic armed';
+  return 'JClic ready!';
 });
 
 // Testing function for npm
@@ -61,6 +74,5 @@ if (typeof exports !== "undefined") {
     console.log("This is a message from JClic");
   };
 }
-;
 
 /* global exports, JClicDataProject, JClicDataOptions */
