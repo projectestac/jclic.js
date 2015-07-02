@@ -112,9 +112,10 @@ define([
       });
       // Correction needed for '@Holes' shaper
       if (shaper.shapeData.length > 0 && shaper.shapeData.length !== shaper.nRows * shaper.nCols) {
-        shaper.nRows = shaper.shapeData.length;
-        shaper.nCols = 1;
-        shaper.nCells = shaper.nCols * shaper.nRows;
+        //shaper.nRows = shaper.shapeData.length;
+        //shaper.nCols = 1;
+        //shaper.nCells = shaper.nCols * shaper.nRows;
+        shaper.nCells = shaper.shapeData.length;
       }
       return this;
     },
