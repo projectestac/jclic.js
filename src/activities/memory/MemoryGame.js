@@ -24,8 +24,13 @@ define([
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT, Rectangular) {
 
   //
-  // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
-  // objects.
+  // This class of [Activity](Activity.html) shows a panel with duplicate [ActiveBox](ActiveBox.html)
+  // objects initially hidden and scrambled. To complete the activity, all the pairs of objects must
+  // be find. Only two objects are revealed in every move, so you must remember the content of each
+  // cell.
+  // The pairs of cells can have identical content, defined in the `primary` [ActiveBagContent](ActiveBagContent.html)
+  // of the activity, or two different contents. In this case, the `secondary`
+  // bag will contain the content related to each `primary` element.
   var MemoryGame = function (project) {
     Activity.call(this, project);
   };
@@ -233,8 +238,9 @@ define([
             // Don't consider drag moves below 3 pixels. Can be a "trembling click"
             if (this.bc.active && p.distanceTo(this.bc.origin) <= 3) {
               break;
-            }            
+            }
             up = true;
+            /* falls through */
           case 'touchstart':
           case 'mousedown':
             this.ps.stopMedia(1);
@@ -275,8 +281,8 @@ define([
               if (bx1 && bx1.idAss !== -1 && bx2 && bx2.idAss !== -1) {
                 if (bx1 !== bx2) {
                   var ok = false;
-                  if (bx1.idAss === bx2.idAss
-                      || bx1.getContent().isEquivalent(bx2.getContent(), true)) {
+                  if (bx1.idAss === bx2.idAss ||
+                      bx1.getContent().isEquivalent(bx2.getContent(), true)) {
                     ok = true;
                     bx1.idAss = -1;
                     bx1.setInactive(false);

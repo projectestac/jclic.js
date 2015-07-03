@@ -23,8 +23,9 @@ define([
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT) {
 
   //
-  // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
-  // objects.
+  // This class of [Activity](Activity.html) shows only one panel with scrambled [ActiveBox](ActiveBox.html)
+  // objects. To solve the activity, each cell must exchange its location with another one. When all cells
+  // are on place, the activity is done.
   var ExchangePuzzle = function (project) {
     Activity.call(this, project);
   };
@@ -213,6 +214,7 @@ define([
               break;
             }
             up = true;
+            /* falls through */
           case 'touchend':
           case 'touchstart':
           case 'mousedown':

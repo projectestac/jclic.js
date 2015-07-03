@@ -701,7 +701,7 @@ define([
       // http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
       // Thanks Steve!!
 
-      var kappa = .5522848,
+      var kappa = 0.5522848,
           ox = (this.dim.width / 2) * kappa, // control point offset horizontal
           oy = (this.dim.height / 2) * kappa, // control point offset vertical
           xe = this.pos.x + this.dim.width, // x-end
@@ -868,7 +868,7 @@ define([
     preparePath: function (ctx) {
       // TODO: Implement filling paths
       ctx.beginPath();
-      for (n in this.strokes)
+      for (var n in this.strokes)
         this.strokes[n].stroke(ctx);
       return ctx;
     }

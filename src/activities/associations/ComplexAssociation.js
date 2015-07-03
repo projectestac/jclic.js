@@ -20,6 +20,9 @@ define([
   "./SimpleAssociation"
 ], function ($, Activity, AWT, SimpleAssociation) {
 
+  //
+  // This is a special case of [SimpleAssociation](SimpleAssociation.html) where elements of the
+  // 'secondary' panel can have zero, one or more associated elements in 'primary'.
   var ComplexAssociation = function (project) {
     SimpleAssociation.call(this, project);
     this.useIdAss = true;
@@ -69,23 +72,23 @@ define([
 
       panelAncestor.buildVisualComponents.call(this);
 
-      var abcA = this.act.abc['primary'];
-      var abcB = this.act.abc['secondary'];
+      var abcA = this.act.abc['primary'],
+          abcB = this.act.abc['secondary'],
+          i, n;
 
       if (abcA && abcB) {
-
         if (this.act.invAss) {
           this.invAssCheck = [];
-          var n = abcB.getNumCells();
-          for (var i = 0; i < n; i++)
+          n = abcB.getNumCells();
+          for (i = 0; i < n; i++)
             this.invAssCheck[i] = false;
         }
 
         this.bgA.setDefaultIdAss();
 
         this.act.nonAssignedCells = 0;
-        var n = this.bgA.getNumCells();
-        for (var i = 0; i < n; i++) {
+        n = this.bgA.getNumCells();
+        for (i = 0; i < n; i++) {
           var bx = this.bgA.getActiveBox(i);
           if (bx.idAss === -1) {
             this.act.nonAssignedCells++;
@@ -112,11 +115,10 @@ define([
       if (this.bc && this.playing) {
         // 
         // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
-        var p = null;
-        // 
-        // Two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
+        // and two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
         // `origin` and `dest` points.
-        var bx1, bx2;
+        var p = null, bx1, bx2;
+
         // 
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
@@ -124,18 +126,18 @@ define([
         }
         else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
-          var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
-          var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+          var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
+              y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
           p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 
         // Flag for tracking `mouseup` events
-        var up = false;
-        // Flag for assuring that only one media plays per event (avoid event sounds overlapping
-        // cell's media sounds)
-        var m = false;
-        // Flag for tracking clicks on the background of grid A        
-        var clickOnBg0 = false;
+        var up = false,
+            // Flag for assuring that only one media plays per event (avoid event sounds overlapping
+            // cell's media sounds)
+            m = false,
+            // Flag for tracking clicks on the background of grid A        
+            clickOnBg0 = false;
 
         switch (event.type) {
           case 'touchcancel':
@@ -150,6 +152,7 @@ define([
               break;
             }
             up = true;
+            /* falls through */
           case 'touchend':
           case 'touchstart':
           case 'mousedown':
@@ -164,8 +167,9 @@ define([
               // Determine if click was done on panel A or panel B
               bx1 = this.bgA.findActiveBox(p);
               bx2 = this.bgB.findActiveBox(p);
-              if ((bx1 && bx1.idAss !== -1 && (!this.act.useOrder || bx1.idOrder === this.currentItem))
-                  || (!this.act.useOrder && bx2)) {
+              if ((bx1 && bx1.idAss !== -1 &&
+                  (!this.act.useOrder || bx1.idOrder === this.currentItem)) ||
+                  (!this.act.useOrder && bx2)) {
                 // Start the [BoxConnector](BoxConnector.html)
                 if (this.act.dragCells)
                   this.bc.begin(p, bx1 ? bx1 : bx2);
@@ -196,12 +200,13 @@ define([
               }
               // Check if the pairing was correct
               if (bx1 && bx2 && bx1.idAss !== -1 && !bx2.isInactive()) {
-                var ok = false;
-                var src = bx1.getDescription();
-                var dest = bx2.getDescription();
-                var matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idAss);
+                var ok = false,
+                    src = bx1.getDescription(),
+                    dest = bx2.getDescription(),
+                    matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idAss);
+
                 if (bx1.idAss === bx2.idOrder || bx2.getContent().isEquivalent(matchingDest, true)) {
-                  // Pairing is OK. Play media and disable involved cells
+                  // Pairing was OK. Play media and disable involved cells
                   ok = true;
                   bx1.idAss = -1;
                   if (this.act.abc['solvedPrimary']) {
@@ -234,8 +239,8 @@ define([
               }
               else if ((clickOnBg0 && this.bgA.contains(p)) || (!clickOnBg0 && this.bgB.contains(p))) {
                 // click on grid, out of cell
-                var src = (bx1 ? bx1.getDescription() : bx2 ? bx2.getDescription() : 'null');
-                this.ps.reportNewAction(this.act, 'MATCH', src, 'null', false, this.bgB.countCellsWithIdAss(-1));
+                var srcOut = (bx1 ? bx1.getDescription() : bx2 ? bx2.getDescription() : 'null');
+                this.ps.reportNewAction(this.act, 'MATCH', srcOut, 'null', false, this.bgB.countCellsWithIdAss(-1));
                 this.playEvent('actionError');
               }
               this.update();

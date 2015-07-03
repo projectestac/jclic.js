@@ -23,8 +23,10 @@ define([
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT) {
 
   //
-  // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
-  // objects.
+  // This class of [Activity](Activity.html) uses two panels to put in order the previously scrambled
+  // elements of the `primary` [ActiveBagContent](ActiveBagContenthtml).
+  // The first panel contains the scrambled cells, that must be moved to its correct position in
+  // the secondary panel.
   var DoublePuzzle = function (project) {
     Activity.call(this, project);
   };
@@ -228,6 +230,7 @@ define([
               break;
             }            
             up = true;
+            /* falls through */
           case 'touchend':
           case 'touchstart':
           case 'mousedown':

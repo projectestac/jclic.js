@@ -353,8 +353,8 @@ define([
 
         for (var i = 0, textNode; (textNode = textNodes[i++]); ) {
           endCharCount = charCount + textNode.length;
-          if (!foundStart && start >= charCount
-              && (start < endCharCount ||
+          if (!foundStart && start >= charCount &&
+              (start < endCharCount ||
                   (start === endCharCount && i <= textNodes.length))) {
             range.setStart(textNode, start - charCount);
             foundStart = true;

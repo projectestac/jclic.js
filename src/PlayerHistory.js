@@ -86,8 +86,8 @@ define([
       // todo: check return value
       if (this.sequenceStack.length > 0) {
         var e = this.sequenceStack.pop();
-        if (e.projectPath === this.player.project.path
-            && Utils.isEquivalent(e.fullZipPath, (this.player.zip ? this.player.zip.fullZipPath : null)))
+        if (e.projectPath === this.player.project.path &&
+            Utils.isEquivalent(e.fullZipPath, (this.player.zip ? this.player.zip.fullZipPath : null)))
           this.player.load(null, e.activity, null);
         else {
           if (this.testMode && e.projectPath !== null && e.projectPath.length > 0) {

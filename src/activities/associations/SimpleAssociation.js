@@ -23,8 +23,10 @@ define([
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT) {
 
   //
-  // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
-  // objects.
+  // This class of [Activity](Activity.html) uses two panels (`primary` and `seondary`) with 
+  // [ActiveBox](ActiveBox.html) objects, both with the same number of elements and associated one-to-one.
+  // A third [ActiveBagContent](ActiveBagContent.html) can be used as alternative content to be revealed
+  // in the `primary` panel as its cells are solved.
   var SimpleAssociation = function (project) {
     Activity.call(this, project);
   };
@@ -101,9 +103,9 @@ define([
 
       this.clear();
 
-      var abcA = this.act.abc['primary'];
-      var abcB = this.act.abc['secondary'];
-      var solved = this.act.abc['solvedPrimary'];
+      var abcA = this.act.abc['primary'],
+          abcB = this.act.abc['secondary'],
+          solved = this.act.abc['solvedPrimary'];
 
       if (abcA && abcB) {
 
@@ -171,8 +173,8 @@ define([
     updateContent: function (dirtyRegion) {
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
       if (this.bgA && this.bgB && this.$canvas) {
-        var canvas = this.$canvas.get(0);
-        var ctx = canvas.getContext('2d');
+        var canvas = this.$canvas.get(0),
+            ctx = canvas.getContext('2d');
         if (!dirtyRegion)
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
@@ -216,11 +218,10 @@ define([
       if (this.bc && this.playing) {
         // 
         // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
-        var p = null;
-        // 
-        // Two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
+        // and two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
         // `origin` and `dest` points.
-        var bx1, bx2;
+        var p = null,
+            bx1, bx2;
         // 
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
@@ -228,18 +229,18 @@ define([
         }
         else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
-          var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
-          var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+          var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
+              y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
           p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 
         // Flag for tracking `mouseup` events
-        var up = false;
-        // Flag for assuring that only one media plays per event (avoid event sounds overlapping
-        // cell's media sounds)
-        var m = false;
-        // Flag for tracking clicks on the background of grid A        
-        var clickOnBg0 = false;
+        var up = false,
+            // Flag for assuring that only one media plays per event (avoid event sounds overlapping
+            // cell's media sounds)
+            m = false,
+            // Flag for tracking clicks on the background of grid A        
+            clickOnBg0 = false;
 
         switch (event.type) {
           case 'touchcancel':
@@ -252,8 +253,9 @@ define([
             // Don't consider drag moves below 3 pixels. Can be a "trembling click"
             if (this.bc.active && p.distanceTo(this.bc.origin) <= 3) {
               break;
-            }            
+            }
             up = true;
+            /* falls through */
           case 'touchend':
           case 'touchstart':
           case 'mousedown':
@@ -268,15 +270,15 @@ define([
               // Determine if click was done on panel A or panel B
               bx1 = this.bgA.findActiveBox(p);
               bx2 = this.bgB.findActiveBox(p);
-              if ((bx1 && (!this.act.useOrder || bx1.idOrder === this.currentItem))
-                  || (!this.act.useOrder && bx2) && bx2.idAss !== -1) {
+              if ((bx1 && (!this.act.useOrder || bx1.idOrder === this.currentItem)) ||
+                  (!this.act.useOrder && bx2) && bx2.idAss !== -1) {
                 // Start the [BoxConnector](BoxConnector.html)
                 if (this.act.dragCells)
                   this.bc.begin(p, bx1 ? bx1 : bx2);
                 else
                   this.bc.begin(p);
                 // Play cell media or event sound
-                if(bx1)
+                if (bx1)
                   m = bx1.playMedia(this.ps);
                 if (!m)
                   this.playEvent('click');
@@ -301,10 +303,10 @@ define([
               }
               // Check if the pairing was correct
               if (bx1 && bx2 && bx1.idAss !== -1 && bx2.idAss !== -1) {
-                var ok = false;
-                var src = bx1.getDescription();
-                var dest = bx2.getDescription();
-                var matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idOrder);
+                var ok = false,
+                    src = bx1.getDescription(),
+                    dest = bx2.getDescription(),
+                    matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idOrder);
                 if (bx1.idOrder === bx2.idOrder || bx2.getContent().isEquivalent(matchingDest, true)) {
                   // Pairing is OK. Play media and disable involved cells
                   ok = true;
