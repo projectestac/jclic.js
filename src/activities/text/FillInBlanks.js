@@ -84,7 +84,7 @@ define([
             target.iniText
             : Utils.fillString(target.iniChar, target.numIniChars);
 
-        target.$span = $span.html(target.currentText).attr({
+        target.$span = $span.text(target.currentText).attr({
           contenteditable: 'true',
           id: idLabel,
           autocomplete: 'off',
@@ -153,7 +153,7 @@ define([
         var target = this.targets[i];
         if (checkNow) {
           if (target.$span)
-            target.currentText = target.$span.html();
+            target.currentText = target.$span.text();
           else if (target.$comboList)
             target.currentText = target.$comboList.val();
           this.checkTarget(target, true);
@@ -192,7 +192,7 @@ define([
         currentStatus = attributes[0];
         for (var i = 0; i < fragments.length; i++) {
           $('<span/>')
-              .html(fragments[i])
+              .text(fragments[i])
               .css(target.doc.style[currentStatus === 0 ? 'target' : 'targetError'].css)
               .appendTo(target.$span);
           currentStatus ^= 1;
@@ -248,7 +248,7 @@ define([
                   target.currentText.length,
                   Utils.getCaretCharacterOffsetWithin($span.get(0)));
               $span.empty();
-              $span.html(target.currentText);
+              $span.text(target.currentText);
               Utils.setSelectionRange($span.get(0), pos, pos);
               target.flagModified = true;
             }
@@ -267,20 +267,21 @@ define([
           if (target && target.$span) {
             var $span = target.$span;
             var txt = $span.html();
+            // Check for `enter` key
+            if (txt.indexOf('<br>') >= 0) {
+              txt = txt.replace(/<br>/g, '');
+              $span.html(txt);
+              target.currentText = $span.text();
+              return this.checkTarget(target, false, 1);
+            }
+            // Check if text has changed
+            // From here, use 'text' instead of 'html' to avoid HTML entities
+            txt = $span.text();
             if (txt !== target.currentText) {
               // Span text has changed!
               target.flagModified = true;
               var added = txt.length - target.currentText.length;
               if (added > 0) {
-                // Check for `enter` key
-                var p = txt.indexOf('<br>');
-                if (p >= 0) {
-                  txt = txt.replace(/<br>/g, '');
-                  $span.html(txt);
-                  target.currentText = txt;
-                  return this.checkTarget(target, false, 1);
-                }
-
                 if (txt.indexOf(target.iniChar) >= 0) {
                   // Remove filling chars
                   var pos = Utils.getCaretCharacterOffsetWithin($span.get(0));
@@ -292,7 +293,7 @@ define([
                     if (p < pos)
                       pos--;
                   }
-                  $span.html(txt);
+                  $span.text(txt);
                   Utils.setSelectionRange($span.get(0), pos, pos);
                 }
 
@@ -301,13 +302,13 @@ define([
                   var pos = Utils.getCaretCharacterOffsetWithin($span.get(0));
                   txt = txt.substr(0, target.maxLenResp);
                   pos = Math.min(pos, txt.length);
-                  $span.html(txt);
+                  $span.text(txt);
                   Utils.setSelectionRange($span.get(0), pos, pos);
                 }
               }
               else if (txt === '') {
                 txt = target.iniChar;
-                $span.html(txt);
+                $span.text(txt);
                 Utils.setSelectionRange($span.get(0), 0, 0);
               }
               target.currentText = txt;

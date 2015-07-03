@@ -188,7 +188,7 @@ define([
     // $span (JQuery DOM object) - An initial DOM object (usually a `span`) that can be used to
     // store the target, or replaced by another type of object.
     $createTargetElement: function (target, $span) {
-      $span.html(target.text);
+      $span.text(target.text);
       target.$span = $span;
       return $span;
     },
