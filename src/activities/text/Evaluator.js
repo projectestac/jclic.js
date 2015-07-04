@@ -221,9 +221,12 @@ define([
     // skipped (null or array of Booleans)
     // Returns: String
     getClearedText: function (src, skipped) {
+
+      var i;
+
       if (!skipped) {
         skipped = [];
-        for (var i = 0; i < src.length; i++)
+        for (i = 0; i < src.length; i++)
           skipped[i] = false;
       }
 
@@ -232,7 +235,7 @@ define([
 
       var sb = '';
       var wasSpace = false;
-      for (var i = 0; i < src.length; i++) {
+      for (i = 0; i < src.length; i++) {
         var ch = src.charAt(i);
         if (this.PUNCTUATION.indexOf(ch) >= 0 && !this.checkPunctuation) {
           if (!wasSpace)
@@ -274,10 +277,13 @@ define([
     // match (array of String)
     // Returns: Array of number    
     _evalText: function (text, match) {
+
+      var i;
+
       if (!this.detail)
         return BasicEvaluator.prototype._evalText.call(this, text, match);
       var skipped = [];
-      for (var i = 0; i < text.length; i++) {
+      for (i = 0; i < text.length; i++) {
         skipped[i] = false;
       }
       var sText = this.getClearedText(text, skipped);
@@ -285,7 +291,7 @@ define([
       var numChecks = [];
       var flags = [];
 
-      for (var i = 0; i < match.length; i++) {
+      for (i = 0; i < match.length; i++) {
         flags[i] = [];
         for (var j = 0; j < text.length; j++) {
           flags[i][j] = 0;
@@ -299,7 +305,7 @@ define([
       }
 
       if (maxCheckIndex === -1) {
-        for (var i = 0; i < match.length; i++) {
+        for (i = 0; i < match.length; i++) {
           if (numChecks[i] > maxCheck) {
             maxCheck = numChecks[i];
             maxCheckIndex = i;
@@ -308,7 +314,7 @@ define([
       }
 
       var returnFlags = [];
-      for (var i = 0, k = 0; i < text.length; i++) {
+      for (i = 0, k = 0; i < text.length; i++) {
         if (skipped[i])
           returnFlags[i] = 0;
         else

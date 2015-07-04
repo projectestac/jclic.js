@@ -141,8 +141,8 @@ define([
         atr |= this.flags.TRANSPARENT;
       else
         atr |= this.flags.INVERTED | this.flags.HIDDEN;
-      for (var py = 0; py < this.nRows; py++){
-        for (var px = 0; px < this.nCols; px++){
+      for (var py = 0; py < this.nRows; py++) {
+        for (var px = 0; px < this.nCols; px++) {
           if (lockWild && this.chars[py][px] === this.wild)
             this.attributes[py][px] = atr;
           else {
@@ -173,12 +173,16 @@ define([
     // ry (Number)
     // Returns: AWT.Point
     getItemFor: function (rx, ry) {
+
       if (!this.isValidCell(rx, ry))
         return null;
-      var point = new AWT.Point();
-      var inBlack = false;
-      var startCount = false;
-      for (var px = 0; px < rx; px++) {
+
+      var point = new AWT.Point(),
+          inBlack = false,
+          startCount = false,
+          px, py;
+
+      for (px = 0; px < rx; px++) {
         if ((this.attributes[ry][px] & this.flags.LOCKED) !== 0) {
           if (!inBlack) {
             if (startCount)
@@ -192,7 +196,7 @@ define([
       }
       inBlack = false;
       startCount = false;
-      for (var py = 0; py < ry; py++) {
+      for (py = 0; py < ry; py++) {
         if ((this.attributes[py][rx] & this.flags.LOCKED) !== 0) {
           if (!inBlack) {
             if (startCount)
@@ -237,9 +241,11 @@ define([
     // skipLocked (Boolean)
     moveCursor: function (dx, dy, skipLocked) {
       if (this.useCursor) {
+
         var point = this.findNextCellWithAttr(this.cursor.x, this.cursor.y,
             skipLocked ? this.flags.LOCKED : this.flags.NORMAL,
             dx, dy, false);
+
         if (!this.cursor.equals(point))
           this.setCursorAt(point.x, point.y, skipLocked);
       }
@@ -271,12 +277,12 @@ define([
     isIntoBlacks: function (pt, checkHorizontal) {
       var result = false;
       if (checkHorizontal) {
-        result = (pt.x <= 0 || this.getCellAttribute(pt.x - 1, pt.y, this.flags.LOCKED))
-            && (pt.x >= this.nCols - 1 || this.getCellAttribute(pt.x + 1, pt.y, this.flags.LOCKED));
+        result = (pt.x <= 0 || this.getCellAttribute(pt.x - 1, pt.y, this.flags.LOCKED)) &&
+            (pt.x >= this.nCols - 1 || this.getCellAttribute(pt.x + 1, pt.y, this.flags.LOCKED));
       }
       else {
-        result = (pt.y <= 0 || this.getCellAttribute(pt.x, pt.y - 1, this.flags.LOCKED))
-            && (pt.y >= this.nRows - 1 || this.getCellAttribute(pt.x, pt.y + 1, this.flags.LOCKED));
+        result = (pt.y <= 0 || this.getCellAttribute(pt.x, pt.y - 1, this.flags.LOCKED)) &&
+            (pt.y >= this.nRows - 1 || this.getCellAttribute(pt.x, pt.y + 1, this.flags.LOCKED));
       }
       return result;
     },
@@ -287,12 +293,12 @@ define([
     isIntoWhites: function (pt, checkHorizontal) {
       var result = false;
       if (checkHorizontal) {
-        result = (pt.x > 0 && !this.getCellAttribute(pt.x - 1, pt.y, this.flags.LOCKED))
-            && (pt.x < this.nCols - 1 && !this.getCellAttribute(pt.x + 1, pt.y, this.flags.LOCKED));
+        result = (pt.x > 0 && !this.getCellAttribute(pt.x - 1, pt.y, this.flags.LOCKED)) &&
+            (pt.x < this.nCols - 1 && !this.getCellAttribute(pt.x + 1, pt.y, this.flags.LOCKED));
       }
       else {
-        result = (pt.y > 0 && !this.getCellAttribute(pt.x, pt.y - 1, this.flags.LOCKED))
-            && (pt.y < this.nRows - 1 && !this.getCellAttribute(pt.x, pt.y + 1, this.flags.LOCKED));
+        result = (pt.y > 0 && !this.getCellAttribute(pt.x, pt.y - 1, this.flags.LOCKED)) &&
+            (pt.y < this.nRows - 1 && !this.getCellAttribute(pt.x, pt.y + 1, this.flags.LOCKED));
       }
       return result;
     },
@@ -376,11 +382,14 @@ define([
     // ch (char)
     // returns: Number
     countCharsLike: function (ch) {
-      var result = 0;
-      for (var py = 0; py < this.nRows; py++)
-        for (var px = 0; px < this.nCols; px++)
+      var result = 0,
+          px, py;
+
+      for (py = 0; py < this.nRows; py++)
+        for (px = 0; px < this.nCols; px++)
           if (this.chars[py][px] === ch)
             result++;
+
       return result;
     },
     //
@@ -392,12 +401,15 @@ define([
     // checkCase (Boolean)
     // returns: Number    
     countCoincidences: function (checkCase) {
-      var result = 0;
+      var result = 0,
+          px, py;
+
       if (this.answers)
-        for (var py = 0; py < this.nRows; py++)
-          for (var px = 0; px < this.nCols; px++)
+        for (py = 0; py < this.nRows; py++)
+          for (px = 0; px < this.nCols; px++)
             if (this.isCellOk(px, py, checkCase))
               result++;
+
       return result;
     },
     //
@@ -406,11 +418,13 @@ define([
     // checkCase (boolean)
     // returns: Boolean
     isCellOk: function (px, py, checkCase) {
-      var result = false;
+      var result = false,
+          ch, ch2;
+
       if (this.isValidCell(px, py)) {
-        var ch = this.chars[py][px];
+        ch = this.chars[py][px];
         if (ch !== this.wild) {
-          var ch2 = this.answers[py][px];
+          ch2 = this.answers[py][px];
           if (ch === ch2 ||
               (!checkCase && ch.toUpperCase() === ch2.toUpperCase()))
             result = true;
@@ -422,10 +436,13 @@ define([
     // devicePoint (AWT.Point)
     // returns: AWT.Point
     getLogicalCoords: function (devicePoint) {
+
       if (!this.contains(devicePoint))
         return null;
-      var px = Math.floor((devicePoint.x - this.pos.x) / this.cellWidth);
-      var py = Math.floor((devicePoint.y - this.pos.y) / this.cellHeight);
+
+      var px = Math.floor((devicePoint.x - this.pos.x) / this.cellWidth),
+          py = Math.floor((devicePoint.y - this.pos.y) / this.cellHeight);
+
       if (this.isValidCell(px, py)) {
         return new AWT.Point(px, py);
       }
@@ -464,17 +481,19 @@ define([
     // x1 and y1 (Number)
     // Returns: String
     getStringBetween: function (x0, y0, x1, y1) {
-      var sb = '';
+
+      var sb = '', i, dx, dy, steps;
+
       if (this.isValidCell(x0, y0) && this.isValidCell(x1, y1)) {
-        var dx = x1 - x0;
-        var dy = y1 - y0;
+        dx = x1 - x0;
+        dy = y1 - y0;
         if (dx === 0 || dy === 0 || Math.abs(dx) === Math.abs(dy)) {
-          var steps = Math.max(Math.abs(dx), Math.abs(dy));
+          steps = Math.max(Math.abs(dx), Math.abs(dy));
           if (steps > 0) {
             dx /= steps;
             dy /= steps;
           }
-          for (var i = 0; i <= steps; i++)
+          for (i = 0; i <= steps; i++)
             sb += this.getCharAt(x0 + dx * i, y0 + dy * i);
         }
       }
@@ -486,9 +505,12 @@ define([
     // atribute (Number)
     // value (Boolean)
     setAttributeBetween: function (x0, y0, x1, y1, attribute, value) {
+
       if (this.isValidCell(x0, y0) && this.isValidCell(x1, y1)) {
-        var dx = x1 - x0;
-        var dy = y1 - y0;
+
+        var dx = x1 - x0,
+            dy = y1 - y0;
+
         if (dx === 0 || dy === 0 || Math.abs(dx) === Math.abs(dy)) {
           var steps = Math.max(Math.abs(dx), Math.abs(dy));
           if (steps > 0) {
@@ -542,17 +564,21 @@ define([
     // px and py (Number)
     // Returns: AWT.Rectangle    
     getCellBorderBounds: function (px, py) {
+
       var isMarked = this.getCellAttribute(px, py, this.flags.MARKED);
+
       if (!this.border && !isMarked)
         return this.getCellRect(px, py);
-      var bb = this.getBoxBaseResolve();
-      var strk = isMarked ? bb.markerStroke : bb.borderStroke;
+
+      var bb = this.getBoxBaseResolve(),
+          strk = isMarked ? bb.markerStroke : bb.borderStroke;
+
       return  this.getCellRect(px, py).grow(strk.lineWidth, strk.lineWidth);
     },
     //
     // px and py (Number)
     repaintCell: function (px, py) {
-      if (this.container){
+      if (this.container) {
         this.container.invalidate(this.getCellBorderBounds(px, py)).update();
       }
     },
@@ -597,20 +623,19 @@ define([
           this.cellHeight - 2 * this.defaults.MIN_INTERNAL_MARGIN);
 
 
-      var ch = [];
-      var attr;
-      var isMarked, isInverted, isCursor;
-      var boxBounds;
-      var dx, dy;
+      var ch = [],
+          attr, isMarked, isInverted, isCursor,
+          boxBounds,
+          dx, dy, px, py, ry, bxr;
       // 
       // TODO: Check in different browsers and devices what is the real font height.
       // In Chrome on Linux (Gnome), substracting `bb.font._descent / 4` produces
       // good results, but in iPad this correction places the character at the bottom of the cell.
-      var ry = (this.cellHeight - bb.font.getHeight()) / 2;
+      ry = (this.cellHeight - bb.font.getHeight()) / 2;
 
-      for (var py = 0; py < this.nRows; py++) {
-        for (var px = 0; px < this.nCols; px++) {
-          var bxr = this.getCellBorderBounds(px, py);
+      for (py = 0; py < this.nRows; py++) {
+        for (px = 0; px < this.nCols; px++) {
+          bxr = this.getCellBorderBounds(px, py);
           if (bxr.intersects(dirtyRegion)) {
             attr = this.attributes[py][px];
             if ((attr & this.flags.TRANSPARENT) === 0) {

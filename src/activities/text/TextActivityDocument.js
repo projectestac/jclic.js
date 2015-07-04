@@ -236,7 +236,7 @@ define([
         var attr = doc.readDocAttributes($(this));
         doc.style[attr.name] = attr;
       });
-      
+
       // Read paragraphs
       $xml.find('section > p').each(function () {
 
@@ -316,10 +316,11 @@ define([
             break;
           case 'family':
             css['font-family'] = val;
-            // Attributes specific to named styles:
+            /* falls through */            
           case 'name':
           case 'base':
           case 'style':
+            // Attributes specific to named styles:
             attr[name] = val;
             break;
           case 'bold':

@@ -35,6 +35,7 @@ define([
       case 'RECORD_AUDIO':
         this.clearAudioBuffer(mc.recBuffer);
         ActiveMediaPlayer.prototype._audioBuffer[mc.recBuffer] = this.createAudioBuffer(mc.length);
+        /* falls through */
       case 'PLAY_RECORDED_AUDIO':
         this.useAudioBuffer = true;
         break;
@@ -49,6 +50,7 @@ define([
         break;
       case 'PLAY_MIDI':
         // TODO: Implement MIDI playing
+        break;
       default:
         break;
     }

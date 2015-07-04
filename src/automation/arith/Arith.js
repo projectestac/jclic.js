@@ -70,8 +70,8 @@ define([
       var op = this;
       // Read attributes
       $.each($xml.get(0).attributes, function () {
-        var name = this.name;
-        var val = this.value;
+        var name = this.name,
+            val = this.value;
         switch (name) {
           case 'decimals':
             op.numDec = Number(val);
@@ -129,7 +129,7 @@ define([
 
   Num.prototype.format = function () {
     return DecFormat(this.vf, this.c);
-  }
+  };
 
   var Operacio = function () {
     this.numA = new Num();
@@ -235,8 +235,8 @@ define([
     // liminf2 (Number)
     // limSup2 (Number)
     genNum: function (n, op, limInf2, limSup2) {
-      var r, exp, rang, ls, li, k, v;
-      var solved = false;
+      var r, exp, rang, ls, li, k, v,
+          solved = false;
 
       n.c = op.numDec;
       exp = n.c === 0 ? 1 : n.c === 1 ? 10 : 100;
@@ -287,10 +287,10 @@ define([
     //
     // o (Operacio)
     genOp: function (o) {
-      var i;
-      var ops = [], nops, op;
-      var rlinf, rlsup, ri2, rs2;
-      var q;
+      var i,
+          ops = [], nops, op,
+          rlinf, rlsup, ri2, rs2,
+          q, va, vb, bufa, bufb;
 
       rlinf = this.resultLimInf;
       rlsup = this.resultLimSup;
@@ -330,11 +330,10 @@ define([
           o.numR.c = o.numA.c > o.numB.c ? o.numA.c : o.numB.c;
           o.op = 0;
           if (this.resultCarry && o.numA.vf > 0 && o.numB.vf > 0) {
-            var va, vb;
             q = o.numR.c === 2 ? 100 : o.numR.c === 1 ? 10 : 1;
 
-            var bufa = DecFormat(Math.round(o.numA.vf * q + 0.5), 0, 10).split('');
-            var bufb = DecFormat(Math.round(o.numB.vf * q + 0.5), 0, 10).split('');
+            bufa = DecFormat(Math.round(o.numA.vf * q + 0.5), 0, 10).split('');
+            bufb = DecFormat(Math.round(o.numB.vf * q + 0.5), 0, 10).split('');
             for (i = 0; i < 10; i++)
               if (bufa[i] !== '0' || bufb[i] !== '0')
                 break;
@@ -382,10 +381,9 @@ define([
           o.numR.c = o.numA.c > o.numB.c ? o.numA.c : o.numB.c;
           o.op = 1;
           if (this.resultCarry && o.numA.vf > 0 && o.numB.vf > 0 && o.numA.vf >= o.numB.vf) {
-            var va, vb;
             q = (o.numR.c === 2 ? 100 : (o.numR.c === 1 ? 10 : 1));
-            var bufa = DecFormat(Math.round(o.numA.vf * q + 0.5), 0, 10).split('');
-            var bufb = DecFormat(Math.round(o.numB.vf * q + 0.5), 0, 10).split('');
+            bufa = DecFormat(Math.round(o.numA.vf * q + 0.5), 0, 10).split('');
+            bufb = DecFormat(Math.round(o.numB.vf * q + 0.5), 0, 10).split('');
             for (i = 0; i < 10; i++)
               if (bufb[i] !== '0')
                 break;
@@ -444,10 +442,10 @@ define([
                 break;
             }
             this.genNum(o.numB, this.opB, ri2, rs2);
-            if (o.numB.vf !== 0
-                && Math.abs(o.numA.vf) >= Math.abs(o.numB.vf)
-                && (o.numR.vf = o.numA.vf / o.numB.vf) >= rlinf
-                && o.numR.vf <= rlsup)
+            if (o.numB.vf !== 0 &&
+                Math.abs(o.numA.vf) >= Math.abs(o.numB.vf) &&
+                (o.numR.vf = (o.numA.vf / o.numB.vf)) >= rlinf &&
+                o.numR.vf <= rlsup)
               break;
           }
           if (o.numB.vf === 0)
@@ -477,29 +475,28 @@ define([
     // rb (ResourceBridge), usually a [JClicPlayer](JClicPlayer.html)
     generateContent: function (kit, rb) {
 
-      var nRows = kit.nRows;
-      var nCols = kit.nCols;
-      var content = kit.content; //Array of ActiveBagContent
-      var useIds = kit.useIds;
+      var nRows = kit.nRows,
+          nCols = kit.nCols,
+          content = kit.content, //Array of ActiveBagContent
+          useIds = kit.useIds,
+          i, j, k,
+          o, op = [], // Array of Operacio
+          S = this.S, // non-breaking whitespace
+          tipus = [],
+          numTipus, tipX,
+          tipInv = this.exp_caxb,
+          va = '', vb = '', vc = '', operator = '',
+          stra = [], strb = [], strc = [],
+          nColsB = nCols, nRowsB = nRows,
+          nCells = nRows * nCols,
+          ass = null;
 
       if (nRows <= 0 || nCols <= 0 ||
           content === null || content.length < 1 || content[0] === null || rb === null)
         return false;
 
-      var op = []; // Array of Operacio
-      var S = this.S; // non-breaking whitespace
-      var tipus = [];
-      var numTipus, tipX;
-      var tipInv = this.exp_caxb;
-      var va = '', vb = '', vc = '', operator = '';
-      var stra = [], strb = [], strc = [];
-      var nColsB = nCols, nRowsB = nRows;
-      var nCells = nRows * nCols;
-
       if (nCells < 2)
         return false;
-
-      var ass = null;
 
       numTipus = 0;
       if (this.exp_abx)
@@ -513,12 +510,12 @@ define([
       if (numTipus === 0)
         return false;
 
-      for (var i = 0; i < nCells; i++) {
-        var o = new Operacio();
-        for (var j = 0; j < this.NMAXLOOPS; j++) {
+      for (i = 0; i < nCells; i++) {
+        o = new Operacio();
+        for (j = 0; j < this.NMAXLOOPS; j++) {
           this.genOp(o);
           if (this.resultNoDup) {
-            for (var k = 0; k < i; k++) {
+            for (k = 0; k < i; k++) {
               if (o.numR.vf === op[k].numR.vf)
                 break;
             }
@@ -532,12 +529,12 @@ define([
       }
 
       if (this.resultOrder !== 0) {
-        for (var i = nCells - 1; i > 0; i--) {
-          for (var j = 0; j < i; j++) {
-            if ((this.resultOrder === 'SORTASC' && op[j].numR.vf > op[j + 1].numR.vf)
-                || (this.resultOrder === 'SORTDESC' && op[j].numR.vf < op[j + 1].numR.vf)) {
+        for (i = nCells - 1; i > 0; i--) {
+          for (j = 0; j < i; j++) {
+            if ((this.resultOrder === 'SORTASC' && op[j].numR.vf > op[j + 1].numR.vf) ||
+                (this.resultOrder === 'SORTDESC' && op[j].numR.vf < op[j + 1].numR.vf)) {
               // Switch values
-              var o = op[j];
+              o = op[j];
               op[j] = op[j + 1];
               op[j + 1] = o;
             }
@@ -545,7 +542,7 @@ define([
         }
       }
 
-      for (var i = 0; i < nCells; i++) {
+      for (i = 0; i < nCells; i++) {
         tipX = tipus[Math.floor(Math.random() * numTipus)];
         va = DecFormat(op[i].numA.vf, op[0].numA.c);
         vb = DecFormat(op[i].numB.vf, op[0].numB.c);
@@ -560,29 +557,29 @@ define([
         switch (tipX) {
           case 'AXC':
             strb[i] = vb;
-            stra[i] = tipInv
-                ? vc + S + "=" + S + va + S + operator + S + "?"
+            stra[i] = tipInv ?
+                vc + S + "=" + S + va + S + operator + S + "?"
                 : va + S + operator + S + "?" + S + "=" + S + vc;
             break;
 
           case 'XBC':
             strb[i] = va;
-            stra[i] = tipInv
-                ? vc + S + "=" + S + "?" + S + operator + S + vb
+            stra[i] = tipInv ?
+                vc + S + "=" + S + "?" + S + operator + S + vb
                 : "?" + S + operator + S + vb + S + "=" + S + vc;
             break;
 
           case 'AXBC':
             strb[i] = operator;
-            stra[i] = tipInv
-                ? vc + S + "=" + S + va + S + "?" + S + vb
+            stra[i] = tipInv ?
+                vc + S + "=" + S + va + S + "?" + S + vb
                 : va + S + "?" + S + vb + S + "=" + S + vc;
             break;
 
           default:
             strb[i] = vc;
-            stra[i] = tipInv
-                ? "?" + S + "=" + S + va + S + operator + S + vb
+            stra[i] = tipInv ?
+                "?" + S + "=" + S + va + S + operator + S + vb
                 : va + S + operator + S + vb + S + "=";
             break;
         }
@@ -591,9 +588,9 @@ define([
       if (useIds) {
         ass = [];
         var strbx = [];
-        var k = 0;
-        for (var i = 0; i < nCells; i++) {
-          for (var j = 0; j < k; j++)
+        k = 0;
+        for (i = 0; i < nCells; i++) {
+          for (j = 0; j < k; j++)
             if (strb[i] === strbx[j])
               break;
           if (j === k) {
@@ -606,7 +603,7 @@ define([
         }
 
         strb = [];
-        for (var i = 0; i < k; i++)
+        for (i = 0; i < k; i++)
           strb[i] = strbx[i];
 
         if (nRowsB * nColsB !== k) {
@@ -694,7 +691,6 @@ define([
   // 
   // Register class in Activity.prototype
   AutoContentProvider.prototype._CLASSES['@arith.Arith'] = Arith;
-
 
   return Arith;
 

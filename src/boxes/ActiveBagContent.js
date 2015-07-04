@@ -76,12 +76,13 @@ define([
     // Loads the object settings from a specific JQuery XML element 
     setProperties: function ($xml, mediaBag) {
 
-      var cellSet = this;
-      var bug = false;
+      var cellSet = this,
+          bug = false,
+          i, n;
 
       $.each($xml.get(0).attributes, function () {
-        var name = this.name;
-        var val = this.value;
+        var name = this.name,
+            val = this.value;
         switch (this.name) {
           case 'id':
             cellSet.id = val;
@@ -95,7 +96,8 @@ define([
             cellSet.nch = Number(val);
             break;
           case 'columns':
-            bug=true;          
+            bug = true;
+            /* falls through */
           case 'cols':
             cellSet.ncw = Number(val);
             break;
@@ -110,9 +112,9 @@ define([
             break;
         }
       });
-      
-      if(bug){
-        var n = cellSet.ncw;
+
+      if (bug) {
+        n = cellSet.ncw;
         cellSet.ncw = cellSet.nch;
         cellSet.nch = n;
       }
@@ -124,16 +126,16 @@ define([
             cellSet.bb = new BoxBase(null).setProperties($node);
             break;
           case 'shaper':
-            var shaperClassName = $node.attr('class');
-            var nCols = Math.max(1, $node.attr('cols'));
-            var nRows = Math.max(1, $node.attr('rows'));
+            var shaperClassName = $node.attr('class'),
+                nCols = Math.max(1, $node.attr('cols')),
+                nRows = Math.max(1, $node.attr('rows'));
             cellSet.shaper = Shaper.prototype._getShaper(shaperClassName, nCols, nRows);
             cellSet.shaper.setProperties($node);
             break;
           case 'ids':
             // Used in special cases where all cells have empty content with only 'ids'
             var ids = this.textContent.split(' ');
-            for (var i = 0; i < ids.length; i++)
+            for (i = 0; i < ids.length; i++)
               cellSet.activeBoxContentArray[i] = new ActiveBoxContent(Number(ids[i]));
             break;
           case 'cell':
@@ -144,10 +146,10 @@ define([
       });
 
       // Assign ids when cells have empty content (they are just shapes)
-      var n = this.activeBoxContentArray.length;
+      n = this.activeBoxContentArray.length;
       if (n > 0) {
         var empty = true;
-        for (var i = 0; i < n; i++) {
+        for (i = 0; i < n; i++) {
           var bxc = this.getActiveBoxContent(i);
           if (bxc.id !== -1 || bxc.item !== -1 || !bxc.isEmpty()) {
             empty = false;
@@ -155,7 +157,7 @@ define([
           }
         }
         if (empty) {
-          for (var i = 0; i < n; i++)
+          for (i = 0; i < n; i++)
             this.getActiveBoxContent(i).id = i;
         }
       }
@@ -236,10 +238,10 @@ define([
     setImgContent: function (mb, sh, roundSizes) {
       if (sh)
         this.setShaper(sh);
-      
-      if(this.shaper.className === '@Holes')
+
+      if (this.shaper.className === '@Holes')
         this.shaper.hasRemainder = true;
-      
+
       this.ncw = this.shaper.nCols;
       this.nch = this.shaper.nRows;
       if (mb && this.imgName && mb.elements[this.imgName] && mb.elements[this.imgName].ready) {
@@ -297,9 +299,11 @@ define([
     //
     //
     avoidAllIdsNull: function (maxId) {
-      var allIdsNull = true;
-      var numCells = this.activeBoxContentArray.length;
-      for (var i = 0; i < numCells; i++) {
+      
+      var i, allIdsNull = true,
+          numCells = this.activeBoxContentArray.length;
+      
+      for (i = 0; i < numCells; i++) {
         if (this.getActiveBoxContent(i).id !== -1) {
           allIdsNull = false;
           break;
@@ -307,7 +311,7 @@ define([
       }
       if (allIdsNull) {
         maxId = Math.max(1, maxId);
-        for (var i = 0; i < numCells; i++) {
+        for (i = 0; i < numCells; i++) {
           this.getActiveBoxContent(i).id = i % maxId;
         }
       }

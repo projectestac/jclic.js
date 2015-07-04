@@ -169,6 +169,9 @@ define([
     // attributes (Array of Number) - Array of flags indicating the status (OK or error) of each
     // character in `target.currentText`.
     markTarget: function (target, attributes) {
+
+      var i = 0;
+
       if (target.$comboList || this.act.ev.isOk(attributes))
         target.checkColors();
       else if (target.$span) {
@@ -177,7 +180,6 @@ define([
         var fragments = [];
         var currentStatus = -1;
         var currentFragment = -1;
-        var i = 0;
         for (; i < attributes.length && i < txt.length; i++) {
           if (attributes[i] !== currentStatus) {
             fragments[++currentFragment] = '';
@@ -190,7 +192,7 @@ define([
         // Empty and re-fill $span
         target.$span.empty();
         currentStatus = attributes[0];
-        for (var i = 0; i < fragments.length; i++) {
+        for (i = 0; i < fragments.length; i++) {
           $('<span/>')
               .text(fragments[i])
               .css(target.doc.style[currentStatus === 0 ? 'target' : 'targetError'].css)
@@ -236,15 +238,17 @@ define([
       if (!ActPanelAncestor.processEvent.call(this, event))
         return false;
 
-      var target = event.textTarget;
+      var target = event.textTarget,
+          $span = null,
+          pos = 0;
 
       switch (event.type) {
         case 'focus':
           if (target) {
             if (target.$span && target.$span.children().length > 0) {
               // Clear inner spans used to mark errors
-              var $span = target.$span;
-              var pos = Math.min(
+              $span = target.$span;
+              pos = Math.min(
                   target.currentText.length,
                   Utils.getCaretCharacterOffsetWithin($span.get(0)));
               $span.empty();
@@ -265,7 +269,7 @@ define([
 
         case 'input':
           if (target && target.$span) {
-            var $span = target.$span;
+            $span = target.$span;
             var txt = $span.html();
             // Check for `enter` key
             if (txt.indexOf('<br>') >= 0) {
@@ -284,7 +288,7 @@ define([
               if (added > 0) {
                 if (txt.indexOf(target.iniChar) >= 0) {
                   // Remove filling chars
-                  var pos = Utils.getCaretCharacterOffsetWithin($span.get(0));
+                  pos = Utils.getCaretCharacterOffsetWithin($span.get(0));
                   for (var i = 0; i < added; i++) {
                     var p = txt.indexOf(target.iniChar);
                     if (p < 0)
@@ -299,7 +303,7 @@ define([
 
                 // Check if current text exceeds max length
                 if (txt.length > target.maxLenResp) {
-                  var pos = Utils.getCaretCharacterOffsetWithin($span.get(0));
+                  pos = Utils.getCaretCharacterOffsetWithin($span.get(0));
                   txt = txt.substr(0, target.maxLenResp);
                   pos = Math.min(pos, txt.length);
                   $span.text(txt);

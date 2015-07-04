@@ -38,6 +38,8 @@ define([
   var ActiveBoxGrid = function (parent, container, boxBase, px, py, setWidth, setHeight, sh) {
     // ActiveBoxGrid derives from ActiveBoxBag
     ActiveBoxBag.call(this, parent, container, boxBase);
+    
+    var i, tmpSh, bx;
 
     this.nCols = sh.nCols;
     this.nRows = sh.nRows;
@@ -51,9 +53,9 @@ define([
 
     // Create all the [ActiveBox](ActiveBox.html) objects based on the
     // shapes provided by the [Shaper](Shaper.html)
-    for (var i = 0; i < sh.nCells; i++) {
-      var tmpSh = sh.getShape(i, r);
-      var bx = new ActiveBox(this, container, boxBase, i, tmpSh.getBounds());
+    for (i = 0; i < sh.nCells; i++) {
+      tmpSh = sh.getShape(i, r);
+      bx = new ActiveBox(this, container, boxBase, i, tmpSh.getBounds());
       if (!sh.rectangularShapes)
         bx.setShape(tmpSh);
       this.addActiveBox(bx);
@@ -62,8 +64,8 @@ define([
     // If the Shaper has `remainder` (extra space), set the background box of this
     // [BoxBag](BoxBag.html)
     if (sh.hasRemainder) {
-      var tmpSh = sh.getRemainderShape(r);
-      var bx = new ActiveBox(this, container, boxBase, 0, tmpSh.getBounds());
+      tmpSh = sh.getRemainderShape(r);
+      bx = new ActiveBox(this, container, boxBase, 0, tmpSh.getBounds());
       bx.setShape(tmpSh);
       this.setBackgroundBox(bx);
     }

@@ -25,8 +25,9 @@ define([
 ], function ($, Activity, ActiveBoxGrid, BoxBag, AWT, Utils, Rectangular) {
 
   //
-  // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
-  // objects.
+  // This class of [Activity](Activity.html) shows a panel with [ActiveBox](ActiveBox.html)
+  // objects acting as cells with questions. The answers to these questions must be written in a
+  // text field.
   var WrittenAnswer = function (project) {
     Activity.call(this, project);
   };
@@ -115,6 +116,8 @@ define([
     // 
     // Prepares the activity panel
     buildVisualComponents: function () {
+      
+      var n, i;
 
       if (this.firstRun)
         ActPanelAncestor.buildVisualComponents.call(this);
@@ -129,8 +132,8 @@ define([
 
         if (this.act.invAss) {
           this.invAssCheck = [];
-          var n = abcB.getNumCells();
-          for (var i = 0; i < n; i++)
+          n = abcB.getNumCells();
+          for (i = 0; i < n; i++)
             this.invAssCheck[i] = false;
         }
 
@@ -196,15 +199,14 @@ define([
         this.bgA.setDefaultIdAss();
 
         this.act.nonAssignedCells = 0;
-        var n = this.bgA.getNumCells();
-        for (var i = 0; i < n; i++) {
+        n = this.bgA.getNumCells();
+        for (i = 0; i < n; i++) {
           var bx = this.bgA.getActiveBox(i);
           if (bx.idAss === -1) {
             this.act.nonAssignedCells++;
             bx.switchToAlt(this.ps);
           }
         }
-
         this.bgA.setVisible(true);
         this.bgB.setVisible(false);
       }

@@ -25,7 +25,9 @@ define([
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT, TextGrid) {
 
   //
-  // 
+  // In this type of [Activity](Activity.html) a grid of letters is presented to the user, that must
+  // find words hidden on it. The words can be written in horizontal, verticat or diagonal lines, in
+  // regular or reverse order, and can have associated content that will be revealed as found.
   var WordSearch = function (project) {
     Activity.call(this, project);
   };
@@ -258,6 +260,7 @@ define([
               break;
             }
             up = true;
+            /* falls through */
           case 'touchend':
           case 'touchstart':
           case 'mousedown':
