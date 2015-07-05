@@ -56,14 +56,15 @@ module.exports = function (grunt) {
         }
       }
     },
-    docco: {
-      dist: {
-        src: ['src/**/*.js'],
-        options: {
-          output: 'doc',
-          layout: 'parallel'
+    jsdoc: {
+        dist: {
+            src: ['src/**/*.js'],
+            options: {
+                destination: 'doc',
+                //template: 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template',
+                configure: 'jsdoc.conf.json'
+            }
         }
-      }
     },
     express: {
       all: {
@@ -113,7 +114,7 @@ module.exports = function (grunt) {
   grunt.registerTask(
       'doc',
       'Generates the project documentation in "doc"',
-      ['clean:doc', 'docco:dist']
+      ['clean:doc', 'jsdoc:dist']
       );
 
   grunt.registerTask(

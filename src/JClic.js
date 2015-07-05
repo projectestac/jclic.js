@@ -13,25 +13,29 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
-// Main JClic method  
-// 
-// Looks for the first DOM element in the document with class "JClic", builds a new
-// [JClicPlayer](JClicPlayer.html) object attached to this DOM element and loads the
-// project file specified in the `data-project` attribute.  
-// 
-// Example: `<div class ="JClic" data-project="my-project.jclic"></div>`  
-// This JClic `div` must preferabily be empty. Inner content may become overlapped by other objects.
-//
 define([
   "jquery",
   "./JClicPlayer",
   "./Deps"
 ], function ($, JClicPlayer, deps) {
 
+/** 
+ * This is the main JClic method
+ * 
+ * It looks for the first DOM element in the document with class "JClic", builds a new
+ * [JClicPlayer](JClicPlayer.html) object attached to this DOM element and loads the
+ * project file specified in the `data-project` attribute.  
+ * 
+ * Example: `<div class ="JClic" data-project="my-project.jclic"></div>`  
+ * 
+ * This JClic `div` must preferabily be empty. Inner content may become overlapped by other objects.
+ * 
+ * @module JClic
+ */
   // Execute on document ready
   $(function () {
 
-    // If defined, load the global variable `JClicDataOptions`
+    /** If defined, load the global variable `JClicDataOptions` */
     var options = (typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions);
     
     if (!options.noInit) {

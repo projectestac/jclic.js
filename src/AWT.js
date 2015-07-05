@@ -17,20 +17,30 @@ define([
   "jquery",
   "./Utils"
 ], function ($, Utils) {
+    
+  /**
+   * This object encapsulates utility clases for painting graphics and images,
+   * as found in the Java [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html)  
+   * 
+   * The objects defined here are: [Font](#Font), [Gradient](#Gradient), [Stroke](#Stroke),
+   * [Point](#Point), [Dimension](#Dimension), [Shape](#Shape), [Rectangle](#Rectangle),
+   * [Ellipse](#Ellipse), [Path](#Path), [PathStroke](#PathStroke), [Action](#Action), [Timer](#Timer)
+   * and [Container](#Container)
+   * @exports AWT
+   */
+  var AWT;
 
-  //
-  // This object encapsulates utility clases for painting graphics and images,
-  // as found in the Java [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html)  
-  // 
-  // The objects defined here are: [Font](#Font), [Gradient](#Gradient), [Stroke](#Stroke),
-  // [Point](#Point), [Dimension](#Dimension), [Shape](#Shape), [Rectangle](#Rectangle),
-  // [Ellipse](#Ellipse), [Path](#Path), [PathStroke](#PathStroke), [Action](#Action), [Timer](#Timer)
-  // and [Container](#Container)
-
-  //
-  // #### <a name="Font">Font</a> ####
-  // Encapsulates properties and provides methotds to manage fonts.
-  var Font = function (family, size, bold, italic, variant) {
+  /**
+   * AWT.Font encapsulates properties and provides methods to manage fonts
+   * @constructor
+   * @param {string=} [family='Arial']
+   * @param {number=} [size=17]
+   * @param {number=} [bold=0]
+   * @param {number=} [italic=0]
+   * @param {string=} [variant='']
+   * @returns {AWT#Font}
+   */
+  AWT.Font = function (family, size, bold, italic, variant) {
     if (family)
       this.family = family;
     if (typeof size === 'number')
@@ -43,8 +53,8 @@ define([
       this.variant = variant;
   };
 
-  Font.prototype = {
-    constructor: Font,
+  AWT.Font.prototype = {
+    constructor: AWT.Font,
     family: 'Arial',
     // 
     // Warning: Do not change `size` directly. Instead, use the `setSize` method
@@ -57,8 +67,10 @@ define([
     _ascent: -1,
     _descent: -1,
     _height: -1,
-    //
-    // Read Font properties from an XML element
+    /**
+     * Read Font properties from an XML element
+     * @param {Object} $xml
+     */
     setProperties: function ($xml) {
       if ($xml.attr('family'))
         this.family = $xml.attr('family');
@@ -72,9 +84,10 @@ define([
         this.variant = $xml.attr('variant');
       return this;
     },
-    //
-    // Allows to change the `size` member, recalculating the vertical
-    // metrics
+    /**
+     * Allows to change the `size` member, recalculating the vertical metrics.
+     * @param {number} size
+     */
     setSize: function (size) {
       var currentSize = this.size;
       this.size = size;
@@ -82,13 +95,15 @@ define([
         this._height = -1;
       return this;
     },
-    //
-    // Gets the font height
+    /**
+     * Gets this font height
+     * @returns {number}
+     */
     getHeight: function () {
       if (this._height < 0) {
         // Look for an equivalent font already calculated
-        for (var i = 0; i < Font.prototype._ALREADY_CALCULATED_FONTS.length; i++) {
-          var font = Font.prototype._ALREADY_CALCULATED_FONTS[i];
+        for (var i = 0; i < AWT.Font.prototype._ALREADY_CALCULATED_FONTS.length; i++) {
+          var font = AWT.Font.prototype._ALREADY_CALCULATED_FONTS[i];
           if (font.equals(this)) {
             this._height = font._height;
             this._ascent = font._ascent;
@@ -99,18 +114,21 @@ define([
         if (this._height < 0) {
           this._calcHeight();
           if (this._height > 0)
-            Font.prototype._ALREADY_CALCULATED_FONTS.push(this);
+            AWT.Font.prototype._ALREADY_CALCULATED_FONTS.push(this);
         }
       }
       return this._height;
     },
-    //
-    // Array of font objects with already calculated heights, always stored on the prototype
+    /**
+     * Array of font objects with already calculated heights, always stored on the prototype
+     */
     _ALREADY_CALCULATED_FONTS: [],
-    //
-    // Translates the Font properties into CSS statements  
-    // css (Object or null) - The object where to add CSS properties. When null or undefined, a new
-    // object will be created and returned.
+    /**
+     * Translates the Font properties into CSS statements  
+     * @param {Object} css - The object where to add CSS properties. When null or undefined, a new
+     * object will be created and returned.
+     * @returns {Object}
+     */
     toCss: function (css) {
       if (!css)
         css = {};
@@ -124,9 +142,11 @@ define([
         css['font-variant'] = this.variant;
       return css;
     },
-    //
-    // Gets the codification of this font in a single string
-    // suitable to be use in the `font` CSS attribute
+    /**
+     * Gets the codification of this font in a single string suitable to be use in a `font`
+     * CSS attribute
+     * @returns {String}
+     */
     cssFont: function () {
       return (this.italic ? 'italic ' : 'normal') + ' ' +
           (this.variant === '' ? 'normal' : this.variant) + ' ' +
@@ -134,15 +154,17 @@ define([
           this.size + 'pt ' +
           this.family;
     },
-    //
-    // The [TextMetrics](https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics) 
-    // object used by [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-    // does not provide a `heigth` value for rendered text.
-    // This [stackoverflow question](http://stackoverflow.com/questions/1134586/how-can-you-find-the-height-of-text-on-an-html-canvas)
-    // has an excellent response by Daniel Earwicker explaining how to measure the
-    // vertical dimension of rendered text using a `span` element.
-    // The code has been slighty adapted to deal with Font objects.
-    // Warning: Do not call this method direcly. Use `getHeight` instead
+    /**
+     * The [TextMetrics](https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics) 
+     * object used by [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+     * does not provide a `heigth` value for rendered text.<br>
+     * This [stackoverflow question](http://stackoverflow.com/questions/1134586/how-can-you-find-the-height-of-text-on-an-html-canvas)
+     * has an excellent response by Daniel Earwicker explaining how to measure the
+     * vertical dimension of rendered text using a `span` element.<br>
+     * The code has been slighty adapted to deal with Font objects.
+     * 
+     * _Warning_: Do not call this method direcly. Use `getHeight` instead
+     */
     _calcHeight: function () {
       var text = $('<span>Hg</span>').css(this.toCss());
       var block = $('<div style="display: inline-block; width: 1px; height: 0px;"></div>');
@@ -165,8 +187,11 @@ define([
       }
       return this;
     },
-    //
-    // Check if two Font objects are equivalent
+    /**
+     * Checks if two Font objects are equivalent
+     * @param {AWT#Font} font - The AWT.Font object to compare against this one
+     * @returns {Boolean} - `true` if both objects are equivalent, `false` otherwise
+     */
     equals: function (font) {
       return this.family === font.family &&
           this.size === font.size &&
@@ -1145,7 +1170,7 @@ define([
 
   //
   // Global variable to be exported
-  var AWT = {
+  AWT = {
     Font: Font,
     Gradient: Gradient,
     Stroke: Stroke,
