@@ -629,7 +629,7 @@ define([
           dx, dy, px, py, ry, bxr;
       // 
       // TODO: Check in different browsers and devices what is the real font height.
-      // In Chrome on Linux (Gnome), substracting `bb.font._descent / 4` produces
+      // In Chrome on Linux (Gnome), substracting `bb.font._metrics.descent / 4` produces
       // good results, but in iPad this correction places the character at the bottom of the cell.
       ry = (this.cellHeight - bb.font.getHeight()) / 2;
 

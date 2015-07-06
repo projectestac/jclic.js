@@ -20,7 +20,7 @@ define([
 ], function ($, AWT, Utils) {
 
 //
-// This object encapsulates a description of any multimedia content (sound,
+// This object contains a description of any multimedia content (sound,
 // video, MIDI, voice recording..) or special actions (jump to another point in
 // the sequence, link to an URL, etc.) associated to an [ActiveBox](ActiveBox.html)
 // object.

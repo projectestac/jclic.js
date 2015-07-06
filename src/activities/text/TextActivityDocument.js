@@ -22,7 +22,7 @@ define([
 ], function ($, Utils, ActiveBoxContent, MediaContent, ActiveBagContent) {
 
   //   // #### <a name="TextTarget">TextTarget</a> ####
-  // This class encapsulates the properties and methods of the document elements that are the 
+  // This class contains the properties and methods of the document elements that are the 
   // real targets of user actions in text activities.
   //
   var TextTarget = function (doc, text) {
@@ -190,7 +190,7 @@ define([
   };
 
   //
-  // TextActivityDocument encapsulates the main document of text activities
+  // TextActivityDocument is the main HTML document used in text activities
   var TextActivityDocument = function () {
     // Make a deep clone of the default style
     this.style = {'default': $.extend(true, {}, this.DEFAULT_DOC_STYLE)};

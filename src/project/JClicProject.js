@@ -22,7 +22,7 @@ define([
   "../Utils"
 ], function ($, ProjectSettings, ActivitySequence, MediaBag, Activity, Utils) {
 
-// JClicProject encapsulates all the components of a JClic project:
+// JClicProject contains all the components of a JClic project:
 // activities, sequences, media files, descriptors and metadata.  
 // This encapsulation is achieved by three auxiliary objects:
 // - ProjectSettings: stores metadata like full tiltle, description,

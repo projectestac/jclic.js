@@ -24,28 +24,30 @@ define([
  * 
  * It looks for the first DOM element in the document with class "JClic", builds a new
  * [JClicPlayer](JClicPlayer.html) object attached to this DOM element and loads the
- * project file specified in the `data-project` attribute.  
+ * project file specified in the `data-project` attribute.
  * 
- * Example: `<div class ="JClic" data-project="my-project.jclic"></div>`  
+ * This DOM element must preferabily be empty. Inner content may become overlapped by other objects.
  * 
- * This JClic `div` must preferabily be empty. Inner content may become overlapped by other objects.
+ * @example
+ * // Creates a JClic div and loads "my-project.jclic" on it
+ * <div class ="JClic" data-project="my-project.jclic"></div>
  * 
  * @module JClic
  */
   // Execute on document ready
   $(function () {
 
-    /** If defined, load the global variable `JClicDataOptions` */
+    // If defined, load the global variable `JClicDataOptions`
     var options = (typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions);
     
     if (!options.noInit) {
       // If defined, load the global variable `JClicDataProject`
       var projectName = (typeof JClicDataProject === 'undefined' ? null : JClicDataProject);
 
-      // Search `div` elements with class "JClic"
+      // Search DOM elements with class "JClic"
       var $JClicDivs = $('.JClic');
 
-      // Iterate over all JClic divs initializing players
+      // Iterate over all JClic DOM elements, initializing players
       $JClicDivs.each(function () {
         var $div = $(this);
 

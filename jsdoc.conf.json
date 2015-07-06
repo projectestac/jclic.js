@@ -1,10 +1,16 @@
 {
+  "opts": {
+    "recurse": true,
+    "verbose": true
+  },
   "tags": {
     "allowUnknownTags": true
   },
-  "plugins": ["plugins/markdown"],
+  "plugins": [
+    "plugins/markdown"
+  ],
   "templates": {
-    "cleverLinks": false,
+    "cleverLinks": true,
     "monospaceLinks": false,
     "dateFormat": "ddd MMM Do YYYY",
     "outputSourceFiles": true,

@@ -17,28 +17,28 @@ define([
   "jquery",
   "./Utils"
 ], function ($, Utils) {
-    
-  /**
-   * This object encapsulates utility clases for painting graphics and images,
-   * as found in the Java [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html)  
-   * 
-   * The objects defined here are: [Font](#Font), [Gradient](#Gradient), [Stroke](#Stroke),
-   * [Point](#Point), [Dimension](#Dimension), [Shape](#Shape), [Rectangle](#Rectangle),
-   * [Ellipse](#Ellipse), [Path](#Path), [PathStroke](#PathStroke), [Action](#Action), [Timer](#Timer)
-   * and [Container](#Container)
-   * @exports AWT
-   */
-  var AWT;
 
   /**
-   * AWT.Font encapsulates properties and provides methods to manage fonts
+   * This object contains utility clases for painting graphics and images,
+   * as found in the Java [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html)  
+   * 
+   * The objects defined here are: {@link AWT.Font}, {@link AWT.Gradient}, {@link AWT.Stroke},
+   * {@link AWT.Point}, {@link AWT.Dimension}, {@link AWT.Shape}, {@link AWT.Rectangle},
+   * {@link AWT.Ellipse}, {@link AWT.Path}, {@link AWT.PathStroke}, {@link AWT.Action},
+   * {@link AWT.Timer} and {@link AWT.Container}.
+   * @exports AWT
+   * @namespace
+   */
+  var AWT = {};
+
+  /**
+   * AWT.Font contains properties and provides methods to manage fonts
    * @constructor
    * @param {string=} [family='Arial']
    * @param {number=} [size=17]
    * @param {number=} [bold=0]
    * @param {number=} [italic=0]
    * @param {string=} [variant='']
-   * @returns {AWT#Font}
    */
   AWT.Font = function (family, size, bold, italic, variant) {
     if (family)
@@ -51,25 +51,46 @@ define([
       this.italic = italic;
     if (variant)
       this.variant = variant;
+    this._metrics = {ascent: -1, descent: -1, height: -1};
   };
 
   AWT.Font.prototype = {
     constructor: AWT.Font,
+    /** 
+     * The `font-family` property
+     * @type {string} */
     family: 'Arial',
-    // 
-    // Warning: Do not change `size` directly. Instead, use the `setSize` method
+    /** 
+     * The font size
+     * __Warning__: Do not change `size` directly. Use the {@link AWT.Font#setSize setSize()}
+     * method instead.
+     * @type {number} */
     size: 17,
+    /** 
+     * The font _bold_ value 
+     * @type {number} */
     bold: 0,
+    /** 
+     * The font _italic_ value
+     * @type {number} */
     italic: 0,
+    /** 
+     * The font _variant_ value
+     * @type {string}*/
     variant: '',
-    // 
-    // Vertical font metrics are calculated in `calcHeight`
-    _ascent: -1,
-    _descent: -1,
-    _height: -1,
+    /** 
+     * The font *_metrics* property contains the values for `ascent`, `descent` and `height`
+     * attributes. Vertical font metrics are calculated in
+     * {@link AWT.Font#_calcHeight _calcHeight()} as needed.
+     * @type {{ascent: number, descent: number, height: number}} */
+    _metrics: {ascent: -1, descent: -1, height: -1},
+    /** 
+     * Array of font objects with already calculated heights, always stored on the prototype */
+    _ALREADY_CALCULATED_FONTS: [],
     /**
-     * Read Font properties from an XML element
-     * @param {Object} $xml
+     * 
+     * Reads the properties of this Font from a JQuery XML element
+     * @param {object} $xml - The JQuery xml element
      */
     setProperties: function ($xml) {
       if ($xml.attr('family'))
@@ -85,6 +106,7 @@ define([
       return this;
     },
     /**
+     * 
      * Allows to change the `size` member, recalculating the vertical metrics.
      * @param {number} size
      */
@@ -92,42 +114,41 @@ define([
       var currentSize = this.size;
       this.size = size;
       if (currentSize !== size)
-        this._height = -1;
+        this._metrics.height = -1;
       return this;
     },
     /**
-     * Gets this font height
-     * @returns {number}
+     * 
+     * Calculates the vertical font metrics and returns its height
+     * @returns {number} - The font height
      */
     getHeight: function () {
-      if (this._height < 0) {
+      if (this._metrics.height < 0) {
         // Look for an equivalent font already calculated
         for (var i = 0; i < AWT.Font.prototype._ALREADY_CALCULATED_FONTS.length; i++) {
           var font = AWT.Font.prototype._ALREADY_CALCULATED_FONTS[i];
           if (font.equals(this)) {
-            this._height = font._height;
-            this._ascent = font._ascent;
-            this._descent = font._descent;
+            this._metrics.height = font._metrics.height;
+            this._metrics.ascent = font._metrics.ascent;
+            this._metrics.descent = font._metrics.descent;
             break;
           }
         }
-        if (this._height < 0) {
+        if (this._metrics.height < 0) {
           this._calcHeight();
-          if (this._height > 0)
+          if (this._metrics.height > 0)
             AWT.Font.prototype._ALREADY_CALCULATED_FONTS.push(this);
         }
       }
-      return this._height;
+      return this._metrics.height;
     },
     /**
-     * Array of font objects with already calculated heights, always stored on the prototype
-     */
-    _ALREADY_CALCULATED_FONTS: [],
-    /**
+     * 
      * Translates the Font properties into CSS statements  
      * @param {Object} css - The object where to add CSS properties. When null or undefined, a new
      * object will be created and returned.
-     * @returns {Object}
+     * @returns {Object} - A set of CSS property-values pairs, ready to be used in JQuery
+     * [.css(properties)](http://api.jquery.com/css/#css-properties) function.
      */
     toCss: function (css) {
       if (!css)
@@ -143,9 +164,10 @@ define([
       return css;
     },
     /**
-     * Gets the codification of this font in a single string suitable to be use in a `font`
-     * CSS attribute
-     * @returns {String}
+     * 
+     * Gets the codification of this font in a single string, suitable to be used in a `font`
+     * CSS attribute.
+     * @returns {String} - A string with all the CSS font properties concatenated
      */
     cssFont: function () {
       return (this.italic ? 'italic ' : 'normal') + ' ' +
@@ -155,6 +177,7 @@ define([
           this.family;
     },
     /**
+     * 
      * The [TextMetrics](https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics) 
      * object used by [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
      * does not provide a `heigth` value for rendered text.<br>
@@ -163,7 +186,7 @@ define([
      * vertical dimension of rendered text using a `span` element.<br>
      * The code has been slighty adapted to deal with Font objects.
      * 
-     * _Warning_: Do not call this method direcly. Use `getHeight` instead
+     * _Warning_: Do not call this method direcly. Use {@link AWT.Font#getHeight getHeight()} instead
      */
     _calcHeight: function () {
       var text = $('<span>Hg</span>').css(this.toCss());
@@ -176,18 +199,19 @@ define([
 
       try {
         block.css({verticalAlign: 'baseline'});
-        this._ascent = block.offset().top - text.offset().top;
+        this._metrics.ascent = block.offset().top - text.offset().top;
 
         block.css({verticalAlign: 'bottom'});
-        this._height = block.offset().top - text.offset().top;
+        this._metrics.height = block.offset().top - text.offset().top;
 
-        this._descent = this._height - this._ascent;
+        this._metrics.descent = this._metrics.height - this._metrics.ascent;
       } finally {
         div.remove();
       }
       return this;
     },
     /**
+     * 
      * Checks if two Font objects are equivalent
      * @param {AWT#Font} font - The AWT.Font object to compare against this one
      * @returns {Boolean} - `true` if both objects are equivalent, `false` otherwise
@@ -201,11 +225,15 @@ define([
     }
   };
 
-  //
-  // #### <a name="Gradient">Gradient</a> ####
-  // Encapsulates parametres and methods to draw complex color gradients
-  //
-  var Gradient = function (c1, c2, angle, cycles) {
+  /**
+   * Contains parametres and methods to draw complex color gradients
+   * @constructor
+   * @param {string} c1 - The initial color, in any CSS-valid form.
+   * @param {string} c2 - The final color, in any CSS-valid form.
+   * @param {number=} [angle=0] - The inclination of the gradient relative to the horizontal line.
+   * @param {number=} [cycles=1] - The number of times the gradient will be repeated.
+   */
+  AWT.Gradient = function (c1, c2, angle, cycles) {
     if (c1)
       this.c1 = c1;
     if (c2)
@@ -216,22 +244,29 @@ define([
       this.cycles = cycles;
   };
 
-  Gradient.prototype = {
-    constructor: Gradient,
-    //
-    // Initial color
+  AWT.Gradient.prototype = {
+    constructor: AWT.Gradient,
+    /** 
+     * Initial color
+     * @type {string} */
     c1: 'white',
-    //
-    // Final color
+    /** 
+     * Final color
+     * @type {string} */
     c2: 'black',
-    //
-    // Tilt angle
+    /**
+     * Tilt angle
+     * @type {number} */
     angle: 0,
-    //
-    // Number repetitions of the gradient
+    /**
+     * Number of repetitions of the gradient
+     * @type {number} */
     cycles: 1,
-    //
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Reads the properties of this Gradient from a JQuery XML element
+     * @param {object} $xml - The JQuery xml element
+     */
     setProperties: function ($xml) {
       this.c1 = Utils.checkColor($xml.attr('source'), 'black');
       this.c2 = Utils.checkColor($xml.attr('dest'), 'white');
@@ -239,10 +274,14 @@ define([
       this.cycles = Number($xml.attr('cycles') || 1);
       return this;
     },
-    //
-    // Creates a [CanvasGradient](https://developer.mozilla.org/en-US/docs/Web/API/CanvasGradient)
-    // based on the provided context and rectangle
-    // TODO: Implement gradients with angle
+    /**
+     * 
+     * Creates a [CanvasGradient](https://developer.mozilla.org/en-US/docs/Web/API/CanvasGradient)
+     * based on the provided context and rectangle.
+     * @param {CanvasRenderingContext2D} ctx - The 2D rendering context
+     * @param {AWT.Rectangle} rect - The rectangle where this gradient will be applied to
+     * @returns {AWT.Gradient}
+     */
     getGradient: function (ctx, rect) {
       var p2 = rect.getOppositeVertex();
       var gradient = ctx.createLinearGradient(rect.pos.x, rect.pos.y, p2.x, p2.y);
@@ -251,8 +290,12 @@ define([
         gradient.addColorStop(i * step, i % 2 ? this.c1 : this.c2);
       return gradient;
     },
-    //
-    // Gets the CSS 'linear-gradient' expression of this Gradient
+    /**
+     * 
+     * Gets the CSS 'linear-gradient' expression of this Gradient
+     * @returns {string} - A string ready to be used as a value for the `linear-gradient` CSS
+     * property
+     */
     getCss: function () {
       var result = 'linear-gradient(' +
           (this.angle + 90) + 'deg, ' +
@@ -264,18 +307,28 @@ define([
       result += ')';
       return result;
     },
-    //
-    // Checks if the gradient colors have transparency
+    /**
+     * 
+     * Checks if the gradient colors have transparency
+     * @returns {boolean} - `true` if this gradient uses colors with transparency, `false` otherwise.
+     */
     hasTransparency: function () {
       return Utils.colorHasTransparency(this.c1) || Utils.colorHasTransparency(this.c2);
     }
   };
 
-  //
-  // #### <a name="Stroke">Stroke</a> ####
-  // Encapsulates the properties used to draw lines in `canvas` elements
-  // See: http://bucephalus.org/text/CanvasHandbook/CanvasHandbook.html#line-caps-and-joins
-  var Stroke = function (lineWidth, lineCap, lineJoin, miterLimit) {
+  /**
+   * Contains properties used to draw lines in HTML `canvas` elements.
+   * See: [http://bucephalus.org/text/CanvasHandbook/CanvasHandbook.html#line-caps-and-joins]
+   * @constructor
+   * @param {number=} [lineWidth=1] - The line width of the stroke
+   * @param {string=} [lineCap='butt'] - The line ending type. Possible values are: `butt`, `round`
+   * and `square`.
+   * @param {string=} [lineJoin='miter'] - The type of drawing used when two lines join. Possible
+   * values are: `round`, `bevel` and `miter`.
+   * @param {number=} [miterLimit=10] - The ratio between the miter length and half `lineWidth`.
+   */
+  AWT.Stroke = function (lineWidth, lineCap, lineJoin, miterLimit) {
     if (typeof lineWidth === 'number')
       this.lineWidth = lineWidth;
     if (lineCap)
@@ -286,17 +339,29 @@ define([
       this.miterLimit = miterLimit;
   };
 
-  Stroke.prototype = {
-    constructor: Stroke,
+  AWT.Stroke.prototype = {
+    constructor: AWT.Stroke,
+    /**
+     * The line width
+     * @type {number} */
     lineWidth: 1.0,
-    // Possible values are: `butt`, `round` and `square`
+    /**
+     * The line ending type (`butt`, `round` or `square`)
+     * @type {string} */
     lineCap: 'butt',
-    // Possible values are `round`, `bevel` and `miter`
+    /**
+     * The drawing used when two lines join (`round`, `bevel` or `miter`)
+     * @type {string} */
     lineJoin: 'miter',
-    // Ratio between miter length and half lineWidth
+    /**
+     * Ratio between the miter length and half `lineWidth`
+     * @type {number} */
     miterLimit: 10.0,
-    //
-    // Sets the properties to a CanvasRenderingContext2D
+    /**
+     * 
+     * Sets the properties of this stroke to a CanvasRenderingContext2D
+     * @param {CanvasRenderingContext2D} ctx - The canvas 2D rendering context
+     */
     setStroke: function (ctx) {
       ctx.lineWidth = this.lineWidth;
       ctx.lineCap = this.lineCap;
@@ -306,14 +371,16 @@ define([
     }
   };
 
-  //
-  // #### <a name="Point">Point</a> ####
-  // Encapsulates the `x` andy `y` coordinates of a point, and provides some useful methods.  
-  // x (Number or Point) - When `x` is a `Point` object, a clone of it will be generated
-  // y (Number) - Not used when `x` is a `Point`
-  var Point = function (x, y) {
-    // Special case: constructor passing another point as unique parameter
-    if (x instanceof Point) {
+  /**
+   * 
+   * Contains the `x` andy `y` coordinates of a point, and provides some useful methods.
+   * @constructor
+   * @param {number|AWT.Point} x - When `x` is an `AWT.Point` object, a clone of it will be created.
+   * @param {number=} y - Not used when `x` is an `AWT.Point`
+   */
+  AWT.Point = function (x, y) {
+    if (x instanceof AWT.Point) {
+      // Special case: constructor passing another point as unique parameter
       this.x = x.x;
       this.y = x.y;
     }
@@ -323,29 +390,40 @@ define([
     }
   };
 
-  Point.prototype = {
-    constructor: Point,
+  AWT.Point.prototype = {
+    constructor: AWT.Point,
+    /**
+     * @type {number} */
     x: 0,
+    /**
+     * @type {number} */
     y: 0,
-    //
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Reads the properties of this Point from a JQuery XML element
+     * @param {object} $xml - The JQuery xml element
+     */
     setProperties: function ($xml) {
       this.x = Number($xml.attr('x'));
       this.y = Number($xml.attr('y'));
       return this;
     },
-    // 
-    // Moves this Point to a new position, by a specified displacement
-    // delta (Point or Dimension): The displacement
+    /**
+     * 
+     * Moves this Point to a new position, by a specified displacement
+     * @param {AWT.Point|AWT.Dimension} delta - The amount to move
+     */
     moveBy: function (delta) {
       this.x += delta.x ? delta.x : delta.width ? delta.width : 0;
       this.y += delta.y ? delta.y : delta.height ? delta.height : 0;
       return this;
     },
-    //
-    // Moves this Point to a new position
-    // newPos (Number or Point) - The new position, or a x co-ordinate
-    // y (Number) - null if newPos is a Point
+    /**
+     * 
+     * Moves this Point to a new position
+     * @param {number|AWT.Point} newPos - The new position, or a x coordinate
+     * @param {number=} y - `null` or `undefined` when `newPos` is a Point
+     */
     moveTo: function (newPos, y) {
       if (typeof newPos === 'number') {
         this.x = newPos;
@@ -357,38 +435,54 @@ define([
       }
       return this;
     },
-    // 
-    // Multiplies the `x` and `y` co-ordinates by a specified `delta`
-    // delta (Point or Dimension)
+    /**
+     * 
+     * Multiplies the `x` and `y` coordinates by a specified `delta`
+     * @param {AWT.Point|AWT.Dimension} delta - The amount to multiply by.
+     */
     multBy: function (delta) {
       this.x *= delta.x ? delta.x : delta.width ? delta.width : 0;
       this.y *= delta.y ? delta.y : delta.height ? delta.height : 0;
       return this;
     },
-    //
-    // Check if two points are the same
+    /**
+     * 
+     * Checks if two points are the same
+     * @param {AWT.Point} p - The Point to check against to
+     * @returns {boolean}
+     */
     equals: function (p) {
       return this.x === p.x && this.y === p.y;
     },
-    //
-    // Calculates the distance between two points
-    // point (Point)
+    /**
+     * 
+     * Calculates the distance between two points
+     * @param {AWT.Point} point - The Point to calculate the distance against to
+     * @returns {number} - The distance between the two points.
+     */
     distanceTo: function (point) {
       return Math.sqrt(Math.pow(this.x - point.x, 2), Math.pow(this.y - point.y, 2));
     },
-    //
-    // Clones this point
-    clone: function(){
-      return new Point(this);
+    /**
+     * 
+     * Clones this point
+     * @returns {AWT.Point}
+     */
+    clone: function () {
+      return new AWT.Point(this);
     }
   };
 
-  //
-  // #### <a name="Dimension">Dimension</a> ####
-  // w (number or Point) - The width of this Dimension, or the upper-left vertex of a virtual rectangle
-  // h (number or Point) - The height of this Dimension, or the bottom-right vertex of a virtual rectangle
-  var Dimension = function (w, h) {
-    if (w instanceof Point && h instanceof Point) {
+  /**
+   * This class encapsulates `width` and `height` properties.
+   * @constructor
+   * @param {number|AWT.Point} w - The width of this Dimension, or the upper-left vertex of a
+   * virtual Rectangle
+   * @param {number|AWT.Point} h - The height of this Dimension, or the bottom-right vertex of a
+   * virtual Rectangle
+   */
+  AWT.Dimension = function (w, h) {
+    if (w instanceof AWT.Point && h instanceof AWT.Point) {
       this.width = h.x - w.x;
       this.height = h.y - w.y;
     }
@@ -398,25 +492,38 @@ define([
     }
   };
 
-  Dimension.prototype = {
-    constructor: Dimension,
+  AWT.Dimension.prototype = {
+    constructor: AWT.Dimension,
+    /**
+     * @type {number} */
     width: 0,
+    /**
+     * @type {number} */
     height: 0,
-    //
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Reads the properties of this Dimension from a JQuery XML element
+     * @param {object} $xml - The JQuery xml element
+     */
     setProperties: function ($xml) {
       this.width = Number($xml.attr('width'));
       this.height = Number($xml.attr('height'));
       return this;
     },
-    //
-    // Check if two dimensions are equivalent
+    /**
+     * 
+     * Check if two dimensions are equivalent
+     * @param {AWT.Dimension} d
+     * @returns {Boolean}
+     */
     equals: function (d) {
       return this.width === d.width && this.height === d.height;
     },
-    // 
-    // Multiplies the `x` and `y` co-ordinates by a specified `delta`
-    // delta (Point or Dimension)
+    /**
+     * 
+     * Multiplies the `w` and `h` co-ordinates by a specified `delta`
+     * @param {AWT.Point|AWT.Dimension} delta
+     */
     multBy: function (delta) {
       this.width *= delta.x ? delta.x : delta.width ? delta.width : 0;
       this.height *= delta.y ? delta.y : delta.height ? delta.height : 0;
@@ -425,8 +532,14 @@ define([
     //
     // Sets new values
     // width can be a number or a Dimension object
+    /**
+     * 
+     * Sets new values for width and height
+     * @param {number|AWT.Dimension} width - The new width, or a full Dimension to copy it from.
+     * @param {number=} height - Not used when `width` is a Dimension
+     */
     setDimension: function (width, height) {
-      if (width instanceof Dimension) {
+      if (width instanceof AWT.Dimension) {
         height = width.height;
         width = width.width;
       }
@@ -434,87 +547,117 @@ define([
       this.height = height;
       return this;
     },
-    //
-    // Calcs the area of a rectangle with this dimension
+    /**
+     * Calculates the area of a Rectangle with this dimension
+     * @return {number} The resulting area
+     */
     getSurface: function () {
       return this.width * this.height;
     }
   };
 
-  //
-  // #### <a name="Shape">Shape</a> ####
-  // Shape is a generic class for rectangles, ellipses and stroke-free shapes
-  // pos (Point) - Indicates the shape top-left coordinates
-  var Shape = function (pos) {
-    this.pos = pos ? pos : new Point();
+  /**
+   * 
+   * Shape is a generic class for rectangles, ellipses and stroke-free shapes.
+   * @constructor
+   * @param {AWT.Point} pos - The top-left coordinates of this Shape
+   */
+  AWT.Shape = function (pos) {
+    this.pos = pos ? pos : new AWT.Point();
   };
 
-  Shape.prototype = {
-    constructor: Shape,
-    //
-    // The current position of the shape
-    pos: new Point(),
-    //
-    // Moves the shape
-    // delta (Point or Dimension) - The displacement to apply to the shape
+  AWT.Shape.prototype = {
+    constructor: AWT.Shape,
+    /**
+     * The current position of the shape
+     * @type {AWT.Point} */
+    pos: new AWT.Point(),
+    /**
+     * 
+     * Shifts the shape a specified amount in horizontal and vertical directions
+     * @param {AWT.Point|AWT.Dimension} delta - The amount to shift the Shape
+     */
     moveBy: function (delta) {
       this.pos.moveBy(delta);
       return this;
     },
-    //
-    // Moves the Shape
-    // newPos (Point) - the new position of the shape
+    /**
+     * 
+     * Moves this shape to a new position
+     * @param {AWT.Point} newPos - The new position of the shape
+     */
     moveTo: function (newPos) {
       this.pos.moveTo(newPos);
       return this;
     },
-    //
-    // Gets the enclosing rectangle of this Shape
-    // Method to be overrided by each type of shape
+    /**
+     * 
+     * Gets the enclosing {@link AWT.Rectangle} of this Shape.
+     * @returns {AWT.Rectangle}
+     */
     getBounds: function () {
-      return new Rectangle(this.pos);
+      return new AWT.Rectangle(this.pos);
     },
-    //
-    // Check if two shapes are equivalent
-    // (method to be overrided by subclasses)
+    /**
+     * 
+     * Checks if two shapes are equivalent.
+     * @param {AWT.Shape} p - The AWT.Shape to compare against
+     * @returns {boolean}
+     */
     equals: function (p) {
-      return this.pos.equals(p);
+      return this.pos.equals(p.pos);
     },
-    //
-    // Multiplies the dimension of the Shape by the specified `delta` amount
-    // (method to be overrided by subclasses)
-    // delta (`AWT.Point` or `AWT.Dimension`) - Object containing the X and Y ratio to be scaled.
+    /**
+     * 
+     * Multiplies the dimension of the Shape by the specified `delta` amount.
+     * @param {AWT.Point|AWT.Dimension} delta - Object containing the X and Y ratio to be scaled.
+     */
     scaleBy: function (delta) {
       // Nothing to scale in abstract shapes
       return this;
     },
-    //
-    // Gets a clone of this shape moved to the `pos` component of the rectangle, and scaled
-    // by the `dim` values.
-    // rect (`AWT.Rectangle`)
+    /**
+     * 
+     * Gets a clone of this shape moved to the `pos` component of the rectangle and scaled
+     * by its `dim` value.
+     * @param {AWT.Rectangle} rect - The rectangle to be taken as a base for moving and scaling
+     * this shape.
+     * @returns {AWT.Shape}
+     */
     getShape: function (rect) {
-      //return $.extend(true, {}, this).scaleBy(rect.dim).moveBy(rect.pos);
       var newShape = this.clone();
       return newShape.scaleBy(rect.dim).moveBy(rect.pos);
     },
-    //
-    // Check if the provided Point `p` is inside this shape
-    // (method to be overrided by subclasses)
+    /**
+     * 
+     * Checks if the provided {@link AWT.Point} is inside this shape.
+     * @param {AWT.Point} p - The point to check
+     * @returns {boolean}
+     */
     contains: function (p) {
+      // Nothing to check in abstract shapes
       return false;
     },
-    //
-    // Check if the provided Rectangle `r` isntersects this shape
-    // (method to be overrided by subclasses)
+    /**
+     * 
+     * Checks if the provided {@link AWT.Rectangle} `r` intersects with this shape.
+     * @param {AWT.Rectangle} r
+     * @returns {boolean}
+     */
     intersects: function (r) {
+      // Nothing to check in abstract shapes
       return false;
     },
-    //
-    // Fills the Shape with the current style in the provided canvas context
-    // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+    /**
+     * 
+     * Fills the Shape with the current style in the provided HTML canvas context
+     * @param {CanvasRenderingContext2D} ctx - The canvas 2D rendering context where to fill this shape.
+     * @param {AWT.Rectangle=} dirtyRegion - The context region to be updated. Used as clipping
+     * region when drawing.
+     */
     fill: function (ctx, dirtyRegion) {
       ctx.save();
-      if(dirtyRegion && dirtyRegion.getSurface()>0){
+      if (dirtyRegion && dirtyRegion.getSurface() > 0) {
         // Clip the dirty region
         ctx.beginPath();
         ctx.rect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
@@ -522,38 +665,47 @@ define([
       }
       // Prepare shape path and fill      
       this.preparePath(ctx);
-      ctx.fill();      
+      ctx.fill();
       ctx.restore();
       return ctx;
     },
     //
-    // Draws the Shape with the current style in the provided canvas context
-    // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+    /**
+     * 
+     * Draws this shape in the provided HTML canvas 2D rendering context.
+     * @param {CanvasRenderingContext2D} ctx - The canvas 2D rendering context where to draw the shape.
+     */
     stroke: function (ctx) {
       this.preparePath(ctx);
       ctx.stroke();
       return ctx;
     },
-    //
-    // Prepares CanvasRenderingContext2D with a path that can be used to stroke a line, to fill a
-    // surface or to define a clipping region.
-    // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+    /**
+     * 
+     * Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,
+     * to fill a surface or to define a clipping region.<br>
+     * @param {CanvasRenderingContext2D} ctx
+     */
     preparePath: function (ctx) {
       // Nothing to do in abstract shapes
-      // (to be implemented in subclasses
       return ctx;
     },
-    //
-    // Creates a clipping region in the provided canvas context
-    // ctx ([CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-    // fillRule (String) - Can be 'nonzero' (default value when undefined) or 'evenodd'
+    /**
+     * 
+     * Creates a clipping region on the specified HTML canvas 2D rendering context
+     * @param {CanvasRenderingContext2D} ctx - The rendering context
+     * @param {string=} [fillRule='nonzero'] - Can be 'nonzero' (default when not set) or 'evenodd'
+     */
     clip: function (ctx, fillRule) {
       this.preparePath(ctx);
       ctx.clip(fillRule ? fillRule : 'nonzero');
       return ctx;
     },
-    //
-    // Shorthand method for determining if a Shape is a Rectangle
+    /**
+     * 
+     * Shorthand method for determining if a Shape is an {@link AWT.Rectangle}
+     * @returns {Boolean}
+     */
     isRect: function () {
       return false;
     }
@@ -565,40 +717,40 @@ define([
   // dim: Object of type Dimension or Point (if it's of type `Point`, the dimension
   // of the rectangle will be calculated substracting co-ordinates)
   // w and h: when defined, `pos` and `dim` will be treated as `x` and `y` co-ordinates
-  var Rectangle = function (pos, dim, w, h) {
+  AWT.Rectangle = function (pos, dim, w, h) {
     var p = pos, d = dim;
     // Special case: constructor with a Rectangle as a unique parameter
-    if (pos instanceof Rectangle) {
-      d = new Dimension(pos.dim.width, pos.dim.height);
-      p = new Point(pos.pos.x, pos.pos.y);
+    if (pos instanceof AWT.Rectangle) {
+      d = new AWT.Dimension(pos.dim.width, pos.dim.height);
+      p = new AWT.Point(pos.pos.x, pos.pos.y);
     }
-    else if (pos instanceof Point) {
-      p = new Point(pos.x, pos.y);
-      if (dim instanceof Dimension)
-        d = new Dimension(dim.width, dim.height);
+    else if (pos instanceof AWT.Point) {
+      p = new AWT.Point(pos.x, pos.y);
+      if (dim instanceof AWT.Dimension)
+        d = new AWT.Dimension(dim.width, dim.height);
     }
     else if (pos instanceof Array) {
       // Assume `pos` is an array of numbers indicating: x0, y0, x1, y1
-      p = new Point(pos[0], pos[1]);
-      d = new Dimension(pos[2] - pos[0], pos[3] - pos[1]);
+      p = new AWT.Point(pos[0], pos[1]);
+      d = new AWT.Dimension(pos[2] - pos[0], pos[3] - pos[1]);
     }
     else if (typeof w === 'number' && typeof h === 'number') {
       // width and height passed. Treat all parameters as co-ordinates:
-      p = new Point(pos, dim);
-      d = new Dimension(w, h);
+      p = new AWT.Point(pos, dim);
+      d = new AWT.Dimension(w, h);
     }
-    Shape.call(this, p);
-    if (d instanceof Dimension)
+    AWT.Shape.call(this, p);
+    if (d instanceof AWT.Dimension)
       this.dim = d;
-    else if (d instanceof Point)
-      this.dim = new Dimension(d.x - this.pos.x, d.y - this.pos.y);
+    else if (d instanceof AWT.Point)
+      this.dim = new AWT.Dimension(d.x - this.pos.x, d.y - this.pos.y);
     else
-      this.dim = new Dimension();
+      this.dim = new AWT.Dimension();
   };
 
-  Rectangle.prototype = {
-    constructor: Rectangle,
-    dim: new Dimension(),
+  AWT.Rectangle.prototype = {
+    constructor: AWT.Rectangle,
+    dim: new AWT.Dimension(),
     //
     // Overrides function in `Shape`. Returns itself
     getBounds: function () {
@@ -619,12 +771,12 @@ define([
     //
     // Check if two Rectangles are equivalent
     equals: function (r) {
-      return r instanceof Rectangle && this.pos.equals(r.pos) && this.dim.equals(r.dim);
+      return r instanceof AWT.Rectangle && this.pos.equals(r.pos) && this.dim.equals(r.dim);
     },
     //
     // Clones this Rectangle
     clone: function () {
-      return new Rectangle(this);
+      return new AWT.Rectangle(this);
     },
     //
     // Multiplies the rectangle dimensions by the values supplied in `delta`
@@ -647,7 +799,7 @@ define([
     //
     // Gets the AWT.Point correspondinf to the lower-right vertex of the rectangle.
     getOppositeVertex: function () {
-      return new Point(this.pos.x + this.dim.width, this.pos.y + this.dim.height);
+      return new AWT.Point(this.pos.x + this.dim.width, this.pos.y + this.dim.height);
     },
     //
     // Adds another `Rectangle` to the current one
@@ -670,7 +822,7 @@ define([
       return p.x >= this.pos.x && p.x <= p2.x && p.y >= this.pos.y && p.y <= p2.y;
     },
     //
-    // Check if the provided Rectangle `r` isntersects this Rectangle
+    // Check if the provided Rectangle `r` intersects this Rectangle
     intersects: function (r) {
       var p1 = this.pos, p2 = this.getOppositeVertex();
       var r1 = r.pos, r2 = r.getOppositeVertex();
@@ -702,19 +854,19 @@ define([
     }
   };
   // Rectangle extends Shape
-  Rectangle.prototype = $.extend(Object.create(Shape.prototype), Rectangle.prototype);
+  AWT.Rectangle.prototype = $.extend(Object.create(AWT.Shape.prototype), AWT.Rectangle.prototype);
 
   //
   // #### <a name="Ellipse">Ellipse</a> ####
   //
   // pos (Point) - Upper left corner of the enclosing rectangle 
   // dim (Dimension or Point) - Dimension of the enclosing rectangle
-  var Ellipse = function (pos, dim, w, h) {
-    Rectangle.call(this, pos, dim, w, h);
+  AWT.Ellipse = function (pos, dim, w, h) {
+    AWT.Rectangle.call(this, pos, dim, w, h);
   };
 
-  Ellipse.prototype = {
-    constructor: Ellipse,
+  AWT.Ellipse.prototype = {
+    constructor: AWT.Ellipse,
     // 
     // Prepares CanvasRenderingContext2D with a path that can be used to stroke a line, to fill a
     // surface or to define a clipping region.
@@ -751,12 +903,12 @@ define([
     //
     // Check if two Rectangles are equivalent
     equals: function (e) {
-      return e instanceof Ellipse && Rectangle.prototype.equals.call(this, e);
+      return e instanceof AWT.Ellipse && AWT.Rectangle.prototype.equals.call(this, e);
     },
     //
     // Clones this Ellipse
     clone: function () {
-      return new Ellipse(this.pos, this.dim);
+      return new AWT.Ellipse(this.pos, this.dim);
     },
     //
     // Shorthand method for determining if a Shape is a Rectangle
@@ -765,7 +917,7 @@ define([
     }
   };
   // Ellipse extends Rectangle
-  Ellipse.prototype = $.extend(Object.create(Rectangle.prototype), Ellipse.prototype);
+  AWT.Ellipse.prototype = $.extend(Object.create(AWT.Rectangle.prototype), AWT.Ellipse.prototype);
 
 
   //
@@ -773,13 +925,13 @@ define([
   // 
   // A `Path` is formed by a serie of strokes, represented by `PathStroke`objects
   //
-  var Path = function (strokes) {
+  AWT.Path = function (strokes) {
     // Deep copy of the array of strokes
     if (strokes) {
       this.strokes = [];
       for (var n in strokes) {
         var str = strokes[n];
-        str = new PathStroke(
+        str = new AWT.PathStroke(
             // In [Shaper](Shaper.html) objects, strokes have `action`, not `type`
             str.type ? str.type : str.action,
             // In [Shaper](Shaper.html) objects, strokes have `data`, not `points`
@@ -788,22 +940,22 @@ define([
       }
     }
     // Calculate the enclosing rectangle
-    this.enclosing = new Rectangle();
+    this.enclosing = new AWT.Rectangle();
     this.calcEnclosingRect();
-    Shape.call(this, this.enclosing.pos);
+    AWT.Shape.call(this, this.enclosing.pos);
   };
 
-  Path.prototype = {
-    constructor: Path,
+  AWT.Path.prototype = {
+    constructor: AWT.Path,
     strokes: [],
-    enclosing: new Rectangle(),
+    enclosing: new AWT.Rectangle(),
     //
     // Clones this Path
     clone: function () {
       var str = [];
       for (var i = 0; i < this.strokes.length; i++)
         str[i] = this.strokes[i].clone();
-      return new Path(str);
+      return new AWT.Path(str);
     },
     //
     // Adds a PathStroke element to `strokes`
@@ -823,8 +975,8 @@ define([
           for (var m in str.points) {
             var p = str.points[m];
             if (!p0 || !p1) {
-              p0 = new Point(p);
-              p1 = new Point(p);
+              p0 = new AWT.Point(p);
+              p1 = new AWT.Point(p);
             }
             else {
               // Check if `p` is at left or above `p0`
@@ -836,7 +988,7 @@ define([
             }
           }
       }
-      this.enclosing.setBounds(new Rectangle(p0, new Dimension(p0, p1)));
+      this.enclosing.setBounds(new AWT.Rectangle(p0, new AWT.Dimension(p0, p1)));
 
       return this.enclosing;
     },
@@ -856,7 +1008,7 @@ define([
     //
     // Moves the path to a new position
     moveTo: function (newPos) {
-      var d = new Dimension(newPos.x - this.pos.x, newPos.y - this.pos.y);
+      var d = new AWT.Dimension(newPos.x - this.pos.x, newPos.y - this.pos.y);
       return this.moveBy(d);
     },
     //
@@ -899,34 +1051,34 @@ define([
     }
   };
   // Path extends Shape
-  Path.prototype = $.extend(Object.create(Shape.prototype), Path.prototype);
+  AWT.Path.prototype = $.extend(Object.create(AWT.Shape.prototype), AWT.Path.prototype);
 
 
   //
   // #### <a name="PathStroke">PathStroke</a> ####
   // PathStrokes are basic elements of Paths
   //
-  var PathStroke = function (type, points) {
+  AWT.PathStroke = function (type, points) {
     this.type = type;
     // Points are deep cloned, to avoid change the original values
     if (points && points.length > 0) {
       this.points = [];
       // Check if 'points' is an array of objects of type 'Point'
-      if (points[0] instanceof Point) {
+      if (points[0] instanceof AWT.Point) {
         for (var p in points)
-          this.points.push(new Point(points[p].x, points[p].y));
+          this.points.push(new AWT.Point(points[p].x, points[p].y));
       }
       // otherwise assume that 'points' contains just numbers
       // to be readed in pairs of x and y co-ordinates
       else {
         for (var i = 0; i < points.length; i += 2)
-          this.points.push(new Point(points[i], points[i + 1]));
+          this.points.push(new AWT.Point(points[i], points[i + 1]));
       }
     }
   };
 
-  PathStroke.prototype = {
-    constructor: PathStroke,
+  AWT.PathStroke.prototype = {
+    constructor: AWT.PathStroke,
     // 
     // Possible stroke types are: `M` (move to), `L` (line to), `Q` (quadratic to),
     // `B` (bezier to) and `X` (close path)
@@ -936,7 +1088,7 @@ define([
     // Clones this PathStroke
     clone: function () {
       // The constructors of PathStroke always make a deep copy of the `points` array
-      return new PathStroke(this.type, this.points);
+      return new AWT.PathStroke(this.type, this.points);
     },
     //
     // Multiplies by `delta` the x and y coordinates of all points
@@ -986,16 +1138,16 @@ define([
 
   // 
   // #### <a name="Action">Action</a> ####
-  // This class encapsulates actions that will be linked to buttons, menus and
+  // This class contains actions that will be linked to buttons, menus and
   // other objects
-  var Action = function (name, actionPerformed) {
+  AWT.Action = function (name, actionPerformed) {
     this.name = name;
     this.actionPerformed = actionPerformed;
     this._statusListeners = [];
   };
 
-  Action.prototype = {
-    constructor: Action,
+  AWT.Action.prototype = {
+    constructor: AWT.Action,
     // 
     // The action's name and description
     name: null,
@@ -1021,20 +1173,20 @@ define([
     },
     //
     // Add a status listener
-    addStatusListener: function(listener){
+    addStatusListener: function (listener) {
       this._statusListeners.push(listener);
     },
     //
     // Remove a status listener
-    removeStatusListener: function(listener){
-      this._statusListeners = $.grep(_statusListeners, function(item){
-        return item!== listener;
+    removeStatusListener: function (listener) {
+      this._statusListeners = $.grep(_statusListeners, function (item) {
+        return item !== listener;
       });
-    },    
+    },
     // Enables/disables the action
     setEnabled: function (enabled) {
       this.enabled = enabled;
-      for(var i=0; i<this._statusListeners.length; i++)
+      for (var i = 0; i < this._statusListeners.length; i++)
         this._statusListeners[i].call(this);
       return this;
     }
@@ -1042,16 +1194,16 @@ define([
 
   // 
   // #### <a name="Timer">Timer</a> ####
-  // This class encapsulates actions that will be linked to buttons, menus and
+  // This class contains actions that will be linked to buttons, menus and
   // other objects
-  var Timer = function (actionPerformed, interval, enabled) {
+  AWT.Timer = function (actionPerformed, interval, enabled) {
     this.actionPerformed = actionPerformed;
     this.interval = interval;
     this.setEnabled(enabled ? true : false);
   };
 
-  Timer.prototype = {
-    constructor: Timer,
+  AWT.Timer.prototype = {
+    constructor: AWT.Timer,
     // 
     // The timer interval
     interval: 0,
@@ -1126,13 +1278,12 @@ define([
   // 
   // #### <a name="Container">Container</a> ####
   //
-  var Container = function (pos, dim, w, h) {
-    Rectangle.call(this, pos, dim, w, h);
-    //this.invalidatedRect = new Rectangle(new Point(), this.dim);
+  AWT.Container = function (pos, dim, w, h) {
+    AWT.Rectangle.call(this, pos, dim, w, h);
   };
 
-  Container.prototype = {
-    constructor: Container,
+  AWT.Container.prototype = {
+    constructor: AWT.Container,
     //
     // Invalidated area
     invalidatedRect: null,
@@ -1166,25 +1317,7 @@ define([
     }
   };
   // Container extends Rectangle
-  Container.prototype = $.extend(Object.create(Rectangle.prototype), Container.prototype);
-
-  //
-  // Global variable to be exported
-  AWT = {
-    Font: Font,
-    Gradient: Gradient,
-    Stroke: Stroke,
-    Point: Point,
-    Dimension: Dimension,
-    Shape: Shape,
-    Rectangle: Rectangle,
-    Ellipse: Ellipse,
-    Path: Path,
-    PathStroke: PathStroke,
-    Action: Action,
-    Timer: Timer,
-    Container: Container
-  };
+  AWT.Container.prototype = $.extend(Object.create(AWT.Rectangle.prototype), AWT.Container.prototype);
 
   return AWT;
 });

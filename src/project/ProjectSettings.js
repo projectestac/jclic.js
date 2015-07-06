@@ -20,7 +20,7 @@ define([
 ], function ($, EventSounds) {
 
 
-// This class encapsulates miscellaneous settings of JClic projects
+// This class contains miscellaneous settings of JClic projects
   var ProjectSettings = function (project) {
     this.project = project;
     this.languages = [];    
