@@ -710,13 +710,28 @@ define([
       return false;
     }
   };
-
-  //
-  // #### <a name="Rectangle">Rectangle</a> ####
-  // pos: Object of type Position 
-  // dim: Object of type Dimension or Point (if it's of type `Point`, the dimension
-  // of the rectangle will be calculated substracting co-ordinates)
-  // w and h: when defined, `pos` and `dim` will be treated as `x` and `y` co-ordinates
+  
+  /**
+   * 
+   * The rectangular {@link AWT.Shape} accepts five different sets of parameters:
+   * @example
+   * // An AWT.Point and an AWT.Dimension:
+   * new AWT.Rectangle(pos, dim);
+   * // Another AWT.Rectangle, to be cloned:
+   * new AWT.Rectangle(rect);
+   * // Two AWT.Point objects containing the coordinates of upper-left and lower-right vertexs:
+   * new AWT.Rectangle(p0, p1);
+   * // An array of four numbers with the coordinates of the same vertexs:
+   * new AWT.Rectangle([x0, y0, x1, y1]);
+   * // Four single numbers, meaning the same coordinates as above:
+   * new AWT.Rectangle(x0, y0, x1, y1);
+   * @constructor
+   * @extends AWT.Shape
+   * @param {AWT.Point|AWT.Rectangle|number|number[]} pos
+   * @param {AWT.Dimension|number=} dim
+   * @param {number=} w
+   * @param {number=} h
+   */
   AWT.Rectangle = function (pos, dim, w, h) {
     var p = pos, d = dim;
     // Special case: constructor with a Rectangle as a unique parameter
@@ -750,15 +765,20 @@ define([
 
   AWT.Rectangle.prototype = {
     constructor: AWT.Rectangle,
+    /**
+     * The {@link AWT.Dimension} of the Rectangle
+     * @type {AWT.Dimension} */
     dim: new AWT.Dimension(),
-    //
-    // Overrides function in `Shape`. Returns itself
+    // 
+    // Inherits the documentation of `getBounds` in AWT.Shape    
     getBounds: function () {
       return this;
     },
-    //
-    // Sets the position and dimension of another Rectangle
-    // rect (AWT.Rectangle)
+    /**
+     * 
+     * Sets this Rectangle the position and dimension of another one
+     * @param {AWT.Rectangle} rect
+     */
     setBounds: function (rect) {
       if (!rect)
         rect = new AWT.Rectangle();
@@ -768,27 +788,31 @@ define([
       this.dim.height = rect.dim.height;
       return this;
     },
-    //
-    // Check if two Rectangles are equivalent
+    // 
+    // Inherits the documentation of `equals` in AWT.Shape
     equals: function (r) {
       return r instanceof AWT.Rectangle && this.pos.equals(r.pos) && this.dim.equals(r.dim);
     },
-    //
-    // Clones this Rectangle
+    /**
+     * 
+     * Clones this Rectangle
+     * @returns {AWT.Rectangle}
+     */
     clone: function () {
       return new AWT.Rectangle(this);
     },
-    //
-    // Multiplies the rectangle dimensions by the values supplied in `delta`
-    // delta (Point or Dimension)
+    // Inherits the documentation of `scaleBy` in AWT.Shape
     scaleBy: function (delta) {
       this.pos.multBy(delta);
       this.dim.multBy(delta);
       return this;
     },
-    //
-    // Expands the boundaries of the rectangle. This affects the current position
-    // and the dimension
+    /**
+     * 
+     * Expands the boundaries of this shape. This affects the current position and dimension.
+     * @param {number} dx - The amount to grow (or decrease) in horizontal direction
+     * @param {number} dy - The amount to grow (or decrease) in vertical direction
+     */
     grow: function (dx, dy) {
       this.pos.x -= dx;
       this.pos.y -= dy;
@@ -796,13 +820,19 @@ define([
       this.dim.height += 2 * dy;
       return this;
     },
-    //
-    // Gets the AWT.Point correspondinf to the lower-right vertex of the rectangle.
+    /**
+     * 
+     * Gets the {@link AWT.Point} corresponding to the lower-right vertex of the Rectangle.
+     * @returns {AWT.Point}
+     */
     getOppositeVertex: function () {
       return new AWT.Point(this.pos.x + this.dim.width, this.pos.y + this.dim.height);
     },
-    //
-    // Adds another `Rectangle` to the current one
+    /**
+     * 
+     * Adds the boundaries of another shape to the current one
+     * @param {AWT.Shape} shape - The {@link AWT.Shape} to be added
+     */
     add: function (shape) {
       var myP2 = this.getOppositeVertex();
       var rectP2 = shape.getBounds().getOppositeVertex();
@@ -815,40 +845,38 @@ define([
           Math.max(myP2.y, rectP2.y) - this.pos.y);
       return this;
     },
-    //
-    // Check if the provided point `p` is inside this Rectangle
+    // 
+    // Inherits the documentation of `contains` in AWT.Shape    
     contains: function (p) {
       var p2 = this.getOppositeVertex();
       return p.x >= this.pos.x && p.x <= p2.x && p.y >= this.pos.y && p.y <= p2.y;
     },
-    //
-    // Check if the provided Rectangle `r` intersects this Rectangle
+    // 
+    // Inherits the documentation of `intersects` in AWT.Shape    
     intersects: function (r) {
       var p1 = this.pos, p2 = this.getOppositeVertex();
       var r1 = r.pos, r2 = r.getOppositeVertex();
       return r2.x >= p1.x && r1.x <= p2.x && r2.y >= p1.y && r1.y <= p2.y;
     },
     // 
-    // Prepares CanvasRenderingContext2D with a path that can be used to stroke a line, to fill a
-    // surface or to define a clipping region.
-    // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+    // Inherits the documentation of `preparePath` in AWT.Shape    
     preparePath: function (ctx) {
       ctx.beginPath();
       ctx.rect(this.pos.x, this.pos.y, this.dim.width, this.dim.height);
       return ctx;
     },
-    //
-    // Calcs the area of a rectangle with this dimension
+    // 
+    // Inherits the documentation of `getSurface` in AWT.Shape    
     getSurface: function () {
       return this.dim.getSurface();
     },
-    //
-    // Checks if this rectangle is empty
+    // 
+    // Inherits the documentation of `isEmpty` in AWT.Shape    
     isEmpty: function () {
       return this.getSurface() === 0;
     },
-    //
-    // Shorthand method for determining if a Shape is a Rectangle
+    // 
+    // Inherits the documentation of `isRect` in AWT.Shape    
     isRect: function () {
       return true;
     }
@@ -856,11 +884,15 @@ define([
   // Rectangle extends Shape
   AWT.Rectangle.prototype = $.extend(Object.create(AWT.Shape.prototype), AWT.Rectangle.prototype);
 
-  //
-  // #### <a name="Ellipse">Ellipse</a> ####
-  //
-  // pos (Point) - Upper left corner of the enclosing rectangle 
-  // dim (Dimension or Point) - Dimension of the enclosing rectangle
+  /**
+   * The Ellipse shape has the same constructor options as {@link AWT.Rectangle}
+   * @constructor
+   * @extends AWT.Rectangle
+   * @param {AWT.Point|AWT.Rectangle|number|number[]} pos
+   * @param {AWT.Dimension|number=} dim
+   * @param {number=} w
+   * @param {number=} h
+   */
   AWT.Ellipse = function (pos, dim, w, h) {
     AWT.Rectangle.call(this, pos, dim, w, h);
   };
@@ -868,9 +900,7 @@ define([
   AWT.Ellipse.prototype = {
     constructor: AWT.Ellipse,
     // 
-    // Prepares CanvasRenderingContext2D with a path that can be used to stroke a line, to fill a
-    // surface or to define a clipping region.
-    // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+    // Inherits the documentation of `preparePath` in AWT.Rectangle  
     preparePath: function (ctx) {
 
       // Using the solution 'drawEllipseWithBezier' proposed by Steve Tranby in:
@@ -895,23 +925,23 @@ define([
       ctx.closePath();
       return ctx;
     },
-    //
-    // Calcs the area of a ellipse with this dimension
+    // 
+    // Inherits the documentation of `getSurface` in AWT.Rectangle
     getSurface: function () {
       return Math.PI * this.dim.width / 2 * this.dim.height / 2;
     },
-    //
-    // Check if two Rectangles are equivalent
+    // 
+    // Inherits the documentation of `equals` in AWT.Rectangle
     equals: function (e) {
       return e instanceof AWT.Ellipse && AWT.Rectangle.prototype.equals.call(this, e);
     },
-    //
-    // Clones this Ellipse
+    // 
+    // Inherits the documentation of `clone` in AWT.Rectangle
     clone: function () {
       return new AWT.Ellipse(this.pos, this.dim);
     },
-    //
-    // Shorthand method for determining if a Shape is a Rectangle
+    // 
+    // Inherits the documentation of `isRect` in AWT.Rectangle
     isRect: function () {
       return false;
     }
@@ -919,12 +949,14 @@ define([
   // Ellipse extends Rectangle
   AWT.Ellipse.prototype = $.extend(Object.create(AWT.Rectangle.prototype), AWT.Ellipse.prototype);
 
-
-  //
-  // #### <a name="Path">Path</a> ####
-  // 
-  // A `Path` is formed by a serie of strokes, represented by `PathStroke`objects
-  //
+  /**
+   * 
+   * A `Path` is a {@link AWT.Shape} formed by a serie of strokes, represented by
+   * {@link AWT.PathStroke} objects
+   * @constructor
+   * @extends AWT.Shape
+   * @param {AWT.PathStroke[]} strokes - The array of {@link AWT.PathStroke} objects defining this Path.
+   */
   AWT.Path = function (strokes) {
     // Deep copy of the array of strokes
     if (strokes) {
@@ -947,10 +979,16 @@ define([
 
   AWT.Path.prototype = {
     constructor: AWT.Path,
+    /**
+     * The strokes forming this Path.
+     * @type {AWT.PathStroke[]} */
     strokes: [],
+    /**
+     * The {@link AWT.Rectangle} enclosing this Path (when drawing, this Rectangle don't include border width!)
+     * @type {AWT.Rectangle} */
     enclosing: new AWT.Rectangle(),
-    //
-    // Clones this Path
+    // 
+    // Inherits the documentation of `clone` in AWT.Shape
     clone: function () {
       var str = [];
       for (var i = 0; i < this.strokes.length; i++)
@@ -959,15 +997,24 @@ define([
     },
     //
     // Adds a PathStroke element to `strokes`
+    /**
+     * 
+     * Adds a {@link AWT.PathStroke} to `strokes`
+     * @param {AWT.PathStroke} stroke
+     */
     addStroke: function (stroke) {
       this.strokes.push(stroke);
       return this;
     },
-    //
-    // Calculates the rectangle that (approximately) encloses the shape, taking
-    // in consideration only the co-ordinates of the master points. Bezier and 
-    // Quadratic curves can get out of this enclosing box.
+    /**
+     * 
+     * Calculates the rectangle that (approximately) encloses the shape, taking
+     * in consideration only the co-ordinates of the master points. Bezier and 
+     * Quadratic curves can get out of this enclosing box.
+     * @returns {AWT.Rectangle}
+     */
     calcEnclosingRect: function () {
+      // TODO: Implement a method to calculate the real enclosing rect
       var p0, p1;
       for (var n in this.strokes) {
         var str = this.strokes[n];
@@ -992,56 +1039,53 @@ define([
 
       return this.enclosing;
     },
-    //
-    // Overrides function in `Shape`
+    // 
+    // Inherits the documentation of `getBounds` in AWT.Shape
     getBounds: function () {
       return this.enclosing;
     },
     // 
-    // Moves the Path by a specified `delta` Point or Dimension
+    // Inherits the documentation of `moveBy` in AWT.Shape
     moveBy: function (delta) {
       for (var str in this.strokes)
         this.strokes[str].moveBy(delta);
       this.enclosing.moveBy(delta);
       return this;
     },
-    //
-    // Moves the path to a new position
+    // 
+    // Inherits the documentation of `moveTo` in AWT.Shape
     moveTo: function (newPos) {
       var d = new AWT.Dimension(newPos.x - this.pos.x, newPos.y - this.pos.y);
       return this.moveBy(d);
     },
-    //
-    // Check if two paths are equivalent
+    // 
+    // Inherits the documentation of `equals` in AWT.Shape
     // TODO: Implement comparision of complex paths
     equals: function (p) {
       return false;
     },
-    //
-    // Multiplies the shape dimension by the values supplied in `delta`
-    // delta (Point or Dimension)
+    // 
+    // Inherits the documentation of `scaleBy` in AWT.Shape
     scaleBy: function (delta) {
       for (var str in this.strokes)
         this.strokes[str].multBy(delta);
       this.enclosing.scaleBy(delta);
       return this;
     },
-    //
-    // Check if the provided point `p` is inside the Path rectangle
+    // 
+    // Inherits the documentation of `contains` in AWT.Shape
     // TODO: Implement a check algorithm based on the real shape
     contains: function (p) {
       return this.enclosing.contains(p);
     },
-    //
-    // Check if the provided Rectangle `r` isntersects this Shape
+    // 
+    // Inherits the documentation of `intersects` in AWT.Shape
     // TODO: Implement a check algorithm based on the real shape
     intersects: function (r) {
       return this.enclosing.intersects(r);
     },
-    //
-    // Prepares CanvasRenderingContext2D with a path that can be used to stroke a line, to fill a
-    // surface or to define a clipping region.
-    // ctx: a [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+    // 
+    // Inherits the documentation of `preparePath` in AWT.Shape
     preparePath: function (ctx) {
       // TODO: Implement filling paths
       ctx.beginPath();
@@ -1058,6 +1102,14 @@ define([
   // #### <a name="PathStroke">PathStroke</a> ####
   // PathStrokes are basic elements of Paths
   //
+  /**
+   * 
+   * PathStroke is the basic component of AWT.Path objects
+   * @constructor
+   * @param {string} type - The type of stroke. Possible values are: `M` (move to), `L` (line to),
+   * `Q` (quadratic to), `B` (bezier to) and `X` (close path).
+   * @param {AWT.Point[]} points - The array of {@link AWT.Point} objects used in this Stroke.
+   */
   AWT.PathStroke = function (type, points) {
     this.type = type;
     // Points are deep cloned, to avoid change the original values
@@ -1079,36 +1131,53 @@ define([
 
   AWT.PathStroke.prototype = {
     constructor: AWT.PathStroke,
-    // 
-    // Possible stroke types are: `M` (move to), `L` (line to), `Q` (quadratic to),
-    // `B` (bezier to) and `X` (close path)
+    /**
+     * The Stroke type. Possible values are: `M` (move to), `L` (line to), `Q` (quadratic to),
+     * `B` (bezier to) and `X` (close path).
+     * @type {string} */
     type: 'X',
+    /**
+     * The array of points used by this stroke. Can be `null`.
+     * @type {AWT.Point[]} */
     points: null,
-    //
-    // Clones this PathStroke
+    /**
+     * 
+     * Clones this PathStroke
+     * @returns {AWT.PathStroke}
+     */
     clone: function () {
       // The constructors of PathStroke always make a deep copy of the `points` array
       return new AWT.PathStroke(this.type, this.points);
     },
-    //
-    // Multiplies by `delta` the x and y coordinates of all points
+    /**
+     * 
+     * Increments or decrements by `delta` the x and y coordinates of all points
+     * @param {AWT.Point|AWT.Dimension} delta - The amount to add to the `x` and `y`
+     * coordinates of each point.
+     */
     moveBy: function (delta) {
       if (this.points)
         for (var p in this.points)
           this.points[p].moveBy(delta);
       return this;
     },
-    //
-    // Multiplies point co-ordinates by `dx` and `dy`
+    /**
+     * 
+     * Multiplies each point coordinates by the `x` and `y` (or `w` and `h`) values of the
+     * passed {@link AWT.Point} or {@link AWT.Dimension}.
+     * @param {AWT.Point|AWT.Dimension} delta
+     */
     multBy: function (delta) {
       if (this.points)
         for (var p in this.points)
           this.points[p].multBy(delta);
       return this;
     },
-    //
-    // Draws the PathStroke in the provided canvas context
-    // ctx: ([CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D))
+    /**
+     * 
+     * Draws this PathStroke in the provided HTML canvas context
+     * @param {CanvasRenderingContext2D} ctx - The HTML canvas 2D rendering context
+     */
     stroke: function (ctx) {
       switch (this.type) {
         case 'M':
