@@ -28,11 +28,10 @@ define([
  * 
  * This DOM element must preferabily be empty. Inner content may become overlapped by other objects.
  * 
+ * @module JClic
  * @example
  * // Creates a JClic div and loads "my-project.jclic" on it
  * <div class ="JClic" data-project="my-project.jclic"></div>
- * 
- * @module JClic
  */
   // Execute on document ready
   $(function () {

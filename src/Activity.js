@@ -34,16 +34,17 @@ define([
   // Event used for detecting touch devices
   var TOUCH_TEST_EVENT = 'touchstart';
 
-// Activity is the abstract base class for JClic activities. It defines also
-// the inner class [ActivityPanel](ActivityPanel.html), wich is
-// responsible of the user interaction with the activity content.
-// Activities should extend both `Activity` and `ActivityPanel` classes in
-// order to become fully operative.
-// The Java version of JClic stores activities in memory as JDOM elements
-// that must be parsed into Activity objects when requested in order to be
-// usable. This implementation of the JavaScript player avoids this intermediate
-// encapsulation, and uses only Activity objects.
-//
+  /**
+   * 
+   * Activity is the abstract base class of JClic activities. It defines also the inner class
+   * {@link Activity.ActivityPanel}, wich is responsible of the user interaction with the activity
+   * content.
+   * Activities should extend both `Activity` and `ActivityPanel` classes in order to become fully
+   * operative.
+   * @class Activity
+   * @abstract
+   * @param {JClicProject} project - The JClicProject this Activity belongs to
+   */
   var Activity = function (project) {
     this.project = project;
     this.eventSounds = new EventSounds(this.project.settings.eventSounds);
@@ -53,17 +54,21 @@ define([
 
   Activity.prototype = {
     constructor: Activity,
-    // 
-    // `Activity.prototype._CLASSES` contains the list of classes derived from Activity. It
-    // should be read-only and updated by real activity classes at creation.
-    // TODO: When all activities are created, initialize _CLASSES as an empty object
+    /**
+     * This static member contains the list of all classes derived from Activity. It should
+     * be read-only and updated by real activity classes at creation.
+     * @const {object} */
     _CLASSES: {
       '@panels.Menu': Activity
     },
-    //
-    // Dynamic constructor that returns a specific type of Activity
-    // based on the `class` attribute declared in the $xml element  
-    // Should be called only from Activity.constructor
+    /**
+     * 
+     * Dynamic constructor that returns a specific type of Activity based on the `class` attribute
+     * declared in the $xml parameter.
+     * @param {object} $xml - A JQuery XML element
+     * @param {JClicProject} project - The JClicProject this activity belongs to
+     * @returns {Activity}
+     */
     _getActivity: function ($xml, project) {
       var act = null;
       if ($xml && project) {

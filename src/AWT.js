@@ -27,7 +27,6 @@ define([
    * {@link AWT.Ellipse}, {@link AWT.Path}, {@link AWT.PathStroke}, {@link AWT.Action},
    * {@link AWT.Timer} and {@link AWT.Container}.
    * @exports AWT
-   * @namespace
    */
   var AWT = {};
 
