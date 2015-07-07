@@ -1096,12 +1096,6 @@ define([
   };
   // Path extends Shape
   AWT.Path.prototype = $.extend(Object.create(AWT.Shape.prototype), AWT.Path.prototype);
-
-
-  //
-  // #### <a name="PathStroke">PathStroke</a> ####
-  // PathStrokes are basic elements of Paths
-  //
   /**
    * 
    * PathStroke is the basic component of AWT.Path objects
@@ -1205,10 +1199,13 @@ define([
     }
   };
 
-  // 
-  // #### <a name="Action">Action</a> ####
-  // This class contains actions that will be linked to buttons, menus and
-  // other objects
+  /**
+   * 
+   * This class encapsulates actions that can be linked to buttons, menus and other active objects
+   * @constructor
+   * @param {string} name - The name of this Action
+   * @param {function} actionPerformed - The callback function to be triggered by this Action
+   */
   AWT.Action = function (name, actionPerformed) {
     this.name = name;
     this.actionPerformed = actionPerformed;
@@ -1217,42 +1214,70 @@ define([
 
   AWT.Action.prototype = {
     constructor: AWT.Action,
-    // 
-    // The action's name and description
+    /**
+     * The action's name
+     * @type {string} */
     name: null,
+    /**
+     * An optional description
+     * @type {string} */
     description: null,
-    //
-    // Action status `true`: enabled, `false`: disabled
+    /**
+     * Action status. `true` means enabled, `false` disabled
+     * @type {boolean} */
     enabled: false,
-    //
-    // Listeners of changes on this Action status
+    /**
+     * Array of callback functions to be triggered when the `enabled` flag changes
+     * @type {function[]} */
     _statusListeners: null,
-    // 
-    // Here is where subclasses must define the function to be performed 
-    // when this Action object is called.
-    // thisAction - Pointer to this Action object
-    // event - The ActionEvent originating this action
+    /**
+     * 
+     * Here is where subclasses must define the callback function to be triggered when
+     * this AWT.Action object is called
+     * @param {AWT.Action} thisAction - Pointer to this AWT.Action object
+     * @param {object} event - The original action event that has originated this action
+     */
     actionPerformed: function (thisAction, event) {
       return this;
     },
-    //
-    // This is the method to be passed to event triggers
+    /**
+     * 
+     * This is the method to be passed to DOM event triggers
+     * @example
+     * var myFunc = function(){
+     *   alert('Hello!');
+     * };
+     * var myAction = new AWT.Action('hello', myFunc);
+     * $( "#foo" ).bind( "click", myAction.processEvent);
+     * @param {object} event - The event object passed by the DOM event trigger
+     */
     processEvent: function (event) {
       return this.actionPerformed(this, event);
     },
-    //
-    // Add a status listener
+    /**
+     * 
+     * Adds a status listener
+     * @param {function} listener - The callback method to be called when the status of this
+     * Action changes
+     */
     addStatusListener: function (listener) {
       this._statusListeners.push(listener);
     },
-    //
-    // Remove a status listener
+    /**
+     * 
+     * Removes a previously registered status listener
+     * @param {function} listener - The listener to be removed
+     */
     removeStatusListener: function (listener) {
       this._statusListeners = $.grep(_statusListeners, function (item) {
         return item !== listener;
       });
     },
-    // Enables/disables the action
+    /**
+     * 
+     * Enables or disables this action
+     * @param {boolean} enabled
+     */
     setEnabled: function (enabled) {
       this.enabled = enabled;
       for (var i = 0; i < this._statusListeners.length; i++)
