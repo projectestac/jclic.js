@@ -710,11 +710,12 @@ define([
       return false;
     }
   };
-  
+
   /**
    * 
    * The rectangular {@link AWT.Shape} accepts five different sets of parameters:
    * @example
+   * // Calling AWT.Rectangle() with different sets of parameters
    * // An AWT.Point and an AWT.Dimension:
    * new AWT.Rectangle(pos, dim);
    * // Another AWT.Rectangle, to be cloned:
@@ -1286,10 +1287,14 @@ define([
     }
   };
 
-  // 
-  // #### <a name="Timer">Timer</a> ####
-  // This class contains actions that will be linked to buttons, menus and
-  // other objects
+  /**
+   * 
+   * This class provides a timer that will launch a function at specific intervals
+   * @constructor
+   * @param {function} actionPerformed - The function to be triggered when the timer is enabled.
+   * @param {number} interval - The interval between action calls, specified in milliseconds.
+   * @param {boolean=} [enabled=false] - Flag to indicate if the timer will be initially enabled.
+   */
   AWT.Timer = function (actionPerformed, interval, enabled) {
     this.actionPerformed = actionPerformed;
     this.interval = interval;
@@ -1300,36 +1305,49 @@ define([
     constructor: AWT.Timer,
     // 
     // The timer interval
+    /**
+     * The umer interval, in milliseconds
+     * @type {number} */
     interval: 0,
-    // 
-    // Ticks counter
+    /**
+     * The ticks counter 
+     * @type {number} */
     ticks: 0,
     //
     // The JavaScript timer object
+    /**
+     * The object returned by `window.setInterval`
+     * @type {object} */
     timer: null,
-    // 
-    // The timer should repeat until `stop` is called
+    /**
+     * When `true`, the timer should repeat until `stop` is called
+     * @type {boolean} */
     repeats: true,
-    // 
-    // Here is where subclasses must define the function to be performed 
-    // when this timer ticks.
-    // thisTimer - Pointer to this Timer object
-    // event - The ActionEvent originating this action
+    /**
+     * 
+     * Here is where subclasses must define the function to be performed when this timer ticks.
+     * @param {AWT.Timer} thisTimer
+     */
     actionPerformed: function (thisTimer) {
       return this;
     },
-    //
-    // This is the method to be called by setInterval
+    /**
+     * 
+     * This is the method called by `window.setInterval`
+     * @param {Event} event
+     */
     processTimer: function (event) {
       this.ticks++;
       if (!this.repeats)
         this.stop();
       return this.actionPerformed.call(this);
     },
-    // 
-    // Enables/disables the timer
-    // * enabled (boolean) : Indicates if the timer should be enabled or disabled
-    // * retainCounter (boolean or null) : When `true`, the ticks counter will not be cleared
+    /**
+     * 
+     * Enables or disables this timer
+     * @param {boolean} enabled - Indicates if the timer should be enabled or disabled
+     * @param {boolean=} [retainCounter=false] - When `true`, the ticks counter will not be cleared
+     */
     setEnabled: function (enabled, retainCounter) {
       if (!retainCounter)
         this.ticks = 0;
@@ -1352,37 +1370,57 @@ define([
       }
       return this;
     },
-    //
-    // Checks if the timer is running
+    /**
+     * 
+     * Checks if this timer is running
+     * @returns {Boolean}
+     */
     isRunning: function () {
       return this.timer !== null;
     },
-    //
-    // Starts the timer
+    /**
+     * 
+     * Starts this tmer
+     * @param {boolean=} [retainCounter=false] - When `true`, the ticks counter will not be cleared
+     */
     start: function (retainCounter) {
       return this.setEnabled(true, retainCounter);
     },
-    //
-    // Stops the timer
+    /**
+     * 
+     * Stops this tmer
+     * @param {boolean=} [retainCounter=false] - When `true`, the ticks counter will not be cleared
+     */
     stop: function (retainCounter) {
       return this.setEnabled(false, retainCounter);
     }
   };
-
-  // 
-  // #### <a name="Container">Container</a> ####
-  //
+  /**
+   * Logic object that takes care of an "invalidated" rectangle that will be repainted
+   * at the next update of a 2D object, usually an HTML Canvas.
+   * AWT.Container has the same constructor options as {@link AWT.Rectangle}
+   * @constructor
+   * @extends AWT.Rectangle
+   * @param {AWT.Point|AWT.Rectangle|number|number[]} pos
+   * @param {AWT.Dimension|number=} dim
+   * @param {number=} w
+   * @param {number=} h
+   */
   AWT.Container = function (pos, dim, w, h) {
     AWT.Rectangle.call(this, pos, dim, w, h);
   };
 
   AWT.Container.prototype = {
     constructor: AWT.Container,
-    //
-    // Invalidated area
+    /**
+     * The currently "invalidated" area
+     * @type {AWT.Rectangle} */
     invalidatedRect: null,
-    //
-    // Invalidates the specified rectangle
+    /**
+     * 
+     * Adds the provided rectangle to the invalidated area.
+     * @param {AWT.Rectangle} rect
+     */
     invalidate: function (rect) {
       if (rect) {
         if (this.invalidatedRect === null)
@@ -1394,19 +1432,23 @@ define([
         this.invalidatedRect = null;
       return this;
     },
-    //
-    // Updates the invalid area
+    /**
+     * 
+     * Updates the invalidated area
+     */
     update: function () {
       this.updateContent(this.invalidatedRect);
       return this;
     },
-    //
-    // Containers should implement this method to update its graphic contents.
-    // This method should be called from `AWT.Container.update`
-    // dirtyRegion (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the
-    // whole Container.
+    /**
+     * 
+     * Containers should implement this method to update its graphic contents. It should
+     * be called from {@link AWT.Container~update}
+     * @param {AWT.Shape} dirtyRegion - Specifies the area to be updated. When `null`, it's the whole
+     * Container.
+     */
     updateContent: function (dirtyRegion) {
-      // To be overrided. Here does nothing.
+      // To be overrided by subclasses. Here does nothing.
       return this;
     }
   };

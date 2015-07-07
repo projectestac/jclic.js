@@ -17,61 +17,91 @@ define([
   "jquery"
 ], function ($) {
 
-// Miscellaneous utilities
+  /**
+   * 
+   * Miscellaneous utility functions and constants
+   * @exports Utils
+   */
   var Utils = {
-    // 
-    // Gets a boolean value (0 or 1) from a textual expression
-    // - val: The value to be parsed ('true' for 1, otherwise for 'false')
-    // - defaultValue: The value to be returned by default. Defaults to 1.
+    /**
+     * Gets a boolean value (0 or 1) from a textual expression
+     * @param {string} val - The value to be parsed (`true` for 1, null or otherwise for `false`)
+     * @param {boolean=} [defaultValue=false] - The default value to return when `val` is false
+     * @returns {number}
+     */
     getBoolean: function (val, defaultValue) {
       return Number(val === 'true' | defaultValue ? 1 : 0);
     },
-    //
-    // Gets a value from an given expression that can bel null, empty or undefined
+    /**
+     * Gets a value from an given expression that can bel null, empty or undefined
+     * @param {?*} val - The expression to parse
+     * @param {?*} defaultValue - The value to return when `val` is `null`, `''` or `undefined`
+     * @returns {*}
+     */
     getVal: function (val, defaultValue) {
       return (val === '' || val === null || typeof val === 'undefined') ? defaultValue : val;
     },
-    //
-    // Gets a number from a string or another number
+    /**
+     * Gets a number from a string or another number
+     * @param {?*} val - The expression to parse
+     * @param {number} defaultValue - The default value
+     * @returns {number}
+     */
     getNumber: function (val, defaultValue) {
       return Number(Utils.getVal(val, defaultValue));
     },
-    // 
-    // Gets a tri-state value (0, 1 or 2) from a set of 'false', 'true' and
-    // 'default' possible values.
-    // - val: The text to be parsed.
+    /** @const {number} */
     'FALSE': 0,
+    /** @const {number} */
     'TRUE': 1,
+    /** @const {number} */
     'DEFAULT': 2,
+    /**
+     * Gets a tri-state value (0, 1 or 2) from a set of 'false', 'true' and 'default' possible values.
+     * @param {type} val - The text to be parsed
+     * @returns {number}
+     */
     getTriState: function (val) {
       return Number(val === 'true' ? Utils.TRUE
           : val === 'false' ? Utils.FALSE : Utils.DEFAULT);
     },
-    //
-    // Returns a string with the given `tag` repeated n times
-    // tag (String) - The tag to be repeated
-    // repeats (Number) - The number of times to repeat the tag
+    /**
+     * Returns a string with the given `tag` repeated n times
+     * @param {string} tag - The tag to be repeated
+     * @param {number} repeats - The number of times to repeat the tag
+     * @returns {string}
+     */
     fillString: function (tag, repeats) {
       var s = '';
       for (var i = 0; i < repeats; i++)
         s += tag;
       return s;
     },
-    // 
-    // Checks if the provided variable name is 'null' or 'undefined'.
-    // - variable: The variable name to be examined.
-    isNullOrUndef: function (variable) {
-      return (typeof variable === 'undefined' || variable === null);
+    /**
+     * Checks if the provided value is 'null' or 'undefined'.
+     * @param {*} val - The value to be parsed
+     * @returns {boolean}
+     */
+    isNullOrUndef: function (val) {
+      return (typeof val === 'undefined' || val === null);
     },
-    //
-    // Checks if two expressions are equivalent
-    // Returns `true` when both parameters are `null` or undefined, and also when both have equal values
+    /**
+     * Checks if two expressions are equivalent.<br>
+     * Returns `true` when both parameters are `null` or `undefined`, and also when both have
+     * equivalent values.
+     * @param {!*} a
+     * @param {!*} b
+     * @returns {boolean}
+     */
     isEquivalent: function (a, b) {
       return ((typeof a === 'undefined' || a === null) && (typeof b === 'undefined' || b === null)) ||
           a === b;
     },
-    // 
-    // Reads 'p' blocks inside XML elements
+    /**
+     * Reads paragraphs, identified by `<p></p>` elements, inside XML data
+     * @param {object} xml - The XML data to be parsed
+     * @returns {string}
+     */
     getXmlText: function (xml) {
       var text = '';
       $(xml).children('p').each(function () {
@@ -79,9 +109,12 @@ define([
       });
       return text;
     },
-    //
-    // Creates a String suitable to be used in 'style' attribute of HTML tags,
-    // filled with the CSS attributes contained in an object
+    /**
+     * Creates a string suitable to be used in the 'style' attribute of HTML tags, filled with the
+     * CSS attributes contained in the provided object.
+     * @param {object} cssObj
+     * @returns {string}
+     */
     cssToString: function (cssObj) {
       var s = '';
       $.each(cssObj, function (key, value) {
@@ -89,9 +122,12 @@ define([
       });
       return s;
     },
-    // 
-    // Converts java-like color codes (like '0xRRGGBB') to valid CSS values
-    // like '#RRGGBB' or 'rgba(r,g,b,a)'
+    /**
+     * Converts java-like color codes (like '0xRRGGBB') to valid CSS values like '#RRGGBB' or 'rgba(r,g,b,a)'
+     * @param {?string} color - A color, as codified in java
+     * @param {?string} defaultColor - The default color to be used
+     * @returns {string}
+     */
     checkColor: function (color, defaultColor) {
 
       if (typeof color === 'undefined' || color === null) {
@@ -113,8 +149,11 @@ define([
       }
       return col;
     },
-    //
-    // Checks if the provided color (a String) has alpha value less than one
+    /**
+     * Checks if the provided color has an alpha value less than one
+     * @param {string} color - The color to be analyzed
+     * @returns {boolean}
+     */
     colorHasTransparency: function (color) {
       var result = false;
       if (color.indexOf('rgba(') === 0) {
@@ -124,25 +163,39 @@ define([
       }
       return result;
     },
-    // 
-    // Clone object
+    /**
+     * Clones the provided object
+     * @param {object} obj
+     * @returns {object}
+     */
     cloneObject: function (obj) {
       return $.extend(true, {}, obj);
     },
-    // Check if the given char is a separator
+    /**
+     * Check if the given char is a separator
+     * @param {string} ch - A string with a single character
+     * @returns {boolean}
+     */
     isSeparator: function (ch) {
       return ' .,;-|'.indexOf(ch) >= 0;
     },
-    // Rounds `v` to the nearest multiple of `n`
+    /**
+     * Rounds `v` to the nearest multiple of `n`
+     * @param {number} v
+     * @param {number} n - Cannot be zero!
+     * @returns {number}
+     */
     roundTo: function (v, n) {
       return (Math.round(v / n)) * n;
     },
-    //
-    // Compares the provided answer against multiple valid options. These valid options are
-    // concatenated in a string, separed by pipe chars (`|`). The comparision can be case sensitive.
-    // answer (String) - The text to check against to
-    // check (String) - String containing one or multiple options, separed by `|`
-    // checkCase (Boolean) - When true, the comparision must be case sensitive    
+    /**
+     * Compares the provided answer against multiple valid options. These valid options are
+     * concatenated in a string, separed by pipe chars (`|`). The comparision can be case sensitive.
+     * @param {string} answer - The text to check against to
+     * @param {string} check - String containing one or multiple options, separed by `|`
+     * @param {boolean} checkCase - When true, the comparision will be case-sensitive
+     * @returns {boolean}
+     */
     compareMultipleOptions: function (answer, check, checkCase) {
       if (answer === null || answer.length === 0 || check === null || check.length === 0)
         return false;
@@ -160,24 +213,30 @@ define([
       }
       return false;
     },
-    //
-    // Checks if the given string ends with the specified expression
-    // text (String) - The string where to find the expression
-    // expr (String) - The expression to search for
+    /**
+     * Checks if the given string ends with the specified expression
+     * @param {string} text - The string where to find the expression
+     * @param {string} expr - The expression to search for
+     * @returns {boolean}
+     */
     endsWith: function (text, expr) {
       return text.indexOf(expr, text.length - expr.length) !== -1;
     },
-    // 
-    // Checks if the given expressin is an absolute URL
-    // expr (String) - The expression to be checked
+    /**
+     * Checks if the given expression is an absolute URL
+     * @param {string} exp - The expression to be checked
+     * @returns {boolean}
+     */
     isURL: function (exp) {
       var path = /^(https?|file|ftps?):\/\//i;
       return path.test(exp);
     },
-    //
-    // Gets the base path of the given file path (absolute or full URL)
-    // This base path always ends with `/`, meaning it can be concatenated with relative paths
-    // without adding a separator.
+    /**
+     * Gets the base path of the given file path (absolute or full URL). This base path always ends
+     * with `/`, meaning it can be concatenated with relative paths without adding a separator.
+     * @param {type} path - The full path to be parsed
+     * @returns {string}
+     */
     getBasePath: function (path) {
       var result = '';
       var p = path.lastIndexOf('/');
@@ -185,19 +244,26 @@ define([
         result = path.substring(0, p + 1);
       return result;
     },
-    //
-    // Gets the relative path of `file` to `basePath`
+    /**
+     * Gets the full path of `file` relative to `basePath`
+     * @param {string} file - The file name
+     * @param {?string} path - The base path
+     * @returns {string}
+     */
     getRelativePath: function (file, path) {
       if (!path || path === '' | file.indexOf(path) !== 0)
         return file;
       else
         return file.substr(path.length);
     },
-    //
-    // Gets the complete path of a relative or absolute URL, using the provided `basePath`
-    // basePath (String) - The base URL
-    // path (String) - The filename
-    // zip (JSZip or `null`) - An optional JSZip object to look for
+    /**
+     * Gets the complete path of a relative or absolute URL, using the provided `basePath`
+     * @param {string} basePath - The base URL
+     * @param {string} path - The filename
+     * @param {?JSZip} zip - An optional [JSZip](https://stuk.github.io/jszip/) object where to look
+     * for the file
+     * @returns {string}
+     */
     getPath: function (basePath, path, zip) {
       if (Utils.isURL(path))
         return path;
@@ -213,8 +279,10 @@ define([
       }
       return basePath + path;
     },
-    // 
-    // Global constants
+    /**
+     * Global constants
+     * @constant
+     */
     settings: {
       // layout constants
       AB: 0, BA: 1, AUB: 2, BUA: 3,
@@ -294,16 +362,20 @@ define([
         RIGHT: 39,
         DOWN: 40
       },
-      // Flag to indicate if we are running on a touch device
+      // Flag to indicate that we are running on a touch device
       TOUCH_DEVICE: false
     },
     //
     // Functions useful to deal with caret position in `contentEditable` DOM elements
     //
-    // Gets the caret position within the given element
-    // Thanks to [Tim Down](http://stackoverflow.com/users/96100/tim-down) answers in:
-    // http://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container
-    // http://stackoverflow.com/questions/6240139/highlight-text-range-using-javascript/6242538
+    /**
+     * Gets the caret position within the given element. Thanks to
+     * [Tim Down](http://stackoverflow.com/users/96100/tim-down) answers in:
+     * [http://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container]
+     * and [http://stackoverflow.com/questions/6240139/highlight-text-range-using-javascript/6242538]
+     * @param {object} element - A DOM element
+     * @returns {number}
+     */
     getCaretCharacterOffsetWithin: function (element) {
       var caretOffset = 0;
       var doc = element.ownerDocument || element.document;
@@ -327,7 +399,11 @@ define([
       }
       return caretOffset;
     },
-    //
+    /**
+     * Utility function called by {@link Utils~getCaretCharacterOffsetWithin}
+     * @param {object} node - A text node
+     * @returns {object[]}
+     */
     getTextNodesIn: function (node) {
       var textNodes = [];
       if (node.nodeType === 3) {
@@ -340,10 +416,17 @@ define([
       }
       return textNodes;
     },
-    //
-    // Sets the selection range (or the cursor position, when `start` and `end` are the same)
-    // into a specific DOM element `el`:
+    /**
+     * Sets the selection range (or the cursor position, when `start` and `end` are the same) into
+     * a specific DOM element `el`
+     * @param {object} el - The DOM element where to set the cursor
+     * @param {number} start - The start position of the selection (or cursor position)
+     * @param {type} end - The end position of the selection. When null or identical to `start`,
+     * indicates a cursor position.
+     */
     setSelectionRange: function (el, start, end) {
+      if (Utils.isNullOrUndef(end))
+        end = start;
       if (document.createRange && window.getSelection) {
         var range = document.createRange();
         range.selectNodeContents(el);
@@ -378,6 +461,5 @@ define([
       }
     }
   };
-
   return Utils;
 });
