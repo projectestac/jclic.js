@@ -29,9 +29,9 @@ define([
    * Both panels have the same number of elements, associated one-to-one.
    * A third {@link ActiveBagContent} can be used as alternative content. This alternative content
    * will be revealed in the `primary` panel as the pairings of cells are solved.
-   * @class SimpleAssociation
+   * @exports SimpleAssociation
+   * @class
    * @extends Activity
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
    */
   var SimpleAssociation = function (project) {
     Activity.call(this, project);
@@ -67,9 +67,8 @@ define([
       return true;
     },
     /**
-     * @name SimpleAssociation.Panel
      * @class
-     * @extends Activity.Panel
+     * @extends Activity#Panel
      */
     Panel: function (act, ps, $div) {
       Activity.prototype.Panel.call(this, act, ps, $div);
@@ -85,9 +84,13 @@ define([
   var ActPanelAncestor = Activity.prototype.Panel.prototype;
   SimpleAssociation.prototype.Panel.prototype = {
     constructor: SimpleAssociation.prototype.Panel,
-    //
-    // The [ActiveBoxBag](ActiveBoxBag.html) objects containing the information to be displayed.
+    /**
+     * The {@link ActiveBoxBag} object containing the information to be displayed in the `primary` panel
+     * @type {ActiveBoxBag} */
     bgA: null,
+    /**
+     * The {@link ActiveBoxBag} object containing the information to be displayed in the `secondary` panel
+     * @type {ActiveBoxBag} */
     bgB: null,
     //
     // The [BoxConnector](BoxConnector.html) obect

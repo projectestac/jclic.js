@@ -41,7 +41,8 @@ define([
    * content.
    * Activities should extend both `Activity` and `ActivityPanel` classes in order to become fully
    * operative.
-   * @class Activity
+   * @exports Activity
+   * @class
    * @abstract
    * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
    */
@@ -55,10 +56,9 @@ define([
   Activity.prototype = {
     constructor: Activity,
     /**
+     * 
      * This static member contains the list of all classes derived from Activity. It should
      * be read-only and updated by real activity classes at creation.
-     * @memberof Activity
-     * @const
      * @type {object} */
     _CLASSES: {
       '@panels.Menu': Activity
@@ -67,7 +67,6 @@ define([
      * 
      * Dynamic constructor that returns a specific type of Activity based on the `class` attribute
      * declared in the $xml parameter.
-     * @memberof Activity
      * @param {object} $xml - A JQuery XML element
      * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
      * @returns {Activity}
@@ -88,7 +87,6 @@ define([
     },
     /** 
      * The {@link JClicProject} to which this activity belongs
-     * @memberof Activity 
      * @type {JClicProject} */
     project: null,
     /**
@@ -96,7 +94,7 @@ define([
      * @type {string} */
     name: K.DEFAULT_NAME,
     /**
-     * The ASctivity class name
+     * The class name of this Activity
      * @type {string} */
     className: null,
     /**
@@ -105,45 +103,54 @@ define([
     code: null,
     /**
      * Type of activity, used in text activities to distinguish between different variants of the
-     * same activity. Possible values are: `orderWords`, `orderParagraphs`, `identifyWords` or
+     * same activity. Possible values are: `orderWords`, `orderParagraphs`, `identifyWords` and
      * `identifyChars`.
      * @type {string} */    
     type: null,
-    // 
-    // Description of the activity
+    /**
+     * A short description of the activity
+     * @type {string} */
     description: null,
-    // 
-    // Space, measured in pixels, between the activity components.
+    /**
+     * Space, measured in pixels, between the activity components.
+     * @type {number} */
     margin: K.DEFAULT_MARGIN,
-    // 
-    // Background color of the activity panel.
+    /**
+     * Background color of the activity panel
+     * @type {string} */
     bgColor: K.DEFAULT_BG_COLOR,
-    // 
-    // Object of type [Gradient](Gradient.html) used to draw the background
-    // of the activity window.
+    /**
+     * When set, gradient used to draw the activity window background
+     * @type {AWT.Gradient} */
     bgGradient: null,
-    // 
-    // Whether the bgImage (if any) has to be tiled across the panel background.
+    /**
+     * Whether the bgImage (if any) has to be tiled across the panel background
+     * @type {boolean} */
     tiledBgImg: false,
-    // 
-    // Filename of the image painted in the panel background.
+    /**
+     * Filename of the image painted in the panel background.
+     * @type {string} */
     bgImageFile: null,
-    // 
-    // Whether to draw a border around the activity panel.
+    /**
+     * Whether to draw a border around the activity panel
+     * @type {boolean} */
     border: true,
-    // 
-    // Whether to place the activity panel at the point specified by
-    // `absolutePosition` or leave it centered in the main window of the player.
+    /**
+     * Whether to place the activity panel at the point specified by `absolutePosition` or leave
+     * it centered on the main player's window.
+     * @type {boolean} */
     absolutePositioned: false,
-    // 
-    // Object of type (Point)[Point.html] indicating the position of the
-    // activity panel into the player.
+    /**
+     * Position of the activity panel on the player.
+     * @type {AWT.Point} */
     absolutePosition: null,
-    // 
-    // Whether to generate usage reports.
+    /**
+     * Whether to generate usage reports
+     * @type {boolean} */
     includeInReports: true,
-    // 
-    // Whether to send action events to the Reporter.
+    /**
+     * Whether to send action events to the {@link Reporter}
+     * @type {boolean} */
     reportActions: false,
     // 
     // Whether to have a help window or not.
@@ -633,7 +640,7 @@ define([
      * In JClic, [Activity.Panel](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html)
      * extends [javax.swing.JPanel](http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html).<br>
      * In this implementation, the JPanel will be replaced by an HTML DIV tag.
-     * @class Activity.Panel
+     * @class
      * @param {Activity} act - The {@link Activity} to wich this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -659,15 +666,15 @@ define([
     constructor: Activity.Panel,
     /**
      * The Activity this panel is related to
-     * @memberof Activity.Panel
-     * @type {Activity}
-     */
+     * @type {Activity} */
     act: null,
-    //
-    // The JQuery div element used by this panel
+    /**
+     * The JQuery div element used by this panel
+     * @type {object} */
     $div: null,
-    //
-    // The realized skin
+    /**
+     * The realized current {@link Skin}
+     * @type {Skin} */
     skin: null,
     //
     // `true` when the activity is solved, `false` otherwise
@@ -705,7 +712,6 @@ define([
     /**
      * 
      * Sets the size and position of this activity panel
-     * @memberof Activity.Panel
      * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
