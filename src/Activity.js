@@ -27,13 +27,13 @@ define([
   "./activities/text/TextActivityDocument"], function (
     $, Utils, AWT, EventSounds, ActiveBoxContent, ActiveBagContent,
     BoxBase, AutoContentProvider, TextGridContent, Evaluator, TextActivityDocument) {
-
+  
   // Direct access to global setings
   var K = Utils.settings;
 
   // Event used for detecting touch devices
   var TOUCH_TEST_EVENT = 'touchstart';
-
+  
   /**
    * 
    * Activity is the abstract base class of JClic activities. It defines also the inner class
@@ -43,7 +43,7 @@ define([
    * operative.
    * @class Activity
    * @abstract
-   * @param {JClicProject} project - The JClicProject this Activity belongs to
+   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
    */
   var Activity = function (project) {
     this.project = project;
@@ -57,7 +57,9 @@ define([
     /**
      * This static member contains the list of all classes derived from Activity. It should
      * be read-only and updated by real activity classes at creation.
-     * @const {object} */
+     * @memberof Activity
+     * @const
+     * @type {object} */
     _CLASSES: {
       '@panels.Menu': Activity
     },
@@ -65,8 +67,9 @@ define([
      * 
      * Dynamic constructor that returns a specific type of Activity based on the `class` attribute
      * declared in the $xml parameter.
+     * @memberof Activity
      * @param {object} $xml - A JQuery XML element
-     * @param {JClicProject} project - The JClicProject this activity belongs to
+     * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
      * @returns {Activity}
      */
     _getActivity: function ($xml, project) {
@@ -83,22 +86,28 @@ define([
       }
       return act;
     },
-    // 
-    // The [JClicProject](JClicProject.html) this Activity belongs to
+    /** 
+     * The {@link JClicProject} to which this activity belongs
+     * @memberof Activity 
+     * @type {JClicProject} */
     project: null,
-    // 
-    // The Activity name
+    /**
+     * The Activity name
+     * @type {string} */
     name: K.DEFAULT_NAME,
-    // 
-    // The activity class name:
+    /**
+     * The ASctivity class name
+     * @type {string} */
     className: null,
-    // 
-    // Code used in reports to filter queries. Default is `null`.
+    /**
+     * Code used in reports to filter queries. Default is `null`.
+     * @type {string} */
     code: null,
-    // 
-    // Type of activity, used in text activities to distinguish between
-    // different variants of the same activity. Possible values are:
-    // `orderWords`, `orderParagraphs`, `identifyWords`, `identifyChars`
+    /**
+     * Type of activity, used in text activities to distinguish between different variants of the
+     * same activity. Possible values are: `orderWords`, `orderParagraphs`, `identifyWords` or
+     * `identifyChars`.
+     * @type {string} */    
     type: null,
     // 
     // Description of the activity
@@ -259,8 +268,11 @@ define([
     forceOkToAdvance: false,
     // In scrambled words activities, allow to scramble among different paragraphs
     amongParagraphs: false,
-    //
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Loads this object settings from a specific JQuery XML element 
+     * @param {object} $xml
+     */
     setProperties: function ($xml) {
 
       var act = this;
@@ -613,19 +625,21 @@ define([
     getActivityPanel: function (ps) {
       return new this.Panel(this, ps);
     },
-    //
-    // Activity.Panel is the object responsible for rendering the contents of the
-    // activity on the screen and managing user's interaction.
-    // Each type of activity must implement its own `Activity.Panel`.
-    // In JClic, [Activity.Panel](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html)
-    // extends [javax.swing.JPanel](http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html).
-    // In this implementation, the JPanel will be replaced by an HTML DIV tag.
-    // The constructor takes two arguments:
-    // act (Activity) - The Activity this Panel belongs to
-    // ps (currently a [JClicPlayer](JClicPlayer.html) object) - Any object implementing
-    // the methods defined in the 
-    // [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) 
-    // Java interface.
+    /**
+     * 
+     * This object is responsible for rendering the contents of the activity on the screen and
+     * managing user's interaction.
+     * Each type of Activity must implement its own `Activity.Panel`.<br>
+     * In JClic, [Activity.Panel](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html)
+     * extends [javax.swing.JPanel](http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html).<br>
+     * In this implementation, the JPanel will be replaced by an HTML DIV tag.
+     * @class Activity.Panel
+     * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+     * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+     * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+     * Java interface.
+     * @param {type=} $div - The JQuery DOM element where this Panel will deploy
+     */
     Panel: function (act, ps, $div) {
       // Activity.Panel extends AWT.Container
       AWT.Container.call(this);
@@ -643,8 +657,11 @@ define([
 
   Activity.prototype.Panel.prototype = {
     constructor: Activity.Panel,
-    // 
-    // The Activity this panel is related to
+    /**
+     * The Activity this panel is related to
+     * @memberof Activity.Panel
+     * @type {Activity}
+     */
     act: null,
     //
     // The JQuery div element used by this panel
@@ -685,8 +702,12 @@ define([
     backgroundColor: null,
     backgroundTransparent: false,
     border: null,
-    // 
-    // Sets the size and position of this activity panel
+    /**
+     * 
+     * Sets the size and position of this activity panel
+     * @memberof Activity.Panel
+     * @param {AWT.Rectangle} rect
+     */
     setBounds: function (rect) {
       AWT.Container.prototype.setBounds.call(this, rect);
       this.$div.css({

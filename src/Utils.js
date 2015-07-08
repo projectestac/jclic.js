@@ -150,7 +150,7 @@ define([
       return col;
     },
     /**
-     * Checks if the provided color has an alpha value less than one
+     * Checks if the provided color has an alpha value less than 1
      * @param {string} color - The color to be analyzed
      * @returns {boolean}
      */

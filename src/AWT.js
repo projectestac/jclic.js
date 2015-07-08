@@ -32,7 +32,7 @@ define([
 
   /**
    * AWT.Font contains properties and provides methods to manage fonts
-   * @constructor
+   * @class
    * @param {string=} [family='Arial']
    * @param {number=} [size=17]
    * @param {number=} [bold=0]
@@ -226,7 +226,7 @@ define([
 
   /**
    * Contains parametres and methods to draw complex color gradients
-   * @constructor
+   * @class
    * @param {string} c1 - The initial color, in any CSS-valid form.
    * @param {string} c2 - The final color, in any CSS-valid form.
    * @param {number=} [angle=0] - The inclination of the gradient relative to the horizontal line.
@@ -319,7 +319,7 @@ define([
   /**
    * Contains properties used to draw lines in HTML `canvas` elements.
    * See: [http://bucephalus.org/text/CanvasHandbook/CanvasHandbook.html#line-caps-and-joins]
-   * @constructor
+   * @class
    * @param {number=} [lineWidth=1] - The line width of the stroke
    * @param {string=} [lineCap='butt'] - The line ending type. Possible values are: `butt`, `round`
    * and `square`.
@@ -373,7 +373,7 @@ define([
   /**
    * 
    * Contains the `x` andy `y` coordinates of a point, and provides some useful methods.
-   * @constructor
+   * @class
    * @param {number|AWT.Point} x - When `x` is an `AWT.Point` object, a clone of it will be created.
    * @param {number=} y - Not used when `x` is an `AWT.Point`
    */
@@ -474,7 +474,7 @@ define([
 
   /**
    * This class encapsulates `width` and `height` properties.
-   * @constructor
+   * @class
    * @param {number|AWT.Point} w - The width of this Dimension, or the upper-left vertex of a
    * virtual Rectangle
    * @param {number|AWT.Point} h - The height of this Dimension, or the bottom-right vertex of a
@@ -558,7 +558,7 @@ define([
   /**
    * 
    * Shape is a generic class for rectangles, ellipses and stroke-free shapes.
-   * @constructor
+   * @interface
    * @param {AWT.Point} pos - The top-left coordinates of this Shape
    */
   AWT.Shape = function (pos) {
@@ -725,7 +725,7 @@ define([
    * new AWT.Rectangle([x0, y0, x1, y1]);
    * // Four single numbers, meaning the same coordinates as above:
    * new AWT.Rectangle(x0, y0, x1, y1);
-   * @constructor
+   * @class
    * @extends AWT.Shape
    * @param {AWT.Point|AWT.Rectangle|number|number[]} pos
    * @param {AWT.Dimension|number=} dim
@@ -886,7 +886,7 @@ define([
 
   /**
    * The Ellipse shape has the same constructor options as {@link AWT.Rectangle}
-   * @constructor
+   * @class
    * @extends AWT.Rectangle
    * @param {AWT.Point|AWT.Rectangle|number|number[]} pos
    * @param {AWT.Dimension|number=} dim
@@ -953,7 +953,7 @@ define([
    * 
    * A `Path` is a {@link AWT.Shape} formed by a serie of strokes, represented by
    * {@link AWT.PathStroke} objects
-   * @constructor
+   * @class
    * @extends AWT.Shape
    * @param {AWT.PathStroke[]} strokes - The array of {@link AWT.PathStroke} objects defining this Path.
    */
@@ -1096,10 +1096,11 @@ define([
   };
   // Path extends Shape
   AWT.Path.prototype = $.extend(Object.create(AWT.Shape.prototype), AWT.Path.prototype);
+  
   /**
    * 
    * PathStroke is the basic component of AWT.Path objects
-   * @constructor
+   * @class
    * @param {string} type - The type of stroke. Possible values are: `M` (move to), `L` (line to),
    * `Q` (quadratic to), `B` (bezier to) and `X` (close path).
    * @param {AWT.Point[]} points - The array of {@link AWT.Point} objects used in this Stroke.
@@ -1202,7 +1203,7 @@ define([
   /**
    * 
    * This class encapsulates actions that can be linked to buttons, menus and other active objects
-   * @constructor
+   * @class
    * @param {string} name - The name of this Action
    * @param {function} actionPerformed - The callback function to be triggered by this Action
    */
@@ -1289,7 +1290,7 @@ define([
   /**
    * 
    * This class provides a timer that will launch a function at specific intervals
-   * @constructor
+   * @class
    * @param {function} actionPerformed - The function to be triggered when the timer is enabled.
    * @param {number} interval - The interval between action calls, specified in milliseconds.
    * @param {boolean=} [enabled=false] - Flag to indicate if the timer will be initially enabled.
@@ -1394,11 +1395,12 @@ define([
       return this.setEnabled(false, retainCounter);
     }
   };
+  
   /**
    * Logic object that takes care of an "invalidated" rectangle that will be repainted
    * at the next update of a 2D object, usually an HTML Canvas.
    * AWT.Container has the same constructor options as {@link AWT.Rectangle}
-   * @constructor
+   * @class
    * @extends AWT.Rectangle
    * @param {AWT.Point|AWT.Rectangle|number|number[]} pos
    * @param {AWT.Dimension|number=} dim

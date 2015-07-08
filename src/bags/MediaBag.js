@@ -38,7 +38,7 @@ define([
     // The collection of [MediaBagElement](MediaBagElement.html) objects:
     elements: null,
     //
-    // The [JClicProject](JClicProject.html) this MediaBag belongs to
+    // The [JClicProject](JClicProject.html) to which this MediaBag belongs
     project: null,
     //
     // Loads the object settings from a specific JQuery XML element 

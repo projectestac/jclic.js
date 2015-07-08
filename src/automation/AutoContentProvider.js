@@ -50,7 +50,7 @@ define([], function () {
     },
     ActiveBagContentKit: ActiveBagContentKit,
     //
-    // The [JClicProject](JClicProject.html) this AutoContentProvider belongs to
+    // The [JClicProject](JClicProject.html) to which AutoContentProvider belongs
     project: null,
     // 
     // Loads the object settings from a specific JQuery XML element 

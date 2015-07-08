@@ -29,7 +29,7 @@ define([
   PlayerHistory.prototype = {
     constructor: PlayerHistory,
     // 
-    // The [JClicPlayer](JClicPlayer.html) object this `PlayerHistory` belongs to
+    // The [JClicPlayer](JClicPlayer.html) object to which this `PlayerHistory` belongs
     player: null,
     // 
     // This is the main member of the class. PlayerHistory puts and retrieves

@@ -23,7 +23,7 @@ define([
   // drawing a line between an origin point (usually the point where the user clicks on) and a
   // destination point, or dragging the ActiveBox from one location to another. The connecting
   // lines can have arrowheads at its endings.
-  // parent (AWT.Container) - The Container this BoxConnector belongs to
+  // parent (AWT.Container) - The Container to which this BoxConnector belongs
   var BoxConnector = function (parent, ctx) {
     this.parent = parent;
     this.ctx = ctx;
@@ -77,7 +77,7 @@ define([
     ctx: null,
     dim: null,
     // 
-    // The AWT.Container this connector belongs to
+    // The AWT.Container to which this connector belongs
     parent: null,
     // 
     // The width of the connector line

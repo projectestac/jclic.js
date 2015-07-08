@@ -35,7 +35,7 @@ define([
     // The array of [ActivitySequenceElement](ActivitySequenceElement.html) objects
     elements: null,
     //
-    // The [JClicProject](JClicProject.html) this ActivitySequence belongs to
+    // The [JClicProject](JClicProject.html) to which this ActivitySequence belongs
     project: null,
     //
     // Pointer to the [ActivitySequenceElement](ActivitySequenceElement.html) currently running.

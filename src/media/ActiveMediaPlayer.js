@@ -66,7 +66,7 @@ define([
     // The [MediaContent](MediaContent.html) associated to this player
     mc: null,
     //
-    // The [JClicPlayer](JClicPlayer.html) this player belongs to
+    // The [JClicPlayer](JClicPlayer.html) to which this player belongs
     ps: null,
     //
     // MediaPlayers should be linked to an [ActiveBox](ActiveBox.html)

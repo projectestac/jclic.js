@@ -35,7 +35,7 @@ define([
 
   TextTarget.prototype = {
     constructor: TextTarget,
-    // The TextActivityDocument this target belongs to
+    // The TextActivityDocument to which this target belongs
     doc: null,
     //
     // The current text displayed by this TextTarget

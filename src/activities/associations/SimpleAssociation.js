@@ -22,22 +22,32 @@ define([
   "../../AWT"
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT) {
 
-  //
-  // This class of [Activity](Activity.html) uses two panels (`primary` and `seondary`) with 
-  // [ActiveBox](ActiveBox.html) objects, both with the same number of elements and associated one-to-one.
-  // A third [ActiveBagContent](ActiveBagContent.html) can be used as alternative content to be revealed
-  // in the `primary` panel as its cells are solved.
+  /**
+   * 
+   * This class of {@link Activity} uses two panels (`primary` and `secondary`) formed by
+   * {@link ActiveBox} objects filed with data stored in {@link ActiveBagContent} repositories.
+   * Both panels have the same number of elements, associated one-to-one.
+   * A third {@link ActiveBagContent} can be used as alternative content. This alternative content
+   * will be revealed in the `primary` panel as the pairings of cells are solved.
+   * @class SimpleAssociation
+   * @extends Activity
+   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   */
   var SimpleAssociation = function (project) {
     Activity.call(this, project);
   };
 
   SimpleAssociation.prototype = {
     constructor: SimpleAssociation,
-    //
-    // Uses cell's `idAss` field to check if a pairing match
+    /**
+     * When `true`, the cell's `idAss` field will be used to check pairing matches.
+     * @type {boolean} */
     useIdAss: false,
-    //
-    // Retrieves the minimum number of actions needed to solve this activity
+    /**
+     * Retrieves the minimum number of actions needed to solve this activity
+     * @override
+     * @returns {number}
+     */
     getMinNumActions: function () {
       return this.abc.primary.getNumCells();
     },
@@ -56,8 +66,11 @@ define([
     helpSolutionAllowed: function () {
       return true;
     },
-    //
-    // Activity.Panel constructor
+    /**
+     * @name SimpleAssociation.Panel
+     * @class
+     * @extends Activity.Panel
+     */
     Panel: function (act, ps, $div) {
       Activity.prototype.Panel.call(this, act, ps, $div);
     }

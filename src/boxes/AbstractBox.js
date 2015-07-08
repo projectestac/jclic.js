@@ -25,7 +25,7 @@ define([
 // that determine how it must be drawn on screen. Some types of boxes can act as
 // containers for other boxes, establishing a hierarchy of dependences.
 // 
-// parent (*AbstractBox* or null) - The AbstractBox this box belongs to.  
+// parent (*AbstractBox* or null) - The AbstractBox to which this box belongs
 // container ([AWT.Container](AWT.html#Container)) - The AWT.Container where this AbstractBox is placed.  
 // boxBase ([BoxBase](BoxBase.html)) - The objct difining colors, fonts, border and other graphic
 // properties of this box.
@@ -48,7 +48,7 @@ define([
     // The parent AbstractBox (can be `null`)
     parent: null,
     //
-    // The AWT.Container object this AbstractBox belongs to
+    // The AWT.Container object to which this AbstractBox belongs
     container: null,
     // 
     // The [BoxBase](BoxBase.html) used to draw this AbstractBox

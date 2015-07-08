@@ -29,7 +29,7 @@ define([
   ProjectSettings.prototype = {
     constructor: ProjectSettings,
     // 
-    // The JClicProject this settings belongs to
+    // The JClicProject to which this ProjectSettings belongs
     project: null,
     // 
     // The project title
