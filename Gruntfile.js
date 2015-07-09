@@ -63,6 +63,29 @@ module.exports = function (grunt) {
                 template: 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template',
                 destination: 'doc',
                 // see: http://terryweiss.github.io/docstrap/
+                // Theme 'yeti' with some modifications:
+                // - File: node_modules/grunt-jsdoc/node_modules/ink-docstrap/template/static/styles/site.yeti.css
+                // - Line: 1254
+                //         h4,
+                //         .h4 {
+                //           font - size: 19px;
+                //  added:   padding: 5px;
+                //  added:   background-color: lavender;
+                //  added:   border-radius: 5px;
+                //         }
+                //         
+                // - Line: 1418
+                //             dt {
+                //  commented:   //font - weight: bold;
+                //             }
+                //           
+                // - Line: 6944:
+                //           code {
+                //  changed:   background - color: lavender;
+                //             border: none;
+                //  changed:   color: darkcyan;
+                //           }
+                //
                 configure: 'jsdoc.conf.json'
             }
         }

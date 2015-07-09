@@ -260,7 +260,7 @@ define([
     //
     /**
      * Array of bags with the description of the content to be displayed on panels and cells.
-     * @type {ActiveBagContent} */
+     * @type {ActiveBagContent[]} */
     abc: null,
     /**
      * Content of the grid of letters used in crosswords and scrambled letters

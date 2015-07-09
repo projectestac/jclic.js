@@ -135,11 +135,11 @@ define([
      * @type {string} */
     basePath: '',
     /**
-     * A {@link xternal:JSZip} object pointing to a `jclic.zip` file containing the current project.<br>
+     * A {@link external:JSZip} object pointing to a `jclic.zip` file containing the current project.<br>
      * Two extra properties will be added to this object when loaded:<br>
      * - __zip.fullZipPath__ {string} - The full path of the ZIP file
      * - __zip.zipBasePath__ {string} - The path to the folder containing the ZIP file
-     * @type {JSZip} */
+     * @type {external:JSZip} */
     zip: null,
     /**
      * The {@link Activity#Panel} currently running on this player.
