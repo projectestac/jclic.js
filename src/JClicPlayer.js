@@ -29,15 +29,21 @@ define([
 ], function ($, JSZip, JSZipUtils, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds, JClicProject,
     JumpInfo, ActiveBoxContent) {
 
-//
-//  JClicPlayer is one of the the main classes of the JClic system. It implements
-//  the [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-//  interface, needed to read and play JClic projects.
-//  JClicPlayer offers to [Activity.Panel](Activity.html) objects all the necessary
-//  resources: media bags (to load and realize images and other media contents),
-//  sequence control, management of the report system, user interface, displaying 
-//  of system messages, etc.
-  var JClicPlayer = function ($topDiv, options, $div) {
+  /**
+   * 
+   * JClicPlayer is one of the the main classes of the JClic system. It implements the
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * interface, needed to read and play JClic projects.<br>
+   * JClicPlayer offers to {@link Activity#Panel} objects all the necessary resources and functions:
+   * media bags (to load and realize images and other media contents), sequence control, management
+   * of the reporting system, user interface, display of system messages, etc.
+   * @exports JClicPlayer
+   * @class
+   * @extends module:AWT.Container
+   * @param {external:jQuery} $topDiv - The HTML `div` element where this JClicPlayer will deploy.
+   * @param {object=} options - A set of optional customized options.
+   */
+  var JClicPlayer = function ($topDiv, options) {
 
     // JClicPlayer extends AWT.Container
     AWT.Container.call(this);
@@ -58,13 +64,7 @@ define([
 
     this.options = $.extend(Object.create(this.options), options);
 
-    // $div usually is `undefined`
-    this.$div = $div;
-    if ($div)
-      this.dim = new AWT.Dimension($div.width(), $div.height());
-    else
-      this.$div = $('<div class="JClicPlayer"/>');
-
+    this.$div = $('<div class="JClicPlayer"/>');
     this.project = new JClicProject();
     this.activeMediaBag = new ActiveMediaBag();
     this.counterVal = {score: 0, actions: 0, time: 0};
@@ -82,8 +82,9 @@ define([
 
   JClicPlayer.prototype = {
     constructor: JClicPlayer,
-    //
-    // Miscellaneous options to be stored in the prototype
+    /**
+     * Object with miscellaneous options.
+     * @type {object} */
     options: {
       // 
       // Max waiting time to have all media loaded (milliseconds)
@@ -117,65 +118,74 @@ define([
       // is performed
       fade: 300
     },
-    //
-    // The JQuery "div" element used by this player.
+    /**
+     * The JQuery "div" element used by this player
+     * @type {external:jQuery} */
     $div: null,
-    // 
-    // The JQuery top container of all JClic components (also a 'div' DOM element)
+    /**
+     * The JQuery top container of all JClic components (also a 'div' DOM element)
+     * @type {external:jQuery} */
     $topDiv: null,
-    // 
-    // The [JClicProject](JclicProject.html) currently hosted in this player
+    /**
+     * The {@link JClicProject} currently hosted in this player
+     * @type {JClicProject} */
     project: null,
-    //
-    // Relative path or absolute URL to be used as a base to access files
+    /**
+     * Relative path or absolute URL to be used as a base to access files
+     * @type {string} */
     basePath: '',
-    // 
-    // A [JSZip](https://stuk.github.io/jszip/https://stuk.github.io/jszip/) object pointing to
-    // a `jclic.zip` file containing the current project.
-    // Two extra properties will be added to this object when loaded:
-    // zip.fullZipPath (String) - The full path of the ZIP file
-    // zipBasePath (String) - The path to the folder containing the ZIP file
+    /**
+     * A {@link xternal:JSZip} object pointing to a `jclic.zip` file containing the current project.<br>
+     * Two extra properties will be added to this object when loaded:<br>
+     * - __zip.fullZipPath__ {string} - The full path of the ZIP file
+     * - __zip.zipBasePath__ {string} - The path to the folder containing the ZIP file
+     * @type {JSZip} */
     zip: null,
-    // 
-    // Object of type [Activity.Panel](Activity.html) linked to the `Activity`
-    // currently running in this player.
+    /**
+     * The {@link Activity#Panel} currently running on this player.
+     * @type {Activity#Panel} */
     actPanel: null,
-    // 
-    // Object of type [PlayerHistory](PlayerHistory.html), responsible for recording
-    // the list of the activities played in the current session.
-    // TODO: Implement PlayerHistory!
+    /**
+     * This object records the list of the activities played during the current session.
+     * @type {PlayerHistory} */
     history: null,
-    //
-    // The current [Skin](Skin.html) used in this player
+    /**
+     * The Skin currently used by this player.
+     * @type {Skin} */
     skin: null,
-    //
-    // The default [Skin](Skin.html) to be used if none specified
+    /**
+     * The default Skin to use if none specified
+     * @type {Skin} */
     defaultSkin: null,
-    // 
-    // Object of type [ActiveMediaBag](ActiveMediaBag.html) containing references
-    // to realized media objects, ready to play.
-    // TODO: Implement ActiveMediaBag!
+    /**
+     * Object containing references to realized media objects, ready to play.
+     * @type {ActiveMediaBag} */
     activeMediaBag: null,
-    //
-    // Object of type [Reporter](Reporter.html), responsible of passing the scores
-    // done in the activities to external reporting systems.
+    /**
+     * Object responsible of passing to external reporting systems the scores obtained by the users
+     * when playing activities.
+     * @type {Reporter} */
     // TODO: Implement Reporter!
     reporter: null,
-    //
-    // Object of type [EventSounds](EventSounds.html) with the current set of
-    // system sonds used in this player.
+    /**
+     * Object with the current set of system sonds used in this player.
+     * @type {EventSounds} */
     eventSounds: null,
-    //
-    // Collection of AWT.Action objects
+    /**
+     * Collection of {@link module:AWT.Action} objects used by this player.
+     * @type {module:AWT.Action[]} */
     actions: {},
-    //
-    // Main timer object used to feed the time counter. Ticks every second.
+    /**
+     * Main timer object used to feed the time counter. Ticks every second.
+     * @type {module:AWT.Timer} */
     timer: null,
-    // 
-    // AWT.Timer for delayed actions
+    /**
+     * Timer for delayed actions
+     * @type {module:AWT.Timer} */
     delayedTimer: null,
-    //
-    // AWT.Action for delayed actions
+    /**
+     * This variable holds the action to be executed by `delayedTimer`
+     * @type {module:AWT.Action} */
     delayedAction: null,
     // 
     // Current values of the counters
@@ -199,8 +209,9 @@ define([
     // of the indications made by the activities or the sequence control system.
     // Used only to debug projects with complicated sequence chaining.
     navButtonsAlways: false,
-    // 
-    // Builds actions for this player
+    /**
+     * Builds actions for this player
+     */
     buildActions: function () {
       var tp = this;
       this.actions = {
@@ -252,14 +263,15 @@ define([
         });
       });
     },
-    // 
-    // This method is called when the container gains the focus for the first
-    // time or when losts it. Currently not used.
+    /**
+     * This method is called when the container gains the focus for the first. Currently is not used.
+     */
     activate: function () {
       // Do nothing
     },
-    //
-    // Instructs the player to stop working
+    /**
+     * Instructs the player to stop working
+     */
     stop: function () {
       this.stopMedia(-1);
     },
@@ -460,7 +472,7 @@ define([
                   tp.setSystemMessage('Error reading ZIP file: ', e);
                 }
               });
-              
+
               tp.skin.setWaitCursor(false);
 
             }, 100);

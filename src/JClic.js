@@ -18,33 +18,60 @@ define([
   "./JClicPlayer",
   "./Deps"
 ], function ($, JClicPlayer, deps) {
+  
+  // Declaration of JSDoc external objects:
 
-/** 
- * This is the main JClic method
- * 
- * It looks for the first DOM element in the document with class "JClic", builds a new
- * [JClicPlayer](JClicPlayer.html) object attached to this DOM element and loads the
- * project file specified in the `data-project` attribute.
- * 
- * This DOM element must preferabily be empty. Inner content may become overlapped by other objects.
- * 
- * @module JClic
- * @example
- * // Creates a JClic div and loads "my-project.jclic" on it
- * <div class ="JClic" data-project="my-project.jclic"></div>
- */
+  /**
+   * A jQuery object
+   * @external jQuery
+   * @see {@link http://api.jquery.com/jQuery/}
+   */
+
+  /**
+   * The class used for manipulating the layout and presentation of HTML image elements.
+   * @external HTMLImageElement
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement
+   */
+  
+  /**
+   * A JSZip object
+   * @external JSZip
+   * @see {@link https://stuk.github.io/jszip}
+   */
+  
+  /**
+   * @typedef {object} HTMLElement 
+   */
+  
+  /** 
+   * This is the main JClic method
+   * 
+   * Executes on `document.ready()`.
+   * 
+   * The method iterates over all `div` objects with `JClic` class and creates a {@link JClicPlayer}
+   * within them. Each player loads the JClic project file specified in the `data-project` attribute of
+   * the `div` tag.
+   * 
+   * The `div` elements must preferabily be empty. Inner content may become overlapped by objects
+   * created by the JClic player.
+   * 
+   * @module JClic
+   * @example
+   * // Creates a JClic div and loads "my-project.jclic" on it
+   * <div class ="JClic" data-project="my-project.jclic"></div>
+   */
   // Execute on document ready
   $(function () {
 
     // If defined, load the global variable `JClicDataOptions`
     var options = (typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions);
-    
+
     if (!options.noInit) {
       // If defined, load the global variable `JClicDataProject`
       var projectName = (typeof JClicDataProject === 'undefined' ? null : JClicDataProject);
 
       // Search DOM elements with class "JClic"
-      var $JClicDivs = $('.JClic');
+      var $JClicDivs = $('div.JClic');
 
       // Iterate over all JClic DOM elements, initializing players
       $JClicDivs.each(function () {

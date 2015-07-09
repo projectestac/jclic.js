@@ -25,7 +25,7 @@
     "//analytics": {"ua":"UA-XXXXX-XXX", "domain":"XXXX"},
     "inverseNav": true,
     "highlightTutorialCode": true,
-    "syntaxTheme": "dark",
+    "syntaxTheme": "default",
     "protocol": "html://"
   },
   "markdown": {

@@ -88,8 +88,8 @@ define([
     _ALREADY_CALCULATED_FONTS: [],
     /**
      * 
-     * Reads the properties of this Font from a JQuery XML element
-     * @param {object} $xml - The JQuery xml element
+     * Reads the properties of this Font from an XML element
+     * @param {external:jQuery} $xml - The xml element to be parsed
      */
     setProperties: function ($xml) {
       if ($xml.attr('family'))
@@ -263,8 +263,8 @@ define([
     cycles: 1,
     /**
      * 
-     * Reads the properties of this Gradient from a JQuery XML element
-     * @param {object} $xml - The JQuery xml element
+     * Reads the properties of this Gradient from an XML element
+     * @param {external:jQuery} $xml - The xml element to be parsed
      */
     setProperties: function ($xml) {
       this.c1 = Utils.checkColor($xml.attr('source'), 'black');
@@ -399,8 +399,8 @@ define([
     y: 0,
     /**
      * 
-     * Reads the properties of this Point from a JQuery XML element
-     * @param {object} $xml - The JQuery xml element
+     * Reads the properties of this Point from an XML element
+     * @param {external:jQuery} $xml - The xml element to be parsed
      */
     setProperties: function ($xml) {
       this.x = Number($xml.attr('x'));
@@ -501,8 +501,8 @@ define([
     height: 0,
     /**
      * 
-     * Reads the properties of this Dimension from a JQuery XML element
-     * @param {object} $xml - The JQuery xml element
+     * Reads the properties of this Dimension from an XML element
+     * @param {external:jQuery} $xml - The xml element to be parsed
      */
     setProperties: function ($xml) {
       this.width = Number($xml.attr('width'));

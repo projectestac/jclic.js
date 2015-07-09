@@ -33,7 +33,7 @@ define([
       return Number(val === 'true' | defaultValue ? 1 : 0);
     },
     /**
-     * Gets a value from an given expression that can bel null, empty or undefined
+     * Gets a value from an given expression that can bel `null`, `undefined` or empty string ('')
      * @param {?*} val - The expression to parse
      * @param {?*} defaultValue - The value to return when `val` is `null`, `''` or `undefined`
      * @returns {*}
@@ -57,8 +57,8 @@ define([
     /** @const {number} */
     'DEFAULT': 2,
     /**
-     * Gets a tri-state value (0, 1 or 2) from a set of 'false', 'true' and 'default' possible values.
-     * @param {type} val - The text to be parsed
+     * Gets a numeric value (0, 1 or 2) from a set of possible values: `false`, `true` and `default`.
+     * @param {?string} val - The text to be parsed
      * @returns {number}
      */
     getTriState: function (val) {
@@ -99,7 +99,7 @@ define([
     },
     /**
      * Reads paragraphs, identified by `<p></p>` elements, inside XML data
-     * @param {object} xml - The XML data to be parsed
+     * @param {object} xml - The DOM-XML element to be parsed
      * @returns {string}
      */
     getXmlText: function (xml) {
@@ -281,7 +281,7 @@ define([
     },
     /**
      * Global constants
-     * @constant
+     * @const
      */
     settings: {
       // layout constants
@@ -370,9 +370,9 @@ define([
     //
     /**
      * Gets the caret position within the given element. Thanks to
-     * [Tim Down](http://stackoverflow.com/users/96100/tim-down) answers in:
-     * [http://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container]
-     * and [http://stackoverflow.com/questions/6240139/highlight-text-range-using-javascript/6242538]
+     * {@link http://stackoverflow.com/users/96100/tim-down|Tim Down} answers in:
+     * {@link http://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container}
+     * and {@link http://stackoverflow.com/questions/6240139/highlight-text-range-using-javascript/6242538}
      * @param {object} element - A DOM element
      * @returns {number}
      */
