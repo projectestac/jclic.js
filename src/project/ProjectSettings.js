@@ -87,6 +87,5 @@ define([
     }
   };
 
-  /* global module */
   return ProjectSettings;
 });

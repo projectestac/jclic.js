@@ -31,8 +31,15 @@ define([
    * The class used for manipulating the layout and presentation of HTML image elements.
    * @external HTMLImageElement
    * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement
-   */
+   */  
   
+  /**
+   * The CanvasRenderingContext2D interface provides the 2D rendering context for the drawing surface
+   * of a &lt;canvas&gt; element.
+   * @external CanvasRenderingContext2D
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+   */
+ 
   /**
    * A JSZip object
    * @external JSZip

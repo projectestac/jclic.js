@@ -16,11 +16,14 @@
 define([
   "./Utils"
 ], function (Utils) {
-
-  //
-  // PlayerHistory uses an array to store the list of projects and activities
-  // done by the user. This class allows [JClicPlayer](JClicPlayer.html) objects
-  // to rewind a sequence or go back to a caller menu.
+  /**
+   * 
+   * PlayerHistory uses an array to store the list of projects and activities done by the user.
+   * This class allows {@link JClicPlayer} objects to rewind a sequence or to go back to a caller menu.
+   * @exports PlayerHistory
+   * @class
+   * @param {JClicPlayer} player - The JClicPlayer associated to this history
+   */
   var PlayerHistory = function (player) {
     this.player = player;
     this.sequenceStack = [];
@@ -28,37 +31,55 @@ define([
 
   PlayerHistory.prototype = {
     constructor: PlayerHistory,
-    // 
-    // The [JClicPlayer](JClicPlayer.html) object to which this `PlayerHistory` belongs
+    /**
+     * The {@link JClicPlayer} object to which this `PlayerHistory` belongs
+     * @type {JClicPlayer} */
     player: null,
-    // 
-    // This is the main member of the class. PlayerHistory puts and retrieves
-    // on it information about the proects and activities done by the current user.
+    /**
+     * This is the main member of the class. PlayerHistory puts and retrieves
+     * on it information about the proects and activities done by the current user.
+     * @type {PlayerHistory#HistoryElement[]} */
     sequenceStack: [],
-    //
-    // When in test mode, jumps are only simulated.
+    /**
+     * When in test mode, jumps are only simulated.
+     * @type {boolean} */
     testMode: false,
-    //
-    // Counts the number of history elements stored in the stack
+    /**
+     * 
+     * Counts the number of {@link PlayerHistory#HistoryElement HistoryElement} objects stored in
+     * {@link PlayerHistory#sequenceStack sequenceStack}
+     * @returns {number}
+     */
     storedElementsCount: function () {
       return this.sequenceStack.length;
     },
-    //
-    // Removes all the elements from the history stack
+    /**
+     * 
+     * Removes all elements from {@link PlayerHistory#sequenceStack sequenceStack}
+     */
     clearHistory: function () {
       this.sequenceStack.length = 0;
     },
-    // 
-    // Inner class used to store history elements.
+    /**
+     * 
+     * Inner class used to store history elements.
+     * @class
+     * @param {string} projectPath - The full path of the project file
+     * @param {?string} sequence - The nearest sequence tag
+     * @param {number} activity - The index of the current activity into the project's {@link ActivitySequence}
+     * @param {?type} fullZipPath - If `projectPath` resides into a {@link external:JSZip JSZip} object, full
+     * path of the zip file.
+     */
     HistoryElement: function (projectPath, sequence, activity, fullZipPath) {
       this.projectPath = projectPath;
       this.sequence = sequence;
       this.activity = activity;
       this.fullZipPath = fullZipPath;
     },
-    //
-    // Adds the current project and activity to the top of the
-    // history stack.
+    /**
+     * 
+     * Adds the current project and activity to the top of the history stack.
+     */
     push: function () {
       if (this.player.project !== null && this.player.project.path !== null) {
         var ase = this.player.project.activitySequence;
@@ -78,10 +99,13 @@ define([
         }
       }
     },
-    //
-    // Retrieves the history element placed at the top of the stack (if any) and instructs
-    // the `JClicPlayer` to load it. The obtained effect is to "rewind" or "go back",
-    // usually to a caller menu or activity.
+    /**
+     * 
+     * Retrieves the {@link PlayerHistory#HistoryElement HistoryElement} placed at the top of the
+     * stack (if any) and instructs {@link JClicPlayer} to load it. The obtained effect is to
+     * "rewind" or "go back", usually to an activity that acts as a menu.
+     * @returns {boolean}
+     */
     pop: function () {
       // todo: check return value
       if (this.sequenceStack.length > 0) {
@@ -101,15 +125,15 @@ define([
       }
       return true;
     },
-    //
-    // Processes the provided [JumpInfo](JumpInfo.html) object, instructing the
-    // [JClicPlayer](JClicPlayer.html) to go back, stop or jump to another point
-    // in the sequence.
-    // ji (JumpInfo) - The object to be processed
-    // allowReturn (boolean) - When this param is `true`, the jump instructed by
-    // `ji` (if any) will be recorded, thus allowing to go back returning to
-    // the current activity.
-    // Returns `true` if the jump can be processed without errors, `false` otherwise.
+    /**
+     * 
+     * Processes the provided {@link JumpInfo} object, instructing {@link JClicPlayer} to go back,
+     * stop or jump to another point in the sequence.
+     * @param {JumpInfo} ji - The object to be processed
+     * @param {boolean} allowReturn - When this param is `true`, the jump instructed by `ji` (if any)
+     * will be recorded, thus allowing to return to the current activity.
+     * @returns {boolean} - `true` if the jump can be processed without errors, `false` otherwise.
+     */
     processJump: function (ji, allowReturn) {
       var result = false;
       if (ji !== null && this.player.project !== null) {
@@ -127,7 +151,7 @@ define([
               this.player.exit(ji.sequence);
             break;
           case 'JUMP':
-            if (!ji.sequence  && !ji.projectPath) {
+            if (!ji.sequence && !ji.projectPath) {
               var ase = this.player.project.activitySequence.getElement(ji.actNum, true);
               if (ase !== null) {
                 if (allowReturn)
@@ -148,14 +172,16 @@ define([
       }
       return result;
     },
-    //
-    // Performs a jump to the specified sequence
-    // sequence (String) - The [ActivitySequence](ActivitySequence.html) tag to jump to.
-    // path (String) - When different of `null`, indicates a new project file that must
-    // be loaded. Otherwise, the `sequence` parameter refers to the ActivitySequence of
-    // the current project.
-    // allowReturn (boolean) - When this param is `true`, the jump will be recorded,
-    // thus allowing to go back returning to the current activity.    
+    /**
+     * 
+     * Performs a jump to the specified sequence
+     * @param {string} sequence - The {@link ActivitySequence} tag to jump to.
+     * @param {?string} path - When not `null`, indicates a new project file that must be loaded.
+     * Otherwise, the `sequence` parameter refers to a tah into the {@link ActivitySequence} of
+     * the current project.
+     * @param {boolean} allowReturn - When this param is `true`, the jump will be recorded, thus
+     * allowing to return to the current activity.
+     */
     jumpToSequence: function (sequence, path, allowReturn) {
       if (Utils.isNullOrUndef(sequence) && Utils.isNullOrUndef(path))
         return false;

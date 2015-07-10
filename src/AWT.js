@@ -27,6 +27,8 @@ define([
    * {@link AWT.Ellipse}, {@link AWT.Path}, {@link AWT.PathStroke}, {@link AWT.Action},
    * {@link AWT.Timer} and {@link AWT.Container}.
    * @exports AWT
+   * @class
+   * @abstract
    */
   var AWT = {};
 
@@ -177,10 +179,10 @@ define([
     },
     /**
      * 
-     * The [TextMetrics](https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics) 
-     * object used by [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+     * The {@link https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics TextMetrics} object used
+     * by {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D CanvasRenderingContext2D}
      * does not provide a `heigth` value for rendered text.<br>
-     * This [stackoverflow question](http://stackoverflow.com/questions/1134586/how-can-you-find-the-height-of-text-on-an-html-canvas)
+     * This {@link http://stackoverflow.com/questions/1134586/how-can-you-find-the-height-of-text-on-an-html-canvas stackoverflow question}
      * has an excellent response by Daniel Earwicker explaining how to measure the
      * vertical dimension of rendered text using a `span` element.<br>
      * The code has been slighty adapted to deal with Font objects.
@@ -277,7 +279,7 @@ define([
      * 
      * Creates a [CanvasGradient](https://developer.mozilla.org/en-US/docs/Web/API/CanvasGradient)
      * based on the provided context and rectangle.
-     * @param {CanvasRenderingContext2D} ctx - The 2D rendering context
+     * @param {external:CanvasRenderingContext2D} ctx - The 2D rendering context
      * @param {AWT.Rectangle} rect - The rectangle where this gradient will be applied to
      * @returns {AWT.Gradient}
      */
@@ -359,7 +361,7 @@ define([
     /**
      * 
      * Sets the properties of this stroke to a CanvasRenderingContext2D
-     * @param {CanvasRenderingContext2D} ctx - The canvas 2D rendering context
+     * @param {external:CanvasRenderingContext2D} ctx - The canvas 2D rendering context
      */
     setStroke: function (ctx) {
       ctx.lineWidth = this.lineWidth;
@@ -650,7 +652,7 @@ define([
     /**
      * 
      * Fills the Shape with the current style in the provided HTML canvas context
-     * @param {CanvasRenderingContext2D} ctx - The canvas 2D rendering context where to fill this shape.
+     * @param {external:CanvasRenderingContext2D} ctx - The canvas 2D rendering context where to fill this shape.
      * @param {AWT.Rectangle=} dirtyRegion - The context region to be updated. Used as clipping
      * region when drawing.
      */
@@ -672,7 +674,7 @@ define([
     /**
      * 
      * Draws this shape in the provided HTML canvas 2D rendering context.
-     * @param {CanvasRenderingContext2D} ctx - The canvas 2D rendering context where to draw the shape.
+     * @param {external:CanvasRenderingContext2D} ctx - The canvas 2D rendering context where to draw the shape.
      */
     stroke: function (ctx) {
       this.preparePath(ctx);
@@ -683,7 +685,7 @@ define([
      * 
      * Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,
      * to fill a surface or to define a clipping region.<br>
-     * @param {CanvasRenderingContext2D} ctx
+     * @param {external:CanvasRenderingContext2D} ctx
      */
     preparePath: function (ctx) {
       // Nothing to do in abstract shapes
@@ -692,7 +694,7 @@ define([
     /**
      * 
      * Creates a clipping region on the specified HTML canvas 2D rendering context
-     * @param {CanvasRenderingContext2D} ctx - The rendering context
+     * @param {external:CanvasRenderingContext2D} ctx - The rendering context
      * @param {string=} [fillRule='nonzero'] - Can be 'nonzero' (default when not set) or 'evenodd'
      */
     clip: function (ctx, fillRule) {
@@ -1171,7 +1173,7 @@ define([
     /**
      * 
      * Draws this PathStroke in the provided HTML canvas context
-     * @param {CanvasRenderingContext2D} ctx - The HTML canvas 2D rendering context
+     * @param {external:CanvasRenderingContext2D} ctx - The HTML canvas 2D rendering context
      */
     stroke: function (ctx) {
       switch (this.type) {

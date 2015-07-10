@@ -39,7 +39,7 @@ define([
    * of the reporting system, user interface, display of system messages, etc.
    * @exports JClicPlayer
    * @class
-   * @extends module:AWT.Container
+   * @extends AWT.Container
    * @param {external:jQuery} $topDiv - The HTML `div` element where this JClicPlayer will deploy.
    * @param {object=} options - A set of optional customized options.
    */
@@ -172,45 +172,53 @@ define([
      * @type {EventSounds} */
     eventSounds: null,
     /**
-     * Collection of {@link module:AWT.Action} objects used by this player.
-     * @type {module:AWT.Action[]} */
+     * Collection of {@link AWT.Action} objects used by this player.
+     * @type {AWT.Action[]} */
     actions: {},
     /**
      * Main timer object used to feed the time counter. Ticks every second.
-     * @type {module:AWT.Timer} */
+     * @type {AWT.Timer} */
     timer: null,
     /**
      * Timer for delayed actions
-     * @type {module:AWT.Timer} */
+     * @type {AWT.Timer} */
     delayedTimer: null,
     /**
      * This variable holds the action to be executed by `delayedTimer`
-     * @type {module:AWT.Action} */
+     * @type {AWT.Action} */
     delayedAction: null,
-    // 
-    // Current values of the counters
+    /**
+     * @typedef counterValType
+     * @type {object}
+     * @property {number} score
+     * @property {number} actions
+     * @property {number} time */
+    /**
+     * Current values of the counters     
+     * @type {counterValType} */
     counterVal: {score: 0, actions: 0, time: 0},
-    // 
-    // Splash image to display while loading
-    splashImg: null,
-    //
-    // An [AWT.Point](AWT.html) indicating the origin of the background image
+    /**
+     * Point indicating the upper-left corner of the current background image
+     * @type {AWT.Point} */
     bgImageOrigin: null,
-    // 
-    // This flag indicates that the player must play all the sounds (including 
-    // system sounds) and other media contents of the activities.
+    /**
+     * Whether the player must play all sounds (including system sounds) and other media content
+     * of the activities.
+     * @type {boolean} */
     audioEnabled: true,
-    //
-    // This flag indicates if the navigation buttons `next` and `back` are
-    // enabled o disabled.
+    /**
+     * Whether the navigation buttons `next` and `back` are enabled o disabled.
+     * @type {boolean} */
     navButtonsDisabled: false,
-    //
-    // When this flag is `true`, the navigation buttons are always enabled despite
-    // of the indications made by the activities or the sequence control system.
-    // Used only to debug projects with complicated sequence chaining.
+    /**
+     * When this flag is `true`, the navigation buttons are always enabled despite
+     * of the indications made by the activities or the sequence control system.<br>
+     * This is used only to debug projects with complicated sequence chaining.
+     * @type {boolean} */
     navButtonsAlways: false,
     /**
-     * Builds actions for this player
+     * 
+     * Builds the {@link AWT.Action} objects for this player
      */
     buildActions: function () {
       var tp = this;
@@ -264,19 +272,24 @@ define([
       });
     },
     /**
-     * This method is called when the container gains the focus for the first. Currently is not used.
+     * 
+     * This method is called when the container gains the focus for the first time.<br>
+     * Currently not used.
      */
     activate: function () {
       // Do nothing
     },
     /**
+     * 
      * Instructs the player to stop working
      */
     stop: function () {
       this.stopMedia(-1);
     },
-    //
-    // Executes miscellaneous finalization routines.
+    /**
+     * 
+     * Executes miscellaneous finalization routines.
+     */
     end: function () {
       this.stopMedia();
       this.closeHelpWindow();
@@ -300,12 +313,10 @@ define([
         this.reporter = null;
       }
     },
-    //
-    // Creates and initializes mouse cursors (currently not implemented)
-    createCursors: function () {
-    },
-    //
-    // Creates and initializes the `eventSounds` member
+    /**
+     * 
+     * Creates and initializes the {@link EventSounds} member
+     */
     createEventSounds: function () {
 
       this.eventSounds = new EventSounds(null);
@@ -313,8 +324,10 @@ define([
       this.eventSounds.realize(this.project.mediaBag);
       EventSounds.prototype.globalEnabled = true;
     },
-    //
-    // Creates and initializes the `reporter` member
+    /**
+     * 
+     * Creates and initializes the {@link Reporter} member
+     */
     initReporter: function () {
       if (this.reporter) {
         this.reporter.end();
@@ -322,8 +335,10 @@ define([
       }
       // TODO: Build a reporter and assign to this.reporter
     },
-    //
-    // Creates and initializes timers
+    /**
+     * 
+     * Creates and initializes objects of type {@link AWT.Timer}
+     */
     initTimers: function () {
       // Main timer
       if (this.timer)
@@ -349,24 +364,32 @@ define([
       }, 1000, false);
       this.delayedTimer.repeats = false;
     },
-    //
-    // Closes the help dialog window
+    /**
+     * 
+     * Closes the help dialog window
+     */
     closeHelpWindow: function () {
       if (this.skin) {
         this.skin.showHelp(null);
         this.skin.showAbout(null);
       }
     },
-    //
-    // Returns the JQuery DOM top component (usually, the [Skin](Skin.html) `$div` member)
+    /**
+     * 
+     * Returns the JQuery DOM top component (usually, the {@link Skin} `$div` member)
+     * @returns {external:jQuery}
+     */
     getTopComponent: function () {
       if (this.skin)
         return this.skin.$getTopComponent();
       else
         return this.$div;
     },
-    //
-    // Sets the current [Skin](Skin.html)
+    /**
+     * 
+     * Sets the current skin
+     * @param {?Skin} newSkin - The skin to use. When `null`, `defaultSkin` will be used.
+     */
     setSkin: function (newSkin) {
       if (!newSkin)
         newSkin = this.defaultSkin;
@@ -395,8 +418,11 @@ define([
          */
       }
     },
-    //
-    // Sets the current project of this player, without starting any activity
+    /**
+     * 
+     * Sets the current project of this player, without starting any activity
+     * @param {JClicProject} project - The project to be set
+     */
     setProject: function (project) {
       if (this.project !== null) {
         if (this.project !== project)
@@ -408,17 +434,16 @@ define([
       if (this.project.skin !== null)
         this.defaultSkin = this.project.skin;
     },
-    //
-    // Loads the specified project and starts playing at the specified activity
-    // or sequence tag.
-    // project (String, JClicProject or `null`) - The [JClicProject](JClicProject.html)
-    // to be loaded (if it's a String) or used. When `null` or `undefined`, refers to
-    // the current project.
-    // sequence (String, Number or `null`) - Sequence tag or numeric order in the
-    // [ActivitySequence](ActivitySequence.html) to be loaded. If
-    // _sequence_ and _activity_ are both `null`, the first
-    // [ActivitySequenceElement](ActivitySequenceElement.html) will be loaded.
-    // activity (String or `null`) - Name of the activity to be loaded (usually `null`)
+    /**
+     * 
+     * Loads the specified project and starts playing at the specified activity or sequence tag.
+     * @param {?(string|JClicProject)} project - The project to load (if it's a string) or used.
+     * When `null` or `undefined`, refers to the current project.
+     * @param {(string|number)=} sequence - Sequence tag or numeric order in the {@link ActivitySequence}
+     * to be loaded. If _sequence_ and _activity_ are both `null`, the first {@link ActivitySequenceElement}
+     * will be loaded.
+     * @param {string=} activity - Name of the activity to be loaded (usually `null`)
+     */
     load: function (project, sequence, activity) {
 
       var tp = this;
@@ -639,6 +664,10 @@ define([
       }
       this.skin.setWaitCursor(false);
     },
+    /**
+     * 
+     * Forces the current activity to stop playing.
+     */
     //
     // Forces to stop playing the current activity
     forceFinishActivity: function () {
@@ -651,8 +680,10 @@ define([
         this.activeMediaBag.removeAll();
       }
     },
-    // 
-    // Removes the current Activity.Panel of this player
+    /**
+     * 
+     * Removes the current {@link Activity#Panel} from this player
+     */
     removeActivity: function () {
       this.forceFinishActivity();
       if (this.actPanel) {
@@ -660,12 +691,13 @@ define([
         this.actPanel.$div.remove();
         this.actPanel = null;
         this.setMsg(null);
-        this.setBackgroundSettings(null);
         this.doLayout();
       }
     },
-    // 
-    // Initialises the activity
+    /**
+     * 
+     * Initializes the activity
+     */
     initActivity: function () {
       this.setWaitCursor(true);
       this.timer.stop();
@@ -681,24 +713,31 @@ define([
       }
       this.setWaitCursor(false);
     },
-    //
-    // Called by `load` when the Activity.Panel is full visible after the JQuery animation effect
+    /**
+     * 
+     * Called by {@link JClicPlayer#load} when the {@link Activity#Panel} is fully visible, just
+     * after the JQuery animation effect.
+     */
     activityReady: function () {
       if (this.actPanel) {
         this.actPanel.activityReady();
         this.setSystemMessage('Activity ready');
       }
     },
-    // 
-    // Just starts the activity (called from Text activities, when in prev screen)
-    startActivity: function (activityPanel) {
+    /**
+     * 
+     * Starts the activity. This method is usually called from text activities with previous text.
+     */
+    startActivity: function () {
       this.setWaitCursor(true);
       if (this.actPanel)
         this.actPanel.startActivity();
       this.setWaitCursor(false);
     },
-    // 
-    // Configures the layout and visual aspect of the player area
+    /**
+     * 
+     * Configures the layout and visual aspect of the player area.
+     */
     doLayout: function () {
 
       // Main player area settings
@@ -752,11 +791,13 @@ define([
       }
       this.$div.css(mainCss);
     },
-    //
-    // Plays the specified media
-    // * mediaContent([MediaContent](MediaContent)) - The media content to be played.
-    // * mediaPlacement([ActiveBox](ActiveBox.html) - The visual placement of the media,
-    // when applicable.
+    /**
+     * 
+     * Plays the specified media.
+     * @param {MediaContent} mediaContent - The media to be played
+     * @param {ActiveBox=} mediaPlacement - The cell where the graphic component of this media
+     * should be placed (used with video objects)
+     */
     playMedia: function (mediaContent, mediaPlacement) {
 
       // Run asyncronously to avoid UI locking. In Java this was achieved
@@ -819,8 +860,12 @@ define([
         }
       }, 1);
     },
-    //
-    // Stops currently playing media
+    /**
+     * 
+     * Stops currently playing media
+     * @param {number=} [level=-1] - Sets the threshold above which all media objects with equal
+     * or greater `level` will also also be muted.
+     */
     stopMedia: function (level) {
       if (typeof level !== 'number')
         level = -1;
@@ -829,23 +874,30 @@ define([
       thisPlayer.activeMediaBag.stopAll(level);
       //}, 0);
     },
-    //
-    // Launches the specified external command
-    // (currently dues nothing)
+    /**
+     * 
+     * Launches the specified system command.<br>
+     * Currently not implemented.
+     * @param {string} cmd
+     */
     runCmd: function (cmd) {
       this.setSystemMessage('Unsupported call to external command', cmd);
     },
-    // 
-    // Called from [Activity](Activity.html) when finishing
-    // * completedOK (boolean) - The user has successful completed the activity
+    /**
+     * 
+     * Called from {@link Activity} when finished.
+     * @param {boolean} completedOK - `true` when the activity was successfully completed, `false`
+     * otherwise.
+     */
     activityFinished: function (completedOK) {
       this.closeHelpWindow();
       this.setSystemMessage('activity finished');
       this.timer.stop();
       this.startAutoPassTimer();
     },
-    //
-    // Starts the automatic passing to the next activity, if applicable
+    /**
+     * Starts the automatic passing to the next activity, when applicable.
+     */
     startAutoPassTimer: function () {
       var ase = this.project.activitySequence.getCurrentAct();
       if (ase !== null && ase.delay > 0 && !this.delayedTimer.isRunning() && !this.navButtonsDisabled) {
@@ -854,13 +906,11 @@ define([
         this.delayedTimer.start();
       }
     },
-    //
-    // Sets the background settings of this player
-    setBackgroundSettings: function (act) {
-      this.doLayout();
-    },
-    //
-    // Sets the current main message
+    /**
+     * 
+     * Sets the current main message
+     * @param {ActiveBoxContent} abc - The content of the message
+     */
     setMsg: function (abc) {
       var ab = null;
       if (this.skin)
@@ -874,33 +924,51 @@ define([
         ab.playMedia(this);
       }
     },
-    //
-    // Launches the active media content present in the message box, if any 
+    /**
+     * 
+     * Launches the active media content associated to the main message, if any.
+     */
     playMsg: function () {
       if (this.skin && this.skin.getMsgBox())
         this.skin.getMsgBox().playMedia(this);
     },
-    // 
-    // Sets the specified value to a counter
+    /**
+     * 
+     * Sets a value to the specified counter
+     * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
+     * @param {number} newValue - The value to be set
+     */
     setCounterValue: function (counter, newValue) {
       this.counterVal[counter] = newValue;
       if (this.skin && this.skin.counters[counter])
         this.skin.counters[counter].setValue(newValue);
     },
-    //
-    // Gets the current value of the specified counter
+    /**
+     * 
+     * Gets the current value for the specified counter
+     * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
+     * @returns {number}
+     */
     getCounterValue: function (counter) {
       return this.counterVal[counter];
     },
-    // 
-    // Enables or disables a specific counter
+    /**
+     * 
+     * Enables or disables a specific counter
+     * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
+     * @param {boolean} bEnabled - When `true`, the counter will be enabled.
+     */
     setCounterEnabled: function (counter, bEnabled) {
       if (this.skin) {
         this.skin.enableCounter(counter, bEnabled);
         this.setCountDown(counter, 0);
       }
     },
-    // Increments the value of the specified counter
+    /**
+     * 
+     * Increments by 1 the value of the specified counter
+     * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
+     */
     incCounterValue: function (counter) {
       this.counterVal[counter]++;
       var actp = this.actPanel;
@@ -917,39 +985,55 @@ define([
         }, 0);
       }
     },
-    // 
-    // Sets the specified counter in count-down status, starting at maxValue
+    /**
+     * 
+     * Sets the specified counter in count-down status, starting at `maxValue`.
+     * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
+     * @param {number} maxValue - The value from which to start counting down
+     */
     setCountDown: function (counter, maxValue) {
       this.counterVal[counter] = maxValue;
       if (this.skin && this.skin.counters[counter])
         this.skin.counters[counter].setCountDown(maxValue);
     },
-    // 
-    // Sets / unsets the panel in 'wait' state
+    /**
+     * 
+     * Sets / unsets the panel in 'wait' state
+     * @param {boolean} status
+     */
     setWaitCursor: function (status) {
       if (this.skin)
         this.skin.setWaitCursor(status);
     },
-    // 
-    // Displays system messages
+    /**
+     * 
+     * Displays debug messages on the console
+     * @param {string} msg1
+     * @param {string} msg2
+     */
     setSystemMessage: function (msg1, msg2) {
       if (this.skin !== null)
         this.skin.setSystemMessage(msg1, msg2);
       else
         console.log((msg1 ? msg1 + ' - ' : '') + (msg2 ? msg2 : ''));
     },
-    //
-    // Builds an [ActiveMediaPlayer](ActiveMediaPlayer.html) for the specified
-    // [MediaContent](MediaContent.html)
+    /**
+     * 
+     * Builds an {@link ActiveMediaPlayer} for the specified {@link MediaContent}
+     * @param {MediaContent} mediaContent - The media content to be played
+     * @returns {ActiveMediaPlayer}
+     */
     getActiveMediaPlayer: function (mediaContent) {
       if (this.activeMediaBag && mediaContent)
         return this.activeMediaBag.getActiveMediaPlayer(mediaContent, this.project.mediaBag, this);
       else
         return null;
     },
-    // 
-    // Notifies the reporting system that a new activity has started
-    // * act ([Activity](Activity.html)) - The activity that is sending the notification
+    /**
+     * 
+     * Notifies the reporting system that a new activity has started
+     * @param {Activity} act - The activity that is sending the notification
+     */
     reportNewActivity: function (act) {
       var ase = this.project.activitySequence.getCurrentAct();
       if (this.reporter) {
@@ -962,14 +1046,16 @@ define([
       this.setCounterValue('actions', 0);
       this.setCounterValue('score', 0);
     },
-    //
-    // Notifies the reporting system that a new action has been performed in the current activity
-    // * act ([Activity](Activity.html)) - The activity that is sending the notification
-    // * type (string) - Type of action (match, move, switch...)
-    // * source (string) - Object acting as a source of the action (cell, grid, clue...)
-    // * dest (string) - When applicable, object acting as a receiver of the action (cell, grid...)
-    // * ok (boolean) - The action was OK
-    // * currentScore (number) - The current score of the activity
+    /**
+     * 
+     * Notifies the reporting system that a new action has been performed on the current activity
+     * @param {Activity} act - The activity that is sending the notification
+     * @param {string} type - Type of action (match, move, switch...)
+     * @param {?string} source - Object acting as a source of the action (cell, grid, clue...)
+     * @param {?string} dest - When applicable, object acting as a receiver of the action (cell, grid...)
+     * @param {boolean} ok - Whether the action was OK or not
+     * @param {number} currentScore - The current score of the activity
+     */
     reportNewAction: function (act, type, source, dest, ok, currentScore) {
       if (this.reporter && act.includeInReports && act.reportActions)
         this.reporter.newAction(type, source, dest, ok);
@@ -978,25 +1064,34 @@ define([
         this.setCounterValue('score', currentScore);
       }
     },
-    // 
-    // Notifies the reporting system that the current activity has finished
+    /**
+     * 
+     * Notifies the reporting system that the current activity has finished
+     * @param {Activity} act - The activity that is sending the notification
+     * @param {boolean} solved - Whether the activity was successfully completed or not.
+     */
     reportEndActivity: function (act, solved) {
       if (this.reporter && act.includeInReports)
         this.reporter.endActivity(this.counterVal['score'], this.counterVal['actions'], solved);
     },
-    //
-    // Shows the help info provided by the activity
+    /**
+     * 
+     * Shows the help info provided by the activity
+     * @param {external:jQuery} $hlpComponent - The jQuery DOM component to be shown.
+     * @returns {boolean} - True when the component was successfully displayed
+     */
     showHelp: function ($hlpComponent) {
       if (this.skin) {
-        this.skin.showHelp($hlpComponent);
-        return true;
+        return this.skin.showHelp($hlpComponent);
       }
       return false;
     },
-    //
-    // Shows the requested URL
-    // * url (string) - The URL to navigate to
-    // * inFrame (boolean) - Opens in a new frame
+    /**
+     * 
+     * Navigates to the requested URL
+     * @param {string} url - The URL to navigate to
+     * @param {boolean} inFrame - When `true` opens in a new frame
+     */
     displayURL: function (url, inFrame) {
       if (url) {
         if (inFrame)
@@ -1005,16 +1100,21 @@ define([
           window.location.href = url;
       }
     },
-    //
-    // Exit function. Has effect only if `exitUrlL` has been specified in `options`
+    /**
+     * 
+     * Only when `exitUrl` has been specified in `options`, navigates to the specified URL
+     * @param {string} url - The URL to navigate to.
+     */
     exit: function (url) {
       if (!url)
         url = this.options.exitUrl;
       if (url)
         this.displayURL(url, false);
     },
-    //
-    // Sets a title in a specific HTML element, if provided
+    /**
+     * Sets a title in a specific HTML element, if provided.
+     * @param {string} docTitle
+     */
     setWindowTitle: function (docTitle) {
       this.setSystemMessage('running', docTitle);
     }

@@ -128,7 +128,7 @@ define([
     bgColor: K.DEFAULT_BG_COLOR,
     /**
      * When set, gradient used to draw the activity window background
-     * @type {module:AWT.Gradient} */
+     * @type {AWT.Gradient} */
     bgGradient: null,
     /**
      * Whether the bgImage (if any) has to be tiled across the panel background
@@ -149,7 +149,7 @@ define([
     absolutePositioned: false,
     /**
      * The position of the activity panel on the player.
-     * @type {module:AWT.Point} */
+     * @type {AWT.Point} */
     absolutePosition: null,
     /**
      * Whether to generate usage reports
@@ -224,7 +224,7 @@ define([
     messages: null,
     /**
      * Preferred dimension of the activity window
-     * @type {module:AWT.Dimension} */
+     * @type {AWT.Dimension} */
     windowSize: new AWT.Dimension(K.DEFAULT_WIDTH, K.DEFAULT_HEIGHT),
     /**
      * Whether the activity window has transparent background.
@@ -236,7 +236,7 @@ define([
     activityBgColor: K.DEFAULT_BG_COLOR,
     /**
      * Gradient used to draw backgrounds inside the activity.
-     * @type {module:AWT.Gradient} */
+     * @type {AWT.Gradient} */
     activityBgGradient: null,
     /**
      * Whether to display or not the 'time' counter
@@ -729,7 +729,7 @@ define([
     /**
      * 
      * Getter method for `windowSize`
-     * @returns {module:AWT.Dimension}
+     * @returns {AWT.Dimension}
      */
     getWindowSize: function () {
       return new AWT.Dimension(this.windowSize);
@@ -737,7 +737,7 @@ define([
     /**
      * 
      * Setter method for `windowSize`
-     * @param {module:AWT.Dimension} windowSize
+     * @param {AWT.Dimension} windowSize
      */
     setWindowSize: function (windowSize) {
       this.windowSize = new AWT.Dimension(windowSize);
@@ -761,7 +761,7 @@ define([
      * extends [javax.swing.JPanel](http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html).<br>
      * In this implementation, the JPanel will be replaced by an HTML `div` tag.
      * @class
-     * @extends module:AWT.Container
+     * @extends AWT.Container
      * @param {Activity} act - The {@link Activity} to wich this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -828,11 +828,11 @@ define([
     ps: null,
     /**
      * The minimum size of this kind of Activity.Panel
-     * @type {module:AWT.Dimension} */
+     * @type {AWT.Dimension} */
     minimumSize: null,
     /**
      * The preferred size of this kind of Activity.Panel
-     * @type {module:AWT.Dimension} */
+     * @type {AWT.Dimension} */
     preferredSize: null,
     /**
      * List of events intercepted by this Activity.Panel. Current events are: 'keydown', 'keyup',
@@ -846,7 +846,7 @@ define([
     /**
      * 
      * Sets the size and position of this activity panel
-     * @param {module:AWT.Rectangle} rect
+     * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
       AWT.Container.prototype.setBounds.call(this, rect);
@@ -904,9 +904,9 @@ define([
     },
     /**
      * Activities should implement this method to update the graphic content of its panel. The method
-     * will be called from {@link module:AWT.Container#update} when needed.
+     * will be called from {@link AWT.Container#update} when needed.
      * @override
-     * @param {module:AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.
      */
     updateContent: function (dirtyRegion) {
@@ -965,8 +965,8 @@ define([
     /**
      * 
      * Sets the real dimension of this Activity.Panel.
-     * @param {module:AWT.Dimension} maxSize - The maximum surface available for the activity panel
-     * @returns {module:AWT.Dimension}
+     * @param {AWT.Dimension} maxSize - The maximum surface available for the activity panel
+     * @returns {AWT.Dimension}
      */
     setDimension: function (maxSize) {
       return new AWT.Dimension(
@@ -1021,8 +1021,8 @@ define([
      *
      *  Fits the panel into the `proposed` rectangle. The panel can occupy more space, but always
      * not surpassing the `bounds` rectangle.
-     * @param {module:AWT.Rectangle} proposed - The proposed rectangle
-     * @param {module:AWT.Rectangle} bounds - The maximum allowed bounds
+     * @param {AWT.Rectangle} proposed - The proposed rectangle
+     * @param {AWT.Rectangle} bounds - The maximum allowed bounds
      */
     fitTo: function (proposed, bounds) {
       var origin = new AWT.Point();

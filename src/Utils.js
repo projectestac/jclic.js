@@ -21,6 +21,8 @@ define([
    * 
    * Miscellaneous utility functions and constants
    * @exports Utils
+   * @class
+   * @abstract
    */
   var Utils = {
     /**

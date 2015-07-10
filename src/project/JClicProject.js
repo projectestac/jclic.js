@@ -125,6 +125,5 @@ define([
     }
   };
 
-  /* global module */
   return JClicProject;
 });
