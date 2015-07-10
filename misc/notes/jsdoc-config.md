@@ -38,12 +38,23 @@ h4,
   border-radius: 5px;
 }
 ```
+
 _Line 1418:_
 ```
 dt {
   //font - weight: bold;
 }
 ```
+
+_Line 3849:_
+```
+.nav > li > a {
+  position: relative;
+  display: block;
+  padding: 2px 15px;
+}
+```
+
 _Line 6944:_
 ```
 code {
@@ -52,5 +63,3 @@ code {
   color: darkcyan;
 }
 ```
-
-

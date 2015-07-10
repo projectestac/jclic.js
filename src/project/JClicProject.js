@@ -21,15 +21,19 @@ define([
   "../Activity",
   "../Utils"
 ], function ($, ProjectSettings, ActivitySequence, MediaBag, Activity, Utils) {
-
-// JClicProject contains all the components of a JClic project:
-// activities, sequences, media files, descriptors and metadata.  
-// This encapsulation is achieved by three auxiliary objects:
-// - ProjectSettings: stores metadata like full tiltle, description,
-// authors, languages, educational topics...
-// - ActivitySequence: defines the order in which the activities must be shown
-// - MediaBag: contains the full list of media files used by the activities    
-//
+  
+  /**
+   * 
+   *  JClicProject contains all the components of a JClic project: activities, sequences, media
+   *  files, descriptors and metadata.<br>
+   *  This encapsulation is achieved by three auxiliary objects:
+   *  - {@link ProjectSettings}: stores metadata like full tiltle, description, authors, languages,
+   *  educational topics...
+   *  - {@link ActivitySequence}: defines the order in which the activities must be shown.
+   *  - {@link MediaBag}: contains the list of all media files used by the activities    
+   * @exports JClicProject
+   * @class
+   */
   var JClicProject = function () {
     this.settings = new ProjectSettings(this);
     this.activitySequence = new ActivitySequence(this);
@@ -39,38 +43,65 @@ define([
 
   JClicProject.prototype = {
     constructor: JClicProject,
-    //
+    /**
+     * The project's name
+     * @type {string} */
     name: 'unknown',
+    /**
+     * The version of the XML file format used to save the project (currently 0.1.3)
+     * @type {string} */
     version: '0.1.3',
+    /**
+     * Optional property that can be used by reporting systems
+     * @type {string} */
     type: null,
+    /**
+     * Optional property that can be used by reporting systems
+     * @type {string} */    
     code: null,
-    // 
-    // ProjectSettings
+    /**
+     * Object containing the project settings
+     * @type {ProjectSettings} */
     settings: null,
-    // 
-    // ActivitySequence
+    /**
+     * Object containing the order in which the activities must be presented
+     * @type {ActivitySequence} */
     activitySequence: null,
-    // 
-    // Activities stored as JQuery xml elements
+    /**
+     * Array of jQuery xml elements containing the data of each activity. Don't rely on this object
+     * to retrieve real activities. Use the method {@link @JClicProject#getActivity} instead.
+     * @private
+     * @type {external:jQuery[]} */
     _activities: null,
-    // 
-    // MediaBag
+    /**
+     * The collection of all media elements used in this project
+     * @type {MediaBag} */
     mediaBag: null,
-    // 
-    // Skin
+    /**
+     * The object that builds and manages the visual interface presented to users
+     * @type {Skin} */
     skin: null,
-    //
-    // Relative path or absolute URL to be used as a base to access files
-    // (usually in conjunction with [JClicPlayer.basePath](JClicPlayer.html))
+    /**
+     * Relative path or absolute URL to be used as a base to access files, usually in conjunction
+     * with {@link JClicPlayer#basePath}
+     * @type {string} */
     basePath: '',
-    //
-    // Full path of this project
+    /**
+     * Full path of this project
+     * @type {string} */
     path: null,
-    // 
-    // The JSZip object where this project is stored (can be `null`)
+    /**
+     * The JSZip object where this project is stored (can be `null`)
+     * @type {external:JSZip} */
     zip: null,
-    // 
-    // Loads the project settings from a main JQuery XML element 
+    /**
+     * 
+     * Loads the project settings from a main jQuery XML element 
+     * @param {external:jQuery} $xml - The XML element
+     * @param {string} path - The full path of this project
+     * @param {?external:JSZip} zip - An optional JSZip object where this project is encapsulated
+     * @returns {JClicProject}
+     */
     setProperties: function ($xml, path, zip) {
       if (path){
         this.path = path;
@@ -95,8 +126,12 @@ define([
       });
       return this;
     },
-    // 
-    // Returns the [Activity](Activity.html) object named as requested
+    /**
+     * 
+     * Finds activities by name and builds the corresponding {@link Activity} object.
+     * @param {string} name - The name of the requested activity
+     * @returns {Activity}
+     */
     getActivity: function(name){
       return Activity.prototype._getActivity(this._activities[name], this);
     },
