@@ -905,7 +905,6 @@ define([
     /**
      * Activities should implement this method to update the graphic content of its panel. The method
      * will be called from {@link AWT.Container#update} when needed.
-     * @override
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.
      */

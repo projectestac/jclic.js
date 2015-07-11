@@ -26,10 +26,17 @@ define([
   if (!screenfull)
     screenfull = window.screenfull;
 
-  //
-  // This is the default [Skin](Skin.html) used by jclic.js
-  // $div (a JQuery `<div/>` object) - The `div` to be used as a recipient for
-  // this skin. When `null` or `undefined`, a new one will be created.  
+  /**
+   * This is the default {@link Skin} used by JClic.js
+   * @exports DefaultSkin
+   * @class
+   * @extends Skin
+   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+   * realize the media objects meeded tot build the Skin.
+   * @param {string=} name - The skin class name
+   * @param {external:jQuery=} $div - The DOM element (usually a `div`) to be used as a recipient for
+   * this skin. When `null` or `undefined`, a new one will be created.  
+   */
   var DefaultSkin = function (ps, name, $div) {
 
     // DefaultSkin extends [Skin](Skin.html)
@@ -85,37 +92,51 @@ define([
 
   DefaultSkin.prototype = {
     constructor: DefaultSkin,
-    // 
-    // An object of type [ActiveBox](ActiveBox.html) used to display the main
-    // messages of each JClic [Activity](Activity.html)
+    /**
+     * The box used to display the main messages of JClic activities
+     * @type {ActiveBox} */
     msgBox: null,
+    /**
+     * The `div` DOM object where `msgBox` is located
+     * @type {external:jQuery} */
     $msgBoxDiv: null,
+    /*
+     * An HTML `canvas` object created into `$msgBoxDiv`
+     * @type {external:jQuery} */
     $msgBoxDivCanvas: null,
     //
-    // Objects used as _help_ and _about_ windows
-    currentHelpWindow: null,
-    currentAboutWindow: null,
-    //
     // Background, margin and height of the messageBox
+    /**
+     * Background color used to fill the skin base
+     * @type {string} */
     background: '#3F51B5',
+    /**
+     * Space (pixels) between the components of this {@link Skin}
+     * @type {number} */
     margin: 18,
+    /**
+     * Height of {@link DefaultSkin#msgBox msgBox}
+     * @type {number} */
     msgBoxHeight: 60,
-    // 
-    // Overrides `Skin.updateContent`
-    // Updates the graphic contents of this skin.
-    // The method should be called from `Skin.update`
-    // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
+    /**
+     * 
+     * Updates the graphic contents of this skin.<br>
+     * This method should be called from {@link Skin#update}
+     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`, it's the
+     * whole panel.
+     */
     updateContent: function (dirtyRegion) {
-      if (this.$msgBoxDivCanvas){
+      if (this.$msgBoxDivCanvas) {
         var ctx = this.$msgBoxDivCanvas.get(0).getContext('2d');
         ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
         this.msgBox.update(ctx, dirtyRegion);
       }
       return Skin.prototype.updateContent.call(this);
     },
-    // 
-    // Main method used to build the contents
-    // Resizes and places internal objects
+    /**
+     * 
+     * Main method used to build the content of the skin. Resizes and places internal objects.
+     */
     doLayout: function () {
 
       var margin = this.margin;
@@ -124,13 +145,13 @@ define([
       var full = this.resources.fullScreenSize;
 
       // Set the appropiate fullScreen icon
-      if(this.buttons.fullscreen){
+      if (this.buttons.fullscreen) {
         this.buttons.fullscreen.get(0).src = this.resources[
-          screenfull.isFullscreen ? 'fullScreenExit' : 'fullScreen'];
+            screenfull.isFullscreen ? 'fullScreenExit' : 'fullScreen'];
       } else {
-        full = {w:0, h:0};
+        full = {w: 0, h: 0};
       }
-        
+
       var autoFit = this.ps.options.autoFit | (screenfull && screenfull.enabled && screenfull.isFullscreen);
       var mainWidth = autoFit ? $(window).width() : this.ps.options.width;
       var mainHeight = autoFit ? $(window).height() : this.ps.options.height;
@@ -192,7 +213,7 @@ define([
         left: msgBoxRect.pos.x + msgBoxRect.dim.width + 'px'
       });
 
-      if (this.buttons.fullscreen){
+      if (this.buttons.fullscreen) {
         this.buttons.fullscreen.css({
           position: 'absolute',
           top: msgBoxRect.pos.y + (h - full.h) / 2 + 'px',
@@ -210,37 +231,43 @@ define([
       this.invalidate(msgBoxRect);
       this.update();
     },
-    //
-    // Gets the [ActiveBox](ActiveBox.html) used by activities to display the main message
+    /**
+     * 
+     * Gets the {@link ActiveBox} used to display the main messages of activities
+     * @returns {ActiveBox}
+     */
     getMsgBox: function () {
       return this.msgBox;
     },
-    //
-    // Method used to notify this skin that a specific action has changed its enabled/disabled status
-    // act (AWT.Action)
-    actionStatusChanged: function(act){
-      switch(act.name){
+    /**
+     * 
+     * Method used to notify this skin that a specific action has changed its enabled/disabled status
+     * @param {AWT.Action} act - The action originating the change event
+     */
+    actionStatusChanged: function (act) {
+      switch (act.name) {
         case 'next':
           this.setEnabled(this.buttons.next, act.enabled);
-          break;        
+          break;
         case 'prev':
           this.setEnabled(this.buttons.prev, act.enabled);
-          break;        
+          break;
         default:
           break;
       }
     },
-    //
-    // Enables or disables an object changing its opacity
-    // $object (A JQuery element)
-    // enabled (boolean)
-    setEnabled: function($object, enabled){
-      $object.css('opacity', enabled ? 1.0 : 0.3);      
+    /**
+     * 
+     * Enables or disables an object changing its opacity
+     * @param {external:jQuery} $object - A JQuery DOM element
+     * @param {boolean} enabled
+     */
+    setEnabled: function ($object, enabled) {
+      $object.css('opacity', enabled ? 1.0 : 0.3);
     },
-    
-    
-    //
-    // Graphical resources used by this skin
+    /**
+     * Buttons and other graphical resources used by this skin.
+     * @type {object} */
     resources: {
       //
       // SVG image for the 'previous activity' button
@@ -348,7 +375,6 @@ define([
   DefaultSkin.prototype = $.extend(Object.create(Skin.prototype), DefaultSkin.prototype);
 
   // Register this class in the list of available skins
-  // Register class in Activity.prototype
   Skin.prototype._CLASSES['DefaultSkin'] = DefaultSkin;
 
   return DefaultSkin;

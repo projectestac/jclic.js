@@ -45,7 +45,6 @@ define([
     useIdAss: false,
     /**
      * Retrieves the minimum number of actions needed to solve this activity
-     * @override
      * @returns {number}
      */
     getMinNumActions: function () {

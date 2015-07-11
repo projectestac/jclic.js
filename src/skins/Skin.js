@@ -28,10 +28,10 @@ define([
    * @class
    * @abstract
    * @extends AWT.Container
-   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+   * @param {PlayStation=} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
    * realize the media objects meeded tot build the Skin.
-   * @param {string} name - The skin class name
-   * @param {external:jQuery} $div - The DOM component that will act as a main container of the skin
+   * @param {string=} name - The skin name
+   * @param {external:jQuery=} $div - The DOM component that will act as a main container of the skin
    */
   var Skin = function (ps, name, $div) {
 
@@ -196,7 +196,6 @@ define([
      * 
      * Updates the graphic contents of this skin.<br>
      * The method should be called from {@link Skin#update}
-     * @override
      * @param {AWT.Rectangle} dirtyRegion - The region to be painted. When `null`, refers to the full
      * skin area.
      */

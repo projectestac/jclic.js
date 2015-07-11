@@ -19,47 +19,95 @@ define([
   "../AWT"
 ], function ($, Utils, AWT) {
 
-//
-// This class (and its derivatives) draws a set of "shapes" used to place the
-// [ActiveBox](ActiveBox.html) objects in a specific position, and to determine
-// its dimension and appareance.
+  /**
+   * The function of this class and its subclasses is to draw a set of "shapes" that will be used to
+   * place {@link ActiveBox} objects at a specific position, and to determine its dimension and
+   * appareance.
+   * @exports Shaper
+   * @class
+   * @param {number} nx - Number of columns (in grid-based shapers)
+   * @param {number} ny - Number of rows (in grid-based shapers)
+   */
   var Shaper = function (nx, ny) {
     this.reset(nx, ny);
   };
 
   Shaper.prototype = {
     constructor: Shaper,
-    // 
-    // `Shaper.prototype._CLASSES` contains the list of classes derived from Shaper. It
-    // should be read-only and updated by real shaper classes.
+    /**
+     * `Shaper.prototype._CLASSES` contains the list of classes derived from Shaper. It should be
+     * updated by real shaper classes.
+     * @protected
+     * @type {object} */
     _CLASSES: {},
-    //
-    // This shaper class name
+    /**
+     * This shaper class name
+     * @type {string} */
     className: 'Shaper',
-    // 
-    // Number of columns (nCols) and rows (nRows)
-    nCols: 0, nRows: 0, nCells: 0,
-    //
-    // Contains the specific definition of each shape
+    /**
+     * Number of columns (useful in grid-based shapers)
+     * @type {number} */
+    nCols: 0,
+    /**
+     * Number of rows (useful in grid-based shapers)
+     * @type {number} */
+    nRows: 0,
+    /**
+     * Number of cells managed by this shaper
+     * @type {number} */
+    nCells: 0,
+    /**
+     * Contains the specific definition of each shape
+     * @type {object} */
     shapeData: null,
-    //
-    // Flag used to check if the `Shaper`has been initiated
+    /**
+     * Flag used to check if the `Shaper` has been initialized against a real surface
+     * @type {boolean} */
     initiated: false,
     //
     // Fields used only in JigSaw shapers
+    /**
+     * In {@link JigSaw}, ratio between the base width of the tooth and the total length of the side.
+     * @type {number} */
     baseWidthFactor: 1.0 / 3,
+    /**
+     * In {@link JigSaw}, ratio between the tooth height and the total length of the side.
+     * @type {number} */
     toothHeightFactor: 1.0 / 6,
+    /**
+     * In {@link JigSaw}, whether the tooths take random directions or not
+     * @type {boolean} */
     randomLines: false,
     //
     // Fields used only in the `Holes` shaper
-    scaleX: 1.0, scaleY: 1.0,
+    /**
+     * In {@link Holes}, scale to be applied to horizontal positions and lengths to achieve the real
+     * value of the shape placed on a real surface.
+     * @type {number} */
+    scaleX: 1.0,
+    /**
+     * In {@link Holes}, scale to be applied to vertical positions and lengths to achieve the real
+     * value of the shape placed on a real surface.
+     * @type {number} */
+    scaleY: 1.0,
+    /**
+     * In {@link Holes}, the enclosing area where all shapes are placed.
+     * @type {AWT.Shape} */
     enclosing: null,
+    /**
+     * In {@link Holes}, when `true`, the enclosing area will be drawn
+     * @type {boolean} */
     showEnclosure: false,
-    //
-    // Flag indicating if this shaper organizes its cells in rows and columns
+    /**
+     * Flag indicating if this shaper organizes its cells in rows and columns
+     * @type {boolean} */
     rectangularShapes: false,
-    // 
-    // Initialises this Shaper to default values
+    /**
+     * 
+     * Initializes this Shaper to default values
+     * @param {number} nCols - Number of columns
+     * @param {number} nRows - Number of rows
+     */
     reset: function (nCols, nRows) {
       this.nCols = nCols;
       this.nRows = nRows;
@@ -69,10 +117,12 @@ define([
       for (var i = 0; i < this.nCells; i++)
         this.shapeData[i] = new AWT.Shape();
     },
-    // 
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Loads this shaper settings from a specific JQuery XML element 
+     * @param {external:jQuery} $xml - The XML element with the shaper data
+     */
     setProperties: function ($xml) {
-
       var shaper = this;
       $.each($xml.get(0).attributes, function () {
         switch (this.name) {
@@ -119,13 +169,18 @@ define([
       }
       return this;
     },
-    //
-    // Reads a shape from XML
-    // Shapes are arrays of `stroke` objects
-    // Each `stroke` has an `action` (_move to_, _line to_, _quad to_, etc.)
-    // and corresponding `data`.
+    /**
+     * 
+     * Reads an individual shape from an XML element.<br>
+     * Shapes are arrays of `stroke` objects.<br>
+     * Each `stroke` has an `action` (_move to_, _line to_, _quad to_...) and associated `data`.
+     * @param {external:jQuery} $xml - The XML element with the shape data
+     * @param {number} scaleX
+     * @param {number} scaleY
+     * @returns {AWT.Shape}
+     */
     readShapeData: function ($xml, scaleX, scaleY) {
-      var shd = [], result=null;
+      var shd = [], result = null;
       $.each($xml.textContent.split('|'), function () {
         var sd = this.split(':');
         // Possible strokes are: `rectangle`, `ellipse`, `M`, `L`, `Q`, `B`, `X`
@@ -151,15 +206,20 @@ define([
             break;
         }
       });
-      
-      if(!result && shd.length>0)
+
+      if (!result && shd.length > 0)
         result = new AWT.Path(shd);
-      
+
       return result;
     },
-    //
-    // Returns a Shaper of the requested class
-    // Should be called by `Shaper.prototype._getShaper`
+    /**
+     * 
+     * Returns a Shaper of the requested class. This method should be called only by `Shaper.prototype._getShaper`
+     * @param {string} className - The class name of the requested Shaper.
+     * @param {number} nx - Number of columns (in grid-based shapers)
+     * @param {number} ny - Number of rows (in grid-based shapers)
+     * @returns {Shaper}
+     */
     _getShaper: function (className, nx, ny) {
       var shaper = null;
       var cl = Shaper.prototype._CLASSES[className];
@@ -171,12 +231,18 @@ define([
 
       return shaper;
     },
-    //
-    // Function to be implemented in derivatives:
+    /**
+     * Builds the shapes that will form this Shaper
+     */
     buildShapes: function () {
     },
-    //
-    // Gets a clone of the nth Shape object, scaled and located into a Rectangle
+    /**
+     * 
+     * Gets a clone of the nth Shape object, scaled and located into a Rectangle
+     * @param {number} n
+     * @param {AWT.Rectangle} rect
+     * @returns {AWT.Shape}
+     */
     getShape: function (n, rect) {
       if (!this.initiated)
         this.buildShapes();
@@ -184,25 +250,34 @@ define([
         return null;
       return this.shapeData[n].getShape(rect);
     },
-    //
-    // Gets the nth Shape object
+    /**
+     * Gets the nth Shape data object
+     * @param {number} n
+     * @returns {object}
+     */
     getShapeData: function (n) {
       return (n >= 0 && n < this.shapeData.length) ? this.shapeData[n] : null;
     },
-    //
-    // Gets the AWT.Rectangle that contains all shapes
-    // This method should be overwrited by objects derived from Shape
+    /**
+     * 
+     * Gets the AWT.Rectangle that contains all shapes of this Shaper.
+     * @returns {AWT.Rectangle}
+     */
     getEnclosingShapeData: function () {
       return new AWT.Rectangle(0, 0, 1, 1);
     },
-    //
-    // Flag indicating if this Shaper deploys over a surface biggest than the rectangle enclosing
-    // all its shapes
+    /**
+     * Flag indicating if this Shaper deploys over a surface biggest than the rectangle enclosing
+     * all its shapes
+     * @type {boolean} */
     hasRemainder: false,
-    //
-    // When `hasRemainder` is true, this method gets the rectangle containing the full surface on
-    // which the Shaper develops.
-    // rect (AWT.Rectangle) - The frame where to move and scale all the shapes
+    /**
+     * 
+     * When `hasRemainder` is true, this method gets the rectangle containing the full surface where
+     * the Shaper develops.
+     * @param {AWT.Rectangle} rect - The frame where to move and scale all the shapes
+     * @returns {AWT.Rectangle}
+     */
     getRemainderShape: function (rect) {
       var r = null;
 
@@ -211,12 +286,12 @@ define([
 
       if (!this.initiated)
         this.buildShapes();
-      
+
       var sh = this.getEnclosingShapeData();
-      if(sh)
-        r=sh.getShape(rect);
+      if (sh)
+        r = sh.getShape(rect);
       else
-        r=new AWT.Rectangle();
+        r = new AWT.Rectangle();
 
       for (var i = 0; i < this.nCells; i++) {
         if (this.shapeData[i])
