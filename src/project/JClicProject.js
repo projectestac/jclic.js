@@ -21,7 +21,7 @@ define([
   "../Activity",
   "../Utils"
 ], function ($, ProjectSettings, ActivitySequence, MediaBag, Activity, Utils) {
-  
+
   /**
    * 
    *  JClicProject contains all the components of a JClic project: activities, sequences, media
@@ -57,7 +57,7 @@ define([
     type: null,
     /**
      * Optional property that can be used by reporting systems
-     * @type {string} */    
+     * @type {string} */
     code: null,
     /**
      * Object containing the project settings
@@ -103,9 +103,9 @@ define([
      * @returns {JClicProject}
      */
     setProperties: function ($xml, path, zip) {
-      if (path){
+      if (path) {
         this.path = path;
-        if(path.file)
+        if (path.file)
           this.basePath = path;
         else
           this.basePath = Utils.getBasePath(path);
@@ -132,15 +132,15 @@ define([
      * @param {string} name - The name of the requested activity
      * @returns {Activity}
      */
-    getActivity: function(name){
+    getActivity: function (name) {
       return Activity.prototype._getActivity(this._activities[name], this);
     },
-    //
-    // Builds skin, eventSounds and mediaBag fonts
-    // eventSoundsParent (EventSounds) - The parent [EventSounds](EventSounds.html)
-    // object. Can be `null`.
-    // ps (PlayStation) - The PlayStation (usually a [JClicPlayer](JClicPlayer.html)
-    // object) linked to this project.
+    /**
+     * 
+     * Builds the {@link Skin}, {@link EventSounds} and {@link MediaBag} fonts associated to this project.
+     * @param {EventSounds=} eventSoundsParent - The EventSounds object to be used as parent of the new one
+     * @param {PlayStation} ps - The PkayStation (usually a {@link JClicPlayer}) linked to this project.
+     */
     realize: function (eventSoundsParent, ps) {
       if (this.skin === null && this.settings.skinFileName !== null && this.settings.skinFileName.length > 0)
         this.skin = this.mediaBag.getSkinElement(this.settings.skinFileName, ps);
@@ -153,9 +153,11 @@ define([
       // Build all elements of type `font`
       this.mediaBag.buildAll('font');
     },
-    //
-    // Run finalizers on realized objects
-    end: function(){
+    /**
+     * 
+     * Run finalizers on realized objects
+     */
+    end: function () {
       // TODO: Implement JClicProject.end()
     }
   };
