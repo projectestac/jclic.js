@@ -18,68 +18,96 @@ define([
   "../AWT",
   "../Utils"
 ], function ($, AWT, Utils) {
-
-//
-// This object contains a description of any multimedia content (sound,
-// video, MIDI, voice recording..) or special actions (jump to another point in
-// the sequence, link to an URL, etc.) associated to an [ActiveBox](ActiveBox.html)
-// object.
-//
+  /**
+   * This object contains a description of any multimedia content (sound, video, MIDI, voice
+   * recording..) or special actions (jump to another point in the sequence, link to an URL, etc.)
+   * associated to an {@link ActiveBox} object.
+   * @exports MediaContent
+   * @class
+   * @param {string} type - The type of media. Valid values are: `UNKNOWN`, `PLAY_AUDIO`, `PLAY_VIDEO`,
+   * `PLAY_MIDI`, `PLAY_CDAUDIO`, `RECORD_AUDIO`, `PLAY_RECORDED_AUDIO`, `RUN_CLIC_ACTIVITY`,
+   * `RUN_CLIC_PACKAGE`, `RUN_EXTERNAL`, `URL`, `EXIT` and `RETURN`
+   */
   var MediaContent = function (type) {
     this.mediaType = type;
   };
 
   MediaContent.prototype = {
     constructor: MediaContent,
-    // 
-    // Valid `mediaType` values are: `UNKNOWN`, `PLAY_AUDIO`, `PLAY_VIDEO`, 
-    // `PLAY_MIDI`, `PLAY_CDAUDIO`, `RECORD_AUDIO`, `PLAY_RECORDED_AUDIO`,
-    // `RUN_CLIC_ACTIVITY`, `RUN_CLIC_PACKAGE`, `RUN_EXTERNAL`, `URL`, `EXIT`
-    // and `RETURN`
+    /**
+     * The type of media. Valid values are: `UNKNOWN`, `PLAY_AUDIO`, `PLAY_VIDEO`,
+     * `PLAY_MIDI`, `PLAY_CDAUDIO`, `RECORD_AUDIO`, `PLAY_RECORDED_AUDIO`, `RUN_CLIC_ACTIVITY`,
+     * `RUN_CLIC_PACKAGE`, `RUN_EXTERNAL`, `URL`, `EXIT` and `RETURN`
+     * @type {string} */
     mediaType: 'UNKNOWN',
-    //
-    // Priority level, used when different medias want to play together. Higest
-    // level objects silent lowest ones.
+    /**
+     * The priority level is important when different medias want to play together. Objects with
+     * higest priority level can mute lower ones.
+     * @type {number} */
     level: 1,
-    // 
-    // Media file
+    /**
+     * Media file name
+     * @type {String} */
     mediaFileName: null,
-    //
-    // Optional params passed to external calls
+    /**
+     * Optional params passed to external calls
+     * @type {string} */
     externalParam: null,
-    //
-    // Special settings used to play only a fragment of media. `-1` means
-    // not used (plays full length, from the beginning)
+    /**
+     * Special setting used to play only a fragment of media. `-1` means not used (plays full
+     * length, from the beginning)
+     * @type {number} */
     from: -1,
+    /**
+     * Special setting used to play only a fragment of media. `-1` means not used (plays to the end
+     * of the media)
+     * @type {number} */
     to: -1,
-    //
-    // When `mediaType` is `RECORD_AUDIO`, maximum time to record sound (in seconds),
-    // and buffer ID where the recording must be stored
+    /**
+     * When `mediaType` is `RECORD_AUDIO`, this member stores the maximum length of the recorded
+     * sound, in seconds.
+     * @type {number} */
     length: 3,
+    /**
+     * When `mediaType` is `RECORD_AUDIO`, this member stores the buffer ID where the recording
+     * will be stored.
+     * @type {number} */
     recBuffer: 0,
-    // 
-    // Stretch video size to fit cell space
+    /**
+     * Whether to stretch or not the video size to fit the cell space.
+     * @type {boolean} */
     stretch: false,
-    //
-    // Play the video out of the cell, centered on the activity window
+    /**
+     * When `true`, the video plays out of the cell, centered on the activity window.
+     * @type {boolean} */
     free: false,
-    //
-    // Place the video window at specific location:
-    // Location Point:
+    /**
+     * Places the video window at a specific location.
+     * @type {AWT.Point} */
     absLocation: null,
-    // Point measured from `BOX`, `WINDOW` or `FRAME`
+    /**
+     * When {@link MediaContent#absLocation} is not `null`, this field indicates from where to
+     * measure its coordinates. Valid values are: `BOX`, `WINDOW` or `FRAME`.
+     * @type {string} */
     absLocationFrom: null,
-    // Video window must catch mouse clicks
+    /**
+     * `true` when the video window must catch mouse clicks.
+     * @type {boolean} */
     catchMouseEvents: false,
-    // 
-    // Plays media in loop
+    /**
+     * Whether to repeat the media in loop, or just one time.
+     * @type {boolean} */
     loop: false,
-    //
-    // Media automatically starts when its [ActiveBox](ActiveBox.html) becomes
-    // active.
+    /**
+     * When `true`, the media will automatically start playing when the associated {@link ActiveBox}
+     * become active.
+     * @type {boolean} */
     autoStart: false,
-    //
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Loads the MediaContent settings from a specific JQuery XML element 
+     * @param {external:jQuery} $xml
+     */
     setProperties: function ($xml) {
       var media = this;
       $.each($xml.get(0).attributes, function () {
@@ -131,8 +159,11 @@ define([
       });
       return this;
     },
-    //
-    // Compare with another `MediaContent`
+    /**
+     * Compares this object with another MediaContent.
+     * @param {MediaContent} mc - The Media Content to compare against to.
+     * @returns {boolean} - `true` when both objects are equivalent.
+     */
     isEquivalent: function (mc) {
       return this.mediaType === mc.mediaType &&
           this.mediaFileName.toLocaleLowerCase() === mc.mediaFileName.toLocaleLowerCase() &&
@@ -140,9 +171,12 @@ define([
           this.to === mc.to &&
           this.recBuffer === mc.recBuffer;
     },
-    //
-    // Gets a string representing this media content, useful for checking if two different elements
-    // are in fact equivalent
+    /**
+     * 
+     * Gets a string representing this media content, useful for checking if two different elements
+     * are equivalent.
+     * @returns {string}
+     */
     getDescription: function () {
       var result = '';
       result += this.mediaType;
@@ -158,8 +192,11 @@ define([
       }
       return result;
     },
-    //
-    // Returns an image to be used as icon for representing this media content
+    /**
+     * 
+     * Returns an image to be used as icon for representing this media content.
+     * @returns {external:HTMLImageElement}
+     */
     getIcon: function () {
 
       var icon = null;
@@ -185,9 +222,10 @@ define([
       }
       return icon ? this._icoImg[icon] : null;
     },
-    //
-    // Default icons for the different media types
-    // Should be accessed only via `MediaContent.prototype`
+    /**
+     * Default icons for the different media types.<br>
+     * Should be accessed only throught `MediaContent.prototype`
+     * @type {object} */
     _icoData: {
       default: 'data:image/svg+xml;base64,' +
           'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGhlaWdodD0iNDgiIHZp' +
@@ -225,12 +263,13 @@ define([
           'IDAtNCAxLjc5LTQgNHMxLjc5IDQgNCA0IDQtMS43OSA0LTRWN2g0VjNoLTZ6Ij48L3BhdGg+PC9z' +
           'dmc+Cg=='
     },
-    //
-    // Icon `ImageData` objects
+    /**
+     * Collection of icon {@link external:HTMLImageElement} objects
+     * @type {object} */
     _icoImg: {}
   };
 
-  // Load icons
+  // Load the icons
   $.each(MediaContent.prototype._icoData, function (key, value) {
     var img = new Image();
     // Assign an empty image

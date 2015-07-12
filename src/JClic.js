@@ -39,7 +39,15 @@ define([
    * @external CanvasRenderingContext2D
    * @see https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
    */
- 
+
+  /**
+   * The HTMLImageElement interface provides special properties and methods (beyond the regular
+   * HTMLElement interface it also has available to it by inheritance) for manipulating the layout
+   * and presentation of &lt;img&gt; elements.
+   * @external HTMLImageElement
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image
+   */
+
   /**
    * A JSZip object
    * @external JSZip
