@@ -19,20 +19,29 @@ define([
   "../AWT"
 ], function ($, Shaper, AWT) {
 
-  //
-  // This [Shaper](Shaper.html) returns a set of rectangular shapes with teeth and slots that fit
-  // between them.
+  /**
+   * 
+   * This {@link Shaper} returns a set of rectangular shapes with teeth and slots that fit between them.
+   * @exports JigSaw
+   * @class
+   * @extends Shaper
+   * @param {number} nx - Number of columns
+   * @param {number} ny - Number of rows
+   */
   var JigSaw = function (nx, ny) {
     Shaper.call(this, nx, ny);
   };
 
   JigSaw.prototype = {
     constructor: JigSaw,
-    //
-    // Overwrites the `rectangularShapes` flag of [Shaper](Shaper.html)
+    /**
+     * Overrides same flag in {@link Shaper#rectangularShapes}
+     * @type {boolean} */
     rectangularShapes: false,
-    //
-    // Builds the rectangular shapes
+    /**
+     * 
+     * Builds the jigsaw shapes based on the number of rows and columns
+     */
     buildShapes: function () {
       // Create two two-dimension arrays for storing the type of horizontal and vertical lines
       var hLineType = [];
@@ -81,13 +90,17 @@ define([
       }
       this.initiated = true;
     },
-    //
-    // Adds an horizontal line to the provided path
-    // sd (AWT.Path) - The Path where the line will be added
-    // type (number) - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, 2 means tooth down
-    // x and y (number) - Starting point
-    // w and h (number) - Width and height of the piece
-    // inv - The line will be drawn right to left
+    /**
+     * 
+     * Adds an horizontal line to the provided path
+     * @param {AWT.Path} sd - The Path to which the line will be added
+     * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, and 2 means tooth down
+     * @param {number} x - X coordinate of the starting point
+     * @param {number} y - Y coordinate of the starting point
+     * @param {number} w - Width of the piece
+     * @param {number} h - Height of the piece
+     * @param {boolean} inv - The line must be drawn right to left
+     */
     hLine: function (sd, type, x, y, w, h, inv) {
       var kx = inv ? -1 : 1;
       var ky = (type === 1 ? 1 : -1);
@@ -110,13 +123,17 @@ define([
         sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
       }
     },
-    //
-    // Adds an vertical line to the provided path
-    // sd (AWT.Path) - The Path where the line will be added
-    // type (number) - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, 2 means tooth left
-    // x and y (number) - Starting point
-    // w and h (number) - Width and height of the piece
-    // inv - The line will be drawn bottom to top
+    /**
+     * 
+     * Adds a vertical line to the provided path
+     * @param {AWT.Path} sd - The Path to which the line will be added
+     * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, and 2 means tooth left
+     * @param {number} x - X coordinate of the starting point
+     * @param {number} y - Y coordinate of the starting point
+     * @param {number} w - Width of the piece
+     * @param {number} h - Height of the piece
+     * @param {boolean} inv - The line must be drawn bottom to top
+     */
     vLine: function (sd, type, x, y, w, h, inv) {
       var ky = inv ? -1 : 1;
       var kx = (type === 1 ? 1 : -1);
@@ -144,6 +161,7 @@ define([
   // JigSaw extends Shaper
   JigSaw.prototype = $.extend(Object.create(Shaper.prototype), JigSaw.prototype);
 
+  // Register this class in the list of known shapers
   Shaper.prototype._CLASSES['@JigSaw'] = JigSaw;
 
   return JigSaw;

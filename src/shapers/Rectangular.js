@@ -18,26 +18,36 @@ define([
   "./Shaper",
   "../AWT"
 ], function ($, Shaper, AWT) {
-
-  //
-  // This [Shaper](Shaper.html) returns a set of rectangular shapes
+  /**
+   * 
+   * This is the simplest {@link Shaper}. It divides the graphic object in a set of rectangular
+   * shapes distributed in the specified number of rows and columns.
+   * @exports Rectangular
+   * @class
+   * @extends Shaper
+   * @param {number} nx - Number of columns
+   * @param {number} ny - Number of rows
+   */
   var Rectangular = function (nx, ny) {
     Shaper.call(this, nx, ny);
   };
 
   Rectangular.prototype = {
     constructor: Rectangular,
-    //
-    // Overwrites the `rectangularShapes` flag of [Shaper](Shaper.html)
+    /**
+     * Overrides same flag in {@link Shaper#rectangularShapes}
+     * @type {boolean} */
     rectangularShapes: true,
-    //
-    // Builds the rectangular shapes
+    /**
+     * 
+     * Builds the rectangular shapes based on the number of rows and columns
+     */
     buildShapes: function () {
       var w = 1 / this.nCols;
       var h = 1 / this.nRows;
       for (var y = 0; y < this.nRows; y++) {
         for (var x = 0; x < this.nCols; x++) {
-          this.shapeData[y * this.nCols + x] = new AWT.Rectangle(new AWT.Point(x*w, y*h), new AWT.Dimension(w, h));
+          this.shapeData[y * this.nCols + x] = new AWT.Rectangle(new AWT.Point(x * w, y * h), new AWT.Dimension(w, h));
         }
       }
       this.initiated = true;
@@ -47,8 +57,9 @@ define([
   // Rectangular extends Shaper
   Rectangular.prototype = $.extend(Object.create(Shaper.prototype), Rectangular.prototype);
 
+  // Register this class in the list of known shapers
   Shaper.prototype._CLASSES['@Rectangular'] = Rectangular;
-  
+
   return Rectangular;
 
 });

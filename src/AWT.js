@@ -1441,6 +1441,8 @@ define([
      */
     update: function () {
       this.updateContent(this.invalidatedRect);
+      if(this.invalidatedRect)
+        this.invalidatedRect = null;
       return this;
     },
     /**

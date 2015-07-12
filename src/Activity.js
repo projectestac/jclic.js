@@ -849,7 +849,7 @@ define([
      * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
-      AWT.Container.prototype.setBounds.call(this, rect);
+      this.invalidate(rect);
       this.$div.css({
         position: 'relative',
         left: rect.pos.x,

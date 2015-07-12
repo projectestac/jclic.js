@@ -18,24 +18,32 @@ define([
   "./JigSaw",
   "../AWT"
 ], function ($, JigSaw, AWT) {
-
-  //
-  // This [Shaper](Shaper.html) returns a set of rectangular shapes with teeth and slots that fit
-  // between them.
+  /**
+   * This {@link Shaper} returns a set of rectangular shapes with triangular teeth and slots that
+   * fit between them.
+   * @exports TriangularJigSaw
+   * @class
+   * @extends JigSaw
+   * @param {number} nx - Number of columns
+   * @param {number} ny - Number of rows
+   */
   var TriangularJigSaw = function (nx, ny) {
     JigSaw.call(this, nx, ny);
   };
 
   TriangularJigSaw.prototype = {
     constructor: TriangularJigSaw,
-    //
-    // Overrides `hLine` in [JigSaw](JigSaw.html)
-    // Adds an horizontal line to the provided path
-    // sd (AWT.Path) - The Path where the line will be added
-    // type (number) - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, 2 means tooth down
-    // x and y (number) - Starting point
-    // w and h (number) - Width and height of the piece
-    // inv - The line will be drawn right to left
+    /**
+     * 
+     * Overrides {@link JigSaw#hLine}
+     * @param {AWT.Path} sd - The Path to which the line will be added
+     * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, and 2 means tooth down
+     * @param {number} x - X coordinate of the starting point
+     * @param {number} y - Y coordinate of the starting point
+     * @param {number} w - Width of the piece
+     * @param {number} h - Height of the piece
+     * @param {boolean} inv - The line must be drawn right to left
+     */
     hLine: function (sd, type, x, y, w, h, inv) {
       var kx = inv ? -1 : 1;
       var ky = (type === 1 ? 1 : -1);
@@ -57,14 +65,17 @@ define([
         sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
       }
     },
-    //
-    // Overrides `vLine` in [JigSaw](JigSaw.html)
-    // Adds an vertical line to the provided path
-    // sd (AWT.Path) - The Path where the line will be added
-    // type (number) - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, 2 means tooth left
-    // x and y (number) - Starting point
-    // w and h (number) - Width and height of the piece
-    // inv - The line will be drawn bottom to top
+    /**
+     * 
+     * Overrides {@link JigSaw#vLine}
+     * @param {AWT.Path} sd - The Path to which the line will be added
+     * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, and 2 means tooth left
+     * @param {number} x - X coordinate of the starting point
+     * @param {number} y - Y coordinate of the starting point
+     * @param {number} w - Width of the piece
+     * @param {number} h - Height of the piece
+     * @param {boolean} inv - The line must be drawn bottom to top
+     */
     vLine: function (sd, type, x, y, w, h, inv) {
       var ky = inv ? -1 : 1;
       var kx = (type === 1 ? 1 : -1);
@@ -91,6 +102,7 @@ define([
   // TriangularJigSaw extends JigSaw
   TriangularJigSaw.prototype = $.extend(Object.create(JigSaw.prototype), TriangularJigSaw.prototype);
 
+  // Register this class in the list of known shapers
   JigSaw.prototype._CLASSES['@TriangularJigSaw'] = TriangularJigSaw;
 
   return TriangularJigSaw;

@@ -15,12 +15,22 @@
 
 define([
   "jquery",
-  "./Shaper",
-  "../AWT"
-], function ($, Shaper, AWT) {
+  "./Shaper"
+], function ($, Shaper) {
 
-  //
-  // This [Shaper](Shaper.html) returns a set of rectangular shapes
+  /**
+   * This {@link Shaper} consists of a set of arbitrary shapes placed over a main rectangle that
+   * acts as a enclosure.<br>
+   * The components can be of type {@link AWT.Rectangle}, {@link AWT.Ellipse} or {@link AWT.Path}.<br>
+   * This components have internal dimension values relative to the horizontal and vertical
+   * sizes of the enclosure. Its values (always between 0 and 1) must be scaled to real sizes
+   * of graphic objects.
+   * @exports Holes
+   * @class
+   * @extends Shaper
+   * @param {number} nx - Not used
+   * @param {number} ny - Not used
+   */
   var Holes = function (nx, ny) {
     Shaper.call(this, 1, 1);
     this.nCols = nx;
@@ -30,17 +40,21 @@ define([
 
   Holes.prototype = {
     constructor: Holes,
-    //
-    // Shapes are already loaded by [Shaper](Shaper.html)
+    /**
+     * 
+     * Shapes are already loaded by {@link Shaper}, so this function just sets `initiated` to `true`
+     */
     buildShapes: function () {
       if (this.nCells > 0)
         this.initiated = true;
     },
-    //
-    // Gets the AWT.Rectangle that contains all shapes
-    // overrides same function in [Shaper](Shaper.html)
+    /**
+     * 
+     * Gets the rectangle that contains all shapes
+     * @returns {AWT.Rectangle}
+     */
     getEnclosingShapeData: function () {
-      if(!this.showEnclosure)
+      if (!this.showEnclosure)
         return null;
       return this.enclosing ? this.enclosing : Shaper.prototype.getEnclosingShapeData.call(this);
     }
@@ -49,6 +63,7 @@ define([
   // Rectangular extends Shaper
   Holes.prototype = $.extend(Object.create(Shaper.prototype), Holes.prototype);
 
+  // Register this class in the list of known shapers
   Shaper.prototype._CLASSES['@Holes'] = Holes;
 
   return Holes;
