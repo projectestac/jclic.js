@@ -22,13 +22,17 @@ define([
   "../AWT"
 ], function ($, BoxBase, Utils, ActiveBoxContent, Shaper, AWT) {
 
-//
-//  This class stores a collection of [ActiveBoxContent](ActiveBoxContent.html)
-//  objects, currently in an Array, and provides methods to manage it. The two
-//  main members of `ActiveBagContent` are the [Shaper](Shaper.html), responsible
-//  of determining the position and shape of each [ActiveBox](ActiveBox.html), 
-//  and the [BoxBase](BoxBase.html) (field `bb`), provider of a common visual style.
-//
+  /**
+   * This class stores a collection of {@link ActiveBoxContent} objects and provides methods to
+   * manage it. The two main members of `ActiveBagContent` are the {@link Shaper}, responsible of
+   * determining the position and shape of each {@link ActiveBox}, and the {@link BoxBase} (field `bb`),
+   * provider of a common visual style.
+   * @exports ActiveBagContent
+   * @class 
+   * @param {string=} id - An optional text tag identifying this ActiveBagContent
+   * @param {number} ncw - In grid-based distributions, number of columns.
+   * @param {number} nch - In grid-based distributions, number of rows.
+   */
   var ActiveBagContent = function (id, ncw, nch) {
     if (id)
       this.id = id;
@@ -39,41 +43,64 @@ define([
 
   ActiveBagContent.prototype = {
     constructor: ActiveBagContent,
-    //
-    // The global identifier of this object: `primary`, `secondary`...
+    /**
+     * The global identifier of this object: `primary`, `secondary`...
+     * @type {string} */
     id: 'primary',
-    //
-    // The filename of the main image of the bag, and the realized Image object
+    /**
+     * The name of the image file used as a common image of this bag
+     * @type {string} */
     imgName: null,
+    /**
+     * The build image object
+     * @type {external:HTMLImageElement} */
     img: null,
-    //
-    // Number of columns (ncw) and rows (nch) when cells are distributed in a table
-    ncw: 1, nch: 1,
-    //
-    // Optimal cell width (w) and height (h)
+    /**
+     * Number of columns when cells are distributed in a grid
+     * @type {number} */
+    ncw: 1,
+    /**
+     * Number of rows when cells are distributed in a grid
+     * @type {number} */
+    nch: 1,
+    /**
+     * Optimal cell width
+     * @type {number} */
     w: Utils.settings.DEFAULT_GRID_ELEMENT_SIZE,
+    /**
+     * Optimal cell height
+     * @type {number} */
     h: Utils.settings.DEFAULT_GRID_ELEMENT_SIZE,
-    //
-    // Cells have/don't have borders
+    /**
+     * Whether the cells must have a border or not
+     * @type {boolean} */
     border: true,
-    //
-    // The [BoxBase](BoxBase.html) used for this bag of cell contents
+    /**
+     * The BoxBase used for this bag of cell contents
+     * @type {BoxBase} */
     bb: null,
-    // 
-    // The [Shaper](Shaper.html) used to define the specific shape of each cell
+    /**
+     * The Shaper used to define the specific shape of each cell
+     * @type {Shaper} */
     shaper: null,
-    //
-    // An optional [ActiveBoxContent](ActiveBoxContent.html) object with settings
-    // for the background
+    /**
+     * An optional ActiveBoxContent object with background settings.
+     * @type {ActiveBoxContent} */
     backgroundContent: null,
-    //
-    // The main Array of [ActiveBoxContent](ActiveBoxContent.html) objects
+    /**
+     * The main Array of {@link ActiveBoxContent} objects
+     * @type {ActiveBoxContent[]} */
     activeBoxContentArray: null,
-    //
-    // The default value to assign to the 'id' field of children
+    /**
+     * The default value to be assigned at the 'id' field of children
+     * @type {number} */
     defaultIdValue: -1,
-    //
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Loads the object settings from a specific JQuery XML element 
+     * @param {external:jQuery} $xml - The XML element to parse
+     * @param {MediaBag} mediaBag - The project's MediaBag
+     */
     setProperties: function ($xml, mediaBag) {
 
       var cellSet = this,
@@ -171,35 +198,61 @@ define([
       }
       return this;
     },
-    //
-    // Prepares the media content of all elements
+    /**
+     * 
+     * Prepares the media content of all elements
+     * @param {PlayStation} playStation - The {@link JClicPlayer}
+     */
     prepareMedia: function (playStation) {
       // TODO: Implement ActiveBagContent.prepareMedia      
     },
-    //
-    // Gets the estimated total width and height of this bag
+    /**
+     * 
+     * Gets the estimated total width of this content bag
+     * @returns {number}
+     */
     getTotalWidth: function () {
       return this.w * this.ncw;
     },
+    /**
+     * 
+     * Gets the estimated total height of this bag
+     * @returns {number}
+     */
     getTotalHeight: function () {
       return this.h * this.nch;
     },
+    /**
+     * 
+     * Gets the total number of cells of this bag
+     * @returns {number}
+     */
     getNumCells: function () {
       return this.activeBoxContentArray.length;
     },
+    /**
+     * 
+     * Checks if the bag is empty
+     * @returns {boolean}
+     */
     isEmpty: function () {
       return this.activeBoxContentArray.length === 0;
     },
-    //
-    // Retrieves the bag [Shaper](Shaper.html), building a new one if needed
+    /**
+     * 
+     * Retrieves the {@link Shaper} of this bag building a new one if needed
+     * @returns {Shaper}
+     */
     getShaper: function () {
       if (this.shaper === null)
         this.shaper = Shaper.prototype._getShaper('@Rectangular', this.ncw, this.nch);
       return this.shaper;
     },
-    //
-    // Adds the provided [ActiveBoxContent](ActiveBoxContent.html) to this bag
-    // ab (ActiveBoxContent)
+    /**
+     * 
+     * Adds a new {@link ActiveBoxContent} to this bag
+     * @param {ActiveBoxContent} ab - The ActiveBoxContent to add
+     */
     addActiveBoxContent: function (ab) {
       this.activeBoxContentArray.push(ab);
       if (this.ncw === 0 || this.nch === 0) {
@@ -207,8 +260,12 @@ define([
         this.nch = 1;
       }
     },
-    //
-    // Gets the nth [ActiveBoxContent](ActiveBoxContent.html)
+    /**
+     * 
+     * Gets the nth ActiveBoxContent in `activeBoxContentArray`
+     * @param {number} i - The index of the content to be retrieved
+     * @returns {ActiveBoxContent}
+     */
     getActiveBoxContent: function (i) {
       if (i >= this.activeBoxContentArray.length) {
         for (var j = this.activeBoxContentArray.length; j <= i; j++)
@@ -216,8 +273,13 @@ define([
       }
       return this.activeBoxContentArray[i];
     },
-    //
-    // Finds the [ActiveBoxContent](ActiveBoxContent.html) with a specific `id` and `item` values
+    /**
+     * 
+     * Finds the ActiveBoxContent with specific `id` and `item` values
+     * @param {number} id
+     * @param {number} item
+     * @returns {ActiveBoxContent}
+     */
     getActiveBoxContentWith: function (id, item) {
       var result = null;
       for (var i = 0; i < this.activeBoxContentArray.length; i++) {
@@ -229,12 +291,14 @@ define([
       }
       return result;
     },
-    //
-    // Sets the content of the cells based on a image spliced by a shaper
-    // mb ([MediaBag](MediaBag.html)) - The MediaBag used to retrieve the image
-    // sh ([Shaper](Shaper.html)) - The Shaper used to splice the image
-    // roundSizes (boolean) - When `true`, the cells size and coordinates will be rounded to its
-    // nearest integer values.
+    /**
+     * 
+     * Sets the content of the cells based on a image spliced by a shaper
+     * @param {MediaBag} mb - The MediaBag used to retrieve the image
+     * @param {Shaper} sh - The Shaper used to splice the image
+     * @param {boolean} roundSizes - When `true`, the size and coordinates of cells will be rounded
+     * to the nearest integer values.
+     */
     setImgContent: function (mb, sh, roundSizes) {
       if (sh)
         this.setShaper(sh);
@@ -268,11 +332,13 @@ define([
         this.backgroundContent.setImgContent(this.img, this.shaper.getRemainderShape(r));
       }
     },
-    //
-    // Sets an array of strings as content of this bag
-    // txt (Array of String)
-    // setNcw (number)
-    // setNch (number)
+    /**
+     * 
+     * Sets the content of this bag based on an array of strings
+     * @param {string[]} txt - The array of strings to be used as content.
+     * @param {number} setNcw - Number of columns
+     * @param {number} setNch - Number of rows
+     */
     setTextContent: function (txt, setNcw, setNch) {
       this.ncw = Math.max(1, setNcw);
       this.nch = Math.max(1, setNch);
@@ -282,27 +348,36 @@ define([
             (i >= txt.length || txt[i] === null) ? '' : txt[i]);
       }
     },
-    //
-    // Sets `id` values to a all [ActiveBoxContent](ActiveBoxContent,html) elements
-    // ids (Array of Number)
+    /**
+     * 
+     * Sets `id` values to a all the {@link ActiveBoxContent} elements of his bag.
+     * @param {number[]} ids -Array of numeric identifiers
+     */
     setIds: function (ids) {
       for (var i = 0; i < this.activeBoxContentArray.length; i++)
         if (i < ids.length)
           this.getActiveBoxContent(i).id = ids[i];
     },
-    //
-    // Resets all `id` values to the specified    
+    /**
+     * 
+     * Resets the `id` fields of all the {@link ActiveBoxContent} elements to the specified value.
+     * @param {number} id - The value to set as `id`
+     */
     setAllIdsTo: function (id) {
       for (var i = 0; i < this.activeBoxContentArray.length; i++)
         this.getActiveBoxContent(i).id = id;
     },
-    //
-    //
+    /**
+     * 
+     * Cheks if the `id` values of all {@link ActiveBoxContent} objects are -1 and, if true,
+     * sets new ids to them, with values between 0 and `maxId`
+     * @param {number} maxId - The maximum value of identifiers
+     */
     avoidAllIdsNull: function (maxId) {
-      
+
       var i, allIdsNull = true,
           numCells = this.activeBoxContentArray.length;
-      
+
       for (i = 0; i < numCells; i++) {
         if (this.getActiveBoxContent(i).id !== -1) {
           allIdsNull = false;
