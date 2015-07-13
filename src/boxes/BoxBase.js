@@ -21,49 +21,113 @@ define([
 
   var defaultValues = Utils.settings.BoxBase;
 
-//
-// This class contains all the main visual attributes needed to draw
-// [AbstractBox](AbstractBox.html) objects: background and foreground colors
-// and gradient, colors for special states (inactive, alternative, disabled...),
-// margins, fonts, strokes for borders, etc. Objects derived from [AbstractBox](AbstractBox.html)
-// can have inheritance: boxes that act as "containers" of other boxes
-// (like [BoxBag](BoxBag.html)). Most of the attributes of `BoxBase` can be `null`,
-// meaning that the value of the ancestor -or the default value if the box has no 
-// ancestors- must be used.
+  /**
+   * This class contains all the main visual attributes needed to draw {@link AbstractBox} objects:
+   * background and foreground colors, gradients, colors for special states (inactive, alternative,
+   * disabled...), margins, fonts, border strokes, etc.<br>
+   * Objects derived from {@link AbstractBox} can have inheritance: boxes that act as "containers"
+   * of other boxes (like {@link BoxBag}). Most of the attributes of `BoxBase` can be `null`,
+   * meaning that the value of the ancestor -or the default value if the box has no ancestors- must
+   * be used.
+   * @exports BoxBase
+   * @class
+   * @param {BoxBase=} parent - Another BoxBase object used to determine the value of properties not
+   * locally set.
+   */
   var BoxBase = function (parent) {
     this.parent = parent ? parent : null;
   };
 
   BoxBase.prototype = {
     constructor: BoxBase,
-    //
-    // The parent BoxBase object
+    /**
+     * The parent BoxBase object
+     * @type {BoxBase} */
     parent: null,
-    //
-    // Original font specifications
+    /**
+     * Default values
+     * @type {object} */
+    default: defaultValues,
+    /**
+     * Original font specification
+     * @type {AWT.Font} */
     originalFont: new AWT.Font(),
-    // Font size can be dynamically reduced to fit the available space if any
-    // element using this `BoxBase` requests it. The `font` field contains
-    // the font currently used to draw text
+    /**
+     * Font size can be dynamically reduced to fit the available space if any element using this
+     * `BoxBase` requests it. When this happen, this field contains the real font currently used
+     * to draw text.
+     * @type {AWT.Font} */
     font: new AWT.Font(),
+    /**
+     * The current font size of this BoxBase. Can be dynamically adjusted when drawing.
+     * @type {number} */
     dynFontSize: 0,
+    /**
+     * Counts the number of times the `dynFontSize` has been reset. This is useful to avoid excessive
+     * recursive loops searching the optimal font size.
+     * @type {number} */
     resetFontCounter: 0,
-    //
-    // Colors, gradients, shadows, margins, borders and transparencies:
+    /**
+     * The background color
+     * @type {string} */
     backColor: defaultValues.BACK_COLOR,
+    /**
+     * The background gradient. Default is `null`.
+     * @type {AWT.Gradient} */
     bgGradient: null,
+    /**
+     * The color used to write text.
+     * @type {string} */
     textColor: defaultValues.TEXT_COLOR,
+    /**
+     * The color used to draw a shadow below regular text.
+     * @type {string} */
     shadowColor: defaultValues.SHADOW_COLOR,
+    /**
+     * The color of the border.
+     * @type {string} */
     borderColor: defaultValues.BORDER_COLOR,
+    /**
+     * The color used to draw text when a cell is in `inactive` state.
+     * @type {string} */
     inactiveColor: defaultValues.INACTIVE_COLOR,
+    /**
+     * The color used to draw text when a cell is in `alternative` state.
+     * @type {string} */
     alternativeColor: defaultValues.ALTERNATIVE_COLOR,
+    /**
+     * Whether the text should have a shadow or not
+     * @type {boolean} */
     shadow: false,
+    /**
+     * Whether the cell's background should be transparent
+     * @type {boolean} */
     transparent: false,
+    /**
+     * The margin to respect between text elements and the limits of the cell or other elements.
+     * @type {number} */
     textMargin: defaultValues.AC_MARGIN,
+    /**
+     * The stroke used to draw the border.
+     * @type {AWT.Stroke} */
     borderStroke: new AWT.Stroke(defaultValues.BORDER_STROKE_WIDTH),
+    /**
+     * The stroke used to draw a border around marked cells.
+     * @type {AWT.Stroke} */
     markerStroke: new AWT.Stroke(defaultValues.MARKER_STROKE_WIDTH),
-    //
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * Counter to control the number of times the size of all fonts have been reduced
+     * @type {number} */
+    resetAllFontsCounter: 0,
+    /**
+     * `true` when the font size has been reduced.
+     * @type {boolean} */
+    flagFontReduced: false,
+    /**
+     * 
+     * Loads the BoxBase settings from a specific JQuery XML element 
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
     setProperties: function ($xml) {
 
       var bb = this;
@@ -116,32 +180,37 @@ define([
     },
     //
     // Utility functions:
-    // 
-    // Get property value, scanning down to prototype if not defined
+    /**
+     * 
+     * Gets the value of the specified property, scanning down to parents and prototype if not defined.
+     * @param {string} property - The property to retrieve
+     * @returns {*} - Depends on the type of property
+     */
     get: function (property) {
       if (this.hasOwnProperty(property) || this.parent === null)
         return this[property];
       else
         return this.parent.get(property);
     },
-    //
-    // Setter
-    set: function(property, value){
+    /**
+     * 
+     * Sets the value of a specific property.
+     * @param {string} property - The property name.
+     * @param {*} value - Depends on the type of property
+     */
+    set: function (property, value) {
       this[property] = value;
       return this;
     },
-    //
-    // Default values
-    default: defaultValues,
-    // Global static variables. Modify it only through `BoxBase.prototype`
-    resetAllFontsCounter: 0,
-    flagFontReduced: false,
-    //
-    // Get properties as a collection of CSS attributes
-    // css (Object, optional) - An optional set of initial CSS properties
-    // inactive (Boolean, optional) - When `true`, get the CSS for an inactive cell
-    // inverse (Boolean, optional) - When `true`, get the CSS for an inverse (negative image) cell
-    // alternative (Boolean, optional) - When `true`, get the CSS for a cell in `alternative` status
+    /**
+     * 
+     * Gets the properties defined in this BoxBase as a collection of CSS attributes
+     * @param {object=} css - An optional set of initial CSS properties
+     * @param {boolean} inactive - When `true`, get CSS attributes for an inactive cell
+     * @param {boolean} inverse - When `true`, get CSS attributes for an inverse cell
+     * @param {boolean} alternative - When `true`, get CSS attributes for an alternative cell
+     * @returns {object}
+     */
     getCSS: function (css, inactive, inverse, alternative) {
       // (css will be created by [AWT.Font.toCss](AWT.html) if null or undefined)
       var font = this.get('font');
@@ -167,11 +236,17 @@ define([
       }
       return css;
     },
-    // Utility methods used to display text on HTML Canvas elements
-    //
-    // Computes the width and height of a text rendered on a HTML Canvas element,
-    // reducing the `font` size of the BoxBase if it don fit in the specified
-    // maxWidth and maxHeight
+    /**
+     * This is utility function computes the width and height of text lines rendered on an HTML
+     * __canvas__ element, reducing the font size of the BoxBase as needed when they exceed the maximum
+     * width and/or height.
+     * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the text.
+     * @param {string} text - The text to drawn.
+     * @param {number} maxWidth - Maximum width
+     * @param {number} maxHeight - Maximum height
+     * @returns {object[]} - An array of objects representing lines of text. Each object has ha `text`
+     * member with the text displayed in the line, and a `size` member with the line {@link AWT.Dimension}
+     */
     prepareText: function (ctx, text, maxWidth, maxHeight) {
       var result = [];
       var height = this.font.getHeight();

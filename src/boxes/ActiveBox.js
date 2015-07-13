@@ -21,19 +21,25 @@ define([
   "../AWT",
   "../Utils"
 ], function ($, AbstractBox, ActiveBoxContent, ActiveBagContent, AWT, Utils) {
-
-//
-// Objects of this class are widely used in JClic activities: cells in puzzles
-// and associations, messages and other objects are active boxes. The specific
-// content, size and location of `ActiveBox` objects is determined by its
-// [ActiveBoxContent](ActiveBoxContent.html) members. Most ActiveBoxes have only
-// one content, but some of them can have a secondary or "alternative" content,
-// stored in the `altContent` field. This content is used only when the
-// `alternative` flag of the ActiveBox is on.
-// Active boxes can host video and interactive media content (specified in the
-// `mediaContent` member of the [ActiveBoxContent](ActiveBoxContent.html) through
-// the `hostedMediaPlayer` member.
-
+  /**
+   * Objects of this class are widely used in JClic activities: cells in puzzles and associations,
+   * messages and other objects are active boxes.<br>
+   * The specific content, size and location of `ActiveBox` objects is determined by its
+   * {@link ActiveBoxContent} member. Most ActiveBoxes have only one content, but some of them can
+   * have a secondary or "alternative" content stored in the `altContent` field. This content is
+   * used only when the `alternative` flag of the ActiveBox is on.<br>
+   * Active boxes can host video and interactive media content (specified in the `mediaContent`
+   * member of the {@link ActiveBoxContent} through its `hostedMediaPlayer` member.
+   * @exports ActiveBox
+   * @class
+   * @extends AbstractBox
+   * @param {?AbstractBox} parent - The AbstractBox to which this ActiveBox belongs
+   * @param {?AWT.Container} container - The container where this box is placed.  
+   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   * of this box are defined.
+   * @param {number=} setIdLoc - A numeric identifier, used to locate this box in a set of sibling objects.
+   * @param {AWT.Rectangle=} rect - The initial bounds of the box.
+   */
   var ActiveBox = function (parent, container, boxBase, setIdLoc, rect) {
 
     // ActiveBox extends AbstractBox
@@ -51,39 +57,61 @@ define([
 
   ActiveBox.prototype = {
     constructor: ActiveBox,
-    // 
-    // Numeric identifiers used in some activities
+    /**
+     * Identifier used to set the relative position of this box in a set.
+     * @type {number} */
     idOrder: -1,
+    /**
+     * Identifier used to set a relative position in the space.
+     * @type {number} */
     idLoc: -1,
+    /**
+     * Identifier used to establish relationships between cells of different sets (in associations)
+     * @type {number} */
     idAss: -1,
-    //
-    // The [ActiveBoxContent](ActiveBoxContent.html) members, containing
-    // the ral content of this box
+    /**
+     * Main content of this box
+     * @type {ActiveBoxContent} */
     content: null,
+    /**
+     * Alternative content of this box
+     * @type {ActiveBoxContent} */
     altContent: null,
-    //
-    // Flag to check if this box has a 'hosted component'
+    /**
+     * Flag to check if this box has a 'hosted component'
+     * @type {boolean} */
     hasHostedComponent: false,
-    //
-    // The media player (usually an HTML5 media tag) containing
+    /**
+     * The media player associated to this box
+     * @type {ActiveMediaPlayer} */
     hostedMediaPlayer: null,
-    // 
-    // This box is used as a background. When drawing, must resppect the clipping region
+    /**
+     * Indicates that this box is used as a background. When drawing, the clipping region must be
+     * respected.
+     * @type {boolean} */
     isBackground: false,
-    // 
-    // Returns the current media content used by the box
+    /**
+     * 
+     * Returns the current content used by the box
+     * @returns {ActiveBoxContent}
+     */
     getCurrentContent: function () {
       return this.isAlternative() ? this.altContent : this.content;
     },
-    //
-    // Returns the current content
+    /**
+     * 
+     * Returns the current content, creating an empty one if needed.
+     * @returns {ActiveBoxContent}
+     */
     getContent: function () {
       if (!this.content)
         this.setContent(new ActiveBoxContent());
       return this.content;
     },
-    //
-    // Clears the current content
+    /**
+     * 
+     * Clears the current content
+     */
     clear: function () {
       this.content = null;
       this.altContent = null;
@@ -94,22 +122,34 @@ define([
       this.setHostedMediaPlayer(null);
       this.invalidate();
     },
-    //
-    // Checks if two ActiveBox objects have equivalent content
+    /**
+     * 
+     * Checks if two ActiveBox objects have equivalent content
+     * @param {ActiveBox} bx - The ActiveBox to check against this.
+     * @param {boolean=} checkCase - When `true`, the comparision will be case-sensitive.
+     * @returns {boolean} - `true` if both cells are equivalent.
+     */
     isEquivalent: function (bx, checkCase) {
       return bx !== null &&
           this.content !== null &&
           this.content.isEquivalent(bx.content, checkCase);
     },
-    // 
-    // Same functionality, but comparing the current content
+    /**
+     * 
+     * Same functionality as {@link ActiveBox#isEquivalent isEquivalent}, but comparing the current content.
+     * @param {ActiveBox} bx - The ActiveBox to check against this.
+     * @param {boolean=} checkCase - When `true`, the comparision will be case-sensitive.
+     * @returns {boolean}
+     */
     isCurrentContentEquivalent: function (bx, checkCase) {
       return bx !== null &&
           this.getCurrentContent() !== null &&
           this.getCurrentContent().isEquivalent(bx.getCurrentContent(), checkCase);
     },
-    // 
-    // Function used to swap the position of two `ActiveBox`
+    /**
+     * Swaps the position of two active boxes
+     * @param {ActiveBox} bx - The ActiveBox to swap with this one.
+     */
     exchangeLocation: function (bx) {
       var pt = new AWT.Point(this.pos);
       var idLoc0 = this.idLoc;
@@ -118,8 +158,11 @@ define([
       this.idLoc = bx.idLoc;
       bx.idLoc = idLoc0;
     },
-    //
-    // Copy the content of another ActiveBox into this one
+    /**
+     * 
+     * Copy the content of another ActiveBox into this one
+     * @param {ActiveBox} bx - The ActiveBox from wich to take the content
+     */
     copyContent: function (bx) {
       this.idOrder = bx.idOrder;
       this.idAss = bx.idAss;
@@ -140,16 +183,22 @@ define([
       if (this.hostedMediaPlayer)
         this.hostedMediaPlayer.setVisualComponentVisible(!isInactive() && isVisible());
     },
-    // 
-    // Exhange the content of this ActiveBox with another
+    /**
+     * 
+     * Exhanges the content of this ActiveBox with another
+     * @param {ActiveBox} bx - The ActiveBox with wich to exchange content.
+     */
     exchangeContent: function (bx) {
       var bx0 = new ActiveBox(this.getParent(), this.getContainerX(), this.boxBase);
       bx0.copyContent(this);
       this.copyContent(bx);
       bx.copyContent(bx0);
     },
-    //
-    // Sets the text content of this ActiveBox
+    /**
+     * 
+     * Sets the text content of this ActiveBox.
+     * @param {strint} tx - The text to set.
+     */
     setTextContent: function (tx) {
       // only plain text!
       if (!tx)
@@ -166,22 +215,28 @@ define([
       this.checkHostedComponent();
       this.setHostedMediaPlayer(null);
     },
-    //
-    // Sets the default value for `idAss`
+    /**
+     * 
+     * Sets the default value to `idAss`
+     */
     setDefaultIdAss: function () {
       this.idAss = (this.content === null ? -1 : this.content.id);
     },
-    //
-    // Check if this ActiveBox is at its original place  
+    /**
+     * 
+     * Checks if this ActiveBox is at its original place.
+     * @returns {boolean}
+     */
     isAtPlace: function () {
       return this.idOrder === this.idLoc;
     },
-    //
-    // Sets the [ActiveBoxContent](ActiveBoxContent.html) of this ActiveBox
-    // `abc` can be both an [ActiveBoxContent](ActiveBoxContent.html) or an
-    // [ActiveBagContent](ActiveBagContent.html) containing a collection of
-    // content objects. In this second case, the parameter `i` indicates
-    // the index of the ActiveBoxContent to be used.
+    /**
+     * 
+     * Sets the {@link ActiveBoxContent} of this ActiveBox
+     * @param {(ActiveBoxContent|ActiveBagContent)} abc - Object containing the content to set.
+     * @param {number} i - When `abc` is an {@link ActiveBagContent}, this field indicates an
+     * index into the content array.
+     */
     setContent: function (abc, i) {
       if (abc instanceof ActiveBagContent) {
         if (i < 0)
@@ -211,13 +266,14 @@ define([
 
       this.invalidate();
     },
-    //
-    // Sets the [ActiveBoxContent](ActiveBoxContent.html) that will act as a
-    // alternative content (`altContent` field) of this ActiveBox
-    // The parpameter `abc` can be an [ActiveBoxContent](ActiveBoxContent.html)
-    // or an [ActiveBagContent](ActiveBagContent.html) containing a collection of
-    // content objects. In this second case, the parameter `i` indicates
-    // the index of the ActiveBoxContent to be used.
+    /**
+     * 
+     * Sets the {@link ActiveBoxContent} that will act as an alternative content (`altContent` field)
+     * of this ActiveBox,
+     * @param {(ActiveBoxContent|ActiveBagContent)} abc - Object containing the content to set.
+     * @param {number} i - When `abc` is an {@link ActiveBagContent}, this field indicates an
+     * index into the content array.
+     */
     setAltContent: function (abc, i) {
       if (abc instanceof ActiveBagContent) {
         if (i < 0)
@@ -230,8 +286,10 @@ define([
       if (this.isAlternative() && this.hostedMediaPlayer)
         this.setHostedMediaPlayer(null);
     },
-    //
-    // Sets the current content of this ActiveBox    
+    /**
+     * Sets the current content of this ActiveBox
+     * @param {ActiveBoxContent} abc - The content to set.
+     */
     setCurrentContent: function (abc) {
       if (this.isAlternative())
         this.setAltContent(abc);
@@ -239,9 +297,10 @@ define([
         this.setContent(abc);
       this.invalidate();
     },
-    // 
-    // Puts this ActiveBox in "alternative" mode, meaning that `altContent` will
-    // be used in place of `content`
+    /**
+     * 
+     * Puts this ActiveBox in "alternative" mode, meaning that `altContent` will be used instead of `content`
+     */
     switchToAlt: function () {
       if (this.isAlternative() || !this.altContent || this.altContent.isEmpty())
         return false;
@@ -252,11 +311,12 @@ define([
       this.checkAutoStartMedia();
       return true;
     },
-    //
-    // Checks the presence of content susceptible to be treated as HTML DOM
-    // embedded into this ActiveBox
-    // See: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas
-    // ctx: The Context2D of the canvas object containing this ActiveBox
+    /**
+     * 
+     * Checks the presence of content susceptible to be treated as HTML DOM embedded into this ActiveBox.<br>
+     * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas}
+     * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the box.
+     */
     checkHostedComponent: function (ctx) {
       if (this.hasHostedComponent)
         return;
@@ -272,22 +332,24 @@ define([
         }
       }
     },
-    //
-    // Checks if the call has a [MediaContent](MediaContent.html) set to `autostart`, and
-    // launches it
+    /**
+     * 
+     * Checks if the call has a {@link MediaContent} set to `autostart`, and launches it when found.
+     */
     checkAutoStartMedia: function () {
       var cnt = this.getContent();
       if (cnt && cnt.mediaContent && cnt.mediaContent.autoStart && cnt.amp) {
         // TODO: Play the media
       }
     },
-    // 
-    // Creates a new cell inside a JQuery DOM element.  
-    // Should be invoked throught `ActiveBox.prototype`
-    // $dom (JQuery DOM element) - The element that will act as a container
-    // abc ([ActiveBoxContent](ActiveBoxContent.html)) - The cell's content. Must not be null and
-    // have the `dimension` member initialized.  
-    // returns: The newly created ActiveBox
+    /**
+     * Creates a new cell inside a JQuery DOM element.<br>
+     * Should be invoked throught `ActiveBox.prototype`
+     * @param {external:jQuery} $dom - The DOM element that will act as a container
+     * @param {ActiveBoxContent} abc - The cell's content. Must not be null and have the `dimension`
+     * member initialized.
+     * @returns {ActiveBox}
+     */
     _createCell: function ($dom, abc) {
       if (abc && abc.dimension) {
         var box = new ActiveBox();

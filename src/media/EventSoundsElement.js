@@ -14,24 +14,32 @@
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define(["../Utils"], function (Utils) {
-
-// The EventSoundsElement object contains the description of a specific
-// sound to be played when one of the JClic events are fired.
-// For the full list of the JClic events see: [EventSounds](EventSounds.html)
-//
+  /**
+   * The EventSoundsElement object contains the description of a specific sound to be played when
+   * one of the JClic events are fired.<br>
+   * For a full list of the JClic events see: {@link EventSounds}
+   * @exports EventSoundsElement
+   * @class
+   * @param {string} id - The identifier of this media sound
+   */
   var EventSoundsElement = function (id) {
     this.id = id;
   };
 
   EventSoundsElement.prototype = {
     constructor: EventSoundsElement,
-    //
-    // The sound file used by this element
+    /**
+     * The sound file used by this element
+     * @type {string} */
     fileName: null,
-    //
+    /**
+     * Whether the sound for this event is enabled or not
+     * @type {boolean} */
     enabled: Utils.DEFAULT,
-    //
-    // Read the object propertis from an XML element
+    /**
+     * Reads the properties of this object from an XML element
+     * @param {external:jQuery} $xml - The XML element to be parsed
+     */
     setProperties: function ($xml) {
       this.fileName = $xml.attr('file');
       this.enabled = Utils.getTriState($xml.attr('enabled'));
@@ -41,7 +49,5 @@ define(["../Utils"], function (Utils) {
     // TODO: Implement methods for playing sounds defined in 'elements'
     // See: [edu.xtec.jclic.media.EventSounds.java](https://github.com/projectestac/jclic/blob/master/src/core/edu/xtec/jclic/media/EventSounds.java)
   };
-
   return EventSoundsElement;
-  
 });

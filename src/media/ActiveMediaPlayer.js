@@ -17,17 +17,17 @@ define([
   "jquery",
   "../AWT"
 ], function ($, AWT) {
-
-  //
-  // This kind of object encapsulates a realized [MediaContent](MediaContent.html)
-  // and provides methods to start, stop, pause and record different types of
-  // media (audio, video, MIDI, voice recording...)
-  // 
-  // TODO: This is only a skeleton of the class. Must be implemented!
-  // mc ([MediaContent](MediaContent.html) - The content used by this player
-  // mb ([MediaBag](MediaBag.html) - The project's MediaBag
-  // ps (An object implementing the [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-  // interface, usually a [JClicPlayer](JClicPlayer.html)
+  /**
+   * This kind of object encapsulates a realized {@link MediaContent} and provides methods to start,
+   * stop, pause and record different types of media (audio, video, MIDI, voice recording...)
+   * @exports ActiveMediaPlayer
+   * @class
+   * @param {MediaContent} mc - - The content used by this player
+   * @param {MediaBag} mb - The project's MediaBag
+   * @param {PlayStation} ps - An object implementing the
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) interface,
+   * usually a {@link JClicPlayer}.
+   */
   var ActiveMediaPlayer = function (mc, mb, ps) {
     this.mc = mc;
     this.ps = ps;
@@ -58,35 +58,49 @@ define([
 
   ActiveMediaPlayer.prototype = {
     constructor: ActiveMediaPlayer,
-    //
-    // The AudioBuffer is common to all ActiveMediaPlayer instances, so
-    // it's stored in the prototype
+    /**
+     * The audio buffers used for recording and playing voice are stored in the prototype because
+     * are common to all instances of {@link ActiveMediaPlayer}
+     * @protected
+     * @type {AudioBuffer[]} */
     _audioBuffer: [],
-    //
-    // The [MediaContent](MediaContent.html) associated to this player
+    /**
+     * The MediaContent associated to this player.
+     * @type {MediaContent} */
     mc: null,
-    //
-    // The [JClicPlayer](JClicPlayer.html) to which this player belongs
+    /**
+     * The player to which this player belongs.
+     * @type {JClicPlayer} */
     ps: null,
-    //
-    // MediaPlayers should be linked to an [ActiveBox](ActiveBox.html)
+    /**
+     * MediaPlayers should be linked to {@link ActiveBox} objects.
+     * @type {ActiveBox} */
     bx: null,
-    //
-    // The visual component, usually an `audio` or `video` DOM element
-    visualComponent: null,
-    //
-    // Indicates that this player uses a recording audio buffer
+    /**
+     * The visual component for videos, usually a `video` HTML element
+     * @type {external:jQuery} */
+    $visualComponent: null,
+    /**
+     * When `true`, this player makes use of a recording audio buffer
+     * @type {boolean} */
     useAudioBuffer: false,
-    //
-    // The [MediaBagElement] containing the reference to the data to be played
+    /**
+     * The {@link MediaBagElement} containing the reference to the media to be played
+     * @type {MediaBagElement} */
     mbe: null,
-    // 
-    // Creates a new AudioBuffer
+    /**
+     * 
+     * Creates a new AudioBuffer
+     * @param {number} seconds - Maximum duration of the buffer
+     * @returns {AudioBuffer}
+     */
     createAudioBuffer: function (seconds) {
       //TODO: Implement AudioBuffer      
     },
-    //
-    // Generates the real objects capable of playing media
+    /**
+     * 
+     * Generates the real objects capable of playing media
+     */
     realize: function () {
       if (this.mbe) {
         this.mbe.build(function () {
@@ -94,21 +108,24 @@ define([
         });
       }
     },
-    //
-    // Realizes and plays the media
-    // setBx ([ActiveBox](ActiveBox.html) - The active box where this media
-    // will be placed    
-    // TODO: Check error setting currentTime on Audio objects
+    /**
+     * 
+     * Plays the media, realizing it if needed.
+     * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
+     */
     playNow: function (setBx) {
+
+      // TODO: Check error setting currentTime on Audio objects
+
       if (this.mbe) {
         //if (this.mbe.data)
         //  this.mbe.data.trigger('pause');
         var thisMP = this;
         this.mbe.build(function () {
           var armed = false;
-          
+
           // `this` points here to the [MediaBagElement](MediaBagElement) object `mbe`
-          
+
           // Clear previous event handlers
           this.data.off();
 
@@ -145,23 +162,32 @@ define([
         });
       }
     },
-    //
-    // Plays the media when available, without blocking the current thread
+    /**
+     * 
+     * Plays the media when available, without blocking the current thread.
+     * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
+     */
     play: function (setBx) {
       // TODO: invoke in a separate thread, not blocking the current one
       // _In Java was javax.swing.SwingUtilities.invokeLater(new Runnable(){})_
       this.stopAllAudioBuffers();
       this.playNow(setBx);
     },
-    //
-    // TODO: Implement and document the following methods:
+    /**
+     * 
+     * Stops the media playing
+     */
     stop: function () {
       if (this.useAudioBuffer)
         this.stopAudioBuffer(this.mc.recBuffer);
-      else if(this.mbe && this.mbe.data && this.mbe.data.length>0 && this.mbe.data[0].paused === false){
+      else if (this.mbe && this.mbe.data && this.mbe.data.length > 0 && this.mbe.data[0].paused === false) {
         this.mbe.data[0].pause();
       }
     },
+    /**
+     * 
+     * Frees all resources used by this player
+     */
     clear: function () {
       this.stop();
       if (this.useAudioBuffer)
@@ -172,18 +198,30 @@ define([
       //  this.mbe.ready = false;
       //}
     },
-    setTimeRanges: function () {
-    },
+    /**
+     * 
+     * Clears the specified audio buffer
+     * @param {number} buffer - Index of the buffer into {@link ActiveMediaPlayer#_audioBuffer}
+     */
     clearAudioBuffer: function (buffer) {
       if (buffer >= 0 && buffer < ActiveMediaPlayer.prototype._audioBuffer.length && ActiveMediaPlayer.prototype._audioBuffer[buffer] !== null) {
         ActiveMediaPlayer.prototype._audioBuffer[buffer].clear();
         ActiveMediaPlayer.prototype._audioBuffer[buffer] = null;
       }
     },
+    /**
+     * 
+     * Clears all audio buffers
+     */
     clearAllAudioBuffers: function () {
       for (var i = 0; i < ActiveMediaPlayer.prototype._audioBuffer.length; i++)
         this.clearAudioBuffer(i);
     },
+    /**
+     * 
+     * Counts the number of active audio buffers
+     * @returns {number}
+     */
     countActiveBuffers: function () {
       var c = 0;
       for (var i = 0; i < ActiveMediaPlayer.prototype._audioBuffer.length; i++)
@@ -191,29 +229,45 @@ define([
           c++;
       return c;
     },
+    /**
+     * 
+     * Stops the playing or recording actions of all audio buffers
+     */
     stopAllAudioBuffers: function () {
       for (var i = 0; i < ActiveMediaPlayer.prototype._audioBuffer.length; i++)
         if (ActiveMediaPlayer.prototype._audioBuffer[i])
           ActiveMediaPlayer.prototype._audioBuffer[i].stop();
     },
+    /**
+     * 
+     * Stops a specific audio buffer
+     * @param {number} buffer - Index of the buffer into {@link ActiveMediaPlayer#_audioBuffer}
+     */
     stopAudioBuffer: function (buffer) {
       if (buffer >= 0 && buffer < ActiveMediaPlayer.prototype._audioBuffer.length && ActiveMediaPlayer.prototype._audioBuffer[buffer] !== null)
         ActiveMediaPlayer.prototype._audioBuffer[buffer].stop();
     },
+    /**
+     * 
+     * Checks the position of visual components after a displacement or resizing of its container
+     * @param {ActiveBox} bxi - The container where this player is hosted
+     */
     checkVisualComponentBounds: function (bxi) {
+      // TODO: Implement checkVisualComponents
     },
+    /**
+     * Sets the visual component of this player visible or invisible
+     * @param {boolean} state - `true` for visible
+     */
     setVisualComponentVisible: function (state) {
+      // TODO: Implement setVisualComponentVisible
     },
-    getVisualComponent: function () {
-    },
-    attachVisualComponent: function () {
-    },
-    destroyVisualComponent: function () {
-    },
+    /**
+     * 
+     * Sets the ActiveBox associated to this media player
+     * @param {?ActiveBox} setBx - The new container of this media. Can be `null`.
+     */
     linkTo: function (setBx) {
-    },
-    getMediaContent: function () {
-      return this.mc;
     }
   };
 

@@ -18,18 +18,21 @@ define([
   "./EventSoundsElement",
   "../Utils"
 ], function ($, EventSoundsElement, Utils) {
-
-// The EventSounds objects contains specific sounds to be played when
-// JClic events are fired:
-// - start
-// - click
-// - actionError
-// - actionOk
-// - finishedError
-// - finishedOk
-// 
-// The sounds are stored in an array of [EventSoundsElement](EventSoundsElement.html) objects.
-//
+  /**
+   * The EventSounds objects contains specific sounds to be played when JClic events are fired:
+   * - start
+   * - click
+   * - actionError
+   * - actionOk
+   * - finishedError
+   * - finishedOk
+   * 
+   * The sounds are stored in an array of {@link EventSoundsElement} objects.
+   * @exports EventSounds
+   * @class
+   * @param {EventSounds=} parent - Another EventSounds object that will act as a parent of this one,
+   * used to resolve which sound must be played for events when not defined here.
+   */
   var EventSounds = function (parent) {
     this.parent = parent;
     this.elements = [];
@@ -37,21 +40,28 @@ define([
 
   EventSounds.prototype = {
     constructor: EventSounds,
-    // 
-    // The 'parent' EventSounds object, used in activities to point to
-    // the project's setings.
+    /**
+     * The 'parent' EventSounds object.
+     * @type {EventSounds} */
     eventSoundsParent: null,
-    // 
-    // Array of [EventSoundsElement](EventSoundsElement.html) objects
+    /**
+     * Indexed array of {@link EventSoundsElement} objects
+     * @type {object} */
     elements: null,
-    //
-    // 
+    /**
+     * Whether this event sounds are enabled or not
+     * @type {boolean} */
     enabled: Utils.DEFAULT,
-    //
-    // Global `enabled`flag
+    /**
+     * This attribute is intended to be used at prototype level, to indicate a globally disabled
+     * or enabled state.
+     * @type {boolean} */
     globalEnabled: true,
-    //
-    // Read the object properties from an XML element
+    /**
+     * 
+     * Reads the object properties from an XML element
+     * @param {external:jQuery} $xml - The XML element to be parsed
+     */
     setProperties: function ($xml) {
       var elements = this.elements;
       $xml.children().each(function () {
@@ -60,22 +70,31 @@ define([
       });
       return this;
     },
-    // Gets the default EventSounds object
+    /**
+     * The default EventSounds object. Will be initialized after the class declaration.
+     * @type {EventSounds} */
     defaultEventSounds: null,
-    // 
-    // TODO: Implement methods for playing sounds defined in 'elements'
-    // See: [edu.xtec.jclic.media.EventSounds.java](https://github.com/projectestac/jclic/blob/master/src/core/edu/xtec/jclic/media/EventSounds.java)
-    realize: function(mediaBag){
-      // TODO: Implement EventSounds.realize      
+    /**
+     * 
+     * Instantiates the audio objects needed to play event sounds
+     * @param {MediaBag} mediaBag
+     */
+    realize: function (mediaBag) {
+      // TODO: Implement methods for playing sounds defined in 'elements'
+      // See: [edu.xtec.jclic.media.EventSounds.java](https://github.com/projectestac/jclic/blob/master/src/core/edu/xtec/jclic/media/EventSounds.java)
     },
-    play: function(eventName){
+    /**
+     * 
+     * Plays a specific event sound
+     * @param {string} eventName - The identifier of the event to be played
+     */
+    play: function (eventName) {
       // TODO: Implement EventSounds.play      
     }
   };
-  
+
   // TODO: Create the default eventSounds object
   EventSounds.prototype.defaultEventSounds = new EventSounds(null);
 
   return EventSounds;
-
 });

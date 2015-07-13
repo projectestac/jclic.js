@@ -17,27 +17,32 @@ define([
   "./ActiveMediaPlayer",
   "../Utils"
 ], function (ActiveMediaPlayer, Utils) {
-
-  //
-  // This class stores a collection of realized [ActiveMediaPlayer](ActiveMediaPlayer.html)
-  // objects, related to a [JClicProject](JClicProject.html) or [Activity](Activity.html)
-  //
+  /**
+   * This class stores a collection of realized {@link ActiveMediaPlayer} objects, related to a
+   * {@link JClicProject} or {@link Activity}.
+   * @exports ActiveMediaBag
+   * @class
+   */
   var ActiveMediaBag = function () {
     this.players = [];
   };
 
   ActiveMediaBag.prototype = {
     constructor: ActiveMediaBag,
-    // 
-    // The collection of [ActiveMediaPlayer](ActiveMediaPlayer.html) objects
-    // stored in this media bag
+    /**
+     * The collection of {@link ActiveMediaPlayer} objects stored in this media bag.
+     * @type {ActiveMediaPlayer[]} */
     players: [],
-    //
-    // Creates a new [ActiveMediaPlayer](ActiveMediaPlayer.html) linked to this media bag
-    // mc ([MediaContent](MediaContent.html) - The content used by this player
-    // mb ([MediaBag](MediaBag.html) - The project's MediaBag
-    // ps (An object implementing the [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-    // interface, usually a [JClicPlayer](JClicPlayer.html)
+    /**
+     * 
+     * Creates a new {@link ActiveMediaPlayer} linked to this media bag
+     * @param {MediaContent} mc - The content used by the new player
+     * @param {MediaBag} mb - The project's MediaBag
+     * @param {PlayStation} ps - An object implementing the
+     * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) interface,
+     * usually a {@link JClicPlayer}.
+     * @returns {ActiveMediaPlayer}
+     */
     createActiveMediaPlayer: function (mc, mb, ps) {
       var amp = null;
       switch (mc.mediaType) {
@@ -59,15 +64,21 @@ define([
         this.players.push(amp);
       return amp;
     },
-    //
-    // Looks for an already existing [ActiveMediaPlayer](ActiveMediaPlayer.html)
-    // being equivalent to the requested.
-    // If not found, creates a new one and returns it.
+    /**
+     * Looks for an already existing {@link ActiveMediaPlayer} equivalent to the requested.<br>
+     * When not found, creates a new one and returns it.
+     * @param {MediaContent} mc - The content used by the new player
+     * @param {MediaBag} mb - The project's MediaBag
+     * @param {PlayStation} ps - An object implementing the
+     * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) interface,
+     * usually a {@link JClicPlayer}.
+     * @returns {ActiveMediaPlayer}
+     */
     getActiveMediaPlayer: function (mc, mb, ps) {
       var amp = null;
       for (var i = 0; i < this.players.length; i++) {
         amp = this.players[i];
-        if (amp.getMediaContent() === mc || amp.getMediaContent().isEquivalent(mc))
+        if (amp.mc === mc || amp.mc.isEquivalent(mc))
           break;
         amp = null;
       }
@@ -75,15 +86,17 @@ define([
         amp = this.createActiveMediaPlayer(mc, mb, ps);
       return amp;
     },
-    //
-    // Removes the [ActiveMediaPlayer](ActiveMediaPlayer.html) related to the
-    // provided [MediaContent](MediaContent.html) from the list of players    
+    /**
+     * 
+     * Removes from the list of players the {@link ActiveMediaPlayer} related to the specified {@link MediaContent}.
+     * @param {MediaContent} mc - The media content to look for.
+     */
     removeActiveMediaPlayer: function (mc) {
       var amp = null;
       var i;
       for (i = 0; i < this.players.length; i++) {
         amp = this.players[i];
-        if (amp.getMediaContent() === mc)
+        if (amp.mc === mc)
           break;
         amp = null;
       }
@@ -93,21 +106,32 @@ define([
         this.players.splice(i, 1);
       }
     },
-    //
-    // Realizes all media elements stored in this bag
+    /**
+     * 
+     * Realizes all the media elements stored in this bag
+     */
     realizeAll: function () {
       for (var i = 0; i < this.players.length; i++)
         this.players[i].realize();
     },
+    /**
+     * 
+     * Stops playing all media elements stored in this bag
+     * @param {number} level - Level at and below what all media players will be muted.
+     */
     stopAll: function (level) {
       if (typeof (level) === 'undefined')
         level = -1;
       for (var i = 0; i < this.players.length; i++) {
         var amp = this.players[i];
-        if (level === -1 || amp.getMediaContent().level <= level)
+        if (level === -1 || (amp.mc !== null && amp.mc.level <= level))
           amp.stop();
       }
     },
+    /**
+     * 
+     * Removes all players from this media bag
+     */
     removeAll: function () {
       for (var i = 0; i < this.players.length; i++)
         this.players[i].clear();
@@ -118,5 +142,4 @@ define([
   };
 
   return ActiveMediaBag;
-
 });
