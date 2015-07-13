@@ -188,14 +188,14 @@ define([
      * @type {AWT.Action} */
     delayedAction: null,
     /**
-     * @typedef counterValType
+     * @typedef JClicPlayer~counterValType
      * @type {object}
      * @property {number} score
      * @property {number} actions
      * @property {number} time */
     /**
      * Current values of the counters     
-     * @type {counterValType} */
+     * @type {JClicPlayer~counterValType} */
     counterVal: {score: 0, actions: 0, time: 0},
     /**
      * Point indicating the upper-left corner of the current background image

@@ -147,6 +147,7 @@ define([
           this.getCurrentContent().isEquivalent(bx.getCurrentContent(), checkCase);
     },
     /**
+     * 
      * Swaps the position of two active boxes
      * @param {ActiveBox} bx - The ActiveBox to swap with this one.
      */
@@ -185,7 +186,7 @@ define([
     },
     /**
      * 
-     * Exhanges the content of this ActiveBox with another
+     * Exhanges the content of this ActiveBox with another one
      * @param {ActiveBox} bx - The ActiveBox with wich to exchange content.
      */
     exchangeContent: function (bx) {
@@ -343,6 +344,7 @@ define([
       }
     },
     /**
+     * 
      * Creates a new cell inside a JQuery DOM element.<br>
      * Should be invoked throught `ActiveBox.prototype`
      * @param {external:jQuery} $dom - The DOM element that will act as a container
@@ -362,8 +364,13 @@ define([
         return box;
       }
     },
-    // 
-    // Draws the content of this Activebox to the specified canvas context
+    /**
+     * 
+     * Draws the content of this Activebox into the specified canvas context.
+     * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
+     * box content.
+     * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+     */
     updateContent: function (ctx, dirtyRegion) {
 
       var abc = this.getCurrentContent();
@@ -533,14 +540,19 @@ define([
       }
       return true;
     },
-    //
-    // Gets the `description` field of the current [ActiveBoxContent](ActiveBoxContent.html)
+    /**
+     * 
+     * Gets the `description` field of the current {@link ActiveBoxContent}
+     * @returns {string}
+     */
     getDescription: function () {
       return this.content ? this.content.getDescription() : '';
     },
-    //
-    // Plays the action or media associated with this ActiveBox
-    // ps (PlayStation) - Usually, a [JClicPlayer](JClicPlayer,html)
+    /**
+     * 
+     * Plays the action or media associated with this ActiveBox
+     * @param {PlayStation} ps - Usually, a {@link JClicPlayer}
+     */
     playMedia: function (ps) {
       var abc = this.getCurrentContent();
       if (abc && abc.mediaContent) {
@@ -549,17 +561,26 @@ define([
       }
       return false;
     },
-    // Sets the hosted media player
-    // amp (ActiveMediaPlayer)
+    /**
+     * 
+     * Sets the hosted media player of this ActiveBox
+     * @param {ActiveMediaPlayer} amp - The media player.
+     */
     setHostedMediaPlayer: function (amp) {
       var old = this.hostedMediaPlayer;
       this.hostedMediaPlayer = amp;
       if (old && old !== amp)
         old.linkTo(null);
     },
-    //
-    // Sets a new size and/or dimension
-    // Overrides setBounds in [AbstractBox](AbstractBox.html)
+    /**
+     * 
+     * Sets a new size and/or dimension to this box.
+     * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
+     * upper-left corner of a new rectangle.
+     * @param {number=} y - `y` coordinate of the upper-left corner of the new rectangle.
+     * @param {number=} w - Width of the new rectangle.
+     * @param {number=} h - Height of the new rectangle.
+     */
     setBounds: function (rect, y, w, h) {
       if (typeof rect === 'number')
         // arguments are co-ordinates and size

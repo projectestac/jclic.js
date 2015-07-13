@@ -21,13 +21,17 @@ define([
   "../media/MediaContent"
 ], function ($, AWT, Utils, BoxBase, MediaContent) {
 
-// This class defines a content that can be displayed by [ActiveBox](ActiveBox.html)
-// objects. This content can be a text, an image, a fragment of an image or a
-// combination of text and images. The style (colours, font and size, borders,
-// shadow, margins, etc.) are specified in the `bb` attribute, always
-// pointing to a [BoxBase](BoxBase.html) object.
+  /**
+   * This class defines a content that can be displayed by {@link ActiveBox} objects. This content
+   * can be a text, an image, a fragment of an image or a combination of text and images. The style
+   * (colours, font and size, borders, shadows, margins, etc.) are specified in the `bb` attribute,
+   * always pointing to a {@link BoxBase} object.
+   * @exports ActiveBoxContent
+   * @class
+   * @param {string=} id - An optional identifier.
+   */
   var ActiveBoxContent = function (id) {
-    if(typeof id !== 'undefined')
+    if (typeof id !== 'undefined')
       this.id = id;
     this.imgAlign = {h: 'middle', v: 'middle'};
     this.txtAlign = {h: 'middle', v: 'middle'};
@@ -35,43 +39,68 @@ define([
 
   ActiveBoxContent.prototype = {
     constructor: ActiveBoxContent,
-    //
-    // The [BoxBase](BoxBase.html) attribute of this content
+    /**
+     * The {@link BoxBase} attribute of this content. Can be `null`, meaning {@link ActiveBox} will
+     * try to find a suitable style scanning down through its own BoxBase, their parent's and, finally,
+     * the default values defined in `BoxBase.prototype`.
+     * @type {BoxBase} */
     bb: null,
-    // 
-    // Optimal [Dimension](AWT.html#Dimension) of the [ActiveBox](ActiveBox.html)
+    /**
+     * Optimal dimension of any {@link ActiveBox} taking this content.
+     * @type {AWT.Dimension} */
     dimension: null,
-    // The [ActiveBox](ActiveBox.html) must have or not a border, despite the
-    // setting in [BoxBase](BoxBase.html). The default value `null` means not to
-    // take in consideration this setting.
+    /**
+     * The {@link ActiveBox} can have or not a border despite the settings of {@link BoxBase}.<br>
+     * The default value `null` means not to take in consideration this setting.
+     * @type {(null|boolean)} */
     border: null,
-    //
-    // The text to display in the [ActiveBox](ActiveBox.html). Can have up
-    // to two paragraphs.
+    /**
+     * The text to display on the {@link ActiveBox}. It can have up to two paragraphs.
+     * @type {string} */
     text: null,
-    //
-    // The image file to display to display in the [ActiveBox](ActiveBox.html)
+    /**
+     * The name of the image file to display on the {@link ActiveBox}.
+     * @type {string} */
     imgName: null,
-    //
-    // A [AWT.Shape](AWT.html) used to clip the image
+    /**
+     * An optional shape used to clip the image.
+     * @type {AWT.Shape} */
     imgClip: null,
-    //
-    // The [MediaContent](MediaContent.html) associated with this object.
+    /**
+     * The media content associated with this object.
+     * @type {MediaContent} */
     mediaContent: null,
-    //
-    // The horizontal and vertical alignment of text and image inside the cell.
-    // Valid values are: `left`, `middle`, `right`, `top`, `bottom`
+    /**
+     * @typedef ActiveBoxContent~alignType
+     * @type {object}
+     * @property {string} h - Valid values are: `left`, `middle`, `right`
+     * @property {string} v - Valud values are: `top`, `middle`, `bottom` */
+    /**
+     * The horizontal and vertical alignment of the image inside the cell.
+     * @type {ActiveBoxContent~alignType} */
     imgAlign: null,
+    /**
+     * The horizontal and vertical alignment of the text inside the cell.<br>
+     * Valid values are: `left`, `middle`, `right`, `top` and `bottom`.
+     * @type {ActiveBoxContent~alignType} */
     txtAlign: null,
-    //
-    // Avoid overlapping of image and text
+    /**
+     * Whether to avoid overlapping of image and text inside the cell when both are present.
+     * @type {boolean} */
     avoidOverlapping: false,
-    // 
-    // Miscellaneous identifiers used in activities and reporting:
+    /**
+     * Numeric identifier used in activities to resolve relationships between cells
+     * @type {number} */
     id: -1,
+    /**
+     * Numeric identifier used in activities to resolve relationships between cells
+     * @type {number} */
     item: -1,
     // 
-    // Transient properties, build and modified at run-time
+    // Transient properties build and modified at run-time
+    /**
+     * The realized image used by this box content.
+     * @type {external:HTMLImageElement} */
     img: null,
     userData: null,
     rawText: null,
@@ -80,9 +109,12 @@ define([
     animated: false,
     // ActiveMediaPlayer
     amp: null,
-    // Loads the object settings from a specific JQuery XML element 
-    // $xml (JQuery XML element) - The XML element to parse
-    // mediaBag ([MediaBag](MediaBag.html)) - The media bag used to retrieve images and other media
+    /**
+     * 
+     * Loads settings from a specific JQuery XML element 
+     * @param {external:jQuery} $xml - The XML element to be parsed
+     * @param {MediaBag} mediaBag - The media bag used to retrieve images and other media
+     */
     setProperties: function ($xml, mediaBag) {
       var content = this;
       //
@@ -152,9 +184,13 @@ define([
 
       return this;
     },
-    // 
-    // Decode expressions with combined values of horizontal and vertical alugnments
-    // in the form: "(left|middle|right),(top|middle|bottom)"
+    /**
+     * 
+     * Decode expressions with combined values of horizontal and vertical alugnments in the form:
+     * "(left|middle|right),(top|middle|bottom)"
+     * @param {string} str - The string to parse
+     * @returns {ActiveBoxContent~alignType}
+     */
     readAlign: function (str) {
       var align = {h: 'center', v: 'center'};
       if (str) {
@@ -167,9 +203,13 @@ define([
     isEmpty: function () {
       return (this.text === null && this.img === null);
     },
-    //
-    // Checks if this content is equivalent to the provided one
-    // abc (ActiveBoxContent) - The content to compare to
+    /**
+     * 
+     * Checks if two contents are equivalent
+     * @param {ActiveBoxContent} abc - The content to compare with this.
+     * @param {boolean} checkCase - When `true` the comparision will be case-sensitive.
+     * @returns {boolean}
+     */
     isEquivalent: function (abc, checkCase) {
       if (abc === this)
         return true;
@@ -191,8 +231,11 @@ define([
       }
       return result;
     },
-    //
-    // Sets the text content of this ActiveBox
+    /**
+     * 
+     * Sets the text content of this ActiveBox
+     * @param {string} tx
+     */
     setTextContent: function (tx) {
       // only plain text!
       if (tx !== null) {
@@ -207,7 +250,10 @@ define([
         this.innerHtmlText = null;
       }
     },
-    // Checks HTML text inside cells
+    /**
+     * 
+     * Checks if cell's text uses HTML, initializing the `innerHtmlText` member as needed.
+     */
     checkHtmlText: function () {
       this.htmlText = null;
       this.innerHtmlText = null;
@@ -222,27 +268,36 @@ define([
         }
       }
     },
-    //
-    // Sets a fragment of a main image as graphic content of this cell.
-    // Cells cannot have two graphic contents, so `imgName` (the specific image of this cell, if any)
-    // should be cleared.
+    /**
+     * 
+     * Sets a fragment of a main image as a graphic content of this cell.<br>
+     * Cells cannot have two graphic contents, so `imgName` (the specific image of this cell) should
+     * be cleared with this setting.
+     * @param {external:HTMLImageElement} img - The image data
+     * @param {AWT.Shape} imgClip - A shape that clips the portion of image assigned to this content.
+     */
     setImgContent: function (img, imgClip) {
       this.img = img;
       this.imgName = null;
       this.imgClip = imgClip;
     },
-    //
-    // Prepares media content
+    /**
+     * 
+     * Prepares the media content
+     * @param {PlayStation} playStation - Usually a {@link JClicPlayer}
+     */
     prepareMedia: function (playStation) {
       // TODO: Implement ActiveBoxContent.prepareMedia()
     },
-    // 
-    // Reads and initializes the image
-    // mediaBag ([MediaBag](MediaBag.html)) - The MediaBag of the current project
+    /**
+     * 
+     * Reads and initializes the image associated to this content
+     * @param {MediaBag} mediaBag - The media bag of the current project.
+     */
     realizeContent: function (mediaBag) {
       var thisContent = this;
       if (this.imgName !== null && this.imgName.length > 0) {
-        var mbe = mediaBag.getElement(this.imgName, true); 
+        var mbe = mediaBag.getElement(this.imgName, true);
         if (mbe) {
           mbe.build(function () {
             thisContent.img = mbe.data;
@@ -256,9 +311,11 @@ define([
       }
       this.checkHtmlText(mediaBag);
     },
-    //
-    // Gets a string representing this content, useful for checking if two different contents are
-    // in fact equivalent
+    /**
+     * Gets a string representing this content, useful for checking if two different contents are
+     * equivalent.
+     * @returns {string}
+     */
     getDescription: function () {
       var result = '';
       if (this.text && this.text.length > 0)
@@ -277,7 +334,9 @@ define([
       }
       return result;
     },
-    // Gets an empty ActiveBoxContent
+    /**
+     * An empty ActiveBoxContent linked at protoype level.
+     * @type {ActiveBoxContent} */
     EMPTY_CONTENT: null
   };
 

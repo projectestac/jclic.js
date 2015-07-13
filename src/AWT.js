@@ -559,8 +559,9 @@ define([
 
   /**
    * 
-   * Shape is a generic class for rectangles, ellipses and stroke-free shapes.
-   * @interface
+   * Shape is a generic abstract class for rectangles, ellipses and stroke-free shapes.
+   * @class
+   * @abstract
    * @param {AWT.Point} pos - The top-left coordinates of this Shape
    */
   AWT.Shape = function (pos) {

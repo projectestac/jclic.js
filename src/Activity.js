@@ -275,13 +275,13 @@ define([
      * @type {number} */
     shuffles: K.DEFAULT_SHUFFLES,
     /**
-     * @typedef scrambleType
+     * @typedef Activity~scrambleType
      * @type {object}
      * @property {boolean} primary
      * @property {boolean} secondary */
     /** 
      * Object that indicates if box grids A and B must be scrambled.
-     * @type {scrambleType} */
+     * @type {Activity~scrambleType} */
     scramble: {primary: true, secondary: true},
     /**
      * Flag to indicate "inverse resolution" in complex associations
