@@ -23,7 +23,7 @@ define([
 // Media elements have a name, a reference to a file (the `fileName` field)
 // and, when initialized, a `data` field pointing to the object that contains
 // the media. They have also a flag indicating if the data must be saved
-// into the [JClicProject](JClicProject.html) file or just mantained as a 
+// in the [JClicProject](JClicProject.html) file or just mantained as a 
 // reference to an external file.
 //
   var MediaBagElement = function (basePath, fileName, zip) {

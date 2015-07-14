@@ -218,7 +218,7 @@ define([
     /**
      * Checks if the given string ends with the specified expression
      * @param {string} text - The string where to find the expression
-     * @param {string} expr - The expression to search for
+     * @param {string} expr - The expression to search
      * @returns {boolean}
      */
     endsWith: function (text, expr) {
@@ -419,8 +419,8 @@ define([
       return textNodes;
     },
     /**
-     * Sets the selection range (or the cursor position, when `start` and `end` are the same) into
-     * a specific DOM element `el`
+     * Sets the selection range (or the cursor position, when `start` and `end` are the same) to a
+     * specific position inside a DOM element.
      * @param {object} el - The DOM element where to set the cursor
      * @param {number} start - The start position of the selection (or cursor position)
      * @param {type} end - The end position of the selection. When null or identical to `start`,

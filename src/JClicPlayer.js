@@ -162,7 +162,7 @@ define([
      * @type {ActiveMediaBag} */
     activeMediaBag: null,
     /**
-     * Object responsible of passing to external reporting systems the scores obtained by the users
+     * Object responsible for passing the scores obtained by users to a external reporting systems
      * when playing activities.
      * @type {Reporter} */
     // TODO: Implement Reporter!
@@ -625,7 +625,7 @@ define([
           this.actPanel.$div.css('display', 'none');
         }
 
-        // Places the JQuery DOM element of actPanel into the player's one
+        // Places the JQuery DOM element of actPanel within the player main panel
         this.$div.prepend(this.actPanel.$div);
         if (this.skin)
           this.skin.resetAllCounters(false);

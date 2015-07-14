@@ -91,7 +91,7 @@ define([
     // Current text in the $span element
     currentText: '',
     //
-    // Ordinal number of this target into the activity collection of targets
+    // Ordinal number of this target in the collection of targets
     num: 0,
     //
     // Current target status. Valid values are: `NOT_EDITED`, `EDITED`, `SOLVED` and `WITH_ERROR`

@@ -23,8 +23,8 @@ define([
 ], function ($, BoxBase, Utils, ActiveBoxContent, Shaper, AWT) {
 
   /**
-   * This class stores a collection of {@link ActiveBoxContent} objects and provides methods to
-   * manage it. The two main members of `ActiveBagContent` are the {@link Shaper}, responsible of
+   * This class packs a collection of {@link ActiveBoxContent} objects and provides methods to access
+   * and manage it. The two main members of `ActiveBagContent` are the {@link Shaper}, responsible for
    * determining the position and shape of each {@link ActiveBox}, and the {@link BoxBase} (field `bb`),
    * provider of a common visual style.
    * @exports ActiveBagContent

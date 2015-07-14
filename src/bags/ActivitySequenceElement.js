@@ -18,12 +18,12 @@ define([
   "./ActivitySequenceJump"
 ], function ($, ActivitySequenceJump) {
 
-// This class defines a specific point into a JClic sequence of activities:
+// This class defines a specific point in the sequence of JClic activities:
 // what activity must run at this point, what to do or where to jump when
 // the activity finishes, the behavior of the "next" and "prev" buttons, etc.
 // It can also have a "tag", used to refer to this point of the sequence
 // with a unique name. `ActivitySequenceElement` objects are always stored
-// into [ActivitySequence](ActivitySequence.html) objects.
+// in [ActivitySequence](ActivitySequence.html) objects.
 //
   var ActivitySequenceElement = function () {
   };

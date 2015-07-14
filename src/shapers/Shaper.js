@@ -238,7 +238,7 @@ define([
     },
     /**
      * 
-     * Gets a clone of the nth Shape object, scaled and located into a Rectangle
+     * Gets a clone of the nth Shape object, scaled and located inside a Rectangle
      * @param {number} n
      * @param {AWT.Rectangle} rect
      * @returns {AWT.Shape}

@@ -37,7 +37,7 @@ define([
   /**
    * 
    * Activity is the abstract base class of JClic activities. It defines also the inner class
-   * {@link Activity.ActivityPanel}, wich is responsible of the user interaction with the activity
+   * {@link Activity.ActivityPanel}, wich is responsible for user interaction with the activity
    * content.
    * Activities should extend both `Activity` and `ActivityPanel` classes in order to become fully
    * operative.
@@ -1018,7 +1018,7 @@ define([
     },
     /**
      *
-     *  Fits the panel into the `proposed` rectangle. The panel can occupy more space, but always
+     *  Fits the panel within the `proposed` rectangle. The panel can occupy more space, but always
      * not surpassing the `bounds` rectangle.
      * @param {AWT.Rectangle} proposed - The proposed rectangle
      * @param {AWT.Rectangle} bounds - The maximum allowed bounds

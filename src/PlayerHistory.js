@@ -66,9 +66,9 @@ define([
      * @class
      * @param {string} projectPath - The full path of the project file
      * @param {?string} sequence - The nearest sequence tag
-     * @param {number} activity - The index of the current activity into the project's {@link ActivitySequence}
-     * @param {?type} fullZipPath - If `projectPath` resides into a {@link external:JSZip JSZip} object, full
-     * path of the zip file.
+     * @param {number} activity - The index of the current activity on the project's {@link ActivitySequence}
+     * @param {?type} fullZipPath - If `projectPath` resides in a {@link external:JSZip JSZip} object,
+     * the full path of the zip file.
      */
     HistoryElement: function (projectPath, sequence, activity, fullZipPath) {
       this.projectPath = projectPath;
@@ -177,8 +177,8 @@ define([
      * Performs a jump to the specified sequence
      * @param {string} sequence - The {@link ActivitySequence} tag to jump to.
      * @param {?string} path - When not `null`, indicates a new project file that must be loaded.
-     * Otherwise, the `sequence` parameter refers to a tah into the {@link ActivitySequence} of
-     * the current project.
+     * Otherwise, the `sequence` parameter refers to a tag on the {@link ActivitySequence} of the
+     * current project.
      * @param {boolean} allowReturn - When this param is `true`, the jump will be recorded, thus
      * allowing to return to the current activity.
      */

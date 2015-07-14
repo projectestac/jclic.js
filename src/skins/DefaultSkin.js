@@ -101,7 +101,7 @@ define([
      * @type {external:jQuery} */
     $msgBoxDiv: null,
     /*
-     * An HTML `canvas` object created into `$msgBoxDiv`
+     * An HTML `canvas` object created in `$msgBoxDiv`
      * @type {external:jQuery} */
     $msgBoxDivCanvas: null,
     //

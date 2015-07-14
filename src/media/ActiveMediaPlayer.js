@@ -201,7 +201,7 @@ define([
     /**
      * 
      * Clears the specified audio buffer
-     * @param {number} buffer - Index of the buffer into {@link ActiveMediaPlayer#_audioBuffer}
+     * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer#_audioBuffer}
      */
     clearAudioBuffer: function (buffer) {
       if (buffer >= 0 && buffer < ActiveMediaPlayer.prototype._audioBuffer.length && ActiveMediaPlayer.prototype._audioBuffer[buffer] !== null) {
@@ -241,7 +241,7 @@ define([
     /**
      * 
      * Stops a specific audio buffer
-     * @param {number} buffer - Index of the buffer into {@link ActiveMediaPlayer#_audioBuffer}
+     * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer#_audioBuffer}
      */
     stopAudioBuffer: function (buffer) {
       if (buffer >= 0 && buffer < ActiveMediaPlayer.prototype._audioBuffer.length && ActiveMediaPlayer.prototype._audioBuffer[buffer] !== null)

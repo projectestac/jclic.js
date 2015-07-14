@@ -267,7 +267,7 @@ define([
 
   //
   // ComplexEvaluator acts like BasicEvaluator, but providing feedback about what's the location
-  // of the mistakes into the user's answer.
+  // of the mistakes in the user provided answer.
   ComplexEvaluator.prototype = {
     constructor: ComplexEvaluator,
     //

@@ -53,7 +53,7 @@ define([
     // 
     // Returns the index in the sequence of the provided element
     // - ase([ActivitySequenceElement](ActivitySequenceElement.html)): the
-    // element to search for.
+    // element to search.
     getElementIndex: function (ase) {
       return ase === null ? -1 : this.elements.indexOf(ase);
     },
@@ -75,7 +75,7 @@ define([
     },
     // 
     // Searchs the sequence for a element with the provided tag
-    // - tag (string): The tag to search for
+    // - tag (string): The tag to search
     // - updateCurrentAct (boolean): when `true`, the `currentAct` index
     // will be updated
     // - returns the requested [ActivitySequenceElement](ActivitySequenceElement.html)
@@ -216,7 +216,7 @@ define([
     // Gets the first [ActivitySequenceElement](ActivitySequenceElement.html)
     // of the sequence pointing to the provided activity name.
     // The search is case-insensitive.
-    // - activityName (string): the name of the activity to search for.
+    // - activityName (string): the name of the activity to search.
     // - returns: the [ActivitySequenceElement](ActivitySequenceElement.html)
     // if found, `null` otherwise.
     getElementByActivityName: function (activityName) {

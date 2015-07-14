@@ -19,13 +19,19 @@ define([
   "../AWT"
 ], function ($, BoxBag, AWT) {
 
-//
-// This class is a special case of [BoxBag](BoxBag.html), containing only
-// objects of type [ActiveBox](ActiveBox.html). In addition to the members and
-// methods of `BoxBag`, it implements specific methods to deal with
-// [ActiveBagContent](ActiveBagContent.html) objects and with other specific
-// members of `ActiveBox` like its "ids" (`idOrder`, `idLoc` and `idAss`).
-//
+  /**
+   * This class is a special case of {@link BoxBag} containing only objects of type {@link ActiveBox}.<br>
+   * In addition to the members and methods of `BoxBag`, it implements specific methods to deal with
+   * {@link ActiveBagContent} objects and with the other specific members of `ActiveBox` like its "ids"
+   * (`idOrder`, `idLoc` and `idAss`).
+   * @exports ActiveBoxBag
+   * @class
+   * @extends BoxBag
+   * @param {?AbstractBox} parent - The AbstractBox to which this box bag belongs
+   * @param {?AWT.Container} container - The container where this box bag is placed.  
+   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   * of this box bag are defined.
+   */
   var ActiveBoxBag = function (parent, container, boxBase) {
     // ActiveBoxBag extends BoxBag
     BoxBag.call(this, parent, container, boxBase);
@@ -33,32 +39,43 @@ define([
 
   ActiveBoxBag.prototype = {
     constructor: ActiveBoxBag,
-    //
-    // Adds an (ActiveBox)[ActiveBox.html] to this bag
+    /**
+     * 
+     * Adds an {@link ActiveBox} to this bag
+     * @param {ActiveBox} bx - The ActiveBox to be added to this bag
+     */
     addActiveBox: function (bx) {
       bx.idLoc = this.cells.length;
       bx.idOrder = bx.idLoc;
       return this.addBox(bx);
     },
-    // 
-    // Finds an ActiveBox by its numeric location
+    /**
+     * 
+     * Finds an ActiveBox by its relative location (`idLoc` field)
+     * @param {number} idLoc
+     * @returns {ActiveBox}
+     */
     getActiveBox: function (idLoc) {
       return this.getBox(idLoc);
     },
-    //
-    // Gets the background box
+    /**
+     * 
+     * Gets the background box
+     * @returns {ActiveBox}
+     */
     getBackgroundActiveBox: function () {
       return this.getBackgroundBox();
     },
-    //
-    // Sets the contents of this ActiveBoxBag based on the provided
-    // [ActiveBagContent](ActiveBagContent.html) objects
-    // abc (ActiveBagContent) - The main content bag
-    // altAbc (ActiveBagContent, optional) - The alternative content bag
-    // fromIndex (number, optional) - Take [ActiveBoxContent](ActiveBoxContent.html)
-    // from the specified index.
-    // toCell (number, optional) - Start filling at this cell number
-    // numCells (number, optional) - Take only a limited number of cells
+    /**
+     * 
+     * Sets the content of members of this ActiveBoxBag, based on one or more {@link ActiveBagContent}
+     * objects.
+     * @param {ActiveBagContent} abc - The main bag of content
+     * @param {?ActiveBagContent=} altAbc - The alternative bag of content
+     * @param {number=} fromIndex - Starts taking the cell content located at this position on the bag
+     * @param {number=} toCell - Starts filling the box located at this position on the ActiveBoxBag
+     * @param {type=} numCells - Acts only with a limited number of elements.
+     */
     setContent: function (abc, altAbc, fromIndex, toCell, numCells) {
 
       var bx;
@@ -84,22 +101,30 @@ define([
           bx.setBoxBase(abc.bb);
       }
     },
-    //
-    // Finds an ActiveBox by location
-    // point: (AWT.Point) - The location to search for  
+    /**
+     * 
+     * Finds an ActiveBox by location
+     * @param {AWT.Point} point - The location to search
+     * @returns {ActiveBox}
+     */
     findActiveBox: function (point) {
       return this.findBox(point);
     },
-    //
-    // Clear the content of all boxes
+    /**
+     * 
+     * Clears the content of all boxes
+     */
     clearAll: function () {
       for (var i = 0; i < this.cells.length; i++)
         this.getActiveBox(i).clear();
       if (this.backgroundBox !== null)
         this.getBackgroundActiveBox().clear();
     },
-    //
-    // Count the number of cells that are at its original place
+    /**
+     * 
+     * Count the number of cells that are at its original place
+     * @returns {number}
+     */
     countCellsAtPlace: function () {
       var cellsAtPlace = 0;
       for (var i = 0; i < this.cells.length; i++)
@@ -107,8 +132,12 @@ define([
           cellsAtPlace++;
       return cellsAtPlace;
     },
-    //
-    // Finds the [ActiveBox](ActiveBox.html) having the specified `idLoc` attribute
+    /**
+     * 
+     * Finds the {@link ActiveBox} that has the specified `idLoc` attribute
+     * @param {number} idLoc - The idLoc to search
+     * @returns {ActiveBox}
+     */
     getActiveBoxWithIdLoc: function (idLoc) {
       var result = null;
       for (var bx, i = 0; i < this.cells.length; i++) {
@@ -119,16 +148,23 @@ define([
       }
       return result;
     },
-    //
-    // Checks if a cell is at a place equivalent to its original position
-    // bx (ActiveBox): The ActiveBox to check for
-    // checkCase (boolean): check case when comparing texts
+    /**
+     * 
+     * Checks if the place occupied by a cell corresponds to a cell with equivalent content.
+     * @param {ActiveBox} bx - The box to check
+     * @param {boolean} checkCase - If `true`, check case when comparing texts
+     * @returns {boolean}
+     */
     cellIsAtEquivalentPlace: function (bx, checkCase) {
       return bx.isAtPlace() ||
           bx.isEquivalent(this.getActiveBoxWithIdLoc(bx.idOrder), checkCase);
     },
-    //
-    // Count the number of cells that are at its original place
+    /**
+     * 
+     * Count the number of cells that are at its original place or equivalent
+     * @param {type} checkCase -  - If `true`, check case when comparing texts
+     * @returns {number}
+     */
     countCellsAtEquivalentPlace: function (checkCase) {
       var cellsAtPlace = 0;
       for (var i = 0; i < this.cells.length; i++) {
@@ -137,8 +173,12 @@ define([
       }
       return cellsAtPlace;
     },
-    //
-    // Count the number of cells having the provided `idAss` attribute    
+    /**
+     * 
+     * Counts the number of cells that have the provided `idAss` attribute
+     * @param {number} idAss - The `idAss` attribute to search
+     * @returns {number}
+     */
     countCellsWithIdAss: function (idAss) {
       var n = 0;
       for (var i = 0; i < this.cells.length; i++) {
@@ -147,8 +187,11 @@ define([
       }
       return n;
     },
-    //
-    // Count the number of inactive cells
+    /**
+     * 
+     * Counts the number of inactive cells
+     * @returns {number}
+     */
     countInactiveCells: function () {
       var n = 0;
       for (var i = 0; i < this.cells.length; i++) {
@@ -157,16 +200,19 @@ define([
       }
       return n;
     },
-    //
-    // Resets the default `idAss`attribute of all cells
+    /**
+     * Resets the default `idAss` attribute on all cells
+     */
     setDefaultIdAss: function () {
       for (var i = 0; i < this.cells.length; i++)
         this.getActiveBox(i).setDefaultIdAss();
     },
-    //
-    // Scramble all the cells
-    // times (number): Number of times to scramble
-    // fitInArea (boolean): Ensure that all cells are inside the bag rectangle
+    /**
+     * 
+     * Shuffles the cells
+     * @param {number} times - Number of times to shuffle
+     * @param {boolean} fitInArea - Ensure that all cells are inside the bag rectangle
+     */
     scrambleCells: function (times, fitInArea) {
       var nc = this.cells.length;
       if (nc >= 2) {
@@ -209,8 +255,10 @@ define([
         }
       }
     },
-    //
-    // Resets the IDs of all cells
+    /**
+     * 
+     * Resets the IDs of all cells
+     */
     resetIds: function () {
       for (var i = 0; i < this.cells.length; i++) {
         var bx = cells[i];
@@ -221,12 +269,15 @@ define([
         }
       }
     },
-    //
-    // Gets the box located in the `cells` array after the provided index 
-    // that has the provided `idAss` parameter (or, if not provided, any
-    // value greather than zero)
-    // currentItem (number): The index after to start scanning
-    // idAssValid (number, optional): The `idAss` attribute to look for
+    /**
+     * 
+     * Gets the index of box located in the `cells` array after the provided index, having the
+     * provided `idAssValid` value as `idAss` attribute.<br>
+     * When `idAssValid` is `null` or `undefined`, searchs for the next cell with `idAss>0`
+     * @param {type} currentItem - The index after to which start scanning
+     * @param {type=} idAssValid - The `idAss` attribute value to search
+     * @returns {number}
+     */
     getNextItem: function (currentItem, idAssValid) {
       var IDASSNOTUSED = -12345;
       if (!idAssValid)

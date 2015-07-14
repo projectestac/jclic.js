@@ -449,7 +449,7 @@ define([
     },
     /**
      * 
-     * Draws the content of this box into an HTML `canvas` element. At this level, only background
+     * Draws the content of this box on an HTML `canvas` element. At this level, only background
      * and border are painted/stroked. Derived classes should implement specific drawing tasks in
      * {@link AbstractBox#updateContent}.
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the

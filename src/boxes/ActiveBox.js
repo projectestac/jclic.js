@@ -236,7 +236,7 @@ define([
      * Sets the {@link ActiveBoxContent} of this ActiveBox
      * @param {(ActiveBoxContent|ActiveBagContent)} abc - Object containing the content to set.
      * @param {number} i - When `abc` is an {@link ActiveBagContent}, this field indicates an
-     * index into the content array.
+     * index in the content array.
      */
     setContent: function (abc, i) {
       if (abc instanceof ActiveBagContent) {
@@ -273,7 +273,7 @@ define([
      * of this ActiveBox,
      * @param {(ActiveBoxContent|ActiveBagContent)} abc - Object containing the content to set.
      * @param {number} i - When `abc` is an {@link ActiveBagContent}, this field indicates an
-     * index into the content array.
+     * index in the content array.
      */
     setAltContent: function (abc, i) {
       if (abc instanceof ActiveBagContent) {
@@ -314,7 +314,7 @@ define([
     },
     /**
      * 
-     * Checks the presence of content susceptible to be treated as HTML DOM embedded into this ActiveBox.<br>
+     * Checks the presence of content susceptible to be treated as HTML DOM embedded in this ActiveBox.<br>
      * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas}
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the box.
      */
@@ -366,7 +366,7 @@ define([
     },
     /**
      * 
-     * Draws the content of this Activebox into the specified canvas context.
+     * Draws the content of this Activebox on the specified canvas context.
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * box content.
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.

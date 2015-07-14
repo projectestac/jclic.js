@@ -123,7 +123,7 @@ define([
     // Sets the provided character as a content of the cell located at the x & y coordinates
     // x (Number) - The X coordinate of the cell
     // y (Number) - The y coordinate of the cell
-    // ch (String) - The character to place into the specified cell
+    // ch (String) - The character to be placed into the specified cell
     setCharAt: function (x, y, ch) {
       if (x >= 0 && x < this.ncw && y >= 0 && y < this.nch)
         this.text[y] = this.text[y].substring(0, x) + ch + this.text[y].substring(x + 1);

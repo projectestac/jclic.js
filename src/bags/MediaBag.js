@@ -53,7 +53,7 @@ define([
     },
         // 
     // Gets a [MediaBagElement](MediaBagElement.html) by its name
-    // name (String) - The name to search for
+    // name (String) - The name to search
     // create (Boolean or `null`) - When `true`, a new [MediaBagElement](MediaBagElement.html) will 
     // be created if not found, using 'name' as fileName.
     getElement: function (name, create) {
@@ -64,7 +64,7 @@ define([
     },
     // 
     // Gets a [MediaBagElement](MediaBagElement.html) by file name
-    // fileName (String) - The file name to search for
+    // fileName (String) - The file name to search
     // create (Boolean or `null`) - When `true`, a new [MediaBagElement](MediaBagElement.html) will 
     // be created if not found.
     getElementByFileName: function (fileName, create) {
