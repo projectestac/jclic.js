@@ -19,7 +19,7 @@ define([
   "../AWT",
   "../Utils"
 ], function ($, AbstractBox, AWT, Utils) {
-  
+
   /**
    * 
    * BoxBag is a class derivated from {@link AbstractBox} that contains a collection of "boxes"
@@ -90,7 +90,7 @@ define([
     addBox: function (bx) {
       this.cells.push(bx);
       bx.setParent(this);
-      
+
       if (this.cells.length === 1) {
         AWT.Rectangle.prototype.setBounds.call(this, bx);
       }
@@ -150,13 +150,13 @@ define([
       var r = null;
       if (this.backgroundBox)
         r = new AWT.Rectangle(this.backgroundBox.pos, this.backgroundBox.dim);
-      for (var i = 0; i < this.cells.length; i++){
-        if(!r)
-          r =new AWT.Rectangle(this.cells[i].pos, this.cells[i].dim);
+      for (var i = 0; i < this.cells.length; i++) {
+        if (!r)
+          r = new AWT.Rectangle(this.cells[i].pos, this.cells[i].dim);
         else
           r.add(this.cells[i]);
       }
-      if(!r)
+      if (!r)
         r = new AWT.Rectangle(this.pos.x, this.pos.y, 0, 0);
       this.preferredBounds.setRect(r);
       this.x = r.pos.x;
@@ -172,33 +172,45 @@ define([
     getNumCells: function () {
       return this.cells.length;
     },
-    //
-    // Overrides the `setBorder` method of [AbstractBox](AbstractBox.html)
-    // iterating through all cells
+    /**
+     * 
+     * Overrides {@link AbstractBox#setBorder} iterating over all the cells stored in this box bag.
+     * @param {boolean} newVal - Whether to set or unset the border
+     */
     setBorder: function (newVal) {
       for (var i = 0; i < this.cells.length; i++)
         this.getBox(i).setBorder(newVal);
     },
-    //
-    // Overrides the `setVisible` method of [AbstractBox](AbstractBox.html)
-    // iterating through all cells
+    /**
+     * 
+     * Overrides {@link AbstractBox#setVisible} iterating over all the cells stored in this box bag.
+     * @param {boolean} newVal - Whether to set the cells visible or not
+     */
     setVisible: function (newVal) {
       for (var i = 0; i < this.cells.length; i++)
         this.getBox(i).setVisible(newVal);
     },
-    //
-    // Overrides the `setAlternative` method of [AbstractBox](AbstractBox.html)
-    // iterating through all cells
+    /**
+     * 
+     * Overrides {@link AbstractBox#setAlternative} iterating over all the cells stored in this box bag.
+     * @param {boolean} newVal - Whether to set or unset the cells in "alternative" mode
+     */
     setAlternative: function (newVal) {
       AbstractBox.prototype.setAlternative.call(this, newVal);
       for (var i = 0; i < this.cells.length; i++)
         this.getBox(i).setAlternative(newVal);
     },
-    //
-    // Overrides the `setBounds` method of [AbstractBox](AbstractBox.html)
-    // adjusting the position and size of all cells
+    /**
+     * 
+     * Overrides {@link AbstractBox#setBounds} adjusting the position and size of all cells
+     * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
+     * upper-left corner of a new rectangle.
+     * @param {number=} y - `y` coordinate of the upper-left corner of the new rectangle.
+     * @param {number=} w - Width of the new rectangle.
+     * @param {number=} h - Height of the new rectangle.
+     */
     setBounds: function (rect, ry, rw, rh) {
-      if(typeof rect === 'number'){
+      if (typeof rect === 'number') {
         // Arguments are co-ordinates and size
         var rx = rect;
         rect = new AWT.Rectangle(rx, ry, rw, rh);
@@ -230,9 +242,14 @@ define([
       }
       AbstractBox.prototype.setBounds.call(this, rect);
     },
-    //
-    // Graphics operations based on a Canvas context ctx
-    // Overrides same method in [AbstractBox](AbstractBox.html)
+    /**
+     * 
+     * Performs graphics operations for each cell.<br>
+     * Overrides {@link AbstractBox#update}
+     * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
+     * box contents.
+     * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+     */
     update: function (ctx, dirtyRegion) {
 
       if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
@@ -259,14 +276,12 @@ define([
       }
       return true;
     },
-    //
-    // Updates content
-    updateContent: function (ctx, dirtyRegion) {
-      return true;
-    },
-    //
-    // Finds the first [AbstractBox](AbstractBox.html) located under the
-    // provided AWT.Point
+    /**
+     * 
+     * Finds the first visible {@link AbstractBox} located under the specified point
+     * @param {AWT.Point} p
+     * @returns {AbstractBox}
+     */
     findBox: function (p) {
       var result = null;
       for (var i = this.cells.length - 1; i >= 0; i--) {
@@ -278,8 +293,11 @@ define([
       }
       return result;
     },
-    //
-    // Count the number of cells of this BoxBag that are in `inactive` state
+    /**
+     * 
+     * Count the number of cells of this BoxBag that are in "inactive" state
+     * @returns {number}
+     */
     countInactiveCells: function () {
       var n = 0;
       for (var i = 0; i < this.cells.length; i++) {
@@ -288,19 +306,18 @@ define([
       }
       return n;
     },
-    //
-    // Sets the position and dimension of a Resizable object based on a preferred 
-    // maximum size and a margin.
-    // preferredMaxSize (AWT.Dimension) - The preferred maximum size
-    // rs (currently a [BoxBag](BoxBag.html) or a [TextGrid](TextGrid.html) 
-    // implementing the methods described in the 
-    // [Resizable](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html)
-    // interface of JClic) - The object to be positioned and resized.
-    // margin (number) - The margin between the available area and the BoxBag
-    // Returns: an AWT.Dimension object with the final size of the container
-    //
-    // This is a static function and should be called directly from prototype as:
-    // `BoxBag.prototype._layoutSingle(...)`
+    /**
+     * 
+     * Sets the position and dimension of a Resizable object based on a preferred maximum dimension,
+     * and a margin.<br>
+     * This is a static function and should be called directly from prototype as: `BoxBag.prototype._layoutSingle(...)`
+     * @param {AWT.Dimension} preferredMaxSize - The preferred maximum size
+     * @param {Resizable} rs - A resizable object implementing the methods described in the
+     * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html Resizable}
+     * interface of JClic. Currently a {@link BoxBag} or {@link TextGrid}.
+     * @param {number} margin - The margin between the available area and the BoxBag
+     * @returns {AWT.Dimension} - The resulting size of the container
+     */
     _layoutSingle: function (preferredMaxSize, rs, margin) {
 
       // Avoid exceptions when rs is null
@@ -339,20 +356,24 @@ define([
 
       return d;
     },
-    // 
-    // Sets the position and dimension of two Resizable objects based on a preferred 
-    // maximum size, a layout schema and a margin.
-    // desiredMaxSize (AWT.Dimension) - The preferred maximum size
-    // rsA and rsB (currently a [BoxBag](BoxBag.html) or a [TextGrid](TextGrid.html) 
-    // implementing the methods described in the 
-    // [Resizable](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html)
-    // interface of JClic) - The objects to be positioned and resized.
-    // boxGridPos (string) - The layout schema (_AB_, _BA_, _AUB_ or _BUA_)
-    // margin (number) - The margin between the available area and the BoxBag
-    // Returns: an AWT.Dimension object with the final size of the container
-    //
-    // This is a static function and should be called directly from prototype as:
-    // `BoxBag.prototype._layoutDouble(...)`
+    /**
+     * 
+     * Sets the position and dimension of two Resizable objects based on a preferred maximum size,
+     * a layout schema and a margin.<br>
+     * This is a static function and should be called directly from prototype as: `BoxBag.prototype._layoutDouble(...)`
+     * @param {AWT.Dimension} desiredMaxSize - The preferred maximum size
+     * @param {Resizable} rsA - First resizable object implementing the methods described in the
+     * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html Resizable}
+     * interface of JClic. Currently a {@link BoxBag} or {@link TextGrid}.
+     * @param {Resizable} rsB - Second resizable object
+     * @param {string} boxGridPos -  - The layout schema. Possible values are:
+     * - "AB" (_A_ at left, _B_ at right)
+     * - "BA" (_B_ at left, _A_ at right)
+     * - "AUB" (_A_ above _B_)
+     * - "BUA" (_A_ below _B_).
+     * @param {number} margin - The margin between the available area and the BoxBag
+     * @returns {AWT.Dimension} - The resulting size of the container
+     */
     _layoutDouble: function (desiredMaxSize, rsA, rsB, boxGridPos, margin) {
       // number of horizontal and vertical grid lines
       var isHLayout = false;
@@ -448,7 +469,7 @@ define([
           break;
       }
 
-      // recompute d adding margins
+      // recompute 'd' adding margins
       var r = new AWT.Rectangle(rsA.getBounds());
       r.add(rsB.getBounds());
       d.width = r.dim.width + 2 * margin;
