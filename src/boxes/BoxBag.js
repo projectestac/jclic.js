@@ -19,12 +19,19 @@ define([
   "../AWT",
   "../Utils"
 ], function ($, AbstractBox, AWT, Utils) {
-
-//
-// `BoxBag` is a class derivated from [AbstractBox](AbstractBox.html) that contains
-// a collection of "boxes" (objects also derived from AbstractBox). The class 
-// implements methods to add, remove and retrieve boxes, and to manage some of 
-// its properties like visibility, status, location and size.
+  
+  /**
+   * 
+   * BoxBag is a class derivated from {@link AbstractBox} that contains a collection of "boxes"
+   * (objects also derived from {@link AbstractBox}). This class implements methods to add, remove
+   * and retrieve boxes, and to manage some of its properties like visibility, status, location and size.
+   * @exports BoxBag
+   * @class
+   * @extends AbstractBox
+   * @param {?AbstractBox} parent - The AbstractBox to which this box bag belongs
+   * @param {?AWT.Container} container - The container where this box bag is placed.  
+   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   */
   var BoxBag = function (parent, container, boxBase) {
     // BoxBag extends AbstractBox
     AbstractBox.call(this, parent, container, boxBase);
@@ -34,33 +41,52 @@ define([
 
   BoxBag.prototype = {
     constructor: BoxBag,
-    //
-    // The array of cells
+    /**
+     * The array of cells.
+     * @type {AbstractBox[]} */
     cells: [],
-    //
-    // Rectangle containing the preferred bounds of the BoxBag
+    /**
+     * Rectangle containing the preferred bounds of the BoxBag
+     * @type {AWT.Rectangle} */
     preferredBounds: new AWT.Rectangle(),
-    //
-    // The background of this BoxBag, defined by an [AbstractBox](AbstractBox.html)
+    /**
+     * An optional box used as a background by this BoxBag
+     * @type {AbstractBox} */
     backgroundBox: null,
-    //
-    // Miscellaneous functions to get the preferred and current sizes
-    // of this `BoxBag`
+    /**
+     * 
+     * Gets the preferred size of this `BoxBag`
+     * @returns {AWT.Dimension}
+     */
     getPreferredSize: function () {
       return this.preferredBounds.dim;
     },
+    /**
+     * 
+     * Gets the minimum size requested by this `BoxBag`
+     * @returns {AWT.Dimension}
+     */
     getMinimumSize: function () {
       var d = this.getPreferredSize();
       return new AWT.Dimension(
           Math.max(Utils.settings.MIN_CELL_SIZE, d.width),
           Math.max(Utils.settings.MIN_CELL_SIZE, d.height));
     },
+    /**
+     * 
+     * Scales the current size of this box bag, multiplicating all values by a specific factor
+     * @param {number} scale - The scale factor
+     * @returns {AWT.Dimension}
+     */
     getScaledSize: function (scale) {
       var d = this.getPreferredSize();
       return new AWT.Dimension(Math.round(scale * d.width), Math.round(scale * d.height));
     },
-    // 
-    // Adds an [AbstractBox](AbstractBox.html) to the collection of cells
+    /**
+     * 
+     * Adds an {@link AbstractBox} to the collection of cells
+     * @param {AbstractBox} bx - The box to add
+     */
     addBox: function (bx) {
       this.cells.push(bx);
       bx.setParent(this);
@@ -73,21 +99,37 @@ define([
       }
       this.preferredBounds.setBounds(this.getBounds());
     },
-    //
-    // Returns the index of a specific box in the `cells` array
+    /**
+     * 
+     * Returns the index of a specific box in the `cells` array
+     * @param {AbstractBox} bx
+     * @returns {number}
+     */
     boxIndex: function (bx) {
       return bx === null ? -1 : this.cells.indexOf(bx);
     },
-    // 
-    // Returns the box at a specific index in the `cells` array
+    /**
+     * 
+     * Returns the box at a specific index in the `cells` array
+     * @param {number} n - The index
+     * @returns {AbstractBox}
+     */
     getBox: function (n) {
       return (n < 0 || n >= this.cells.length) ? null : this.cells[n];
     },
-    // 
-    // Getter and setter for the `backgroundBox` property
+    /**
+     * 
+     * Gets the background box
+     * @returns {AbstractBox}
+     */
     getBackgroundBox: function () {
       return this.backgroundBox;
     },
+    /**
+     * 
+     * Sets the background box
+     * @param {AbstractBox} bx
+     */
     setBackgroundBox: function (bx) {
       this.backgroundBox = bx;
       if (bx !== null) {
@@ -98,9 +140,12 @@ define([
       AWT.Rectangle.prototype.add.call(this, bx);
       this.preferredBounds.setBounds(this.getBounds());
     },
-    //
-    // Recalculates the total size of this BoxBag
-    // (useful after direct additions o deletions of elemnts in the `cells` array
+    /**
+     * 
+     * Recalculates the total size of this BoxBag (useful after direct additions o deletions of
+     * elements in the `cells` array).<br>
+     * Updates `preferredBounds` and the current position and size of the box bag.
+     */
     recalcSize: function () {
       var r = null;
       if (this.backgroundBox)
@@ -119,9 +164,11 @@ define([
       this.dim.width = r.dim.width;
       this.dim.height = r.dim.height;
     },
-    //
-    // Returns the number of cells stored in this BoxBag
-    // (function can be overrided by subclasses)
+    /**
+     * 
+     * Returns the number of cells stored in this BoxBag
+     * @returns {number}
+     */
     getNumCells: function () {
       return this.cells.length;
     },
