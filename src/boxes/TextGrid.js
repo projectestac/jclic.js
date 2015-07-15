@@ -20,9 +20,25 @@ define([
   "./AbstractBox",
   "./TextGridContent"
 ], function ($, AWT, Utils, AbstractBox, TextGridContent) {
-  //
-  // This class is a special type of [AbstractBox](AbstractBox.html) that displays a grid of single
-  // characters. It is used in activities like crosswords and scrambled letters. 
+  
+  /**
+   * This class is a special type of {@link AbstractBox} that displays a grid of single
+   * characters.<br>
+   * It's used {@link CrossWord} and {@link WordSearch} activities.
+   * @exports TextGrid
+   * @class
+   * @extends AbstractBox
+   * @param {?AbstractBox} parent - The AbstractBox to which this text grid belongs
+   * @param {?AWT.Container} container - The container where this text grid is placed.  
+   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   * @param {number} x - `X` coordinate of the upper left corner of this grid
+   * @param {number} y - `Y` coordinate of the upper left corner of this grid
+   * @param {number} ncw - Number of columns of the grid
+   * @param {number} nch - Nomber of rows of the grid
+   * @param {number} cellW - Width of the cells
+   * @param {number} cellH - Height of the cells
+   * @param {boolean} border - When `true`, a border must be drawn between the cells
+   */
   var TextGrid = function (parent, container, boxBase, x, y, ncw, nch, cellW, cellH, border) {
 
     // *TextGrid* extends [AbstractBox](AbstractBox.html)
@@ -51,31 +67,85 @@ define([
 
   TextGrid.prototype = {
     constructor: TextGrid,
+    /**
+     * Number of rows
+     * @type {number} */
     nRows: 1,
+    /**
+     * Number of columns
+     * @type {number} */
     nCols: 1,
+    /**
+     * Two-dimension array of characters
+     * @type {string[][]} */
     chars: null,
+    /**
+     * Two-dimension array with the expected characters, used to check user's answers.
+     * @type {string[][]} */    
     answers: null,
+    /**
+     * Two-dimension array of bytes used as containers of boolean attributes
+     * @see textGrid#flags
+     * @type {number[][]} */
     attributes: null,
+    /**
+     * The cell width, in pixels
+     * @type {number} */
     cellWidth: 20,
+    /**
+     * The cell height, in pixels
+     * @type {number} */    
     cellHeight: 20,
+    /**
+     * The preferred bounds of this grid
+     * @type {AWT.Rectangle} */
     preferredBounds: null,
+    /**
+     * The character to be used as wildcard
+     * @type {string} */    
     wild: TextGridContent.prototype.wild,
+    /**
+     * Characters that can be used when randomizing the content of this grid
+     * @see TextGridContent#randomChars
+     * @type {string} */
     randomChars: TextGridContent.prototype.randomChars,
+    /**
+     * Whether the blinking cursor is enabled or disabled
+     * @type {boolean} */
     cursorEnabled: false,
+    /**
+     * Whether this grid uses a blinking cursor or not
+     * @type {boolean} */
     useCursor: false,
+    /**
+     * The current position of the cursor
+     * @type {AWT.Point} */    
     cursor: null,
+    /**
+     * `true` when the cursor is "blinking" (cell drawed with {@link BoxBase} `inverse` attributes)
+     * @type {boolean} */
     cursorBlink: false,
+    /**
+     * Controls the blinking of the cursor
+     * @type {AWT.Timer} */
     cursorTimer: null,
+    /**
+     * Whether the wildcard is transparent or opaque
+     * @type {boolean} */
     wildTransparent: false,
-    //
-    // Default values
+    /**
+     * Default values
+     * @constant
+     * @type {object} */
     defaults: {
       MIN_CELL_SIZE: 12,
       DEFAULT_CELL_SIZE: 20,
       MIN_INTERNAL_MARGIN: 2
     },
-    //
-    // Binary flags used to mark status
+    /**
+     * Binary flags used to mark status
+     * @constant
+     * @type {object} */
     flags: {
       NORMAL: 0,
       INVERTED: 1,
@@ -84,14 +154,19 @@ define([
       MARKED: 8,
       TRANSPARENT: 16
     },
-    //
-    // Creates an empty grid based on a [TextGridContent](TextGridContent.html)
-    // parent (AbstractBox). This static method should be called always as
-    // `TextGrid.prototype._createEmptyGrid(...)`
-    // container (AWT.Container)
-    // x and y (Number)
-    // tgc (TextGridContent)
-    // wildTransparent (Boolean)
+    /**
+     * 
+     * Creates an empty grid based on a {@link TextGridContent}
+     * This static method should be called always as `TextGrid.prototype._createEmptyGrid(...)`
+     * @static
+     * @param {?AbstractBox} parent - The AbstractBox to which the text grid belongs
+     * @param {?AWT.Container} container - The container where the text grid will be placed.  
+     * @param {number} x - `X` coordinate of the upper left corner of the grid
+     * @param {number} y - `Y` coordinate of the upper left corner of the grid
+     * @param {TextGridContent} tgc - Object with the content and other settings of the grid
+     * @param {boolean} wildTransparent - When `true`, the wildcard will be transparent
+     * @returns {TextGrid}
+     */
     _createEmptyGrid: function (parent, container, x, y, tgc, wildTransparent) {
       var result = new TextGrid(parent, container, tgc.bb,
           x, y, tgc.ncw, tgc.nch, tgc.w, tgc.h, tgc.border);
@@ -100,9 +175,11 @@ define([
       result.wildTransparent = wildTransparent;
       return result;
     },
-    //
-    // Sets the characters to be placed in the cells of this TextGrid
-    // text (Array of String)
+    /**
+     * 
+     * Sets the characters to be placed in the cells of this TextGrid
+     * @param {string} text
+     */
     setChars: function (text) {
       this.chars = [];
       this.answers = [];
@@ -121,8 +198,11 @@ define([
       }
       //this.repaint();
     },
-    //
-    // Substitutes the current content of all cells with wildcards with a randomly generated char
+    /**
+     * 
+     * Substitutes the current content of all cells with wildcards with a randomly generated char.
+     * @see TextGridContent#randomChars
+     */
     randomize: function () {
       for (var py = 0; py < this.nRows; py++)
         for (var px = 0; px < this.nCols; px++)
@@ -130,11 +210,13 @@ define([
             this.chars[py][px] = this.randomChars.charAt(
                 Math.floor(Math.random() * this.randomChars.length));
     },
-    // 
-    // Clears or sets global attributes to all cells
-    // lockWild (Boolean) - When `true`, the wildcard cells will be marked with special attributes.
-    // (used in CrossWords to mark black cells)
-    // clearChars (Boolean) - When `true`, the current content of the cell will be erased.
+    /**
+     * 
+     * Clears or sets global attributes to all cells
+     * @param {boolean} lockWild - When `true`, the wildcard cells will be marked with special
+     * attributes (used in CrossWords to mark black cells)
+     * @param {boolean} clearChars - When `true`, the current content of cells will be erased.
+     */
     setCellAttributes: function (lockWild, clearChars) {
       var atr = this.flags.LOCKED;
       if (this.wildTransparent)
@@ -153,10 +235,14 @@ define([
         }
       }
     },
-    //
-    // Sets or unsets the `locked` properties (black cell) to a specific cell
-    // px and py (Number) - The logicat coordinates of the cell
-    // locked (Boolean) - When true, the `locked` attributes will be on. Otherwise, off.
+    /**
+     * 
+     * Sets or unsets the `locked` properties (black cell) to a specific cell.
+     * @param {number} px - The logical 'X' coordinate of the cell
+     * @param {number} py - The logical 'Y' coordinate of the cell
+     * @param {boolean} locked - When true, the `locked` attribute will be on.
+     * @returns {undefined}
+     */
     setCellLocked: function (px, py, locked) {
       if (px >= 0 && px < this.nCols && py >= 0 && py < this.nRows) {
         this.attributes[py][px] = locked ?
@@ -168,10 +254,18 @@ define([
             this.flags.NORMAL;
       }
     },
-    // 
-    // rx (Number)
-    // ry (Number)
-    // Returns: AWT.Point
+    /**
+     * 
+     * For a specific cell located at column `rx` and row `ry`, finds the number of words delimited
+     * by wildchars located behind its current position and in the same row and column. Used in
+     * {@link CrossWord} activities to find the definition for a specific cell.<br>
+     * The result is returned as 'x' and 'y' properties of a logical point.
+     * @param {type} rx - The 'X' position of the cell
+     * @param {type} ry - The 'Y' position of the cell
+     * @returns {AWT.Point} - The logical positions of the definition for this cell inside the list
+     * of current definitions of its row and column. '0' means first definition of its row/column,
+     * '1' the second one, etc.
+     */
     getItemFor: function (rx, ry) {
 
       if (!this.isValidCell(rx, ry))
@@ -210,8 +304,11 @@ define([
       }
       return point;
     },
-    //
-    // status (Boolean)
+    /**
+     * 
+     * Whether the blinking cursor must be enabled or disabled.
+     * @param {boolean} status
+     */
     setCursorEnabled: function (status) {
       this.cursorEnabled = status;
       if (status === true)
@@ -219,26 +316,33 @@ define([
       else
         this.stopCursorBlink();
     },
-    //
-    //
+    /**
+     * 
+     * Starts the {@link AWT.Timer} that makes the cursor blink.
+     */
     startCursorBlink: function () {
       if (this.useCursor && this.cursorEnabled && this.cursorTimer && !this.cursorTimer.isRunning()) {
         this.blink(1);
         this.cursorTimer.start();
       }
     },
-    //
-    //
+    /**
+     * 
+     * Stops the {@link AWT.Timer} that makes the cursor blink.
+     */
     stopCursorBlink: function () {
       if (this.cursorTimer && this.cursorTimer.isRunning()) {
         this.cursorTimer.stop();
         this.blink(-1);
       }
     },
-    //
-    // dx(Number)
-    // dy (Number)
-    // skipLocked (Boolean)
+    /**
+     * 
+     * Moves the cursor in the specified x and y directions.
+     * @param {number} dx - Amount to move in the 'X' axis
+     * @param {number} dy - Amount to move in the 'Y' axis
+     * @param {boolean} skipLocked - Skip locked cells (wildcards in {@link CrossWord})
+     */
     moveCursor: function (dx, dy, skipLocked) {
       if (this.useCursor) {
 
@@ -250,11 +354,15 @@ define([
           this.setCursorAt(point.x, point.y, skipLocked);
       }
     },
-    //
-    // from (AWT.Point)
-    // dx (Number)
-    // dy (Number)
-    // returns: AWT.Point
+    /**
+     * 
+     * Finds the coordinates of the nearest non-locked cell (non wildcard) moving on the indicated
+     * 'X' and 'Y' directions.
+     * @param {AWT.Point} - Logical coordinates of the starting point
+     * @param {number} dx - 0 means no movement, 1 go right, -1 go left.
+     * @param {number} dy - 0 means no movement, 1 go down, -1 go up.
+     * @returns {AWT.Point}
+     */
     findFreeCell: function (from, dx, dy) {
       var result = null;
       if (from && (dx !== 0 || dy !== 0)) {
@@ -270,46 +378,18 @@ define([
       }
       return result;
     },
-    //
-    // pt (AWT.Point)
-    // checkHorizontal (Boolean)
-    // returns: Boolean
-    isIntoBlacks: function (pt, checkHorizontal) {
-      var result = false;
-      if (checkHorizontal) {
-        result = (pt.x <= 0 || this.getCellAttribute(pt.x - 1, pt.y, this.flags.LOCKED)) &&
-            (pt.x >= this.nCols - 1 || this.getCellAttribute(pt.x + 1, pt.y, this.flags.LOCKED));
-      }
-      else {
-        result = (pt.y <= 0 || this.getCellAttribute(pt.x, pt.y - 1, this.flags.LOCKED)) &&
-            (pt.y >= this.nRows - 1 || this.getCellAttribute(pt.x, pt.y + 1, this.flags.LOCKED));
-      }
-      return result;
-    },
-    //
-    // pt (AWT.Point)
-    // checkHorizontal (Boolean)
-    // returns: Boolean    
-    isIntoWhites: function (pt, checkHorizontal) {
-      var result = false;
-      if (checkHorizontal) {
-        result = (pt.x > 0 && !this.getCellAttribute(pt.x - 1, pt.y, this.flags.LOCKED)) &&
-            (pt.x < this.nCols - 1 && !this.getCellAttribute(pt.x + 1, pt.y, this.flags.LOCKED));
-      }
-      else {
-        result = (pt.y > 0 && !this.getCellAttribute(pt.x, pt.y - 1, this.flags.LOCKED)) &&
-            (pt.y < this.nRows - 1 && !this.getCellAttribute(pt.x, pt.y + 1, this.flags.LOCKED));
-      }
-      return result;
-    },
-    //
-    // startX (Number)
-    // startY (Number)
-    // attr (Nuber)
-    // dx (Number)
-    // dy (Number)
-    // attrState (Boolean)
-    // returns: AWT.Point   
+    /**
+     * 
+     * Finds the first cell with the specified attributes at the specified state, starting
+     * at specified point.
+     * @param {number} startX - Starting X coordinate
+     * @param {number} startY - Starting Y coordinate
+     * @param {number} attr - Attribute to check. See {@link TextGrid#flags}.
+     * @param {number} dx - 0 means no movement, 1 go right, -1 go left.
+     * @param {number} dy - 0 means no movement, 1 go down, -1 go up.
+     * @param {boolean} attrState - Desired state (enabled or disabled) of `attr`
+     * @returns {AWT.Point}
+     */
     findNextCellWithAttr: function (startX, startY, attr, dx, dy, attrState) {
       var point = new AWT.Point(startX + dx, startY + dy);
       while (true) {
@@ -349,10 +429,13 @@ define([
       }
       return point;
     },
-    //
-    // px (Number)
-    // py (Number)
-    // skipLocked (Boolean)
+    /**
+     * 
+     * Sets the blinking cursor at a specific point
+     * @param {number} px - X coordinate
+     * @param {number} py - Y coordinate
+     * @param {boolean} skipLocked - Skip locked (wildcard) cells
+     */
     setCursorAt: function (px, py, skipLocked) {
       this.stopCursorBlink();
       if (this.isValidCell(px, py)) {
@@ -368,19 +451,28 @@ define([
         }
       }
     },
-    //
-    // value (Boolean)
+    /**
+     * 
+     * Sets the `useCursor` property of this text grid
+     * @param {boolean} value
+     */
     setUseCursor: function (value) {
       this.useCursor = value;
     },
-    //
-    // returns AWT.Point
+    /**
+     * 
+     * Gets the current position of the blinking cursor
+     * @returns {AWT.Point}
+     */
     getCursor: function () {
       return this.cursor;
     },
-    //
-    // ch (char)
-    // returns: Number
+    /**
+     * 
+     * Counts the number of cells of this grid with the specified character
+     * @param {string} ch
+     * @returns {number}
+     */
     countCharsLike: function (ch) {
       var result = 0,
           px, py;
@@ -392,14 +484,20 @@ define([
 
       return result;
     },
-    //
-    // returns: Number   
+    /**
+     * 
+     * Gets the number of cells of this grid
+     * @returns {number}
+     */
     getNumCells: function () {
       return this.nRows * this.nCols;
     },
-    //
-    // checkCase (Boolean)
-    // returns: Number    
+    /**
+     * 
+     * Counts the number of coincidences between the `answers` array and the current content of this grid
+     * @param {boolean} checkCase - Make comparisions case-sensitive
+     * @returns {number}
+     */
     countCoincidences: function (checkCase) {
       var result = 0,
           px, py;
@@ -412,11 +510,14 @@ define([
 
       return result;
     },
-    //
-    // px (Number)
-    // py (Number)
-    // checkCase (boolean)
-    // returns: Boolean
+    /**
+     * 
+     * Checks if a specific cell is equivalent to the content of `answers` at its position
+     * @param {number} px - X coordinate
+     * @param {number} py - Y coordinate
+     * @param {boolean} checkCase - Make comparisions case-sensitive
+     * @returns {boolean}
+     */
     isCellOk: function (px, py, checkCase) {
       var result = false,
           ch, ch2;
@@ -432,9 +533,13 @@ define([
       }
       return result;
     },
-    //
-    // devicePoint (AWT.Point)
-    // returns: AWT.Point
+    /**
+     * 
+     * Gets the logical coordinates (in 'cell' units) of a device point into the grid
+     * @param {AWT.Point} devicePoint
+     * @returns {AWT.Point}
+     * 
+     */
     getLogicalCoords: function (devicePoint) {
 
       if (!this.contains(devicePoint))
@@ -449,37 +554,52 @@ define([
       else
         return null;
     },
-    //
-    // px (Number)
-    // py (Number)
-    // Returns: Boolean
+    /**
+     * 
+     * Checks if the specified logical coordinates are inside the valid bounds of the grid.
+     * @param {number} px - 'X' coordinate
+     * @param {number} py - 'Y' coordinate
+     * @returns {boolean}
+     */
     isValidCell: function (px, py) {
       return px < this.nCols && py < this.nRows && px >= 0 && py >= 0;
     },
-    //
-    // px (Number)
-    // py (Number)
-    // ch (char)
+    /**
+     * 
+     * Sets the specified character as a content of the cell at specified coordinates
+     * @param {number} px - 'X' coordinate
+     * @param {number} py - 'Y' coordinate
+     * @param {string} ch - The character to set.
+     */
     setCharAt: function (px, py, ch) {
       if (this.isValidCell(px, py)) {
         this.chars[py][px] = ch;
         this.repaintCell(px, py);
       }
     },
-    //
-    // px (Number)
-    // py (Number)
-    // Returns: char   
+    /**
+     * Gets the character of the cell at the specified coordinates
+     * @param {number} px - 'X' coordinate
+     * @param {number} py - 'Y' coordinate
+     * @returns {string}
+     */
     getCharAt: function (px, py) {
       if (this.isValidCell(px, py))
         return this.chars[py][px];
       else
         return ' ';
     },
-    //
-    // x0 and y0 (Number)
-    // x1 and y1 (Number)
-    // Returns: String
+    /**
+     * 
+     * Gets the text formed by the letters between two cells that share a straight line on the grid.<br>
+     * The text can be formed horizontally, vertically and diagonal, both in left-to-right or
+     * right-to-left direction.<br>
+     * @param {number} x0 - 'X' coordinate of the first cell
+     * @param {number} y0 - 'Y' coordinate of the first cell
+     * @param {number} x1 - 'X' coordinate of the second cell
+     * @param {number} y1 - 'Y' coordinate of the second cell
+     * @returns {string}
+     */
     getStringBetween: function (x0, y0, x1, y1) {
 
       var sb = '', i, dx, dy, steps;
@@ -499,11 +619,15 @@ define([
       }
       return sb;
     },
-    //
-    // x0 and y0 (Number)
-    // x1 and y1 (Number)
-    // atribute (Number)
-    // value (Boolean)
+    /**
+     * Sets a specific attribute to all cells forming a straight line between two cells on the grid.
+     * @param {number} x0 - 'X' coordinate of the first cell
+     * @param {number} y0 - 'Y' coordinate of the first cell
+     * @param {number} x1 - 'X' coordinate of the second cell
+     * @param {number} y1 - 'Y' coordinate of the second cell
+     * @param {number} attribute - The binary flag representing this attribute. See {@link textGrid#flags}.
+     * @param {boolean} value - Whether to set or unset the attribute.
+     */
     setAttributeBetween: function (x0, y0, x1, y1, attribute, value) {
 
       if (this.isValidCell(x0, y0) && this.isValidCell(x1, y1)) {
@@ -522,10 +646,14 @@ define([
         }
       }
     },
-    //
-    // px and py (Number)
-    // attribute (Number)
-    // state (Boolean)
+    /**
+     * 
+     * Sets or unsets a specifi attrobut to a cell.
+     * @param {number} px - The 'X' coordinate of the cell
+     * @param {number} py - The 'Y' coordinate of the cell
+     * @param {number} attribute - The binary flag representing this attribute. See {@link textGrid#flags}.
+     * @param {boolean} state - Whether to set or unset the attribute.
+     */
     setAttribute: function (px, py, attribute, state) {
       if (this.isValidCell(px, py)) {
         if (this.attribute === this.flags.MARKED && !state)
@@ -536,33 +664,48 @@ define([
           this.repaintCell(px, py);
       }
     },
-    //
-    // attribute (Number)
-    // state (Boolean)
+    /**
+     * 
+     * Sets the specified attribute to all cells.
+     * @param {number} attribute - The binary flag representing this attribute. See {@link textGrid#flags}.
+     * @param {boolean} state - Whether to set or unset the attribute.
+     */
     setAllCellsAttribute: function (attribute, state) {
       for (var py = 0; py < this.nRows; py++)
         for (var px = 0; px < this.nCols; px++)
           this.setAttribute(px, py, attribute, state);
     },
-    //
-    // px and py (Number)
-    // attribute (Number)
-    // returns Boolean
+    /**
+     * 
+     * Gets the specified attribute of a cell
+     * @param {number} px - The 'X' coordinate of the cell
+     * @param {number} py - The 'Y' coordinate of the cell
+     * @param {number} attribute - The binary flag representing this attribute. See {@link textGrid#flags}.
+     * @returns {boolean} - `true` if the cell has this attribute, `false` otherwise.
+     */
     getCellAttribute: function (px, py, attribute) {
       if (this.isValidCell(px, py))
         return (this.attributes[py][px] & attribute) !== 0;
       else
         return false;
     },
-    //
-    // px and py (Number)
-    // Returns: AWT.Rectangle
+    /**
+     * 
+     * Gets the rectangle enclosing a specific cell
+     * @param {number} px - The 'X' coordinate of the cell
+     * @param {number} py - The 'Y' coordinate of the cell
+     * @returns {AWT.Rectangle}
+     */
     getCellRect: function (px, py) {
       return new AWT.Rectangle(this.pos.x + px * this.cellWidth, this.pos.y + py * this.cellHeight, this.cellWidth, this.cellHeight);
     },
-    //
-    // px and py (Number)
-    // Returns: AWT.Rectangle    
+    /**
+     * 
+     * Gets the rectangle enclosing a specific cell, including the border thick.
+     * @param {number} px - The 'X' coordinate of the cell
+     * @param {number} py - The 'Y' coordinate of the cell
+     * @returns {AWT.Rectangle}
+     */
     getCellBorderBounds: function (px, py) {
 
       var isMarked = this.getCellAttribute(px, py, this.flags.MARKED);
@@ -575,42 +718,65 @@ define([
 
       return  this.getCellRect(px, py).grow(strk.lineWidth, strk.lineWidth);
     },
-    //
-    // px and py (Number)
+    /**
+     * 
+     * Repaints a cell
+     * @param {number} px - The 'X' coordinate of the cell
+     * @param {number} py - The 'Y' coordinate of the cell
+     */
     repaintCell: function (px, py) {
       if (this.container) {
         this.container.invalidate(this.getCellBorderBounds(px, py)).update();
       }
     },
-    //
-    // Returns: AWT.Dimension
+    /**
+     * 
+     * Gets the preferred size of this grid
+     * @returns {AWT.Dimension}
+     */
     getPreferredSize: function () {
       return this.preferredBounds.dim;
     },
-    //
-    // Returns: AWT.Dimension
+    /**
+     * 
+     * Gets the minimum size of this grid
+     * @returns {AWT.Dimension}
+     */
     getMinimumSize: function () {
       return new AWT.Dimension(this.defaults.MIN_CELL_SIZE * this.nCols, this.defaults.MIN_CELL_SIZE * this.nRows);
     },
-    // scale (Number)
-    // Returns: AWT.Dimension
+    /**
+     * 
+     * Scales the grid to a new size
+     * @param {number} scale - The factor used to multiply all coordinates and sizes
+     * @returns {AWT.Dimension}
+     */
     getScaledSize: function (scale) {
       return new AWT.Dimension(
           Utils.roundTo(scale * this.preferredBounds.dim.width, this.nCols),
           Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
     },
-    //
-    // Overrides SetBounds in AWT.Rectangle
-    // r (AWT.Rectangle)
-    setBounds: function (r, y, w, h) {
-      AbstractBox.prototype.setBounds.call(this, r, y, w, h);
+    /**
+     * 
+     * Overrides {@link AbstractBox#setBounds}
+     * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
+     * upper-left corner of a new rectangle.
+     * @param {number=} y - `y` coordinate of the upper-left corner of the new rectangle.
+     * @param {number=} w - Width of the new rectangle.
+     * @param {number=} h - Height of the new rectangle.
+     */
+    setBounds: function (rect, y, w, h) {
+      AbstractBox.prototype.setBounds.call(this, rect, y, w, h);
       this.cellWidth = this.dim.width / this.nCols;
       this.cellHeight = this.dim.height / this.nRows;
     },
-    //
-    // Overrides updateContent in AbstractBox
-    // ctx - Canvas graphic context
-    // dirtyRegion (Rectangle)
+    /**
+     * 
+     * Overrides {@link AbstractBox#updateContent}
+     * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
+     * grid.
+     * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+     */
     updateContent: function (ctx, dirtyRegion) {
 
       var bb = this.getBoxBaseResolve();
@@ -688,16 +854,23 @@ define([
       }
       return true;
     },
-    //
-    // TODO: Move blink and timer to Activity.Panel
+    /**
+     * 
+     * Makes the cursor blink, alternating between two states. This function should be called only by
+     * {@link TextGrid.cursorTimer}
+     * @param {boolean} status
+     */
     blink: function (status) {
+      // TODO: Move blink and timer to Activity.Panel
       if (this.useCursor) {
         this.cursorBlink = status === 1 ? true : status === -1 ? false : !this.cursorBlink;
         this.repaintCell(this.cursor.x, this.cursor.y);
       }
     },
-    //
-    //
+    /**
+     * 
+     * Stops the cursor timer if not `null` and active
+     */
     end: function () {
       if (this.cursorTimer) {
         this.cursorTimer.stop();

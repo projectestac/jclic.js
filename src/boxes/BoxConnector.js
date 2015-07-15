@@ -16,14 +16,18 @@
 define([
   "../AWT"
 ], function (AWT) {
-
-  //
-  // BoxConnector allows users to visually connect two [ActiveBox](ActiveBox.html)
-  // objects on an [Activity.Panel](Activity.html). There are two modes of operation:
-  // drawing a line between an origin point (usually the point where the user clicks on) and a
-  // destination point, or dragging the ActiveBox from one location to another. The connecting
-  // lines can have arrowheads at its endings.
-  // parent (AWT.Container) - The Container to which this BoxConnector belongs
+  /**
+   * BoxConnector allows users to visually connect two {@link ActiveBox} objects of an
+   * {@link Activity.Panel}. There are two modes of operation:
+   * - Drawing a line between an origin point (usually the point where the user clicks on) and a
+   * destination point.
+   * - Dragging the ActiveBox from one location to another.
+   * The connecting lines can have arrowheads at its endings.
+   * @exports BoxConnector
+   * @class
+   * @param {AWT.Container} parent - The Container to which this BoxConnector belongs
+   * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context where to draw
+   */
   var BoxConnector = function (parent, ctx) {
     this.parent = parent;
     this.ctx = ctx;
@@ -37,59 +41,101 @@ define([
 
   BoxConnector.prototype = {
     constructor: BoxConnector,
-    // 
-    // The background image, saved and redrawn on each movement
+    /**
+     * The background image, saved and redrawn on each movement
+     * @type {external:HTMLImageElement} */
     bgImg: null,
+    /**
+     * The rectangle of {@link Activity.Panel} saved in `bgImg`
+     * @type {AWT.Rectangle} */
     bgRect: null,
-    // 
-    // `origin` and `dest` are objects of type [AWT](AWT.html).Point 
+    /**
+     * Initial position of the connector
+     * @type {AWT.Point} */
     origin: null,
+    /**
+     * Current (while moving) and final position of the connector
+     * @type {AWT.Point} */
     dest: null,
-    // 
-    // The connector ends in an arrowhead
+    /**
+     * When `true`, the connector must end on an arrowhead
+     * @type {boolean} */
     arrow: false,
-    // 
-    // The connector is active
+    /**
+     * `true` while the connector is active
+     * @type {boolean} */
     active: false,
-    // 
-    // The line is already painted (used for XOR expressions)
+    /**
+     * `true` while the line has already been painted (used for XOR expressions)
+     * @type {boolean} */
     linePainted: false,
-    // 
-    // The arrowhead length (in pixels)
+    /**
+     * The arrowhead length (in pixels)
+     * @type {number} */
     arrowLength: 10,
-    // 
-    // The arrowhead angle
+    /**
+     * The arrowhead angle
+     * @type {number} */
     arrowAngle: Math.PI / 6,
-    // 
-    // The main color and a complementary color used for XOR operations
+    /**
+     * The main color used in XOR operations
+     * @type {string} */
     lineColor: 'black',
+    /**
+     * The complementary color used in XOR operations
+     * @type {string} */
     xorColor: 'white',
+    /**
+     * The global composite operator used when drawing in XOR mode. Default is "difference".<br>
+     * For a list of possible values see:
+     * https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+     * @type {string} */
     compositeOp: 'difference',
+    /**
+     * The default {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation composite operator}
+     * ("source-over").
+     * @static
+     * @type {string} */
     DEFAULT_COMPOSITE_OP: DEFAULT_COMPOSITE_OP,
-    // 
-    // Relative position of point B respeect to A (AWT.Point)
+    /**
+     * Relative position of point B respeect to A
+     * @type {AWT.Point} */
     relativePos: null,
-    // 
-    // The ActiveBox to be moved
+    /**
+     * The ActiveBox to connect or move
+     * @type {ActiveBox} */
     bx: null,
-    //
-    // The Graphics context where the BoxConnector will paint, and its dimension
+    /**
+     * The Graphics context where the BoxConnector will paint
+     * @type {external:CanvasRenderingContext2D} */
     ctx: null,
+    /**
+     * The dimension of the HTML canvas where to draw
+     * @type {AWT.Dimension} */
     dim: null,
-    // 
-    // The AWT.Container to which this connector belongs
+    /**
+     * The container to which this connector belongs
+     * @type {AWT.Container} */
     parent: null,
-    // 
-    // The width of the connector line
+    /**
+     * Width of the connector line
+     * @type {number} */
     lineWidth: 1.5,
-    //
-    //
+    /**
+     * 
+     * Displaces the ending point of the connector
+     * @param {number} dx - Displacement on the X axis
+     * @param {number} dy - Displacement on the Y axis
+     */
     moveBy: function (dx, dy) {
       this.moveTo(AWT.Point(this.dest.x + dx, this.dest.y + dy));
     },
-    //
-    // tp (AWT.Point)
-    // forcePaint (boolean)
+    /**
+     * Moves the ending point of the connector to a new position
+     * @param {AWT.Point} pt - The new position
+     * @param {boolean} forcePaint - When `true`, forces the repaint of all the area also if there is
+     * no movement at all.
+     */
     moveTo: function (pt, forcePaint) {
       if (!this.active || (!forcePaint && this.dest.equals(pt)))
         return;
@@ -128,9 +174,12 @@ define([
         this.linePainted = true;
       }
     },
-    //
-    // pt (AWT.Point) - Starting point
-    // box (ActiveBox) - Only when the BoxConnector runs in drag&drop mode
+    /**
+     * 
+     * Starts the box connector operation
+     * @param {AWT.Point} pt - Starting point
+     * @param {ActiveBox=} box -  Passed only when the BoxConnector runs in drag&drop mode
+     */
     begin: function (pt, box) {
       if (this.active)
         this.end();
@@ -157,8 +206,10 @@ define([
       if (box)
         this.moveTo(pt, true);
     },
-    //
-    //    
+    /**
+     * 
+     * Finalizes the operation of this box connector until a new call to `begin`
+     */
     end: function () {
       if (!this.active)
         return;
@@ -181,8 +232,10 @@ define([
       this.ctx.clearRect(0, 0, this.dim.width, this.dim.height);
       this.parent.invalidate().update();
     },
-    //
-    // 
+    /**
+     * 
+     * Strokes a line between `origin` and `dest`, optionally ended with an arrowhead.
+     */
     drawLine: function () {
       if (this.compositeOp !== DEFAULT_COMPOSITE_OP) {
         this.ctx.strokeStyle = this.xorColor;

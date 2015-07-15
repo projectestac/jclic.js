@@ -20,7 +20,7 @@ define([
   "./Skin",
   "../boxes/ActiveBox",
   "../boxes/Counter"
-], function ($, screenfull, AWT, Skin, ActiveBox, Counter) {
+], function ($, screenfull, AWT, Skin, ActiveBox) {
 
   // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
