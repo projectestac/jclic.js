@@ -857,7 +857,7 @@ define([
     /**
      * 
      * Makes the cursor blink, alternating between two states. This function should be called only by
-     * {@link TextGrid.cursorTimer}
+     * {@link TextGrid#cursorTimer}
      * @param {boolean} status
      */
     blink: function (status) {

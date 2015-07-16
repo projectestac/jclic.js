@@ -19,12 +19,14 @@ define([
   "./BoxBase"
 ], function ($, Utils, BoxBase) {
 
-//
-//  This class encapsulates the content [TextGrid](TextGrid.html) objects.
-//  It implements methds to set and retrieve individual characters on the grid,
-//  and to parse the content from XML objects. It also contains information
-//  about the optimal size and graphic properties (font, colors, etc.) of the grid.
-//
+  /**
+   * This class encapsulates the content of {@link TextGrid} objects.<br>
+   * It implements methods to set and retrieve individual characters on the grid, and parsing of
+   * XML objects. It also contains information about the optimal size and other graphic properties
+   * (fonts, colors, etc.) of the grid.
+   * @exports TextGridContent
+   * @class
+   */
   var TextGridContent = function () {
     this.bb = new BoxBase(null);
     this.text = [];
@@ -32,30 +34,48 @@ define([
 
   TextGridContent.prototype = {
     constructor: TextGridContent,
-    //
-    // Number of rows and columns of the grid
-    ncw: 1, nch: 1,
-    //
-    // Width and height of cells
-    w: 20, h: 20,
-    //
-    // The cells must be surronded by a border
+    /**
+     * Grid columns
+     * @type {number} */
+    ncw: 1,
+    /**
+     * Grid rows
+     * @type {number} */
+    nch: 1,
+    /**
+     * Width of cells
+     * @type {number} */
+    w: 20,
+    /**
+     * Height of cells
+     * @type {number} */
+    h: 20,
+    /**
+     * Whether the cells must be surronded by a border or not
+     * @type {boolean} */
     border: false,
-    //
-    // The [BoxBase](BoxBase.html) object containing the visual settings of the
-    // text grid
+    /**
+     * The {@link BoxBase} object with visual settings of the text grid
+     * @type {BoxBase} */
     bb: null,
-    //
-    // An array of String objects conteining the chars, one for each row
+    /**
+     * An array of String objects containing the chars of cells. One string per row, one character of
+     * this string per cell.
+     * @type {string[]} */
     text: null,
-    //
-    // The wildchar
+    /**
+     * The letter used as wildcard
+     * @type {string} */
     wild: '*',
-    //
-    // A String with the chars to take to randomly fill empty cells
+    /**
+     * A String with the chars to take as source when randomly filling empty cells
+     * @type {string} */
     randomChars: Utils.settings.RANDOM_CHARS,
-    //
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Loads the object settings from a specific JQuery XML element
+     * @param {external:jQuery} $xml
+     */
     setProperties: function ($xml) {
 
       var textGrid = this;
@@ -103,8 +123,11 @@ define([
 
       return this;
     },
-    //
-    // Counts the noumber of wildchars present in this TextGrid
+    /**
+     * 
+     * Counts the number of wildcard characters present in this TextGrid
+     * @returns {number}
+     */
     countWildChars: function () {
       var result = 0;
       if (this.text)
@@ -114,16 +137,21 @@ define([
               result++;
       return result;
     },
-    //
-    // Counts the total number of characters, including wildcards    
+    /**
+     * 
+     * Counts the total number of characters, including wildcards.
+     * @returns {Number}
+     */
     getNumChars: function () {
       return this.ncw * this.nch;
     },
-    //
-    // Sets the provided character as a content of the cell located at the x & y coordinates
-    // x (Number) - The X coordinate of the cell
-    // y (Number) - The y coordinate of the cell
-    // ch (String) - The character to be placed into the specified cell
+    /**
+     * 
+     * Sets the specified character as a content of the cell located at specific coordinates
+     * @param {number} x - The X coordinate of the cell
+     * @param {number} y - The X coordinate of the cell
+     * @param {string} ch - The character to be placed on the specified cell
+     */
     setCharAt: function (x, y, ch) {
       if (x >= 0 && x < this.ncw && y >= 0 && y < this.nch)
         this.text[y] = this.text[y].substring(0, x) + ch + this.text[y].substring(x + 1);
