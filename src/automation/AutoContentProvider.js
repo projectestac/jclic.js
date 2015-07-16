@@ -15,28 +15,18 @@
 
 define([], function () {
 
-  //
-  // Utility object, useful for encapsulating multiple sets of box contents
-  // nRows (number) - Number of rows to be processed
-  // nCols (number) - Number of columns to be processed
-  // content (array of [ActiveBagContent](ActiveBagContent.html)) - One or more containers of
-  // [ActiveBoxContent](ActiveBoxContent.html) objects
-  // useIds (boolean) - When `true`, the `id` field of the ActiveBoxContent objects is significative.
-  var ActiveBagContentKit = function (nRows, nCols, content, useIds) {
-    this.nRows = nRows;
-    this.nCols = nCols;
-    this.content = content;
-    this.useIds = useIds;
-  };
-
-//
-// This abstract class is the base for all the classes that provide contents to
-// JClic activities, usually based on random values. Activities linked to an
-// `AutoContentProvider` object rely on it to build its contents on every
-// start.
+  /**
+   * This abstract class is the base for all the classes that provide contents to JClic activities,
+   * usually based on random values. Activities linked to an `AutoContentProvider` object rely on it
+   * to build its contents on every start.
+   * @exports AutoContentProvider
+   * @class
+   * @param {JClicProject} project - The JClic project to which this content provider belongs.
+   */
   var AutoContentProvider = function (project) {
     this.project = project;
   };
+
 
   AutoContentProvider.prototype = {
     constructor: AutoContentProvider,
@@ -48,12 +38,15 @@ define([], function () {
     _CLASSES: {
       '@tagreplace.TagReplace': AutoContentProvider
     },
-    ActiveBagContentKit: ActiveBagContentKit,
-    //
-    // The [JClicProject](JClicProject.html) to which AutoContentProvider belongs
+    /**
+     * The JClic project to which AutoContentProvider belongs
+     * @type {JClicProject} */
     project: null,
-    // 
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Loads the object settings from a specific jQuery XML element
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
     setProperties: function ($xml) {
       this.className = $xml.attr('class');
       return this;
@@ -81,10 +74,32 @@ define([], function () {
     //
     init: function (resourceBridge, fileSystem) {
     },
-    //
+    /**
+     * 
+     * Generates the automatized content
+     * @param {AutoContentProvider.ActiveBagContentKit} kit
+     * @param {RsourceBridge} resourceBridge
+     * @returns {boolean}
+     */
     generateContent: function (kit, resourceBridge) {
       return false;
-    }    
+    }
+  };
+
+  /**
+   * Utility object used to encapsulate multiple sets of box contents
+   * @class
+   * @param {number} nRows - Number of rows to be processed
+   * @param {number} nCols - Number of columns to be processed
+   * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
+   * objects thatwill be filled with new content.
+   * @param {bolean} useIds - When `true`, the `id` field of {@link ActiveBoxContent} objects is significative
+   */
+  AutoContentProvider.ActiveBagContentKit = function (nRows, nCols, content, useIds) {
+    this.nRows = nRows;
+    this.nCols = nCols;
+    this.content = content;
+    this.useIds = useIds;
   };
 
   return AutoContentProvider;
