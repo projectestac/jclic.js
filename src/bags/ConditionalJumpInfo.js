@@ -17,13 +17,13 @@ define([
   "jquery",
   "./JumpInfo"
 ], function ($, JumpInfo) {
-
+  
   /**
    * This special case of {@link JumpInfo} is used in {@link ActivitySequenceJump} objects to decide
    * the type of jump or action to be performed, based on the results obtained by the user when
    * playing previous JClic activities.<br>
-   * In addition to the standard {@link JumpInfo} fields and
-   * methods, this class has two public members where score and time thresholds are stored.<br>
+   * In addition to the standard {@link JumpInfo} fields and methods, this class has two public
+   * members where score and time thresholds are stored.<br>
    * The exact meaning of this members will depend on the type of `ConditionalJumpInfo` in the
    * {@link ActivitySequenceJump} (it can be `upperJump` or `lowerJump`).
    * @exports ConditionalJumpInfo
@@ -41,7 +41,7 @@ define([
     this.threshold = (typeof threshold === 'number' ? threshold : -1);
     this.time = (typeof threshold === 'number' ? time : -1);
   };
-
+  
   ConditionalJumpInfo.prototype = {
     constructor: ConditionalJumpInfo,
     /**
@@ -71,5 +71,5 @@ define([
   ConditionalJumpInfo.prototype = $.extend(Object.create(JumpInfo.prototype), ConditionalJumpInfo.prototype);
 
   return ConditionalJumpInfo;
-
+  
 });

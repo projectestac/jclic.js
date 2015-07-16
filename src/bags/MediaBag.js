@@ -18,15 +18,14 @@ define([
   "./MediaBagElement",
   "../skins/Skin"
 ], function ($, MediaBagElement, Skin) {
-
-//
-// Description
-// This class stores and manages all the media components (images, sounds, 
-// animations, video, MIDI files, etc.) needed to run the activities of a
-// [JClicProject](JClicProject.html). The main member of the class is the
-// `elements` array, that stores [MediaBagElement](MediaBagElement.html)
-// objects.
-//
+  /**
+   * This class stores and manages all the media components (images, sounds, animations, video,
+   * MIDI files, etc.) needed to run the activities of a {@link JClicProject}. The main member of
+   * the class is `elements`. This is where {@link MediaBagElement} objects are stored.
+   * @exports MediaBag
+   * @class
+   * @param {JClicProject} project - The JClic project to which this media bag belongs
+   */
   var MediaBag = function (project) {
     this.project = project;
     this.elements = {};
@@ -34,14 +33,19 @@ define([
 
   MediaBag.prototype = {
     constructor: MediaBag,
-    // 
-    // The collection of [MediaBagElement](MediaBagElement.html) objects:
+    /**
+     * The collection of {@link MediaBagElement} objects:
+     * @type {object} */
     elements: null,
-    //
-    // The [JClicProject](JClicProject.html) to which this MediaBag belongs
+    /**
+     * The JClic project to which this MediaBag belongs
+     * @type {JClicProject} */
     project: null,
-    //
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Loads this object settings from a specific JQuery XML element 
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
     setProperties: function ($xml) {
       var thisMediaBag = this;
       $xml.children('media').each(function () {
@@ -51,22 +55,28 @@ define([
       });
       return this;
     },
-        // 
-    // Gets a [MediaBagElement](MediaBagElement.html) by its name
-    // name (String) - The name to search
-    // create (Boolean or `null`) - When `true`, a new [MediaBagElement](MediaBagElement.html) will 
-    // be created if not found, using 'name' as fileName.
+    /**
+     * 
+     * Finds a {@link MediaBagElement} by its name, creating a new one if not found and requested.
+     * @param {string} name - The name of the element
+     * @param {boolean=} create - When `true`, a new MediaBagElement will be created if not found,
+     * using 'name' as its fileName..
+     * @returns {MediaBagElement}
+     */
     getElement: function (name, create) {
       var result = this.elements[name];
-      if(create && !result)
+      if (create && !result)
         result = this.getElementByFileName(name, create);
       return  result;
     },
-    // 
-    // Gets a [MediaBagElement](MediaBagElement.html) by file name
-    // fileName (String) - The file name to search
-    // create (Boolean or `null`) - When `true`, a new [MediaBagElement](MediaBagElement.html) will 
-    // be created if not found.
+    /**
+     * 
+     * Gets a {@link MediaBagElement} by its file name.
+     * @param {string} fileName - The requested file name
+     * @param {boolean=} create - When `true`, a new {@link MediaBagElement} will be created if not
+     * found.
+     * @returns {MediaBagElement}
+     */
     getElementByFileName: function (fileName, create) {
       var result = null;
       if (fileName) {
@@ -87,12 +97,14 @@ define([
       }
       return result;
     },
-    // 
-    // Preload all resources
-    // **Use with care!** Calling this method will start loading all the resources
-    // defined in the MediaBag, whether used or not in the current activity.
-    // type (String) - The type of media to be build. When `null` or `undefined`, all
-    // resources are build.
+    /**
+     * 
+     * Preload all resources.<br>
+     * __Use with care!__ Calling this method will start loading all the resources defined in the
+     * MediaBag, whether used or not in the current activity.
+     * @param {string} type - The type of media to be build. When `null` or `undefined`, all
+     * resources will be build.
+     */
     buildAll: function (type) {
       $.each(this.elements, function (name, element) {
         if (!type || element.name === type) {
@@ -102,30 +114,35 @@ define([
         }
       });
     },
-    //
-    // Check if there are media waiting to be loaded
-    isWaiting: function () {            
+    /**
+     * 
+     * Checks if there are media waiting to be loaded
+     * @returns {boolean}
+     */
+    isWaiting: function () {
       var result = false;
       // Only for debug purposes: return always 'false'
       // TODO: Check loading process!
       $.each(this.elements, function (name, element) {
         if (element.data && !element.ready) {
-          console.log('... waiting for '+name);
+          console.log('... waiting for ' + name);
           result = true;
           return false;
         }
       });
       return result;
     },
-    //
-    // loads a [Skin](Skin.html) object
-    // name (String) - The name of the element to be loaded
-    // ps (PlayStation) - The [PlayStation](PlayStation.html) linked to the skin
+    /**
+     * 
+     * Loads a {@link Skin} object
+     * @param {string} name - The skin name to be loaded
+     * @param {string} ps - The {@link PlayStation} linked to the skin
+     * @returns {Skin}
+     */
     getSkinElement: function (name, ps) {
       // TODO: Implement loading skins      
       return Skin.prototype.getSkin('default', ps);
     }
-
   };
 
   return MediaBag;

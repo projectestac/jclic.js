@@ -20,7 +20,7 @@ define([], function () {
    * - an activity finishes
    * - the user clicks on the "next" or "prev" buttons
    * - the user clicks or a cell with special "active content"
-   * <br>
+   * 
    * Different kinds of actions are possible for each of these events:
    * - RETURN: to go back to a previous point in the sequence.
    * - EXIT: to exit the program (thus navigating to another URL)
@@ -28,6 +28,8 @@ define([], function () {
    * - JUMP: to jump to a specific point in the sequence of activities, or to another JClic project.
    * @exports JumpInfo
    * @class
+   * @see {@link ActivitySequenceJump}
+   * @see {@link ConditionalJumpInfo}
    * @param {string} action - Must be one of the described actions.
    * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
    * cardinal number in the list.

@@ -18,38 +18,63 @@ define([
   "./ActivitySequenceJump"
 ], function ($, ActivitySequenceJump) {
 
-// This class defines a specific point in the sequence of JClic activities:
-// what activity must run at this point, what to do or where to jump when
-// the activity finishes, the behavior of the "next" and "prev" buttons, etc.
-// It can also have a "tag", used to refer to this point of the sequence
-// with a unique name. `ActivitySequenceElement` objects are always stored
-// in [ActivitySequence](ActivitySequence.html) objects.
-//
+  /**
+   * 
+   * This class is the basic component of {@link ActivitySequence} objects. It represents a specific
+   * point in the project's sequence of JClic activities.<br>
+   * For each point of the sequence, some options can be set:
+   * - What activity must run at this point
+   * - What to do or where to jump when the activity finishes
+   * - The behavior of the "next" button
+   * - The behavior of the  "prev" button
+   * 
+   * Sequence points can also have a "tag", used to refer to them with a unique name.
+   * @exports ActivitySequenceElement
+   * @class
+   */
   var ActivitySequenceElement = function () {
   };
 
   ActivitySequenceElement.prototype = {
     constructor: ActivitySequenceElement,
-    //
-    // Unique identifier of this element in the [ActivitySequence](ActivitySequence.html)
+    /**
+     * Optional unique identifier of this element in the {@link ActivitySequence}.
+     * @type {string} */
     tag: null,
+    /**
+     * Optional description of this sequence element.
+     * @type {string} */
     description: null,
-    //
-    // Name of the [Activity](Activity.html) this element points to. Activities
-    // are stored in the [JClicProject](JClicProject.html).
+    /**
+     * Name of the {@link Activity} pointed by this element.
+     * @type {string} */
     activityName: '',
-    // 
-    // ActivitySequenceJump elements:
+    /**
+     * Jump to be processed by the 'next' button action, or when in automatic mode and the associated
+     * activity finishes.
+     * @type {ActivitySequenceJump} */
     fwdJump: null,
+    /**
+     * Jump to be processed by the 'prev' button action.
+     * @type {ActivitySequenceJump} */
     backJump: null,
-    //
-    // What buttons should be active at this point of the sequence
+    /**
+     * What buttons should be active at this point of the sequence. Valid values are:
+     * - 'none'
+     * - 'fwd'
+     * - 'back'
+     * - 'both'
+     * @type {string} */
     navButtons: 'both',
-    //
-    // Time delay (in seconds) before passing to the next/prev activity
+    /**
+     * Time delay (in seconds) before passing to the next/prev activity
+     * @type {number} */
     delay: 0,
-    // 
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Loads the object settings from a specific JQuery XML element 
+     * @param {external:jQuery} $xml
+     */
     setProperties: function ($xml) {
 
       // Iterate on all provided attributes

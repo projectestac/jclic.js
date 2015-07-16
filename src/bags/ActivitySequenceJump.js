@@ -19,28 +19,40 @@ define([
   "./ConditionalJumpInfo"
 ], function ($, JumpInfo, ConditionalJumpInfo) {
 
-// 
-// This is a special case of [JumpInfo](JumpInfo.html), used only in
-// [ActivitySequenceElement](ActivitySequenceElement.html) objects. Sequence
-// elements contain two [ActivitySequenceJump](ActivitySequenceJump.html)
-// objects: one to be processed when the user clicks on the "next" button
-// (or when the activity finishes, if in automatic mode), and the other one
-// linked to the "prev" button. [ActivitySequenceJump](ActivitySequenceJump.html)
-// objects define a default jump or action, but can have up to two
-// [ConditionalJumpInfo](ConditionalJumpInfo.html) objects, used to define
-// alternative jumps when the obtained score or the time spend to solve the
-// activities are below or over specific values.
-//
+  /**
+   * This is a special case of {@link JumpInfo}, used only in {@link ActivitySequenceElement} objects.<br>
+   * Sequence elements can contain up to two ActivitySequenceJump objects: one to be processed
+   * when the user clicks on the "next" button (or when the activity finishes, if in automatic mode),
+   * and the other used with the "prev" button. ActivitySequenceJump objects define a default jump
+   * or action to be performed, but can also have up to two {@link ConditionalJumpInfo} objects. These
+   * define alternative jumps that are performed only when score or time are below or over a specific
+   * threshold.
+   * @exports ActivitySequenceJump
+   * @class
+   * @extends JumpInfo
+   * @param {string} action - Must be one of the described actions.
+   * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
+   * cardinal number in the list.
+   */
   var ActivitySequenceJump = function (action, sq) {
     JumpInfo.call(this, action, sq);
   };
 
   ActivitySequenceJump.prototype = {
     constructor: ActivitySequenceJump,
+    /**
+     * Optional jump to be performed when the results (score and time) are above a specific threshold.
+     * @type {ConditionalJumpInfo} */
     upperJump: null,
+    /**
+     * Optional jump to be performed when the results (score or time) are below a specific threshold.
+     * @type {ConditionalJumpInfo} */
     lowerJump: null,
-    // 
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Loads the object settings from a specific JQuery XML element.
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
     setProperties: function ($xml) {
       JumpInfo.prototype.setProperties.call(this, $xml);
       // Read conditional jumps
@@ -54,13 +66,15 @@ define([
       });
       return this;
     },
-    // 
-    // Resolves what [JumpInfo](JumpInfo.html) to take based on a done time
-    // and average rating.
-    // * rating (number): the average rating obtained by the user in the
-    // activities done during the last sequence stretch.
-    // * time (number): total time spend doing the activities.
-    // * _returns_: a [JumpInfo](JumpInfo.html) object.
+    /**
+     * 
+     * Resolves what {@link JumpInfo} must be taked, based on a done time and average rating obtained
+     * in activities.
+     * @param {number} rating - Average rating obteined by the user in the activities done during the
+     * last sequence stretch.
+     * @param {number} time - Total time spend doing the activities.
+     * @returns {JumpInfo}
+     */
     resolveJump: function (rating, time) {
       var result = this;
       if (rating >= 0 && time >= 0) {

@@ -1,4 +1,4 @@
-//    File    : DefaultSkin.js  
+//    File    : DefaultSkin.js
 //    Created : 12/05/2015  
 //    By      : fbusquet  
 //
@@ -18,8 +18,7 @@ define([
   "screenfull",
   "../AWT",
   "./Skin",
-  "../boxes/ActiveBox",
-  "../boxes/Counter"
+  "../boxes/ActiveBox"
 ], function ($, screenfull, AWT, Skin, ActiveBox) {
 
   // In some cases, require.js does not return a valid value for screenfull. Check it:
@@ -155,7 +154,7 @@ define([
       var autoFit = this.ps.options.autoFit | (screenfull && screenfull.enabled && screenfull.isFullscreen);
       var mainWidth = autoFit ? $(window).width() : this.ps.options.width;
       var mainHeight = autoFit ? $(window).height() : this.ps.options.height;
-
+      
       this.$div.css({
         position: 'relative',
         width: Math.max(this.ps.options.minWidth, Math.min(this.ps.options.maxWidth, mainWidth)),

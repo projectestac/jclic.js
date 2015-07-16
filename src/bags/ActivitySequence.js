@@ -19,11 +19,15 @@ define([
   "./ActivitySequenceElement"
 ], function ($, JumpInfo, ActivitySequenceElement) {
 
-// This class stores the definition of the sequence of activities of
-// a [JClicProject](JClicProject.html). The sequence are formed by an ordered
-// list of objects of type [ActivitySequenceElement](ActivitySequenceElement.html),
-// It stores also a transient pointer to the current element.
-//
+  /**
+   * This class stores the definition of the sequence to follow to show the activities of a
+   * {@link JClicProject}. The sequence are formed by an ordered list of objects of type
+   * {@link ActivitySequenceElement}.<br>
+   * It stores also a transient pointer to the current sequence element.
+   * @exports ActivitySequence
+   * @class
+   * @param {JClicProject} project - The JClic project to which this ActivitySequence belongs
+   */
   var ActivitySequence = function (project) {
     this.project = project;
     this.elements = [];
@@ -31,17 +35,25 @@ define([
 
   ActivitySequence.prototype = {
     constructor: ActivitySequence,
-    // 
-    // The array of [ActivitySequenceElement](ActivitySequenceElement.html) objects
+    /**
+     * The ordered list of {@link ActivitySequenceElement} objects
+     * @type {ActivitySequenceElement[]} */
     elements: null,
-    //
-    // The [JClicProject](JClicProject.html) to which this ActivitySequence belongs
+    /**
+     * The JClic project to which this ActivitySequence belongs.
+     * @type {JClicProject} */
     project: null,
-    //
-    // Pointer to the [ActivitySequenceElement](ActivitySequenceElement.html) currently running.
+    /**
+     * 
+     * Pointer to the {@link ActivitySequenceElement} currently running (points inside the `elements`
+     * array).
+     * @type {number} */
     currentAct: -1,
-    // 
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Loads the object settings from a specific JQuery XML element
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
     setProperties: function ($xml) {
       var elements = this.elements;
       $xml.children('item').each(function (i, data) {
@@ -50,20 +62,22 @@ define([
       });
       return this;
     },
-    // 
-    // Returns the index in the sequence of the provided element
-    // - ase([ActivitySequenceElement](ActivitySequenceElement.html)): the
-    // element to search.
+    /**
+     * 
+     * Returns the index of the specified element in the sequence.
+     * @param {ActivitySequenceElement} ase - The element to search.
+     * @returns {number} - The requested index, or `null` if not found.
+     */
     getElementIndex: function (ase) {
       return ase === null ? -1 : this.elements.indexOf(ase);
     },
-    // 
-    // Returns the nth element of the sequence
-    // - n (number): The index of the requested element
-    // - updateCurrentAct (boolean): when `true`, the `currentAct` index
-    // will be updated
-    // - returns the requested [ActivitySequenceElement](ActivitySequenceElement.html)
-    // object, or `null` if the request was out of range.
+    /**
+     * 
+     * Returns the nth element of the sequence.
+     * @param {number} n - Index of the requested element
+     * @param {boolean} updateCurrentAct - when `true`, the `currentAct` index will be updated.
+     * @returns {ActivitySequenceElement} - The requested element, or `null` if out of range.
+     */
     getElement: function (n, updateCurrentAct) {
       var result = null;
       if (n >= 0 && n < this.elements.length) {
@@ -73,13 +87,13 @@ define([
       }
       return result;
     },
-    // 
-    // Searchs the sequence for a element with the provided tag
-    // - tag (string): The tag to search
-    // - updateCurrentAct (boolean): when `true`, the `currentAct` index
-    // will be updated
-    // - returns the requested [ActivitySequenceElement](ActivitySequenceElement.html)
-    // object, or `null` when not found.
+    /**
+     * 
+     * Searchs into the sequence for a element with the provided tag
+     * @param {string} tag - The tag to search
+     * @param {boolean} updateCurrentAct - when `true`, the `currentAct` index will be updated.
+     * @returns {ActivitySequenceElement} - The requested element, or `null` if not found.
+     */
     getElementByTag: function (tag, updateCurrentAct) {
       var result = null, resultIndex = -1;
       if (tag !== null) {
@@ -95,18 +109,21 @@ define([
       }
       return result;
     },
-    // 
-    // Returns the [ActivitySequenceElement](ActivitySequenceElement.html)
-    // pointed by `currentAct`, or `null` if not set.
+    /**
+     * 
+     * Gets the sequence element pointed by the `currentAct` member.
+     * @returns {ActivitySequenceElement} - The current sequence element, or `null` if not set.
+     */
     getCurrentAct: function () {
       return this.getElement(this.currentAct, false);
     },
-    // 
-    // Check if the current position in the sequence can continue forward
-    // - hasReturn (boolean): indicates that the history of jumps done is
-    // not empty, thus a `RETURN` action is still possible.
-    // - returns: `true` if the user can go ahead to another activity, `false`
-    // otherwise.
+    /**
+     * 
+     * Checks if it's possible to go forward from the current position in the sequence.
+     * @param {boolean} hasReturn - Indicates whether the history of jumps done since the beggining
+     * of the JClic session is empty or not. When not empty, a `RETURN` action is still possible.
+     * @returns {boolean} - `true` when the user is allowed to go ahead to a next activity,
+     * `false` otherwise. */
     hasNextAct: function (hasReturn) {
       var result = false;
       var ase = this.getCurrentAct();
@@ -126,12 +143,13 @@ define([
       }
       return result;
     },
-    // 
-    // Check if the current position in the sequence can go back
-    // - hasReturn (boolean): indicates that the history of jumps done is
-    // not empty, thus a `RETURN` action is still possible.
-    // - returns: `true` if the user can go back to another activity, `false`
-    // otherwise.
+    /**
+     * 
+     * Checks if it's possible to go back from the current position in the sequence.
+     * @param {boolean} hasReturn - Indicates whether the history of jumps done since the beggining
+     * of the JClic session is empty or not. When not empty, a `RETURN` action is still possible.
+     * @returns {boolean} - `true` when the user is allowed to go back to a previous activity,
+     * `false` otherwise. */
     hasPrevAct: function (hasReturn) {
       var result = false;
       var ase = this.getCurrentAct();
@@ -151,11 +169,12 @@ define([
       }
       return result;
     },
-    // 
-    // Gets the current state for the 'next' and 'prev' buttons
-    // - returns (string): one of the possible values of
-    // [ActivitySequenceElement](ActivitySequenceElement.html).navButtons, 
-    // thus: `none`, `fwd`, `back` or `both`
+    /**
+     * 
+     * Gets the current state for the 'next' and 'prev' buttons.
+     * @returns {string} - One of the possible values of {@link ActivitySequenceElement#navButtons},
+     * thus: `none`, `fwd`, `back` or `both`
+     */
     getNavButtonsFlag: function () {
       var flag = 'none';
       var ase = this.getCurrentAct();
@@ -163,15 +182,15 @@ define([
         flag = ase.navButtons;
       return flag;
     },
-    // 
-    // Computes the jump to be done from the current position
-    // - back (boolean): when `true`, the request is for the 'go back' button. 
-    // Otherwise, is for the 'next' one.
-    // - reporter ([Reporter](Reporter.html)): The reporting engine that
-    // will provide values for average score and time spend on the 
-    // activities, used only in conditional jumps.
-    // - returns: A [JumpInfo](JumpInfo) object if a valid jump is possible,
-    // `null` otherwise.
+    /**
+     * 
+     * Computes the jump to perform from the current position on the sequence
+     * @param {boolean} back - When `true`, the request is for the 'go back' button. Otherwise, is
+     * for the 'next' one.
+     * @param {Reporter} reporter - The reporting engine that will provide values about score average
+     * and time spend on the activities, used only to compute conditional jumps.
+     * @returns {JumpInfo} - The jump info if a valid jump is possible, `null` otherwise.
+     */
     getJump: function (back, reporter) {
       var ase = this.getCurrentAct();
       var result = null;
@@ -199,11 +218,12 @@ define([
       }
       return result;
     },
-    // 
-    // Finds the nearest sequence element with a 'tag', always looking back
-    // in the list.
-    // num (number): The position in the element's list to start looking for.
-    // returns: the nearest 'tag', or `null` if not found.
+    /**
+     * 
+     * Finds the nearest sequence element with a valid 'tag', looking back in the `elements` list.
+     * @param {number} num - The point of the sequence from which to start looking bak.
+     * @returns {string} - The nearest 'tag', or `null` if not found.
+     */
     getSequenceForElement: function (num) {
       var tag = null;
       if (num >= 0 && num < this.elements.length)
@@ -212,13 +232,14 @@ define([
         }
       return tag;
     },
-    // 
-    // Gets the first [ActivitySequenceElement](ActivitySequenceElement.html)
-    // of the sequence pointing to the provided activity name.
-    // The search is case-insensitive.
-    // - activityName (string): the name of the activity to search.
-    // - returns: the [ActivitySequenceElement](ActivitySequenceElement.html)
-    // if found, `null` otherwise.
+    /**
+     * 
+     * Gets the first {@link ActivitySequenceElement} in the `elements` list pointing to the
+     * specified activity name.<br>
+     * The search is always case-insensitive.
+     * @param {string} activityName - The activity to search.
+     * @returns {ActivitySequenceElement} The requested element or `null` if not found.
+     */
     getElementByActivityName: function (activityName) {
       var result = null;
       if (activityName !== null) {
@@ -230,9 +251,13 @@ define([
       }
       return  result;
     },
-    //
-    // Utility function to check if the current activity is really the indicated
-    checkCurrentActivity: function(activityName){
+    /**
+     * 
+     * Utility function to check if the current sequence element corresponds to the specified
+     * activity. If negative, the `currentAct` will be accordingly set.
+     * @param {string} activityName - The activity to check
+     */
+    checkCurrentActivity: function (activityName) {
       // TODO: Implement ActivitySequence.checkCurrentActivity
     }
   };

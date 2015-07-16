@@ -19,13 +19,18 @@ define([
   "../AWT"
 ], function ($, Utils, AWT) {
 
-// This kind of objects are the members of [MediaBag](MediaBag.html).
-// Media elements have a name, a reference to a file (the `fileName` field)
-// and, when initialized, a `data` field pointing to the object that contains
-// the media. They have also a flag indicating if the data must be saved
-// in the [JClicProject](JClicProject.html) file or just mantained as a 
-// reference to an external file.
-//
+  /**
+   * This kind of objects are the components of {@link MediaBag}.<br>
+   * Media elements have a name, a reference to a file (the `fileName` field) and, when initialized,
+   * a `data` field pointing to a object containing the real media. They have also a flag indicating
+   * if the data must be saved on the {@link JClicProject} zip file or just mantained as a reference
+   * to an external file.
+   * @exports MediaBagElement
+   * @class
+   * @param {string} basePath - Path to be used as a prefix of the file name
+   * @param {string} fileName - The media file name
+   * @param {external:JSZip=} zip - An optional JSZip object from which the file must be extracted.
+   */
   var MediaBagElement = function (basePath, fileName, zip) {
     if (basePath)
       this.basePath = basePath;
@@ -42,32 +47,41 @@ define([
 
   MediaBagElement.prototype = {
     constructor: MediaBagElement,
-    //
-    // The name of this element. Usually is the same as `fileName`
+    /**
+     * The name of this element. Usually is the same as `fileName`
+     * @type {string} */
     name: '',
-    //
-    // The file this element points to
+    /**
+     * The name of the file where this element is stored
+     * @type {string} */
     fileName: '',
-    //
-    // The path to be used as base to access this media element
+    /**
+     * The path to be used as base to access this media element
+     * @type {string} */
     basePath: '',
-    //
-    // An optional JSZip object that can act as a container of this media
+    /**
+     * An optional JSZip object that can act as a container of this media
+     * @type {external:JSZip} */
     zip: null,
-    //
-    // When loaded, this field will store the realized media object
+    /**
+     * When loaded, this field will store the realized media object
+     * @type {object} */
     data: null,
-    //
-    // Flag to indicate that `data` is ready to be used
+    /**
+     * Flag indicating that `data` is ready to be used
+     * @type {boolean} */
     ready: false,
-    //
-    // Array of callback methods to be called when the resource becomes ready
+    /**
+     * Array of callback methods to be called when the resource becomes ready
+     * @type {function[]} */
     _whenReady: null,
-    //
-    // Normalized extension of `fileName`, useful to determine the kind of media
+    /**
+     * Normalized extension of `fileName`, useful to determine the media type
+     * @type {string} */
     ext: '',
-    // 
-    // The resource type (audio, image, midi, video, font)
+    /**
+     * The resource type ('audio', 'image', 'midi', 'video', 'font')
+     * @type {string} */
     type: null,
     // 
     // Other fields present in JClic, currently not used:  
@@ -76,8 +90,12 @@ define([
     // projectFlag: false,  
     // saveFlag: true,  
     // hasThumb: false,  
-    //   
-    // Loads the object settings from a specific JQuery XML element 
+    //    
+    /**
+     * 
+     * Loads this object settings from a specific JQuery XML element 
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
     setProperties: function ($xml) {
       this.name = $xml.attr('name');
       this.fileName = $xml.attr('file');
@@ -85,12 +103,20 @@ define([
       this.type = this.getFileType(this.ext);
       return this;
     },
-    // Checks if the MediaBagElement has been initiated
+    /**
+     * 
+     * Checks if the MediaBagElement has been initiated
+     * @returns {boolean}
+     */
     isEmpty: function () {
       return this.data === null;
     },
-    //
-    // Determines the type of this MediaBagElement based on the file extension
+    /**
+     * 
+     * Determines the type of a file from its extension
+     * @param {string} ext - The file name extension
+     * @returns {string}
+     */
     getFileType: function (ext) {
       var result = null;
       for (var type in Utils.settings.FILE_TYPES) {
@@ -99,9 +125,11 @@ define([
       }
       return result;
     },
-    //
-    // Realizes the media content
-    // The optional `callback` method is called when the referred resource is ready
+    /**
+     * 
+     * Instantiates the media content
+     * @param {function} callback - Callback method called when the referred resource is ready
+     */
     build: function (callback) {
       var media = this;
 
@@ -171,8 +199,10 @@ define([
 
       return this;
     },
-    //
-    // Notify listeners that the resource is ready
+    /**
+     * 
+     * Notify listeners that the resource is ready
+     */
     _onReady: function () {
       this.ready = true;
       for (var i = 0; i < this._whenReady.length; i++) {
@@ -181,10 +211,13 @@ define([
       }
       this._whenReady.length = 0;
     },
-    //
-    // Gets the full path of the file associated to this element
-    getFullPath: function(){
-      return Utils.getPath(this.basePath, this.fileName, this.zip);      
+    /**
+     * 
+     * Gets the full path of the file associated to this element
+     * @returns {string}
+     */
+    getFullPath: function () {
+      return Utils.getPath(this.basePath, this.fileName, this.zip);
     }
   };
 
