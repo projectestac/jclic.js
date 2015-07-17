@@ -755,7 +755,7 @@ define([
   /**
    * 
    * This object is responsible for rendering the contents of the activity on the screen and
-   * managing user's interaction.
+   * managing user's interaction.<br>
    * Each type of Activity must implement its own `Activity.Panel`.<br>
    * In JClic, [Activity.Panel](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html)
    * extends [javax.swing.JPanel](http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html).<br>
@@ -922,7 +922,7 @@ define([
     },
     /**
      * 
-     * Basic init procedure common to all activities.
+     * Basic initialization procedure, common to all activities.
      */
     initActivity: function () {
       if (this.playing) {
@@ -1107,7 +1107,6 @@ define([
      * 
      * Miscellaneous cleaning operations
      */
-    // Miscellaneous cleaning operations
     clear: function () {
       // to be overrided by subclasses
     },
