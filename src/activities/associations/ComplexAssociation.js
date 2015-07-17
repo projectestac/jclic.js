@@ -48,11 +48,6 @@ define([
         return this.abc['secondary'].getNumCells();
       else
         return this.abc['primary'].getNumCells() - this.nonAssignedCells;
-    },
-    //
-    // Activity.Panel constructor
-    Panel: function (act, ps, $div) {
-      SimpleAssociation.prototype.Panel.call(this, act, ps, $div);
     }
   };
 
@@ -60,9 +55,17 @@ define([
   // ComplexAssociation extends SimpleAssociation
   ComplexAssociation.prototype = $.extend(Object.create(SimpleAssociation.prototype), ComplexAssociation.prototype);
 
-  var panelAncestor = SimpleAssociation.prototype.Panel.prototype;
-  ComplexAssociation.prototype.Panel.prototype = {
-    constructor: ComplexAssociation.prototype.Panel,
+  //
+  // Activity.Panel constructor
+  ComplexAssociation.Panel = function (act, ps, $div) {
+    SimpleAssociation.Panel.call(this, act, ps, $div);
+  };
+
+
+  var panelAncestor = SimpleAssociation.Panel.prototype;
+
+  ComplexAssociation.Panel.prototype = {
+    constructor: ComplexAssociation.Panel,
     //
     // Array for storing checked associations
     invAssCheck: null,
@@ -258,9 +261,7 @@ define([
   };
 
   // ComplexAssociation.Panel extends SimpleAssociation.Panel
-  ComplexAssociation.prototype.Panel.prototype = $.extend(
-      Object.create(panelAncestor),
-      ComplexAssociation.prototype.Panel.prototype);
+  ComplexAssociation.Panel.prototype = $.extend(Object.create(panelAncestor), ComplexAssociation.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

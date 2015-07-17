@@ -68,11 +68,6 @@ define([
     // The activity permits the user to display the solution
     helpSolutionAllowed: function () {
       return true;
-    },
-    //
-    // Activity.Panel constructor
-    Panel: function (act, ps, $div) {
-      Activity.prototype.Panel.call(this, act, ps, $div);
     }
   };
 
@@ -80,11 +75,17 @@ define([
   // InformationScreen extends Activity
   WrittenAnswer.prototype = $.extend(Object.create(Activity.prototype), WrittenAnswer.prototype);
 
-  // 
-  // Properties and methods specific to InformationScreen.Panel
-  var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  WrittenAnswer.prototype.Panel.prototype = {
-    constructor: WrittenAnswer.prototype.Panel,
+  //
+  // Activity.Panel constructor
+  WrittenAnswer.Panel = function (act, ps, $div) {
+    Activity.Panel.call(this, act, ps, $div);
+  };
+
+
+  var ActPanelAncestor = Activity.Panel.prototype;
+
+  WrittenAnswer.Panel.prototype = {
+    constructor: WrittenAnswer.Panel,
     //
     // The input text field where users write the answers
     $textField: null,
@@ -116,7 +117,7 @@ define([
     // 
     // Prepares the activity panel
     buildVisualComponents: function () {
-      
+
       var n, i;
 
       if (this.firstRun)
@@ -158,37 +159,37 @@ define([
         // 
         // bgB will be used only as a placeholder for `$textField`
         this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1));
-        
+
         this.$form = $('<form id="form1" action="#"/>');
-        
+
         var thisPanel = this;
-        this.$form.submit(function(event){
+        this.$form.submit(function (event) {
           event.preventDefault();
-          if(thisPanel.playing){
+          if (thisPanel.playing) {
             thisPanel.setCurrentCell(thisPanel.currentCell);
           }
         });
-        
+
         this.$textField = $('<input type="text" size="200"/>').css(abcB.bb.getCSS()).css({
           position: 'absolute', top: 0, left: 0,
           border: 0, padding: 0, margin: 0,
           'text-align': 'center'
         });
         /*
-        this.$textField.blur(function(event){
-          console.log('Focus lost!');
-          event.preventDefault();
-        });
-        */
-       
-       /*
-        this.$textField.change(function(event){
-          console.log('Text changed!');
-          event.preventDefault();
-        });
-        */
+         this.$textField.blur(function(event){
+         console.log('Focus lost!');
+         event.preventDefault();
+         });
+         */
+
+        /*
+         this.$textField.change(function(event){
+         console.log('Text changed!');
+         event.preventDefault();
+         });
+         */
         this.$form.append(this.$textField);
-        
+
 
         //this.attachEvent(this.$textField, 'edit');
 
@@ -236,10 +237,10 @@ define([
     //
     // Called by [JClicPlayer](JClicPlayer.html) when this activity panel is fully visible, after
     // the initialization process.
-    activityReady: function(){
+    activityReady: function () {
       ActPanelAncestor.activityReady.call(this);
       this.setCurrentCell(0);
-    },    
+    },
     //
     // Overrides `Activity.Panel.updateContent`
     // Updates the graphic contents of its panel.
@@ -272,11 +273,11 @@ define([
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bgA || this.bgB) {
         var r = rect.clone();
-        if(this.act.boxGridPos === 'AUB')
-          r.height -= (this.bgB.pos.y + this.act.margin/2);
-        else if(this.act.boxGridPos === 'AB')
-          r.width -= (this.bgB.pos.x + this.act.margin/2);
-                  
+        if (this.act.boxGridPos === 'AUB')
+          r.height -= (this.bgB.pos.y + this.act.margin / 2);
+        else if (this.act.boxGridPos === 'AB')
+          r.width -= (this.bgB.pos.x + this.act.margin / 2);
+
         // Create the main canvas
         this.$canvas = $('<canvas width="' + r.dim.width + '" height="' + r.dim.height + '"/>').css({
           position: 'absolute',
@@ -396,7 +397,7 @@ define([
     // Main handler to receive mouse and key events
     // Overrides same function in Activity.Panel
     processEvent: function (event) {
-      if (this.playing) {        
+      if (this.playing) {
         switch (event.type) {
           case 'click':
             event.preventDefault();
@@ -404,13 +405,13 @@ define([
             var p = new AWT.Point(
                 event.pageX - this.$div.offset().left,
                 event.pageY - this.$div.offset().top);
-                                
+
             // Avoid clicks on the text field
-            if(this.bgB.contains(p)){              
+            if (this.bgB.contains(p)) {
               this.$textField.focus();
               break;
             }
-            
+
             var bx = this.bgA.findActiveBox(p);
             if (bx) {
               if (bx.getContent() && bx.getContent().mediaContent === null)
@@ -419,20 +420,17 @@ define([
             }
             break;
 
-          case 'edit':            
+          case 'edit':
             event.preventDefault();
             this.setCurrentCell(this.currentCell);
             return false;
-            
         }
       }
     }
   };
 
   // WrittenAnswer.Panel extends Activity.Panel
-  WrittenAnswer.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      WrittenAnswer.prototype.Panel.prototype);
+  WrittenAnswer.Panel.prototype = $.extend(Object.create(ActPanelAncestor), WrittenAnswer.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

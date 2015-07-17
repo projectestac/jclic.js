@@ -27,26 +27,27 @@ define([
   };
 
   TextActivityBase.prototype = {
-    constructor: TextActivityBase,
-    //
-    // Constructor of this Activity.Panel object
-    Panel: function (act, ps, $div) {
-      Activity.prototype.Panel.call(this, act, ps, $div);
-      this.boxes = [];
-      this.popups = [];
-      this.targets = [];
-    }
+    constructor: TextActivityBase
   };
 
   // 
   // TextActivityBase extends Activity
   TextActivityBase.prototype = $.extend(Object.create(Activity.prototype), TextActivityBase.prototype);
 
+  //
+  // Constructor of this Activity.Panel object
+  TextActivityBase.Panel = function (act, ps, $div) {
+    Activity.Panel.call(this, act, ps, $div);
+    this.boxes = [];
+    this.popups = [];
+    this.targets = [];
+  };
+
   // 
   // Properties and methods specific to TextAvtivityBase.Panel
-  var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  TextActivityBase.prototype.Panel.prototype = {
-    constructor: TextActivityBase.prototype.Panel,
+  var ActPanelAncestor = Activity.Panel.prototype;
+  TextActivityBase.Panel.prototype = {
+    constructor: TextActivityBase.Panel,
     // 
     // Array of ActiveBox objects contained in this Panel
     boxes: null,
@@ -218,9 +219,7 @@ define([
   };
 
   // TextActivityBase.Panel extends Activity.Panel
-  TextActivityBase.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      TextActivityBase.prototype.Panel.prototype);
+  TextActivityBase.Panel.prototype = $.extend(Object.create(ActPanelAncestor), TextActivityBase.Panel.prototype);
 
   return TextActivityBase;
 

@@ -26,29 +26,29 @@ define([
   };
 
   Order.prototype = {
-    constructor: Order,
-    //
-    // Constructor of this Activity.Panel object
-    Panel: function (act, ps, $div) {
-      TextActivityBase.prototype.Panel.call(this, act, ps, $div);
-    }
+    constructor: Order
   };
 
   // 
   // Order extends TextActivityBase
   Order.prototype = $.extend(Object.create(TextActivityBase.prototype), Order.prototype);
 
+  //
+  // Constructor of this Activity.Panel object
+  Order.Panel = function (act, ps, $div) {
+    TextActivityBase.Panel.call(this, act, ps, $div);
+  };
+
+
   // 
   // Properties and methods specific to Order.Panel
-  var ActPanelAncestor = TextActivityBase.prototype.Panel.prototype;
-  Order.prototype.Panel.prototype = {
-    constructor: Order.prototype.Panel
+  var ActPanelAncestor = TextActivityBase.Panel.prototype;
+  Order.Panel.prototype = {
+    constructor: Order.Panel
   };
 
   // Order.Panel extends TextActivityBase.Panel
-  Order.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      Order.prototype.Panel.prototype);
+  Order.Panel.prototype = $.extend(Object.create(ActPanelAncestor), Order.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

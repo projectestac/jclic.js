@@ -26,29 +26,28 @@ define([
   };
 
   Complete.prototype = {
-    constructor: Complete,
-    //
-    // Constructor of this Activity.Panel object
-    Panel: function (act, ps, $div) {
-      TextActivityBase.prototype.Panel.call(this, act, ps, $div);
-    }
+    constructor: Complete
+        //
   };
 
   // 
   // Complete extends TextActivityBase
   Complete.prototype = $.extend(Object.create(TextActivityBase.prototype), Complete.prototype);
 
+  // Constructor of this Activity.Panel object
+  Complete.Panel = function (act, ps, $div) {
+    TextActivityBase.Panel.call(this, act, ps, $div);
+  };
+
   // 
   // Properties and methods specific to Complete.Panel
-  var ActPanelAncestor = TextActivityBase.prototype.Panel.prototype;
-  Complete.prototype.Panel.prototype = {
-    constructor: Complete.prototype.Panel
+  var ActPanelAncestor = TextActivityBase.Panel.prototype;
+  Complete.Panel.prototype = {
+    constructor: Complete.Panel
   };
 
   // Complete.Panel extends TextActivityBase.Panel
-  Complete.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      Complete.prototype.Panel.prototype);
+  Complete.Panel.prototype = $.extend(Object.create(ActPanelAncestor), Complete.Panel.prototype);
 
   // 
   // Register class in Activity.prototype
@@ -56,6 +55,3 @@ define([
 
   return Complete;
 });
-
-
-

@@ -48,12 +48,6 @@ define([
     // The activity uses random to generate filling characters
     hasRandom: function () {
       return true;
-    },
-    //
-    // Activity.Panel constructor
-    Panel: function (act, ps, $div) {
-      Activity.prototype.Panel.call(this, act, ps, $div);
-      this.resolvedClues = [];
     }
   };
 
@@ -61,11 +55,19 @@ define([
   // WordSearch extends Activity
   WordSearch.prototype = $.extend(Object.create(Activity.prototype), WordSearch.prototype);
 
+  //
+  // Activity.Panel constructor
+  WordSearch.Panel = function (act, ps, $div) {
+    Activity.Panel.call(this, act, ps, $div);
+    this.resolvedClues = [];
+  };
+
   // 
   // Properties and methods specific to InformationScreen.Panel
-  var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  WordSearch.prototype.Panel.prototype = {
-    constructor: WordSearch.prototype.Panel,
+  var ActPanelAncestor = Activity.Panel.prototype;
+
+  WordSearch.Panel.prototype = {
+    constructor: WordSearch.Panel,
     //
     // The [TextGrid](TextGrid.html) of this Activity.Panel
     grid: null,
@@ -145,7 +147,7 @@ define([
 
         if (this.bgAlt) {
           this.bgAlt.setContent(this.act.abc['secondary']);
-          if (this.act.scramble[0]){
+          if (this.act.scramble[0]) {
             var scrambleArray = [this.bgAlt];
             this.act.shuffle(scrambleArray, true, true);
           }
@@ -310,7 +312,7 @@ define([
                     }
                   }
                 }
-                if (!repeated) {                  
+                if (!repeated) {
                   var r = this.getCurrentScore();
                   this.ps.reportNewAction(this.act, 'ACTION_SELECT', s, null, ok, r);
                   if (r === this.act.clues.length)
@@ -340,9 +342,7 @@ define([
   };
 
   // WordSearch.Panel extends Activity.Panel
-  WordSearch.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      WordSearch.prototype.Panel.prototype);
+  WordSearch.Panel.prototype = $.extend(Object.create(ActPanelAncestor), WordSearch.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

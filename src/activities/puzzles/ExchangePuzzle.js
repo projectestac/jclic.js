@@ -51,11 +51,6 @@ define([
     // The activity permits the user to display the solution
     helpSolutionAllowed: function () {
       return true;
-    },
-    //
-    // Activity.Panel constructor
-    Panel: function (act, ps, $div) {
-      Activity.prototype.Panel.call(this, act, ps, $div);
     }
   };
 
@@ -63,11 +58,17 @@ define([
   // InformationScreen extends Activity
   ExchangePuzzle.prototype = $.extend(Object.create(Activity.prototype), ExchangePuzzle.prototype);
 
+  //
+  // Activity.Panel constructor
+  ExchangePuzzle.Panel = function (act, ps, $div) {
+    Activity.Panel.call(this, act, ps, $div);
+  };
+
   // 
   // Properties and methods specific to InformationScreen.Panel
-  var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  ExchangePuzzle.prototype.Panel.prototype = {
-    constructor: ExchangePuzzle.prototype.Panel,
+  var ActPanelAncestor = Activity.Panel.prototype;
+  ExchangePuzzle.Panel.prototype = {
+    constructor: ExchangePuzzle.Panel,
     //
     // The [ActiveBoxBag](ActiveBoxBag.html) object containing the information to be displayed.
     bg: null,
@@ -278,10 +279,8 @@ define([
     }
   };
 
-  // DoublePuzzle.Panel extends Activity.Panel
-  ExchangePuzzle.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      ExchangePuzzle.prototype.Panel.prototype);
+  // ExchangePuzzle.Panel extends Activity.Panel
+  ExchangePuzzle.Panel.prototype = $.extend(Object.create(ActPanelAncestor), ExchangePuzzle.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

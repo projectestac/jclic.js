@@ -45,11 +45,6 @@ define([
     // The activity uses random to scramble internal components
     hasRandom: function () {
       return true;
-    },
-    //
-    // Activity.Panel constructor
-    Panel: function (act, ps, $div) {
-      Activity.prototype.Panel.call(this, act, ps, $div);
     }
   };
 
@@ -57,11 +52,17 @@ define([
   // InformationScreen extends Activity
   Explore.prototype = $.extend(Object.create(Activity.prototype), Explore.prototype);
 
+  //
+  // Activity.Panel constructor
+  Explore.Panel = function (act, ps, $div) {
+    Activity.Panel.call(this, act, ps, $div);
+  };
+
   // 
   // Properties and methods specific to InformationScreen.Panel
-  var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  Explore.prototype.Panel.prototype = {
-    constructor: Explore.prototype.Panel,
+  var ActPanelAncestor = Activity.Panel.prototype;
+  Explore.Panel.prototype = {
+    constructor: Explore.Panel,
     //
     // The [ActiveBoxBag](ActiveBoxBag.html) objects containing the information to be displayed.
     bgA: null,
@@ -221,9 +222,7 @@ define([
   };
 
   // Explore.Panel extends Activity.Panel
-  Explore.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      Explore.prototype.Panel.prototype);
+  Explore.Panel.prototype = $.extend(Object.create(ActPanelAncestor), Explore.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

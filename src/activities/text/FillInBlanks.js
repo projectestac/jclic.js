@@ -34,11 +34,6 @@ define([
     // The activity uses the keyboard
     needsKeyboard: function () {
       return true;
-    },
-    //
-    // Constructor of this Activity.Panel object
-    Panel: function (act, ps, $div) {
-      TextActivityBase.prototype.Panel.call(this, act, ps, $div);
     }
   };
 
@@ -46,11 +41,17 @@ define([
   // FillInBlanks extends TextActivityBase
   FillInBlanks.prototype = $.extend(Object.create(TextActivityBase.prototype), FillInBlanks.prototype);
 
+  //
+  // Constructor of this Activity.Panel object
+  FillInBlanks.Panel = function (act, ps, $div) {
+    TextActivityBase.Panel.call(this, act, ps, $div);
+  };
+
   // 
   // Properties and methods specific to FillInBlanks.Panel
-  var ActPanelAncestor = TextActivityBase.prototype.Panel.prototype;
-  FillInBlanks.prototype.Panel.prototype = {
-    constructor: FillInBlanks.prototype.Panel,
+  var ActPanelAncestor = TextActivityBase.Panel.prototype;
+  FillInBlanks.Panel.prototype = {
+    constructor: FillInBlanks.Panel,
     //
     // Flag indicating if the activity is open or locked
     locked: true,
@@ -337,9 +338,7 @@ define([
   };
 
   // FillInBlanks.Panel extends TextActivityBase.Panel
-  FillInBlanks.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      FillInBlanks.prototype.Panel.prototype);
+  FillInBlanks.Panel.prototype = $.extend(Object.create(ActPanelAncestor), FillInBlanks.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

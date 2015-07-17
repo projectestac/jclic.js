@@ -27,33 +27,32 @@ define([
   };
 
   IdentifyText.prototype = {
-    constructor: IdentifyText,
-    //
-    // Constructor of this Activity.Panel object
-    Panel: function (act, ps, $div) {
-      TextActivityBase.prototype.Panel.call(this, act, ps, $div);
-    }
+    constructor: IdentifyText
   };
 
   // 
   // Identify extends TextActivityBase
   IdentifyText.prototype = $.extend(Object.create(TextActivityBase.prototype), IdentifyText.prototype);
 
+  // Constructor of this Activity.Panel object
+  IdentifyText.Panel = function (act, ps, $div) {
+    TextActivityBase.Panel.call(this, act, ps, $div);
+  };
+
+
   // 
   // Properties and methods specific to Identify.Panel
-  var ActPanelAncestor = TextActivityBase.prototype.Panel.prototype;
-  IdentifyText.prototype.Panel.prototype = {
-    constructor: IdentifyText.prototype.Panel,
+  var ActPanelAncestor = TextActivityBase.Panel.prototype;
+  IdentifyText.Panel.prototype = {
+    constructor: IdentifyText.Panel,
     //
     // Flag indicating if targets must be visually marked when the activity begins.
     // Here is `false` to avoid revealing the items that must be found
-    targetsMarked: false    
+    targetsMarked: false
   };
 
   // Identify.Panel extends TextActivityBase.Panel
-  IdentifyText.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      IdentifyText.prototype.Panel.prototype);
+  IdentifyText.Panel.prototype = $.extend(Object.create(ActPanelAncestor), IdentifyText.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

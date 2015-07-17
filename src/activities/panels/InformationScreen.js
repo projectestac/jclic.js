@@ -33,23 +33,23 @@ define([
 
   InformationScreen.prototype = {
     constructor: InformationScreen,
-    //
-    // Activity.Panel constructor
-    Panel: function (act, ps, $div) {
-      Activity.prototype.Panel.call(this, act, ps, $div);
-
-    }
   };
 
   // 
   // InformationScreen extends Activity
   InformationScreen.prototype = $.extend(Object.create(Activity.prototype), InformationScreen.prototype);
 
+  //
+  // Activity.Panel constructor
+  InformationScreen.Panel = function (act, ps, $div) {
+    Activity.Panel.call(this, act, ps, $div);
+  };
+
   // 
   // Properties and methods specific to InformationScreen.Panel
-  var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  InformationScreen.prototype.Panel.prototype = {
-    constructor: InformationScreen.prototype.Panel,
+  var ActPanelAncestor = Activity.Panel.prototype;
+  InformationScreen.Panel.prototype = {
+    constructor: InformationScreen.Panel,
     //
     // The [ActiveBoxBag](ActiveBoxBag.html) containing the information to be displayed.
     bg: null,
@@ -67,13 +67,13 @@ define([
 
       var abc = this.act.abc['primary'];
       if (abc) {
-        
+
         if (abc.imgName)
           abc.setImgContent(this.act.project.mediaBag, null, false);
-  
+
         if (this.act.acp !== null)
           this.act.acp.generateContent(abc.nch, abc.ncw, [abc], false);
-          
+
         this.bg = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
         this.bg.setContent(abc);
         this.bg.setVisible(true);
@@ -86,7 +86,7 @@ define([
     // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
     updateContent: function (dirtyRegion) {
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
-      
+
       if (this.bg && this.$canvas) {
         var canvas = this.$canvas.get(0);
         var ctx = canvas.getContext('2d');
@@ -133,15 +133,13 @@ define([
           if (!bx.playMedia(this.ps))
             this.playEvent('click');
         }
-        event.preventDefault();        
+        event.preventDefault();
       }
     }
   };
 
   // InformationScreen.Panel extends Activity.Panel
-  InformationScreen.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      InformationScreen.prototype.Panel.prototype);
+  InformationScreen.Panel.prototype = $.extend(Object.create(ActPanelAncestor), InformationScreen.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

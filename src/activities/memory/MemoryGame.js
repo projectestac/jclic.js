@@ -51,23 +51,25 @@ define([
     // The activity mut always be scrambled
     shuffleAlways: function () {
       return true;
-    },
-    //
-    // Activity.Panel constructor
-    Panel: function (act, ps, $div) {
-      Activity.prototype.Panel.call(this, act, ps, $div);
     }
   };
 
   // 
   // InformationScreen extends Activity
   MemoryGame.prototype = $.extend(Object.create(Activity.prototype), MemoryGame.prototype);
+  
+      //
+    // Activity.Panel constructor
+  MemoryGame.Panel=function (act, ps, $div) {
+      Activity.Panel.call(this, act, ps, $div);
+    };
 
   // 
   // Properties and methods specific to InformationScreen.Panel
-  var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  MemoryGame.prototype.Panel.prototype = {
-    constructor: MemoryGame.prototype.Panel,
+  var ActPanelAncestor = Activity.Panel.prototype;
+  
+  MemoryGame.Panel.prototype = {
+    constructor: MemoryGame.Panel,
     //
     // The [ActiveBoxBag](ActiveBoxBag.html) object containing the information to be displayed.
     bg: null,
@@ -333,9 +335,7 @@ define([
   };
 
   // MemoryGame.Panel extends Activity.Panel
-  MemoryGame.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      MemoryGame.prototype.Panel.prototype);
+  MemoryGame.Panel.prototype = $.extend(Object.create(ActPanelAncestor), MemoryGame.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

@@ -51,12 +51,6 @@ define([
     // The activity permits the user to display the solution
     helpSolutionAllowed: function () {
       return true;
-    },
-    //
-    // Activity.Panel constructor
-    Panel: function (act, ps, $div) {
-      Activity.prototype.Panel.call(this, act, ps, $div);
-      //this.bc = new BoxConnector(this);
     }
   };
 
@@ -64,11 +58,17 @@ define([
   // InformationScreen extends Activity
   HolePuzzle.prototype = $.extend(Object.create(Activity.prototype), HolePuzzle.prototype);
 
+  //
+  // Activity.Panel constructor
+  HolePuzzle.Panel = function (act, ps, $div) {
+    Activity.Panel.call(this, act, ps, $div);
+  };
+
   // 
   // Properties and methods specific to InformationScreen.Panel
-  var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  HolePuzzle.prototype.Panel.prototype = {
-    constructor: HolePuzzle.prototype.Panel,
+  var ActPanelAncestor = Activity.Panel.prototype;
+  HolePuzzle.Panel.prototype = {
+    constructor: HolePuzzle.Panel,
     //
     // The [ActiveBoxGrid](ActiveBoxGrid.html) object containing the information to be displayed.
     bg: null,
@@ -258,10 +258,8 @@ define([
     }
   };
 
-  // DoublePuzzle.Panel extends Activity.Panel
-  HolePuzzle.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      HolePuzzle.prototype.Panel.prototype);
+  // HolePuzzle.Panel extends Activity.Panel
+  HolePuzzle.Panel.prototype = $.extend(Object.create(ActPanelAncestor), HolePuzzle.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

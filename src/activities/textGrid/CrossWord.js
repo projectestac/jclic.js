@@ -44,11 +44,6 @@ define([
     // Cross word activities need keyboard
     needsKeyboard: function () {
       return true;
-    },
-    //
-    // Activity.Panel constructor
-    Panel: function (act, ps, $div) {
-      Activity.prototype.Panel.call(this, act, ps, $div);
     }
   };
 
@@ -56,11 +51,19 @@ define([
   // WordSearch extends Activity
   CrossWord.prototype = $.extend(Object.create(Activity.prototype), CrossWord.prototype);
 
+  //
+  // Activity.Panel constructor
+  CrossWord.Panel = function (act, ps, $div) {
+    Activity.Panel.call(this, act, ps, $div);
+  };
+
+
   // 
   // Properties and methods specific to InformationScreen.Panel
-  var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  CrossWord.prototype.Panel.prototype = {
-    constructor: CrossWord.prototype.Panel,
+  var ActPanelAncestor = Activity.Panel.prototype;
+
+  CrossWord.Panel.prototype = {
+    constructor: CrossWord.Panel,
     //
     // The default width of the 'Horizontal' and 'Vertical' labels
     LABEL_WIDTH: 40,
@@ -290,19 +293,19 @@ define([
               this.hClue.playMedia(this.ps);
             else if (this.vClue.contains(p))
               this.vClue.playMedia(this.ps);
-            else if(this.hClueBtn.contains(p)){
-              if(this.advance === 'ADVANCE_RIGHT')
+            else if (this.hClueBtn.contains(p)) {
+              if (this.advance === 'ADVANCE_RIGHT')
                 this.advance = 'NO_ADVANCE';
               else
                 this.advance = 'ADVANCE_RIGHT';
               this.setBtnStatus();
             }
-            else if(this.vClueBtn.contains(p)){
-              if(this.advance === 'ADVANCE_DOWN')
+            else if (this.vClueBtn.contains(p)) {
+              if (this.advance === 'ADVANCE_DOWN')
                 this.advance = 'NO_ADVANCE';
               else
                 this.advance = 'ADVANCE_DOWN';
-              this.setBtnStatus();              
+              this.setBtnStatus();
             }
             else
               break;
@@ -405,11 +408,11 @@ define([
     },
     //
     // Sets the status of horizontal and vertical buttons based on the value of `advance`
-    setBtnStatus: function(){      
-      if(this.hClueBtn)
-        this.hClueBtn.setInactive(this.advance !==  'ADVANCE_RIGHT');      
-      if(this.vClueBtn)
-        this.vClueBtn.setInactive(this.advance !==  'ADVANCE_DOWN');      
+    setBtnStatus: function () {
+      if (this.hClueBtn)
+        this.hClueBtn.setInactive(this.advance !== 'ADVANCE_RIGHT');
+      if (this.vClueBtn)
+        this.vClueBtn.setInactive(this.advance !== 'ADVANCE_DOWN');
     },
     //
     // Icons for horizontal and vertical directions:
@@ -434,9 +437,7 @@ define([
   };
 
   // CrossWord.Panel extends Activity.Panel
-  CrossWord.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      CrossWord.prototype.Panel.prototype);
+  CrossWord.Panel.prototype = $.extend(Object.create(ActPanelAncestor), CrossWord.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

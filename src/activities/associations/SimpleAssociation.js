@@ -64,13 +64,6 @@ define([
     // The activity permits the user to display the solution
     helpSolutionAllowed: function () {
       return true;
-    },
-    /**
-     * @class
-     * @extends Activity#Panel
-     */
-    Panel: function (act, ps, $div) {
-      Activity.prototype.Panel.call(this, act, ps, $div);
     }
   };
 
@@ -78,11 +71,20 @@ define([
   // InformationScreen extends Activity
   SimpleAssociation.prototype = $.extend(Object.create(Activity.prototype), SimpleAssociation.prototype);
 
+  /**
+   * @class
+   * @extends Activity.Panel
+   */
+  SimpleAssociation.Panel = function (act, ps, $div) {
+    Activity.Panel.call(this, act, ps, $div);
+  };
+
   // 
   // Properties and methods specific to InformationScreen.Panel
-  var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  SimpleAssociation.prototype.Panel.prototype = {
-    constructor: SimpleAssociation.prototype.Panel,
+  var ActPanelAncestor = Activity.Panel.prototype;
+
+  SimpleAssociation.Panel.prototype = {
+    constructor: SimpleAssociation.Panel,
     /**
      * The {@link ActiveBoxBag} object containing the information to be displayed in the `primary` panel
      * @type {ActiveBoxBag} */
@@ -366,10 +368,8 @@ define([
     }
   };
 
-  // DoublePuzzle.Panel extends Activity.Panel
-  SimpleAssociation.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      SimpleAssociation.prototype.Panel.prototype);
+  // SimpleAssociation.Panel extends Activity.Panel
+  SimpleAssociation.Panel.prototype = $.extend(Object.create(ActPanelAncestor), SimpleAssociation.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

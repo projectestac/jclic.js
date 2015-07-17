@@ -52,12 +52,6 @@ define([
     // The activity permits the user to display the solution
     helpSolutionAllowed: function () {
       return true;
-    },
-    //
-    // Activity.Panel constructor
-    Panel: function (act, ps, $div) {
-      Activity.prototype.Panel.call(this, act, ps, $div);
-      //this.bc = new BoxConnector(this);
     }
   };
 
@@ -65,11 +59,17 @@ define([
   // InformationScreen extends Activity
   DoublePuzzle.prototype = $.extend(Object.create(Activity.prototype), DoublePuzzle.prototype);
 
+  //
+  // Activity.Panel constructor
+  DoublePuzzle.Panel = function (act, ps, $div) {
+    Activity.Panel.call(this, act, ps, $div);
+  };
+
   // 
   // Properties and methods specific to InformationScreen.Panel
-  var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  DoublePuzzle.prototype.Panel.prototype = {
-    constructor: DoublePuzzle.prototype.Panel,
+  var ActPanelAncestor = Activity.Panel.prototype;
+  DoublePuzzle.Panel.prototype = {
+    constructor: DoublePuzzle.Panel,
     //
     // The [ActiveBoxBag](ActiveBoxBag.html) objects containing the information to be displayed.
     bgA: null,
@@ -227,7 +227,7 @@ define([
             // Don't consider drag moves below 3 pixels. Can be a "trembling click"
             if (this.bc.active && p.distanceTo(this.bc.origin) <= 3) {
               break;
-            }            
+            }
             up = true;
             /* falls through */
           case 'touchend':
@@ -306,9 +306,7 @@ define([
   };
 
   // DoublePuzzle.Panel extends Activity.Panel
-  DoublePuzzle.prototype.Panel.prototype = $.extend(
-      Object.create(ActPanelAncestor),
-      DoublePuzzle.prototype.Panel.prototype);
+  DoublePuzzle.Panel.prototype = $.extend(Object.create(ActPanelAncestor), DoublePuzzle.Panel.prototype);
 
   // 
   // Register class in Activity.prototype

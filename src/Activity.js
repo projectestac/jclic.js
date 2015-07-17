@@ -748,40 +748,41 @@ define([
      * @returns {Activity.Panel}
      */
     getActivityPanel: function (ps) {
-      return new this.Panel(this, ps);
-    },
-    /**
-     * 
-     * This object is responsible for rendering the contents of the activity on the screen and
-     * managing user's interaction.
-     * Each type of Activity must implement its own `Activity.Panel`.<br>
-     * In JClic, [Activity.Panel](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html)
-     * extends [javax.swing.JPanel](http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html).<br>
-     * In this implementation, the JPanel will be replaced by an HTML `div` tag.
-     * @class
-     * @extends AWT.Container
-     * @param {Activity} act - The {@link Activity} to wich this Panel belongs
-     * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
-     * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-     * Java interface.
-     * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
-     */
-    Panel: function (act, ps, $div) {
-      // Activity.Panel extends AWT.Container
-      AWT.Container.call(this);
-      this.act = act;
-      this.ps = ps;
-      this.minimumSize = new AWT.Dimension(100, 100);
-      this.preferredSize = new AWT.Dimension(500, 400);
-      if ($div)
-        this.$div = $div;
-      else
-        this.$div = $('<div class="JClicActivity"/>');
-      this.act.initAutoContentProvider();
+      return new this.constructor.Panel(this, ps);
     }
   };
 
-  Activity.prototype.Panel.prototype = {
+  /**
+   * 
+   * This object is responsible for rendering the contents of the activity on the screen and
+   * managing user's interaction.
+   * Each type of Activity must implement its own `Activity.Panel`.<br>
+   * In JClic, [Activity.Panel](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html)
+   * extends [javax.swing.JPanel](http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html).<br>
+   * In this implementation, the JPanel will be replaced by an HTML `div` tag.
+   * @class
+   * @extends AWT.Container
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
+  Activity.Panel = function (act, ps, $div) {
+    // Activity.Panel extends AWT.Container
+    AWT.Container.call(this);
+    this.act = act;
+    this.ps = ps;
+    this.minimumSize = new AWT.Dimension(100, 100);
+    this.preferredSize = new AWT.Dimension(500, 400);
+    if ($div)
+      this.$div = $div;
+    else
+      this.$div = $('<div class="JClicActivity"/>');
+    this.act.initAutoContentProvider();
+  };
+
+  Activity.Panel.prototype = {
     constructor: Activity.Panel,
     /**
      * The Activity this panel is related to
@@ -1155,7 +1156,8 @@ define([
     }
   };
 
-  Activity.prototype.Panel.prototype = $.extend(Object.create(AWT.Container.prototype), Activity.prototype.Panel.prototype);
+  // Activity.Panel extends AWT.Container
+  Activity.Panel.prototype = $.extend(Object.create(AWT.Container.prototype), Activity.Panel.prototype);
 
   return Activity;
 });
