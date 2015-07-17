@@ -21,9 +21,16 @@ define([
   "../../AWT"
 ], function ($, Activity, ActiveBoxGrid, BoxBag, AWT) {
 
-  //
-  // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
-  // objects.
+  /**
+   * This class of {@link Activity} just shows a panel with {@link ActiveBox} objects.<br>
+   * Because active boxes can act as a links to specific points in the project's sequence of
+   * activities, this kind of activity is often used as a menu where users can choose from different
+   * options.
+   * @exports InformationScreen
+   * @class
+   * @extends Activity
+   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   */
   var InformationScreen = function (project) {
     Activity.call(this, project);
     // This kind of activities are not reported
@@ -32,32 +39,52 @@ define([
   };
 
   InformationScreen.prototype = {
-    constructor: InformationScreen,
+    constructor: InformationScreen
   };
 
-  // 
   // InformationScreen extends Activity
   InformationScreen.prototype = $.extend(Object.create(Activity.prototype), InformationScreen.prototype);
 
-  //
-  // Activity.Panel constructor
+  /**
+   * The {@link Activity.Panel} where information screen show its content.
+   * @class
+   * @extends Activity.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
   InformationScreen.Panel = function (act, ps, $div) {
     Activity.Panel.call(this, act, ps, $div);
   };
 
-  // 
-  // Properties and methods specific to InformationScreen.Panel
   var ActPanelAncestor = Activity.Panel.prototype;
+
   InformationScreen.Panel.prototype = {
     constructor: InformationScreen.Panel,
-    //
-    // The [ActiveBoxBag](ActiveBoxBag.html) containing the information to be displayed.
+    /**
+     * The {@link ActiveBoxBag} containing the information to be displayed.
+     * @type {ActiveBoxBag} */
     bg: null,
-    //
-    // Mouse events intercepted by this panel
+    /**
+     * List of mouse, touch and keyboard events intercepted by this panel
+     * @type {string[]} */
     events: ['click'],
-    // 
-    // Prepares the activity panel
+    /**
+     * 
+     * Miscellaneous cleaning operations
+     */
+    clear: function () {
+      if (this.bg) {
+        this.bg.end();
+        this.bg = null;
+      }
+    },
+    /**
+     * 
+     * Prepares the visual components of the activity
+     */
     buildVisualComponents: function () {
 
       if (this.firstRun)
@@ -79,11 +106,12 @@ define([
         this.bg.setVisible(true);
       }
     },
-    //
-    // Overrides `Activity.Panel.updateContent`
-    // Updates the graphic contents of its panel.
-    // The method should be called from `Activity.Panel.update`
-    // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
+    /**
+     * Updates the graphic content of this panel.<br>
+     * This method will be called from {@link AWT.Container#update} when needed.
+     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+     * it's the whole panel.
+     */
     updateContent: function (dirtyRegion) {
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
 
@@ -97,15 +125,22 @@ define([
       }
       return this;
     },
-    //
-    // Calculates the optimal dimension of this panel
+    /**
+     * 
+     * Sets the real dimension of this panel.
+     * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+     * @returns {AWT.Dimension}
+     */
     setDimension: function (preferredMaxSize) {
       if (this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
       return BoxBag.layoutSingle(preferredMaxSize, this.bg, this.act.margin);
     },
-    //
-    // Sets the size and position of this activity panel
+    /**
+     * 
+     * Sets the size and position of this activity panel
+     * @param {AWT.Rectangle} rect
+     */
     setBounds: function (rect) {
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
@@ -119,9 +154,13 @@ define([
         this.invalidate().update();
       }
     },
-    // 
-    // Main handler to receive mouse and key events
-    // Overrides same function in Activity.Panel
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
     processEvent: function (event) {
       if (this.playing) {
         var p = new AWT.Point(
@@ -141,7 +180,6 @@ define([
   // InformationScreen.Panel extends Activity.Panel
   InformationScreen.Panel.prototype = $.extend(Object.create(ActPanelAncestor), InformationScreen.Panel.prototype);
 
-  // 
   // Register class in Activity.prototype
   Activity.CLASSES['@panels.InformationScreen'] = InformationScreen;
 

@@ -353,7 +353,7 @@ define([
     /**
      * 
      * Loads this object settings from an XML element 
-     * @param {external:jQuery} $xml
+     * @param {external:jQuery} $xml - The jQuery XML element to parse
      */
     setProperties: function ($xml) {
 

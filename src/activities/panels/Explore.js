@@ -22,56 +22,86 @@ define([
   "../../shapers/Rectangular"
 ], function ($, Activity, ActiveBoxGrid, BoxBag, AWT, Rectangular) {
 
-  //
-  // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
-  // objects.
+  /**
+   * 
+   * This class of {@link Activity} shows a panel with {@link ActiveBox} objects. Users can click
+   * on this objects to obtain associated information. This associated information, displayed in
+   * a second panel, can be text graphics, sound, video... or a combination of them.
+   * @exports Explore
+   * @class
+   * @extends Activity
+   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   */
   var Explore = function (project) {
     Activity.call(this, project);
   };
 
   Explore.prototype = {
     constructor: Explore,
-    //
-    // Activities of this type never end, so automatic sequences must pause here
+    /**
+     * 
+     * Activities of this type never end, so automatic sequences must pause here
+     * @returns {boolean}
+     */
     mustPauseSequence: function () {
       return true;
     },
-    // 
-    // Retrieves the minimum number of actions needed to solve this activity
+    /**
+     * 
+     * Retrieves the minimum number of actions needed to solve this activity
+     * @returns {number}
+     */
     getMinNumActions: function () {
       return 0;
     },
-    //
-    // The activity uses random to scramble internal components
+    /**
+     * Usually this activity don't use random to scramble internal components, but in some cases
+     * can make use of it.
+     * @returns {boolean}
+     */
     hasRandom: function () {
       return true;
     }
   };
 
-  // 
   // InformationScreen extends Activity
   Explore.prototype = $.extend(Object.create(Activity.prototype), Explore.prototype);
 
-  //
-  // Activity.Panel constructor
+  /**
+   * The {@link Activity.Panel} where exploration activities are played.
+   * @class
+   * @extends Activity.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
   Explore.Panel = function (act, ps, $div) {
     Activity.Panel.call(this, act, ps, $div);
   };
 
-  // 
-  // Properties and methods specific to InformationScreen.Panel
   var ActPanelAncestor = Activity.Panel.prototype;
+
   Explore.Panel.prototype = {
     constructor: Explore.Panel,
-    //
-    // The [ActiveBoxBag](ActiveBoxBag.html) objects containing the information to be displayed.
+    /**
+     * The {@link ActiveBoxBag} object containing the information to be displayed in the `primary` panel
+     * @type {ActiveBoxBag} */
     bgA: null,
+    /**
+     * The {@link ActiveBoxBag} object containing the information associated to `primary` elements.
+     * Only one of this elements will be showed for each click done in the `primary` panel.
+     * @type {ActiveBoxBag} */
     bgB: null,
-    // 
-    // Mouse events intercepted by this panel
+    /**
+     * List of mouse, touch and keyboard events intercepted by this panel
+     * @type {string[]} */
     events: ['click'],
-    //
-    // Clears the realized objects
+    /**
+     * 
+     * Miscellaneous cleaning operations
+     */
     clear: function () {
       if (this.bgA) {
         this.bgA.end();
@@ -82,8 +112,10 @@ define([
         this.bgB = null;
       }
     },
-    // 
-    // Prepares the activity panel
+    /**
+     * 
+     * Prepares the visual components of the activity
+     */
     buildVisualComponents: function () {
 
       if (this.firstRun)
@@ -118,8 +150,10 @@ define([
         this.bgB.setVisible(true);
       }
     },
-    // 
-    // Basic initialization procedure
+    /**
+     * 
+     * Basic initialization procedure
+     */
     initActivity: function () {
       ActPanelAncestor.initActivity.call(this);
 
@@ -141,11 +175,12 @@ define([
         this.invalidate().update();
       }
     },
-    //
-    // Overrides `Activity.Panel.updateContent`
-    // Updates the graphic contents of its panel.
-    // The method should be called from `Activity.Panel.update`
-    // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
+    /**
+     * Updates the graphic content of this panel.<br>
+     * This method will be called from {@link AWT.Container#update} when needed.
+     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+     * it's the whole panel.
+     */
     updateContent: function (dirtyRegion) {
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
       if (this.bgA && this.bgB && this.$canvas) {
@@ -159,15 +194,22 @@ define([
       }
       return this;
     },
-    //
-    // Calculates the optimal dimension of this panel
+    /**
+     * 
+     * Sets the real dimension of this panel.
+     * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+     * @returns {AWT.Dimension}
+     */
     setDimension: function (preferredMaxSize) {
       if (!this.bgA || !this.bgB || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
       return BoxBag.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
     },
-    //
-    // Set the size and position of this activity panel
+    /**
+     * 
+     * Sets the size and position of this activity panel
+     * @param {AWT.Rectangle} rect
+     */
     setBounds: function (rect) {
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
@@ -184,9 +226,13 @@ define([
         this.invalidate().update();
       }
     },
-    // 
-    // Main handler to receive mouse and key events
-    // Overrides same function in Activity.Panel
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
     processEvent: function (event) {
       if (this.playing) {
         var bx1, bx2;
@@ -224,7 +270,6 @@ define([
   // Explore.Panel extends Activity.Panel
   Explore.Panel.prototype = $.extend(Object.create(ActPanelAncestor), Explore.Panel.prototype);
 
-  // 
   // Register class in Activity.prototype
   Activity.CLASSES['@panels.Explore'] = Explore;
 

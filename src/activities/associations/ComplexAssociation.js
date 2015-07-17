@@ -20,9 +20,14 @@ define([
   "./SimpleAssociation"
 ], function ($, Activity, AWT, SimpleAssociation) {
 
-  //
-  // This is a special case of [SimpleAssociation](SimpleAssociation.html) where elements of the
-  // 'secondary' panel can have zero, one or more associated elements in 'primary'.
+  /**
+   * This is a special case of {@link SimpleAssociation} where the elements of the 'secondary' panel
+   * can have zero, one or more associated elements in the 'primary' panel.
+   * @exports ComplexAssociation
+   * @class
+   * @extends SimpleAssociation
+   * @param {JClicProject} project - The JClic project to which this activity belongs
+   */
   var ComplexAssociation = function (project) {
     SimpleAssociation.call(this, project);
     this.useIdAss = true;
@@ -30,19 +35,28 @@ define([
 
   ComplexAssociation.prototype = {
     constructor: ComplexAssociation,
-    //
-    // Number of unassigned cells
+    /**
+     * Number of unassigned cells
+     * @type {number} */
     nonAssignedCells: 0,
-    // Uses cell's `idAss` field to check if a pairing match
+    /**
+     * Uses cell's `idAss` field to check if pairings match
+     * @type {boolean} */
     useIdAss: false,
-    //
-    // Overrides `setProperties` in Activity
+    /**
+     * 
+     * Loads this object settings from an XML element 
+     * @param {external:jQuery} $xml - The jQuery XML element to parse
+     */
     setProperties: function ($xml) {
       SimpleAssociation.prototype.setProperties.call(this, $xml);
       this.abc['primary'].avoidAllIdsNull(this.abc['secondary'].getNumCells());
     },
-    // 
-    // Retrieves the minimum number of actions needed to solve this activity
+    /**
+     * 
+     * Retrieves the minimum number of actions needed to solve this activity.
+     * @returns {number}
+     */
     getMinNumActions: function () {
       if (this.invAss)
         return this.abc['secondary'].getNumCells();
@@ -51,26 +65,35 @@ define([
     }
   };
 
-  // 
   // ComplexAssociation extends SimpleAssociation
   ComplexAssociation.prototype = $.extend(Object.create(SimpleAssociation.prototype), ComplexAssociation.prototype);
 
-  //
-  // Activity.Panel constructor
+  /**
+   * The {@link Activity.Panel} where complex association activities are played.
+   * @class
+   * @extends SimpleAssociation.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
   ComplexAssociation.Panel = function (act, ps, $div) {
     SimpleAssociation.Panel.call(this, act, ps, $div);
   };
-
 
   var panelAncestor = SimpleAssociation.Panel.prototype;
 
   ComplexAssociation.Panel.prototype = {
     constructor: ComplexAssociation.Panel,
-    //
-    // Array for storing checked associations
+    /**
+     * Array for storing checked associations
+     * @type {boolean[]} */
     invAssCheck: null,
-    // 
-    // Prepares the activity panel
+    /**
+     * 
+     * Prepares the visual components of the activity
+     */
     buildVisualComponents: function () {
 
       panelAncestor.buildVisualComponents.call(this);
@@ -100,8 +123,11 @@ define([
         }
       }
     },
-    // 
-    // Check if all inverse associations are done
+    /**
+     * 
+     * Checks if all inverse associations are done
+     * @returns {boolean}
+     */
     checkInvAss: function () {
       var i;
       if (!this.act.invAss || !this.invAssCheck)
@@ -111,9 +137,13 @@ define([
           break;
       return i === this.invAssCheck.length;
     },
-    // 
-    // Main handler to receive mouse and key events
-    // Overrides same function in Activity.Panel
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
     processEvent: function (event) {
       if (this.bc && this.playing) {
         // 
@@ -263,7 +293,6 @@ define([
   // ComplexAssociation.Panel extends SimpleAssociation.Panel
   ComplexAssociation.Panel.prototype = $.extend(Object.create(panelAncestor), ComplexAssociation.Panel.prototype);
 
-  // 
   // Register class in Activity.prototype
   Activity.CLASSES['@associations.ComplexAssociation'] = ComplexAssociation;
 
