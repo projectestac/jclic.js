@@ -28,7 +28,7 @@ define([
   "./automation/arith/Arith",
   "./activities/text/TextActivityBase",
   "./activities/text/FillInBlanks",
-  "./activities/text/Order",
+  "./activities/text/OrderText",
   "./activities/text/Complete",
   "./activities/text/IdentifyText",
   "./activities/text/WrittenAnswer",

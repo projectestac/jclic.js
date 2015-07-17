@@ -21,38 +21,38 @@ define([
 
   //
   // TODO: Implement order text activities
-  var Order = function (project) {
+  var OrderText = function (project) {
     TextActivityBase.call(this, project);
   };
 
-  Order.prototype = {
-    constructor: Order
+  OrderText.prototype = {
+    constructor: OrderText
   };
 
   // 
-  // Order extends TextActivityBase
-  Order.prototype = $.extend(Object.create(TextActivityBase.prototype), Order.prototype);
+  // OrderText extends TextActivityBase
+  OrderText.prototype = $.extend(Object.create(TextActivityBase.prototype), OrderText.prototype);
 
   //
   // Constructor of this Activity.Panel object
-  Order.Panel = function (act, ps, $div) {
+  OrderText.Panel = function (act, ps, $div) {
     TextActivityBase.Panel.call(this, act, ps, $div);
   };
 
 
   // 
-  // Properties and methods specific to Order.Panel
+  // Properties and methods specific to OrderText.Panel
   var ActPanelAncestor = TextActivityBase.Panel.prototype;
-  Order.Panel.prototype = {
-    constructor: Order.Panel
+  OrderText.Panel.prototype = {
+    constructor: OrderText.Panel
   };
 
-  // Order.Panel extends TextActivityBase.Panel
-  Order.Panel.prototype = $.extend(Object.create(ActPanelAncestor), Order.Panel.prototype);
+  // OrderText.Panel extends TextActivityBase.Panel
+  OrderText.Panel.prototype = $.extend(Object.create(ActPanelAncestor), OrderText.Panel.prototype);
 
   // 
   // Register class in Activity.prototype
-  Activity.CLASSES['@text.Order'] = Order;
+  Activity.CLASSES['@text.Order'] = OrderText;
 
-  return Order;
+  return OrderText;
 });
