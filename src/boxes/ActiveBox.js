@@ -55,6 +55,26 @@ define([
       this.setBounds(rect);
   };
 
+  /**
+   * Factory constructor that creates a new cell inside a JQuery DOM element.<br>
+   * @param {external:jQuery} $dom - The DOM element that will act as a container
+   * @param {ActiveBoxContent} abc - The cell's content. Must not be null and have the `dimension`
+   * member initialized.
+   * @returns {ActiveBox}
+   */
+  ActiveBox.createCell = function ($dom, abc) {
+    if (abc && abc.dimension) {
+      var box = new ActiveBox();
+      box.setContent(abc);
+      var $canvas = $('<canvas width="' + abc.dimension.width + '" height="' + abc.dimension.height + '"/>');
+      var rect = new AWT.Rectangle(0, 0, abc.dimension.width, abc.dimension.height);
+      box.setBounds(rect);
+      $dom.append($canvas);
+      box.update($canvas.get(0).getContext('2d'), rect);
+      return box;
+    }
+  };
+
   ActiveBox.prototype = {
     constructor: ActiveBox,
     /**
@@ -341,27 +361,6 @@ define([
       var cnt = this.getContent();
       if (cnt && cnt.mediaContent && cnt.mediaContent.autoStart && cnt.amp) {
         // TODO: Play the media
-      }
-    },
-    /**
-     * 
-     * Creates a new cell inside a JQuery DOM element.<br>
-     * Should be invoked throught `ActiveBox.prototype`
-     * @param {external:jQuery} $dom - The DOM element that will act as a container
-     * @param {ActiveBoxContent} abc - The cell's content. Must not be null and have the `dimension`
-     * member initialized.
-     * @returns {ActiveBox}
-     */
-    _createCell: function ($dom, abc) {
-      if (abc && abc.dimension) {
-        var box = new ActiveBox();
-        box.setContent(abc);
-        var $canvas = $('<canvas width="' + abc.dimension.width + '" height="' + abc.dimension.height + '"/>');
-        var rect = new AWT.Rectangle(0, 0, abc.dimension.width, abc.dimension.height);
-        box.setBounds(rect);
-        $dom.append($canvas);
-        box.update($canvas.get(0).getContext('2d'), rect);
-        return box;
       }
     },
     /**

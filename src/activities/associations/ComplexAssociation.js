@@ -264,7 +264,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@associations.ComplexAssociation'] = ComplexAssociation;
+  Activity.CLASSES['@associations.ComplexAssociation'] = ComplexAssociation;
 
   return ComplexAssociation;
 

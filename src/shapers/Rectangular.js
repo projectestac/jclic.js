@@ -58,7 +58,7 @@ define([
   Rectangular.prototype = $.extend(Object.create(Shaper.prototype), Rectangular.prototype);
 
   // Register this class in the list of known shapers
-  Shaper.prototype._CLASSES['@Rectangular'] = Rectangular;
+  Shaper.CLASSES['@Rectangular'] = Rectangular;
 
   return Rectangular;
 

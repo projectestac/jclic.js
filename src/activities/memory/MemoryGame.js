@@ -175,7 +175,7 @@ define([
     setDimension: function (preferredMaxSize) {
       if (!this.bg || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
-      return BoxBag.prototype._layoutSingle(preferredMaxSize, this.bg, this.act.margin);
+      return BoxBag.layoutSingle(preferredMaxSize, this.bg, this.act.margin);
     },
     //
     // Sets the size and position of this activity panel
@@ -339,7 +339,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@memory.MemoryGame'] = MemoryGame;
+  Activity.CLASSES['@memory.MemoryGame'] = MemoryGame;
 
   return MemoryGame;
 

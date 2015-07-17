@@ -48,23 +48,22 @@ define([
       this.name = name;
 
     // Registers this Skin in the list of realized Skin objects
-    Skin.prototype._skinStack.push(this);
+    Skin.skinStack.push(this);
 
   };
 
+  /**
+   * Collection of realized __Skin__ objects.<br>
+   * @type {Skin[]} */
+  Skin.skinStack = [];
+
+  /**
+   * List of classes derived from Skin. It should be filled by real skin classes at declaration time.
+   * @type {object} */
+  Skin.CLASSES = {};
+
   Skin.prototype = {
     constructor: Skin,
-    /**
-     * `Skin.prototype._CLASSES` contains the list of classes derived from Skin. It
-     * should be read-only and updated by real skin classes at creation time.
-     * @protected
-     * @type {object} */
-    _CLASSES: {},
-    /**
-     * The prototype stores a collection of realized __Skin__ objects.<br>
-     * Is important to access always this member as a `Skin.prototype.skinStack`
-     * @type {Skin[]} */
-    _skinStack: [],
     /**
      * The HTML div object used by this Skin
      * @type {external:jQuery} */
@@ -164,8 +163,8 @@ define([
       var sk = null;
       // look for the skin in the stack of realized skins
       if (skinName && ps) {
-        for (var i = 0; i < Skin.prototype._skinStack; i++) {
-          sk = Skin.prototype._skinStack[i];
+        for (var i = 0; i < Skin.skinStack; i++) {
+          sk = Skin.skinStack[i];
           if (sk.name === skinName && sk.ps === ps)
             return sk;
         }
@@ -173,7 +172,7 @@ define([
 
       // Locates the class of the requested Skin (or [DefaultSkin](DefaultSkin.html)
       // if not specified), creates and registers it on `skinStack`
-      var cl = Skin.prototype._CLASSES[skinName ? skinName : 'DefaultSkin'];
+      var cl = Skin.CLASSES[skinName ? skinName : 'DefaultSkin'];
       if (cl) {
         sk = new cl(ps, skinName, $div);
         if ($xml)

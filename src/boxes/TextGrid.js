@@ -20,7 +20,7 @@ define([
   "./AbstractBox",
   "./TextGridContent"
 ], function ($, AWT, Utils, AbstractBox, TextGridContent) {
-  
+
   /**
    * This class is a special type of {@link AbstractBox} that displays a grid of single
    * characters.<br>
@@ -65,6 +65,25 @@ define([
     this.cursor = new AWT.Point();
   };
 
+  /**
+   * Factory constructor that creates an empty grid based on a {@link TextGridContent}
+   * @param {?AbstractBox} parent - The AbstractBox to which the text grid belongs
+   * @param {?AWT.Container} container - The container where the text grid will be placed.  
+   * @param {number} x - `X` coordinate of the upper left corner of the grid
+   * @param {number} y - `Y` coordinate of the upper left corner of the grid
+   * @param {TextGridContent} tgc - Object with the content and other settings of the grid
+   * @param {boolean} wildTransparent - When `true`, the wildcard will be transparent
+   * @returns {TextGrid}
+   */
+  TextGrid.createEmptyGrid = function (parent, container, x, y, tgc, wildTransparent) {
+    var result = new TextGrid(parent, container, tgc.bb,
+        x, y, tgc.ncw, tgc.nch, tgc.w, tgc.h, tgc.border);
+    result.wild = tgc.wild;
+    result.randomChars = tgc.randomChars;
+    result.wildTransparent = wildTransparent;
+    return result;
+  };
+
   TextGrid.prototype = {
     constructor: TextGrid,
     /**
@@ -81,7 +100,7 @@ define([
     chars: null,
     /**
      * Two-dimension array with the expected characters, used to check user's answers.
-     * @type {string[][]} */    
+     * @type {string[][]} */
     answers: null,
     /**
      * Two-dimension array of bytes used as containers of boolean attributes
@@ -94,7 +113,7 @@ define([
     cellWidth: 20,
     /**
      * The cell height, in pixels
-     * @type {number} */    
+     * @type {number} */
     cellHeight: 20,
     /**
      * The preferred bounds of this grid
@@ -102,7 +121,7 @@ define([
     preferredBounds: null,
     /**
      * The character to be used as wildcard
-     * @type {string} */    
+     * @type {string} */
     wild: TextGridContent.prototype.wild,
     /**
      * Characters that can be used when randomizing the content of this grid
@@ -119,7 +138,7 @@ define([
     useCursor: false,
     /**
      * The current position of the cursor
-     * @type {AWT.Point} */    
+     * @type {AWT.Point} */
     cursor: null,
     /**
      * `true` when the cursor is "blinking" (cell drawed with {@link BoxBase} `inverse` attributes)
@@ -153,27 +172,6 @@ define([
       LOCKED: 4,
       MARKED: 8,
       TRANSPARENT: 16
-    },
-    /**
-     * 
-     * Creates an empty grid based on a {@link TextGridContent}
-     * This static method should be called always as `TextGrid.prototype._createEmptyGrid(...)`
-     * @static
-     * @param {?AbstractBox} parent - The AbstractBox to which the text grid belongs
-     * @param {?AWT.Container} container - The container where the text grid will be placed.  
-     * @param {number} x - `X` coordinate of the upper left corner of the grid
-     * @param {number} y - `Y` coordinate of the upper left corner of the grid
-     * @param {TextGridContent} tgc - Object with the content and other settings of the grid
-     * @param {boolean} wildTransparent - When `true`, the wildcard will be transparent
-     * @returns {TextGrid}
-     */
-    _createEmptyGrid: function (parent, container, x, y, tgc, wildTransparent) {
-      var result = new TextGrid(parent, container, tgc.bb,
-          x, y, tgc.ncw, tgc.nch, tgc.w, tgc.h, tgc.border);
-      result.wild = tgc.wild;
-      result.randomChars = tgc.randomChars;
-      result.wildTransparent = wildTransparent;
-      return result;
     },
     /**
      * 

@@ -35,7 +35,6 @@ define([
   var TOUCH_TEST_EVENT = 'touchstart';
 
   /**
-   * 
    * Activity is the abstract base class of JClic activities. It defines also the inner class
    * {@link Activity.ActivityPanel}, wich is responsible for user interaction with the activity
    * content.
@@ -53,45 +52,44 @@ define([
     this.abc = {};
   };
 
+  /**
+   * 
+   * Classes derived from `Activity` should register themselves by adding a field to
+   * `Activity.CLASSES` using its name as identifier and the class constructor as a value.
+   * @example
+   * // To be included at the end of MyActivity class:
+   * Activity.CLASSES['custom@myActivity'] = MyActivity;
+   * @type {object}
+   */
+  Activity.CLASSES = {
+    '@panels.Menu': Activity
+  };
+
+  /**
+   * 
+   * Factory constructor that returns a specific type of Activity based on the `class` attribute
+   * declared in the $xml parameter.
+   * @param {external:jQuery} $xml - The XML element to be parsed
+   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   * @returns {Activity}
+   */
+  Activity.getActivity = function ($xml, project) {
+    var act = null;
+    if ($xml && project) {
+      var className = $xml.attr('class');
+      var cl = Activity.CLASSES[className];
+      if (cl) {
+        act = new cl(project);
+        act.setProperties($xml);
+      }
+      else
+        console.log('[JClic] Unknown activity class: ' + className);
+    }
+    return act;
+  };
+
   Activity.prototype = {
     constructor: Activity,
-    /**
-     * 
-     * Classes derived from `Activity` should register themselves by adding a field to
-     * `Activity.prototype._CLASSES` with its name as identifier and the class constructor as
-     * a value.
-     * @example
-     * // To be included at the end of MyActivity class:
-     * Activity.prototype._CLASSES['custom@myActivity'] = MyActivity;
-     * @protected
-     * @final
-     * @type {object} */
-    _CLASSES: {
-      '@panels.Menu': Activity
-    },
-    /**
-     * 
-     * Factory constructor that returns a specific type of Activity based on the `class` attribute
-     * declared in the $xml parameter.
-     * @final
-     * @param {external:jQuery} $xml - The XML element to be parsed
-     * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
-     * @returns {Activity}
-     */
-    _getActivity: function ($xml, project) {
-      var act = null;
-      if ($xml && project) {
-        var className = $xml.attr('class');
-        var cl = Activity.prototype._CLASSES[className];
-        if (cl) {
-          act = new cl(project);
-          act.setProperties($xml);
-        }
-        else
-          console.log('[JClic] Unknown activity class: ' + className);
-      }
-      return act;
-    },
     /** 
      * The {@link JClicProject} to which this activity belongs
      * @type {JClicProject} */
@@ -581,7 +579,7 @@ define([
             break;
 
           case 'evaluator':
-            act.ev = Evaluator.prototype._getEvaluator($node);
+            act.ev = Evaluator.getEvaluator($node);
             break;
 
           case 'document':

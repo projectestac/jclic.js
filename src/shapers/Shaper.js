@@ -32,14 +32,33 @@ define([
     this.reset(nx, ny);
   };
 
+  /**
+   * List of known classes derived from Shaper. It should be filled by real shaper classes at
+   * declaration time.
+   * @type {object} */
+  Shaper.CLASSES = {};
+
+  /**
+   * Factory constructor that returns a Shaper of the requested class.
+   * @param {string} className - The class name of the requested Shaper.
+   * @param {number} nx - Number of columns (in grid-based shapers)
+   * @param {number} ny - Number of rows (in grid-based shapers)
+   * @returns {Shaper}
+   */
+  Shaper.getShaper = function (className, nx, ny) {
+    var shaper = null;
+    var cl = Shaper.CLASSES[className];
+    if (cl) {
+      shaper = new cl(nx, ny);
+    }
+    else
+      console.log('Unknown shaper: ' + className);
+
+    return shaper;
+  };
+
   Shaper.prototype = {
     constructor: Shaper,
-    /**
-     * `Shaper.prototype._CLASSES` contains the list of classes derived from Shaper. It should be
-     * updated by real shaper classes.
-     * @protected
-     * @type {object} */
-    _CLASSES: {},
     /**
      * This shaper class name
      * @type {string} */
@@ -214,25 +233,7 @@ define([
     },
     /**
      * 
-     * Returns a Shaper of the requested class. This method should be called only by `Shaper.prototype._getShaper`
-     * @param {string} className - The class name of the requested Shaper.
-     * @param {number} nx - Number of columns (in grid-based shapers)
-     * @param {number} ny - Number of rows (in grid-based shapers)
-     * @returns {Shaper}
-     */
-    _getShaper: function (className, nx, ny) {
-      var shaper = null;
-      var cl = Shaper.prototype._CLASSES[className];
-      if (cl) {
-        shaper = new cl(nx, ny);
-      }
-      else
-        console.log('Unknown shaper: ' + className);
-
-      return shaper;
-    },
-    /**
-     * Builds the shapes that will form this Shaper
+     * Builds the individual shapes that will form this Shaper
      */
     buildShapes: function () {
     },

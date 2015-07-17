@@ -55,6 +55,10 @@ define([
     this._metrics = {ascent: -1, descent: -1, height: -1};
   };
 
+  /** 
+   * Array of font objects with already calculated heights */
+  AWT.Font.ALREADY_CALCULATED_FONTS = [];
+
   AWT.Font.prototype = {
     constructor: AWT.Font,
     /** 
@@ -85,9 +89,6 @@ define([
      * {@link AWT.Font#_calcHeight _calcHeight()} as needed.
      * @type {{ascent: number, descent: number, height: number}} */
     _metrics: {ascent: -1, descent: -1, height: -1},
-    /** 
-     * Array of font objects with already calculated heights, always stored on the prototype */
-    _ALREADY_CALCULATED_FONTS: [],
     /**
      * 
      * Reads the properties of this Font from an XML element
@@ -126,8 +127,8 @@ define([
     getHeight: function () {
       if (this._metrics.height < 0) {
         // Look for an equivalent font already calculated
-        for (var i = 0; i < AWT.Font.prototype._ALREADY_CALCULATED_FONTS.length; i++) {
-          var font = AWT.Font.prototype._ALREADY_CALCULATED_FONTS[i];
+        for (var i = 0; i < AWT.Font.ALREADY_CALCULATED_FONTS.length; i++) {
+          var font = AWT.Font.ALREADY_CALCULATED_FONTS[i];
           if (font.equals(this)) {
             this._metrics.height = font._metrics.height;
             this._metrics.ascent = font._metrics.ascent;
@@ -138,7 +139,7 @@ define([
         if (this._metrics.height < 0) {
           this._calcHeight();
           if (this._metrics.height > 0)
-            AWT.Font.prototype._ALREADY_CALCULATED_FONTS.push(this);
+            AWT.Font.ALREADY_CALCULATED_FONTS.push(this);
         }
       }
       return this._metrics.height;
@@ -1099,7 +1100,7 @@ define([
   };
   // Path extends Shape
   AWT.Path.prototype = $.extend(Object.create(AWT.Shape.prototype), AWT.Path.prototype);
-  
+
   /**
    * 
    * PathStroke is the basic component of AWT.Path objects
@@ -1398,7 +1399,7 @@ define([
       return this.setEnabled(false, retainCounter);
     }
   };
-  
+
   /**
    * Logic object that takes care of an "invalidated" rectangle that will be repainted
    * at the next update of a 2D object, usually an HTML Canvas.
@@ -1442,7 +1443,7 @@ define([
      */
     update: function () {
       this.updateContent(this.invalidatedRect);
-      if(this.invalidatedRect)
+      if (this.invalidatedRect)
         this.invalidatedRect = null;
       return this;
     },

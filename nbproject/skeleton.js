@@ -7,17 +7,27 @@ define([
   "jquery"
 ], function($){
 
-  //
-  // Description
+  /**
+   * Description of XXX
+   * @exports XXX
+   * @class
+   * @param {type} id - Param description
+   */
   var XXX = function (id) {
     this.id = id;
   };
 
   XXX.prototype = {
     constructor: XXX,
+    /**
+     * Description of field aaa
+     * @type {type} */
     aaa: bbb,
-    //
-    // Loads the object settings from a specific JQuery XML element
+    /**
+     * 
+     * Loads this object settings from an XML element 
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
     setProperties: function ($xml) {
       this.aaa = $xml.attr('aaa');
       return this;
@@ -37,8 +47,12 @@ define([
   "BaseClass"
 ], function($, BaseClass){
 
-  //
-  // Description
+  /**
+   * Description of XXX
+   * @exports XXX
+   * @class
+   * @param {type} id - Param description
+   */
   var XXX = function (id) {
     BaseClass.call(this, id);
     this.id = id;
@@ -46,9 +60,15 @@ define([
 
   XXX.prototype = {
     constructor: XXX,
+    /**
+     * Description of field aaa
+     * @type {type} */
     aaa: bbb,
-    //
-    // Loads the object settings from a specific JQuery XML element
+    /**
+     * 
+     * Loads this object settings from an XML element 
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
     setProperties: function ($xml) {
       this.aaa = $xml.attr('aaa');
       return this;
@@ -111,7 +131,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@package.XXX'] = XXX;
+  Activity.CLASSES['@package.XXX'] = XXX;
 
   return XXX;
 

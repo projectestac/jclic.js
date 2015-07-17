@@ -156,7 +156,7 @@ define([
             var shaperClassName = $node.attr('class'),
                 nCols = Math.max(1, $node.attr('cols')),
                 nRows = Math.max(1, $node.attr('rows'));
-            cellSet.shaper = Shaper.prototype._getShaper(shaperClassName, nCols, nRows);
+            cellSet.shaper = Shaper.getShaper(shaperClassName, nCols, nRows);
             cellSet.shaper.setProperties($node);
             break;
           case 'ids':
@@ -245,7 +245,7 @@ define([
      */
     getShaper: function () {
       if (this.shaper === null)
-        this.shaper = Shaper.prototype._getShaper('@Rectangular', this.ncw, this.nch);
+        this.shaper = Shaper.getShaper('@Rectangular', this.ncw, this.nch);
       return this.shaper;
     },
     /**

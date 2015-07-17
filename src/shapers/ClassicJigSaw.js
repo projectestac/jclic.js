@@ -15,9 +15,10 @@
 
 define([
   "jquery",
+  "./Shaper",
   "./JigSaw",
   "../AWT"
-], function ($, JigSaw, AWT) {
+], function ($, Shaper, JigSaw, AWT) {
   /**
    * This is the classic {@link JigSaw} {@link Shaper} used in puzzle toys, where teeth and slots
    * are shaped by bezier curves.
@@ -113,7 +114,7 @@ define([
   ClassicJigSaw.prototype = $.extend(Object.create(JigSaw.prototype), ClassicJigSaw.prototype);
 
   // Register this class in the list of known shapers
-  JigSaw.prototype._CLASSES['@ClassicJigSaw'] = ClassicJigSaw;
+  Shaper.CLASSES['@ClassicJigSaw'] = ClassicJigSaw;
 
   return ClassicJigSaw;
 });

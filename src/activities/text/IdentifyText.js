@@ -57,7 +57,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@text.Identify'] = IdentifyText;
+  Activity.CLASSES['@text.Identify'] = IdentifyText;
 
   return IdentifyText;
 });

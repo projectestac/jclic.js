@@ -163,7 +163,7 @@ define([
       }
 
       if (tgc) {
-        this.grid = TextGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, tgc, this.act.wildTransparent);
+        this.grid = TextGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, tgc, this.act.wildTransparent);
         this.bb = new BoxBag(null, this, null);
         var bxbh = this.createBoxBag('acrossClues');
         var bxbv = this.createBoxBag('downClues');
@@ -234,7 +234,7 @@ define([
       if (!this.grid || !this.bb || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
       else
-        return BoxBag.prototype._layoutDouble(preferredMaxSize, this.grid, this.bb, this.act.boxGridPos, this.act.margin);
+        return BoxBag.layoutDouble(preferredMaxSize, this.grid, this.bb, this.act.boxGridPos, this.act.margin);
     },
     //
     // Set the size and position of this activity panel
@@ -440,7 +440,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@textGrid.CrossWord'] = CrossWord;
+  Activity.CLASSES['@textGrid.CrossWord'] = CrossWord;
 
   return CrossWord;
 

@@ -97,7 +97,6 @@ define([], function () {
    * This object should be updated by real automation classes at declaration time.<br>
    * Currently, only two autocontentproviders are defined: {@link Arith} and TagReplace.
    * @type {object} */
-
   AutoContentProvider.CLASSES = {
     // TODO: Implement TagReplace
     '@tagreplace.TagReplace': AutoContentProvider

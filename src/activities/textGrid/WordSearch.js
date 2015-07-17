@@ -115,10 +115,10 @@ define([
       }
 
       if (tgc) {
-        this.grid = TextGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, tgc, false);
+        this.grid = TextGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, tgc, false);
 
         if (abcAlt)
-          this.bgAlt = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abcAlt);
+          this.bgAlt = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abcAlt);
 
         this.grid.setVisible(true);
       }
@@ -181,9 +181,9 @@ define([
       if (!this.grid || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
       if (this.bgAlt)
-        return BoxBag.prototype._layoutDouble(preferredMaxSize, this.grid, this.bgAlt, this.act.boxGridPos, this.act.margin);
+        return BoxBag.layoutDouble(preferredMaxSize, this.grid, this.bgAlt, this.act.boxGridPos, this.act.margin);
       else
-        return BoxBag.prototype._layoutSingle(preferredMaxSize, this.grid, this.act.margin);
+        return BoxBag.layoutSingle(preferredMaxSize, this.grid, this.act.margin);
     },
     //
     // Set the size and position of this activity panel
@@ -346,7 +346,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@textGrid.WordSearch'] = WordSearch;
+  Activity.CLASSES['@textGrid.WordSearch'] = WordSearch;
 
   return WordSearch;
 

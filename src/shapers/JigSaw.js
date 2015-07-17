@@ -162,7 +162,7 @@ define([
   JigSaw.prototype = $.extend(Object.create(Shaper.prototype), JigSaw.prototype);
 
   // Register this class in the list of known shapers
-  Shaper.prototype._CLASSES['@JigSaw'] = JigSaw;
+  Shaper.CLASSES['@JigSaw'] = JigSaw;
 
   return JigSaw;
 

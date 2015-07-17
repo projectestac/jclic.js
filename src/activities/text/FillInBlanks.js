@@ -343,7 +343,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@text.FillInBlanks'] = FillInBlanks;
+  Activity.CLASSES['@text.FillInBlanks'] = FillInBlanks;
 
   return FillInBlanks;
 

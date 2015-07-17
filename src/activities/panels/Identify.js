@@ -108,7 +108,7 @@ define([
           }
           this.act.acp.generateContent(abc.nch, abc.ncw, contentKit, false);
         }
-        this.bg = ActiveBoxGrid.prototype._createEmptyGrid(null, this,
+        this.bg = ActiveBoxGrid.createEmptyGrid(null, this,
             this.act.margin, this.act.margin,
             abc);
         this.bg.setContent(abc, solved ? solved : null);
@@ -171,7 +171,7 @@ define([
     setDimension: function (preferredMaxSize) {
       if (this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
-      return BoxBag.prototype._layoutSingle(preferredMaxSize, this.bg, this.act.margin);
+      return BoxBag.layoutSingle(preferredMaxSize, this.bg, this.act.margin);
     },
     //
     // Sets the size and position of this activity panel
@@ -242,7 +242,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@panels.Identify'] = Identify;
+  Activity.CLASSES['@panels.Identify'] = Identify;
 
   return Identify;
 

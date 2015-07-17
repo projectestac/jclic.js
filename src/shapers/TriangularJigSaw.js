@@ -15,9 +15,10 @@
 
 define([
   "jquery",
+  "./Shaper",
   "./JigSaw",
   "../AWT"
-], function ($, JigSaw, AWT) {
+], function ($, Shaper, JigSaw, AWT) {
   /**
    * This {@link Shaper} returns a set of rectangular shapes with triangular teeth and slots that
    * fit between them.
@@ -103,7 +104,7 @@ define([
   TriangularJigSaw.prototype = $.extend(Object.create(JigSaw.prototype), TriangularJigSaw.prototype);
 
   // Register this class in the list of known shapers
-  JigSaw.prototype._CLASSES['@TriangularJigSaw'] = TriangularJigSaw;
+  Shaper.CLASSES['@TriangularJigSaw'] = TriangularJigSaw;
 
   return TriangularJigSaw;
 });

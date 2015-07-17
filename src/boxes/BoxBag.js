@@ -305,183 +305,180 @@ define([
           n++;
       }
       return n;
-    },
-    /**
-     * 
-     * Sets the position and dimension of a Resizable object based on a preferred maximum dimension,
-     * and a margin.<br>
-     * This is a static function and should be called directly from prototype as: `BoxBag.prototype._layoutSingle(...)`
-     * @param {AWT.Dimension} preferredMaxSize - The preferred maximum size
-     * @param {Resizable} rs - A resizable object implementing the methods described in the
-     * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html Resizable}
-     * interface of JClic. Currently a {@link BoxBag} or {@link TextGrid}.
-     * @param {number} margin - The margin between the available area and the BoxBag
-     * @returns {AWT.Dimension} - The resulting size of the container
-     */
-    _layoutSingle: function (preferredMaxSize, rs, margin) {
-
-      // Avoid exceptions when rs is null
-      if (!rs)
-        return preferredMaxSize;
-
-      // optimal dimension
-      var d = rs.getPreferredSize();
-
-      // minimal dimension
-      var minSize = rs.getMinimumSize();
-      // maximal dimension
-      var maxSize = preferredMaxSize;
-      // remove margins
-      maxSize.width -= 2 * margin;
-      maxSize.height -= 2 * margin;
-      // correct maxSize if less than minSize
-      if (minSize.width > maxSize.width || minSize.height > maxSize.height) {
-        maxSize = minSize;
-      }
-      // compute scale factor
-      var scale = 1;
-      if (d.width > maxSize.width) {
-        scale = maxSize.width / d.width;
-      }
-      if ((scale * d.height) > maxSize.height) {
-        scale = maxSize.height / d.height;
-      }
-      // resize the Resizable object
-      d = rs.getScaledSize(scale);
-      rs.setBounds(margin, margin, d.width, d.height);
-
-      // restore margins
-      d.width += 2 * margin;
-      d.height += 2 * margin;
-
-      return d;
-    },
-    /**
-     * 
-     * Sets the position and dimension of two Resizable objects based on a preferred maximum size,
-     * a layout schema and a margin.<br>
-     * This is a static function and should be called directly from prototype as: `BoxBag.prototype._layoutDouble(...)`
-     * @param {AWT.Dimension} desiredMaxSize - The preferred maximum size
-     * @param {Resizable} rsA - First resizable object implementing the methods described in the
-     * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html Resizable}
-     * interface of JClic. Currently a {@link BoxBag} or {@link TextGrid}.
-     * @param {Resizable} rsB - Second resizable object
-     * @param {string} boxGridPos -  - The layout schema. Possible values are:
-     * - "AB" (_A_ at left, _B_ at right)
-     * - "BA" (_B_ at left, _A_ at right)
-     * - "AUB" (_A_ above _B_)
-     * - "BUA" (_A_ below _B_).
-     * @param {number} margin - The margin between the available area and the BoxBag
-     * @returns {AWT.Dimension} - The resulting size of the container
-     */
-    _layoutDouble: function (desiredMaxSize, rsA, rsB, boxGridPos, margin) {
-      // number of horizontal and vertical grid lines
-      var isHLayout = false;
-      var nbh = 1, nbv = 1;
-      switch (boxGridPos) {
-        case 'AB':
-        case 'BA':
-          nbh = 2;
-          nbv = 1;
-          isHLayout = true;
-          break;
-        case 'AUB':
-        case 'BUA':
-          nbh = 1;
-          nbv = 2;
-          isHLayout = false;
-          break;
-      }
-      var ra = rsA.getBounds();
-      var rb = rsB.getBounds();
-      // optimal dimensions
-      var da = rsA.getPreferredSize();
-      var db = rsB.getPreferredSize();
-      var d = new AWT.Dimension(
-          isHLayout ? da.width + db.width : Math.max(da.width, db.width),
-          isHLayout ? Math.max(da.height, db.height) : da.height + db.height
-          );
-      // minimal dimensions
-      var minSizeA = rsA.getMinimumSize();
-      var minSizeB = rsB.getMinimumSize();
-      var minSize = new AWT.Dimension(
-          isHLayout ? minSizeA.width + minSizeB.width : Math.max(minSizeA.width, minSizeB.width),
-          isHLayout ? Math.max(minSizeA.height, minSizeB.height) : minSizeA.height + minSizeB.height
-          );
-      // maximal dimension
-      var maxSize = desiredMaxSize;
-      // remove margins
-      maxSize.width -= (1 + nbh) * margin;
-      maxSize.height -= (1 + nbv) * margin;
-
-      // correct maxSize if less than minSize
-      if (minSize.width > maxSize.width || minSize.height > maxSize.height)
-        maxSize.setDimension(minSize);
-
-      // compute scale factor
-      var scale = 1;
-      if (d.width > maxSize.width) {
-        scale = maxSize.width / d.width;
-      }
-      if ((scale * d.height) > maxSize.height) {
-        scale = maxSize.height / d.height;
-      }
-      // 
-      // correct possible minimal infractions
-      // ...
-      // resize
-      da = rsA.getScaledSize(scale);
-      db = rsB.getScaledSize(scale);
-
-      // set margins to center one box relative to the other
-      var dah, dav, dbh, dbv;
-      dah = db.width > da.width ? (db.width - da.width) / 2 : 0;
-      dbh = da.width > db.width ? (da.width - db.width) / 2 : 0;
-      dav = db.height > da.height ? (db.height - da.height) / 2 : 0;
-      dbv = da.height > db.height ? (da.height - db.height) / 2 : 0;
-
-      switch (boxGridPos) {
-        case 'AB':
-          rsA.setBounds(margin, margin + dav, da.width, da.height);
-          rsB.setBounds(2 * margin + da.width, margin + dbv, db.width, db.height);
-          break;
-        case 'BA':
-          rsB.setBounds(margin, margin + dbv, db.width, db.height);
-          rsA.setBounds(2 * margin + db.width, margin + dav, da.width, da.height);
-          break;
-        case 'AUB':
-          rsA.setBounds(margin + dah, margin, da.width, da.height);
-          rsB.setBounds(margin + dbh, 2 * margin + da.height, db.width, db.height);
-          break;
-        case 'BUA':
-          rsB.setBounds(margin + dbh, margin, db.width, db.height);
-          rsA.setBounds(margin + dah, 2 * margin + db.height, da.width, da.height);
-          break;
-        default:
-          rsA.setBounds(
-              Math.round(margin + scale * ra.pos.x),
-              Math.round(margin + scale * ra.pos.y),
-              da.width, da.height);
-          rsB.setBounds(
-              Math.round(margin + scale * rb.pos.x),
-              Math.round(margin + scale * rb.pos.y),
-              da.width, da.height);
-          break;
-      }
-
-      // recompute 'd' adding margins
-      var r = new AWT.Rectangle(rsA.getBounds());
-      r.add(rsB.getBounds());
-      d.width = r.dim.width + 2 * margin;
-      d.height = r.dim.height + 2 * margin;
-
-      return d;
     }
-
   };
 
   // BoxBag extends AbstractBox
   BoxBag.prototype = $.extend(Object.create(AbstractBox.prototype), BoxBag.prototype);
+
+  /**
+   * Static function that sets the position and dimension of a Resizable object based on a
+   * preferred maximum dimension and a margin.<br>
+   * @param {AWT.Dimension} preferredMaxSize - The preferred maximum size
+   * @param {Resizable} rs - A resizable object implementing the methods described in the
+   * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html Resizable}
+   * interface of JClic. Currently a {@link BoxBag} or {@link TextGrid}.
+   * @param {number} margin - The margin between the available area and the BoxBag
+   * @returns {AWT.Dimension} - The resulting size of the container
+   */
+  BoxBag.layoutSingle = function (preferredMaxSize, rs, margin) {
+
+    // Avoid exceptions when rs is null
+    if (!rs)
+      return preferredMaxSize;
+
+    // optimal dimension
+    var d = rs.getPreferredSize();
+
+    // minimal dimension
+    var minSize = rs.getMinimumSize();
+    // maximal dimension
+    var maxSize = preferredMaxSize;
+    // remove margins
+    maxSize.width -= 2 * margin;
+    maxSize.height -= 2 * margin;
+    // correct maxSize if less than minSize
+    if (minSize.width > maxSize.width || minSize.height > maxSize.height) {
+      maxSize = minSize;
+    }
+    // compute scale factor
+    var scale = 1;
+    if (d.width > maxSize.width) {
+      scale = maxSize.width / d.width;
+    }
+    if ((scale * d.height) > maxSize.height) {
+      scale = maxSize.height / d.height;
+    }
+    // resize the Resizable object
+    d = rs.getScaledSize(scale);
+    rs.setBounds(margin, margin, d.width, d.height);
+
+    // restore margins
+    d.width += 2 * margin;
+    d.height += 2 * margin;
+
+    return d;
+  };
+
+  /**
+   * Static function that sets the position and dimension of two Resizable objects based on a
+   * preferred maximum size, a layout schema and a margin.<br>
+   * @param {AWT.Dimension} desiredMaxSize - The preferred maximum size
+   * @param {Resizable} rsA - First resizable object implementing the methods described in the
+   * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html Resizable}
+   * interface of JClic. Currently a {@link BoxBag} or {@link TextGrid}.
+   * @param {Resizable} rsB - Second resizable object
+   * @param {string} boxGridPos -  - The layout schema. Possible values are:
+   * - "AB" (_A_ at left, _B_ at right)
+   * - "BA" (_B_ at left, _A_ at right)
+   * - "AUB" (_A_ above _B_)
+   * - "BUA" (_A_ below _B_).
+   * @param {number} margin - The margin between the available area and the BoxBag
+   * @returns {AWT.Dimension} - The resulting size of the container
+   */
+  BoxBag.layoutDouble = function (desiredMaxSize, rsA, rsB, boxGridPos, margin) {
+    // number of horizontal and vertical grid lines
+    var isHLayout = false;
+    var nbh = 1, nbv = 1;
+    switch (boxGridPos) {
+      case 'AB':
+      case 'BA':
+        nbh = 2;
+        nbv = 1;
+        isHLayout = true;
+        break;
+      case 'AUB':
+      case 'BUA':
+        nbh = 1;
+        nbv = 2;
+        isHLayout = false;
+        break;
+    }
+    var ra = rsA.getBounds();
+    var rb = rsB.getBounds();
+    // optimal dimensions
+    var da = rsA.getPreferredSize();
+    var db = rsB.getPreferredSize();
+    var d = new AWT.Dimension(
+        isHLayout ? da.width + db.width : Math.max(da.width, db.width),
+        isHLayout ? Math.max(da.height, db.height) : da.height + db.height
+        );
+    // minimal dimensions
+    var minSizeA = rsA.getMinimumSize();
+    var minSizeB = rsB.getMinimumSize();
+    var minSize = new AWT.Dimension(
+        isHLayout ? minSizeA.width + minSizeB.width : Math.max(minSizeA.width, minSizeB.width),
+        isHLayout ? Math.max(minSizeA.height, minSizeB.height) : minSizeA.height + minSizeB.height
+        );
+    // maximal dimension
+    var maxSize = desiredMaxSize;
+    // remove margins
+    maxSize.width -= (1 + nbh) * margin;
+    maxSize.height -= (1 + nbv) * margin;
+
+    // correct maxSize if less than minSize
+    if (minSize.width > maxSize.width || minSize.height > maxSize.height)
+      maxSize.setDimension(minSize);
+
+    // compute scale factor
+    var scale = 1;
+    if (d.width > maxSize.width) {
+      scale = maxSize.width / d.width;
+    }
+    if ((scale * d.height) > maxSize.height) {
+      scale = maxSize.height / d.height;
+    }
+    // 
+    // correct possible minimal infractions
+    // ...
+    // resize
+    da = rsA.getScaledSize(scale);
+    db = rsB.getScaledSize(scale);
+
+    // set margins to center one box relative to the other
+    var dah, dav, dbh, dbv;
+    dah = db.width > da.width ? (db.width - da.width) / 2 : 0;
+    dbh = da.width > db.width ? (da.width - db.width) / 2 : 0;
+    dav = db.height > da.height ? (db.height - da.height) / 2 : 0;
+    dbv = da.height > db.height ? (da.height - db.height) / 2 : 0;
+
+    switch (boxGridPos) {
+      case 'AB':
+        rsA.setBounds(margin, margin + dav, da.width, da.height);
+        rsB.setBounds(2 * margin + da.width, margin + dbv, db.width, db.height);
+        break;
+      case 'BA':
+        rsB.setBounds(margin, margin + dbv, db.width, db.height);
+        rsA.setBounds(2 * margin + db.width, margin + dav, da.width, da.height);
+        break;
+      case 'AUB':
+        rsA.setBounds(margin + dah, margin, da.width, da.height);
+        rsB.setBounds(margin + dbh, 2 * margin + da.height, db.width, db.height);
+        break;
+      case 'BUA':
+        rsB.setBounds(margin + dbh, margin, db.width, db.height);
+        rsA.setBounds(margin + dah, 2 * margin + db.height, da.width, da.height);
+        break;
+      default:
+        rsA.setBounds(
+            Math.round(margin + scale * ra.pos.x),
+            Math.round(margin + scale * ra.pos.y),
+            da.width, da.height);
+        rsB.setBounds(
+            Math.round(margin + scale * rb.pos.x),
+            Math.round(margin + scale * rb.pos.y),
+            da.width, da.height);
+        break;
+    }
+
+    // recompute 'd' adding margins
+    var r = new AWT.Rectangle(rsA.getBounds());
+    r.add(rsB.getBounds());
+    d.width = r.dim.width + 2 * margin;
+    d.height = r.dim.height + 2 * margin;
+
+    return d;
+  };
 
   return BoxBag;
 

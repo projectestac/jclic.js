@@ -64,7 +64,7 @@ define([
   Holes.prototype = $.extend(Object.create(Shaper.prototype), Holes.prototype);
 
   // Register this class in the list of known shapers
-  Shaper.prototype._CLASSES['@Holes'] = Holes;
+  Shaper.CLASSES['@Holes'] = Holes;
 
   return Holes;
 

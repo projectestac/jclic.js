@@ -136,7 +136,7 @@ define([
 
             case 'cell':
               // Create a new [ActiveBox] based on this [ActiveBoxContent]
-              var box = ActiveBox.prototype._createCell($span, this);
+              var box = ActiveBox.createCell($span, this);
               // Save the box for future references
               thisPanel.boxes.push(box);
               $span.css({'display': 'inline-block', 'vertical-align': 'middle'});

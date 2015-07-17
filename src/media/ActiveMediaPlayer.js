@@ -34,7 +34,7 @@ define([
     switch (mc.mediaType) {
       case 'RECORD_AUDIO':
         this.clearAudioBuffer(mc.recBuffer);
-        ActiveMediaPlayer.prototype._audioBuffer[mc.recBuffer] = this.createAudioBuffer(mc.length);
+        ActiveMediaPlayer.AUDIO_BUFFERS[mc.recBuffer] = this.createAudioBuffer(mc.length);
         /* falls through */
       case 'PLAY_RECORDED_AUDIO':
         this.useAudioBuffer = true;
@@ -56,14 +56,14 @@ define([
     }
   };
 
+  /**
+   * Audio buffers used for recording and playing voice are stored in a static array because
+   * they are common to all instances of {@link ActiveMediaPlayer}
+   * @type {AudioBuffer[]} */
+  ActiveMediaPlayer.AUDIO_BUFFERS = [];
+
   ActiveMediaPlayer.prototype = {
     constructor: ActiveMediaPlayer,
-    /**
-     * The audio buffers used for recording and playing voice are stored in the prototype because
-     * are common to all instances of {@link ActiveMediaPlayer}
-     * @protected
-     * @type {AudioBuffer[]} */
-    _audioBuffer: [],
     /**
      * The MediaContent associated to this player.
      * @type {MediaContent} */
@@ -201,12 +201,12 @@ define([
     /**
      * 
      * Clears the specified audio buffer
-     * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer#_audioBuffer}
+     * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
      */
     clearAudioBuffer: function (buffer) {
-      if (buffer >= 0 && buffer < ActiveMediaPlayer.prototype._audioBuffer.length && ActiveMediaPlayer.prototype._audioBuffer[buffer] !== null) {
-        ActiveMediaPlayer.prototype._audioBuffer[buffer].clear();
-        ActiveMediaPlayer.prototype._audioBuffer[buffer] = null;
+      if (buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length && ActiveMediaPlayer.AUDIO_BUFFERS[buffer] !== null) {
+        ActiveMediaPlayer.AUDIO_BUFFERS[buffer].clear();
+        ActiveMediaPlayer.AUDIO_BUFFERS[buffer] = null;
       }
     },
     /**
@@ -214,7 +214,7 @@ define([
      * Clears all audio buffers
      */
     clearAllAudioBuffers: function () {
-      for (var i = 0; i < ActiveMediaPlayer.prototype._audioBuffer.length; i++)
+      for (var i = 0; i < ActiveMediaPlayer.AUDIO_BUFFERS.length; i++)
         this.clearAudioBuffer(i);
     },
     /**
@@ -224,8 +224,8 @@ define([
      */
     countActiveBuffers: function () {
       var c = 0;
-      for (var i = 0; i < ActiveMediaPlayer.prototype._audioBuffer.length; i++)
-        if (ActiveMediaPlayer.prototype._audioBuffer[i])
+      for (var i = 0; i < ActiveMediaPlayer.AUDIO_BUFFERS.length; i++)
+        if (ActiveMediaPlayer.AUDIO_BUFFERS[i])
           c++;
       return c;
     },
@@ -234,18 +234,18 @@ define([
      * Stops the playing or recording actions of all audio buffers
      */
     stopAllAudioBuffers: function () {
-      for (var i = 0; i < ActiveMediaPlayer.prototype._audioBuffer.length; i++)
-        if (ActiveMediaPlayer.prototype._audioBuffer[i])
-          ActiveMediaPlayer.prototype._audioBuffer[i].stop();
+      for (var i = 0; i < ActiveMediaPlayer.AUDIO_BUFFERS.length; i++)
+        if (ActiveMediaPlayer.AUDIO_BUFFERS[i])
+          ActiveMediaPlayer.AUDIO_BUFFERS[i].stop();
     },
     /**
      * 
      * Stops a specific audio buffer
-     * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer#_audioBuffer}
+     * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
      */
     stopAudioBuffer: function (buffer) {
-      if (buffer >= 0 && buffer < ActiveMediaPlayer.prototype._audioBuffer.length && ActiveMediaPlayer.prototype._audioBuffer[buffer] !== null)
-        ActiveMediaPlayer.prototype._audioBuffer[buffer].stop();
+      if (buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length && ActiveMediaPlayer.AUDIO_BUFFERS[buffer] !== null)
+        ActiveMediaPlayer.AUDIO_BUFFERS[buffer].stop();
     },
     /**
      * 

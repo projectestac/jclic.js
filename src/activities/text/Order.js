@@ -52,7 +52,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@text.Order'] = Order;
+  Activity.CLASSES['@text.Order'] = Order;
 
   return Order;
 });

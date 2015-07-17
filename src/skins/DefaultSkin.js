@@ -374,7 +374,7 @@ define([
   DefaultSkin.prototype = $.extend(Object.create(Skin.prototype), DefaultSkin.prototype);
 
   // Register this class in the list of available skins
-  Skin.prototype._CLASSES['DefaultSkin'] = DefaultSkin;
+  Skin.CLASSES['DefaultSkin'] = DefaultSkin;
 
   return DefaultSkin;
 });

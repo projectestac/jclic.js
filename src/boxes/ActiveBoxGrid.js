@@ -74,6 +74,34 @@ define([
     }
   };
 
+  /**
+   * 
+   * This factory constructor creates a new empty grid with the number of cells indicated by the
+   * {@link ActiveBagContent} `abc`, not filling the cells with any content.
+   * @param {?AbstractBox} parent - The AbstractBox to which this box grid belongs
+   * @param {?AWT.Container} container - The container where this box grid is placed.  
+   * @param {number} px - `X` coordinate of the upper left corner of this box grid
+   * @param {number} py - `Y` coordinate of the upper left corner of this box grid
+   * @param {ActiveBagContent} abc - Used only to get the number of cells and the shaper (when `sh` is `null`)
+   * @param {?Shaper} sh - Shaper used to build the ActiveBox objects
+   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   * of this box grid are defined.
+   * @returns {ActiveBoxGrid}
+   */
+  ActiveBoxGrid.createEmptyGrid = function (parent, container, px, py, abc, sh, boxBase) {
+    var result = null;
+    if (abc) {
+      result = new ActiveBoxGrid(parent, container,
+          boxBase ? boxBase : abc.bb,
+          px, py,
+          abc.getTotalWidth(), abc.getTotalHeight(),
+          sh ? sh : abc.getShaper());
+
+      result.setBorder(abc.border);
+    }
+    return result;
+  };
+
   ActiveBoxGrid.prototype = {
     constructor: ActiveBoxGrid,
     /**
@@ -104,33 +132,6 @@ define([
       return new AWT.Dimension(
           Utils.roundTo(scale * this.preferredBounds.dim.width, this.nCols),
           Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
-    },
-    /**
-     * 
-     * This prototype method creates a new grid with the number of cells indicated by the
-     * {@link ActiveBagContent} `abc`, but not filling the cells with any content.
-     * @param {?AbstractBox} parent - The AbstractBox to which this box grid belongs
-     * @param {?AWT.Container} container - The container where this box grid is placed.  
-     * @param {number} px - `X` coordinate of the upper left corner of this box grid
-     * @param {number} py - `Y` coordinate of the upper left corner of this box grid
-     * @param {ActiveBagContent} abc - Used only to get the number of cells and the shaper (when `sh` is `null`)
-     * @param {?Shaper} sh - Shaper used to build the ActiveBox objects
-     * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
-     * of this box grid are defined.
-     * @returns {ActiveBoxGrid}
-     */
-    _createEmptyGrid: function (parent, container, px, py, abc, sh, boxBase) {
-      var result = null;
-      if (abc) {
-        result = new ActiveBoxGrid(parent, container,
-            boxBase ? boxBase : abc.bb,
-            px, py,
-            abc.getTotalWidth(), abc.getTotalHeight(),
-            sh ? sh : abc.getShaper());
-
-        result.setBorder(abc.border);
-      }
-      return result;
     },
     /**
      * 

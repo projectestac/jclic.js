@@ -150,7 +150,7 @@ define([
           this.act.acp.generateContent(abcA.nch, abcA.ncw, contentKit, false);
         }
 
-        this.bgA = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abcA);
+        this.bgA = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abcA);
 
         var w = abcB.w;
         if (this.act.boxGridPos === 'AUB' || this.act.boxGridPos === 'BUA')
@@ -263,7 +263,7 @@ define([
     setDimension: function (preferredMaxSize) {
       if (!this.bgA || !this.bgB || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
-      return BoxBag.prototype._layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
+      return BoxBag.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
     },
     //
     // Set the size and position of this activity panel
@@ -436,7 +436,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@text.WrittenAnswer'] = WrittenAnswer;
+  Activity.CLASSES['@text.WrittenAnswer'] = WrittenAnswer;
 
   return WrittenAnswer;
 

@@ -140,8 +140,8 @@ define([
           this.act.acp.generateContent(abcA.nch, abcA.ncw, contentKit, false);
         }
 
-        this.bgA = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abcA);
-        this.bgB = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abcB);
+        this.bgA = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abcA);
+        this.bgB = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abcB);
 
         this.bgA.setContent(abcA, solved ? solved : null);
         this.bgB.setContent(abcB);
@@ -202,7 +202,7 @@ define([
     setDimension: function (preferredMaxSize) {
       if (!this.bgA || !this.bgB || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
-      return BoxBag.prototype._layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
+      return BoxBag.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
     },
     //
     // Set the size and position of this activity panel
@@ -373,7 +373,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@associations.SimpleAssociation'] = SimpleAssociation;
+  Activity.CLASSES['@associations.SimpleAssociation'] = SimpleAssociation;
 
   return SimpleAssociation;
 

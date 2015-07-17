@@ -133,7 +133,7 @@ define([
      * @returns {Activity}
      */
     getActivity: function (name) {
-      return Activity.prototype._getActivity(this._activities[name], this);
+      return Activity.getActivity(this._activities[name], this);
     },
     /**
      * 

@@ -37,12 +37,39 @@ define([
     }
   };
 
+  //
+  // Factory constructor that returns a specific type of Evaluator
+  // based on the `class` attribute declared in the $xml element  
+  Evaluator.getEvaluator = function ($xml) {
+    var ev = null;
+    if ($xml) {
+      var className = $xml.attr('class');
+      var cl = Evaluator.CLASSES[className];
+      if (cl) {
+        ev = new cl(className);
+        ev.setProperties($xml);
+      }
+      else
+        console.log('[JClic] Unknown evaluator class: ' + className);
+    }
+    return ev;
+  };
+
+
   var BasicEvaluator = function (className) {
     Evaluator.call(this, className);
   };
 
   var ComplexEvaluator = function (className) {
     BasicEvaluator.call(this, className);
+  };
+  
+  /**
+   * List of known evaluator classes
+   * @type {object} */
+  Evaluator.CLASSES = {
+    '@BasicEvaluator': BasicEvaluator,
+    '@ComplexEvaluator': ComplexEvaluator
   };
 
   Evaluator.prototype = {
@@ -153,30 +180,6 @@ define([
         if (flags[i] !== 0)
           return false;
       return true;
-    },
-    //
-    // Dynamic constructor that returns a specific type of Evaluator
-    // based on the `class` attribute declared in the $xml element  
-    // Should be called only from Evaluator.constructor
-    _getEvaluator: function ($xml) {
-      var ev = null;
-      if ($xml) {
-        var className = $xml.attr('class');
-        var cl = Evaluator.prototype._CLASSES[className];
-        if (cl) {
-          ev = new cl(className);
-          ev.setProperties($xml);
-        }
-        else
-          console.log('[JClic] Unknown evaluator class: ' + className);
-      }
-      return ev;
-    },
-    //
-    // Evaluator classes
-    _CLASSES: {
-      '@BasicEvaluator': BasicEvaluator,
-      '@ComplexEvaluator': ComplexEvaluator
     },
     //
     // References to the two Evaluator classes:

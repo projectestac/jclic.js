@@ -52,7 +52,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@text.Complete'] = Complete;
+  Activity.CLASSES['@text.Complete'] = Complete;
 
   return Complete;
 });

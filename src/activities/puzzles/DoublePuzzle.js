@@ -110,8 +110,8 @@ define([
         if (this.act.acp !== null)
           this.act.acp.generateContent(abc.nch, abc.ncw, [abc], false);
 
-        this.bgA = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
-        this.bgB = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
+        this.bgA = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
+        this.bgB = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
 
         this.bgA.setContent(abc);
 
@@ -166,7 +166,7 @@ define([
     setDimension: function (preferredMaxSize) {
       if (!this.bgA || !this.bgB || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
-      return BoxBag.prototype._layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
+      return BoxBag.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
     },
     //
     // Sets the size and position of this activity panel
@@ -312,7 +312,7 @@ define([
 
   // 
   // Register class in Activity.prototype
-  Activity.prototype._CLASSES['@puzzles.DoublePuzzle'] = DoublePuzzle;
+  Activity.CLASSES['@puzzles.DoublePuzzle'] = DoublePuzzle;
 
   return DoublePuzzle;
 
