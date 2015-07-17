@@ -147,8 +147,7 @@ define([
           var contentKit = [abcA, abcB];
           if (solved)
             contentKit.push(solved);
-          this.act.acp.generateContent(
-              new this.act.acp.ActiveBagContentKit(abcA.nch, abcA.ncw, contentKit, false), this.ps);
+          this.act.acp.generateContent(abcA.nch, abcA.ncw, contentKit, false);
         }
 
         this.bgA = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abcA);

@@ -159,8 +159,7 @@ define([
         abcV.setImgContent(this.act.project.mediaBag, null, false);
 
       if (this.act.acp !== null) {
-        this.act.acp.generateContent(
-            new this.act.acp.ActiveBagContentKit(0, 0, this.act.abc, false), this.ps);
+        this.act.acp.generateContent(0, 0, this.act.abc, false);
       }
 
       if (tgc) {

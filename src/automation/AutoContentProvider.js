@@ -16,9 +16,9 @@
 define([], function () {
 
   /**
-   * This abstract class is the base for all the classes that provide contents to JClic activities,
-   * usually based on random values. Activities linked to an `AutoContentProvider` object rely on it
-   * to build its contents on every start.
+   * This abstract class is the base for classes that create on-time automatic content for JClic
+   * activities, usually using random parameters to assure different content in each session.<br>
+   * Activities with `AutoContentProvider` objects rely on them to build new content on every start.
    * @exports AutoContentProvider
    * @class
    * @param {JClicProject} project - The JClic project to which this content provider belongs.
@@ -30,14 +30,6 @@ define([], function () {
 
   AutoContentProvider.prototype = {
     constructor: AutoContentProvider,
-    // 
-    // `AutoContentProvider.prototype._CLASSES` contains the list of classes derived from
-    // AutoContentProvider. It should be read-only and updated by real automation classes at creation.
-    // Currently, only two content providers are defined: `@arith.Arith` and `@tagreplace.TagReplace`
-    // TODO: When all automation engines are created, initialize _CLASSES as an empty object
-    _CLASSES: {
-      '@tagreplace.TagReplace': AutoContentProvider
-    },
     /**
      * The JClic project to which AutoContentProvider belongs
      * @type {JClicProject} */
@@ -51,37 +43,35 @@ define([], function () {
       this.className = $xml.attr('class');
       return this;
     },
-    //
-    // Dynamic constructor that returns a specific type of AutoContentProvider based on the `class`
-    // attribute declared in the $xml element  
-    // Should be called only from Activity.setProperties()
-    _readAutomation: function ($xml, project) {
-      var automation = null;
-      if ($xml && project) {
-        var className = $xml.attr('class');
-        var cl = AutoContentProvider.prototype._CLASSES[className];
-        if (cl) {
-          automation = new cl(project);
-          automation.setProperties($xml);
-        }
-        else
-          console.log('Unknown AutoContentProvider class: ' + className);
-      }
-      return automation;
+    /**
+     * 
+     * Initializes the content provider
+     */
+    init: function () {
+      // To be implemented in real content providers
     },
-    //
-    // Functions to be implemented by real automatic content providers:
-    //
-    init: function (resourceBridge, fileSystem) {
+    /**
+     * 
+     * Builds an {@link AutoContentProvider.ActiveBagContentKit} and generates the automatized content.
+     * @param {number} nRows - Number of rows to be processed
+     * @param {number} nCols - Number of columns to be processed
+     * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
+     * objects to be filled with new content.
+     * @param {bolean} useIds - When `true`, the `id` field of {@link ActiveBoxContent} objects is significative
+     * @returns {boolean} - `true` if the process was OK. `false` otherwise.
+     */
+    generateContent: function (nRows, nCols, content, useIds) {
+      var kit = new AutoContentProvider.ActiveBagContentKit(nRows, nCols, content, useIds);
+      return this.process(kit);
     },
     /**
      * 
      * Generates the automatized content
-     * @param {AutoContentProvider.ActiveBagContentKit} kit
-     * @param {RsourceBridge} resourceBridge
-     * @returns {boolean}
+     * @param {AutoContentProvider.ActiveBagContentKit} kit - The objects to be filled with content
+     * @returns {boolean} - `true` if the process was OK. `false` otherwise.
      */
-    generateContent: function (kit, resourceBridge) {
+    process: function (kit) {
+      // To be implemented in subclasses
       return false;
     }
   };
@@ -92,14 +82,48 @@ define([], function () {
    * @param {number} nRows - Number of rows to be processed
    * @param {number} nCols - Number of columns to be processed
    * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
-   * objects thatwill be filled with new content.
-   * @param {bolean} useIds - When `true`, the `id` field of {@link ActiveBoxContent} objects is significative
+   * objects to be filled with new content.
+   * @param {bolean} useIds - `true` when the `id` field of {@link ActiveBoxContent} objects is significative.
    */
   AutoContentProvider.ActiveBagContentKit = function (nRows, nCols, content, useIds) {
     this.nRows = nRows;
     this.nCols = nCols;
     this.content = content;
     this.useIds = useIds;
+  };
+
+  /**
+   * Contains the current list of classes derived from AutoContentProvider.<br>
+   * This object should be updated by real automation classes at declaration time.<br>
+   * Currently, only two autocontentproviders are defined: {@link Arith} and TagReplace.
+   * @type {object} */
+
+  AutoContentProvider.CLASSES = {
+    // TODO: Implement TagReplace
+    '@tagreplace.TagReplace': AutoContentProvider
+  };
+
+  /**
+   * Dynamic constructor that returns a specific type of AutoContentProvider based on the `class`
+   * attribute declared on an $xml element.<br>
+   * It should be called only from {@link Activity#setproperties}
+   * @param {external.jQuery} $xml - The XML element to parse
+   * @param {JClicProject} project - The JClic project to which this object will be related
+   * @returns {AutoContentProvider}
+   */
+  AutoContentProvider.getProvider = function ($xml, project) {
+    var automation = null;
+    if ($xml && project) {
+      var className = $xml.attr('class');
+      var cl = AutoContentProvider.CLASSES[className];
+      if (cl) {
+        automation = new cl(project);
+        automation.setProperties($xml);
+      }
+      else
+        console.log('Unknown AutoContentProvider class: ' + className);
+    }
+    return automation;
   };
 
   return AutoContentProvider;

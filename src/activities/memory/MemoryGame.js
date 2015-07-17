@@ -108,8 +108,7 @@ define([
           var contentKit = [abcA];
           if (abcB)
             contentKit.push(abcB);
-          this.act.acp.generateContent(
-              new this.act.acp.ActiveBagContentKit(abcA.nch, abcA.ncw, contentKit, false), this.ps);
+          this.act.acp.generateContent(abcA.nch, abcA.ncw, contentKit, false);
         }
 
         var ncw = abcA.ncw;

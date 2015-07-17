@@ -504,7 +504,7 @@ define([
 
           case 'automation':
             // Read the automation settings ('Arith' or other automation engines)        
-            act.acp = AutoContentProvider.prototype._readAutomation($node, act.project);
+            act.acp = AutoContentProvider.getProvider($node, act.project);
             break;
 
             // Settings specific to panel-type activities (puzzles, associations...)           
@@ -614,7 +614,7 @@ define([
      */
     initAutoContentProvider: function () {
       if (this.acp !== null)
-        this.acp.init(this.project);
+        this.acp.init();
     },
     /**
      * 

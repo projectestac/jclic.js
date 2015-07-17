@@ -102,8 +102,7 @@ define([
           abcB.setImgContent(this.act.project.mediaBag, null, false);
 
         if (this.act.acp !== null)
-          this.act.acp.generateContent(
-              new this.act.acp.ActiveBagContentKit(abcA.nch, abcA.ncw, [abcA, abcB], false), this.ps);
+          this.act.acp.generateContent(abcA.nch, abcA.ncw, [abcA, abcB], false);
 
         this.bgA = ActiveBoxGrid.prototype._createEmptyGrid(null, this, this.act.margin, this.act.margin, abcA);
         var w = abcB.w;

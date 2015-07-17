@@ -19,130 +19,20 @@ define([
   "../../Utils"
 ], function ($, AutoContentProvider, Utils) {
 
-  //
-  // Arith is the first implementation of [AutoContentProvider](AutoContentProvider.html)
-  // It's based on the code of ARITH2.DLL, that was initially created for Clic 3.0. It provides
-  // randomly generated menthal arithmetics operations that can be used by JClic activities.
-  // The operations can be additions, substractions, multiplications or divides. The unknown can be
-  // the result of the operation or any of the two operators (in the form A # B = ?, A # ? = C or ? # B = C),
-  // or also the operator itself (like A ? B = C).
-
-
-  // Operator is an Utility class used by Arith to encapsulate the properties and methods related
-  // to the members of the operations
-  var Operator = function () {
-    this.limInf = this.LIM0;
-    this.limSup = this.LIM10;
-    this.lst = [];
-  };
-
-  Operator.prototype = {
-    constructor: Operator,
-    // Miscellaneous constants used by Operator:
-    MAX_VALUE: 100000000,
-    WZERO: 1, WONE: 2, WMINUSONE: 4,
-    NLIMITS: 26,
-    LIMITS: [0, -9999, -1000, -999, -100, -99, -50, -25, -20, -10, -9, -5, -1, 0, 1, 5, 9, 10, 20,
-      25, 50, 99, 100, 999, 1000, 9999],
-    DEFAULT_LIMIT: 13,
-    LIM0: 13,
-    LIM10: 17,
-    LIMI25: 7,
-    LIMS25: 19,
-    NOLIM: 25,
-    LIM_CH: ["x", "-9999", "-1000", "-999", "-100", "-99", "-50", "-25", "-20", "-10", "-9", "-5",
-      "-1", "0", "1", "5", "9", "10", "20", "25", "50", "99", "100", "999", "1000", "9999"],
-    NUMLST: 20,
-    // 
-    // Operator members
-    limInf: 0,
-    limSup: 10,
-    numDec: 0,
-    wZero: false,
-    wOne: false,
-    wMinusOne: false,
-    fromList: 0,
-    lst: [],
-    fromBlank: false,
-    //
-    // Loads the object settings from a specific JQuery XML element
-    setProperties: function ($xml) {
-      var op = this;
-      // Read attributes
-      $.each($xml.get(0).attributes, function () {
-        var name = this.name,
-            val = this.value;
-        switch (name) {
-          case 'decimals':
-            op.numDec = Number(val);
-            break;
-
-          case 'values':
-            var values = val.split(' ');
-            for (var i = 0; i < values.length; i++)
-              op.lst[i] = Number(values[i]);
-            op.fromList = op.lst.length;
-            break;
-
-          case 'from':
-            op.limInf = Number(val);
-            break;
-
-          case 'to':
-            op.limSup = Number(val);
-            break;
-        }
-
-        $xml.children().each(function () {
-          var $node = $(this);
-          switch (this.nodeName) {
-            case 'include':
-              op.wZero = Utils.getBoolean($node.attr('zero'));
-              op.wOne = Utils.getBoolean($node.attr('one'));
-              op.wMinusOne = Utils.getBoolean($node.attr('minusOne'));
-              break;
-          }
-        });
-      });
-      return this;
-    }
-  };
-
-  // Formats the number with a fixed number of decimals, optionally filling the result with leading
-  // zeroes to have a fixed number of digits
-  var DecFormat = function (val, dec, pre) {
-    var result = val.toFixed(dec);
-    if (pre) {
-      var n = result.indexOf('.');
-      if (n < 0)
-        n = result.length;
-      for (; n < pre; n++)
-        result = '0' + result;
-    }
-    return result;
-  };
-
-  var Num = function () {
-    this.vf = 0.0; // The number value
-    this.c = 0; // Number of decimals to be used when representing the number
-  };
-
-  Num.prototype.format = function () {
-    return DecFormat(this.vf, this.c);
-  };
-
-  var Operacio = function () {
-    this.numA = new Num();
-    this.numB = new Num();
-    this.numR = new Num();
-    this.op = 0;
-  };
-
-  // This is the main class
-  var Arith = function (nRows, nCols, content, useIds) {
-    AutoContentProvider.call(this, nRows, nCols, content, useIds);
-    this.opA = new Operator();
-    this.opB = new Operator();
+  /**
+   * Arith provides randomly generated menthal arithmetics operations, ready to be used in JClic activities.<br>
+   * The operations can be additions, substractions, multiplications or divides. The unknown of these
+   * operations can be the result of the operation (`A op B = ?`), any of the two operators
+   * (`A op ? = C` or `? op B = C`) or also the operator itself (`A ? B = C`).
+   * @exports Arith
+   * @class
+   * @extends AutoContentProvider
+   * @param {JClicProject} project - The JClic project to which this provider is related
+   */
+  var Arith = function (project) {
+    AutoContentProvider.call(this, project);
+    this.opA = new Arith.Operator();
+    this.opB = new Arith.Operator();
   };
 
   Arith.prototype = {
@@ -161,31 +51,81 @@ define([
     S: String.fromCharCode(160),
     //
     // Operations use two operators:
+    /**
+     * First operator
+     * @type {Arith.Operator} */
     opA: null,
+    /**
+     * Second operator
+     * @type {Arith.Operator} */
     opB: null,
-    // 
-    // Boolean flags for operands:
+    /**
+     * Allow additions
+     * @type {boolean} */
     use_add: true,
+    /**
+     * Allow substractions
+     * @type {boolean} */
     use_subst: false,
+    /**
+     * Allow multiplications
+     * @type {boolean} */
     use_mult: false,
+    /**
+     * Allow divides
+     * @type {boolean} */
     use_div: false,
-    // 
-    // Allowed types of expressions:
-    exp_abx: true, // A op B = X
-    exp_axc: false, // A op X = C    
-    exp_xbc: false, // X op B = C
-    exp_axbc: false, // A x B = C
-    exp_caxb: false, // C = A x B
-    //
-    // Limits and boolean flags related to the result
+    /**
+     * Allow expressions of type `A op B = X`
+     * @type {boolean} */
+    exp_abx: true,
+    /**
+     * Allow expressions of type `A op X = C`
+     * @type {boolean} */
+    exp_axc: false,
+    /**
+     * Allow expressions of type `X op B = C`
+     * @type {boolean} */
+    exp_xbc: false,
+    /**
+     * Allow expressions of type `A x B = C`
+     * @type {boolean} */
+    exp_axbc: false,
+    /**
+     * Allow inverse expressions, like `C = A op B`
+     * @type {boolean} */
+    exp_caxb: false,
+    /**
+     * Lower limit of the result
+     * @type {number} */
     resultLimInf: 0,
+    /**
+     * Upper limit of the result
+     * @type {number} */
     resultLimSup: 9999,
+    /**
+     * Allow carry operations
+     * @see {@link https://en.wikipedia.org/wiki/Carry_(arithmetic)}
+     * @type {boolean} */
     resultCarry: false,
+    /**
+     * Avoid operations with the same result
+     * @type {boolean} */
     resultNoDup: false,
+    /**
+     * Type of sorting of results. Possible values are: 'NOSORT', 'SORTASC' and 'SORTDESC'
+     * @type {string} */
     resultOrder: 'NOSORT',
+    /**
+     * Sorting of the operands in commutative operations. Possible values are: 'AGB' (_A greather than B_),
+     * 'BGA' (_B greather tan A_) and 'INDIF' (default)
+     */
     opCond: 'INDIF',
-    //
-    // Loads the object settings from a specific JQuery XML element
+    /**
+     * 
+     * Loads the object settings from a specific JQuery XML element
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
     setProperties: function ($xml) {
       var arith = this;
       $xml.children().each(function () {
@@ -228,12 +168,16 @@ define([
       });
       return this;
     },
-    // Fills the `n` parameter (a `Num` object) with a value in accordance with the specifications
-    // of `op` (an Operand object) and between two limits
-    // n (Num)
-    // op (Operator)
-    // liminf2 (Number)
-    // limSup2 (Number)
+    /**
+     * 
+     * Fills the `n` parameter (an {@link Arith.Num}) with a value in accordance with the
+     * specifications of `op` (an {@link Arith.Operand}), between two limits.
+     * @param {Arith.Num} n - The number
+     * @param {Arith.Operator} op - The operator
+     * @param {number} limInf2 - Lower limit
+     * @param {number} limSup2 - Upper limit
+     * @returns {boolean} - `true` if all was OK
+     */
     genNum: function (n, op, limInf2, limSup2) {
       var r, exp, rang, ls, li, k, v,
           solved = false;
@@ -284,8 +228,12 @@ define([
       }
       return true;
     },
-    //
-    // o (Operacio)
+    /**
+     * 
+     * Fills the provided {@link Arith.Operator} with real values
+     * @param {Arith.Operator} o - The operator to use to generate the operation
+     * @returns {boolean} - `true` if all was OK
+     */
     genOp: function (o) {
       var i,
           ops = [], nops, op,
@@ -332,8 +280,8 @@ define([
           if (this.resultCarry && o.numA.vf > 0 && o.numB.vf > 0) {
             q = o.numR.c === 2 ? 100 : o.numR.c === 1 ? 10 : 1;
 
-            bufa = DecFormat(Math.round(o.numA.vf * q + 0.5), 0, 10).split('');
-            bufb = DecFormat(Math.round(o.numB.vf * q + 0.5), 0, 10).split('');
+            bufa = Arith.DecFormat(Math.round(o.numA.vf * q + 0.5), 0, 10).split('');
+            bufb = Arith.DecFormat(Math.round(o.numB.vf * q + 0.5), 0, 10).split('');
             for (i = 0; i < 10; i++)
               if (bufa[i] !== '0' || bufb[i] !== '0')
                 break;
@@ -382,8 +330,8 @@ define([
           o.op = 1;
           if (this.resultCarry && o.numA.vf > 0 && o.numB.vf > 0 && o.numA.vf >= o.numB.vf) {
             q = (o.numR.c === 2 ? 100 : (o.numR.c === 1 ? 10 : 1));
-            bufa = DecFormat(Math.round(o.numA.vf * q + 0.5), 0, 10).split('');
-            bufb = DecFormat(Math.round(o.numB.vf * q + 0.5), 0, 10).split('');
+            bufa = Arith.DecFormat(Math.round(o.numA.vf * q + 0.5), 0, 10).split('');
+            bufb = Arith.DecFormat(Math.round(o.numB.vf * q + 0.5), 0, 10).split('');
             for (i = 0; i < 10; i++)
               if (bufb[i] !== '0')
                 break;
@@ -468,19 +416,20 @@ define([
       }
       return true;
     },
-    //
-    // Fills the provided ActiveBagContentKit with randomly generated operations
-    // Overrides `generateContent` in [AutoContentProvider](AutoContentProvider.html)
-    // kit (AutoContentProvider.ActiveBagContentKit)
-    // rb (ResourceBridge), usually a [JClicPlayer](JClicPlayer.html)
-    generateContent: function (kit, rb) {
+    /**
+     * 
+     * Fills the provided ActiveBagContentKit with randomly generated operations
+     * @param {AutoContentProvider.ActiveBagContentKit} kit - The composite object to be filled with data.
+     * @returns {boolean} - `true` if all was OK
+     */
+    process: function (kit) {
 
       var nRows = kit.nRows,
           nCols = kit.nCols,
           content = kit.content, //Array of ActiveBagContent
           useIds = kit.useIds,
           i, j, k,
-          o, op = [], // Array of Operacio
+          o, op = [], // Array of Arith.Operacio
           S = this.S, // non-breaking whitespace
           tipus = [],
           numTipus, tipX,
@@ -492,7 +441,7 @@ define([
           ass = null;
 
       if (nRows <= 0 || nCols <= 0 ||
-          content === null || content.length < 1 || content[0] === null || rb === null)
+          content === null || content.length < 1 || content[0] === null)
         return false;
 
       if (nCells < 2)
@@ -511,7 +460,7 @@ define([
         return false;
 
       for (i = 0; i < nCells; i++) {
-        o = new Operacio();
+        o = new Arith.Operacio();
         for (j = 0; j < this.NMAXLOOPS; j++) {
           this.genOp(o);
           if (this.resultNoDup) {
@@ -544,9 +493,9 @@ define([
 
       for (i = 0; i < nCells; i++) {
         tipX = tipus[Math.floor(Math.random() * numTipus)];
-        va = DecFormat(op[i].numA.vf, op[0].numA.c);
-        vb = DecFormat(op[i].numB.vf, op[0].numB.c);
-        vc = DecFormat(op[i].numR.vf, op[0].numR.c);
+        va = Arith.DecFormat(op[i].numA.vf, op[0].numA.c);
+        vb = Arith.DecFormat(op[i].numB.vf, op[0].numB.c);
+        vc = Arith.DecFormat(op[i].numR.vf, op[0].numR.c);
         operator = this.OPSTR[op[i].op];
 
         if (tipInv)
@@ -679,18 +628,163 @@ define([
         content[2].setTextContent(strc, nCols, nRows);
 
       return true;
-    },
-    // 
-    // Export a reference to the Operator class
-    Operator: Operator
+    }
   };
+
+  /**
+   * Formats the number with a fixed number of decimals, optionally filling the result with leading
+   * zeroes to have a fixed number of digits.
+   * @param {number} val - The value to format
+   * @param {number} dec - Number of decimals
+   * @param {number} pre - Minimal number of digits before dot.
+   * @returns {String}
+   */
+  Arith.DecFormat = function (val, dec, pre) {
+    var result = val.toFixed(dec);
+    if (pre) {
+      var n = result.indexOf('.');
+      if (n < 0)
+        n = result.length;
+      for (; n < pre; n++)
+        result = '0' + result;
+    }
+    return result;
+  };
+
+
+
+  /**
+   * Operator is an Utility class used by Arith to encapsulate the properties and methods related
+   * to the members of the operations.
+   * @class
+   */
+  Arith.Operator = function () {
+    this.limInf = this.LIM0;
+    this.limSup = this.LIM10;
+    this.lst = [];
+  };
+
+  Arith.Operator.prototype = {
+    constructor: Arith.Operator,
+    // Miscellaneous constants used by Arith.Operator
+    MAX_VALUE: 100000000,
+    WZERO: 1, WONE: 2, WMINUSONE: 4,
+    NLIMITS: 26,
+    LIMITS: [0, -9999, -1000, -999, -100, -99, -50, -25, -20, -10, -9, -5, -1, 0, 1, 5, 9, 10, 20,
+      25, 50, 99, 100, 999, 1000, 9999],
+    DEFAULT_LIMIT: 13,
+    LIM0: 13,
+    LIM10: 17,
+    LIMI25: 7,
+    LIMS25: 19,
+    NOLIM: 25,
+    LIM_CH: ["x", "-9999", "-1000", "-999", "-100", "-99", "-50", "-25", "-20", "-10", "-9", "-5",
+      "-1", "0", "1", "5", "9", "10", "20", "25", "50", "99", "100", "999", "1000", "9999"],
+    NUMLST: 20,
+    // 
+    // Operator members
+    /**
+     * Lower limit
+     * @type {number} */
+    limInf: 0,
+    /** 
+     * Upper limit
+     * @type {number} */
+    limSup: 10,
+    /** 
+     * Number of decimal places
+     * @type {number} */
+    numDec: 0,
+    /** 
+     * Including 0
+     * @type {boolean} */
+    wZero: false,
+    /**
+     * Including 1
+     * @type {boolean} */
+    wOne: false,
+    /**
+     * Including -1
+     * @type {boolean} */
+    wMinusOne: false,
+    /**
+     * Take values from list. This member stores the list length.
+     * @type {number} */
+    fromList: 0,
+    /**
+     * The list of possible values
+     * @type {number[]} */
+    lst: [],
+    /**
+     * 
+     * Loads Arith.Operator settings from a specific JQuery XML element
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
+    setProperties: function ($xml) {
+      var op = this;
+      // Read attributes
+      $.each($xml.get(0).attributes, function () {
+        var name = this.name,
+            val = this.value;
+        switch (name) {
+          case 'decimals':
+            op.numDec = Number(val);
+            break;
+
+          case 'values':
+            var values = val.split(' ');
+            for (var i = 0; i < values.length; i++)
+              op.lst[i] = Number(values[i]);
+            op.fromList = op.lst.length;
+            break;
+
+          case 'from':
+            op.limInf = Number(val);
+            break;
+
+          case 'to':
+            op.limSup = Number(val);
+            break;
+        }
+
+        $xml.children().each(function () {
+          var $node = $(this);
+          switch (this.nodeName) {
+            case 'include':
+              op.wZero = Utils.getBoolean($node.attr('zero'));
+              op.wOne = Utils.getBoolean($node.attr('one'));
+              op.wMinusOne = Utils.getBoolean($node.attr('minusOne'));
+              break;
+          }
+        });
+      });
+      return this;
+    }
+  };
+
+
+  Arith.Num = function () {
+    this.vf = 0.0; // The number value
+    this.c = 0; // Number of decimals to be used when representing the number
+  };
+
+  Arith.Num.prototype.format = function () {
+    return Arith.DecFormat(this.vf, this.c);
+  };
+
+  Arith.Operacio = function () {
+    this.numA = new Arith.Num();
+    this.numB = new Arith.Num();
+    this.numR = new Arith.Num();
+    this.op = 0;
+  };
+
 
   // Arith extends AutoContentPtrovider
   Arith.prototype = $.extend(Object.create(AutoContentProvider.prototype), Arith.prototype);
 
-  // 
   // Register class in Activity.prototype
-  AutoContentProvider.prototype._CLASSES['@arith.Arith'] = Arith;
+  AutoContentProvider.CLASSES['@arith.Arith'] = Arith;
 
   return Arith;
 

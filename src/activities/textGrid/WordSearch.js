@@ -110,8 +110,7 @@ define([
 
         if (this.act.acp !== null) {
           var contentKit = [abcAlt];
-          this.act.acp.generateContent(
-              new this.act.acp.ActiveBagContentKit(0, 0, contentKit, false), this.ps);
+          this.act.acp.generateContent(0, 0, contentKit, false);
         }
       }
 
