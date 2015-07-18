@@ -22,66 +22,97 @@ define([
   "../../AWT"
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT) {
 
-  //
-  // This class of [Activity](Activity.html) uses two panels to put in order the previously scrambled
-  // elements of the `primary` [ActiveBagContent](ActiveBagContenthtml).
-  // The first panel contains the scrambled cells, that must be moved to its correct position in
-  // the secondary panel.
+  /**
+   * The aim of this class of {@link Activity} is to put in order the scrambled elements of an
+   * {@link ActiveBagContent} that contains an image, sounds, text... or any other media content.<br>
+   * The activity uses two panels: one with the scrambled cells, and other initially empty where
+   * this cells must be placed in order.
+   * @exports DoublePuzzle
+   * @class
+   * @extends Activity
+   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   */
   var DoublePuzzle = function (project) {
     Activity.call(this, project);
   };
 
   DoublePuzzle.prototype = {
     constructor: DoublePuzzle,
-    //
-    // Retrieves the minimum number of actions needed to solve this activity
+    /**
+     * 
+     * Retrieves the minimum number of actions needed to solve this activity.
+     * @returns {number}
+     */
     getMinNumActions: function () {
       return this.abc.primary.getNumCells();
     },
-    //
-    // The activity uses random to scramble internal components
+    /**
+     * 
+     * Whether or not the activity uses random to scramble internal components
+     * @returns {boolean}
+     */
     hasRandom: function () {
       return true;
     },
-    //
-    // The activity mut always be scrambled
+    /**
+     * 
+     * When `true`, the activity mut always be scrambled
+     * @returns {boolean}
+     */
     shuffleAlways: function () {
       return true;
     },
-    //
-    // The activity permits the user to display the solution
+    /**
+     * 
+     * Whether the activity allows the user to request help.
+     * @returns {boolean}
+     */
     helpSolutionAllowed: function () {
       return true;
     }
   };
 
-  // 
   // InformationScreen extends Activity
   DoublePuzzle.prototype = $.extend(Object.create(Activity.prototype), DoublePuzzle.prototype);
 
-  //
-  // Activity.Panel constructor
+  /**
+   * The {@link Activity.Panel} where double puzzle activities are played.
+   * @class
+   * @extends Activity.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
   DoublePuzzle.Panel = function (act, ps, $div) {
     Activity.Panel.call(this, act, ps, $div);
   };
 
-  // 
-  // Properties and methods specific to InformationScreen.Panel
   var ActPanelAncestor = Activity.Panel.prototype;
+
   DoublePuzzle.Panel.prototype = {
     constructor: DoublePuzzle.Panel,
-    //
-    // The [ActiveBoxBag](ActiveBoxBag.html) objects containing the information to be displayed.
+    /**
+     * The {@link ActiveBoxBag} object containing the information to be displayed in the `primary` panel
+     * @type {ActiveBoxBag} */
     bgA: null,
+    /**
+     * The secondary {@link ActiveBoxBag}, intially empty.
+     * @type {ActiveBoxBag} */
     bgB: null,
-    //
-    // The [BoxConnector](BoxConnector.html) obect
+    /**
+     * The box connector
+     * @type {BoxConnector} */
     bc: null,
-    // 
-    // Mouse and touch events intercepted by this panel
+    /**
+     * List of mouse, touch and keyboard events intercepted by this panel
+     * @type {string[]} */
     events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
-    //
-    // Clear the realized objects
+    /**
+     * 
+     * Miscellaneous cleaning operations
+     */
     clear: function () {
       if (this.bgA) {
         this.bgA.end();
@@ -92,8 +123,10 @@ define([
         this.bgB = null;
       }
     },
-    // 
-    // Prepare the activity panel
+    /**
+     * 
+     * Prepares the visual components of the activity
+     */
     buildVisualComponents: function () {
 
       if (this.firstRun)
@@ -124,8 +157,10 @@ define([
           bgbB.exchangeContent(bgbA);
       }
     },
-    // 
-    // Basic initialization procedure
+    /**
+     * 
+     * Basic initialization procedure
+     */
     initActivity: function () {
       ActPanelAncestor.initActivity.call(this);
 
@@ -143,11 +178,12 @@ define([
         this.invalidate().update();
       }
     },
-    //
-    // Overrides `Activity.Panel.updateContent`
-    // Updates the graphic contents of its panel.
-    // The method should be called from `Activity.Panel.update`
-    // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
+    /**
+     * Updates the graphic content of this panel.<br>
+     * This method will be called from {@link AWT.Container#update} when needed.
+     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+     * it's the whole panel.
+     */
     updateContent: function (dirtyRegion) {
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
       if (this.bgA && this.bgB && this.$canvas) {
@@ -161,15 +197,22 @@ define([
       }
       return this;
     },
-    //
-    // Calculates the optimal dimension of this panel
+    /**
+     * 
+     * Sets the real dimension of this panel.
+     * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+     * @returns {AWT.Dimension}
+     */
     setDimension: function (preferredMaxSize) {
       if (!this.bgA || !this.bgB || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
       return BoxBag.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
     },
-    //
-    // Sets the size and position of this activity panel
+    /**
+     * 
+     * Sets the size and position of this activity panel
+     * @param {AWT.Rectangle} rect
+     */
     setBounds: function (rect) {
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
@@ -189,9 +232,13 @@ define([
         this.invalidate().update();
       }
     },
-    // 
-    // Main handler to receive mouse and key events
-    // Overrides same function in Activity.Panel
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
     processEvent: function (event) {
       if (this.bc && this.playing) {
         // 
@@ -308,7 +355,6 @@ define([
   // DoublePuzzle.Panel extends Activity.Panel
   DoublePuzzle.Panel.prototype = $.extend(Object.create(ActPanelAncestor), DoublePuzzle.Panel.prototype);
 
-  // 
   // Register class in Activity.prototype
   Activity.CLASSES['@puzzles.DoublePuzzle'] = DoublePuzzle;
 

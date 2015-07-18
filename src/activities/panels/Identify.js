@@ -42,8 +42,7 @@ define([
     /**
      * Number of cells the user must identify to complete the activity (calculated in
      * {@link Identify.Panel#buildVisualComponents})
-     * @type {number} * 
-     */
+     * @type {number} */
     cellsToMatch: 1,
     /**
      * 

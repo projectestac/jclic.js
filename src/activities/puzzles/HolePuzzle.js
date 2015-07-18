@@ -23,67 +23,101 @@ define([
   "../../shapers/Rectangular"
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT, Rectangular) {
 
-  //
-  // This class of [Activity](Activity.html) just shows a panel with [ActiveBox](ActiveBox.html)
-  // objects.
+  /**
+   * This class of {@link Activity} shows only one panel with scrambled {@link ActiveBox} cells.<br>
+   * One of the cells is out of the main panel, thus allowing its neighbors occupy their space.
+   * Only immediate neighbors of the "hole" can move into it.<br>
+   * When all cells are on place, the initially "expulsed" cell comes back home and the activity is done.
+   * @exports HolePuzzle
+   * @class
+   * @extends Activity
+   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   */
   var HolePuzzle = function (project) {
     Activity.call(this, project);
   };
 
   HolePuzzle.prototype = {
     constructor: HolePuzzle,
-    //
-    // Retrieves the minimum number of actions needed to solve this activity
+    /**
+     * 
+     * Retrieves the minimum number of actions needed to solve this activity.
+     * @returns {number}
+     */
     getMinNumActions: function () {
       return this.abc.primary.getNumCells();
     },
-    //
-    // The activity uses random to scramble internal components
+    /**
+     * 
+     * Whether or not the activity uses random to scramble internal components
+     * @returns {boolean}
+     */
     hasRandom: function () {
       return true;
     },
-    //
-    // The activity mut always be scrambled
+    /**
+     * 
+     * When `true`, the activity mut always be scrambled
+     * @returns {boolean}
+     */
     shuffleAlways: function () {
       return true;
     },
-    //
-    // The activity permits the user to display the solution
+    /**
+     * 
+     * Whether the activity allows the user to request help.
+     * @returns {boolean}
+     */
     helpSolutionAllowed: function () {
       return true;
     }
   };
 
-  // 
   // InformationScreen extends Activity
   HolePuzzle.prototype = $.extend(Object.create(Activity.prototype), HolePuzzle.prototype);
 
-  //
-  // Activity.Panel constructor
+  /**
+   * The {@link Activity.Panel} where hole puzzle activities are played.
+   * @class
+   * @extends Activity.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
   HolePuzzle.Panel = function (act, ps, $div) {
     Activity.Panel.call(this, act, ps, $div);
   };
 
-  // 
-  // Properties and methods specific to InformationScreen.Panel
   var ActPanelAncestor = Activity.Panel.prototype;
   HolePuzzle.Panel.prototype = {
     constructor: HolePuzzle.Panel,
-    //
-    // The [ActiveBoxGrid](ActiveBoxGrid.html) object containing the information to be displayed.
+    /**
+     * The {@link ActiveBoxBag} object containing the information to be displayed in the panel.
+     * @type {ActiveBoxBag} */
     bg: null,
-    // An auxiliar [ActiveBoxGrid](ActiveBoxGrid.html) with only one box, used to store the
-    // "missing piece" of the puzzle.
+    /**
+     * An auxiliary box bag with only one box, used to store the "missing piece" of
+     * the puzzle.
+     * @type {ActiveBoxGrid} */
     parkBg: null,
-    //
-    // The hidden cell and its index on the ActiveBagContent
+    /**
+     * The hidden cell
+     * @type {ActiveBox} */
     hiddenBox: null,
+    /**
+     * Index of the hidden cell on the ActiveBagContent
+     * @type {number} */
     hiddenBoxIndex: -1,
-    //
-    // Mouse and touch events intercepted by this panel
+    /**
+     * List of mouse, touch and keyboard events intercepted by this panel
+     * @type {string[]} */
     events: ['click'],
-    //
-    // Clears the realized objects
+    /**
+     * 
+     * Miscellaneous cleaning operations
+     */
     clear: function () {
       if (this.bg) {
         this.bg.end();
@@ -94,8 +128,10 @@ define([
         this.parkBg = null;
       }
     },
-    // 
-    // Prepares the activity panel
+    /**
+     * 
+     * Prepares the visual components of the activity
+     */
     buildVisualComponents: function () {
 
       if (this.firstRun)
@@ -126,8 +162,10 @@ define([
         this.parkBg.setVisible(true);
       }
     },
-    // 
-    // Basic initialization procedure
+    /**
+     * 
+     * Basic initialization procedure
+     */
     initActivity: function () {
       ActPanelAncestor.initActivity.call(this);
 
@@ -163,11 +201,12 @@ define([
         this.invalidate().update();
       }
     },
-    //
-    // Overrides `Activity.Panel.updateContent`
-    // Updates the graphic contents of its panel.
-    // The method should be called from `Activity.Panel.update`
-    // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
+    /**
+     * Updates the graphic content of this panel.<br>
+     * This method will be called from {@link AWT.Container#update} when needed.
+     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+     * it's the whole panel.
+     */
     updateContent: function (dirtyRegion) {
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
       if (this.bg && this.parkBg && this.$canvas) {
@@ -181,15 +220,22 @@ define([
       }
       return this;
     },
-    //
-    // Calculates the optimal dimension of this panel
+    /**
+     * 
+     * Sets the real dimension of this panel.
+     * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+     * @returns {AWT.Dimension}
+     */
     setDimension: function (preferredMaxSize) {
       if (!this.bg || !this.parkBg || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
       return BoxBag.layoutDouble(preferredMaxSize, this.bg, this.parkBg, this.act.boxGridPos, this.act.margin);
     },
-    //
-    // Sets the size and position of this activity panel
+    /**
+     * 
+     * Sets the size and position of this activity panel
+     * @param {AWT.Rectangle} rect
+     */
     setBounds: function (rect) {
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
@@ -206,9 +252,13 @@ define([
         this.invalidate().update();
       }
     },
-    // 
-    // Main handler to receive mouse and key events
-    // Overrides same function in Activity.Panel
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
     processEvent: function (event) {
       if (this.playing) {
         var bx;
@@ -261,7 +311,6 @@ define([
   // HolePuzzle.Panel extends Activity.Panel
   HolePuzzle.Panel.prototype = $.extend(Object.create(ActPanelAncestor), HolePuzzle.Panel.prototype);
 
-  // 
   // Register class in Activity.prototype
   Activity.CLASSES['@puzzles.HolePuzzle'] = HolePuzzle;
 
