@@ -61,11 +61,17 @@ module.exports = function (grunt) {
             src: ['misc/doc/index.md', 'src/**/*.js'],
             options: {
                 destination: 'doc',
-                template: 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template',
-                // see: http://terryweiss.github.io/docstrap/
+                // Uncomment only one 'template' setting:
+                //
+                // DocStrap (http://terryweiss.github.io/docstrap):
+                // template: 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template',
+                //
+                // Jaguar.js (https://github.com/davidshimjs/jaguarjs-jsdoc):
+                template: 'misc/jaguarjs-jsdoc',
+                //
                 configure: 'jsdoc.conf.json'
-            }
         }
+      }
     },
     express: {
       all: {
@@ -121,6 +127,6 @@ module.exports = function (grunt) {
   grunt.registerTask(
       'default',
       'builds all',
-      ['build', 'doc']
+      ['build']
       );
 };

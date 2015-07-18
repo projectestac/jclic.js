@@ -6,9 +6,7 @@
   "tags": {
     "allowUnknownTags": true
   },
-  "plugins": [
-    "plugins/markdown"
-  ],
+  "plugins": ["plugins/markdown"],
   "templates": {
     "cleverLinks": true,
     "monospaceLinks": false,
@@ -16,6 +14,8 @@
     "outputSourceFiles": true,
     "outputSourcePath": true,
     "systemName": "JClic.js",
+    "applicationName": "JClic.js",
+    "disqus": "",
     "footer": "",
     "copyright": "",
     "navType": "inline",
@@ -23,13 +23,27 @@
     "linenums": true,
     "collapseSymbols": false,
     "//analytics": {"ua":"UA-XXXXX-XXX", "domain":"XXXX"},
+    "googleAnalytics": "",
     "inverseNav": true,
     "highlightTutorialCode": true,
     "syntaxTheme": "default",
-    "protocol": "html://"
+    "protocol": "html://",
+    "openGraph": {
+      "title": "",
+      "type": "website",
+      "image": "",
+      "site_name": "",
+      "url": ""
+    },
+    "meta": {
+      "title": "",
+      "description": "",
+      "keyword": ""
+    }
   },
   "markdown": {
     "parser": "gfm",
-    "hardwrap": true
+    "hardwrap": true,
+    "tags": ["examples"]
   }
 }
