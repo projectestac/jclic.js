@@ -58,7 +58,7 @@ module.exports = function (grunt) {
     },
     jsdoc: {
         dist: {
-            src: ['misc/doc/index.md', 'src/**/*.js'],
+            src: ['misc/jsdoc/index.md', 'src/**/*.js'],
             options: {
                 destination: 'doc',
                 // Uncomment only one 'template' setting:

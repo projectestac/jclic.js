@@ -9,10 +9,13 @@
   "plugins": ["plugins/markdown"],
   "templates": {
     "cleverLinks": true,
-    "monospaceLinks": false,
+    "monospaceLinks": true,
     "dateFormat": "ddd MMM Do YYYY",
     "outputSourceFiles": true,
     "outputSourcePath": true,
+    "default": {
+       "outputSourceFiles" : true
+    },
     "systemName": "JClic.js",
     "applicationName": "JClic.js",
     "disqus": "",
