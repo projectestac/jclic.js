@@ -61,15 +61,15 @@ module.exports = function (grunt) {
             src: ['misc/jsdoc/index.md', 'src/**/*.js'],
             options: {
                 destination: 'doc',
-                // Uncomment only one 'template' setting:
+                configure: 'jsdoc.conf.json',
+                //
+                // Templates (uncomment only one)
                 //
                 // DocStrap (http://terryweiss.github.io/docstrap):
                 // template: 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template',
                 //
-                // Jaguar.js (https://github.com/davidshimjs/jaguarjs-jsdoc):
-                template: 'misc/jaguarjs-jsdoc',
-                //
-                configure: 'jsdoc.conf.json'
+                // gc-jaguarjs (https://www.npmjs.com/package/gc-jaguarjs-jsdoc)
+                template: 'node_modules/gc-jaguarjs-jsdoc'
         }
       }
     },
