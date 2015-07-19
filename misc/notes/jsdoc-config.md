@@ -2,6 +2,25 @@
 JSDoc configuration
 ===================
 
+
+### Changes made in gc-jaguarjs-jsdoc theme ###
+
+File: `node_modules/gc-jaguarjs-jsdoc/less/main.less`
+
+_Line 179_:
+```
+    .type-signature {
+        font-size: 12px;
+        background-color: @colorLink;
+        margin-right: 5px;
+    }
+```
+
+Remember to run `npm-update` and `grunt less` in `node_modules/gc-jaguarjs-jsdoc` to update the theme.
+
+
+### Changes made in _Gruntfile.js_ ###
+
 Settings introduced in __Gruntfile.js__ to use [docstrap](https://github.com/terryweiss/docstrap)
 
 ```
