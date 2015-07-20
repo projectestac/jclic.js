@@ -75,7 +75,7 @@ module.exports = function (grunt) {
     },
     copy: {
       doc: {
-        files: [{src: 'misc/skin/default/ico00.png', dest: 'doc/ico.png'}]
+        files: [{src: 'misc/jsdoc/ico.png', dest: 'doc/ico.png'}]
       }
     },
     express: {

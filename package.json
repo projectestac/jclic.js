@@ -30,7 +30,7 @@
   "author": "Francesc Busquets <fbusquets@xtec.cat>",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "browserify": "~10.2.4",
+    "browserify": "~11.0.0",
     "deamdify": "~0.1.1",
     "gc-jaguarjs-jsdoc": "0.0.1",
     "grunt": "~0.4.5",
@@ -43,7 +43,7 @@
     "grunt-express": "^1.4.1",
     "grunt-jsdoc": "^0.6.7",
     "load-grunt-tasks": "~3.2.0",
-    "requirejs": "~2.1.18"
+    "requirejs": "~2.1.19"
   },
   "dependencies": {
     "jquery": "~2.1.4",
