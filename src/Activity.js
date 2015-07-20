@@ -947,7 +947,7 @@ define([
     },
     /**
      * 
-     * Called by {@link JClicPlayer} when this activity panel is fully visible, after the
+     * Called by {@link JClicPlayer} when this activity panel is fully visible, just after the
      * initialization process.
      */
     activityReady: function () {
@@ -1005,7 +1005,7 @@ define([
     },
     /**
      * 
-     * Main handler used to process mouse, touch, keyboard and edit events
+     * Main handler used to process mouse, touch, keyboard and edit events.
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}

@@ -20,8 +20,14 @@ define([
   "../../boxes/ActiveBox"
 ], function ($, Activity, AWT, ActiveBox) {
 
-  //
-  // This class acts as a base for all text activities
+  /**
+   * This class and its visual component {@link TextActivityBase.Panel} are the base for text
+   * activities like {@link FillInBlanks}, {@link IdentifyText}, {@link OrderText} and {@link Complete}.
+   * @exports TextActivityBase
+   * @class
+   * @extends Activity
+   * @param {JClicProject} project - The project to which this activity belongs
+   */
   var TextActivityBase = function (project) {
     Activity.call(this, project);
   };
@@ -30,12 +36,19 @@ define([
     constructor: TextActivityBase
   };
 
-  // 
   // TextActivityBase extends Activity
   TextActivityBase.prototype = $.extend(Object.create(Activity.prototype), TextActivityBase.prototype);
 
-  //
-  // Constructor of this Activity.Panel object
+  /**
+   * The {@link Activity.Panel} where text activities are played.
+   * @class
+   * @extends Activity.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
   TextActivityBase.Panel = function (act, ps, $div) {
     Activity.Panel.call(this, act, ps, $div);
     this.boxes = [];
@@ -43,34 +56,40 @@ define([
     this.targets = [];
   };
 
-  // 
-  // Properties and methods specific to TextAvtivityBase.Panel
   var ActPanelAncestor = Activity.Panel.prototype;
   TextActivityBase.Panel.prototype = {
     constructor: TextActivityBase.Panel,
-    // 
-    // Array of ActiveBox objects contained in this Panel
+    /**
+     * Array of ActiveBox objects contained in this Panel
+     * @type {ActiveBox[]} */
     boxes: null,
-    // 
-    // Array of ActiveBox objects used as popup elements
+    /**
+     * Array of ActiveBox objects used as popup elements
+     * @type {ActiveBox[]} */
     popups: null,
-    // 
-    // Array of target elements    
+    /**
+     * Array of jQuery DOM elements (usually of type 'span') containing the targets of this activity
+     * @type {external.jQuery[]} */
     targets: null,
-    //
-    // Flag indicating if targets must be visually marked when the activity begins.
-    // Should be `true` except for [IdentifyText](IdentifyText.html) activities
+    /**
+     * Flag indicating if targets must be visually marked at the beggining of the activity.<br>
+     * Should be `true` except for {@link IdentifyText} activities.
+     * @type {boolean} */
     targetsMarked: true,
-    //
-    // Prepares the text panel
+    /**
+     * 
+     * Prepares the text panel
+     */
     buildVisualComponents: function () {
       ActPanelAncestor.buildVisualComponents.call(this);
       this.setDocContent(this.$div, this.act.document);
     },
-    // 
-    // Fills a DOM element with the specified document
-    // $dom (JQuery DOM object) - The DOM objject to be filled with the document
-    // doc ([TextActivityDocument](TextActivityDocument.html)) - The document
+    /**
+     * 
+     * Fills a jQuery DOM element (usually a 'div') with the specified {@link TextActivityDocument}.
+     * @param {external:jQuery} $dom - The jQuery DOM object to be filled with the document.
+     * @param {TextActivityDocument} doc - The document
+     */
     setDocContent: function ($dom, doc) {
 
       var thisPanel = this;
@@ -182,20 +201,27 @@ define([
       $dom.append($html);
       return $dom;
     },
-    //
-    // Creates the target DOM element
-    // Function to be overrided in derivative classes to create specific types of targets
-    // target (TextTarget) - The target related to the DOM object to be created
-    // $span (JQuery DOM object) - An initial DOM object (usually a `span`) that can be used to
-    // store the target, or replaced by another type of object.
+    /**
+     * 
+     * Creates a target DOM element.<br>
+     * This method can be overrided in subclasses to create specific types of targets.
+     * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
+     * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
+     * to store the target, or replaced by another type of object.
+     * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
+     */
     $createTargetElement: function (target, $span) {
       $span.text(target.text);
       target.$span = $span;
       return $span;
     },
-    // 
-    // Main handler to receive mouse and key events
-    // Overrides same function in Activity.Panel
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
     processEvent: function (event) {
       if (this.playing) {
         switch (event.type) {

@@ -57,26 +57,31 @@ module.exports = function (grunt) {
       }
     },
     jsdoc: {
-        dist: {
-            src: ['misc/jsdoc/index.md', 'src/**/*.js'],
-            options: {
-                destination: 'doc',
-                configure: 'jsdoc.conf.json',
-                //
-                // Templates (uncomment only one)
-                //
-                // DocStrap (http://terryweiss.github.io/docstrap):
-                // template: 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template',
-                //
-                // gc-jaguarjs (https://www.npmjs.com/package/gc-jaguarjs-jsdoc)
-                template: 'node_modules/gc-jaguarjs-jsdoc'
+      dist: {
+        src: ['misc/jsdoc/index.md', 'src/**/*.js'],
+        options: {
+          destination: 'doc',
+          configure: 'jsdoc.conf.json',
+          //
+          // Templates (uncomment only one)
+          //
+          // DocStrap (http://terryweiss.github.io/docstrap):
+          // template: 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template',
+          //
+          // gc-jaguarjs (https://www.npmjs.com/package/gc-jaguarjs-jsdoc)
+          template: 'node_modules/gc-jaguarjs-jsdoc'
         }
+      }
+    },
+    copy: {
+      doc: {
+        files: [{src: 'misc/skin/default/ico00.png', dest: 'doc/ico.png'}]
       }
     },
     express: {
       all: {
         options: {
-          bases: ['.'],     
+          bases: ['.'],
           port: 8080,
           hostname: '0.0.0.0',
           livereload: true,
@@ -105,7 +110,7 @@ module.exports = function (grunt) {
       'Starts a test server',
       ['express', 'watch']
       );
-  
+
   grunt.registerTask(
       'lint',
       'Checks the JS code',
@@ -121,7 +126,7 @@ module.exports = function (grunt) {
   grunt.registerTask(
       'doc',
       'Generates the project documentation in "doc"',
-      ['clean:doc', 'jsdoc:dist']
+      ['clean:doc', 'jsdoc:dist', 'copy:doc']
       );
 
   grunt.registerTask(

@@ -20,48 +20,64 @@ define([
   "./TextActivityBase"
 ], function ($, Utils, Activity, TextActivityBase) {
 
-  //
-  // In this type of activity the text has some blanks that must be filled-in. The blanks can be
-  // drop-down boxes or text fields (empty or pre-filled with an initial text). Blanks can also
-  // have associated clues.
+  /**
+   * In this type of activity the text document has some blanks that must be filled-in. The blanks
+   * can be drop-down boxes or text fields (empty or pre-filled with an initial text). Blanks can
+   * also have associated clues, shown as "pop-ups".
+   * @exports FillInBlanks
+   * @class
+   * @extends TextActivityBase
+   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   */
   var FillInBlanks = function (project) {
     TextActivityBase.call(this, project);
   };
 
   FillInBlanks.prototype = {
     constructor: FillInBlanks,
-    //
-    // The activity uses the keyboard
+    /**
+     * 
+     * This kind of activity usually makes use of the keyboard
+     * @returns {boolean}
+     */
     needsKeyboard: function () {
       return true;
     }
   };
 
-  // 
   // FillInBlanks extends TextActivityBase
   FillInBlanks.prototype = $.extend(Object.create(TextActivityBase.prototype), FillInBlanks.prototype);
 
-  //
-  // Constructor of this Activity.Panel object
+  /**
+   * The {@link TextActivityBase.Panel} where fill-in blank activities are played.
+   * @class
+   * @extends TextActivityBase.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
   FillInBlanks.Panel = function (act, ps, $div) {
     TextActivityBase.Panel.call(this, act, ps, $div);
   };
 
-  // 
-  // Properties and methods specific to FillInBlanks.Panel
   var ActPanelAncestor = TextActivityBase.Panel.prototype;
   FillInBlanks.Panel.prototype = {
     constructor: FillInBlanks.Panel,
-    //
-    // Flag indicating if the activity is open or locked
+    /**
+     * Flag indicating if the activity is open or locked
+     * @type {boolean} */
     locked: true,
-    //
-    // Creates a JQuery DOM element associated with the given [TextTarget](TextActivityDocument.html#TextTarget)
-    // Function to be overrided in derivative classes to create specific types of targets
-    // target ([TextTarget](TextActivityDocument.html#TextTarget)) - The target related to the DOM object to be created
-    // $span (JQuery DOM object) - An initial DOM object (usually a `span`) that can be used to
-    // store the target, or replaced by another type of object.
-    // Overrides `$createTargetElement` in [TextActivityBase](TextActivityBase.html)
+    /**
+     * 
+     * Creates a target DOM element for the provided target. This DOm element can be an editable
+     * `span` or a `select` with specific `option` elements (when the target is a drop-down list)
+     * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
+     * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
+     * to store the target, or replaced by another type of object.
+     * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
+     */
     $createTargetElement: function (target, $span) {
 
       var id = this.targets.length - 1;
@@ -98,11 +114,14 @@ define([
       }
       return $span;
     },
-    //
-    // Checks if the specified TextTarget has a valid answer in its `currentText` field
-    // target (TextTarget) - The target to be checked
-    // onlyCheck (boolean) - When `true`, the cursor will no be re-positioned
-    // Returns: Boolean - `true` when the target has a valid answer
+    /**
+     * 
+     * Checks if the specified TextTarget has a valid answer in its `currentText` field
+     * @param {TextActivityDocument.TextTarget} target - The target to check
+     * @param {boolean} onlyCheck - When `true`, the cursor will no be re-positioned
+     * @param {number=} jumpDirection - `1` to go forward, `-1` to go back.
+     * @returns {boolean} - `true` when the target contains a valid answer
+     */
     checkTarget: function (target, onlyCheck, jumpDirection) {
 
       var result = this.act.ev.evalText(target.currentText, target.answers);
@@ -145,9 +164,13 @@ define([
 
       return ok;
     },
-    // 
-    // Counts targets with `SOLVED` status
-    // checkNow (Boolean) - When `true`, all targets will be checked
+    /**
+     * 
+     * Counts the number of targets with `SOLVED` status
+     * @param {boolean} checkNow - When `true`, all targets will be checked. Otherwhise, they will be
+     * just checked.
+     * @returns {number} - The number of targets currently solved.
+     */
     countSolvedTargets: function (checkNow) {
       var n = 0;
       for (var i = 0; i < this.targets.length; i++) {
@@ -164,11 +187,12 @@ define([
       }
       return n;
     },
-    //
-    // Visually marks the target as 'solved OK' or 'with errors'.
-    // target ([TextTarget](TextActivityDocument.html#TextTarget)) - The text target to be marked.
-    // attributes (Array of Number) - Array of flags indicating the status (OK or error) of each
-    // character in `target.currentText`.
+    /**
+     * Visually marks the target as 'solved OK' or 'with errors'.
+     * @param {TextActivityDocument.TextTarget} target - The text target to be marked.
+     * @param {number[]} attributes -  - Array of flags indicating the status (OK or error) for each
+     * character in `target.currentText`.
+     */
     markTarget: function (target, attributes) {
 
       var i = 0;
@@ -204,9 +228,11 @@ define([
       // Target has been marked, so clear the 'modified' flag
       target.flagModified = false;
     },
-    //
-    // Called by [JClicPlayer](JClicPlayer.html) when this activity panel is fully visible, after
-    // the initialization process.
+    /**
+     * 
+     * Called by {@link JClicPlayer} when this activity panel is fully visible, just after the
+     * initialization process.
+     */
     activityReady: function () {
       ActPanelAncestor.activityReady.call(this);
 
@@ -218,9 +244,11 @@ define([
         this.targets[0].$span.focus();
       }
     },
-    //
-    // Regular ending of the activity
-    // reault (boolean) - Indicates if the activity was successfully done by the user
+    /**
+     * 
+     * Ordinary ending of the activity, usually called form `processEvent`
+     * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
+     */
     finishActivity: function (result) {
       for (var i = 0; i < this.targets.length; i++) {
         var target = this.targets[i];
@@ -231,9 +259,13 @@ define([
       }
       return ActPanelAncestor.finishActivity.call(this, result);
     },
-    // 
-    // Main handler to receive mouse and key events
-    // Overrides same function in TextActivityBase.Panel
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events.
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
     processEvent: function (event) {
 
       if (!ActPanelAncestor.processEvent.call(this, event))
@@ -340,7 +372,6 @@ define([
   // FillInBlanks.Panel extends TextActivityBase.Panel
   FillInBlanks.Panel.prototype = $.extend(Object.create(ActPanelAncestor), FillInBlanks.Panel.prototype);
 
-  // 
   // Register class in Activity.prototype
   Activity.CLASSES['@text.FillInBlanks'] = FillInBlanks;
 

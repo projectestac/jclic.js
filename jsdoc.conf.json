@@ -8,6 +8,7 @@
   },
   "plugins": ["plugins/markdown"],
   "templates": {
+    "logo": "ico.png",
     "cleverLinks": true,
     "monospaceLinks": true,
     "dateFormat": "ddd MMM Do YYYY",

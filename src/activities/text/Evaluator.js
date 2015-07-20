@@ -56,20 +56,20 @@ define([
   };
 
 
-  var BasicEvaluator = function (className) {
+  Evaluator.BasicEvaluator = function (className) {
     Evaluator.call(this, className);
   };
 
-  var ComplexEvaluator = function (className) {
-    BasicEvaluator.call(this, className);
+  Evaluator.ComplexEvaluator = function (className) {
+    Evaluator.BasicEvaluator.call(this, className);
   };
   
   /**
    * List of known evaluator classes
    * @type {object} */
   Evaluator.CLASSES = {
-    '@BasicEvaluator': BasicEvaluator,
-    '@ComplexEvaluator': ComplexEvaluator
+    '@BasicEvaluator': Evaluator.BasicEvaluator,
+    '@ComplexEvaluator': Evaluator.ComplexEvaluator
   };
 
   Evaluator.prototype = {
@@ -180,17 +180,13 @@ define([
         if (flags[i] !== 0)
           return false;
       return true;
-    },
-    //
-    // References to the two Evaluator classes:
-    BasicEvaluator: BasicEvaluator,
-    ComplexEvaluator: ComplexEvaluator
+    }
   };
 
   //
   // BasicEvaluator just checks the validity of a given text agains a match
-  BasicEvaluator.prototype = {
-    constructor: BasicEvaluator,
+  Evaluator.BasicEvaluator.prototype = {
+    constructor: Evaluator.BasicEvaluator,
     //
     // Initializes the `collator`
     init: function () {
@@ -265,14 +261,14 @@ define([
 
   // 
   // BasicEvaluator extends Evaluator
-  BasicEvaluator.prototype = $.extend(Object.create(Evaluator.prototype), BasicEvaluator.prototype);
+  Evaluator.BasicEvaluator.prototype = $.extend(Object.create(Evaluator.prototype), Evaluator.BasicEvaluator.prototype);
 
 
   //
   // ComplexEvaluator acts like BasicEvaluator, but providing feedback about what's the location
   // of the mistakes in the user provided answer.
-  ComplexEvaluator.prototype = {
-    constructor: ComplexEvaluator,
+  Evaluator.ComplexEvaluator.prototype = {
+    constructor: Evaluator.ComplexEvaluator,
     //
     // Performs comparision between `text` and `match`, returning an array of flags indicating which 
     // characters in `text` are wrong.
@@ -284,7 +280,7 @@ define([
       var i;
 
       if (!this.detail)
-        return BasicEvaluator.prototype._evalText.call(this, text, match);
+        return Evaluator.BasicEvaluator.prototype._evalText.call(this, text, match);
       var skipped = [];
       for (i = 0; i < text.length; i++) {
         skipped[i] = false;
@@ -414,7 +410,9 @@ define([
 
   // 
   // ComplexEvaluator extends BasicEvaluator
-  ComplexEvaluator.prototype = $.extend(Object.create(BasicEvaluator.prototype), ComplexEvaluator.prototype);
+  Evaluator.ComplexEvaluator.prototype = $.extend(
+      Object.create(Evaluator.BasicEvaluator.prototype), 
+      Evaluator.ComplexEvaluator.prototype);
 
   return Evaluator;
 
