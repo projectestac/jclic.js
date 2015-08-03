@@ -13,7 +13,6 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
-
 define([
   "jquery",
   "../../Activity",
@@ -24,10 +23,18 @@ define([
   "../../boxes/TextGrid"
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT, TextGrid) {
 
-  //
-  // In this type of [Activity](Activity.html) a grid of letters is presented to the user, that must
-  // find words hidden on it. The words can be written in horizontal, verticat or diagonal lines, in
-  // regular or reverse order, and can have associated content that will be revealed as found.
+  /**
+   * This class of {@link Activity} shows a {@link TextGrid} with some words placed in horizontal,
+   * vertical or diagonal direction, written right or upside down. The remaining grid cells will be
+   * filled with randomly selected characters.<br>
+   * The aim of the activity is to find all the words hidden on the text grid.<br>
+   * The content of an optional {@link ActiveBagContent} can be revealed on an auxiliary panel as
+   * words are found.
+   * @exports WordSearch
+   * @class
+   * @extends Activity
+   * @param {JClicProject} project - The JClic project to which this activity belongs
+   */
   var WordSearch = function (project) {
     Activity.call(this, project);
   };
@@ -43,57 +50,79 @@ define([
      * of an associated {@link ActiveBoxContent} located on the secondary {@link ActiveBoxBag}.<br>
      * This associated element is optional.
      * @type {number[]} */
-    clueItems: null,    
-    // 
-    // Retrieves the minimum number of actions needed to solve this activity
+    clueItems: null,
+    /**
+     * 
+     * Retrieves the minimum number of actions needed to solve this activity
+     * @returns {number}
+     */
     getMinNumActions: function () {
       return this.clues.length;
     },
-    //
-    // The activity permits the user to display the solution
+    /**
+     * 
+     * This type of activity permits the user to display the solution
+     * @returns {boolean}
+     */
     helpSolutionAllowed: function () {
       return true;
     },
-    //
-    // The activity uses random to generate filling characters
+    /**
+     * 
+     * This kind of activity uses random numbers to generate the filling characters
+     * @returns {boolean}
+     */
     hasRandom: function () {
       return true;
     }
   };
 
-  // 
   // WordSearch extends Activity
   WordSearch.prototype = $.extend(Object.create(Activity.prototype), WordSearch.prototype);
 
-  //
-  // Activity.Panel constructor
+  /**
+   * The {@link Activity.Panel} where word search activities are played.
+   * @class
+   * @extends Activity.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
   WordSearch.Panel = function (act, ps, $div) {
     Activity.Panel.call(this, act, ps, $div);
     this.resolvedClues = [];
   };
 
-  // 
-  // Properties and methods specific to InformationScreen.Panel
   var ActPanelAncestor = Activity.Panel.prototype;
 
   WordSearch.Panel.prototype = {
     constructor: WordSearch.Panel,
-    //
-    // The [TextGrid](TextGrid.html) of this Activity.Panel
+    /**
+     * The TextGrid object of this Activity.Panel
+     * @type {TextGrid} */
     grid: null,
-    // The [ActiveBoxBag](ActiveBoxBag.html) object used to display information associated with clues.
+    /**
+     * An optional {@link ActiveBoxBag} used to display information associated with the hidden words.
+     * @type {ActiveBoxBag} */
     bgAlt: null,
-    //
-    // An array of boolean values indicating which clues have been found
+    /**
+     * An array of boolean values indicating which clues have been found
+     * @type {boolean[]} */
     resolvedClues: null,
-    //
-    // The [BoxConnector](BoxConnector.html) obect
+    /**
+     * The box connector object
+     * @type {BoxConnector} */
     bc: null,
-    // 
-    // Mouse and touch events intercepted by this panel
+    /**
+     * Mouse and touch events intercepted by this panel
+     * @type {string[]} */
     events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
-    //
-    // Clears the realized objects
+    /**
+     * 
+     * Performs miscellaneous cleaning operations
+     */
     clear: function () {
       if (this.grid) {
         this.grid.end();
@@ -104,8 +133,10 @@ define([
         this.bgAlt = null;
       }
     },
-    // 
-    // Prepares the activity panel
+    /**
+     * 
+     * Prepares the visual components of the activity
+     */
     buildVisualComponents: function () {
 
       if (this.firstRun)
@@ -135,8 +166,10 @@ define([
         this.grid.setVisible(true);
       }
     },
-    // 
-    // Basic initialization procedure
+    /**
+     * 
+     * Basic initialization procedure
+     */
     initActivity: function () {
       ActPanelAncestor.initActivity.call(this);
 
@@ -168,11 +201,12 @@ define([
         this.invalidate().update();
       }
     },
-    //
-    // Overrides `Activity.Panel.updateContent`
-    // Updates the graphic contents of its panel.
-    // The method should be called from `Activity.Panel.update`
-    // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
+    /**
+     * Updates the graphic content of this panel.<br>
+     * This method will be called from {@link AWT.Container#update} when needed.
+     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+     * it's the whole panel.
+     */
     updateContent: function (dirtyRegion) {
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
       if (this.grid && this.$canvas) {
@@ -187,8 +221,12 @@ define([
       }
       return this;
     },
-    //
-    // Calculates the optimal dimension of this panel
+    /**
+     * 
+     * Sets the real dimension of this panel.
+     * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+     * @returns {AWT.Dimension}
+     */
     setDimension: function (preferredMaxSize) {
       if (!this.grid || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
@@ -197,8 +235,11 @@ define([
       else
         return BoxBag.layoutSingle(preferredMaxSize, this.grid, this.act.margin);
     },
-    //
-    // Set the size and position of this activity panel
+    /**
+     * 
+     * Sets the size and position of this activity panel
+     * @param {AWT.Rectangle} rect
+     */
     setBounds: function (rect) {
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
@@ -218,8 +259,11 @@ define([
         this.invalidate().update();
       }
     },
-    // 
-    // 
+    /**
+     * 
+     * Calculates the current score
+     * @returns {number}
+     */
     getCurrentScore: function () {
       var result = 0;
       if (this.act.clues)
@@ -228,9 +272,13 @@ define([
             result++;
       return result;
     },
-    // 
-    // Main handler to receive mouse and key events
-    // Overrides same function in Activity.Panel
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
     processEvent: function (event) {
       if (this.bc && this.playing) {
         // 
@@ -354,10 +402,8 @@ define([
   // WordSearch.Panel extends Activity.Panel
   WordSearch.Panel.prototype = $.extend(Object.create(ActPanelAncestor), WordSearch.Panel.prototype);
 
-  // 
   // Register class in Activity.prototype
   Activity.CLASSES['@textGrid.WordSearch'] = WordSearch;
 
   return WordSearch;
-
 });
