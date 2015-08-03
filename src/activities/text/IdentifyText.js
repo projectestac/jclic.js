@@ -13,13 +13,20 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
-
 define([
   "jquery",
   "../../Activity",
   "./TextActivityBase"
 ], function ($, Activity, TextActivityBase) {
 
+  /**
+   * This type of text activity suggests users to click on specific words or single letters of a
+   * given text, without any help on where these elements are placed.
+   * @exports IdentifyText
+   * @class
+   * @extends TextActivityBase
+   * @param {JClicProject} project - The project to which this activity belongs
+   */
   //
   // TODO: Implement Identify text activities
   var IdentifyText = function (project) {
@@ -34,27 +41,33 @@ define([
   // Identify extends TextActivityBase
   IdentifyText.prototype = $.extend(Object.create(TextActivityBase.prototype), IdentifyText.prototype);
 
-  // Constructor of this Activity.Panel object
+  /**
+   * The {@link TextActivityBase.Panel} where this kind of text activities are played.
+   * @class
+   * @extends TextActivityBase.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
   IdentifyText.Panel = function (act, ps, $div) {
     TextActivityBase.Panel.call(this, act, ps, $div);
   };
 
-
-  // 
-  // Properties and methods specific to Identify.Panel
   var ActPanelAncestor = TextActivityBase.Panel.prototype;
   IdentifyText.Panel.prototype = {
     constructor: IdentifyText.Panel,
-    //
-    // Flag indicating if targets must be visually marked when the activity begins.
-    // Here is `false` to avoid revealing the items that must be found
+    /**
+     * Flag indicating if targets must be visually marked when the activity begins. In this type of
+     * activity should be always `false` to avoid revealing the words o letters that must be found.
+     * @type {boolean} */
     targetsMarked: false
   };
 
   // Identify.Panel extends TextActivityBase.Panel
   IdentifyText.Panel.prototype = $.extend(Object.create(ActPanelAncestor), IdentifyText.Panel.prototype);
 
-  // 
   // Register class in Activity.prototype
   Activity.CLASSES['@text.Identify'] = IdentifyText;
 

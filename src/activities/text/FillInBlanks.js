@@ -36,6 +36,15 @@ define([
   FillInBlanks.prototype = {
     constructor: FillInBlanks,
     /**
+     * Whether to jump or not to the next target when the current one is solved.
+     * @type {boolean} */
+    autoJump: false,
+    /**
+     * Whether to block or not the jump to other targets until the current one
+     * is resolved.
+     * @type {boolean} */
+    forceOkToAdvance: false,    
+    /**
      * 
      * This kind of activity usually makes use of the keyboard
      * @returns {boolean}
@@ -188,6 +197,7 @@ define([
       return n;
     },
     /**
+     * 
      * Visually marks the target as 'solved OK' or 'with errors'.
      * @param {TextActivityDocument.TextTarget} target - The text target to be marked.
      * @param {number[]} attributes -  - Array of flags indicating the status (OK or error) for each

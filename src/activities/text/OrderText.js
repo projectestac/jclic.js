@@ -19,6 +19,14 @@ define([
   "./TextActivityBase"
 ], function ($, Activity, TextActivityBase) {
 
+  /**
+   * In this type of text activity users must put in order some words or paragrafs that have been
+   * initially scrambled.
+   * @exports OrderText
+   * @class
+   * @extends TextActivityBase
+   * @param {JClicProject} project - The project to which this activity belongs
+   */
   //
   // TODO: Implement order text activities
   var OrderText = function (project) {
@@ -26,21 +34,30 @@ define([
   };
 
   OrderText.prototype = {
-    constructor: OrderText
+    constructor: OrderText,
+    /**
+     * Whether to allow or not to scramble words among different paragraphs.
+     * @type {boolean} */
+    amongParagraphs: false    
   };
 
-  // 
   // OrderText extends TextActivityBase
   OrderText.prototype = $.extend(Object.create(TextActivityBase.prototype), OrderText.prototype);
 
-  //
-  // Constructor of this Activity.Panel object
+  /**
+   * The {@link TextActivityBase.Panel} where this kind of text activities are played.
+   * @class
+   * @extends TextActivityBase.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
   OrderText.Panel = function (act, ps, $div) {
     TextActivityBase.Panel.call(this, act, ps, $div);
   };
 
-
-  // 
   // Properties and methods specific to OrderText.Panel
   var ActPanelAncestor = TextActivityBase.Panel.prototype;
   OrderText.Panel.prototype = {
@@ -50,7 +67,6 @@ define([
   // OrderText.Panel extends TextActivityBase.Panel
   OrderText.Panel.prototype = $.extend(Object.create(ActPanelAncestor), OrderText.Panel.prototype);
 
-  // 
   // Register class in Activity.prototype
   Activity.CLASSES['@text.Order'] = OrderText;
 

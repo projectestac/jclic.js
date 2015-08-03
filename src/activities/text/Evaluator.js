@@ -18,10 +18,14 @@ define([
   "../../Utils"
 ], function ($, Utils) {
 
-//
-// This class and its derivatives BasicEvaluator and ComplexEvaluator are 
-// used to evaluate answers in text activities
-//
+  /**
+   * This class and its derivatives {@link Evaluator.BasicEvaluator} and
+   * {@link Evaluator.ComplexEvaluator} are used to evaluate the answers written by the final users
+   * in text activities.
+   * @exports Evaluator
+   * @class
+   * @param {string} className - The class name of this evaluator.
+   */
   var Evaluator = function (className) {
     this.className = className;
     if (window.Intl && window.Intl.Collator) {
@@ -37,9 +41,12 @@ define([
     }
   };
 
-  //
-  // Factory constructor that returns a specific type of Evaluator
-  // based on the `class` attribute declared in the $xml element  
+  /**
+   * Factory constructor that returns a specific type of {@link Evaluator} based on the `class`
+   * attribute declared in the $xml element.
+   * @param {external:jQuery} $xml - The XML element to be parsed.
+   * @returns {Evaluator}
+   */
   Evaluator.getEvaluator = function ($xml) {
     var ev = null;
     if ($xml) {
@@ -55,49 +62,29 @@ define([
     return ev;
   };
 
-
-  Evaluator.BasicEvaluator = function (className) {
-    Evaluator.call(this, className);
-  };
-
-  Evaluator.ComplexEvaluator = function (className) {
-    Evaluator.BasicEvaluator.call(this, className);
-  };
-  
-  /**
-   * List of known evaluator classes
-   * @type {object} */
-  Evaluator.CLASSES = {
-    '@BasicEvaluator': Evaluator.BasicEvaluator,
-    '@ComplexEvaluator': Evaluator.ComplexEvaluator
-  };
-
   Evaluator.prototype = {
     constructor: Evaluator,
-    //
-    // The type of Evaluator
+    /**
+     * The type of evaluator.
+     * @type {string} */
     className: null,
-    //
-    // Initiliazation flag
+    /**
+     * Whether this evaluator has been initialized or not.
+     * @type {boolean} */
     initiated: false,
-    //
-    // The Intl.Collator object used to compare strings, when available.
-    // See: [https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Collator]
+    /**
+     * The Intl.Collator object used to compare strings, when available.
+     * @type {external:Collator} */
     collator: null,
-    // 
-    // Fields used by BasicEvaluator and ComplexEvaluator
+    /**
+     * Whether uppercase and lowercase expressions must be considered equivalent or not.
+     * @type {boolean} */
     checkCase: false,
-    checkAccents: true,
-    checkPunctuation: true,
-    checkDoubleSpaces: false,
-    PUNCTUATION: '.,;:',
-    //
-    // Fields used by ComplexEvaluator
-    detail: true,
-    checkSteps: 3,
-    checkScope: 6,
-    //
-    // Loads the object settings from a specific JQuery XML element 
+    /**
+     * 
+     * Loads the object settings from a specific JQuery XML element 
+     * @param {external:jQuery} $xml - The jQuery XML element to parse
+     */
     setProperties: function ($xml) {
       var evaluator = this;
       $.each($xml.get(0).attributes, function () {
@@ -122,16 +109,20 @@ define([
       });
       return this;
     },
-    //
-    // Inits this Evaluator
+    /**
+     * 
+     * Initializes this evaluator
+     */
     init: function () {
       this.initiated = true;
     },
-    //
-    // Checks the given text against a set of valid matches
-    // text (String)
-    // match (String or Array of String)
-    // Returns: Boolean
+    /**
+     * 
+     * Checks the given text against a set of valid matches
+     * @param {string} text - The text to be checked
+     * @param {(string|string[])} match - The valid expression or expressions with which to compare.
+     * @returns {boolean} - `true` if the checked expression is valid, `false` otherwise.
+     */
     checkText: function (text, match) {
       if (match instanceof Array) {
         for (var i = 0; i < match.length; i++)
@@ -143,38 +134,51 @@ define([
 
       return false;
     },
-    //
-    // Abstract method to be implemented in subclasses.
-    // Performs the validation of a string against a single match
-    // text (String)
-    // match (String)
+    /**
+     * 
+     * Abstract method to be implemented in subclasses.
+     * Performs the validation of a string against a single match.
+     * @param {string} text - The text to be checked
+     * @param {string} match - A valid expression with which to compare.
+     * @returns {boolean} - `true` when the two expressions can be considered equivalent.
+     */
     _checkText: function (text, match) {
       return false;
     },
-    //
-    // Evaluates the given text against a set of valid matches, returning an array of flags
-    // of flags useful to indicate where the mistakes are located.
-    // text (String)
-    // match (String or Array of String)
-    // Returns: Array of number
+    /**
+     * 
+     * Evaluates the given text against a set of valid matches, returning an array of flags useful
+     * to indicate where the mistakes are located.
+     * @param {string} text - The text to be checked
+     * @param {(string|string[])} match - The valid expression or expressions with which to compare.
+     * @returns {number[]} - An array of flags (one number for character) indicating whether each
+     * position is erroneous or ok.
+     */
     evalText: function (text, match) {
       if (!(match instanceof Array))
         match = [match];
       return this._evalText(text, match);
     },
-    //
-    // Abstract method to be implemented in subclasses.
-    // Performs the evaluation of a string against an array of valid matches, returning an array
-    // of flags useful to indicate where the mistakes are located.
-    // text (String)
-    // match (array of String)
-    // Returns: Array of number
+    /**
+     * 
+     * Abstract method to be implemented in subclasses.<br>
+     * Performs the evaluation of a string against an array of valid matches, returning an array of
+     * flags useful to indicate where the mistakes are located.
+     * @param {string} text - The text to be checked
+     * @param {string} match - A valid expression with which to compare.
+     * @returns {number[]} - An array of flags (one number for character) indicating whether each
+     * position is erroneous or ok.
+     */
     _evalText: function (text, match) {
       return [];
     },
-    // Checks if the given array of flags (usually retirned by `evalText`) can be considered a
-    // valid answer.
-    // flags (Array of number)
+    /**
+     * 
+     * Checks if the given array of flags (usually returned by `evalText`) can be considered as a
+     * valid or erroneous answer.
+     * @param {number[]} flags
+     * @returns {boolean} - `true` when all flags are 0 (meaning no error).
+     */
     isOk: function (flags) {
       for (var i = 0; i < flags.length; i++)
         if (flags[i] !== 0)
@@ -183,12 +187,39 @@ define([
     }
   };
 
-  //
-  // BasicEvaluator just checks the validity of a given text agains a match
+  /**
+   * A basic evaluator that just compares texts, without looking for possible coincidences of text
+   * fragments once erroneous characters removed.
+   * @class
+   * @extends Evaluator
+   * @param {string} className - The class name of this evaluator.
+   */
+  Evaluator.BasicEvaluator = function (className) {
+    Evaluator.call(this, className);
+  };
+
   Evaluator.BasicEvaluator.prototype = {
     constructor: Evaluator.BasicEvaluator,
-    //
-    // Initializes the `collator`
+    /**
+     * Whether accented letters must be considered equivalent or not.
+     * @type {boolean} */
+    checkAccents: true,
+    /**
+     * Whether to check or not dots, commas and other punctuation marks when comparing texts.
+     * @type {boolean} */
+    checkPunctuation: true,
+    /**
+     * Whether to check or not the extra spaces added between words.
+     * @type {boolean} */
+    checkDoubleSpaces: false,
+    /**
+     * String containing all the characters considered as punctuation marks (currently ".,;:")
+     * @type {string} */
+    PUNCTUATION: '.,;:',
+    /**
+     * 
+     * Initializes the {@link Evaluator#collator}.
+     */
     init: function () {
       Evaluator.prototype.init.call(this);
       if (window.Intl && window.Intl.Collator) {
@@ -198,15 +229,27 @@ define([
         });
       }
     },
-    //
-    // Performs comparision between text and match
+    /**
+     * 
+     * Performs the validation of a string against a single match.
+     * @param {string} text - The text to be checked
+     * @param {string} match - A valid expression with which to compare.
+     * @returns {boolean} - `true` when the two expressions can be considered equivalent.
+     */
     _checkText: function (text, match) {
       return this.collator.compare(this.getClearedText(text), this.getClearedText(match)) === 0;
     },
-    //
-    // Performs comparision between `text` and `match`, returning an array of flags indicating which 
-    // characters in `text` are wrong. In BasicEvaluator, all characters are marked as 1 or 0. See
-    // ComplexEvaluator for more specific analysis
+    /**
+     * 
+     * Performs the evaluation of a string against an array of valid matches, returning an array of
+     * flags useful to indicate where the mistakes are located.<br>
+     * In BasicEvaluator, all characters are just marked as 1 (error) or 0 (ok). See
+     * {@link Evaluator.ComplexEvaluator} for more detailed analysis of answers.
+     * @param {string} text - The text to be checked
+     * @param {string} match - A valid expression with which to compare.
+     * @returns {number[]} - An array of flags (one number for character) indicating whether each
+     * position is erroneous or ok.
+     */
     _evalText: function (text, match) {
       var flags = [];
       var result = this._checkText(text, match[0]);
@@ -215,10 +258,14 @@ define([
       }
       return flags;
     },
-    //
-    // src (String)
-    // skipped (null or array of Booleans)
-    // Returns: String
+    /**
+     * 
+     * Removes double spaces and erroneous characters from a given text expression.
+     * @param {string} src - The text to be processed.
+     * @param {boolean[]} skipped - An array of boolean indicating which characters should be removed
+     * from the string.
+     * @returns {string}
+     */
     getClearedText: function (src, skipped) {
 
       var i;
@@ -259,22 +306,53 @@ define([
     }
   };
 
-  // 
   // BasicEvaluator extends Evaluator
   Evaluator.BasicEvaluator.prototype = $.extend(Object.create(Evaluator.prototype), Evaluator.BasicEvaluator.prototype);
 
+  /**
+   * ComplexEvaluator acts like {@link Evaluator.BasicEvaluator}, but providing feedback about
+   * the location of mistakes on the user's answer.
+   * @class
+   * @extends Evaluator.BasicEvaluator
+   * @param {string} className - The class name of this evaluator.
+   */
+  Evaluator.ComplexEvaluator = function (className) {
+    Evaluator.BasicEvaluator.call(this, className);
+  };
 
-  //
-  // ComplexEvaluator acts like BasicEvaluator, but providing feedback about what's the location
-  // of the mistakes in the user provided answer.
   Evaluator.ComplexEvaluator.prototype = {
     constructor: Evaluator.ComplexEvaluator,
-    //
-    // Performs comparision between `text` and `match`, returning an array of flags indicating which 
-    // characters in `text` are wrong.
-    // text (String)
-    // match (array of String)
-    // Returns: Array of number    
+    /**
+     * Whether to detail or not the location of errors found on the analyzed text.
+     * @type {boolean} */
+    detail: true,
+    /**
+     * Number of times to repeat the evaluation process if an error is found, eliminating in each
+     * cycle the extra characters that caused the error.
+     * @type {number} */
+    checkSteps: 3,
+    /**
+     * When an eror is detected in the analyzed expression, this variable indicates the number of
+     * characters the checking pointer will be moved forward and back looking for a coincident
+     * expression.<br>
+     * For example, comparing the answer "_one lardzy dog_" with the correct answer "_one lazy dog_"
+     * will detect an error at position 6 (an "r" instead of "z"). If `checkSteps` is set to 2 or
+     * greater, the "_zy dog_" expression at position 8 will be found and evaluated as valid, while
+     * a value of 1 or less will not found any coincident expression beyond the error position, thus
+     * evaluating all the remaining sentence as erroneous.
+     * @type {number} */
+    checkScope: 6,
+    /**
+     * 
+     * Performs the evaluation of a string against an array of valid matches, returning an array of
+     * flags useful to indicate where the mistakes are located.<br>
+     * In BasicEvaluator, all characters are just marked as 1 (error) or 0 (ok). See
+     * {@link Evaluator.ComplexEvaluator} for more detailed analysis of answers.
+     * @param {string} text - The text to be checked
+     * @param {string} match - A valid expression with which to compare.
+     * @returns {number[]} - An array of flags (one number for character) indicating whether each
+     * position is erroneous or ok.
+     */
     _evalText: function (text, match) {
 
       var i;
@@ -321,9 +399,12 @@ define([
       }
       return returnFlags;
     },
-    //
-    // Count the number of 'flags' in an array that are zero
-    // flags (Array of Number)
+    /**
+     * 
+     * Counts the number of flags on the provided array that are zero.
+     * @param {number[]} flags
+     * @returns {number}
+     */
     countFlagsOk: function (flags) {
       var r = 0;
       for (var i = 0; i < flags.length; i++)
@@ -331,15 +412,20 @@ define([
           r++;
       return r;
     },
-    //
-    // Compare two segments of text
-    // src (String)
-    // ls (number)
-    // ok (String)
-    // lok (number)
-    // attr (Array of number)
-    // iterate (boolean)
-    // Returns: boolean
+    /**
+     * 
+     * Compares two segments of text.<br>
+     * This function should make recursive calls.
+     * @param {string} src - Text to be compared
+     * @param {number} ls - Offset in `src` where to start the comparision
+     * @param {string} ok - Text to match against.
+     * @param {number} lok - Offset in `ok` where to start the comparision.
+     * @param {number[]} attr - Array of integers that will be filled with information about the
+     * validity or error of each character in `src`.
+     * @param {boolean} iterate - When `true`, the segment will be iterated looking for other
+     * coincident fragments.
+     * @returns {boolean} - `true` if the comparision was valid.
+     */
     compareSegment: function (src, ls, ok, lok, attr, iterate) {
       var is = 0, iok = 0, lastIs = 0;
       var lastiok = true;
@@ -411,9 +497,14 @@ define([
   // 
   // ComplexEvaluator extends BasicEvaluator
   Evaluator.ComplexEvaluator.prototype = $.extend(
-      Object.create(Evaluator.BasicEvaluator.prototype), 
+      Object.create(Evaluator.BasicEvaluator.prototype),
       Evaluator.ComplexEvaluator.prototype);
 
-  return Evaluator;
+  // List of known Evaluator classes
+  Evaluator.CLASSES = {
+    '@BasicEvaluator': Evaluator.BasicEvaluator,
+    '@ComplexEvaluator': Evaluator.ComplexEvaluator
+  };
 
+  return Evaluator;
 });

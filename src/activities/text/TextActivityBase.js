@@ -33,7 +33,31 @@ define([
   };
 
   TextActivityBase.prototype = {
-    constructor: TextActivityBase
+    constructor: TextActivityBase,
+    /**
+     * The main document used by this text activity
+     * @type {TextActivityDocument} */
+    tad: null,
+    /**
+     * This is the object used to evaluate user's answers in text activities.
+     * @type {Evaluator} */
+    ev: null,
+    /**
+     * This is the label used by text activities for the `check` button, when present.
+     * @type {string} */
+    checkButtonText: null,
+    /**
+     * Optional text to be shown before the beginning of the activity.
+     * @type {string}*/
+    prevScreenText: null,
+    /**
+     * The style of the optional text to be shown before the beginning of the activity.
+     * @type {BoxBase}*/
+    prevScreenStyle: null,
+    /**
+     * Maximum amount of time for showing the previous document text activities.
+     * @type {number}*/
+    prevScreenMaxTime: -1
   };
 
   // TextActivityBase extends Activity

@@ -35,6 +35,18 @@ define([
 
   CrossWord.prototype = {
     constructor: CrossWord,
+    /**
+     * Whether all letters of the {@link TextGrid} should be displayed in upper case
+     * @type {boolean} */
+    upperCase: true,
+    /**
+     * Whether the case is significant to evaluate answers
+     * @type {boolean} */
+    checkCase: true,
+    /**
+     * When `true`, the wildchar of the {@link TextGrid} will be transparent.
+     * @type {boolean} */
+    wildTransparent: false,    
     // 
     // Retrieves the minimum number of actions needed to solve this activity
     getMinNumActions: function () {

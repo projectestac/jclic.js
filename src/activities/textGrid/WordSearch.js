@@ -34,6 +34,16 @@ define([
 
   WordSearch.prototype = {
     constructor: WordSearch,
+    /**
+     * String array containing all the valid clues.
+     * @type {string[]} */
+    clues: null,
+    /**
+     * Array of integers containing __for each clue__ the index
+     * of an associated {@link ActiveBoxContent} located on the secondary {@link ActiveBoxBag}.<br>
+     * This associated element is optional.
+     * @type {number[]} */
+    clueItems: null,    
     // 
     // Retrieves the minimum number of actions needed to solve this activity
     getMinNumActions: function () {

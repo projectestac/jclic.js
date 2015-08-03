@@ -44,6 +44,13 @@ define([
    */
 
   /**
+   * The Intl.Collator object is a constructor for collators, objects that enable language sensitive
+   * string comparison.
+   * @external Collator
+   * @see https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Collator
+   */
+
+  /**
    * A JSZip object
    * @external JSZip
    * @see {@link https://stuk.github.io/jszip}
