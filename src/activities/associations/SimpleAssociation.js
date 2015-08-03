@@ -118,7 +118,7 @@ define([
     events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
     /**
      * 
-     * Miscellaneous cleaning operations
+     * Performs miscellaneous cleaning operations
      */
     clear: function () {
       if (this.bgA) {

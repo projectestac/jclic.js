@@ -24,59 +24,90 @@ define([
   "../../shapers/Rectangular"
 ], function ($, Activity, ActiveBoxGrid, BoxBag, AWT, Utils, Rectangular) {
 
-  //
-  // This class of [Activity](Activity.html) shows a panel with [ActiveBox](ActiveBox.html)
-  // objects acting as cells with questions. The answers to these questions must be written in a
-  // text field.
+  /**
+   * This class of {@link Activity} shows a panel with {@link ActiveBox} objects acting as cells
+   * with questions. The answers to these questions must be written in a separate text field.<br>
+   * The ActiveBox objects are filled with data stored in {@link ActiveBagContent} repositories.<br>
+   * A second {@link ActiveBagContent} can be used as alternative content, revealed as the questions
+   * are solved.
+   * @exports WrittenAnswer
+   * @class
+   * @extends Activity
+   * @param {JClicProject} project - The JClic project to which this activity belongs
+   */
   var WrittenAnswer = function (project) {
     Activity.call(this, project);
   };
 
   WrittenAnswer.prototype = {
     constructor: WrittenAnswer,
-    //
-    // Number of unassigned cells
+    /**
+     * Number of unassigned cells
+     * @type {number} */
     nonAssignedCells: 0,
-    //
-    // Uses cell's `idAss` field to check if a pairing match
+    /**
+     * Whether to use or not the cell's `idAss` field to check if pairings match
+     * @type {boolean} */
     useIdAss: true,
-    //
-    // Overrides `setProperties` in Activity
+    /**
+     * 
+     * Loads this object settings from an XML element 
+     * @param {external:jQuery} $xml - The jQuery XML element to parse
+     */
     setProperties: function ($xml) {
       Activity.prototype.setProperties.call(this, $xml);
       this.abc['primary'].avoidAllIdsNull(this.abc['answers'].getNumCells());
     },
-    //
-    // Retrieves the minimum number of actions needed to solve this activity
+    /**
+     * 
+     * Retrieves the minimum number of actions needed to solve this activity
+     * @returns {number}
+     */
     getMinNumActions: function () {
       if (this.invAss)
         return this.abc['answers'].getNumCells();
       else
         return this.abc['primary'].getNumCells() - this.nonAssignedCells;
     },
-    //
-    // The activity uses random to scramble internal components
+    /**
+     * 
+     * This activity uses random values to scramble its internal components
+     * @returns {boolean}
+     */
     hasRandom: function () {
       return true;
     },
-    //
-    // The activity uses the keyboard
+    /**
+     * 
+     * This activity makes use of the keyboard
+     * @returns {boolean}
+     */
     needsKeyboard: function () {
       return true;
     },
-    //
-    // The activity permits the user to display the solution
+    /**
+     * 
+     * This activity can permit the user to display the solution
+     * @returns {boolean}
+     */
     helpSolutionAllowed: function () {
       return true;
     }
   };
 
-  // 
   // InformationScreen extends Activity
   WrittenAnswer.prototype = $.extend(Object.create(Activity.prototype), WrittenAnswer.prototype);
 
-  //
-  // Activity.Panel constructor
+  /**
+   * The {@link Activity.Panel} where writen answer activities are played.
+   * @class
+   * @extends Activity.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
   WrittenAnswer.Panel = function (act, ps, $div) {
     Activity.Panel.call(this, act, ps, $div);
   };
@@ -86,24 +117,34 @@ define([
 
   WrittenAnswer.Panel.prototype = {
     constructor: WrittenAnswer.Panel,
-    //
-    // The input text field where users write the answers
+    /**
+     * The input text field where users write the answers
+     * @type {external:jQuery} */
     $textField: null,
-    //
-    // Array for storing checked associations
+    /**
+     * Array for storing checked associations
+     * @type {boolean[]} */
     invAssCheck: null,
-    //
-    // The [ActiveBoxBag](ActiveBoxBag.html) object containing the questions
+    /**
+     * The {@link ActiveBoxBag} object containing the questions
+     * @type {ActiveBoxBag} */
     bgA: null,
+    /**
+     * An optional {@link ActiveBoxBag} with content displayed as cells are solved.
+     * @type {ActiveBoxBag} */
     bgB: null,
-    //
-    // The currently selected cell
+    /**
+     * The currently selected cell
+     * @type {number} */
     currentCell: -1,
-    // 
-    // Mouse events intercepted by this panel
+    /**
+     * Mouse events intercepted by this panel
+     * @type {string[]} */
     events: ['click'],
-    //
-    // Clears the realized objects
+    /**
+     * 
+     * Performs miscellaneous cleaning operations
+     */
     clear: function () {
       if (this.bgA) {
         this.bgA.end();
@@ -114,8 +155,10 @@ define([
         this.bgB = null;
       }
     },
-    // 
-    // Prepares the activity panel
+    /**
+     * 
+     * Prepares the visual components of the activity
+     */
     buildVisualComponents: function () {
 
       var n, i;
@@ -211,8 +254,10 @@ define([
         this.bgB.setVisible(false);
       }
     },
-    // 
-    // Basic initialization procedure
+    /**
+     * 
+     * Basic initialization procedure
+     */
     initActivity: function () {
       ActPanelAncestor.initActivity.call(this);
 
@@ -234,18 +279,21 @@ define([
         this.playing = true;
       }
     },
-    //
-    // Called by [JClicPlayer](JClicPlayer.html) when this activity panel is fully visible, after
-    // the initialization process.
+    /**
+     * 
+     * Called by [JClicPlayer](JClicPlayer.html) when this activity panel is fully visible, just
+     * after the initialization process.
+     */
     activityReady: function () {
       ActPanelAncestor.activityReady.call(this);
       this.setCurrentCell(0);
     },
-    //
-    // Overrides `Activity.Panel.updateContent`
-    // Updates the graphic contents of its panel.
-    // The method should be called from `Activity.Panel.update`
-    // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
+    /**
+     * Updates the graphic content of this panel.<br>
+     * This method will be called from {@link AWT.Container#update} when needed.
+     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+     * it's the whole panel.
+     */
     updateContent: function (dirtyRegion) {
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
       if (this.bgA && this.$canvas) {
@@ -259,15 +307,22 @@ define([
       }
       return this;
     },
-    //
-    // Calculates the optimal dimension of this panel
+    /**
+     * 
+     * Sets the real dimension of this panel.
+     * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+     * @returns {AWT.Dimension}
+     */
     setDimension: function (preferredMaxSize) {
       if (!this.bgA || !this.bgB || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
       return BoxBag.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
     },
-    //
-    // Set the size and position of this activity panel
+    /**
+     * 
+     * Sets the size and position of this activity panel
+     * @param {AWT.Rectangle} rect
+     */
     setBounds: function (rect) {
       this.$div.empty();
       ActPanelAncestor.setBounds.call(this, rect);
@@ -301,8 +356,11 @@ define([
         this.invalidate().update();
       }
     },
-    // 
-    // Check if all inverse associations are done
+    /**
+     * 
+     * Checks if all inverse associations are done
+     * @returns {boolean}
+     */
     checkInvAss: function () {
       var i;
       if (!this.act.invAss || !this.invAssCheck)
@@ -312,9 +370,11 @@ define([
           break;
       return i === this.invAssCheck.length;
     },
-    //
-    // Changes the currently selected cell, evaluating the answer written by the user
-    // i (Number)
+    /**
+     * 
+     * Changes the currently selected cell, evaluating the answer written by the user on the text field.
+     * @param {number} i - Index into the {@link ActiveBoxBag} of the cell to make active
+     */
     setCurrentCell: function (i) {
       var bx = null;
       var m = false;
@@ -393,9 +453,13 @@ define([
       if (bx)
         bx.playMedia(this.ps);
     },
-    // 
-    // Main handler to receive mouse and key events
-    // Overrides same function in Activity.Panel
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
     processEvent: function (event) {
       if (this.playing) {
         switch (event.type) {
@@ -432,10 +496,8 @@ define([
   // WrittenAnswer.Panel extends Activity.Panel
   WrittenAnswer.Panel.prototype = $.extend(Object.create(ActPanelAncestor), WrittenAnswer.Panel.prototype);
 
-  // 
   // Register class in Activity.prototype
   Activity.CLASSES['@text.WrittenAnswer'] = WrittenAnswer;
 
   return WrittenAnswer;
-
 });

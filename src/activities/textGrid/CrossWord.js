@@ -27,8 +27,21 @@ define([
 
   var K = Utils.settings;
 
-  //
-  // 
+  /**
+   * This class of {@link Activity} shows a {@link TextGrid} initially empty, with some cells
+   * marked in negative color that act as word stoppers. A blinking "cursor" indicates the cell that
+   * will receive the next character entered by the user on the keyboard.<br>
+   * The letter in each cell of the grid is always shared by two words: one in horizontal direction
+   * and the other one in vertical. Two {@link ActiveBox} objects are placed next to the
+   * {@link TextGrid}, hosting the definitions of the horizontal and vertyical words crossing at the
+   * cell currently marked by the cursor.<br>
+   * Two special buttons placed near this boxes allow to write on the grid horizontally or vertically.
+   * The aim of the activity is to fill all the text grid with the correct words.<br>
+   * @exports CrossWord
+   * @class
+   * @extends Activity
+   * @param {JClicProject} project - The JClic project to which this activity belongs
+   */
   var CrossWord = function (project) {
     Activity.call(this, project);
   };
@@ -46,14 +59,20 @@ define([
     /**
      * When `true`, the wildchar of the {@link TextGrid} will be transparent.
      * @type {boolean} */
-    wildTransparent: false,    
-    // 
-    // Retrieves the minimum number of actions needed to solve this activity
+    wildTransparent: false,
+    /**
+     * 
+     * Retrieves the minimum number of actions needed to solve this activity
+     * @returns {number}
+     */
     getMinNumActions: function () {
       return this.tgc.getNumChars() - this.tgc.countWildChars();
     },
-    //
-    // Cross word activities need keyboard
+    /**
+     * 
+     * Crossword activities always make use of the keyboard
+     * @returns {boolean}
+     */
     needsKeyboard: function () {
       return true;
     }
@@ -63,48 +82,70 @@ define([
   // WordSearch extends Activity
   CrossWord.prototype = $.extend(Object.create(Activity.prototype), CrossWord.prototype);
 
-  //
-  // Activity.Panel constructor
+  /**
+   * The {@link Activity.Panel} where crossword activities are played.
+   * @class
+   * @extends Activity.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
   CrossWord.Panel = function (act, ps, $div) {
     Activity.Panel.call(this, act, ps, $div);
   };
 
-
-  // 
-  // Properties and methods specific to InformationScreen.Panel
   var ActPanelAncestor = Activity.Panel.prototype;
 
   CrossWord.Panel.prototype = {
     constructor: CrossWord.Panel,
-    //
-    // The default width of the 'Horizontal' and 'Vertical' labels
+    /**
+     * The default width of the 'Horizontal' and 'Vertical' buttons (currently 40 pixels)
+     * @type {number} */
     LABEL_WIDTH: 40,
-    //
-    // The [TextGrid](TextGrid.html) of this Activity.Panel
+    /**
+     * The text grid of this Activity.Panel
+     * @type {textGrid} */
     grid: null,
-    // 
-    // A [BoxBag](BoxBag.html) used to place the across and down clues, and the
-    // `toggle direction` button.
+    /**
+     * A BoxBag used to place the across and down clues, and the `toggle direction` button.
+     * @type {BoxBag} */
     bb: null,
-    //
-    // The total number of letters of this cross word
+    /**
+     * The total number of letters of this cross word
+     * @type {number} */
     numLetters: 0,
-    //
-    // Flag indicating the type of automatic advance of the cursor.
-    // Possible values: `NO_ADVANCE` (default), 'ADVANCE_RIGHT' and 'ADVANCE_DOWN'
-    // TODO: Implement 'ADVANCE_LEFT' for LTR languages
+    /**
+     * Flag indicating the type of automatic advance of the cursor.<br>
+     * Possible values are: `NO_ADVANCE` (default), 'ADVANCE_RIGHT' and 'ADVANCE_DOWN'.
+     * TODO: Implement 'ADVANCE_LEFT' for LTR languages
+     */
     advance: 'NO_ADVANCE',
-    //
-    // Two [ActiveBox](ActiveBox.html) objects used to display across and down clues
-    hClue: null, vClue: null,
-    //
-    // Two buttons used to select the `advance` mode
-    hClueBtn: null, vClueBtn: null,
-    // 
-    // Mouse and touch events intercepted by this panel
+    /**
+     * The ActiveBox object used to display the 'across' clues
+     * @type {ActiveBox} */
+    hClue: null,
+    /**
+     * The ActiveBox object used to display the 'down' clues
+     * @type {ActiveBox} */
+    vClue: null,
+    /**
+     * Button used to set the advance mode to 'ADVANCE_RIGHT'
+     * @type {ActiveBox} */
+    hClueBtn: null,
+    /**
+     * Button used to set the advance mode to 'ADVANCE_BOTTOM'
+     * @type {ActiveBox} */
+    vClueBtn: null,
+    /**
+     * Mouse and touch events intercepted by this panel
+     * @type {string[]} */
     events: ['click', 'keydown', 'keypress'],
-    //
-    // Clears the realized objects
+    /**
+     * 
+     * Performs miscellaneous cleaning operations
+     */
     clear: function () {
       if (this.grid) {
         this.grid.end();
@@ -115,11 +156,13 @@ define([
         this.bb = null;
       }
     },
-    //
-    // Creates a [BoxBag](BoxBag.html) with a label ("Horizontal" or "Vertical") and an
-    // [ActiveBox](ActiveBox.html) used to display clues.
-    // type (String) - `acrossClues` for horizontal clues, 'downClues' for vertical.
-    // Returns: [BoxBag](BoxBag.html)
+    /**
+     * 
+     * Creates a {@link BoxBag} with a label ("Horizontal" or "Vertical") and an {@link ActiveBox}
+     * that will be used to display clues.
+     * @param {string} type - `acrossClues` for horizontal clues, 'downClues' for vertical.
+     * @returns {BoxBag}
+     */
     createBoxBag: function (type) {
 
       var bxb = new BoxBag(null, this, null);
@@ -154,8 +197,10 @@ define([
       }
       return bxb;
     },
-    // 
-    // Prepares the activity panel
+    /**
+     * 
+     * Prepares the visual components of the activity
+     */
     buildVisualComponents: function () {
 
       if (this.firstRun)
@@ -193,8 +238,10 @@ define([
         this.bb.setVisible(true);
       }
     },
-    // 
-    // Basic initialization procedure
+    /**
+     * 
+     * Basic initialization procedure
+     */
     initActivity: function () {
       ActPanelAncestor.initActivity.call(this);
 
@@ -220,16 +267,20 @@ define([
         this.$div.focus();
       }
     },
-    //
-    // Calculates the current score
+    /**
+     * 
+     * Calculates the current score
+     * @returns {number}
+     */
     getCurrentScore: function () {
       return this.grid ? this.grid.countCoincidences(this.act.checkCase) : 0;
     },
-    //
-    // Overrides `Activity.Panel.updateContent`
-    // Updates the graphic contents of its panel.
-    // The method should be called from `Activity.Panel.update`
-    // dirtyRect (AWT.Rectangle) - Specifies the area to be updated. When `null`, it's the whole panel.
+    /**
+     * Updates the graphic content of this panel.<br>
+     * This method will be called from {@link AWT.Container#update} when needed.
+     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+     * it's the whole panel.
+     */
     updateContent: function (dirtyRegion) {
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
       if (this.grid && this.$canvas) {
@@ -243,16 +294,23 @@ define([
       }
       return this;
     },
-    //
-    // Calculates the optimal dimension of this panel
+    /**
+     * 
+     * Sets the real dimension of this panel.
+     * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+     * @returns {AWT.Dimension}
+     */
     setDimension: function (preferredMaxSize) {
       if (!this.grid || !this.bb || this.getBounds().equals(preferredMaxSize))
         return preferredMaxSize;
       else
         return BoxBag.layoutDouble(preferredMaxSize, this.grid, this.bb, this.act.boxGridPos, this.act.margin);
     },
-    //
-    // Set the size and position of this activity panel
+    /**
+     * 
+     * Sets the size and position of this activity panel
+     * @param {AWT.Rectangle} rect
+     */
     setBounds: function (rect) {
 
       if (this.$canvas) {
@@ -274,9 +332,13 @@ define([
         this.invalidate().update();
       }
     },
-    // 
-    // Main handler to receive mouse and key events
-    // Overrides same function in Activity.Panel
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
     processEvent: function (event) {
       if (this.playing) {
         switch (event.type) {
@@ -360,24 +422,31 @@ define([
         }
       }
     },
-    //
-    // Moves the cursor the specified dx and dy amount (in logical coordinates)
-    // dx (Number)
-    // dy (Number)
+    /**
+     * 
+     * Moves the cursor the specified dx and dy amount (in logical coordinates)
+     * @param {number} dx - Amount of cells to horizontally move on
+     * @param {number} dy - Amount of cells to vertically move on
+     */
     moveCursor: function (dx, dy) {
       if (this.grid) {
         this.grid.moveCursor(dx, dy, true);
         this.cursorPosChanged();
       }
     },
-    //
-    // Places the cursor at the specified location (logical coordinates)
+    /**
+     * Places the cursor at the specified location (in logical coordinates)
+     * @param {number} x
+     * @param {number} y
+     */
     setCursorAt: function (x, y) {
       this.grid.setCursorAt(x, y, true);
       this.cursorPosChanged();
     },
-    //
-    // Called when the cursor moves to a different location
+    /**
+     * 
+     * Method called when the cursor moves to a different location
+     */
     cursorPosChanged: function () {
       var pt = this.grid.getCursor();
       if (pt !== null && this.bb !== null) {
@@ -388,8 +457,14 @@ define([
         }
       }
     },
-    //
-    // Writes a string on the grid
+    /**
+     * 
+     * Writes a string on the grid, starting at the specified X and Y logical coordinates, and
+     * following the direction maked by the 'advance' field
+     * @param {string} txt - Text to write
+     * @param {number} x - Starting X logical coordinate
+     * @param {number} y - Starting Y logical coordinate
+     */
     writeChars: function (txt, x, y) {
       if (txt && txt.length > 0) {
         for (var i = 0; i < txt.length; i++) {
@@ -418,16 +493,20 @@ define([
       }
       this.update();
     },
-    //
-    // Sets the status of horizontal and vertical buttons based on the value of `advance`
+    /**
+     * 
+     * Sets the status of horizontal and vertical buttons based on the value of `advance`
+     */
     setBtnStatus: function () {
       if (this.hClueBtn)
         this.hClueBtn.setInactive(this.advance !== 'ADVANCE_RIGHT');
       if (this.vClueBtn)
         this.vClueBtn.setInactive(this.advance !== 'ADVANCE_DOWN');
     },
-    //
-    // Icons for horizontal and vertical directions:
+    /**
+     * Graphic icon for the horizontal direction button, represented as a string containing
+     * an SVG file codified in base64.
+     * @type {string} */
     hIcon: 'data:image/svg+xml;base64,' +
         'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
         'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
@@ -436,6 +515,10 @@ define([
         'LjktMi0yLTJ6bTEyIDBjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyIDItLjkgMi0yLS45LTItMi0y' +
         'em0tNiAwYy0xLjEgMC0yIC45LTIgMnMuOSAyIDIgMiAyLS45IDItMi0uOS0yLTItMnoiPjwvcGF0' +
         'aD48L3N2Zz4K',
+    /**
+     * Graphic icon for the vertical direction button, represented as a string containing
+     * an SVG file codified in base64.
+     * @type {string} */
     vIcon: 'data:image/svg+xml;base64,' +
         'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
         'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
@@ -444,17 +527,21 @@ define([
         'LjkgMiAyIDJ6bTAgMmMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6' +
         'bTAgNmMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6Ij48L3BhdGg+' +
         'PC9zdmc+Cg==',
+    /**
+     * Sizes of the icons (currently 36 x 36 pixel)
+     * @type {Object} */
     icoSize: {w: 36, h: 36},
+    /**
+     * BoxBase with the style to be used by the direction buttons.
+     * @type {BoxBase} */
     icoBB: new BoxBase().set('backColor', '#4285F4').set('inactiveColor', '#70A2F6')
   };
 
   // CrossWord.Panel extends Activity.Panel
   CrossWord.Panel.prototype = $.extend(Object.create(ActPanelAncestor), CrossWord.Panel.prototype);
 
-  // 
   // Register class in Activity.prototype
   Activity.CLASSES['@textGrid.CrossWord'] = CrossWord;
 
   return CrossWord;
-
 });
