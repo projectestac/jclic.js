@@ -1,22 +1,21 @@
-#JClic.js - HTML5 player for JClic activities (under construction!)
+#JClic.js - HTML5 player for JClic activities
 
 [JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player
-for [JClic](https://github.com/projectestac/jclic) activities
-
-
+for [JClic](https://github.com/projectestac/jclic) activities.
 
 ## Known issues
 
+* This project is a work on progress. By now, only some basic features of JClic are implemented.
 * Text activities of type "complete", "order" and "identify" are not yet implemented.
 * Only a basic implementation of "skin" is provided, without counters nor buttons.
 * The JClic reporting system is not yet implemented.
 * Event sounds are not yet implemented.
-* Video playing and recording/playing of voice are not yet implemented.
+* Video playing and recording/playing of sounds are not yet implemented.
 * Playing of MIDI files is not yet implemented
 * Loading of big (about 10MB) JClic project files from zipped files can crash on tablets
 and mobile devices with low memory resources. This is due to a
 [known issue](https://github.com/Stuk/jszip/issues/135) of JSZip.
-
+* The project has been tested only with the latest versions of Chrome/Chromium and Firefox.
 
 ## How to build JClic.js
 
@@ -55,10 +54,13 @@ To build jclic.js, just run:
 grunt
 ```
 
-This will generate the file `jclic. min.js` in the `dist` folder.
+This will generate the file `jclic.min.js` in the `dist` folder.
 
 To test the module and see the demo in your browser, just launch the test server running:
 
 ```
 grunt server
 ```
+
+For full documentation of the current API, see: [http://projectestac.github.io/jclic.js/doc/index.html]
+
