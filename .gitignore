@@ -1,0 +1,6 @@
+# Back, tmp and log files #
+*.bak
+*~
+*.tmp
+*.log
+
