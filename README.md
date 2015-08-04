@@ -1,7 +1,7 @@
-#JClic.js - HTML5 player for JClic activities
+#JClic.js
 
 [JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player
-for [JClic](https://github.com/projectestac/jclic) activities.
+of [JClic](https://github.com/projectestac/jclic) activities.
 
 ## Known issues
 
