@@ -1,126 +1,204 @@
-# JClic.js
+<a href="https://github.com/projectestac/jclic.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
 
-This is the front page for the documentation of __jclic.js__
+JClic.js
+========
 
-## Class dependency graph
+
+__JClic.js__ is a JavaScript player for __JClic__ activities.<br>
+
+## JClic
+
+[JClic](http://clic.xtec.cat) is an open source authoring system promoted by the Catalan Ministry of
+Education ([XTEC](http://www.xtec.cat)) that allows the creation of interactive learning __activities__.
+These activities can be puzzles (with different shapes and distributions), associations, memory games,
+scrambled letters, crosswords and several types of text activities (fill-in the gap, put in order
+words or paragraphs, identify words or letters, etc.).
+
+Groups of single activities are often grouped in __JClic projects__ and organized in one or more
+__sequences__ (lists of activities that must be performed in a specific order). The resulting set of
+activities, sequences and media elements are packaged into __JClic project files__ (files with
+extension ".jclic.zip").
+
+Since 1995, the JClic project has a huge community of users and a
+[library](http://clic.xtec.cat/db/listact_en.jsp) of free JClic projects created by teachers of
+different countries and shared under licenses of type _Creative Commons_.
+
+JClic has been developed in Java and has multiple [components](http://clic.xtec.cat/en/jclic/download.htm):
+authoring tool, standalone player, applet, packaging and reporting system. The
+[source code](https://github.com/projectestac/jclic) and the [documentation](http://projectestac.github.io/jclic/)
+of JClic are freely available on GitHub.
 
 
-* activities
-  * associations
-    * [ComplexAssociation](ComplexAssociation.html)
-      * [SimpleAssociation](SimpleAssociation.html)
-  * memory
-      * [MemoryGame](MemoryGame.html)
-  * panels
-    * [Explore](Explore.html)
-    * [Identify](Identify.html)
-      * [InformationScreen](InformationScreen.html)
-  * puzzles
-    * [DoublePuzzle](DoublePuzzle.html)
-    * [ExchangePuzzle](ExchangePuzzle.html)
-      * [HolePuzzle](HolePuzzle.html)
-  * text
-    * [Complete](Complete.html)
-    * [Evaluator](Evaluator.html)
-    * [FillInBlanks](FillInBlanks.html)
-    * [IdentifyText](IdentifyText.html)
-    * [OrderText](OrderText.html)
-    * [TextActivityBase](TextActivityBase.html)
-    * [TextActivityDocument](TextActivityDocument.html)
-      * [WrittenAnswer](WrittenAnswer.html)
-    * textGrid
-      * [CrossWord](CrossWord.html)
-      * [WordSearch](WordSearch.html)
-* automation
-  * arith
-      * [Arith](Arith.html)
-    * [AutoContentProvider](AutoContentProvider.html)
-* bags
-  * [ActivitySequenceElement](ActivitySequenceElement.html)
-  * [ActivitySequence](ActivitySequence.html)
+## JClic.js components
+
+JClic.js makes use of two main libraries:
+* [jQuery](https://jquery.com/) to parse XML documents and manage DOM objects
+* [JSZip](https://stuk.github.io/jszip/) to extract contents from "jclic.zip" files.
+
+The build brocess of JClic.js is based on:
+* [npm](https://www.npmjs.com/) (the package manager of [Node.js](https://nodejs.org/)) to install,
+update and track package dependencies.
+* [Browserify](http://browserify.org/) to allow the use of npm modules in browsers.
+* [Grunt](http://gruntjs.com/) to automate debug and building tasks.
+* [JSDoc](http://usejsdoc.org/) to generate this documentation.
+
+
+## How to set-up the development environtment
+
+First of all, you must have Node.js (which includes 'npm' by default)
+[installed](https://nodejs.org/download/) in your system.
+
+To update __npm__ to the latest version run:
+
+```
+sudo npm install -g npm
+```
+
+Then you must globally install __Grunt__ and __Browserify__ running:
+
+```
+sudo npm install -g grunt-cli browserify
+```
+
+To install the remaining packages, just go to the project's root directory and run:
+
+```
+npm install
+```
+
+This will install JQuery and other needed packages into `node_modules`.
+
+To build jclic.js, just run:
+
+```
+grunt
+```
+
+This will generate the file `jclic. min.js` in the `dist` folder.
+
+To test the module and see the demo in your browser, just launch the test server running:
+
+```
+grunt server
+```
+
+You can also build this documentation running `grunt doc`
+
+
+
+## Main classes
+
+JClic.js is organized in three main groups of classes: _Document_, _Utilities_ and _Player_. In
+addition to this, the main [JClic](JClic.html) class provides methods to read JClic project documents,
+build players, launch activities and communicate with external reporting systems.
+
+
+### Document classes
+
+[JClicProject](JClicProject.html) encapsulates all data needed to play JClic activities. Its main
+components are:
+* [ProjectSettings](ProjectSettings.html)
+* A collection of [Activity](Activity.html) objects (see below)
+* An [ActivitySequence](ActivitySequence.html) formed by
+[ActivitySequenceElement](ActivitySequenceElement.html) objects.
+* A [PlayerHistory](PlayerHistory.html) used to track the user's navigation between activities.
+* A [MediaBag](MediaBag.html) formed by [MediaBagElement](MediaBagElement.html) objects.
+
+The [Activity](Activity.html) class has the following subclasses:
+* [SimpleAssociation](SimpleAssociation.html)
+  * [ComplexAssociation](ComplexAssociation.html)
+* [WrittenAnswer](WrittenAnswer.html)
+* [MemoryGame](MemoryGame.html)
+* [Explore](Explore.html)
+* [Identify](Identify.html)
+* [InformationScreen](InformationScreen.html)
+* [DoublePuzzle](DoublePuzzle.html)
+* [ExchangePuzzle](ExchangePuzzle.html)
+* [HolePuzzle](HolePuzzle.html)
+* [TextActivityBase](TextActivityBase.html) (see below)
+  * [FillInBlanks](FillInBlanks.html)
+  * [Complete](Complete.html)
+  * [IdentifyText](IdentifyText.html)
+  * [OrderText](OrderText.html)
+* [CrossWord](CrossWord.html)
+* [WordSearch](WordSearch.html)
+
+All classes derived from [TextActivityBase](TextActivityBase.html) have:
+* One [TextActivityDocument](TextActivityDocument.html)
+* An [Evaluator](Evaluator.html)
+
+At run time, all classes derived from [Activity](Activity.html) generate
+a specific [Activity.Panel](Activity.Panel.html), that is a real DOM object with wich users interact.
+
+
+### Utility classes
+
+#### AWT
+[AWT](AWT.html): contains some classes similar to those defined in the Java
+[Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html):
+* [AWT.Font](AWT.Font.html)
+* [AWT.Gradient](AWT.Gradient.html)
+* [AWT.Stroke](AWT.Stroke.html)
+* [AWT.Point](AWT.Point.html)
+* [AWT.Dimension](AWT.Dimension.html)
+* [AWT.Shape](AWT.Shape.html)
+  * [AWT.Rectangle](AWT.Rectangle.html)
+  * [AWT.Ellipse](AWT.Ellipse.html)
+  * [AWT.Path](AWT.Path.html): formed by [AWT.PathStroke](AWT.PathStroke.html) elements
+* [AWT.Action](AWT.Action.html)
+* [AWT.Timer](AWT.Timer.html)
+* [AWT.Container](AWT.Container.html)
+
+#### Boxes
+[AbstractBox](AbstractBox.html) is a special class derived from [AWT.Rectangle](AWT.Rectangle.html)
+that has the following subclasses:
+* [ActiveBox](ActiveBox.html): an AbstractBox with active content (see below)
+* [BoxBag](BoxBag.html): a collection of AbstractBox objects.
+  * [ActiveBoxBag](ActiveBoxBag.html): a collection of [ActiveBox](ActiveBox.html) objects.
+    * [ActiveBoxGrid](ActiveBoxGrid.html): a special case of ActiveBoxBag with boxes distributed in
+rows and columns.
+* [TextGrid](TextGrid.html): a grid of single letters.
+
+#### Box content
+* [ActiveBoxContent](ActiveBoxContent.html): encapsulates the content of a single _ActiveBox_.
+* [BoxBase](BoxBase.html): contains style specs (color, gradient, border, font, size...) common to
+one or more _ActiveBoxContent_ objects. Also used by _TextActivityDocument_ to encapsulate text styles.
+* [ActiveBagContent](ActiveBagContent.html): a collection of _ActiveBoxContent_ objects.
+* [TextGridContent](TextGridContent.html): encapsulates the content of a _TextGrid_ object.
+
+#### Shapers
+* [Shaper](Shaper.html): describes how to cut a panel in multiple cells.
+  * [Rectangular](Rectangular.html): divides the panel in rectangular cells.
+  * [Holes](Holes.html): a free-form shaper.
+  * [JigSaw](JigSaw.html): generates cells with teeth and slots.
+    * [ClassicJigSaw](ClassicJigSaw.html)
+    * [TriangularJigSaw](TriangularJigSaw.html)
+
+#### Media
+* [EventSounds](EventSounds.html): a collection of [EventSoundsElement](EventSoundsElement.html)
+* [ActiveMediaBag](ActiveMediaBag.html): a collection of [MediaContent](MediaContent.html)
+* [ActiveMediaPlayer](ActiveMediaPlayer.html): performs playing of _MediaContent_
+
+#### Automation
+* [AutoContentProvider](AutoContentProvider.html): builds dynamic content for activities
+  * [Arith](Arith.html): random generator of menthal arithmetics operations
+
+#### Jump between sequence points
+* [JumpInfo](JumpInfo.html)
   * [ActivitySequenceJump](ActivitySequenceJump.html)
   * [ConditionalJumpInfo](ConditionalJumpInfo.html)
-  * [JumpInfo](JumpInfo.html)
-  * [MediaBagElement](MediaBagElement.html)
-    * [MediaBag](MediaBag.html)
-* boxes
-  * [AbstractBox](AbstractBox.html)
-  * [ActiveBagContent](ActiveBagContent.html)
-  * [ActiveBoxBag](ActiveBoxBag.html)
-  * [ActiveBoxContent](ActiveBoxContent.html)
-  * [ActiveBoxGrid](ActiveBoxGrid.html)
-  * [ActiveBox](ActiveBox.html)
-  * [BoxBag](BoxBag.html)
-  * [BoxBase](BoxBase.html)
-  * [BoxConnector](BoxConnector.html)
-  * [TextGridContent](TextGridContent.html)
-    * [TextGrid](TextGrid.html)
-* media
-  * [ActiveMediaBag](ActiveMediaBag.html)
-  * [ActiveMediaPlayer](ActiveMediaPlayer.html)
-  * [EventSoundsElement](EventSoundsElement.html)
-  * [EventSounds](EventSounds.html)
-    * [MediaContent](MediaContent.html)
-* project
-  * [JClicProject](JClicProject.html)
-    * [ProjectSettings](ProjectSettings.html)
-* shapers
-  * [ClassicJigSaw](ClassicJigSaw.html)
-  * [Holes](Holes.html)
-  * [JigSaw](JigSaw.html)
-  * [Rectangular](Rectangular.html)
-  * [Shaper](Shaper.html)
-    * [TriangularJigSaw](TriangularJigSaw.html)
-* skins
-  * [Counter](Counter.html)
-  * [DefaultSkin](DefaultSkin.html)
-    * [Skin](Skin.html)
-* [Activity](Activity.html)
-* [AWT](AWT.html)
-* [Deps](Deps.html)
-* [JClic](JClic.html)
-* [JClicPlayer](JClicPlayer.html)
-* [PlayerHistory](PlayerHistory.html)
-  * [Utils](Utils.html)
+
+#### Skins
+* [Skin](Skin.html): manages the visual appareance of [JClicPlayer](JClicPlayer.html). Should have
+up to three [Counter](Counter.html) objects.
+  * [DefaultSkin](DefaultSkin.html): basic implementation of _Skin_.
+
+#### Misc. utility classes
+* [BoxConnector](BoxConnector.html)
+* [Utils](Utils.html)
 
 
-
-
-[Activity](Activity.html)
-[AWT](AWT.html)
-[JClic](JClic.html)
+### Player
 [JClicPlayer](JClicPlayer.html)
-[PlayerHistory](PlayerHistory.html)
-[Utils](Utils.html)
-
-#### skins ####
-[Skin](Skin.html)
-* [DefaultSkin](DefaultSkin.html)
-
-[Counter](Counter.html)
-
-#### shapers ####
-[Shaper](Shaper.html)
-* [Rectangular](Rectangular.html)
-* [JigSaw](JigSaw.html)
-  * [ClassicJigSaw](ClassicJigSaw.html)
-  * [TriangularJigSaw](TriangularJigSaw.html)
-* [Holes](Holes.html)
-
-#### project ####
-[JClicProject](JClicProject.html)
-* Has: [ProjectSettings](ProjectSettings.html)
-
-#### media ####
-[EventSounds](EventSounds.html)
-* Contains: [EventSoundsElement](EventSoundsElement.html)
-[MediaContent](MediaContent.html)
-[ActiveMediaBag](ActiveMediaBag.html)
-[ActiveMediaPlayer](ActiveMediaPlayer.html)
-
-
-
-
-
 
 

@@ -50,8 +50,7 @@ define([
      * @type {string} */
     activityName: '',
     /**
-     * Jump to be processed by the 'next' button action, or when in automatic mode and the associated
-     * activity finishes.
+     * Jump to be processed by the 'next' button action
      * @type {ActivitySequenceJump} */
     fwdJump: null,
     /**

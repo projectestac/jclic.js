@@ -16,6 +16,32 @@ _Line 179_:
     }
 ```
 
+_Line 298_:
+```
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e1e1e1;
+        }
+
+        h3 {
+           margin-top: 30px;
+           font-size: 1.3em;
+        }
+
+        h4 {
+           margin-top: 25px;
+           font-size: 1.1em;
+           font-style: italic;
+        }
+```
+
+
 Remember to run `npm-update` and `grunt less` in `node_modules/gc-jaguarjs-jsdoc` to update the theme.
 
 
