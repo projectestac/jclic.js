@@ -10,12 +10,7 @@
   "bugs": {
     "url": "https://github.com/projectestac/jclic.js/issues"
   },
-  "licenses": [
-    {
-      "type": "GPL-3.0",
-      "url": "https://spdx.org/licenses/GPL-3.0.html"
-    }
-  ],
+  "license": "GPL-3.0",
   "main": "src/JClic.js",
   "scripts": {
     "build": "grunt build"
