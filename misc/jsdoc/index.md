@@ -4,7 +4,7 @@ JClic.js
 ========
 
 
-__JClic.js__ is a JavaScript player for __JClic__ activities.<br>
+__JClic.js__ is a JavaScript player of __JClic__ activities.<br>
 
 ## JClic
 
@@ -54,10 +54,10 @@ To update __npm__ to the latest version run:
 sudo npm install -g npm
 ```
 
-Then you must globally install __Grunt__ and __Browserify__ running:
+Then you must globally install __Grunt__ running:
 
 ```
-sudo npm install -g grunt-cli browserify
+sudo npm install -g grunt-cli
 ```
 
 To install the remaining packages, just go to the project's root directory and run:
@@ -74,7 +74,7 @@ To build jclic.js, just run:
 grunt
 ```
 
-This will generate the file `jclic. min.js` in the `dist` folder.
+This will generate the file `jclic.min.js` inside the `dist` folder.
 
 To test the module and see the demo in your browser, just launch the test server running:
 
@@ -88,9 +88,17 @@ You can also build this documentation running `grunt doc`
 
 ## Main classes
 
-JClic.js is organized in three main groups of classes: _Document_, _Utilities_ and _Player_. In
+JClic.js is organized in three main groups of classes: _Player_, _Document_ and _Utilities_. In
 addition to this, the main [JClic](JClic.html) class provides methods to read JClic project documents,
 build players, launch activities and communicate with external reporting systems.
+
+### Player
+[JClicPlayer](JClicPlayer.html) loads JClic project files, manages the user interaction and acts as
+a interface between the browser and JClic classes for multiple functions. The player has:
+* [Skin](Skin.html): manages the visual appareance. Can have up to three [Counter](Counter.html)
+objects.
+  * [DefaultSkin](DefaultSkin.html): is the basic implementation of _Skin_.
+* [PlayerHistory](PlayerHistory.html): used to track the user's navigation between activities.
 
 
 ### Document classes
@@ -101,7 +109,6 @@ components are:
 * A collection of [Activity](Activity.html) objects (see below)
 * An [ActivitySequence](ActivitySequence.html) formed by
 [ActivitySequenceElement](ActivitySequenceElement.html) objects.
-* A [PlayerHistory](PlayerHistory.html) used to track the user's navigation between activities.
 * A [MediaBag](MediaBag.html) formed by [MediaBagElement](MediaBagElement.html) objects.
 
 The [Activity](Activity.html) class has the following subclasses:
@@ -188,17 +195,6 @@ one or more _ActiveBoxContent_ objects. Also used by _TextActivityDocument_ to e
   * [ActivitySequenceJump](ActivitySequenceJump.html)
   * [ConditionalJumpInfo](ConditionalJumpInfo.html)
 
-#### Skins
-* [Skin](Skin.html): manages the visual appareance of [JClicPlayer](JClicPlayer.html). Should have
-up to three [Counter](Counter.html) objects.
-  * [DefaultSkin](DefaultSkin.html): basic implementation of _Skin_.
-
 #### Misc. utility classes
 * [BoxConnector](BoxConnector.html)
 * [Utils](Utils.html)
-
-
-### Player
-[JClicPlayer](JClicPlayer.html)
-
-
