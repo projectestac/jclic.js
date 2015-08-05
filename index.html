@@ -12,11 +12,10 @@
   <body>
     <section class="page-header">
       <h1 class="project-name">JClic.js</h1>
-      <h2 class="project-tagline">HTML5 player for JClic activities</h2>
+      <h2 class="project-tagline">HTML5 player of JClic activities</h2>
       <a href="https://github.com/projectestac/jclic.js" class="btn">View on GitHub</a>
       <a href="https://github.com/projectestac/jclic.js/zipball/master" class="btn">Download .zip</a>
-      <a href="doc/index.html" class="btn">Check the API docs</a>
-      <a href="http://clic.xtec.cat" class="btn">Visit the clicZone</a>
+      <a href="https://github.com/projectestac/jclic.js/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
     <section class="main-content">
@@ -27,10 +26,33 @@
 of <a href="https://github.com/projectestac/jclic">JClic</a> activities.</p>
 
 <h2>
+<a id="jclic" class="anchor" href="#jclic" aria-hidden="true"><span class="octicon octicon-link"></span></a>JClic</h2>
+
+<p><a href="http://clic.xtec.cat">JClic</a> is an open source authoring system promoted by the Catalan Ministry of
+Education (<a href="http://www.xtec.cat">XTEC</a>) that allows the creation of interactive learning <strong>activities</strong>.
+These activities can be puzzles (with different shapes and distributions), associations, memory games,
+scrambled letters, crosswords and several types of text activities (fill-in the gap, put in order
+words or paragraphs, identify words or letters, etc.).</p>
+
+<p>Groups of single activities are often grouped in <strong>JClic projects</strong> and organized in one or more
+<strong>sequences</strong> (lists of activities that must be performed in a specific order). The resulting set of
+activities, sequences and media elements are packaged into <strong>JClic project files</strong> (files with
+extension ".jclic.zip").</p>
+
+<p>Since 1995, the JClic project has a huge community of users and a
+<a href="http://clic.xtec.cat/db/listact_en.jsp">library</a> of free JClic projects created by teachers of
+different countries and shared under licenses of type <em>Creative Commons</em>.</p>
+
+<p>JClic has been developed in Java and has multiple <a href="http://clic.xtec.cat/en/jclic/download.htm">components</a>:
+authoring tool, standalone player, applet, packaging and reporting system. The
+<a href="https://github.com/projectestac/jclic">source code</a> and the <a href="http://projectestac.github.io/jclic/">documentation</a>
+of JClic are freely available on GitHub.</p>
+
+<h2>
 <a id="known-issues" class="anchor" href="#known-issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Known issues</h2>
 
 <ul>
-<li>This project is a work on progress. By now, only some basic features of JClic are implemented.</li>
+<li>This project is a work on progress. Only some basic features of JClic are implemented.</li>
 <li>Text activities of type "complete", "order" and "identify" are not yet implemented.</li>
 <li>Only a basic implementation of "skin" is provided, without counters nor buttons.</li>
 <li>The JClic reporting system is not yet implemented.</li>
@@ -51,18 +73,15 @@ and mobile devices with low memory resources. This is due to a
 (which includes 'npm' by default) <a href="https://nodejs.org/download/">installed</a>
 on your system.</p>
 
-<p>To update <code>npm</code> to the latest version run:</p>
+<p>To update <code>npm</code> to the latest version, run:</p>
 
 <pre><code>sudo npm install npm -g
 </code></pre>
 
-<p>We use <a href="http://gruntjs.com/">Grunt</a> for automation of building tasks, and
-<a href="http://browserify.org/">Browserify</a> for dependency checking and grouping of
-multiple JavaScript sources into one single file.</p>
+<p>We use <a href="http://gruntjs.com/">Grunt</a> for automation of building tasks. You must globally install this
+package running:</p>
 
-<p>You must globally install these two packages by running:</p>
-
-<pre><code>sudo npm install -g grunt-cli browserify
+<pre><code>sudo npm install -g grunt-cli
 </code></pre>
 
 <p>To install the remaining packages, just go to the project's root directory and run:</p>
@@ -70,19 +89,21 @@ multiple JavaScript sources into one single file.</p>
 <pre><code>npm install
 </code></pre>
 
-<p>This will install JQuery and other needed packages into <code>node_modules</code> </p>
+<p>This will install jQuery, Browserify and other needed components into <code>node_modules</code> </p>
 
 <p>To build jclic.js, just run:</p>
 
 <pre><code>grunt
 </code></pre>
 
-<p>This will generate the file <code>jclic.min.js</code> in the <code>dist</code> folder.</p>
+<p>This will generate the file <code>jclic.min.js</code> into the <code>dist</code> folder.</p>
 
 <p>To test the module and see the demo in your browser, just launch the test server running:</p>
 
 <pre><code>grunt server
 </code></pre>
+
+<p>For full documentation of the API, see: [<a href="http://projectestac.github.io/jclic.js/doc/index.html">http://projectestac.github.io/jclic.js/doc/index.html</a>]</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/projectestac/jclic.js">JClic.js</a> is maintained by <a href="https://github.com/projectestac">projectestac</a>.</span>
