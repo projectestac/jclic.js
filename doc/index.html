@@ -9799,7 +9799,7 @@
 
     <section>
         <article class="readme"><p><a target="_blank" href="https://github.com/projectestac/jclic.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a></p>
-<h1>JClic.js</h1><p><strong>JClic.js</strong> is a JavaScript player for <strong>JClic</strong> activities.<br></p>
+<h1>JClic.js</h1><p><strong>JClic.js</strong> is a JavaScript player of <strong>JClic</strong> activities.<br></p>
 <h2>JClic</h2><p><a target="_blank" href="http://clic.xtec.cat">JClic</a> is an open source authoring system promoted by the Catalan Ministry of
 Education (<a target="_blank" href="http://www.xtec.cat">XTEC</a>) that allows the creation of interactive learning <strong>activities</strong>.
 These activities can be puzzles (with different shapes and distributions), associations, memory games,
@@ -9832,16 +9832,26 @@ update and track package dependencies.</li>
 <h2>How to set-up the development environtment</h2><p>First of all, you must have Node.js (which includes 'npm' by default)
 <a target="_blank" href="https://nodejs.org/download/">installed</a> in your system.</p>
 <p>To update <strong>npm</strong> to the latest version run:</p>
-<pre class="prettyprint source"><code>sudo npm install -g npm</code></pre><p>Then you must globally install <strong>Grunt</strong> and <strong>Browserify</strong> running:</p>
-<pre class="prettyprint source"><code>sudo npm install -g grunt-cli browserify</code></pre><p>To install the remaining packages, just go to the project's root directory and run:</p>
+<pre class="prettyprint source"><code>sudo npm install -g npm</code></pre><p>Then you must globally install <strong>Grunt</strong> running:</p>
+<pre class="prettyprint source"><code>sudo npm install -g grunt-cli</code></pre><p>To install the remaining packages, just go to the project's root directory and run:</p>
 <pre class="prettyprint source"><code>npm install</code></pre><p>This will install JQuery and other needed packages into <code>node_modules</code>.</p>
 <p>To build jclic.js, just run:</p>
-<pre class="prettyprint source"><code>grunt</code></pre><p>This will generate the file <code>jclic. min.js</code> in the <code>dist</code> folder.</p>
+<pre class="prettyprint source"><code>grunt</code></pre><p>This will generate the file <code>jclic.min.js</code> inside the <code>dist</code> folder.</p>
 <p>To test the module and see the demo in your browser, just launch the test server running:</p>
 <pre class="prettyprint source"><code>grunt server</code></pre><p>You can also build this documentation running <code>grunt doc</code></p>
-<h2>Main classes</h2><p>JClic.js is organized in three main groups of classes: <em>Document</em>, <em>Utilities</em> and <em>Player</em>. In
+<h2>Main classes</h2><p>JClic.js is organized in three main groups of classes: <em>Player</em>, <em>Document</em> and <em>Utilities</em>. In
 addition to this, the main <a href="JClic.html">JClic</a> class provides methods to read JClic project documents,
 build players, launch activities and communicate with external reporting systems.</p>
+<h3>Player</h3><p><a href="JClicPlayer.html">JClicPlayer</a> loads JClic project files, manages the user interaction and acts as
+a interface between the browser and JClic classes for multiple functions. The player has:</p>
+<ul>
+<li><a href="Skin.html">Skin</a>: manages the visual appareance. Can have up to three <a href="Counter.html">Counter</a>
+objects.<ul>
+<li><a href="DefaultSkin.html">DefaultSkin</a>: is the basic implementation of <em>Skin</em>.</li>
+</ul>
+</li>
+<li><a href="PlayerHistory.html">PlayerHistory</a>: used to track the user's navigation between activities.</li>
+</ul>
 <h3>Document classes</h3><p><a href="JClicProject.html">JClicProject</a> encapsulates all data needed to play JClic activities. Its main
 components are:</p>
 <ul>
@@ -9849,7 +9859,6 @@ components are:</p>
 <li>A collection of <a href="Activity.html">Activity</a> objects (see below)</li>
 <li>An <a href="ActivitySequence.html">ActivitySequence</a> formed by
 <a href="ActivitySequenceElement.html">ActivitySequenceElement</a> objects.</li>
-<li>A <a href="PlayerHistory.html">PlayerHistory</a> used to track the user's navigation between activities.</li>
 <li>A <a href="MediaBag.html">MediaBag</a> formed by <a href="MediaBagElement.html">MediaBagElement</a> objects.</li>
 </ul>
 <p>The <a href="Activity.html">Activity</a> class has the following subclasses:</p>
@@ -9952,18 +9961,10 @@ one or more <em>ActiveBoxContent</em> objects. Also used by <em>TextActivityDocu
 </ul>
 </li>
 </ul>
-<h4>Skins</h4><ul>
-<li><a href="Skin.html">Skin</a>: manages the visual appareance of <a href="JClicPlayer.html">JClicPlayer</a>. Should have
-up to three <a href="Counter.html">Counter</a> objects.<ul>
-<li><a href="DefaultSkin.html">DefaultSkin</a>: basic implementation of <em>Skin</em>.</li>
-</ul>
-</li>
-</ul>
 <h4>Misc. utility classes</h4><ul>
 <li><a href="BoxConnector.html">BoxConnector</a></li>
 <li><a href="Utils.html">Utils</a></li>
-</ul>
-<h3>Player</h3><p><a href="JClicPlayer.html">JClicPlayer</a></p></article>
+</ul></article>
     </section>
 
 
@@ -9974,7 +9975,7 @@ up to three <a href="Counter.html">Counter</a> objects.<ul>
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Aug 04 2015 14:52:16 GMT+0200 (CEST)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Wed Aug 05 2015 16:14:54 GMT+0200 (CEST)
         </footer>
     </div>
 </div>
