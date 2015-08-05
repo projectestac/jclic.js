@@ -112,12 +112,11 @@ define([
   return 'JClic ready!';
 });
 
-// Testing function for npm
-// TODO: Remove npm testing function
+// Exports npm module
 if (typeof exports !== "undefined") {
-  exports.printMsg = function () {
-    console.log("This is a message from JClic");
-  };
+  exports.JClicProject = require("./project/JClicProject");
+  exports.JClicPlayer = require("./JClicPlayer");  
+  module.exports = exports;  
 }
 
-/* global exports, JClicDataProject, JClicDataOptions */
+/* global module, exports, JClicDataProject, JClicDataOptions */

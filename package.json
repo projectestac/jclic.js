@@ -1,8 +1,8 @@
 {
   "name": "jclic",
-  "version": "0.0.0",
-  "description": "HTML5 player for JClic activities (under construction!)",
-  "homepage": "https://github.com/projectestac/jclic.js",
+  "version": "0.1.1",
+  "description": "HTML5 player for JClic activities",
+  "homepage": "http://projectestac.github.io/jclic.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/projectestac/jclic.js.git"
@@ -22,9 +22,11 @@
   },
   "keywords": [
     "jclic",
+    "JClic",
+    "java", "html5",
     "education",
-    "game",
-    "puzzle",
+    "game", "games",
+    "puzzle", "puzzles",
     "activities"
   ],
   "author": "Francesc Busquets <fbusquets@xtec.cat>",
