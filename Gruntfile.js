@@ -35,6 +35,9 @@ module.exports = function (grunt) {
           'dist/jclic.js': ['src/JClic.js']
         },
         options: {
+          browserifyOptions: {
+            debug: true
+          },
           baseUrl: './src/',
           debug: true,
           transform: ['deamdify'],

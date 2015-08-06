@@ -1,10 +1,19 @@
+*.bak
+*~
+*.tmp
+*.log
 .jshintrc
 .editorconfig
 .travis.yml
 npm-debug.log
+/misc
 /build
 /doc
+/docco
+/deploy
 /groc
 /nbproject
 /test
+/bower_components
+
 
