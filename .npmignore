@@ -1,8 +1,10 @@
-doc
-groc
-build
-node_modules
+.jshintrc
+.editorconfig
+.travis.yml
 npm-debug.log
-nbproject
-bower_components
-test/jclic-demo
+/build
+/doc
+/groc
+/nbproject
+/test
+
