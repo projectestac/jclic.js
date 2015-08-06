@@ -9,7 +9,7 @@ module.exports = function (grunt) {
     meta: {
       banner:
           '// JClic.js version <%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>)\n' +
-          '// JavaScript player for JClic activities\n' +
+          '// HTML5 player of JClic activities\n' +
           '// (c) 2000-<%= grunt.template.today("yyyy") %> Educational Telematic Network of Catalonia (XTEC)\n' +
           '// This program can be freely redistributed under the terms of the GNU General Public License\n' +
           '// WARNING: You are reading a minimized, uglifyed version of jclic.js. Full, readable source\n' +
@@ -22,22 +22,21 @@ module.exports = function (grunt) {
       }
     },
     clean: {
-      build: {
-        src: ['build']
+      dist: {
+        src: ['dist']
       },
       doc: {
         src: ['doc']
       }
     },
     browserify: {
-      build: {
+      dist: {
         files: {
-          'build/jclic.unified.js': ['src/JClic.js']
+          'dist/jclic.js': ['src/JClic.js']
         },
         options: {
           baseUrl: './src/',
           debug: true,
-          //exclude: ['../lib/jcanvas.js'],
           transform: ['deamdify'],
           banner: '<%= meta.banner %>'
         }
@@ -46,29 +45,21 @@ module.exports = function (grunt) {
     uglify: {
       dist: {
         options: {
-          //compress: true,
-          //mangle: true,
+          sourceMap: true,
           banner: '<%= meta.banner %>',
           preserveComments: false
         },
         files: {
-          'dist/jclic.min.js': ['build/jclic.unified.js']
+          'dist/jclic.min.js': ['dist/jclic.js']
         }
       }
     },
     jsdoc: {
-      dist: {
+      doc: {
         src: ['misc/jsdoc/index.md', 'src/**/*.js'],
         options: {
           destination: 'doc',
           configure: 'jsdoc.conf.json',
-          //
-          // Templates (uncomment only one)
-          //
-          // DocStrap (http://terryweiss.github.io/docstrap):
-          // template: 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template',
-          //
-          // gc-jaguarjs (https://www.npmjs.com/package/gc-jaguarjs-jsdoc)
           template: 'node_modules/gc-jaguarjs-jsdoc'
         }
       }
@@ -91,7 +82,7 @@ module.exports = function (grunt) {
     },
     watch: {
       all: {
-        files: ['src/**/*.js', 'dist/*.js', 'build/*.js'],
+        files: ['src/**/*.js', 'dist/*.js'],
         options: {
           livereload: true
         }
@@ -120,13 +111,13 @@ module.exports = function (grunt) {
   grunt.registerTask(
       'build',
       'cleans and compiles all',
-      ['clean:build', 'browserify:build', 'uglify:dist']
+      ['clean:dist', 'browserify:dist', 'uglify:dist']
       );
 
   grunt.registerTask(
       'doc',
       'Generates the project documentation in "doc"',
-      ['clean:doc', 'jsdoc:dist', 'copy:doc']
+      ['clean:doc', 'jsdoc:doc', 'copy:doc']
       );
 
   grunt.registerTask(
