@@ -45,10 +45,18 @@ module.exports = function (grunt) {
         }
       }
     },
+    extract_sourcemap: {
+      dist: {
+        files: {
+          'dist': ['dist/jclic.js']
+        }
+      }
+    },
     uglify: {
       dist: {
         options: {
-          sourceMap: true,
+          // By default, build just one source map from browserify
+          // sourceMap: true,
           banner: '<%= meta.banner %>',
           preserveComments: false
         },
@@ -114,7 +122,7 @@ module.exports = function (grunt) {
   grunt.registerTask(
       'build',
       'cleans and compiles all',
-      ['clean:dist', 'browserify:dist', 'uglify:dist']
+      ['clean:dist', 'browserify:dist', 'extract_sourcemap:dist', 'uglify:dist']
       );
 
   grunt.registerTask(
