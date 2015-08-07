@@ -90,48 +90,80 @@ define([
 
 define([
   "jquery",
-  "../../Activity",
+  "../Activity",
 ], function ($, Activity) {
 
-  //
-  // Description
+  /**
+   * 
+   * Description of this class of {@link Activity}
+   *
+   * @exports XXX
+   * @class
+   * @extends Activity
+   * @param {JClicProject} project - The JClic project to which this activity belongs
+   */
   var XXX = function (project) {
     Activity.call(this, project);
   };
 
   XXX.prototype = {
     constructor: XXX,
-    //
-    // Activity.Panel constructor
-    Panel: function (act, ps, $div) {
-      Activity.prototype.Panel.call(this, act, ps, $div);
-
-    }
+    /**
+     * Description of field aaa.
+     * @type {type} */
+    aaa: null,
+    /**
+     * 
+     * Description of method mmm.
+     * @returns {type}
+     */
+    mmm: function () {
+      return xxx;
+    },
   };
 
   // 
   // XXX extends Activity
   XXX.prototype = $.extend(Object.create(Activity.prototype), XXX.prototype);
 
-  // 
-  // Properties and methods specific to XXX.Panel
-  var ActPanelAncestor = Activity.prototype.Panel.prototype;
-  XXX.prototype.Panel.prototype = {
-    constructor: XXX.prototype.Panel,
-    //
-    // Prepares the text panel
-    buildVisualComponents: function () {
-      ActPanelAncestor.buildVisualComponents.call(this);
-
-    }
+  /**
+   * The {@link Activity.Panel} where XXX activities are played.
+   * @class
+   * @extends Activity.Panel
+   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
+  XXX.Panel = function (act, ps, $div) {
+    Activity.Panel.call(this, act, ps, $div);
   };
 
-  // InformationScreen.Panel extends Activity.Panel
-  XXX.prototype.Panel.prototype = $.extend(Object.create(ActPanelAncestor), XXX.prototype.Panel.prototype);
+  var ActPanelAncestor = Activity.Panel.prototype;
+
+  XXX.Panel.prototype = {
+    constructor: XXX.Panel,
+    /**
+     * Description of field aaa
+     * @type {type} */
+    aaa: null,
+    /**
+     * 
+     * Description of method mmm
+     * @returns {type}
+     */
+    mmm: function () {
+      return xxx;
+    },
+  };
+
+  // XXX.Panel extends Activity.Panel
+  XXX.Panel.prototype = $.extend(Object.create(ActPanelAncestor), XXX.Panel.prototype);
 
   // 
   // Register class in Activity.prototype
-  Activity.CLASSES['@package.XXX'] = XXX;
+  Activity.CLASSES['@XXX'] = XXX;
 
   return XXX;
 

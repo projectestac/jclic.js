@@ -1,17 +1,17 @@
-//    File    : JClicPlayer.js  
-//    Created : 28/04/2015  
-//    By      : Francesc Busquets  
+//  File    : JClicPlayer.js  
+//  Created : 28/04/2015  
+//  By      : Francesc Busquets  
 //
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+//  JClic.js  
+//  HTML5 player of [JClic](http://clic.xtec.cat) activities  
+//  https://github.com/projectestac/jclic.js  
+//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
+//  This program is free software: you can redistribute it and/or modify it under the terms of
+//  the GNU General Public License as published by the Free Software Foundation, version. This
+//  program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+//  General Public License for more details. You should have received a copy of the GNU General
+//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define([
   "jquery",
@@ -26,8 +26,8 @@ define([
   "./project/JClicProject",
   "./bags/JumpInfo",
   "./boxes/ActiveBoxContent"
-], function ($, JSZip, JSZipUtils, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds, JClicProject,
-    JumpInfo, ActiveBoxContent) {
+], function ($, JSZip, JSZipUtils, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds,
+    JClicProject, JumpInfo, ActiveBoxContent) {
 
   /**
    * 
