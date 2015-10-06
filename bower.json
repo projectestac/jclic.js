@@ -1,6 +1,6 @@
 {
   "name": "jclic",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "homepage": "http://projectestac.github.io/jclic.js",
   "authors": [
     "Francesc Busquets <francesc@gmail.com>"
@@ -31,7 +31,6 @@
     "node_modules",
     "bower_components",
     "package.json",
-    "src",
     "test"
   ]
 }
