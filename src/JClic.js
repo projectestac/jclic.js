@@ -16,9 +16,12 @@
 define([
   "jquery",
   "./JClicPlayer",
+  "./project/JClicProject",
+  "./AWT",
+  "./Utils",
   "./Deps"
-], function ($, JClicPlayer, deps) {
-  
+], function ($, JClicPlayer, JClicProject, AWT, Utils, deps) {
+
   // Declaration of JSDoc external objects:
 
   /**
@@ -55,7 +58,15 @@ define([
    * @external JSZip
    * @see {@link https://stuk.github.io/jszip}
    */
-  
+
+  // Object that will be exported as a result
+  var JClicObject = {
+    JClicPlayer: JClicPlayer,
+    JClicProject: JClicProject,
+    AWT: AWT,
+    Utils: Utils
+  };
+
   /** 
    * This is the main JClic method
    * 
@@ -68,16 +79,31 @@ define([
    * The `div` elements must preferabily be empty. Inner content may become overlapped by objects
    * created by the JClic player.
    * 
+   * This method exports the global variable `window.JClicObject`, useful when other scripts
+   * need to make direct calls to the main components of JClic.
+   * 
+   * The global variable `JClicObject` has three members:
+   * - `JClicObject.JClicPlayer` (the {@link JClicPlayer} object)
+   * - `JClicObject.JClicProject` (the {@link JClicProject} object)
+   * - `JClicObject.AWT` (the {@link AWT} object)
+   * - `JClicObject.Utils` (the {@link Utils} object)
+   * - `JClicObject.options` (the main options loaded at startup, usually the content of the global variable `JClicDataOptions`)
+   * 
    * @module JClic
    * @example
    * // Creates a JClic div and loads "my-project.jclic" on it
    * <div class ="JClic" data-project="my-project.jclic"></div>
+   * 
    */
   // Execute on document ready
   $(function () {
 
     // If defined, load the global variable `JClicDataOptions`
     var options = (typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions);
+
+    // Exports the global variable JClicObject
+    JClicObject.options = options;
+    window.JClicObject = JClicObject;
 
     if (!options.noInit) {
       // If defined, load the global variable `JClicDataProject`
@@ -109,14 +135,14 @@ define([
       });
     }
   });
-  return 'JClic ready!';
+  return JClicObject;
 });
 
 // Exports npm module
 if (typeof exports !== "undefined") {
   exports.JClicProject = require("./project/JClicProject");
-  exports.JClicPlayer = require("./JClicPlayer");  
-  module.exports = exports;  
+  exports.JClicPlayer = require("./JClicPlayer");
+  module.exports = exports;
 }
 
 /* global module, exports, JClicDataProject, JClicDataOptions */
