@@ -177,8 +177,7 @@ define([
         sk = new cl(ps, skinName, $div);
         if ($xml)
           sk.setProperties($xml);
-      }
-      else
+      } else
         console.log('Unknown skin class: ' + skinName);
 
       return sk;
@@ -236,8 +235,7 @@ define([
           this.$waitPanel.css({
             display: this.waitCursorCount > 0 ? 'inherit' : 'none'
           });
-      }
-      else {
+      } else {
         if (status)
           this.waitCursorCount++;
         else if (--this.waitCursorCount < 0)
@@ -277,6 +275,17 @@ define([
      * Main method, to be implemented by subclasses
      */
     doLayout: function () {
+    },
+    /**
+     * 
+     * adjusts the skin to the dimension of its `$div` container
+     * @returns {AWT.Dimension} the new dimension of the skin
+     */
+    fit: function () {
+      this.ps.options.width = this.$div.width();
+      this.ps.options.height = this.$div.height();
+      this.doLayout();
+      return new AWT.Dimension(this.$div.width(), this.$div.height());
     },
     /**
      * 

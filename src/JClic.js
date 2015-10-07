@@ -130,7 +130,7 @@ define([
 
         $(window).resize(function () {
           if (player.skin)
-            player.skin.doLayout();
+            player.skin.fit();
         });
       });
     }

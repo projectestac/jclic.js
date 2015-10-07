@@ -77,6 +77,7 @@ define([
       this.$div.append(this.buttons.fullscreen);
     }
 
+    // TODO: Change SVG animation (deprecated) to web animation
     this.$waitPanel = $('<div />').css({
       'background-color': 'rgba(255, 255, 255, .60)',
       'background-image': 'url(' + this.resources.waitImg + ')',
