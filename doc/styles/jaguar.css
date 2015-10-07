@@ -341,8 +341,6 @@ li {
 }
 .main .type-signature {
   font-size: 12px;
-  background-color: #2a6496;
-  margin-right: 5px;
 }
 .main .tag-deprecated {
   display: inline-block;
@@ -444,22 +442,13 @@ li {
   font-size: 0.85em;
 }
 .main .readme h1 {
-  font-size: 2em;
+  font-size: 1.7em;
 }
 .main .readme h2 {
   margin-top: 30px;
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid #e1e1e1;
-}
-.main .readme h3 {
-  margin-top: 30px;
-  font-size: 1.3em;
-}
-.main .readme h4 {
-  margin-top: 25px;
-  font-size: 1.1em;
-  font-style: italic;
 }
 .main .readme li {
   font-size: 0.9em;
