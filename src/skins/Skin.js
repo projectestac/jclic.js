@@ -15,9 +15,14 @@
 
 define([
   "jquery",
+  "screenfull",
   "../Utils",
   "../AWT"
-], function ($, Utils, AWT) {
+], function ($, screenfull, Utils, AWT) {
+
+  // In some cases, require.js does not return a valid value for screenfull. Check it:
+  if (!screenfull)
+    screenfull = window.screenfull;
 
   /**
    * This abstract class manages the layout, position ans size of the visual components of JClic:
@@ -92,7 +97,8 @@ define([
       'help': null,
       'audio': null,
       'about': null,
-      'fullscreen': null
+      'fullscreen': null,
+      'close': null
     },
     /**
      * The collection of counters
@@ -286,6 +292,22 @@ define([
       this.ps.options.height = this.$div.height();
       this.doLayout();
       return new AWT.Dimension(this.$div.width(), this.$div.height());
+    },
+    /**
+     * 
+     * Sets or unsets the player in screenfull mode, when allowed, using the 
+     * [screenfull.js](https://github.com/sindresorhus/screenfull.js) library.
+     * @param {boolean} status - Whether to set or unset the player in fullscreen mode. When `null`
+     * or `undefined`, the status toggles between fullscreen and windowed modes.
+     * @returns {boolean} `true` if the request was successfull, `false` otherwise.
+     */
+    setScreenFull: function (status) {
+      if (screenfull && screenfull.enabled && (
+          status === true && !screenfull.isFullscreen ||
+          status === false && !screenfull.isFullScreen ||
+          status !== true && status !== false)) {
+        screenfull.toggle(this.$div[0]);
+      }
     },
     /**
      * 

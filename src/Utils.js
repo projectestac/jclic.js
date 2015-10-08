@@ -14,9 +14,14 @@
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define([
-  "jquery"
-], function ($) {
-
+  "jquery",
+  "screenfull",
+], function ($, screenfull) {
+  
+  // In some cases, require.js does not return a valid value for screenfull. Check it:
+  if (!screenfull)
+    screenfull = window.screenfull;
+  
   /**
    * 
    * Miscellaneous utility functions and constants
@@ -280,6 +285,13 @@ define([
         }
       }
       return basePath + path;
+    },
+    /**
+     * Checks if the current browser allows to put HTML elements in full screen mode
+     * @returns {boolean}
+     */
+    screenFullAllowed: function(){
+      return screenfull && screenfull.enabled;
     },
     /**
      * Global constants

@@ -70,11 +70,20 @@ define([
     if (screenfull && screenfull.enabled) {
       this.buttons.fullscreen = $('<img />').on('click',
           function () {
-            if (screenfull && screenfull.enabled)
-              screenfull.toggle(thisSkin.$div[0]);
+            thisSkin.setScreenFull(null);
           });
       this.buttons.fullscreen.get(0).src = this.resources.fullScreen;
       this.$div.append(this.buttons.fullscreen);
+    }
+
+    if (typeof this.ps.options.closeFn === 'function') {
+      var closeFn = this.ps.options.closeFn;
+      this.buttons.close = $('<img/>').on('click',
+          function () {
+            closeFn();
+          });
+      this.buttons.close.get(0).src = this.resources.close;
+      this.$div.append(this.buttons.close);
     }
 
     // TODO: Change SVG animation (deprecated) to web animation
@@ -143,6 +152,7 @@ define([
       var prv = this.resources.prevBtnSize;
       var nxt = this.resources.nextBtnSize;
       var full = this.resources.fullScreenSize;
+      var close = this.buttons.close ? this.resources.closeSize : {w: 0, h: 0};
 
       // Set the appropiate fullScreen icon
       if (this.buttons.fullscreen) {
@@ -155,7 +165,7 @@ define([
       var autoFit = this.ps.options.autoFit | (screenfull && screenfull.enabled && screenfull.isFullscreen);
       var mainWidth = autoFit ? $(window).width() : this.ps.options.width;
       var mainHeight = autoFit ? $(window).height() : this.ps.options.height;
-      
+
       this.$div.css({
         position: 'relative',
         width: Math.max(this.ps.options.minWidth, Math.min(this.ps.options.maxWidth, mainWidth)),
@@ -166,7 +176,7 @@ define([
       var actualSize = new AWT.Dimension(this.$div.width(), this.$div.height());
 
       var w = Math.max(100, actualSize.width - 2 * margin);
-      var wMsgBox = w - prv.w - nxt.w - full.w;
+      var wMsgBox = w - prv.w - nxt.w - full.w - close.w;
       var h = this.msgBoxHeight;
       var playerHeight = Math.max(100, actualSize.height - 3 * margin - h);
 
@@ -218,6 +228,14 @@ define([
           position: 'absolute',
           top: msgBoxRect.pos.y + (h - full.h) / 2 + 'px',
           left: msgBoxRect.pos.x + msgBoxRect.dim.width + nxt.w + 'px'
+        });
+      }
+
+      if (this.buttons.close) {
+        this.buttons.close.css({
+          position: 'absolute',
+          top: msgBoxRect.pos.y + (h - close.h) / 2 + 'px',
+          left: msgBoxRect.pos.x + msgBoxRect.dim.width + nxt.w + full.w + 'px'
         });
       }
 
@@ -367,7 +385,17 @@ define([
           'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
           'PjwvcGF0aD48cGF0aCBkPSJNNSAxNmgzdjNoMnYtNUg1djJ6bTMtOEg1djJoNVY1SDh2M3ptNiAx' +
           'MWgydi0zaDN2LTJoLTV2NXptMi0xMVY1aC0ydjVoNVY4aC0zeiI+PC9wYXRoPjwvc3ZnPgo=',
-      fullScreenSize: {w: 36, h: 36}
+      fullScreenSize: {w: 36, h: 36},
+      //
+      // Close button
+      close: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xOSA2LjQxTDE3LjU5IDUgMTIgMTAuNTkg' +
+          'Ni40MSA1IDUgNi40MSAxMC41OSAxMiA1IDE3LjU5IDYuNDEgMTkgMTIgMTMuNDEgMTcuNTkgMTkg' +
+          'MTkgMTcuNTkgMTMuNDEgMTJ6Ij48L3BhdGg+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0i' +
+          'bm9uZSI+PC9wYXRoPjwvc3ZnPgo=',
+      closeSize: {w: 36, h: 36}
     }
   };
 
