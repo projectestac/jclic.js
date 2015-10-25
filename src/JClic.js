@@ -13,6 +13,8 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
+/* global module, exports, JClicDataProject, JClicDataOptions */
+
 define([
   "jquery",
   "./JClicPlayer",
@@ -59,15 +61,22 @@ define([
    * @see {@link https://stuk.github.io/jszip}
    */
 
-  // Object that will be exported as a result
+  // JClicObject will be exported as a result
   var JClicObject = {
     JClicPlayer: JClicPlayer,
     JClicProject: JClicProject,
     AWT: AWT,
-    Utils: Utils
+    Utils: Utils,
+    $: $,
+    options: (typeof JClicDataOptions === 'undefined') ? {} : JClicDataOptions
   };
+  
+  // Make JClicObject global
+  if(typeof window !== 'undefined'){
+    window.JClicObject = JClicObject;
+  }
 
-  /** 
+  /**
    * This is the main JClic method
    * 
    * Executes on `document.ready()`.
@@ -82,12 +91,13 @@ define([
    * This method exports the global variable `window.JClicObject`, useful when other scripts
    * need to make direct calls to the main components of JClic.
    * 
-   * The global variable `JClicObject` has three members:
+   * The global variable `JClicObject` has four members:
    * - `JClicObject.JClicPlayer` (the {@link JClicPlayer} object)
    * - `JClicObject.JClicProject` (the {@link JClicProject} object)
    * - `JClicObject.AWT` (the {@link AWT} object)
    * - `JClicObject.Utils` (the {@link Utils} object)
    * - `JClicObject.options` (the main options loaded at startup, usually the content of the global variable `JClicDataOptions`)
+   * - `JClicObject.$` (the JQuery object)
    * 
    * @module JClic
    * @example
@@ -100,10 +110,7 @@ define([
 
     // If defined, load the global variable `JClicDataOptions`
     var options = (typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions);
-
-    // Exports the global variable JClicObject
     JClicObject.options = options;
-    window.JClicObject = JClicObject;
 
     if (!options.noInit) {
       // If defined, load the global variable `JClicDataProject`
@@ -144,5 +151,3 @@ if (typeof exports !== "undefined") {
   exports.JClicPlayer = require("./JClicPlayer");
   module.exports = exports;
 }
-
-/* global module, exports, JClicDataProject, JClicDataOptions */
