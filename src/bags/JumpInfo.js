@@ -13,7 +13,7 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
-define([], function () {
+define(["../Utils"], function (Utils) {
   /**
    * This class contains information about what things JClic sequence manager has to do in certain
    * circumstances, such as:
@@ -79,8 +79,8 @@ define([], function () {
     setProperties: function ($xml) {
       this.id = $xml.attr('id');
       this.action = $xml.attr('action') ? $xml.attr('action') : 'JUMP';
-      this.sequence = $xml.attr('tag');
-      this.projectPath = $xml.attr('project');
+      this.sequence = Utils.nSlash($xml.attr('tag'));
+      this.projectPath = Utils.nSlash($xml.attr('project'));
       return this;
     }
   };

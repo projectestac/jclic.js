@@ -122,7 +122,7 @@ define([
       var $node = $xml.children('activities');
       var $acts = $node.children('activity');
       $acts.each(function () {
-        prj._activities[$(this).attr('name')] = $(this);
+        prj._activities[Utils.nSlash($(this).attr('name'))] = $(this);
       });
       return this;
     },
@@ -133,7 +133,7 @@ define([
      * @returns {Activity}
      */
     getActivity: function (name) {
-      return Activity.getActivity(this._activities[name], this);
+      return Activity.getActivity(this._activities[Utils.nSlash(name)], this);
     },
     /**
      * 

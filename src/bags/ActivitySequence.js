@@ -16,8 +16,9 @@
 define([
   "jquery",
   "./JumpInfo",
-  "./ActivitySequenceElement"
-], function ($, JumpInfo, ActivitySequenceElement) {
+  "./ActivitySequenceElement",
+  "../Utils"
+], function ($, JumpInfo, ActivitySequenceElement, Utils) {
 
   /**
    * This class stores the definition of the sequence to follow to show the activities of a
@@ -97,6 +98,7 @@ define([
     getElementByTag: function (tag, updateCurrentAct) {
       var result = null, resultIndex = -1;
       if (tag !== null) {
+        tag = Utils.nSlash(tag);
         this.elements.some(function (el, index) {
           if (el.tag === tag) {
             result = el;

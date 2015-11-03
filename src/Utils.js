@@ -230,6 +230,15 @@ define([
       return text.indexOf(expr, text.length - expr.length) !== -1;
     },
     /**
+     * Replaces al occurrences of the backslash character (`\`) by a regular slash (`/`)
+     * This is useful to normalize bad path names present in some old JClic projects
+     * @param {String} str - The string to be normalized
+     * @returns {string}
+     */    
+    nSlash: function(str) {
+      return str ? str.replace(/\\/g,'/') : str;      
+    },
+    /**
      * Checks if the given expression is an absolute URL
      * @param {string} exp - The expression to be checked
      * @returns {boolean}

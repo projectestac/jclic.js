@@ -15,8 +15,9 @@
 
 define([
   "jquery",
-  "./ActivitySequenceJump"
-], function ($, ActivitySequenceJump) {
+  "./ActivitySequenceJump",
+  "../Utils"
+], function ($, ActivitySequenceJump, Utils) {
 
   /**
    * 
@@ -83,7 +84,7 @@ define([
         var val = this.value;
         switch (name) {
           case 'id':
-            ase['tag'] = val;
+            ase['tag'] = Utils.nSlash(val);
             break;
           case 'name':
             ase['activityName'] = val;

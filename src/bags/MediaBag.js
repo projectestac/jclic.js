@@ -16,8 +16,9 @@
 define([
   "jquery",
   "./MediaBagElement",
-  "../skins/Skin"
-], function ($, MediaBagElement, Skin) {
+  "../skins/Skin",
+  "../Utils"
+], function ($, MediaBagElement, Skin, Utils) {
   /**
    * This class stores and manages all the media components (images, sounds, animations, video,
    * MIDI files, etc.) needed to run the activities of a {@link JClicProject}. The main member of
@@ -64,6 +65,7 @@ define([
      * @returns {MediaBagElement}
      */
     getElement: function (name, create) {
+      name = Utils.nSlash(name);
       var result = this.elements[name];
       if (create && !result)
         result = this.getElementByFileName(name, create);
@@ -80,6 +82,7 @@ define([
     getElementByFileName: function (fileName, create) {
       var result = null;
       if (fileName) {
+        fileName = Utils.nSlash(fileName);
         for (var name in this.elements) {
           if (this.elements[name].fileName === fileName) {
             result = this.elements[name];

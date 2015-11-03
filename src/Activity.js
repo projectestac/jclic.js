@@ -301,6 +301,7 @@ define([
         switch (name) {
           // Generic attributes:
           case 'name':
+            val = Utils.nSlash(val);
           case 'code':
           case 'type':
           case 'description':

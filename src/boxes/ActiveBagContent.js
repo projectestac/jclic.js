@@ -19,8 +19,9 @@ define([
   "../Utils",
   "./ActiveBoxContent",
   "../shapers/Shaper",
-  "../AWT"
-], function ($, BoxBase, Utils, ActiveBoxContent, Shaper, AWT) {
+  "../AWT",
+  "../Utils"
+], function ($, BoxBase, Utils, ActiveBoxContent, Shaper, AWT, Utils) {
 
   /**
    * This class packs a collection of {@link ActiveBoxContent} objects and provides methods to access
@@ -115,7 +116,7 @@ define([
             cellSet.id = val;
             break;
           case 'image':
-            cellSet.imgName = val;
+            cellSet.imgName = Utils.nSlash(val);
             break;
             // Bug in JClic beta 1: "columns" is number of rows, and "rows" is number of columns.
             // Was corrected in beta 2: If "cols" is specified, "rows" are rows and "cols" are columns.
@@ -171,9 +172,16 @@ define([
             break;
         }
       });
-
-      // Assign ids when cells have empty content (they are just shapes)
+      
       n = this.activeBoxContentArray.length;
+      
+      // Create cells when `activeBoxContentArray` is empty
+      if (n === 0 && cellSet.shaper && cellSet.shaper.nCells > 0) {
+        n = cellSet.shaper.nCells;
+        this.getActiveBoxContent(n - 1);
+      }
+      
+      // Assign ids when cells have empty content (they are just shapes)
       if (n > 0) {
         var empty = true;
         for (i = 0; i < n; i++) {

@@ -35,8 +35,8 @@ define([
     if (basePath)
       this.basePath = basePath;
     if (fileName) {
-      this.fileName = fileName;
-      this.name = fileName;
+      this.fileName = Utils.nSlash(fileName);
+      this.name = Utils.nSlash(fileName);
       this.ext = this.fileName.toLowerCase().split('.').pop();
       this.type = this.getFileType(this.ext);
     }
@@ -97,8 +97,8 @@ define([
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties: function ($xml) {
-      this.name = $xml.attr('name');
-      this.fileName = $xml.attr('file');
+      this.name = Utils.nSlash($xml.attr('name'));
+      this.fileName = Utils.nSlash($xml.attr('file'));
       this.ext = this.fileName.toLowerCase().split('.').pop();
       this.type = this.getFileType(this.ext);
       return this;
