@@ -347,7 +347,7 @@ define([
       this.timer = new AWT.Timer(function () {
         thisPlayer.incCounterValue('time');
         if (thisPlayer.actPanel && thisPlayer.actPanel.act.maxTime > 0 &&
-            thisPlayer.actPanel.playing() &&
+            thisPlayer.actPanel.playing &&
             thisPlayer.counterVal['time'] >= thisPlayer.actPanel.act.maxTime) {
           thisPlayer.actPanel.finishActivity(false);
         }

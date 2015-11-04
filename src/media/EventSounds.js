@@ -77,9 +77,10 @@ define([
     /**
      * 
      * Instantiates the audio objects needed to play event sounds
+     * @param {PlayStation} ps
      * @param {MediaBag} mediaBag
      */
-    realize: function (mediaBag) {
+    realize: function (ps, mediaBag) {
       // TODO: Implement methods for playing sounds defined in 'elements'
       // See: [edu.xtec.jclic.media.EventSounds.java](https://github.com/projectestac/jclic/blob/master/src/core/edu/xtec/jclic/media/EventSounds.java)
     },

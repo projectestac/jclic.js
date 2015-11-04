@@ -146,7 +146,7 @@ define([
         this.skin = this.mediaBag.getSkinElement(this.settings.skinFileName, ps);
 
       if (this.settings.eventSounds) {
-        this.settings.eventSounds.setParent(eventSoundsParent);
+        this.settings.eventSounds.eventSoundsParent = eventSoundsParent;
         this.settings.eventSounds.realize(ps, this.mediaBag);
       }
 
