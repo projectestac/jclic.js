@@ -53,6 +53,10 @@ define([
      * @type {object} */
     tmb: null,
     /**
+     * Number of targets
+     * @type {number} */
+    numTargets: 0,    
+    /**
      * Type of targets used in this activity. Possible values are: `TT_FREE`, `TT_CHAR`, `TT_WORD`
      * and `TT_PARAGRAPH`.
      * @type {string} */
@@ -130,6 +134,7 @@ define([
             case 'target':
               obj = new TextActivityDocument.TextTarget(doc, this.textContent.replace(/\t/g, '&#9;'));
               obj.setProperties($child, mediaBag);
+              doc.numTargets++;
               break;
 
             default:

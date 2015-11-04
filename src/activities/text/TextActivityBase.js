@@ -35,10 +35,6 @@ define([
   TextActivityBase.prototype = {
     constructor: TextActivityBase,
     /**
-     * The main document used by this text activity
-     * @type {TextActivityDocument} */
-    tad: null,
-    /**
      * This is the object used to evaluate user's answers in text activities.
      * @type {Evaluator} */
     ev: null,
@@ -57,7 +53,15 @@ define([
     /**
      * Maximum amount of time for showing the previous document text activities.
      * @type {number}*/
-    prevScreenMaxTime: -1
+    prevScreenMaxTime: -1,
+    /**
+     * 
+     * Retrieves the minimum number of actions needed to solve this activity
+     * @returns {number}
+     */
+    getMinNumActions: function () {
+      return this.document ? this.document.numTargets : 0;
+    }    
   };
 
   // TextActivityBase extends Activity

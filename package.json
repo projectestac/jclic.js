@@ -40,7 +40,7 @@
     "screenfull": "^2.0.0"
   },
   "devDependencies": {
-    "browserify": "~11.2.0",
+    "browserify": "~12.0.1",
     "deamdify": "~0.1.1",
     "gc-jaguarjs-jsdoc": "0.0.1",
     "grunt": "~0.4.5",
@@ -48,7 +48,7 @@
     "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-jshint": "~0.11.2",
-    "grunt-contrib-uglify": "~0.9.1",
+    "grunt-contrib-uglify": "~0.10.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-express": "^1.4.1",
     "grunt-extract-sourcemap": "^0.1.16",

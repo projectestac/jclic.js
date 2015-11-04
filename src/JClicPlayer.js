@@ -902,7 +902,7 @@ define([
       var ase = this.project.activitySequence.getCurrentAct();
       if (ase !== null && ase.delay > 0 && !this.delayedTimer.isRunning() && !this.navButtonsDisabled) {
         this.delayedAction = this.actions['next'];
-        this.delayedTimer.delay = ase.delay * 1000;
+        this.delayedTimer.interval = ase.delay * 1000;
         this.delayedTimer.start();
       }
     },
@@ -978,7 +978,7 @@ define([
       if (counter === 'actions' &&
           actp !== null &&
           actp.act.maxActions > 0 &&
-          actp.isPlaying() &&
+          actp.playing &&
           this.counterVal['actions'] >= actp.act.maxActions) {
         window.setTimeout(function () {
           actp.finishActivity(actp.solved);
@@ -992,7 +992,7 @@ define([
      * @param {number} maxValue - The value from which to start counting down
      */
     setCountDown: function (counter, maxValue) {
-      this.counterVal[counter] = maxValue;
+      //this.counterVal[counter] = maxValue;
       if (this.skin && this.skin.counters[counter])
         this.skin.counters[counter].setCountDown(maxValue);
     },
