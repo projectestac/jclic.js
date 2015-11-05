@@ -3,27 +3,25 @@
 [JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player
 of [JClic](https://github.com/projectestac/jclic) activities.
 
-## JClic
+## JClic and JClic-repo
 
-[JClic](http://clic.xtec.cat) is an open source authoring system promoted by the Catalan Ministry of
-Education ([XTEC](http://www.xtec.cat)) that allows the creation of interactive learning __activities__.
-These activities can be puzzles (with different shapes and distributions), associations, memory games,
-scrambled letters, crosswords and several types of text activities (fill-in the gap, put in order
-words or paragraphs, identify words or letters, etc.).
+[JClic](http://clic.xtec.cat) is a free software project from the [Catalan Educational Telematic Network](http://www.xtec.cat) 
+(XTEC) for creating various types of interactive activities such as associations, puzzles, text activities,
+crosswords or puzzles, from elements of text, graphics and multimedia.
 
-Groups of single activities are often grouped in __JClic projects__ and organized in one or more
-__sequences__ (lists of activities that must be performed in a specific order). The resulting set of
-activities, sequences and media elements are packaged into __JClic project files__ (files with
-extension ".jclic.zip").
+The program includes an authoring tool to create activities, a player and a reporting system that stores
+the results obtained by students. All these components, along with some guides and tutorials on how to
+create activities, are available in the [clicZone](http://clic.xtec.cat/en/jclic/download.htm).
 
-Since 1995, the JClic project has a huge community of users and a
-[library](http://clic.xtec.cat/db/listact_en.jsp) of free JClic projects created by teachers of
-different countries and shared under licenses of type _Creative Commons_.
+JClic is a Java application that runs on Linux, Windows and Mac OS. Full [source code](https://github.com/projectestac/jclic)
+and [documentation](http://projectestac.github.io/jclic/) are available on GitHub.
 
-JClic has been developed in Java and has multiple [components](http://clic.xtec.cat/en/jclic/download.htm):
-authoring tool, standalone player, applet, packaging and reporting system. The
-[source code](https://github.com/projectestac/jclic) and the [documentation](http://projectestac.github.io/jclic/)
-of JClic are freely available on GitHub.
+Many teachers from different countries have used JClic to create interactive materials for a wide variety
+of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a 
+huge [library](http://clic.xtec.cat/repo) created with [jclic-repo](https://github.com/projectestac/jclic-repo),
+another open source project that will facilitate the publication of collections of JClic projects in
+static web hosting services.
+
 
 ## Known issues
 
@@ -41,15 +39,14 @@ and mobile devices with low memory resources. This is due to a
 
 ## How to build JClic.js
 
-JClic.js uses [Node.js](https://nodejs.org/) modules encapsulated in
-[npm](https://www.npmjs.com/) packages. First of all, you must have Node.js
-(which includes 'npm' by default) [installed](https://nodejs.org/download/)
+JClic.js uses [Node.js](https://nodejs.org/) modules encapsulated in [npm](https://www.npmjs.com/)
+packages. First of all, you must have Node.js (which includes 'npm' by default) [installed](https://nodejs.org/download/)
 on your system.
 
 To update `npm` to the latest version, run:
 
 ```
-sudo npm install npm -g
+sudo npm install -g npm
 ```
 
 We use [Grunt](http://gruntjs.com/) for automation of building tasks. You must globally install this
@@ -73,7 +70,7 @@ To build jclic.js, just run:
 grunt
 ```
 
-This will generate the file `jclic.min.js` into the `dist` folder.
+This will generate the file `jclic.min.js` in the `dist` folder.
 
 To test the module and see the demo in your browser, just launch the test server running:
 
@@ -81,5 +78,7 @@ To test the module and see the demo in your browser, just launch the test server
 grunt server
 ```
 
-For full documentation of the API, see: [http://projectestac.github.io/jclic.js/doc/index.html]
+Full API documentation of jclic.js is available at http://projectestac.github.io/jclic.js/doc
 
+__jclic.js__ is also available as [NPM](https://www.npmjs.com/package/jclic) and [Bower](https://libraries.io/bower/jclic)
+packages.
