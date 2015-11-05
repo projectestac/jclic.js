@@ -8,26 +8,31 @@ __JClic.js__ is a JavaScript player of __JClic__ activities.<br>
 
 ## JClic
 
-[JClic](http://clic.xtec.cat) is an open source authoring system promoted by the Catalan Ministry of
-Education ([XTEC](http://www.xtec.cat)) that allows the creation of interactive learning __activities__.
-These activities can be puzzles (with different shapes and distributions), associations, memory games,
-scrambled letters, crosswords and several types of text activities (fill-in the gap, put in order
-words or paragraphs, identify words or letters, etc.).
+## JClic and JClic-repo
 
-Groups of single activities are often grouped in __JClic projects__ and organized in one or more
+[JClic](http://clic.xtec.cat) is a free software project from the [Catalan Educational Telematic Network](http://www.xtec.cat) 
+(XTEC) for creating various types of interactive activities such as associations, puzzles, text activities,
+crosswords or puzzles, from elements of text, graphics and multimedia.
+
+The program includes an authoring tool to create activities, a player and a reporting system that stores
+the results obtained by students. All these components, along with some guides and tutorials on how to
+create activities, are available in the [clicZone](http://clic.xtec.cat/en/jclic/download.htm).
+
+JClic is a Java application that runs on Linux, Windows and Mac OS. Full [source code](https://github.com/projectestac/jclic)
+and [documentation](http://projectestac.github.io/jclic/) are available on GitHub.
+
+Many teachers from different countries have used JClic to create interactive materials for a wide variety
+of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a 
+huge [library](http://clic.xtec.cat/repo) created with [jclic-repo](https://github.com/projectestac/jclic-repo),
+another open source project that will facilitate the publication of collections of JClic projects in
+static web hosting services.
+
+## JClic project files
+
+Groups of single __activities__ are often grouped in __JClic projects__ and organized in one or more
 __sequences__ (lists of activities that must be performed in a specific order). The resulting set of
 activities, sequences and media elements are packaged into __JClic project files__ (files with
 extension ".jclic.zip").
-
-Since 1995, the JClic project has a huge community of users and a
-[library](http://clic.xtec.cat/db/listact_en.jsp) of free JClic projects created by teachers of
-different countries and shared under licenses of type _Creative Commons_.
-
-JClic has been developed in Java and has multiple [components](http://clic.xtec.cat/en/jclic/download.htm):
-authoring tool, standalone player, applet, packaging and reporting system. The
-[source code](https://github.com/projectestac/jclic) and the [documentation](http://projectestac.github.io/jclic/)
-of JClic are freely available on GitHub.
-
 
 ## JClic.js components
 
@@ -86,13 +91,13 @@ You can also build this documentation running `grunt doc`
 
 
 
-## Main classes
+# Main classes
 
 JClic.js is organized in three main groups of classes: _Player_, _Document_ and _Utilities_. In
 addition to this, the main [JClic](JClic.html) class provides methods to read JClic project documents,
 build players, launch activities and communicate with external reporting systems.
 
-### Player
+## Player
 [JClicPlayer](JClicPlayer.html) loads JClic project files, manages the user interaction and acts as
 a interface between the browser and JClic classes for multiple functions. The player has:
 * [Skin](Skin.html): manages the visual appareance. Can have up to three [Counter](Counter.html)
@@ -101,7 +106,7 @@ objects.
 * [PlayerHistory](PlayerHistory.html): used to track the user's navigation between activities.
 
 
-### Document classes
+## Document classes
 
 [JClicProject](JClicProject.html) encapsulates all data needed to play JClic activities. Its main
 components are:
@@ -138,7 +143,7 @@ At run time, all classes derived from [Activity](Activity.html) generate
 a specific [Activity.Panel](Activity.Panel.html), that is a real DOM object with wich users interact.
 
 
-### Utility classes
+## Utility classes
 
 #### AWT
 [AWT](AWT.html): contains some classes similar to those defined in the Java
@@ -191,10 +196,10 @@ one or more _ActiveBoxContent_ objects. Also used by _TextActivityDocument_ to e
   * [Arith](Arith.html): random generator of menthal arithmetics operations
 
 #### Jump between sequence points
-* [JumpInfo](JumpInfo.html)
-  * [ActivitySequenceJump](ActivitySequenceJump.html)
-  * [ConditionalJumpInfo](ConditionalJumpInfo.html)
+* [JumpInfo](JumpInfo.html): stores information about what to do when an activity finishes or when the user clicks on a link or button.
+  * [ActivitySequenceJump](ActivitySequenceJump.html): used by _ActivitySequenceElement_ objects.
+  * [ConditionalJumpInfo](ConditionalJumpInfo.html): used to decide where to jump, based on the current timing and scoring
 
-#### Misc. utility classes
+#### Miscellaneous utility classes
 * [BoxConnector](BoxConnector.html)
 * [Utils](Utils.html)
