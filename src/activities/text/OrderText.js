@@ -38,7 +38,31 @@ define([
     /**
      * Whether to allow or not to scramble words among different paragraphs.
      * @type {boolean} */
-    amongParagraphs: false    
+    amongParagraphs: false,
+    /**
+     * 
+     * Whether or not the activity uses random to scramble internal components
+     * @returns {boolean}
+     */
+    hasRandom: function () {
+      return true;
+    },
+    /**
+     * 
+     * When `true`, the activity mut always be scrambled
+     * @returns {boolean}
+     */
+    shuffleAlways: function () {
+      return true;
+    },
+    /**
+     * 
+     * Whether the activity allows the user to request help.
+     * @returns {boolean}
+     */
+    helpSolutionAllowed: function () {
+      return true;
+    }    
   };
 
   // OrderText extends TextActivityBase
@@ -61,7 +85,79 @@ define([
   // Properties and methods specific to OrderText.Panel
   var ActPanelAncestor = TextActivityBase.Panel.prototype;
   OrderText.Panel.prototype = {
-    constructor: OrderText.Panel
+    constructor: OrderText.Panel,
+    /**
+     * Currently selected text target
+     * @type {TextActivityDocument.TextTarget} */
+    currentTarget: null,    
+    /**
+     * 
+     * Creates a target DOM element for the provided target.
+     * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
+     * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
+     * to store the target, or replaced by another type of object.
+     * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
+     */
+    $createTargetElement: function (target, $span) {
+      
+      ActPanelAncestor.$createTargetElement.call(this, target, $span);
+
+      var id = this.targets.length - 1;
+      var idLabel = 'target' + ('000' + id).slice(-3);
+      var thisPanel = this;
+
+      $span.addClass('JClicTextTarget').bind('mousedown mouseup touchstart touchend touchcancel', function (event) {
+          event.textTarget = target;
+          event.idLabel = idLabel;
+          thisPanel.processEvent(event);
+        });
+
+      return $span;
+    },
+    /**
+     * 
+     * Basic initialization procedure
+     */
+    initActivity: function () {
+      ActPanelAncestor.initActivity.call(this);
+
+      if (!this.firstRun)
+        this.buildVisualComponents();
+      else
+        this.firstRun = false;
+      
+      // Shuffle!
+      
+      this.playing=true;
+      
+    },    
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events.
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
+    processEvent: function (event) {
+
+      if (!ActPanelAncestor.processEvent.call(this, event))
+        return false;
+
+      var target = event.textTarget;
+
+      switch (event.type) {
+        case 'mouseup':
+          if(target){
+            target.$span.css({
+              color: target.doc.style['target'].css.background,
+              background: target.doc.style['target'].css.color});
+          }
+          break;
+        default:
+          console.log(event.type + ' Target:' + target);
+          break;
+      }
+    }    
   };
 
   // OrderText.Panel extends TextActivityBase.Panel
