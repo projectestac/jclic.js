@@ -323,6 +323,10 @@ define([
      * @type {external:jQuery} */
     $span: null,
     /**
+     * The paragraph element where $span is curently located
+     * @type {external:jQuery} */
+    $p: null,
+    /**
      * Current text in the $span element
      * @type {string} */
     currentText: '',
@@ -330,6 +334,11 @@ define([
      * Ordinal number of this target in the collection of targets
      * @type {number} */
     num: 0,
+    /**
+     * Current ordinal position of this target in the document
+     * (used in {@link OrderText} activities)
+     * @type {number} */
+    pos: 0,
     /**
      * Current status of the target. Valid values are: `NOT_EDITED`, `EDITED`, `SOLVED` and `WITH_ERROR`
      * @type {string} */

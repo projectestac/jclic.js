@@ -27,8 +27,6 @@ define([
    * @extends TextActivityBase
    * @param {JClicProject} project - The project to which this activity belongs
    */
-  //
-  // TODO: Implement order text activities
   var OrderText = function (project) {
     TextActivityBase.call(this, project);
   };
@@ -89,7 +87,16 @@ define([
     /**
      * Currently selected text target
      * @type {TextActivityDocument.TextTarget} */
-    currentTarget: null,    
+    currentTarget: null,
+    /**
+     * 
+     * Prepares the text panel
+     */
+    buildVisualComponents: function () {
+      // TODO: Add transparent canvas with a BoxConnector
+      this.act.document.style['target'].css.cursor = 'pointer';
+      ActPanelAncestor.buildVisualComponents.call(this);
+    },    
     /**
      * 
      * Creates a target DOM element for the provided target.
@@ -106,13 +113,36 @@ define([
       var idLabel = 'target' + ('000' + id).slice(-3);
       var thisPanel = this;
 
-      $span.addClass('JClicTextTarget').bind('mousedown mouseup touchstart touchend touchcancel', function (event) {
+      $span.addClass('JClicTextTarget').bind('click', function (event) {
           event.textTarget = target;
           event.idLabel = idLabel;
           thisPanel.processEvent(event);
         });
 
       return $span;
+    },
+    /**
+     * Swaps the position of two targets in the document
+     * @param {TextActivityDocument.TextTarget} t1 - One target
+     * @param {TextActivityDocument.TextTarget} t2 - Another target
+     */
+    swapTargets: function(t1, t2){
+      var $span1 = t1.$span;
+      var $span2 = t2.$span;
+      var $marker = $('<span/>');      
+      $marker.insertAfter($span2);
+      $span2.detach();      
+      $span2.insertAfter($span1);
+      $span1.detach();
+      $span1.insertAfter($marker);
+      $marker.remove();
+      
+      var pos = t1.pos,
+          $p = t1.$p;      
+      t1.pos = t2.pos;
+      t1.$p = t2.$p;      
+      t2.pos = pos;
+      t2.$p = $p;
     },
     /**
      * 
@@ -126,10 +156,103 @@ define([
       else
         this.firstRun = false;
       
-      // Shuffle!
+      if(this.act.type==='orderWords' && !this.act.amongParagraphs){        
+        // Group targets by paragraph
+        var groups = [];
+        var lastTarget = null;
+        var currentGroup = [];
+        
+        for(var i in this.targets){
+          var t = this.targets[i];
+          if(lastTarget!==null && lastTarget.$p !== t.$p){
+            groups.push(currentGroup);
+            currentGroup = [];
+          }
+          currentGroup.push(t);
+          lastTarget = t;
+        }
+        if(currentGroup.length > 0){
+          groups.push(currentGroup);
+        }        
+        
+        // Scramble group by group
+        for(var g in groups){
+          this.shuffleTargets(groups[g], this.act.shuffles);          
+        }        
+      }
+      else {      
+        this.shuffleTargets(this.targets, this.act.shuffles);
+      }
       
       this.playing=true;
       
+    },
+    /**
+     * 
+     * Randomly shuffles a set of targets
+     * @param {TextActivityDocument.TextTarget[]} targets - The set of targets to shuffle (can be all
+     * document targets or just the targets belonging to the same paragraph, depending on the value of
+     * `amongParagraphs` in {@link Activity}.
+     * @param {number} steps - The number of times to shuffle the elements
+     */
+    shuffleTargets: function (targets, steps) {
+      var nt = targets.length;
+      if (nt > 1) {
+        var repeatCount = 100;
+        for (var i = 0; i < steps; i++) {
+          var r1 = Math.floor(Math.random() * nt);
+          var r2 = Math.floor(Math.random() * nt);
+          if (r1 !== r2) {
+            this.swapTargets(targets[r1], targets[r2]);
+          }
+          else {
+            if(--repeatCount)
+              i++;
+          }
+        }
+      }
+    },
+    /**
+     * 
+     * Sets the current target
+     * @param {TextActivityDocument.TextTarget} target - The currently selected target. Can be `null`.
+     */
+    setCurrentTarget: function(target){
+      var targetCss = this.act.document.style['target'].css;
+      
+      if(this.currentTarget && this.currentTarget.$span)
+        this.currentTarget.$span.css(targetCss);
+      
+      if(target && target.$span){
+            target.$span.css({
+              color: targetCss.background,
+              background: targetCss.color});
+      }
+      
+      this.currentTarget = target;
+    },
+    /**
+     * 
+     * Counts the number of targets that are at right position
+     * @returns {number}
+     */
+    countSolvedTargets: function(){      
+      var result = 0;
+      for(var i in this.targets){
+        var t = this.targets[i];
+        if(t.num === t.pos)
+          result ++;
+      }
+      return result;      
+    },
+    /**
+     * 
+     * Ordinary ending of the activity, usually called form `processEvent`
+     * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
+     */
+    finishActivity: function (result) {
+      $('.JClicTextTarget').css('cursor', 'auto');      
+      return ActPanelAncestor.finishActivity.call(this, result);
     },    
     /**
      * 
@@ -144,20 +267,36 @@ define([
         return false;
 
       var target = event.textTarget;
-
+      
       switch (event.type) {
-        case 'mouseup':
-          if(target){
-            target.$span.css({
-              color: target.doc.style['target'].css.background,
-              background: target.doc.style['target'].css.color});
+        case 'click':
+          if (target && target !== this.currentTarget) {
+            if (this.currentTarget) {
+              this.swapTargets(target, this.currentTarget);
+              this.setCurrentTarget(null);
+              
+              // Check and notify action
+              var cellsAtPlace = this.countSolvedTargets();
+              var ok = target.pos === target.num;
+              this.ps.reportNewAction(this.act, 'PLACE', target.text, target.pos, ok, cellsAtPlace);
+              
+              // End activity or play event sound
+              if (ok && cellsAtPlace === this.targets.length)
+                this.finishActivity(true);
+              else
+                this.playEvent(ok ? 'actionOk' : 'actionError');
+
+            } else {
+              this.setCurrentTarget(target);
+              this.playEvent('click');
+            }
           }
           break;
         default:
-          console.log(event.type + ' Target:' + target);
           break;
-      }
-    }    
+      }      
+      return true;
+    }
   };
 
   // OrderText.Panel extends TextActivityBase.Panel

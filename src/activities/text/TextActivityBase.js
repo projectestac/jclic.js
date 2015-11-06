@@ -195,6 +195,7 @@ define([
               var target = this;
               $span = thisPanel.$createTargetElement(target, $span);
               target.num = thisPanel.targets.length;
+              target.pos = target.num;
               thisPanel.targets.push(target);
               $span.css(doc.style['default'].css);
               if (currentPStyle)
@@ -213,6 +214,7 @@ define([
                   $span.css(doc.style['target'].css);
               }
               $p.append($span);
+              target.$p = $p;              
               break;
           }
           empty = false;

@@ -176,8 +176,8 @@ define([
     /**
      * 
      * Counts the number of targets with `SOLVED` status
-     * @param {boolean} checkNow - When `true`, all targets will be checked. Otherwhise, they will be
-     * just checked.
+     * @param {boolean} checkNow - When `true`, all targets will be evaluated. Otherwhise, only the
+     * current value of `targetStatus` will be checked.
      * @returns {number} - The number of targets currently solved.
      */
     countSolvedTargets: function (checkNow) {
