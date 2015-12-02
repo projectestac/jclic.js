@@ -68,7 +68,8 @@ define([
     AWT: AWT,
     Utils: Utils,
     $: $,
-    options: (typeof JClicDataOptions === 'undefined') ? {} : JClicDataOptions
+    options: (typeof JClicDataOptions === 'undefined') ? {} : JClicDataOptions,
+    projectFiles: {}    
   };
   
   // Make JClicObject global
@@ -115,6 +116,10 @@ define([
     if (!options.noInit) {
       // If defined, load the global variable `JClicDataProject`
       var projectName = (typeof JClicDataProject === 'undefined' ? null : JClicDataProject);
+      
+      if(!projectName && typeof JClicObject.projectFile!==null) {
+        
+      }
 
       // Search DOM elements with class "JClic"
       var $JClicDivs = $('div.JClic');

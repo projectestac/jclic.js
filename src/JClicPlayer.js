@@ -57,12 +57,14 @@ define([
       if ($topDiv.height() > 0) {
         options.height = $topDiv.height();
         options.width = $topDiv.width();
-      }
-      else if (typeof options.autoFit === 'undefined')
+      } else if (typeof options.autoFit === 'undefined')
         options.autoFit = true;
     }
 
     this.options = $.extend(Object.create(this.options), options);
+    
+    /* global location */
+    this.localFS = (location && location.protocol === 'file:');
 
     this.$div = $('<div class="JClicPlayer"/>');
     this.project = new JClicProject();
@@ -141,6 +143,11 @@ define([
      * - __zip.zipBasePath__ {string} - The path to the folder containing the ZIP file
      * @type {external:JSZip} */
     zip: null,
+    /**
+     * This flag indicates if the player is running inside a document loaded by `file:` protocol
+     * @type {boolean}
+     */
+    localFS: false,
     /**
      * The {@link Activity#Panel} currently running on this player.
      * @type {Activity#Panel} */
@@ -245,8 +252,7 @@ define([
           if (tp.actPanel && tp.actPanel.act.hasInfo()) {
             if (tp.actPanel.act.infoUrl) {
               tp.displayUrl(tp.act.infoUrl, true);
-            }
-            else if (tp.actPanel.act.infoCmd) {
+            } else if (tp.actPanel.act.infoCmd) {
               tp.runCmd(tp.actPanel.act.infoCmd);
             }
           }
@@ -490,8 +496,7 @@ define([
                   }
                   if (fileName) {
                     tp.load(Utils.getPath(tp.zip.zipBasePath, fileName), sequence, activity);
-                  }
-                  else
+                  } else
                     tp.setSystemMessage('Error: ZIP does not contain any valid jclic file!');
                 } catch (e) {
                   tp.setSystemMessage('Error reading ZIP file: ', e);
@@ -504,6 +509,17 @@ define([
             this.skin.setWaitCursor(false);
             return;
           }
+          else if (tp.localFS && JClicObject && !JClicObject.projectFiles[project]) {
+            // WARNING: bootstrap.js needed!
+            // See: https://bitbucket.org/scott_koon/bootstrap
+            // From: http://code.tutsplus.com/articles/for-your-script-loading-needs--net-19570
+            $b(fullPath + '.js', project, function () {              
+              tp.load(project, sequence, activity);
+              tp.skin.setWaitCursor(false);
+            });
+            return;
+          }
+
 
           // Step 1: Load the project
           this.setSystemMessage('loading project', project);
@@ -515,6 +531,11 @@ define([
               fp = 'data:text/xml;charset=UTF-8,' + tp.zip.file(fName).asText();
             }
           }
+          // Check if file is already loaded in the global variable `JClicObject`
+          /* global JClicObject */
+          else if (JClicObject && JClicObject.projectFiles[fp]) {
+            fp = 'data:text/xml;charset=UTF-8,' + JClicObject.projectFiles[fp];
+          }          
 
           $.get(fp, null, null, 'xml')
               .done(function (data) {
@@ -551,6 +572,7 @@ define([
               .always(function () {
                 tp.skin.setWaitCursor(false);
               });
+
           return;
         }
 
@@ -599,8 +621,7 @@ define([
           this.project.activitySequence.checkCurrentActivity(act.name);
           actp = act.getActivityPanel(this);
           actp.buildVisualComponents();
-        }
-        else {
+        } else {
           this.setSystemMessage('Error: Missing activity', activity);
           // Alert ?
         }

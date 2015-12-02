@@ -141,12 +141,16 @@ define([
         return;
 
       // Restore the background
-      if (this.bgRect && this.bgImg) {
-        this.ctx.putImageData(
-            this.bgImg,
-            0, 0,
-            this.bgRect.pos.x, this.bgRect.pos.y,
-            this.bgRect.dim.width, this.bgRect.dim.height);
+      if (this.bgRect) {
+        if (this.bgImg) {
+          this.ctx.putImageData(
+              this.bgImg,
+              0, 0,
+              this.bgRect.pos.x, this.bgRect.pos.y,
+              this.bgRect.dim.width, this.bgRect.dim.height);
+        } else if(this.parent) {
+          this.parent.updateContent(this.bgRect);
+        }
       }
 
       this.dest.moveTo(pt);
@@ -199,7 +203,13 @@ define([
       }
 
       // Save the full image currently displayed on the panel (with the box hidden)
-      this.bgImg = this.ctx.getImageData(0, 0, this.dim.width, this.dim.height);
+      try {
+        this.bgImg = this.ctx.getImageData(0, 0, this.dim.width, this.dim.height);
+      } catch (ex) {
+        // Avoid "canvas tainted by cross-origin data" errors
+        // Setting bgImg to null is less eficient, but works
+        this.bgImg = null;
+      }
       this.bgRect = null;
 
       // Make a first movement to make the box appear
