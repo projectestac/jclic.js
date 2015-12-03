@@ -178,6 +178,10 @@ define([
 
           case 'xml':
             this.data = '';
+            this.ready=true;
+            // Since we are not yet supporting complex skins, there
+            // is no need to read XML files
+            /*
             $.get(fullPath, null, null, 'xml')
                 .done(function (data) {
                   media.data = data;
@@ -186,6 +190,7 @@ define([
               console.log('Error loading ' + media.name);
               media.data = null;
             });
+            */
             break;
 
           default:

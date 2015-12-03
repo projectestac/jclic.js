@@ -149,7 +149,7 @@ define([
               this.bgRect.pos.x, this.bgRect.pos.y,
               this.bgRect.dim.width, this.bgRect.dim.height);
         } else if(this.parent) {
-          this.parent.updateContent(this.bgRect);
+          this.parent.updateContent();
         }
       }
 
