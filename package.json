@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "main": "dist/jclic.js",
   "homepage": "http://projectestac.github.io/jclic.js",
   "readmeFilename": "README.md",
@@ -37,7 +37,8 @@
     "jquery": "~2.1.4",
     "jszip": "^2.5.0",
     "jszip-utils": "0.0.2",
-    "screenfull": "^2.0.0"
+    "screenfull": "^2.0.0",
+    "scriptjs": "^2.5.8"
   },
   "devDependencies": {
     "browserify": "~12.0.1",

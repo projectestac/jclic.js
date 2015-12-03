@@ -13,10 +13,13 @@
 //  General Public License for more details. You should have received a copy of the GNU General
 //  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
+/* global JClicObject */
+
 define([
   "jquery",
   "jszip",
   "jszip-utils",
+  "scriptjs",
   "./Utils",
   "./AWT",
   "./PlayerHistory",
@@ -26,7 +29,7 @@ define([
   "./project/JClicProject",
   "./bags/JumpInfo",
   "./boxes/ActiveBoxContent"
-], function ($, JSZip, JSZipUtils, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds,
+], function ($, JSZip, JSZipUtils, ScriptJS, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds,
     JClicProject, JumpInfo, ActiveBoxContent) {
 
   /**
@@ -509,17 +512,13 @@ define([
             this.skin.setWaitCursor(false);
             return;
           }
-          else if (tp.localFS && JClicObject && !JClicObject.projectFiles[project]) {
-            // WARNING: bootstrap.js needed!
-            // See: https://bitbucket.org/scott_koon/bootstrap
-            // From: http://code.tutsplus.com/articles/for-your-script-loading-needs--net-19570
-            $b(fullPath + '.js', project, function () {              
+          else if (tp.localFS && JClicObject && !JClicObject.projectFiles[fullPath]) {
+            ScriptJS(fullPath + '.js', function () {              
               tp.load(project, sequence, activity);
-              tp.skin.setWaitCursor(false);
-            });
+            });            
+            this.skin.setWaitCursor(false);            
             return;
           }
-
 
           // Step 1: Load the project
           this.setSystemMessage('loading project', project);
@@ -532,7 +531,6 @@ define([
             }
           }
           // Check if file is already loaded in the global variable `JClicObject`
-          /* global JClicObject */
           else if (JClicObject && JClicObject.projectFiles[fp]) {
             fp = 'data:text/xml;charset=UTF-8,' + JClicObject.projectFiles[fp];
           }          
