@@ -505,9 +505,7 @@ define([
                   tp.setSystemMessage('Error reading ZIP file: ', e);
                 }
               });
-
               tp.skin.setWaitCursor(false);
-
             }, 100);
             this.skin.setWaitCursor(false);
             return;
@@ -524,21 +522,31 @@ define([
           this.setSystemMessage('loading project', project);
           var fp = fullPath;
 
+          // Special case for ZIP files
           if (tp.zip) {
             var fName = Utils.getRelativePath(fp, tp.zip.zipBasePath);
             if (tp.zip.files[fName]) {
               fp = 'data:text/xml;charset=UTF-8,' + tp.zip.file(fName).asText();
             }
           }
-          // Check if file is already loaded in the global variable `JClicObject`
-          else if (JClicObject && JClicObject.projectFiles[fp]) {
-            fp = 'data:text/xml;charset=UTF-8,' + JClicObject.projectFiles[fp];
-          }          
-
+          // Special case for local filesystems (`file:` protocol)
+          else if(tp.localFS){
+            // Check if file is already loaded in the global variable `JClicObject`
+            if (JClicObject && JClicObject.projectFiles[fullPath]) {
+              fp = 'data:text/xml;charset=UTF-8,' + JClicObject.projectFiles[fullPath];
+            }
+            else {
+              tp.setSystemMessage('Error: Unable to load', fullPath+'.js');
+              return;
+            }            
+          }
+                    
           $.get(fp, null, null, 'xml')
               .done(function (data) {
-                if (typeof data !== 'object')
-                  console.log('Project not loaded. Bad data!');
+                if (data === null || typeof data !== 'object'){
+                  tp.setSystemMessage('ERROR: Project not loaded. Bad data!', project);
+                  return;
+                }
                 var prj = new JClicProject();
                 prj.setProperties($(data).find('JClicProject'), fullPath, tp.zip);
                 tp.setSystemMessage('Project file loaded and parsed', project);
