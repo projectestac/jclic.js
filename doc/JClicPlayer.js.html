@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9802,10 +9818,13 @@
 //  General Public License for more details. You should have received a copy of the GNU General
 //  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
+/* global JClicObject */
+
 define([
   "jquery",
   "jszip",
   "jszip-utils",
+  "scriptjs",
   "./Utils",
   "./AWT",
   "./PlayerHistory",
@@ -9815,7 +9834,7 @@ define([
   "./project/JClicProject",
   "./bags/JumpInfo",
   "./boxes/ActiveBoxContent"
-], function ($, JSZip, JSZipUtils, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds,
+], function ($, JSZip, JSZipUtils, ScriptJS, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds,
     JClicProject, JumpInfo, ActiveBoxContent) {
 
   /**
@@ -9846,12 +9865,14 @@ define([
       if ($topDiv.height() > 0) {
         options.height = $topDiv.height();
         options.width = $topDiv.width();
-      }
-      else if (typeof options.autoFit === 'undefined')
+      } else if (typeof options.autoFit === 'undefined')
         options.autoFit = true;
     }
 
     this.options = $.extend(Object.create(this.options), options);
+    
+    /* global location */
+    this.localFS = (location &amp;&amp; location.protocol === 'file:');
 
     this.$div = $('&lt;div class="JClicPlayer"/>');
     this.project = new JClicProject();
@@ -9930,6 +9951,11 @@ define([
      * - __zip.zipBasePath__ {string} - The path to the folder containing the ZIP file
      * @type {external:JSZip} */
     zip: null,
+    /**
+     * This flag indicates if the player is running inside a document loaded by `file:` protocol
+     * @type {boolean}
+     */
+    localFS: false,
     /**
      * The {@link Activity#Panel} currently running on this player.
      * @type {Activity#Panel} */
@@ -10034,8 +10060,7 @@ define([
           if (tp.actPanel &amp;&amp; tp.actPanel.act.hasInfo()) {
             if (tp.actPanel.act.infoUrl) {
               tp.displayUrl(tp.act.infoUrl, true);
-            }
-            else if (tp.actPanel.act.infoCmd) {
+            } else if (tp.actPanel.act.infoCmd) {
               tp.runCmd(tp.actPanel.act.infoCmd);
             }
           }
@@ -10279,18 +10304,22 @@ define([
                   }
                   if (fileName) {
                     tp.load(Utils.getPath(tp.zip.zipBasePath, fileName), sequence, activity);
-                  }
-                  else
+                  } else
                     tp.setSystemMessage('Error: ZIP does not contain any valid jclic file!');
                 } catch (e) {
                   tp.setSystemMessage('Error reading ZIP file: ', e);
                 }
               });
-
               tp.skin.setWaitCursor(false);
-
             }, 100);
             this.skin.setWaitCursor(false);
+            return;
+          }
+          else if (tp.localFS &amp;&amp; JClicObject &amp;&amp; !JClicObject.projectFiles[fullPath]) {
+            ScriptJS(fullPath + '.js', function () {              
+              tp.load(project, sequence, activity);
+            });            
+            this.skin.setWaitCursor(false);            
             return;
           }
 
@@ -10298,17 +10327,31 @@ define([
           this.setSystemMessage('loading project', project);
           var fp = fullPath;
 
+          // Special case for ZIP files
           if (tp.zip) {
             var fName = Utils.getRelativePath(fp, tp.zip.zipBasePath);
             if (tp.zip.files[fName]) {
               fp = 'data:text/xml;charset=UTF-8,' + tp.zip.file(fName).asText();
             }
           }
-
+          // Special case for local filesystems (`file:` protocol)
+          else if(tp.localFS){
+            // Check if file is already loaded in the global variable `JClicObject`
+            if (JClicObject &amp;&amp; JClicObject.projectFiles[fullPath]) {
+              fp = 'data:text/xml;charset=UTF-8,' + JClicObject.projectFiles[fullPath];
+            }
+            else {
+              tp.setSystemMessage('Error: Unable to load', fullPath+'.js');
+              return;
+            }            
+          }
+                    
           $.get(fp, null, null, 'xml')
               .done(function (data) {
-                if (typeof data !== 'object')
-                  console.log('Project not loaded. Bad data!');
+                if (data === null || typeof data !== 'object'){
+                  tp.setSystemMessage('ERROR: Project not loaded. Bad data!', project);
+                  return;
+                }
                 var prj = new JClicProject();
                 prj.setProperties($(data).find('JClicProject'), fullPath, tp.zip);
                 tp.setSystemMessage('Project file loaded and parsed', project);
@@ -10340,6 +10383,7 @@ define([
               .always(function () {
                 tp.skin.setWaitCursor(false);
               });
+
           return;
         }
 
@@ -10388,8 +10432,7 @@ define([
           this.project.activitySequence.checkCurrentActivity(act.name);
           actp = act.getActivityPanel(this);
           actp.buildVisualComponents();
-        }
-        else {
+        } else {
           this.setSystemMessage('Error: Missing activity', activity);
           // Alert ?
         }
@@ -10926,7 +10969,7 @@ define([
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:47 GMT+0100 (CET)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:29 GMT+0100 (CET)
         </footer>
     </div>
 </div>

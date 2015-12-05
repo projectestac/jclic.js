@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9819,10 +9835,7 @@
 <dd class="folded">
     
     <div class="description">
-        <p>This class stores the definition of the sequence to follow to show the activities of a
-<a href="JClicProject.html"><code>JClicProject</code></a>. The sequence are formed by an ordered list of objects of type
-<a href="ActivitySequenceElement.html"><code>ActivitySequenceElement</code></a>.<br>
-It stores also a transient pointer to the current sequence element.</p>
+        <p>This class stores the definition of the sequence to follow to show the activities of a<br><a href="JClicProject.html"><code>JClicProject</code></a>. The sequence are formed by an ordered list of objects of type<br><a href="ActivitySequenceElement.html"><code>ActivitySequenceElement</code></a>.<br><br>It stores also a transient pointer to the current sequence element.</p>
     </div>
     
 
@@ -9952,8 +9965,7 @@ It stores also a transient pointer to the current sequence element.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Pointer to the <a href="ActivitySequenceElement.html"><code>ActivitySequenceElement</code></a> currently running (points inside the <code>elements</code>
-array).</p>
+        <p>Pointer to the <a href="ActivitySequenceElement.html"><code>ActivitySequenceElement</code></a> currently running (points inside the <code>elements</code><br>array).</p>
     </div>
     
 
@@ -10025,8 +10037,7 @@ array).</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Utility function to check if the current sequence element corresponds to the specified
-activity. If negative, the <code>currentAct</code> will be accordingly set.</p>
+        <p>Utility function to check if the current sequence element corresponds to the specified<br>activity. If negative, the <code>currentAct</code> will be accordingly set.</p>
     </div>
     
 
@@ -10435,9 +10446,7 @@ activity. If negative, the <code>currentAct</code> will be accordingly set.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Gets the first <a href="ActivitySequenceElement.html"><code>ActivitySequenceElement</code></a> in the <code>elements</code> list pointing to the
-specified activity name.<br>
-The search is always case-insensitive.</p>
+        <p>Gets the first <a href="ActivitySequenceElement.html"><code>ActivitySequenceElement</code></a> in the <code>elements</code> list pointing to the<br>specified activity name.<br><br>The search is always case-insensitive.</p>
     </div>
     
 
@@ -10969,8 +10978,7 @@ The search is always case-insensitive.</p>
             
             <td class="description last">
                 
-                <p>When <code>true</code>, the request is for the 'go back' button. Otherwise, is
-for the 'next' one.</p></td>
+                <p>When <code>true</code>, the request is for the 'go back' button. Otherwise, is<br>for the 'next' one.</p></td>
         </tr>
 	
 	
@@ -10993,8 +11001,7 @@ for the 'next' one.</p></td>
             
             <td class="description last">
                 
-                <p>The reporting engine that will provide values about score average
-and time spend on the activities, used only to compute conditional jumps.</p></td>
+                <p>The reporting engine that will provide values about score average<br>and time spend on the activities, used only to compute conditional jumps.</p></td>
         </tr>
 	
 	
@@ -11143,8 +11150,7 @@ and time spend on the activities, used only to compute conditional jumps.</p></t
                     
             </td>
             <td class="description last"><ul>
-<li>One of the possible values of <a href="ActivitySequenceElement.html#navButtons"><code>ActivitySequenceElement#navButtons</code></a>,
-thus: <code>none</code>, <code>fwd</code>, <code>back</code> or <code>both</code></li>
+<li>One of the possible values of <a href="ActivitySequenceElement.html#navButtons"><code>ActivitySequenceElement#navButtons</code></a>,<br>thus: <code>none</code>, <code>fwd</code>, <code>back</code> or <code>both</code></li>
 </ul></td>
         </tr>
     
@@ -11412,8 +11418,7 @@ thus: <code>none</code>, <code>fwd</code>, <code>back</code> or <code>both</code
             
             <td class="description last">
                 
-                <p>Indicates whether the history of jumps done since the beggining
-of the JClic session is empty or not. When not empty, a <code>RETURN</code> action is still possible.</p></td>
+                <p>Indicates whether the history of jumps done since the beggining<br>of the JClic session is empty or not. When not empty, a <code>RETURN</code> action is still possible.</p></td>
         </tr>
 	
 	
@@ -11453,8 +11458,7 @@ of the JClic session is empty or not. When not empty, a <code>RETURN</code> acti
                     
             </td>
             <td class="description last"><ul>
-<li><code>true</code> when the user is allowed to go ahead to a next activity,
-<code>false</code> otherwise.</li>
+<li><code>true</code> when the user is allowed to go ahead to a next activity,<br><code>false</code> otherwise.</li>
 </ul></td>
         </tr>
     
@@ -11568,8 +11572,7 @@ of the JClic session is empty or not. When not empty, a <code>RETURN</code> acti
             
             <td class="description last">
                 
-                <p>Indicates whether the history of jumps done since the beggining
-of the JClic session is empty or not. When not empty, a <code>RETURN</code> action is still possible.</p></td>
+                <p>Indicates whether the history of jumps done since the beggining<br>of the JClic session is empty or not. When not empty, a <code>RETURN</code> action is still possible.</p></td>
         </tr>
 	
 	
@@ -11609,8 +11612,7 @@ of the JClic session is empty or not. When not empty, a <code>RETURN</code> acti
                     
             </td>
             <td class="description last"><ul>
-<li><code>true</code> when the user is allowed to go back to a previous activity,
-<code>false</code> otherwise.</li>
+<li><code>true</code> when the user is allowed to go back to a previous activity,<br><code>false</code> otherwise.</li>
 </ul></td>
         </tr>
     
@@ -11794,7 +11796,7 @@ of the JClic session is empty or not. When not empty, a <code>RETURN</code> acti
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:49 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:32 GMT+0100 (CET)
         </footer>
     </div>
 </div>

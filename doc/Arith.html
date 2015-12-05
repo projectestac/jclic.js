@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9819,10 +9835,7 @@
 <dd class="folded">
     
     <div class="description">
-        <p>Arith provides randomly generated menthal arithmetics operations, ready to be used in JClic activities.<br>
-The operations can be additions, substractions, multiplications or divides. The unknown of these
-operations can be the result of the operation (<code>A op B = ?</code>), any of the two operators
-(<code>A op ? = C</code> or <code>? op B = C</code>) or also the operator itself (<code>A ? B = C</code>).</p>
+        <p>Arith provides randomly generated menthal arithmetics operations, ready to be used in JClic activities.<br><br>The operations can be additions, substractions, multiplications or divides. The unknown of these<br>operations can be the result of the operation (<code>A op B = ?</code>), any of the two operators<br>(<code>A op ? = C</code> or <code>? op B = C</code>) or also the operator itself (<code>A ? B = C</code>).</p>
     </div>
     
 
@@ -10098,8 +10111,7 @@ operations can be the result of the operation (<code>A op B = ?</code>), any of 
 <dd class="folded">
     
     <div class="description">
-        <p>Sorting of the operands in commutative operations. Possible values are: 'AGB' (<em>A greather than B</em>),
-'BGA' (<em>B greather tan A</em>) and 'INDIF' (default)</p>
+        <p>Sorting of the operands in commutative operations. Possible values are: 'AGB' (<em>A greather than B</em>),<br>'BGA' (<em>B greather tan A</em>) and 'INDIF' (default)</p>
     </div>
     
 
@@ -10364,8 +10376,7 @@ operations can be the result of the operation (<code>A op B = ?</code>), any of 
 <dd class="folded">
     
     <div class="description">
-        <p>Formats the number with a fixed number of decimals, optionally filling the result with leading
-zeroes to have a fixed number of digits.</p>
+        <p>Formats the number with a fixed number of decimals, optionally filling the result with leading<br>zeroes to have a fixed number of digits.</p>
     </div>
     
 
@@ -10660,8 +10671,7 @@ zeroes to have a fixed number of digits.</p>
             
             <td class="description last">
                 
-                <p>Array with one or more containers of <a href="ActiveBoxContent.html"><code>ActiveBoxContent</code></a>
-objects to be filled with new content.</p></td>
+                <p>Array with one or more containers of <a href="ActiveBoxContent.html"><code>ActiveBoxContent</code></a><br>objects to be filled with new content.</p></td>
         </tr>
 	
 	
@@ -10789,8 +10799,7 @@ objects to be filled with new content.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Fills the <code>n</code> parameter (an <code>Arith.Num</code>) with a value in accordance with the
-specifications of <code>op</code> (an <code>Arith.Operand</code>), between two limits.</p>
+        <p>Fills the <code>n</code> parameter (an <code>Arith.Num</code>) with a value in accordance with the<br>specifications of <code>op</code> (an <code>Arith.Operand</code>), between two limits.</p>
     </div>
     
 
@@ -11470,7 +11479,7 @@ specifications of <code>op</code> (an <code>Arith.Operand</code>), between two l
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:50 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:32 GMT+0100 (CET)
         </footer>
     </div>
 </div>

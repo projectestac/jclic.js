@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9819,9 +9835,7 @@
 <dd class="folded">
     
     <div class="description">
-        <p>This class and its derivatives <a href="Evaluator.BasicEvaluator.html"><code>Evaluator.BasicEvaluator</code></a> and
-<a href="Evaluator.ComplexEvaluator.html"><code>Evaluator.ComplexEvaluator</code></a> are used to evaluate the answers written by the final users
-in text activities.</p>
+        <p>This class and its derivatives <a href="Evaluator.BasicEvaluator.html"><code>Evaluator.BasicEvaluator</code></a> and<br><a href="Evaluator.ComplexEvaluator.html"><code>Evaluator.ComplexEvaluator</code></a> are used to evaluate the answers written by the final users<br>in text activities.</p>
     </div>
     
 
@@ -10052,8 +10066,7 @@ in text activities.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Factory constructor that returns a specific type of <a href="Evaluator.html"><code>Evaluator</code></a> based on the <code>class</code>
-attribute declared in the $xml element.</p>
+        <p>Factory constructor that returns a specific type of <a href="Evaluator.html"><code>Evaluator</code></a> based on the <code>class</code><br>attribute declared in the $xml element.</p>
     </div>
     
 
@@ -10205,8 +10218,7 @@ attribute declared in the $xml element.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Abstract method to be implemented in subclasses.
-Performs the validation of a string against a single match.</p>
+        <p>Abstract method to be implemented in subclasses.<br>Performs the validation of a string against a single match.</p>
     </div>
     
 
@@ -10383,9 +10395,7 @@ Performs the validation of a string against a single match.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Abstract method to be implemented in subclasses.<br>
-Performs the evaluation of a string against an array of valid matches, returning an array of
-flags useful to indicate where the mistakes are located.</p>
+        <p>Abstract method to be implemented in subclasses.<br><br>Performs the evaluation of a string against an array of valid matches, returning an array of<br>flags useful to indicate where the mistakes are located.</p>
     </div>
     
 
@@ -10497,8 +10507,7 @@ flags useful to indicate where the mistakes are located.</p>
                     
             </td>
             <td class="description last"><ul>
-<li>An array of flags (one number for character) indicating whether each
-position is erroneous or ok.</li>
+<li>An array of flags (one number for character) indicating whether each<br>position is erroneous or ok.</li>
 </ul></td>
         </tr>
     
@@ -10743,8 +10752,7 @@ position is erroneous or ok.</li>
 <dd class="folded">
     
     <div class="description">
-        <p>Evaluates the given text against a set of valid matches, returning an array of flags useful
-to indicate where the mistakes are located.</p>
+        <p>Evaluates the given text against a set of valid matches, returning an array of flags useful<br>to indicate where the mistakes are located.</p>
     </div>
     
 
@@ -10859,8 +10867,7 @@ to indicate where the mistakes are located.</p>
                     
             </td>
             <td class="description last"><ul>
-<li>An array of flags (one number for character) indicating whether each
-position is erroneous or ok.</li>
+<li>An array of flags (one number for character) indicating whether each<br>position is erroneous or ok.</li>
 </ul></td>
         </tr>
     
@@ -10953,8 +10960,7 @@ position is erroneous or ok.</li>
 <dd class="folded">
     
     <div class="description">
-        <p>Checks if the given array of flags (usually returned by <code>evalText</code>) can be considered as a
-valid or erroneous answer.</p>
+        <p>Checks if the given array of flags (usually returned by <code>evalText</code>) can be considered as a<br>valid or erroneous answer.</p>
     </div>
     
 
@@ -11227,7 +11233,7 @@ valid or erroneous answer.</p>
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:53 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:36 GMT+0100 (CET)
         </footer>
     </div>
 </div>

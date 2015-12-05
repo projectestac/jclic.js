@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9903,9 +9919,7 @@
                         
                     
                 
-                <p>Any object implementing the methods defined in the 
-<a target="_blank" href="http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html">PlayStation</a>
-Java interface.</p></td>
+                <p>Any object implementing the methods defined in the<br><a target="_blank" href="http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html">PlayStation</a><br>Java interface.</p></td>
         </tr>
 	
 	
@@ -10155,9 +10169,7 @@ Java interface.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>List of events intercepted by this Activity.Panel. Current events are: 'keydown', 'keyup',
-'keypress', 'mousedown', 'mouseup', 'click', 'dblclick', 'mousemove', 'mouseenter',
-'mouseleave', 'mouseover', 'mouseout', 'touchstart', 'touchend', 'touchmove' and 'touchcancel'.</p>
+        <p>List of events intercepted by this Activity.Panel. Current events are: 'keydown', 'keyup',<br>'keypress', 'mousedown', 'mouseup', 'click', 'dblclick', 'mousemove', 'mouseenter',<br>'mouseleave', 'mouseover', 'mouseout', 'touchstart', 'touchend', 'touchmove' and 'touchcancel'.</p>
     </div>
     
 
@@ -10309,8 +10321,7 @@ Java interface.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>The PlayStation used to realize media objects and communicate with the player services
-(usually a <a href="JClicPlayer.html"><code>JClicPlayer</code></a></p>
+        <p>The PlayStation used to realize media objects and communicate with the player services<br>(usually a <a href="JClicPlayer.html"><code>JClicPlayer</code></a></p>
     </div>
     
 
@@ -10386,8 +10397,7 @@ Java interface.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Flag indicating if targets must be visually marked at the beggining of the activity.<br>
-Should be <code>true</code> except for <a href="IdentifyText.html"><code>IdentifyText</code></a> activities.</p>
+        <p>Flag indicating if targets must be visually marked at the beggining of the activity.<br><br>Should be <code>true</code> except for <a href="IdentifyText.html"><code>IdentifyText</code></a> activities.</p>
     </div>
     
 
@@ -10411,7 +10421,7 @@ Should be <code>true</code> except for <a href="IdentifyText.html"><code>Identif
 
         
         <div class="tag-source">
-            <a href="activities_text_TextActivityBase.js.html">activities/text/TextActivityBase.js</a>, <a href="activities_text_TextActivityBase.js.html#line241">line 241</a>
+            <a href="activities_text_TextActivityBase.js.html">activities/text/TextActivityBase.js</a>, <a href="activities_text_TextActivityBase.js.html#line243">line 243</a>
         </div>
         
     </div>
@@ -10421,8 +10431,7 @@ Should be <code>true</code> except for <a href="IdentifyText.html"><code>Identif
 <dd class="folded">
     
     <div class="description">
-        <p>Creates a target DOM element.<br>
-This method can be overrided in subclasses to create specific types of targets.</p>
+        <p>Creates a target DOM element.<br><br>This method can be overrided in subclasses to create specific types of targets.</p>
     </div>
     
 
@@ -10495,8 +10504,7 @@ This method can be overrided in subclasses to create specific types of targets.<
             <td class="description last">
                 
                 <ul>
-<li>An initial DOM object (usually a <code>span</code>) that can be used
-to store the target, or replaced by another type of object.</li>
+<li>An initial DOM object (usually a <code>span</code>) that can be used<br>to store the target, or replaced by another type of object.</li>
 </ul></td>
         </tr>
 	
@@ -10604,8 +10612,7 @@ to store the target, or replaced by another type of object.</li>
 <dd class="folded">
     
     <div class="description">
-        <p>Called by <a href="JClicPlayer.html"><code>JClicPlayer</code></a> when this activity panel is fully visible, just after the
-initialization process.</p>
+        <p>Called by <a href="JClicPlayer.html"><code>JClicPlayer</code></a> when this activity panel is fully visible, just after the<br>initialization process.</p>
     </div>
     
 
@@ -11870,8 +11877,7 @@ initialization process.</p>
                         
                     
                 
-                <p>The context region to be updated. Used as clipping
-region when drawing.</p></td>
+                <p>The context region to be updated. Used as clipping<br>region when drawing.</p></td>
         </tr>
 	
 	
@@ -12072,8 +12078,7 @@ region when drawing.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Fits the panel within the <code>proposed</code> rectangle. The panel can occupy more space, but always
-not surpassing the <code>bounds</code> rectangle.</p>
+        <p>Fits the panel within the <code>proposed</code> rectangle. The panel can occupy more space, but always<br>not surpassing the <code>bounds</code> rectangle.</p>
     </div>
     
 
@@ -12469,8 +12474,7 @@ not surpassing the <code>bounds</code> rectangle.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Gets a clone of this shape moved to the <code>pos</code> component of the rectangle and scaled
-by its <code>dim</code> value.</p>
+        <p>Gets a clone of this shape moved to the <code>pos</code> component of the rectangle and scaled<br>by its <code>dim</code> value.</p>
     </div>
     
 
@@ -12519,8 +12523,7 @@ by its <code>dim</code> value.</p>
             
             <td class="description last">
                 
-                <p>The rectangle to be taken as a base for moving and scaling
-this shape.</p></td>
+                <p>The rectangle to be taken as a base for moving and scaling<br>this shape.</p></td>
         </tr>
 	
 	
@@ -13569,8 +13572,7 @@ this shape.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,
-to fill a surface or to define a clipping region.<br></p>
+        <p>Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,<br>to fill a surface or to define a clipping region.<br></p>
     </div>
     
 
@@ -13683,7 +13685,7 @@ to fill a surface or to define a clipping region.<br></p>
 
         
         <div class="tag-source">
-            <a href="activities_text_TextActivityBase.js.html">activities/text/TextActivityBase.js</a>, <a href="activities_text_TextActivityBase.js.html#line253">line 253</a>
+            <a href="activities_text_TextActivityBase.js.html">activities/text/TextActivityBase.js</a>, <a href="activities_text_TextActivityBase.js.html#line255">line 255</a>
         </div>
         
     </div>
@@ -13782,8 +13784,7 @@ to fill a surface or to define a clipping region.<br></p>
                     
             </td>
             <td class="description last"><ul>
-<li>When this event handler returns <code>false</code>, jQuery will stop its
-propagation through the DOM tree. See: <a target="_blank" href="http://api.jquery.com/on">http://api.jquery.com/on</a></li>
+<li>When this event handler returns <code>false</code>, jQuery will stop its<br>propagation through the DOM tree. See: <a target="_blank" href="http://api.jquery.com/on">http://api.jquery.com/on</a></li>
 </ul></td>
         </tr>
     
@@ -14949,8 +14950,7 @@ propagation through the DOM tree. See: <a target="_blank" href="http://api.jquer
 <dd class="folded">
     
     <div class="description">
-        <p>Activities should implement this method to update the graphic content of its panel. The method
-will be called from <a href="AWT.Container.html#update"><code>AWT.Container#update</code></a> when needed.</p>
+        <p>Activities should implement this method to update the graphic content of its panel. The method<br>will be called from <a href="AWT.Container.html#update"><code>AWT.Container#update</code></a> when needed.</p>
     </div>
     
 
@@ -14999,8 +14999,7 @@ will be called from <a href="AWT.Container.html#update"><code>AWT.Container#upda
             
             <td class="description last">
                 
-                <p>Specifies the area to be updated. When <code>null</code>,
-it's the whole panel.</p></td>
+                <p>Specifies the area to be updated. When <code>null</code>,<br>it's the whole panel.</p></td>
         </tr>
 	
 	
@@ -15070,7 +15069,7 @@ it's the whole panel.</p></td>
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:59 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:42 GMT+0100 (CET)
         </footer>
     </div>
 </div>

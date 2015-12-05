@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9819,8 +9835,7 @@
 <dd class="folded">
     
     <div class="description">
-        <p>PlayerHistory uses an array to store the list of projects and activities done by the user.
-This class allows <a href="JClicPlayer.html"><code>JClicPlayer</code></a> objects to rewind a sequence or to go back to a caller menu.</p>
+        <p>PlayerHistory uses an array to store the list of projects and activities done by the user.<br>This class allows <a href="JClicPlayer.html"><code>JClicPlayer</code></a> objects to rewind a sequence or to go back to a caller menu.</p>
     </div>
     
 
@@ -9976,8 +9991,7 @@ This class allows <a href="JClicPlayer.html"><code>JClicPlayer</code></a> object
 <dd class="folded">
     
     <div class="description">
-        <p>This is the main member of the class. PlayerHistory puts and retrieves
-on it information about the proects and activities done by the current user.</p>
+        <p>This is the main member of the class. PlayerHistory puts and retrieves<br>on it information about the proects and activities done by the current user.</p>
     </div>
     
 
@@ -10142,9 +10156,7 @@ on it information about the proects and activities done by the current user.</p>
                         
                     
                 
-                <p>When not <code>null</code>, indicates a new project file that must be loaded.
-Otherwise, the <code>sequence</code> parameter refers to a tag on the <a href="ActivitySequence.html"><code>ActivitySequence</code></a> of the
-current project.</p></td>
+                <p>When not <code>null</code>, indicates a new project file that must be loaded.<br>Otherwise, the <code>sequence</code> parameter refers to a tag on the <a href="ActivitySequence.html"><code>ActivitySequence</code></a> of the<br>current project.</p></td>
         </tr>
 	
 	
@@ -10172,8 +10184,7 @@ current project.</p></td>
                         
                     
                 
-                <p>When this param is <code>true</code>, the jump will be recorded, thus
-allowing to return to the current activity.</p></td>
+                <p>When this param is <code>true</code>, the jump will be recorded, thus<br>allowing to return to the current activity.</p></td>
         </tr>
 	
 	
@@ -10247,9 +10258,7 @@ allowing to return to the current activity.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Retrieves the <a href="PlayerHistory_HistoryElement.html"><code>HistoryElement</code></a> placed at the top of the
-stack (if any) and instructs <a href="JClicPlayer.html"><code>JClicPlayer</code></a> to load it. The obtained effect is to
-&quot;rewind&quot; or &quot;go back&quot;, usually to an activity that acts as a menu.</p>
+        <p>Retrieves the <a href="PlayerHistory_HistoryElement.html"><code>HistoryElement</code></a> placed at the top of the<br>stack (if any) and instructs <a href="JClicPlayer.html"><code>JClicPlayer</code></a> to load it. The obtained effect is to<br>&quot;rewind&quot; or &quot;go back&quot;, usually to an activity that acts as a menu.</p>
     </div>
     
 
@@ -10356,8 +10365,7 @@ stack (if any) and instructs <a href="JClicPlayer.html"><code>JClicPlayer</code>
 <dd class="folded">
     
     <div class="description">
-        <p>Processes the provided <a href="JumpInfo.html"><code>JumpInfo</code></a> object, instructing <a href="JClicPlayer.html"><code>JClicPlayer</code></a> to go back,
-stop or jump to another point in the sequence.</p>
+        <p>Processes the provided <a href="JumpInfo.html"><code>JumpInfo</code></a> object, instructing <a href="JClicPlayer.html"><code>JClicPlayer</code></a> to go back,<br>stop or jump to another point in the sequence.</p>
     </div>
     
 
@@ -10429,8 +10437,7 @@ stop or jump to another point in the sequence.</p>
             
             <td class="description last">
                 
-                <p>When this param is <code>true</code>, the jump instructed by <code>ji</code> (if any)
-will be recorded, thus allowing to return to the current activity.</p></td>
+                <p>When this param is <code>true</code>, the jump instructed by <code>ji</code> (if any)<br>will be recorded, thus allowing to return to the current activity.</p></td>
         </tr>
 	
 	
@@ -10563,8 +10570,7 @@ will be recorded, thus allowing to return to the current activity.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Counts the number of <a href="PlayerHistory_HistoryElement.html"><code>HistoryElement</code></a> objects stored in
-<a href="PlayerHistory.html#sequenceStack"><code>sequenceStack</code></a></p>
+        <p>Counts the number of <a href="PlayerHistory_HistoryElement.html"><code>HistoryElement</code></a> objects stored in<br><a href="PlayerHistory.html#sequenceStack"><code>sequenceStack</code></a></p>
     </div>
     
 
@@ -10667,7 +10673,7 @@ will be recorded, thus allowing to return to the current activity.</p></td>
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:58 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:41 GMT+0100 (CET)
         </footer>
     </div>
 </div>

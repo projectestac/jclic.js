@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9809,7 +9825,7 @@
 
         
         <div class="tag-source">
-            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line32">line 32</a>
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line30">line 30</a>
         </div>
         
     </div>
@@ -9819,8 +9835,7 @@
 <dd class="folded">
     
     <div class="description">
-        <p>In this type of text activity users must put in order some words or paragrafs that have been
-initially scrambled.</p>
+        <p>In this type of text activity users must put in order some words or paragrafs that have been<br>initially scrambled.</p>
     </div>
     
 
@@ -10001,8 +10016,7 @@ initially scrambled.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Whether to place the activity panel at the point specified by <code>absolutePosition</code> or leave
-it centered on the main player's window.</p>
+        <p>Whether to place the activity panel at the point specified by <code>absolutePosition</code> or leave<br>it centered on the main player's window.</p>
     </div>
     
 
@@ -10363,8 +10377,7 @@ it centered on the main player's window.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Wheter the cells of the activity will be dragged across the screen.<br>
-When <code>false</code>, a line will be painted to link elements.</p>
+        <p>Wheter the cells of the activity will be dragged across the screen.<br><br>When <code>false</code>, a line will be painted to link elements.</p>
     </div>
     
 
@@ -10402,8 +10415,7 @@ When <code>false</code>, a line will be painted to link elements.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Specific set of <a href="EventSounds.html"><code>EventSounds</code></a> used in the activity. The default is <code>null</code>, meaning
-to use the default event sounds.</p>
+        <p>Specific set of <a href="EventSounds.html"><code>EventSounds</code></a> used in the activity. The default is <code>null</code>, meaning<br>to use the default event sounds.</p>
     </div>
     
 
@@ -10479,8 +10491,7 @@ to use the default event sounds.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>System command to be launched when the user clicks on the 'info' button. Default is <code>null</code>.<br>
-Important: this parameter is not currently used</p>
+        <p>System command to be launched when the user clicks on the 'info' button. Default is <code>null</code>.<br><br>Important: this parameter is not currently used</p>
     </div>
     
 
@@ -10556,8 +10567,7 @@ Important: this parameter is not currently used</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Maximum number of actions allowed to solve the activity. The default value is 0, meaning
-unlimited actions.</p>
+        <p>Maximum number of actions allowed to solve the activity. The default value is 0, meaning<br>unlimited actions.</p>
     </div>
     
 
@@ -10576,8 +10586,7 @@ unlimited actions.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Maximum amount of time (seconds) to solve the activity. The default value is 0, meaning
-unlimited time.</p>
+        <p>Maximum amount of time (seconds) to solve the activity. The default value is 0, meaning<br>unlimited time.</p>
     </div>
     
 
@@ -10786,8 +10795,7 @@ unlimited time.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>File name of the Skin used by the activity. The default value is <code>null</code>, meaning that the
-activity will use the skin specified for the project.</p>
+        <p>File name of the Skin used by the activity. The default value is <code>null</code>, meaning that the<br>activity will use the skin specified for the project.</p>
     </div>
     
 
@@ -10863,9 +10871,7 @@ activity will use the skin specified for the project.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Type of activity, used in text activities to distinguish between different variants of the
-same activity. Possible values are: <code>orderWords</code>, <code>orderParagraphs</code>, <code>identifyWords</code> and
-<code>identifyChars</code>.</p>
+        <p>Type of activity, used in text activities to distinguish between different variants of the<br>same activity. Possible values are: <code>orderWords</code>, <code>orderParagraphs</code>, <code>identifyWords</code> and<br><code>identifyChars</code>.</p>
     </div>
     
 
@@ -11108,8 +11114,7 @@ same activity. Possible values are: <code>orderWords</code>, <code>orderParagrap
 <dd class="folded">
     
     <div class="description">
-        <p>Builds the <a href="Activity.Panel.html"><code>Activity.Panel</code></a> object.<br>
-Subclasses must update the <code>Panel</code> member of its prototypes to produce specific panels.</p>
+        <p>Builds the <a href="Activity.Panel.html"><code>Activity.Panel</code></a> object.<br><br>Subclasses must update the <code>Panel</code> member of its prototypes to produce specific panels.</p>
     </div>
     
 
@@ -11570,17 +11575,15 @@ Subclasses must update the <code>Panel</code> member of its prototypes to produc
         
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="hasRandom">
-            
-                <span class="inherited"><a href="Activity.html#hasRandom">inherited</a></span>
             
             hasRandom<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
         </h4>
 
         
         <div class="tag-source">
-            <a href="Activity.js.html">Activity.js</a>, <a href="Activity.js.html#line629">line 629</a>
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line45">line 45</a>
         </div>
         
     </div>
@@ -11679,17 +11682,15 @@ Subclasses must update the <code>Panel</code> member of its prototypes to produc
         
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="helpSolutionAllowed">
-            
-                <span class="inherited"><a href="Activity.html#helpSolutionAllowed">inherited</a></span>
             
             helpSolutionAllowed<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
         </h4>
 
         
         <div class="tag-source">
-            <a href="Activity.js.html">Activity.js</a>, <a href="Activity.js.html#line578">line 578</a>
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line61">line 61</a>
         </div>
         
     </div>
@@ -11699,7 +11700,7 @@ Subclasses must update the <code>Panel</code> member of its prototypes to produc
 <dd class="folded">
     
     <div class="description">
-        <p>Whether the activity allows the user to request the solution.</p>
+        <p>Whether the activity allows the user to request help.</p>
     </div>
     
 
@@ -11947,8 +11948,7 @@ Subclasses must update the <code>Panel</code> member of its prototypes to produc
 <dd class="folded">
     
     <div class="description">
-        <p>When this method returns <code>true</code>, the automatic jump to the next activity must be paused at
-this activity.</p>
+        <p>When this method returns <code>true</code>, the automatic jump to the next activity must be paused at<br>this activity.</p>
     </div>
     
 
@@ -12675,17 +12675,15 @@ this activity.</p>
         
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="shuffleAlways">
-            
-                <span class="inherited"><a href="Activity.html#shuffleAlways">inherited</a></span>
             
             shuffleAlways<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
         </h4>
 
         
         <div class="tag-source">
-            <a href="Activity.js.html">Activity.js</a>, <a href="Activity.js.html#line637">line 637</a>
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line53">line 53</a>
         </div>
         
     </div>
@@ -12798,7 +12796,7 @@ this activity.</p>
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:58 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:40 GMT+0100 (CET)
         </footer>
     </div>
 </div>

@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -10426,8 +10442,7 @@
 <dd class="folded">
     
     <div class="description">
-        <p>Compares the provided answer against multiple valid options. These valid options are
-concatenated in a string, separed by pipe chars (<code>|</code>). The comparision can be case sensitive.</p>
+        <p>Compares the provided answer against multiple valid options. These valid options are<br>concatenated in a string, separed by pipe chars (<code>|</code>). The comparision can be case sensitive.</p>
     </div>
     
 
@@ -10625,8 +10640,7 @@ concatenated in a string, separed by pipe chars (<code>|</code>). The comparisio
 <dd class="folded">
     
     <div class="description">
-        <p>Creates a string suitable to be used in the 'style' attribute of HTML tags, filled with the
-CSS attributes contained in the provided object.</p>
+        <p>Creates a string suitable to be used in the 'style' attribute of HTML tags, filled with the<br>CSS attributes contained in the provided object.</p>
     </div>
     
 
@@ -11128,8 +11142,7 @@ CSS attributes contained in the provided object.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Gets the base path of the given file path (absolute or full URL). This base path always ends
-with <code>/</code>, meaning it can be concatenated with relative paths without adding a separator.</p>
+        <p>Gets the base path of the given file path (absolute or full URL). This base path always ends<br>with <code>/</code>, meaning it can be concatenated with relative paths without adding a separator.</p>
     </div>
     
 
@@ -11480,10 +11493,7 @@ with <code>/</code>, meaning it can be concatenated with relative paths without 
 <dd class="folded">
     
     <div class="description">
-        <p>Gets the caret position within the given element. Thanks to
-<a target="_blank" href="http://stackoverflow.com/users/96100/tim-down">Tim Down</a> answers in:
-<a target="_blank" href="http://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container">http://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container</a>
-and <a target="_blank" href="http://stackoverflow.com/questions/6240139/highlight-text-range-using-javascript/6242538">http://stackoverflow.com/questions/6240139/highlight-text-range-using-javascript/6242538</a></p>
+        <p>Gets the caret position within the given element. Thanks to<br><a target="_blank" href="http://stackoverflow.com/users/96100/tim-down">Tim Down</a> answers in:<br><a target="_blank" href="http://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container">http://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container</a><br>and <a target="_blank" href="http://stackoverflow.com/questions/6240139/highlight-text-range-using-javascript/6242538">http://stackoverflow.com/questions/6240139/highlight-text-range-using-javascript/6242538</a></p>
     </div>
     
 
@@ -11934,8 +11944,7 @@ and <a target="_blank" href="http://stackoverflow.com/questions/6240139/highligh
                         
                     
                 
-                <p>An optional <a target="_blank" href="https://stuk.github.io/jszip/">JSZip</a> object where to look
-for the file</p></td>
+                <p>An optional <a target="_blank" href="https://stuk.github.io/jszip/">JSZip</a> object where to look<br>for the file</p></td>
         </tr>
 	
 	
@@ -12877,9 +12886,7 @@ for the file</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Checks if two expressions are equivalent.<br>
-Returns <code>true</code> when both parameters are <code>null</code> or <code>undefined</code>, and also when both have
-equivalent values.</p>
+        <p>Checks if two expressions are equivalent.<br><br>Returns <code>true</code> when both parameters are <code>null</code> or <code>undefined</code>, and also when both have<br>equivalent values.</p>
     </div>
     
 
@@ -13510,8 +13517,7 @@ equivalent values.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Replaces al occurrences of the backslash character (<code>\</code>) by a regular slash (<code>/</code>)
-This is useful to normalize bad path names present in some old JClic projects</p>
+        <p>Replaces al occurrences of the backslash character (<code>\</code>) by a regular slash (<code>/</code>)<br>This is useful to normalize bad path names present in some old JClic projects</p>
     </div>
     
 
@@ -13945,8 +13951,7 @@ This is useful to normalize bad path names present in some old JClic projects</p
 <dd class="folded">
     
     <div class="description">
-        <p>Sets the selection range (or the cursor position, when <code>start</code> and <code>end</code> are the same) to a
-specific position inside a DOM element.</p>
+        <p>Sets the selection range (or the cursor position, when <code>start</code> and <code>end</code> are the same) to a<br>specific position inside a DOM element.</p>
     </div>
     
 
@@ -14041,8 +14046,7 @@ specific position inside a DOM element.</p>
             
             <td class="description last">
                 
-                <p>The end position of the selection. When null or identical to <code>start</code>,
-indicates a cursor position.</p></td>
+                <p>The end position of the selection. When null or identical to <code>start</code>,<br>indicates a cursor position.</p></td>
         </tr>
 	
 	
@@ -14112,7 +14116,7 @@ indicates a cursor position.</p></td>
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:27:00 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:43 GMT+0100 (CET)
         </footer>
     </div>
 </div>

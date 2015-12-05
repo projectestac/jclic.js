@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9819,9 +9835,7 @@
 <dd class="folded">
     
     <div class="description">
-        <p>This object contains a description of any multimedia content (sound, video, MIDI, voice
-recording..) or special actions (jump to another point in the sequence, link to an URL, etc.)
-associated to an <a href="ActiveBox.html"><code>ActiveBox</code></a> object.</p>
+        <p>This object contains a description of any multimedia content (sound, video, MIDI, voice<br>recording..) or special actions (jump to another point in the sequence, link to an URL, etc.)<br>associated to an <a href="ActiveBox.html"><code>ActiveBox</code></a> object.</p>
     </div>
     
 
@@ -9870,9 +9884,7 @@ associated to an <a href="ActiveBox.html"><code>ActiveBox</code></a> object.</p>
             
             <td class="description last">
                 
-                <p>The type of media. Valid values are: <code>UNKNOWN</code>, <code>PLAY_AUDIO</code>, <code>PLAY_VIDEO</code>,
-<code>PLAY_MIDI</code>, <code>PLAY_CDAUDIO</code>, <code>RECORD_AUDIO</code>, <code>PLAY_RECORDED_AUDIO</code>, <code>RUN_CLIC_ACTIVITY</code>,
-<code>RUN_CLIC_PACKAGE</code>, <code>RUN_EXTERNAL</code>, <code>URL</code>, <code>EXIT</code> and <code>RETURN</code></p></td>
+                <p>The type of media. Valid values are: <code>UNKNOWN</code>, <code>PLAY_AUDIO</code>, <code>PLAY_VIDEO</code>,<br><code>PLAY_MIDI</code>, <code>PLAY_CDAUDIO</code>, <code>RECORD_AUDIO</code>, <code>PLAY_RECORDED_AUDIO</code>, <code>RUN_CLIC_ACTIVITY</code>,<br><code>RUN_CLIC_PACKAGE</code>, <code>RUN_EXTERNAL</code>, <code>URL</code>, <code>EXIT</code> and <code>RETURN</code></p></td>
         </tr>
 	
 	
@@ -10010,8 +10022,7 @@ associated to an <a href="ActiveBox.html"><code>ActiveBox</code></a> object.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>When <a href="MediaContent.html#absLocation"><code>MediaContent#absLocation</code></a> is not <code>null</code>, this field indicates from where to
-measure its coordinates. Valid values are: <code>BOX</code>, <code>WINDOW</code> or <code>FRAME</code>.</p>
+        <p>When <a href="MediaContent.html#absLocation"><code>MediaContent#absLocation</code></a> is not <code>null</code>, this field indicates from where to<br>measure its coordinates. Valid values are: <code>BOX</code>, <code>WINDOW</code> or <code>FRAME</code>.</p>
     </div>
     
 
@@ -10030,8 +10041,7 @@ measure its coordinates. Valid values are: <code>BOX</code>, <code>WINDOW</code>
 <dd class="folded">
     
     <div class="description">
-        <p>When <code>true</code>, the media will automatically start playing when the associated <a href="ActiveBox.html"><code>ActiveBox</code></a>
-become active.</p>
+        <p>When <code>true</code>, the media will automatically start playing when the associated <a href="ActiveBox.html"><code>ActiveBox</code></a><br>become active.</p>
     </div>
     
 
@@ -10107,8 +10117,7 @@ become active.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Special setting used to play only a fragment of media. <code>-1</code> means not used (plays full
-length, from the beginning)</p>
+        <p>Special setting used to play only a fragment of media. <code>-1</code> means not used (plays full<br>length, from the beginning)</p>
     </div>
     
 
@@ -10127,8 +10136,7 @@ length, from the beginning)</p>
 <dd class="folded">
     
     <div class="description">
-        <p>When <code>mediaType</code> is <code>RECORD_AUDIO</code>, this member stores the maximum length of the recorded
-sound, in seconds.</p>
+        <p>When <code>mediaType</code> is <code>RECORD_AUDIO</code>, this member stores the maximum length of the recorded<br>sound, in seconds.</p>
     </div>
     
 
@@ -10147,8 +10155,7 @@ sound, in seconds.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>The priority level is important when different medias want to play together. Objects with
-higest priority level can mute lower ones.</p>
+        <p>The priority level is important when different medias want to play together. Objects with<br>higest priority level can mute lower ones.</p>
     </div>
     
 
@@ -10205,9 +10212,7 @@ higest priority level can mute lower ones.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>The type of media. Valid values are: <code>UNKNOWN</code>, <code>PLAY_AUDIO</code>, <code>PLAY_VIDEO</code>,
-<code>PLAY_MIDI</code>, <code>PLAY_CDAUDIO</code>, <code>RECORD_AUDIO</code>, <code>PLAY_RECORDED_AUDIO</code>, <code>RUN_CLIC_ACTIVITY</code>,
-<code>RUN_CLIC_PACKAGE</code>, <code>RUN_EXTERNAL</code>, <code>URL</code>, <code>EXIT</code> and <code>RETURN</code></p>
+        <p>The type of media. Valid values are: <code>UNKNOWN</code>, <code>PLAY_AUDIO</code>, <code>PLAY_VIDEO</code>,<br><code>PLAY_MIDI</code>, <code>PLAY_CDAUDIO</code>, <code>RECORD_AUDIO</code>, <code>PLAY_RECORDED_AUDIO</code>, <code>RUN_CLIC_ACTIVITY</code>,<br><code>RUN_CLIC_PACKAGE</code>, <code>RUN_EXTERNAL</code>, <code>URL</code>, <code>EXIT</code> and <code>RETURN</code></p>
     </div>
     
 
@@ -10226,8 +10231,7 @@ higest priority level can mute lower ones.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>When <code>mediaType</code> is <code>RECORD_AUDIO</code>, this member stores the buffer ID where the recording
-will be stored.</p>
+        <p>When <code>mediaType</code> is <code>RECORD_AUDIO</code>, this member stores the buffer ID where the recording<br>will be stored.</p>
     </div>
     
 
@@ -10265,8 +10269,7 @@ will be stored.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Special setting used to play only a fragment of media. <code>-1</code> means not used (plays to the end
-of the media)</p>
+        <p>Special setting used to play only a fragment of media. <code>-1</code> means not used (plays to the end<br>of the media)</p>
     </div>
     
 
@@ -10300,8 +10303,7 @@ of the media)</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Gets a string representing this media content, useful for checking if two different elements
-are equivalent.</p>
+        <p>Gets a string representing this media content, useful for checking if two different elements<br>are equivalent.</p>
     </div>
     
 
@@ -10788,7 +10790,7 @@ are equivalent.</p>
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:57 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:40 GMT+0100 (CET)
         </footer>
     </div>
 </div>

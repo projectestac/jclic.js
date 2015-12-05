@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9819,9 +9835,7 @@
 <dd class="folded">
     
     <div class="description">
-        <p>This class is a special type of <a href="AbstractBox.html"><code>AbstractBox</code></a> that displays a grid of single
-characters.<br>
-It's used <a href="CrossWord.html"><code>CrossWord</code></a> and <a href="WordSearch.html"><code>WordSearch</code></a> activities.</p>
+        <p>This class is a special type of <a href="AbstractBox.html"><code>AbstractBox</code></a> that displays a grid of single<br>characters.<br><br>It's used <a href="CrossWord.html"><code>CrossWord</code></a> and <a href="WordSearch.html"><code>WordSearch</code></a> activities.</p>
     </div>
     
 
@@ -10356,8 +10370,7 @@ It's used <a href="CrossWord.html"><code>CrossWord</code></a> and <a href="WordS
 <dd class="folded">
     
     <div class="description">
-        <p>The <a href="BoxBase.html"><code>BoxBase</code></a> related to this AbstractBox. When <code>null</code>, the parent can provide an
-alternative one.</p>
+        <p>The <a href="BoxBase.html"><code>BoxBase</code></a> related to this AbstractBox. When <code>null</code>, the parent can provide an<br>alternative one.</p>
     </div>
     
 
@@ -11390,8 +11403,7 @@ alternative one.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Makes the cursor blink, alternating between two states. This function should be called only by
-<a href="TextGrid.html#cursorTimer"><code>TextGrid#cursorTimer</code></a></p>
+        <p>Makes the cursor blink, alternating between two states. This function should be called only by<br><a href="TextGrid.html#cursorTimer"><code>TextGrid#cursorTimer</code></a></p>
     </div>
     
 
@@ -12304,8 +12316,7 @@ alternative one.</p>
             
             <td class="description last">
                 
-                <p>The canvas rendering context where the border
-will be drawn.</p></td>
+                <p>The canvas rendering context where the border<br>will be drawn.</p></td>
         </tr>
 	
 	
@@ -12647,8 +12658,7 @@ will be drawn.</p></td>
                         
                     
                 
-                <p>The context region to be updated. Used as clipping
-region when drawing.</p></td>
+                <p>The context region to be updated. Used as clipping<br>region when drawing.</p></td>
         </tr>
 	
 	
@@ -12722,8 +12732,7 @@ region when drawing.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Finds the coordinates of the nearest non-locked cell (non wildcard) moving on the indicated
-'X' and 'Y' directions.</p>
+        <p>Finds the coordinates of the nearest non-locked cell (non wildcard) moving on the indicated<br>'X' and 'Y' directions.</p>
     </div>
     
 
@@ -12921,8 +12930,7 @@ region when drawing.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Finds the first cell with the specified attributes at the specified state, starting
-at specified point.</p>
+        <p>Finds the first cell with the specified attributes at the specified state, starting<br>at specified point.</p>
     </div>
     
 
@@ -14675,10 +14683,7 @@ at specified point.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>For a specific cell located at column <code>rx</code> and row <code>ry</code>, finds the number of words delimited
-by wildchars located behind its current position and in the same row and column. Used in
-<a href="CrossWord.html"><code>CrossWord</code></a> activities to find the definition for a specific cell.<br>
-The result is returned as 'x' and 'y' properties of a logical point.</p>
+        <p>For a specific cell located at column <code>rx</code> and row <code>ry</code>, finds the number of words delimited<br>by wildchars located behind its current position and in the same row and column. Used in<br><a href="CrossWord.html"><code>CrossWord</code></a> activities to find the definition for a specific cell.<br><br>The result is returned as 'x' and 'y' properties of a logical point.</p>
     </div>
     
 
@@ -14790,9 +14795,7 @@ The result is returned as 'x' and 'y' properties of a logical point.</p>
                     
             </td>
             <td class="description last"><ul>
-<li>The logical positions of the definition for this cell inside the list
-of current definitions of its row and column. '0' means first definition of its row/column,
-'1' the second one, etc.</li>
+<li>The logical positions of the definition for this cell inside the list<br>of current definitions of its row and column. '0' means first definition of its row/column,<br>'1' the second one, etc.</li>
 </ul></td>
         </tr>
     
@@ -15809,9 +15812,7 @@ of current definitions of its row and column. '0' means first definition of its 
 <dd class="folded">
     
     <div class="description">
-        <p>Gets the text formed by the letters between two cells that share a straight line on the grid.<br>
-The text can be formed horizontally, vertically and diagonal, both in left-to-right or
-right-to-left direction.<br></p>
+        <p>Gets the text formed by the letters between two cells that share a straight line on the grid.<br><br>The text can be formed horizontally, vertically and diagonal, both in left-to-right or<br>right-to-left direction.<br></p>
     </div>
     
 
@@ -16494,8 +16495,7 @@ right-to-left direction.<br></p>
             
             <td class="description last">
                 
-                <p>The rectangle to be invalidated. When <code>null</code>, it's the full
-container area.</p></td>
+                <p>The rectangle to be invalidated. When <code>null</code>, it's the full<br>container area.</p></td>
         </tr>
 	
 	
@@ -18296,8 +18296,7 @@ container area.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,
-to fill a surface or to define a clipping region.<br></p>
+        <p>Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,<br>to fill a surface or to define a clipping region.<br></p>
     </div>
     
 
@@ -19605,8 +19604,7 @@ to fill a surface or to define a clipping region.<br></p>
                         
                     
                 
-                <p>An AWT.Rectangle object, or the <code>x</code> coordinate of the
-upper-left corner of a new rectangle.</p></td>
+                <p>An AWT.Rectangle object, or the <code>x</code> coordinate of the<br>upper-left corner of a new rectangle.</p></td>
         </tr>
 	
 	
@@ -19944,8 +19942,7 @@ upper-left corner of a new rectangle.</p></td>
             
             <td class="description last">
                 
-                <p>When <code>true</code>, the wildcard cells will be marked with special
-attributes (used in CrossWords to mark black cells)</p></td>
+                <p>When <code>true</code>, the wildcard cells will be marked with special<br>attributes (used in CrossWords to mark black cells)</p></td>
         </tr>
 	
 	
@@ -21201,8 +21198,7 @@ attributes (used in CrossWords to mark black cells)</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Sets the <a href="AbstractBox.html#$hostedComponent"><code>$hostedComponent</code></a> border, based on the current
-<a href="BoxBase.html"><code>BoxBase</code></a> of this box.</p>
+        <p>Sets the <a href="AbstractBox.html#$hostedComponent"><code>$hostedComponent</code></a> border, based on the current<br><a href="BoxBase.html"><code>BoxBase</code></a> of this box.</p>
     </div>
     
 
@@ -21232,8 +21228,7 @@ attributes (used in CrossWords to mark black cells)</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Places and resizes <a href="AbstractBox.html#$hostedComponent"><code>$hostedComponent</code></a>, based on the size
-and position of this box.</p>
+        <p>Places and resizes <a href="AbstractBox.html#$hostedComponent"><code>$hostedComponent</code></a>, based on the size<br>and position of this box.</p>
     </div>
     
 
@@ -21263,8 +21258,7 @@ and position of this box.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Sets <a href="AbstractBox.html#$hostedComponent"><code>$hostedComponent</code></a> colors and other css properties
-based on the current <a href="BoxBase.html"><code>BoxBase</code></a> of this box.</p>
+        <p>Sets <a href="AbstractBox.html#$hostedComponent"><code>$hostedComponent</code></a> colors and other css properties<br>based on the current <a href="BoxBase.html"><code>BoxBase</code></a> of this box.</p>
     </div>
     
 
@@ -22746,9 +22740,7 @@ based on the current <a href="BoxBase.html"><code>BoxBase</code></a> of this box
 <dd class="folded">
     
     <div class="description">
-        <p>Draws the content of this box on an HTML <code>canvas</code> element. At this level, only background
-and border are painted/stroked. Derived classes should implement specific drawing tasks in
-<a href="AbstractBox.html#updateContent"><code>AbstractBox#updateContent</code></a>.</p>
+        <p>Draws the content of this box on an HTML <code>canvas</code> element. At this level, only background<br>and border are painted/stroked. Derived classes should implement specific drawing tasks in<br><a href="AbstractBox.html#updateContent"><code>AbstractBox#updateContent</code></a>.</p>
     </div>
     
 
@@ -22802,8 +22794,7 @@ and border are painted/stroked. Derived classes should implement specific drawin
                         
                     
                 
-                <p>The canvas rendering context used to draw the
-box content.</p></td>
+                <p>The canvas rendering context used to draw the<br>box content.</p></td>
         </tr>
 	
 	
@@ -22961,8 +22952,7 @@ box content.</p></td>
                         
                     
                 
-                <p>The canvas rendering context used to draw the
-grid.</p></td>
+                <p>The canvas rendering context used to draw the<br>grid.</p></td>
         </tr>
 	
 	
@@ -23062,7 +23052,7 @@ grid.</p></td>
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:27:00 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:42 GMT+0100 (CET)
         </footer>
     </div>
 </div>

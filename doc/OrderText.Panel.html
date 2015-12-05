@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9811,7 +9827,7 @@
 
         
         <div class="tag-source">
-            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line57">line 57</a>
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line79">line 79</a>
         </div>
         
     </div>
@@ -9903,9 +9919,7 @@
                         
                     
                 
-                <p>Any object implementing the methods defined in the 
-<a target="_blank" href="http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html">PlayStation</a>
-Java interface.</p></td>
+                <p>Any object implementing the methods defined in the<br><a target="_blank" href="http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html">PlayStation</a><br>Java interface.</p></td>
         </tr>
 	
 	
@@ -10128,6 +10142,25 @@ Java interface.</p></td>
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="currentTarget">currentTarget<span class="type-signature type textactivitydocument.texttarget"><a href="TextActivityDocument.TextTarget.html">TextActivityDocument.TextTarget</a></span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Currently selected text target</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="dim">dim<span class="type-signature type awt.dimension"><a href="AWT.Dimension.html">AWT.Dimension</a></span> </h4>
     </div>
 
@@ -10155,9 +10188,7 @@ Java interface.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>List of events intercepted by this Activity.Panel. Current events are: 'keydown', 'keyup',
-'keypress', 'mousedown', 'mouseup', 'click', 'dblclick', 'mousemove', 'mouseenter',
-'mouseleave', 'mouseover', 'mouseout', 'touchstart', 'touchend', 'touchmove' and 'touchcancel'.</p>
+        <p>List of events intercepted by this Activity.Panel. Current events are: 'keydown', 'keyup',<br>'keypress', 'mousedown', 'mouseup', 'click', 'dblclick', 'mousemove', 'mouseenter',<br>'mouseleave', 'mouseover', 'mouseout', 'touchstart', 'touchend', 'touchmove' and 'touchcancel'.</p>
     </div>
     
 
@@ -10309,8 +10340,7 @@ Java interface.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>The PlayStation used to realize media objects and communicate with the player services
-(usually a <a href="JClicPlayer.html"><code>JClicPlayer</code></a></p>
+        <p>The PlayStation used to realize media objects and communicate with the player services<br>(usually a <a href="JClicPlayer.html"><code>JClicPlayer</code></a></p>
     </div>
     
 
@@ -10386,8 +10416,7 @@ Java interface.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Flag indicating if targets must be visually marked at the beggining of the activity.<br>
-Should be <code>true</code> except for <a href="IdentifyText.html"><code>IdentifyText</code></a> activities.</p>
+        <p>Flag indicating if targets must be visually marked at the beggining of the activity.<br><br>Should be <code>true</code> except for <a href="IdentifyText.html"><code>IdentifyText</code></a> activities.</p>
     </div>
     
 
@@ -10403,17 +10432,15 @@ Should be <code>true</code> except for <a href="IdentifyText.html"><code>Identif
         <dl>
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="$createTargetElement">
-            
-                <span class="inherited"><a href="TextActivityBase.Panel.html#$createTargetElement">inherited</a></span>
             
             $createTargetElement<span class="signature">(target, $span)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="external-jQuery.html">external:jQuery</a>}</span>
         </h4>
 
         
         <div class="tag-source">
-            <a href="activities_text_TextActivityBase.js.html">activities/text/TextActivityBase.js</a>, <a href="activities_text_TextActivityBase.js.html#line241">line 241</a>
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line108">line 108</a>
         </div>
         
     </div>
@@ -10423,8 +10450,7 @@ Should be <code>true</code> except for <a href="IdentifyText.html"><code>Identif
 <dd class="folded">
     
     <div class="description">
-        <p>Creates a target DOM element.<br>
-This method can be overrided in subclasses to create specific types of targets.</p>
+        <p>Creates a target DOM element for the provided target.</p>
     </div>
     
 
@@ -10497,8 +10523,7 @@ This method can be overrided in subclasses to create specific types of targets.<
             <td class="description last">
                 
                 <ul>
-<li>An initial DOM object (usually a <code>span</code>) that can be used
-to store the target, or replaced by another type of object.</li>
+<li>An initial DOM object (usually a <code>span</code>) that can be used<br>to store the target, or replaced by another type of object.</li>
 </ul></td>
         </tr>
 	
@@ -10606,8 +10631,7 @@ to store the target, or replaced by another type of object.</li>
 <dd class="folded">
     
     <div class="description">
-        <p>Called by <a href="JClicPlayer.html"><code>JClicPlayer</code></a> when this activity panel is fully visible, just after the
-initialization process.</p>
+        <p>Called by <a href="JClicPlayer.html"><code>JClicPlayer</code></a> when this activity panel is fully visible, just after the<br>initialization process.</p>
     </div>
     
 
@@ -10920,17 +10944,15 @@ initialization process.</p>
         
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="buildVisualComponents">
-            
-                <span class="inherited"><a href="TextActivityBase.Panel.html#buildVisualComponents">inherited</a></span>
             
             buildVisualComponents<span class="signature">()</span>
         </h4>
 
         
         <div class="tag-source">
-            <a href="activities_text_TextActivityBase.js.html">activities/text/TextActivityBase.js</a>, <a href="activities_text_TextActivityBase.js.html#line111">line 111</a>
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line95">line 95</a>
         </div>
         
     </div>
@@ -11366,6 +11388,113 @@ initialization process.</p>
             <td class="type">
             
                         boolean
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="countSolvedTargets">
+            
+            countSolvedTargets<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{number}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line239">line 239</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Counts the number of targets that are at right position</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        number
                         
                     
             </td>
@@ -11874,8 +12003,7 @@ initialization process.</p>
                         
                     
                 
-                <p>The context region to be updated. Used as clipping
-region when drawing.</p></td>
+                <p>The context region to be updated. Used as clipping<br>region when drawing.</p></td>
         </tr>
 	
 	
@@ -11931,17 +12059,15 @@ region when drawing.</p></td>
         
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="finishActivity">
-            
-                <span class="inherited"><a href="Activity.Panel.html#finishActivity">inherited</a></span>
             
             finishActivity<span class="signature">(result)</span>
         </h4>
 
         
         <div class="tag-source">
-            <a href="Activity.js.html">Activity.js</a>, <a href="Activity.js.html#line995">line 995</a>
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line253">line 253</a>
         </div>
         
     </div>
@@ -12076,8 +12202,7 @@ region when drawing.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Fits the panel within the <code>proposed</code> rectangle. The panel can occupy more space, but always
-not surpassing the <code>bounds</code> rectangle.</p>
+        <p>Fits the panel within the <code>proposed</code> rectangle. The panel can occupy more space, but always<br>not surpassing the <code>bounds</code> rectangle.</p>
     </div>
     
 
@@ -12473,8 +12598,7 @@ not surpassing the <code>bounds</code> rectangle.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Gets a clone of this shape moved to the <code>pos</code> component of the rectangle and scaled
-by its <code>dim</code> value.</p>
+        <p>Gets a clone of this shape moved to the <code>pos</code> component of the rectangle and scaled<br>by its <code>dim</code> value.</p>
     </div>
     
 
@@ -12523,8 +12647,7 @@ by its <code>dim</code> value.</p>
             
             <td class="description last">
                 
-                <p>The rectangle to be taken as a base for moving and scaling
-this shape.</p></td>
+                <p>The rectangle to be taken as a base for moving and scaling<br>this shape.</p></td>
         </tr>
 	
 	
@@ -12757,17 +12880,15 @@ this shape.</p></td>
         
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="initActivity">
-            
-                <span class="inherited"><a href="Activity.Panel.html#initActivity">inherited</a></span>
             
             initActivity<span class="signature">()</span>
         </h4>
 
         
         <div class="tag-source">
-            <a href="Activity.js.html">Activity.js</a>, <a href="Activity.js.html#line863">line 863</a>
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line151">line 151</a>
         </div>
         
     </div>
@@ -12777,7 +12898,7 @@ this shape.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Basic initialization procedure, common to all activities.</p>
+        <p>Basic initialization procedure</p>
     </div>
     
 
@@ -13573,8 +13694,7 @@ this shape.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,
-to fill a surface or to define a clipping region.<br></p>
+        <p>Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,<br>to fill a surface or to define a clipping region.<br></p>
     </div>
     
 
@@ -13679,17 +13799,15 @@ to fill a surface or to define a clipping region.<br></p>
         
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="processEvent">
-            
-                <span class="inherited"><a href="TextActivityBase.Panel.html#processEvent">inherited</a></span>
             
             processEvent<span class="signature">(event)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
         </h4>
 
         
         <div class="tag-source">
-            <a href="activities_text_TextActivityBase.js.html">activities/text/TextActivityBase.js</a>, <a href="activities_text_TextActivityBase.js.html#line253">line 253</a>
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line264">line 264</a>
         </div>
         
     </div>
@@ -13699,7 +13817,7 @@ to fill a surface or to define a clipping region.<br></p>
 <dd class="folded">
     
     <div class="description">
-        <p>Main handler used to process mouse, touch, keyboard and edit events</p>
+        <p>Main handler used to process mouse, touch, keyboard and edit events.</p>
     </div>
     
 
@@ -13788,8 +13906,7 @@ to fill a surface or to define a clipping region.<br></p>
                     
             </td>
             <td class="description last"><ul>
-<li>When this event handler returns <code>false</code>, jQuery will stop its
-propagation through the DOM tree. See: <a target="_blank" href="http://api.jquery.com/on">http://api.jquery.com/on</a></li>
+<li>When this event handler returns <code>false</code>, jQuery will stop its<br>propagation through the DOM tree. See: <a target="_blank" href="http://api.jquery.com/on">http://api.jquery.com/on</a></li>
 </ul></td>
         </tr>
     
@@ -14194,6 +14311,129 @@ propagation through the DOM tree. See: <a target="_blank" href="http://api.jquer
             <td class="description last">
                 
                 </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="setCurrentTarget">
+            
+            setCurrentTarget<span class="signature">(target)</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line220">line 220</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Sets the current target</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>target</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="TextActivityDocument.TextTarget.html">TextActivityDocument.TextTarget</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The currently selected target. Can be <code>null</code>.</p></td>
         </tr>
 	
 	
@@ -14752,6 +14992,152 @@ propagation through the DOM tree. See: <a target="_blank" href="http://api.jquer
         
             
 <dt>
+    <div class="nameContainer">
+        <h4 class="name" id="shuffleTargets">
+            
+            shuffleTargets<span class="signature">(targets, steps)</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line198">line 198</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Randomly shuffles a set of targets</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>targets</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="TextActivityDocument.TextTarget.html">TextActivityDocument.TextTarget</a>></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The set of targets to shuffle (can be all<br>document targets or just the targets belonging to the same paragraph, depending on the value of<br><code>amongParagraphs</code> in <a href="Activity.html"><code>Activity</code></a>.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>steps</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The number of times to shuffle the elements</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
     <div class="nameContainer inherited">
         <h4 class="name" id="startActivity">
             
@@ -14907,6 +15293,152 @@ propagation through the DOM tree. See: <a target="_blank" href="http://api.jquer
         
             
 <dt>
+    <div class="nameContainer">
+        <h4 class="name" id="swapTargets">
+            
+            swapTargets<span class="signature">(t1, t2)</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="activities_text_OrderText.js.html">activities/text/OrderText.js</a>, <a href="activities_text_OrderText.js.html#line129">line 129</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Swaps the position of two targets in the document</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>t1</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="TextActivityDocument.TextTarget.html">TextActivityDocument.TextTarget</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>One target</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>t2</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="TextActivityDocument.TextTarget.html">TextActivityDocument.TextTarget</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Another target</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
     <div class="nameContainer inherited">
         <h4 class="name" id="update">
             
@@ -14957,8 +15489,7 @@ propagation through the DOM tree. See: <a target="_blank" href="http://api.jquer
 <dd class="folded">
     
     <div class="description">
-        <p>Activities should implement this method to update the graphic content of its panel. The method
-will be called from <a href="AWT.Container.html#update"><code>AWT.Container#update</code></a> when needed.</p>
+        <p>Activities should implement this method to update the graphic content of its panel. The method<br>will be called from <a href="AWT.Container.html#update"><code>AWT.Container#update</code></a> when needed.</p>
     </div>
     
 
@@ -15007,8 +15538,7 @@ will be called from <a href="AWT.Container.html#update"><code>AWT.Container#upda
             
             <td class="description last">
                 
-                <p>Specifies the area to be updated. When <code>null</code>,
-it's the whole panel.</p></td>
+                <p>Specifies the area to be updated. When <code>null</code>,<br>it's the whole panel.</p></td>
         </tr>
 	
 	
@@ -15078,7 +15608,7 @@ it's the whole panel.</p></td>
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:58 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:40 GMT+0100 (CET)
         </footer>
     </div>
 </div>

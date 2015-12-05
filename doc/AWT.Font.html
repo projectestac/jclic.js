@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -10110,9 +10126,7 @@
 <dd class="folded">
     
     <div class="description">
-        <p>The font <em>_metrics</em> property contains the values for <code>ascent</code>, <code>descent</code> and <code>height</code>
-attributes. Vertical font metrics are calculated in
-<a href="AWT.Font.html#_calcHeight"><code>_calcHeight()</code></a> as needed.</p>
+        <p>The font <em>_metrics</em> property contains the values for <code>ascent</code>, <code>descent</code> and <code>height</code><br>attributes. Vertical font metrics are calculated in<br><a href="AWT.Font.html#_calcHeight"><code>_calcHeight()</code></a> as needed.</p>
     </div>
     
 
@@ -10188,9 +10202,7 @@ attributes. Vertical font metrics are calculated in
 <dd class="folded">
     
     <div class="description">
-        <p>The font size
-<strong>Warning</strong>: Do not change <code>size</code> directly. Use the <a href="AWT.Font.html#setSize"><code>setSize()</code></a>
-method instead.</p>
+        <p>The font size<br><strong>Warning</strong>: Do not change <code>size</code> directly. Use the <a href="AWT.Font.html#setSize"><code>setSize()</code></a><br>method instead.</p>
     </div>
     
 
@@ -10243,13 +10255,7 @@ method instead.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>The <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics">TextMetrics</a> object used
-by <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">CanvasRenderingContext2D</a>
-does not provide a <code>heigth</code> value for rendered text.<br>
-This <a target="_blank" href="http://stackoverflow.com/questions/1134586/how-can-you-find-the-height-of-text-on-an-html-canvas">stackoverflow question</a>
-has an excellent response by Daniel Earwicker explaining how to measure the
-vertical dimension of rendered text using a <code>span</code> element.<br>
-The code has been slighty adapted to deal with Font objects.</p>
+        <p>The <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics">TextMetrics</a> object used<br>by <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">CanvasRenderingContext2D</a><br>does not provide a <code>heigth</code> value for rendered text.<br><br>This <a target="_blank" href="http://stackoverflow.com/questions/1134586/how-can-you-find-the-height-of-text-on-an-html-canvas">stackoverflow question</a><br>has an excellent response by Daniel Earwicker explaining how to measure the<br>vertical dimension of rendered text using a <code>span</code> element.<br><br>The code has been slighty adapted to deal with Font objects.</p>
 <p><em>Warning</em>: Do not call this method direcly. Use <a href="AWT.Font.html#getHeight"><code>getHeight()</code></a> instead</p>
     </div>
     
@@ -10278,8 +10284,7 @@ The code has been slighty adapted to deal with Font objects.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Gets the codification of this font in a single string, suitable to be used in a <code>font</code>
-CSS attribute.</p>
+        <p>Gets the codification of this font in a single string, suitable to be used in a <code>font</code><br>CSS attribute.</p>
     </div>
     
 
@@ -10946,8 +10951,7 @@ CSS attribute.</p>
             
             <td class="description last">
                 
-                <p>The object where to add CSS properties. When null or undefined, a new
-object will be created and returned.</p></td>
+                <p>The object where to add CSS properties. When null or undefined, a new<br>object will be created and returned.</p></td>
         </tr>
 	
 	
@@ -10987,8 +10991,7 @@ object will be created and returned.</p></td>
                     
             </td>
             <td class="description last"><ul>
-<li>A set of CSS property-values pairs, ready to be used in JQuery
-<a target="_blank" href="http://api.jquery.com/css/#css-properties">.css(properties)</a> function.</li>
+<li>A set of CSS property-values pairs, ready to be used in JQuery<br><a target="_blank" href="http://api.jquery.com/css/#css-properties">.css(properties)</a> function.</li>
 </ul></td>
         </tr>
     
@@ -11049,7 +11052,7 @@ object will be created and returned.</p></td>
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:50 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:33 GMT+0100 (CET)
         </footer>
     </div>
 </div>

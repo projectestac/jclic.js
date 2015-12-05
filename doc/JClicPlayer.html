@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9809,7 +9825,7 @@
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line46">line 46</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line49">line 49</a>
         </div>
         
     </div>
@@ -9819,12 +9835,7 @@
 <dd class="folded">
     
     <div class="description">
-        <p>JClicPlayer is one of the the main classes of the JClic system. It implements the
-<a target="_blank" href="http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html">PlayStation</a>
-interface, needed to read and play JClic projects.<br>
-JClicPlayer offers to <code>Activity#Panel</code> objects all the necessary resources and functions:
-media bags (to load and realize images and other media contents), sequence control, management
-of the reporting system, user interface, display of system messages, etc.</p>
+        <p>JClicPlayer is one of the the main classes of the JClic system. It implements the<br><a target="_blank" href="http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html">PlayStation</a><br>interface, needed to read and play JClic projects.<br><br>JClicPlayer offers to <code>Activity#Panel</code> objects all the necessary resources and functions:<br>media bags (to load and realize images and other media contents), sequence control, management<br>of the reporting system, user interface, display of system messages, etc.</p>
     </div>
     
 
@@ -10090,8 +10101,7 @@ of the reporting system, user interface, display of system messages, etc.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Whether the player must play all sounds (including system sounds) and other media content
-of the activities.</p>
+        <p>Whether the player must play all sounds (including system sounds) and other media content<br>of the activities.</p>
     </div>
     
 
@@ -10292,6 +10302,25 @@ of the activities.</p>
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="localFS">localFS<span class="type-signature type boolean">boolean</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>This flag indicates if the player is running inside a document loaded by <code>file:</code> protocol</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="navButtonsAlways">navButtonsAlways<span class="type-signature type boolean">boolean</span> </h4>
     </div>
 
@@ -10300,9 +10329,7 @@ of the activities.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>When this flag is <code>true</code>, the navigation buttons are always enabled despite
-of the indications made by the activities or the sequence control system.<br>
-This is used only to debug projects with complicated sequence chaining.</p>
+        <p>When this flag is <code>true</code>, the navigation buttons are always enabled despite<br>of the indications made by the activities or the sequence control system.<br><br>This is used only to debug projects with complicated sequence chaining.</p>
     </div>
     
 
@@ -10397,8 +10424,7 @@ This is used only to debug projects with complicated sequence chaining.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Object responsible for passing the scores obtained by users to a external reporting systems
-when playing activities.</p>
+        <p>Object responsible for passing the scores obtained by users to a external reporting systems<br>when playing activities.</p>
     </div>
     
 
@@ -10455,8 +10481,7 @@ when playing activities.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>A <a href="external-JSZip.html"><code>external:JSZip</code></a> object pointing to a <code>jclic.zip</code> file containing the current project.<br>
-Two extra properties will be added to this object when loaded:<br></p>
+        <p>A <a href="external-JSZip.html"><code>external:JSZip</code></a> object pointing to a <code>jclic.zip</code> file containing the current project.<br><br>Two extra properties will be added to this object when loaded:<br></p>
 <ul>
 <li><strong>zip.fullZipPath</strong> {string} - The full path of the ZIP file</li>
 <li><strong>zip.zipBasePath</strong> {string} - The path to the folder containing the ZIP file</li>
@@ -10484,7 +10509,7 @@ Two extra properties will be added to this object when loaded:<br></p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line279">line 279</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line288">line 288</a>
         </div>
         
     </div>
@@ -10494,8 +10519,7 @@ Two extra properties will be added to this object when loaded:<br></p>
 <dd class="folded">
     
     <div class="description">
-        <p>This method is called when the container gains the focus for the first time.<br>
-Currently not used.</p>
+        <p>This method is called when the container gains the focus for the first time.<br><br>Currently not used.</p>
     </div>
     
 
@@ -10513,7 +10537,7 @@ Currently not used.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line892">line 892</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line919">line 919</a>
         </div>
         
     </div>
@@ -10572,8 +10596,7 @@ Currently not used.</p>
             
             <td class="description last">
                 
-                <p><code>true</code> when the activity was successfully completed, <code>false</code>
-otherwise.</p></td>
+                <p><code>true</code> when the activity was successfully completed, <code>false</code><br>otherwise.</p></td>
         </tr>
 	
 	
@@ -10637,7 +10660,7 @@ otherwise.</p></td>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line721">line 721</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line748">line 748</a>
         </div>
         
     </div>
@@ -10647,8 +10670,7 @@ otherwise.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Called by <a href="JClicPlayer.html#load"><code>JClicPlayer#load</code></a> when the <code>Activity#Panel</code> is fully visible, just
-after the JQuery animation effect.</p>
+        <p>Called by <a href="JClicPlayer.html#load"><code>JClicPlayer#load</code></a> when the <code>Activity#Panel</code> is fully visible, just<br>after the JQuery animation effect.</p>
     </div>
     
 
@@ -10791,7 +10813,7 @@ after the JQuery animation effect.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line223">line 223</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line233">line 233</a>
         </div>
         
     </div>
@@ -11100,7 +11122,7 @@ after the JQuery animation effect.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line371">line 371</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line380">line 380</a>
         </div>
         
     </div>
@@ -11282,7 +11304,7 @@ after the JQuery animation effect.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line320">line 320</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line329">line 329</a>
         </div>
         
     </div>
@@ -11310,7 +11332,7 @@ after the JQuery animation effect.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1095">line 1095</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1122">line 1122</a>
         </div>
         
     </div>
@@ -11456,7 +11478,7 @@ after the JQuery animation effect.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line741">line 741</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line768">line 768</a>
         </div>
         
     </div>
@@ -11484,7 +11506,7 @@ after the JQuery animation effect.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line293">line 293</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line302">line 302</a>
         </div>
         
     </div>
@@ -11666,7 +11688,7 @@ after the JQuery animation effect.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1108">line 1108</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1135">line 1135</a>
         </div>
         
     </div>
@@ -11885,8 +11907,7 @@ after the JQuery animation effect.</p>
                         
                     
                 
-                <p>The context region to be updated. Used as clipping
-region when drawing.</p></td>
+                <p>The context region to be updated. Used as clipping<br>region when drawing.</p></td>
         </tr>
 	
 	
@@ -11950,7 +11971,7 @@ region when drawing.</p></td>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line673">line 673</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line700">line 700</a>
         </div>
         
     </div>
@@ -11978,7 +11999,7 @@ region when drawing.</p></td>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1026">line 1026</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1053">line 1053</a>
         </div>
         
     </div>
@@ -12239,7 +12260,7 @@ region when drawing.</p></td>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line952">line 952</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line979">line 979</a>
         </div>
         
     </div>
@@ -12512,8 +12533,7 @@ region when drawing.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Gets a clone of this shape moved to the <code>pos</code> component of the rectangle and scaled
-by its <code>dim</code> value.</p>
+        <p>Gets a clone of this shape moved to the <code>pos</code> component of the rectangle and scaled<br>by its <code>dim</code> value.</p>
     </div>
     
 
@@ -12562,8 +12582,7 @@ by its <code>dim</code> value.</p>
             
             <td class="description last">
                 
-                <p>The rectangle to be taken as a base for moving and scaling
-this shape.</p></td>
+                <p>The rectangle to be taken as a base for moving and scaling<br>this shape.</p></td>
         </tr>
 	
 	
@@ -12656,7 +12675,7 @@ this shape.</p></td>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line382">line 382</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line391">line 391</a>
         </div>
         
     </div>
@@ -12911,7 +12930,7 @@ this shape.</p></td>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line972">line 972</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line999">line 999</a>
         </div>
         
     </div>
@@ -13034,7 +13053,7 @@ this shape.</p></td>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line701">line 701</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line728">line 728</a>
         </div>
         
     </div>
@@ -13062,7 +13081,7 @@ this shape.</p></td>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line331">line 331</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line340">line 340</a>
         </div>
         
     </div>
@@ -13090,7 +13109,7 @@ this shape.</p></td>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line342">line 342</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line351">line 351</a>
         </div>
         
     </div>
@@ -13506,7 +13525,7 @@ this shape.</p></td>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line447">line 447</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line456">line 456</a>
         </div>
         
     </div>
@@ -13575,8 +13594,7 @@ this shape.</p></td>
                         
                     
                 
-                <p>The project to load (if it's a string) or used.
-When <code>null</code> or <code>undefined</code>, refers to the current project.</p></td>
+                <p>The project to load (if it's a string) or used.<br>When <code>null</code> or <code>undefined</code>, refers to the current project.</p></td>
         </tr>
 	
 	
@@ -13609,9 +13627,7 @@ When <code>null</code> or <code>undefined</code>, refers to the current project.
                         
                     
                 
-                <p>Sequence tag or numeric order in the <a href="ActivitySequence.html"><code>ActivitySequence</code></a>
-to be loaded. If <em>sequence</em> and <em>activity</em> are both <code>null</code>, the first <a href="ActivitySequenceElement.html"><code>ActivitySequenceElement</code></a>
-will be loaded.</p></td>
+                <p>Sequence tag or numeric order in the <a href="ActivitySequence.html"><code>ActivitySequence</code></a><br>to be loaded. If <em>sequence</em> and <em>activity</em> are both <code>null</code>, the first <a href="ActivitySequenceElement.html"><code>ActivitySequenceElement</code></a><br>will be loaded.</p></td>
         </tr>
 	
 	
@@ -13958,7 +13974,7 @@ will be loaded.</p></td>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line801">line 801</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line828">line 828</a>
         </div>
         
     </div>
@@ -14052,8 +14068,7 @@ will be loaded.</p></td>
                         
                     
                 
-                <p>The cell where the graphic component of this media
-should be placed (used with video objects)</p></td>
+                <p>The cell where the graphic component of this media<br>should be placed (used with video objects)</p></td>
         </tr>
 	
 	
@@ -14117,7 +14132,7 @@ should be placed (used with video objects)</p></td>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line931">line 931</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line958">line 958</a>
         </div>
         
     </div>
@@ -14157,8 +14172,7 @@ should be placed (used with video objects)</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,
-to fill a surface or to define a clipping region.<br></p>
+        <p>Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,<br>to fill a surface or to define a clipping region.<br></p>
     </div>
     
 
@@ -14271,7 +14285,7 @@ to fill a surface or to define a clipping region.<br></p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line687">line 687</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line714">line 714</a>
         </div>
         
     </div>
@@ -14299,7 +14313,7 @@ to fill a surface or to define a clipping region.<br></p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1073">line 1073</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1100">line 1100</a>
         </div>
         
     </div>
@@ -14445,7 +14459,7 @@ to fill a surface or to define a clipping region.<br></p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1059">line 1059</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1086">line 1086</a>
         </div>
         
     </div>
@@ -14717,7 +14731,7 @@ to fill a surface or to define a clipping region.<br></p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1037">line 1037</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1064">line 1064</a>
         </div>
         
     </div>
@@ -14840,7 +14854,7 @@ to fill a surface or to define a clipping region.<br></p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line883">line 883</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line910">line 910</a>
         </div>
         
     </div>
@@ -14850,8 +14864,7 @@ to fill a surface or to define a clipping region.<br></p>
 <dd class="folded">
     
     <div class="description">
-        <p>Launches the specified system command.<br>
-Currently not implemented.</p>
+        <p>Launches the specified system command.<br><br>Currently not implemented.</p>
     </div>
     
 
@@ -15217,7 +15230,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line994">line 994</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1021">line 1021</a>
         </div>
         
     </div>
@@ -15363,7 +15376,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line961">line 961</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line988">line 988</a>
         </div>
         
     </div>
@@ -15509,7 +15522,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line941">line 941</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line968">line 968</a>
         </div>
         
     </div>
@@ -15655,7 +15668,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line914">line 914</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line941">line 941</a>
         </div>
         
     </div>
@@ -15778,7 +15791,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line426">line 426</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line435">line 435</a>
         </div>
         
     </div>
@@ -15901,7 +15914,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line393">line 393</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line402">line 402</a>
         </div>
         
     </div>
@@ -16031,7 +16044,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1014">line 1014</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1041">line 1041</a>
         </div>
         
     </div>
@@ -16177,7 +16190,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1004">line 1004</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1031">line 1031</a>
         </div>
         
     </div>
@@ -16300,7 +16313,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1118">line 1118</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1145">line 1145</a>
         </div>
         
     </div>
@@ -16423,7 +16436,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1083">line 1083</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line1110">line 1110</a>
         </div>
         
     </div>
@@ -16577,7 +16590,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line731">line 731</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line758">line 758</a>
         </div>
         
     </div>
@@ -16605,7 +16618,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line901">line 901</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line928">line 928</a>
         </div>
         
     </div>
@@ -16633,7 +16646,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line286">line 286</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line295">line 295</a>
         </div>
         
     </div>
@@ -16661,7 +16674,7 @@ Currently not implemented.</p>
 
         
         <div class="tag-source">
-            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line869">line 869</a>
+            <a href="JClicPlayer.js.html">JClicPlayer.js</a>, <a href="JClicPlayer.js.html#line896">line 896</a>
         </div>
         
     </div>
@@ -16735,8 +16748,7 @@ Currently not implemented.</p>
                         
                     
                 
-                <p>Sets the threshold above which all media objects with equal
-or greater <code>level</code> will also also be muted.</p></td>
+                <p>Sets the threshold above which all media objects with equal<br>or greater <code>level</code> will also also be muted.</p></td>
         </tr>
 	
 	
@@ -16967,8 +16979,7 @@ or greater <code>level</code> will also also be muted.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Containers should implement this method to update its graphic contents. It should
-be called from <code>AWT.Container~update</code></p>
+        <p>Containers should implement this method to update its graphic contents. It should<br>be called from <code>AWT.Container~update</code></p>
     </div>
     
 
@@ -17017,8 +17028,7 @@ be called from <code>AWT.Container~update</code></p>
             
             <td class="description last">
                 
-                <p>Specifies the area to be updated. When <code>null</code>, it's the whole
-Container.</p></td>
+                <p>Specifies the area to be updated. When <code>null</code>, it's the whole<br>Container.</p></td>
         </tr>
 	
 	
@@ -17238,7 +17248,7 @@ Container.</p></td>
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:56 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:39 GMT+0100 (CET)
         </footer>
     </div>
 </div>

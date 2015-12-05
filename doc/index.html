@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9804,23 +9820,11 @@
     <section>
         <article class="readme"><p><a target="_blank" href="https://github.com/projectestac/jclic.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a></p>
 <h1>JClic.js</h1><p><strong>JClic.js</strong> is a JavaScript player of <strong>JClic</strong> activities.<br></p>
-<h2>JClic</h2><h2>JClic and JClic-repo</h2><p><a target="_blank" href="http://clic.xtec.cat">JClic</a> is a free software project from the <a target="_blank" href="http://www.xtec.cat">Catalan Educational Telematic Network</a> 
-(XTEC) for creating various types of interactive activities such as associations, puzzles, text activities,
-crosswords or puzzles, from elements of text, graphics and multimedia.</p>
-<p>The program includes an authoring tool to create activities, a player and a reporting system that stores
-the results obtained by students. All these components, along with some guides and tutorials on how to
-create activities, are available in the <a target="_blank" href="http://clic.xtec.cat/en/jclic/download.htm">clicZone</a>.</p>
-<p>JClic is a Java application that runs on Linux, Windows and Mac OS. Full <a target="_blank" href="https://github.com/projectestac/jclic">source code</a>
-and <a target="_blank" href="http://projectestac.github.io/jclic/">documentation</a> are available on GitHub.</p>
-<p>Many teachers from different countries have used JClic to create interactive materials for a wide variety
-of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a 
-huge <a target="_blank" href="http://clic.xtec.cat/repo">library</a> created with <a target="_blank" href="https://github.com/projectestac/jclic-repo">jclic-repo</a>,
-another open source project that will facilitate the publication of collections of JClic projects in
-static web hosting services.</p>
-<h2>JClic project files</h2><p>Groups of single <strong>activities</strong> are often grouped in <strong>JClic projects</strong> and organized in one or more
-<strong>sequences</strong> (lists of activities that must be performed in a specific order). The resulting set of
-activities, sequences and media elements are packaged into <strong>JClic project files</strong> (files with
-extension &quot;.jclic.zip&quot;).</p>
+<h2>JClic</h2><h2>JClic and JClic-repo</h2><p><a target="_blank" href="http://clic.xtec.cat">JClic</a> is a free software project from the <a target="_blank" href="http://www.xtec.cat">Catalan Educational Telematic Network</a><br>(XTEC) for creating various types of interactive activities such as associations, puzzles, text activities,<br>crosswords or puzzles, from elements of text, graphics and multimedia.</p>
+<p>The program includes an authoring tool to create activities, a player and a reporting system that stores<br>the results obtained by students. All these components, along with some guides and tutorials on how to<br>create activities, are available in the <a target="_blank" href="http://clic.xtec.cat/en/jclic/download.htm">clicZone</a>.</p>
+<p>JClic is a Java application that runs on Linux, Windows and Mac OS. Full <a target="_blank" href="https://github.com/projectestac/jclic">source code</a><br>and <a target="_blank" href="http://projectestac.github.io/jclic/">documentation</a> are available on GitHub.</p>
+<p>Many teachers from different countries have used JClic to create interactive materials for a wide variety<br>of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a<br>huge <a target="_blank" href="http://clic.xtec.cat/repo">library</a> created with <a target="_blank" href="https://github.com/projectestac/jclic-repo">jclic-repo</a>,<br>another open source project that will facilitate the publication of collections of JClic projects in<br>static web hosting services.</p>
+<h2>JClic project files</h2><p>Groups of single <strong>activities</strong> are often grouped in <strong>JClic projects</strong> and organized in one or more<br><strong>sequences</strong> (lists of activities that must be performed in a specific order). The resulting set of<br>activities, sequences and media elements are packaged into <strong>JClic project files</strong> (files with<br>extension &quot;.jclic.zip&quot;).</p>
 <h2>JClic.js components</h2><p>JClic.js makes use of two main libraries:</p>
 <ul>
 <li><a target="_blank" href="https://jquery.com/">jQuery</a> to parse XML documents and manage DOM objects</li>
@@ -9828,14 +9832,12 @@ extension &quot;.jclic.zip&quot;).</p>
 </ul>
 <p>The build brocess of JClic.js is based on:</p>
 <ul>
-<li><a target="_blank" href="https://www.npmjs.com/">npm</a> (the package manager of <a target="_blank" href="https://nodejs.org/">Node.js</a>) to install,
-update and track package dependencies.</li>
+<li><a target="_blank" href="https://www.npmjs.com/">npm</a> (the package manager of <a target="_blank" href="https://nodejs.org/">Node.js</a>) to install,<br>update and track package dependencies.</li>
 <li><a target="_blank" href="http://browserify.org/">Browserify</a> to allow the use of npm modules in browsers.</li>
 <li><a target="_blank" href="http://gruntjs.com/">Grunt</a> to automate debug and building tasks.</li>
 <li><a target="_blank" href="http://usejsdoc.org/">JSDoc</a> to generate this documentation.</li>
 </ul>
-<h2>How to set-up the development environtment</h2><p>First of all, you must have Node.js (which includes 'npm' by default)
-<a target="_blank" href="https://nodejs.org/download/">installed</a> in your system.</p>
+<h2>How to set-up the development environtment</h2><p>First of all, you must have Node.js (which includes 'npm' by default)<br><a target="_blank" href="https://nodejs.org/download/">installed</a> in your system.</p>
 <p>To update <strong>npm</strong> to the latest version run:</p>
 <pre class="prettyprint source"><code>sudo npm install -g npm</code></pre><p>Then you must globally install <strong>Grunt</strong> running:</p>
 <pre class="prettyprint source"><code>sudo npm install -g grunt-cli</code></pre><p>To install the remaining packages, just go to the project's root directory and run:</p>
@@ -9844,26 +9846,20 @@ update and track package dependencies.</li>
 <pre class="prettyprint source"><code>grunt</code></pre><p>This will generate the file <code>jclic.min.js</code> inside the <code>dist</code> folder.</p>
 <p>To test the module and see the demo in your browser, just launch the test server running:</p>
 <pre class="prettyprint source"><code>grunt server</code></pre><p>You can also build this documentation running <code>grunt doc</code></p>
-<h1>Main classes</h1><p>JClic.js is organized in three main groups of classes: <em>Player</em>, <em>Document</em> and <em>Utilities</em>. In
-addition to this, the main <a href="JClic.html">JClic</a> class provides methods to read JClic project documents,
-build players, launch activities and communicate with external reporting systems.</p>
-<h2>Player</h2><p><a href="JClicPlayer.html">JClicPlayer</a> loads JClic project files, manages the user interaction and acts as
-a interface between the browser and JClic classes for multiple functions. The player has:</p>
+<h1>Main classes</h1><p>JClic.js is organized in three main groups of classes: <em>Player</em>, <em>Document</em> and <em>Utilities</em>. In<br>addition to this, the main <a href="JClic.html">JClic</a> class provides methods to read JClic project documents,<br>build players, launch activities and communicate with external reporting systems.</p>
+<h2>Player</h2><p><a href="JClicPlayer.html">JClicPlayer</a> loads JClic project files, manages the user interaction and acts as<br>a interface between the browser and JClic classes for multiple functions. The player has:</p>
 <ul>
-<li><a href="Skin.html">Skin</a>: manages the visual appareance. Can have up to three <a href="Counter.html">Counter</a>
-objects.<ul>
+<li><a href="Skin.html">Skin</a>: manages the visual appareance. Can have up to three <a href="Counter.html">Counter</a><br>objects.<ul>
 <li><a href="DefaultSkin.html">DefaultSkin</a>: is the basic implementation of <em>Skin</em>.</li>
 </ul>
 </li>
 <li><a href="PlayerHistory.html">PlayerHistory</a>: used to track the user's navigation between activities.</li>
 </ul>
-<h2>Document classes</h2><p><a href="JClicProject.html">JClicProject</a> encapsulates all data needed to play JClic activities. Its main
-components are:</p>
+<h2>Document classes</h2><p><a href="JClicProject.html">JClicProject</a> encapsulates all data needed to play JClic activities. Its main<br>components are:</p>
 <ul>
 <li><a href="ProjectSettings.html">ProjectSettings</a></li>
 <li>A collection of <a href="Activity.html">Activity</a> objects (see below)</li>
-<li>An <a href="ActivitySequence.html">ActivitySequence</a> formed by
-<a href="ActivitySequenceElement.html">ActivitySequenceElement</a> objects.</li>
+<li>An <a href="ActivitySequence.html">ActivitySequence</a> formed by<br><a href="ActivitySequenceElement.html">ActivitySequenceElement</a> objects.</li>
 <li>A <a href="MediaBag.html">MediaBag</a> formed by <a href="MediaBagElement.html">MediaBagElement</a> objects.</li>
 </ul>
 <p>The <a href="Activity.html">Activity</a> class has the following subclasses:</p>
@@ -9895,10 +9891,8 @@ components are:</p>
 <li>One <a href="TextActivityDocument.html">TextActivityDocument</a></li>
 <li>An <a href="Evaluator.html">Evaluator</a></li>
 </ul>
-<p>At run time, all classes derived from <a href="Activity.html">Activity</a> generate
-a specific <a href="Activity.Panel.html">Activity.Panel</a>, that is a real DOM object with wich users interact.</p>
-<h2>Utility classes</h2><h4>AWT</h4><p><a href="AWT.html">AWT</a>: contains some classes similar to those defined in the Java
-<a target="_blank" href="http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html">Abstract Window Toolkit</a>:</p>
+<p>At run time, all classes derived from <a href="Activity.html">Activity</a> generate<br>a specific <a href="Activity.Panel.html">Activity.Panel</a>, that is a real DOM object with wich users interact.</p>
+<h2>Utility classes</h2><h4>AWT</h4><p><a href="AWT.html">AWT</a>: contains some classes similar to those defined in the Java<br><a target="_blank" href="http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html">Abstract Window Toolkit</a>:</p>
 <ul>
 <li><a href="AWT.Font.html">AWT.Font</a></li>
 <li><a href="AWT.Gradient.html">AWT.Gradient</a></li>
@@ -9915,14 +9909,12 @@ a specific <a href="Activity.Panel.html">Activity.Panel</a>, that is a real DOM 
 <li><a href="AWT.Timer.html">AWT.Timer</a></li>
 <li><a href="AWT.Container.html">AWT.Container</a></li>
 </ul>
-<h4>Boxes</h4><p><a href="AbstractBox.html">AbstractBox</a> is a special class derived from <a href="AWT.Rectangle.html">AWT.Rectangle</a>
-that has the following subclasses:</p>
+<h4>Boxes</h4><p><a href="AbstractBox.html">AbstractBox</a> is a special class derived from <a href="AWT.Rectangle.html">AWT.Rectangle</a><br>that has the following subclasses:</p>
 <ul>
 <li><a href="ActiveBox.html">ActiveBox</a>: an AbstractBox with active content (see below)</li>
 <li><a href="BoxBag.html">BoxBag</a>: a collection of AbstractBox objects.<ul>
 <li><a href="ActiveBoxBag.html">ActiveBoxBag</a>: a collection of <a href="ActiveBox.html">ActiveBox</a> objects.<ul>
-<li><a href="ActiveBoxGrid.html">ActiveBoxGrid</a>: a special case of ActiveBoxBag with boxes distributed in
-rows and columns.</li>
+<li><a href="ActiveBoxGrid.html">ActiveBoxGrid</a>: a special case of ActiveBoxBag with boxes distributed in<br>rows and columns.</li>
 </ul>
 </li>
 </ul>
@@ -9931,8 +9923,7 @@ rows and columns.</li>
 </ul>
 <h4>Box content</h4><ul>
 <li><a href="ActiveBoxContent.html">ActiveBoxContent</a>: encapsulates the content of a single <em>ActiveBox</em>.</li>
-<li><a href="BoxBase.html">BoxBase</a>: contains style specs (color, gradient, border, font, size...) common to
-one or more <em>ActiveBoxContent</em> objects. Also used by <em>TextActivityDocument</em> to encapsulate text styles.</li>
+<li><a href="BoxBase.html">BoxBase</a>: contains style specs (color, gradient, border, font, size...) common to<br>one or more <em>ActiveBoxContent</em> objects. Also used by <em>TextActivityDocument</em> to encapsulate text styles.</li>
 <li><a href="ActiveBagContent.html">ActiveBagContent</a>: a collection of <em>ActiveBoxContent</em> objects.</li>
 <li><a href="TextGridContent.html">TextGridContent</a>: encapsulates the content of a <em>TextGrid</em> object.</li>
 </ul>
@@ -9980,7 +9971,7 @@ one or more <em>ActiveBoxContent</em> objects. Also used by <em>TextActivityDocu
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:47 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:30 GMT+0100 (CET)
         </footer>
     </div>
 </div>

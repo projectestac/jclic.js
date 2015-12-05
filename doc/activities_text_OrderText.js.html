@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9816,8 +9832,6 @@ define([
    * @extends TextActivityBase
    * @param {JClicProject} project - The project to which this activity belongs
    */
-  //
-  // TODO: Implement order text activities
   var OrderText = function (project) {
     TextActivityBase.call(this, project);
   };
@@ -9827,7 +9841,31 @@ define([
     /**
      * Whether to allow or not to scramble words among different paragraphs.
      * @type {boolean} */
-    amongParagraphs: false    
+    amongParagraphs: false,
+    /**
+     * 
+     * Whether or not the activity uses random to scramble internal components
+     * @returns {boolean}
+     */
+    hasRandom: function () {
+      return true;
+    },
+    /**
+     * 
+     * When `true`, the activity mut always be scrambled
+     * @returns {boolean}
+     */
+    shuffleAlways: function () {
+      return true;
+    },
+    /**
+     * 
+     * Whether the activity allows the user to request help.
+     * @returns {boolean}
+     */
+    helpSolutionAllowed: function () {
+      return true;
+    }    
   };
 
   // OrderText extends TextActivityBase
@@ -9850,7 +9888,220 @@ define([
   // Properties and methods specific to OrderText.Panel
   var ActPanelAncestor = TextActivityBase.Panel.prototype;
   OrderText.Panel.prototype = {
-    constructor: OrderText.Panel
+    constructor: OrderText.Panel,
+    /**
+     * Currently selected text target
+     * @type {TextActivityDocument.TextTarget} */
+    currentTarget: null,
+    /**
+     * 
+     * Prepares the text panel
+     */
+    buildVisualComponents: function () {
+      // TODO: Add transparent canvas with a BoxConnector
+      this.act.document.style['target'].css.cursor = 'pointer';
+      ActPanelAncestor.buildVisualComponents.call(this);
+    },    
+    /**
+     * 
+     * Creates a target DOM element for the provided target.
+     * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
+     * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
+     * to store the target, or replaced by another type of object.
+     * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
+     */
+    $createTargetElement: function (target, $span) {
+      
+      ActPanelAncestor.$createTargetElement.call(this, target, $span);
+
+      var id = this.targets.length - 1;
+      var idLabel = 'target' + ('000' + id).slice(-3);
+      var thisPanel = this;
+
+      $span.addClass('JClicTextTarget').bind('click', function (event) {
+          event.textTarget = target;
+          event.idLabel = idLabel;
+          thisPanel.processEvent(event);
+        });
+
+      return $span;
+    },
+    /**
+     * Swaps the position of two targets in the document
+     * @param {TextActivityDocument.TextTarget} t1 - One target
+     * @param {TextActivityDocument.TextTarget} t2 - Another target
+     */
+    swapTargets: function(t1, t2){
+      var $span1 = t1.$span;
+      var $span2 = t2.$span;
+      var $marker = $('&lt;span/>');      
+      $marker.insertAfter($span2);
+      $span2.detach();      
+      $span2.insertAfter($span1);
+      $span1.detach();
+      $span1.insertAfter($marker);
+      $marker.remove();
+      
+      var pos = t1.pos,
+          $p = t1.$p;      
+      t1.pos = t2.pos;
+      t1.$p = t2.$p;      
+      t2.pos = pos;
+      t2.$p = $p;
+    },
+    /**
+     * 
+     * Basic initialization procedure
+     */
+    initActivity: function () {
+      ActPanelAncestor.initActivity.call(this);
+
+      if (!this.firstRun)
+        this.buildVisualComponents();
+      else
+        this.firstRun = false;
+      
+      if(this.act.type==='orderWords' &amp;&amp; !this.act.amongParagraphs){        
+        // Group targets by paragraph
+        var groups = [];
+        var lastTarget = null;
+        var currentGroup = [];
+        
+        for(var i in this.targets){
+          var t = this.targets[i];
+          if(lastTarget!==null &amp;&amp; lastTarget.$p !== t.$p){
+            groups.push(currentGroup);
+            currentGroup = [];
+          }
+          currentGroup.push(t);
+          lastTarget = t;
+        }
+        if(currentGroup.length > 0){
+          groups.push(currentGroup);
+        }        
+        
+        // Scramble group by group
+        for(var g in groups){
+          this.shuffleTargets(groups[g], this.act.shuffles);          
+        }        
+      }
+      else {      
+        this.shuffleTargets(this.targets, this.act.shuffles);
+      }
+      
+      this.playing=true;
+      
+    },
+    /**
+     * 
+     * Randomly shuffles a set of targets
+     * @param {TextActivityDocument.TextTarget[]} targets - The set of targets to shuffle (can be all
+     * document targets or just the targets belonging to the same paragraph, depending on the value of
+     * `amongParagraphs` in {@link Activity}.
+     * @param {number} steps - The number of times to shuffle the elements
+     */
+    shuffleTargets: function (targets, steps) {
+      var nt = targets.length;
+      if (nt > 1) {
+        var repeatCount = 100;
+        for (var i = 0; i &lt; steps; i++) {
+          var r1 = Math.floor(Math.random() * nt);
+          var r2 = Math.floor(Math.random() * nt);
+          if (r1 !== r2) {
+            this.swapTargets(targets[r1], targets[r2]);
+          }
+          else {
+            if(--repeatCount)
+              i++;
+          }
+        }
+      }
+    },
+    /**
+     * 
+     * Sets the current target
+     * @param {TextActivityDocument.TextTarget} target - The currently selected target. Can be `null`.
+     */
+    setCurrentTarget: function(target){
+      var targetCss = this.act.document.style['target'].css;
+      
+      if(this.currentTarget &amp;&amp; this.currentTarget.$span)
+        this.currentTarget.$span.css(targetCss);
+      
+      if(target &amp;&amp; target.$span){
+            target.$span.css({
+              color: targetCss.background,
+              background: targetCss.color});
+      }
+      
+      this.currentTarget = target;
+    },
+    /**
+     * 
+     * Counts the number of targets that are at right position
+     * @returns {number}
+     */
+    countSolvedTargets: function(){      
+      var result = 0;
+      for(var i in this.targets){
+        var t = this.targets[i];
+        if(t.num === t.pos)
+          result ++;
+      }
+      return result;      
+    },
+    /**
+     * 
+     * Ordinary ending of the activity, usually called form `processEvent`
+     * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
+     */
+    finishActivity: function (result) {
+      $('.JClicTextTarget').css('cursor', 'auto');      
+      return ActPanelAncestor.finishActivity.call(this, result);
+    },    
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events.
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
+    processEvent: function (event) {
+
+      if (!ActPanelAncestor.processEvent.call(this, event))
+        return false;
+
+      var target = event.textTarget;
+      
+      switch (event.type) {
+        case 'click':
+          if (target &amp;&amp; target !== this.currentTarget) {
+            if (this.currentTarget) {
+              this.swapTargets(target, this.currentTarget);
+              this.setCurrentTarget(null);
+              
+              // Check and notify action
+              var cellsAtPlace = this.countSolvedTargets();
+              var ok = target.pos === target.num;
+              this.ps.reportNewAction(this.act, 'PLACE', target.text, target.pos, ok, cellsAtPlace);
+              
+              // End activity or play event sound
+              if (ok &amp;&amp; cellsAtPlace === this.targets.length)
+                this.finishActivity(true);
+              else
+                this.playEvent(ok ? 'actionOk' : 'actionError');
+
+            } else {
+              this.setCurrentTarget(target);
+              this.playEvent('click');
+            }
+          }
+          break;
+        default:
+          break;
+      }      
+      return true;
+    }
   };
 
   // OrderText.Panel extends TextActivityBase.Panel
@@ -9873,7 +10124,7 @@ define([
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:47 GMT+0100 (CET)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:29 GMT+0100 (CET)
         </footer>
     </div>
 </div>

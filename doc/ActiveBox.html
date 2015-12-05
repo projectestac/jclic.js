@@ -6573,6 +6573,8 @@
             
                 <li data-name="JClicPlayer#invalidatedRect"><a href="JClicPlayer.html#invalidatedRect">invalidatedRect</a></li>
             
+                <li data-name="JClicPlayer#localFS"><a href="JClicPlayer.html#localFS">localFS</a></li>
+            
                 <li data-name="JClicPlayer#navButtonsAlways"><a href="JClicPlayer.html#navButtonsAlways">navButtonsAlways</a></li>
             
                 <li data-name="JClicPlayer#navButtonsDisabled"><a href="JClicPlayer.html#navButtonsDisabled">navButtonsDisabled</a></li>
@@ -7513,6 +7515,8 @@
             
                 <li data-name="OrderText.Panel#currentItem"><a href="OrderText.Panel.html#currentItem">currentItem</a></li>
             
+                <li data-name="OrderText.Panel#currentTarget"><a href="OrderText.Panel.html#currentTarget">currentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#dim"><a href="OrderText.Panel.html#dim">dim</a></li>
             
                 <li data-name="OrderText.Panel#events"><a href="OrderText.Panel.html#events">events</a></li>
@@ -7569,6 +7573,8 @@
             
                 <li data-name="OrderText.Panel#contains"><a href="OrderText.Panel.html#contains">contains</a></li>
             
+                <li data-name="OrderText.Panel#countSolvedTargets"><a href="OrderText.Panel.html#countSolvedTargets">countSolvedTargets</a></li>
+            
                 <li data-name="OrderText.Panel#enableCounters"><a href="OrderText.Panel.html#enableCounters">enableCounters</a></li>
             
                 <li data-name="OrderText.Panel#end"><a href="OrderText.Panel.html#end">end</a></li>
@@ -7615,6 +7621,8 @@
             
                 <li data-name="OrderText.Panel#setBounds"><a href="OrderText.Panel.html#setBounds">setBounds</a></li>
             
+                <li data-name="OrderText.Panel#setCurrentTarget"><a href="OrderText.Panel.html#setCurrentTarget">setCurrentTarget</a></li>
+            
                 <li data-name="OrderText.Panel#setDimension"><a href="OrderText.Panel.html#setDimension">setDimension</a></li>
             
                 <li data-name="OrderText.Panel#setDocContent"><a href="OrderText.Panel.html#setDocContent">setDocContent</a></li>
@@ -7623,9 +7631,13 @@
             
                 <li data-name="OrderText.Panel#shuffle"><a href="OrderText.Panel.html#shuffle">shuffle</a></li>
             
+                <li data-name="OrderText.Panel#shuffleTargets"><a href="OrderText.Panel.html#shuffleTargets">shuffleTargets</a></li>
+            
                 <li data-name="OrderText.Panel#startActivity"><a href="OrderText.Panel.html#startActivity">startActivity</a></li>
             
                 <li data-name="OrderText.Panel#stroke"><a href="OrderText.Panel.html#stroke">stroke</a></li>
+            
+                <li data-name="OrderText.Panel#swapTargets"><a href="OrderText.Panel.html#swapTargets">swapTargets</a></li>
             
                 <li data-name="OrderText.Panel#update"><a href="OrderText.Panel.html#update">update</a></li>
             
@@ -8649,6 +8661,8 @@
                 
                 <li data-name="TextActivityDocument.TextTarget#$comboList"><a href="TextActivityDocument.TextTarget.html#$comboList">$comboList</a></li>
             
+                <li data-name="TextActivityDocument.TextTarget#$p"><a href="TextActivityDocument.TextTarget.html#$p">$p</a></li>
+            
                 <li data-name="TextActivityDocument.TextTarget#$span"><a href="TextActivityDocument.TextTarget.html#$span">$span</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#answers"><a href="TextActivityDocument.TextTarget.html#answers">answers</a></li>
@@ -8686,6 +8700,8 @@
                 <li data-name="TextActivityDocument.TextTarget#popupDelay"><a href="TextActivityDocument.TextTarget.html#popupDelay">popupDelay</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#popupMaxTime"><a href="TextActivityDocument.TextTarget.html#popupMaxTime">popupMaxTime</a></li>
+            
+                <li data-name="TextActivityDocument.TextTarget#pos"><a href="TextActivityDocument.TextTarget.html#pos">pos</a></li>
             
                 <li data-name="TextActivityDocument.TextTarget#targetStatus"><a href="TextActivityDocument.TextTarget.html#targetStatus">targetStatus</a></li>
             
@@ -9819,14 +9835,7 @@
 <dd class="folded">
     
     <div class="description">
-        <p>Objects of this class are widely used in JClic activities: cells in puzzles and associations,
-messages and other objects are active boxes.<br>
-The specific content, size and location of <code>ActiveBox</code> objects is determined by its
-<a href="ActiveBoxContent.html"><code>ActiveBoxContent</code></a> member. Most ActiveBoxes have only one content, but some of them can
-have a secondary or &quot;alternative&quot; content stored in the <code>altContent</code> field. This content is
-used only when the <code>alternative</code> flag of the ActiveBox is on.<br>
-Active boxes can host video and interactive media content (specified in the <code>mediaContent</code>
-member of the <a href="ActiveBoxContent.html"><code>ActiveBoxContent</code></a> through its <code>hostedMediaPlayer</code> member.</p>
+        <p>Objects of this class are widely used in JClic activities: cells in puzzles and associations,<br>messages and other objects are active boxes.<br><br>The specific content, size and location of <code>ActiveBox</code> objects is determined by its<br><a href="ActiveBoxContent.html"><code>ActiveBoxContent</code></a> member. Most ActiveBoxes have only one content, but some of them can<br>have a secondary or &quot;alternative&quot; content stored in the <code>altContent</code> field. This content is<br>used only when the <code>alternative</code> flag of the ActiveBox is on.<br><br>Active boxes can host video and interactive media content (specified in the <code>mediaContent</code><br>member of the <a href="ActiveBoxContent.html"><code>ActiveBoxContent</code></a> through its <code>hostedMediaPlayer</code> member.</p>
     </div>
     
 
@@ -9942,8 +9951,7 @@ member of the <a href="ActiveBoxContent.html"><code>ActiveBoxContent</code></a> 
                         
                     
                 
-                <p>The object where colors, fonts, border and other graphic properties
-of this box are defined.</p></td>
+                <p>The object where colors, fonts, border and other graphic properties<br>of this box are defined.</p></td>
         </tr>
 	
 	
@@ -10166,8 +10174,7 @@ of this box are defined.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>The <a href="BoxBase.html"><code>BoxBase</code></a> related to this AbstractBox. When <code>null</code>, the parent can provide an
-alternative one.</p>
+        <p>The <a href="BoxBase.html"><code>BoxBase</code></a> related to this AbstractBox. When <code>null</code>, the parent can provide an<br>alternative one.</p>
     </div>
     
 
@@ -10395,8 +10402,7 @@ alternative one.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Indicates that this box is used as a background. When drawing, the clipping region must be
-respected.</p>
+        <p>Indicates that this box is used as a background. When drawing, the clipping region must be<br>respected.</p>
     </div>
     
 
@@ -10635,8 +10641,7 @@ respected.</p>
             
             <td class="description last">
                 
-                <p>The cell's content. Must not be null and have the <code>dimension</code>
-member initialized.</p></td>
+                <p>The cell's content. Must not be null and have the <code>dimension</code><br>member initialized.</p></td>
         </tr>
 	
 	
@@ -11659,8 +11664,7 @@ member initialized.</p></td>
             
             <td class="description last">
                 
-                <p>The canvas rendering context where the border
-will be drawn.</p></td>
+                <p>The canvas rendering context where the border<br>will be drawn.</p></td>
         </tr>
 	
 	
@@ -12250,8 +12254,7 @@ will be drawn.</p></td>
                         
                     
                 
-                <p>The context region to be updated. Used as clipping
-region when drawing.</p></td>
+                <p>The context region to be updated. Used as clipping<br>region when drawing.</p></td>
         </tr>
 	
 	
@@ -14089,8 +14092,7 @@ region when drawing.</p></td>
             
             <td class="description last">
                 
-                <p>The rectangle to be invalidated. When <code>null</code>, it's the full
-container area.</p></td>
+                <p>The rectangle to be invalidated. When <code>null</code>, it's the full<br>container area.</p></td>
         </tr>
 	
 	
@@ -15955,8 +15957,7 @@ container area.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,
-to fill a surface or to define a clipping region.<br></p>
+        <p>Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,<br>to fill a surface or to define a clipping region.<br></p>
     </div>
     
 
@@ -16207,8 +16208,7 @@ to fill a surface or to define a clipping region.<br></p>
 <dd class="folded">
     
     <div class="description">
-        <p>Sets the <a href="ActiveBoxContent.html"><code>ActiveBoxContent</code></a> that will act as an alternative content (<code>altContent</code> field)
-of this ActiveBox,</p>
+        <p>Sets the <a href="ActiveBoxContent.html"><code>ActiveBoxContent</code></a> that will act as an alternative content (<code>altContent</code> field)<br>of this ActiveBox,</p>
     </div>
     
 
@@ -16283,8 +16283,7 @@ of this ActiveBox,</p>
             
             <td class="description last">
                 
-                <p>When <code>abc</code> is an <a href="ActiveBagContent.html"><code>ActiveBagContent</code></a>, this field indicates an
-index in the content array.</p></td>
+                <p>When <code>abc</code> is an <a href="ActiveBagContent.html"><code>ActiveBagContent</code></a>, this field indicates an<br>index in the content array.</p></td>
         </tr>
 	
 	
@@ -16665,8 +16664,7 @@ index in the content array.</p></td>
                         
                     
                 
-                <p>An AWT.Rectangle object, or the <code>x</code> coordinate of the
-upper-left corner of a new rectangle.</p></td>
+                <p>An AWT.Rectangle object, or the <code>x</code> coordinate of the<br>upper-left corner of a new rectangle.</p></td>
         </tr>
 	
 	
@@ -17155,8 +17153,7 @@ upper-left corner of a new rectangle.</p></td>
             
             <td class="description last">
                 
-                <p>When <code>abc</code> is an <a href="ActiveBagContent.html"><code>ActiveBagContent</code></a>, this field indicates an
-index in the content array.</p></td>
+                <p>When <code>abc</code> is an <a href="ActiveBagContent.html"><code>ActiveBagContent</code></a>, this field indicates an<br>index in the content array.</p></td>
         </tr>
 	
 	
@@ -17633,8 +17630,7 @@ index in the content array.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Sets the <a href="AbstractBox.html#$hostedComponent"><code>$hostedComponent</code></a> border, based on the current
-<a href="BoxBase.html"><code>BoxBase</code></a> of this box.</p>
+        <p>Sets the <a href="AbstractBox.html#$hostedComponent"><code>$hostedComponent</code></a> border, based on the current<br><a href="BoxBase.html"><code>BoxBase</code></a> of this box.</p>
     </div>
     
 
@@ -17664,8 +17660,7 @@ index in the content array.</p></td>
 <dd class="folded">
     
     <div class="description">
-        <p>Places and resizes <a href="AbstractBox.html#$hostedComponent"><code>$hostedComponent</code></a>, based on the size
-and position of this box.</p>
+        <p>Places and resizes <a href="AbstractBox.html#$hostedComponent"><code>$hostedComponent</code></a>, based on the size<br>and position of this box.</p>
     </div>
     
 
@@ -17695,8 +17690,7 @@ and position of this box.</p>
 <dd class="folded">
     
     <div class="description">
-        <p>Sets <a href="AbstractBox.html#$hostedComponent"><code>$hostedComponent</code></a> colors and other css properties
-based on the current <a href="BoxBase.html"><code>BoxBase</code></a> of this box.</p>
+        <p>Sets <a href="AbstractBox.html#$hostedComponent"><code>$hostedComponent</code></a> colors and other css properties<br>based on the current <a href="BoxBase.html"><code>BoxBase</code></a> of this box.</p>
     </div>
     
 
@@ -19273,9 +19267,7 @@ based on the current <a href="BoxBase.html"><code>BoxBase</code></a> of this box
 <dd class="folded">
     
     <div class="description">
-        <p>Draws the content of this box on an HTML <code>canvas</code> element. At this level, only background
-and border are painted/stroked. Derived classes should implement specific drawing tasks in
-<a href="AbstractBox.html#updateContent"><code>AbstractBox#updateContent</code></a>.</p>
+        <p>Draws the content of this box on an HTML <code>canvas</code> element. At this level, only background<br>and border are painted/stroked. Derived classes should implement specific drawing tasks in<br><a href="AbstractBox.html#updateContent"><code>AbstractBox#updateContent</code></a>.</p>
     </div>
     
 
@@ -19329,8 +19321,7 @@ and border are painted/stroked. Derived classes should implement specific drawin
                         
                     
                 
-                <p>The canvas rendering context used to draw the
-box content.</p></td>
+                <p>The canvas rendering context used to draw the<br>box content.</p></td>
         </tr>
 	
 	
@@ -19488,8 +19479,7 @@ box content.</p></td>
                         
                     
                 
-                <p>The canvas rendering context used to draw the
-box content.</p></td>
+                <p>The canvas rendering context used to draw the<br>box content.</p></td>
         </tr>
 	
 	
@@ -19589,7 +19579,7 @@ box content.</p></td>
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 05 2015 10:26:48 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 06 2015 00:18:30 GMT+0100 (CET)
         </footer>
     </div>
 </div>
