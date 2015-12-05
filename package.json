@@ -37,7 +37,7 @@
     "jquery": "~2.1.4",
     "jszip": "^2.5.0",
     "jszip-utils": "0.0.2",
-    "screenfull": "^2.0.0",
+    "screenfull": "^3.0.0",
     "scriptjs": "^2.5.8"
   },
   "devDependencies": {
@@ -46,10 +46,10 @@
     "gc-jaguarjs-jsdoc": "0.0.1",
     "grunt": "~0.4.5",
     "grunt-browserify": "~4.0.0",
-    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-clean": "~0.7.0",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-jshint": "~0.11.2",
-    "grunt-contrib-uglify": "~0.10.0",
+    "grunt-contrib-uglify": "~0.11.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-express": "^1.4.1",
     "grunt-extract-sourcemap": "^0.1.16",

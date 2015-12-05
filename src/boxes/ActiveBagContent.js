@@ -16,12 +16,11 @@
 define([
   "jquery",
   "./BoxBase",
-  "../Utils",
   "./ActiveBoxContent",
   "../shapers/Shaper",
   "../AWT",
   "../Utils"
-], function ($, BoxBase, Utils, ActiveBoxContent, Shaper, AWT, Utils) {
+], function ($, BoxBase, ActiveBoxContent, Shaper, AWT, Utils) {
 
   /**
    * This class packs a collection of {@link ActiveBoxContent} objects and provides methods to access
