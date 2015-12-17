@@ -11,7 +11,8 @@ requirejs.config({
     jquery: '../node_modules/jquery/dist/jquery',
     screenfull: '../node_modules/screenfull/dist/screenfull',
     jszip: '../test/lib/jszip/jszip',
-    'jszip-utils': '../test/lib/jszip-utils/jszip-utils'
+    'jszip-utils': '../test/lib/jszip-utils/jszip-utils',
+    scriptjs: '../node_modules/scriptjs/dist/script'
   }
 });
 
