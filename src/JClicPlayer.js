@@ -838,8 +838,10 @@ define([
         switch (mediaContent.mediaType) {
           case 'RUN_CLIC_PACKAGE':
             ji = new JumpInfo('JUMP', fn);
-            if (mediaContent.externalParam)
-              ji.projectPath = Utils.getPath(thisPlayer.project.basePath, mediaContent.externalParam);
+            if (mediaContent.externalParam){
+              // Relative path computed in History.processJump
+              ji.projectPath = mediaContent.externalParam;
+            }
             thisPlayer.history.processJump(ji, true);
             break;
 

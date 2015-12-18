@@ -164,8 +164,11 @@ define([
               if (this.testMode && ji.projectPath !== null && ji.projectPath.length > 0) {
                 console.log('At this point, a jump to ' + ji.projectPath + ' should be performed.');
               }
-              else
-                result = this.jumpToSequence(ji.sequence, ji.projectPath, allowReturn);
+              else {
+                result = this.jumpToSequence(ji.sequence,
+                    ji.projectPath ? Utils.getPath(this.player.project.basePath, ji.projectPath) : null,
+                    allowReturn);
+              }
             }
             break;
         }
