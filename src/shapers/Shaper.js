@@ -180,7 +180,7 @@ define([
         shaper.shapeData[i] = shaper.readShapeData(data, shaper.scaleX, shaper.scaleY);
       });
       // Correction needed for '@Holes' shaper
-      if (shaper.shapeData.length > 0 && shaper.shapeData.length !== shaper.nRows * shaper.nCols) {
+      if (shaper.shapeData.length > 0 /* && shaper.shapeData.length !== shaper.nRows * shaper.nCols */) {
         //shaper.nRows = shaper.shapeData.length;
         //shaper.nCols = 1;
         //shaper.nCells = shaper.nCols * shaper.nRows;
