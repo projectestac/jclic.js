@@ -62,7 +62,94 @@ define([
      * Flag indicating if targets must be visually marked when the activity begins. In this type of
      * activity should be always `false` to avoid revealing the words o letters that must be found.
      * @type {boolean} */
-    targetsMarked: false
+    targetsMarked: false,
+    /**
+     * 
+     * Creates a target DOM element for the provided target.
+     * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
+     * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
+     * to store the target, or replaced by another type of object.
+     * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
+     */
+    $createTargetElement: function (target, $span) {
+
+      ActPanelAncestor.$createTargetElement.call(this, target, $span);
+
+      var id = this.targets.length - 1;
+      var idLabel = 'target' + ('000' + id).slice(-3);
+      var thisPanel = this;
+
+      $span.bind('click', function (event) {
+        event.textTarget = target;
+        event.idLabel = idLabel;
+        thisPanel.processEvent(event);
+      });
+
+      return $span;
+    },
+    /**
+     * 
+     * Counts the number of targets that are solved
+     * @returns {number}
+     */
+    countSolvedTargets: function () {
+      var result = 0;
+      for (var i in this.targets) {
+        var t = this.targets[i];
+        if (t.targetStatus === 'SOLVED')
+          result++;
+      }
+      return result;
+    },
+    /**
+     * 
+     * Main handler used to process mouse, touch, keyboard and edit events.
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
+    processEvent: function (event) {
+      
+      // TODO: Check also clicks outside targets
+
+      if (!ActPanelAncestor.processEvent.call(this, event))
+        return false;
+
+      var target = event.textTarget;
+
+      switch (event.type) {
+        case 'click':
+          if (target) {
+            var ok = false;
+            if (target.targetStatus === 'SOLVED') {
+              target.targetStatus = 'WITH_ERROR';
+              target.$span.removeClass('JClicTextTarget');
+            } else {
+              target.targetStatus = 'SOLVED';
+              target.$span.addClass('JClicTextTarget');
+              ok = true;
+            }
+            // TODO: Just on/off target colors, don't mark it as error!
+            target.checkColors();
+
+            // Check and notify action
+            var cellsAtPlace = this.countSolvedTargets();
+            this.ps.reportNewAction(this.act, 'SELECT', target.text, target.pos, ok, cellsAtPlace);
+
+            // End activity or play event sound
+            if (ok && cellsAtPlace === this.targets.length)
+              this.finishActivity(true);
+            else
+              this.playEvent(ok ? 'actionOk' : 'actionError');
+
+          }
+          break;
+        default:
+          break;
+      }
+      return true;
+    }
+
   };
 
   // Identify.Panel extends TextActivityBase.Panel
