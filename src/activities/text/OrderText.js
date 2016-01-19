@@ -16,8 +16,10 @@
 define([
   "jquery",
   "../../Activity",
-  "./TextActivityBase"
-], function ($, Activity, TextActivityBase) {
+  "./TextActivityBase",
+  "../../boxes/BoxConnector",
+  "../../AWT"
+], function ($, Activity, TextActivityBase, BoxConnector, AWT) {
 
   /**
    * In this type of text activity users must put in order some words or paragrafs that have been
@@ -37,6 +39,10 @@ define([
      * Whether to allow or not to scramble words among different paragraphs.
      * @type {boolean} */
     amongParagraphs: false,
+    /**
+     * The box connector
+     * @type {BoxConnector} */
+    bc: null,
     /**
      * 
      * Whether or not the activity uses random to scramble internal components
@@ -60,7 +66,7 @@ define([
      */
     helpSolutionAllowed: function () {
       return true;
-    }    
+    }
   };
 
   // OrderText extends TextActivityBase
@@ -89,14 +95,50 @@ define([
      * @type {TextActivityDocument.TextTarget} */
     currentTarget: null,
     /**
+     * The box connector
+     * @type {BoxConnector} */
+    bc: null,
+    /**
+     * List of mouse, touch and keyboard events intercepted by this panel
+     * @type {string[]} */
+    events: ['click', 'mousemove'],
+    /**
      * 
      * Prepares the text panel
      */
     buildVisualComponents: function () {
-      // TODO: Add transparent canvas with a BoxConnector
       this.act.document.style['target'].css.cursor = 'pointer';
       ActPanelAncestor.buildVisualComponents.call(this);
-    },    
+    },
+    /**
+     * 
+     * Sets the size and position of this activity panel
+     * @param {AWT.Rectangle} rect
+     */
+    setBounds: function (rect) {
+      if (this.$canvas) {
+        this.$canvas.remove();
+        this.$canvas = null;
+      }
+      ActPanelAncestor.setBounds.call(this, rect);
+      if (!this.act.dragCells) {
+        // Create the main canvas
+        this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          'pointer-events': 'none'
+        });
+        this.$div.append(this.$canvas);
+
+        // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context
+        this.bc = new BoxConnector(this, this.$canvas.get(0).getContext('2d'));
+        this.bc.compositeOp = this.bc.DEFAULT_COMPOSITE_OP;
+
+        // Repaint all
+        this.invalidate().update();
+      }
+    },
     /**
      * 
      * Creates a target DOM element for the provided target.
@@ -106,7 +148,7 @@ define([
      * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
      */
     $createTargetElement: function (target, $span) {
-      
+
       ActPanelAncestor.$createTargetElement.call(this, target, $span);
 
       var id = this.targets.length - 1;
@@ -114,10 +156,10 @@ define([
       var thisPanel = this;
 
       $span.addClass('JClicTextTarget').bind('click', function (event) {
-          event.textTarget = target;
-          event.idLabel = idLabel;
-          thisPanel.processEvent(event);
-        });
+        event.textTarget = target;
+        event.idLabel = idLabel;
+        thisPanel.processEvent(event);
+      });
 
       return $span;
     },
@@ -126,21 +168,21 @@ define([
      * @param {TextActivityDocument.TextTarget} t1 - One target
      * @param {TextActivityDocument.TextTarget} t2 - Another target
      */
-    swapTargets: function(t1, t2){
+    swapTargets: function (t1, t2) {
       var $span1 = t1.$span;
       var $span2 = t2.$span;
-      var $marker = $('<span/>');      
+      var $marker = $('<span/>');
       $marker.insertAfter($span2);
-      $span2.detach();      
+      $span2.detach();
       $span2.insertAfter($span1);
       $span1.detach();
       $span1.insertAfter($marker);
       $marker.remove();
-      
+
       var pos = t1.pos,
-          $p = t1.$p;      
+          $p = t1.$p;
       t1.pos = t2.pos;
-      t1.$p = t2.$p;      
+      t1.$p = t2.$p;
       t2.pos = pos;
       t2.$p = $p;
     },
@@ -155,37 +197,36 @@ define([
         this.buildVisualComponents();
       else
         this.firstRun = false;
-      
-      if(this.act.type==='orderWords' && !this.act.amongParagraphs){        
+
+      if (this.act.type === 'orderWords' && !this.act.amongParagraphs) {
         // Group targets by paragraph
         var groups = [];
         var lastTarget = null;
         var currentGroup = [];
-        
-        for(var i in this.targets){
+
+        for (var i in this.targets) {
           var t = this.targets[i];
-          if(lastTarget!==null && lastTarget.$p !== t.$p){
+          if (lastTarget !== null && lastTarget.$p !== t.$p) {
             groups.push(currentGroup);
             currentGroup = [];
           }
           currentGroup.push(t);
           lastTarget = t;
         }
-        if(currentGroup.length > 0){
+        if (currentGroup.length > 0) {
           groups.push(currentGroup);
-        }        
-        
+        }
+
         // Scramble group by group
-        for(var g in groups){
-          this.shuffleTargets(groups[g], this.act.shuffles);          
-        }        
-      }
-      else {      
+        for (var g in groups) {
+          this.shuffleTargets(groups[g], this.act.shuffles);
+        }
+      } else {
         this.shuffleTargets(this.targets, this.act.shuffles);
       }
-      
-      this.playing=true;
-      
+
+      this.playing = true;
+
     },
     /**
      * 
@@ -204,9 +245,8 @@ define([
           var r2 = Math.floor(Math.random() * nt);
           if (r1 !== r2) {
             this.swapTargets(targets[r1], targets[r2]);
-          }
-          else {
-            if(--repeatCount)
+          } else {
+            if (--repeatCount)
               i++;
           }
         }
@@ -217,18 +257,18 @@ define([
      * Sets the current target
      * @param {TextActivityDocument.TextTarget} target - The currently selected target. Can be `null`.
      */
-    setCurrentTarget: function(target){
+    setCurrentTarget: function (target) {
       var targetCss = this.act.document.style['target'].css;
-      
-      if(this.currentTarget && this.currentTarget.$span)
+
+      if (this.currentTarget && this.currentTarget.$span)
         this.currentTarget.$span.css(targetCss);
-      
-      if(target && target.$span){
-            target.$span.css({
-              color: targetCss.background,
-              background: targetCss.color});
+
+      if (target && target.$span) {
+        target.$span.css({
+          color: targetCss.background,
+          background: targetCss.color});
       }
-      
+
       this.currentTarget = target;
     },
     /**
@@ -236,14 +276,14 @@ define([
      * Counts the number of targets that are at right position
      * @returns {number}
      */
-    countSolvedTargets: function(){      
+    countSolvedTargets: function () {
       var result = 0;
-      for(var i in this.targets){
+      for (var i in this.targets) {
         var t = this.targets[i];
-        if(t.num === t.pos)
-          result ++;
+        if (t.num === t.pos)
+          result++;
       }
-      return result;      
+      return result;
     },
     /**
      * 
@@ -251,9 +291,9 @@ define([
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
     finishActivity: function (result) {
-      $('.JClicTextTarget').css('cursor', 'auto');      
+      $('.JClicTextTarget').css('cursor', 'auto');
       return ActPanelAncestor.finishActivity.call(this, result);
-    },    
+    },
     /**
      * 
      * Main handler used to process mouse, touch, keyboard and edit events.
@@ -267,35 +307,62 @@ define([
         return false;
 
       var target = event.textTarget;
-      
-      switch (event.type) {
-        case 'click':
-          if (target && target !== this.currentTarget) {
-            if (this.currentTarget) {
-              this.swapTargets(target, this.currentTarget);
-              this.setCurrentTarget(null);
-              
-              // Check and notify action
-              var cellsAtPlace = this.countSolvedTargets();
-              var ok = target.pos === target.num;
-              this.ps.reportNewAction(this.act, 'PLACE', target.text, target.pos, ok, cellsAtPlace);
-              
-              // End activity or play event sound
-              if (ok && cellsAtPlace === this.targets.length)
-                this.finishActivity(true);
-              else
-                this.playEvent(ok ? 'actionOk' : 'actionError');
 
-            } else {
-              this.setCurrentTarget(target);
-              this.playEvent('click');
+      var p = null;
+
+      if (this.bc && this.playing) {
+
+        // 
+        // _touchend_ event don't provide pageX nor pageY information
+        if (event.type === 'touchend') {
+          p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
+        } else {
+          // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
+          var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
+              y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+          p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
+        }
+
+        switch (event.type) {
+
+          case 'click':
+            if (target && target !== this.currentTarget) {
+              if (this.currentTarget) {
+                if (this.bc && this.bc.active)
+                  this.bc.end();
+                this.swapTargets(target, this.currentTarget);
+                this.setCurrentTarget(null);
+
+                // Check and notify action
+                var cellsAtPlace = this.countSolvedTargets();
+                var ok = target.pos === target.num;
+                this.ps.reportNewAction(this.act, 'PLACE', target.text, target.pos, ok, cellsAtPlace);
+
+                // End activity or play event sound
+                if (ok && cellsAtPlace === this.targets.length)
+                  this.finishActivity(true);
+                else
+                  this.playEvent(ok ? 'actionOk' : 'actionError');
+
+              } else {
+                this.setCurrentTarget(target);
+                this.bc.begin(p);
+                this.playEvent('click');
+              }
             }
-          }
-          break;
-        default:
-          break;
-      }      
-      return true;
+            break;
+
+          case 'mousemove':
+            this.bc.moveTo(p);
+            break;
+
+          default:
+            break;
+        }
+        event.preventDefault();
+
+        return true;
+      }
     }
   };
 
