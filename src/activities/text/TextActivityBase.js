@@ -212,6 +212,8 @@ define([
                 }
                 else if (doc.style['target'])
                   $span.css(doc.style['target'].css);
+              } else {
+                target.targetStatus = 'HIDDEN';
               }
               $p.append($span);
               target.$p = $p;              

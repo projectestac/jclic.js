@@ -340,7 +340,7 @@ define([
      * @type {number} */
     pos: 0,
     /**
-     * Current status of the target. Valid values are: `NOT_EDITED`, `EDITED`, `SOLVED` and `WITH_ERROR`
+     * Current status of the target. Valid values are: `NOT_EDITED`, `EDITED`, `SOLVED`, `WITH_ERROR` and `HIDDEN`
      * @type {string} */
     targetStatus: 'NOT_EDITED',
     /**
@@ -354,9 +354,10 @@ define([
     /**
      * 
      * Resets the TextTarget status
+     * @param {string=} status - The `targetStatus` to be established. Default is `NOT_EDITED`
      */
-    reset: function () {
-      this.targetStatus = 'NOT_EDITED';
+    reset: function (status) {
+      this.targetStatus = status ? status : 'NOT_EDITED';
       this.flagModified = false;
     },
     /**
@@ -442,7 +443,9 @@ define([
     checkColors: function () {
       var $element = this.$comboList ? this.$comboList : this.$span;
       if ($element) {
-        var style = this.doc.style[this.targetStatus === 'WITH_ERROR' ? 'targetError' : 'target'];
+        var style = this.doc.style[
+          this.targetStatus === 'WITH_ERROR' ? 'targetError' : 
+              this.targetStatus === 'HIDDEN' ? 'default' : 'target'];
         if (style && style.css) {
           $element.css(style.css);
         }

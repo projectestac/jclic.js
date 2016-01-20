@@ -89,6 +89,15 @@ define([
     },
     /**
      * 
+     * Basic initialization procedure
+     */
+    initActivity: function () {
+      ActPanelAncestor.initActivity.call(this);
+      this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');
+      this.playing = true;
+    },    
+    /**
+     * 
      * Counts the number of targets that are solved
      * @returns {number}
      */
@@ -101,6 +110,15 @@ define([
       }
       return result;
     },
+    /**
+     * 
+     * Ordinary ending of the activity, usually called form `processEvent`
+     * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
+     */
+    finishActivity: function (result) {
+      this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');      
+      return ActPanelAncestor.finishActivity.call(this, result);
+    },    
     /**
      * 
      * Main handler used to process mouse, touch, keyboard and edit events.
@@ -122,11 +140,9 @@ define([
           if (target) {
             var ok = false;
             if (target.targetStatus === 'SOLVED') {
-              target.targetStatus = 'WITH_ERROR';
-              target.$span.removeClass('JClicTextTarget');
+              target.targetStatus = 'HIDDEN';
             } else {
               target.targetStatus = 'SOLVED';
-              target.$span.addClass('JClicTextTarget');
               ok = true;
             }
             // TODO: Just on/off target colors, don't mark it as error!
@@ -143,6 +159,7 @@ define([
               this.playEvent(ok ? 'actionOk' : 'actionError');
 
           }
+          event.preventDefault();
           break;
         default:
           break;
