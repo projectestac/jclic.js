@@ -34,8 +34,14 @@ define([
    * used to resolve which sound must be played for events when not defined here.
    */
   var EventSounds = function (parent) {
-    this.parent = parent;
-    this.elements = {};
+    if(parent){
+      var thisElements = this.elements;
+      $.each(parent.elements, function(key, value){
+        if(parent.elements.hasOwnProperty(key)){
+          thisElements[key]=value;
+        }
+      });
+    }
   };
 
   EventSounds.prototype = {
@@ -47,7 +53,7 @@ define([
     /**
      * Collection of {@link EventSoundsElement} objects
      * @type {object} */
-    elements: null,
+    elements: {},
     /**
      * Whether this event sounds are enabled or not
      * @type {boolean} */
@@ -71,18 +77,16 @@ define([
       return this;
     },
     /**
-     * The default EventSounds object. Will be initialized after the class declaration.
-     * @type {EventSounds} */
-    defaultEventSounds: null,
-    /**
      * 
      * Instantiates the audio objects needed to play event sounds
      * @param {PlayStation} ps
      * @param {MediaBag} mediaBag
      */
     realize: function (ps, mediaBag) {
-      // TODO: Implement methods for playing sounds defined in 'elements'
-      // See: [edu.xtec.jclic.media.EventSounds.java](https://github.com/projectestac/jclic/blob/master/src/core/edu/xtec/jclic/media/EventSounds.java)
+      $.each(this.elements, function (key, value) {
+        // Values are {EventSoundElement} objects
+        value.realize(ps, mediaBag);
+      });
     },
     /**
      * 
@@ -90,7 +94,9 @@ define([
      * @param {string} eventName - The identifier of the event to be played
      */
     play: function (eventName) {
-      // TODO: Implement EventSounds.play      
+      var sound = this.elements[eventName];
+      if (sound)
+        sound.play();
     },
     /**
      * Audio data for default event sounds
@@ -303,17 +309,15 @@ define([
     }
   };
 
-  // TODO: Create the default eventSounds object
-  EventSounds.prototype.defaultEventSounds = (function(){
-    var result = new EventSounds(null);    
-    result.elements.start = new EventSoundsElement('start', EventSounds.prototype.resources.start);
-    result.elements.click = new EventSoundsElement('click', EventSounds.prototype.resources.click);
-    result.elements.actionOk = new EventSoundsElement('actionOk', EventSounds.prototype.resources.actionOk);
-    result.elements.actionError = new EventSoundsElement('actionError', EventSounds.prototype.resources.actionError);
-    result.elements.finishedOk = new EventSoundsElement('finishedOk', EventSounds.prototype.resources.finishedOk);
-    result.elements.finishedError = new EventSoundsElement('finishedError', EventSounds.prototype.resources.finishedError);
-    return result;
-  })();
+  // Load default sounds in prototype  
+  EventSounds.prototype.elements = {
+    start: new EventSoundsElement('start', EventSounds.prototype.resources.start),
+    click: new EventSoundsElement('click', EventSounds.prototype.resources.click),
+    actionOk: new EventSoundsElement('actionOk', EventSounds.prototype.resources.actionOk),
+    actionError: new EventSoundsElement('actionError', EventSounds.prototype.resources.actionError),
+    finishedOk: new EventSoundsElement('finishedOk', EventSounds.prototype.resources.finishedOk),
+    finishedError: new EventSoundsElement('finishedError', EventSounds.prototype.resources.finishedError)
+  };
 
   return EventSounds;
 });

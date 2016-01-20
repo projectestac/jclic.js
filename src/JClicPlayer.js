@@ -80,7 +80,6 @@ define([
     this.navButtonsAlways = this.options.navButtonsAlways;
     this.defaultSkin = Skin.prototype.getSkin(null, this, this.$topDiv);
     this.setSkin(this.defaultSkin);
-    this.createEventSounds();
     this.initTimers();
     this.setSystemMessage("ready");
   };
@@ -177,10 +176,6 @@ define([
      * @type {Reporter} */
     // TODO: Implement Reporter!
     reporter: null,
-    /**
-     * Object with the current set of system sonds used in this player.
-     * @type {EventSounds} */
-    eventSounds: null,
     /**
      * Collection of {@link AWT.Action} objects used by this player.
      * @type {AWT.Action[]} */
@@ -307,10 +302,6 @@ define([
         this.actPanel.$div.remove();
         this.actPanel = null;
       }
-      if (this.eventSounds) {
-        this.eventSounds.close();
-        this.eventSounds = null;
-      }
       if (this.project) {
         this.project.end();
         this.project = null;
@@ -321,17 +312,6 @@ define([
         this.reporter.end();
         this.reporter = null;
       }
-    },
-    /**
-     * 
-     * Creates and initializes the {@link EventSounds} member
-     */
-    createEventSounds: function () {
-
-      this.eventSounds = new EventSounds(null);
-      // TODO: Assign the default sound for each event
-      this.eventSounds.realize(this.project.mediaBag);
-      EventSounds.prototype.globalEnabled = true;
     },
     /**
      * 
@@ -439,7 +419,7 @@ define([
         this.removeActivity();
       }
       this.project = (project !== null ? project : new JClicProject());
-      this.project.realize(this.eventSounds, this);
+      this.project.realize(this);
       if (this.project.skin !== null)
         this.defaultSkin = this.project.skin;
     },

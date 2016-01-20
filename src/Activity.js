@@ -556,8 +556,8 @@ define([
      * @param {PlayStation} ps - The {@link PlayStation} used to realize the media objects.
      */
     prepareMedia: function (ps) {
-      if (this.eventSounds !== null)
-        this.eventSounds.realize(this.project.mediaBag);
+      
+      this.eventSounds.realize(this.project.mediaBag);
 
       $.each(this.messages, function (key, msg) {
         if (msg !== null)
@@ -649,10 +649,7 @@ define([
      * Called when the activity must be disposed
      */
     end: function () {
-      if (this.eventSounds !== null) {
-        this.eventSounds.close();
-        this.eventSounds = null;
-      }
+      this.eventSounds.close();
       this.clear();
     },
     /**
@@ -853,8 +850,7 @@ define([
      * @param {string} event - The type of event to be performed
      */
     playEvent: function (event) {
-      if (this.act.eventSounds)
-        this.act.eventSounds.play(event);
+      this.act.eventSounds.play(event);
     },
     /**
      * 

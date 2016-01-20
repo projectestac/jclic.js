@@ -138,17 +138,13 @@ define([
     /**
      * 
      * Builds the {@link Skin}, {@link EventSounds} and {@link MediaBag} fonts associated to this project.
-     * @param {EventSounds=} eventSoundsParent - The EventSounds object to be used as parent of the new one
      * @param {PlayStation} ps - The PkayStation (usually a {@link JClicPlayer}) linked to this project.
      */
-    realize: function (eventSoundsParent, ps) {
+    realize: function (ps) {
       if (this.skin === null && this.settings.skinFileName !== null && this.settings.skinFileName.length > 0)
         this.skin = this.mediaBag.getSkinElement(this.settings.skinFileName, ps);
 
-      if (this.settings.eventSounds) {
-        this.settings.eventSounds.eventSoundsParent = eventSoundsParent;
-        this.settings.eventSounds.realize(ps, this.mediaBag);
-      }
+      this.settings.eventSounds.realize(ps, this.mediaBag);
 
       // Build all elements of type `font`
       this.mediaBag.buildAll('font');

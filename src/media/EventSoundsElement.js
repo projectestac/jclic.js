@@ -13,7 +13,11 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
-define(["../Utils"], function (Utils) {
+define([
+  "../Utils", 
+  "./ActiveMediaPlayer", 
+  "./MediaContent"
+], function (Utils, ActiveMediaPlayer, MediaContent) {
   /**
    * The EventSoundsElement object contains the description of a specific sound to be played when
    * one of the JClic events are fired.<br>
@@ -47,10 +51,31 @@ define(["../Utils"], function (Utils) {
       this.fileName = $xml.attr('file');
       this.enabled = Utils.getTriState($xml.attr('enabled'));
       return this;
+    },
+    /**
+     * Media player used to play this sound
+     * @type {ActiveMediaPlayer} */
+    player: null,
+    /**
+     * 
+     * Instantiates this audio object
+     * @param {PlayStation} ps
+     * @param {MediaBag} mediaBag
+     */    
+    realize: function(ps, mediaBag){
+      if(this.player === null){
+        this.player = new ActiveMediaPlayer(new MediaContent('PLAY_AUDIO', this.fileName), mediaBag, ps);      
+        this.player.realize();
+      }
+    },
+    play: function(){
+      if(this.player)
+        this.player.play();
+    },
+    stop: function(){
+      if(this.player)
+        this.player.stop();
     }
-    // 
-    // TODO: Implement methods for playing sounds defined in 'elements'
-    // See: [edu.xtec.jclic.media.EventSounds.java](https://github.com/projectestac/jclic/blob/master/src/core/edu/xtec/jclic/media/EventSounds.java)
   };
   return EventSoundsElement;
 });

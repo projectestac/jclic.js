@@ -244,7 +244,7 @@ define([
      * @returns {boolean}
      */
     isURL: function (exp) {
-      var path = /^(https?|file|ftps?):\/\//i;
+      var path = /^(https?|file|data|ftps?):\/\//i;
       return path.test(exp);
     },
     /**
