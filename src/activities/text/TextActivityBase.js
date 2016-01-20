@@ -61,7 +61,7 @@ define([
      */
     getMinNumActions: function () {
       return this.document ? this.document.numTargets : 0;
-    }    
+    }
   };
 
   // TextActivityBase extends Activity
@@ -149,8 +149,7 @@ define([
         if (this.style) {
           currentPStyle = doc.style[this.style].css;
           $p.css(currentPStyle);
-        }
-        else
+        } else
           currentPStyle = null;
 
         // Check if the paragraph has a special alignment
@@ -176,8 +175,7 @@ define([
                   $span.css(this.attr.css);
                 }
                 $p.append($span);
-              }
-              else {
+              } else {
                 $p.append(this.text);
               }
               break;
@@ -197,26 +195,27 @@ define([
               target.num = thisPanel.targets.length;
               target.pos = target.num;
               thisPanel.targets.push(target);
-              $span.css(doc.style['default'].css);
-              if (currentPStyle)
-                $span.css(currentPStyle);
-              if (thisPanel.targetsMarked) {
-                if (target.attr) {
-                  // Default style name for targets is 'target'
-                  if (!target.attr.style)
-                    target.attr.style = 'target';
-                  $span.css(doc.style[target.attr.style].css);
-                  // Check if target has specific attributes
-                  if (target.attr.css)
-                    $span.css(target.attr.css);
+              if ($span) {
+                $span.css(doc.style['default'].css);
+                if (currentPStyle)
+                  $span.css(currentPStyle);
+                if (thisPanel.targetsMarked) {
+                  if (target.attr) {
+                    // Default style name for targets is 'target'
+                    if (!target.attr.style)
+                      target.attr.style = 'target';
+                    $span.css(doc.style[target.attr.style].css);
+                    // Check if target has specific attributes
+                    if (target.attr.css)
+                      $span.css(target.attr.css);
+                  } else if (doc.style['target'])
+                    $span.css(doc.style['target'].css);
+                } else {
+                  target.targetStatus = 'HIDDEN';
                 }
-                else if (doc.style['target'])
-                  $span.css(doc.style['target'].css);
-              } else {
-                target.targetStatus = 'HIDDEN';
+                $p.append($span);
               }
-              $p.append($span);
-              target.$p = $p;              
+              target.$p = $p;
               break;
           }
           empty = false;

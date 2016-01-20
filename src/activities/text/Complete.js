@@ -57,7 +57,38 @@ define([
 
   var ActPanelAncestor = TextActivityBase.Panel.prototype;
   Complete.Panel.prototype = {
-    constructor: Complete.Panel
+    constructor: Complete.Panel,
+    /**
+     * 
+     * Creates a target DOM element for the provided target.
+     * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
+     * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
+     * to store the target, or replaced by another type of object.
+     * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
+     */
+    $createTargetElement: function (target, $span) {
+      // Targets are always hidden in this type of activities
+      return null;
+    },
+    /**
+     * 
+     * Basic initialization procedure
+     */
+    initActivity: function () {
+      ActPanelAncestor.initActivity.call(this);
+      this.$div.find('.JClicTextDocument').attr('contenteditable', 'true').attr('spellcheck', 'false');
+      this.playing = true;
+    },    
+    /**
+     * 
+     * Ordinary ending of the activity, usually called form `processEvent`
+     * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
+     */
+    finishActivity: function (result) {
+      this.$div.find('.JClicTextDocument').attr('contenteditable', 'false');
+      return ActPanelAncestor.finishActivity.call(this, result);
+    }
+    // TODO: Check activity completion!
   };
 
   // Complete.Panel extends TextActivityBase.Panel
