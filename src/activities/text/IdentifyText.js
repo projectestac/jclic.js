@@ -95,7 +95,7 @@ define([
       ActPanelAncestor.initActivity.call(this);
       this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');
       this.playing = true;
-    },    
+    },
     /**
      * 
      * Counts the number of targets that are solved
@@ -116,9 +116,9 @@ define([
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
     finishActivity: function (result) {
-      this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');      
+      this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');
       return ActPanelAncestor.finishActivity.call(this, result);
-    },    
+    },
     /**
      * 
      * Main handler used to process mouse, touch, keyboard and edit events.
@@ -127,8 +127,6 @@ define([
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
      */
     processEvent: function (event) {
-      
-      // TODO: Check also clicks outside targets
 
       if (!ActPanelAncestor.processEvent.call(this, event))
         return false;
@@ -137,6 +135,7 @@ define([
 
       switch (event.type) {
         case 'click':
+          var text, pos;
           if (target) {
             var ok = false;
             if (target.targetStatus === 'SOLVED') {
@@ -145,22 +144,29 @@ define([
               target.targetStatus = 'SOLVED';
               ok = true;
             }
+            text = target.text;
+            pos = target.pos;
             // TODO: Just on/off target colors, don't mark it as error!
             target.checkColors();
-
-            // Check and notify action
-            var cellsAtPlace = this.countSolvedTargets();
-            this.ps.reportNewAction(this.act, 'SELECT', target.text, target.pos, ok, cellsAtPlace);
-
-            // End activity or play event sound
-            if (ok && cellsAtPlace === this.targets.length)
-              this.finishActivity(true);
-            else
-              this.playEvent(ok ? 'actionOk' : 'actionError');
-
+          } else {
+            // TODO: Get current text at click position, perhaps using [window|document].getSelection
+            text = 'unknown';
+            pos = 0;
           }
+
+          // Check and notify action
+          var cellsAtPlace = this.countSolvedTargets();
+          this.ps.reportNewAction(this.act, 'SELECT', text, pos, ok, cellsAtPlace);
+
+          // End activity or play event sound
+          if (ok && cellsAtPlace === this.targets.length)
+            this.finishActivity(true);
+          else
+            this.playEvent(ok ? 'actionOk' : 'actionError');
+
           event.preventDefault();
           break;
+          
         default:
           break;
       }
