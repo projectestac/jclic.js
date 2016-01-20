@@ -21,9 +21,12 @@ define(["../Utils"], function (Utils) {
    * @exports EventSoundsElement
    * @class
    * @param {string} id - The identifier of this media sound
+   * @param {string=} fileName - An optional file name or URL containing the sound data
    */
-  var EventSoundsElement = function (id) {
+  var EventSoundsElement = function (id, fileName) {
     this.id = id;
+    if(fileName)
+      this.fileName = fileName;
   };
 
   EventSoundsElement.prototype = {

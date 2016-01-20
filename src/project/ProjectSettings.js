@@ -65,7 +65,7 @@ define([
     /**
      * The main {@link EventSounds} object of the project
      * @type {EventSounds} */
-    eventSounds: EventSounds.defaultEventSounds,
+    eventSounds: EventSounds.prototype.defaultEventSounds,
     // 
     /**
      * 
@@ -86,7 +86,7 @@ define([
             settings.languages.push(this.textContent);
             break;
           case 'eventSounds':
-            settings.eventSounds = new EventSounds(EventSounds.defaultEventSounds);
+            settings.eventSounds = new EventSounds(settings.eventSounds);
             settings.eventSounds.setProperties($(this));
             break;
           case 'skin':
