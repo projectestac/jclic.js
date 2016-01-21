@@ -102,7 +102,7 @@ define([
      * Audio data for default event sounds
      * @type {object} */
     resources: {
-      start: 'data:audio/mpeg3;base64,' +
+      start: 'data:audio/mp3;base64,' +
           '//NAxAARGk5RdUEQANIEZEBAPGPyIAAYAKMY/6EaQn8hP+c/yEb//kITU7oc9Cf6nPnPoT/8nQhC' +
           'KEEEnDizkAwM8ThYH1Bj/EAYEhyUGghyivv7fn0vtsLdYI0CiTQE+aaqfH3BW37/80LEFhl6nvZf' +
           'j1ACplLtsfx19gOQfBp7iHeEWRj8WxiLLI6khikjEI9IvsePycfERCSpPJ9s95IbO1O/tRX70XQi' +
@@ -135,7 +135,7 @@ define([
           'qqqqqqqqqqqqqqqqqqqqqqqqqv/zQMSQDcslQAoAR1mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq' +
           'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq' +
           'qqqqqqqqqqqq',
-      click: 'data:audio/mpeg3;base64,' +
+      click: 'data:audio/mp3;base64,' +
           '//NAxAASsyJgIUEQAY///gX8///yfyHO/8hCEafoRp3nPQgAAEUAABBCEIT//QhCKQhNGyEIQhCN' +
           'ITU5//OQhCN7f/yEZQAAIynOc5CEIhGnABGY/4gAIQZ4h4h4d3Z2Z9Jba5XWhWP/80LEEBhJOxcf' +
           'iUAC9BEda+oiKFQsViiMpvHFC98pLjySjUNeKoYxMpwIT21HmHlEhx83A9K5vDAuZUQxzq7nJPgE' +
@@ -155,7 +155,7 @@ define([
           'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsR3EnAF9kgARgBVVVVVVVVVVVVVVVVVVVVV' +
           'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV' +
           'VVVVVVVVVVVVVVVVVVVVVVVVVQ==',
-      actionOk: 'data:audio/mpeg3;base64,' +
+      actionOk: 'data:audio/mp3;base64,' +
           '//NAxAAT+gKmPUFoAI81KAANYQZECuQAASjAD820006kC+buYDgGEGEKIcsCYAUQYA6JeI2JmS5w' +
           'cY5yXL6b1IJpp6kG////9X+h/oaaaadAvpvBA5/9QIDQQOQ+cbQllsQQAKTggvn/80LECxdCcupd' +
           'jFACwA8cFoNFZuosRJUe3E48kEhWIRueePjSdR4T9XMQ4SwB/BZ1GQNAtHHOPzOFryImV2zlb//r' +
@@ -182,7 +182,7 @@ define([
           'HjzvOh0JndVbtdYykkFQmdDoaDqCIaLKTEFNRTMuOTkuNaqqqqqqqqqqqqqqqqr/80LEXRFYBf5I' +
           'CEYAqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq' +
           'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqo=',
-      actionError: 'data:audio/mpeg3;base64,' +
+      actionError: 'data:audio/mp3;base64,' +
           '//M4xAAUuVJUAUgYARcXFz4DgFAeKHAeChiIie7u+iaIibgYuAYGcTz3OIhf/Xd38v+J6J7u+gGB' +
           'iw8P8PDw8PDHRw8/+O6GADo/h78BEQz8HAHh5+v+A4A6H/8AAEfIiZmZBXlicwVCsWj1//M4xAwY' +
           'WvL/H4goAHY5EADTzSBEDUpfz/OhTMPGC+NAMWAgfAcAgHFSjhZD1PCRAUQFBjMUxMhGGuOVyndn' +
@@ -204,7 +204,7 @@ define([
           '//qn///YxTAwQIGhyP/u7O/3P2eqNZ2k4so4sp2NFAYhnZ2couBNTEFNRTMuOTkuNVVVVVVV//M4' +
           'xDoKqz1wDACNy1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV' +
           'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV',
-      finishedOk: 'data:audio/mpeg3;base64,' +
+      finishedOk: 'data:audio/mp3;base64,' +
           '//NAxAAQiXIEAUIQAPnfO/OdyAYGehP/U5Gqd+c/8785zoBi3QhCMpCVP+SpwM6AYGODH/8TvB+s' +
           'PiMP5cMCcPygIAg7/lAff4IAgcBCD6ofD4diQbC0WaISi0SB3EAzA8WZgeALXg3/80LEGBoDGyZf' +
           'glACgsRODRuWFcnMLm+eQEhRVQz5IePy5Icm/2Yn5GLY58hG3/J0JyAkq54WhVHosmkTmr//OYkI' +
@@ -262,7 +262,7 @@ define([
           'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV' +
           '//NAxLwR22HQAAgKnVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV' +
           'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=',
-      finishedError: 'data:audio/mpeg3;base64,' +
+      finishedError: 'data:audio/mp3;base64,' +
           '/+MgxAAT5BX8AUEoAP///mNkc/////1Oc/6noc/9f///85/0O///r/kI2jf+pCf/Of/6HP/znOc7' +
           'znPkIQgfFzvIRjhwOChCEIQOB8Ph853yHOc/zvEA4AAAAABF/UgSPmQKhhYBw4f/4yLECxVpXpgB' +
           'mYgAKgCEXoz6Bj24G4gxlPDKhgAUoFxwtiGufjWFsGbKgF+Fh4noT/8i5uaFcZgLm1i2k0Mbam8Z' +

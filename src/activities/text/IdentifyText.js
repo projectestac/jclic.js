@@ -120,6 +120,11 @@ define([
       return ActPanelAncestor.finishActivity.call(this, result);
     },
     /**
+     * Used to avoid duplicate event processing
+     * @type {number}
+     */
+    lastTimeStamp: 0,
+    /**
      * 
      * Main handler used to process mouse, touch, keyboard and edit events.
      * @param {HTMLEvent} event - The HTML event to be processed
@@ -128,8 +133,12 @@ define([
      */
     processEvent: function (event) {
 
-      if (!ActPanelAncestor.processEvent.call(this, event))
+      if (!ActPanelAncestor.processEvent.call(this, event) || 
+          event.timeStamp === this.lastTimeStamp)
         return false;
+      
+      if(event.timeStamp)
+        this.lastTimeStamp = event.timeStamp;
 
       var target = event.textTarget;
 
@@ -165,6 +174,7 @@ define([
             this.playEvent(ok ? 'actionOk' : 'actionError');
 
           event.preventDefault();
+          
           break;
           
         default:

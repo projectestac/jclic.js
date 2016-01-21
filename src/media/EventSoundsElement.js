@@ -29,8 +29,13 @@ define([
    */
   var EventSoundsElement = function (id, fileName) {
     this.id = id;
-    if(fileName)
-      this.fileName = fileName;
+    if(fileName){
+      if(fileName.indexOf('data:')===0){
+        this.audio = new Audio(fileName);        
+      }
+      else
+        this.fileName = fileName;
+    }
   };
 
   EventSoundsElement.prototype = {
@@ -44,6 +49,14 @@ define([
      * @type {boolean} */
     enabled: Utils.DEFAULT,
     /**
+     * Media player used to play this sound
+     * @type {ActiveMediaPlayer} */
+    player: null,
+    /**
+     * HTMLAudioElement used to play this sound
+     * @type {HTMLAudioElement} */    
+    audio: null,
+    /**
      * Reads the properties of this object from an XML element
      * @param {external:jQuery} $xml - The XML element to be parsed
      */
@@ -53,27 +66,32 @@ define([
       return this;
     },
     /**
-     * Media player used to play this sound
-     * @type {ActiveMediaPlayer} */
-    player: null,
-    /**
      * 
      * Instantiates this audio object
      * @param {PlayStation} ps
      * @param {MediaBag} mediaBag
      */    
     realize: function(ps, mediaBag){
-      if(this.player === null){
+      if(this.audio){
+        //this.audio.load();
+        console.log(this.id + ': ' + this.audio.readyState);
+      } else if(this.player === null && this.fileName!==null){
         this.player = new ActiveMediaPlayer(new MediaContent('PLAY_AUDIO', this.fileName), mediaBag, ps);      
         this.player.realize();
       }
     },
     play: function(){
-      if(this.player)
+      if(this.audio){
+        this.audio.currentTime=0;
+        this.audio.play();
+      }
+      else if(this.player)
         this.player.play();
     },
     stop: function(){
-      if(this.player)
+      if(this.audio)
+        this.audio.pause();
+      else if(this.player)
         this.player.stop();
     }
   };

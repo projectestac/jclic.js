@@ -49,6 +49,14 @@ define([
    */
 
   /**
+   * The HTMLAudioElement interface provides access to the properties of &lt;audio&gt; elements, as
+   * well as methods to manipulate them. It derives from the
+   * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement HTMLMediaElement} interface.
+   * @external HTMLAudioElement
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement
+   */
+  
+  /**
    * The Intl.Collator object is a constructor for collators, objects that enable language sensitive
    * string comparison.
    * @external Collator
