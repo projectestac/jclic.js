@@ -664,7 +664,7 @@
     </cell>
    </cells>
    <cells rows="3" cols="4" cellWidth="100.0" cellHeight="90.0" border="true" id="solvedPrimary">
-    <shaper class="@Rectangular" cols="4" rows="3" />
+    <shaper class="@Rectangular" cols="1" rows="13" />
     <cell>
      <p>I did it</p>
     </cell>
@@ -3533,7 +3533,7 @@
     </cell>
    </cells>
    <cells rows="3" cols="4" cellWidth="100.0" cellHeight="90.0" border="true" id="solvedPrimary">
-    <shaper class="@Rectangular" cols="4" rows="3" />
+    <shaper class="@Rectangular" cols="1" rows="13" />
     <cell>
      <p>This activity uses a custom set of event sounds</p>
      <p>Listen what happens when you click on the cells, when a mach is solved or failed, or when the activity is finished.</p>
@@ -3571,7 +3571,9 @@
     <cell>
      <p>these are mine</p>
     </cell>
-    <cell />
+    <cell>
+     <p>the flowers are ours</p>
+    </cell>
    </cells>
    <scramble times="31" primary="false" secondary="true" />
    <layout position="AB" />

@@ -77,6 +77,9 @@ define([
         this.player.realize();
       }
     },
+    /**
+     * Plays the audioo associated to this event
+     */
     play: function(){
       if(this.audio){
         this.audio.currentTime=0;
@@ -85,6 +88,9 @@ define([
       else if(this.player)
         this.player.play();
     },
+    /**
+     * Stops playing the audio associated to this event
+     */
     stop: function(){
       if(this.audio)
         this.audio.pause();
