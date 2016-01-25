@@ -178,7 +178,6 @@ define([
       else
         this.firstRun = false;
 
-      //this.setAndPlayMsg('main', 'start');
       if (this.grid) {
 
         this.grid.setChars(this.act.tgc.text);
@@ -197,8 +196,9 @@ define([
           this.bgAlt.setVisible(false);
         }
 
-        this.playing = true;
+        this.setAndPlayMsg('initial', 'start');
         this.invalidate().update();
+        this.playing = true;
       }
     },
     /**

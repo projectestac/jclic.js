@@ -164,14 +164,16 @@ define([
       else
         this.firstRun = false;
 
-      //this.setAndPlayMsg('main', 'start');
       if (this.bg) {
         if (this.act.scramble['primary'])
           this.shuffle([this.bg], true, true);
+        
         if (this.useOrder)
           this.currentItem = this.bg.getNextItem(-1);
-        this.playing = true;
+        
+        this.setAndPlayMsg('initial', 'start');
         this.invalidate().update();
+        this.playing = true;
       }
     },
     /**

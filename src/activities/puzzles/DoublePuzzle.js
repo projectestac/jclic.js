@@ -169,13 +169,13 @@ define([
       else
         this.firstRun = false;
 
-      //this.setAndPlayMsg('main', 'start');
       if (this.bgA && this.bgB) {
         this.shuffle([this.bgA], true, true);
         if (this.useOrder)
           this.currentItem = this.bgA.getNextItem(-1);
-        this.playing = true;
+        this.setAndPlayMsg('initial', 'start');
         this.invalidate().update();
+        this.playing = true;
       }
     },
     /**
@@ -252,8 +252,7 @@ define([
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
-        }
-        else {
+        } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
           var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
@@ -301,8 +300,7 @@ define([
                 if (!bx1.playMedia(this.ps))
                   this.playEvent('click');
               }
-            }
-            else {
+            } else {
               // Pairing completed
               //
               // Find the active boxes behind `bc.origin` and `p`

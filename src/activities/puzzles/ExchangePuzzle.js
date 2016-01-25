@@ -21,7 +21,7 @@ define([
   "../../boxes/BoxConnector",
   "../../AWT"
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT) {
-  
+
   /**
    * This class of {@link Activity} shows only one panel with scrambled {@link ActiveBox} objects.
    * To solve the activity, each cell must exchange its location with another one. When all cells are
@@ -150,13 +150,13 @@ define([
       else
         this.firstRun = false;
 
-      //this.setAndPlayMsg('main', 'start');
       if (this.bg) {
         this.shuffle([this.bg], true, true);
         if (this.useOrder)
           this.currentItem = this.bg.getNextItem(-1);
-        this.playing = true;
+        this.setAndPlayMsg('initial', 'start');
         this.invalidate().update();
+        this.playing = true;
       }
     },
     /**
@@ -233,8 +233,7 @@ define([
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
-        }
-        else {
+        } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
           var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
@@ -280,8 +279,7 @@ define([
                 if (!bx1.playMedia(this.ps))
                   this.playEvent('click');
               }
-            }
-            else {
+            } else {
               // Pairing completed
               //
               // Find the active boxes behind `bc.origin` and `p`              

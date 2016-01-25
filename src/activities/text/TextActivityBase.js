@@ -248,6 +248,65 @@ define([
     },
     /**
      * 
+     * Basic initialization procedure, common to all activities.
+     */
+    initActivity: function () {
+      if (this.act.prevScreen)
+        this.preInitActivity();
+      else
+        this.startActivity();
+
+      /*
+       if (this.playing) {
+       this.playing = false;
+       this.ps.reportEndActivity(this.act, this.solved);
+       }
+       this.solved = false;
+       this.ps.reportNewActivity(this.act, 0);
+       this.attachEvents();
+       this.ps.startActivity();
+       this.enableCounters();
+       */
+    },
+    /**
+     * 
+     * Called when the activity starts playing
+     */
+    startActivity: function () {
+      ActPanelAncestor.initActivity.call(this);
+      this.showingPrevScreen = false;
+      this.setAndPlayMsg('initial', 'start');
+      //this.initDocument();
+      if (this.checkButton)
+        this.checkButton.setVisible(true);
+      //pane.requestFocus();
+      this.playing = true;
+    },
+    /**
+     * 
+     * Called when the text activity has a 'previous screen' information to be shown before the
+     * activity starts
+     */
+    preInitActivity: function () {
+      if (!this.act.messages['previous'] || !this.act.prevScreen)
+        return;
+      this.showingPrevScreen = true;
+      if (this.checkButton)
+        this.checkButton.setVisible(false);
+      this.enableCounters(true, false, false);
+      this.ps.setCounterValue('time', 0);
+
+      this.ps.setMsg(this.act.messages['previous']);
+      //pane.setEditable(false);
+      //pane.setStyledDocument(prevScreenDocument != null ? prevScreenDocument : tad);
+      if (this.prevScreenTimer) {
+        this.ps.setCountDown('time', this.act.prevScreenMaxTime);
+        this.prevScreenTimer.start();
+      }
+      this.ps.playMsg();
+    },
+    /**
+     * 
      * Main handler used to process mouse, touch, keyboard and edit events
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its

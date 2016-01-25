@@ -250,7 +250,6 @@ define([
       else
         this.firstRun = false;
 
-      //this.setAndPlayMsg('main', 'start');
       if (this.grid) {
 
         this.grid.setChars(this.act.tgc.text);
@@ -260,8 +259,9 @@ define([
         this.setCursorAt(0, 0);
         this.advance = 'ADVANCE_RIGHT';
         this.setBtnStatus();
-        this.playing = true;
+        this.setAndPlayMsg('initial', 'start');
         this.invalidate().update();
+        this.playing = true;
 
         this.$div.attr("tabindex", 0);
         this.$div.focus();

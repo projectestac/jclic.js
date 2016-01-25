@@ -218,26 +218,10 @@ define([
           border: 0, padding: 0, margin: 0,
           'text-align': 'center'
         });
-        /*
-         this.$textField.blur(function(event){
-         console.log('Focus lost!');
-         event.preventDefault();
-         });
-         */
-
-        /*
-         this.$textField.change(function(event){
-         console.log('Text changed!');
-         event.preventDefault();
-         });
-         */
+        
         this.$form.append(this.$textField);
 
-
-        //this.attachEvent(this.$textField, 'edit');
-
         this.bgA.setContent(abcA, solved ? solved : null);
-        //this.currentCell = 0;
 
         this.bgA.setDefaultIdAss();
 
@@ -266,7 +250,6 @@ define([
       else
         this.firstRun = false;
 
-      //this.setAndPlayMsg('main', 'start');
       if (this.bgA && this.bgB) {
         // Scramble cells
         if (this.act.scramble.primary)
@@ -275,6 +258,7 @@ define([
         if (this.useOrder)
           this.currentItem = this.bgA.getNextItem(-1);
 
+        this.setAndPlayMsg('initial', 'start');
         this.invalidate().update();
         this.playing = true;
       }

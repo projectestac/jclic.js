@@ -174,7 +174,6 @@ define([
       else
         this.firstRun = false;
 
-      //this.setAndPlayMsg('main', 'start');
       if (this.bg) {
         // 
         // This activity has an special shuffle method. Cells can move only to places near the 'hole'
@@ -197,8 +196,9 @@ define([
           if (dstBx !== null)
             this.hiddenBox.exchangeLocation(dstBx);
         }
-        this.playing = true;
+        this.setAndPlayMsg('initial', 'start');
         this.invalidate().update();
+        this.playing = true;
       }
     },
     /**

@@ -175,11 +175,11 @@ define([
       else
         this.firstRun = false;
 
-      //this.setAndPlayMsg('main', 'start');
       if (this.bg) {
         this.shuffle([this.bg], true, true);
-        this.playing = true;
         this.invalidate().update();
+        this.setAndPlayMsg('initial', 'start');
+        this.playing = true;
       }
     },
     /**

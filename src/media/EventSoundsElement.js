@@ -72,10 +72,7 @@ define([
      * @param {MediaBag} mediaBag
      */    
     realize: function(ps, mediaBag){
-      if(this.audio){
-        //this.audio.load();
-        console.log(this.id + ': ' + this.audio.readyState);
-      } else if(this.player === null && this.fileName!==null){
+      if(!this.audio && this.player === null && this.fileName!==null){
         this.player = new ActiveMediaPlayer(new MediaContent('PLAY_AUDIO', this.fileName), mediaBag, ps);      
         this.player.realize();
       }

@@ -107,6 +107,22 @@ define([
       }
     },
     /**
+     * 
+     * Basic initialization procedure
+     */
+    initActivity: function () {
+      ActPanelAncestor.initActivity.call(this);
+
+      if (!this.firstRun)
+        this.buildVisualComponents();
+      else
+        this.firstRun = false;
+
+      this.invalidate().update();
+      this.setAndPlayMsg('initial', 'start');
+      this.playing = true;
+    },
+    /**
      * Updates the graphic content of this panel.<br>
      * This method will be called from {@link AWT.Container#update} when needed.
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,

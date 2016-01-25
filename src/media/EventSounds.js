@@ -71,8 +71,9 @@ define([
     setProperties: function ($xml) {
       var elements = this.elements;
       $xml.children().each(function () {
-        elements[this.nodeName] = new EventSoundsElement(this.nodeName);
-        elements[this.nodeName].setProperties($(this));
+        var id = this.getAttribute('id');
+        elements[id] = new EventSoundsElement(id);
+        elements[id].setProperties($(this));
       });
       return this;
     },

@@ -557,7 +557,7 @@ define([
      */
     prepareMedia: function (ps) {
       
-      this.eventSounds.realize(this.project.mediaBag);
+      this.eventSounds.realize(ps, this.project.mediaBag);
 
       $.each(this.messages, function (key, msg) {
         if (msg !== null)
@@ -864,7 +864,6 @@ define([
       this.solved = false;
       this.ps.reportNewActivity(this.act, 0);
       this.attachEvents();
-      this.ps.startActivity();
       this.enableCounters();
     },
     /**
@@ -872,9 +871,9 @@ define([
      * Called when the activity starts playing
      */
     startActivity: function () {
-      var msg = this.act.messages['initial'];
-      if (msg)
-        this.ps.setMsg(msg);
+      //var msg = this.act.messages['initial'];
+      //if (msg)
+      //  this.ps.setMsg(msg);
       this.playing = true;
     },
     /**
@@ -943,8 +942,6 @@ define([
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
      */
     processEvent: function (event) {
-      if (this.playing)
-        console.log('[JClic] Event fired: ' + event.type);
       return false;
     },
     /**

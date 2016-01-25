@@ -162,7 +162,6 @@ define([
       else
         this.firstRun = false;
 
-      //this.setAndPlayMsg('main', 'start');
       if (this.bgA && this.bgB) {
         // Scramble cells
         if (this.act.scramble.primary)
@@ -171,8 +170,9 @@ define([
         if (this.useOrder)
           this.currentItem = this.bgA.getNextItem(-1);
 
-        this.playing = true;
+        this.setAndPlayMsg('initial', 'start');
         this.invalidate().update();
+        this.playing = true;
       }
     },
     /**

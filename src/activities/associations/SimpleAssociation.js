@@ -184,8 +184,7 @@ define([
         this.buildVisualComponents();
       else
         this.firstRun = false;
-
-      //this.setAndPlayMsg('main', 'start');
+      
       if (this.bgA && this.bgB) {
         // Scramble cells
         var scrambleArray = [];
@@ -200,8 +199,9 @@ define([
         if (this.useOrder)
           this.currentItem = this.bgA.getNextItem(-1);
 
-        this.playing = true;
         this.invalidate().update();
+        this.setAndPlayMsg('initial', 'start');
+        this.playing = true;
       }
     },
     /**
