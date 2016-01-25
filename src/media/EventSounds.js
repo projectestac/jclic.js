@@ -35,11 +35,10 @@ define([
    */
   var EventSounds = function (parent) {
     if(parent){
+      this.elements = {};
       var thisElements = this.elements;
       $.each(parent.elements, function(key, value){
-        if(parent.elements.hasOwnProperty(key)){
           thisElements[key]=value;
-        }
       });
     }
   };
