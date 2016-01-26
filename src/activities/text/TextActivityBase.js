@@ -43,16 +43,21 @@ define([
      * @type {string} */
     checkButtonText: null,
     /**
-     * Optional text to be shown before the beginning of the activity.
-     * @type {string}*/
+     * When `true`, a text will be shown before the beggining of the activity.
+     * @type {boolean} */
+    prevScreen: false,
+    /**
+     * Optional text to be shown before the beginning of the activity. When `null`, this text is
+     * the main document.
+     * @type {string} */
     prevScreenText: null,
     /**
      * The style of the optional text to be shown before the beginning of the activity.
-     * @type {BoxBase}*/
+     * @type {BoxBase} */
     prevScreenStyle: null,
     /**
      * Maximum amount of time for showing the previous document text activities.
-     * @type {number}*/
+     * @type {number} */
     prevScreenMaxTime: -1,
     /**
      * 
@@ -110,7 +115,6 @@ define([
      */
     buildVisualComponents: function () {
       ActPanelAncestor.buildVisualComponents.call(this);
-      this.setDocContent(this.$div, this.act.document);
     },
     /**
      * 
@@ -190,6 +194,12 @@ define([
               break;
 
             case 'target':
+              if(thisPanel.showingPrevScreen){
+                $span.text(this.text);
+                $p.append($span);
+                break;
+              }
+              
               var target = this;
               $span = thisPanel.$createTargetElement(target, $span);
               target.num = thisPanel.targets.length;
@@ -255,18 +265,6 @@ define([
         this.preInitActivity();
       else
         this.startActivity();
-
-      /*
-       if (this.playing) {
-       this.playing = false;
-       this.ps.reportEndActivity(this.act, this.solved);
-       }
-       this.solved = false;
-       this.ps.reportNewActivity(this.act, 0);
-       this.attachEvents();
-       this.ps.startActivity();
-       this.enableCounters();
-       */
     },
     /**
      * 
@@ -274,12 +272,10 @@ define([
      */
     startActivity: function () {
       ActPanelAncestor.initActivity.call(this);
-      this.showingPrevScreen = false;
       this.setAndPlayMsg('initial', 'start');
-      //this.initDocument();
+      this.setDocContent(this.$div, this.act.document);
       if (this.checkButton)
         this.checkButton.setVisible(true);
-      //pane.requestFocus();
       this.playing = true;
     },
     /**
@@ -288,9 +284,23 @@ define([
      * activity starts
      */
     preInitActivity: function () {
-      if (!this.act.messages['previous'] || !this.act.prevScreen)
+      if (!this.act.prevScreen)
         return;
+
       this.showingPrevScreen = true;
+      this.$div.empty();
+
+      if (!this.act.prevScreenText) {
+        this.setDocContent(this.$div, this.act.document);
+      } else {
+        if (!this.act.prevScreenStyle)
+          this.act.prevScreenStyle = new BoxBase();
+        this.$div.css(this.act.prevScreenStyle.getCSS()).css('overflow', 'auto');
+        var $html = $('<div class="JClicTextDocument"/>').css({'padding': 4});
+        $html.css(this.act.prevScreenStyle.getCSS()).append(this.act.prevScreenText);
+        this.$div.append($html);
+      }
+
       if (this.checkButton)
         this.checkButton.setVisible(false);
       this.enableCounters(true, false, false);
@@ -303,6 +313,15 @@ define([
         this.ps.setCountDown('time', this.act.prevScreenMaxTime);
         this.prevScreenTimer.start();
       }
+      
+      var thisPanel = this;
+      this.$div.on('click', function(){
+        thisPanel.showingPrevScreen = false;
+        thisPanel.$div.unbind('click');
+        thisPanel.startActivity();
+        return true;
+      });
+      
       this.ps.playMsg();
     },
     /**

@@ -500,6 +500,7 @@ define([
             break;
 
           case 'prevScreen':
+            act.prevScreen = true;
             $node.children().each(function () {
               switch (this.nodeName) {
                 case 'style':
@@ -781,6 +782,12 @@ define([
      * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
+      
+      this.pos.x = rect.pos.x;
+      this.pos.y = rect.pos.y;
+      this.dim.width = rect.dim.width;
+      this.dim.height = rect.dim.height;
+
       this.invalidate(rect);
       this.$div.css({
         position: 'relative',
@@ -909,7 +916,7 @@ define([
       for (var i = 0; i < this.events.length; i++) {
         this.attachEvent(this.$div, this.events[i]);
       }
-      // Prepare handler to check if we are in a touch devide
+      // Prepare handler to check if we are in a touch device
       if (!K.TOUCH_DEVICE && $.inArray(TOUCH_TEST_EVENT, this.events) === -1)
         this.attachEvent(this.$div, TOUCH_TEST_EVENT);
     },

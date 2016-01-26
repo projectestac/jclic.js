@@ -197,36 +197,45 @@ define([
         this.buildVisualComponents();
       else
         this.firstRun = false;
+    },
+    /**
+     * 
+     * Called when the activity starts playing
+     */
+    startActivity: function () {
+      ActPanelAncestor.startActivity.call(this);
 
-      if (this.act.type === 'orderWords' && !this.act.amongParagraphs) {
-        // Group targets by paragraph
-        var groups = [];
-        var lastTarget = null;
-        var currentGroup = [];
+      if (!this.showingPrevScreen) {
+        if (this.act.type === 'orderWords' && !this.act.amongParagraphs) {
+          // Group targets by paragraph
+          var groups = [];
+          var lastTarget = null;
+          var currentGroup = [];
 
-        for (var i in this.targets) {
-          var t = this.targets[i];
-          if (lastTarget !== null && lastTarget.$p !== t.$p) {
-            groups.push(currentGroup);
-            currentGroup = [];
+          for (var i in this.targets) {
+            var t = this.targets[i];
+            if (lastTarget !== null && lastTarget.$p !== t.$p) {
+              groups.push(currentGroup);
+              currentGroup = [];
+            }
+            currentGroup.push(t);
+            lastTarget = t;
           }
-          currentGroup.push(t);
-          lastTarget = t;
-        }
-        if (currentGroup.length > 0) {
-          groups.push(currentGroup);
+          if (currentGroup.length > 0) {
+            groups.push(currentGroup);
+          }
+
+          // Scramble group by group
+          for (var g in groups) {
+            this.shuffleTargets(groups[g], this.act.shuffles);
+          }
+        } else {
+          this.shuffleTargets(this.targets, this.act.shuffles);
         }
 
-        // Scramble group by group
-        for (var g in groups) {
-          this.shuffleTargets(groups[g], this.act.shuffles);
-        }
-      } else {
-        this.shuffleTargets(this.targets, this.act.shuffles);
+        this.playing = true;
       }
-
-      this.playing = true;
-
+      this.setBounds(this);
     },
     /**
      * 
@@ -310,7 +319,7 @@ define([
 
       var p = null;
 
-      if (this.bc && this.playing) {
+      if (this.bc && this.playing && !this.showingPrevScreen) {
 
         // 
         // _touchend_ event don't provide pageX nor pageY information
