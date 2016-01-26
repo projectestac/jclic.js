@@ -240,6 +240,19 @@ define([
       });
 
       $dom.append($html);
+      
+      if(this.act.checkButtonText && !this.showingPrevScreen){
+        this.$checkButton = $('<button type="button">'+this.act.checkButtonText+'</button>');
+        // Invert button background and foreground colors
+        var css = $.extend(true, {}, doc.style['default'].css);
+        var color = css.color ? css.color : 'black';
+        css.color = css.background;
+        css.background = color;
+        this.$checkButton.css(css).css({position: 'absolute', bottom: '0', width: '100%'});
+        $dom.append(this.$checkButton);
+        // TODO: Set button behavior!
+      }
+      
       return $dom;
     },
     /**
