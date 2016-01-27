@@ -26,10 +26,8 @@ static web hosting services.
 ## Known issues
 
 * This project is a work on progress. Only some basic features of JClic are implemented.
-* Text activities of type "complete", "order" and "identify" are not yet implemented.
 * Only a basic implementation of "skin" is provided, without counters nor buttons.
 * The JClic reporting system is not yet implemented.
-* Event sounds are not yet implemented.
 * Video playing and recording/playing of sounds are not yet implemented.
 * Playing of MIDI files is not yet implemented
 * Loading of big (about 10MB) JClic project files from zipped files can crash on tablets
@@ -50,13 +48,13 @@ sudo npm install -g npm
 ```
 
 We use [Grunt](http://gruntjs.com/) for automation of building tasks. You must globally install this
-package running:
+package:
 
 ```
 sudo npm install -g grunt-cli
 ```
 
-To install the remaining packages, just go to the project's root directory and run:
+To install the remaining packages, just go to the project's root directory and launch:
 
 ```
 npm install
@@ -64,21 +62,21 @@ npm install
 
 This will install jQuery, Browserify and other needed components into `node_modules` 
 
-To build jclic.js, just run:
+To build jclic.js, just launch:
 
 ```
 grunt
 ```
 
-This will generate the file `jclic.min.js` in the `dist` folder.
+This will generate the file `jclic.min.js`, placed in the `dist` folder.
 
-To test the module and see the demo in your browser, just launch the test server running:
+To test the module and see the demo on your browser, just launch the test server running:
 
 ```
 grunt server
 ```
 
-Full API documentation of jclic.js is available at http://projectestac.github.io/jclic.js/doc
+Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc
 
-__jclic.js__ is also available as [NPM](https://www.npmjs.com/package/jclic) and [Bower](https://libraries.io/bower/jclic)
+__jclic.js__ is also available as a [NPM](https://www.npmjs.com/package/jclic) and [Bower](https://libraries.io/bower/jclic)
 packages.
