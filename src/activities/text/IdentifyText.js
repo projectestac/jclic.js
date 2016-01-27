@@ -112,6 +112,30 @@ define([
     },
     /**
      * 
+     * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
+     * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
+     */
+    evaluatePanel: function () {      
+      var targetsOk = 0;
+      var numTargets = this.targets.length;
+      for (var i = 0; i < numTargets; i++) {
+        var target = this.targets[i];
+        var ok = (target.targetStatus === 'SOLVED');
+        if (ok)
+          targetsOk++;
+        target.checkColors();
+        this.ps.reportNewAction(this.act, 'SELECT', target.text, target.pos, ok, targetsOk);
+      }
+      if (targetsOk === numTargets) {
+        this.finishActivity(true);
+        return true;
+      } else {
+        this.playEvent('finishedError');
+      }
+      return false;
+    },
+    /**
+     * 
      * Ordinary ending of the activity, usually called form `processEvent`
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
@@ -133,11 +157,11 @@ define([
      */
     processEvent: function (event) {
 
-      if (!ActPanelAncestor.processEvent.call(this, event) || 
+      if (!ActPanelAncestor.processEvent.call(this, event) ||
           event.timeStamp === this.lastTimeStamp)
         return false;
-      
-      if(event.timeStamp)
+
+      if (event.timeStamp)
         this.lastTimeStamp = event.timeStamp;
 
       var target = event.textTarget;
@@ -163,20 +187,21 @@ define([
             pos = 0;
           }
 
-          // Check and notify action
-          var cellsAtPlace = this.countSolvedTargets();
-          this.ps.reportNewAction(this.act, 'SELECT', text, pos, ok, cellsAtPlace);
+          if (!this.$checkButton) {
+            // Check and notify action
+            var cellsAtPlace = this.countSolvedTargets();
+            this.ps.reportNewAction(this.act, 'SELECT', text, pos, ok, cellsAtPlace);
 
-          // End activity or play event sound
-          if (ok && cellsAtPlace === this.targets.length)
-            this.finishActivity(true);
-          else
-            this.playEvent(ok ? 'actionOk' : 'actionError');
+            // End activity or play event sound
+            if (ok && cellsAtPlace === this.targets.length)
+              this.finishActivity(true);
+            else
+              this.playEvent(ok ? 'actionOk' : 'actionError');
+          }
 
           event.preventDefault();
-          
           break;
-          
+
         default:
           break;
       }

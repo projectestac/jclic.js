@@ -286,13 +286,44 @@ define([
      * @returns {number}
      */
     countSolvedTargets: function () {
-      var result = 0;
-      for (var i in this.targets) {
+      var solved = 0;
+      var numTargets = this.targets.length;
+      for (var i=0; i<numTargets; i++) {
         var t = this.targets[i];
         if (t.num === t.pos)
-          result++;
+          solved++;
       }
-      return result;
+      return solved;
+    },
+    /**
+     * 
+     * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
+     * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
+     */
+    evaluatePanel: function () {
+      
+      if (this.bc && this.bc.active)
+        this.bc.end();
+      this.setCurrentTarget(null);
+      
+      var targetsOk = 0;
+      var numTargets = this.targets.length;
+      for (var i = 0; i < numTargets; i++) {
+        var target = this.targets[i];
+        var ok = (target.num === target.pos);
+        target.targetStatus = ok ? 'SOLVED' : 'WITH_ERROR';
+        if (ok)
+          targetsOk++;
+        target.checkColors();
+        this.ps.reportNewAction(this.act, 'PLACE', target.text, target.pos, ok, targetsOk);
+      }
+      if (targetsOk === numTargets) {
+        this.finishActivity(true);
+        return true;
+      } else {
+        this.playEvent('finishedError');
+      }
+      return false;
     },
     /**
      * 
@@ -300,7 +331,7 @@ define([
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
     finishActivity: function (result) {
-      $('.JClicTextTarget').css('cursor', 'auto');
+      $('.JClicTextTarget').css('cursor', 'pointer');
       return ActPanelAncestor.finishActivity.call(this, result);
     },
     /**
@@ -342,16 +373,18 @@ define([
                 this.swapTargets(target, this.currentTarget);
                 this.setCurrentTarget(null);
 
-                // Check and notify action
-                var cellsAtPlace = this.countSolvedTargets();
-                var ok = target.pos === target.num;
-                this.ps.reportNewAction(this.act, 'PLACE', target.text, target.pos, ok, cellsAtPlace);
+                if (!this.$checkButton) {
+                  // Check and notify action
+                  var cellsAtPlace = this.countSolvedTargets();
+                  var ok = target.pos === target.num;
+                  this.ps.reportNewAction(this.act, 'PLACE', target.text, target.pos, ok, cellsAtPlace);
 
-                // End activity or play event sound
-                if (ok && cellsAtPlace === this.targets.length)
-                  this.finishActivity(true);
-                else
-                  this.playEvent(ok ? 'actionOk' : 'actionError');
+                  // End activity or play event sound
+                  if (ok && cellsAtPlace === this.targets.length)
+                    this.finishActivity(true);
+                  else
+                    this.playEvent(ok ? 'actionOk' : 'actionError');
+                }
 
               } else {
                 this.setCurrentTarget(target);

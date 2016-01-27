@@ -3571,7 +3571,7 @@
      <counters time="true" actions="true" score="true" />
     </container>
     <window bgColor="0xC0C0C0" border="false">
-     <size width="540" height="350" />
+     <size width="540" height="400" />
     </window>
    </settings>
    <document>
@@ -3654,13 +3654,13 @@
       <text>	    </text>
       <target>
        <answer>watermelon</answer>
-       <response fill="_" length="10" maxLength="7" />
+       <response fill="_" length="10" maxLength="10" />
        <text>watermelon</text>
       </target>
       <text>	    </text>
       <target>
        <answer>grapes</answer>
-       <response fill="_" length="6" maxLength="4" />
+       <response fill="_" length="6" maxLength="6" />
        <text>grapes</text>
       </target>
      </p>

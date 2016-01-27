@@ -110,6 +110,10 @@ define([
      * @type {boolean} */
     targetsMarked: true,
     /**
+     * The button used to check the activity, only when `Activity.checkButtonText` is not null
+     * @type {external:jQuery}*/
+    $checkButton: null,
+    /**
      * 
      * Prepares the text panel
      */
@@ -243,14 +247,11 @@ define([
       
       if(this.act.checkButtonText && !this.showingPrevScreen){
         this.$checkButton = $('<button type="button">'+this.act.checkButtonText+'</button>');
-        // Invert button background and foreground colors
-        var css = $.extend(true, {}, doc.style['default'].css);
-        var color = css.color ? css.color : 'black';
-        css.color = css.background;
-        css.background = color;
-        this.$checkButton.css(css).css({position: 'absolute', bottom: '0', width: '100%'});
+        this.$checkButton.css({position: 'absolute', bottom: '0', width: '100%'});
+        this.$checkButton.on('click', function(){
+          thisPanel.evaluatePanel();
+        });
         $dom.append(this.$checkButton);
-        // TODO: Set button behavior!
       }
       
       return $dom;
@@ -287,8 +288,6 @@ define([
       ActPanelAncestor.initActivity.call(this);
       this.setAndPlayMsg('initial', 'start');
       this.setDocContent(this.$div, this.act.document);
-      if (this.checkButton)
-        this.checkButton.setVisible(true);
       this.playing = true;
     },
     /**
@@ -314,14 +313,10 @@ define([
         this.$div.append($html);
       }
 
-      if (this.checkButton)
-        this.checkButton.setVisible(false);
       this.enableCounters(true, false, false);
       this.ps.setCounterValue('time', 0);
 
       this.ps.setMsg(this.act.messages['previous']);
-      //pane.setEditable(false);
-      //pane.setStyledDocument(prevScreenDocument != null ? prevScreenDocument : tad);
       if (this.prevScreenTimer) {
         this.ps.setCountDown('time', this.act.prevScreenMaxTime);
         this.prevScreenTimer.start();
@@ -337,6 +332,24 @@ define([
       
       this.ps.playMsg();
     },
+    /**
+     * Called when the user clicks on the check button
+     * @returns {boolean} - `true` when the panel is OK, `false` otherwise.
+     */
+    evaluatePanel: function(){      
+      this.finishActivity(true);      
+      return true;
+    },
+    /**
+     * 
+     * Ordinary ending of the activity, usually called form `processEvent`
+     * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
+     */
+    finishActivity: function (result) {
+      if(this.$checkButton)
+        this.$checkButton.prop('disabled', true);
+      ActPanelAncestor.finishActivity.call(this, result);      
+    },    
     /**
      * 
      * Main handler used to process mouse, touch, keyboard and edit events

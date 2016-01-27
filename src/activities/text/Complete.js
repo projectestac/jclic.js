@@ -81,6 +81,29 @@ define([
     },    
     /**
      * 
+     * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
+     * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
+     */
+    evaluatePanel: function () {      
+      
+      // TODO: Mark errors!
+      
+      var currentText = this.$div.find('.JClicTextDocument').text().trim();
+      var originalText = this.act.document.getRawText();      
+      var ok = this.act.ev.checkText(currentText, originalText);
+      
+      this.ps.reportNewAction(this.act, 'WRITE', currentText, originalText, ok, this.targets.length);
+        
+      if (ok) {
+        this.finishActivity(true);
+        return true;
+      } else {
+        this.playEvent('finishedError');
+      }
+      return false;
+    },
+    /**
+     * 
      * Ordinary ending of the activity, usually called form `processEvent`
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
@@ -88,7 +111,8 @@ define([
       this.$div.find('.JClicTextDocument').attr('contenteditable', 'false');
       return ActPanelAncestor.finishActivity.call(this, result);
     }
-    // TODO: Check activity completion!
+    
+    // TODO: Check fot activity completion without checkButton!
   };
 
   // Complete.Panel extends TextActivityBase.Panel

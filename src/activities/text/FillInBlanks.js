@@ -43,7 +43,7 @@ define([
      * Whether to block or not the jump to other targets until the current one
      * is resolved.
      * @type {boolean} */
-    forceOkToAdvance: false,    
+    forceOkToAdvance: false,
     /**
      * 
      * This kind of activity usually makes use of the keyboard
@@ -125,6 +125,32 @@ define([
     },
     /**
      * 
+     * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
+     * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
+     */
+    evaluatePanel: function () {
+      var targetsOk = 0;
+      var numTargets = this.targets.length;
+      for (var i = 0; i < numTargets; i++) {
+        var target = this.targets[i];
+        var result = this.act.ev.evalText(target.readCurrentText(), target.answers);
+        var ok = this.act.ev.isOk(result);
+        target.targetStatus = ok ? 'SOLVED' : 'WITH_ERROR';
+        if (ok)
+          targetsOk++;
+        this.markTarget(target, result);
+        this.ps.reportNewAction(this.act, 'WRITE', target.currentText, target.getAnswers(), ok, targetsOk);
+      }
+      if (targetsOk === numTargets) {
+        this.finishActivity(true);
+        return true;
+      } else {
+        this.playEvent('finishedError');
+      }
+      return false;
+    },
+    /**
+     * 
      * Checks if the specified TextTarget has a valid answer in its `currentText` field
      * @param {TextActivityDocument.TextTarget} target - The target to check
      * @param {boolean} onlyCheck - When `true`, the cursor will no be re-positioned
@@ -142,7 +168,7 @@ define([
 
       this.markTarget(target, result);
 
-      var targetsOk = this.countSolvedTargets(false);
+      var targetsOk = this.countSolvedTargets(false, false);
 
       if (target.currentText.length > 0) {
         this.ps.reportNewAction(this.act, 'WRITE', target.currentText, target.getAnswers(), ok, targetsOk);
@@ -150,8 +176,7 @@ define([
       if (ok && targetsOk === this.targets.length) {
         this.finishActivity(true);
         return ok;
-      }
-      else if (target.currentText.length > 0)
+      } else if (target.currentText.length > 0)
         this.playEvent(ok ? 'actionOk' : 'actionError');
 
       if (jumpDirection && jumpDirection !== 0) {
@@ -166,8 +191,7 @@ define([
         if (target.$span) {
           target.$span.focus();
           Utils.setSelectionRange(target.$span.get(0), 0, 0);
-        }
-        else if (target.$comboList)
+        } else if (target.$comboList)
           target.$comboList.focus();
       }
 
@@ -178,18 +202,16 @@ define([
      * Counts the number of targets with `SOLVED` status
      * @param {boolean} checkNow - When `true`, all targets will be evaluated. Otherwhise, only the
      * current value of `targetStatus` will be checked.
+     * @param {boolean=} mark - When `true`, errors in the target answer will be marked.
      * @returns {number} - The number of targets currently solved.
      */
-    countSolvedTargets: function (checkNow) {
+    countSolvedTargets: function (checkNow, mark) {
       var n = 0;
       for (var i = 0; i < this.targets.length; i++) {
         var target = this.targets[i];
         if (checkNow) {
-          if (target.$span)
-            target.currentText = target.$span.text();
-          else if (target.$comboList)
-            target.currentText = target.$comboList.val();
-          this.checkTarget(target, true);
+          target.readCurrentText();
+          this.checkTarget(target, !mark);
         }
         if (target.targetStatus === 'SOLVED')
           n++;
@@ -298,15 +320,14 @@ define([
               $span.text(target.currentText);
               Utils.setSelectionRange($span.get(0), pos, pos);
               target.flagModified = true;
-            }
-            else if (target.$comboList) {
+            } else if (target.$comboList) {
               target.$comboList.css(target.doc.style['target'].css);
             }
           }
           break;
 
         case 'blur':
-          if (target.flagModified)
+          if (target.flagModified && !this.$checkButton)
             this.checkTarget(target, false, 1);
           break;
 
@@ -319,7 +340,7 @@ define([
               txt = txt.replace(/<br>/g, '');
               $span.html(txt);
               target.currentText = $span.text();
-              return this.checkTarget(target, false, 1);
+              return this.$checkButton ? false : this.checkTarget(target, false, 1);
             }
             // Check if text has changed
             // From here, use 'text' instead of 'html' to avoid HTML entities
@@ -352,8 +373,7 @@ define([
                   $span.text(txt);
                   Utils.setSelectionRange($span.get(0), pos, pos);
                 }
-              }
-              else if (txt === '') {
+              } else if (txt === '') {
                 txt = target.iniChar;
                 $span.text(txt);
                 Utils.setSelectionRange($span.get(0), 0, 0);
@@ -367,7 +387,7 @@ define([
           if (target && target.$comboList) {
             target.currentText = target.$comboList.val();
             target.flagModified = true;
-            return this.checkTarget(target, false, 1);
+            return this.$checkButton ? false : this.checkTarget(target, false, 1);
           }
           break;
 

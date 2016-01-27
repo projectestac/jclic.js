@@ -219,6 +219,42 @@ define([
         attr['css'] = css;
 
       return attr;
+    },
+    /**
+     * 
+     * Gets the full text of this document in raw format
+     * @returns {String} - The text of the document.
+     */
+    getRawText: function(){
+      var $html = $('<div/>');            
+      // Process paragraphs
+      $.each(this.p, function () {
+        // Creates a new DOM paragraph
+        var $p = $('<p/>');
+        var empty = true;
+        // Process the paragraph elements
+        $.each(this.elements, function () {
+          switch (this.objectType) {
+            case 'text':
+            case 'target':
+                $p.append(this.text);
+              break;
+            case 'cell':
+              // cells are not considered raw text of the document
+              break;
+            default:
+                break;
+          }
+          empty = false;
+        });
+        if (empty) {
+          // Don't leave paragraphs empty
+          $p.html('&nbsp;');
+        }
+        // Adds the paragraph to the DOM element
+        $html.append($p);
+      });      
+      return $html.text().trim();
     }
   };
 
@@ -450,6 +486,18 @@ define([
           $element.css(style.css);
         }
       }
+    },
+    /**
+     * 
+     * Fils the `currentText` member with the text currently hosted in $span or selected in $comboList
+     * @returns {String} - The current text of this target
+     */
+    readCurrentText: function () {
+      if (this.$span)
+        this.currentText = this.$span.text();
+      else if (this.$comboList)
+        this.currentText = this.$comboList.val();      
+      return this.currentText;
     }
   };
 
