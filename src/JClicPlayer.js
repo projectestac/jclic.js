@@ -249,7 +249,7 @@ define([
         'info': new AWT.Action('info', function () {
           if (tp.actPanel && tp.actPanel.act.hasInfo()) {
             if (tp.actPanel.act.infoUrl) {
-              tp.displayUrl(tp.act.infoUrl, true);
+              tp.displayURL(tp.act.infoUrl, true);
             } else if (tp.actPanel.act.infoCmd) {
               tp.runCmd(tp.actPanel.act.infoCmd);
             }
@@ -844,8 +844,10 @@ define([
             break;
 
           case 'URL':
-            if (fn)
-              thisPlayer.displayUrl(fn, true);
+            if (fn){
+              // When mediaContent.level is 2 or more, the URL will be opened in a separate window.
+              thisPlayer.displayURL(fn, mediaContent.level > 1);
+            }
             break;
 
           case 'PLAY_AUDIO':

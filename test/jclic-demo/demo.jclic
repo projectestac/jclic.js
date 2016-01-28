@@ -203,6 +203,7 @@
     </shaper>
     <cell>
      <p>In JClic cells can have different media and animations. It's possible also to record a sound from the microphone and listen it:</p>
+     <media type="URL" level="1" file="http://clic.xtec.cat" />
     </cell>
     <cell>
      <media type="PLAY_VIDEO" level="1" file="test1.swf" stretch="true" free="false" catchMouseEvents="true" />

@@ -31,7 +31,7 @@ define([
    */
   var MediaContent = function (type, mediaFileName) {
     this.mediaType = type;
-    if(mediaFileName)
+    if (mediaFileName)
       this.mediaFileName = mediaFileName;
   };
 
@@ -189,8 +189,7 @@ define([
           result += ' from:' + this.from;
         if (this.to >= 0)
           result += ' to:' + this.to;
-      }
-      else if (this.externalParam) {
+      } else if (this.externalParam) {
         result += ' ' + this.externalParam;
       }
       return result;
@@ -218,6 +217,9 @@ define([
           break;
         case 'PLAY_MIDI':
           icon = 'music';
+          break;
+        case 'URL':
+          icon = 'url';
           break;
         default:
           icon = 'default';
@@ -265,7 +267,17 @@ define([
         'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
         'PjwvcGF0aD48cGF0aCBkPSJNMTIgM3YxMC41NWMtLjU5LS4zNC0xLjI3LS41NS0yLS41NS0yLjIx' +
         'IDAtNCAxLjc5LTQgNHMxLjc5IDQgNCA0IDQtMS43OSA0LTRWN2g0VjNoLTZ6Ij48L3BhdGg+PC9z' +
-        'dmc+Cg=='
+        'dmc+Cg==',
+    url: 'data:image/svg+xml;base64,' +
+        'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiMwMDAwMDAi' +
+        'IGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDov' +
+        'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
+        'PjwvcGF0aD48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAx' +
+        'MC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptLTEgMTcuOTNjLTMuOTUtLjQ5LTctMy44NS03LTcu' +
+        'OTMgMC0uNjIuMDgtMS4yMS4yMS0xLjc5TDkgMTV2MWMwIDEuMS45IDIgMiAydjEuOTN6bTYuOS0y' +
+        'LjU0Yy0uMjYtLjgxLTEtMS4zOS0xLjktMS4zOWgtMXYtM2MwLS41NS0uNDUtMS0xLTFIOHYtMmgy' +
+        'Yy41NSAwIDEtLjQ1IDEtMVY3aDJjMS4xIDAgMi0uOSAyLTJ2LS40MWMyLjkzIDEuMTkgNSA0LjA2' +
+        'IDUgNy40MSAwIDIuMDgtLjggMy45Ny0yLjEgNS4zOXoiPjwvcGF0aD48L3N2Zz4K'
   };
 
   /**
