@@ -194,6 +194,7 @@
     "externals": {
       "CanvasRenderingContext2D": "<p>The CanvasRenderingContext2D interface provides the 2D rendering context for the drawing surface<br>of a &lt;canvas&gt; element.</p>",
       "Collator": "<p>The Intl.Collator object is a constructor for collators, objects that enable language sensitive<br>string comparison.</p>",
+      "HTMLAudioElement": "<p>The HTMLAudioElement interface provides access to the properties of &lt;audio&gt; elements, as<br>well as methods to manipulate them. It derives from the<br>{@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement HTMLMediaElement} interface.</p>",
       "HTMLImageElement": "<p>The HTMLImageElement interface provides special properties and methods (beyond the regular<br>{@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement HTMLElement} interface it<br>also has available to it by inheritance) for manipulating the layout and presentation of<br>&lt;img&gt; elements.</p>",
       "jQuery": "<p>A jQuery object</p>",
       "JSZip": "<p>A JSZip object</p>"
