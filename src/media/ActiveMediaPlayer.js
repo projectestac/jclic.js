@@ -104,7 +104,7 @@ define([
     realize: function () {
       if (this.mbe) {
         this.mbe.build(function () {
-          this.data.trigger('pause');
+          this.data.pause();
         });
       }
     },
@@ -125,17 +125,19 @@ define([
           var armed = false;
 
           // `this` points here to the [MediaBagElement](MediaBagElement) object `mbe`
+          var thisData = this.data;
+          var $thisData = $(thisData);
 
           // Clear previous event handlers
-          this.data.off();
+          $thisData.off();
 
           // If there is a time fragment specified, prepare to stop when the `to` position is reached
           if (thisMP.mc.to > 0) {
-            this.data.on('timeupdate', function () {
+            $thisData.on('timeupdate', function () {
               // `this` points here to the HTML audio element
-              if (armed && this.currentTime >= thisMP.mc.to / 1000) {
-                $(this).off('timeupdate');
-                this.pause();
+              if (armed && thisData.currentTime >= thisMP.mc.to / 1000) {
+                $thisData.off('timeupdate');
+                thisData.pause();
               }
             });
           }
@@ -143,20 +145,20 @@ define([
           // Seek the media position
           var t = thisMP.mc.from > 0 ? thisMP.mc.from / 1000 : 0;
           // CAN_PLAY_THROUGH is always 4 ?
-          if (this.data[0].readyState >= 4) {
+          if (thisData.readyState >= 4) {
             armed = true;
-            this.data[0].pause();
-            this.data[0].currentTime = t;
-            this.data[0].play();
+            thisData.pause();
+            thisData.currentTime = t;
+            thisData.play();
           }
           else {
-            this.data[0].load();
-            this.data.on('canplaythrough', function () {
-              $(this).off('canplaythrough');
+            thisData.load();
+            $thisData.on('canplaythrough', function () {
+              $thisData.off('canplaythrough');
               armed = true;
-              this.pause();
-              this.currentTime = t;
-              this.play();
+              thisData.pause();
+              thisData.currentTime = t;
+              thisData.play();
             });
           }
         });

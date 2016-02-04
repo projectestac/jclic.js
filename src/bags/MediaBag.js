@@ -127,7 +127,7 @@ define([
       // Only for debug purposes: return always 'false'
       // TODO: Check loading process!
       $.each(this.elements, function (name, element) {
-        if (element.data && !element.ready) {
+        if (element.data && !element.ready && !element.checkReady() && !element.checkTimeout()) {
           console.log('... waiting for ' + name);
           result = true;
           return false;

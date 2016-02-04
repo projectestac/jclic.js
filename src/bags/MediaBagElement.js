@@ -42,7 +42,7 @@ define([
     }
     if (zip)
       this.zip = zip;
-    this._whenReady = [];
+    this.timeout = Date.now() + 10000;
   };
 
   MediaBagElement.prototype = {
@@ -133,8 +133,11 @@ define([
     build: function (callback) {
       var media = this;
 
-      if (callback)
+      if (callback) {
+        if (!this._whenReady)
+          this._whenReady = [];
         this._whenReady.push(callback);
+      }
 
       if (!this.data) {
         var fullPath = this.getFullPath();
@@ -154,22 +157,21 @@ define([
 
           case 'image':
             this.data = new Image();
-            $(this.data).attr('src', fullPath);
-            if (this.data.complete || this.data.readyState === 4 || this.data.readyState === 'complete')
-              // Image was in cache
-              this.ready = true;
-            else
-              $(this.data).load(function (response, status, xhr) {
-                if (status !== 'error') {
-                  media._onReady();
-                }
-              });
+            this.data.onload = media._onReady.call(media);
+            this.data.src = fullPath;
             break;
 
           case 'audio':
-            this.data = new $('<audio />').attr('src', fullPath);
-            this.ready = true;
-            break;
+            this.data = new Audio(fullPath);
+            if(this.data.readyState>=1)
+              this.ready=true;
+            else
+              this.data.onloadedmetadata = function () {
+                console.log('audio ready: ' + fullPath);
+                media._onReady.call(media);
+              };
+            this.data.pause();
+            break;            
 
           case 'video':
             this.data = $('<video />').attr('src', fullPath);
@@ -178,19 +180,19 @@ define([
 
           case 'xml':
             this.data = '';
-            this.ready=true;
+            this.ready = true;
             // Since we are not yet supporting complex skins, there
             // is no need to read XML files
             /*
-            $.get(fullPath, null, null, 'xml')
-                .done(function (data) {
-                  media.data = data;
-                  media._onReady();
-                }).fail(function () {
-              console.log('Error loading ' + media.name);
-              media.data = null;
-            });
-            */
+             $.get(fullPath, null, null, 'xml')
+             .done(function (data) {
+             media.data = data;
+             media._onReady();
+             }).fail(function () {
+             console.log('Error loading ' + media.name);
+             media.data = null;
+             });
+             */
             break;
 
           default:
@@ -204,17 +206,37 @@ define([
 
       return this;
     },
+    checkReady: function () {
+      if (this.data && !this.ready) {
+        switch (this.type) {
+          case 'image':
+            this.ready = (this.data.complete === true);
+            break;
+          case 'audio':
+            this.ready = (this.data.readyState >= 1);
+            break;
+          default:
+            this.ready = true;
+        }
+      }
+      return this.ready;
+    },
+    checkTimeout: function() {
+      return Date.now() > this.timeout;
+    },
     /**
      * 
      * Notify listeners that the resource is ready
      */
     _onReady: function () {
       this.ready = true;
-      for (var i = 0; i < this._whenReady.length; i++) {
-        var callback = this._whenReady[i];
-        callback.apply(this);
+      if (this._whenReady) {
+        for (var i = 0; i < this._whenReady.length; i++) {
+          var callback = this._whenReady[i];
+          callback.apply(this);
+        }
+        this._whenReady = null;
       }
-      this._whenReady.length = 0;
     },
     /**
      * 
