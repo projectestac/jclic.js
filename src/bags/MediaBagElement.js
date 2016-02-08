@@ -157,25 +157,16 @@ define([
 
           case 'image':
             this.data = new Image();
-            this.data.onload = media._onReady.call(media);
+            $(this.data).on('load', function(){media._onReady.call(media);});
             this.data.src = fullPath;
             break;
 
           case 'audio':
-            this.data = new Audio(fullPath);
-            if(this.data.readyState>=1)
-              this.ready=true;
-            else
-              this.data.onloadedmetadata = function () {
-                console.log('audio ready: ' + fullPath);
-                media._onReady.call(media);
-              };
-            this.data.pause();
-            break;            
-
           case 'video':
-            this.data = $('<video />').attr('src', fullPath);
-            this.ready = true;
+            this.data = document.createElement(this.type);
+            $(this.data).on('canplay', function () {media._onReady.call(media);});
+            this.data.src = fullPath;
+            this.data.pause();
             break;
 
           case 'xml':
@@ -213,6 +204,7 @@ define([
             this.ready = (this.data.complete === true);
             break;
           case 'audio':
+          case 'video':
             this.ready = (this.data.readyState >= 1);
             break;
           default:
@@ -230,6 +222,7 @@ define([
      */
     _onReady: function () {
       this.ready = true;
+      console.log(this.name+" ready!");
       if (this._whenReady) {
         for (var i = 0; i < this._whenReady.length; i++) {
           var callback = this._whenReady[i];

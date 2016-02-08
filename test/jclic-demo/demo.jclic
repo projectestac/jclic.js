@@ -209,7 +209,7 @@
      <media type="PLAY_VIDEO" level="1" file="test1.swf" stretch="true" free="false" catchMouseEvents="true" />
     </cell>
     <cell>
-     <media type="PLAY_VIDEO" level="1" file="zebra.avi" stretch="true" free="false" />
+     <media type="PLAY_VIDEO" level="1" file="zebra.mp4" stretch="true" free="false" />
     </cell>
     <cell image="simpleanim.gif" />
     <cell>
@@ -3414,10 +3414,10 @@
     </container>
     <window bgColor="0xC0C0C0" border="true" />
     <eventSounds>
-     <click file="pop.wav" />
-     <actionError file="whistledown.wav" />
-     <actionOk file="whistleup.wav" />
-     <finishedOk file="ohhh.wav" />
+     <sound id="click" file="pop.wav" />
+     <sound id="actionError" file="whistledown.wav" />
+     <sound id="actionOk" file="whistleup.wav" />
+     <sound id="finishedOk" file="ohhh.wav" />
     </eventSounds>
    </settings>
    <cells rows="4" columns="3" cellWidth="100.0" cellHeight="90.0" border="true" id="primary">
@@ -5140,7 +5140,7 @@
   </activity>
  </activities>
  <mediaBag>
-  <media name="zebra.avi" file="zebra.avi" />
+  <media name="zebra.mp4" file="zebra.mp4" />
   <media name="bici.gif" file="bici.gif" />
   <media name="bici2.gif" file="bici2.gif" />
   <media name="camio.gif" file="camio.gif" />
