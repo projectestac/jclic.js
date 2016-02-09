@@ -42,7 +42,7 @@ define([
     }
     if (zip)
       this.zip = zip;
-    this.timeout = Date.now() + 10000;
+    this.timeout = Date.now() + Utils.settings.LOAD_TIMEOUT;
   };
 
   MediaBagElement.prototype = {
@@ -83,6 +83,10 @@ define([
      * The resource type ('audio', 'image', 'midi', 'video', 'font')
      * @type {string} */
     type: null,
+    /**
+     * Time set to load the resource before leaving
+     * @type {number} */
+    timeout: 0,
     // 
     // Other fields present in JClic, currently not used:  
     // animated: false,  
@@ -168,6 +172,15 @@ define([
             this.data.src = fullPath;
             this.data.pause();
             break;
+            
+          case 'anim':
+            //this.data = document.createElement('object');
+            //this.data.type = 'application/x-shockwave-flash';            
+            //$(this.data).on('canplay', function () {media._onReady.call(media);});
+            //this.data.data = fullPath;
+            this.data = $('<object type="application/x-shockwave-flash" width="300" height="200" data="'+fullPath+'"/>').get(0);
+            this.ready = true;
+            break;
 
           case 'xml':
             this.data = '';
@@ -205,9 +218,8 @@ define([
             break;
           case 'audio':
           case 'video':
+          case 'anim':
             this.ready = (this.data.readyState >= 1);
-            if(this.ready)
-              console.log(this.name+" ready - checked");
             break;
           default:
             this.ready = true;
@@ -215,8 +227,15 @@ define([
       }
       return this.ready;
     },
+    /**
+     * 
+     * Check that the loading of this resource has not timed out.
+     */    
     checkTimeout: function() {
-      return Date.now() > this.timeout;
+      var result = Date.now() > this.timeout;
+      if(result)
+        console.log('Timeout while loading '+this.name);
+      return result;
     },
     /**
      * 
@@ -224,7 +243,6 @@ define([
      */
     _onReady: function () {
       this.ready = true;
-      console.log(this.name+" ready - callback");
       if (this._whenReady) {
         for (var i = 0; i < this._whenReady.length; i++) {
           var callback = this._whenReady[i];

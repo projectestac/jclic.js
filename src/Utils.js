@@ -350,6 +350,7 @@ define([
         video: 'avi,mov,mpeg,mp4,ogv,m4v,webm',
         font: 'ttf,otf,eot,woff,woff2',
         midi: 'mid,midi',
+        anim: 'swf',
         // Used in custom skins
         xml: 'xml'
       },
@@ -380,7 +381,8 @@ define([
         otf: 'application/font-sfnt',
         eot: ' application/vnd.ms-fontobject',
         woff: 'application/font-woff',
-        woff2: 'application/font-woff2'
+        woff2: 'application/font-woff2',
+        swf: 'application/x-shockwave-flash'
       },
       // Global settings susceptible to be modified
       COMPRESS_IMAGES: true,
@@ -392,7 +394,9 @@ define([
         DOWN: 40
       },
       // Flag to indicate that we are running on a touch device
-      TOUCH_DEVICE: false
+      TOUCH_DEVICE: false,
+      // Amount of time (in milliseconds) to wait before a media resource is loaded
+      LOAD_TIMEOUT: 10000
     },
     //
     // Functions useful to deal with caret position in `contentEditable` DOM elements

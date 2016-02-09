@@ -105,8 +105,9 @@ define([
       if (this.mbe) {
         var thisMediaPlayer = this;
         this.mbe.build(function () {          
-          this.data.pause();
-          if(this.type === 'video' && this.data){
+          if(this.data.pause)
+            this.data.pause();
+          if((this.type === 'video' || this.type === 'anim') && this.data){
             thisMediaPlayer.$visualComponent = $(this.data);
             thisMediaPlayer.$visualComponent.css('z-index', 20);
           }
