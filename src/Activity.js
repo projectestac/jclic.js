@@ -727,6 +727,10 @@ define([
      * @type {external:jQuery} */
     $div: null,
     /**
+     * The jQuery main canvas element used by this panel
+     * @type {external:jQuery} */
+    $canvas: null,
+    /**
      * The realized current {@link Skin}
      * @type {Skin} */
     skin: null,

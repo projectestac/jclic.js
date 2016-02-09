@@ -211,7 +211,9 @@ define([
      * @param {PlayStation} playStation - The {@link JClicPlayer}
      */
     prepareMedia: function (playStation) {
-      // TODO: Implement ActiveBagContent.prepareMedia      
+      for(var i=0; i<this.activeBoxContentArray.length; i++){
+        this.activeBoxContentArray[i].prepareMedia(playStation);
+      }
     },
     /**
      * 

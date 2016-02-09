@@ -198,12 +198,12 @@ define([
               break;
 
             case 'target':
-              if(thisPanel.showingPrevScreen){
+              if (thisPanel.showingPrevScreen) {
                 $span.text(this.text);
                 $p.append($span);
                 break;
               }
-              
+
               var target = this;
               $span = thisPanel.$createTargetElement(target, $span);
               target.num = thisPanel.targets.length;
@@ -244,16 +244,16 @@ define([
       });
 
       $dom.append($html);
-      
-      if(this.act.checkButtonText && !this.showingPrevScreen){
-        this.$checkButton = $('<button type="button">'+this.act.checkButtonText+'</button>');
+
+      if (this.act.checkButtonText && !this.showingPrevScreen) {
+        this.$checkButton = $('<button type="button">' + this.act.checkButtonText + '</button>');
         this.$checkButton.css({position: 'absolute', bottom: '0', width: '100%'});
-        this.$checkButton.on('click', function(){
+        this.$checkButton.on('click', function () {
           thisPanel.evaluatePanel();
         });
         $dom.append(this.$checkButton);
       }
-      
+
       return $dom;
     },
     /**
@@ -321,23 +321,23 @@ define([
         this.ps.setCountDown('time', this.act.prevScreenMaxTime);
         this.prevScreenTimer.start();
       }
-      
+
       var thisPanel = this;
-      this.$div.on('click', function(){
+      this.$div.on('click', function () {
         thisPanel.showingPrevScreen = false;
         thisPanel.$div.unbind('click');
         thisPanel.startActivity();
         return true;
       });
-      
+
       this.ps.playMsg();
     },
     /**
      * Called when the user clicks on the check button
      * @returns {boolean} - `true` when the panel is OK, `false` otherwise.
      */
-    evaluatePanel: function(){      
-      this.finishActivity(true);      
+    evaluatePanel: function () {
+      this.finishActivity(true);
       return true;
     },
     /**
@@ -346,10 +346,10 @@ define([
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
     finishActivity: function (result) {
-      if(this.$checkButton)
+      if (this.$checkButton)
         this.$checkButton.prop('disabled', true);
-      ActPanelAncestor.finishActivity.call(this, result);      
-    },    
+      ActPanelAncestor.finishActivity.call(this, result);
+    },
     /**
      * 
      * Main handler used to process mouse, touch, keyboard and edit events

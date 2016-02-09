@@ -156,8 +156,7 @@ define([
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
-        }
-        else {
+        } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
               y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
@@ -213,8 +212,7 @@ define([
                 if (!m)
                   this.playEvent('click');
               }
-            }
-            else {
+            } else {
               // Pairing completed
               //
               // Find the active boxes behind `bc.origin` and `p`
@@ -223,8 +221,7 @@ define([
               bx1 = this.bgA.findActiveBox(origin);
               if (bx1) {
                 bx2 = this.bgB.findActiveBox(p);
-              }
-              else {
+              } else {
                 bx2 = this.bgB.findActiveBox(origin);
                 if (bx2) {
                   bx1 = this.bgA.findActiveBox(p);
@@ -245,8 +242,7 @@ define([
                   if (this.act.abc['solvedPrimary']) {
                     bx1.switchToAlt(this.ps);
                     m |= bx1.playMedia(this.ps);
-                  }
-                  else {
+                  } else {
                     if (clickOnBg0)
                       m |= bx1.playMedia(this.ps);
                     else
@@ -269,8 +265,7 @@ define([
                   this.finishActivity(true);
                 else if (!m)
                   this.playEvent(ok ? 'actionOk' : 'actionError');
-              }
-              else if ((clickOnBg0 && this.bgA.contains(p)) || (!clickOnBg0 && this.bgB.contains(p))) {
+              } else if ((clickOnBg0 && this.bgA.contains(p)) || (!clickOnBg0 && this.bgB.contains(p))) {
                 // click on grid, out of cell
                 var srcOut = (bx1 ? bx1.getDescription() : bx2 ? bx2.getDescription() : 'null');
                 this.ps.reportNewAction(this.act, 'MATCH', srcOut, 'null', false, this.bgB.countCellsWithIdAss(-1));

@@ -190,8 +190,7 @@ define([
       if (type === 'acrossClues') { // Horizontal
         this.hClue = ab;
         this.hClueBtn = sb;
-      }
-      else {
+      } else {
         this.vClue = ab;
         this.vClueBtn = sb;
       }
@@ -362,8 +361,7 @@ define([
                   this.writeChars(txt);
                 }
               }
-            }
-            else if (this.hClue.contains(p))
+            } else if (this.hClue.contains(p))
               this.hClue.playMedia(this.ps);
             else if (this.vClue.contains(p))
               this.vClue.playMedia(this.ps);
@@ -373,15 +371,13 @@ define([
               else
                 this.advance = 'ADVANCE_RIGHT';
               this.setBtnStatus();
-            }
-            else if (this.vClueBtn.contains(p)) {
+            } else if (this.vClueBtn.contains(p)) {
               if (this.advance === 'ADVANCE_DOWN')
                 this.advance = 'NO_ADVANCE';
               else
                 this.advance = 'ADVANCE_DOWN';
               this.setBtnStatus();
-            }
-            else
+            } else
               break;
 
             this.update();
@@ -481,8 +477,7 @@ define([
             this.grid.setCursorEnabled(false);
             this.grid.stopCursorBlink();
             this.finishActivity(true);
-          }
-          else {
+          } else {
             this.playEvent('click');
             if (this.advance === 'ADVANCE_DOWN')
               this.moveCursor(0, 1);

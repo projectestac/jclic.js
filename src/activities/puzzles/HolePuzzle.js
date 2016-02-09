@@ -237,7 +237,9 @@ define([
      * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
-      this.$div.empty();
+      if (this.$canvas)
+        this.$canvas.remove();      
+      
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bg && this.parkBg) {
         // Create the main canvas

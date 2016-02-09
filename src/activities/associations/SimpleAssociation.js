@@ -184,7 +184,7 @@ define([
         this.buildVisualComponents();
       else
         this.firstRun = false;
-      
+
       if (this.bgA && this.bgB) {
         // Scramble cells
         var scrambleArray = [];
@@ -240,7 +240,9 @@ define([
      * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
-      this.$div.empty();
+      if (this.$canvas)
+        this.$canvas.remove();
+
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bgA || this.bgB) {
         // Create the main canvas
@@ -277,8 +279,7 @@ define([
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
-        }
-        else {
+        } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
               y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
@@ -334,8 +335,7 @@ define([
                 if (!m)
                   this.playEvent('click');
               }
-            }
-            else {
+            } else {
               // Pairing completed
               //
               // Find the active boxes behind `bc.origin` and `p`
@@ -344,8 +344,7 @@ define([
               bx1 = this.bgA.findActiveBox(origin);
               if (bx1) {
                 bx2 = this.bgB.findActiveBox(p);
-              }
-              else {
+              } else {
                 bx2 = this.bgB.findActiveBox(origin);
                 if (bx2) {
                   bx1 = this.bgA.findActiveBox(p);
@@ -366,8 +365,7 @@ define([
                   if (this.act.abc['solvedPrimary']) {
                     bx1.switchToAlt(this.ps);
                     m |= bx1.playMedia(this.ps);
-                  }
-                  else {
+                  } else {
                     if (clickOnBg0)
                       m |= bx1.playMedia(this.ps);
                     else

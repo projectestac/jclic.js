@@ -211,7 +211,9 @@ define([
      * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
-      this.$div.empty();
+      if (this.$canvas)
+        this.$canvas.remove();
+
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bgA || this.bgB) {
         // Create the main canvas
@@ -253,8 +255,7 @@ define([
                 if (this.act.useOrder)
                   this.currentItem = this.bgA.getNextItem(this.currentItem);
                 this.ps.reportNewAction(this.act, 'SELECT', bx1.getDescription(), bx2.getDescription(), true, 0);
-              }
-              else {
+              } else {
                 bx2.clear();
                 bx2.setInactive(false);
               }

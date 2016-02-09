@@ -554,8 +554,13 @@ define([
      * @param {external:jQuery} $hc - The jQuery DOM component hosted by this box.
      */
     setHostedComponent: function ($hc) {
+      if(this.$hostedComponent)
+        this.$hostedComponent.detach();
+                 
       this.$hostedComponent = $hc;
+      
       if (this.$hostedComponent) {
+        this.setContainer(this.container);
         this.setHostedComponentVisible(false);
         this.setHostedComponentColors();
         this.setHostedComponentBorder();

@@ -205,9 +205,9 @@ define([
      * Overrides {@link AbstractBox#setBounds} adjusting the position and size of all cells
      * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
      * upper-left corner of a new rectangle.
-     * @param {number=} y - `y` coordinate of the upper-left corner of the new rectangle.
-     * @param {number=} w - Width of the new rectangle.
-     * @param {number=} h - Height of the new rectangle.
+     * @param {number=} ry - `y` coordinate of the upper-left corner of the new rectangle.
+     * @param {number=} rw - Width of the new rectangle.
+     * @param {number=} rh - Height of the new rectangle.
      */
     setBounds: function (rect, ry, rw, rh) {
       if (typeof rect === 'number') {

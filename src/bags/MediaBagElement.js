@@ -206,6 +206,8 @@ define([
           case 'audio':
           case 'video':
             this.ready = (this.data.readyState >= 1);
+            if(this.ready)
+              console.log(this.name+" ready - checked");
             break;
           default:
             this.ready = true;
@@ -222,7 +224,7 @@ define([
      */
     _onReady: function () {
       this.ready = true;
-      console.log(this.name+" ready!");
+      console.log(this.name+" ready - callback");
       if (this._whenReady) {
         for (var i = 0; i < this._whenReady.length; i++) {
           var callback = this._whenReady[i];

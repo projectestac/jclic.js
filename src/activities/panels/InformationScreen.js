@@ -158,7 +158,9 @@ define([
      * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
-      this.$div.empty();
+      if (this.$canvas)
+        this.$canvas.remove();
+
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bg) {
         this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({

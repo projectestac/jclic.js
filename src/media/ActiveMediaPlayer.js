@@ -103,9 +103,14 @@ define([
      */
     realize: function () {
       if (this.mbe) {
-        this.mbe.build(function () {
+        var thisMediaPlayer = this;
+        this.mbe.build(function () {          
           this.data.pause();
-        });
+          if(this.type === 'video' && this.data){
+            thisMediaPlayer.$visualComponent = $(this.data);
+            thisMediaPlayer.$visualComponent.css('z-index', 20);
+          }
+        });        
       }
     },
     /**
@@ -255,7 +260,7 @@ define([
      * @param {ActiveBox} bxi - The container where this player is hosted
      */
     checkVisualComponentBounds: function (bxi) {
-      // TODO: Implement checkVisualComponents
+      // does nothing
     },
     /**
      * Sets the visual component of this player visible or invisible
@@ -270,6 +275,9 @@ define([
      * @param {?ActiveBox} setBx - The new container of this media. Can be `null`.
      */
     linkTo: function (setBx) {
+      this.bx=setBx;
+      if(this.$visualComponent)
+        this.bx.setHostedComponent(this.$visualComponent);
     }
   };
 

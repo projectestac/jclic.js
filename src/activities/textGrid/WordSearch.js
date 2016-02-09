@@ -241,7 +241,9 @@ define([
      * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
-      this.$div.empty();
+      if (this.$canvas)
+        this.$canvas.remove();
+
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.grid) {
         // Create the main canvas
@@ -292,8 +294,7 @@ define([
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
-        }
-        else {
+        } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
           var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
@@ -336,8 +337,7 @@ define([
                 this.bc.begin(p);
               }
 
-            }
-            else {
+            } else {
               // Word selection completed
               //
               // Find the active boxes behind `bc.origin` and `p`
@@ -378,11 +378,9 @@ define([
                   else if (!m)
                     this.playEvent(ok ? 'actionOK' : 'actionError');
                   this.invalidate();
-                }
-                else if (!ok && !m)
+                } else if (!ok && !m)
                   this.playEvent('actionError');
-              }
-              else
+              } else
                 this.playEvent('actionError');
 
               this.update();

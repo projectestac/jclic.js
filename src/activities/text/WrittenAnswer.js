@@ -308,7 +308,11 @@ define([
      * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
-      this.$div.empty();
+      if (this.$canvas)
+        this.$canvas.remove();
+      if (this.$form)
+        this.$form.detach();
+      
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bgA || this.bgB) {
         var r = rect.clone();

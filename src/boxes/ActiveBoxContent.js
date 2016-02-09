@@ -287,7 +287,10 @@ define([
      * @param {PlayStation} playStation - Usually a {@link JClicPlayer}
      */
     prepareMedia: function (playStation) {
-      // TODO: Implement ActiveBoxContent.prepareMedia()
+      if(!this.amp && this.mediaContent && this.mediaContent.mediaType === 'PLAY_VIDEO'){
+        this.amp = playStation.getActiveMediaPlayer(this.mediaContent);
+        this.amp.realize();
+      }
     },
     /**
      * 

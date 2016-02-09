@@ -279,6 +279,8 @@ define([
         if (abc.hasOwnProperty('border') && this.hasBorder() !== abc.border)
           this.setBorder(abc.border);
         this.setInactive(false);
+        if(abc.amp)
+          this.setHostedMediaPlayer(abc.amp);
         this.checkHostedComponent();
         this.checkAutoStartMedia();
       }
@@ -360,7 +362,7 @@ define([
     checkAutoStartMedia: function () {
       var cnt = this.getContent();
       if (cnt && cnt.mediaContent && cnt.mediaContent.autoStart && cnt.amp) {
-        // TODO: Play the media
+        cnt.amp.playNow(this);
       }
     },
     /**
@@ -570,6 +572,8 @@ define([
       this.hostedMediaPlayer = amp;
       if (old && old !== amp)
         old.linkTo(null);
+      if(amp)
+        amp.linkTo(this);      
     },
     /**
      * 

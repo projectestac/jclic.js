@@ -167,10 +167,10 @@ define([
       if (this.bg) {
         if (this.act.scramble['primary'])
           this.shuffle([this.bg], true, true);
-        
+
         if (this.useOrder)
           this.currentItem = this.bg.getNextItem(-1);
-        
+
         this.setAndPlayMsg('initial', 'start');
         this.invalidate().update();
         this.playing = true;
@@ -210,7 +210,9 @@ define([
      * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
-      this.$div.empty();
+      if (this.$canvas)
+        this.$canvas.remove();
+
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bg) {
         this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>');
@@ -261,8 +263,7 @@ define([
                 else if (!m)
                   this.playEvent(ok ? 'actionOk' : 'actionError');
                 this.update();
-              }
-              else {
+              } else {
                 this.playEvent('actionError');
               }
             }

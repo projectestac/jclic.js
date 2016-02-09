@@ -218,7 +218,9 @@ define([
      * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
-      this.$div.empty();
+      if (this.$canvas)
+        this.$canvas.remove();
+
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bg) {
         // Create the main canvas
@@ -256,8 +258,7 @@ define([
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
-        }
-        else {
+        } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
           var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
@@ -306,8 +307,7 @@ define([
                 else
                   this.bc.begin(p);
               }
-            }
-            else {
+            } else {
               // Pairing completed
               //
               // Find the active boxes behind `bc.origin` and `p`              
@@ -329,8 +329,7 @@ define([
                     bx1.setInactive(false);
                     bx2.idAss = -1;
                     bx2.setInactive(false);
-                  }
-                  else {
+                  } else {
                     bx1.setInactive(true);
                     if (this.act.dragCells)
                       bx2.setInactive(true);
@@ -351,13 +350,11 @@ define([
                     this.finishActivity(true);
                   else if (!m)
                     this.playEvent(ok ? 'actionOk' : 'actionError');
-                }
-                else {
+                } else {
                   this.playEvent('CLICK');
                   bx1.setInactive(true);
                 }
-              }
-              else if (bx1 !== null) {
+              } else if (bx1 !== null) {
                 bx1.setInactive(true);
               }
               this.invalidate().update();
