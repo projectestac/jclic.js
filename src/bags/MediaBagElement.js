@@ -174,11 +174,8 @@ define([
             break;
             
           case 'anim':
-            //this.data = document.createElement('object');
-            //this.data.type = 'application/x-shockwave-flash';            
-            //$(this.data).on('canplay', function () {media._onReady.call(media);});
-            //this.data.data = fullPath;
             this.data = $('<object type="application/x-shockwave-flash" width="300" height="200" data="'+fullPath+'"/>').get(0);
+            // Unable to check the loading progress in elements of type `object. Mark it always as `ready`
             this.ready = true;
             break;
 
@@ -210,6 +207,11 @@ define([
 
       return this;
     },
+    /**
+     * 
+     * Checks if this media element is ready to start
+     * @returns {Boolean} - `true` if ready, `false` otherwise
+     */
     checkReady: function () {
       if (this.data && !this.ready) {
         switch (this.type) {
@@ -229,8 +231,9 @@ define([
     },
     /**
      * 
-     * Check that the loading of this resource has not timed out.
-     */    
+     * Checks if this resource has timed out.
+     * @returns {Boolean} - `true` if the resource has exhausted the allowed time to load, `false` otherwise
+     */ 
     checkTimeout: function() {
       var result = Date.now() > this.timeout;
       if(result)

@@ -99,7 +99,7 @@ define([
     },
     /**
      * 
-     * Generates the real objects capable of playing media
+     * Generates the objects that will play media
      */
     realize: function () {
       if (this.mbe) {
