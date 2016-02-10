@@ -923,10 +923,8 @@ define([
      * @param {ActiveBoxContent} abc - The content of the message
      */
     setMsg: function (abc) {
-      var ab = null;
-      if (this.skin)
-        ab = this.skin.getMsgBox();
-      if (ab !== null) {
+      var ab = this.skin ? this.skin.getMsgBox() : null;
+      if (ab) {
         ab.clear();
         this.skin.invalidate(ab).update();
         ab.setContent(abc ? abc : ActiveBoxContent.prototype.EMPTY_CONTENT);

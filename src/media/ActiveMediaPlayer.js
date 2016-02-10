@@ -104,14 +104,14 @@ define([
     realize: function () {
       if (this.mbe) {
         var thisMediaPlayer = this;
-        this.mbe.build(function () {          
-          if(this.data.pause)
+        this.mbe.build(function () {
+          if (this.data.pause)
             this.data.pause();
-          if((this.type === 'video' || this.type === 'anim') && this.data){
+          if ((this.type === 'video' || this.type === 'anim') && this.data) {
             thisMediaPlayer.$visualComponent = $(this.data);
             thisMediaPlayer.$visualComponent.css('z-index', 20);
           }
-        });        
+        });
       }
     },
     /**
@@ -150,23 +150,33 @@ define([
           //
           // Seek the media position
           var t = thisMP.mc.from > 0 ? thisMP.mc.from / 1000 : 0;
-          // CAN_PLAY_THROUGH is always 4 ?
-          if (thisData.readyState >= 4) {
-            armed = true;
-            thisData.pause();
-            thisData.currentTime = t;
-            thisData.play();
-          }
-          else {
-            thisData.load();
-            $thisData.on('canplaythrough', function () {
-              $thisData.off('canplaythrough');
-              armed = true;
-              thisData.pause();
-              thisData.currentTime = t;
-              thisData.play();
-            });
-          }
+
+          /*
+           // CAN_PLAY_THROUGH is always 4 ?                    
+           if (thisData.readyState >= 4) {
+           armed = true;
+           thisData.pause();
+           thisData.currentTime = t;
+           thisData.play();
+           }          
+           else {
+           //thisData.load();
+           $thisData.on('canplaythrough', function () {
+           $thisData.off('canplaythrough');
+           armed = true;
+           thisData.pause();
+           thisData.currentTime = t;
+           thisData.play();
+           });
+           }
+           */
+          
+          // Launch the media despite of its readyState
+          armed = true;
+          thisData.pause();
+          thisData.currentTime = t;
+          thisData.play();
+
         });
       }
     },
@@ -188,8 +198,8 @@ define([
     stop: function () {
       if (this.useAudioBuffer)
         this.stopAudioBuffer(this.mc.recBuffer);
-      else if (this.mbe && this.mbe.data && this.mbe.data.length > 0 && this.mbe.data[0].paused === false) {
-        this.mbe.data[0].pause();
+      else if (this.mbe && this.mbe.data && !this.mbe.data.paused && this.mbe.data.pause) {
+        this.mbe.data.pause();
       }
     },
     /**
@@ -276,8 +286,8 @@ define([
      * @param {?ActiveBox} setBx - The new container of this media. Can be `null`.
      */
     linkTo: function (setBx) {
-      this.bx=setBx;
-      if(this.$visualComponent)
+      this.bx = setBx;
+      if (this.$visualComponent)
         this.bx.setHostedComponent(this.$visualComponent);
     }
   };
