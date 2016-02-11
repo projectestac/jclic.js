@@ -65,7 +65,7 @@ define([
     }
 
     this.options = $.extend(Object.create(this.options), options);
-    
+
     /* global location */
     this.localFS = (location && location.protocol === 'file:');
 
@@ -489,12 +489,11 @@ define([
             }, 100);
             this.skin.setWaitCursor(false);
             return;
-          }
-          else if (tp.localFS && JClicObject && !JClicObject.projectFiles[fullPath]) {
-            ScriptJS(fullPath + '.js', function () {              
+          } else if (tp.localFS && JClicObject && !JClicObject.projectFiles[fullPath]) {
+            ScriptJS(fullPath + '.js', function () {
               tp.load(project, sequence, activity);
-            });            
-            this.skin.setWaitCursor(false);            
+            });
+            this.skin.setWaitCursor(false);
             return;
           }
 
@@ -510,20 +509,19 @@ define([
             }
           }
           // Special case for local filesystems (`file:` protocol)
-          else if(tp.localFS){
+          else if (tp.localFS) {
             // Check if file is already loaded in the global variable `JClicObject`
             if (JClicObject && JClicObject.projectFiles[fullPath]) {
               fp = 'data:text/xml;charset=UTF-8,' + JClicObject.projectFiles[fullPath];
-            }
-            else {
-              tp.setSystemMessage('Error: Unable to load', fullPath+'.js');
+            } else {
+              tp.setSystemMessage('Error: Unable to load', fullPath + '.js');
               return;
-            }            
+            }
           }
-                    
+
           $.get(fp, null, null, 'xml')
               .done(function (data) {
-                if (data === null || typeof data !== 'object'){
+                if (data === null || typeof data !== 'object') {
                   tp.setSystemMessage('ERROR: Project not loaded. Bad data!', project);
                   return;
                 }
@@ -814,62 +812,62 @@ define([
       var thisPlayer = this;
       var ji = null;
       var fn = mediaContent.mediaFileName;
-      window.setTimeout(function () {
-        switch (mediaContent.mediaType) {
-          case 'RUN_CLIC_PACKAGE':
-            ji = new JumpInfo('JUMP', fn);
-            if (mediaContent.externalParam){
-              // Relative path computed in History.processJump
-              ji.projectPath = mediaContent.externalParam;
-            }
-            thisPlayer.history.processJump(ji, true);
-            break;
 
-          case 'RUN_CLIC_ACTIVITY':
-            thisPlayer.history.push();
-            thisPlayer.load(null, null, fn);
-            break;
+      switch (mediaContent.mediaType) {
+        case 'PLAY_AUDIO':
+        case 'PLAY_VIDEO':
+        case 'PLAY_MIDI':
+        case 'RECORD_AUDIO':
+        case 'PLAY_RECORDED_AUDIO':
+          if (thisPlayer.audioEnabled) {
+            var amp = thisPlayer.activeMediaBag.getActiveMediaPlayer(
+                mediaContent,
+                thisPlayer.project.mediaBag,
+                thisPlayer);
+            if (amp)
+              amp.play(mediaPlacement);
 
-          case 'RETURN':
-            thisPlayer.history.pop();
-            break;
+          }
+          break;
+          
+        case 'RUN_CLIC_PACKAGE':
+          ji = new JumpInfo('JUMP', fn);
+          if (mediaContent.externalParam) {
+            // Relative path computed in History.processJump
+            ji.projectPath = mediaContent.externalParam;
+          }
+          thisPlayer.history.processJump(ji, true);
+          break;
 
-          case 'EXIT':
-            ji = new JumpInfo('EXIT', fn);
-            thisPlayer.history.processJump(ji, false);
-            break;
+        case 'RUN_CLIC_ACTIVITY':
+          thisPlayer.history.push();
+          thisPlayer.load(null, null, fn);
+          break;
 
-          case 'RUN_EXTERNAL':
-            thisPlayer.runCmd(fn);
-            break;
+        case 'RETURN':
+          thisPlayer.history.pop();
+          break;
 
-          case 'URL':
-            if (fn){
-              // When mediaContent.level is 2 or more, the URL will be opened in a separate window.
-              thisPlayer.displayURL(fn, mediaContent.level > 1);
-            }
-            break;
+        case 'EXIT':
+          ji = new JumpInfo('EXIT', fn);
+          thisPlayer.history.processJump(ji, false);
+          break;
 
-          case 'PLAY_AUDIO':
-          case 'PLAY_VIDEO':
-          case 'PLAY_MIDI':
-          case 'RECORD_AUDIO':
-          case 'PLAY_RECORDED_AUDIO':
-            if (thisPlayer.audioEnabled) {
-              var amp = thisPlayer.activeMediaBag.getActiveMediaPlayer(
-                  mediaContent,
-                  thisPlayer.project.mediaBag,
-                  thisPlayer);
-              if (amp)
-                amp.play(mediaPlacement);
+        case 'RUN_EXTERNAL':
+          thisPlayer.runCmd(fn);
+          break;
 
-            }
-            break;
-          default:
-            thisPlayer.setSystemMessage('unknown media type', mediaContent.mediaType);
-            break;
-        }
-      }, 1);
+        case 'URL':
+          if (fn) {
+            // When mediaContent.level is 2 or more, the URL will be opened in a separate window.
+            thisPlayer.displayURL(fn, mediaContent.level > 1);
+          }
+          break;
+
+        default:
+          thisPlayer.setSystemMessage('unknown media type', mediaContent.mediaType);
+          break;
+      }
     },
     /**
      * 

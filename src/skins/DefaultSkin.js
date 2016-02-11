@@ -49,6 +49,11 @@ define([
     this.$msgBoxDivCanvas = $('<canvas />');
     this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
     this.msgBox = new ActiveBox();
+    
+    var thisMsgBox = this.msgBox;    
+    this.$msgBoxDiv.on('click', function(){
+      thisMsgBox.playMedia(ps);        
+    });
 
     var thisSkin = this;
     this.buttons.prev = $('<img />').on('click',
@@ -244,7 +249,7 @@ define([
       // Internal bounds, relative to the origin of `$msgBoxDivCanvas`
       this.msgBox.setBounds(new AWT.Rectangle(0, 0, wMsgBox, h));
       this.add(msgBoxRect);
-
+      
       // Invalidates the msgBox area and calls `Container.update` to paint it
       this.invalidate(msgBoxRect);
       this.update();
