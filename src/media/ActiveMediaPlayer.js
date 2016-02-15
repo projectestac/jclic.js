@@ -287,7 +287,7 @@ define([
      */
     linkTo: function (setBx) {
       this.bx = setBx;
-      if (this.$visualComponent)
+      if (this.bx && this.$visualComponent)
         this.bx.setHostedComponent(this.$visualComponent);
     }
   };
