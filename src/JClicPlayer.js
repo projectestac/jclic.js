@@ -805,10 +805,6 @@ define([
      */
     playMedia: function (mediaContent, mediaPlacement) {
 
-      // Run asyncronously to avoid UI locking. In Java this was achieved
-      // with `SwingUtilities.invokeLater`.
-      // Here we will use `setTimeout` better to use a
-      // [WebWorker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)?
       var thisPlayer = this;
       var ji = null;
       var fn = mediaContent.mediaFileName;

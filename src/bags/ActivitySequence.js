@@ -17,8 +17,9 @@ define([
   "jquery",
   "./JumpInfo",
   "./ActivitySequenceElement",
+  "./ActivitySequenceJump",
   "../Utils"
-], function ($, JumpInfo, ActivitySequenceElement, Utils) {
+], function ($, JumpInfo, ActivitySequenceElement, ActivitySequenceJump, Utils) {
 
   /**
    * This class stores the definition of the sequence to follow to show the activities of a
@@ -203,8 +204,7 @@ define([
           if (i >= this.elements.length || i < 0)
             i = 0;
           result = new JumpInfo('JUMP', i);
-        }
-        else {
+        } else {
           var rating = -1;
           var time = -1;
           // TODO: Implement Reporter and SequenceReg classes
@@ -260,7 +260,23 @@ define([
      * @param {string} activityName - The activity to check
      */
     checkCurrentActivity: function (activityName) {
-      // TODO: Implement ActivitySequence.checkCurrentActivity
+      var ase = this.getCurrentAct();
+      if (ase === null || ase.activityName.toUpperCase() !== activityName.toUpperCase()) {
+        for (var i = 0; i < this.elements.length; i++) {
+          if (this.getElement(i, false).activityName.toUpperCase() === activityName.toUpperCase()) {
+            this.currentAct = i;
+            return false;
+          }
+        }
+        ase = new ActivitySequenceElement();
+        ase.activityName = activityName;
+        ase.fwdJump = new ActivitySequenceJump('STOP');
+        ase.backJump = new ActivitySequenceJump('STOP');
+        this.elements.push(ase);
+        this.currentAct = this.elements.length - 1;
+        return false;
+      }
+      return true;
     }
   };
 
