@@ -13,10 +13,12 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
+/* global MediaRecorder, navigator, window, URL */
+
 define([
   "jquery",
-  "../AWT"
-], function ($, AWT) {
+  "./AudioBuffer"
+], function ($, AudioBuffer) {
   /**
    * This kind of object encapsulates a realized {@link MediaContent} and provides methods to start,
    * stop, pause and record different types of media (audio, video, MIDI, voice recording...)
@@ -33,8 +35,10 @@ define([
     this.ps = ps;
     switch (mc.mediaType) {
       case 'RECORD_AUDIO':
-        this.clearAudioBuffer(mc.recBuffer);
-        ActiveMediaPlayer.AUDIO_BUFFERS[mc.recBuffer] = this.createAudioBuffer(mc.length);
+        if (ActiveMediaPlayer.AUDIO_BUFFERS) {
+          this.clearAudioBuffer(mc.recBuffer);
+          ActiveMediaPlayer.AUDIO_BUFFERS[mc.recBuffer] = new AudioBuffer(mc.length);
+        }
         /* falls through */
       case 'PLAY_RECORDED_AUDIO':
         this.useAudioBuffer = true;
@@ -55,13 +59,31 @@ define([
         break;
     }
   };
+  
+  /**
+   * Recording of audio is enabled only when `navigator.getUserMedia` and `MediaRecorder` are defined
+   * In 02-Mar-2016 this is implemented only in Firefox 41 and Chrome 49 or later.
+   * See: https://addpipe.com/blog/mediarecorder-api/
+   * @type Boolean
+   */
+  ActiveMediaPlayer.REC_ENABLED = (typeof navigator !== 'undefined' && typeof MediaRecorder !== 'undefined');
+  
+  if(ActiveMediaPlayer.REC_ENABLED) {
+    navigator.getUserMedia = (navigator.getUserMedia ||
+                       navigator.webkitGetUserMedia ||
+                       navigator.mozGetUserMedia ||
+                       navigator.msGetUserMedia);
+                   
+    URL = window.URL || window.webkitURL;
+  }
 
   /**
    * Audio buffers used for recording and playing voice are stored in a static array because
    * they are common to all instances of {@link ActiveMediaPlayer}
-   * @type {AudioBuffer[]} */
-  ActiveMediaPlayer.AUDIO_BUFFERS = [];
-
+   * Only initialized when {@link REC_ENABLED} is `true`.
+   * @type {AudioBuffer[]} */  
+  ActiveMediaPlayer.AUDIO_BUFFERS = ActiveMediaPlayer.REC_ENABLED ? [] : null;
+    
   ActiveMediaPlayer.prototype = {
     constructor: ActiveMediaPlayer,
     /**
@@ -90,15 +112,6 @@ define([
     mbe: null,
     /**
      * 
-     * Creates a new AudioBuffer
-     * @param {number} seconds - Maximum duration of the buffer
-     * @returns {AudioBuffer}
-     */
-    createAudioBuffer: function (seconds) {
-      //TODO: Implement AudioBuffer      
-    },
-    /**
-     * 
      * Generates the objects that will play media
      */
     realize: function () {
@@ -120,10 +133,22 @@ define([
      * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
      */
     playNow: function (setBx) {
-
-      // TODO: Check error setting currentTime on Audio objects
-
-      if (this.mbe) {
+      
+      if (this.useAudioBuffer){                        
+        
+        if (ActiveMediaPlayer.AUDIO_BUFFERS) {
+          var buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer];
+          if(buffer){
+            if(this.mc.mediaType === 'RECORD_AUDIO'){
+              buffer.record();
+            }
+            else{
+              buffer.play();            
+            }
+          }
+        }
+      }
+      else if (this.mbe) {
         //if (this.mbe.data)
         //  this.mbe.data.trigger('pause');
         var thisMP = this;
@@ -222,7 +247,9 @@ define([
      * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
      */
     clearAudioBuffer: function (buffer) {
-      if (buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length && ActiveMediaPlayer.AUDIO_BUFFERS[buffer] !== null) {
+      if (ActiveMediaPlayer.AUDIO_BUFFERS && 
+          buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length && 
+          ActiveMediaPlayer.AUDIO_BUFFERS[buffer]) {
         ActiveMediaPlayer.AUDIO_BUFFERS[buffer].clear();
         ActiveMediaPlayer.AUDIO_BUFFERS[buffer] = null;
       }
@@ -232,8 +259,9 @@ define([
      * Clears all audio buffers
      */
     clearAllAudioBuffers: function () {
-      for (var i = 0; i < ActiveMediaPlayer.AUDIO_BUFFERS.length; i++)
-        this.clearAudioBuffer(i);
+      if (ActiveMediaPlayer.AUDIO_BUFFERS)
+        for (var i = 0; i < ActiveMediaPlayer.AUDIO_BUFFERS.length; i++)
+          this.clearAudioBuffer(i);
     },
     /**
      * 
@@ -242,9 +270,10 @@ define([
      */
     countActiveBuffers: function () {
       var c = 0;
-      for (var i = 0; i < ActiveMediaPlayer.AUDIO_BUFFERS.length; i++)
-        if (ActiveMediaPlayer.AUDIO_BUFFERS[i])
-          c++;
+      if (ActiveMediaPlayer.AUDIO_BUFFERS)
+        for (var i = 0; i < ActiveMediaPlayer.AUDIO_BUFFERS.length; i++)
+          if (ActiveMediaPlayer.AUDIO_BUFFERS[i])
+            c++;
       return c;
     },
     /**
@@ -252,9 +281,10 @@ define([
      * Stops the playing or recording actions of all audio buffers
      */
     stopAllAudioBuffers: function () {
-      for (var i = 0; i < ActiveMediaPlayer.AUDIO_BUFFERS.length; i++)
-        if (ActiveMediaPlayer.AUDIO_BUFFERS[i])
-          ActiveMediaPlayer.AUDIO_BUFFERS[i].stop();
+      if (ActiveMediaPlayer.AUDIO_BUFFERS)
+        for (var i = 0; i < ActiveMediaPlayer.AUDIO_BUFFERS.length; i++)
+          if (ActiveMediaPlayer.AUDIO_BUFFERS[i])
+            ActiveMediaPlayer.AUDIO_BUFFERS[i].stop();
     },
     /**
      * 
@@ -262,7 +292,9 @@ define([
      * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
      */
     stopAudioBuffer: function (buffer) {
-      if (buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length && ActiveMediaPlayer.AUDIO_BUFFERS[buffer] !== null)
+      if (ActiveMediaPlayer.AUDIO_BUFFERS &&
+          buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length &&
+          ActiveMediaPlayer.AUDIO_BUFFERS[buffer])
         ActiveMediaPlayer.AUDIO_BUFFERS[buffer].stop();
     },
     /**
