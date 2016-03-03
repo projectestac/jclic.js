@@ -42,39 +42,81 @@ define([
      * @type {number}
      */
     seconds: AudioBuffer.MAX_RECORD_LENGTH,
+    /**
+     * The object used to record audio data and convert it to a valid stream for the {@link mediaPlayer}
+     * @type {external:MediaRecorder}
+     */
     mediaRecorder: null,
+    /**
+     * Array of data chuncks collected during the recording
+     */
     chunks: null,
+    /**
+     * The HTML audio element used to play the recorded sound
+     * @type {external:HTMLAudioElement}
+     */
     mediaPlayer: null,
-    timeoutFunc: null,
+    /**
+     * The identifier of the timer launched to stop the recording when the maximum time is exceeded.
+     * This member is `null` when no timeout function is associated to this AudioBuffer
+     * @type {number}
+     */
+    timeoutID: null,
+    /**
+     * 
+     * Starts playing the currently recorded audio, if any.
+     */
     play: function () {
-      this.stop();
+      var bufferStopped = this.stop();
       if (this.mediaPlayer) {
         this.mediaPlayer.currentTime = 0;
         this.mediaPlayer.play();
+      } else if(bufferStopped) {        
+        // Retry later if the current recording was stopped due to this call to "play"
+        //window.setTimeout(2000, 
+        //function(buffer){
+        //  console.log('deferred play!');
+        //  buffer.play();
+        //}, this);
       }
     },
+    /**
+     * 
+     * Stops the current operation, either recording or playing audio
+     * @returns {boolean} - `true` when the current recording was stopped due to this call. `false` otherwise.
+     */
     stop: function () {
+      var result = false;
       if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
         this.mediaRecorder.stop();
-      } else if (this.mediaPlayer) {
+        result = true;
+      } else if (this.mediaPlayer && !this.mediaPlayer.paused) {
         this.mediaPlayer.pause();
       }
+      return result;
     },
+    /**
+     * 
+     * Starts recording audio, or stops the recording if already started.
+     */
     record: function () {
-
       if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
         this.mediaRecorder.stop();
       } else {
-
         this.stop();
         var thisBuffer = this;
         this.mediaPlayer = null;
+        
+        // TODO: update navigator.getUserMedia to navigator.mediaDevices.getUserMedia (with promises)
+        // when supported in Chrome/Chromium
+        // (in v. 49 this is supported only when "experimental web extensions" flag is enabled)
+        // See: https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia
 
-        navigator.getUserMedia({audio: true},
+        navigator.getUserMedia(
+            {audio: true},
             function (stream) {
               thisBuffer.mediaRecorder = new MediaRecorder(stream);
               thisBuffer.mediaRecorder.ondataavailable = function (e) {
-                console.log('recording data available!');
                 thisBuffer.chunks.push(e.data);
               };
               thisBuffer.mediaRecorder.onerror = function (e) {
@@ -87,9 +129,9 @@ define([
               thisBuffer.mediaRecorder.onstop = function () {
                 console.log('Recording audio stopped. Current status: ' + thisBuffer.mediaRecorder.state);
 
-                if (thisBuffer.timeoutFunc) {
-                  window.clearTimeout(thisBuffer.timeoutFunc);
-                  thisBuffer.timeoutFunc = null;
+                if (thisBuffer.timeoutID) {
+                  window.clearTimeout(thisBuffer.timeoutID);
+                  thisBuffer.timeoutID = null;
                 }
 
                 var options = {};
@@ -98,15 +140,17 @@ define([
                 var blob = new Blob(thisBuffer.chunks, options);
                 thisBuffer.chunks = [];
                 thisBuffer.mediaPlayer = document.createElement('audio');
-                thisBuffer.mediaPlayer.src = URL.createObjectURL(blob);
+                var url = URL.createObjectURL(blob);
+                thisBuffer.mediaPlayer.src = url;
                 thisBuffer.mediaPlayer.pause();
                 thisBuffer.mediaRecorder = null;
               };
               thisBuffer.mediaRecorder.onwarning = function (e) {
                 console.log('Warning recording audio: ' + e);
               };
+
               thisBuffer.mediaRecorder.start();
-              thisBuffer.timeoutFunc = window.setTimeout(function () {
+              thisBuffer.timeoutID = window.setTimeout(function () {
                 if (thisBuffer.mediaRecorder)
                   thisBuffer.mediaRecorder.stop();
               }, thisBuffer.seconds * 1000);
@@ -117,6 +161,10 @@ define([
             });
       }
     },
+    /**
+     *
+     * Clears all data associated to this AudioBuffer
+     */
     clear: function () {
       this.stop();
       this.mediaPlayer = null;

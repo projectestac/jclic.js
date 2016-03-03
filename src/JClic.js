@@ -68,6 +68,13 @@ define([
    * @external JSZip
    * @see {@link https://stuk.github.io/jszip}
    */
+  
+  /**
+   * The MediaRecorder interface of the {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API MediaRecorder API}
+   * provides functionality to easily capture media. 
+   * @external MediaRecorder
+   * @see https://developer.mozilla.org/ca/docs/Web/API/MediaRecorder
+   */
 
   // JClicObject will be exported as a result
   var JClicObject = {

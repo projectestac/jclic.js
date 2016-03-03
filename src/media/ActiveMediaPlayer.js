@@ -66,7 +66,7 @@ define([
    * See: https://addpipe.com/blog/mediarecorder-api/
    * @type Boolean
    */
-  ActiveMediaPlayer.REC_ENABLED = (typeof navigator !== 'undefined' && typeof MediaRecorder !== 'undefined');
+  ActiveMediaPlayer.REC_ENABLED = (typeof MediaRecorder !== 'undefined' && typeof navigator !== 'undefined');
   
   if(ActiveMediaPlayer.REC_ENABLED) {
     navigator.getUserMedia = (navigator.getUserMedia ||
