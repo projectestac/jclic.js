@@ -169,7 +169,9 @@ define([
      */
     isEquivalent: function (mc) {
       return this.mediaType === mc.mediaType &&
-          this.mediaFileName.toLocaleLowerCase() === mc.mediaFileName.toLocaleLowerCase() &&
+          (this.mediaFileName === mc.mediaFileName ||
+           (this.mediaFileName !== null && mc.mediaFileName !== null &&
+            this.mediaFileName.toLocaleLowerCase() === mc.mediaFileName.toLocaleLowerCase())) &&
           this.from === mc.from &&
           this.to === mc.to &&
           this.recBuffer === mc.recBuffer;
