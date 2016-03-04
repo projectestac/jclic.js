@@ -63,37 +63,33 @@ define([
      */
     timeoutID: null,
     /**
+     * Instructs this AudioBuffer recorder to start playing the collected audio at the end of the
+     * current mediaRecorder task.
+     * @type {boolean}
+     */
+    playWhenFinished: false,
+    /**
      * 
      * Starts playing the currently recorded audio, if any.
      */
     play: function () {
-      var bufferStopped = this.stop();
+      this.stop();
       if (this.mediaPlayer) {
         this.mediaPlayer.currentTime = 0;
         this.mediaPlayer.play();
-      } else if(bufferStopped) {        
-        // Retry later if the current recording was stopped due to this call to "play"
-        //window.setTimeout(2000, 
-        //function(buffer){
-        //  console.log('deferred play!');
-        //  buffer.play();
-        //}, this);
+      } else {        
+        this.playWhenFinished = true;
       }
     },
     /**
      * 
      * Stops the current operation, either recording or playing audio
-     * @returns {boolean} - `true` when the current recording was stopped due to this call. `false` otherwise.
      */
     stop: function () {
-      var result = false;
-      if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
+      if (this.mediaRecorder && this.mediaRecorder.state === 'recording')
         this.mediaRecorder.stop();
-        result = true;
-      } else if (this.mediaPlayer && !this.mediaPlayer.paused) {
-        this.mediaPlayer.pause();
-      }
-      return result;
+      else if (this.mediaPlayer && !this.mediaPlayer.paused)
+        this.mediaPlayer.pause();      
     },
     /**
      * 
@@ -124,10 +120,10 @@ define([
                 thisBuffer.mediaRecorder = null;
               };
               thisBuffer.mediaRecorder.onstart = function (e) {
-                console.log('Recording audio started. Current status: ' + thisBuffer.mediaRecorder.state);
+                console.log('Recording audio started');
               };
               thisBuffer.mediaRecorder.onstop = function () {
-                console.log('Recording audio stopped. Current status: ' + thisBuffer.mediaRecorder.state);
+                console.log('Recording audio finished');
 
                 if (thisBuffer.timeoutID) {
                   window.clearTimeout(thisBuffer.timeoutID);
@@ -144,11 +140,16 @@ define([
                 thisBuffer.mediaPlayer.src = url;
                 thisBuffer.mediaPlayer.pause();
                 thisBuffer.mediaRecorder = null;
+                if(thisBuffer.playWhenFinished){
+                  thisBuffer.playWhenFinished = false;
+                  thisBuffer.mediaPlayer.play();
+                }
               };
               thisBuffer.mediaRecorder.onwarning = function (e) {
                 console.log('Warning recording audio: ' + e);
               };
 
+              thisBuffer.playWhenFinished = false;
               thisBuffer.mediaRecorder.start();
               thisBuffer.timeoutID = window.setTimeout(function () {
                 if (thisBuffer.mediaRecorder)
