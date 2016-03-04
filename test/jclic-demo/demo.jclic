@@ -228,7 +228,7 @@
      <media type="PLAY_RECORDED_AUDIO" level="1" buffer="1" />
     </cell>
     <cell>
-     <media type="PLAY_AUDIO" level="1" file="muybien.wav" />
+     <media type="PLAY_AUDIO" level="1" file="muybien.mp3" />
     </cell>
     <cell>
      <p>Record a sound</p>
@@ -1268,16 +1268,16 @@
     </style>
     <shaper class="@Rectangular" cols="4" rows="1" />
     <cell image="bici.gif">
-     <media type="PLAY_AUDIO" level="1" file="bycicle.wav" />
+     <media type="PLAY_AUDIO" level="1" file="bycicle.mp3" />
     </cell>
     <cell image="cotxe.gif">
-     <media type="PLAY_AUDIO" level="1" file="car.wav" />
+     <media type="PLAY_AUDIO" level="1" file="car.mp3" />
     </cell>
     <cell image="camio.gif">
-     <media type="PLAY_AUDIO" level="1" file="lorry.wav" />
+     <media type="PLAY_AUDIO" level="1" file="lorry.mp3" />
     </cell>
     <cell image="moto.gif">
-     <media type="PLAY_AUDIO" level="1" file="motorcyc.wav" />
+     <media type="PLAY_AUDIO" level="1" file="motorcyc.mp3" />
     </cell>
    </cells>
    <cells rows="1" cols="4" cellWidth="120.0" cellHeight="120.0" border="false" id="secondary">
@@ -1314,7 +1314,7 @@
      <style>
       <font family="Arial" size="16" bold="true" />
      </style>
-     <media type="PLAY_AUDIO" level="2" file="muybien.wav" />
+     <media type="PLAY_AUDIO" level="2" file="muybien.mp3" />
      <p>¡Very good!</p>
     </cell>
    </messages>
@@ -1630,7 +1630,7 @@
      <color background="0xFFFFFF" />
     </style>
     <cell id="0" item="0">
-     <media type="PLAY_AUDIO" level="1" file="bycicle.wav" />
+     <media type="PLAY_AUDIO" level="1" file="bycicle.mp3" />
     </cell>
     <cell id="1" item="0">
      <p>paramilitary group</p>
@@ -1639,7 +1639,7 @@
      <p>old cloth</p>
     </cell>
     <cell id="2" item="0">
-     <media type="PLAY_AUDIO" level="1" file="lorry.wav" />
+     <media type="PLAY_AUDIO" level="1" file="lorry.mp3" />
     </cell>
     <cell id="2" item="1">
      <p> 7th letter</p>
@@ -1672,7 +1672,7 @@
      <p>a heavy metal</p>
     </cell>
     <cell id="2" item="0">
-     <media type="PLAY_AUDIO" level="1" file="car.wav" />
+     <media type="PLAY_AUDIO" level="1" file="car.mp3" />
     </cell>
     <cell id="3" item="0">
      <p>a question?</p>
@@ -3414,10 +3414,10 @@
     </container>
     <window bgColor="0xC0C0C0" border="true" />
     <eventSounds>
-     <sound id="click" file="pop.wav" />
-     <sound id="actionError" file="whistledown.wav" />
-     <sound id="actionOk" file="whistleup.wav" />
-     <sound id="finishedOk" file="ohhh.wav" />
+     <sound id="click" file="pop.mp3" />
+     <sound id="actionError" file="whistledown.mp3" />
+     <sound id="actionOk" file="whistleup.mp3" />
+     <sound id="finishedOk" file="ohhh.mp3" />
     </eventSounds>
    </settings>
    <cells rows="4" columns="3" cellWidth="100.0" cellHeight="90.0" border="true" id="primary">
@@ -3756,7 +3756,7 @@
        <answer>flock</answer>
        <response fill="_" length="5" maxLength="5" />
        <info>
-        <media type="PLAY_AUDIO" level="1" file="oveja.wav" />
+        <media type="PLAY_AUDIO" level="1" file="oveja.mp3" />
        </info>
        <text>flock</text>
       </target>
@@ -4203,7 +4203,7 @@
      <style>
       <color foreground="0x000080" background="0xFFFFFF" />
      </style>
-     <media type="PLAY_AUDIO" level="1" file="nuria.wav" />
+     <media type="PLAY_AUDIO" level="1" file="nuria.mp3" />
      <p>Dictation: The valley of Núria</p>
     </cell>
     <cell type="final">
@@ -4243,7 +4243,7 @@
        <style>
         <color foreground="0x000080" background="0xFFFFFF" inactive="0x000000" alternative="0x000000" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="nuria.wav" from="0" to="3243" catchMouseEvents="true" />
+       <media type="PLAY_AUDIO" level="1" file="nuria.mp3" from="0" to="3243" catchMouseEvents="true" />
       </cell>
       <text> </text>
       <target>
@@ -4256,7 +4256,7 @@
        <style>
         <color foreground="0x000080" background="0xFFFFFF" inactive="0x000000" alternative="0x000000" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="nuria.wav" from="3243" to="4695" catchMouseEvents="true" />
+       <media type="PLAY_AUDIO" level="1" file="nuria.mp3" from="3243" to="4695" catchMouseEvents="true" />
       </cell>
       <text> </text>
       <target>
@@ -4272,7 +4272,7 @@
        <style>
         <color foreground="0x000080" background="0xFFFFFF" inactive="0x000000" alternative="0x000000" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="nuria.wav" from="4695" to="6623" catchMouseEvents="true" />
+       <media type="PLAY_AUDIO" level="1" file="nuria.mp3" from="4695" to="6623" catchMouseEvents="true" />
       </cell>
       <text> </text>
       <target>
@@ -4285,7 +4285,7 @@
        <style>
         <color foreground="0x000080" background="0xFFFFFF" inactive="0x000000" alternative="0x000000" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="nuria.wav" from="6623" to="8800" catchMouseEvents="true" />
+       <media type="PLAY_AUDIO" level="1" file="nuria.mp3" from="6623" to="8800" catchMouseEvents="true" />
       </cell>
       <text> </text>
       <target>
@@ -4298,7 +4298,7 @@
        <style>
         <color foreground="0x000080" background="0xFFFFFF" inactive="0x000000" alternative="0x000000" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="nuria.wav" from="8800" to="10570" catchMouseEvents="true" />
+       <media type="PLAY_AUDIO" level="1" file="nuria.mp3" from="8800" to="10570" catchMouseEvents="true" />
       </cell>
       <text> </text>
       <target>
@@ -4313,7 +4313,7 @@
        <style>
         <color foreground="0x000080" background="0xFFFFFF" inactive="0x000000" alternative="0x000000" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="nuria.wav" from="10570" to="15129" catchMouseEvents="true" />
+       <media type="PLAY_AUDIO" level="1" file="nuria.mp3" from="10570" to="15129" catchMouseEvents="true" />
       </cell>
       <text> </text>
       <target>
@@ -4326,7 +4326,7 @@
        <style>
         <color foreground="0x000080" background="0xFFFFFF" inactive="0x000000" alternative="0x000000" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="nuria.wav" from="15129" to="17900" catchMouseEvents="true" />
+       <media type="PLAY_AUDIO" level="1" file="nuria.mp3" from="15129" to="17900" catchMouseEvents="true" />
       </cell>
       <text> </text>
       <target>
@@ -4339,7 +4339,7 @@
        <style>
         <color foreground="0x000080" background="0xFFFFFF" inactive="0x000000" alternative="0x000000" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="nuria.wav" from="17900" to="19200" catchMouseEvents="true" />
+       <media type="PLAY_AUDIO" level="1" file="nuria.mp3" from="17900" to="19200" catchMouseEvents="true" />
       </cell>
       <text> </text>
       <target>
@@ -4352,7 +4352,7 @@
        <style>
         <color foreground="0x000080" background="0xFFFFFF" inactive="0x000000" alternative="0x000000" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="nuria.wav" from="19200" catchMouseEvents="true" />
+       <media type="PLAY_AUDIO" level="1" file="nuria.mp3" from="19200" catchMouseEvents="true" />
       </cell>
       <text> </text>
       <target>
@@ -5181,16 +5181,16 @@
   <media name="scratch.png" file="scratch.png" />
   <media name="test1.swf" file="test1.swf" />
   <media name="HandSign" file="handsign.ttf" />
-  <media name="bycicle.wav" file="bycicle.wav" />
-  <media name="car.wav" file="car.wav" />
-  <media name="lorry.wav" file="lorry.wav" />
-  <media name="motorcyc.wav" file="motorcyc.wav" />
-  <media name="muybien.wav" file="muybien.wav" />
-  <media name="nuria.wav" file="nuria.wav" />
-  <media name="ohhh.wav" file="ohhh.wav" />
-  <media name="pop.wav" file="pop.wav" />
-  <media name="whistledown.wav" file="whistledown.wav" />
-  <media name="whistleup.wav" file="whistleup.wav" />
+  <media name="bycicle.mp3" file="bycicle.mp3" />
+  <media name="car.mp3" file="car.mp3" />
+  <media name="lorry.mp3" file="lorry.mp3" />
+  <media name="motorcyc.mp3" file="motorcyc.mp3" />
+  <media name="muybien.mp3" file="muybien.mp3" />
+  <media name="nuria.mp3" file="nuria.mp3" />
+  <media name="ohhh.mp3" file="ohhh.mp3" />
+  <media name="pop.mp3" file="pop.mp3" />
+  <media name="whistledown.mp3" file="whistledown.mp3" />
+  <media name="whistleup.mp3" file="whistleup.mp3" />
   <media name="scratch.xml" file="scratch.xml" />
  </mediaBag>
 </JClicProject>
