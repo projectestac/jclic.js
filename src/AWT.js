@@ -554,7 +554,7 @@ define([
       return this.width * this.height;
     }
   };
-  
+
   /**
    * 
    * Calculates some of the points included in a quadratic Bézier curve
@@ -582,7 +582,7 @@ define([
     }
     return result;
   };
-    
+
   /**
    * 
    * Calculates some of the points included in a cubic Bézier (curve with two control points)
@@ -974,6 +974,24 @@ define([
       return ctx;
     },
     // 
+    // Inherits the documentation of `contains` in AWT.Shape    
+    contains: function (p) {
+      // First check if the point is inside the enclosing rectangle
+      var result = AWT.Rectangle.prototype.contains.call(this, p);
+      if (result) {
+        var rx = this.dim.width / 2;
+        var ry = this.dim.height / 2;
+        var cx = this.pos.x + rx;
+        var cy = this.pos.y + ry;
+        // Apply the general equation of an ellipse
+        // See: http://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse
+        // rx and ry are > 0 because we are inside the enclosing rect,
+        // so don't care about division by zero
+        result = (Math.pow(p.x - cx, 2) / Math.pow(rx, 2) + Math.pow(p.y - cy, 2) / Math.pow(ry, 2)) <= 1;
+      }
+      return result;
+    },
+    // 
     // Inherits the documentation of `getSurface` in AWT.Rectangle
     getSurface: function () {
       return Math.PI * this.dim.width / 2 * this.dim.height / 2;
@@ -1069,19 +1087,19 @@ define([
         var str = this.strokes[n];
         var points = str.getEnclosingPoints(last);
         if (points.length > 0) {
-          for(var i=0; i<points.length; i++){
+          for (var i = 0; i < points.length; i++) {
             last = new AWT.Point(points[i]);
             this.enclosingPoints.push(last);
           }
         }
       }
-      
+
       var l = this.enclosingPoints.length;
-      if(l > 1 && this.enclosingPoints[0].equals(this.enclosingPoints[l-1])){
+      if (l > 1 && this.enclosingPoints[0].equals(this.enclosingPoints[l - 1])) {
         this.enclosingPoints.pop();
         l--;
       }
-      
+
       var p0 = new AWT.Point(this.enclosingPoints[0]);
       var p1 = new AWT.Point(this.enclosingPoints[0]);
       for (var n = 1; n < l; n++) {
@@ -1095,7 +1113,7 @@ define([
       }
       this.enclosing.setBounds(new AWT.Rectangle(p0, new AWT.Dimension(p0, p1)));
       return this.enclosing;
-    },    
+    },
     // 
     // Inherits the documentation of `getBounds` in AWT.Shape
     getBounds: function () {
@@ -1107,7 +1125,7 @@ define([
       for (var str in this.strokes)
         this.strokes[str].moveBy(delta);
       for (var p in this.enclosingPoints)
-        this.enclosingPoints[p].moveBy(delta);      
+        this.enclosingPoints[p].moveBy(delta);
       this.enclosing.moveBy(delta);
       return this;
     },
@@ -1138,7 +1156,7 @@ define([
     contains: function (p) {
       //return this.enclosing.contains(p);
       var result = this.enclosing.contains(p);
-      if (result) {        
+      if (result) {
         // Let's see if the point really lies inside the polygon formed by enclosingPoints
         // Using the "Ray casting algorithm" described in https://en.wikipedia.org/wiki/Point_in_polygon
         var p1 = this.enclosingPoints[0];
