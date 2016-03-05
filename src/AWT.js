@@ -385,8 +385,7 @@ define([
       // Special case: constructor passing another point as unique parameter
       this.x = x.x;
       this.y = x.y;
-    }
-    else {
+    } else {
       this.x = x ? x : 0;
       this.y = y ? y : 0;
     }
@@ -430,8 +429,7 @@ define([
       if (typeof newPos === 'number') {
         this.x = newPos;
         this.y = y;
-      }
-      else {
+      } else {
         this.x = newPos.x;
         this.y = newPos.y;
       }
@@ -487,8 +485,7 @@ define([
     if (w instanceof AWT.Point && h instanceof AWT.Point) {
       this.width = h.x - w.x;
       this.height = h.y - w.y;
-    }
-    else {
+    } else {
       this.width = w ? w : 0;
       this.height = h ? h : 0;
     }
@@ -556,6 +553,56 @@ define([
     getSurface: function () {
       return this.width * this.height;
     }
+  };
+  
+  /**
+   * 
+   * Calculates some of the points included in a quadratic Bézier curve
+   * The number of points being calculated is defined in Utils.settings.BEZIER_POINTS
+   * See: https://en.wikipedia.org/wiki/B%C3%A9zier_curve
+   * See also: https://www.jasondavies.com/animated-bezier/
+   *    
+   * @param {type} p0 - Starting point of the quadratic Bézier curve
+   * @param {type} p1 - Control point
+   * @param {type} p2 - Ending point
+   * @returns {AWT.Point[]} - Array with some intermediate points from the resulting Bézier curve
+   */
+  AWT.getQuadraticPoints = function (p0, p1, p2) {
+    var numPoints = Utils.settings.BEZIER_POINTS;
+    var result = [];
+    var pxa = new AWT.Point();
+    var pxb = new AWT.Point();
+    for (var i = 0; i < numPoints; i++) {
+      var n = (i + 1) / (numPoints + 1);
+      pxa.x = p0.x + (p1.x - p0.x) * n;
+      pxa.y = p0.y - (p0.y - p1.y) * n;
+      pxb.x = p1.x + (p2.x - p1.x) * n;
+      pxb.y = p1.y + (p2.y - p1.y) * n;
+      result.push(new AWT.Point(pxa.x + (pxb.x - pxa.x) * n, pxa.y - (pxa.y - pxb.y) * n));
+    }
+    return result;
+  };
+    
+  /**
+   * 
+   * Calculates some of the points included in a cubic Bézier (curve with two control points)
+   * The number of points being calculated is defined in Utils.settings.BEZIER_POINTS
+   * @param {type} p0 - Starting point of the cubic Bézier curve
+   * @param {type} p1 - First control point
+   * @param {type} p2 - Second control point
+   * @param {type} p3 - Ending point
+   * @returns {AWT.Point[]} - Array with some intermediate points from the resulting Bézier curve
+   */
+  AWT.getCubicPoints = function (p0, p1, p2, p3) {
+    var result = [];
+    var numPoints = Utils.settings.BEZIER_POINTS;
+    var pr = AWT.getQuadraticPoints(p0, p1, p2);
+    var pq = AWT.getQuadraticPoints(p1, p2, p3);
+    for (var i = 0; i < numPoints; i++) {
+      var n = (i + 1) / (numPoints + 1);
+      result.push(new AWT.Point(pr[i].x + (pq[i].x - pr[i].x) * n, pr[i].y - (pr[0].y - pq[0].y) * n));
+    }
+    return result;
   };
 
   /**
@@ -742,18 +789,15 @@ define([
     if (pos instanceof AWT.Rectangle) {
       d = new AWT.Dimension(pos.dim.width, pos.dim.height);
       p = new AWT.Point(pos.pos.x, pos.pos.y);
-    }
-    else if (pos instanceof AWT.Point) {
+    } else if (pos instanceof AWT.Point) {
       p = new AWT.Point(pos.x, pos.y);
       if (dim instanceof AWT.Dimension)
         d = new AWT.Dimension(dim.width, dim.height);
-    }
-    else if (pos instanceof Array) {
+    } else if (pos instanceof Array) {
       // Assume `pos` is an array of numbers indicating: x0, y0, x1, y1
       p = new AWT.Point(pos[0], pos[1]);
       d = new AWT.Dimension(pos[2] - pos[0], pos[3] - pos[1]);
-    }
-    else if (typeof w === 'number' && typeof h === 'number') {
+    } else if (typeof w === 'number' && typeof h === 'number') {
       // width and height passed. Treat all parameters as co-ordinates:
       p = new AWT.Point(pos, dim);
       d = new AWT.Dimension(w, h);
@@ -977,6 +1021,7 @@ define([
     }
     // Calculate the enclosing rectangle
     this.enclosing = new AWT.Rectangle();
+    this.enclosingPoints = [];
     this.calcEnclosingRect();
     AWT.Shape.call(this, this.enclosing.pos);
   };
@@ -991,6 +1036,10 @@ define([
      * The {@link AWT.Rectangle} enclosing this Path (when drawing, this Rectangle don't include border width!)
      * @type {AWT.Rectangle} */
     enclosing: new AWT.Rectangle(),
+    /**
+     * Set of vertexs of a polygon close to the real path of this shape
+     * @type {AWT.Point[]} */
+    enclosingPoints: [],
     // 
     // Inherits the documentation of `clone` in AWT.Shape
     clone: function () {
@@ -999,8 +1048,6 @@ define([
         str[i] = this.strokes[i].clone();
       return new AWT.Path(str);
     },
-    //
-    // Adds a PathStroke element to `strokes`
     /**
      * 
      * Adds a {@link AWT.PathStroke} to `strokes`
@@ -1012,37 +1059,43 @@ define([
     },
     /**
      * 
-     * Calculates the rectangle that (approximately) encloses the shape, taking
-     * in consideration only the co-ordinates of the master points. Bezier and 
-     * Quadratic curves can get out of this enclosing box.
+     * Calculates the polygon and the rectangle that (approximately) encloses this shape
      * @returns {AWT.Rectangle}
      */
     calcEnclosingRect: function () {
-      // TODO: Implement a method to calculate the real enclosing rect
-      var p0, p1;
+      this.enclosingPoints = [];
+      var last = new AWT.Point();
       for (var n in this.strokes) {
         var str = this.strokes[n];
-        if (str.points)
-          for (var m in str.points) {
-            var p = str.points[m];
-            if (!p0 || !p1) {
-              p0 = new AWT.Point(p);
-              p1 = new AWT.Point(p);
-            }
-            else {
-              // Check if `p` is at left or above `p0`
-              p0.x = Math.min(p.x, p0.x);
-              p0.y = Math.min(p.y, p0.y);
-              // Check if `p` is at right or below `p1`
-              p1.x = Math.max(p.x, p1.x);
-              p1.y = Math.max(p.y, p1.y);
-            }
+        var points = str.getEnclosingPoints(last);
+        if (points.length > 0) {
+          for(var i=0; i<points.length; i++){
+            last = new AWT.Point(points[i]);
+            this.enclosingPoints.push(last);
           }
+        }
+      }
+      
+      var l = this.enclosingPoints.length;
+      if(l > 1 && this.enclosingPoints[0].equals(this.enclosingPoints[l-1])){
+        this.enclosingPoints.pop();
+        l--;
+      }
+      
+      var p0 = new AWT.Point(this.enclosingPoints[0]);
+      var p1 = new AWT.Point(this.enclosingPoints[0]);
+      for (var n = 1; n < l; n++) {
+        var p = this.enclosingPoints[n];
+        // Check if `p` is at left or above `p0`
+        p0.x = Math.min(p.x, p0.x);
+        p0.y = Math.min(p.y, p0.y);
+        // Check if `p` is at right or below `p1`
+        p1.x = Math.max(p.x, p1.x);
+        p1.y = Math.max(p.y, p1.y);
       }
       this.enclosing.setBounds(new AWT.Rectangle(p0, new AWT.Dimension(p0, p1)));
-
       return this.enclosing;
-    },
+    },    
     // 
     // Inherits the documentation of `getBounds` in AWT.Shape
     getBounds: function () {
@@ -1053,6 +1106,8 @@ define([
     moveBy: function (delta) {
       for (var str in this.strokes)
         this.strokes[str].moveBy(delta);
+      for (var p in this.enclosingPoints)
+        this.enclosingPoints[p].moveBy(delta);      
       this.enclosing.moveBy(delta);
       return this;
     },
@@ -1073,14 +1128,42 @@ define([
     scaleBy: function (delta) {
       for (var str in this.strokes)
         this.strokes[str].multBy(delta);
+      for (var p in this.enclosingPoints)
+        this.enclosingPoints[p].multBy(delta);
       this.enclosing.scaleBy(delta);
       return this;
     },
     // 
     // Inherits the documentation of `contains` in AWT.Shape
-    // TODO: Implement a check algorithm based on the real shape
     contains: function (p) {
-      return this.enclosing.contains(p);
+      //return this.enclosing.contains(p);
+      var result = this.enclosing.contains(p);
+      if (result) {        
+        // Let's see if the point really lies inside the polygon formed by enclosingPoints
+        // Using the "Ray casting algorithm" described in https://en.wikipedia.org/wiki/Point_in_polygon
+        var p1 = this.enclosingPoints[0];
+        var N = this.enclosingPoints.length;
+        var xinters = 0;
+        var counter = 0;
+        for (var i = 1; i <= N; i++) {
+          var p2 = this.enclosingPoints[i % N];
+          if (p.y > Math.min(p1.y, p2.y)) {
+            if (p.y <= Math.max(p1.y, p2.y)) {
+              if (p.x <= Math.max(p1.x, p2.x)) {
+                if (p1.y !== p2.y) {
+                  xinters = (p.y - p1.y) * (p2.x - p1.x) / (p2.y - p1.y) + p1.x;
+                  if (p1.x === p2.x || p.x <= xinters)
+                    counter++;
+                }
+              }
+            }
+          }
+          p1 = p2;
+        }
+        if (counter % 2 === 0)
+          result = false;
+      }
+      return result;
     },
     // 
     // Inherits the documentation of `intersects` in AWT.Shape
@@ -1201,6 +1284,31 @@ define([
           break;
       }
       return ctx;
+    },
+    /**
+     * 
+     * Gets the set of points that will be included as a vertexs on the owner's shape
+     * enclosing polygon.
+     * @param {AWT.Point} from - The starting point for this stroke
+     * @returns {AWT.Point[]}
+     */
+    getEnclosingPoints: function (from) {
+      var result = [];
+      switch (this.type) {
+        case 'M':
+        case 'L':
+          result.push(this.points[0]);
+          break;
+        case 'Q':
+          result = AWT.getQuadraticPoints(from, this.points[0], this.points[1]);
+          result.push(this.points[1]);
+          break;
+        case 'B':
+          result = AWT.getQuadraticPoints(from, this.points[0], this.points[1], this.points[2]);
+          result.push(this.points[2]);
+          break;
+      }
+      return result;
     }
   };
 
@@ -1365,8 +1473,7 @@ define([
         this.timer = window.setInterval(function () {
           self.processTimer(null);
         }, this.interval);
-      }
-      else {
+      } else {
         if (this.timer !== null) {
           window.clearInterval(this.timer);
           this.timer = null;
@@ -1432,8 +1539,7 @@ define([
           this.invalidatedRect = rect.clone();
         else
           this.invalidatedRect.add(rect);
-      }
-      else
+      } else
         this.invalidatedRect = null;
       return this;
     },
