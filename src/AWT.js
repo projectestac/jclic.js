@@ -562,13 +562,16 @@ define([
    * See: https://en.wikipedia.org/wiki/B%C3%A9zier_curve
    * See also: https://www.jasondavies.com/animated-bezier/
    *    
-   * @param {type} p0 - Starting point of the quadratic Bézier curve
-   * @param {type} p1 - Control point
-   * @param {type} p2 - Ending point
+   * @param {AWT.Point} p0 - Starting point of the quadratic Bézier curve
+   * @param {AWT.Point} p1 - Control point
+   * @param {AWT.Point} p2 - Ending point
+   * @param {number=} numPoints - The number of intermediate points to calculate. When not defined,
+   * the value will be obtained from {@link Utils.settings.BEZIER_POINTS}.
    * @returns {AWT.Point[]} - Array with some intermediate points from the resulting Bézier curve
    */
-  AWT.getQuadraticPoints = function (p0, p1, p2) {
-    var numPoints = Utils.settings.BEZIER_POINTS;
+  AWT.getQuadraticPoints = function (p0, p1, p2, numPoints) {
+    if(!numPoints)
+      numPoints = Utils.settings.BEZIER_POINTS;
     var result = [];
     var pxa = new AWT.Point();
     var pxb = new AWT.Point();
@@ -587,17 +590,20 @@ define([
    * 
    * Calculates some of the points included in a cubic Bézier (curve with two control points)
    * The number of points being calculated is defined in Utils.settings.BEZIER_POINTS
-   * @param {type} p0 - Starting point of the cubic Bézier curve
-   * @param {type} p1 - First control point
-   * @param {type} p2 - Second control point
-   * @param {type} p3 - Ending point
+   * @param {AWT.Point} p0 - Starting point of the cubic Bézier curve
+   * @param {AWT.Point} p1 - First control point
+   * @param {AWT.Point} p2 - Second control point
+   * @param {AWT.Point} p3 - Ending point
+   * @param {number=} numPoints - The number of intermediate points to calculate. When not defined,
+   * the value will be obtained from {@link Utils.settings.BEZIER_POINTS}.
    * @returns {AWT.Point[]} - Array with some intermediate points from the resulting Bézier curve
    */
-  AWT.getCubicPoints = function (p0, p1, p2, p3) {
+  AWT.getCubicPoints = function (p0, p1, p2, p3, numPoints) {
     var result = [];
-    var numPoints = Utils.settings.BEZIER_POINTS;
-    var pr = AWT.getQuadraticPoints(p0, p1, p2);
-    var pq = AWT.getQuadraticPoints(p1, p2, p3);
+    if(!numPoints)
+      numPoints = Utils.settings.BEZIER_POINTS;
+    var pr = AWT.getQuadraticPoints(p0, p1, p2, numPoints);
+    var pq = AWT.getQuadraticPoints(p1, p2, p3, numPoints);
     for (var i = 0; i < numPoints; i++) {
       var n = (i + 1) / (numPoints + 1);
       result.push(new AWT.Point(pr[i].x + (pq[i].x - pr[i].x) * n, pr[i].y - (pr[0].y - pq[0].y) * n));
@@ -1322,7 +1328,7 @@ define([
           result.push(this.points[1]);
           break;
         case 'B':
-          result = AWT.getQuadraticPoints(from, this.points[0], this.points[1], this.points[2]);
+          result = AWT.getCubicPoints(from, this.points[0], this.points[1], this.points[2]);
           result.push(this.points[2]);
           break;
       }
