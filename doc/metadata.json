@@ -48,6 +48,7 @@
     "src/boxes/TextGridContent.js",
     "src/media/ActiveMediaBag.js",
     "src/media/ActiveMediaPlayer.js",
+    "src/media/AudioBuffer.js",
     "src/media/EventSounds.js",
     "src/media/EventSoundsElement.js",
     "src/media/MediaContent.js",
@@ -121,6 +122,7 @@
       "ActivitySequenceJump": "<p>This is a special case of {@link JumpInfo}, used only in {@link ActivitySequenceElement} objects.<br><br>Sequence elements can contain up to two ActivitySequenceJump objects: one to be processed<br>when the user clicks on the &quot;next&quot; button (or when the activity finishes, if in automatic mode),<br>and the other used with the &quot;prev&quot; button. ActivitySequenceJump objects define a default jump<br>or action to be performed, but can also have up to two {@link ConditionalJumpInfo} objects. These<br>define alternative jumps that are performed only when score or time are below or over a specific<br>threshold.</p>",
       "Arith": "<p>Arith provides randomly generated menthal arithmetics operations, ready to be used in JClic activities.<br><br>The operations can be additions, substractions, multiplications or divides. The unknown of these<br>operations can be the result of the operation (<code>A op B = ?</code>), any of the two operators<br>(<code>A op ? = C</code> or <code>? op B = C</code>) or also the operator itself (<code>A ? B = C</code>).</p>",
       "Operator": "<p>Operator is an Utility class used by Arith to encapsulate the properties and methods related<br>to the members of the operations.</p>",
+      "AudioBuffer": "<p>The AudioBuffer object provides sound recording and replaying to activities.</p>",
       "AutoContentProvider": "<p>This abstract class is the base for classes that create on-time automatic content for JClic<br>activities, usually using random parameters to assure different content in each session.<br><br>Activities with <code>AutoContentProvider</code> objects rely on them to build new content on every start.</p>",
       "ActiveBagContentKit": "<p>Utility object used to encapsulate multiple sets of box contents</p>",
       "AWT": "<p>This object contains utility clases for painting graphics and images,<br>as found in the Java <a href=\"http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html\">Abstract Window Toolkit</a>  </p>\n<p>The objects defined here are: {@link AWT.Font}, {@link AWT.Gradient}, {@link AWT.Stroke},<br>{@link AWT.Point}, {@link AWT.Dimension}, {@link AWT.Shape}, {@link AWT.Rectangle},<br>{@link AWT.Ellipse}, {@link AWT.Path}, {@link AWT.PathStroke}, {@link AWT.Action},<br>{@link AWT.Timer} and {@link AWT.Container}.</p>",
@@ -197,7 +199,8 @@
       "HTMLAudioElement": "<p>The HTMLAudioElement interface provides access to the properties of &lt;audio&gt; elements, as<br>well as methods to manipulate them. It derives from the<br>{@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement HTMLMediaElement} interface.</p>",
       "HTMLImageElement": "<p>The HTMLImageElement interface provides special properties and methods (beyond the regular<br>{@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement HTMLElement} interface it<br>also has available to it by inheritance) for manipulating the layout and presentation of<br>&lt;img&gt; elements.</p>",
       "jQuery": "<p>A jQuery object</p>",
-      "JSZip": "<p>A JSZip object</p>"
+      "JSZip": "<p>A JSZip object</p>",
+      "MediaRecorder": "<p>The MediaRecorder interface of the {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API MediaRecorder API}<br>provides functionality to easily capture media.</p>"
     }
   }
 }

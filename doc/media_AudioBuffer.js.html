@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Source: bags/ConditionalJumpInfo.js</title>
+    <title>Source: media/AudioBuffer.js</title>
     
     
     
@@ -9949,15 +9949,15 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="bags_ConditionalJumpInfo.js.html">Source: bags/ConditionalJumpInfo.js</h1>
+        <h1 class="page-title" data-filename="media_AudioBuffer.js.html">Source: media/AudioBuffer.js</h1>
         
 
 
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>//    File    : ConditionalJumpInfo.js  
-//    Created : 05/04/2015  
+            <pre class="prettyprint source linenums"><code>//    File    : EventSoundsElement.js  
+//    Created : 01/04/2015  
 //    By      : Francesc Busquets  
 //
 //    JClic.js  
@@ -9971,67 +9971,167 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
+/* global MediaRecorder, navigator, window, URL */
+
 define([
-  "jquery",
-  "./JumpInfo"
-], function ($, JumpInfo) {
-  
+  "./ActiveMediaPlayer"
+], function (ActiveMediaPlayer) {
   /**
-   * This special case of {@link JumpInfo} is used in {@link ActivitySequenceJump} objects to decide
-   * the type of jump or action to be performed, based on the results obtained by the user when
-   * playing previous JClic activities.&lt;br>
-   * In addition to the standard {@link JumpInfo} fields and methods, this class has two public
-   * members where score and time thresholds are stored.&lt;br>
-   * The exact meaning of this members will depend on the type of `ConditionalJumpInfo` in the
-   * {@link ActivitySequenceJump} (it can be `upperJump` or `lowerJump`).
-   * @exports ConditionalJumpInfo
+   * The AudioBuffer object provides sound recording and replaying to activities.
+   * @exports AudioBuffer
    * @class
-   * @extends JumpInfo
-   * @param {string} action - Must be one of the described actions.
-   * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
-   * cardinal number in the list.
-   * @param {number=} threshold - Threshold above or below which the action will be triggered,
-   * depending on the type of JumpInfo.
-   * @param {number=} time - Delay to be applied in automatic jumps.
+   * @param {number=} seconds - The maximum amount of time allowed to be recorded by this AudioBuffer
    */
-  var ConditionalJumpInfo = function (action, sq, threshold, time) {
-    JumpInfo.call(this, action, sq);
-    this.threshold = (typeof threshold === 'number' ? threshold : -1);
-    this.time = (typeof threshold === 'number' ? time : -1);
+  var AudioBuffer = function (seconds) {
+    if (seconds)
+      this.seconds = seconds;
+    this.chunks = [];
   };
-  
-  ConditionalJumpInfo.prototype = {
-    constructor: ConditionalJumpInfo,
+
+  /**
+   * Maximum amount of time allowed for recordings (in seconds)
+   */
+  AudioBuffer.MAX_RECORD_LENGTH = 20;
+
+  AudioBuffer.prototype = {
+    constructor: AudioBuffer,
     /**
-     * Threshold above or below which the action will be triggered, depending on the type of JumpInfo.
-     * @type {number} */
-    threshold: -1,
+     * Maximum length of recordings allowed to this AudioBuffer (in seconds)
+     * @type {number}
+     */
+    seconds: AudioBuffer.MAX_RECORD_LENGTH,
     /**
-     * Delay to be applied in automatic jumps.
-     * @type {number} */
-    time: -1,
+     * The object used to record audio data and convert it to a valid stream for the {@link mediaPlayer}
+     * @type {external:MediaRecorder}
+     */
+    mediaRecorder: null,
+    /**
+     * Array of data chuncks collected during the recording
+     */
+    chunks: null,
+    /**
+     * The HTML audio element used to play the recorded sound
+     * @type {external:HTMLAudioElement}
+     */
+    mediaPlayer: null,
+    /**
+     * The identifier of the timer launched to stop the recording when the maximum time is exceeded.
+     * This member is `null` when no timeout function is associated to this AudioBuffer
+     * @type {number}
+     */
+    timeoutID: null,
+    /**
+     * Instructs this AudioBuffer recorder to start playing the collected audio at the end of the
+     * current mediaRecorder task.
+     * @type {boolean}
+     */
+    playWhenFinished: false,
     /**
      * 
-     * Loads this object settings from a specific JQuery XML element
-     * @param {external:jQuery} $xml - The XML element to parse
+     * Starts playing the currently recorded audio, if any.
      */
-    setProperties: function ($xml) {
-      JumpInfo.prototype.setProperties.call(this, $xml);
-      if ($xml.attr('threshold') !== undefined)
-        this.threshold = $xml.attr('threshold');
-      if ($xml.attr('time') !== undefined)
-        this.time = $xml.attr('time');
-      return this;
+    play: function () {
+      this.stop();
+      if (this.mediaPlayer) {
+        this.mediaPlayer.currentTime = 0;
+        this.mediaPlayer.play();
+      } else {        
+        this.playWhenFinished = true;
+      }
+    },
+    /**
+     * 
+     * Stops the current operation, either recording or playing audio
+     */
+    stop: function () {
+      if (this.mediaRecorder &amp;&amp; this.mediaRecorder.state === 'recording')
+        this.mediaRecorder.stop();
+      else if (this.mediaPlayer &amp;&amp; !this.mediaPlayer.paused)
+        this.mediaPlayer.pause();      
+    },
+    /**
+     * 
+     * Starts recording audio, or stops the recording if already started.
+     */
+    record: function () {
+      if (this.mediaRecorder &amp;&amp; this.mediaRecorder.state === 'recording') {
+        this.mediaRecorder.stop();
+      } else {
+        this.stop();
+        var thisBuffer = this;
+        this.mediaPlayer = null;
+        
+        // TODO: update navigator.getUserMedia to navigator.mediaDevices.getUserMedia (with promises)
+        // when supported in Chrome/Chromium
+        // (in v. 49 this is supported only when "experimental web extensions" flag is enabled)
+        // See: https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia
+
+        navigator.getUserMedia(
+            {audio: true},
+            function (stream) {
+              thisBuffer.mediaRecorder = new MediaRecorder(stream);
+              thisBuffer.mediaRecorder.ondataavailable = function (e) {
+                thisBuffer.chunks.push(e.data);
+              };
+              thisBuffer.mediaRecorder.onerror = function (e) {
+                console.log('Error recording audio: ' + e);
+                thisBuffer.mediaRecorder = null;
+              };
+              thisBuffer.mediaRecorder.onstart = function (e) {
+                console.log('Recording audio started');
+              };
+              thisBuffer.mediaRecorder.onstop = function () {
+                console.log('Recording audio finished');
+
+                if (thisBuffer.timeoutID) {
+                  window.clearTimeout(thisBuffer.timeoutID);
+                  thisBuffer.timeoutID = null;
+                }
+
+                var options = {};
+                if (thisBuffer.chunks.length > 0 &amp;&amp; thisBuffer.chunks[0].type)
+                  options.type = thisBuffer.chunks[0].type;
+                var blob = new Blob(thisBuffer.chunks, options);
+                thisBuffer.chunks = [];
+                thisBuffer.mediaPlayer = document.createElement('audio');
+                var url = URL.createObjectURL(blob);
+                thisBuffer.mediaPlayer.src = url;
+                thisBuffer.mediaPlayer.pause();
+                thisBuffer.mediaRecorder = null;
+                if(thisBuffer.playWhenFinished){
+                  thisBuffer.playWhenFinished = false;
+                  thisBuffer.mediaPlayer.play();
+                }
+              };
+              thisBuffer.mediaRecorder.onwarning = function (e) {
+                console.log('Warning recording audio: ' + e);
+              };
+
+              thisBuffer.playWhenFinished = false;
+              thisBuffer.mediaRecorder.start();
+              thisBuffer.timeoutID = window.setTimeout(function () {
+                if (thisBuffer.mediaRecorder)
+                  thisBuffer.mediaRecorder.stop();
+              }, thisBuffer.seconds * 1000);
+
+            },
+            function (error) {
+              console.log('Error recording audio: ' + error);
+            });
+      }
+    },
+    /**
+     *
+     * Clears all data associated to this AudioBuffer
+     */
+    clear: function () {
+      this.stop();
+      this.mediaPlayer = null;
     }
   };
 
-  // ConditionalJumpInfo extends JumpInfo
-  ConditionalJumpInfo.prototype = $.extend(Object.create(JumpInfo.prototype), ConditionalJumpInfo.prototype);
-
-  return ConditionalJumpInfo;
-  
-});
-</code></pre>
+  return AudioBuffer;
+});</code></pre>
         </article>
     </section>
 
