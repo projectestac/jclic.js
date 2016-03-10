@@ -1,7 +1,6 @@
 #JClic.js
 
-[JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player
-of [JClic](https://github.com/projectestac/jclic) activities.
+[JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player of [JClic](https://github.com/projectestac/jclic) activities. See a [demo](http://clic.xtec.cat/repo/player.html?demo_eng/jclic.js/demo.jclic) on how it works.
 
 ## JClic and JClic-repo
 
@@ -25,10 +24,9 @@ static web hosting services.
 
 ## Known issues
 
-* This project is a work on progress. Only some basic features of JClic are implemented.
+* This project is a work on progress. Some advanced features are not yet implemented.
 * Only a basic implementation of "skin" is provided, without counters nor buttons.
 * The JClic reporting system is not yet implemented.
-* Video playing and recording/playing of sounds are not yet implemented.
 * Playing of MIDI files is not yet implemented
 * Loading of big (about 10MB) JClic project files from zipped files can crash on tablets
 and mobile devices with low memory resources. This is due to a
@@ -47,8 +45,7 @@ To update `npm` to the latest version, run:
 sudo npm install -g npm
 ```
 
-We use [Grunt](http://gruntjs.com/) for automation of building tasks. You must globally install this
-package:
+We use [Grunt](http://gruntjs.com/) for automation of building tasks. You must globally install this package:
 
 ```
 sudo npm install -g grunt-cli
@@ -68,7 +65,7 @@ To build jclic.js, just launch:
 grunt
 ```
 
-This will generate the file `jclic.min.js`, placed in the `dist` folder.
+This will generate the file `jclic.min.js` on the `dist` folder.
 
 To test the module and see the demo on your browser, just launch the test server running:
 
