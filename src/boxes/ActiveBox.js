@@ -274,17 +274,28 @@ define([
       this.setHostedMediaPlayer(null);
       this.content = abc;
       if (abc) {
+        if (abc.mbe !== null && abc.mbe.ext === 'gif' && abc.imgClip === null && !this.specialShape) {
+          //var $hc = $('<img src="'+abc.mbe.getFullPath()+'">');
+          var $hc = $('<span/>').css({
+            'background-image': 'url(' + abc.mbe.getFullPath() + ')',
+            'background-size': 'contain',
+            'background-position': 'center',
+            'background-repeat': 'no-repeat'
+          });
+
+          this.setHostedComponent($hc);
+        }
+
         if (abc.bb !== this.boxBase)
           this.setBoxBase(abc.bb);
         if (abc.hasOwnProperty('border') && this.hasBorder() !== abc.border)
           this.setBorder(abc.border);
         this.setInactive(false);
-        if(abc.amp)
+        if (abc.amp)
           this.setHostedMediaPlayer(abc.amp);
         this.checkHostedComponent();
         this.checkAutoStartMedia();
-      }
-      else
+      } else
         this.clear();
 
       this.invalidate();
@@ -406,8 +417,7 @@ define([
           ctx.drawImage(img,
               Math.max(0, r.pos.x), Math.max(0, r.pos.y), Math.min(img.width, r.dim.width), Math.min(img.height, r.dim.height),
               this.pos.x, this.pos.y, this.dim.width, this.dim.height);
-        }
-        else {
+        } else {
           var imgw, imgh;
           var compress = false;
           imgw = abc.img.naturalWidth;
@@ -433,8 +443,7 @@ define([
               : (this.dim.height - imgh) / 2);
           if (compress) {
             ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys, imgw, imgh);
-          }
-          else
+          } else
             ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys);
 
           if (abc.avoidOverlapping && abc.text)
@@ -572,8 +581,8 @@ define([
       this.hostedMediaPlayer = amp;
       if (old && old !== amp)
         old.linkTo(null);
-      if(amp)
-        amp.linkTo(this);      
+      if (amp)
+        amp.linkTo(this);
     },
     /**
      * 

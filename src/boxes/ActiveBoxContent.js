@@ -109,6 +109,8 @@ define([
     animated: false,
     // ActiveMediaPlayer
     amp: null,
+    // MediaBagElement
+    mbe: null,
     /**
      * 
      * Loads settings from a specific JQuery XML element 
@@ -300,10 +302,10 @@ define([
     realizeContent: function (mediaBag) {
       var thisContent = this;
       if (this.imgName !== null && this.imgName.length > 0) {
-        var mbe = mediaBag.getElement(this.imgName, true);
-        if (mbe) {
-          mbe.build(function () {
-            thisContent.img = mbe.data;
+        this.mbe = mediaBag.getElement(this.imgName, true);
+        if (this.mbe) {
+          this.mbe.build(function () {
+            thisContent.img = thisContent.mbe.data;
           });
         }
       }
