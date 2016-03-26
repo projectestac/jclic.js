@@ -21,6 +21,7 @@
   ],
   "license": "GPL-3.0",
   "ignore": [
+    "src",
     "**/.*",
     "*.conf.json",
     "*.md",
