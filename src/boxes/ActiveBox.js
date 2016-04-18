@@ -274,14 +274,22 @@ define([
       this.setHostedMediaPlayer(null);
       this.content = abc;
       if (abc) {
-        if (abc.mbe !== null && abc.mbe.ext === 'gif' && abc.imgClip === null && !this.specialShape) {
+        // if (abc.mbe !== null && abc.mbe.ext === 'gif' && !this.specialShape) {
+        if (abc.animatedGifFile && !this.specialShape) {
           //var $hc = $('<img src="'+abc.mbe.getFullPath()+'">');
           var $hc = $('<span/>').css({
-            'background-image': 'url(' + abc.mbe.getFullPath() + ')',
+            'background-image': 'url(' + abc.animatedGifFile + ')',
             'background-size': 'contain',
-            'background-position': 'center',
-            'background-repeat': 'no-repeat'
+            'background-position': 'center'
+            //,'background-repeat': 'no-repeat'
           });
+
+          if (abc.imgClip !== null) {
+            $hc.css({
+              'background-position': abc.imgClip.pos.x + 'px ' + abc.imgClip.pos.y + 'px',
+              'background-size': abc.imgClip.dim.width + 'px ' + abc.imgClip.dim.height + 'px'
+            });
+          }
 
           this.setHostedComponent($hc);
         }

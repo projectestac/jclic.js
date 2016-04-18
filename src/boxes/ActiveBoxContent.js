@@ -102,6 +102,12 @@ define([
      * The realized image used by this box content.
      * @type {external:HTMLImageElement} */
     img: null,
+    /**
+     * When `img` is an animated GIF file, this field should contain its file name
+     */
+    animatedGifFile: null,
+    //
+    //
     userData: null,
     rawText: null,
     htmlText: null,
@@ -277,11 +283,14 @@ define([
      * be cleared with this setting.
      * @param {external:HTMLImageElement} img - The image data
      * @param {AWT.Shape} imgClip - A shape that clips the portion of image assigned to this content.
+     * @param {string=} animatedGifFile - When `img` is an animated GIF, its fileName
      */
-    setImgContent: function (img, imgClip) {
+    setImgContent: function (img, imgClip, animatedGifFile) {
       this.img = img;
       this.imgName = null;
       this.imgClip = imgClip;
+      if(animatedGifFile)
+        this.animatedGifFile = animatedGifFile;
     },
     /**
      * 
@@ -306,12 +315,14 @@ define([
         if (this.mbe) {
           this.mbe.build(function () {
             thisContent.img = thisContent.mbe.data;
+            thisContent.animatedGifFile = thisContent.mbe.animated ? thisContent.mbe.getFullPath() : null;
           });
         }
       }
       if (this.mediaContent !== null) {
         if (this.imgName === null && (this.text === null || this.text.length === 0)) {
           this.img = this.mediaContent.getIcon();
+          this.animatedGifFile = null;
         }
       }
       this.checkHtmlText(mediaBag);

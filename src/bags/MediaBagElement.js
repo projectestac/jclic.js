@@ -39,6 +39,8 @@ define([
       this.name = Utils.nSlash(fileName);
       this.ext = this.fileName.toLowerCase().split('.').pop();
       this.type = this.getFileType(this.ext);
+      // TODO: Check if GIF file is actually animated
+      this.animated = (this.ext === 'gif');      
     }
     if (zip)
       this.zip = zip;
@@ -87,9 +89,13 @@ define([
      * Time set to load the resource before leaving
      * @type {number} */
     timeout: 0,
+    //
+    /**
+     * Flag used for animated GIFs
+     * @type {boolean} */
+    animated: false,
     // 
     // Other fields present in JClic, currently not used:  
-    // animated: false,  
     // usageCount: 0,  
     // projectFlag: false,  
     // saveFlag: true,  
@@ -105,6 +111,8 @@ define([
       this.fileName = Utils.nSlash($xml.attr('file'));
       this.ext = this.fileName.toLowerCase().split('.').pop();
       this.type = this.getFileType(this.ext);
+      // TODO: Check if GIF file is actually animated
+      this.animated = (this.ext === 'gif');
       return this;
     },
     /**
