@@ -430,6 +430,9 @@ define([
       this.focused = newVal;
       if (newVal)
         this.invalidate();
+      // Put hosted component on top
+      if(this.$hostedComponent)
+        this.$hostedComponent.css('z-index', this.focused ? 20 : 'inherit');
     },
     /**
      * Checks if this box is in `alternative` state.
@@ -513,20 +516,20 @@ define([
      * will be drawn.
      */
     drawBorder: function (ctx) {
-      if (this.border || this.marked || this.focused) {
+      if (this.border || this.marked) {
         var bb = this.getBoxBaseResolve();
 
         // Prepare stroke settings
         ctx.strokeStyle = bb.borderColor;
-        bb[(this.marked || this.focused) ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
-        if (this.marked || this.focused)
+        bb[this.marked ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
+        if (this.marked)
           ctx.globalCompositeOperation = 'xor';
 
         // Draw border
         this.shape.stroke(ctx);
 
         // Reset ctx default values
-        if (this.marked || this.focused)
+        if (this.marked)
           ctx.globalCompositeOperation = 'source-over';
         ctx.strokeStyle = 'black';
         AWT.Stroke.prototype.setStroke(ctx);
@@ -539,9 +542,9 @@ define([
      */
     getBorderBounds: function () {
       var result = new Rectangle(this.getBounds());
-      if (this.border || this.marked || this.focused) {
+      if (this.border || this.marked) {
         var bb = this.getBoxBaseResolve();
-        var w = bb[(this.marked || this.focused) ? 'markerStroke' : 'borderStroke'].lineWidth;
+        var w = bb[this.marked ? 'markerStroke' : 'borderStroke'].lineWidth;
         result.moveBy(-w / 2, -w / 2);
         result.dim.width += w;
         result.dim.height += w;
