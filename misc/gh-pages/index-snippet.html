@@ -1,0 +1,32 @@
+<h1 id="jclic.js">JClic.js</h1>
+<p><a href="https://github.com/projectestac/jclic.js">JClic.js</a> is an HTML5 player of <a href="https://github.com/projectestac/jclic">JClic</a> activities. See a <a href="http://clic.xtec.cat/repo/player.html?demo_eng/jclic.js/demo.jclic">demo</a> on how it works.</p>
+<h2 id="jclic-and-jclic-repo">JClic and JClic-repo</h2>
+<p><a href="http://clic.xtec.cat">JClic</a> is a free software project from the <a href="http://www.xtec.cat">Catalan Educational Telematic Network</a> (XTEC) for creating various types of interactive activities such as associations, puzzles, text activities, crosswords or puzzles, from elements of text, graphics and multimedia.</p>
+<p>The program includes an authoring tool to create activities, a player and a reporting system that stores the results obtained by students. All these components, along with some guides and tutorials on how to create activities, are available in the <a href="http://clic.xtec.cat/en/jclic/download.htm">clicZone</a>.</p>
+<p>JClic is a Java application that runs on Linux, Windows and Mac OS. Full <a href="https://github.com/projectestac/jclic">source code</a> and <a href="http://projectestac.github.io/jclic/">documentation</a> are available on GitHub.</p>
+<p>Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge <a href="http://clic.xtec.cat/repo">library</a> created with <a href="https://github.com/projectestac/jclic-repo">jclic-repo</a>, another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.</p>
+<h2 id="known-issues">Known issues</h2>
+<ul>
+<li>This project is a work on progress. Some advanced features are not yet implemented.</li>
+<li>Only a basic implementation of &quot;skin&quot; is provided, without counters nor buttons.</li>
+<li>The JClic reporting system is not yet implemented.</li>
+<li>Playing of MIDI files is not yet implemented</li>
+<li>Loading of big (about 10MB) JClic project files from zipped files can crash on tablets and mobile devices with low memory resources. This is due to a <a href="https://github.com/Stuk/jszip/issues/135">known issue</a> of JSZip.</li>
+<li>The project has been tested only with the latest versions of Chrome/Chromium and Firefox.</li>
+</ul>
+<h2 id="how-to-build-jclic.js">How to build JClic.js</h2>
+<p>JClic.js uses <a href="https://nodejs.org/">Node.js</a> modules encapsulated in <a href="https://www.npmjs.com/">npm</a> packages. First of all, you must have Node.js (which includes 'npm' by default) <a href="https://nodejs.org/download/">installed</a> on your system.</p>
+<p>To update <code>npm</code> to the latest version, run:</p>
+<pre><code>sudo npm install -g npm</code></pre>
+<p>We use <a href="http://gruntjs.com/">Grunt</a> for automation of building tasks. You must globally install this package:</p>
+<pre><code>sudo npm install -g grunt-cli</code></pre>
+<p>To install the remaining packages, just go to the project's root directory and launch:</p>
+<pre><code>npm install</code></pre>
+<p>This will install jQuery, Browserify and other needed components into <code>node_modules</code></p>
+<p>To build jclic.js, just launch:</p>
+<pre><code>grunt</code></pre>
+<p>This will generate the file <code>jclic.min.js</code> on the <code>dist</code> folder.</p>
+<p>To test the module and see the demo on your browser, just launch the test server running:</p>
+<pre><code>grunt server</code></pre>
+<p>Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc</p>
+<p><strong>jclic.js</strong> is also available as a <a href="https://www.npmjs.com/package/jclic">NPM</a> and <a href="https://libraries.io/bower/jclic">Bower</a> packages.</p>
