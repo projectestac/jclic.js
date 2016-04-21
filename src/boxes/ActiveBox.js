@@ -65,6 +65,8 @@ define([
   ActiveBox.createCell = function ($dom, abc) {
     if (abc && abc.dimension) {
       var box = new ActiveBox();
+      box.container = new AWT.Container();
+      box.container.$div = $dom;
       box.setContent(abc);
       var $canvas = $('<canvas width="' + abc.dimension.width + '" height="' + abc.dimension.height + '"/>');
       var rect = new AWT.Rectangle(0, 0, abc.dimension.width, abc.dimension.height);
