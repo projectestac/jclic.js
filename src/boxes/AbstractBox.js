@@ -331,7 +331,7 @@ define([
         if (val === false)
           this.$hostedComponent.css('visibility', 'hidden');
         else
-          this.$hostedComponent.css('visibility', this.visible ? 'visible' : 'hidden');
+          this.$hostedComponent.css('visibility', (this.visible && !this.inactive) ? 'visible' : 'hidden');
       }
     },
     /**
@@ -365,8 +365,10 @@ define([
      */
     setInactive: function (newVal) {
       this.inactive = newVal;
-      if (this.$hostedComponent)
+      if (this.$hostedComponent){
         this.setHostedComponentColors();
+        this.setHostedComponentVisible();
+      }
       else
         this.invalidate();
     },
