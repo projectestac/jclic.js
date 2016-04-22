@@ -247,8 +247,7 @@ define([
           this.shape.moveTo(rect.pos);
         }
         this.setShape(this.shape);
-      }
-      else
+      } else
         AWT.Rectangle.prototype.setBounds.call(this, rect);
 
       if (this.$hostedComponent)
@@ -365,11 +364,10 @@ define([
      */
     setInactive: function (newVal) {
       this.inactive = newVal;
-      if (this.$hostedComponent){
+      if (this.$hostedComponent) {
         this.setHostedComponentColors();
         this.setHostedComponentVisible();
-      }
-      else
+      } else
         this.invalidate();
     },
     /**
@@ -408,9 +406,10 @@ define([
       if (!newVal)
         this.invalidate();
       this.marked = newVal;
-      if (this.$hostedComponent)
+      if (this.$hostedComponent) {
         this.setHostedComponentColors();
-      else if (newVal)
+        this.setHostedComponentBorder();
+      } else if (newVal)
         this.invalidate();
     },
     /**
@@ -433,8 +432,8 @@ define([
       if (newVal)
         this.invalidate();
       // Put hosted component on top
-      if(this.$hostedComponent)
-        this.$hostedComponent.css('z-index', this.focused ? 20 : 'inherit');
+      if (this.$hostedComponent)
+        this.$hostedComponent.css('z-index', this.focused ? 20 : 10);
     },
     /**
      * Checks if this box is in `alternative` state.
@@ -462,7 +461,7 @@ define([
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
      */
     update: function (ctx, dirtyRegion) {
-      if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden() || this.$hostedComponent)
+      if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
         return false;
 
       if (dirtyRegion && !this.shape.intersects(dirtyRegion))
@@ -494,7 +493,8 @@ define([
         ctx.fillStyle = 'black';
       }
 
-      this.updateContent(ctx, dirtyRegion);
+      if (!this.$hostedComponent)
+        this.updateContent(ctx, dirtyRegion);
 
       this.drawBorder(ctx);
       return true;
@@ -559,11 +559,11 @@ define([
      * @param {external:jQuery} $hc - The jQuery DOM component hosted by this box.
      */
     setHostedComponent: function ($hc) {
-      if(this.$hostedComponent)
+      if (this.$hostedComponent)
         this.$hostedComponent.detach();
-                 
+
       this.$hostedComponent = $hc;
-      
+
       if (this.$hostedComponent) {
         this.setContainer(this.container);
         this.setHostedComponentVisible(false);
@@ -571,6 +571,7 @@ define([
         this.setHostedComponentBorder();
         this.setHostedComponentBounds();
         this.setHostedComponentVisible();
+        this.setFocused(this.focused);
       }
     },
     /**
@@ -598,7 +599,14 @@ define([
      * {@link BoxBase} of this box.
      */
     setHostedComponentBorder: function () {
-      // TODO: Implement $hostedComponent border
+      if (this.$hostedComponent && (this.border || this.marked)) {
+        var bb = this.getBoxBaseResolve();
+        this.$hostedComponent.css({
+          'border-width': bb.get(this.marked ? 'markerStroke' : 'borderStroke').lineWidth + 'px',
+          'border-style': 'solid',
+          'border-color': bb.get('borderColor')
+        });
+      }
     },
     /**
      * 
