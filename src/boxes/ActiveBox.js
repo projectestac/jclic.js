@@ -65,6 +65,8 @@ define([
   ActiveBox.createCell = function ($dom, abc) {
     if (abc && abc.dimension) {
       var box = new ActiveBox();
+      box.container = new AWT.Container();
+      box.container.$div = $dom;
       box.setContent(abc);
       var $canvas = $('<canvas width="' + abc.dimension.width + '" height="' + abc.dimension.height + '"/>');
       var rect = new AWT.Rectangle(0, 0, abc.dimension.width, abc.dimension.height);
@@ -274,17 +276,35 @@ define([
       this.setHostedMediaPlayer(null);
       this.content = abc;
       if (abc) {
+        if (abc.animatedGifFile /* && !this.specialShape*/) {
+          var $hc = $('<span/>').css({
+            'background-image': 'url(' + abc.animatedGifFile + ')',
+            //'background-size': 'contain',
+            'background-position': 'center',
+            'background-repeat': 'no-repeat'
+          });
+
+          if (abc.imgClip !== null) {
+            $hc.css({
+              'background-origin': 'border-box',
+              'background-position': (-abc.imgClip.pos.x) + 'px ' + (-abc.imgClip.pos.y) + 'px'
+                  // TODO: Use background-size only when the original image must be compressed
+                  //,'background-size': abc.imgClip.dim.width + 'px ' + abc.imgClip.dim.height + 'px'
+            });
+          }
+          this.setHostedComponent($hc);
+        }
+
         if (abc.bb !== this.boxBase)
           this.setBoxBase(abc.bb);
         if (abc.hasOwnProperty('border') && this.hasBorder() !== abc.border)
           this.setBorder(abc.border);
         this.setInactive(false);
-        if(abc.amp)
+        if (abc.amp)
           this.setHostedMediaPlayer(abc.amp);
         this.checkHostedComponent();
         this.checkAutoStartMedia();
-      }
-      else
+      } else
         this.clear();
 
       this.invalidate();
@@ -406,8 +426,7 @@ define([
           ctx.drawImage(img,
               Math.max(0, r.pos.x), Math.max(0, r.pos.y), Math.min(img.width, r.dim.width), Math.min(img.height, r.dim.height),
               this.pos.x, this.pos.y, this.dim.width, this.dim.height);
-        }
-        else {
+        } else {
           var imgw, imgh;
           var compress = false;
           imgw = abc.img.naturalWidth;
@@ -433,8 +452,7 @@ define([
               : (this.dim.height - imgh) / 2);
           if (compress) {
             ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys, imgw, imgh);
-          }
-          else
+          } else
             ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys);
 
           if (abc.avoidOverlapping && abc.text)
@@ -572,8 +590,8 @@ define([
       this.hostedMediaPlayer = amp;
       if (old && old !== amp)
         old.linkTo(null);
-      if(amp)
-        amp.linkTo(this);      
+      if (amp)
+        amp.linkTo(this);
     },
     /**
      * 
@@ -594,6 +612,44 @@ define([
       AbstractBox.prototype.setBounds.call(this, rect);
       if (this.hostedMediaPlayer)
         this.hostedMediaPlayer.checkVisualComponentBounds(this);
+    },
+    /**
+     * 
+     * Places and resizes {@link AbstractBox#$hostedComponent $hostedComponent}, based on the size
+     * and position of this box.
+     * @param {boolean} sizeChanged - `true` when this {@link ActiveBox} has changed its size
+     */
+    setHostedComponentBounds: function (sizeChanged) {
+      if (this.$hostedComponent) {
+        AbstractBox.prototype.setHostedComponentBounds.call(this, sizeChanged);
+        var abc = this.getCurrentContent();
+        if (sizeChanged && abc && abc.animatedGifFile && abc.img /* && !this.specialShape */) {
+          var img = abc.img;
+          var w = Math.max(img.naturalWidth, this.dim.width);
+          var h = Math.max(img.naturalHeight, this.dim.height);
+          var scale = 1;
+          var bgSize = '';
+          if (abc.imgClip) {
+            var r = abc.imgClip.getBounds();
+            if (this.dim.width < r.dim.width || this.dim.height < r.dim.height){
+              scale = Math.min(this.dim.width / r.dim.width, this.dim.height / r.dim.height);
+              bgSize = w * scale + 'px ' + h * scale + 'px';
+            }
+            this.$hostedComponent.css({
+              'background-position': (-abc.imgClip.pos.x * scale) + 'px ' + (-abc.imgClip.pos.y * scale) + 'px',
+              'background-size': bgSize
+            });
+          } else {
+            if (this.dim.width < w || this.dim.height < h){
+              scale = Math.min(this.dim.width / w, this.dim.height / h);
+              bgSize = w * scale + 'px ' + h * scale + 'px';
+            }
+            this.$hostedComponent.css({
+              'background-size': bgSize
+            });
+          }
+        }
+      }
     }
   };
 

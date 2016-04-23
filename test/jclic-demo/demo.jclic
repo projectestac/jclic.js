@@ -46,6 +46,7 @@
   <item name="gigpuzzle" />
   <item name="mapa" />
   <item name="puzanim.puz" />
+  <item name="puzanim2.puz" />
   <item name="puz04.puz" />
   <item name="puz05.puz" />
   <item name="puz06.puz" />
@@ -130,6 +131,7 @@
   </item>
   <item name="anim1" />
   <item name="puzanim.puz" />
+  <item name="puzanim2.puz" />  
   <item name="anim2">
    <jump action="RETURN" id="forward" />
   </item>
@@ -264,7 +266,7 @@
      <color background="0xFFFFFF" />
     </style>
     <shaper class="@Rectangular" cols="2" rows="2" />
-    <cell id="0" image="bici2.gif" />
+    <cell id="0" image="big.gif" />
     <cell id="1" image="natacio.gif" />
     <cell id="2" image="esqui.gif" />
     <cell id="3" image="trampoli.gif" />
@@ -275,7 +277,7 @@
     </style>
     <shaper class="@Rectangular" cols="1" rows="4" />
     <cell>
-     <p>cycling</p>
+     <p>quasar</p>
     </cell>
     <cell>
      <p>swimming</p>
@@ -2853,6 +2855,35 @@
    </cells>
    <scramble times="31" />
   </activity>
+  <activity class="@puzzles.DoublePuzzle" name="puzanim2.puz">
+   <description>
+    <p>Puzzle with animated GIF</p>
+   </description>
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Example of a puzzle with animated GIF</p>
+    </cell>
+    <cell type="final">
+     <style />
+     <p>Very good!</p>
+    </cell>
+   </messages>
+   <settings margin="8" dragCells="true" report="true" reportActions="false">
+    <helpWindow showSolution="true" />
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="3" columns="3" border="true" image="big.gif">
+    <style>
+     <font family="Arial" size="21" />
+    </style>
+    <shaper class="@Rectangular" cols="3" rows="3" />
+   </cells>
+   <scramble times="31" />
+  </activity>
   <activity class="@puzzles.DoublePuzzle" name="shape1">
    <messages>
     <cell type="initial">
@@ -5141,32 +5172,33 @@
  </activities>
  <mediaBag>
   <media name="zebra.mp4" file="zebra.mp4" />
-  <media name="bici.gif" file="bici.gif" />
-  <media name="bici2.gif" file="bici2.gif" />
-  <media name="camio.gif" file="camio.gif" />
-  <media name="casa.gif" file="casa.gif" />
-  <media name="cireres.gif" file="cireres.gif" />
-  <media name="cotxe.gif" file="cotxe.gif" />
+  <media name="bici.gif" file="bici.gif" animated="false" />
+  <media name="bici2.gif" file="bici2.gif" animated="false" />
+  <media name="camio.gif" file="camio.gif" animated="false" />
+  <media name="casa.gif" file="casa.gif" animated="false" />
+  <media name="cireres.gif" file="cireres.gif" animated="false" />
+  <media name="cotxe.gif" file="cotxe.gif" animated="false" />
   <media name="elmo.gif" file="elmo.gif" />
-  <media name="esqui.gif" file="esqui.gif" />
-  <media name="func2.gif" file="func2.gif" />
-  <media name="funcio.gif" file="funcio.gif" />
-  <media name="great.gif" file="great.gif" />
-  <media name="lletres.gif" file="lletres.gif" />
-  <media name="llimona.gif" file="llimona.gif" />
-  <media name="mapa.gif" file="mapa.gif" />
-  <media name="minialt.gif" file="minialt.gif" />
-  <media name="minialt2.gif" file="minialt2.gif" />
-  <media name="moto.gif" file="moto.gif" />
-  <media name="natacio.gif" file="natacio.gif" />
-  <media name="pera.gif" file="pera.gif" />
-  <media name="raim.gif" file="raim.gif" />
-  <media name="simpleanim.gif" file="simpleanim.gif" />
-  <media name="sindria.gif" file="sindria.gif" />
-  <media name="taronja.gif" file="taronja.gif" />
-  <media name="tennis.gif" file="tennis.gif" />
-  <media name="trampoli.gif" file="trampoli.gif" />
-  <media name="trex.gif" file="trex.gif" />
+  <media name="big.gif" file="big.gif" animated="true" />
+  <media name="esqui.gif" file="esqui.gif" animated="true" />
+  <media name="func2.gif" file="func2.gif" animated="false" />
+  <media name="funcio.gif" file="funcio.gif" animated="false" />
+  <media name="great.gif" file="great.gif" animated="false" />
+  <media name="lletres.gif" file="lletres.gif" animated="false" />
+  <media name="llimona.gif" file="llimona.gif" animated="false" />
+  <media name="mapa.gif" file="mapa.gif" animated="false" />
+  <media name="minialt.gif" file="minialt.gif" animated="false" />
+  <media name="minialt2.gif" file="minialt2.gif" animated="false" />
+  <media name="moto.gif" file="moto.gif" animated="false" />
+  <media name="natacio.gif" file="natacio.gif" animated="true" />
+  <media name="pera.gif" file="pera.gif" animated="false" />
+  <media name="raim.gif" file="raim.gif" animated="false" />
+  <media name="simpleanim.gif" file="simpleanim.gif" animated="true" />
+  <media name="sindria.gif" file="sindria.gif" animated="false" />
+  <media name="taronja.gif" file="taronja.gif" animated="false" />
+  <media name="tennis.gif" file="tennis.gif" animated="true" />
+  <media name="trampoli.gif" file="trampoli.gif" animated="true" />
+  <media name="trex.gif" file="trex.gif" animated="true" />
   <media name="astro.jpg" file="astro.jpg" />
   <media name="foto.jpg" file="foto.jpg" />
   <media name="foto2.jpg" file="foto2.jpg" />

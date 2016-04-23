@@ -197,6 +197,7 @@ define([
         // Remember what box will be moved, hide it from the panel and repaint all
         this.bx = box;
         this.relativePos.moveTo(pt.x - box.pos.x, pt.y - box.pos.y);
+        this.bx.setFocused(true);
         this.bx.setTemporaryHidden(true);
         this.linePainted = false;
         this.parent.invalidate().update();
@@ -232,6 +233,7 @@ define([
 
       if (this.bx) {
         // Restore the original position and attributes of the box
+        this.bx.setFocused(false);
         this.bx.moveTo(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y);
         this.bx.setTemporaryHidden(false);
         this.bx = null;

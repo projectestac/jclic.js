@@ -39,6 +39,8 @@ define([
       this.name = Utils.nSlash(fileName);
       this.ext = this.fileName.toLowerCase().split('.').pop();
       this.type = this.getFileType(this.ext);
+      if (this.ext === 'gif')
+        this.checkAnimatedGif();
     }
     if (zip)
       this.zip = zip;
@@ -87,9 +89,13 @@ define([
      * Time set to load the resource before leaving
      * @type {number} */
     timeout: 0,
+    //
+    /**
+     * Flag used for animated GIFs
+     * @type {boolean} */
+    animated: false,
     // 
     // Other fields present in JClic, currently not used:  
-    // animated: false,  
     // usageCount: 0,  
     // projectFlag: false,  
     // saveFlag: true,  
@@ -105,7 +111,64 @@ define([
       this.fileName = Utils.nSlash($xml.attr('file'));
       this.ext = this.fileName.toLowerCase().split('.').pop();
       this.type = this.getFileType(this.ext);
+      // Check if it's an animated GIF
+      if (this.ext === 'gif') {
+        var anim = $xml.attr('animated');
+        if (typeof anim === 'undefined') {
+          this.checkAnimatedGif();
+        } else
+          this.animated = anim;
+      }
       return this;
+    },
+    /**
+     * Checks if the image associated with this MediaBagElement is an animated GIF
+     * 
+     * Code based on: https://gist.github.com/marckubischta/261ad8427a214022890b
+     * Thanks to @lakenen and @marckubischta
+     */
+    checkAnimatedGif: function () {
+      var thisMbe = this;
+      var request = new XMLHttpRequest();
+      request.open('GET', this.getFullPath(), true);
+      request.responseType = 'arraybuffer';
+      request.addEventListener('load', function () {
+        var arr = new Uint8Array(request.response),
+            i, len, length = arr.length, frames = 0;
+
+        // make sure it's a gif (GIF8)
+        if (arr[0] !== 0x47 || arr[1] !== 0x49 ||
+            arr[2] !== 0x46 || arr[3] !== 0x38) {
+          thisMbe.animated = false;
+          return;
+        }
+
+        //ported from php http://www.php.net/manual/en/function.imagecreatefromgif.php#104473
+        //an animated gif contains multiple "frames", with each frame having a
+        //header made up of:
+        // * a static 3-byte sequence (\x00\x21\xF9
+        // * one byte indicating the length of the header (usually \x04)
+        // * variable length header (usually 4 bytes)
+        // * a static 2-byte sequence (\x00\x2C) (some variants may use \x00\x21 ?)
+        // We read through the file as long as we haven't reached the end of the file
+        // and we haven't yet found at least 2 frame headers
+        for (i = 0, len = length - 3; i < len && frames < 2; ++i) {
+          if (arr[i] === 0x00 && arr[i + 1] === 0x21 && arr[i + 2] === 0xF9) {
+            var blocklength = arr[i + 3];
+            var afterblock = i + 4 + blocklength;
+            if (afterblock + 1 < length &&
+                arr[afterblock] === 0x00 &&
+                (arr[afterblock + 1] === 0x2C || arr[afterblock + 1] === 0x21)) {
+              if (++frames > 1) {
+                thisMbe.animated = true;
+                //console.log('Animated GIF detected: '+thisMbe.fileName);
+                break;
+              }
+            }
+          }
+        }
+      });
+      request.send();
     },
     /**
      * 
@@ -161,20 +224,24 @@ define([
 
           case 'image':
             this.data = new Image();
-            $(this.data).on('load', function(){media._onReady.call(media);});
+            $(this.data).on('load', function () {
+              media._onReady.call(media);
+            });
             this.data.src = fullPath;
             break;
 
           case 'audio':
           case 'video':
             this.data = document.createElement(this.type);
-            $(this.data).on('canplay', function () {media._onReady.call(media);});
+            $(this.data).on('canplay', function () {
+              media._onReady.call(media);
+            });
             this.data.src = fullPath;
             this.data.pause();
             break;
-            
+
           case 'anim':
-            this.data = $('<object type="application/x-shockwave-flash" width="300" height="200" data="'+fullPath+'"/>').get(0);
+            this.data = $('<object type="application/x-shockwave-flash" width="300" height="200" data="' + fullPath + '"/>').get(0);
             // Unable to check the loading progress in elements of type `object. Mark it always as `ready`
             this.ready = true;
             break;
@@ -233,11 +300,11 @@ define([
      * 
      * Checks if this resource has timed out.
      * @returns {Boolean} - `true` if the resource has exhausted the allowed time to load, `false` otherwise
-     */ 
-    checkTimeout: function() {
+     */
+    checkTimeout: function () {
       var result = Date.now() > this.timeout;
-      if(result)
-        console.log('Timeout while loading '+this.name);
+      if (result)
+        console.log('Timeout while loading ' + this.name);
       return result;
     },
     /**

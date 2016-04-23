@@ -238,8 +238,9 @@ define([
       // Rectangle comparision
       if (this.equals(rect))
         return;
+      var sizeChanged = !this.dim.equals(rect.dim);
       if (this.specialShape) {
-        if (!this.dim.equals(rect.dim)) {
+        if (sizeChanged) {
           this.shape.scaleBy(new AWT.Dimension(rect.dim.width / this.dim.width, rect.dim.height / this.dim.height));
           this.setShape(this.shape);
         }
@@ -247,12 +248,11 @@ define([
           this.shape.moveTo(rect.pos);
         }
         this.setShape(this.shape);
-      }
-      else
+      } else
         AWT.Rectangle.prototype.setBounds.call(this, rect);
 
       if (this.$hostedComponent)
-        this.setHostedComponentBounds();
+        this.setHostedComponentBounds(sizeChanged);
 
       return this;
     },
@@ -331,7 +331,7 @@ define([
         if (val === false)
           this.$hostedComponent.css('visibility', 'hidden');
         else
-          this.$hostedComponent.css('visibility', this.visible ? 'visible' : 'hidden');
+          this.$hostedComponent.css('visibility', (this.visible && !this.inactive) ? 'visible' : 'hidden');
       }
     },
     /**
@@ -365,9 +365,10 @@ define([
      */
     setInactive: function (newVal) {
       this.inactive = newVal;
-      if (this.$hostedComponent)
+      if (this.$hostedComponent) {
         this.setHostedComponentColors();
-      else
+        this.setHostedComponentVisible();
+      } else
         this.invalidate();
     },
     /**
@@ -406,9 +407,10 @@ define([
       if (!newVal)
         this.invalidate();
       this.marked = newVal;
-      if (this.$hostedComponent)
+      if (this.$hostedComponent) {
         this.setHostedComponentColors();
-      else if (newVal)
+        this.setHostedComponentBorder();
+      } else if (newVal)
         this.invalidate();
     },
     /**
@@ -430,6 +432,9 @@ define([
       this.focused = newVal;
       if (newVal)
         this.invalidate();
+      // Put hosted component on top
+      if (this.$hostedComponent)
+        this.$hostedComponent.css('z-index', this.focused ? 20 : 2);
     },
     /**
      * Checks if this box is in `alternative` state.
@@ -457,7 +462,7 @@ define([
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
      */
     update: function (ctx, dirtyRegion) {
-      if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden() || this.$hostedComponent)
+      if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
         return false;
 
       if (dirtyRegion && !this.shape.intersects(dirtyRegion))
@@ -489,7 +494,8 @@ define([
         ctx.fillStyle = 'black';
       }
 
-      this.updateContent(ctx, dirtyRegion);
+      if (!this.$hostedComponent)
+        this.updateContent(ctx, dirtyRegion);
 
       this.drawBorder(ctx);
       return true;
@@ -513,20 +519,20 @@ define([
      * will be drawn.
      */
     drawBorder: function (ctx) {
-      if (this.border || this.marked || this.focused) {
+      if (this.border || this.marked) {
         var bb = this.getBoxBaseResolve();
 
         // Prepare stroke settings
         ctx.strokeStyle = bb.borderColor;
-        bb[(this.marked || this.focused) ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
-        if (this.marked || this.focused)
+        bb[this.marked ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
+        if (this.marked)
           ctx.globalCompositeOperation = 'xor';
 
         // Draw border
         this.shape.stroke(ctx);
 
         // Reset ctx default values
-        if (this.marked || this.focused)
+        if (this.marked)
           ctx.globalCompositeOperation = 'source-over';
         ctx.strokeStyle = 'black';
         AWT.Stroke.prototype.setStroke(ctx);
@@ -539,9 +545,9 @@ define([
      */
     getBorderBounds: function () {
       var result = new Rectangle(this.getBounds());
-      if (this.border || this.marked || this.focused) {
+      if (this.border || this.marked) {
         var bb = this.getBoxBaseResolve();
-        var w = bb[(this.marked || this.focused) ? 'markerStroke' : 'borderStroke'].lineWidth;
+        var w = bb[this.marked ? 'markerStroke' : 'borderStroke'].lineWidth;
         result.moveBy(-w / 2, -w / 2);
         result.dim.width += w;
         result.dim.height += w;
@@ -554,18 +560,19 @@ define([
      * @param {external:jQuery} $hc - The jQuery DOM component hosted by this box.
      */
     setHostedComponent: function ($hc) {
-      if(this.$hostedComponent)
+      if (this.$hostedComponent)
         this.$hostedComponent.detach();
-                 
+
       this.$hostedComponent = $hc;
-      
+
       if (this.$hostedComponent) {
         this.setContainer(this.container);
         this.setHostedComponentVisible(false);
         this.setHostedComponentColors();
         this.setHostedComponentBorder();
-        this.setHostedComponentBounds();
+        this.setHostedComponentBounds(true);
         this.setHostedComponentVisible();
+        this.setFocused(this.focused);
       }
     },
     /**
@@ -593,14 +600,22 @@ define([
      * {@link BoxBase} of this box.
      */
     setHostedComponentBorder: function () {
-      // TODO: Implement $hostedComponent border
+      if (this.$hostedComponent && (this.border || this.marked)) {
+        var bb = this.getBoxBaseResolve();
+        this.$hostedComponent.css({
+          'border-width': bb.get(this.marked ? 'markerStroke' : 'borderStroke').lineWidth + 'px',
+          'border-style': 'solid',
+          'border-color': bb.get('borderColor')
+        });
+      }
     },
     /**
      * 
      * Places and resizes {@link AbstractBox#$hostedComponent $hostedComponent}, based on the size
      * and position of this box.
+     * @param {boolean} sizeChanged - `true` when this {@link ActiveBox} has changed its size
      */
-    setHostedComponentBounds: function () {
+    setHostedComponentBounds: function (sizeChanged) {
       if (this.$hostedComponent) {
         var r = this.getBounds();
         this.$hostedComponent.css({

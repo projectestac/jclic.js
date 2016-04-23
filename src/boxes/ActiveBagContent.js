@@ -52,9 +52,13 @@ define([
      * @type {string} */
     imgName: null,
     /**
-     * The build image object
+     * The built image object
      * @type {external:HTMLImageElement} */
     img: null,
+    /**
+     * Name of the img source when is an animated GIF
+     * @type {string} */
+    animatedGifFile: null,
     /**
      * Number of columns when cells are distributed in a grid
      * @type {number} */
@@ -317,8 +321,11 @@ define([
 
       this.ncw = this.shaper.nCols;
       this.nch = this.shaper.nRows;
-      if (mb && this.imgName && mb.elements[this.imgName] && mb.elements[this.imgName].ready) {
-        this.img = mb.elements[this.imgName].data;
+      var mbe = mb.elements[this.imgName];
+      if (mb && this.imgName && mbe && mbe.ready) {
+        this.img = mbe.data;
+        if(mbe.animated)
+          this.animatedGifFile = mbe.getFullPath();
         this.w = this.img.width / this.ncw;
         this.h = this.img.height / this.nch;
         if (roundSizes) {
@@ -334,7 +341,7 @@ define([
 
       var r = new AWT.Rectangle(0, 0, this.w * this.ncw, this.h * this.nch);
       for (var i = 0; i < this.shaper.nCells; i++) {
-        this.getActiveBoxContent(i).setImgContent(this.img, this.shaper.getShape(i, r));
+        this.getActiveBoxContent(i).setImgContent(this.img, this.shaper.getShape(i, r), this.animatedGifFile);
       }
       if (this.shaper.hasRemainder) {
         this.backgroundContent = new ActiveBoxContent();
