@@ -276,7 +276,7 @@ define([
       this.setHostedMediaPlayer(null);
       this.content = abc;
       if (abc) {
-        if (abc.animatedGifFile && !this.specialShape) {
+        if (abc.animatedGifFile /* && !this.specialShape*/) {
           var $hc = $('<span/>').css({
             'background-image': 'url(' + abc.animatedGifFile + ')',
             //'background-size': 'contain',
@@ -288,8 +288,8 @@ define([
             $hc.css({
               'background-origin': 'border-box',
               'background-position': (-abc.imgClip.pos.x) + 'px ' + (-abc.imgClip.pos.y) + 'px'
-              // TODO: Use background-size only when the original image must be compressed
-              //,'background-size': abc.imgClip.dim.width + 'px ' + abc.imgClip.dim.height + 'px'
+                  // TODO: Use background-size only when the original image must be compressed
+                  //,'background-size': abc.imgClip.dim.width + 'px ' + abc.imgClip.dim.height + 'px'
             });
           }
           this.setHostedComponent($hc);
@@ -612,6 +612,44 @@ define([
       AbstractBox.prototype.setBounds.call(this, rect);
       if (this.hostedMediaPlayer)
         this.hostedMediaPlayer.checkVisualComponentBounds(this);
+    },
+    /**
+     * 
+     * Places and resizes {@link AbstractBox#$hostedComponent $hostedComponent}, based on the size
+     * and position of this box.
+     * @param {boolean} sizeChanged - `true` when this {@link ActiveBox} has changed its size
+     */
+    setHostedComponentBounds: function (sizeChanged) {
+      if (this.$hostedComponent) {
+        AbstractBox.prototype.setHostedComponentBounds.call(this, sizeChanged);
+        var abc = this.getCurrentContent();
+        if (sizeChanged && abc && abc.animatedGifFile && abc.img /* && !this.specialShape */) {
+          var img = abc.img;
+          var w = Math.max(img.naturalWidth, this.dim.width);
+          var h = Math.max(img.naturalHeight, this.dim.height);
+          var scale = 1;
+          var bgSize = '';
+          if (abc.imgClip) {
+            var r = abc.imgClip.getBounds();
+            if (this.dim.width < r.dim.width || this.dim.height < r.dim.height){
+              scale = Math.min(this.dim.width / r.dim.width, this.dim.height / r.dim.height);
+              bgSize = w * scale + 'px ' + h * scale + 'px';
+            }
+            this.$hostedComponent.css({
+              'background-position': (-abc.imgClip.pos.x * scale) + 'px ' + (-abc.imgClip.pos.y * scale) + 'px',
+              'background-size': bgSize
+            });
+          } else {
+            if (this.dim.width < w || this.dim.height < h){
+              scale = Math.min(this.dim.width / w, this.dim.height / h);
+              bgSize = w * scale + 'px ' + h * scale + 'px';
+            }
+            this.$hostedComponent.css({
+              'background-size': bgSize
+            });
+          }
+        }
+      }
     }
   };
 

@@ -238,8 +238,9 @@ define([
       // Rectangle comparision
       if (this.equals(rect))
         return;
+      var sizeChanged = !this.dim.equals(rect.dim);
       if (this.specialShape) {
-        if (!this.dim.equals(rect.dim)) {
+        if (sizeChanged) {
           this.shape.scaleBy(new AWT.Dimension(rect.dim.width / this.dim.width, rect.dim.height / this.dim.height));
           this.setShape(this.shape);
         }
@@ -251,7 +252,7 @@ define([
         AWT.Rectangle.prototype.setBounds.call(this, rect);
 
       if (this.$hostedComponent)
-        this.setHostedComponentBounds();
+        this.setHostedComponentBounds(sizeChanged);
 
       return this;
     },
@@ -433,7 +434,7 @@ define([
         this.invalidate();
       // Put hosted component on top
       if (this.$hostedComponent)
-        this.$hostedComponent.css('z-index', this.focused ? 20 : 10);
+        this.$hostedComponent.css('z-index', this.focused ? 20 : 2);
     },
     /**
      * Checks if this box is in `alternative` state.
@@ -569,7 +570,7 @@ define([
         this.setHostedComponentVisible(false);
         this.setHostedComponentColors();
         this.setHostedComponentBorder();
-        this.setHostedComponentBounds();
+        this.setHostedComponentBounds(true);
         this.setHostedComponentVisible();
         this.setFocused(this.focused);
       }
@@ -612,8 +613,9 @@ define([
      * 
      * Places and resizes {@link AbstractBox#$hostedComponent $hostedComponent}, based on the size
      * and position of this box.
+     * @param {boolean} sizeChanged - `true` when this {@link ActiveBox} has changed its size
      */
-    setHostedComponentBounds: function () {
+    setHostedComponentBounds: function (sizeChanged) {
       if (this.$hostedComponent) {
         var r = this.getBounds();
         this.$hostedComponent.css({
