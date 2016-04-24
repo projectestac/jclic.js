@@ -277,7 +277,7 @@
     </style>
     <shaper class="@Rectangular" cols="1" rows="4" />
     <cell>
-     <p>quasar</p>
+     <p>horse riding</p>
     </cell>
     <cell>
      <p>swimming</p>
@@ -2874,12 +2874,12 @@
     <container bgColor="0xC0C0C0">
      <counters time="true" actions="true" score="true" />
     </container>
-    <window bgColor="0xC0C0C0" border="true" />
+    <window bgColor="0xC0C0C0" border="true" >
+      <gradient dest="green" source="lightblue" angle="90" cycles="1" />
+    </window>
    </settings>
    <cells rows="3" columns="3" border="true" image="big.gif">
-    <style>
-     <font family="Arial" size="21" />
-    </style>
+    <style transparent="true"/>
     <shaper class="@Rectangular" cols="3" rows="3" />
    </cells>
    <scramble times="31" />
