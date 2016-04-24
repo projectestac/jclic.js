@@ -618,10 +618,13 @@ define([
     setHostedComponentBounds: function (sizeChanged) {
       if (this.$hostedComponent) {
         var r = this.getBounds();
+        var b = (this.border || this.marked)
+            ? this.getBoxBaseResolve().get(this.marked ? 'markerStroke' : 'borderStroke').lineWidth
+            : 0;
         this.$hostedComponent.css({
           position: 'absolute',
-          width: r.dim.width + 'px',
-          height: r.dim.height + 'px',
+          width: (r.dim.width - 2 * b) + 'px',
+          height: (r.dim.height - 2 * b) + 'px',
           top: r.pos.y + 'px',
           left: r.pos.x + 'px'
         });
