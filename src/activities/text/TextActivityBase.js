@@ -357,6 +357,33 @@ define([
       if (this.$checkButton)
         this.$checkButton.prop('disabled', true);
       ActPanelAncestor.finishActivity.call(this, result);
+    },
+    /**		
+     * 		
+     * Main handler used to process mouse, touch, keyboard and edit events		
+     * @param {HTMLEvent} event - The HTML event to be processed		
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its		
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}		
+     */
+    processEvent: function (event) {
+      if (this.playing) {
+        switch (event.type) {
+          case 'click':
+            var p = new AWT.Point(
+                event.pageX - this.$div.offset().left,
+                event.pageY - this.$div.offset().top);
+            for (var i = 0; i < this.boxes.length; i++) {
+              if (this.boxes[i].contains(p)) {
+                event.preventDefault();
+                this.ps.stopMedia(1);
+                this.boxes[i].playMedia(this.ps);
+                return false;
+              }
+            }
+        }
+        return true;
+      }
+      return false;
     }
   };
 
