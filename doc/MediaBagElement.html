@@ -229,6 +229,8 @@
                 
                 <li data-name="ActiveBagContent#activeBoxContentArray"><a href="ActiveBagContent.html#activeBoxContentArray">activeBoxContentArray</a></li>
             
+                <li data-name="ActiveBagContent#animatedGifFile"><a href="ActiveBagContent.html#animatedGifFile">animatedGifFile</a></li>
+            
                 <li data-name="ActiveBagContent#backgroundContent"><a href="ActiveBagContent.html#backgroundContent">backgroundContent</a></li>
             
                 <li data-name="ActiveBagContent#bb"><a href="ActiveBagContent.html#bb">bb</a></li>
@@ -754,6 +756,8 @@
             
                 <span class="subtitle">Members</span>
                 
+                <li data-name="ActiveBoxContent#animatedGifFile"><a href="ActiveBoxContent.html#animatedGifFile">animatedGifFile</a></li>
+            
                 <li data-name="ActiveBoxContent#avoidOverlapping"><a href="ActiveBoxContent.html#avoidOverlapping">avoidOverlapping</a></li>
             
                 <li data-name="ActiveBoxContent#bb"><a href="ActiveBoxContent.html#bb">bb</a></li>
@@ -7059,6 +7063,8 @@
                 
                 <li data-name="MediaBagElement#_whenReady"><a href="MediaBagElement.html#_whenReady">_whenReady</a></li>
             
+                <li data-name="MediaBagElement#animated"><a href="MediaBagElement.html#animated">animated</a></li>
+            
                 <li data-name="MediaBagElement#basePath"><a href="MediaBagElement.html#basePath">basePath</a></li>
             
                 <li data-name="MediaBagElement#data"><a href="MediaBagElement.html#data">data</a></li>
@@ -7088,6 +7094,8 @@
                 <li data-name="MediaBagElement#_onReady"><a href="MediaBagElement.html#_onReady">_onReady</a></li>
             
                 <li data-name="MediaBagElement#build"><a href="MediaBagElement.html#build">build</a></li>
+            
+                <li data-name="MediaBagElement#checkAnimatedGif"><a href="MediaBagElement.html#checkAnimatedGif">checkAnimatedGif</a></li>
             
                 <li data-name="MediaBagElement#checkReady"><a href="MediaBagElement.html#checkReady">checkReady</a></li>
             
@@ -10192,6 +10200,25 @@
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="animated">animated<span class="type-signature type boolean">boolean</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Flag used for animated GIFs</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="basePath">basePath<span class="type-signature type string">string</span> </h4>
     </div>
 
@@ -10376,7 +10403,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line247">line 247</a>
+            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line314">line 314</a>
         </div>
         
     </div>
@@ -10404,7 +10431,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line137">line 137</a>
+            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line200">line 200</a>
         </div>
         
     </div>
@@ -10520,6 +10547,35 @@
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="checkAnimatedGif">
+            
+            checkAnimatedGif<span class="signature">()</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line130">line 130</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Checks if the image associated with this MediaBagElement is an animated GIF</p>
+<p>Code based on: https://gist.github.com/marckubischta/261ad8427a214022890b<br>Thanks to @lakenen and @marckubischta</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="checkReady">
             
             checkReady<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
@@ -10527,7 +10583,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line215">line 215</a>
+            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line282">line 282</a>
         </div>
         
     </div>
@@ -10636,7 +10692,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line237">line 237</a>
+            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line304">line 304</a>
         </div>
         
     </div>
@@ -10745,7 +10801,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line124">line 124</a>
+            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line187">line 187</a>
         </div>
         
     </div>
@@ -10897,7 +10953,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line262">line 262</a>
+            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line329">line 329</a>
         </div>
         
     </div>
@@ -11004,7 +11060,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line115">line 115</a>
+            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line178">line 178</a>
         </div>
         
     </div>
@@ -11111,7 +11167,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line103">line 103</a>
+            <a href="bags_MediaBagElement.js.html">bags/MediaBagElement.js</a>, <a href="bags_MediaBagElement.js.html#line109">line 109</a>
         </div>
         
     </div>
@@ -11240,7 +11296,7 @@
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Mar 10 2016 15:47:26 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Apr 25 2016 16:52:21 GMT+0200 (CEST)
         </footer>
     </div>
 </div>
