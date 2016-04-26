@@ -122,7 +122,7 @@ define([
         if (typeof anim === 'undefined') {
           this.checkAnimatedGif();
         } else
-          this.animated = anim;
+          this.animated = (anim === 'true');
       }
       return this;
     },
