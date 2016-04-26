@@ -94,6 +94,11 @@ define([
      * Flag used for animated GIFs
      * @type {boolean} */
     animated: false,
+    /**
+     * Full path obtained after a successfull call to getFullPathPromise
+     * @type {string}
+     */
+    _fullPath: null,
     // 
     // Other fields present in JClic, currently not used:  
     // usageCount: 0,  
@@ -130,7 +135,6 @@ define([
     checkAnimatedGif: function () {
       var thisMbe = this;
       var request = new XMLHttpRequest();
-      request.open('GET', this.getFullPath(), true);
       request.responseType = 'arraybuffer';
       request.addEventListener('load', function () {
         var arr = new Uint8Array(request.response),
@@ -168,7 +172,11 @@ define([
           }
         }
       });
-      request.send();
+
+      this.getFullPathPromise().then(function (fullPath) {
+        request.open('GET', fullPath, true);
+        request.send();
+      });
     },
     /**
      * 
@@ -206,71 +214,73 @@ define([
         this._whenReady.push(callback);
       }
 
-      if (!this.data) {
-        var fullPath = this.getFullPath();
-        switch (this.type) {
-          case 'font':
-            var format = this.ext === 'ttf' ? 'truetype'
-                : this.ext === 'otf' ? 'embedded-opentype'
-                : this.ext;
-            $('head').prepend(
-                '<style type="text/css">' +
-                '@font-face{font-family:"' + this.name + '";' +
-                'src:url(' + fullPath + ') format("' + format + '");}' +
-                '</style>');
-            this.data = new AWT.Font(this.name);
-            this.ready = true;
-            break;
+      if (!media.data)
+        media.getFullPathPromise().then(function (fullPath) {
+          switch (media.type) {
+            case 'font':
+              var format = media.ext === 'ttf' ? 'truetype'
+                  : media.ext === 'otf' ? 'embedded-opentype'
+                  : media.ext;
+              $('head').prepend(
+                  '<style type="text/css">' +
+                  '@font-face{font-family:"' + media.name + '";' +
+                  'src:url(' + fullPath + ') format("' + format + '");}' +
+                  '</style>');
+              media.data = new AWT.Font(media.name);
+              media.ready = true;
+              break;
 
-          case 'image':
-            this.data = new Image();
-            $(this.data).on('load', function () {
-              media._onReady.call(media);
-            });
-            this.data.src = fullPath;
-            break;
+            case 'image':
+              media.data = new Image();
+              $(media.data).on('load', function () {
+                media._onReady.call(media);
+              });
+              media.data.src = fullPath;
+              break;
 
-          case 'audio':
-          case 'video':
-            this.data = document.createElement(this.type);
-            $(this.data).on('canplay', function () {
-              media._onReady.call(media);
-            });
-            this.data.src = fullPath;
-            this.data.pause();
-            break;
+            case 'audio':
+            case 'video':
+              media.data = document.createElement(media.type);
+              $(media.data).on('canplay', function () {
+                media._onReady.call(media);
+              });
+              media.data.src = fullPath;
+              media.data.pause();
+              break;
 
-          case 'anim':
-            this.data = $('<object type="application/x-shockwave-flash" width="300" height="200" data="' + fullPath + '"/>').get(0);
-            // Unable to check the loading progress in elements of type `object. Mark it always as `ready`
-            this.ready = true;
-            break;
+            case 'anim':
+              media.data = $('<object type="application/x-shockwave-flash" width="300" height="200" data="' + fullPath + '"/>').get(0);
+              // Unable to check the loading progress in elements of type `object`. Mark it always as `ready`
+              media.ready = true;
+              break;
 
-          case 'xml':
-            this.data = '';
-            this.ready = true;
-            // Since we are not yet supporting complex skins, there
-            // is no need to read XML files
-            /*
-             $.get(fullPath, null, null, 'xml')
-             .done(function (data) {
-             media.data = data;
-             media._onReady();
-             }).fail(function () {
-             console.log('Error loading ' + media.name);
-             media.data = null;
-             });
-             */
-            break;
+            case 'xml':
+              media.data = '';
+              media.ready = true;
+              // Since we are not yet supporting complex skins, there
+              // is no need to read XML files
+              /*
+               $.get(fullPath, null, null, 'xml')
+               .done(function (data) {
+               media.data = data;
+               media._onReady();
+               }).fail(function () {
+               console.log('Error loading ' + media.name);
+               media.data = null;
+               });
+               */
+              break;
 
-          default:
-            // TODO: Load the real resource
-            return;
-        }
-      }
+            default:
+              // TODO: Load the real resource
+              return;
+          }
 
-      if (this.ready)
-        this._onReady();
+          if (media.ready)
+            media._onReady();
+        });
+      else if (media.ready)
+        media._onReady();
 
       return this;
     },
@@ -323,11 +333,26 @@ define([
     },
     /**
      * 
-     * Gets the full path of the file associated to this element
+     * Gets the full path of the file associated to this element.
+     * WARNING: This function should be called only after a successfull call to `getFullPathPromise`
      * @returns {string}
      */
     getFullPath: function () {
-      return Utils.getPath(this.basePath, this.fileName, this.zip);
+      return this._fullPath;
+    },
+    /**
+     * 
+     * Gets a promise with the full path of the file associated to this element.
+     * @returns {Promise}
+     */
+    getFullPathPromise: function () {
+      var media = this;
+      return new Promise(function (resolve, reject) {
+        Utils.getPathPromise(media.basePath, media.fileName, media.zip).then(function (fullPath) {
+          media._fullPath = fullPath;
+          resolve(fullPath);
+        }).catch(reject);
+      });
     }
   };
 

@@ -35,7 +35,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "jquery": "~2.2.0",
-    "jszip": "^2.5.0",
+    "jszip": "^3.0.0",
     "jszip-utils": "0.0.2",
     "screenfull": "^3.0.0",
     "scriptjs": "^2.5.8"
@@ -53,7 +53,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-express": "^1.4.1",
     "grunt-extract-sourcemap": "^0.1.17",
-    "grunt-jsdoc": "^1.0.0",
+    "grunt-jsdoc": "^2.0.0",
     "load-grunt-tasks": "~3.5.0",
     "requirejs": "~2.2.0"
   },

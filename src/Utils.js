@@ -1,3 +1,5 @@
+/* global Promise */
+
 //    File    : Utils.js  
 //    Created : 01/04/2015  
 //    By      : Francesc Busquets  
@@ -17,11 +19,11 @@ define([
   "jquery",
   "screenfull",
 ], function ($, screenfull) {
-  
+
   // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
     screenfull = window.screenfull;
-  
+
   /**
    * 
    * Miscellaneous utility functions and constants
@@ -234,9 +236,9 @@ define([
      * This is useful to normalize bad path names present in some old JClic projects
      * @param {String} str - The string to be normalized
      * @returns {string}
-     */    
-    nSlash: function(str) {
-      return str ? str.replace(/\\/g,'/') : str;      
+     */
+    nSlash: function (str) {
+      return str ? str.replace(/\\/g, '/') : str;
     },
     /**
      * Checks if the given expression is an absolute URL
@@ -276,30 +278,41 @@ define([
      * Gets the complete path of a relative or absolute URL, using the provided `basePath`
      * @param {string} basePath - The base URL
      * @param {string} path - The filename
-     * @param {?JSZip} zip - An optional [JSZip](https://stuk.github.io/jszip/) object where to look
-     * for the file
      * @returns {string}
      */
-    getPath: function (basePath, path, zip) {
-      if (Utils.isURL(path))
-        return path;
-      else if (zip) {
+    getPath: function (basePath, path) {
+      return Utils.isURL(path) ? path : basePath + path;
+    },
+    /**
+     * Gets a promise with the complete path of a relative or absolute URL, using the provided `basePath`
+     * @param {string} basePath - The base URL
+     * @param {string} path - The filename
+     * @param {?JSZip} zip - An optional [JSZip](https://stuk.github.io/jszip/) object where to look
+     * for the file
+     * @returns {Promise}
+     */
+    getPathPromise: function (basePath, path, zip) {
+      if (zip) {
         var fName = Utils.getRelativePath(basePath + path, zip.zipBasePath);
         if (zip.files[fName]) {
-          var ext = path.toLowerCase().split('.').pop();
-          var mime = Utils.settings.MIME_TYPES[ext];
-          if (!mime)
-            mime = 'application/octet-stream';
-          return 'data:' + mime + ';base64,' + window.btoa(zip.file(fName).asBinary());
+          return new Promise(function (resolve, reject) {
+            zip.file(fName).async('base64').then(function (data) {
+              var ext = path.toLowerCase().split('.').pop();
+              var mime = Utils.settings.MIME_TYPES[ext];
+              if (!mime)
+                mime = 'application/octet-stream';
+              resolve('data:' + mime + ';base64,' + data);
+            }).catch(reject);
+          });
         }
       }
-      return basePath + path;
+      return Promise.resolve(Utils.getPath(basePath, path));
     },
     /**
      * Checks if the current browser allows to put HTML elements in full screen mode
      * @returns {boolean}
      */
-    screenFullAllowed: function(){
+    screenFullAllowed: function () {
       return screenfull && screenfull.enabled;
     },
     /**

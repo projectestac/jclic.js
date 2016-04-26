@@ -465,8 +465,8 @@ define([
                   tp.setSystemMessage('Error loading ZIP file: ', err);
                   return;
                 }
-                try {
-                  tp.zip = new JSZip(data);
+                new JSZip().loadAsync(data).then(function (zip) {
+                  tp.zip = zip;
                   tp.zip.fullZipPath = fullPath;
                   tp.zip.zipBasePath = Utils.getBasePath(fullPath);
                   // Find first file with extension '.jclic' inside the zip file
@@ -479,11 +479,12 @@ define([
                   }
                   if (fileName) {
                     tp.load(Utils.getPath(tp.zip.zipBasePath, fileName), sequence, activity);
-                  } else
+                  } else {
                     tp.setSystemMessage('Error: ZIP does not contain any valid jclic file!');
-                } catch (e) {
-                  tp.setSystemMessage('Error reading ZIP file: ', e);
-                }
+                  }
+                }).catch(function (reason) {
+                  tp.setSystemMessage('Error reading ZIP file: ', reason);
+                });
               });
               tp.skin.setWaitCursor(false);
             }, 100);
@@ -497,7 +498,44 @@ define([
             return;
           }
 
-          // Step 1: Load the project
+          // Step one: load the project file
+          var processProjectFile = function (fp) {
+            $.get(fp, null, null, 'xml').done(function (data) {
+              if (data === null || typeof data !== 'object') {
+                tp.setSystemMessage('ERROR: Project not loaded. Bad data!', project);
+                return;
+              }
+              var prj = new JClicProject();
+              prj.setProperties($(data).find('JClicProject'), fullPath, tp.zip);
+              tp.setSystemMessage('Project file loaded and parsed', project);
+              prj.mediaBag.buildAll();
+              var loops = 0;
+              var interval = 500;
+              tp.skin.setWaitCursor(true);
+              var checkMedia = window.setInterval(function () {
+                // Wait for a maximum time of two minutes
+                if (++loops > tp.options.maxWaitTime / interval) {
+                  window.clearInterval(checkMedia);
+                  tp.skin.setWaitCursor(false);
+                  tp.setSystemMessage('Error loading media!');
+                  // alert?                    
+                }
+                if (!prj.mediaBag.isWaiting()) {
+                  window.clearInterval(checkMedia);
+                  tp.skin.setWaitCursor(false);
+                  // Call again `load`, passing the loaded [JClicProject](JClicProject.html) object
+                  tp.load(prj, sequence, activity);
+                }
+              }, interval);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+              var errMsg = textStatus + ' (' + errorThrown + ') while loading ' + project;
+              tp.setSystemMessage('Error', errMsg);
+              alert('Error!\n' + errMsg);
+            }).always(function () {
+              tp.skin.setWaitCursor(false);
+            });
+          };
+
           this.setSystemMessage('loading project', project);
           var fp = fullPath;
 
@@ -505,7 +543,13 @@ define([
           if (tp.zip) {
             var fName = Utils.getRelativePath(fp, tp.zip.zipBasePath);
             if (tp.zip.files[fName]) {
-              fp = 'data:text/xml;charset=UTF-8,' + tp.zip.file(fName).asText();
+              tp.zip.file(fName).async('string').then(function (text) {
+                processProjectFile('data:text/xml;charset=UTF-8,' + text);
+              }).catch(function (reason) {
+                tp.setSystemMessage('Error: Unable to extract ', fName + ' from ZIP file: ' + reason);
+                tp.skin.setWaitCursor(false);
+              });
+              return;
             }
           }
           // Special case for local filesystems (`file:` protocol)
@@ -515,48 +559,11 @@ define([
               fp = 'data:text/xml;charset=UTF-8,' + JClicObject.projectFiles[fullPath];
             } else {
               tp.setSystemMessage('Error: Unable to load', fullPath + '.js');
+              tp.skin.setWaitCursor(false);
               return;
             }
           }
-
-          $.get(fp, null, null, 'xml')
-              .done(function (data) {
-                if (data === null || typeof data !== 'object') {
-                  tp.setSystemMessage('ERROR: Project not loaded. Bad data!', project);
-                  return;
-                }
-                var prj = new JClicProject();
-                prj.setProperties($(data).find('JClicProject'), fullPath, tp.zip);
-                tp.setSystemMessage('Project file loaded and parsed', project);
-                prj.mediaBag.buildAll();
-                var loops = 0;
-                var interval = 500;
-                tp.skin.setWaitCursor(true);
-                var checkMedia = window.setInterval(function () {
-                  // Wait for a maximum time of two minutes
-                  if (++loops > tp.options.maxWaitTime / interval) {
-                    window.clearInterval(checkMedia);
-                    tp.skin.setWaitCursor(false);
-                    tp.setSystemMessage('Error loading media!');
-                    // alert?                    
-                  }
-                  if (!prj.mediaBag.isWaiting()) {
-                    window.clearInterval(checkMedia);
-                    tp.skin.setWaitCursor(false);
-                    // Call again `load`, passing the loaded [JClicProject](JClicProject.html) object
-                    tp.load(prj, sequence, activity);
-                  }
-                }, interval);
-              })
-              .fail(function (jqXHR, textStatus, errorThrown) {
-                var errMsg = textStatus + ' (' + errorThrown + ') while loading ' + project;
-                tp.setSystemMessage('Error', errMsg);
-                alert('Error!\n' + errMsg);
-              })
-              .always(function () {
-                tp.skin.setWaitCursor(false);
-              });
-
+          processProjectFile(fp);
           return;
         }
 
@@ -760,14 +767,14 @@ define([
           mainCss['background-image'] = act.bgGradient.getCss();
 
         if (act.bgImageFile && act.bgImageFile.length > 0) {
-          var bgImageUrl = this.project.mediaBag.getElement(act.bgImageFile, true).getFullPath();
-          var repeat = act.tiledBgImg ? 'repeat' : 'no-repeat';
-          mainCss['background-image'] = 'url(\'' + bgImageUrl + '\')';
-          mainCss['background-repeat'] = repeat;
-          if (repeat === 'no-repeat')
-            mainCss['background-position'] = 'center center';
-          else
-            bgImageUrl = '';
+          var thisPlayer = this;
+          this.project.mediaBag.getElement(act.bgImageFile, true).getFullPathPromise().then(function (bgImageUrl) {
+            thisPlayer.$div.css({
+              'background-image': 'url(\'' + bgImageUrl + '\')',
+              'background-repeat': act.tiledBgImg ? 'repeat' : 'no-repeat',
+              'background-position': act.tiledBgImg ? '' : 'center center'
+            });
+          });
         }
 
         // Activity panel settings
@@ -825,7 +832,7 @@ define([
 
           }
           break;
-          
+
         case 'RUN_CLIC_PACKAGE':
           ji = new JumpInfo('JUMP', fn);
           if (mediaContent.externalParam) {
