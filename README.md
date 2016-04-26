@@ -1,4 +1,7 @@
 #JClic.js
+[![Bower version](https://badge.fury.io/bo/jclic.svg)](https://badge.fury.io/bo/jclic)
+[![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic)
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
 
 [JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player of [JClic](https://github.com/projectestac/jclic) activities. See a [demo](http://clic.xtec.cat/repo/player.html?demo_eng/jclic.js/demo.jclic) on how it works.
 
