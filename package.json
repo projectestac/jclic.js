@@ -38,7 +38,8 @@
     "jszip": "^3.0.0",
     "jszip-utils": "0.0.2",
     "screenfull": "^3.0.0",
-    "scriptjs": "^2.5.8"
+    "scriptjs": "^2.5.8",
+    "webfontloader": "^1.6.24"
   },
   "devDependencies": {
     "browserify": "~13.0.0",

@@ -16,10 +16,11 @@
 define([
   "jquery",
   "../../Utils",
+  "../../AWT",
   "../../boxes/ActiveBoxContent",
   "../../media/MediaContent",
   "../../boxes/ActiveBagContent"
-], function ($, Utils, ActiveBoxContent, MediaContent, ActiveBagContent) {
+], function ($, Utils, AWT, ActiveBoxContent, MediaContent, ActiveBagContent) {
 
   /**
    * This is the HTML DOM element used in text activities like {@link FillInBlanks},
@@ -176,7 +177,7 @@ define([
             css['color'] = val;
             break;
           case 'family':
-            css['font-family'] = val;
+            css['font-family'] = AWT.Font.checkFamily(val);
             /* falls through */
           case 'name':
           case 'base':

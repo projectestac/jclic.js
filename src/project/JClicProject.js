@@ -19,8 +19,9 @@ define([
   "../bags/ActivitySequence",
   "../bags/MediaBag",
   "../Activity",
-  "../Utils"
-], function ($, ProjectSettings, ActivitySequence, MediaBag, Activity, Utils) {
+  "../Utils",
+  "../AWT"
+], function ($, ProjectSettings, ActivitySequence, MediaBag, Activity, Utils, AWT) {
 
   /**
    * 
@@ -121,6 +122,7 @@ define([
       var prj = this;
       var $node = $xml.children('activities');
       var $acts = $node.children('activity');
+      AWT.Font.checkTree($acts);
       $acts.each(function () {
         prj._activities[Utils.nSlash($(this).attr('name'))] = $(this);
       });

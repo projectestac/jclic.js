@@ -343,7 +343,7 @@
    </settings>
    <cells rows="4" cols="3" cellWidth="100.0" cellHeight="70.0" border="false" id="primary">
     <style shadow="true">
-     <font family="Arial" size="17" bold="true" />
+     <font family="MeMima" size="17" bold="true" />
      <color foreground="0xFFFFFF" background="0x0000FF" shadow="0x000000" inactive="0x000000" alternative="0x000000" />
     </style>
     <shaper class="@Rectangular" cols="3" rows="4" />

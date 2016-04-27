@@ -15,8 +15,9 @@
 
 define([
   "jquery",
-  "./Utils"
-], function ($, Utils) {
+  "./Utils",
+  "webfontloader"
+], function ($, Utils, WebFont) {
 
   /**
    * This object contains utility clases for painting graphics and images,
@@ -58,6 +59,33 @@ define([
   /** 
    * Array of font objects with already calculated heights */
   AWT.Font.ALREADY_CALCULATED_FONTS = [];
+  
+  AWT.Font.SUBSTITUTIONS = {
+    arial: 'Oswald',  
+    memima: 'Vibur',
+    memima_n1: 'Vibur',
+    memima_n2: 'Vibur',
+    palmemim: 'Vibur',
+    massallera: 'Vibur'
+  };
+
+  AWT.Font.ALREADY_LOADED_FONTS = [];
+  
+  AWT.Font.checkTree = function($tree){    
+    $tree.find('style[family],font[family]').each(function(){
+      var $this=$(this);
+      var name = $this.attr('family').trim().toLowerCase();
+      if(name in AWT.Font.SUBSTITUTIONS){
+        var newName = AWT.Font.SUBSTITUTIONS[name];
+        if (AWT.Font.ALREADY_LOADED_FONTS.indexOf(newName) < 0) {
+          WebFont.load({google: {families: [newName]}});
+          AWT.Font.ALREADY_LOADED_FONTS.push(newName);
+        }
+        $this.attr('family', newName);
+        console.log(name + ' changed to ' + newName);
+      }
+    });    
+  };
 
   AWT.Font.prototype = {
     constructor: AWT.Font,
