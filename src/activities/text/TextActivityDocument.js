@@ -177,7 +177,7 @@ define([
             css['color'] = val;
             break;
           case 'family':
-            css['font-family'] = AWT.Font.checkFamily(val);
+            css['font-family'] = val;
             /* falls through */
           case 'name':
           case 'base':

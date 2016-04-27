@@ -61,7 +61,6 @@ define([
   AWT.Font.ALREADY_CALCULATED_FONTS = [];
   
   AWT.Font.SUBSTITUTIONS = {
-    arial: 'Oswald',  
     memima: 'Vibur',
     memima_n1: 'Vibur',
     memima_n2: 'Vibur',
