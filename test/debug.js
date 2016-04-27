@@ -10,9 +10,10 @@ requirejs.config({
   paths: {
     jquery: '../node_modules/jquery/dist/jquery',
     screenfull: '../node_modules/screenfull/dist/screenfull',
-    jszip: '../test/lib/jszip/jszip',
-    'jszip-utils': '../test/lib/jszip-utils/jszip-utils',
-    scriptjs: '../node_modules/scriptjs/dist/script'
+    jszip: '../node_modules/jszip/dist/jszip',
+    'jszip-utils': '../node_modules/jszip-utils/dist/jszip-utils',
+    scriptjs: '../node_modules/scriptjs/dist/script',
+    webfontloader: '../node_modules/webfontloader/webfontloader'
   }
 });
 
