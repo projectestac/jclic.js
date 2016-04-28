@@ -70,12 +70,17 @@ define([
 
   AWT.Font.ALREADY_LOADED_FONTS = [];
   
-  AWT.Font.checkTree = function($tree){    
+  AWT.Font.checkTree = function($tree, options){
+    
+    var substitutions = AWT.Font.SUBSTITUTIONS;
+    if(options && options.fontSubstitutions)
+      substitutions = $.extend(Object.create(substitutions), options.fontSubstitutions);
+    
     $tree.find('style[family],font[family]').each(function(){
       var $this=$(this);
       var name = $this.attr('family').trim().toLowerCase();
-      if(name in AWT.Font.SUBSTITUTIONS){
-        var newName = AWT.Font.SUBSTITUTIONS[name];
+      if(name in substitutions){
+        var newName = substitutions[name];
         if (AWT.Font.ALREADY_LOADED_FONTS.indexOf(newName) < 0) {
           WebFont.load({google: {families: [newName]}});
           AWT.Font.ALREADY_LOADED_FONTS.push(newName);

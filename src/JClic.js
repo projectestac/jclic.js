@@ -129,12 +129,11 @@ define([
     JClicObject.options = options;
 
     if (!options.noInit) {
-      // If defined, load the global variable `JClicDataProject`
-      var projectName = (typeof JClicDataProject === 'undefined' ? null : JClicDataProject);
-      
-      if(!projectName && typeof JClicObject.projectFile!==null) {
-        
-      }
+      // If defined, load the global variable `JClicDataProject` or `JClicObject.projectFile`
+      var projectName =
+          typeof JClicDataProject === 'string' ? JClicDataProject
+          : typeof JClicObject.projectFile === 'string' ? JClicObject.projectFile
+          : null;
 
       // Search DOM elements with class "JClic"
       var $JClicDivs = $('div.JClic');

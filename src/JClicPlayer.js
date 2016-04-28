@@ -506,7 +506,7 @@ define([
                 return;
               }
               var prj = new JClicProject();
-              prj.setProperties($(data).find('JClicProject'), fullPath, tp.zip);
+              prj.setProperties($(data).find('JClicProject'), fullPath, tp.zip, tp.options);
               tp.setSystemMessage('Project file loaded and parsed', project);
               prj.mediaBag.buildAll();
               var loops = 0;

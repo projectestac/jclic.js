@@ -101,9 +101,10 @@ define([
      * @param {external:jQuery} $xml - The XML element
      * @param {string} path - The full path of this project
      * @param {?external:JSZip} zip - An optional JSZip object where this project is encapsulated
+     * @param {?object} options - An object with miscellaneous options
      * @returns {JClicProject}
-     */
-    setProperties: function ($xml, path, zip) {
+     */    
+    setProperties: function ($xml, path, zip, options) {
       if (path) {
         this.path = path;
         if (path.file)
@@ -122,7 +123,7 @@ define([
       var prj = this;
       var $node = $xml.children('activities');
       var $acts = $node.children('activity');
-      AWT.Font.checkTree($acts);
+      AWT.Font.checkTree($acts, options);
       $acts.each(function () {
         prj._activities[Utils.nSlash($(this).attr('name'))] = $(this);
       });
