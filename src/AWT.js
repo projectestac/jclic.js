@@ -59,36 +59,61 @@ define([
   /** 
    * Array of font objects with already calculated heights */
   AWT.Font.ALREADY_CALCULATED_FONTS = [];
-  
+
+  /**
+   * Google Fonts equivalent for special fonts used in some JClic projects.
+   * More substitutions can be added to the list for specific projects indicating a
+   * `fontSubstitutions` object in the `data-options` attribute of the HTML `div` element
+   * containing the player.
+   * For example:
+   * `<div class ="JClic" data-project="demo.jclic" data-options='{"fontSubstitutions":{"arial":"Arimo"}}'/>`
+   */
   AWT.Font.SUBSTITUTIONS = {
-    memima: 'Vibur',
-    memima_n1: 'Vibur',
-    memima_n2: 'Vibur',
-    palmemim: 'Vibur',
-    massallera: 'Vibur'
+    'abc': 'Kalam',
+    'a.c.m.e. secret agent': 'Permanent Marker',
+    // 'arial': 'Arimo',
+    'comic sans ms': 'Patrick Hand',
+    'impact': 'Oswald',
+    'massallera': 'Vibur',
+    'memima': 'Vibur',
+    'memima_n1': 'Vibur',
+    'memima_n2': 'Vibur',
+    'memimas-regularalternate': 'Vibur',
+    'palmemim': 'Vibur',
+    'zurichcalligraphic': 'Felipa'
   };
 
+  /**
+   * Array of font names already loaded from Google Fonts */
   AWT.Font.ALREADY_LOADED_FONTS = [];
   
-  AWT.Font.checkTree = function($tree, options){
-    
+  /**
+   * Finds the XML elements with typeface specifications, checks its value against the font
+   * substitution list, replacing the `family` attribute and loading the alternative font when needed.
+   * @param {external:jQuery} $tree - The xml element to be processed
+   * @param {Object=} options - Optional param that can contain a `fontSubstitutions` attribute with
+   * a substition table to be added to {@link AWT.Font.SUBSTITUTIONS}
+   */
+  AWT.Font.checkTree = function ($tree, options) {
+
     var substitutions = AWT.Font.SUBSTITUTIONS;
-    if(options && options.fontSubstitutions)
+    if (options && options.fontSubstitutions)
       substitutions = $.extend(Object.create(substitutions), options.fontSubstitutions);
-    
-    $tree.find('style[family],font[family]').each(function(){
-      var $this=$(this);
+
+    $tree.find('style[family],font[family]').each(function () {
+      var $this = $(this);
       var name = $this.attr('family').trim().toLowerCase();
-      if(name in substitutions){
+      if (name in substitutions) {
         var newName = substitutions[name];
-        if (AWT.Font.ALREADY_LOADED_FONTS.indexOf(newName) < 0) {
-          WebFont.load({google: {families: [newName]}});
-          AWT.Font.ALREADY_LOADED_FONTS.push(newName);
+        if (newName !== '') {
+          if (AWT.Font.ALREADY_LOADED_FONTS.indexOf(newName) < 0) {
+            WebFont.load({google: {families: [newName]}});
+            AWT.Font.ALREADY_LOADED_FONTS.push(newName);
+          }
+          $this.attr('family', newName);
         }
-        $this.attr('family', newName);
-        console.log(name + ' changed to ' + newName);
       }
-    });    
+    });
   };
 
   AWT.Font.prototype = {
@@ -602,7 +627,7 @@ define([
    * @returns {AWT.Point[]} - Array with some intermediate points from the resulting Bézier curve
    */
   AWT.getQuadraticPoints = function (p0, p1, p2, numPoints) {
-    if(!numPoints)
+    if (!numPoints)
       numPoints = Utils.settings.BEZIER_POINTS;
     var result = [];
     var pxa = new AWT.Point();
@@ -632,7 +657,7 @@ define([
    */
   AWT.getCubicPoints = function (p0, p1, p2, p3, numPoints) {
     var result = [];
-    if(!numPoints)
+    if (!numPoints)
       numPoints = Utils.settings.BEZIER_POINTS;
     var pr = AWT.getQuadraticPoints(p0, p1, p2, numPoints);
     var pq = AWT.getQuadraticPoints(p1, p2, p3, numPoints);
