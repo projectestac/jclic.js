@@ -17,7 +17,7 @@
 
 define([
   "jquery",
-  "screenfull",
+  "screenfull"
 ], function ($, screenfull) {
 
   // In some cases, require.js does not return a valid value for screenfull. Check it:
@@ -33,13 +33,13 @@ define([
    */
   var Utils = {
     /**
-     * Gets a boolean value (0 or 1) from a textual expression
-     * @param {string} val - The value to be parsed (`true` for 1, null or otherwise for `false`)
+     * Gets a boolean value from a textual expression
+     * @param {string} val - The value to be parsed (`true` for true, null or otherwise for `false`)
      * @param {boolean=} [defaultValue=false] - The default value to return when `val` is false
      * @returns {number}
      */
     getBoolean: function (val, defaultValue) {
-      return Number(val === 'true' | defaultValue ? 1 : 0);
+      return val === 'true' ? true : val === 'false' ? false : defaultValue;
     },
     /**
      * Gets a value from an given expression that can bel `null`, `undefined` or empty string ('')

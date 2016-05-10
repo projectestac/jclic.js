@@ -1061,9 +1061,9 @@ define([
       if (typeof (eTime) === 'undefined')
         eTime = this.act.bTimeCounter;
       if (typeof (eScore) === 'undefined')
-        eTime = this.act.bScoreCounter;
+        eScore = this.act.bScoreCounter;
       if (typeof (eActions) === 'undefined')
-        eTime = this.act.bActionsCounter;
+        eActions = this.act.bActionsCounter;
 
       this.ps.setCounterEnabled('time', eTime);
       if (this.act.countDownTime)

@@ -13,126 +13,108 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
-define([
-  "jquery",
-  "./AbstractBox"
-], function ($, AbstractBox) {
+define([], function () {
 
-  //
-  // This special case of [AbstractBox](AbstractBox.html) displays up to three
-  // digits in an HTML Canvas.
-  var Counter = function (parent, container, rect, boxBase) {
-    AbstractBox.call(this, parent, container, boxBase);
-    this.setBounds(rect);
+  /**
+   * 
+   * This class encapsulates the operation of a numeric counter, used to display the current
+   * values of score, actions and time.
+   * @param {string} id - The type of information stored on this counter
+   * @param {external:jQuery=} $div - The HTML element where this counter will show values (can be _null_)
+   */
+  var Counter = function (id, $div) {
+    if (id)
+      this.id = id;
+    if($div)
+      this.$div = $div;
   };
 
   Counter.prototype = {
     constructor: Counter,
+    /**
+     * Type of counter (usually: `score`, `actions` or `time`)
+     * @type {string} */
+    id: '',
+    /**
+     * The HTML element where this counter shows its value
+     * @type {external:jQuery}
+     */
+    $div: null,
+    /**
+     * Current value of this counter
+     * @type {number} */
     value: 0,
+    /**
+     * When set, the counter displays a countdown from this value to zero
+     * @type {number} */
     countDown: 0,
-    enabled: false,
-    //
-    // The Image object containing the representation of the digits
-    img: null,
-    // 
-    // AWT.Dimension with the current size of the digits
-    dSize: null,
-    // 
-    // AWT.Point indicating the origin of the digits in `img`
-    origin: null,
-    //
-    // Enables or disables this counter
-    setEnabled: function (bEnabled) {
-      this.enabled = bEnabled;
-      this.container.invalidate(this.getBounds()).update();
+    /**
+     * Flag indicating if this counter is currently enabled 
+     * @type {boolean} */
+    enabled: true,
+    /**
+     * Maximum value to be displayed by this counter
+     * @type {Number} */
+    MAX_DISPLAY_VALUE: 999,
+    /**
+     * 
+     * Gets the current display value of this counter
+     * @returns {number}
+     */
+    getDisplayValue: function () {
+      var result = this.countDown > 0 ? Math.max(0, this.countDown - result) : this.value;
+      return Math.min(this.MAX_DISPLAY_VALUE, result);
     },
-    //
-    // Checks if the counter is enabled    
-    isEnabled: function () {
-      return this.enabled;
+    /**
+     * 
+     * Paints the value of this counter on screen
+     * (method to be overrided by subclasses)
+     */
+    refreshDisplay: function () {
+      // console.log('Counter ' + this.  id + ': ' + (this.enabled ? this.getDisplayValue() : 'disabled'));
+      if(this.$div){
+        this.$div.html(this.enabled ? (this.getDisplayValue()+1000).toString().substr(1) : '000');
+        this.$div.css('opacity', this.enabled ? 1.0 : 0.3);
+      }
     },
-    //
-    // Sets the initial value of the counter
+    /**
+     * 
+     * Enables or disables this counter
+     * @param {boolean} enabled - State been assigned to this counter
+     */
+    setEnabled: function (enabled) {
+      this.enabled = enabled;
+      this.refreshDisplay();
+    },
+    /**
+     * 
+     * Sets the initial value of the counter
+     * @param {number} maxValue - Value from which the countdown will start
+     */
     setCountDown: function (maxValue) {
       this.countDown = maxValue;
-      this.container.invalidate(this.getBounds()).update();
+      this.refreshDisplay();
     },
-    //
-    // Sets the image to be used as a source for drawing the counters
-    // * img (Image)
-    // * setOrigin (AWT.Point)
-    // * setDigitSize (AWT.Dimension)
-    setSource: function (setImg, setOrigin, setDigitSize) {
-      this.img = setImg;
-      this.origin = setOrigin;
-      this.dSize = setDigitSize;
-      this.container.invalidate(this.getBounds()).update();
-    },
-    //
-    // Increments the value of this counter    
+    /**
+     * 
+     * Increments by one the value of this counter
+     */
     incValue: function () {
       this.value++;
-      if (this.enabled)
-        this.container.invalidate(this.getBounds()).update();
+      if(this.enabled)
+        this.refreshDisplay();
     },
-    //
-    // Sets/ Gets the value of this counter
-    setValue: function (newValue) {
-      this.value = newValue;
-      if (this.enabled)
-        this.container.invalidate(this.getBounds()).update();
-    },
-    getValue: function () {
-      return this.value;
-    },
-    //
-    // Draws the conunter in the provided Canvas context
-    // * ctx (Canvas Context)
-    // * dirtyRegion (AWT.rectangle) - The rectangular area to be updated
-    updateContent: function (ctx, dirtyRegion) {
-      // Todo: implement text mode
-      if (this.img === null)
-        return false;
-
-      var w, d;
-      var marginW = (this.dim.width - 3 * this.dSize.width) / 2;
-      var marginH = (this.dim.height - this.dSize.height) / 2;
-
-
-      var valr = value;
-      if (this.countDown > 0)
-        valr = Math.max(0, this.countDown - this.value);
-      valr = Math.min(999, valr);
-
-      for (var k = false, i = 0, j = 100; i < 3; i++, j /= 10) {
-        if (!this.enabled)
-          d = 1;
-        else {
-          w = (valr / j) % 10;
-          if (w !== 0) {
-            k = true;
-            d = 11 - w;
-          }
-          else
-            d = (k || i === 2 ? 11 : 1);
-        }
-
-        ctx.drawImage(img,
-            this.origin.x,
-            this.origin.y + this.dSize.height * d,
-            this.origin.x + this.dSize.width,
-            this.origin.y + this.dSize.height * (d + 1),
-            this.pos.x + marginW + this.dSize.width * i,
-            this.pos.y + marginH,
-            this.pos.x + marginW + this.dSize.width * (i + 1),
-            this.pos.y + marginH + this.dSize.height);
-      }
-      return true;
+    /**
+     * 
+     * Sets a specific value to this counter
+     * @param {number} value - The value to set
+     */
+    setValue: function (value) {
+      this.value = value;
+      if(this.enabled)
+        this.refreshDisplay();
     }
   };
-
-  // Counter extends AbstractBox
-  Counter.prototype = $.extend(Object.create(AbstractBox.prototype), Counter.prototype);
 
   return Counter;
 
