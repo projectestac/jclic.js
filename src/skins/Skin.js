@@ -104,8 +104,8 @@ define([
      * The collection of counters
      * @type {object} */
     counters: {
-      'score': null,
       'actions': null,
+      'score': null,
       'time': null
     },
     /**

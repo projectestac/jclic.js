@@ -181,6 +181,23 @@ define([
       return $.extend(true, {}, obj);
     },
     /**
+     * Converts string values to number or boolean when needed
+     * @param {Object} obj - The object to be processed
+     * @returns {Object} - A new object with normalized content
+     */
+    normalizeObject: function (obj) {
+      var result = {};
+      if (obj)
+        $.each(obj, function (key, value) {
+          var s;
+          if (typeof value === 'string' && (s = value.trim().toLowerCase()) !== '') {
+            value = s === 'true' ? true : s === 'false' ? false : isNaN(s) ? value : Number(s);
+          }
+          result[key] = value;
+        });
+      return result;
+    },
+    /**
      * Check if the given char is a separator
      * @param {string} ch - A string with a single character
      * @returns {boolean}

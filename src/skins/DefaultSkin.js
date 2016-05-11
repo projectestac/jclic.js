@@ -91,7 +91,7 @@ define([
     // TODO: Change SVG animation (deprecated) to web animation
     this.$waitPanel = $('<div />').css({
       'background-color': 'rgba(255, 255, 255, .60)',
-      'background-image': 'url(\'' + this.resources.waitImg + '\')',
+      'background-image': 'url(' + this.resources.waitImg + ')',
       'background-repeat': 'no-repeat',
       'background-size': '20%',
       'background-position': 'center',
@@ -100,18 +100,21 @@ define([
     });
     this.$div.append(this.$waitPanel);
 
-    if (this.ps.options.counters) {
+    if (false !== this.ps.options.counters) {
       // Create counters
+      var padding = this.resources.counterIconSize.w + 2;
+      var cssWidth = this.countersWidth - padding;
+      var cssHeight = this.countersHeight;
       $.each(Skin.prototype.counters, function (name) {
-        thisSkin.counters[name] = new Counter(name, $('<div/>').css({
-          'width': thisSkin.countersWidth + 'px',
-          'height': thisSkin.countersHeight + 'px',
-          'font-family': 'Roboto,Arial,Sans',
-          'font-size': '18px',
+        thisSkin.counters[name] = new Counter(name, $('<div>000</div>').css({
+          'width': cssWidth + 'px',
+          'height': cssHeight + 'px',
+          'font-family': 'Sans-serif',
+          'font-size': (cssHeight - 2) + 'px',
+          'text-align': 'center',
           'color': 'white',
-          'padding-left': '20px',
-          'padding-top': '3px',
-          'background-image': 'url(\'' + thisSkin.resources[name] + '\')',
+          'padding-left': padding + 'px',
+          'background-image': 'url(' + thisSkin.resources[name] + ')',
           'background-repeat': 'no-repeat',
           'background-position': 'left'
         }).appendTo(thisSkin.$div));
@@ -309,18 +312,22 @@ define([
       //
       // SVG image for the 'previous activity' button
       // See `/misc/skin/default` for original Inkscape images
-      prevBtn: 'data:image/svg+xml;utf8,' +
-          '<svg fill="#FFFFFF" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">' +
-          '<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>' +
-          '<path d="M0 0h24v24H0z" fill="none"/></svg>',
+      prevBtn: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xNS40MSA3LjQxTDE0IDZsLTYgNiA2IDYg' +
+          'MS40MS0xLjQxTDEwLjgzIDEyeiI+PC9wYXRoPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9' +
+          'Im5vbmUiPjwvcGF0aD48L3N2Zz4K',
       prevBtnSize: {w: 36, h: 36},
       //
       // SVG image for the 'next activity' button
       // See `/misc/skin/default` for original Inkscape images
-      nextBtn: 'data:image/svg+xml;utf8,' +
-          '<svg fill="#FFFFFF" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">' +
-          '<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>' +
-          '<path d="M0 0h24v24H0z" fill="none"/></svg>',
+      nextBtn: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMCA2TDguNTkgNy40MSAxMy4xNyAxMmwt' +
+          'NC41OCA0LjU5TDEwIDE4bDYtNnoiPjwvcGF0aD48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxs' +
+          'PSJub25lIj48L3BhdGg+PC9zdmc+Cg==',
       nextBtnSize: {w: 36, h: 36},
       //
       // Animated image to be shown when loading resources
@@ -388,38 +395,71 @@ define([
       // SVG images for 'fullscreen' and 'fullscreen extit' actions.
       // By **Google Material design Icons**:
       // https://google.github.io/material-design-icons/
-      fullScreen: 'data:image/svg+xml;utf8,' +
-          '<svg fill="#FFFFFF" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">' +
-          '<path d="M0 0h24v24H0z" fill="none"/>' +
-          '<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>',
-      fullScreenExit: 'data:image/svg+xml;utf8,' +
-          '<svg fill="#FFFFFF" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">' +
-          '<path d="M0 0h24v24H0z" fill="none"/>' +
-          '<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>',
+      fullScreen: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
+          'PjwvcGF0aD48cGF0aCBkPSJNNyAxNEg1djVoNXYtMkg3di0zem0tMi00aDJWN2gzVjVINXY1em0x' +
+          'MiA3aC0zdjJoNXYtNWgtMnYzek0xNCA1djJoM3YzaDJWNWgtNXoiPjwvcGF0aD48L3N2Zz4K',
+      fullScreenExit: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
+          'PjwvcGF0aD48cGF0aCBkPSJNNSAxNmgzdjNoMnYtNUg1djJ6bTMtOEg1djJoNVY1SDh2M3ptNiAx' +
+          'MWgydi0zaDN2LTJoLTV2NXptMi0xMVY1aC0ydjVoNVY4aC0zeiI+PC9wYXRoPjwvc3ZnPgo=',
       fullScreenSize: {w: 36, h: 36},
       //
       // Close button
-      close: 'data:image/svg+xml;utf8,' +
-          '<svg fill="#FFFFFF" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">' +
-          '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>' +
-          '<path d="M0 0h24v24H0z" fill="none"/></svg>',
+      close: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xOSA2LjQxTDE3LjU5IDUgMTIgMTAuNTkg' +
+          'Ni40MSA1IDUgNi40MSAxMC41OSAxMiA1IDE3LjU5IDYuNDEgMTkgMTIgMTMuNDEgMTcuNTkgMTkg' +
+          'MTkgMTcuNTkgMTMuNDEgMTJ6Ij48L3BhdGg+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0i' +
+          'bm9uZSI+PC9wYXRoPjwvc3ZnPgo=',
       closeSize: {w: 36, h: 36},
       //
       // Icons for counters
-      time: 'data:image/svg+xml;utf8,'+
-          '<svg fill="#FFFFFF" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">' +
-          '<path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>' +
-          '<path d="M0 0h24v24H0z" fill="none"/>' +
-          '<path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>',
-      score: 'data:image/svg+xml;utf8,' +
-          '<svg fill="#FFFFFF" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">' +
-          '<path d="M0 0h24v24H0z" fill="none"/>' +
-          '<path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>',
-      actions: 'data:image/svg+xml;utf8,' +
-          '<svg fill="#FFFFFF" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
-          '<defs><path d="M0 0h24v24H0V0z" id="a"/></defs>' +
-          '<clipPath id="b"><use overflow="visible" xlink:href="#a"/></clipPath>' +
-          '<path clip-path="url(#b)" d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.08-.01-.15-.03-.24-.03-.31 0-.59.13-.79.33l-.79.8 4.94 4.94c.27.27.65.44 1.06.44h6.79c.75 0 1.33-.55 1.44-1.28l.75-5.27c.01-.07.02-.14.02-.2 0-.62-.38-1.16-.91-1.38z"/></svg>',
+      time: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjE4IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMS45OSAyQzYuNDcgMiAyIDYuNDggMiAx' +
+          'MnM0LjQ3IDEwIDkuOTkgMTBDMTcuNTIgMjIgMjIgMTcuNTIgMjIgMTJTMTcuNTIgMiAxMS45OSAy' +
+          'ek0xMiAyMGMtNC40MiAwLTgtMy41OC04LThzMy41OC04IDgtOCA4IDMuNTggOCA4LTMuNTggOC04' +
+          'IDh6Ij48L3BhdGg+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxw' +
+          'YXRoIGQ9Ik0xMi41IDdIMTF2Nmw1LjI1IDMuMTUuNzUtMS4yMy00LjUtMi42N3oiPjwvcGF0aD48' +
+          'L3N2Zz4K',
+      score: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjE4IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
+          'PjwvcGF0aD48cGF0aCBkPSJNOSAxNi4yTDQuOCAxMmwtMS40IDEuNEw5IDE5IDIxIDdsLTEuNC0x' +
+          'LjRMOSAxNi4yeiI+PC9wYXRoPjwvc3ZnPgo=',
+      /*
+      actions: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjE4IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5' +
+          'L3hsaW5rIj48ZGVmcz48cGF0aCBkPSJNMCAwaDI0djI0SDBWMHoiIGlkPSJhIj48L3BhdGg+PC9k' +
+          'ZWZzPjxjbGlwUGF0aCBpZD0iYiI+PHVzZSBvdmVyZmxvdz0idmlzaWJsZSIgeGxpbms6aHJlZj0i' +
+          'I2EiPjwvdXNlPjwvY2xpcFBhdGg+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2IpIiBkPSJNOSAxMS4y' +
+          'NFY3LjVDOSA2LjEyIDEwLjEyIDUgMTEuNSA1UzE0IDYuMTIgMTQgNy41djMuNzRjMS4yMS0uODEg' +
+          'Mi0yLjE4IDItMy43NEMxNiA1LjAxIDEzLjk5IDMgMTEuNSAzUzcgNS4wMSA3IDcuNWMwIDEuNTYu' +
+          'NzkgMi45MyAyIDMuNzR6bTkuODQgNC42M2wtNC41NC0yLjI2Yy0uMTctLjA3LS4zNS0uMTEtLjU0' +
+          'LS4xMUgxM3YtNmMwLS44My0uNjctMS41LTEuNS0xLjVTMTAgNi42NyAxMCA3LjV2MTAuNzRsLTMu' +
+          'NDMtLjcyYy0uMDgtLjAxLS4xNS0uMDMtLjI0LS4wMy0uMzEgMC0uNTkuMTMtLjc5LjMzbC0uNzku' +
+          'OCA0Ljk0IDQuOTRjLjI3LjI3LjY1LjQ0IDEuMDYuNDRoNi43OWMuNzUgMCAxLjMzLS41NSAxLjQ0' +
+          'LTEuMjhsLjc1LTUuMjdjLjAxLS4wNy4wMi0uMTQuMDItLjIgMC0uNjItLjM4LTEuMTYtLjkxLTEu' +
+          'Mzh6Ij48L3BhdGg+PC9zdmc+Cg==',
+      */
+      actions: 'data:image/svg+xml;base64,' +
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+          'IGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjE4IiB4bWxucz0iaHR0cDov' +
+          'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
+          'PjwvcGF0aD48cGF0aCBkPSJNNiAxMGMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTIt' +
+          'LjktMi0yLTJ6bTEyIDBjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyIDItLjkgMi0yLS45LTItMi0y' +
+          'em0tNiAwYy0xLjEgMC0yIC45LTIgMnMuOSAyIDIgMiAyLS45IDItMi0uOS0yLTItMnoiPjwvcGF0' +
+          'aD48L3N2Zz4K',
       counterIconSize: {w: 18, h: 18}
     }
   };

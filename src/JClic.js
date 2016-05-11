@@ -150,7 +150,7 @@ define([
         if (opt)
           options = $.extend(Object.create(options), opt);
 
-        var player = new JClicPlayer($div, options);
+        var player = new JClicPlayer($div, Utils.normalizeObject(options));
         if (projectName)
           player.load(projectName);
 

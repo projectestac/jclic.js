@@ -25,7 +25,7 @@ define([], function () {
   var Counter = function (id, $div) {
     if (id)
       this.id = id;
-    if($div)
+    if ($div)
       this.$div = $div;
   };
 
@@ -62,7 +62,7 @@ define([], function () {
      * @returns {number}
      */
     getDisplayValue: function () {
-      var result = this.countDown > 0 ? Math.max(0, this.countDown - result) : this.value;
+      var result = this.countDown > 0 ? Math.max(0, this.countDown - this.value) : this.value;
       return Math.min(this.MAX_DISPLAY_VALUE, result);
     },
     /**
@@ -71,9 +71,8 @@ define([], function () {
      * (method to be overrided by subclasses)
      */
     refreshDisplay: function () {
-      // console.log('Counter ' + this.  id + ': ' + (this.enabled ? this.getDisplayValue() : 'disabled'));
-      if(this.$div){
-        this.$div.html(this.enabled ? (this.getDisplayValue()+1000).toString().substr(1) : '000');
+      if (this.$div) {
+        this.$div.html(this.enabled ? (this.getDisplayValue() + 1000).toString().substr(1) : '000');
         this.$div.css('opacity', this.enabled ? 1.0 : 0.3);
       }
     },
@@ -83,8 +82,8 @@ define([], function () {
      * @param {boolean} enabled - State been assigned to this counter
      */
     setEnabled: function (enabled) {
-      this.enabled = enabled;
-      this.refreshDisplay();
+      if (this.enabled !== (this.enabled = enabled))
+        this.refreshDisplay();
     },
     /**
      * 
@@ -92,8 +91,8 @@ define([], function () {
      * @param {number} maxValue - Value from which the countdown will start
      */
     setCountDown: function (maxValue) {
-      this.countDown = maxValue;
-      this.refreshDisplay();
+      if (this.countDown !== (this.countDown = maxValue))
+        this.refreshDisplay();
     },
     /**
      * 
@@ -101,7 +100,7 @@ define([], function () {
      */
     incValue: function () {
       this.value++;
-      if(this.enabled)
+      if (this.enabled)
         this.refreshDisplay();
     },
     /**
@@ -110,12 +109,11 @@ define([], function () {
      * @param {number} value - The value to set
      */
     setValue: function (value) {
-      this.value = value;
-      if(this.enabled)
+      if (this.enabled && this.value !== (this.value = value))
         this.refreshDisplay();
     }
   };
-
+  
   return Counter;
-
+  
 });
