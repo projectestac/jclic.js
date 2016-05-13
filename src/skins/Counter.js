@@ -57,13 +57,21 @@ define([], function () {
      * @type {Number} */
     MAX_DISPLAY_VALUE: 999,
     /**
+     * An optional Counter used as a substractor to display the current value.
+     * Useful to display `errors` substracting `score` from `actions`.
+     * @type {Counter}
+     */
+    displayDiffFrom: null,
+    /**
      * 
      * Gets the current display value of this counter
      * @returns {number}
      */
     getDisplayValue: function () {
-      var result = this.countDown > 0 ? Math.max(0, this.countDown - this.value) : this.value;
-      return Math.min(this.MAX_DISPLAY_VALUE, result);
+      var result = this.countDown > 0 ? this.countDown - this.value : this.value;
+      if(this.displayDiffFrom)
+        result = result - this.displayDiffFrom.value;
+      return Math.max(0, Math.min(this.MAX_DISPLAY_VALUE, result));
     },
     /**
      * 
