@@ -28,9 +28,10 @@ define([
   "./media/EventSounds",
   "./project/JClicProject",
   "./bags/JumpInfo",
-  "./boxes/ActiveBoxContent"
+  "./boxes/ActiveBoxContent",
+  "./report/Reporter"
 ], function ($, JSZip, JSZipUtils, ScriptJS, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds,
-    JClicProject, JumpInfo, ActiveBoxContent) {
+    JClicProject, JumpInfo, ActiveBoxContent, Reporter) {
 
   /**
    * 
@@ -322,7 +323,7 @@ define([
         this.reporter.end();
         this.reporter = null;
       }
-      // TODO: Build a reporter and assign to this.reporter
+      this.reporter = Reporter.getReporter(null, this.options);
     },
     /**
      * 
