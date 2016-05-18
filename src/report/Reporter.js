@@ -14,8 +14,9 @@
 //  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define([
-  "./SessionReg"
-], function (SessionReg) {
+  "./SessionReg",
+  "../Utils"
+], function (SessionReg, Utils) {
 
   /**
    * This class implements the basic operations related with the processing of times and scores
@@ -122,11 +123,11 @@ define([
       return '';
     },
     init: function (properties) {
-      this.userId = properties.hasOwnProperty('user') ? properties.user : null;
-      this.sessionKey = properties.hasOwnProperty('key') ? properties.key : null;
-      this.sessionContext = properties.hasOwnProperty('context') ? properties.key : null;
-      this.groupCodeFilter = properties.hasOwnProperty('groupCodeFilter') ? properties.key : null;
-      this.userCodeFilter = properties.hasOwnProperty('userCodeFilter') ? properties.key : null;
+      this.userId = Utils.getVal(properties.user);
+      this.sessionKey = Utils.getVal(properties.key);
+      this.sessionContext = Utils.getVal(properties.context);
+      this.groupCodeFilter = Utils.getVal(properties.groupCodeFilter);
+      this.userCodeFilter = Utils.getVal(properties.userCodeFilter);
       this.initiated = true;
     },
     end: function () {
@@ -191,8 +192,9 @@ define([
     if (Reporter.CLASSES.hasOwnProperty(className)) {
       result = new Reporter.CLASSES[className]();
       // TODO: Group reporter params into a single Object (as `reporterParams` in JClic)?
-      if (properties)
-        result.init(properties);
+      result.init(properties);
+    } else {
+      console.log('Unknown reporter class: ' + className);
     }
     return result;
   };

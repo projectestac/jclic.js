@@ -48,7 +48,9 @@ define([
      * @returns {*}
      */
     getVal: function (val, defaultValue) {
-      return (val === '' || val === null || typeof val === 'undefined') ? defaultValue : val;
+      return (val === '' || val === null || typeof val === 'undefined')
+      ? (defaultValue ? defaultValue : null)
+      : val;
     },
     /**
      * Gets a number from a string or another number
@@ -263,7 +265,7 @@ define([
      * @returns {boolean}
      */
     isURL: function (exp) {
-      var path = /^(https?|file|data|ftps?):\/\//i;
+      var path = /^(filesystem:)?(https?|file|data|ftps?):/i;
       return path.test(exp);
     },
     /**
