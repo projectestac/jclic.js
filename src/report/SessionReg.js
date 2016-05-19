@@ -14,10 +14,11 @@
 //  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define([
+  "jquery",
   "../Utils",
   "../project/JClicProject",
   "./SequenceReg"
-], function (Utils, JClicProject, SequenceReg) {
+], function ($, Utils, JClicProject, SequenceReg) {
   /**
    * 
    * @exports SessionReg
@@ -61,11 +62,37 @@ define([
      * @type {string} */
     code: null,
     $print: function (recalcInfo, writeProjectName) {
-      // TODO: Implement toHtmlString
       if (recalcInfo)
         this.info.recalc();
       var $html = Utils.$HTML;
-      return $html.p('*** Info about ' + this.projectName + ' ***');
+
+      var $t = $html.table();
+
+      if (this.info.numSequences > 0) {
+
+        if (writeProjectName)
+          $t.append($('<th/>').append($('<td colspan="6"/>').html('Project ' + this.projectName)));
+
+        $t.append($('<th/>')
+            .append($('<td/>').html('sequence'))
+            .append($('<td/>').html('activity'))
+            .append($('<td/>').html('solved'))
+            .append($('<td/>').html('actions'))
+            .append($('<td/>').html('score'))
+            .append($('<td/>').html('time')));
+
+        for (var p = 0; p < this.sequences.length; p++)
+          $t.append(this.sequences[p].$print());
+
+        $t.append($('<tr/>')
+            .append($('<td/>').html('Totals:'))
+            .append($('<td/>').html(this.info.nActivities))
+            .append($('<td/>').html(this.info.nActSolved))
+            .append($('<td/>').html(this.info.nActions))
+            .append($('<td/>').html(Utils.getPercent(this.info.tScore)))
+            .append($('<td/>').html(Utils.getHMStime(this.info.tTime))));
+      }
+      return $t;
     },
     getInfo: function (recalc) {
       if (recalc)

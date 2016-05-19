@@ -122,11 +122,11 @@ define([
       var $html = Utils.$HTML;
 
       var $result = $('<div />');
-      var $tb = $html.table();
-      $tb.append($html.doubleCell('Session started:', this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()));
-      $tb.append($html.doubleCell('Reports system:', this.description));
+      var $t = $html.table();
+      $t.append($html.doubleCell('Session started:', this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()));
+      $t.append($html.doubleCell('Reports system:', this.description));
       if (this.userId)
-        $tb.append($html.doubleCell('User:', this.userId));
+        $t.append($html.doubleCell('User:', this.userId));
 
       var numSessions = 0, numSequences = 0, nActivities = 0, nActSolved = 0, nActScore = 0, nActions = 0,
           percentSolved = 0, tScore = 0, tTime = 0;
@@ -151,18 +151,18 @@ define([
 
       if (numSequences > 0) {
         if (numSessions > 1)
-          $tb.append($html.doubleCell('Projects:', numSessions));
-        $tb.append($html.doubleCell('Sequences:', numSequences));
-        $tb.append($html.doubleCell('Activities done:', nActivities));
+          $t.append($html.doubleCell('Projects:', numSessions));
+        $t.append($html.doubleCell('Sequences:', numSequences));
+        $t.append($html.doubleCell('Activities done:', nActivities));
         if (nActivities > 0) {
           percentSolved = nActSolved / nActivities;
-          $tb.append($html.doubleCell('Activities solved:', nActSolved + " (" + Utils.getPercent(percentSolved) + ")"));
+          $t.append($html.doubleCell('Activities solved:', nActSolved + " (" + Utils.getPercent(percentSolved) + ")"));
           if (nActScore > 0)
-            $tb.append($html.doubleCell('Global score:', Utils.getPercent(tScore / (nActScore * 100))));
-          $tb.append($html.doubleCell('Total time in activities:', Utils.getHMStime(tTime)));
-          $tb.append($html.doubleCell('Actions done:', nActions));
+            $t.append($html.doubleCell('Global score:', Utils.getPercent(tScore / (nActScore * 100))));
+          $t.append($html.doubleCell('Total time in activities:', Utils.getHMStime(tTime)));
+          $t.append($html.doubleCell('Actions done:', nActions));
         }
-        $result.append($tb);
+        $result.append($t);
         // add nbsp here?
         for (var p = 0; p < this.sessions.length; p++) {
           var sr = this.sessions[p];

@@ -14,8 +14,9 @@
 //  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define([
+  "jquery",
   "./ActivityReg"
-], function (ActivityReg) {
+], function ($, ActivityReg) {
   /**
    * 
    * @exports SequenceReg
@@ -41,9 +42,10 @@ define([
     totalTime: 0,
     closed: false,
     info: null,
-    toHtmlString: function () {
-      // TODO: Implement toHtmlString
-      return '';
+    $print: function () {
+      
+      // TODO: Implement $print
+      return $('<tr/>');
     },
     getInfo: function (recalc) {
       if (recalc)
