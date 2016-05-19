@@ -14,9 +14,10 @@
 //  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define([
+  "../Utils",
   "../project/JClicProject",
   "./SequenceReg"
-], function (JClicProject, SequenceReg) {
+], function (Utils, JClicProject, SequenceReg) {
   /**
    * 
    * @exports SessionReg
@@ -59,9 +60,12 @@ define([
      * Optional code to be used with this session
      * @type {string} */
     code: null,
-    toHtmlString: function (recalcInfo, writeProjectName) {
+    $print: function (recalcInfo, writeProjectName) {
       // TODO: Implement toHtmlString
-      return '';
+      if (recalcInfo)
+        this.info.recalc();
+      var $html = Utils.$HTML;
+      return $html.p('*** Info about ' + this.projectName + ' ***');
     },
     getInfo: function (recalc) {
       if (recalc)

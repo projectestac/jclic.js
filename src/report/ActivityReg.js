@@ -28,7 +28,7 @@ define([
     this.name = act.name;
     this.code = act.code;
     this.actions = [];
-    this.startTime = (new Date()).value();
+    this.startTime = (new Date()).valueOf();
     this.minActions = act.getMinNumActions();
     this.reportActions = act.reportActions;
   };
@@ -120,7 +120,7 @@ define([
         if (this.lastAction)
           this.totalTime = this.lastAction.time - this.startTime;
         else
-          this.totalTime = ((new Date()).value()) - this.startTime;
+          this.totalTime = ((new Date()).valueOf()) - this.startTime;
         this.closed = true;
       }
     },

@@ -49,8 +49,8 @@ define([
      */
     getVal: function (val, defaultValue) {
       return (val === '' || val === null || typeof val === 'undefined')
-      ? (defaultValue ? defaultValue : null)
-      : val;
+          ? (defaultValue ? defaultValue : null)
+          : val;
     },
     /**
      * Gets a number from a string or another number
@@ -60,6 +60,24 @@ define([
      */
     getNumber: function (val, defaultValue) {
       return Number(Utils.getVal(val, defaultValue));
+    },
+    /**
+     * Gets the plain percent expression (without decimals) of the given value
+     * @param {number} val - The value to be expressed as a percentile
+     * @returns {string}
+     */
+    getPercent: function (val) {
+      return Math.round(val * 100) + '%';
+    },
+    /**
+     * Returns a given time in [00h 00'00"] format
+     * @param {number} millis - Amount of milliseconds to be processed
+     * @returns {string}
+     */
+    getHMStime: function (millis) {
+      var d = new Date(millis);
+      var h = d.getUTCHours(), m = d.getUTCMinutes(), s = d.getUTCSeconds();
+      return (h ? h + 'h ' : '') + ((h || m) ? m + '\'' : '') + s + '"';
     },
     /** @const {number} */
     'FALSE': 0,
@@ -326,6 +344,21 @@ define([
         }
       }
       return Promise.resolve(Utils.getPath(basePath, path));
+    },
+    /**
+     * Utility object that provides several methods to build simple and complex DOM objects
+     * @type {object}
+     */
+    $HTML: {
+      table: function () {
+        return $('<table/>');
+      },
+      doubleCell: function (a, b) {
+        return $('<tr/>').append($('<td/>').html(a)).append($('<td/>').html(b));
+      },
+      p: function (txt) {
+        return $('<p/>').html(txt);
+      }
     },
     /**
      * Checks if the current browser allows to put HTML elements in full screen mode

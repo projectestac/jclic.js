@@ -82,6 +82,7 @@ define([
     this.defaultSkin = Skin.prototype.getSkin(null, this, this.$topDiv);
     this.setSkin(this.defaultSkin);
     this.initTimers();
+    this.initReporter();
     this.setSystemMessage("ready");
   };
 
@@ -355,13 +356,24 @@ define([
       this.delayedTimer.repeats = false;
     },
     /**
+     * Opens the 'about' dialog, optionally showing current report
+     * @param {boolean} withReport - Show current report on the about window
+     */
+    showAbout: function(withReport){
+      if(this.skin && this.skin.$infoDiv){
+        if(withReport)
+          this.skin.$infoDiv.html(this.reporter ? this.reporter.$print() : '----');        
+        this.skin.showAbout(true);
+      }   
+    },
+    /**
      * 
      * Closes the help dialog window
      */
     closeHelpWindow: function () {
       if (this.skin) {
         this.skin.showHelp(null);
-        this.skin.showAbout(null);
+        this.skin.showAbout(false);
       }
     },
     /**
@@ -1048,7 +1060,7 @@ define([
     reportNewActivity: function (act) {
       var ase = this.project.activitySequence.getCurrentAct();
       if (this.reporter) {
-        if (ase.getTag() === this.reporter.getCurrentSequenceTag())
+        if (ase.tag === this.reporter.getCurrentSequenceTag())
           // Notify that the sequence has changed
           this.reporter.newSequence(ase);
         if (act.includeInReports)

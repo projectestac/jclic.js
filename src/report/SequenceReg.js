@@ -23,8 +23,8 @@ define([
    * @param {ActivitySequenceElement} ase - The ActivitySequenceElement referenced by this sequence.
    */
   var SequenceReg = function (ase) {
-    this.name = ase.getTag();
-    this.description = ase.getDescription();
+    this.name = ase.tag;
+    this.description = ase.description;
     this.activities = [];
     this.currentActivity = null;
     this.totalTime = 0;

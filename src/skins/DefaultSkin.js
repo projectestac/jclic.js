@@ -100,6 +100,32 @@ define([
     });
     this.$div.append(this.$waitPanel);
 
+    this.$infoPanel = $('<div />').css({
+      'background-color': 'rgba(255, 255, 255, .70)',
+      'z-index': 98,
+      position: 'fixed',
+      width: '100%',
+      height: '100%',
+      display: 'none',
+      'text-align': 'center',
+      'transform-style': 'preserve-3d'
+    });
+
+    this.$infoDiv = $('<div />').css({
+      display: 'inline-block',
+      position: 'relative',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      border: '1px solid black',
+      'background-color': 'lightgray'
+    }).on('click', function () {
+      thisSkin.showAbout(false);
+    });
+    this.$infoPanel.append(this.$infoDiv);
+
+    this.$div.append(this.$infoPanel);
+
+
     if (false !== this.ps.options.counters) {
       // Create counters
       var padding = this.resources.counterIconSize.w + 2;
@@ -117,6 +143,9 @@ define([
           'background-image': 'url(' + thisSkin.resources[name] + ')',
           'background-repeat': 'no-repeat',
           'background-position': 'left'
+        }).on('click', function (evt) {
+          if (thisSkin.ps)
+            thisSkin.ps.actions.reports.processEvent(evt);
         }).appendTo(thisSkin.$div));
       });
     }

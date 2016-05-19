@@ -86,6 +86,14 @@ define([
      * @type {external:jQuery} */
     $waitPanel: null,
     /**
+     * Info panel, used to display reports
+     * @type {external:jQuery} */
+    $infoPanel: null,    
+    /**
+     * Div inside @link{$infoPanel} where JClicPlayer will place the information to be shown
+     * @type {external:jQuery} */
+    $infoDiv: null,
+    /**
      * The basic collection of buttons that most skins implement
      * @type {object} */
     buttons: {
@@ -260,12 +268,13 @@ define([
     },
     /**
      * 
-     * Shows a window with information about ths results obtained in the activities
-     * @param {string} tabName - The about window can have multiple tabs. This parameter indicates
-     * what tab must be shown by default. When `null`, the window must be closed.
+     * Shows or hides a panel with miscellaneous information 
+     * @param {boolean} show - `true` when the panel must be shown, `false` otherwise
      */
-    showAbout: function (tabName) {
-      // TODO: Implement showAbout      
+    showAbout: function (show) {
+      if(this.$infoPanel){
+        this.$infoPanel.css({display: show ? 'inherit' : 'none'});
+      }
     },
     /**
      * 

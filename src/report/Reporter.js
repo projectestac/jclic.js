@@ -118,9 +118,62 @@ define([
       // TODO: Implement promptUserId
       return null;
     },
-    toHtmlString: function () {
-      // TODO: Implement toHtmlString
-      return '';
+    $print: function () {
+      var $html = Utils.$HTML;
+
+      var $result = $('<div />');
+      var $tb = $html.table();
+      $tb.append($html.doubleCell('Session started:', this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()));
+      $tb.append($html.doubleCell('Reports system:', this.description));
+      if (this.userId)
+        $tb.append($html.doubleCell('User:', this.userId));
+
+      var numSessions = 0, numSequences = 0, nActivities = 0, nActSolved = 0, nActScore = 0, nActions = 0,
+          percentSolved = 0, tScore = 0, tTime = 0;
+
+      for (var p = 0; p < this.sessions.length; p++) {
+        var inf = this.sessions[p].getInfo(true);
+        if (inf.numSequences > 0) {
+          numSessions++;
+          numSequences += inf.numSequences;
+          if (inf.nActivities > 0) {
+            nActivities += inf.nActivities;
+            nActSolved += inf.nActSolved;
+            nActions += inf.nActions;
+            if (inf.nActScore > 0) {
+              tScore += (inf.tScore * inf.nActScore);
+              nActScore += inf.nActScore;
+            }
+            tTime += inf.tTime;
+          }
+        }
+      }
+
+      if (numSequences > 0) {
+        if (numSessions > 1)
+          $tb.append($html.doubleCell('Projects:', numSessions));
+        $tb.append($html.doubleCell('Sequences:', numSequences));
+        $tb.append($html.doubleCell('Activities done:', nActivities));
+        if (nActivities > 0) {
+          percentSolved = nActSolved / nActivities;
+          $tb.append($html.doubleCell('Activities solved:', nActSolved + " (" + Utils.getPercent(percentSolved) + ")"));
+          if (nActScore > 0)
+            $tb.append($html.doubleCell('Global score:', Utils.getPercent(tScore / (nActScore * 100))));
+          $tb.append($html.doubleCell('Total time in activities:', Utils.getHMStime(tTime)));
+          $tb.append($html.doubleCell('Actions done:', nActions));
+        }
+        $result.append($tb);
+        // add nbsp here?
+        for (var p = 0; p < this.sessions.length; p++) {
+          var sr = this.sessions[p];
+          if (sr.getInfo(false).numSequences > 0)
+            $result.append(sr.$print(false, numSessions > 1));
+        }
+      }
+      else
+        $result.append($html.p('No activities done!'));
+
+      return $result;
     },
     init: function (properties) {
       this.userId = Utils.getVal(properties.user);

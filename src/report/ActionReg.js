@@ -27,7 +27,7 @@ define([
     this.source = source;
     this.dest = dest;
     this.ok = ok;
-    this.time = (new Date()).value();
+    this.time = (new Date()).valueOf();
   };
 
   ActionReg.prototype = {
