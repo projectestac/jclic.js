@@ -102,9 +102,16 @@ define([
         actReg.actions.push(action);
       });
     },
-    toHtmlString: function (firstTd) {
-      // TODO: implement toHtmlString
-      return '';
+    $print: function () {
+      var $html = Utils.$HTML;
+      var result = [$html.td(this.name)];
+      if(this.closed){
+        result.push($html.td(this.solved ? 'YES' : 'NO'));
+        result.push($html.td(this.numActions));
+        result.push($html.td(Utils.getPercent(this.getPrecision()/100)));
+        result.push($html.td(Utils.getHMStime(this.totalTime)));
+      }
+      return result;
     },
     newAction: function (type, source, dest, ok) {
       if (!this.closed) {

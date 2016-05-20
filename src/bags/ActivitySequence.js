@@ -206,13 +206,12 @@ define([
           result = new JumpInfo('JUMP', i);
         } else {
           var rating = -1;
-          var time = -1;
-          // TODO: Implement Reporter and SequenceReg classes
+          var time = -1;          
           if (reporter !== null) {
             var seqRegInfo = reporter.getCurrentSequenceInfo();
             if (seqRegInfo !== null) {
-              rating = (int)(seqRegInfo.tScore);
-              time = (int)(seqRegInfo.tTime / 1000);
+              rating = Math.round(seqRegInfo.tScore);
+              time = Math.round(seqRegInfo.tTime / 1000);
             }
           }
           result = asj.resolveJump(rating, time);

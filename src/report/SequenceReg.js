@@ -43,9 +43,14 @@ define([
     closed: false,
     info: null,
     $print: function () {
-      
-      // TODO: Implement $print
-      return $('<tr/>');
+      var $trArray = [];
+      var $tr = $('<tr/>').append($('<td rowspan="' + this.activities.length + '"/>').html(this.name));
+      for (var p = 0; p < this.activities.length; p++) {
+        $tr.append(this.activities[p].$print());
+        $trArray.push($tr);
+        $tr = $('<tr/>');
+      }
+      return $trArray;
     },
     getInfo: function (recalc) {
       if (recalc)

@@ -123,8 +123,9 @@ define([
 
       var $result = $('<div />');
       var $t = $html.table();
-      $t.append($html.doubleCell('Session started:', this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()));
-      $t.append($html.doubleCell('Reports system:', this.description));
+      $t.append(
+          $html.doubleCell('Session started:', this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
+          $html.doubleCell('Reports system:', this.description));
       if (this.userId)
         $t.append($html.doubleCell('User:', this.userId));
 
@@ -152,15 +153,15 @@ define([
       if (numSequences > 0) {
         if (numSessions > 1)
           $t.append($html.doubleCell('Projects:', numSessions));
-        $t.append($html.doubleCell('Sequences:', numSequences));
-        $t.append($html.doubleCell('Activities done:', nActivities));
+        $t.append($html.doubleCell('Sequences:', numSequences),
+            $html.doubleCell('Activities done:', nActivities));
         if (nActivities > 0) {
           percentSolved = nActSolved / nActivities;
           $t.append($html.doubleCell('Activities solved:', nActSolved + " (" + Utils.getPercent(percentSolved) + ")"));
           if (nActScore > 0)
             $t.append($html.doubleCell('Global score:', Utils.getPercent(tScore / (nActScore * 100))));
-          $t.append($html.doubleCell('Total time in activities:', Utils.getHMStime(tTime)));
-          $t.append($html.doubleCell('Actions done:', nActions));
+          $t.append($html.doubleCell('Total time in activities:', Utils.getHMStime(tTime)),
+              $html.doubleCell('Actions done:', nActions));
         }
         $result.append($t);
         // add nbsp here?

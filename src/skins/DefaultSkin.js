@@ -338,6 +338,8 @@ define([
      * Buttons and other graphical resources used by this skin.
      * @type {object} */
     resources: {
+      css:'.JCSkin .infoPanel {background-color: rgba(255, 255, 255, .70)}\n'+
+          '.JCSkin .infoDiv {background-color: lightgray; border: 1px solid gray}',
       //
       // SVG image for the 'previous activity' button
       // See `/misc/skin/default` for original Inkscape images

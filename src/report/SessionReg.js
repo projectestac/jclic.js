@@ -69,28 +69,30 @@ define([
       var $t = $html.table();
 
       if (this.info.numSequences > 0) {
+        
+        var $th = $('<thead/>').appendTo($t);
 
         if (writeProjectName)
-          $t.append($('<th/>').append($('<td colspan="6"/>').html('Project ' + this.projectName)));
+          $th.append($('<tr/>').append($('<td colspan="6"/>').html('Project ' + this.projectName)));
 
-        $t.append($('<th/>')
-            .append($('<td/>').html('sequence'))
-            .append($('<td/>').html('activity'))
-            .append($('<td/>').html('solved'))
-            .append($('<td/>').html('actions'))
-            .append($('<td/>').html('score'))
-            .append($('<td/>').html('time')));
+        $th.append($('<tr/>').append(
+            $html.td('sequence'),
+            $html.td('activity'),
+            $html.td('solved'),
+            $html.td('actions'),
+            $html.td('score'),
+            $html.td('time')));
 
         for (var p = 0; p < this.sequences.length; p++)
           $t.append(this.sequences[p].$print());
 
-        $t.append($('<tr/>')
-            .append($('<td/>').html('Totals:'))
-            .append($('<td/>').html(this.info.nActivities))
-            .append($('<td/>').html(this.info.nActSolved))
-            .append($('<td/>').html(this.info.nActions))
-            .append($('<td/>').html(Utils.getPercent(this.info.tScore)))
-            .append($('<td/>').html(Utils.getHMStime(this.info.tTime))));
+        $t.append($('<tr/>').append(
+            $html.td('Totals:'),
+            $html.td(this.info.nActivities),
+            $html.td(this.info.nActSolved),
+            $html.td(this.info.nActions),
+            $html.td(Utils.getPercent(this.info.tScore/100)),
+            $html.td(Utils.getHMStime(this.info.tTime))));
       }
       return $t;
     },

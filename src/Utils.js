@@ -351,13 +351,16 @@ define([
      */
     $HTML: {
       table: function () {
-        return $('<table/>');
+        return $('<table/>').css({border: '1px solid black'});
       },
       doubleCell: function (a, b) {
         return $('<tr/>').append($('<td/>').html(a)).append($('<td/>').html(b));
       },
       p: function (txt) {
         return $('<p/>').html(txt);
+      },
+      td: function(txt){
+        return $('<td/>').html(txt);
       }
     },
     /**
