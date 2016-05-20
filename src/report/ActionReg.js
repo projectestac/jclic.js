@@ -38,16 +38,14 @@ define([
     time: 0,
     isOk: false,
     $getXML: function () {
-      var s = '';
+      var attr = {ok: this.ok, time: this.time};
       if (this.type)
-        s += ' type="' + this.type + '"';
+        attr.type = this.type;
       if (this.source)
-        s += ' source="' + this.source + '"';
+        attr.source = this.source;
       if (this.dest)
-        s += ' dest="' + this.dest + '"';
-      s += ' ok="' + this.ok + '"';
-      s += ' time="' + this.time + '"';
-      return $('<action ' + s + '/>');
+        attr.dest = this.dest;
+      return $('<action/>', attr);
     },
     setProperties: function ($xml) {
       var actReg = this;

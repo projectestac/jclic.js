@@ -359,7 +359,7 @@ define([
       p: function (txt) {
         return $('<p/>').html(txt);
       },
-      td: function(txt){
+      td: function (txt) {
         return $('<td/>').html(txt);
       }
     },

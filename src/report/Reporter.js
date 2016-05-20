@@ -121,7 +121,7 @@ define([
     $print: function () {
       var $html = Utils.$HTML;
 
-      var $result = $('<div />');
+      var $result = $('<div/>');
       var $t = $html.table();
       $t.append(
           $html.doubleCell('Session started:', this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
@@ -170,8 +170,7 @@ define([
           if (sr.getInfo(false).numSequences > 0)
             $result.append(sr.$print(false, numSessions > 1));
         }
-      }
-      else
+      } else
         $result.append($html.p('No activities done!'));
 
       return $result;

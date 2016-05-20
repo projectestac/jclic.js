@@ -69,11 +69,11 @@ define([
       var $t = $html.table();
 
       if (this.info.numSequences > 0) {
-        
+
         var $th = $('<thead/>').appendTo($t);
 
         if (writeProjectName)
-          $th.append($('<tr/>').append($('<td colspan="6"/>').html('Project ' + this.projectName)));
+          $th.append($('<tr/>').append($('<td/>', {colspan: 6}).html('Project ' + this.projectName)));
 
         $th.append($('<tr/>').append(
             $html.td('sequence'),
@@ -91,7 +91,7 @@ define([
             $html.td(this.info.nActivities),
             $html.td(this.info.nActSolved),
             $html.td(this.info.nActions),
-            $html.td(Utils.getPercent(this.info.tScore/100)),
+            $html.td(Utils.getPercent(this.info.tScore / 100)),
             $html.td(Utils.getHMStime(this.info.tTime))));
       }
       return $t;

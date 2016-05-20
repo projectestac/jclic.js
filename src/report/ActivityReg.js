@@ -48,23 +48,24 @@ define([
     reportActions: false,
     numActions: 0,
     $getXML: function () {
-      var s = '';
+      var attr = {
+        start: this.startTime,
+        time: this.totalTime,
+        solved: this.solved,
+        score: this.score,
+        minActions: this.minActions,
+        actions: this.numActions
+      };
       if (this.name)
-        s += ' name="' + this.name + '"';
+        attr.name = this.name;
       if (this.code)
-        s += ' code="' + this.code + '"';
-      s += ' start="' + this.startTime + '"';
-      s += ' time="' + this.totalTime + '"';
-      s += ' solved="' + this.solved + '"';
-      s += ' score="' + this.score + '"';
-      s += ' minActions="' + this.minActions + '"';
+        attr.code = this.code;
       if (!this.closed)
-        s += ' closed="false"';
+        attr.closed = false;
       if (this.reportActions)
-        s += ' reportActions="true"';
-      s += ' actions="' + this.numActions + '"';
+        attr.reportActions = true;
 
-      var $result = $('<activity ' + s + '/>');
+      var $result = $('<activity/>', attr);
       for (var p = 0; p < this.actions.length; p++) {
         $result.append(this.actions[p].$getXML());
       }
@@ -105,10 +106,10 @@ define([
     $print: function () {
       var $html = Utils.$HTML;
       var result = [$html.td(this.name)];
-      if(this.closed){
+      if (this.closed) {
         result.push($html.td(this.solved ? 'YES' : 'NO'));
         result.push($html.td(this.numActions));
-        result.push($html.td(Utils.getPercent(this.getPrecision()/100)));
+        result.push($html.td(Utils.getPercent(this.getPrecision() / 100)));
         result.push($html.td(Utils.getHMStime(this.totalTime)));
       }
       return result;

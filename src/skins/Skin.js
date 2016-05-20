@@ -43,7 +43,7 @@ define([
     // Skin extends [AWT.Container](AWT.html)
     AWT.Container.call(this);
 
-    this.$div = $div ? $div : $('<div class="JClic"/>');
+    this.$div = $div ? $div : $('<div/>', {class: 'JClic'});
     this.buttons = Utils.cloneObject(Skin.prototype.buttons);
     this.counters = Utils.cloneObject(Skin.prototype.counters);
     this.msgArea = Utils.cloneObject(Skin.prototype.msgArea);
@@ -88,7 +88,7 @@ define([
     /**
      * Info panel, used to display reports
      * @type {external:jQuery} */
-    $infoPanel: null,    
+    $infoPanel: null,
     /**
      * Div inside @link{$infoPanel} where JClicPlayer will place the information to be shown
      * @type {external:jQuery} */
@@ -272,7 +272,7 @@ define([
      * @param {boolean} show - `true` when the panel must be shown, `false` otherwise
      */
     showAbout: function (show) {
-      if(this.$infoPanel){
+      if (this.$infoPanel) {
         this.$infoPanel.css({display: show ? 'inherit' : 'none'});
       }
     },

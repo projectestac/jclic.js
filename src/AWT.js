@@ -266,24 +266,18 @@ define([
      * _Warning_: Do not call this method direcly. Use {@link AWT.Font#getHeight getHeight()} instead
      */
     _calcHeight: function () {
-      var text = $('<span>Hg</span>').css(this.toCss());
-      var block = $('<div style="display: inline-block; width: 1px; height: 0px;"></div>');
-      var div = $('<div></div>');
-      div.append(text, block);
-
-      var body = $('body');
-      body.append(div);
-
+      var $text = $('<span/>').html('Hg').css(this.toCss());
+      var $block = $('<div/>').css({display: 'inline-block', width: '1px', height: '0px'});
+      var $div = $('<div/>').append($text, $block);
+      $('body').append($div);
       try {
-        block.css({verticalAlign: 'baseline'});
-        this._metrics.ascent = block.offset().top - text.offset().top;
-
-        block.css({verticalAlign: 'bottom'});
-        this._metrics.height = block.offset().top - text.offset().top;
-
+        $block.css({verticalAlign: 'baseline'});
+        this._metrics.ascent = $block.offset().top - $text.offset().top;
+        $block.css({verticalAlign: 'bottom'});
+        this._metrics.height = $block.offset().top - $text.offset().top;
         this._metrics.descent = this._metrics.height - this._metrics.ascent;
       } finally {
-        div.remove();
+        $div.remove();
       }
       return this;
     },

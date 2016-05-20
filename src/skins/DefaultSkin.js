@@ -48,24 +48,24 @@ define([
 
     this.$msgBoxDiv = $div.children('.JClicMsgBox').first();
     if (this.$msgBoxDiv === null || this.$msgBoxDiv.length === 0) {
-      this.$msgBoxDiv = $('<div class="JClicMsgBox"/>');
+      this.$msgBoxDiv = $('<div/>', {class: 'JClicMsgBox'});
       this.$div.append(this.$msgBoxDiv);
     }
-    this.$msgBoxDivCanvas = $('<canvas />');
-    this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
+    //this.$msgBoxDivCanvas = $('<canvas/>');
+    //this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
     this.msgBox = new ActiveBox();
     var thisMsgBox = this.msgBox;
     this.$msgBoxDiv.on('click', function () {
       thisMsgBox.playMedia(ps);
     });
-    this.buttons.prev = $('<img />').on('click',
+    this.buttons.prev = $('<img/>').on('click',
         function (evt) {
           if (thisSkin.ps)
             thisSkin.ps.actions.prev.processEvent(evt);
         });
     this.buttons.prev.get(0).src = this.resources.prevBtn;
     this.$div.append(this.buttons.prev);
-    this.buttons.next = $('<img />').on('click',
+    this.buttons.next = $('<img/>').on('click',
         function (evt) {
           if (thisSkin.ps)
             thisSkin.ps.actions.next.processEvent(evt);
@@ -237,8 +237,10 @@ define([
       this.player.doLayout();
       this.$waitPanel.css(playerCss);
       this.msgBox.ctx = null;
-      this.$msgBoxDivCanvas.remove();
-      this.$msgBoxDivCanvas = null;
+      if (this.$msgBoxDivCanvas) {
+        this.$msgBoxDivCanvas.remove();
+        this.$msgBoxDivCanvas = null;
+      }
       var msgBoxRect = new AWT.Rectangle(margin + prv.w, 2 * margin + playerHeight, wMsgBox, h);
       this.$msgBoxDiv.css({
         position: 'absolute',

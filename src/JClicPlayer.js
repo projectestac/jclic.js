@@ -359,12 +359,12 @@ define([
      * Opens the 'about' dialog, optionally showing current report
      * @param {boolean} withReport - Show current report on the about window
      */
-    showAbout: function(withReport){
-      if(this.skin && this.skin.$infoDiv){
-        if(withReport)
-          this.skin.$infoDiv.html(this.reporter ? this.reporter.$print() : '----');        
+    showAbout: function (withReport) {
+      if (this.skin && this.skin.$infoDiv) {
+        if (withReport)
+          this.skin.$infoDiv.html(this.reporter ? this.reporter.$print() : '----');
         this.skin.showAbout(true);
-      }   
+      }
     },
     /**
      * 

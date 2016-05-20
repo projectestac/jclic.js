@@ -238,8 +238,8 @@ define([
      */
     setBounds: function (rect) {
       if (this.$canvas)
-        this.$canvas.remove();      
-      
+        this.$canvas.remove();
+
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bg && this.parkBg) {
         // Create the main canvas
@@ -292,14 +292,12 @@ define([
                     this.hiddenBox.setVisible(true);
                     this.parkBg.setVisible(false);
                     this.finishActivity(true);
-                  }
-                  else
+                  } else
                   if (!m)
                     this.playEvent('click');
                 }
                 this.update();
-              }
-              else {
+              } else {
                 this.playEvent('actionError');
               }
             }

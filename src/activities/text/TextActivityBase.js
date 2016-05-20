@@ -138,7 +138,7 @@ define([
       // vertical scroll bar when needed
       $dom.empty().css(doc.style['default'].css).css('overflow', 'auto');
 
-      var $html = $('<div class="JClicTextDocument"/>').css({'padding': 4});
+      var $html = $('<div/>', {class: 'JClicTextDocument'}).css({'padding': 4});
 
       // 
       // Sets the default style
@@ -150,7 +150,7 @@ define([
       // Process paragraphs
       $.each(doc.p, function () {
         // Creates a new DOM paragraph
-        var $p = $('<p/>').css({'margin': 0});
+        var $p = $('<p/>').css({margin: 0});
         var empty = true;
 
         // Check if the paragraph has its own style
@@ -254,11 +254,12 @@ define([
       $dom.append($html);
 
       if (this.act.checkButtonText && !this.showingPrevScreen) {
-        this.$checkButton = $('<button type="button">' + this.act.checkButtonText + '</button>');
-        this.$checkButton.css({position: 'absolute', bottom: '0', width: '100%'});
-        this.$checkButton.on('click', function () {
-          thisPanel.evaluatePanel();
-        });
+        this.$checkButton = $('<button/>', {type: 'button'})
+            .html(this.act.checkButtonText)
+            .css({position: 'absolute', bottom: '0', width: '100%'})
+            .on('click', function () {
+              thisPanel.evaluatePanel();
+            });
         $dom.append(this.$checkButton);
       }
 
@@ -316,8 +317,10 @@ define([
         if (!this.act.prevScreenStyle)
           this.act.prevScreenStyle = new BoxBase();
         this.$div.css(this.act.prevScreenStyle.getCSS()).css('overflow', 'auto');
-        var $html = $('<div class="JClicTextDocument"/>').css({'padding': 4});
-        $html.css(this.act.prevScreenStyle.getCSS()).append(this.act.prevScreenText);
+        var $html = $('<div/>', {class: 'JClicTextDocument'})
+            .css({'padding': 4})
+            .css(this.act.prevScreenStyle.getCSS())
+            .append(this.act.prevScreenText);
         this.$div.append($html);
       }
 
@@ -365,8 +368,8 @@ define([
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its		
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}		
      */
-    processEvent: function (event) {      
-      return this.playing;      
+    processEvent: function (event) {
+      return this.playing;
     }
   };
 

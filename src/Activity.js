@@ -81,8 +81,7 @@ define([
       if (cl) {
         act = new cl(project);
         act.setProperties($xml);
-      }
-      else
+      } else
         console.log('[JClic] Unknown activity class: ' + className);
     }
     return act;
@@ -557,7 +556,7 @@ define([
      * @param {PlayStation} ps - The {@link PlayStation} used to realize the media objects.
      */
     prepareMedia: function (ps) {
-      
+
       this.eventSounds.realize(ps, this.project.mediaBag);
 
       $.each(this.messages, function (key, msg) {
@@ -712,7 +711,7 @@ define([
     if ($div)
       this.$div = $div;
     else
-      this.$div = $('<div class="JClicActivity"/>');
+      this.$div = $('<div/>', {class: 'JClicActivity'});
     this.act.initAutoContentProvider();
   };
 
@@ -786,7 +785,7 @@ define([
      * @param {AWT.Rectangle} rect
      */
     setBounds: function (rect) {
-      
+
       this.pos.x = rect.pos.x;
       this.pos.y = rect.pos.y;
       this.dim.width = rect.dim.width;
@@ -1005,8 +1004,7 @@ define([
 
       if (result) {
         this.setAndPlayMsg('final', 'finishedOk');
-      }
-      else {
+      } else {
         this.setAndPlayMsg('finalError', 'finishedError');
       }
       this.ps.activityFinished(this.solved);

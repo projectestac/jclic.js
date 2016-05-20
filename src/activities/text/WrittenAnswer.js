@@ -203,7 +203,7 @@ define([
         // bgB will be used only as a placeholder for `$textField`
         this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1));
 
-        this.$form = $('<form id="form1" action="#"/>');
+        this.$form = $('<form/>', {id: 'form1', action: '#'});
 
         var thisPanel = this;
         this.$form.submit(function (event) {
@@ -213,12 +213,12 @@ define([
           }
         });
 
-        this.$textField = $('<input type="text" size="200"/>').css(abcB.bb.getCSS()).css({
+        this.$textField = $('<input/>', {type: 'text', size: 200}).css(abcB.bb.getCSS()).css({
           position: 'absolute', top: 0, left: 0,
           border: 0, padding: 0, margin: 0,
           'text-align': 'center'
         });
-        
+
         this.$form.append(this.$textField);
 
         this.bgA.setContent(abcA, solved ? solved : null);
@@ -312,7 +312,7 @@ define([
         this.$canvas.remove();
       if (this.$form)
         this.$form.detach();
-      
+
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bgA || this.bgB) {
         var r = rect.clone();
@@ -388,8 +388,7 @@ define([
           if (this.act.abc['solvedPrimary']) {
             bx.switchToAlt(this.ps);
             m = bx.playMedia(this.ps);
-          }
-          else
+          } else
             bx.clear();
           if (this.act.invAss && id >= 0 && id < this.invAssCheck.length) {
             this.invAssCheck[id] = true;
@@ -407,8 +406,7 @@ define([
           this.finishActivity(true);
           this.$textField.prop('disabled', true);
           return;
-        }
-        else if (!m && txAnswer.length > 0)
+        } else if (!m && txAnswer.length > 0)
           this.playEvent(ok ? 'actionOk' : 'actionError');
       }
 
