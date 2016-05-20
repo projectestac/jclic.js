@@ -70,7 +70,7 @@ define([
     /* global location */
     this.localFS = (location && location.protocol === 'file:');
 
-    this.$div = $('<div class="JClicPlayer"/>');
+    this.$div = $('<div/>', {class: 'JClicPlayer'});
     this.project = new JClicProject();
     this.activeMediaBag = new ActiveMediaBag();
     this.counterVal = {score: 0, actions: 0, time: 0};

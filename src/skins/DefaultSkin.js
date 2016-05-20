@@ -43,6 +43,9 @@ define([
 
     var thisSkin = this;
 
+    AWT.Font.loadGoogleFonts(this.resources.cssFonts);
+    $div.addClass('JCSkin').append($('<style/>', {type: 'text/css'}).html(this.resources.css));
+
     this.$msgBoxDiv = $div.children('.JClicMsgBox').first();
     if (this.$msgBoxDiv === null || this.$msgBoxDiv.length === 0) {
       this.$msgBoxDiv = $('<div class="JClicMsgBox"/>');
@@ -70,7 +73,7 @@ define([
     this.buttons.next.get(0).src = this.resources.nextBtn;
     this.$div.append(this.buttons.next);
     if (screenfull && screenfull.enabled) {
-      this.buttons.fullscreen = $('<img />').on('click',
+      this.buttons.fullscreen = $('<img/>').on('click',
           function () {
             thisSkin.setScreenFull(null);
           });
@@ -89,7 +92,7 @@ define([
     }
 
     // TODO: Change SVG animation (deprecated) to web animation
-    this.$waitPanel = $('<div />').css({
+    this.$waitPanel = $('<div/>').css({
       'background-color': 'rgba(255, 255, 255, .60)',
       'background-image': 'url(' + this.resources.waitImg + ')',
       'background-repeat': 'no-repeat',
@@ -100,8 +103,7 @@ define([
     });
     this.$div.append(this.$waitPanel);
 
-    this.$infoPanel = $('<div />').css({
-      'background-color': 'rgba(255, 255, 255, .70)',
+    this.$infoPanel = $('<div/>', {class: 'infoPanel'}).css({
       'z-index': 98,
       position: 'fixed',
       width: '100%',
@@ -111,13 +113,11 @@ define([
       'transform-style': 'preserve-3d'
     });
 
-    this.$infoDiv = $('<div />').css({
+    this.$infoDiv = $('<div/>', {class: 'infoDiv'}).css({
       display: 'inline-block',
       position: 'relative',
       top: '50%',
-      transform: 'translateY(-50%)',
-      border: '1px solid black',
-      'background-color': 'lightgray'
+      transform: 'translateY(-50%)'
     }).on('click', function () {
       thisSkin.showAbout(false);
     });
@@ -132,18 +132,16 @@ define([
       var cssWidth = this.countersWidth - padding;
       var cssHeight = this.countersHeight;
       $.each(Skin.prototype.counters, function (name) {
-        thisSkin.counters[name] = new Counter(name, $('<div>000</div>').css({
+        thisSkin.counters[name] = new Counter(name, $('<div/>', {class: 'counter'}).css({
           'width': cssWidth + 'px',
           'height': cssHeight + 'px',
-          'font-family': 'Sans-serif',
           'font-size': (cssHeight - 2) + 'px',
           'text-align': 'center',
-          'color': 'white',
           'padding-left': padding + 'px',
           'background-image': 'url(' + thisSkin.resources[name] + ')',
           'background-repeat': 'no-repeat',
           'background-position': 'left'
-        }).on('click', function (evt) {
+        }).html('000').on('click', function (evt) {
           if (thisSkin.ps)
             thisSkin.ps.actions.reports.processEvent(evt);
         }).appendTo(thisSkin.$div));
@@ -235,9 +233,7 @@ define([
         top: margin + 'px',
         left: margin + 'px'
       };
-      this.player.$div.css(playerCss).css({
-        'background-color': 'olive'
-      });
+      this.player.$div.css(playerCss);
       this.player.doLayout();
       this.$waitPanel.css(playerCss);
       this.msgBox.ctx = null;
@@ -338,8 +334,15 @@ define([
      * Buttons and other graphical resources used by this skin.
      * @type {object} */
     resources: {
-      css:'.JCSkin .infoPanel {background-color: rgba(255, 255, 255, .70)}\n'+
-          '.JCSkin .infoDiv {background-color: lightgray; border: 1px solid gray}',
+      //
+      // Styles used in this skin
+      css: '.JClicPlayer {background-color: olive}' +
+          '.JCSkin .infoPanel {background-color: rgba(255, 255, 255, .70)}\n' +
+          '.JCSkin .infoDiv {font-family: Roboto, Sans-serif; font-size: 10pt; background-color: lightgray;}\n' +
+          '.JCSkin .counter {font-family: Roboto, Sans-serif; color: white}',
+      //
+      // Fonts used in this skin
+      cssFonts: ['Roboto'],
       //
       // SVG image for the 'previous activity' button
       // See `/misc/skin/default` for original Inkscape images

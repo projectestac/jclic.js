@@ -86,7 +86,7 @@ define([
   /**
    * Array of font names already loaded from Google Fonts */
   AWT.Font.ALREADY_LOADED_FONTS = [];
-  
+
   /**
    * Finds the XML elements with typeface specifications, checks its value against the font
    * substitution list, replacing the `family` attribute and loading the alternative font when needed.
@@ -106,14 +106,32 @@ define([
       if (name in substitutions) {
         var newName = substitutions[name];
         if (newName !== '') {
-          if (AWT.Font.ALREADY_LOADED_FONTS.indexOf(newName) < 0) {
-            WebFont.load({google: {families: [newName]}});
-            AWT.Font.ALREADY_LOADED_FONTS.push(newName);
-          }
+          AWT.Font.loadGoogleFont(newName);
           $this.attr('family', newName);
         }
       }
     });
+  };
+  
+  /**
+   * Try to load a specific font from http://www.google.com/fonts
+   * @param {string} name - The font family name
+   */
+  AWT.Font.loadGoogleFont = function (name) {
+    if (name && AWT.Font.ALREADY_LOADED_FONTS.indexOf(name) < 0) {
+      WebFont.load({google: {families: [name]}});
+      AWT.Font.ALREADY_LOADED_FONTS.push(name);
+    }
+  };
+
+  /**
+   * Try to load a set of Google fonts
+   * @param {string[]} fonts - An array of font names
+   */
+  AWT.Font.loadGoogleFonts = function (fonts) {
+    if (fonts)
+      for (var p = 0; p < fonts.length; p++)
+        AWT.Font.loadGoogleFont(fonts[p]);
   };
 
   AWT.Font.prototype = {
