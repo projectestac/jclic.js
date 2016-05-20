@@ -3,11 +3,77 @@
   <head>
     <title>Test</title>        
     <meta charset="UTF-8">
+    <style type="text/css">
+        .infoDiv {
+            font-family: sans-serif;
+            font-size: 10pt;
+            background-color: #eee;
+        }
+        
+        .infoPanel {
+            padding: 10px;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid black;
+        }
+        
+        .infoDiv table {
+            margin: 10px;
+            border: 1px solid blue;
+        }
+        
+        .infoDiv .JCGlobalResults {
+            background-color: #ffe;
+            min-width: 400px;
+        }
+        
+        .infoDiv .JCGlobalResults td:first-child {
+            font-weight: bold;
+        }
+        
+        .infoDiv .JCDetailed {
+            background-color: #eff;
+            min-width: 400px;
+            border-collapse: collapse;
+        }
+        
+        .infoDiv .JCDetailed td {
+            border: 1px solid gray;
+            padding: 3px;
+            vertical-align: top;
+            text-align: center;
+        }
+        
+
+        .infoDiv .JCDetailed thead {
+            font-weight: bold;
+            background-color: lightblue;
+            color: blue;
+        }
+        
+        .infoDiv .JCDetailed td:nth-last-child(-n+3) {
+            text-align: right;
+        }
+        
+
+        .infoDiv .JCDetailed tr:not(:last-child) td:nth-last-child(4) {
+            background-color: #f99;
+        }
+        
+        .infoDiv .JCDetailed .ok {
+            background-color: #9f9 !important;
+        }
+
+        .infoDiv .JCDetailed tr:last-child {
+            font-weight: bold;
+        }
+
+    </style>
   </head>
   <body style="margin: 0">
-    <div class="infoDiv" style="display: inline-block; position: relative; top: 50%; transform: translateY(-50%);">
-      <div>
-        <table style="border: 1px solid black;">
+    <div class="infoDiv">
+      <div class="infoPanel">
+        <table class="JCGlobalResults">
           <tbody>
             <tr>
               <td>Session started:</td>
@@ -43,15 +109,15 @@
             </tr>
           </tbody>
         </table>
-        <table style="border: 1px solid black;">
+        <table class="JCDetailed">
           <thead>
             <tr>
-              <td>sequence</td>
-              <td>activity</td>
-              <td>solved</td>
-              <td>actions</td>
-              <td>score</td>
-              <td>time</td>
+              <th>sequence</th>
+              <th>activity</th>
+              <th>solved</th>
+              <th>actions</th>
+              <th>score</th>
+              <th>time</th>
             </tr>
           </thead>
           <tbody>
@@ -86,7 +152,7 @@
             </tr>
             <tr>
               <td>mapa</td>
-              <td>NO</td>
+              <td class="ok">YES</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
@@ -100,7 +166,7 @@
             </tr>
             <tr>
               <td>puzanim2.puz</td>
-              <td>NO</td>
+              <td class="ok">YES</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
@@ -239,4 +305,3 @@
     </div>
   </body>
 </html>
-
