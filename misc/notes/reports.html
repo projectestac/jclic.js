@@ -4,64 +4,111 @@
     <title>Test</title>        
     <meta charset="UTF-8">
     <style type="text/css">
+        body {
+            background-color: darkgray;
+        }
+        
         .infoDiv {
-            font-family: sans-serif;
+            display: box;
+            font-family: Roboto, Arial, Helvetica, sans-serif;
             font-size: 10pt;
-            background-color: #eee;
+            background-color: white;
+            color: #777;
+            max-height: 500px;
+            width: 500px;
+            margin: 20px;
+        }
+        
+        .infoHead {
+            margin: 20px;
+            font-size: 12pt;
+        }
+        
+        .cardBottom {
+            padding: 10px;
+            font-size: 12pt;
+            font-weight: bold;
+            text-align: right;
+            border-top: 1px solid #eee;
         }
         
         .infoPanel {
-            padding: 10px;
-            max-height: 500px;
+            max-height: 450px;
             overflow-y: auto;
-            border: 1px solid black;
+            border-top: 1px solid #eee;
         }
         
         .infoDiv table {
-            margin: 10px;
-            border: 1px solid blue;
+            table-layout: fixed;
+            width: 450px;
+            max-width: 450px;
+            margin: 20px;
+            box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
         }
         
         .infoDiv .JCGlobalResults {
-            background-color: #ffe;
-            min-width: 400px;
+            box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
+            border-collapse: collapse;
         }
         
+        .infoDiv .JCGlobalResults td {
+            padding: 7px;
+            border-bottom: 1px solid #eee;
+        }        
+        
         .infoDiv .JCGlobalResults td:first-child {
-            font-weight: bold;
+            font-weight: 600;
+            width: 120px;
         }
         
         .infoDiv .JCDetailed {
-            background-color: #eff;
             min-width: 400px;
             border-collapse: collapse;
         }
         
-        .infoDiv .JCDetailed td {
-            border: 1px solid gray;
-            padding: 3px;
+        .infoDiv .JCDetailed td,th {
+            border-bottom: 1px solid #eee;
+            padding: 3px 5px;
             vertical-align: top;
             text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
-
         .infoDiv .JCDetailed thead {
-            font-weight: bold;
-            background-color: lightblue;
-            color: blue;
+            font-weight: 600;
+        }
+        
+        .infoDiv .JCDetailed th:nth-last-child(-n+3) {
+            width: 42px;
+            text-align: right;
+        }
+        
+        .infoDiv .JCDetailed th:nth-last-child(4) {
+            width: 40px;
+        }
+        
+        .infoDiv .JCDetailed th:first-child {
+            width: 90px;
         }
         
         .infoDiv .JCDetailed td:nth-last-child(-n+3) {
             text-align: right;
         }
         
-
-        .infoDiv .JCDetailed tr:not(:last-child) td:nth-last-child(4) {
-            background-color: #f99;
+        .infoDiv .JCDetailed tr:not(:last-child) td:nth-last-child(6) {
+            /* border-right: 1px solid #eee; */
+            background-color: #fbfbff;
         }
         
         .infoDiv .JCDetailed .ok {
-            background-color: #9f9 !important;
+            color: #0f0;
+            font-weight: 600;
+        }
+        
+        .infoDiv .JCDetailed .no {
+            color: #f88;
+            font-weight: 600;
         }
 
         .infoDiv .JCDetailed tr:last-child {
@@ -73,6 +120,9 @@
   <body style="margin: 0">
     <div class="infoDiv">
       <div class="infoPanel">
+        <div class="infoHead">
+            Results report
+        </div>  
         <table class="JCGlobalResults">
           <tbody>
             <tr>
@@ -122,30 +172,30 @@
           </thead>
           <tbody>
             <tr>
-              <td rowspan="11">menupuz.pac</td>
+              <td rowspan="11">menupuz.pac lkjll;j;lkj;ill;kj;lkjkljl;jklj</td>
               <td>puz01.puz</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>1</td>
               <td>8%</td>
               <td>3"</td>
             </tr>
             <tr>
               <td>puz02.puz</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
             </tr>
             <tr>
               <td>puz03.puz</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
             </tr>
             <tr>
               <td>gigpuzzle</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
@@ -159,7 +209,7 @@
             </tr>
             <tr>
               <td>puzanim.puz</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
@@ -173,28 +223,28 @@
             </tr>
             <tr>
               <td>puz04.puz</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
             </tr>
             <tr>
               <td>puz05.puz</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
             </tr>
             <tr>
               <td>puz06.puz</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
             </tr>
             <tr>
               <td>puz06b.puz</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
@@ -202,91 +252,91 @@
             <tr>
               <td rowspan="13">menutxa.pac</td>
               <td>ass08.ass</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>2</td>
               <td>50%</td>
               <td>8"</td>
             </tr>
             <tr>
               <td>txa01.txa</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>1</td>
               <td>0%</td>
               <td>3"</td>
             </tr>
             <tr>
               <td>txa02.txa</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>1</td>
               <td>0%</td>
               <td>4"</td>
             </tr>
             <tr>
               <td>txa03.txa</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
             </tr>
             <tr>
               <td>txa04.txa</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
             </tr>
             <tr>
               <td>txa05.txa</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
             </tr>
             <tr>
               <td>txa06.txa</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>1"</td>
             </tr>
             <tr>
               <td>txa07.txa</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>1"</td>
             </tr>
             <tr>
               <td>txa08.txa</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
             </tr>
             <tr>
               <td>txa09.txa</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
             </tr>
             <tr>
               <td>txa10.txa</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
             </tr>
             <tr>
               <td>txa12.txa</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
             </tr>
             <tr>
               <td>txa13.txa</td>
-              <td>NO</td>
+              <td class="no">NO</td>
               <td>0</td>
               <td>0%</td>
               <td>0"</td>
@@ -301,6 +351,9 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="cardBottom">
+          EXIT
       </div>
     </div>
   </body>
