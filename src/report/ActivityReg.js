@@ -107,10 +107,13 @@ define([
       var $html = Utils.$HTML;
       var result = [$html.td(this.name)];
       if (this.closed) {
-        result.push($html.td(this.solved ? 'YES' : 'NO'));
+        result.push(this.solved ? $html.td('YES', 'ok') : $html.td('NO', 'no'));
         result.push($html.td(this.numActions));
         result.push($html.td(Utils.getPercent(this.getPrecision() / 100)));
         result.push($html.td(Utils.getHMStime(this.totalTime)));
+      } else {
+        for(var p=0; p<4; p++)
+          result.push($html.td('-'));
       }
       return result;
     },

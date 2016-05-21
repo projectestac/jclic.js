@@ -65,23 +65,23 @@ define([
       if (recalcInfo)
         this.info.recalc();
       var $html = Utils.$HTML;
+      
+      var result = [];
 
-      var $t = $html.table();
+      var $t = $('<table/>', {class: 'JCDetailed'});
 
       if (this.info.numSequences > 0) {
-
-        var $th = $('<thead/>').appendTo($t);
-
+        
         if (writeProjectName)
-          $th.append($('<tr/>').append($('<td/>', {colspan: 6}).html('Project ' + this.projectName)));
+          result.push(($('<p/>').html('Project ' + this.projectName)));
 
-        $th.append($('<tr/>').append(
-            $html.td('sequence'),
-            $html.td('activity'),
-            $html.td('solved'),
-            $html.td('actions'),
-            $html.td('score'),
-            $html.td('time')));
+        $t.append($('<thead/>').append($('<tr/>').append(
+            $html.th('sequence'),
+            $html.th('activity'),
+            $html.th('solved'),
+            $html.th('actions'),
+            $html.th('score'),
+            $html.th('time'))));
 
         for (var p = 0; p < this.sequences.length; p++)
           $t.append(this.sequences[p].$print());
@@ -94,7 +94,9 @@ define([
             $html.td(Utils.getPercent(this.info.tScore / 100)),
             $html.td(Utils.getHMStime(this.info.tTime))));
       }
-      return $t;
+      result.push($t);
+      
+      return result;
     },
     getInfo: function (recalc) {
       if (recalc)

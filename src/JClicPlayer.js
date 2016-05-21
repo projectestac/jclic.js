@@ -176,7 +176,6 @@ define([
      * Object responsible for passing the scores obtained by users to a external reporting systems
      * when playing activities.
      * @type {Reporter} */
-    // TODO: Implement Reporter!
     reporter: null,
     /**
      * Collection of {@link AWT.Action} objects used by this player.

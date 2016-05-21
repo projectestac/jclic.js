@@ -105,11 +105,11 @@ define([
 
     this.$infoPanel = $('<div/>', {class: 'infoPanel'}).css({
       'z-index': 98,
+      'background-color': 'rgba(20,20,20,0.7)',
       position: 'fixed',
       width: '100%',
       height: '100%',
       display: 'none',
-      'text-align': 'center',
       'transform-style': 'preserve-3d'
     });
 
@@ -117,7 +117,8 @@ define([
       display: 'inline-block',
       position: 'relative',
       top: '50%',
-      transform: 'translateY(-50%)'
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
     }).on('click', function () {
       thisSkin.showAbout(false);
     });
@@ -339,9 +340,26 @@ define([
       //
       // Styles used in this skin
       css: '.JClicPlayer {background-color: olive}' +
-          '.JCSkin .infoPanel {background-color: rgba(255, 255, 255, .70)}\n' +
-          '.JCSkin .infoDiv {font-family: Roboto, Sans-serif; font-size: 10pt; background-color: lightgray;}\n' +
-          '.JCSkin .counter {font-family: Roboto, Sans-serif; color: white}',
+          '.JCSkin .counter {font-family: Roboto, Sans-serif; color: white}' +
+          '.infoDiv {font-family: Roboto, Arial, Helvetica, sans-serif; font-size: 10pt; background-color: #fcfcfc; color: #777; width: 525px; max-height: 550px;}' +
+          '.infoHead {margin: 20px; font-size: 12pt;}' +
+          '.bottomPanel {background-color: white; padding: 10px; font-size: 12pt; font-weight: bold; text-align: right; border-top: 1px solid #eee;}' +
+          '.infoMainPanel {max-height: 500px; overflow-y: auto; border-top: 1px solid #eee;}' +
+          '.infoDiv .infoPanel > p {margin: 20px;}' +
+          '.infoDiv table {background-color: white; table-layout: fixed; width: 470px; max-width: 470px; margin: 20px; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); border-collapse: collapse;}' +
+          '.infoDiv .JCGlobalResults td {padding: 7px; border-bottom: 1px solid #eee;}' +
+          '.infoDiv .JCGlobalResults td:first-child {font-weight: 600; width: 120px;}' +
+          '.infoDiv .JCDetailed {min-width: 400px; border-collapse: collapse;}' +
+          '.infoDiv .JCDetailed td,th {border-bottom: 1px solid #eee; padding: 3px 5px; vertical-align: top; text-align: center; overflow: hidden; text-overflow: ellipsis;}' +
+          '.infoDiv .JCDetailed thead {font-weight: 600;}' +
+          '.infoDiv .JCDetailed th:nth-last-child(-n+3) {width: 43px; text-align: right;}' +
+          '.infoDiv .JCDetailed th:nth-last-child(4) {width: 40px;}' +
+          '.infoDiv .JCDetailed th:first-child {width: 90px;}' +
+          '.infoDiv .JCDetailed td:nth-last-child(-n+3) {text-align: right;}' +
+          '.infoDiv .JCDetailed tr:not(:last-child) td:nth-last-child(6) {background-color: #fbfbff;}' +
+          '.infoDiv .JCDetailed .ok {color: #0f0; font-weight: 600;}' +
+          '.infoDiv .JCDetailed .no {color: #f88; font-weight: 600;}' +
+          '.infoDiv .JCDetailed tr:last-child {font-weight: bold;}',
       //
       // Fonts used in this skin
       cssFonts: ['Roboto'],

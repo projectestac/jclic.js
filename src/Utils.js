@@ -350,17 +350,17 @@ define([
      * @type {object}
      */
     $HTML: {
-      table: function () {
-        return $('<table/>').css({border: '1px solid black'});
-      },
       doubleCell: function (a, b) {
         return $('<tr/>').append($('<td/>').html(a)).append($('<td/>').html(b));
       },
       p: function (txt) {
         return $('<p/>').html(txt);
       },
-      td: function (txt) {
-        return $('<td/>').html(txt);
+      td: function (txt, className) {
+        return $('<td/>', className ? {class: className} : null).html(txt);
+      },
+      th: function (txt, className) {
+        return $('<th/>', className ? {class: className} : null).html(txt);
       }
     },
     /**

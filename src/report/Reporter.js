@@ -14,9 +14,10 @@
 //  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define([
+  "jquery",
   "./SessionReg",
   "../Utils"
-], function (SessionReg, Utils) {
+], function ($, SessionReg, Utils) {
 
   /**
    * This class implements the basic operations related with the processing of times and scores
@@ -121,8 +122,14 @@ define([
     $print: function () {
       var $html = Utils.$HTML;
 
-      var $result = $('<div/>');
-      var $t = $html.table();
+      var $infoMainPanel = $('<div/>', {class: 'infoMainPanel'});
+      
+      var $infoHead = $('<div/>', {class: 'infoHead'});
+      $infoHead.html('Current results');
+      
+      $infoMainPanel.append($infoHead);
+            
+      var $t = $('<table/>', {class: 'JCGlobalResults'});
       $t.append(
           $html.doubleCell('Session started:', this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
           $html.doubleCell('Reports system:', this.description));
@@ -163,17 +170,20 @@ define([
           $t.append($html.doubleCell('Total time in activities:', Utils.getHMStime(tTime)),
               $html.doubleCell('Actions done:', nActions));
         }
-        $result.append($t);
-        // add nbsp here?
+        $infoMainPanel.append($t);
+        
         for (var p = 0; p < this.sessions.length; p++) {
           var sr = this.sessions[p];
           if (sr.getInfo(false).numSequences > 0)
-            $result.append(sr.$print(false, numSessions > 1));
+            $infoMainPanel.append(sr.$print(false, numSessions > 1));
         }
       } else
-        $result.append($html.p('No activities done!'));
+        $infoMainPanel.append($('<p/>').html('No activities done!'));
+      
+      var $bottomPanel = $('<div/>', {class: 'bottomPanel'});
+      $bottomPanel.html('EXIT');
 
-      return $result;
+      return [$infoMainPanel, $bottomPanel];
     },
     init: function (properties) {
       this.userId = Utils.getVal(properties.user);
