@@ -72,9 +72,8 @@ define([
 
       if (this.info.numSequences > 0) {
         
-        if (writeProjectName)
-          result.push(($('<p/>').html('Project ' + this.projectName)));
-
+        result.push(($('<p/>').html(writeProjectName ? 'Project ' + this.projectName : '')));
+        
         $t.append($('<thead/>').append($('<tr/>').append(
             $html.th('sequence'),
             $html.th('activity'),

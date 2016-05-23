@@ -129,13 +129,17 @@ define([
 
     this.$reportsPanel = $('<div/>', {class: 'infoMainPanel'});
     this.$bottomPanel = $('<div/>', {class: 'bottomPanel'}).append(
-        $(this.resources.copy).css({width: '26px', height: '26px'})
+        $('<a/>', {title: 'Copy data to clipboard'}).append($(this.resources.copy).css({width: '26px', height: '26px'}))
         .on('click', function () {
-          //clipboard.copy(thisSkin.$reportsPanel.get(0));
-          clipboard.copy({'text/plain': 'lkjlk', 'text/html': thisSkin.$reportsPanel.html()});
-          console.log('Copy!');
+          clipboard.copy({
+            'text/plain': '===> Please paste the content copied from JClic Reports into a spreadsheet or rich-text editor <===',
+            'text/html': thisSkin.$reportsPanel.html()
+          });
+          $(this).parent().append(
+              $('<div/>', {class: 'smallPopup'})
+              .html('Data has been copied to clipboard').fadeIn().delay(3000).fadeOut(function(){$(this).remove();}));              
         }),
-        $(this.resources.closeDialog).css({width: '26px', height: '26px'})
+        $('<a/>', {title: 'Close dialog'}).append($(this.resources.closeDialog).css({width: '26px', height: '26px'}))
         .on('click', function () {
           thisSkin.showAbout(false);
         }));
@@ -359,9 +363,11 @@ define([
 .SKINID .counter {font-family:Roboto,Sans-serif; color:white; cursor: pointer}\
 .SKINID .infoDiv {font-family:Roboto,Arial,Helvetica,sans-serif; font-size:10pt; background-color:#fcfcfc; color:#777; width:43em;}\
 .SKINID .infoHead {margin:1em; font-size:1.6em;}\
-.SKINID .bottomPanel {background-color:white; padding:0.5em; font-size:1.3em; font-weight:bold; text-align:right; border-top:1px solid #eee;}\
-.SKINID .bottomPanel svg {padding: 6px; cursor: pointer;}\
-.SKINID .bottomPanel svg:hover {background-color: #eee; border-radius: 30px;}\
+.SKINID .bottomPanel {background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
+.SKINID .bottomPanel .smallPopup {background-color:black; color:white; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
+.SKINID .bottomPanel a {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
+.SKINID .bottomPanel a:hover {background-color:#eee; border-radius:80px;}\
+.SKINID .bottomPanel a:active {background-color:#ddf;}\
 .SKINID .infoMainPanel {max-height:40em; overflow-y:auto;}\
 .SKINID .infoMainPanel > p {margin:1em;}\
 .SKINID table {background-color:white; table-layout:fixed; width:40em; margin:1.5em 1em; box-shadow:0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); border-collapse:collapse;}\
@@ -516,12 +522,12 @@ LS40LS42LTEtMS0xLjctMS0uMyAwLS41LjEtLjguMWwtNS4yIDIuMnY0LjdoMnYtMy40bDEuOC0u\
 Ny0xLjYgOC4xLTQuOS0xLS40IDIgNyAxLjR6Ij48L3BhdGg+PC9zdmc+Cg==',
       counterIconSize: {w: 18, h: 18},
       // Close dialog button
-      closeDialog: '<svg fill="#777" viewBox="0 0 24 24">\
+      closeDialog: '<svg fill="#777" viewBox="0 0 24 24" width="36" height="36">\
 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
 <path d="M0 0h24v24H0z" fill="none"/>\
 </svg>',
       // Copy text button
-      copy: '<svg fill="#777" viewBox="0 0 24 24">\n\
+      copy: '<svg fill="#777" viewBox="0 0 24 24" width="36" height="36">\n\
 <path d="M0 0h24v24H0z" fill="none"/>\n\
 <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>\
 </svg>'
