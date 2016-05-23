@@ -121,14 +121,10 @@ define([
     },
     $print: function () {
       var $html = Utils.$HTML;
+      var result = [];
 
-      var $infoMainPanel = $('<div/>', {class: 'infoMainPanel'});
-      
-      var $infoHead = $('<div/>', {class: 'infoHead'});
-      $infoHead.html('Current results');
-      
-      $infoMainPanel.append($infoHead);
-            
+      result.push($('<div/>', {class: 'infoHead'}).html('Current results'));
+
       var $t = $('<table/>', {class: 'JCGlobalResults'});
       $t.append(
           $html.doubleCell('Session started:', this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
@@ -170,20 +166,18 @@ define([
           $t.append($html.doubleCell('Total time in activities:', Utils.getHMStime(tTime)),
               $html.doubleCell('Actions done:', nActions));
         }
-        $infoMainPanel.append($t);
-        
+
+        result.push($t);
+
         for (var p = 0; p < this.sessions.length; p++) {
           var sr = this.sessions[p];
           if (sr.getInfo(false).numSequences > 0)
-            $infoMainPanel.append(sr.$print(false, numSessions > 1));
+            result = result.concat(sr.$print(false, numSessions > 1));
         }
       } else
-        $infoMainPanel.append($('<p/>').html('No activities done!'));
-      
-      var $bottomPanel = $('<div/>', {class: 'bottomPanel'});
-      $bottomPanel.html('EXIT');
+        result.push($('<p/>').html('No activities done!'));
 
-      return [$infoMainPanel, $bottomPanel];
+      return result;
     },
     init: function (properties) {
       this.userId = Utils.getVal(properties.user);

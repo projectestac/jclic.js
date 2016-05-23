@@ -34,6 +34,7 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
+    "clipboard-js": "^0.2.0",
     "jquery": "~2.2.0",
     "jszip": "^3.0.0",
     "jszip-utils": "0.0.2",

@@ -13,7 +13,8 @@ requirejs.config({
     jszip: '../node_modules/jszip/dist/jszip',
     'jszip-utils': '../node_modules/jszip-utils/dist/jszip-utils',
     scriptjs: '../node_modules/scriptjs/dist/script',
-    webfontloader: '../node_modules/webfontloader/webfontloader'
+    webfontloader: '../node_modules/webfontloader/webfontloader',
+    'clipboard-js': '../node_modules/clipboard-js/clipboard'
   }
 });
 

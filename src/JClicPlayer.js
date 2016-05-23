@@ -359,9 +359,9 @@ define([
      * @param {boolean} withReport - Show current report on the about window
      */
     showAbout: function (withReport) {
-      if (this.skin && this.skin.$infoDiv) {
+      if (this.skin && this.skin.$reportsPanel) {
         if (withReport)
-          this.skin.$infoDiv.html(this.reporter ? this.reporter.$print() : '----');
+          this.skin.$reportsPanel.html(this.reporter ? this.reporter.$print() : '----');
         this.skin.showAbout(true);
       }
     },
