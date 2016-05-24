@@ -105,14 +105,12 @@ define([
     });
     this.$div.append(this.$waitPanel);
 
-    this.$infoPanel = $('<div/>').css({
-      'z-index': 98,
-      'background-color': 'rgba(20,20,20,0.7)',
+    this.$infoPanel = $('<div/>', {class: 'infoPanel'}).css({
+      'z-index': 98,      
       position: 'fixed',
       width: '100%',
       height: '100%',
-      display: 'none',
-      'transform-style': 'preserve-3d'
+      display: 'none'
     }).on('click', function () {
       thisSkin.showAbout(false);
     });
@@ -127,7 +125,19 @@ define([
       return false;
     });
 
-    this.$reportsPanel = $('<div/>', {class: 'infoMainPanel'});
+    this.$infoMainPanel = $('<div/>', {class: 'infoMainPanel'});    
+    this.$infoHead = $('<div/>', {class: 'infoHead'})
+        .append($('<h2/>')
+            .append($(this.resources.appLogo).css({width: '2em', height: '2em'}))
+            .append($('<span/>').html('JClic.js')))
+        .append($('<p/>').css({'margin-top': 0, 'margin-left': '4.8em', 'font-size': '1.1em'})
+            .append($('<span/>').html('Version 0.1.24'))
+            .append($('<br>'))
+            .append($('<a/>', {href: 'http://clic.xtec.cat/repo/index.html?page=info'}).html('http://clic.xtec.cat'))
+            )
+        .append($('<p/>').html('Current results:'));
+    this.$reportsPanel = $('<div/>');
+        
     this.$bottomPanel = $('<div/>', {class: 'bottomPanel'}).append(
         $('<a/>', {title: 'Copy data to clipboard'}).append($(this.resources.copy).css({width: '26px', height: '26px'}))
         .on('click', function () {
@@ -144,7 +154,13 @@ define([
           thisSkin.showAbout(false);
         }));
 
-    this.$div.append(this.$infoPanel.append(this.$infoDiv.append(this.$reportsPanel, this.$bottomPanel)));
+    this.$div.append(
+        this.$infoPanel.append(
+            this.$infoDiv.append(
+                this.$infoMainPanel.append(
+                    this.$infoHead,
+                    this.$reportsPanel),
+                this.$bottomPanel)));
 
     if (false !== this.ps.options.counters) {
       // Create counters
@@ -348,10 +364,10 @@ define([
      * Enables or disables an object changing its opacity
      * @param {external:jQuery} $object - A JQuery DOM element
      * @param {boolean} enabled
-     */
+     */ 
     setEnabled: function ($object, enabled) {
       $object.css('opacity', enabled ? 1.0 : 0.3);
-    },
+    }, 
     /**
      * Buttons and other graphical resources used by this skin.
      * @type {object} */
@@ -361,27 +377,30 @@ define([
       css: '\
 .SKINID .JClicPlayer {background-color: olive}\
 .SKINID .counter {font-family:Roboto,Sans-serif; color:white; cursor: pointer}\
-.SKINID .infoDiv {font-family:Roboto,Arial,Helvetica,sans-serif; font-size:10pt; background-color:#fcfcfc; color:#777; width:43em;}\
-.SKINID .infoHead {margin:1em; font-size:1.6em;}\
-.SKINID .bottomPanel {background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
-.SKINID .bottomPanel .smallPopup {background-color:black; color:white; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
-.SKINID .bottomPanel a {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
-.SKINID .bottomPanel a:hover {background-color:#eee; border-radius:80px;}\
-.SKINID .bottomPanel a:active {background-color:#ddf;}\
-.SKINID .infoMainPanel {max-height:40em; overflow-y:auto;}\
-.SKINID .infoMainPanel > p {margin:1em;}\
-.SKINID table {background-color:white; table-layout:fixed; width:40em; margin:1.5em 1em; box-shadow:0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); border-collapse:collapse;}\
-.SKINID .JCGlobalResults td {padding:0.4em; border-bottom:1px solid #eee;}\
+.SKINID .infoPanel {background-color:rgba(30,30,30,0.7);}\
+.SKINID .infoDiv {font-family:Roboto,Arial,Helvetica,sans-serif; font-size:10pt; background-color:#009688; color:#b2dfdb; width:45em;}\
+.SKINID .infoDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
+.SKINID .infoMainPanel {padding: 2em; max-height:40em; overflow-y:auto;}\
+.SKINID .infoMainPanel h2 {font-size:2.5em; color:#ffffff; margin:auto;}\
+.SKINID .infoMainPanel p {font-size:1.3em; margin-bottom:0.5em;}\
+.SKINID .infoMainPanel table {background-color:whitesmoke; color:#212121;table-layout:fixed; width:40em; margin:0.5em 0 1.7em 0; box-shadow:0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); border-collapse:collapse;}\
+.SKINID .JCGlobalResults td {padding:0.4em; border-bottom:1px solid #b6b6b6;}\
 .SKINID .JCGlobalResults td:first-child {font-weight:600; width:11em;}\
-.SKINID .JCDetailed td,th {border-bottom:1px solid #eee; padding:0.3em 0.4em; vertical-align:top; text-align:center; overflow:hidden; text-overflow:ellipsis;}\
+.SKINID .JCDetailed td,th {border-bottom:1px solid #b6b6b6; padding:0.3em 0.4em; vertical-align:top; text-align:center; overflow:hidden; text-overflow:ellipsis;}\
 .SKINID .JCDetailed thead {font-weight:600;}\
 .SKINID .JCDetailed th:first-child {width:9em;}\
 .SKINID .JCDetailed th:nth-last-child(4) {width:3.8em;}\
 .SKINID .JCDetailed th:nth-last-child(-n+3) {width:3.8em; text-align:right;}\
 .SKINID .JCDetailed td:nth-last-child(-n+3) {text-align:right;}\
 .SKINID .JCDetailed .ok {color:#0f0; font-weight:600;}\
-.SKINID .JCDetailed .no {color:#f88; font-weight:600;}\
-.SKINID .JCDetailed tr:last-child {font-weight:bold;}',
+.SKINID .JCDetailed .no {color:#f66; font-weight:600;}\
+.SKINID .JCDetailed tr:last-child {font-weight:bold;}\
+.SKINID .bottomPanel {background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
+.SKINID .bottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
+.SKINID .bottomPanel a {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
+.SKINID .bottomPanel a:hover {background-color:#b2dfdb; border-radius:80px;}\
+.SKINID .bottomPanel a:active {background-color:#cddc39;}'
+,
       //
       // Fonts used in this skin
       cssFonts: ['Roboto'],
@@ -522,15 +541,22 @@ LS40LS42LTEtMS0xLjctMS0uMyAwLS41LjEtLjguMWwtNS4yIDIuMnY0LjdoMnYtMy40bDEuOC0u\
 Ny0xLjYgOC4xLTQuOS0xLS40IDIgNyAxLjR6Ij48L3BhdGg+PC9zdmc+Cg==',
       counterIconSize: {w: 18, h: 18},
       // Close dialog button
-      closeDialog: '<svg fill="#777" viewBox="0 0 24 24" width="36" height="36">\
+      closeDialog: '<svg fill="#00796b" viewBox="0 0 24 24" width="36" height="36">\
 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
 <path d="M0 0h24v24H0z" fill="none"/>\
 </svg>',
       // Copy text button
-      copy: '<svg fill="#777" viewBox="0 0 24 24" width="36" height="36">\n\
+      copy: '<svg fill="#00796b" viewBox="0 0 24 24" width="36" height="36">\n\
 <path d="M0 0h24v24H0z" fill="none"/>\n\
 <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>\
-</svg>'
+</svg>',
+      // JClic logo
+      appLogo: '<svg viewBox="0 0 64 64"><g transform="matrix(.02081 0 0-.02081 5 62.33)">\
+<path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1999 519 3 11 999-266 999-266z" fill="none" stroke="#9d6329" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\
+<path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1998 519 3 11 999-266 999-266" fill="#f89c0e"/>\
+<path d="m357 2850l1000-268-267-992-1000 266 267 994z" fill="none" stroke="#86882b" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\n\
+<path d="m357 2850l1000-268-267-992-1000 266 267 994" fill="#d9e70c"/>\n\
+</g></svg>'
     }
   };
   // DefaultSkin extends [Skin](Skin.html)

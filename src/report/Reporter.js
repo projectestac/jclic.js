@@ -123,8 +123,6 @@ define([
       var $html = Utils.$HTML;
       var result = [];
 
-      result.push($('<div/>', {class: 'infoHead'}).html('Current results'));
-
       var $t = $('<table/>', {class: 'JCGlobalResults'});
       $t.append(
           $html.doubleCell('Session started:', this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
