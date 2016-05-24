@@ -378,9 +378,9 @@ define([
 .SKINID .JClicPlayer {background-color: olive}\
 .SKINID .counter {font-family:Roboto,Sans-serif; color:white; cursor: pointer}\
 .SKINID .infoPanel {background-color:rgba(30,30,30,0.7);}\
-.SKINID .infoDiv {font-family:Roboto,Arial,Helvetica,sans-serif; font-size:10pt; background-color:#009688; color:#b2dfdb; width:45em;}\
+.SKINID .infoDiv {height:calc(100% - 5em); background-color:#03a9f4; color:#b3e5fc; font-family:Roboto,Arial,Helvetica,sans-serif; font-size:10pt; width:45em;}\
 .SKINID .infoDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
-.SKINID .infoMainPanel {padding: 2em; max-height:40em; overflow-y:auto;}\
+.SKINID .infoMainPanel {padding: 2em; height:calc(100% - 8em); overflow-y:auto;}\
 .SKINID .infoMainPanel h2 {font-size:2.5em; color:#ffffff; margin:auto;}\
 .SKINID .infoMainPanel p {font-size:1.3em; margin-bottom:0.5em;}\
 .SKINID .infoMainPanel table {background-color:whitesmoke; color:#212121;table-layout:fixed; width:40em; margin:0.5em 0 1.7em 0; box-shadow:0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); border-collapse:collapse;}\
@@ -395,11 +395,11 @@ define([
 .SKINID .JCDetailed .ok {color:#0f0; font-weight:600;}\
 .SKINID .JCDetailed .no {color:#f66; font-weight:600;}\
 .SKINID .JCDetailed tr:last-child {font-weight:bold;}\
-.SKINID .bottomPanel {background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
+.SKINID .bottomPanel {height:3.5em; background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
 .SKINID .bottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
 .SKINID .bottomPanel a {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
-.SKINID .bottomPanel a:hover {background-color:#b2dfdb; border-radius:80px;}\
-.SKINID .bottomPanel a:active {background-color:#cddc39;}'
+.SKINID .bottomPanel a:hover {background-color:#eee; border-radius:80px;}\
+.SKINID .bottomPanel a:active {background-color:#b3e5fc;}'
 ,
       //
       // Fonts used in this skin
@@ -541,12 +541,12 @@ LS40LS42LTEtMS0xLjctMS0uMyAwLS41LjEtLjguMWwtNS4yIDIuMnY0LjdoMnYtMy40bDEuOC0u\
 Ny0xLjYgOC4xLTQuOS0xLS40IDIgNyAxLjR6Ij48L3BhdGg+PC9zdmc+Cg==',
       counterIconSize: {w: 18, h: 18},
       // Close dialog button
-      closeDialog: '<svg fill="#00796b" viewBox="0 0 24 24" width="36" height="36">\
+      closeDialog: '<svg fill="#536dfe" viewBox="0 0 24 24" width="36" height="36">\
 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
 <path d="M0 0h24v24H0z" fill="none"/>\
 </svg>',
       // Copy text button
-      copy: '<svg fill="#00796b" viewBox="0 0 24 24" width="36" height="36">\n\
+      copy: '<svg fill="#536dfe" viewBox="0 0 24 24" width="36" height="36">\n\
 <path d="M0 0h24v24H0z" fill="none"/>\n\
 <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>\
 </svg>',
