@@ -122,6 +122,8 @@ define([
     $print: function () {
       var $html = Utils.$HTML;
       var result = [];
+      
+      result.push($('<div/>', {class: 'subTitle'}).html('Current results:'));
 
       var $t = $('<table/>', {class: 'JCGlobalResults'});
       $t.append(
