@@ -58,7 +58,7 @@ define([
     /**
      * Details about this report system
      * @type {string} */
-    description: 'Results are currently not been registered in any database',
+    description: 'Results are not currently being saved',
     /**
      * Starting date and time of this Reporter
      * @type {Date} */
