@@ -127,7 +127,7 @@ define([
 
     this.$infoMainPanel = $('<div/>', {class: 'infoMainPanel'});
     this.$infoHead = $('<div/>', {class: 'infoHead'})
-        .append($('<h2/>')
+        .append($('<div/>', {class: 'headTitle'})
             .append($(this.resources.appLogo).css({width: '1.5em', height: '1.5em', 'vertical-align': 'bottom'}))
             .append($('<span/>').html('JClic.js')))
         .append($('<p/>').css({'margin-top': 0, 'margin-bottom': '2em', 'margin-left': '3.5em'})
@@ -135,7 +135,7 @@ define([
             .append($('<br>'))
             .append($('<a/>', {href: 'http://clic.xtec.cat/repo/index.html?page=info'}).html('http://clic.xtec.cat'))
             )
-        .append($('<h3/>').html('Current results:'));
+        .append($('<div/>', {class: 'subTitle'}).html('Current results:'));
     this.$reportsPanel = $('<div/>');
 
     this.$bottomPanel = $('<div/>', {class: 'bottomPanel'}).append(
@@ -380,11 +380,11 @@ define([
 .SKINID .JClicPlayer {background-color: olive}\
 .SKINID .counter {font-family:Roboto,Sans-serif; color:white; cursor: pointer}\
 .SKINID .infoPanel {background-color:rgba(30,30,30,0.7);}\
-.SKINID .infoDiv {height:calc(100% - 5em); background-color:#efefef; color:#757575; font-family:Roboto,Arial,Helvetica,sans-serif; font-size:10pt; width:45em;}\
+.SKINID .infoDiv {height:calc(100% - 5em); background-color:#efefef; color:#757575; font-family:Roboto,Arial,Helvetica,sans-serif; font-size:10pt; width:45em; line-height:normal;}\
 .SKINID .infoDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
 .SKINID .infoMainPanel {padding: 2em; height:calc(100% - 8em); overflow-y:auto;}\
-.SKINID .infoMainPanel h2 {font-size:2.5em; margin:auto;}\
-.SKINID .infoMainPanel h3 {font-size:1.4em; margin-bottom:0.5em}\
+.SKINID .infoMainPanel .headTitle {font-size:2.5em; font-weight:bold; margin:auto;}\
+.SKINID .infoMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
 .SKINID .infoMainPanel p {font-size:1.1em; margin-bottom:0.5em;}\
 .SKINID .infoMainPanel table {table-layout:fixed; width:40em; margin:0.5em 0 1.7em 0; border-collapse:collapse;}\
 .SKINID .JCGlobalResults td {padding:0.4em; border-bottom:1px solid #b6b6b6;}\
