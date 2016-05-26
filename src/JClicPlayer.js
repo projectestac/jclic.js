@@ -20,6 +20,7 @@ define([
   "jszip",
   "jszip-utils",
   "scriptjs",
+  "i18next",
   "./Utils",
   "./AWT",
   "./PlayerHistory",
@@ -30,7 +31,7 @@ define([
   "./bags/JumpInfo",
   "./boxes/ActiveBoxContent",
   "./report/Reporter"
-], function ($, JSZip, JSZipUtils, ScriptJS, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds,
+], function ($, JSZip, JSZipUtils, ScriptJS, i18next, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds,
     JClicProject, JumpInfo, ActiveBoxContent, Reporter) {
 
   /**
@@ -66,6 +67,7 @@ define([
     }
 
     this.options = $.extend(Object.create(this.options), options);
+    this.initMessages();
 
     /* global location */
     this.localFS = (location && location.protocol === 'file:');
@@ -223,6 +225,103 @@ define([
      * @type {boolean} */
     navButtonsAlways: false,
     /**
+     * Initializes the translation system based on browser settings or user's preferences
+     */
+    initMessages: function () {
+      var thisPlayer = this;
+      var availableLanguages = ['en', 'ca', 'es'];
+      i18next.init({
+        fallbackLng: 'en',
+        lng: Utils.checkPreferredLanguage(availableLanguages, 'en', this.options.lang),
+        resources: {
+          en: {
+            translation: {
+              time: 'time',
+              actions: 'actions',
+              score: 'score',
+              resultsNotSaved: 'Results are not currently being saved',
+              currentResults: 'Current results:',
+              sessionStarted: 'Session started:',
+              reportsSystem: 'Reports system:',
+              user: 'User:',
+              projects: 'Projects:',
+              sequences: 'Sequences:',
+              activitiesDone: 'Activities done:',
+              activitiesSolved: 'Activities solved:',
+              globalScore: 'Global score:',
+              totalTime: 'Total time in activities:',
+              actionsDone: 'Actions done:',
+              noActivitiesDone: 'No activities done!',
+              project: 'Project',
+              sequence: 'sequence',
+              activity: 'activity',
+              solved: 'OK',
+              YES: 'YES',
+              NO: 'NO',
+              totals: 'Total:'
+            }
+          },
+          ca: {
+            translation: {
+              time: 'temps',
+              actions: 'accions',
+              score: 'encerts',
+              resultsNotSaved: 'Els resultats no s\'estan desant',
+              currentResults: 'Resultats actuals:',
+              sessionStarted: 'Inici de sessió:',
+              reportsSystem: 'Sistema d\'informes:',
+              user: 'Usuari/ària:',
+              projects: 'Projectes:',
+              sequences: 'Seqüències:',
+              activitiesDone: 'Activitats fetes:',
+              activitiesSolved: 'Activitats resoltes:',
+              globalScore: 'Puntuació global:',
+              totalTime: 'Temps total en les activitats:',
+              actionsDone: 'Accions fetes:',
+              noActivitiesDone: 'No heu fet cap activitat!',
+              project: 'Projecte',
+              sequence: 'seqüència',
+              activity: 'activitat',
+              solved: 'OK',
+              YES: 'SI',
+              NO: 'NO',
+              totals: 'Totals:'
+            }
+          },
+          es: {translation: {
+              time: 'tiempo',
+              actions: 'acciones',
+              score: 'aciertos',
+              resultsNotSaved: 'Los resultados no se están guardando',
+              currentResults: 'Resultados actuales:',
+              sessionStarted: 'Inicio de sesión:',
+              reportsSystem: 'Sistema de informes:',
+              user: 'Usuario/aria:',
+              projects: 'Proyectos:',
+              sequences: 'Secuencias:',
+              activitiesDone: 'Actividades hechas:',
+              activitiesSolved: 'Actividades resueltas:',
+              globalScore: 'Puntuación global:',
+              totalTime: 'Tiempo total en las actividades:',
+              actionsDone: 'Acciones realizadas:',
+              noActivitiesDone: '¡No se ha realizado ninguna actividad!',
+              project: 'Proyecto',
+              sequence: 'secuencia',
+              activity: 'actividad',
+              solved: 'OK',
+              YES: 'SI',
+              NO: 'NO',
+              totals: 'Totales:'
+            }}
+        }
+      }, function (err, t) {
+        if (err)
+          console.log('Error initializing "i18next": ' + err);
+        else
+          thisPlayer.getMsg = t;
+      });
+    },
+    /**
      * 
      * Builds the {@link AWT.Action} objects for this player
      */
@@ -361,7 +460,7 @@ define([
     showAbout: function (withReport) {
       if (this.skin && this.skin.$reportsPanel) {
         if (withReport)
-          this.skin.$reportsPanel.html(this.reporter ? this.reporter.$print() : '----');
+          this.skin.$reportsPanel.html(this.reporter ? this.reporter.$print(this) : '');
         this.skin.showAbout(true);
       }
     },
@@ -929,6 +1028,16 @@ define([
         this.delayedTimer.interval = ase.delay * 1000;
         this.delayedTimer.start();
       }
+    },
+    /**
+     * Function obtained from `i18next` that will return the translation of the provided key
+     * into the current language.
+     * The real function will be initiated by constructor. Meanwhile, it returns always `key`.
+     * @param {string} key - ID of the expression to be translated
+     * @returns {string} - Translated text
+     */
+    getMsg: function (key) {
+      return key;
     },
     /**
      * 

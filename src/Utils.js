@@ -1,4 +1,4 @@
-/* global Promise */
+/* global Promise, window */
 
 //    File    : Utils.js  
 //    Created : 01/04/2015  
@@ -369,6 +369,45 @@ define([
      */
     screenFullAllowed: function () {
       return screenfull && screenfull.enabled;
+    },
+    /**
+     * Checks if the language preferred by the user (based on browser and/or specific settings)
+     * is in a list of available languages.
+     * @param {string[]} availableLanguages - Array of available languages. It should contain at least one item.
+     * @param {string=} defaultLanguage -Language to be used by default when not found the selected one
+     * @param {string} setLang - Request this specific language
+     * @returns {string} - The most suitable language for this request
+     */
+    checkPreferredLanguage: function (availableLanguages, defaultLanguage, setLang) {
+      var result = -1;
+      // Create an array to store possible values
+      var tries = [];
+      // If "setLang" is specified, check it
+      if (setLang)
+        tries.push(setLang);
+
+      // Add user's preferred languages, if any
+      if (window.navigator.languages)
+        tries = tries.concat(window.navigator.languages);
+
+      // Add the navigator main language, if defined
+      if (window.navigator.language)
+        tries.push(window.navigator.language);
+
+      // Add English as final option
+      tries.push(defaultLanguage ? defaultLanguage : 'en');
+
+      for (var i in tries) {
+        for (var n in availableLanguages) {
+          if (tries[i].indexOf(availableLanguages[n]) === 0) {
+            result = n;
+            break;
+          }
+        }
+        if (result >= 0)
+          break;
+      }
+      return availableLanguages[result >=0 ? result : 0];
     },
     /**
      * Global constants

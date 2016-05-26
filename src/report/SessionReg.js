@@ -61,32 +61,32 @@ define([
      * Optional code to be used with this session
      * @type {string} */
     code: null,
-    $print: function (recalcInfo, writeProjectName) {
+    $print: function (ps, recalcInfo, writeProjectName) {
       if (recalcInfo)
         this.info.recalc();
       var $html = Utils.$HTML;
-      
+
       var result = [];
 
       var $t = $('<table/>', {class: 'JCDetailed'});
 
       if (this.info.numSequences > 0) {
-        
-        result.push(($('<p/>').html(writeProjectName ? 'Project ' + this.projectName : '')));
-        
+
+        result.push(($('<p/>').html(writeProjectName ? ps.getMsg('project') + ' ' + this.projectName : '')));
+
         $t.append($('<thead/>').append($('<tr/>').append(
-            $html.th('sequence'),
-            $html.th('activity'),
-            $html.th('solved'),
-            $html.th('actions'),
-            $html.th('score'),
-            $html.th('time'))));
+            $html.th(ps.getMsg('sequence')),
+            $html.th(ps.getMsg('activity')),
+            $html.th(ps.getMsg('solved')),
+            $html.th(ps.getMsg('actions')),
+            $html.th(ps.getMsg('score')),
+            $html.th(ps.getMsg('time')))));
 
         for (var p = 0; p < this.sequences.length; p++)
-          $t.append(this.sequences[p].$print());
+          $t.append(this.sequences[p].$print(ps));
 
         $t.append($('<tr/>').append(
-            $html.td('Totals:'),
+            $html.td(ps.getMsg('totals')),
             $html.td(this.info.nActivities),
             $html.td(this.info.nActSolved),
             $html.td(this.info.nActions),
@@ -94,7 +94,7 @@ define([
             $html.td(Utils.getHMStime(this.info.tTime))));
       }
       result.push($t);
-      
+
       return result;
     },
     getInfo: function (recalc) {

@@ -103,18 +103,18 @@ define([
         actReg.actions.push(action);
       });
     },
-    $print: function () {
+    $print: function (ps) {
       var $html = Utils.$HTML;
       var result = [];
       if (this.closed) {
         result.push($html.td(this.name));
-        result.push(this.solved ? $html.td('YES', 'ok') : $html.td('NO', 'no'));
+        result.push(this.solved ? $html.td(ps.getMsg('YES'), 'ok') : $html.td(ps.getMsg('NO'), 'no'));
         result.push($html.td(this.numActions));
         result.push($html.td(Utils.getPercent(this.getPrecision() / 100)));
         result.push($html.td(Utils.getHMStime(this.totalTime)));
       } else {
         result.push($html.td(this.name, 'incomplete'));
-        for(var p=0; p<4; p++)
+        for (var p = 0; p < 4; p++)
           result.push($html.td('-', 'incomplete'));
       }
       return result;

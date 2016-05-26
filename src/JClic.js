@@ -75,6 +75,13 @@ define([
    * @external MediaRecorder
    * @see https://developer.mozilla.org/ca/docs/Web/API/MediaRecorder
    */
+  
+  /**
+   * An i18next object, used to translate literals
+   * @external i18next
+   * @see {@link http://i18next.com}
+   */
+
 
   // JClicObject will be exported as a result
   var JClicObject = {

@@ -14,7 +14,8 @@ requirejs.config({
     'jszip-utils': '../node_modules/jszip-utils/dist/jszip-utils',
     scriptjs: '../node_modules/scriptjs/dist/script',
     webfontloader: '../node_modules/webfontloader/webfontloader',
-    'clipboard-js': '../node_modules/clipboard-js/clipboard'
+    'clipboard-js': '../node_modules/clipboard-js/clipboard',
+    i18next: '../node_modules/i18next/i18next'
   }
 });
 

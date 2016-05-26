@@ -33,7 +33,7 @@ define([
    * @class
    * @abstract
    * @extends AWT.Container
-   * @param {PlayStation=} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
    * realize the media objects meeded tot build the Skin.
    * @param {string=} name - The skin name
    * @param {external:jQuery=} $div - The DOM component that will act as a main container of the skin
@@ -42,10 +42,10 @@ define([
 
     // Skin extends [AWT.Container](AWT.html)
     AWT.Container.call(this);
-    
-    this.skinId = 'JC'+ Math.round((100000 + Math.random()*100000));
 
-    this.$div = $div ? $div.addClass(this.skinId) : $('<div/>').addClass('JClic '+this.skinId);
+    this.skinId = 'JC' + Math.round((100000 + Math.random() * 100000));
+
+    this.$div = $div ? $div.addClass(this.skinId) : $('<div/>').addClass('JClic ' + this.skinId);
     this.buttons = Utils.cloneObject(Skin.prototype.buttons);
     this.counters = Utils.cloneObject(Skin.prototype.counters);
     this.msgArea = Utils.cloneObject(Skin.prototype.msgArea);

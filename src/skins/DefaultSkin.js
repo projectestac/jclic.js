@@ -105,6 +105,7 @@ define([
     });
     this.$div.append(this.$waitPanel);
 
+    // Create reports panel
     this.$infoPanel = $('<div/>', {class: 'infoPanel'}).css({
       'z-index': 98,
       position: 'fixed',
@@ -162,13 +163,14 @@ define([
                     this.$reportsPanel),
                 this.$bottomPanel)));
 
+    // Create counters
     if (false !== this.ps.options.counters) {
       // Create counters
       var padding = this.resources.counterIconSize.w + 2;
       var cssWidth = this.countersWidth - padding;
       var cssHeight = this.countersHeight;
       $.each(Skin.prototype.counters, function (name) {
-        thisSkin.counters[name] = new Counter(name, $('<div/>', {class: 'counter'}).css({
+        thisSkin.counters[name] = new Counter(name, $('<div/>', {class: 'counter', title: ps.getMsg(name)}).css({
           'width': cssWidth + 'px',
           'height': cssHeight + 'px',
           'font-size': (cssHeight - 2) + 'px',
@@ -391,12 +393,12 @@ define([
 .SKINID .JCGlobalResults td:first-child {font-weight:600; width:11em;}\
 .SKINID .JCDetailed td,th {border-bottom:1px solid #b6b6b6; padding:0.3em 0.4em; vertical-align:top; text-align:center; overflow:hidden; text-overflow:ellipsis;}\
 .SKINID .JCDetailed thead {font-weight:600;}\
-.SKINID .JCDetailed th:first-child {width:9em;}\
-.SKINID .JCDetailed th:nth-last-child(4) {width:3.8em;}\
-.SKINID .JCDetailed th:nth-last-child(-n+3) {width:3.8em; text-align:right;}\
+.SKINID .JCDetailed th:first-child {width:8em;}\
+.SKINID .JCDetailed th:nth-last-child(4) {width:3em;}\
+.SKINID .JCDetailed th:nth-last-child(-n+3) {width:4.1em; text-align:right;}\
 .SKINID .JCDetailed td:nth-last-child(-n+3) {text-align:right;}\
-.SKINID .JCDetailed .ok {color:#0f0; font-weight:600;}\
-.SKINID .JCDetailed .no {color:#f66; font-weight:600;}\
+.SKINID .JCDetailed .ok {color:#4bae4f; font-weight:600;}\
+.SKINID .JCDetailed .no {color:#f34235; font-weight:600;}\
 .SKINID .JCDetailed tr:last-child {font-weight:bold;}\
 .SKINID .JCDetailed .incomplete {font-style:italic;}\
 .SKINID .bottomPanel {height:3.5em; background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
