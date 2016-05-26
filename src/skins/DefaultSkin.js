@@ -398,6 +398,7 @@ define([
 .SKINID .JCDetailed .ok {color:#0f0; font-weight:600;}\
 .SKINID .JCDetailed .no {color:#f66; font-weight:600;}\
 .SKINID .JCDetailed tr:last-child {font-weight:bold;}\
+.SKINID .JCDetailed .incomplete {font-style:italic;}\
 .SKINID .bottomPanel {height:3.5em; background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
 .SKINID .bottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
 .SKINID .bottomPanel a {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
