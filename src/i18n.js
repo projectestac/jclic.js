@@ -15,8 +15,8 @@
 
 define([
   'i18next',
-  './locales/AllMessages'
-], function (i18next, AllMessages) {
+  './GlobalData'
+], function (i18next, GlobalData) {
 
   var i18n = {
     /**
@@ -67,15 +67,17 @@ define([
         fallbackLng: 'en',
         lng: i18n.checkPreferredLanguage(['en', 'ca', 'es'], 'en', ps.lang),
         resources: {
-          en: {translation: AllMessages.en},
-          ca: {translation: AllMessages.ca},
-          es: {translation: AllMessages.es}
+          en: {translation: GlobalData.messages.en},
+          ca: {translation: GlobalData.messages.ca},
+          es: {translation: GlobalData.messages.es}
         }
       }, function (err, t) {
         if (err)
           console.log('Error initializing "i18next": ' + err);
-        else
+        else {
           ps.getMsg = t;
+          ps.JClicVersion = GlobalData.version;
+        }
       });
     }
   };

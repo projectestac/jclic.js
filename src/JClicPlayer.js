@@ -92,6 +92,10 @@ define([
   JClicPlayer.prototype = {
     constructor: JClicPlayer,
     /**
+     * Current version will be updated by i18n.js
+     * @type {string} */
+    JClicVersion: '0',
+    /**
      * Object with miscellaneous options.
      * @type {object} */
     options: {
