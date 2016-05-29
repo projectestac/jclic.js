@@ -20,7 +20,7 @@ define([
   "jszip",
   "jszip-utils",
   "scriptjs",
-  "./locales/Locales",
+  "./i18n",
   "./Utils",
   "./AWT",
   "./PlayerHistory",
@@ -31,7 +31,7 @@ define([
   "./bags/JumpInfo",
   "./boxes/ActiveBoxContent",
   "./report/Reporter"
-], function ($, JSZip, JSZipUtils, ScriptJS, Locales, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds,
+], function ($, JSZip, JSZipUtils, ScriptJS, i18n, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds,
     JClicProject, JumpInfo, ActiveBoxContent, Reporter) {
 
   /**
@@ -68,7 +68,7 @@ define([
 
     this.options = $.extend(Object.create(this.options), options);
     
-    Locales.init(this);
+    i18n.init(this);
 
     /* global location */
     this.localFS = (location && location.protocol === 'file:');

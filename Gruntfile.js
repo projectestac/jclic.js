@@ -29,6 +29,20 @@ module.exports = function (grunt) {
         src: ['doc']
       }
     },
+    po_json: {
+      all: {
+        options : {
+          amd: true
+        },
+        files: {
+          'src/locales/AllMessages.js': {
+            'en': 'locales/en.po',
+            'ca': 'locales/ca.po',
+            'es': 'locales/es.po'
+          }
+        }
+      }
+    },
     browserify: {
       dist: {
         files: {
@@ -117,6 +131,12 @@ module.exports = function (grunt) {
       'lint',
       'Checks the JS code',
       ['jshint']
+      );
+
+  grunt.registerTask(
+      'locales',
+      'Process translations',
+      ['po_json:all']
       );
 
   grunt.registerTask(

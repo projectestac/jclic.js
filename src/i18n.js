@@ -1,4 +1,4 @@
-//  File    : Locales.js  
+//  File    : i18n.js  
 //  Created : May 26, 2016  
 //  By      : linkat  
 //
@@ -15,12 +15,10 @@
 
 define([
   'i18next',
-  './en',
-  './ca',
-  './es'
-], function (i18next, en, ca, es) {
+  './locales/AllMessages'
+], function (i18next, AllMessages) {
 
-  var Locales = {
+  var i18n = {
     /**
      * Checks if the language preferred by the user (based on browser and/or specific settings)
      * is in a list of available languages.
@@ -67,11 +65,11 @@ define([
     init: function (ps) {
       i18next.init({
         fallbackLng: 'en',
-        lng: Locales.checkPreferredLanguage(['en', 'ca', 'es'], 'en', ps.lang),
+        lng: i18n.checkPreferredLanguage(['en', 'ca', 'es'], 'en', ps.lang),
         resources: {
-          en: en,
-          ca: ca,
-          es: es
+          en: {translation: AllMessages.en},
+          ca: {translation: AllMessages.ca},
+          es: {translation: AllMessages.es}
         }
       }, function (err, t) {
         if (err)
@@ -82,6 +80,6 @@ define([
     }
   };
 
-  return Locales;
+  return i18n;
 
 });

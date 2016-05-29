@@ -1,0 +1,79 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"POT-Creation-Date: 2016-05-27T13:08:34.325Z\n"
+"PO-Revision-Date: 2016-05-27T13:08:34.326Z\n"
+"Language: es\n"
+
+msgid "time"
+msgstr "tiempo"
+
+msgid "actions"
+msgstr "acciones"
+
+msgid "score"
+msgstr "aciertos"
+
+msgid "resultsNotSaved"
+msgstr "Los resultados no se están guardando"
+
+msgid "currentResults"
+msgstr "Resultados actuales:"
+
+msgid "sessionStarted"
+msgstr "Inicio de sesión:"
+
+msgid "reportsSystem"
+msgstr "Sistema de informes:"
+
+msgid "user"
+msgstr "Usuario/aria:"
+
+msgid "projects"
+msgstr "Proyectos:"
+
+msgid "sequences"
+msgstr "Secuencias:"
+
+msgid "activitiesDone"
+msgstr "Actividades hechas:"
+
+msgid "activitiesSolved"
+msgstr "Actividades resueltas:"
+
+msgid "globalScore"
+msgstr "Puntuación global:"
+
+msgid "totalTime"
+msgstr "Tiempo total en las actividades:"
+
+msgid "actionsDone"
+msgstr "Acciones realizadas:"
+
+msgid "noActivitiesDone"
+msgstr "¡No se ha realizado ninguna actividad!"
+
+msgid "project"
+msgstr "Proyecto"
+
+msgid "sequence"
+msgstr "secuencia"
+
+msgid "activity"
+msgstr "actividad"
+
+msgid "solved"
+msgstr "OK"
+
+msgid "YES"
+msgstr "SI"
+
+msgid "NO"
+msgstr "NO"
+
+msgid "totals"
+msgstr "Totales:"
