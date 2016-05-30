@@ -1,123 +1,113 @@
+# JClic.js  
+# HTML5 player of [JClic](http://clic.xtec.cat) activities  
+# https://github.com/projectestac/jclic.js  
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: i18next-conv\n"
+"Project-Id-Version: JClic.js 0.1.25\n"
+"Language: bs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2016-05-27T13:08:49.449Z\n"
-"PO-Revision-Date: 2016-05-27T13:08:49.450Z\n"
-"Language: ca\n"
+"POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
+"PO-Revision-Date: 2016-05-27T13:02:19.362Z\n"
+"Last-Translator: Meliha Gadara <meliha.gadara@edu.fit.ba>\n"
 
 #: about_window_lb_version
 msgid "Version"
-msgstr "Versió"
+msgstr "Verzija"
 
 #: label_time
 msgid "time"
-msgstr "temps"
+msgstr "vrijeme"
 
 #: label_actions
 msgid "actions"
-msgstr "accions"
+msgstr "pokušaji"
 
 #: label_score
 msgid "score"
-msgstr "encerts"
+msgstr "rezultat"
 
 #: action_next_tooltip
 msgid "Next activity"
-msgstr "Activitat següent"
+msgstr "Sljedeća aktivnost"
 
 #: action_prev_tooltip
 msgid "Previous activity"
-msgstr "Activitat anterior"
+msgstr "Prethodna aktivnost"
 
 #: action_reset_tooltip
 msgid "Restart activity"
-msgstr "Reinicia l'activitat"
+msgstr "Ponovno pokreni aktivnost"
 
 #: action_info_caption
 msgid "Information"
-msgstr "Informació"
-
-#: report_system_standard
-msgid "Results are not currently being saved"
-msgstr "Els resultats no s'estan desant"
+msgstr "Informacije"
 
 #: action_about_tooltip
 msgid "Current results"
-msgstr "Resultats actuals"
+msgstr "Izvješća korisnika"
 
 #: report_started
 msgid "Session started:"
-msgstr "Inici de sessió:"
-
-#: report_system
-msgid "Reports system:"
-msgstr "Sistema d'informes:"
+msgstr "Sesija započeta:"
 
 #: report_user
 msgid "User:"
-msgstr "Usuari/ària:"
+msgstr "Korisnik:"
 
 #: report_num_projects
 msgid "Projects:"
-msgstr "Projectes:"
-
-#: report_num_sequences
-msgid "Sequences:"
-msgstr "Seqüències:"
+msgstr "Projekti:"
 
 #: report_num_activities
 msgid "Activities done:"
-msgstr "Activitats fetes:"
+msgstr "Urađene aktivnosti:"
 
 #: report_num_activities_solved
 msgid "Activities solved:"
-msgstr "Activitats resoltes:"
+msgstr "Aktivnosti ok:"
 
 #: report_global_score
 msgid "Global score:"
-msgstr "Puntuació global:"
+msgstr "Ukupan rezultat:"
 
 #: report_total_time
 msgid "Total time in activities:"
-msgstr "Temps total en les activitats:"
+msgstr "Ukupno vrijeme aktivnosti:"
 
 #: report_num_actions
 msgid "Actions done:"
-msgstr "Accions fetes:"
-
-#: report_no_activities
-msgid "No activities done!"
-msgstr "No heu fet cap activitat!"
+msgstr "Urađene aktivnosti:"
 
 #: report_project
 msgid "Project"
-msgstr "Projecte"
+msgstr "Projekt:"
 
 #: report_lb_sequence
 msgid "sequence"
-msgstr "seqüència"
+msgstr "Sekvenca"
 
 #: about_window_lb_activity
 msgid "activity"
-msgstr "activitat"
+msgstr "Aktivnost"
 
 # 'Activity solved' header column
 #: report_lb_solved
 msgid "OK"
-msgstr "OK"
+msgstr "Uredu"
 
 # Value for 'OK' column
 msgid "YES"
-msgstr "SÍ"
+msgstr "DA"
 
 # Value for 'OK' column
 msgid "NO"
-msgstr "NO"
+msgstr "NE"
 
 #: report_lb_totals
 msgid "Total:"
-msgstr "Totals:"
+msgstr "Ukupno:"
+

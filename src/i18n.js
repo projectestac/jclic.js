@@ -71,7 +71,7 @@ define([
         nsSeparator: false,
         keySeparator: false,
         fallbackLng: 'en',
-        lng: i18n.checkPreferredLanguage(['en', 'ca', 'es', 'ca_ES@valencia'], 'en', ps.options.lang),
+        lng: i18n.checkPreferredLanguage(GlobalData.languages, 'en', ps.options.lang),
         resources: {
           en: {translation: {}},
           ca: {translation: GlobalData.messages.ca},
