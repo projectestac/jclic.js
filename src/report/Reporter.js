@@ -58,7 +58,7 @@ define([
     /**
      * Details about this report system
      * @type {string} */
-    descriptionKey: 'resultsNotSaved',
+    descriptionKey: 'Results are not currently being saved',
     /**
      * Starting date and time of this Reporter
      * @type {Date} */
@@ -123,14 +123,14 @@ define([
       var $html = Utils.$HTML;
       var result = [];
 
-      result.push($('<div/>', {class: 'subTitle'}).html(ps.getMsg('currentResults')));
+      result.push($('<div/>', {class: 'subTitle'}).html(ps.getMsg('Current results')));
 
       var $t = $('<table/>', {class: 'JCGlobalResults'});
       $t.append(
-          $html.doubleCell(ps.getMsg('sessionStarted'), this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
-          $html.doubleCell(ps.getMsg('reportsSystem'), ps.getMsg(this.descriptionKey)));
+          $html.doubleCell(ps.getMsg('Session started:'), this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
+          $html.doubleCell(ps.getMsg('Reports system:'), ps.getMsg(this.descriptionKey)));
       if (this.userId)
-        $t.append($html.doubleCell(this.ps.getMsg('user'), this.userId));
+        $t.append($html.doubleCell(this.ps.getMsg('User:'), this.userId));
 
       var numSessions = 0, numSequences = 0, nActivities = 0, nActSolved = 0, nActScore = 0, nActions = 0,
           percentSolved = 0, tScore = 0, tTime = 0;
@@ -155,16 +155,16 @@ define([
 
       if (numSequences > 0) {
         if (numSessions > 1)
-          $t.append($html.doubleCell(ps.getMsg('projects'), numSessions));
-        $t.append($html.doubleCell(ps.getMsg('sequences'), numSequences),
-            $html.doubleCell(ps.getMsg('activitiesDone'), nActivities));
+          $t.append($html.doubleCell(ps.getMsg('Projects:'), numSessions));
+        $t.append($html.doubleCell(ps.getMsg('Sequences:'), numSequences),
+            $html.doubleCell(ps.getMsg('Activities done:'), nActivities));
         if (nActivities > 0) {
           percentSolved = nActSolved / nActivities;
-          $t.append($html.doubleCell(ps.getMsg('activitiesSolved'), nActSolved + " (" + Utils.getPercent(percentSolved) + ")"));
+          $t.append($html.doubleCell(ps.getMsg('Activities solved:'), nActSolved + " (" + Utils.getPercent(percentSolved) + ")"));
           if (nActScore > 0)
-            $t.append($html.doubleCell(ps.getMsg('globalScore'), Utils.getPercent(tScore / (nActScore * 100))));
-          $t.append($html.doubleCell(ps.getMsg('totalTime'), Utils.getHMStime(tTime)),
-              $html.doubleCell(ps.getMsg('actionsDone'), nActions));
+            $t.append($html.doubleCell(ps.getMsg('Global score:'), Utils.getPercent(tScore / (nActScore * 100))));
+          $t.append($html.doubleCell(ps.getMsg('Total time in activities:'), Utils.getHMStime(tTime)),
+              $html.doubleCell(ps.getMsg('Actions done:'), nActions));
         }
 
         result.push($t);
@@ -175,7 +175,7 @@ define([
             result = result.concat(sr.$print(ps, false, numSessions > 1));
         }
       } else
-        result.push($('<p/>').html(ps.getMsg('noActivitiesDone')));
+        result.push($('<p/>').html(ps.getMsg('No activities done!')));
 
       return result;
     },

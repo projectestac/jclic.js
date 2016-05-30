@@ -9,6 +9,9 @@ msgstr ""
 "PO-Revision-Date: 2016-05-27T13:08:34.326Z\n"
 "Language: es\n"
 
+msgid "Version"
+msgstr "Versión"
+
 msgid "time"
 msgstr "tiempo"
 
@@ -18,46 +21,46 @@ msgstr "acciones"
 msgid "score"
 msgstr "aciertos"
 
-msgid "resultsNotSaved"
+msgid "Results are not currently being saved"
 msgstr "Los resultados no se están guardando"
 
-msgid "currentResults"
-msgstr "Resultados actuales:"
+msgid "Current results"
+msgstr "Resultados actuales"
 
-msgid "sessionStarted"
+msgid "Session started:"
 msgstr "Inicio de sesión:"
 
-msgid "reportsSystem"
+msgid "Reports system:"
 msgstr "Sistema de informes:"
 
-msgid "user"
+msgid "User:"
 msgstr "Usuario/aria:"
 
-msgid "projects"
+msgid "Projects:"
 msgstr "Proyectos:"
 
-msgid "sequences"
+msgid "Sequences:"
 msgstr "Secuencias:"
 
-msgid "activitiesDone"
+msgid "Activities done:"
 msgstr "Actividades hechas:"
 
-msgid "activitiesSolved"
+msgid "Activities solved:"
 msgstr "Actividades resueltas:"
 
-msgid "globalScore"
+msgid "Global score:"
 msgstr "Puntuación global:"
 
-msgid "totalTime"
+msgid "Total time in activities:"
 msgstr "Tiempo total en las actividades:"
 
-msgid "actionsDone"
+msgid "Actions done:"
 msgstr "Acciones realizadas:"
 
-msgid "noActivitiesDone"
+msgid "No activities done!"
 msgstr "¡No se ha realizado ninguna actividad!"
 
-msgid "project"
+msgid "Project"
 msgstr "Proyecto"
 
 msgid "sequence"
@@ -66,14 +69,17 @@ msgstr "secuencia"
 msgid "activity"
 msgstr "actividad"
 
-msgid "solved"
+# 'Activity solved' header column
+msgid "OK"
 msgstr "OK"
 
+# Value for 'OK' column
 msgid "YES"
 msgstr "SI"
 
+# Value for 'OK' column
 msgid "NO"
 msgstr "NO"
 
-msgid "totals"
+msgid "Total:"
 msgstr "Totales:"

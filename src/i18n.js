@@ -47,13 +47,17 @@ define([
       tries.push(defaultLanguage ? defaultLanguage : 'en');
 
       for (var i in tries) {
+        var match = -1;
         for (var n in availableLanguages) {
           if (tries[i].indexOf(availableLanguages[n]) === 0) {
-            result = n;
-            break;
+            match = n;
+            if (tries[i] === availableLanguages[n]) {
+              result = n;
+              break;
+            }
           }
         }
-        if (result >= 0)
+        if (result >= 0 || (result=match)>=0)
           break;
       }
       return availableLanguages[result >= 0 ? result : 0];
@@ -64,11 +68,14 @@ define([
      */
     init: function (ps) {
       i18next.init({
+        nsSeparator: false,
+        keySeparator: false,
         fallbackLng: 'en',
-        lng: i18n.checkPreferredLanguage(['en', 'ca', 'es'], 'en', ps.lang),
+        lng: i18n.checkPreferredLanguage(['en', 'ca', 'es', 'ca_ES@valencia'], 'en', ps.options.lang),
         resources: {
-          en: {translation: GlobalData.messages.en},
+          en: {translation: {}},
           ca: {translation: GlobalData.messages.ca},
+          'ca_ES@valencia': {translation: GlobalData.messages['ca_ES@valencia']},
           es: {translation: GlobalData.messages.es}
         }
       }, function (err, t) {

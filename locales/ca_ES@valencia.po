@@ -7,7 +7,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "POT-Creation-Date: 2016-05-27T13:08:49.449Z\n"
 "PO-Revision-Date: 2016-05-27T13:08:49.450Z\n"
-"Language: ca\n"
+"Language: ca_ES@valencia\n"
 
 msgid "Version"
 msgstr "Versió"
@@ -22,7 +22,7 @@ msgid "score"
 msgstr "encerts"
 
 msgid "Results are not currently being saved"
-msgstr "Els resultats no s'estan desant"
+msgstr "Els resultats no s'estan alçant"
 
 msgid "Current results"
 msgstr "Resultats actuals"

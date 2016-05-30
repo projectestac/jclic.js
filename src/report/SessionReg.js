@@ -72,12 +72,12 @@ define([
 
       if (this.info.numSequences > 0) {
 
-        result.push(($('<p/>').html(writeProjectName ? ps.getMsg('project') + ' ' + this.projectName : '')));
+        result.push(($('<p/>').html(writeProjectName ? ps.getMsg('Project') + ' ' + this.projectName : '')));
 
         $t.append($('<thead/>').append($('<tr/>').append(
             $html.th(ps.getMsg('sequence')),
             $html.th(ps.getMsg('activity')),
-            $html.th(ps.getMsg('solved')),
+            $html.th(ps.getMsg('OK')),
             $html.th(ps.getMsg('actions')),
             $html.th(ps.getMsg('score')),
             $html.th(ps.getMsg('time')))));
@@ -86,7 +86,7 @@ define([
           $t.append(this.sequences[p].$print(ps));
 
         $t.append($('<tr/>').append(
-            $html.td(ps.getMsg('totals')),
+            $html.td(ps.getMsg('Total:')),
             $html.td(this.info.nActivities),
             $html.td(this.info.nActSolved),
             $html.td(this.info.nActions),

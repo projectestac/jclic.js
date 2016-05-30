@@ -134,7 +134,7 @@ define([
         .append($('<p/>').css({'margin-top': 0, 'margin-left': '3.5em'})
             .append($('<a/>', {href: 'http://clic.xtec.cat/repo/index.html?page=info'}).html('http://clic.xtec.cat'))
             .append($('<br>'))
-            .append($('<span/>').html('Version ' + this.ps.JClicVersion)));
+            .append($('<span/>').html(ps.getMsg('Version') + ' ' + this.ps.JClicVersion)));
     this.$reportsPanel = $('<div/>', {class: 'reportsPanel'});
 
     this.$bottomPanel = $('<div/>', {class: 'bottomPanel'}).append(
