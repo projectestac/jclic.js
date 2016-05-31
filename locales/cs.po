@@ -1,0 +1,129 @@
+# JClic.js  
+# HTML5 player of [JClic](http://clic.xtec.cat) activities  
+# https://github.com/projectestac/jclic.js  
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: JClic.js 0.1.25\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
+"PO-Revision-Date: 2016-05-27T13:02:19.362Z\n"
+"Last-Translator: Zbyněk Schwarz <Unknown>\n"
+"Language-Team: Czech <cs@li.org>\n"
+
+#: about_window_lb_version
+msgid "Version"
+msgstr "Verze"
+
+#: label_time
+msgid "time"
+msgstr "čas"
+
+#: label_actions
+msgid "actions"
+msgstr "pokusů"
+
+#: label_score
+msgid "score"
+msgstr "skóre"
+
+#: action_next_tooltip
+msgid "Next activity"
+msgstr "Další aktivita"
+
+#: action_prev_tooltip
+msgid "Previous activity"
+msgstr "Předchozí aktivita"
+
+#: action_reset_tooltip
+msgid "Restart activity"
+msgstr "Restartovat aktivitu"
+
+#: action_info_caption
+msgid "Information"
+msgstr "Informace"
+
+#: report_system_standard
+msgid "Results are not currently being saved"
+msgstr "Zpráva není zaregistrována v žádné DB"
+
+#: action_about_tooltip
+msgid "Current results"
+msgstr "Uživatelská sestava"
+
+#: report_started
+msgid "Session started:"
+msgstr "Sezení spuštěno:"
+
+#: report_system
+msgid "Reports system:"
+msgstr "Systém zprávy:"
+
+#: report_user
+msgid "User:"
+msgstr "Uživatel:"
+
+#: report_num_projects
+msgid "Projects:"
+msgstr "Projekty:"
+
+#: report_num_sequences
+msgid "Sequences:"
+msgstr "Sekvence:"
+
+#: report_num_activities
+msgid "Activities done:"
+msgstr "Dokončené aktivity:"
+
+#: report_num_activities_solved
+msgid "Activities solved:"
+msgstr "Aktivity ok:"
+
+#: report_global_score
+msgid "Global score:"
+msgstr "Celkové skóre:"
+
+#: report_total_time
+msgid "Total time in activities:"
+msgstr "Celkový čas aktivit:"
+
+#: report_num_actions
+msgid "Actions done:"
+msgstr "Provedené akce:"
+
+#: report_no_activities
+msgid "No activities done!"
+msgstr "Nebyly nahlášeny žádné aktivity!"
+
+#: report_project
+msgid "Project"
+msgstr "Projekt"
+
+#: report_lb_sequence
+msgid "sequence"
+msgstr "Sekvence"
+
+#: about_window_lb_activity
+msgid "activity"
+msgstr "Aktivita"
+
+# 'Activity solved' header column
+#: report_lb_solved
+msgid "OK"
+msgstr "Ok"
+
+# Value for 'OK' column
+msgid "YES"
+msgstr "ANO"
+
+# Value for 'OK' column
+msgid "NO"
+msgstr "NE"
+
+#: report_lb_totals
+msgid "Total:"
+msgstr "Celkem:"

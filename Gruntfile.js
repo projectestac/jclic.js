@@ -7,7 +7,7 @@ module.exports = function (grunt) {
   var pkg = grunt.file.readJSON('package.json');
   
   // List of curently available languages and map of language '.po' files
-  var LANGUAGES = ['en', 'ca', 'es', 'ca_ES@valencia', 'ar', 'ast', 'bs'];
+  var LANGUAGES = ['en', 'ca', 'es', 'ca_ES@valencia', 'ar', 'ast', 'bs', 'cs', 'da', 'de'];
   var LNG_MAP = {};
   for(var p=1; p<LANGUAGES.length; p++)
     LNG_MAP[LANGUAGES[p]] = 'locales/' + LANGUAGES[p] + '.po';
