@@ -5,108 +5,125 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JClic.js 0.1.25\n"
-"Language: bs\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
 "PO-Revision-Date: 2016-05-27T13:02:19.362Z\n"
-"Last-Translator: Meliha Gadara <meliha.gadara@edu.fit.ba>\n"
+"Last-Translator: Serafim Nenarokov <Unknown>\n"
+"Language-Team: Russian <ru@li.org>\n"
 
 #: about_window_lb_version
 msgid "Version"
-msgstr "Verzija"
+msgstr "Версия"
 
 #: label_time
 msgid "time"
-msgstr "vrijeme"
+msgstr "время"
 
 #: label_actions
 msgid "actions"
-msgstr "pokušaji"
+msgstr "попытки"
 
 #: label_score
 msgid "score"
-msgstr "rezultat"
+msgstr "счёт"
 
 #: action_next_tooltip
 msgid "Next activity"
-msgstr "Sljedeća aktivnost"
+msgstr "Следующее действие"
 
 #: action_prev_tooltip
 msgid "Previous activity"
-msgstr "Prethodna aktivnost"
+msgstr "Предыдущее действие"
 
 #: action_reset_tooltip
 msgid "Restart activity"
-msgstr "Ponovno pokreni aktivnost"
+msgstr "Перезапуск действия"
 
 #: action_info_caption
 msgid "Information"
-msgstr "Informacije"
+msgstr "Информация"
+
+#: report_system_standard
+msgid "Results are not currently being saved"
+msgstr "Отчёт не зарегистрирован в БД"
 
 #: action_about_tooltip
 msgid "Current results"
-msgstr "Izvješća korisnika"
+msgstr "Отчёты пользователя"
 
 #: report_started
 msgid "Session started:"
-msgstr "Sesija započeta:"
+msgstr "Сессия начата:"
+
+#: report_system
+msgid "Reports system:"
+msgstr "Система отчётов:"
 
 #: report_user
 msgid "User:"
-msgstr "Korisnik:"
+msgstr "Пользователь:"
 
 #: report_num_projects
 msgid "Projects:"
-msgstr "Projekti:"
+msgstr "Проекты:"
+
+#: report_num_sequences
+msgid "Sequences:"
+msgstr "Последовательности:"
 
 #: report_num_activities
 msgid "Activities done:"
-msgstr "Urađene aktivnosti:"
+msgstr "Совершенные действия:"
 
 #: report_num_activities_solved
 msgid "Activities solved:"
-msgstr "Aktivnosti ok:"
+msgstr "Действия в порядке:"
 
 #: report_global_score
 msgid "Global score:"
-msgstr "Ukupan rezultat:"
+msgstr "Общий счёт:"
 
 #: report_total_time
 msgid "Total time in activities:"
-msgstr "Ukupno vrijeme aktivnosti:"
+msgstr "Общее время активности:"
 
 #: report_num_actions
 msgid "Actions done:"
-msgstr "Urađene aktivnosti:"
+msgstr "Завершено действий:"
+
+#: report_no_activities
+msgid "No activities done!"
+msgstr "Нет сообщенных действий!"
 
 #: report_project
 msgid "Project"
-msgstr "Projekt:"
+msgstr "Проект"
 
 #: report_lb_sequence
 msgid "sequence"
-msgstr "Sekvenca"
+msgstr "Последовательность"
 
 #: about_window_lb_activity
 msgid "activity"
-msgstr "Aktivnost"
+msgstr "Активность"
 
 # 'Activity solved' header column
 #: report_lb_solved
 msgid "OK"
-msgstr "Uredu"
+msgstr "ОК"
 
 # Value for 'OK' column
 msgid "YES"
-msgstr "DA"
+msgstr "да"
 
 # Value for 'OK' column
 msgid "NO"
-msgstr "NE"
+msgstr "нет"
 
 #: report_lb_totals
 msgid "Total:"
-msgstr "Ukupno:"
+msgstr "Итого:"
 

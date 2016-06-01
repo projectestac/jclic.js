@@ -1,13 +1,17 @@
+# JClic.js  
+# HTML5 player of [JClic](http://clic.xtec.cat) activities  
+# https://github.com/projectestac/jclic.js  
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "POT-Creation-Date: 2016-05-27T13:08:49.449Z\n"
 "PO-Revision-Date: 2016-05-27T13:08:49.450Z\n"
-"Language: ca\n"
+"Last-Translator: Francesc Busquets <francesc@gmail.com>\n"
 
 #: about_window_lb_version
 msgid "Version"

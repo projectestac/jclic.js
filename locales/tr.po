@@ -5,108 +5,125 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JClic.js 0.1.25\n"
-"Language: bs\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
 "PO-Revision-Date: 2016-05-27T13:02:19.362Z\n"
-"Last-Translator: Meliha Gadara <meliha.gadara@edu.fit.ba>\n"
+"Last-Translator: Ahmet YAVUZ <Unknown>\n"
+"Language-Team: Turkish <tr@li.org>\n"
 
 #: about_window_lb_version
 msgid "Version"
-msgstr "Verzija"
+msgstr "Sürüm"
 
 #: label_time
 msgid "time"
-msgstr "vrijeme"
+msgstr "zaman"
 
 #: label_actions
 msgid "actions"
-msgstr "pokušaji"
+msgstr "Denemeler"
 
 #: label_score
 msgid "score"
-msgstr "rezultat"
+msgstr "sonuç"
 
 #: action_next_tooltip
 msgid "Next activity"
-msgstr "Sljedeća aktivnost"
+msgstr "Bir sonraki etkinlik"
 
 #: action_prev_tooltip
 msgid "Previous activity"
-msgstr "Prethodna aktivnost"
+msgstr "Bir önceki etkinlik"
 
 #: action_reset_tooltip
 msgid "Restart activity"
-msgstr "Ponovno pokreni aktivnost"
+msgstr "Etkinliği tekrar başlat"
 
 #: action_info_caption
 msgid "Information"
-msgstr "Informacije"
+msgstr "Bilgi"
+
+#: report_system_standard
+msgid "Results are not currently being saved"
+msgstr "Rapor herhangi bir veritabanında kaydedilmedi"
 
 #: action_about_tooltip
 msgid "Current results"
-msgstr "Izvješća korisnika"
+msgstr "Kullanıcı raporları"
 
 #: report_started
 msgid "Session started:"
-msgstr "Sesija započeta:"
+msgstr "Oturum başlatıldı"
+
+#: report_system
+msgid "Reports system:"
+msgstr "Sistem raporu:"
 
 #: report_user
 msgid "User:"
-msgstr "Korisnik:"
+msgstr "Kullanıcı:"
 
 #: report_num_projects
 msgid "Projects:"
-msgstr "Projekti:"
+msgstr "Projeler:"
+
+#: report_num_sequences
+msgid "Sequences:"
+msgstr "Etkinlik dizisi"
 
 #: report_num_activities
 msgid "Activities done:"
-msgstr "Urađene aktivnosti:"
+msgstr "Etkinlikler başlatılıyor:"
 
 #: report_num_activities_solved
 msgid "Activities solved:"
-msgstr "Aktivnosti ok:"
+msgstr "Etkinlikler tamam:"
 
 #: report_global_score
 msgid "Global score:"
-msgstr "Ukupan rezultat:"
+msgstr "Genel sonuç:"
 
 #: report_total_time
 msgid "Total time in activities:"
-msgstr "Ukupno vrijeme aktivnosti:"
+msgstr "Etkinlikde geçirilen toplam zaman:"
 
 #: report_num_actions
 msgid "Actions done:"
-msgstr "Urađene aktivnosti:"
+msgstr "Eylem gerçekleştiriliyor:"
+
+#: report_no_activities
+msgid "No activities done!"
+msgstr "Etkinlik raporu yok!"
 
 #: report_project
 msgid "Project"
-msgstr "Projekt:"
+msgstr "Proje"
 
 #: report_lb_sequence
 msgid "sequence"
-msgstr "Sekvenca"
+msgstr "Etkinlik dizisi"
 
 #: about_window_lb_activity
 msgid "activity"
-msgstr "Aktivnost"
+msgstr "Etkinlik"
 
 # 'Activity solved' header column
 #: report_lb_solved
 msgid "OK"
-msgstr "Uredu"
+msgstr "Tamam"
 
 # Value for 'OK' column
 msgid "YES"
-msgstr "DA"
+msgstr "Evet"
 
 # Value for 'OK' column
 msgid "NO"
-msgstr "NE"
+msgstr "hiçbir"
 
 #: report_lb_totals
 msgid "Total:"
-msgstr "Ukupno:"
+msgstr "Toplam:"
 
