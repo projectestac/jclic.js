@@ -1,4 +1,6 @@
 #JClic.js
+
+[![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Bower version](https://badge.fury.io/bo/jclic.svg)](https://badge.fury.io/bo/jclic)
 [![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
