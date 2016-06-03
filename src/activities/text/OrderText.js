@@ -266,7 +266,7 @@ define([
      * @param {TextActivityDocument.TextTarget} target - The currently selected target. Can be `null`.
      */
     setCurrentTarget: function (target) {
-      var targetCss = this.act.document.style['target'].css;
+      var targetCss = this.act.document.getFullStyle('target').css;
 
       if (this.currentTarget && this.currentTarget.$span)
         this.currentTarget.$span.css(targetCss);

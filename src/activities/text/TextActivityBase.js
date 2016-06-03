@@ -256,7 +256,7 @@ define([
       if (this.act.checkButtonText && !this.showingPrevScreen) {
         this.$checkButton = $('<button/>', {type: 'button'})
             .html(this.act.checkButtonText)
-            .css({position: 'absolute', bottom: '0', width: '100%'})
+            .css({position: 'absolute', bottom: '0', left: '0', width: '100%'})
             .on('click', function () {
               thisPanel.evaluatePanel();
             });

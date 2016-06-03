@@ -56,7 +56,7 @@ define([
     /**
      * Number of targets
      * @type {number} */
-    numTargets: 0,    
+    numTargets: 0,
     /**
      * Type of targets used in this activity. Possible values are: `TT_FREE`, `TT_CHAR`, `TT_WORD`
      * and `TT_PARAGRAPH`.
@@ -91,7 +91,8 @@ define([
       // Read named styles
       $xml.children('style').each(function () {
         var attr = doc.readDocAttributes($(this));
-        doc.style[attr.name] = attr;
+        // Grant always that basic attributes are defined
+        doc.style[attr.name] = (attr.name === 'default' ? $.extend(true, doc.style.default, attr) : attr);
       });
 
       // Read paragraphs
@@ -226,8 +227,8 @@ define([
      * Gets the full text of this document in raw format
      * @returns {String} - The text of the document.
      */
-    getRawText: function(){
-      var $html = $('<div/>');            
+    getRawText: function () {
+      var $html = $('<div/>');
       // Process paragraphs
       $.each(this.p, function () {
         // Creates a new DOM paragraph
@@ -238,13 +239,13 @@ define([
           switch (this.objectType) {
             case 'text':
             case 'target':
-                $p.append(this.text);
+              $p.append(this.text);
               break;
             case 'cell':
               // cells are not considered raw text of the document
               break;
             default:
-                break;
+              break;
           }
           empty = false;
         });
@@ -254,18 +255,35 @@ define([
         }
         // Adds the paragraph to the DOM element
         $html.append($p);
-      });      
+      });
       return $html.text().trim();
+    },
+    /**
+     * Gets a `style` object filled with default attributes plus attributes present in the
+     * requested style name.
+     * @param {string} name - The requested style name
+     * @returns {Object} - The result of combining `default` with the requested style
+     */
+    getFullStyle: function (name) {
+      var st = $.extend(true, {}, this.style.default);
+      return $.extend(true, st, this.style[name] ? this.style[name] : {});
     }
   };
 
   /**
    * Default style for new documents
    * @type {object} */
-  TextActivityDocument.DEFAULT_DOC_STYLE = {background: 'white', foreground: 'black',
-    family: 'Arial', size: 17,
-    css: {'font-family': 'Arial,Helvetica,sans-serif', 'font-size': '17px',
-      'margin': '0px', padding: '0px', 'text-align': 'center', 'vertical-align': 'middle'}
+  TextActivityDocument.DEFAULT_DOC_STYLE = {
+    background: 'white',
+    foreground: 'black',
+    family: 'Arial',
+    size: 17,
+    css: {
+      'font-family': 'Arial,Helvetica,sans-serif',
+      'font-size': '17px',
+      background: 'white',
+      color: 'black'
+    }
   };
 
 
@@ -481,8 +499,8 @@ define([
       var $element = this.$comboList ? this.$comboList : this.$span;
       if ($element) {
         var style = this.doc.style[
-          this.targetStatus === 'WITH_ERROR' ? 'targetError' : 
-              this.targetStatus === 'HIDDEN' ? 'default' : 'target'];
+            this.targetStatus === 'WITH_ERROR' ? 'targetError' :
+            this.targetStatus === 'HIDDEN' ? 'default' : 'target'];
         if (style && style.css) {
           $element.css(style.css);
         }
@@ -497,7 +515,7 @@ define([
       if (this.$span)
         this.currentText = this.$span.text();
       else if (this.$comboList)
-        this.currentText = this.$comboList.val();      
+        this.currentText = this.$comboList.val();
       return this.currentText;
     }
   };
