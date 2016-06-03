@@ -22,7 +22,7 @@ define([
    * 
    * @exports ActivityReg
    * @class
-   * @param {Activity} act - The Activity referenced by this sequence.
+   * @param {Activity} act - The Activity referenced by this object.
    */
   var ActivityReg = function (act) {
     this.name = act.name;
