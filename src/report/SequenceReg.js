@@ -18,10 +18,11 @@ define([
   "./ActivityReg"
 ], function ($, ActivityReg) {
   /**
-   * 
+   * This class stores the results of the activities related to an {@link ActivitySequenceElement}.
+   * It's main component is an array of {@link ActivityReg} elements.
    * @exports SequenceReg
    * @class
-   * @param {ActivitySequenceElement} ase - The ActivitySequenceElement referenced by this sequence.
+   * @param {ActivitySequenceElement} ase - The {@link ActivitySequenceElement} related to this sequence.
    */
   var SequenceReg = function (ase) {
     this.name = ase.tag;
@@ -35,13 +36,39 @@ define([
 
   SequenceReg.prototype = {
     constructor: SequenceReg,
+    /**
+     * The `tag` member of the associated {@link ActivitySequenceElement}
+     * {@type string} */
     name: '',
+    /**
+     * Optional description given to the {@link ActivitySequenceElement}
+     * {@type string} */
     description: '',
+    /**
+     * Collection of all the {@link ActivityReg} elements done during this sequence.
+     * {@type ActivityReg[]} */
     activities: [],
+    /**
+     * Registry linked to the {@link Activity} that is currently running
+     * {@type ActivityReg} */
     currentActivity: null,
+    /**
+     * Total time spent on the activities of this sequence
+     * {@type number} */
     totalTime: 0,
+    /**
+     * Flag indicating if the sequence is closed or already available for more activities
+     * {@type boolean} */
     closed: false,
+    /**
+     * Object with global information associated to this sequence
+     * {@type SequenceReg.Info} */
     info: null,
+    /**
+     * 
+     * @param {type} ps
+     * @returns {Array}
+     */
     $print: function (ps) {
       var $trArray = [];
       var $tr = $('<tr/>').append($('<td/>', {rowspan: this.activities.length}).html(this.name));

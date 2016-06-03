@@ -81,7 +81,7 @@ define([
      * @type {boolean} */
     bUserBased: null,
     /**
-     * Get a specific property from this reporting system
+     * Gets a specific property from this reporting system
      * @param {string} key - Requested property
      * @param {string+} defaultValue - Default return value when requested property does not exist
      * @returns {string}
@@ -90,7 +90,7 @@ define([
       return defaultValue;
     },
     /**
-     * Get a specific boolean property from this reporting system
+     * Gets a specific boolean property from this reporting system
      * @param {string} key - Requested property
      * @param {boolean+} defaultValue - Default return when requested property does not exist
      * @returns {boolean}
@@ -100,14 +100,14 @@ define([
       return key === null ? defaultValue : s === 'true' ? true : false;
     },
     /**
-     * Get the list of current groups or organizations registered on this reporting system
+     * Gets the list of current groups or organizations registered on this reporting system
      * @returns {Object[]}
      */
     getGroups: function () {
       return null;
     },
     /**
-     * Get the list of current users registered on this reporting system, optionally filtered by
+     * Gets the list of current users registered on this reporting system, optionally filtered by
      * a specific group ID.
      * @param {string+} groupId - Optional group ID to be used as a filter criteria
      * @returns {Object[]}
@@ -116,7 +116,7 @@ define([
       return null;
     },
     /**
-     * Get extended data associated with a specific user
+     * Gets extended data associated with a specific user
      * @param {string} userId - The requested user ID
      * @returns {Object}
      */
@@ -124,7 +124,7 @@ define([
       return null;
     },
     /**
-     * Gen extended data associated with a specific group or organization
+     * Gets extended data associated with a specific group or organization
      * @param {string} groupId - The requested group ID
      * @returns {Object}
      */
@@ -310,8 +310,8 @@ define([
         this.currentSession.newActivity(act);
     },
     /**
-     * This method should be called when the current activity finishes. It provides data about the
-     * final results obtained by the user playing this activity.
+     * This method should be called when the current activity finishes. Data about the final results
+     * obtained by the user playing this activity will then be saved on the reporting system.
      * @param {number} score - The final score, usually in a 0-100 scale.
      * @param {number} numActions - The total number of actions done by the user to solve the activity
      * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
@@ -348,14 +348,14 @@ define([
   };
 
   /**
-   * List of classes derived from Reporter. It should be filled by Reporter classes at declaration time.
+   * Static list of classes derived from Reporter. It should be filled by Reporter classes at declaration time.
    * @type {Object}
    */
   Reporter.CLASSES = {'Reporter': Reporter};
 
   /**
-   * Creates a new reporter of the requested class
-   * @param {string} className - Class name of the requested reporter.
+   * Creates a new Reporter of the requested class
+   * @param {string} className - Class name of the requested reporter. When `null`, a basic Reporter is created.
    * @param {Object} options - Initial settings to be passed to the constuctor of the new reporter.
    * @returns {Reporter}
    */

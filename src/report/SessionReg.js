@@ -20,7 +20,8 @@ define([
   "./SequenceReg"
 ], function ($, Utils, JClicProject, SequenceReg) {
   /**
-   * 
+   * This class encapsulates data of a user's working session, usually associated to a single {@link JClicProject}
+   * It's main component is `sequences`, an array of {@link SequenceReg} objects.
    * @exports SessionReg
    * @class
    * @param {JClicProject|string} project - The JClicProject referenced by this session, or just its name.
@@ -41,7 +42,7 @@ define([
      * @type {SequenceReg[]} */
     sequences: [],
     /**
-     * Sequence that is currently running
+     * The sequence currently active
      * @type {SequenceReg} */
     currentSequence: null,
     /**
@@ -49,7 +50,7 @@ define([
      * @type {Date} */
     started: null,
     /**
-     * Name of the project
+     * Name of the {@link JClicProject} associated to this session
      * @type {string} */
     projectName: '',
     /**
@@ -61,6 +62,16 @@ define([
      * Optional code to be used with this session
      * @type {string} */
     code: null,
+    /**
+     * Renders the results corresponding to this session into a DOM tree
+     * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
+     * @param {boolean} recalcInfo - When `true`, global variables (number of sequences, score, total time...)
+     * will be recalculated from the data stored in the {@link SequenceReg} objects.
+     * @param {boolean} writeProjectName - When `true`, a paragraph with the project name will be
+     * added to the resulting output.
+     * @returns {external:jQuery[]} - Am array of jQuery objects containing the full report. The main
+     * object is a `table` element. 
+     */
     $print: function (ps, recalcInfo, writeProjectName) {
       if (recalcInfo)
         this.info.recalc();
@@ -97,44 +108,89 @@ define([
 
       return result;
     },
+    /**
+     * Returns the `info` element associated to this SessionReg.
+     * @param {boolean} recalc - When `true`, global variables will be recalculated.
+     * @returns {SessionReg.Info}
+     */
     getInfo: function (recalc) {
       if (recalc)
         this.info.recalc();
       return this.info;
     },
+    /**
+     * Closes this session
+     */
     end: function () {
       this.endSequence();
     },
+    /**
+     * This method should be called when the current working session finishes.
+     */
     endSequence: function () {
       if (this.currentSequence && this.currentSequence.totalTime === 0)
         this.currentSequence.endSequence();
       this.currentSequence = null;
     },
+    /**
+     * This method should be invoked when a new sequence starts
+     * @param {ActivitySequenceElement} ase - The {@link ActivitySequenceElement} referenced by this sequence.
+     */
     newSequence: function (ase) {
       this.endSequence();
       this.currentSequence = new SequenceReg(ase);
       this.sequences.push(this.currentSequence);
     },
+    /**
+     * This method should be invoked when users start a new activity
+     * @param {Activity} act - The {@link Activity} just started.
+     */
     newActivity: function (act) {
       if (this.currentSequence)
         this.currentSequence.newActivity(act);
     },
+    /**
+     * This method should be called when the current activity finishes. Data about the final results
+     * obtained by the user playing this activity will then be saved on the reporting system.
+     * @param {number} score - The final score, usually in a 0-100 scale.
+     * @param {number} numActions - The total number of actions done by the user to solve the activity
+     * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
+     */
     endActivity: function (score, numActions, solved) {
       if (this.currentSequence)
         this.currentSequence.endActivity(score, numActions, solved);
     },
+    /**
+     * Reports a new action done by the user while playing the current activity
+     * @param {string} type - Type of action (`click`, `write`, `move`, `select`...)
+     * @param {string+} source - Description of the object on which the action was done.
+     * @param {string+} dest - Description of the object that has acted as a target of the action (usually in pairings)
+     * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwhise
+     */
     newAction: function (type, source, dest, ok) {
       if (this.currentSequence)
         this.currentSequence.newAction(type, source, dest, ok);
     },
+    /**
+     * Gets the name of the current sequence
+     * @returns {string}
+     */
     getCurrentSequenceTag: function () {
       return this.currentSequence ? this.currentSequence.name : null;
     },
+    /**
+     * Gets information about the current sequence
+     * @returns {SequenceReg.Info}
+     */
     getCurrentSequenceInfo: function () {
       return this.currentSequence ? this.currentSequence.getInfo(true) : null;
     }
   };
-
+  
+  /**
+   * This object stores the global results of a {@link SessionReg}
+   * @param {SessionReg} sReg - The {@link SessionReg} associated tho this `Info` object.
+   */
   SessionReg.Info = function (sReg) {
     this.sReg = sReg;
   };
@@ -142,18 +198,48 @@ define([
   SessionReg.Info.prototype = {
     sReg: null,
     constructor: SessionReg.Info,
+    /**
+     * Number of sequences played
+     * {@type number} */
     numSequences: 0,
+    /**
+     * Number of activities played
+     * {@type number} */
     nActivities: 0,
+    /**
+     * Number of activities solved
+     * {@type number} */
     nActSolved: 0,
+    /**
+     * Global score obtained in this working session
+     * {@type number} */
     nActScore: 0,
+    /**
+     * Percentage of solved activities
+     * {@type number} */    
     percentSolved: 0,
+    /**
+     * Number of actions done by the user while in this working session
+     * {@type number} */    
     nActions: 0,
+    /**
+     * Sum of the scores of all the activities played
+     * {@type number} */        
     tScore: 0,
+    /**
+     * Sum of the playing time reported by each activity (not always equals to the session's total time)
+     */
     tTime: 0,
+    /**
+     * Clears all data associated with this working session
+     */
     clear: function () {
       this.numSequences = this.nActivities = this.nActSolved = this.nActScore = 0;
       this.percentSolved = this.nActions = this.tScore = this.tTime = 0;
     },
+    /**
+     * Computes the value of all global variables based on the data stored in `sequences`
+     */
     recalc: function () {
       this.clear();
       for (var p = 0; p < this.sReg.sequences.length; p++) {
