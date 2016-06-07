@@ -18,25 +18,51 @@ define([
   "../Utils"
 ], function ($, Utils) {
   /**
+   * This class stores information about one specific action done by the current user while playing
+   * an activity.
    * 
    * @exports ActionReg
    * @class
+   * @param {string} type - Type of action (`click`, `write`, `move`, `select`...)
+   * @param {string}+ source - Description of the object on which the action is done.
+   * @param {string}+ dest - Description of the object that acts as a target of the action (used in pairings)
+   * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwhise
    */
   var ActionReg = function (type, source, dest, ok) {
     this.type = type;
-    this.source = source;
-    this.dest = dest;
-    this.ok = ok;
+    this.source = source ? source : null;
+    this.dest = dest ? dest : null;
+    this.ok = ok ? ok : false;
     this.time = (new Date()).valueOf();
   };
 
   ActionReg.prototype = {
     constructor: ActionReg,
-    type: null,
+    /**
+     * The type of action (`click`, `write`, `move`, `select`...)
+     * @type {string} */
+    type: 'unknown',
+    /**
+     * Description of the object on which the action was done
+     * @type {string} */
     source: null,
+    /**
+     * Description of the object that has acted as a target of the action (used in pairings)
+     * @type {string} */
     dest: null,
+    /**
+     * Timestamp taken when the action was done
+     * @type {number} */
     time: 0,
+    /**
+     * `true` if the action was OK
+     */
     isOk: false,
+    /**
+     * Provides the data associated with this action in XML format suitable for
+     * [JClic Reports server](http://clic.xtec.cat/en/jclic/reports/).
+     * @returns {external:jQuery}
+     */
     $getXML: function () {
       var attr = {ok: this.ok, time: this.time};
       if (this.type)
@@ -47,6 +73,10 @@ define([
         attr.dest = this.dest;
       return $('<action/>', attr);
     },
+    /**
+     * Fills this ActionReg with data provided in XML format
+     * @param {external:jQuery} $xml -The XML element to be processed, already wrapped as jQUery object
+     */
     setProperties: function ($xml) {
       var actReg = this;
       $each($xml.get(0).attributes, function () {
@@ -67,10 +97,6 @@ define([
             break;
         }
       });
-    },
-    toHtmlString: function () {
-      // TODO: implement toHtmlString
-      return '';
     }
   };
 

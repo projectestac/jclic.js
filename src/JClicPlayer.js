@@ -67,7 +67,7 @@ define([
     }
 
     this.options = $.extend(Object.create(this.options), options);
-    
+
     i18n.init(this);
 
     /* global location */

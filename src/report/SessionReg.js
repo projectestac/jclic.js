@@ -143,15 +143,15 @@ define([
     },
     /**
      * This method should be invoked when users start a new activity
-     * @param {Activity} act - The {@link Activity} just started.
+     * @param {Activity} act - The {@link Activity} that has just started.
      */
     newActivity: function (act) {
       if (this.currentSequence)
         this.currentSequence.newActivity(act);
     },
     /**
-     * This method should be called when the current activity finishes. Data about the final results
-     * obtained by the user playing this activity will then be saved on the reporting system.
+     * This method should be called when the current activity finishes. Data about user's final results
+     * on the activity will then be saved.
      * @param {number} score - The final score, usually in a 0-100 scale.
      * @param {number} numActions - The total number of actions done by the user to solve the activity
      * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
@@ -163,8 +163,8 @@ define([
     /**
      * Reports a new action done by the user while playing the current activity
      * @param {string} type - Type of action (`click`, `write`, `move`, `select`...)
-     * @param {string+} source - Description of the object on which the action was done.
-     * @param {string+} dest - Description of the object that has acted as a target of the action (usually in pairings)
+     * @param {string}+ source - Description of the object on which the action is done.
+     * @param {string}+ dest - Description of the object that acts as a target of the action (used in pairings)
      * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwhise
      */
     newAction: function (type, source, dest, ok) {
@@ -186,9 +186,10 @@ define([
       return this.currentSequence ? this.currentSequence.getInfo(true) : null;
     }
   };
-  
+
   /**
    * This object stores the global results of a {@link SessionReg}
+   * @class
    * @param {SessionReg} sReg - The {@link SessionReg} associated tho this `Info` object.
    */
   SessionReg.Info = function (sReg) {
@@ -200,35 +201,35 @@ define([
     constructor: SessionReg.Info,
     /**
      * Number of sequences played
-     * {@type number} */
+     * @type {number} */
     numSequences: 0,
     /**
      * Number of activities played
-     * {@type number} */
+     * @type {number} */
     nActivities: 0,
     /**
      * Number of activities solved
-     * {@type number} */
+     * @type {number} */
     nActSolved: 0,
     /**
      * Global score obtained in this working session
-     * {@type number} */
+     * @type {number} */
     nActScore: 0,
     /**
      * Percentage of solved activities
-     * {@type number} */    
+     * @type {number} */
     percentSolved: 0,
     /**
      * Number of actions done by the user while in this working session
-     * {@type number} */    
+     * @type {number} */
     nActions: 0,
     /**
      * Sum of the scores of all the activities played
-     * {@type number} */        
+     * @type {number} */
     tScore: 0,
     /**
      * Sum of the playing time reported by each activity (not always equals to the session's total time)
-     */
+     * @type {number} */
     tTime: 0,
     /**
      * Clears all data associated with this working session
