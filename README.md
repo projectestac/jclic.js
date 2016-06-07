@@ -1,6 +1,5 @@
 #JClic.js
 
-[![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Bower version](https://badge.fury.io/bo/jclic.svg)](https://badge.fury.io/bo/jclic)
 [![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
@@ -25,7 +24,6 @@ of levels, subjects, languages and curriculum areas. Some of these materials hav
 huge [library](http://clic.xtec.cat/repo) created with [jclic-repo](https://github.com/projectestac/jclic-repo),
 another open source project that will facilitate the publication of collections of JClic projects in
 static web hosting services.
-
 
 ## Known issues
 
@@ -82,3 +80,7 @@ Full API documentation of jclic.js is available at: http://projectestac.github.i
 
 __jclic.js__ is also available as a [NPM](https://www.npmjs.com/package/jclic) and [Bower](https://libraries.io/bower/jclic)
 packages.
+
+We are using [Transifex](https://www.transifex.com/francesc/jclicjs) as a platform for translations of JClic.js into many languages. Please read [TRANSLATIONS.md](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md) if you want to contribute to the project creating a new translation or improving the existing ones.
+
+[![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
