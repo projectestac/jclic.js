@@ -42,7 +42,8 @@ define([
   "./activities/associations/SimpleAssociation",
   "./activities/associations/ComplexAssociation",
   "./activities/textGrid/WordSearch",
-  "./activities/textGrid/CrossWord"
-], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x){
+  "./activities/textGrid/CrossWord",
+  "./report/TCPReporter"
+], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y){
   return 'Deep classes loaded!';
 });
