@@ -330,7 +330,7 @@ define([
         this.reporter.end();
         this.reporter = null;
       }
-      this.reporter = Reporter.getReporter(null, this.options);
+      this.reporter = Reporter.getReporter(this, null, this.options);
     },
     /**
      * 

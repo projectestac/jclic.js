@@ -15,17 +15,19 @@
 
 define([
   "jquery",
+  "../Utils",
   "./Reporter"
-], function ($, Reporter) {
+], function ($, Utils, Reporter) {
 
   /**
    * This special case of {@link Reporter} is ...
    * @exports TCPReporter
    * @class
    * @extends Reporter
+   * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
    */
-  var TCPReporter = function () {
-    Reporter.call(this);
+  var TCPReporter = function (ps) {
+    Reporter.call(this, ps);
     this.tasks = [];
   };
 
@@ -64,10 +66,6 @@ define([
      * @type {boolean} */
     processing: false,
     /**
-     * PlayStation used to communicate the status of the operations done
-     * @type {PlayStation} */
-    ps: null,
-    /**
      * Identifier of the background function obtained with a call to window.setInterval
      * @type {number} */
     timer: -1,
@@ -84,6 +82,22 @@ define([
      * @type {number} */
     maxFails: 5,
     /**
+     * Default path of JClic Reports Server
+     * @type {string} */
+    DEFAULT_SERVER_PATH: 'localhost:9000',
+    /**
+     * Default name for the reports service
+     * @type {string} */
+    DEFAULT_SERVER_SERVICE: '/JClicReportService',
+    /**
+     * Default server protocol
+     * @type {string} */
+    DEFAULT_SERVER_PROTOCOL: 'http',
+    /**
+     * Default lap between calls to flushTasks, in seconds
+     * @type {number} */
+    DEFAULT_TIMER_LAP: 5,
+    /**
      * 
      * @param {type} bean
      * @returns {undefined}
@@ -98,6 +112,7 @@ define([
         this.tasks.push(bean);
     },
     flushTasks: function () {
+      // TODO: Return a Promise
       if (this.tasks.length > 0 && this.serviceUrl !== null) {
         this.processing = true;
         var thisReporter = this;
@@ -127,6 +142,93 @@ define([
             });
       }
     },
+    /**
+     * Initializes this report system with an optional set of parameters
+     * @override
+     * @param {Object} properties - Initial settings passed to the reporting system
+     */
+    init: function (properties) {
+      Reporter.prototype.init.call(this, properties);
+      this.initiated = false;
+
+      var serverPath = properties.path ? properties.path : this.DEFAULT_SERVER_PATH;
+      this.description = "TCP/IP " + serverPath;
+      var serverService = properties.service ? properties.service : this.DEFAULT_SERVER_SERVICE;
+      if (!serverService.startsWith('/'))
+        serverService = '/' + serverService;
+      var serverProtocol = properties.protocol ? properties.protocol : this.DEFAULT_SERVER_PROTOCOL;
+
+      this.serviceUrl = serverProtocol + "://" + serverPath + serverService;
+
+      if (!this.userId)
+        this.userId = this.promptUserId(parent, msg);
+
+      if (userId) {
+        var tl = properties.lap ? properties.lap : this.DEFAULT_TIMER_LAP;
+        this.timerLap = Math.min(300, Math.max(1, parseInt(tl)));
+        var thisReporter = this;
+        this.timer = window.setInterval(
+            function () {
+              thisReporter.flushTasks();
+            }, this.timerLap);
+        this.initiated = true;
+      } else
+        this.stopReporting();
+    },
+    /**
+     * This method should be invoked when a new session starts
+     * @override
+     * @param {JClicProject|string} jcp - The {@link JClicProject} referenced by this session, or
+     * just its name.
+     */
+    newSession: function (jcp) {
+      Reporter.prototype.newSession.call(this, jcp);
+      if (!this.serviceUrl)
+        return;
+      if (this.userId === null) {
+        this.userId = this.promptUserId();
+      }
+      if (userId !== null) {
+        // Session ID will be obtained when reporting its first activity
+        this.currentSessionId = null;
+      }
+    },
+    /**
+     * Creates a new session in the remote database and records its ID for future use
+     */
+    createDBSession: function () {
+      if (this.initiated && this.userId !== null && this.currentSession !== null) {
+        //TODO: Use a Promise
+        this.flushTasks();
+        this.currentSessionId = null;
+        this.actCount = 0;
+        var bean = new TCPReporter.ReportBean('add session');
+
+        bean.setParam('project', this.currentSession.projectName);
+        bean.setParam('time', Number(this.currentSession.started));
+        bean.setParam('code', this.currentSession.code);
+        bean.setParam('user', this.userId);
+        bean.setParam('key', this.sessionKey);
+        bean.setParam('context', this.sessionContext);
+
+        var thisReporter = this;
+        this.transaction(bean.$bean)
+            .done(function (xml) {
+              thisReporter.currentSessionId = $($.parseXML(xml)).find('param[name="user"]').attr('value');
+            })
+            .fail(function (err) {
+              thisReporter.stopReporting();
+              console.log('ERROR reporting data: ' + err);
+            })
+            .always(function(){
+              thisReporter.processing = false;
+            });
+      }
+    },
+    /**
+     * Closes this reporting system
+     * @override
+     */
     end: function () {
       Reporter.prototype.end.call(this);
       this.reportActivity();
@@ -157,8 +259,6 @@ define([
       this.initiated = false;
     }
   };
-
-
   /**
    * 
    * @class
@@ -188,6 +288,10 @@ define([
       if ($data) {
         this.$bean.append($data);
       }
+    },
+    setParam: function (param, value) {
+      if (typeof value !== 'undefined' && value !== null)
+        this.appendData($('<param/>', {name: param, value: value}));
     }
   };
 
@@ -200,6 +304,4 @@ define([
   return TCPReporter;
 
 });
-
-
 

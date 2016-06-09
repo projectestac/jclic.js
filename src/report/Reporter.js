@@ -26,8 +26,10 @@ define([
    * presentation of summarized results.
    * @exports Reporter
    * @class
+   * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
    */
-  var Reporter = function () {
+  var Reporter = function (ps) {
+    this.ps = ps;
     this.sessions = [];
     this.started = new Date();
     this.initiated = false;
@@ -35,6 +37,10 @@ define([
 
   Reporter.prototype = {
     constructor: Reporter,
+    /**
+     * The {@link PlayStation} used to retrieve messages
+     * @type {PlayStation} */
+    ps: null,
     /**
      * User ID currently associated with this reporting system
      * @type {string} */
@@ -174,19 +180,18 @@ define([
     },
     /**
      * Renders the data contained in this report into a DOM tree
-     * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
      * @returns {external:jQuery} - A jQuery object with a `div` element containing the full report.
      */
-    $print: function (ps) {
+    $print: function () {
       var $html = Utils.$HTML;
       var result = [];
 
-      result.push($('<div/>', {class: 'subTitle'}).html(ps.getMsg('Current results')));
+      result.push($('<div/>', {class: 'subTitle'}).html(this.ps.getMsg('Current results')));
 
       var $t = $('<table/>', {class: 'JCGlobalResults'});
       $t.append(
-          $html.doubleCell(ps.getMsg('Session started:'), this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
-          $html.doubleCell(ps.getMsg('Reports system:'), ps.getMsg(this.descriptionKey)));
+          $html.doubleCell(this.ps.getMsg('Session started:'), this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
+          $html.doubleCell(this.ps.getMsg('Reports system:'), this.ps.getMsg(this.descriptionKey)));
       if (this.userId)
         $t.append($html.doubleCell(this.ps.getMsg('User:'), this.userId));
 
@@ -213,16 +218,16 @@ define([
 
       if (numSequences > 0) {
         if (numSessions > 1)
-          $t.append($html.doubleCell(ps.getMsg('Projects:'), numSessions));
-        $t.append($html.doubleCell(ps.getMsg('Sequences:'), numSequences),
-            $html.doubleCell(ps.getMsg('Activities done:'), nActivities));
+          $t.append($html.doubleCell(this.ps.getMsg('Projects:'), numSessions));
+        $t.append($html.doubleCell(this.ps.getMsg('Sequences:'), numSequences),
+            $html.doubleCell(this.ps.getMsg('Activities done:'), nActivities));
         if (nActivities > 0) {
           percentSolved = nActSolved / nActivities;
-          $t.append($html.doubleCell(ps.getMsg('Activities solved:'), nActSolved + " (" + Utils.getPercent(percentSolved) + ")"));
+          $t.append($html.doubleCell(this.ps.getMsg('Activities solved:'), nActSolved + " (" + Utils.getPercent(percentSolved) + ")"));
           if (nActScore > 0)
-            $t.append($html.doubleCell(ps.getMsg('Global score:'), Utils.getPercent(tScore / (nActScore * 100))));
-          $t.append($html.doubleCell(ps.getMsg('Total time in activities:'), Utils.getHMStime(tTime)),
-              $html.doubleCell(ps.getMsg('Actions done:'), nActions));
+            $t.append($html.doubleCell(this.ps.getMsg('Global score:'), Utils.getPercent(tScore / (nActScore * 100))));
+          $t.append($html.doubleCell(this.ps.getMsg('Total time in activities:'), Utils.getHMStime(tTime)),
+              $html.doubleCell(this.ps.getMsg('Actions done:'), nActions));
         }
 
         result.push($t);
@@ -233,7 +238,7 @@ define([
             result = result.concat(sr.$print(ps, false, numSessions > 1));
         }
       } else
-        result.push($('<p/>').html(ps.getMsg('No activities done!')));
+        result.push($('<p/>').html(this.ps.getMsg('No activities done!')));
 
       return result;
     },
@@ -356,10 +361,11 @@ define([
   /**
    * Creates a new Reporter of the requested class
    * @param {string} className - Class name of the requested reporter. When `null`, a basic Reporter is created.
+   * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
    * @param {Object} options - Initial settings to be passed to the constuctor of the new reporter.
    * @returns {Reporter}
    */
-  Reporter.getReporter = function (className, options) {
+  Reporter.getReporter = function (className, ps, options) {
     var result = null;
     if (className === null) {
       className = 'Reporter';
@@ -367,7 +373,7 @@ define([
         className = options.reporter;
     }
     if (Reporter.CLASSES.hasOwnProperty(className)) {
-      result = new Reporter.CLASSES[className]();
+      result = new Reporter.CLASSES[className](ps);
       // TODO: Group reporter params into a single Object (as `reporterParams` in JClic)?
       result.init(options);
     } else {
