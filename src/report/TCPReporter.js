@@ -1,3 +1,5 @@
+/* global Promise */
+
 //  File    : TCPReporter.js  
 //  Created : 08/06/2016  
 //  By      : fbusquet  
@@ -192,7 +194,7 @@ define([
       if (this.userId === null) {
         this.userId = this.promptUserId();
       }
-      if (userId !== null) {
+      if (this.userId !== null) {
         // Session ID will be obtained when reporting its first activity
         this.currentSessionId = null;
       }
@@ -205,9 +207,9 @@ define([
 
       if (forceNewSession || this.currentSessionId === null)
         return new Promise(function (resolve, reject) {
-          if (this.initiated && this.userId !== null && this.currentSession !== null) {
+          if (thisReporter.initiated && thisReporter.userId !== null && thisReporter.currentSession !== null) {
 
-            this.flushTasksPromise().then(function () {
+            thisReporter.flushTasksPromise().then(function () {
               thisReporter.currentSessionId = null;
               thisReporter.actCount = 0;
               var bean = new TCPReporter.ReportBean('add session');
@@ -219,7 +221,7 @@ define([
               bean.setParam('key', thisReporter.sessionKey);
               bean.setParam('context', thisReporter.sessionContext);
 
-              this.transaction(bean.$bean)
+              thisReporter.transaction(bean.$bean)
                   .done(function (xml) {
                     thisReporter.currentSessionId = $($.parseXML(xml)).find('param[name="user"]').attr('value');
                     resolve(thisReporter.currentSessionId);
@@ -249,11 +251,13 @@ define([
     transaction: function ($xml) {
       if (this.serviceUrl === null)
         return null;
+      
+      var data = '<?xml version="1.0" encoding="UTF-8"?>' + (new XMLSerializer()).serializeToString($xml.get(0));
 
       return $.ajax({
         method: "POST",
         url: this.serviceUrl,
-        data: (new XMLSerializer()).serializeToString($xml.get(0)),
+        data: data,
         contentType: 'text/xml',
         dataType: 'xml'
       });
@@ -290,7 +294,16 @@ define([
         this.lastActivity = this.currentSession.currentSequence.currentActivity;
       } else
         this.lastActivity = null;
-    }
+    },
+    /**
+     * This method should be invoked when the user starts a new activity
+     * @override
+     * @param {Activity} act - The {@link Activity} that has just started
+     */
+    newActivity: function (act) {
+      Reporter.prototype.newActivity.call(this, act);
+      this.reportActivity();
+    }    
   };
   /**
    * 

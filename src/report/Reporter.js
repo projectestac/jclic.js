@@ -235,7 +235,7 @@ define([
         for (var p = 0; p < this.sessions.length; p++) {
           var sr = this.sessions[p];
           if (sr.getInfo(false).numSequences > 0)
-            result = result.concat(sr.$print(ps, false, numSessions > 1));
+            result = result.concat(sr.$print(this.ps, false, numSessions > 1));
         }
       } else
         result.push($('<p/>').html(this.ps.getMsg('No activities done!')));
