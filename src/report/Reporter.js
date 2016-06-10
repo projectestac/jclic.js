@@ -307,8 +307,8 @@ define([
         this.currentSession.newSequence(ase);
     },
     /**
-     * This method should be invoked when users start a new activity
-     * @param {Activity} act - The {@link Activity} thta has just started.
+     * This method should be invoked when the user starts a new activity
+     * @param {Activity} act - The {@link Activity} that has just started
      */
     newActivity: function (act) {
       if (this.currentSession)

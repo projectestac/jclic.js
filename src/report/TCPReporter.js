@@ -64,7 +64,7 @@ define([
     /**
      * Flag used to indicate if `transaction` is currently running
      * @type {boolean} */
-    processing: false,
+    processingTasks: false,
     /**
      * Identifier of the background function obtained with a call to window.setInterval
      * @type {number} */
@@ -103,7 +103,7 @@ define([
      * @returns {undefined}
      */
     addTask: function (bean) {
-      if (this.processing) {
+      if (this.processingTasks) {
         if (this.waitingTasks === null)
           this.waitingTasks = [bean];
         else
@@ -111,36 +111,40 @@ define([
       } else
         this.tasks.push(bean);
     },
-    flushTasks: function () {
-      // TODO: Return a Promise
-      if (this.tasks.length > 0 && this.serviceUrl !== null) {
-        this.processing = true;
+    flushTasksPromise: function () {
+
+      if (this.currentSessionId !== null && this.tasks.length > 0 && this.serviceUrl !== null) {
+        this.processingTasks = true;
         var thisReporter = this;
 
         var reportBean = new TCPReporter.ReportBean('multiple');
         for (var i = 0; i < this.tasks.length; i++)
           reportBean.appendData(this.tasks[i].$bean);
 
-        this.transaction(reportBean.$bean)
-            .done(function (xml) {
-              // TODO: Check returned message for possible errors on the server side
-              thisReporter.tasks = [];
-              if (thisReporter.waitingTasks) {
-                thisReporter.tasks.concat(thisReporter.waitingTasks);
-                thisReporter.waitingTasks = null;
-              }
-              // Reset the fail counter after a successufull attempt
-              thisReporter.failCount = 0;
-            })
-            .fail(function (err) {
-              if (++thisReporter.failCount > thisReporter.maxFails)
-                thisReporter.stopReporting();
-              console.log('ERROR reporting data: ' + err);
-            })
-            .always(function () {
-              thisReporter.processing = false;
-            });
-      }
+        return new Promise(function (resolve, reject) {
+          this.transaction(reportBean.$bean)
+              .done(function (xml) {
+                // TODO: Check returned message for possible errors on the server side
+                thisReporter.tasks = [];
+                if (thisReporter.waitingTasks) {
+                  thisReporter.tasks.concat(thisReporter.waitingTasks);
+                  thisReporter.waitingTasks = null;
+                }
+                // Reset the fail counter after a successufull attempt
+                thisReporter.failCount = 0;
+                thisReporter.processingTasks = false;
+                resolve(true);
+              })
+              .fail(function (err) {
+                if (++thisReporter.failCount > thisReporter.maxFails)
+                  thisReporter.stopReporting();
+                console.log('ERROR reporting data: ' + err);
+                thisReporter.processingTasks = false;
+                reject(false);
+              });
+        });
+      } else
+        return Promise.resolve(true);
     },
     /**
      * Initializes this report system with an optional set of parameters
@@ -160,16 +164,16 @@ define([
 
       this.serviceUrl = serverProtocol + "://" + serverPath + serverService;
 
-      if (!this.userId)
-        this.userId = this.promptUserId(parent, msg);
+      if (this.userId === null)
+        this.userId = this.promptUserId();
 
-      if (userId) {
+      if (this.userId) {
         var tl = properties.lap ? properties.lap : this.DEFAULT_TIMER_LAP;
         this.timerLap = Math.min(300, Math.max(1, parseInt(tl)));
         var thisReporter = this;
         this.timer = window.setInterval(
             function () {
-              thisReporter.flushTasks();
+              thisReporter.flushTasksPromise();
             }, this.timerLap);
         this.initiated = true;
       } else
@@ -196,34 +200,41 @@ define([
     /**
      * Creates a new session in the remote database and records its ID for future use
      */
-    createDBSession: function () {
-      if (this.initiated && this.userId !== null && this.currentSession !== null) {
-        //TODO: Use a Promise
-        this.flushTasks();
-        this.currentSessionId = null;
-        this.actCount = 0;
-        var bean = new TCPReporter.ReportBean('add session');
+    createDBSession: function (forceNewSession) {
+      var thisReporter = this;
 
-        bean.setParam('project', this.currentSession.projectName);
-        bean.setParam('time', Number(this.currentSession.started));
-        bean.setParam('code', this.currentSession.code);
-        bean.setParam('user', this.userId);
-        bean.setParam('key', this.sessionKey);
-        bean.setParam('context', this.sessionContext);
+      if (forceNewSession || this.currentSessionId === null)
+        return new Promise(function (resolve, reject) {
+          if (this.initiated && this.userId !== null && this.currentSession !== null) {
 
-        var thisReporter = this;
-        this.transaction(bean.$bean)
-            .done(function (xml) {
-              thisReporter.currentSessionId = $($.parseXML(xml)).find('param[name="user"]').attr('value');
-            })
-            .fail(function (err) {
-              thisReporter.stopReporting();
-              console.log('ERROR reporting data: ' + err);
-            })
-            .always(function(){
-              thisReporter.processing = false;
+            this.flushTasksPromise().then(function () {
+              thisReporter.currentSessionId = null;
+              thisReporter.actCount = 0;
+              var bean = new TCPReporter.ReportBean('add session');
+
+              bean.setParam('project', thisReporter.currentSession.projectName);
+              bean.setParam('time', Number(thisReporter.currentSession.started));
+              bean.setParam('code', thisReporter.currentSession.code);
+              bean.setParam('user', thisReporter.userId);
+              bean.setParam('key', thisReporter.sessionKey);
+              bean.setParam('context', thisReporter.sessionContext);
+
+              this.transaction(bean.$bean)
+                  .done(function (xml) {
+                    thisReporter.currentSessionId = $($.parseXML(xml)).find('param[name="user"]').attr('value');
+                    resolve(thisReporter.currentSessionId);
+                  })
+                  .fail(function (err) {
+                    thisReporter.stopReporting();
+                    console.log('ERROR reporting data: ' + err);
+                    reject(err);
+                  });
             });
-      }
+          } else
+            reject('Unable to start new DB session');
+        });
+      else
+        return Promise.resolve(this.currentSessionId);
     },
     /**
      * Closes this reporting system
@@ -232,7 +243,7 @@ define([
     end: function () {
       Reporter.prototype.end.call(this);
       this.reportActivity();
-      this.flushTasks();
+      this.flushTasksPromise();
       this.stopReporting();
     },
     transaction: function ($xml) {
@@ -257,6 +268,28 @@ define([
         this.timer = -1;
       }
       this.initiated = false;
+    },
+    reportActivity: function () {
+      if (this.lastActivity) {
+        if (!this.lastActivity.closed)
+          this.lastActivity.closeActivity();
+        var session = this.currentSessionId;
+        var actCount = this.actCount++;
+        var act = this.lastActivity;
+        var thisReporter = this;
+        this.createDBSession(false).then(function () {
+          var bean = new TCPReporter.ReportBean('add activity');
+          bean.setParam('session', session);
+          bean.setParam('num', actCount);
+          bean.setData(act.$getXML());
+          thisReporter.addTask(bean);
+        });
+      }
+      if (this.currentSession !== null && this.currentSession.currentSequence !== null
+          && this.currentSession.currentSequence.currentActivity !== this.lastActivity) {
+        this.lastActivity = this.currentSession.currentSequence.currentActivity;
+      } else
+        this.lastActivity = null;
     }
   };
   /**
