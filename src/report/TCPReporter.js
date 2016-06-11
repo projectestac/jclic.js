@@ -124,7 +124,7 @@ define([
           reportBean.appendData(this.tasks[i].$bean);
 
         return new Promise(function (resolve, reject) {
-          this.transaction(reportBean.$bean)
+          thisReporter.transaction(reportBean.$bean)
               .done(function (xml) {
                 // TODO: Check returned message for possible errors on the server side
                 thisReporter.tasks = [];
@@ -285,7 +285,7 @@ define([
           var bean = new TCPReporter.ReportBean('add activity');
           bean.setParam('session', session);
           bean.setParam('num', actCount);
-          bean.setData(act.$getXML());
+          bean.appendData(act.$getXML());
           thisReporter.addTask(bean);
         });
       }
@@ -316,7 +316,7 @@ define([
   TCPReporter.ReportBean = function (id, $data) {
     this.$bean = $('<bean id="' + id + '"/>');
     if ($data)
-      this.setData($data);
+      this.appendData($data);
   };
 
   TCPReporter.ReportBean.prototype = {
