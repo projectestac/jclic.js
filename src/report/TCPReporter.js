@@ -125,7 +125,7 @@ define([
 
         return new Promise(function (resolve, reject) {
           thisReporter.transaction(reportBean.$bean)
-              .done(function (xml) {
+              .done(function (data, textStatus, jqXHR) {
                 // TODO: Check returned message for possible errors on the server side
                 thisReporter.tasks = [];
                 if (thisReporter.waitingTasks) {
@@ -137,10 +137,10 @@ define([
                 thisReporter.processingTasks = false;
                 resolve(true);
               })
-              .fail(function (err) {
+              .fail(function (jqXHR, textStatus, errorThrown) {
                 if (++thisReporter.failCount > thisReporter.maxFails)
                   thisReporter.stopReporting();
-                console.log('ERROR reporting data: ' + err);
+                console.log('ERROR reporting data: ' + textStatus);
                 thisReporter.processingTasks = false;
                 reject(false);
               });
@@ -222,13 +222,13 @@ define([
               bean.setParam('context', thisReporter.sessionContext);
 
               thisReporter.transaction(bean.$bean)
-                  .done(function (xml) {
-                    thisReporter.currentSessionId = $($.parseXML(xml)).find('param[name="user"]').attr('value');
+                  .done(function (data, textStatus, jqXHR) {
+                    thisReporter.currentSessionId = $(data).find('param[name="session"]').attr('value');
                     resolve(thisReporter.currentSessionId);
                   })
-                  .fail(function (err) {
+                  .fail(function (jqXHR, textStatus, errorThrown) {
                     thisReporter.stopReporting();
-                    console.log('ERROR reporting data: ' + err);
+                    console.log('ERROR reporting data: ' + textStatus);
                     reject(err);
                   });
             });
@@ -277,13 +277,12 @@ define([
       if (this.lastActivity) {
         if (!this.lastActivity.closed)
           this.lastActivity.closeActivity();
-        var session = this.currentSessionId;
         var actCount = this.actCount++;
         var act = this.lastActivity;
         var thisReporter = this;
         this.createDBSession(false).then(function () {
           var bean = new TCPReporter.ReportBean('add activity');
-          bean.setParam('session', session);
+          bean.setParam('session', thisReporter.currentSessionId);
           bean.setParam('num', actCount);
           bean.appendData(act.$getXML());
           thisReporter.addTask(bean);
