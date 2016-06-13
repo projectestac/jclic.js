@@ -33,6 +33,18 @@ define([
   var TCPReporter = function (ps) {
     Reporter.call(this, ps);
     this.tasks = [];
+    var thisReporter = this;
+    // Warn user before leaving current page with unsaved data:
+    $(window).on('beforeunload', function (event) {
+      if (thisReporter.serviceUrl !== null &&
+          (thisReporter.tasks.length > 0 || thisReporter.processingTasks)) {
+        thisReporter.flushTasksPromise();
+        var result = thisReporter.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
+        if (event)
+          event.returnValue = result;
+        return result;
+      }
+    });
   };
 
   TCPReporter.prototype = {
@@ -277,18 +289,16 @@ define([
      * JQuery [Deferred](https://api.jquery.com/category/deferred-object/) object.
      */
     transaction: function ($xml) {
-      if (this.serviceUrl === null)
-        return null;
-
-      var data = '<?xml version="1.0" encoding="UTF-8"?>' + (new XMLSerializer()).serializeToString($xml.get(0));
-
-      return $.ajax({
-        method: 'POST',
-        url: this.serviceUrl,
-        data: data,
-        contentType: 'text/xml',
-        dataType: 'xml'
-      });
+      return this.serviceUrl === null ?
+          null :
+          $.ajax({
+            method: 'POST',
+            url: this.serviceUrl,
+            data: '<?xml version="1.0" encoding="UTF-8"?>' +
+                (new XMLSerializer()).serializeToString($xml.get(0)),
+            contentType: 'text/xml',
+            dataType: 'xml'
+          });
     },
     /**
      * 
