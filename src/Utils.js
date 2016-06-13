@@ -1,5 +1,3 @@
-/* global Promise, window */
-
 //    File    : Utils.js  
 //    Created : 01/04/2015  
 //    By      : Francesc Busquets  
@@ -14,6 +12,8 @@
 //    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+
+/* global Promise, window */
 
 define([
   "jquery",
@@ -324,9 +324,9 @@ define([
      * Gets a promise with the complete path of a relative or absolute URL, using the provided `basePath`
      * @param {string} basePath - The base URL
      * @param {string} path - The filename
-     * @param {?JSZip} zip - An optional [JSZip](https://stuk.github.io/jszip/) object where to look
+     * @param {?external:JSZip} zip - An optional {@link external:JSZip} object where to look
      * for the file
-     * @returns {Promise}
+     * @returns {external:Promise}
      */
     getPathPromise: function (basePath, path, zip) {
       if (zip) {

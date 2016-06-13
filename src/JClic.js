@@ -31,6 +31,15 @@ define([
    * @external jQuery
    * @see {@link http://api.jquery.com/jQuery/}
    */
+  
+  /**
+   * The jQuery XMLHttpRequest (jqXHR) object returned by `$.ajax()` as of jQuery 1.5 is a superset
+   * of the browser's native [XMLHttpRequest](https://developer.mozilla.org/docs/XMLHttpRequest) object.
+   * As of jQuery 1.5, jqXHR objects implement the {@link external:Promise} interface, giving them
+   * all the properties, methods, and behavior of a Promise.
+   * @external jqXHR
+   * @see {@link https://api.jquery.com/jQuery.ajax/#jqXHR}
+   */
 
   /**
    * The CanvasRenderingContext2D interface provides the 2D rendering context for the drawing surface
@@ -82,6 +91,12 @@ define([
    * @see {@link http://i18next.com}
    */
 
+  /**
+   * The Promise object is used for asynchronous computations. A Promise represents an operation
+   * that hasn't completed yet, but is expected in the future.
+   * @external Promise
+   * @see https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise
+   */
 
   // JClicObject will be exported as a result
   var JClicObject = {
@@ -124,8 +139,13 @@ define([
    * 
    * @module JClic
    * @example
-   * // Creates a JClic div and loads "my-project.jclic" on it
-   * <div class ="JClic" data-project="my-project.jclic"></div>
+   * Creates a JClic div and loads "myproject.jclic" on it:
+   * `<div class ="JClic" data-project="myproject.jclic"></div>`
+   * @example
+   * Creates a JClic div that loads "myproject.jclic" with additional parameters, passed as a
+   * JSON string. Note that `data-options` should be delimited by apostrophes `'` because quotation
+   * marks `"` are used for JSON keys and values:
+   * `<div class ="JClic" data-project="myproject.jclic" data-options='{"fade":"400","lang":"es","reporter":"TCPReporter","user":"test01","path":"localhost:9090"}'></div>`
    * 
    */
   // Execute on document ready

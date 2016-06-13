@@ -94,7 +94,7 @@ You can also build this documentation running `grunt doc`
 # Main classes
 
 JClic.js is organized in three main groups of classes: _Player_, _Document_ and _Utilities_. In
-addition to this, the main [JClic](JClic.html) class provides methods to read JClic project documents,
+addition to this, the main [JClic](module-JClic.html) class provides methods to read JClic project documents,
 build players, launch activities and communicate with external reporting systems.
 
 

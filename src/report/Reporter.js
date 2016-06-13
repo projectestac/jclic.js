@@ -66,6 +66,10 @@ define([
      * @type {string} */
     descriptionKey: 'Results are not currently being saved',
     /**
+     * Additional info to display after the reporter's `description`
+     * @type {string} */
+    descriptionDetail: '',
+    /**
      * Starting date and time of this report
      * @type {Date} */
     started: null,
@@ -191,7 +195,7 @@ define([
       var $t = $('<table/>', {class: 'JCGlobalResults'});
       $t.append(
           $html.doubleCell(this.ps.getMsg('Session started:'), this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
-          $html.doubleCell(this.ps.getMsg('Reports system:'), this.ps.getMsg(this.descriptionKey)));
+          $html.doubleCell(this.ps.getMsg('Reports system:'), this.ps.getMsg(this.descriptionKey) + ' ' + this.descriptionDetail));
       if (this.userId)
         $t.append($html.doubleCell(this.ps.getMsg('User:'), this.userId));
 
