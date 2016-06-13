@@ -93,7 +93,6 @@ define([
             break;
           case 'ok':
             actReg[name] = Utils.getBoolean(value, false);
-          default:
             break;
         }
       });

@@ -168,9 +168,8 @@ define([
 
       switch (event.type) {
         case 'click':
-          var text, pos;
+          var text, pos, ok=false;
           if (target) {
-            var ok = false;
             if (target.targetStatus === 'SOLVED') {
               target.targetStatus = 'HIDDEN';
             } else {

@@ -185,7 +185,7 @@ define([
      */
     clear: function () {
       this.nActivities = this.nActClosed = this.nActSolved = this.nActScore = 0;
-      this.percentSolved = this.nActions = 0, this.tScore = this.tTime = 0;
+      this.percentSolved = this.nActions = this.tScore = this.tTime = 0;
     },
     /**
      * Computes the value of all global variables based on the data stored in `activities`

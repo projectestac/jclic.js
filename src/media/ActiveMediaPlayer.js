@@ -74,7 +74,7 @@ define([
                        navigator.mozGetUserMedia ||
                        navigator.msGetUserMedia);
                    
-    URL = window.URL || window.webkitURL;
+    //URL = window.URL || window.webkitURL;
   }
 
   /**

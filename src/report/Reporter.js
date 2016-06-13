@@ -236,8 +236,8 @@ define([
 
         result.push($t);
 
-        for (var p = 0; p < this.sessions.length; p++) {
-          var sr = this.sessions[p];
+        for (var n = 0; n < this.sessions.length; n++) {
+          var sr = this.sessions[n];
           if (sr.getInfo(false).numSequences > 0)
             result = result.concat(sr.$print(this.ps, false, numSessions > 1));
         }

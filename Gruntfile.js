@@ -34,7 +34,8 @@ module.exports = function (grunt) {
     jshint: {
       files: ['src/**/*.js', '!src/GlobalData.js'],
       options: {
-        sub: true
+        sub: true,
+        multistr: true
       }
     },
     //

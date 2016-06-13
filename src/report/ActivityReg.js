@@ -137,7 +137,6 @@ define([
           case 'closed':
           case 'reportActions':
             actReg[name] = Utils.getBoolean(value, false);
-          default:
             break;
         }
       });

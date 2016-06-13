@@ -411,8 +411,7 @@ define([
 .SKINID .bottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
 .SKINID .bottomPanel a {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
 .SKINID .bottomPanel a:hover {background-color:#eee; border-radius:80px;}\
-.SKINID .bottomPanel a:active {background-color:#b3e5fc;}'
-      ,
+.SKINID .bottomPanel a:active {background-color:#b3e5fc;}',
       //
       // Fonts used in this skin
       cssFonts: ['Roboto'],

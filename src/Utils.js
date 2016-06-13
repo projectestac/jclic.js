@@ -48,9 +48,9 @@ define([
      * @returns {*}
      */
     getVal: function (val, defaultValue) {
-      return (val === '' || val === null || typeof val === 'undefined')
-          ? (defaultValue ? defaultValue : null)
-          : val;
+      return (val === '' || val === null || typeof val === 'undefined') ?
+          (defaultValue ? defaultValue : null) :
+          val;
     },
     /**
      * Gets a number from a string or another number

@@ -1157,8 +1157,8 @@ define([
      */
     calcEnclosingRect: function () {
       this.enclosingPoints = [];
-      var last = new AWT.Point();
-      for (var n in this.strokes) {
+      var n, last = new AWT.Point();
+      for (n in this.strokes) {
         var str = this.strokes[n];
         var points = str.getEnclosingPoints(last);
         if (points.length > 0) {
@@ -1177,7 +1177,7 @@ define([
 
       var p0 = new AWT.Point(this.enclosingPoints[0]);
       var p1 = new AWT.Point(this.enclosingPoints[0]);
-      for (var n = 1; n < l; n++) {
+      for (n = 1; n < l; n++) {
         var p = this.enclosingPoints[n];
         // Check if `p` is at left or above `p0`
         p0.x = Math.min(p.x, p0.x);

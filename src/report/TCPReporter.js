@@ -326,8 +326,9 @@ define([
           thisReporter.addTask(bean);
         });
       }
-      if (this.currentSession !== null && this.currentSession.currentSequence !== null
-          && this.currentSession.currentSequence.currentActivity !== this.lastActivity) {
+      if (this.currentSession !== null &&
+          this.currentSession.currentSequence !== null &&
+          this.currentSession.currentSequence.currentActivity !== this.lastActivity) {
         this.lastActivity = this.currentSession.currentSequence.currentActivity;
       } else
         this.lastActivity = null;

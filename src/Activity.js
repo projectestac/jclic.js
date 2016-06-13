@@ -301,6 +301,7 @@ define([
           // Generic attributes:
           case 'name':
             val = Utils.nSlash(val);
+            /* falls through */
           case 'code':
           case 'type':
           case 'description':
