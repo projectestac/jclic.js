@@ -178,13 +178,16 @@ define([
           options = $.extend(Object.create(options), opt);
 
         var player = new JClicPlayer($div, Utils.normalizeObject(options));
-        if (projectName)
-          player.load(projectName);
 
         $(window).resize(function () {
           if (player.skin)
             player.skin.fit();
         });
+        
+        if (projectName)
+          player.initReporter().then(function(){
+            player.load(projectName);
+          });
       });
     }
   });

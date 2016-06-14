@@ -85,7 +85,6 @@ define([
     this.defaultSkin = Skin.prototype.getSkin(null, this, this.$topDiv);
     this.setSkin(this.defaultSkin);
     this.initTimers();
-    this.initReporter();
     this.setSystemMessage("ready");
   };
 
@@ -324,13 +323,15 @@ define([
     /**
      * 
      * Creates and initializes the {@link Reporter} member
+     * @return {external:Promise}
      */
     initReporter: function () {
       if (this.reporter) {
         this.reporter.end();
         this.reporter = null;
       }
-      this.reporter = Reporter.getReporter(null, this, this.options);
+      this.reporter = Reporter.getReporter(null, this);
+      return this.reporter.init();
     },
     /**
      * 
@@ -589,13 +590,14 @@ define([
         // From here, assume that `project` is a [JClicProject](JClicProject.html)
         this.setProject(project);
 
-        // init reporter
-        if (this.reporter !== null)
-          this.reporter.newSession(project.name, this);
-
         // If none specified, start with the first element of the sequence
         if (!sequence && !activity)
           sequence = '0';
+        
+        // start reporter session
+        if (this.reporter !== null)
+          this.reporter.newSession(project.name, this);
+        
       }
 
       // Step two: load the ActivitySequenceElement

@@ -33,22 +33,30 @@ define([
   var TCPReporter = function (ps) {
     Reporter.call(this, ps);
     this.tasks = [];
-    var thisReporter = this;
-    // Warn user before leaving current page with unsaved data:
-    $(window).on('beforeunload', function (event) {
-      if (thisReporter.serviceUrl !== null &&
-          (thisReporter.tasks.length > 0 || thisReporter.processingTasks)) {
-        thisReporter.flushTasksPromise();
-        var result = thisReporter.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
-        if (event)
-          event.returnValue = result;
-        return result;
-      }
-    });
   };
 
   TCPReporter.prototype = {
     constructor: TCPReporter,
+    /**
+     * Description of this reporting system
+     * @override
+     * @type {string} */
+    descriptionKey: 'Reporting to remote server',
+    /**
+     * Additional info to display after the reporter's `description`
+     * @override
+     * @type {string} */
+    descriptionDetail: '(not connected)',
+    /**
+     * Main path of the reports server (without protocol nor service)
+     * @type {string}
+     */
+    serverPath: '',
+    /**
+     * Function to be called by the browser before leaving the current page
+     * @type {function}
+     */
+    beforeUnloadFunction: null,
     /**
      * Identifier of the current session, provided by the server
      * @type {string} */
@@ -86,9 +94,9 @@ define([
      * @type {number} */
     timer: -1,
     /**
-     * Time between calls to the background function, in milliseconds
+     * Time between calls to the background function, in seconds
      * @type {number} */
-    timerLap: 5000,
+    timerLap: 20,
     /**
      * Counter of unsuccessfull connection attempts with the report server
      * @type {number} */
@@ -112,7 +120,19 @@ define([
     /**
      * Default lap between calls to flushTasks, in seconds
      * @type {number} */
-    DEFAULT_TIMER_LAP: 5,
+    DEFAULT_TIMER_LAP: 20,
+    /**
+     * Gets a specific property from this reporting system
+     * @override
+     * @param {string} key - Requested property
+     * @param {string}+ defaultValue - Default return value when requested property does not exist
+     * @returns {string}
+     */
+    getProperty: function (key, defaultValue) {
+      return (this.dbProperties !== null && this.dbProperties.hasOwnProperty(key)) ?
+          this.dbProperties[key] :
+          defaultValue;
+    },
     /**
      * 
      * Adds a new element to the list of report beans pending to be transmitted.
@@ -174,54 +194,68 @@ define([
     },
     /**
      * 
-     * Initializes this report system with an optional set of parameters
+     * Initializes this report system with an optional set of parameters.
+     * Returns a {@link external:Promise}, fulfilled when the reporter is fully initialized.
      * @override
-     * @param {Object} properties - Initial settings passed to the reporting system
+     * @param {?Object} options - Initial settings passed to the reporting system
+     * @returns {external:Promise}
      */
-    init: function (properties) {
-      Reporter.prototype.init.call(this, properties);
+    init: function (options) {
+      if(!options)
+        options = this.ps.options;
+      Reporter.prototype.init.call(this, options);
       this.initiated = false;
+      this.stopReporting();
 
-      var serverPath = properties.path ? properties.path : this.DEFAULT_SERVER_PATH;
-      this.descriptionKey = "Reporting to remote server";
-      this.descriptionDetail = serverPath;
-      var serverService = properties.service ? properties.service : this.DEFAULT_SERVER_SERVICE;
+      this.serverPath = options.path ? options.path : this.DEFAULT_SERVER_PATH;
+      this.descriptionDetail = this.serverPath;
+      var serverService = options.service ? options.service : this.DEFAULT_SERVER_SERVICE;
       if (!serverService.startsWith('/'))
         serverService = '/' + serverService;
-      var serverProtocol = properties.protocol ? properties.protocol : this.DEFAULT_SERVER_PROTOCOL;
+      var serverProtocol = options.protocol ? options.protocol : this.DEFAULT_SERVER_PROTOCOL;
 
-      this.serviceUrl = serverProtocol + "://" + serverPath + serverService;
+      this.serviceUrl = serverProtocol + "://" + this.serverPath + serverService;
 
       if (this.userId === null)
         this.userId = this.promptUserId();
 
       if (this.userId) {
-        var tl = properties.lap ? properties.lap : this.DEFAULT_TIMER_LAP;
+        var tl = options.lap ? options.lap : this.DEFAULT_TIMER_LAP;
         this.timerLap = Math.min(30, Math.max(1, parseInt(tl)));
         var thisReporter = this;
         this.timer = window.setInterval(
             function () {
               thisReporter.flushTasksPromise();
             }, this.timerLap * 1000);
+
+        // Warn before leaving the current page with unsaved data:
+        this.beforeUnloadFunction = function (event) {
+          if (thisReporter.serviceUrl !== null &&
+              (thisReporter.tasks.length > 0 || thisReporter.processingTasks)) {
+            thisReporter.flushTasksPromise();
+            var result = thisReporter.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
+            if (event)
+              event.returnValue = result;
+            return result;
+          }
+        };
+        window.addEventListener('beforeunload', this.beforeUnloadFunction);
         this.initiated = true;
       } else
         this.stopReporting();
+      
+      return Promise.resolve();
+      
     },
     /**
-     * 
-     * This method should be invoked when a new session starts
-     * @override
+     * This method should be invoked when a new session starts.
      * @param {JClicProject|string} jcp - The {@link JClicProject} referenced by this session, or
      * just its name.
+     * @returns {external:Promise}
      */
     newSession: function (jcp) {
       Reporter.prototype.newSession.call(this, jcp);
-      if (!this.serviceUrl)
-        return;
-      if (this.userId === null) {
-        this.userId = this.promptUserId();
-      }
-      if (this.userId !== null) {
+      if (this.serviceUrl && this.userId !== null) {
         // Session ID will be obtained when reporting first activity
         this.currentSessionId = null;
       }
@@ -243,7 +277,6 @@ define([
         // A new session must be created:
         return new Promise(function (resolve, reject) {
           if (thisReporter.initiated && thisReporter.userId !== null && thisReporter.currentSession !== null) {
-
             thisReporter.flushTasksPromise().then(function () {
               thisReporter.currentSessionId = null;
               var bean = new TCPReporter.ReportBean('add session');
@@ -267,7 +300,7 @@ define([
                   });
             });
           } else
-            reject('Unable to start a new DB session');
+            reject('Unable to start session in remote server!');
         });
     },
     /**
@@ -302,19 +335,26 @@ define([
     },
     /**
      * 
-     * Stops the reporting system, usually as a result of repeated errors or because the player should
-     * be shut down.
+     * Stops the reporting system, usually as a result of repeated errors or because the player
+     * shuts down.
      */
     stopReporting: function () {
-      if (this.serviceUrl !== null) {
-        this.serviceUrl = null;
-        this.descriptionDetail = this.descriptionDetail + ' (' + this.ps.getMsg('currently not connected') + ')';
-      }
       if (this.timer >= 0) {
         window.clearInterval(this.timer);
         this.timer = -1;
       }
-      this.initiated = false;
+      if (this.initiated) {
+        var thisReporter = this;
+        this.flushTasksPromise().then(function () {
+          if (thisReporter.beforeUnloadFunction) {
+            window.removeEventListener('beforeunload', thisReporter.beforeUnloadFunction);
+            thisReporter.beforeUnloadFunction = null;
+          }
+          thisReporter.serviceUrl = null;
+          thisReporter.descriptionDetail = thisReporter.serverPath + ' (' + thisReporter.ps.getMsg('not connected') + ')';
+          thisReporter.initiated = false;
+        });
+      }
     },
     /**
      * 
@@ -354,6 +394,9 @@ define([
       this.reportActivity();
     }
   };
+  
+  
+  
   /**
    * 
    * This inner class encapsulates a chunk of information in XML format, ready to be
@@ -401,7 +444,7 @@ define([
   // TCPReporter extends Reporter
   TCPReporter.prototype = $.extend(Object.create(Reporter.prototype), TCPReporter.prototype);
 
-  // Register class in Reporter
+  // Register class in Reporter.CLASSES
   Reporter.CLASSES['TCPReporter'] = TCPReporter;
 
   return TCPReporter;

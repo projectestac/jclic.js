@@ -13,6 +13,8 @@
 //  General Public License for more details. You should have received a copy of the GNU General
 //  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
+/* global Promise */
+
 define([
   "jquery",
   "./SessionReg",
@@ -247,16 +249,21 @@ define([
       return result;
     },
     /**
-     * Initializes this report system with an optional set of parameters
-     * @param {Object} properties - Initial settings passed to the reporting system
+     * Initializes this report system with an optional set of parameters.
+     * Returns a {@link external:Promise}, fulfilled when the reporter is fully initialized.
+     * @param {?Object} options - Initial settings passed to the reporting system
+     * @returns {external:Promise}
      */
-    init: function (properties) {
-      this.userId = Utils.getVal(properties.user);
-      this.sessionKey = Utils.getVal(properties.key);
-      this.sessionContext = Utils.getVal(properties.context);
-      this.groupCodeFilter = Utils.getVal(properties.groupCodeFilter);
-      this.userCodeFilter = Utils.getVal(properties.userCodeFilter);
+    init: function (options) {
+      if(!options)
+        options = this.ps.options;
+      this.userId = Utils.getVal(options.user);
+      this.sessionKey = Utils.getVal(options.key);
+      this.sessionContext = Utils.getVal(options.context);
+      this.groupCodeFilter = Utils.getVal(options.groupCodeFilter);
+      this.userCodeFilter = Utils.getVal(options.userCodeFilter);
       this.initiated = true;
+      return Promise.resolve();
     },
     /**
      * Closes this reporting system
@@ -293,11 +300,11 @@ define([
       throw "No database!";
     },
     /**
-     * This method should be invoked when a new session starts
+     * This method should be invoked when a new session starts.
      * @param {JClicProject|string} jcp - The {@link JClicProject} referenced by this session, or
      * just its name.
      */
-    newSession: function (jcp) {
+    newSession: function (jcp) {      
       this.endSession();
       this.currentSession = new SessionReg(jcp);
       this.sessions.push(this.currentSession);
@@ -364,22 +371,20 @@ define([
 
   /**
    * Creates a new Reporter of the requested class
+   * The resulting object must be prepared to operate with a call to its `init` method.
    * @param {string} className - Class name of the requested reporter. When `null`, a basic Reporter is created.
    * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
-   * @param {Object} options - Initial settings to be passed to the constuctor of the new reporter.
    * @returns {Reporter}
    */
-  Reporter.getReporter = function (className, ps, options) {
+  Reporter.getReporter = function (className, ps) {
     var result = null;
     if (className === null) {
       className = 'Reporter';
-      if (options.hasOwnProperty('reporter'))
-        className = options.reporter;
+      if (ps.options.hasOwnProperty('reporter'))
+        className = ps.options.reporter;
     }
     if (Reporter.CLASSES.hasOwnProperty(className)) {
       result = new Reporter.CLASSES[className](ps);
-      // TODO: Group reporter params into a single Object (as `reporterParams` in JClic)?
-      result.init(options);
     } else {
       console.log('Unknown reporter class: ' + className);
     }
