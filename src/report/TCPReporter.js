@@ -201,7 +201,7 @@ define([
      * @returns {external:Promise}
      */
     init: function (options) {
-      if(!options)
+      if (typeof options === 'undefined' || options === null)
         options = this.ps.options;
       Reporter.prototype.init.call(this, options);
       this.initiated = false;
@@ -213,39 +213,59 @@ define([
       if (!serverService.startsWith('/'))
         serverService = '/' + serverService;
       var serverProtocol = options.protocol ? options.protocol : this.DEFAULT_SERVER_PROTOCOL;
-
       this.serviceUrl = serverProtocol + "://" + this.serverPath + serverService;
 
-      if (this.userId === null)
-        this.userId = this.promptUserId();
-
-      if (this.userId) {
-        var tl = options.lap ? options.lap : this.DEFAULT_TIMER_LAP;
-        this.timerLap = Math.min(30, Math.max(1, parseInt(tl)));
-        var thisReporter = this;
-        this.timer = window.setInterval(
-            function () {
-              thisReporter.flushTasksPromise();
-            }, this.timerLap * 1000);
-
-        // Warn before leaving the current page with unsaved data:
-        this.beforeUnloadFunction = function (event) {
-          if (thisReporter.serviceUrl !== null &&
-              (thisReporter.tasks.length > 0 || thisReporter.processingTasks)) {
-            thisReporter.flushTasksPromise();
-            var result = thisReporter.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
-            if (event)
-              event.returnValue = result;
-            return result;
-          }
-        };
-        window.addEventListener('beforeunload', this.beforeUnloadFunction);
-        this.initiated = true;
-      } else
-        this.stopReporting();
-      
+      var thisReporter = this;
+      var bean = new TCPReporter.ReportBean('get_properties');
+      return new Promise(function (resolve, reject) {
+        thisReporter.transaction(bean.$bean)
+            .done(function (data, textStatus, jqXHR) {
+              thisReporter.dbProperties = {};
+              $(data).find('param').each(function () {
+                var $param = $(this);
+                thisReporter.dbProperties[$param.attr('name')] = $param.attr('value');
+                console.log('DBPROP '+$param.attr('name')+': '+$param.attr('value'));
+              });
+              thisReporter.getUserId().then(function () {
+                var tl = options.lap ? options.lap : thisReporter.getProperty('TIME_LAP', this.DEFAULT_TIMER_LAP);
+                thisReporter.timerLap = Math.min(30, Math.max(1, parseInt(tl)));
+                thisReporter.timer = window.setInterval(
+                    function () {
+                      thisReporter.flushTasksPromise();
+                    }, thisReporter.timerLap * 1000);
+                // Warn before leaving the current page with unsaved data:
+                thisReporter.beforeUnloadFunction = function (event) {
+                  if (thisReporter.serviceUrl !== null &&
+                      (thisReporter.tasks.length > 0 || thisReporter.processingTasks)) {
+                    thisReporter.flushTasksPromise();
+                    var result = thisReporter.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
+                    if (event)
+                      event.returnValue = result;
+                    return result;
+                  }
+                };
+                window.addEventListener('beforeunload', thisReporter.beforeUnloadFunction);
+                thisReporter.initiated = true;
+                resolve(true);
+              }).catch(function(msg){
+                console.log('ERROR in getUserId: ' + msg);
+                thisReporter.stopReporting();
+                reject(false);                
+              });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+              console.log('ERROR initializing reports: ' + textStatus);
+              thisReporter.stopReporting();
+              reject(false);
+            });
+      });
+    },
+    getUserId: function(){
+      if(this.userId===null){
+        // TODO: prompt user Id
+        this.userId = 'abc';
+      }
       return Promise.resolve();
-      
     },
     /**
      * This method should be invoked when a new session starts.
