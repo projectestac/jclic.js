@@ -224,9 +224,10 @@ define([
               $(data).find('param').each(function () {
                 var $param = $(this);
                 thisReporter.dbProperties[$param.attr('name')] = $param.attr('value');
-                console.log('DBPROP '+$param.attr('name')+': '+$param.attr('value'));
+                console.log('DBPROP ' + $param.attr('name') + ': ' + $param.attr('value'));
               });
-              thisReporter.getUserId().then(function () {
+              thisReporter.promptUserId(false).then(function (userId) {
+                thisReporter.userId = userId;
                 var tl = options.lap ? options.lap : thisReporter.getProperty('TIME_LAP', this.DEFAULT_TIMER_LAP);
                 thisReporter.timerLap = Math.min(30, Math.max(1, parseInt(tl)));
                 thisReporter.timer = window.setInterval(
@@ -247,10 +248,10 @@ define([
                 window.addEventListener('beforeunload', thisReporter.beforeUnloadFunction);
                 thisReporter.initiated = true;
                 resolve(true);
-              }).catch(function(msg){
+              }).catch(function (msg) {
                 console.log('ERROR in getUserId: ' + msg);
                 thisReporter.stopReporting();
-                reject(false);                
+                reject(false);
               });
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -259,13 +260,6 @@ define([
               reject(false);
             });
       });
-    },
-    getUserId: function(){
-      if(this.userId===null){
-        // TODO: prompt user Id
-        this.userId = 'abc';
-      }
-      return Promise.resolve();
     },
     /**
      * This method should be invoked when a new session starts.
@@ -414,9 +408,9 @@ define([
       this.reportActivity();
     }
   };
-  
-  
-  
+
+
+
   /**
    * 
    * This inner class encapsulates a chunk of information in XML format, ready to be

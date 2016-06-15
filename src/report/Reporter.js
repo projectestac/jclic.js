@@ -91,7 +91,11 @@ define([
      * `true` if the system is connected to a database with user's data.
      * When `false`, a generic ID will be used. 
      * @type {boolean} */
-    bUserBased: null,
+    bUserBased: false,
+    /**
+     * Maximum number of incorrect UserID attempts
+     * @type {number} */
+    MAX_USERID_PROMPT_ATTEMPTS: 3,
     /**
      * Gets a specific property from this reporting system
      * @param {string} key - Requested property
@@ -112,36 +116,40 @@ define([
       return key === null ? defaultValue : s === 'true' ? true : false;
     },
     /**
-     * Gets the list of current groups or organizations registered on this reporting system
-     * @returns {Object[]}
+     * Gets the list of current groups or organizations registered on this reporting system. This 
+     * is a method intended to be implemented in subclasses.
+     * @returns {external:Promise} - When fulfilled, an array of grou data is returned as a result
      */
     getGroups: function () {
-      return null;
+      return Promise.reject('No groups defined!');
     },
     /**
      * Gets the list of current users registered on this reporting system, optionally filtered by
-     * a specific group ID.
+     * a specific group ID. This is a method intended to be implemented in subclasses.
      * @param {string}+ groupId - Optional group ID to be used as a filter criteria
-     * @returns {Object[]}
+     * @returns {external:Promise} - When fulfilled, an object with a collection of user data records
+     * is returned
      */
     getUsers: function (groupId) {
-      return null;
+      return Promise.reject('No users defined in ' + groupId);
     },
     /**
-     * Gets extended data associated with a specific user
+     * Gets extended data associated with a specific user. This is a method intended to be
+     * implemented in subclasses.
      * @param {string} userId - The requested user ID
-     * @returns {Object}
+     * @returns {external:Promise} - When fulfilled, an object with user data is returned.
      */
     getUserData: function (userId) {
-      return null;
+      return Promise.reject('Unknown user!');
     },
     /**
-     * Gets extended data associated with a specific group or organization
+     * Gets extended data associated with a specific group or organization. This 
+     * is a method intended to be implemented in subclasses.
      * @param {string} groupId - The requested group ID
-     * @returns {Object}
+     * @returns {external:Promise} - When fulfilled, an object with group data is returned.
      */
     getGroupData: function (groupId) {
-      return null;
+      return Promise.reject('Unknown group!');
     },
     /**
      * Checks if this reporting system manages its own database of users and groups. Defaults to `false`
@@ -154,35 +162,85 @@ define([
     },
     /**
      * Allows the current user to create a new group, and asks his name
-     * @returns {string} - The name choosen for the new group
+     * @returns {external:Promise} - When fulfilled, the name choosen for the new group is returned.
      */
     promptForNewGroup: function () {
       // TODO: Implement promptForNewGroup
-      return null;
+      return Promise.reject('Creation of new groups not allowed!');
     },
     /**
      * Allows the current user to create a new user ID, and asks his ID and password
-     * @returns {string} - The choosen user ID
+     * @returns {external:Promise} - When fulfilled, an object with the new user ID and password
+     * is returned.
      */
     promptForNewUser: function () {
       // TODO: Implement promptForNewUser
-      return null;
+      return Promise.reject('Creation of new users not allowed!');
     },
     /**
      * Allows the current user to select its group or organization from the current groups list
-     * @returns {string} - The choosen group ID
+     * @returns {external:Promise}
      */
     promptGroupId: function () {
-      // TODO: Implement promptGroupId
-      return null;
+      var thisReporter = this;
+      return new Promise(function (resolve, reject) {
+        if (!thisReporter.userBased())
+          reject('This system don\'t manages group data!');
+        else {
+          // TODO: Implement getGroups as a Promise
+          thisReporter.getGroups().then(function (groupList) {
+            // TODO: Select group from list
+            // Creation of new groups not yet implemented!
+            
+            // Provisional implementation!
+            resolve(groupList[0]);
+          }).catch(reject);
+        }
+      });
     },
     /**
-     * Asks the current user which is its ID
-     * @returns {string} - A valid user ID, or `null` if cancelled or error thrown
+     * Asks for a valid user ID fulfilling the promise if found, rejecting it otherwise
+     * @param {boolean}+ forcePrompt - Prompt also if `userId` is already defined (default is `false`)
+     * @returns {external:Promise}
      */
-    promptUserId: function () {
-      // TODO: Implement promptUserId
-      return null;
+    promptUserId: function (forcePrompt) {
+      var thisReporter = this;
+      return new Promise(function (resolve, reject) {
+        if (thisReporter.userId !== null && !forcePrompt)
+          resolve(thisReporter.userId);
+        else if (!thisReporter.userBased())
+          reject('This system don\'t manages user data!');
+        else {
+          var cancel = false, tries = 0;
+          while (thisReporter.userId === null && !cancel && tries++ < thisReporter.MAX_USERID_PROMPT_ATTEMPTS) {
+            if (thisReporter.getBooleanProperty('SHOW_USER_LIST', true)) {
+              // TODO: Implement promptGroupId as a promise!
+              thisReporter.promptGroupId().then(function (groupId) {
+                // TODO: Implement getUsers as a promise!
+                thisReporter.getUsers(groupId).then(function (usersList) {
+                  var userCreationAllowed = thisReporter.getBooleanProperty('ALLOW_CREATE_USERS', false);
+                  // TODO: Select user from list
+                  thisReporter.userId = 'abc';
+                  //UserData ud=(UserData)list.getSelectedValue();
+                  // if(ud.pwd!=null && ud.pwd.length()>0){
+                  // String pwd=Encryption.Decrypt(ud.pwd);
+                  // TODO: Prompt password!
+                  // }
+
+                  // Provisional implementation!
+                  resolve('abc');
+                }).catch(reject);
+              }).catch(reject);
+            } else {
+              // TODO: Prompt user ID and Password
+              // String s=StrUtils.nullableString(textField.getText());
+              // UserData ud=getUserData(s);
+              // Encryption.Decrypt(uPwd)
+              // resolve or reject!
+            }
+          }
+        }
+      });
     },
     /**
      * Renders the data contained in this report into a DOM tree
@@ -255,7 +313,7 @@ define([
      * @returns {external:Promise}
      */
     init: function (options) {
-      if(!options)
+      if (!options)
         options = this.ps.options;
       this.userId = Utils.getVal(options.user);
       this.sessionKey = Utils.getVal(options.key);
@@ -263,7 +321,7 @@ define([
       this.groupCodeFilter = Utils.getVal(options.groupCodeFilter);
       this.userCodeFilter = Utils.getVal(options.userCodeFilter);
       this.initiated = true;
-      return Promise.resolve();
+      return Promise.resolve(true);
     },
     /**
      * Closes this reporting system
@@ -304,7 +362,7 @@ define([
      * @param {JClicProject|string} jcp - The {@link JClicProject} referenced by this session, or
      * just its name.
      */
-    newSession: function (jcp) {      
+    newSession: function (jcp) {
       this.endSession();
       this.currentSession = new SessionReg(jcp);
       this.sessions.push(this.currentSession);
