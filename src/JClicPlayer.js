@@ -263,7 +263,7 @@ define([
           }
         }),
         'reports': new AWT.Action('reports', function (ev) {
-          tp.showAbout(true);
+          tp.showReports();
         }),
         'audio': new AWT.Action('audio', function (ev) {
           tp.audioEnabled = !tp.audioEnabled;
@@ -363,14 +363,11 @@ define([
       this.delayedTimer.repeats = false;
     },
     /**
-     * Opens the 'about' dialog, optionally showing current report
-     * @param {boolean} withReport - Show current report on the about window
+     * Opens the reports dialog
      */
-    showAbout: function (withReport) {
-      if (this.skin && this.skin.$reportsPanel) {
-        if (withReport)
-          this.skin.$reportsPanel.html(this.reporter ? this.reporter.$print(this) : '');
-        this.skin.showAbout(true);
+    showReports: function () {
+      if (this.skin) {
+        this.skin.showReports(this.reporter);
       }
     },
     /**
@@ -379,8 +376,7 @@ define([
      */
     closeHelpWindow: function () {
       if (this.skin) {
-        this.skin.showHelp(null);
-        this.skin.showAbout(false);
+        this.skin._closeDlg(false);
       }
     },
     /**

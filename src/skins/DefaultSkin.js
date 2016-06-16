@@ -16,12 +16,11 @@
 define([
   "jquery",
   "screenfull",
-  "clipboard-js",
   "../AWT",
   "./Skin",
   "../boxes/ActiveBox",
   "./Counter"
-], function ($, screenfull, clipboard, AWT, Skin, ActiveBox, Counter) {
+], function ($, screenfull, AWT, Skin, ActiveBox, Counter) {
 
 // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
@@ -104,64 +103,6 @@ define([
       display: 'none'
     });
     this.$div.append(this.$waitPanel);
-
-    // Create reports panel
-    this.$infoPanel = $('<div/>', {class: 'infoPanel'}).css({
-      'z-index': 98,
-      position: 'fixed',
-      width: '100%',
-      height: '100%',
-      display: 'none'
-    }).on('click', function () {
-      thisSkin.showAbout(false);
-    });
-
-    this.$infoDiv = $('<div/>', {class: 'infoDiv'}).css({
-      display: 'inline-block',
-      position: 'relative',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)'
-    }).on('click', function () {
-      return false;
-    });
-
-    this.$infoMainPanel = $('<div/>', {class: 'infoMainPanel'});
-    this.$infoHead = $('<div/>', {class: 'infoHead'})
-        .append($('<div/>', {class: 'headTitle'})
-            .append($(this.resources.appLogo).css({width: '1.5em', height: '1.5em', 'vertical-align': 'bottom'}))
-            .append($('<span/>').html('JClic.js')))
-        .append($('<p/>').css({'margin-top': 0, 'margin-left': '3.5em'})
-            .append($('<a/>', {href: 'http://clic.xtec.cat/repo/index.html?page=info'}).html('http://clic.xtec.cat'))
-            .append($('<br>'))
-            .append($('<span/>').html(ps.getMsg('Version') + ' ' + this.ps.JClicVersion)));
-    this.$reportsPanel = $('<div/>', {class: 'reportsPanel'});
-
-    this.$bottomPanel = $('<div/>', {class: 'bottomPanel'}).append(
-        $('<a/>', {title: 'Copy data to clipboard'}).append($(this.resources.copy).css({width: '26px', height: '26px'}))
-        .on('click', function () {
-          clipboard.copy({
-            'text/plain': '===> Please paste the content copied from JClic Reports into a spreadsheet or rich-text editor <===',
-            'text/html': thisSkin.$reportsPanel.html()
-          });
-          $(this).parent().append(
-              $('<div/>', {class: 'smallPopup'})
-              .html('Data has been copied to clipboard').fadeIn().delay(3000).fadeOut(function () {
-            $(this).remove();
-          }));
-        }),
-        $('<a/>', {title: 'Close dialog'}).append($(this.resources.closeDialog).css({width: '26px', height: '26px'}))
-        .on('click', function () {
-          thisSkin.showAbout(false);
-        }));
-
-    this.$div.append(
-        this.$infoPanel.append(
-            this.$infoDiv.append(
-                this.$infoMainPanel.append(
-                    this.$infoHead,
-                    this.$reportsPanel),
-                this.$bottomPanel)));
 
     // Create counters
     if (false !== this.ps.options.counters) {
@@ -385,14 +326,14 @@ define([
       css: '\
 .SKINID .JClicPlayer {background-color: olive}\
 .SKINID .counter {font-family:Roboto,Sans-serif; color:white; cursor: pointer}\
-.SKINID .infoPanel {background-color:rgba(30,30,30,0.7);}\
-.SKINID .infoDiv {height:calc(100% - 5em); background-color:#efefef; color:#757575; font-family:Roboto,Arial,Helvetica,sans-serif; font-size:10pt; width:45em; line-height:normal;}\
-.SKINID .infoDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
-.SKINID .infoMainPanel {height:calc(100% - 4em); overflow-y:auto;}\
-.SKINID .infoMainPanel .headTitle {font-size:2.5em; font-weight:bold; margin:auto;}\
-.SKINID .infoMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
-.SKINID .infoMainPanel p {font-size:1.1em; margin-bottom:0.5em;}\
-.SKINID .infoMainPanel table {table-layout:fixed; width:40em; margin:0.5em 0 1.7em 0; border-collapse:collapse;}\
+.SKINID .dlgOverlay {background-color:rgba(30,30,30,0.7);}\
+.SKINID .dlgDiv {height:calc(100% - 5em); background-color:#efefef; color:#757575; font-family:Roboto,Arial,Helvetica,sans-serif; font-size:10pt; width:45em; line-height:normal;}\
+.SKINID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
+.SKINID .dlgMainPanel {height:calc(100% - 4em); overflow-y:auto;}\
+.SKINID .dlgMainPanel .headTitle {font-size:2.5em; font-weight:bold; margin:auto;}\
+.SKINID .dlgMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
+.SKINID .dlgMainPanel p {font-size:1.1em; margin-bottom:0.5em;}\
+.SKINID .dlgMainPanel table {table-layout:fixed; width:40em; margin:0.5em 0 1.7em 0; border-collapse:collapse;}\
 .SKINID .infoHead {padding:2em 2em 0.5em;}\
 .SKINID .reportsPanel {padding:1em 2em;}\
 .SKINID .JCGlobalResults td {padding:0.4em; border-bottom:1px solid #b6b6b6;}\
@@ -407,11 +348,11 @@ define([
 .SKINID .JCDetailed .no {color:#f34235; font-weight:600;}\
 .SKINID .JCDetailed tr:last-child {font-weight:bold;}\
 .SKINID .JCDetailed .incomplete {font-style:italic;}\
-.SKINID .bottomPanel {height:3.5em; background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
-.SKINID .bottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
-.SKINID .bottomPanel a {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
-.SKINID .bottomPanel a:hover {background-color:#eee; border-radius:80px;}\
-.SKINID .bottomPanel a:active {background-color:#b3e5fc;}',
+.SKINID .dlgBottomPanel {height:3.5em; background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
+.SKINID .dlgBottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
+.SKINID .dlgBottomPanel a {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
+.SKINID .dlgBottomPanel a:hover {background-color:#eee; border-radius:80px;}\
+.SKINID .dlgBottomPanel a:active {background-color:#b3e5fc;}',
       //
       // Fonts used in this skin
       cssFonts: ['Roboto'],
@@ -550,31 +491,14 @@ OS0yIDIgLjkgMiAyIDJ6bS0zLjYgMTMuOWwxLTQuNCAyLjEgMnY2aDJ2LTcuNWwtMi4xLTIgLjYt\
 M2MxLjMgMS41IDMuMyAyLjUgNS41IDIuNXYtMmMtMS45IDAtMy41LTEtNC4zLTIuNGwtMS0xLjZj\
 LS40LS42LTEtMS0xLjctMS0uMyAwLS41LjEtLjguMWwtNS4yIDIuMnY0LjdoMnYtMy40bDEuOC0u\
 Ny0xLjYgOC4xLTQuOS0xLS40IDIgNyAxLjR6Ij48L3BhdGg+PC9zdmc+Cg==',
-      counterIconSize: {w: 18, h: 18},
-      //
-      // Close dialog button
-      closeDialog: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36">\
-<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
-<path d="M0 0h24v24H0z" fill="none"/>\
-</svg>',
-      //
-      // Copy text button
-      copy: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36">\n\
-<path d="M0 0h24v24H0z" fill="none"/>\n\
-<path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>\
-</svg>',
-      //
-      // JClic logo
-      appLogo: '<svg viewBox="0 0 64 64"><g transform="matrix(.02081 0 0-.02081 5 62.33)">\
-<path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1999 519 3 11 999-266 999-266z" fill="none" stroke="#9d6329" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\
-<path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1998 519 3 11 999-266 999-266" fill="#f89c0e"/>\
-<path d="m357 2850l1000-268-267-992-1000 266 267 994z" fill="none" stroke="#86882b" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\n\
-<path d="m357 2850l1000-268-267-992-1000 266 267 994" fill="#d9e70c"/>\n\
-</g></svg>'
+      counterIconSize: {w: 18, h: 18}
     }
   };
   // DefaultSkin extends [Skin](Skin.html)
   DefaultSkin.prototype = $.extend(Object.create(Skin.prototype), DefaultSkin.prototype);
+  // Inherit Skin resources
+  DefaultSkin.prototype.resources = $.extend(Object.create(Skin.prototype.resources), DefaultSkin.prototype.resources);
+
   // Register this class in the list of available skins
   Skin.CLASSES['DefaultSkin'] = DefaultSkin;
   return DefaultSkin;

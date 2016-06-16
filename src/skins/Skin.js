@@ -16,9 +16,10 @@
 define([
   "jquery",
   "screenfull",
+  "clipboard-js",
   "../Utils",
   "../AWT"
-], function ($, screenfull, Utils, AWT) {
+], function ($, screenfull, clipboard, Utils, AWT) {
 
   // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
@@ -43,6 +44,8 @@ define([
     // Skin extends [AWT.Container](AWT.html)
     AWT.Container.call(this);
 
+    var thisSkin = this;
+
     this.skinId = 'JC' + Math.round((100000 + Math.random() * 100000));
 
     this.$div = $div ? $div.addClass(this.skinId) : $('<div/>').addClass('JClic ' + this.skinId);
@@ -54,9 +57,77 @@ define([
     if (name)
       this.name = name;
 
+    // Create dialog overlay and panel
+    this.$dlgOverlay = $('<div/>', {class: 'dlgOverlay'}).css({
+      'z-index': 98,
+      position: 'fixed',
+      width: '100%',
+      height: '100%',
+      display: 'none'
+    }).on('click', function () {
+      if (!thisSkin._isModalDlg)
+        // Non-modal dialogs are closed on click outside the main area
+        thisSkin._closeDlg(true);
+      return false;
+    });
+
+    var $dlgDiv = $('<div/>', {class: 'dlgDiv'}).css({
+      display: 'inline-block',
+      position: 'relative',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
+    }).on('click', function () {
+      // Clicks not passed to parent
+      return false;
+    });
+
+    this.$dlgMainPanel = $('<div/>', {class: 'dlgMainPanel'});
+    this.$dlgBottomPanel = $('<div/>', {class: 'dlgBottomPanel'});
+
+    // Basic dialog structure:
+    this.$div.append(
+        this.$dlgOverlay.append(
+            $dlgDiv.append(
+                this.$dlgMainPanel,
+                this.$dlgBottomPanel)));
+
+    this.$infoHead = $('<div/>', {class: 'infoHead'})
+        .append($('<div/>', {class: 'headTitle'})
+            .append($(this.resources.appLogo).css({width: '1.5em', height: '1.5em', 'vertical-align': 'bottom'}))
+            .append($('<span/>').html('JClic.js')))
+        .append($('<p/>').css({'margin-top': 0, 'margin-left': '3.5em'})
+            .append($('<a/>', {href: 'http://clic.xtec.cat/repo/index.html?page=info'}).html('http://clic.xtec.cat'))
+            .append($('<br>'))
+            .append($('<span/>').html(ps.getMsg('Version') + ' ' + this.ps.JClicVersion)));
+
+    this.$reportsPanel = $('<div/>', {class: 'reportsPanel'});
+
+    this.$copyBtn = $('<a/>', {title: 'Copy data to clipboard'})
+        .append($(this.resources.copy).css({width: '26px', height: '26px'}))
+        .on('click', function () {
+          clipboard.copy({
+            'text/plain': '===> Please paste the content copied from JClic Reports into a spreadsheet or rich-text editor <===',
+            'text/html': thisSkin.$reportsPanel.html()
+          });
+          $(this).parent().append(
+              $('<div/>', {class: 'smallPopup'})
+              .html('Data has been copied to clipboard')
+              .fadeIn()
+              .delay(3000)
+              .fadeOut(function () {
+                $(this).remove();
+              }));
+        });
+
+    this.$closeDlgBtn = $('<a/>', {title: 'Close dialog'})
+        .append($(this.resources.closeDialog).css({width: '26px', height: '26px'}))
+        .on('click', function () {
+          thisSkin._closeDlg(true);
+        });
+
     // Registers this Skin in the list of realized Skin objects
     Skin.skinStack.push(this);
-
   };
 
   /**
@@ -93,11 +164,43 @@ define([
      * @type {external:jQuery} */
     $waitPanel: null,
     /**
-     * Info panel, used to display reports
+     * Main panel used to display modal and non-modal dialogs
      * @type {external:jQuery} */
-    $infoPanel: null,
+    $dlgOverlay: null,
     /**
-     * Div inside @link{$infoPanel} where JClicPlayer will place the information to be shown
+     * Main panel of dialogs, where relevant information must be placed
+     * @type {external:jQuery} */
+    $dlgMainPanel: null,
+    /**
+     * Bottom panel of dialogs, used for action buttons
+     * @type {external:jQuery} */
+    $dlgBottomPanel: null,
+    /**
+     * Element usually used as header in dialogs, with JClic logo, name and version
+     * @type {external:jQuery} */
+    $infoHead: null,
+    /**
+     * Iconic button used to copy content to clipboard
+     * @type {external:jQuery} */
+    $copyBtn: null,
+    /**
+     * Iconic button used to close the dialog
+     * @type {external:jQuery} */
+    $closeDlgBtn: null,
+    /**
+     * Value to be returned by the dialog promise when the presented task is fulfilled
+     * @type {Object} */
+    _dlgOkValue: null,
+    /**
+     * Value to be returned in user-cancelled dialogs
+     * @type {Object} */
+    _dlgCancelValue: null,
+    /**
+     * Flag indicating if the current dialog is modal or not
+     * @type {boolean} */
+    _isModalDlg: false,
+    /**
+     * Div inside @link{$dlgOverlay} where JClicPlayer will place the information to be shown
      * @type {external:jQuery} */
     $reportsPanel: null,
     /**
@@ -223,11 +326,19 @@ define([
       return AWT.Container.prototype.updateContent.call(this, dirtyRegion);
     },
     /**
+     * 
      * Resets all counters
      * @param {boolean} bEnabled - Leave it enabled/disabled
      */
     resetAllCounters: function (bEnabled) {
-      // TODO: implement counters
+      $.each(this.counters, function (name, counter) {
+        if (counter !== null) {
+          counter.value = 0;
+          counter.countDown = 0;
+          counter.enabled = bEnabled;
+          counter.refreshDisplay();
+        }
+      });
     },
     /**
      * 
@@ -275,13 +386,56 @@ define([
     },
     /**
      * 
-     * Shows or hides a panel with miscellaneous information 
-     * @param {boolean} show - `true` when the panel must be shown, `false` otherwise
+     * Shows a "dialog" panel, useful for displaying information or prompt something to users
+     * @param {boolean} modal - When `true`, the dialog should be closed by any click outside the main panel
+     * @param {object} options - This object should have two components: `main` and `bottom`, both
+     * containing a jQuery HTML element (or array of elements) to be placed on the main and bottom panels
+     * of the dialog.
+     * @returns {external:Promise} - A {@link external:Promise} that will be fulfilled when the dialog is closed.
      */
-    showAbout: function (show) {
-      if (this.$infoPanel) {
-        this.$infoPanel.css({display: show ? 'inherit' : 'none'});
-      }
+    showDlg: function (modal, options) {
+      var thisSkin = this;
+      return new Promise(function (resolve, reject) {
+        thisSkin._dlgOkValue = null;
+        thisSkin._dlgCancelValue = null;
+        thisSkin._isModalDlg = modal;
+
+        thisSkin.$dlgMainPanel.children().detach();
+        thisSkin.$dlgBottomPanel.children().detach();
+        if (options.main)
+          thisSkin.$dlgMainPanel.append(options.main);
+        if (options.bottom)
+          thisSkin.$dlgBottomPanel.append(options.bottom);
+
+        thisSkin._closeDlg = function (resolved) {
+          if (resolved && resolve)
+            resolve(thisSkin._dlgOkValue);
+          else if (!resolved && reject)
+            reject(thisSkin._dlgCancelValue);
+          thisSkin.$dlgOverlay.css({display: 'none'});
+          thisSkin._closeDlg = Skin.prototype._closeDlg;
+        };
+        thisSkin.$dlgOverlay.css({display: 'inherit'});
+      });
+    },
+    /**
+     * Called when the dialog must be closed, usually only by Skin members.
+     * This method is re-defined on each call to `showDlg`, so the `resolve` and `reject`
+     * functions can be safelly called.
+     */
+    _closeDlg: function () {},
+    /**
+     * 
+     * Displays a dialog with a report of the current results achieved by the user.
+     * @param {Reporter} reporter - The reporter system currently in use
+     * @returns {external:Promise} - The {@link external:Promise} returned by {@link Skin.showDlg}.
+     */
+    showReports: function (reporter) {
+      this.$reportsPanel.html(reporter ? reporter.$print(this.ps) : '');
+      return this.showDlg(false, {
+        main: [this.$infoHead, this.$reportsPanel],
+        bottom: [this.$copyBtn, this.$closeDlgBtn]
+      });
     },
     /**
      * 
@@ -359,6 +513,31 @@ define([
      */
     actionStatusChanged: function (act) {
       // To be implemented in subclasses      
+    },
+    /**
+     * Buttons and other graphical resources used by this skin.
+     * @type {object} */
+    resources: {
+      //
+      // Close dialog button
+      closeDialog: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36">\
+<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
+<path d="M0 0h24v24H0z" fill="none"/>\
+</svg>',
+      //
+      // Copy text button
+      copy: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36">\n\
+<path d="M0 0h24v24H0z" fill="none"/>\n\
+<path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>\
+</svg>',
+      //
+      // JClic logo
+      appLogo: '<svg viewBox="0 0 64 64"><g transform="matrix(.02081 0 0-.02081 5 62.33)">\
+<path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1999 519 3 11 999-266 999-266z" fill="none" stroke="#9d6329" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\
+<path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1998 519 3 11 999-266 999-266" fill="#f89c0e"/>\
+<path d="m357 2850l1000-268-267-992-1000 266 267 994z" fill="none" stroke="#86882b" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\n\
+<path d="m357 2850l1000-268-267-992-1000 266 267 994" fill="#d9e70c"/>\n\
+</g></svg>'
     }
   };
 
