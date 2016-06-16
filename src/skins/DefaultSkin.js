@@ -327,9 +327,9 @@ define([
 .SKINID .JClicPlayer {background-color: olive}\
 .SKINID .counter {font-family:Roboto,Sans-serif; color:white; cursor: pointer}\
 .SKINID .dlgOverlay {background-color:rgba(30,30,30,0.7);}\
-.SKINID .dlgDiv {height:calc(100% - 5em); background-color:#efefef; color:#757575; font-family:Roboto,Arial,Helvetica,sans-serif; font-size:10pt; width:45em; line-height:normal;}\
+.SKINID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,Arial,Helvetica,sans-serif; font-size:10pt; width:45em; line-height:normal;}\
 .SKINID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
-.SKINID .dlgMainPanel {height:calc(100% - 4em); overflow-y:auto;}\
+.SKINID .dlgMainPanel {max-height:calc(100vh - 6em); overflow-y:auto;}\
 .SKINID .dlgMainPanel .headTitle {font-size:2.5em; font-weight:bold; margin:auto;}\
 .SKINID .dlgMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
 .SKINID .dlgMainPanel p {font-size:1.1em; margin-bottom:0.5em;}\
