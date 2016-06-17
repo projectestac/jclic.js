@@ -140,7 +140,7 @@ module.exports = function (grunt) {
           bases: ['.'],
           port: 8080,
           hostname: '0.0.0.0',
-          livereload: true,
+          livereload: false,
           open: 'http://localhost:8080/test/jclic-demo/index.html'
         }
       }

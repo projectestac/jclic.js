@@ -290,11 +290,8 @@ define([
   // Load the icons
   $.each(MediaContent.icoData, function (key, value) {
     var img = new Image();
-    // Assign an empty image
+    img.src = value;
     MediaContent.icoImg[key] = img;
-    $(img).attr('src', value);
-    $(img).load();
-    // TODO: Provide a callback function to track the loading process of the media icons
   });
 
   return MediaContent;

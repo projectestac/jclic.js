@@ -36,7 +36,7 @@
   "dependencies": {
     "clipboard-js": "^0.2.0",
     "i18next": "^3.1.0",
-    "jquery": "~2.2.0",
+    "jquery": "~3.0.0",
     "jszip": "^3.0.0",
     "jszip-utils": "0.0.2",
     "screenfull": "^3.0.0",
