@@ -103,16 +103,16 @@ define([
 
     this.$reportsPanel = $('<div/>', {class: 'reportsPanel'});
 
-    this.$copyBtn = $('<a/>', {title: 'Copy data to clipboard'})
+    this.$copyBtn = $('<a/>', {title: ps.getMsg('Copy data to clipboard')})
         .append($(this.resources.copy).css({width: '26px', height: '26px'}))
         .on('click', function () {
           clipboard.copy({
-            'text/plain': '===> Please paste the content copied from JClic Reports into a spreadsheet or rich-text editor <===',
+            'text/plain': '===> ' + ps.getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor') + ' <===',
             'text/html': thisSkin.$reportsPanel.html()
           });
           $(this).parent().append(
               $('<div/>', {class: 'smallPopup'})
-              .html('Data has been copied to clipboard')
+              .html(ps.getMsg('The data has been copied to clipboard'))
               .fadeIn()
               .delay(3000)
               .fadeOut(function () {
@@ -120,19 +120,19 @@ define([
               }));
         });
 
-    this.$closeDlgBtn = $('<a/>', {title: 'Close dialog'})
+    this.$closeDlgBtn = $('<a/>', {title: ps.getMsg('Close')})
         .append($(this.resources.closeDialog).css({width: '26px', height: '26px'}))
         .on('click', function () {
           thisSkin._closeDlg(true);
         });
         
-    this.$okDlgBtn = $('<a/>', {title: 'OK'})
+    this.$okDlgBtn = $('<a/>', {title: ps.getMsg('OK')})
         .append($(this.resources.okDialog).css({width: '26px', height: '26px'}))
         .on('click', function(){
           thisSkin._closeDlg(true);
         });
     
-    this.$cancelDlgBtn = $('<a/>', {title: 'Cancel'})
+    this.$cancelDlgBtn = $('<a/>', {title: ps.getMsg('Cancel')})
         .append($(this.resources.closeDialog).css({width: '26px', height: '26px'}))
         .on('click', function () {
           thisSkin._closeDlg(false);

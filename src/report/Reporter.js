@@ -174,7 +174,7 @@ define([
      */
     promptForNewGroup: function () {
       // TODO: Implement promptForNewGroup
-      return Promise.reject('Creation of new groups not allowed!');
+      return Promise.reject('Remote creation of groups not yet implemented!');
     },
     /**
      * 
@@ -184,7 +184,7 @@ define([
      */
     promptForNewUser: function () {
       // TODO: Implement promptForNewUser
-      return Promise.reject('Creation of new users not allowed!');
+      return Promise.reject('Remote creation of users not yet implemented!');
     },
     /**
      * 
@@ -266,7 +266,7 @@ define([
                       that.userId = userList[sel].id;
                       resolve(that.userId);
                     } else
-                      reject('No user selected!');
+                      reject('No user was selected!');
                   }).catch(reject);
                 }
               }).catch(reject);

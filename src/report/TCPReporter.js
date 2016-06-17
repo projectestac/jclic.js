@@ -182,8 +182,7 @@ define([
               .fail(function (jqXHR, textStatus, errorThrown) {
                 if (++that.failCount > that.maxFails)
                   that.stopReporting();
-                console.log('ERROR reporting data: ' + textStatus);
-                reject(false);
+                reject('Error reporting data: ' + textStatus);
               })
               .always(function () {
                 // Unset the flag
@@ -224,7 +223,6 @@ define([
               $(data).find('param').each(function () {
                 var $param = $(this);
                 that.dbProperties[$param.attr('name')] = $param.attr('value');
-                console.log('DBPROP ' + $param.attr('name') + ': ' + $param.attr('value'));
               });
               that.promptUserId(false).then(function (userId) {
                 that.userId = userId;
@@ -249,15 +247,13 @@ define([
                 that.initiated = true;
                 resolve(true);
               }).catch(function (msg) {
-                console.log('ERROR in getUserId: ' + msg);
                 that.stopReporting();
-                reject(false);
+                reject('Error getting the user ID: ' + msg);
               });
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-              console.log('ERROR initializing reports: ' + textStatus);
               that.stopReporting();
-              reject(false);
+              reject('Error initializing the reports system: ' + textStatus);
             });
       });
     },
@@ -309,8 +305,7 @@ define([
                   })
                   .fail(function (jqXHR, textStatus, errorThrown) {
                     that.stopReporting();
-                    console.log('ERROR reporting data: ' + textStatus);
-                    reject(null);
+                    reject('Error reporting data: ' + textStatus);
                   });
             });
           } else
@@ -362,7 +357,6 @@ define([
           var bean = new TCPReporter.ReportBean('get groups');
           that.transaction(bean.$bean)
               .done(function (data, textStatus, jqXHR) {
-                console.log((new XMLSerializer()).serializeToString(data));
                 var currentGroups = [];
                 $(data).find('group').each(function () {
                   var $group = $(this);
@@ -407,7 +401,7 @@ define([
                 resolve(currentUsers);
               })
               .fail(function (jqXHR, textStatus, errorThrown) {
-                reject('Error retrieving user list: ' + textStatus);
+                reject('Error retrieving the list of users: ' + textStatus);
               });
         }
       });
