@@ -25,6 +25,7 @@ define([
 // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
     screenfull = window.screenfull;
+  
   /**
    * This is the default {@link Skin} used by JClic.js
    * @exports DefaultSkin
@@ -45,7 +46,7 @@ define([
 
     AWT.Font.loadGoogleFonts(this.resources.cssFonts);
 
-    $div.addClass('JCSkin').append($('<style/>', {type: 'text/css'}).html(this.resources.css.replace(/SKINID/g, this.skinId)));
+    $div.addClass('JCSkin').append($('<style type="text/css"/>').html(this.resources.css.replace(/SKINID/g, this.skinId)));
 
     this.$msgBoxDiv = $div.children('.JClicMsgBox').first();
     if (this.$msgBoxDiv === null || this.$msgBoxDiv.length === 0) {
@@ -327,15 +328,15 @@ define([
 .SKINID .JClicPlayer {background-color: olive}\
 .SKINID .counter {font-family:Roboto,Sans-serif; color:white; cursor: pointer}\
 .SKINID .dlgOverlay {background-color:rgba(30,30,30,0.7);}\
-.SKINID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,Arial,Helvetica,sans-serif; font-size:10pt; width:45em; line-height:normal;}\
+.SKINID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
 .SKINID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
-.SKINID .dlgMainPanel {max-height:calc(100vh - 6em); overflow-y:auto;}\
+.SKINID .dlgMainPanel {padding:1em 2em; max-height:calc(100vh - 6em); max-width:calc(100vw - 2em); min-width:20em; overflow:auto;}\
 .SKINID .dlgMainPanel .headTitle {font-size:2.5em; font-weight:bold; margin:auto;}\
 .SKINID .dlgMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
 .SKINID .dlgMainPanel p {font-size:1.1em; margin-bottom:0.5em;}\
 .SKINID .dlgMainPanel table {table-layout:fixed; width:40em; margin:0.5em 0 1.7em 0; border-collapse:collapse;}\
-.SKINID .infoHead {padding:2em 2em 0.5em;}\
-.SKINID .reportsPanel {padding:1em 2em;}\
+.SKINID .dlgMainPanel select {min-width: 20em; font-size:1.2em; font-family:Roboto,sans-serif; color:#757575;}\
+.SKINID .infoHead {padding:1em 0em 0.5em;}\
 .SKINID .JCGlobalResults td {padding:0.4em; border-bottom:1px solid #b6b6b6;}\
 .SKINID .JCGlobalResults td:first-child {font-weight:600; width:11em;}\
 .SKINID .JCDetailed td,th {border-bottom:1px solid #b6b6b6; padding:0.3em 0.4em; vertical-align:top; text-align:center; overflow:hidden; text-overflow:ellipsis;}\

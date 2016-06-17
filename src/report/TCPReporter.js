@@ -160,34 +160,34 @@ define([
       else {
         // Set up the `processingTasks` flag to avoid re-entrant processing
         this.processingTasks = true;
-        var thisReporter = this;
+        var that = this;
 
         var reportBean = new TCPReporter.ReportBean('multiple');
         for (var i = 0; i < this.tasks.length; i++)
           reportBean.appendData(this.tasks[i].$bean);
 
         return new Promise(function (resolve, reject) {
-          thisReporter.transaction(reportBean.$bean)
+          that.transaction(reportBean.$bean)
               .done(function (data, textStatus, jqXHR) {
                 // TODO: Check returned message for possible errors on the server side
-                thisReporter.tasks = [];
-                if (thisReporter.waitingTasks) {
-                  thisReporter.tasks.concat(thisReporter.waitingTasks);
-                  thisReporter.waitingTasks = null;
+                that.tasks = [];
+                if (that.waitingTasks) {
+                  that.tasks.concat(that.waitingTasks);
+                  that.waitingTasks = null;
                 }
                 // Reset the fail counter after a successufull attempt
-                thisReporter.failCount = 0;
+                that.failCount = 0;
                 resolve(true);
               })
               .fail(function (jqXHR, textStatus, errorThrown) {
-                if (++thisReporter.failCount > thisReporter.maxFails)
-                  thisReporter.stopReporting();
+                if (++that.failCount > that.maxFails)
+                  that.stopReporting();
                 console.log('ERROR reporting data: ' + textStatus);
                 reject(false);
               })
               .always(function () {
                 // Unset the flag
-                thisReporter.processingTasks = false;
+                that.processingTasks = false;
               });
         });
       }
@@ -215,48 +215,48 @@ define([
       var serverProtocol = options.protocol ? options.protocol : this.DEFAULT_SERVER_PROTOCOL;
       this.serviceUrl = serverProtocol + "://" + this.serverPath + serverService;
 
-      var thisReporter = this;
+      var that = this;
       var bean = new TCPReporter.ReportBean('get_properties');
       return new Promise(function (resolve, reject) {
-        thisReporter.transaction(bean.$bean)
+        that.transaction(bean.$bean)
             .done(function (data, textStatus, jqXHR) {
-              thisReporter.dbProperties = {};
+              that.dbProperties = {};
               $(data).find('param').each(function () {
                 var $param = $(this);
-                thisReporter.dbProperties[$param.attr('name')] = $param.attr('value');
+                that.dbProperties[$param.attr('name')] = $param.attr('value');
                 console.log('DBPROP ' + $param.attr('name') + ': ' + $param.attr('value'));
               });
-              thisReporter.promptUserId(false).then(function (userId) {
-                thisReporter.userId = userId;
-                var tl = options.lap ? options.lap : thisReporter.getProperty('TIME_LAP', this.DEFAULT_TIMER_LAP);
-                thisReporter.timerLap = Math.min(30, Math.max(1, parseInt(tl)));
-                thisReporter.timer = window.setInterval(
+              that.promptUserId(false).then(function (userId) {
+                that.userId = userId;
+                var tl = options.lap ? options.lap : that.getProperty('TIME_LAP', this.DEFAULT_TIMER_LAP);
+                that.timerLap = Math.min(30, Math.max(1, parseInt(tl)));
+                that.timer = window.setInterval(
                     function () {
-                      thisReporter.flushTasksPromise();
-                    }, thisReporter.timerLap * 1000);
+                      that.flushTasksPromise();
+                    }, that.timerLap * 1000);
                 // Warn before leaving the current page with unsaved data:
-                thisReporter.beforeUnloadFunction = function (event) {
-                  if (thisReporter.serviceUrl !== null &&
-                      (thisReporter.tasks.length > 0 || thisReporter.processingTasks)) {
-                    thisReporter.flushTasksPromise();
-                    var result = thisReporter.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
+                that.beforeUnloadFunction = function (event) {
+                  if (that.serviceUrl !== null &&
+                      (that.tasks.length > 0 || that.processingTasks)) {
+                    that.flushTasksPromise();
+                    var result = that.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
                     if (event)
                       event.returnValue = result;
                     return result;
                   }
                 };
-                window.addEventListener('beforeunload', thisReporter.beforeUnloadFunction);
-                thisReporter.initiated = true;
+                window.addEventListener('beforeunload', that.beforeUnloadFunction);
+                that.initiated = true;
                 resolve(true);
               }).catch(function (msg) {
                 console.log('ERROR in getUserId: ' + msg);
-                thisReporter.stopReporting();
+                that.stopReporting();
                 reject(false);
               });
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
               console.log('ERROR initializing reports: ' + textStatus);
-              thisReporter.stopReporting();
+              that.stopReporting();
               reject(false);
             });
       });
@@ -282,7 +282,7 @@ define([
      * only when `currentSessionId` have a valid value.
      */
     createDBSession: function (forceNewSession) {
-      var thisReporter = this;
+      var that = this;
 
       if (this.currentSessionId !== null && !forceNewSession)
         // A valid session is available, so just return it
@@ -290,25 +290,25 @@ define([
       else
         // A new session must be created:
         return new Promise(function (resolve, reject) {
-          if (thisReporter.initiated && thisReporter.userId !== null && thisReporter.currentSession !== null) {
-            thisReporter.flushTasksPromise().then(function () {
-              thisReporter.currentSessionId = null;
+          if (that.initiated && that.userId !== null && that.currentSession !== null) {
+            that.flushTasksPromise().then(function () {
+              that.currentSessionId = null;
               var bean = new TCPReporter.ReportBean('add session');
 
-              bean.setParam('project', thisReporter.currentSession.projectName);
-              bean.setParam('time', Number(thisReporter.currentSession.started));
-              bean.setParam('code', thisReporter.currentSession.code);
-              bean.setParam('user', thisReporter.userId);
-              bean.setParam('key', thisReporter.sessionKey);
-              bean.setParam('context', thisReporter.sessionContext);
+              bean.setParam('project', that.currentSession.projectName);
+              bean.setParam('time', Number(that.currentSession.started));
+              bean.setParam('code', that.currentSession.code);
+              bean.setParam('user', that.userId);
+              bean.setParam('key', that.sessionKey);
+              bean.setParam('context', that.sessionContext);
 
-              thisReporter.transaction(bean.$bean)
+              that.transaction(bean.$bean)
                   .done(function (data, textStatus, jqXHR) {
-                    thisReporter.currentSessionId = $(data).find('param[name="session"]').attr('value');
-                    resolve(thisReporter.currentSessionId);
+                    that.currentSessionId = $(data).find('param[name="session"]').attr('value');
+                    resolve(that.currentSessionId);
                   })
                   .fail(function (jqXHR, textStatus, errorThrown) {
-                    thisReporter.stopReporting();
+                    that.stopReporting();
                     console.log('ERROR reporting data: ' + textStatus);
                     reject(null);
                   });
@@ -349,6 +349,71 @@ define([
     },
     /**
      * 
+     * Gets the list of current groups or organizations registered on this reporting system.
+     * @override
+     * @returns {external:Promise} - When fulfilled, an array of group data is returned as a result
+     */
+    getGroups: function () {
+      var that = this;
+      return new Promise(function (resolve, reject) {
+        if (!that.userBased())
+          reject('This system does not manage users!');
+        else {
+          var bean = new TCPReporter.ReportBean('get groups');
+          that.transaction(bean.$bean)
+              .done(function (data, textStatus, jqXHR) {
+                console.log((new XMLSerializer()).serializeToString(data));
+                var currentGroups = [];
+                $(data).find('group').each(function () {
+                  var $group = $(this);
+                  currentGroups.push({id: $group.attr('id'), name: $group.attr('name')});
+                });
+                resolve(currentGroups);
+              })
+              .fail(function (jqXHR, textStatus, errorThrown) {
+                reject('Error retrieving group list: ' + textStatus);
+              });
+        }
+      });
+    },
+    /**
+     * 
+     * Gets the list of users currently registered in the system, optionally filtered by
+     * a specific group ID.
+     * @override
+     * @param {string}+ groupId - Optional group ID to be used as a filter criteria
+     * @returns {external:Promise} - When fulfilled, an object with a collection of user data records
+     * is returned
+     */
+    getUsers: function (groupId) {
+      var that = this;
+      return new Promise(function (resolve, reject) {
+        if (!that.userBased())
+          reject('This system does not manage users!');
+        else {
+          var bean = new TCPReporter.ReportBean('get users');
+          if (typeof groupId !== 'undefined' && groupId !== null)
+            bean.setParam('group', groupId);
+          that.transaction(bean.$bean)
+              .done(function (data, textStatus, jqXHR) {
+                var currentUsers = [];
+                $(data).find('user').each(function () {
+                  var $user = $(this);
+                  var user = {id: $user.attr('id'), name: $user.attr('name')};
+                  if ($user.attr('pwd'))
+                    user.pwd = $user.attr('pwd');
+                  currentUsers.push(user);
+                });
+                resolve(currentUsers);
+              })
+              .fail(function (jqXHR, textStatus, errorThrown) {
+                reject('Error retrieving user list: ' + textStatus);
+              });
+        }
+      });
+    },
+    /**
+     * 
      * Stops the reporting system, usually as a result of repeated errors or because the player
      * shuts down.
      */
@@ -358,15 +423,15 @@ define([
         this.timer = -1;
       }
       if (this.initiated) {
-        var thisReporter = this;
+        var that = this;
         this.flushTasksPromise().then(function () {
-          if (thisReporter.beforeUnloadFunction) {
-            window.removeEventListener('beforeunload', thisReporter.beforeUnloadFunction);
-            thisReporter.beforeUnloadFunction = null;
+          if (that.beforeUnloadFunction) {
+            window.removeEventListener('beforeunload', that.beforeUnloadFunction);
+            that.beforeUnloadFunction = null;
           }
-          thisReporter.serviceUrl = null;
-          thisReporter.descriptionDetail = thisReporter.serverPath + ' (' + thisReporter.ps.getMsg('not connected') + ')';
-          thisReporter.initiated = false;
+          that.serviceUrl = null;
+          that.descriptionDetail = that.serverPath + ' (' + that.ps.getMsg('not connected') + ')';
+          that.initiated = false;
         });
       }
     },
@@ -381,13 +446,13 @@ define([
           this.lastActivity.closeActivity();
         var actCount = this.actCount++;
         var act = this.lastActivity;
-        var thisReporter = this;
+        var that = this;
         this.createDBSession(false).then(function () {
           var bean = new TCPReporter.ReportBean('add activity');
-          bean.setParam('session', thisReporter.currentSessionId);
+          bean.setParam('session', that.currentSessionId);
           bean.setParam('num', actCount);
           bean.appendData(act.$getXML());
-          thisReporter.addTask(bean);
+          that.addTask(bean);
         });
       }
       if (this.currentSession !== null &&
@@ -422,7 +487,7 @@ define([
    * @param $data {external:jQuery}+ - Optional XML data to be added to this bean
    */
   TCPReporter.ReportBean = function (id, $data) {
-    this.$bean = $('<bean id="' + id + '"/>');
+    this.$bean = $('<bean/>').attr({id: id});
     if ($data)
       this.appendData($data);
   };
@@ -451,7 +516,7 @@ define([
      */
     setParam: function (name, value) {
       if (typeof value !== 'undefined' && value !== null)
-        this.appendData($('<param/>', {name: name, value: value}));
+        this.appendData($('<param/>').attr({name: name, value: value}));
     }
   };
 

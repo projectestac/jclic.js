@@ -125,7 +125,19 @@ define([
         .on('click', function () {
           thisSkin._closeDlg(true);
         });
-
+        
+    this.$okDlgBtn = $('<a/>', {title: 'OK'})
+        .append($(this.resources.okDialog).css({width: '26px', height: '26px'}))
+        .on('click', function(){
+          thisSkin._closeDlg(true);
+        });
+    
+    this.$cancelDlgBtn = $('<a/>', {title: 'Cancel'})
+        .append($(this.resources.closeDialog).css({width: '26px', height: '26px'}))
+        .on('click', function () {
+          thisSkin._closeDlg(false);
+        });
+        
     // Registers this Skin in the list of realized Skin objects
     Skin.skinStack.push(this);
   };
@@ -187,6 +199,14 @@ define([
      * Iconic button used to close the dialog
      * @type {external:jQuery} */
     $closeDlgBtn: null,
+    /**
+     * OK dialog button
+     * @type {external:jQuery} */
+    $okDlgBtn: null,
+    /**
+     * Cancel dialog button
+     * @type {external:jQuery} */    
+    $cancelDlgBtn: null,
     /**
      * Value to be returned by the dialog promise when the presented task is fulfilled
      * @type {Object} */
@@ -523,6 +543,12 @@ define([
       closeDialog: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36">\
 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
 <path d="M0 0h24v24H0z" fill="none"/>\
+</svg>',
+      //
+      //OK dialog button
+      okDialog: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36">\
+<path d="M0 0h24v24H0z" fill="none"/>\
+<path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>\
 </svg>',
       //
       // Copy text button

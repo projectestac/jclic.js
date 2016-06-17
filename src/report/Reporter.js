@@ -91,12 +91,13 @@ define([
      * `true` if the system is connected to a database with user's data.
      * When `false`, a generic ID will be used. 
      * @type {boolean} */
-    bUserBased: false,
+    bUserBased: null,
     /**
      * Maximum number of incorrect UserID attempts
      * @type {number} */
     MAX_USERID_PROMPT_ATTEMPTS: 3,
     /**
+     * 
      * Gets a specific property from this reporting system
      * @param {string} key - Requested property
      * @param {string}+ defaultValue - Default return value when requested property does not exist
@@ -106,26 +107,29 @@ define([
       return defaultValue;
     },
     /**
+     * 
      * Gets a specific boolean property from this reporting system
      * @param {string} key - Requested property
      * @param {boolean}+ defaultValue - Default return when requested property does not exist
      * @returns {boolean}
      */
     getBooleanProperty: function (key, defaultValue) {
-      var s = getProperty(key, defaultValue === true ? 'true' : 'false');
+      var s = this.getProperty(key, defaultValue === true ? 'true' : 'false');
       return key === null ? defaultValue : s === 'true' ? true : false;
     },
     /**
-     * Gets the list of current groups or organizations registered on this reporting system. This 
-     * is a method intended to be implemented in subclasses.
-     * @returns {external:Promise} - When fulfilled, an array of grou data is returned as a result
+     * 
+     * Gets the list of groups or organizations currently registered in the system. This 
+     * method should be implemented by classes derived of `Reporter`.
+     * @returns {external:Promise} - When fulfilled, an array of group data is returned as a result
      */
     getGroups: function () {
       return Promise.reject('No groups defined!');
     },
     /**
-     * Gets the list of current users registered on this reporting system, optionally filtered by
-     * a specific group ID. This is a method intended to be implemented in subclasses.
+     * 
+     * Gets the list of users currently registered in the system, optionally filtered by
+     * a specific group ID. This method should be implemented by classes drived of `Reporter`.
      * @param {string}+ groupId - Optional group ID to be used as a filter criteria
      * @returns {external:Promise} - When fulfilled, an object with a collection of user data records
      * is returned
@@ -134,6 +138,7 @@ define([
       return Promise.reject('No users defined in ' + groupId);
     },
     /**
+     * 
      * Gets extended data associated with a specific user. This is a method intended to be
      * implemented in subclasses.
      * @param {string} userId - The requested user ID
@@ -143,6 +148,7 @@ define([
       return Promise.reject('Unknown user!');
     },
     /**
+     * 
      * Gets extended data associated with a specific group or organization. This 
      * is a method intended to be implemented in subclasses.
      * @param {string} groupId - The requested group ID
@@ -152,6 +158,7 @@ define([
       return Promise.reject('Unknown group!');
     },
     /**
+     * 
      * Checks if this reporting system manages its own database of users and groups. Defaults to `false`
      * @returns {boolean}
      */
@@ -161,6 +168,7 @@ define([
       return this.bUserBased;
     },
     /**
+     * 
      * Allows the current user to create a new group, and asks his name
      * @returns {external:Promise} - When fulfilled, the name choosen for the new group is returned.
      */
@@ -169,6 +177,7 @@ define([
       return Promise.reject('Creation of new groups not allowed!');
     },
     /**
+     * 
      * Allows the current user to create a new user ID, and asks his ID and password
      * @returns {external:Promise} - When fulfilled, an object with the new user ID and password
      * is returned.
@@ -178,71 +187,103 @@ define([
       return Promise.reject('Creation of new users not allowed!');
     },
     /**
+     * 
      * Allows the current user to select its group or organization from the current groups list
      * @returns {external:Promise}
      */
     promptGroupId: function () {
-      var thisReporter = this;
+      var that = this;
       return new Promise(function (resolve, reject) {
-        if (!thisReporter.userBased())
-          reject('This system don\'t manages group data!');
+        if (!that.userBased())
+          reject('This system does not manage users!');
         else {
-          // TODO: Implement getGroups as a Promise
-          thisReporter.getGroups().then(function (groupList) {
-            // TODO: Select group from list
-            // Creation of new groups not yet implemented!
-            
-            // Provisional implementation!
-            resolve(groupList[0]);
+          that.getGroups().then(function (groupList) {
+            // Creation of new groups not yet implemented!            
+            if (!groupList || groupList.length < 1)
+              reject('No groups defined!');
+            else {
+              var sel = 0;
+              var $groupSelect = $('<select/>').attr({size: Math.max(3, Math.min(15, groupList.length))});
+              for (var p = 0; p < groupList.length; p++)
+                $groupSelect.append($('<option/>').attr({value: groupList[p].id}).text(groupList[p].name));
+              $groupSelect.change(function () {
+                sel = this.selectedIndex;
+              });
+              that.ps.skin.showDlg(true, {
+                main: [
+                  $('<h2/>', {class: 'subtitle'}).html(that.ps.getMsg('Select group:')),
+                  $groupSelect],
+                bottom: [
+                  that.ps.skin.$okDlgBtn,
+                  that.ps.skin.$cancelDlgBtn]
+              }).then(function () {
+                resolve(groupList[sel].id);
+              }).catch(reject);
+            }
           }).catch(reject);
         }
       });
     },
     /**
+     * 
      * Asks for a valid user ID fulfilling the promise if found, rejecting it otherwise
      * @param {boolean}+ forcePrompt - Prompt also if `userId` is already defined (default is `false`)
      * @returns {external:Promise}
      */
     promptUserId: function (forcePrompt) {
-      var thisReporter = this;
+      var that = this;
       return new Promise(function (resolve, reject) {
-        if (thisReporter.userId !== null && !forcePrompt)
-          resolve(thisReporter.userId);
-        else if (!thisReporter.userBased())
-          reject('This system don\'t manages user data!');
+        if (that.userId !== null && !forcePrompt)
+          resolve(that.userId);
+        else if (!that.userBased())
+          reject('This system does not manage users!');
         else {
-          var cancel = false, tries = 0;
-          while (thisReporter.userId === null && !cancel && tries++ < thisReporter.MAX_USERID_PROMPT_ATTEMPTS) {
-            if (thisReporter.getBooleanProperty('SHOW_USER_LIST', true)) {
-              // TODO: Implement promptGroupId as a promise!
-              thisReporter.promptGroupId().then(function (groupId) {
-                // TODO: Implement getUsers as a promise!
-                thisReporter.getUsers(groupId).then(function (usersList) {
-                  var userCreationAllowed = thisReporter.getBooleanProperty('ALLOW_CREATE_USERS', false);
-                  // TODO: Select user from list
-                  thisReporter.userId = 'abc';
-                  //UserData ud=(UserData)list.getSelectedValue();
-                  // if(ud.pwd!=null && ud.pwd.length()>0){
-                  // String pwd=Encryption.Decrypt(ud.pwd);
-                  // TODO: Prompt password!
-                  // }
-
-                  // Provisional implementation!
-                  resolve('abc');
-                }).catch(reject);
+          if (that.getBooleanProperty('SHOW_USER_LIST', true)) {
+            that.promptGroupId().then(function (groupId) {
+              that.getUsers(groupId).then(function (userList) {
+                // Creation of new users not yet implemented
+                //var userCreationAllowed = that.getBooleanProperty('ALLOW_CREATE_USERS', false);
+                if (!userList || userList.length < 1)
+                  reject('Group ' + groupId + ' has no users!');
+                else {
+                  var sel = -1;
+                  var $userSelect = $('<select/>').attr({size: Math.max(3, Math.min(15, userList.length))});
+                  for (var p = 0; p < userList.length; p++)
+                    $userSelect.append($('<option/>').attr({value: userList[p].id}).text(userList[p].name));
+                  $userSelect.change(function () {
+                    sel = this.selectedIndex;
+                  });
+                  that.ps.skin.showDlg(true, {
+                    main: [
+                      $('<h2/>', {class: 'subtitle'}).html(that.ps.getMsg('Select user:')),
+                      $userSelect],
+                    bottom: [
+                      that.ps.skin.$okDlgBtn,
+                      that.ps.skin.$cancelDlgBtn]
+                  }).then(function () {
+                    if (sel >= 0) {
+                      // TODO: Check password!
+                      that.userId = userList[sel].id;
+                      resolve(that.userId);
+                    } else
+                      reject('No user selected!');
+                  }).catch(reject);
+                }
               }).catch(reject);
-            } else {
-              // TODO: Prompt user ID and Password
-              // String s=StrUtils.nullableString(textField.getText());
-              // UserData ud=getUserData(s);
-              // Encryption.Decrypt(uPwd)
-              // resolve or reject!
-            }
+            }).catch(reject);
+          } else {
+            // TODO: Prompt user ID and Password
+            // String s=StrUtils.nullableString(textField.getText());
+            // UserData ud=getUserData(s);
+            // Encryption.Decrypt(uPwd)
+            // resolve or reject!
+            reject('Manual login not yet implemented!');
           }
         }
       });
     },
     /**
+     * 
      * Renders the data contained in this report into a DOM tree
      * @returns {external:jQuery} - A jQuery object with a `div` element containing the full report.
      */
@@ -307,6 +348,7 @@ define([
       return result;
     },
     /**
+     * 
      * Initializes this report system with an optional set of parameters.
      * Returns a {@link external:Promise}, fulfilled when the reporter is fully initialized.
      * @param {?Object} options - Initial settings passed to the reporting system
@@ -324,12 +366,14 @@ define([
       return Promise.resolve(true);
     },
     /**
+     * 
      * Closes this reporting system
      */
     end: function () {
       this.endSession();
     },
     /**
+     * 
      * Finalizes the current sequence
      */
     endSequence: function () {
@@ -337,6 +381,7 @@ define([
         this.currentSession.endSequence();
     },
     /**
+     * 
      * Finalizes the current session
      */
     endSession: function () {
@@ -344,6 +389,7 @@ define([
       this.currentSession = null;
     },
     /**
+     * 
      * Creates a new group (method to be implemented in subclasses)
      * @param {GroupData} gd
      */
@@ -351,6 +397,7 @@ define([
       throw "No database!";
     },
     /**
+     * 
      * Creates a new user (method to be implemented in subclasses)
      * @param {UserData} ud
      */
@@ -358,6 +405,7 @@ define([
       throw "No database!";
     },
     /**
+     * 
      * This method should be invoked when a new session starts.
      * @param {JClicProject|string} jcp - The {@link JClicProject} referenced by this session, or
      * just its name.
@@ -368,6 +416,7 @@ define([
       this.sessions.push(this.currentSession);
     },
     /**
+     * 
      * This method should be invoked when a new sequence starts
      * @param {ActivitySequenceElement} ase - The {@link ActivitySequenceElement} referenced by this sequence.
      */
@@ -376,6 +425,7 @@ define([
         this.currentSession.newSequence(ase);
     },
     /**
+     * 
      * This method should be invoked when the user starts a new activity
      * @param {Activity} act - The {@link Activity} that has just started
      */
@@ -384,6 +434,7 @@ define([
         this.currentSession.newActivity(act);
     },
     /**
+     * 
      * This method should be called when the current activity finishes. Data about user's final results
      * on the activity will then be saved.
      * @param {number} score - The final score, usually in a 0-100 scale.
@@ -395,6 +446,7 @@ define([
         this.currentSession.endActivity(score, numActions, solved);
     },
     /**
+     * 
      * Reports a new action done by the user while playing the current activity
      * @param {string} type - Type of action (`click`, `write`, `move`, `select`...)
      * @param {string}+ source - Description of the object on which the action is done.
@@ -406,6 +458,7 @@ define([
         this.currentSession.newAction(type, source, dest, ok);
     },
     /**
+     * 
      * Gets information about the current sequence
      * @returns {SequenceReg.Info}
      */
@@ -413,6 +466,7 @@ define([
       return this.currentSession === null ? null : this.currentSession.getCurrentSequenceInfo();
     },
     /**
+     * 
      * Gets the name of the current sequence
      * @returns {string}
      */
@@ -421,13 +475,14 @@ define([
     }
   };
 
-  /**
+  /** 
    * Static list of classes derived from Reporter. It should be filled by Reporter classes at declaration time.
    * @type {Object}
    */
   Reporter.CLASSES = {'Reporter': Reporter};
 
   /**
+   * 
    * Creates a new Reporter of the requested class
    * The resulting object must be prepared to operate with a call to its `init` method.
    * @param {string} className - Class name of the requested reporter. When `null`, a basic Reporter is created.
