@@ -128,7 +128,7 @@ define([
      */
     setDocContent: function ($dom, doc) {
 
-      var thisPanel = this;
+      var panel = this;
 
       // 
       // Empties the conainer of any pre-existing content
@@ -192,13 +192,13 @@ define([
               // Create a new [ActiveBox] based on this [ActiveBoxContent]
               var box = ActiveBox.createCell($span.css({position: 'relative'}), this);
               // Save the box for future references
-              thisPanel.boxes.push(box);
+              panel.boxes.push(box);
               $span.css({'display': 'inline-block', 'vertical-align': 'middle'});
               if (this.mediaContent) {
                 $span.on('click', function (event) {
                   event.preventDefault();
-                  thisPanel.ps.stopMedia(1);
-                  box.playMedia(thisPanel.ps);
+                  panel.ps.stopMedia(1);
+                  box.playMedia(panel.ps);
                   return false;
                 });
               }
@@ -206,22 +206,22 @@ define([
               break;
 
             case 'target':
-              if (thisPanel.showingPrevScreen) {
+              if (panel.showingPrevScreen) {
                 $span.text(this.text);
                 $p.append($span);
                 break;
               }
 
               var target = this;
-              $span = thisPanel.$createTargetElement(target, $span);
-              target.num = thisPanel.targets.length;
+              $span = panel.$createTargetElement(target, $span);
+              target.num = panel.targets.length;
               target.pos = target.num;
-              thisPanel.targets.push(target);
+              panel.targets.push(target);
               if ($span) {
                 $span.css(doc.style['default'].css);
                 if (currentPStyle)
                   $span.css(currentPStyle);
-                if (thisPanel.targetsMarked) {
+                if (panel.targetsMarked) {
                   if (target.attr) {
                     // Default style name for targets is 'target'
                     if (!target.attr.style)
@@ -258,7 +258,7 @@ define([
             .html(this.act.checkButtonText)
             .css({position: 'absolute', bottom: '0', left: '0', width: '100%'})
             .on('click', function () {
-              thisPanel.evaluatePanel();
+              panel.evaluatePanel();
             });
         $dom.append(this.$checkButton);
       }
@@ -333,11 +333,11 @@ define([
         this.prevScreenTimer.start();
       }
 
-      var thisPanel = this;
+      var panel = this;
       this.$div.on('click', function () {
-        thisPanel.showingPrevScreen = false;
-        thisPanel.$div.unbind('click');
-        thisPanel.startActivity();
+        panel.showingPrevScreen = false;
+        panel.$div.unbind('click');
+        panel.startActivity();
         return true;
       });
 

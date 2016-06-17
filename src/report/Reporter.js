@@ -8,7 +8,7 @@
 //  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
 //  This program is free software: you can redistribute it and/or modify it under the terms of
 //  the GNU General Public License as published by the Free Software Foundation, version. This
-//  program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//  program is distributed in the hope reporter it will be useful, but WITHOUT ANY WARRANTY; without
 //  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 //  General Public License for more details. You should have received a copy of the GNU General
 //  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
@@ -192,12 +192,12 @@ define([
      * @returns {external:Promise}
      */
     promptGroupId: function () {
-      var that = this;
+      var reporter = this;
       return new Promise(function (resolve, reject) {
-        if (!that.userBased())
+        if (!reporter.userBased())
           reject('This system does not manage users!');
         else {
-          that.getGroups().then(function (groupList) {
+          reporter.getGroups().then(function (groupList) {
             // Creation of new groups not yet implemented!            
             if (!groupList || groupList.length < 1)
               reject('No groups defined!');
@@ -209,13 +209,13 @@ define([
               $groupSelect.change(function () {
                 sel = this.selectedIndex;
               });
-              that.ps.skin.showDlg(true, {
+              reporter.ps.skin.showDlg(true, {
                 main: [
-                  $('<h2/>', {class: 'subtitle'}).html(that.ps.getMsg('Select group:')),
+                  $('<h2/>', {class: 'subtitle'}).html(reporter.ps.getMsg('Select group:')),
                   $groupSelect],
                 bottom: [
-                  that.ps.skin.$okDlgBtn,
-                  that.ps.skin.$cancelDlgBtn]
+                  reporter.ps.skin.$okDlgBtn,
+                  reporter.ps.skin.$cancelDlgBtn]
               }).then(function () {
                 resolve(groupList[sel].id);
               }).catch(reject);
@@ -231,18 +231,18 @@ define([
      * @returns {external:Promise}
      */
     promptUserId: function (forcePrompt) {
-      var that = this;
+      var reporter = this;
       return new Promise(function (resolve, reject) {
-        if (that.userId !== null && !forcePrompt)
-          resolve(that.userId);
-        else if (!that.userBased())
+        if (reporter.userId !== null && !forcePrompt)
+          resolve(reporter.userId);
+        else if (!reporter.userBased())
           reject('This system does not manage users!');
         else {
-          if (that.getBooleanProperty('SHOW_USER_LIST', true)) {
-            that.promptGroupId().then(function (groupId) {
-              that.getUsers(groupId).then(function (userList) {
+          if (reporter.getBooleanProperty('SHOW_USER_LIST', true)) {
+            reporter.promptGroupId().then(function (groupId) {
+              reporter.getUsers(groupId).then(function (userList) {
                 // Creation of new users not yet implemented
-                //var userCreationAllowed = that.getBooleanProperty('ALLOW_CREATE_USERS', false);
+                //var userCreationAllowed = reporter.getBooleanProperty('ALLOW_CREATE_USERS', false);
                 if (!userList || userList.length < 1)
                   reject('Group ' + groupId + ' has no users!');
                 else {
@@ -253,18 +253,18 @@ define([
                   $userSelect.change(function () {
                     sel = this.selectedIndex;
                   });
-                  that.ps.skin.showDlg(true, {
+                  reporter.ps.skin.showDlg(true, {
                     main: [
-                      $('<h2/>', {class: 'subtitle'}).html(that.ps.getMsg('Select user:')),
+                      $('<h2/>', {class: 'subtitle'}).html(reporter.ps.getMsg('Select user:')),
                       $userSelect],
                     bottom: [
-                      that.ps.skin.$okDlgBtn,
-                      that.ps.skin.$cancelDlgBtn]
+                      reporter.ps.skin.$okDlgBtn,
+                      reporter.ps.skin.$cancelDlgBtn]
                   }).then(function () {
                     if (sel >= 0) {
                       // TODO: Check password!
-                      that.userId = userList[sel].id;
-                      resolve(that.userId);
+                      reporter.userId = userList[sel].id;
+                      resolve(reporter.userId);
                     } else
                       reject('No user was selected!');
                   }).catch(reject);
@@ -427,7 +427,7 @@ define([
     /**
      * 
      * This method should be invoked when the user starts a new activity
-     * @param {Activity} act - The {@link Activity} that has just started
+     * @param {Activity} act - The {@link Activity} reporter has just started
      */
     newActivity: function (act) {
       if (this.currentSession)
@@ -450,7 +450,7 @@ define([
      * Reports a new action done by the user while playing the current activity
      * @param {string} type - Type of action (`click`, `write`, `move`, `select`...)
      * @param {string}+ source - Description of the object on which the action is done.
-     * @param {string}+ dest - Description of the object that acts as a target of the action (usually in pairings)
+     * @param {string}+ dest - Description of the object reporter acts as a target of the action (usually in pairings)
      * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwhise
      */
     newAction: function (type, source, dest, ok) {

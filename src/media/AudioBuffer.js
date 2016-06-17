@@ -77,7 +77,7 @@ define([
       if (this.mediaPlayer) {
         this.mediaPlayer.currentTime = 0;
         this.mediaPlayer.play();
-      } else {        
+      } else {
         this.playWhenFinished = true;
       }
     },
@@ -89,7 +89,7 @@ define([
       if (this.mediaRecorder && this.mediaRecorder.state === 'recording')
         this.mediaRecorder.stop();
       else if (this.mediaPlayer && !this.mediaPlayer.paused)
-        this.mediaPlayer.pause();      
+        this.mediaPlayer.pause();
     },
     /**
      * 
@@ -100,9 +100,9 @@ define([
         this.mediaRecorder.stop();
       } else {
         this.stop();
-        var thisBuffer = this;
+        var buffer = this;
         this.mediaPlayer = null;
-        
+
         // TODO: update navigator.getUserMedia to navigator.mediaDevices.getUserMedia (with promises)
         // when supported in Chrome/Chromium
         // (in v. 49 this is supported only when "experimental web extensions" flag is enabled)
@@ -111,50 +111,50 @@ define([
         navigator.getUserMedia(
             {audio: true},
             function (stream) {
-              thisBuffer.mediaRecorder = new MediaRecorder(stream);
-              thisBuffer.mediaRecorder.ondataavailable = function (e) {
-                thisBuffer.chunks.push(e.data);
+              buffer.mediaRecorder = new MediaRecorder(stream);
+              buffer.mediaRecorder.ondataavailable = function (e) {
+                buffer.chunks.push(e.data);
               };
-              thisBuffer.mediaRecorder.onerror = function (e) {
+              buffer.mediaRecorder.onerror = function (e) {
                 console.log('Error recording audio: ' + e);
-                thisBuffer.mediaRecorder = null;
+                buffer.mediaRecorder = null;
               };
-              thisBuffer.mediaRecorder.onstart = function (e) {
+              buffer.mediaRecorder.onstart = function (e) {
                 console.log('Recording audio started');
               };
-              thisBuffer.mediaRecorder.onstop = function () {
+              buffer.mediaRecorder.onstop = function () {
                 console.log('Recording audio finished');
 
-                if (thisBuffer.timeoutID) {
-                  window.clearTimeout(thisBuffer.timeoutID);
-                  thisBuffer.timeoutID = null;
+                if (buffer.timeoutID) {
+                  window.clearTimeout(buffer.timeoutID);
+                  buffer.timeoutID = null;
                 }
 
                 var options = {};
-                if (thisBuffer.chunks.length > 0 && thisBuffer.chunks[0].type)
-                  options.type = thisBuffer.chunks[0].type;
-                var blob = new Blob(thisBuffer.chunks, options);
-                thisBuffer.chunks = [];
-                thisBuffer.mediaPlayer = document.createElement('audio');
+                if (buffer.chunks.length > 0 && buffer.chunks[0].type)
+                  options.type = buffer.chunks[0].type;
+                var blob = new Blob(buffer.chunks, options);
+                buffer.chunks = [];
+                buffer.mediaPlayer = document.createElement('audio');
                 var url = URL.createObjectURL(blob);
-                thisBuffer.mediaPlayer.src = url;
-                thisBuffer.mediaPlayer.pause();
-                thisBuffer.mediaRecorder = null;
-                if(thisBuffer.playWhenFinished){
-                  thisBuffer.playWhenFinished = false;
-                  thisBuffer.mediaPlayer.play();
+                buffer.mediaPlayer.src = url;
+                buffer.mediaPlayer.pause();
+                buffer.mediaRecorder = null;
+                if (buffer.playWhenFinished) {
+                  buffer.playWhenFinished = false;
+                  buffer.mediaPlayer.play();
                 }
               };
-              thisBuffer.mediaRecorder.onwarning = function (e) {
+              buffer.mediaRecorder.onwarning = function (e) {
                 console.log('Warning recording audio: ' + e);
               };
 
-              thisBuffer.playWhenFinished = false;
-              thisBuffer.mediaRecorder.start();
-              thisBuffer.timeoutID = window.setTimeout(function () {
-                if (thisBuffer.mediaRecorder)
-                  thisBuffer.mediaRecorder.stop();
-              }, thisBuffer.seconds * 1000);
+              buffer.playWhenFinished = false;
+              buffer.mediaRecorder.start();
+              buffer.timeoutID = window.setTimeout(function () {
+                if (buffer.mediaRecorder)
+                  buffer.mediaRecorder.stop();
+              }, buffer.seconds * 1000);
 
             },
             function (error) {

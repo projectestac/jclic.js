@@ -44,7 +44,7 @@ define([
     // Skin extends [AWT.Container](AWT.html)
     AWT.Container.call(this);
 
-    var thisSkin = this;
+    var skin = this;
 
     this.skinId = 'JC' + Math.round((100000 + Math.random() * 100000));
 
@@ -65,9 +65,9 @@ define([
       height: '100%',
       display: 'none'
     }).on('click', function () {
-      if (!thisSkin._isModalDlg)
+      if (!skin._isModalDlg)
         // Non-modal dialogs are closed on click outside the main area
-        thisSkin._closeDlg(true);
+        skin._closeDlg(true);
       return false;
     });
 
@@ -108,7 +108,7 @@ define([
         .on('click', function () {
           clipboard.copy({
             'text/plain': '===> ' + ps.getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor') + ' <===',
-            'text/html': thisSkin.$reportsPanel.html()
+            'text/html': skin.$reportsPanel.html()
           });
           $(this).parent().append(
               $('<div/>', {class: 'smallPopup'})
@@ -123,21 +123,21 @@ define([
     this.$closeDlgBtn = $('<a/>', {title: ps.getMsg('Close')})
         .append($(this.resources.closeDialog).css({width: '26px', height: '26px'}))
         .on('click', function () {
-          thisSkin._closeDlg(true);
+          skin._closeDlg(true);
         });
-        
+
     this.$okDlgBtn = $('<a/>', {title: ps.getMsg('OK')})
         .append($(this.resources.okDialog).css({width: '26px', height: '26px'}))
-        .on('click', function(){
-          thisSkin._closeDlg(true);
+        .on('click', function () {
+          skin._closeDlg(true);
         });
-    
+
     this.$cancelDlgBtn = $('<a/>', {title: ps.getMsg('Cancel')})
         .append($(this.resources.closeDialog).css({width: '26px', height: '26px'}))
         .on('click', function () {
-          thisSkin._closeDlg(false);
+          skin._closeDlg(false);
         });
-        
+
     // Registers this Skin in the list of realized Skin objects
     Skin.skinStack.push(this);
   };
@@ -205,7 +205,7 @@ define([
     $okDlgBtn: null,
     /**
      * Cancel dialog button
-     * @type {external:jQuery} */    
+     * @type {external:jQuery} */
     $cancelDlgBtn: null,
     /**
      * Value to be returned by the dialog promise when the presented task is fulfilled
@@ -414,28 +414,28 @@ define([
      * @returns {external:Promise} - A {@link external:Promise} that will be fulfilled when the dialog is closed.
      */
     showDlg: function (modal, options) {
-      var thisSkin = this;
+      var skin = this;
       return new Promise(function (resolve, reject) {
-        thisSkin._dlgOkValue = null;
-        thisSkin._dlgCancelValue = null;
-        thisSkin._isModalDlg = modal;
+        skin._dlgOkValue = null;
+        skin._dlgCancelValue = null;
+        skin._isModalDlg = modal;
 
-        thisSkin.$dlgMainPanel.children().detach();
-        thisSkin.$dlgBottomPanel.children().detach();
+        skin.$dlgMainPanel.children().detach();
+        skin.$dlgBottomPanel.children().detach();
         if (options.main)
-          thisSkin.$dlgMainPanel.append(options.main);
+          skin.$dlgMainPanel.append(options.main);
         if (options.bottom)
-          thisSkin.$dlgBottomPanel.append(options.bottom);
+          skin.$dlgBottomPanel.append(options.bottom);
 
-        thisSkin._closeDlg = function (resolved) {
+        skin._closeDlg = function (resolved) {
           if (resolved && resolve)
-            resolve(thisSkin._dlgOkValue);
+            resolve(skin._dlgOkValue);
           else if (!resolved && reject)
-            reject(thisSkin._dlgCancelValue);
-          thisSkin.$dlgOverlay.css({display: 'none'});
-          thisSkin._closeDlg = Skin.prototype._closeDlg;
+            reject(skin._dlgCancelValue);
+          skin.$dlgOverlay.css({display: 'none'});
+          skin._closeDlg = Skin.prototype._closeDlg;
         };
-        thisSkin.$dlgOverlay.css({display: 'inherit'});
+        skin.$dlgOverlay.css({display: 'inherit'});
       });
     },
     /**

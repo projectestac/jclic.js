@@ -25,7 +25,7 @@ define([
 // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
     screenfull = window.screenfull;
-  
+
   /**
    * This is the default {@link Skin} used by JClic.js
    * @exports DefaultSkin
@@ -42,7 +42,7 @@ define([
     // DefaultSkin extends [Skin](Skin.html)
     Skin.call(this, ps, name, $div);
 
-    var thisSkin = this;
+    var skin = this;
 
     AWT.Font.loadGoogleFonts(this.resources.cssFonts);
 
@@ -62,22 +62,22 @@ define([
     });
     this.buttons.prev = $('<img/>').on('click',
         function (evt) {
-          if (thisSkin.ps)
-            thisSkin.ps.actions.prev.processEvent(evt);
+          if (skin.ps)
+            skin.ps.actions.prev.processEvent(evt);
         });
     this.buttons.prev.get(0).src = this.resources.prevBtn;
     this.$div.append(this.buttons.prev);
     this.buttons.next = $('<img/>').on('click',
         function (evt) {
-          if (thisSkin.ps)
-            thisSkin.ps.actions.next.processEvent(evt);
+          if (skin.ps)
+            skin.ps.actions.next.processEvent(evt);
         });
     this.buttons.next.get(0).src = this.resources.nextBtn;
     this.$div.append(this.buttons.next);
     if (screenfull && screenfull.enabled) {
       this.buttons.fullscreen = $('<img/>').on('click',
           function () {
-            thisSkin.setScreenFull(null);
+            skin.setScreenFull(null);
           });
       this.buttons.fullscreen.get(0).src = this.resources.fullScreen;
       this.$div.append(this.buttons.fullscreen);
@@ -112,19 +112,19 @@ define([
       var cssWidth = this.countersWidth - padding;
       var cssHeight = this.countersHeight;
       $.each(Skin.prototype.counters, function (name) {
-        thisSkin.counters[name] = new Counter(name, $('<div/>', {class: 'counter', title: ps.getMsg(name)}).css({
+        skin.counters[name] = new Counter(name, $('<div/>', {class: 'counter', title: ps.getMsg(name)}).css({
           'width': cssWidth + 'px',
           'height': cssHeight + 'px',
           'font-size': (cssHeight - 2) + 'px',
           'text-align': 'center',
           'padding-left': padding + 'px',
-          'background-image': 'url(' + thisSkin.resources[name] + ')',
+          'background-image': 'url(' + skin.resources[name] + ')',
           'background-repeat': 'no-repeat',
           'background-position': 'left'
         }).html('000').on('click', function (evt) {
-          if (thisSkin.ps)
-            thisSkin.ps.actions.reports.processEvent(evt);
-        }).appendTo(thisSkin.$div));
+          if (skin.ps)
+            skin.ps.actions.reports.processEvent(evt);
+        }).appendTo(skin.$div));
       });
     }
   };
@@ -249,14 +249,14 @@ define([
       if (this.counters.time) {
         var x = msgBoxRect.pos.x + msgBoxRect.dim.width + nxt.w;
         var y = msgBoxRect.pos.y;
-        var thisSkin = this;
+        var skin = this;
         $.each(this.counters, function (key, val) {
           val.$div.css({
             position: 'absolute',
             left: x,
             top: y
           });
-          y += thisSkin.countersHeight;
+          y += skin.countersHeight;
         });
       }
       if (this.buttons.fullscreen) {

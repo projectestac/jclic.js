@@ -309,13 +309,13 @@ define([
      * @param {MediaBag} mediaBag - The media bag of the current project.
      */
     realizeContent: function (mediaBag) {
-      var thisContent = this;
+      var content = this;
       if (this.imgName !== null && this.imgName.length > 0) {
         this.mbe = mediaBag.getElement(this.imgName, true);
         if (this.mbe) {
           this.mbe.build(function () {
-            thisContent.img = thisContent.mbe.data;
-            thisContent.animatedGifFile = thisContent.mbe.animated ? thisContent.mbe.getFullPath() : null;
+            content.img = content.mbe.data;
+            content.animatedGifFile = content.mbe.animated ? content.mbe.getFullPath() : null;
           });
         }
       }

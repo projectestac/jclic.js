@@ -91,7 +91,7 @@ define([
 
       var id = this.targets.length - 1;
       var idLabel = 'target' + ('000' + id).slice(-3);
-      var thisPanel = this;
+      var panel = this;
 
       $span.addClass('JClicTextTarget');
 
@@ -102,7 +102,7 @@ define([
           $('<option/>', {value: target.options[i], text: target.options[i]}).appendTo($span);
         target.$comboList = $span.bind('focus change', function (event) {
           event.textTarget = target;
-          thisPanel.processEvent(event);
+          panel.processEvent(event);
         });
       } else {
         // Use a `span` element with the `contentEditable` attribute set `on`        
@@ -117,7 +117,7 @@ define([
           spellcheck: 'false'
         }).bind('focus input blur', function (event) {
           event.textTarget = target;
-          thisPanel.processEvent(event);
+          panel.processEvent(event);
         });
 
       }

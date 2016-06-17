@@ -152,12 +152,12 @@ define([
 
       var id = this.targets.length - 1;
       var idLabel = 'target' + ('000' + id).slice(-3);
-      var thisPanel = this;
+      var panel = this;
 
       $span.addClass('JClicTextTarget').bind('click', function (event) {
         event.textTarget = target;
         event.idLabel = idLabel;
-        thisPanel.processEvent(event);
+        panel.processEvent(event);
       });
 
       return $span;

@@ -44,7 +44,6 @@ define([
     // *TextGrid* extends [AbstractBox](AbstractBox.html)
     AbstractBox.call(this, parent, container, boxBase);
 
-    var thisTG = this;
     this.pos.x = x;
     this.pos.y = y;
     this.nCols = Math.max(1, ncw);
@@ -56,8 +55,9 @@ define([
     this.setChars(' ');
     this.preferredBounds = new AWT.Rectangle(this.pos, this.dim);
     this.setBorder(border);
+    var grid = this;
     this.cursorTimer = new AWT.Timer(function () {
-      thisTG.blink(0);
+      grid.blink(0);
     }, 500, false);
     this.cursorEnabled = false;
     this.useCursor = false;
@@ -397,8 +397,7 @@ define([
             point.y--;
           else
             point.y = this.nRows - 1;
-        }
-        else if (point.x >= this.nCols) {
+        } else if (point.x >= this.nCols) {
           point.x = 0;
           if (point.y < this.nRows - 1)
             point.y++;
@@ -411,8 +410,7 @@ define([
             point.x--;
           else
             point.x = this.nCols - 1;
-        }
-        else if (point.y >= this.nRows) {
+        } else if (point.y >= this.nRows) {
           point.y = 0;
           if (point.x < this.nCols - 1)
             point.x++;
@@ -442,8 +440,7 @@ define([
         this.useCursor = true;
         if (skipLocked && this.getCellAttribute(px, py, this.flags.LOCKED)) {
           this.moveCursor(1, 0, skipLocked);
-        }
-        else {
+        } else {
           if (this.cursorEnabled)
             this.startCursorBlink();
         }
@@ -548,8 +545,7 @@ define([
 
       if (this.isValidCell(px, py)) {
         return new AWT.Point(px, py);
-      }
-      else
+      } else
         return null;
     },
     /**
@@ -629,7 +625,6 @@ define([
     setAttributeBetween: function (x0, y0, x1, y1, attribute, value) {
 
       if (this.isValidCell(x0, y0) && this.isValidCell(x1, y1)) {
-
         var dx = x1 - x0,
             dy = y1 - y0;
 
@@ -786,7 +781,6 @@ define([
           this.cellWidth - 2 * this.defaults.MIN_INTERNAL_MARGIN,
           this.cellHeight - 2 * this.defaults.MIN_INTERNAL_MARGIN);
 
-
       var ch = [],
           attr, isMarked, isInverted, isCursor,
           boxBounds,
@@ -842,7 +836,6 @@ define([
                 // Reset ctx default values
                 if (isMarked)
                   ctx.globalCompositeOperation = 'source-over';
-
               }
               ctx.strokeStyle = 'black';
               AWT.Stroke.prototype.setStroke(ctx);

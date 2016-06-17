@@ -931,12 +931,12 @@ define([
      * @param {string} evt - The event name
      */
     attachEvent: function ($obj, evt) {
-      var thisAct = this;
+      var act = this;
       $obj.on(evt, this, function (event) {
         if (event.type === TOUCH_TEST_EVENT) {
           if (!K.TOUCH_DEVICE)
             K.TOUCH_DEVICE = true;
-          if ($.inArray(TOUCH_TEST_EVENT, thisAct.events) === -1) {
+          if ($.inArray(TOUCH_TEST_EVENT, act.events) === -1) {
             // Disconnect handler
             $obj.off(TOUCH_TEST_EVENT);
             return;

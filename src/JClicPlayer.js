@@ -233,52 +233,51 @@ define([
      * Builds the {@link AWT.Action} objects for this player
      */
     buildActions: function () {
-      var tp = this;
+      var player = this;
       this.actions = {
         'next': new AWT.Action('next', function () {
-          tp.history.processJump(tp.project.activitySequence.getJump(false, tp.reporter), false);
+          player.history.processJump(player.project.activitySequence.getJump(false, player.reporter), false);
         }),
         'prev': new AWT.Action('prev', function () {
-          tp.history.processJump(tp.project.activitySequence.getJump(true, tp.reporter), false);
+          player.history.processJump(player.project.activitySequence.getJump(true, player.reporter), false);
 
         }),
         'return': new AWT.Action('return', function () {
-          tp.history.pop();
+          player.history.pop();
         }),
         'reset': new AWT.Action('reset', function () {
-          if (tp.actPanel && tp.actPanel.act.canReinit())
-            tp.initActivity();
+          if (player.actPanel && player.actPanel.act.canReinit())
+            player.initActivity();
         }),
         'help': new AWT.Action('help', function () {
-          if (tp.actPanel !== null)
-            tp.actPanel.showHelp();
+          if (player.actPanel !== null)
+            player.actPanel.showHelp();
         }),
         'info': new AWT.Action('info', function () {
-          if (tp.actPanel && tp.actPanel.act.hasInfo()) {
-            if (tp.actPanel.act.infoUrl) {
-              tp.displayURL(tp.act.infoUrl, true);
-            } else if (tp.actPanel.act.infoCmd) {
-              tp.runCmd(tp.actPanel.act.infoCmd);
+          if (player.actPanel && player.actPanel.act.hasInfo()) {
+            if (player.actPanel.act.infoUrl) {
+              player.displayURL(player.act.infoUrl, true);
+            } else if (player.actPanel.act.infoCmd) {
+              player.runCmd(player.actPanel.act.infoCmd);
             }
           }
         }),
         'reports': new AWT.Action('reports', function (ev) {
-          tp.showReports();
+          player.showReports();
         }),
         'audio': new AWT.Action('audio', function (ev) {
-          tp.audioEnabled = !tp.audioEnabled;
-          if (!tp.audioEnabled)
-            tp.stopMedia();
-          EventSounds.prototype.globalEnabled = tp.audioEnabled;
+          player.audioEnabled = !player.audioEnabled;
+          if (!player.audioEnabled)
+            player.stopMedia();
+          EventSounds.prototype.globalEnabled = player.audioEnabled;
         })
       };
 
-      var thisPlayer = this;
       $.each(this.actions, function (key, value) {
         value.addStatusListener(function () {
           // `this` points here to the [AWT.Action](AWT.html#Action) object
-          if (thisPlayer.skin)
-            thisPlayer.skin.actionStatusChanged(this);
+          if (player.skin)
+            player.skin.actionStatusChanged(this);
         });
       });
     },
@@ -341,13 +340,13 @@ define([
       // Main timer
       if (this.timer)
         this.timer.stop();
-      var thisPlayer = this;
+      var player = this;
       this.timer = new AWT.Timer(function () {
-        thisPlayer.incCounterValue('time');
-        if (thisPlayer.actPanel && thisPlayer.actPanel.act.maxTime > 0 &&
-            thisPlayer.actPanel.playing &&
-            thisPlayer.counterVal['time'] >= thisPlayer.actPanel.act.maxTime) {
-          thisPlayer.actPanel.finishActivity(false);
+        player.incCounterValue('time');
+        if (player.actPanel && player.actPanel.act.maxTime > 0 &&
+            player.actPanel.playing &&
+            player.counterVal['time'] >= player.actPanel.act.maxTime) {
+          player.actPanel.finishActivity(false);
         }
       }, 1000, false);
 
@@ -356,8 +355,8 @@ define([
         this.delayedTimer.stop();
 
       this.delayedTimer = new AWT.Timer(function () {
-        if (thisPlayer.delayedAction) {
-          thisPlayer.delayedAction.processEvent(thisPlayer.delayedAction, null);
+        if (player.delayedAction) {
+          player.delayedAction.processEvent(player.delayedAction, null);
         }
       }, 1000, false);
       this.delayedTimer.repeats = false;
@@ -451,7 +450,7 @@ define([
      */
     load: function (project, sequence, activity) {
 
-      var tp = this;
+      var player = this;
 
       this.forceFinishActivity();
       this.skin.setWaitCursor(true);
@@ -469,46 +468,46 @@ define([
           // Step 0: Check if `project` points to a ZIP file
           if (Utils.endsWith(fullPath, '.jclic.zip')) {
             // TODO: Implement register of zip files in PlayerHistory
-            tp.zip = null;
-            tp.setSystemMessage('Loading ZIP file', fullPath);
+            player.zip = null;
+            player.setSystemMessage('Loading ZIP file', fullPath);
 
             // Launch loading of ZIP file in a separated thread
             window.setTimeout(function () {
-              tp.skin.setWaitCursor(true);
+              player.skin.setWaitCursor(true);
 
               JSZipUtils.getBinaryContent(fullPath, function (err, data) {
                 if (err) {
-                  tp.setSystemMessage('Error loading ZIP file: ', err);
+                  player.setSystemMessage('Error loading ZIP file: ', err);
                   return;
                 }
                 new JSZip().loadAsync(data).then(function (zip) {
-                  tp.zip = zip;
-                  tp.zip.fullZipPath = fullPath;
-                  tp.zip.zipBasePath = Utils.getBasePath(fullPath);
+                  player.zip = zip;
+                  player.zip.fullZipPath = fullPath;
+                  player.zip.zipBasePath = Utils.getBasePath(fullPath);
                   // Find first file with extension '.jclic' inside the zip file
                   var fileName = null;
-                  for (var fn in tp.zip.files) {
+                  for (var fn in player.zip.files) {
                     if (Utils.endsWith(fn, '.jclic')) {
                       fileName = fn;
                       break;
                     }
                   }
                   if (fileName) {
-                    tp.load(Utils.getPath(tp.zip.zipBasePath, fileName), sequence, activity);
+                    player.load(Utils.getPath(player.zip.zipBasePath, fileName), sequence, activity);
                   } else {
-                    tp.setSystemMessage('Error: ZIP does not contain any valid jclic file!');
+                    player.setSystemMessage('Error: ZIP does not contain any valid jclic file!');
                   }
                 }).catch(function (reason) {
-                  tp.setSystemMessage('Error reading ZIP file: ', reason);
+                  player.setSystemMessage('Error reading ZIP file: ', reason);
                 });
               });
-              tp.skin.setWaitCursor(false);
+              player.skin.setWaitCursor(false);
             }, 100);
             this.skin.setWaitCursor(false);
             return;
-          } else if (tp.localFS && JClicObject && !JClicObject.projectFiles[fullPath]) {
+          } else if (player.localFS && JClicObject && !JClicObject.projectFiles[fullPath]) {
             ScriptJS(fullPath + '.js', function () {
-              tp.load(project, sequence, activity);
+              player.load(project, sequence, activity);
             });
             this.skin.setWaitCursor(false);
             return;
@@ -518,37 +517,37 @@ define([
           var processProjectFile = function (fp) {
             $.get(fp, null, null, 'xml').done(function (data) {
               if (data === null || typeof data !== 'object') {
-                tp.setSystemMessage('ERROR: Project not loaded. Bad data!', project);
+                player.setSystemMessage('ERROR: Project not loaded. Bad data!', project);
                 return;
               }
               var prj = new JClicProject();
-              prj.setProperties($(data).find('JClicProject'), fullPath, tp.zip, tp.options);
-              tp.setSystemMessage('Project file loaded and parsed', project);
+              prj.setProperties($(data).find('JClicProject'), fullPath, player.zip, player.options);
+              player.setSystemMessage('Project file loaded and parsed', project);
               prj.mediaBag.buildAll();
               var loops = 0;
               var interval = 500;
-              tp.skin.setWaitCursor(true);
+              player.skin.setWaitCursor(true);
               var checkMedia = window.setInterval(function () {
                 // Wait for a maximum time of two minutes
-                if (++loops > tp.options.maxWaitTime / interval) {
+                if (++loops > player.options.maxWaitTime / interval) {
                   window.clearInterval(checkMedia);
-                  tp.skin.setWaitCursor(false);
-                  tp.setSystemMessage('Error loading media!');
+                  player.skin.setWaitCursor(false);
+                  player.setSystemMessage('Error loading media!');
                   // alert?                    
                 }
                 if (!prj.mediaBag.isWaiting()) {
                   window.clearInterval(checkMedia);
-                  tp.skin.setWaitCursor(false);
+                  player.skin.setWaitCursor(false);
                   // Call again `load`, passing the loaded [JClicProject](JClicProject.html) object
-                  tp.load(prj, sequence, activity);
+                  player.load(prj, sequence, activity);
                 }
               }, interval);
             }).fail(function (jqXHR, textStatus, errorThrown) {
               var errMsg = textStatus + ' (' + errorThrown + ') while loading ' + project;
-              tp.setSystemMessage('Error', errMsg);
+              player.setSystemMessage('Error', errMsg);
               alert('Error!\n' + errMsg);
             }).always(function () {
-              tp.skin.setWaitCursor(false);
+              player.skin.setWaitCursor(false);
             });
           };
 
@@ -556,26 +555,26 @@ define([
           var fp = fullPath;
 
           // Special case for ZIP files
-          if (tp.zip) {
-            var fName = Utils.getRelativePath(fp, tp.zip.zipBasePath);
-            if (tp.zip.files[fName]) {
-              tp.zip.file(fName).async('string').then(function (text) {
+          if (player.zip) {
+            var fName = Utils.getRelativePath(fp, player.zip.zipBasePath);
+            if (player.zip.files[fName]) {
+              player.zip.file(fName).async('string').then(function (text) {
                 processProjectFile('data:text/xml;charset=UTF-8,' + text);
               }).catch(function (reason) {
-                tp.setSystemMessage('Error: Unable to extract ', fName + ' from ZIP file: ' + reason);
-                tp.skin.setWaitCursor(false);
+                player.setSystemMessage('Error: Unable to extract ', fName + ' from ZIP file: ' + reason);
+                player.skin.setWaitCursor(false);
               });
               return;
             }
           }
           // Special case for local filesystems (`file:` protocol)
-          else if (tp.localFS) {
+          else if (player.localFS) {
             // Check if file is already loaded in the global variable `JClicObject`
             if (JClicObject && JClicObject.projectFiles[fullPath]) {
               fp = 'data:text/xml;charset=UTF-8,' + JClicObject.projectFiles[fullPath];
             } else {
-              tp.setSystemMessage('Error: Unable to load', fullPath + '.js');
-              tp.skin.setWaitCursor(false);
+              player.setSystemMessage('Error: Unable to load', fullPath + '.js');
+              player.skin.setWaitCursor(false);
               return;
             }
           }
@@ -589,11 +588,11 @@ define([
         // If none specified, start with the first element of the sequence
         if (!sequence && !activity)
           sequence = '0';
-        
+
         // start reporter session
         if (this.reporter !== null)
           this.reporter.newSession(project.name, this);
-        
+
       }
 
       // Step two: load the ActivitySequenceElement
@@ -687,7 +686,7 @@ define([
 
         if (this.options.fade > 0) {
           this.actPanel.$div.fadeIn(this.options.fade, function () {
-            tp.activityReady();
+            player.activityReady();
           });
         }
       }
@@ -784,9 +783,9 @@ define([
           mainCss['background-image'] = act.bgGradient.getCss();
 
         if (act.bgImageFile && act.bgImageFile.length > 0) {
-          var thisPlayer = this;
+          var player = this;
           this.project.mediaBag.getElement(act.bgImageFile, true).getFullPathPromise().then(function (bgImageUrl) {
-            thisPlayer.$div.css({
+            player.$div.css({
               'background-image': 'url(\'' + bgImageUrl + '\')',
               'background-repeat': act.tiledBgImg ? 'repeat' : 'no-repeat',
               'background-position': act.tiledBgImg ? '' : 'center center'
@@ -829,7 +828,7 @@ define([
      */
     playMedia: function (mediaContent, mediaPlacement) {
 
-      var thisPlayer = this;
+      var player = this;
       var ji = null;
       var fn = mediaContent.mediaFileName;
 
@@ -839,11 +838,11 @@ define([
         case 'PLAY_MIDI':
         case 'RECORD_AUDIO':
         case 'PLAY_RECORDED_AUDIO':
-          if (thisPlayer.audioEnabled) {
-            var amp = thisPlayer.activeMediaBag.getActiveMediaPlayer(
+          if (player.audioEnabled) {
+            var amp = player.activeMediaBag.getActiveMediaPlayer(
                 mediaContent,
-                thisPlayer.project.mediaBag,
-                thisPlayer);
+                player.project.mediaBag,
+                player);
             if (amp)
               amp.play(mediaPlacement);
 
@@ -856,36 +855,36 @@ define([
             // Relative path computed in History.processJump
             ji.projectPath = mediaContent.externalParam;
           }
-          thisPlayer.history.processJump(ji, true);
+          player.history.processJump(ji, true);
           break;
 
         case 'RUN_CLIC_ACTIVITY':
-          thisPlayer.history.push();
-          thisPlayer.load(null, null, fn);
+          player.history.push();
+          player.load(null, null, fn);
           break;
 
         case 'RETURN':
-          thisPlayer.history.pop();
+          player.history.pop();
           break;
 
         case 'EXIT':
           ji = new JumpInfo('EXIT', fn);
-          thisPlayer.history.processJump(ji, false);
+          player.history.processJump(ji, false);
           break;
 
         case 'RUN_EXTERNAL':
-          thisPlayer.runCmd(fn);
+          player.runCmd(fn);
           break;
 
         case 'URL':
           if (fn) {
             // When mediaContent.level is 2 or more, the URL will be opened in a separate window.
-            thisPlayer.displayURL(fn, mediaContent.level > 1);
+            player.displayURL(fn, mediaContent.level > 1);
           }
           break;
 
         default:
-          thisPlayer.setSystemMessage('unknown media type', mediaContent.mediaType);
+          player.setSystemMessage('unknown media type', mediaContent.mediaType);
           break;
       }
     },
@@ -898,9 +897,9 @@ define([
     stopMedia: function (level) {
       if (typeof level !== 'number')
         level = -1;
-      var thisPlayer = this;
+      var player = this;
       //window.setTimeout(function () {      
-      thisPlayer.activeMediaBag.stopAll(level);
+      player.activeMediaBag.stopAll(level);
       //}, 0);
     },
     /**

@@ -133,7 +133,7 @@ define([
      * Thanks to @lakenen and @marckubischta
      */
     checkAnimatedGif: function () {
-      var thisMbe = this;
+      var mbe = this;
       var request = new XMLHttpRequest();
       request.responseType = 'arraybuffer';
       request.addEventListener('load', function () {
@@ -143,7 +143,7 @@ define([
         // make sure it's a gif (GIF8)
         if (arr[0] !== 0x47 || arr[1] !== 0x49 ||
             arr[2] !== 0x46 || arr[3] !== 0x38) {
-          thisMbe.animated = false;
+          mbe.animated = false;
           return;
         }
 
@@ -164,8 +164,8 @@ define([
                 arr[afterblock] === 0x00 &&
                 (arr[afterblock + 1] === 0x2C || arr[afterblock + 1] === 0x21)) {
               if (++frames > 1) {
-                thisMbe.animated = true;
-                //console.log('Animated GIF detected: '+thisMbe.fileName);
+                mbe.animated = true;
+                //console.log('Animated GIF detected: '+mbe.fileName);
                 break;
               }
             }

@@ -162,7 +162,7 @@ define([
     readDocAttributes: function ($xml) {
       var attr = {};
       var css = {};
-      var thisDoc = this;
+      var doc = this;
       $.each($xml.get(0).attributes, function () {
         var name = this.name;
         var val = this.value;
@@ -206,8 +206,8 @@ define([
           case 'tabWidth':
             // `tab-size` CSS attribute is only set when the document has a specific `tabWidth`
             // setting. It must be accompained of `white-space:pre` to successfully work.
-            thisDoc.tabSpc = val;
-            css['tab-size'] = thisDoc.tabSpc;
+            doc.tabSpc = val;
+            css['tab-size'] = doc.tabSpc;
             css['white-space'] = 'pre-wrap';
             break;
           default:
@@ -422,7 +422,7 @@ define([
      * @param {MediaBag} mediaBag - The media bag used to load images and media content
      */
     setProperties: function ($xml, mediaBag) {
-      var tt = this;
+      var target = this;
       var firstAnswer = true;
       // Read specific nodes
       $xml.children().each(function () {
@@ -431,50 +431,50 @@ define([
           case 'answer':
             if (firstAnswer) {
               firstAnswer = false;
-              tt.answers = [];
+              target.answers = [];
             }
-            if (tt.answers === null)
-              tt.answers = [];
-            tt.answers.push(this.textContent);
+            if (target.answers === null)
+              target.answers = [];
+            target.answers.push(this.textContent);
             break;
 
           case 'optionList':
             $node.children('option').each(function () {
-              tt.isList = true;
-              if (tt.options === null)
-                tt.options = [];
-              tt.options.push(this.textContent);
+              target.isList = true;
+              if (target.options === null)
+                target.options = [];
+              target.options.push(this.textContent);
             });
             break;
 
           case 'response':
-            tt.iniChar = Utils.getVal($node.attr('fill'), tt.iniChar).charAt(0);
-            tt.numIniChars = Utils.getNumber($node.attr('length'), tt.numIniChars);
-            tt.maxLenResp = Utils.getNumber($node.attr('maxLength'), tt.maxLenResp);
-            tt.iniText = Utils.getVal($node.attr('show'), tt.iniText);
+            target.iniChar = Utils.getVal($node.attr('fill'), target.iniChar).charAt(0);
+            target.numIniChars = Utils.getNumber($node.attr('length'), target.numIniChars);
+            target.maxLenResp = Utils.getNumber($node.attr('maxLength'), target.maxLenResp);
+            target.iniText = Utils.getVal($node.attr('show'), target.iniText);
             break;
 
           case 'info':
-            tt.infoMode = Utils.getVal($node.attr('mode'), 'always');
-            tt.popupDelay = Utils.getNumber($node.attr('delay'), tt.popupDelay);
-            tt.popupMaxTime = Utils.getNumber($node.attr('maxTime'), tt.popupMaxTime);
+            target.infoMode = Utils.getVal($node.attr('mode'), 'always');
+            target.popupDelay = Utils.getNumber($node.attr('delay'), target.popupDelay);
+            target.popupMaxTime = Utils.getNumber($node.attr('maxTime'), target.popupMaxTime);
             $node.children('media').each(function () {
-              tt.onlyPlay = true;
-              tt.popupContent = new ActiveBoxContent();
-              tt.popupContent.mediaContent = new MediaContent().setProperties($(this));
+              target.onlyPlay = true;
+              target.popupContent = new ActiveBoxContent();
+              target.popupContent.mediaContent = new MediaContent().setProperties($(this));
             });
-            if (!tt.popupContent) {
+            if (!target.popupContent) {
               $node.children('cell').each(function () {
-                tt.popupContent = new ActiveBoxContent().setProperties($(this, mediaBag));
+                target.popupContent = new ActiveBoxContent().setProperties($(this, mediaBag));
               });
             }
             break;
 
           case 'text':
-            tt.text = this.textContent.replace(/\t/g, '&#9;');
+            target.text = this.textContent.replace(/\t/g, '&#9;');
             var attr = TextActivityDocument.prototype.readDocAttributes($(this));
             if (!$.isEmptyObject(attr))
-              tt.attr = attr;
+              target.attr = attr;
             break;
 
           default:

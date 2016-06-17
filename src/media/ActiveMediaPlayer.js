@@ -59,7 +59,7 @@ define([
         break;
     }
   };
-  
+
   /**
    * Recording of audio is enabled only when `navigator.getUserMedia` and `MediaRecorder` are defined
    * In 02-Mar-2016 this is implemented only in Firefox 41 and Chrome 49 or later.
@@ -67,13 +67,13 @@ define([
    * @type Boolean
    */
   ActiveMediaPlayer.REC_ENABLED = (typeof MediaRecorder !== 'undefined' && typeof navigator !== 'undefined');
-  
-  if(ActiveMediaPlayer.REC_ENABLED) {
+
+  if (ActiveMediaPlayer.REC_ENABLED) {
     navigator.getUserMedia = (navigator.getUserMedia ||
-                       navigator.webkitGetUserMedia ||
-                       navigator.mozGetUserMedia ||
-                       navigator.msGetUserMedia);
-                   
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia);
+
     //URL = window.URL || window.webkitURL;
   }
 
@@ -81,9 +81,9 @@ define([
    * Audio buffers used for recording and playing voice are stored in a static array because
    * they are common to all instances of {@link ActiveMediaPlayer}
    * Only initialized when {@link REC_ENABLED} is `true`.
-   * @type {AudioBuffer[]} */  
+   * @type {AudioBuffer[]} */
   ActiveMediaPlayer.AUDIO_BUFFERS = ActiveMediaPlayer.REC_ENABLED ? [] : null;
-    
+
   ActiveMediaPlayer.prototype = {
     constructor: ActiveMediaPlayer,
     /**
@@ -116,13 +116,13 @@ define([
      */
     realize: function () {
       if (this.mbe) {
-        var thisMediaPlayer = this;
+        var mediaplayer = this;
         this.mbe.build(function () {
           if (this.data.pause)
             this.data.pause();
           if ((this.type === 'video' || this.type === 'anim') && this.data) {
-            thisMediaPlayer.$visualComponent = $(this.data);
-            thisMediaPlayer.$visualComponent.css('z-index', 20);
+            mediaplayer.$visualComponent = $(this.data);
+            mediaplayer.$visualComponent.css('z-index', 20);
           }
         });
       }
@@ -133,25 +133,21 @@ define([
      * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
      */
     playNow: function (setBx) {
-      
-      if (this.useAudioBuffer){                        
-        
+      if (this.useAudioBuffer) {
         if (ActiveMediaPlayer.AUDIO_BUFFERS) {
           var buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer];
-          if(buffer){
-            if(this.mc.mediaType === 'RECORD_AUDIO'){
+          if (buffer) {
+            if (this.mc.mediaType === 'RECORD_AUDIO') {
               buffer.record();
-            }
-            else{
-              buffer.play();            
+            } else {
+              buffer.play();
             }
           }
         }
-      }
-      else if (this.mbe) {
+      } else if (this.mbe) {
         //if (this.mbe.data)
         //  this.mbe.data.trigger('pause');
-        var thisMP = this;
+        var mediaplayer = this;
         this.mbe.build(function () {
           var armed = false;
 
@@ -163,45 +159,22 @@ define([
           $thisData.off();
 
           // If there is a time fragment specified, prepare to stop when the `to` position is reached
-          if (thisMP.mc.to > 0) {
+          if (mediaplayer.mc.to > 0) {
             $thisData.on('timeupdate', function () {
               // `this` points here to the HTML audio element
-              if (armed && thisData.currentTime >= thisMP.mc.to / 1000) {
+              if (armed && thisData.currentTime >= mediaplayer.mc.to / 1000) {
                 $thisData.off('timeupdate');
                 thisData.pause();
               }
             });
           }
-          //
           // Seek the media position
-          var t = thisMP.mc.from > 0 ? thisMP.mc.from / 1000 : 0;
-
-          /*
-           // CAN_PLAY_THROUGH is always 4 ?                    
-           if (thisData.readyState >= 4) {
-           armed = true;
-           thisData.pause();
-           thisData.currentTime = t;
-           thisData.play();
-           }          
-           else {
-           //thisData.load();
-           $thisData.on('canplaythrough', function () {
-           $thisData.off('canplaythrough');
-           armed = true;
-           thisData.pause();
-           thisData.currentTime = t;
-           thisData.play();
-           });
-           }
-           */
-          
+          var t = mediaplayer.mc.from > 0 ? mediaplayer.mc.from / 1000 : 0;
           // Launch the media despite of its readyState
           armed = true;
           thisData.pause();
           thisData.currentTime = t;
           thisData.play();
-
         });
       }
     },
@@ -247,8 +220,8 @@ define([
      * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
      */
     clearAudioBuffer: function (buffer) {
-      if (ActiveMediaPlayer.AUDIO_BUFFERS && 
-          buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length && 
+      if (ActiveMediaPlayer.AUDIO_BUFFERS &&
+          buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length &&
           ActiveMediaPlayer.AUDIO_BUFFERS[buffer]) {
         ActiveMediaPlayer.AUDIO_BUFFERS[buffer].clear();
         ActiveMediaPlayer.AUDIO_BUFFERS[buffer] = null;

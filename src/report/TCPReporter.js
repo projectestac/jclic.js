@@ -8,7 +8,7 @@
 //  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
 //  This program is free software: you can redistribute it and/or modify it under the terms of
 //  the GNU General Public License as published by the Free Software Foundation, version. This
-//  program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//  program is distributed in the hope reporter it will be useful, but WITHOUT ANY WARRANTY; without
 //  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 //  General Public License for more details. You should have received a copy of the GNU General
 //  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
@@ -21,7 +21,7 @@ define([
 ], function ($, Reporter) {
 
   /**
-   * This special case of {@link Reporter} connects with an external service that provides the
+   * This special case of {@link Reporter} connects with an external service reporter provides the
    * [JClic Reports API](https://github.com/projectestac/jclic/wiki/JClic-Reports-developers-guide).
    * Connection parameters to the reports server (`path`, `service`, `userId`, `key`, `context`...)
    * are passed through the `options` element of {@link JClicPlayer} (acting as {@link PlayStation}).
@@ -160,33 +160,33 @@ define([
       else {
         // Set up the `processingTasks` flag to avoid re-entrant processing
         this.processingTasks = true;
-        var that = this;
+        var reporter = this;
 
         var reportBean = new TCPReporter.ReportBean('multiple');
         for (var i = 0; i < this.tasks.length; i++)
           reportBean.appendData(this.tasks[i].$bean);
 
         return new Promise(function (resolve, reject) {
-          that.transaction(reportBean.$bean)
+          reporter.transaction(reportBean.$bean)
               .done(function (data, textStatus, jqXHR) {
                 // TODO: Check returned message for possible errors on the server side
-                that.tasks = [];
-                if (that.waitingTasks) {
-                  that.tasks.concat(that.waitingTasks);
-                  that.waitingTasks = null;
+                reporter.tasks = [];
+                if (reporter.waitingTasks) {
+                  reporter.tasks.concat(reporter.waitingTasks);
+                  reporter.waitingTasks = null;
                 }
                 // Reset the fail counter after a successufull attempt
-                that.failCount = 0;
+                reporter.failCount = 0;
                 resolve(true);
               })
               .fail(function (jqXHR, textStatus, errorThrown) {
-                if (++that.failCount > that.maxFails)
-                  that.stopReporting();
+                if (++reporter.failCount > reporter.maxFails)
+                  reporter.stopReporting();
                 reject('Error reporting data: ' + textStatus);
               })
               .always(function () {
                 // Unset the flag
-                that.processingTasks = false;
+                reporter.processingTasks = false;
               });
         });
       }
@@ -214,45 +214,45 @@ define([
       var serverProtocol = options.protocol ? options.protocol : this.DEFAULT_SERVER_PROTOCOL;
       this.serviceUrl = serverProtocol + "://" + this.serverPath + serverService;
 
-      var that = this;
+      var reporter = this;
       var bean = new TCPReporter.ReportBean('get_properties');
       return new Promise(function (resolve, reject) {
-        that.transaction(bean.$bean)
+        reporter.transaction(bean.$bean)
             .done(function (data, textStatus, jqXHR) {
-              that.dbProperties = {};
+              reporter.dbProperties = {};
               $(data).find('param').each(function () {
                 var $param = $(this);
-                that.dbProperties[$param.attr('name')] = $param.attr('value');
+                reporter.dbProperties[$param.attr('name')] = $param.attr('value');
               });
-              that.promptUserId(false).then(function (userId) {
-                that.userId = userId;
-                var tl = options.lap ? options.lap : that.getProperty('TIME_LAP', this.DEFAULT_TIMER_LAP);
-                that.timerLap = Math.min(30, Math.max(1, parseInt(tl)));
-                that.timer = window.setInterval(
+              reporter.promptUserId(false).then(function (userId) {
+                reporter.userId = userId;
+                var tl = options.lap ? options.lap : reporter.getProperty('TIME_LAP', this.DEFAULT_TIMER_LAP);
+                reporter.timerLap = Math.min(30, Math.max(1, parseInt(tl)));
+                reporter.timer = window.setInterval(
                     function () {
-                      that.flushTasksPromise();
-                    }, that.timerLap * 1000);
+                      reporter.flushTasksPromise();
+                    }, reporter.timerLap * 1000);
                 // Warn before leaving the current page with unsaved data:
-                that.beforeUnloadFunction = function (event) {
-                  if (that.serviceUrl !== null &&
-                      (that.tasks.length > 0 || that.processingTasks)) {
-                    that.flushTasksPromise();
-                    var result = that.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
+                reporter.beforeUnloadFunction = function (event) {
+                  if (reporter.serviceUrl !== null &&
+                      (reporter.tasks.length > 0 || reporter.processingTasks)) {
+                    reporter.flushTasksPromise();
+                    var result = reporter.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
                     if (event)
                       event.returnValue = result;
                     return result;
                   }
                 };
-                window.addEventListener('beforeunload', that.beforeUnloadFunction);
-                that.initiated = true;
+                window.addEventListener('beforeunload', reporter.beforeUnloadFunction);
+                reporter.initiated = true;
                 resolve(true);
               }).catch(function (msg) {
-                that.stopReporting();
+                reporter.stopReporting();
                 reject('Error getting the user ID: ' + msg);
               });
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-              that.stopReporting();
+              reporter.stopReporting();
               reject('Error initializing the reports system: ' + textStatus);
             });
       });
@@ -274,11 +274,11 @@ define([
      * 
      * Creates a new session in the remote database and records its ID for future use
      * @param {boolean} forceNewSession - When `true`, a new session will always be created.
-     * @returns {external:Promise} - A {@link external:Promise} that will be successfully resolved
+     * @returns {external:Promise} - A {@link external:Promise} reporter will be successfully resolved
      * only when `currentSessionId` have a valid value.
      */
     createDBSession: function (forceNewSession) {
-      var that = this;
+      var reporter = this;
 
       if (this.currentSessionId !== null && !forceNewSession)
         // A valid session is available, so just return it
@@ -286,25 +286,25 @@ define([
       else
         // A new session must be created:
         return new Promise(function (resolve, reject) {
-          if (that.initiated && that.userId !== null && that.currentSession !== null) {
-            that.flushTasksPromise().then(function () {
-              that.currentSessionId = null;
+          if (reporter.initiated && reporter.userId !== null && reporter.currentSession !== null) {
+            reporter.flushTasksPromise().then(function () {
+              reporter.currentSessionId = null;
               var bean = new TCPReporter.ReportBean('add session');
 
-              bean.setParam('project', that.currentSession.projectName);
-              bean.setParam('time', Number(that.currentSession.started));
-              bean.setParam('code', that.currentSession.code);
-              bean.setParam('user', that.userId);
-              bean.setParam('key', that.sessionKey);
-              bean.setParam('context', that.sessionContext);
+              bean.setParam('project', reporter.currentSession.projectName);
+              bean.setParam('time', Number(reporter.currentSession.started));
+              bean.setParam('code', reporter.currentSession.code);
+              bean.setParam('user', reporter.userId);
+              bean.setParam('key', reporter.sessionKey);
+              bean.setParam('context', reporter.sessionContext);
 
-              that.transaction(bean.$bean)
+              reporter.transaction(bean.$bean)
                   .done(function (data, textStatus, jqXHR) {
-                    that.currentSessionId = $(data).find('param[name="session"]').attr('value');
-                    resolve(that.currentSessionId);
+                    reporter.currentSessionId = $(data).find('param[name="session"]').attr('value');
+                    resolve(reporter.currentSessionId);
                   })
                   .fail(function (jqXHR, textStatus, errorThrown) {
-                    that.stopReporting();
+                    reporter.stopReporting();
                     reject('Error reporting data: ' + textStatus);
                   });
             });
@@ -349,13 +349,13 @@ define([
      * @returns {external:Promise} - When fulfilled, an array of group data is returned as a result
      */
     getGroups: function () {
-      var that = this;
+      var reporter = this;
       return new Promise(function (resolve, reject) {
-        if (!that.userBased())
+        if (!reporter.userBased())
           reject('This system does not manage users!');
         else {
           var bean = new TCPReporter.ReportBean('get groups');
-          that.transaction(bean.$bean)
+          reporter.transaction(bean.$bean)
               .done(function (data, textStatus, jqXHR) {
                 var currentGroups = [];
                 $(data).find('group').each(function () {
@@ -380,15 +380,15 @@ define([
      * is returned
      */
     getUsers: function (groupId) {
-      var that = this;
+      var reporter = this;
       return new Promise(function (resolve, reject) {
-        if (!that.userBased())
+        if (!reporter.userBased())
           reject('This system does not manage users!');
         else {
           var bean = new TCPReporter.ReportBean('get users');
           if (typeof groupId !== 'undefined' && groupId !== null)
             bean.setParam('group', groupId);
-          that.transaction(bean.$bean)
+          reporter.transaction(bean.$bean)
               .done(function (data, textStatus, jqXHR) {
                 var currentUsers = [];
                 $(data).find('user').each(function () {
@@ -417,15 +417,15 @@ define([
         this.timer = -1;
       }
       if (this.initiated) {
-        var that = this;
+        var reporter = this;
         this.flushTasksPromise().then(function () {
-          if (that.beforeUnloadFunction) {
-            window.removeEventListener('beforeunload', that.beforeUnloadFunction);
-            that.beforeUnloadFunction = null;
+          if (reporter.beforeUnloadFunction) {
+            window.removeEventListener('beforeunload', reporter.beforeUnloadFunction);
+            reporter.beforeUnloadFunction = null;
           }
-          that.serviceUrl = null;
-          that.descriptionDetail = that.serverPath + ' (' + that.ps.getMsg('not connected') + ')';
-          that.initiated = false;
+          reporter.serviceUrl = null;
+          reporter.descriptionDetail = reporter.serverPath + ' (' + reporter.ps.getMsg('not connected') + ')';
+          reporter.initiated = false;
         });
       }
     },
@@ -440,13 +440,13 @@ define([
           this.lastActivity.closeActivity();
         var actCount = this.actCount++;
         var act = this.lastActivity;
-        var that = this;
+        var reporter = this;
         this.createDBSession(false).then(function () {
           var bean = new TCPReporter.ReportBean('add activity');
-          bean.setParam('session', that.currentSessionId);
+          bean.setParam('session', reporter.currentSessionId);
           bean.setParam('num', actCount);
           bean.appendData(act.$getXML());
-          that.addTask(bean);
+          reporter.addTask(bean);
         });
       }
       if (this.currentSession !== null &&
@@ -460,7 +460,7 @@ define([
      * 
      * This method should be invoked when the user starts a new activity
      * @override
-     * @param {Activity} act - The {@link Activity} that has just started
+     * @param {Activity} act - The {@link Activity} reporter has just started
      */
     newActivity: function (act) {
       Reporter.prototype.newActivity.call(this, act);

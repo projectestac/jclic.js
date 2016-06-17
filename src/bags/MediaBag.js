@@ -48,11 +48,11 @@ define([
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties: function ($xml) {
-      var thisMediaBag = this;
+      var mediabag = this;
       $xml.children('media').each(function () {
-        var mbe = new MediaBagElement(thisMediaBag.project.basePath, null, thisMediaBag.project.zip);
+        var mbe = new MediaBagElement(mediabag.project.basePath, null, mediabag.project.zip);
         mbe.setProperties($(this));
-        thisMediaBag.elements[mbe.name] = mbe;
+        mediabag.elements[mbe.name] = mbe;
       });
       return this;
     },

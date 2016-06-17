@@ -205,11 +205,11 @@ define([
 
         this.$form = $('<form/>', {id: 'form1', action: '#'});
 
-        var thisPanel = this;
+        var panel = this;
         this.$form.submit(function (event) {
           event.preventDefault();
-          if (thisPanel.playing) {
-            thisPanel.setCurrentCell(thisPanel.currentCell);
+          if (panel.playing) {
+            panel.setCurrentCell(panel.currentCell);
           }
         });
 

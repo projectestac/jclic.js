@@ -77,12 +77,12 @@ define([
 
       var id = this.targets.length - 1;
       var idLabel = 'target' + ('000' + id).slice(-3);
-      var thisPanel = this;
+      var panel = this;
 
       $span.bind('click', function (event) {
         event.textTarget = target;
         event.idLabel = idLabel;
-        thisPanel.processEvent(event);
+        panel.processEvent(event);
       });
 
       return $span;
@@ -115,7 +115,7 @@ define([
      * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
      * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
      */
-    evaluatePanel: function () {      
+    evaluatePanel: function () {
       var targetsOk = 0;
       var numTargets = this.targets.length;
       for (var i = 0; i < numTargets; i++) {
@@ -168,7 +168,7 @@ define([
 
       switch (event.type) {
         case 'click':
-          var text, pos, ok=false;
+          var text, pos, ok = false;
           if (target) {
             if (target.targetStatus === 'SOLVED') {
               target.targetStatus = 'HIDDEN';
