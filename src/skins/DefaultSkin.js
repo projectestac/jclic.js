@@ -335,7 +335,8 @@ define([
 .SKINID .dlgMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
 .SKINID .dlgMainPanel p {font-size:1.1em; margin-bottom:0.5em;}\
 .SKINID .dlgMainPanel table {table-layout:fixed; width:40em; margin:0.5em 0 1.7em 0; border-collapse:collapse;}\
-.SKINID .dlgMainPanel select {min-width: 20em; font-size:1.2em; font-family:Roboto,sans-serif; color:#757575;}\
+.SKINID .dlgMainPanel select {min-width:20em; font-size:1.2em; font-family:Roboto,sans-serif; color:#757575;}\
+.SKINID .dlgMainPanel input {margin-left:1em; font-size:1.2em; font-family:Roboto,sans-serif; color:#757575;}\
 .SKINID .infoHead {padding:1em 0em 0.5em;}\
 .SKINID .JCGlobalResults td {padding:0.4em; border-bottom:1px solid #b6b6b6;}\
 .SKINID .JCGlobalResults td:first-child {font-weight:600; width:11em;}\

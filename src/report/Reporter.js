@@ -18,8 +18,9 @@
 define([
   "jquery",
   "./SessionReg",
+  "./Encryption",
   "../Utils"
-], function ($, SessionReg, Utils) {
+], function ($, SessionReg, Encryption, Utils) {
 
   /**
    * This class implements the basic operations related with the processing of times and scores
@@ -253,18 +254,25 @@ define([
                   $userSelect.change(function () {
                     sel = this.selectedIndex;
                   });
+                  var $pwdInput = $('<input/>', {type: 'password', size: 8});
                   reporter.ps.skin.showDlg(true, {
                     main: [
                       $('<h2/>', {class: 'subtitle'}).html(reporter.ps.getMsg('Select user:')),
-                      $userSelect],
+                      $userSelect,
+                      $('<h2/>', {class: 'subtitle'}).html(reporter.ps.getMsg('Password:')).append($pwdInput)],
                     bottom: [
                       reporter.ps.skin.$okDlgBtn,
                       reporter.ps.skin.$cancelDlgBtn]
                   }).then(function () {
                     if (sel >= 0) {
-                      // TODO: Check password!
-                      reporter.userId = userList[sel].id;
-                      resolve(reporter.userId);
+                      if (userList[sel].pwd && Encryption.Decrypt(userList[sel].pwd) !== $pwdInput.val()) {
+                        //TODO: Warn about bad password!
+                        window.alert('Incorrect password!');
+                        reject('Incorrect password');
+                      } else {
+                        reporter.userId = userList[sel].id;
+                        resolve(reporter.userId);
+                      }
                     } else
                       reject('No user was selected!');
                   }).catch(reject);

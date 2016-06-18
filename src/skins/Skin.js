@@ -416,8 +416,8 @@ define([
     showDlg: function (modal, options) {
       var skin = this;
       return new Promise(function (resolve, reject) {
-        skin._dlgOkValue = null;
-        skin._dlgCancelValue = null;
+        skin._dlgOkValue = 'ok';
+        skin._dlgCancelValue = 'cancelled';
         skin._isModalDlg = modal;
 
         skin.$dlgMainPanel.children().detach();
