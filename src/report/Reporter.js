@@ -18,7 +18,7 @@
 define([
   "jquery",
   "./SessionReg",
-  "./Encryption",
+  "./EncryptMin",
   "../Utils"
 ], function ($, SessionReg, Encryption, Utils) {
 

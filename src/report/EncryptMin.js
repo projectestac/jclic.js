@@ -23,7 +23,11 @@ define([], function() {
    * secure cryptographic system!
    * 
    * Based on [Encription](https://github.com/projectestac/jclic/blob/master/src/utilities/edu/xtec/util/Encryption.java)
-   * utilities, created by Albert Llastarri (ei Albert!) for [JClic](https://github.com/projectestac/jclic). 
+   * utilities, created by Albert Llastarri for [JClic](https://github.com/projectestac/jclic). 
+   * 
+   * IMPORTANT: This is a shortened version of Encryption with only the methods needed to decrypt
+   * stored passwords. Full version is on file `src/misc/encryption/Encryption.js`
+   * 
    * @exports Encryption
    * @class
    * @abstract
@@ -34,22 +38,6 @@ define([], function() {
      * @type {string}
      */
     BLANK: '___blank___##',
-    /**
-     * Encrypts the given text
-     * @param {string} txt - The text to be encrypted
-     * @returns {string}
-     */
-    Encrypt: function (txt) {
-      if (txt === null || txt.length === 0)
-        txt = Encryption.BLANK;
-      var result = null;
-      try {
-        result = Encryption.codify(txt);
-      } catch (ex) {
-        console.log("Error encripting text: " + ex);
-      }
-      return result;
-    },
     /**
      * Decrypts the given code
      * @param {string} txt - Code to be decrypted
@@ -78,32 +66,6 @@ define([], function() {
       return String.fromCharCode(n);
     },
     /**
-     * @param {string} c (was char)
-     * @returns {string} (was char[])
-     */
-    charToHexCharArray: function (c) {
-      var hex = '',
-          j = c.charCodeAt(0);
-      for (var i = 3; i >= 0; i--) {
-        hex = (j % 16).toString(16) + hex;
-        j /= 16;
-      }
-      return hex;
-    },
-    /**
-     * @param {number} c
-     * @returns {string} (was char[])
-     */
-    intToHexCharArray: function (c) {
-      var hex = '',
-          j = Math.round(c);
-      for (var i = 1; i >= 0; i--) {
-        hex = (j % 16).toString(16) + hex;
-        j /= 16;
-      }
-      return hex;
-    },
-    /**
      * @param {string} cA - (was char[])
      * @param {number} fromIndex
      * @returns {number}
@@ -118,63 +80,6 @@ define([], function() {
           n = (n * 16) + j;
       }
       return n;
-    },
-    /**
-     * @param {string} cA - (was char[])
-     * @returns {string} - (was StringBuilder)
-     */
-    compressZeros: function (cA) {
-      var total = 0,
-          sb = '',
-          zeros = [];
-
-      var l = (cA.length + 7) / 8;
-      for (var k = 0; k < l; k++)
-        zeros[k] = 0;
-
-      for (var j = 0; total < cA.length; j++) {
-        var b = 0;
-        for (var i = 0; i <= 7; i++) {
-          b <<= 1;
-          if (total < cA.length) {
-            if (cA[total] === '0')
-              b += 1;
-            else
-              sb = sb + cA[total];
-          }
-          total++;
-        }
-        zeros[j] = b;
-      }
-      return Encryption.codifyZerosField(zeros, j) + sb;
-    },
-    /**
-     * @param {number[]} zeros
-     * @param {number} length
-     * @returns {string} (was StringBuilder)
-     */
-    codifyZerosField: function (zeros, length) {
-      var hexZeros = Encryption.codifyToHex(zeros, length); //hexZeros size is always odd
-      var codified = '';
-      if (hexZeros.length > 1) {
-        var c1 = hexZeros[0],
-            c2 = hexZeros[1],
-            num = 1,
-            currentChar = 2;
-        while (currentChar < hexZeros.length) {
-          if (c1 === hexZeros[currentChar] && c2 === hexZeros[currentChar + 1] && num < 32)
-            num++;
-          else { //New sequence
-            codified = codified + num.toString(32) + c1 + c2;
-            num = 1;
-            c1 = hexZeros[currentChar];
-            c2 = hexZeros[currentChar + 1];
-          }
-          currentChar += 2;
-        }
-        codified = codified + num.toString(32) + c1 + c2 + '0';
-      }
-      return codified;
     },
     /**
      * @param {string} cA - (was char[])
@@ -227,39 +132,6 @@ define([], function() {
       return sb;
     },
     /**
-     * @param {number[]} bA
-     * @param {number} length
-     * @returns {string}
-     */
-    codifyToHex: function (bA, length) {
-      var j = 0,
-          cA = [];
-      for (var p = 0; p < length * 2; p++)
-        cA[p] = '';
-      for (var i = 0; i < length; i++) {
-        var hex = Encryption.intToHexCharArray(bA[i]);
-        for (var k = 0; k < 2; k++)
-          cA[j++] = hex[k];
-      }
-      return cA.join('');
-    },
-    /**
-     * @param {string} s
-     * @returns {string} (was char[])
-     */
-    codifyToHexWord: function (s) {
-      var j = 0,
-          cA = [];
-      for (var p = 0; p < s.length * 4; p++)
-        cA[p] = '';
-      for (var i = 0; i < s.length; i++) {
-        var hex = Encryption.charToHexCharArray(s[i]);
-        for (var k = 0; k < 4; k++)
-          cA[j++] = hex[k];
-      }
-      return cA.join('');
-    },
-    /**
      * @param {string} sb1 - (was StringBuilder)
      * @returns {string}
      */
@@ -272,23 +144,6 @@ define([], function() {
         j += 4;
       }
       return sb;
-    },
-    /**
-     * @param {string} s - (was StringBuilder)
-     * @returns {string} (was char[])
-     */
-    changeOrder: function (s) {
-      var m = 0,
-          n = s.length - 1,
-          cA = [];
-      for (var p = 0; p < s.length; p++)
-        cA[p] = '';
-      for (var i = 0; i < s.length; i++)
-        if ((i % 2) === 0)
-          cA[m++] = s[i];
-        else
-          cA[n--] = s[i];
-      return cA.join('');
     },
     /**
      * @param {string} s
