@@ -239,6 +239,7 @@ define([
         else if (!reporter.userBased())
           reject('This system does not manage users!');
         else {
+          var $pwdInput = $('<input/>', {type: 'password', size: 8, maxlength: 64});
           if (reporter.getBooleanProperty('SHOW_USER_LIST', true)) {
             reporter.promptGroupId().then(function (groupId) {
               reporter.getUsers(groupId).then(function (userList) {
@@ -254,7 +255,6 @@ define([
                   $userSelect.change(function () {
                     sel = this.selectedIndex;
                   });
-                  var $pwdInput = $('<input/>', {type: 'password', size: 8});
                   reporter.ps.skin.showDlg(true, {
                     main: [
                       $('<h2/>', {class: 'subtitle'}).html(reporter.ps.getMsg('Select user:')),
@@ -266,26 +266,41 @@ define([
                   }).then(function () {
                     if (sel >= 0) {
                       if (userList[sel].pwd && Encryption.Decrypt(userList[sel].pwd) !== $pwdInput.val()) {
-                        //TODO: Warn about bad password!
-                        window.alert('Incorrect password!');
+                        window.alert(reporter.ps.getMsg('Incorrect password'));
                         reject('Incorrect password');
                       } else {
                         reporter.userId = userList[sel].id;
                         resolve(reporter.userId);
                       }
                     } else
-                      reject('No user was selected!');
+                      reject('No user has been selected');
                   }).catch(reject);
                 }
               }).catch(reject);
             }).catch(reject);
           } else {
-            // TODO: Prompt user ID and Password
-            // String s=StrUtils.nullableString(textField.getText());
-            // UserData ud=getUserData(s);
-            // Encryption.Decrypt(uPwd)
-            // resolve or reject!
-            reject('Manual login not yet implemented!');
+            var $userInput = $('<input/>', {type: 'text', size: 8, maxlength: 64});
+            reporter.ps.skin.showDlg(true, {
+              main: [
+                $('<div/>').css({'text-align': 'right'})
+                    .append($('<h2/>', {class: 'subtitle'}).html(reporter.ps.getMsg('User:'))
+                        .append($userInput))
+                    .append($('<h2/>', {class: 'subtitle'}).html(reporter.ps.getMsg('Password:'))
+                        .append($pwdInput))],
+              bottom: [
+                reporter.ps.skin.$okDlgBtn,
+                reporter.ps.skin.$cancelDlgBtn]
+            }).then(function () {
+              reporter.getUserData($userInput.val()).then(function (user) {
+                if (user.pwd && Encryption.Decrypt(user.pwd) !== $pwdInput.val()) {
+                  window.alert(reporter.ps.getMsg('Incorrect password'));
+                  reject('Incorrect password');
+                } else {
+                  reporter.userId = user.id;
+                  resolve(reporter.userId);
+                }
+              }).catch(reject);
+            }).catch(reject);
           }
         }
       });

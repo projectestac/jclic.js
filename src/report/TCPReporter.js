@@ -408,6 +408,44 @@ define([
     },
     /**
      * 
+     * Gets extended data associated with a specific user.
+     * @param {string} userId - The requested user ID
+     * @returns {external:Promise} - When fulfilled, an object with user data is returned.
+     */
+    getUserData: function (userId) {
+      var reporter = this;
+      return new Promise(function (resolve, reject) {
+        if (!reporter.userBased())
+          reject('This system does not manage users!');
+        else {
+          var bean = new TCPReporter.ReportBean('get user data');
+
+          if (typeof userId !== 'undefined' && userId !== null)
+            bean.setParam('user', userId);
+          else
+            reject('Invalid user ID');
+
+          reporter.transaction(bean.$bean)
+              .done(function (data, textStatus, jqXHR) {
+                var $user = $(data).find('user');
+                if ($user.length !== 1) {
+                  alert(reporter.ps.getMsg('Invalid user'));
+                  resolve('Invalid user ID');
+                } else {
+                  var user = {id: $user.attr('id'), name: $user.attr('name')};
+                  if ($user.attr('pwd'))
+                    user.pwd = $user.attr('pwd');
+                  resolve(user);
+                }
+              })
+              .fail(function (jqXHR, textStatus, errorThrown) {
+                reject('Error retrieving user data: ' + textStatus);
+              });
+        }
+      });
+    },
+    /**
+     * 
      * Stops the reporting system, usually as a result of repeated errors or because the player
      * shuts down.
      */
@@ -467,7 +505,6 @@ define([
       this.reportActivity();
     }
   };
-
 
 
   /**
