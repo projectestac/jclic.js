@@ -6,16 +6,16 @@
 # francesc <francesc@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: JClic.js 0.1.25\n"
-"Language: es\n"
+"Project-Id-Version: JClic.js\n"
+"POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
+"PO-Revision-Date: 2016-06-20 12:22+0000\n"
+"Last-Translator: francesc <francesc@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/francesc/jclicjs/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
-"PO-Revision-Date: 2016-06-02 12:51+0200\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: Francesc Busquets <francesc@gmail.com>\n"
-"Language-Team: Spanish\n"
 
 #: about_window_lb_version
 msgid "Version"
@@ -129,3 +129,57 @@ msgstr "NO"
 #: report_lb_totals
 msgid "Total:"
 msgstr "Totales:"
+
+# Select group for reports in a list
+msgid "Select group:"
+msgstr "Seleccionar grupo:"
+
+# Select user for reports in a list
+msgid "Select user:"
+msgstr "Seleccionar usuario:"
+
+# Cancel dialog
+msgid "Cancel"
+msgstr "Cancelar"
+
+# Close dialog
+msgid "Close"
+msgstr "Cerrar"
+
+# Caption for 'copy' button in reports dialog
+msgid "Copy data to clipboard"
+msgstr "Copiar datos al portapapeles"
+
+# Text shown when reports data is pasted in plain-text editors
+msgid ""
+"The data has been copied in HTML format. Please paste them into a "
+"spreadsheet or in a rich text editor"
+msgstr "Los datos se han copiado en formato HTML. Puede pegarlos en una hoja de cálculo o en un editor de texto rico."
+
+# Notification shown when reports data has been copied
+msgid "The data has been copied to clipboard"
+msgstr "Los datos se han copiado al portapapeles"
+
+# Added to TCPReporter description when the connection to the remote server is
+# unsuccessful
+msgid "not connected"
+msgstr "no conectado"
+
+# Message displayed when the user attempts to close the player with data
+# pending to be reported
+msgid ""
+"Please wait until the results of your activities are sent to the reports "
+"system"
+msgstr "Por favor, espera mientras los resultados de las actividades se envian al servidor de informes"
+
+# Caption for password input
+msgid "Password:"
+msgstr "Contraseña:"
+
+# Error displayed when the provided password is incorrect
+msgid "Incorrect password"
+msgstr "Contraseña incorrecta"
+
+# Error displayed when the user ID does not exist
+msgid "Invalid user"
+msgstr "Usuario incorrecto"
