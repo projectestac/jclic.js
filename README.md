@@ -29,7 +29,6 @@ static web hosting services.
 
 * This project is a work on progress. Some advanced features are not yet implemented.
 * Only a basic implementation of "skin" is provided.
-* The JClic reporting system is partially implemented.
 * Playing of MIDI files is not yet implemented
 * Loading of big (about 10MB) JClic project files from zipped files can crash on tablets
 and mobile devices with low memory resources. This is due to a
