@@ -1,10 +1,10 @@
 JClic.js changelog
 ==============
 
-### v0.1.28 (not yet released)
+### v0.1.28 (Not yet released!)
 #### Improvements
-- New class `TCPReporter` allows now to report results to external services like [JClic Reports](http://clic.xtec.cat/en/jclic/reports/index.htm) and (soon!) [JClic module for Moodle](https://moodle.org/plugins/view.php?id=305)
-- i18n: New messages waiting for translation in [Transifex](https://www.transifex.com/francesc/jclicjs/). Contributors welcome!
+- New class `TCPReporter` allows now to connect with external services like [JClic Reports](http://clic.xtec.cat/en/jclic/reports/index.htm) and [JClic module for Moodle](https://moodle.org/plugins/view.php?id=305)
+- i18n: New messages waiting for translation in [Transifex](https://www.transifex.com/francesc/jclicjs/). Contributions welcome!
 - Upgrade to jQuery 3.0
 - Improved user interface in reports.
 - Implemented `Skin.showDlg`
