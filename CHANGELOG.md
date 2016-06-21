@@ -13,6 +13,7 @@ JClic.js changelog
 - Updated documentation and code comments
 - Unified `this` syntax in closures
 - Added a [Gitter](https://gitter.im) badge to README.md
+
 ---
 
 ### v0.1.27 (2016-06-03)
@@ -21,11 +22,13 @@ JClic.js changelog
 
 #### Improvements
 - i18n: Opened new project in [Transifex](https://www.transifex.com/francesc/jclicjs/messages/) to help translating messages to any language and locale. Initially filled with partial translations to `ar`, `ast`, `bs`, `ca`, `ca@valencia`, `cs`, `da`, `de`, `el`, `en`, `es`, `eu`, `fr`, `gl`, `he`, `it`, `nl`, `pt`, `pt_BR`, `ru`, `tr`, `vec` and `zh_TW` found on the main [JClic translation project](https://translations.launchpad.net/jclic).
+
 ---
 
 ### v0.1.25 (2016-05-30)
 #### Improvements
 - Multi-language support using gettext (.po and .pot) files stored in `/locales`
+
 ---
 
 ### v0.1.24 (2016-05-25)
@@ -34,6 +37,7 @@ JClic.js changelog
 - Added _copy to clipboard_ and improved UI in reports
 - Optimized JQuery object builders
 - New counters (time, actions, score) and reports system
+
 ---
 
 ### v0.1.23 (2016-04-29)
@@ -45,6 +49,7 @@ JClic.js changelog
 #### Code cleaning and documentation
 - Supressed 'test/lib' folder
 - Added some badges to `README.md`
+
 ---
 
 ### v0.1.21 (2016-04-25)
@@ -61,6 +66,7 @@ JClic.js changelog
 - New CDN: JClic.js is now also available from [JSDelivr](http://www.jsdelivr.com/projects/jclic.js)
 - Ignore `src` in Bower package. Now with just `dist` files
 - Updated _readme_ and docs
+
 ---
 
 ### v0.1.20 (2016-03-07)
@@ -72,6 +78,7 @@ JClic.js changelog
 
 #### Bug fixes
 - Solved bug in `MediaContent.isEquivalent`
+
 ---
 
 ### v0.1.19 (2016-02-25)
@@ -83,6 +90,7 @@ JClic.js changelog
 
 #### Bug fixes
 - Solved error in `ActiveMediaPlayer.linkTo`
+
 ---
 
 ### v0.1.18 (2016-02-11)
@@ -93,6 +101,7 @@ JClic.js changelog
 
 #### Bug fixes
 - Solved problems with `readyState` in media elements
+
 ---
 
 ### v0.1.15 (2016-01-28)
@@ -103,6 +112,7 @@ JClic.js changelog
 #### Bug fixes
 - Media content of type "URL" not working (fixes [Issue #1](https://github.com/projectestac/jclic.js/issues/1))
 - Corrected error in `EventSounds` inheritance
+
 ---
 
 ### v0.1.12 (2016-01-21)
@@ -118,6 +128,7 @@ JClic.js changelog
 #### Bug fixes
 - Correct the calculation of `nShapes` in "Holes" shaper
 - Graphics workaround when working with local files
+
 ---
 
 ### v0.1.11 (2015-12-03)
@@ -131,6 +142,7 @@ JClic.js changelog
 #### Code cleaning and documentation
 - Updated API docs
 - Normalize backslashes and avoid empty bags
+
 ---
 
 ### v0.1.7 (2015-10-25) and previous
