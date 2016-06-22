@@ -1,13 +1,16 @@
 JClic.js changelog
 ==============
 
-### v0.1.28 (Not yet released!)
+### v0.1.28 (2016-06-22)
 #### Improvements
 - New class `TCPReporter` allows now to connect with external services like [JClic Reports](http://clic.xtec.cat/en/jclic/reports/index.htm) and [JClic module for Moodle](https://moodle.org/plugins/view.php?id=305)
 - i18n: New messages waiting for translation in [Transifex](https://www.transifex.com/francesc/jclicjs/). Contributions welcome!
 - Upgrade to jQuery 3.0
 - Improved user interface in reports.
 - Implemented `Skin.showDlg`
+
+#### Bug fixes
+- Use a `try` clause for `canvas.drawImage` to catch exceptions caused by `HTMLImageElement` objects in broken state
 
 #### Code cleaning and documentation
 - Updated documentation and code comments
