@@ -406,59 +406,63 @@ define([
       var imgRect = null;
 
       if (abc.img) {
-        if (abc.imgClip) {
-          var r = abc.imgClip.getBounds();
-          var img = abc.img;
-          if (!abc.imgClip.isRect()) {
-            // Prepare a temporary `canvas` object that will contain the clipped image
-            var tmpCanvas = document.createElement('canvas');
-            tmpCanvas.width = r.pos.x + r.dim.width;
-            tmpCanvas.height = r.pos.y + r.dim.height;
-            var tmpCtx = tmpCanvas.getContext('2d');
-            // Set the clipping region
-            abc.imgClip.clip(tmpCtx);
-            // Draw the original image
-            tmpCtx.drawImage(abc.img, 0, 0);
-            // Use the temporary canvas as a source image
-            // (as seen on: [http://stackoverflow.com/questions/7242006/html5-copy-a-canvas-to-image-and-back])
-            img = tmpCanvas;
-          }
-          ctx.drawImage(img,
-              Math.max(0, r.pos.x), Math.max(0, r.pos.y), Math.min(img.width, r.dim.width), Math.min(img.height, r.dim.height),
-              this.pos.x, this.pos.y, this.dim.width, this.dim.height);
-        } else {
-          var imgw, imgh;
-          var compress = false;
-          imgw = abc.img.naturalWidth;
-          if (imgw === 0)
-            imgw = this.dim.width;
-          imgh = abc.img.naturalHeight;
-          if (imgh === 0)
-            imgh = this.dim.height;
-          var scale = 1.0;
-          if (Utils.settings.COMPRESS_IMAGES &&
-              (this.dim.width > 0 && this.dim.height > 0) &&
-              (imgw > this.dim.width || imgh > this.dim.height)) {
-            scale = Math.min(this.dim.width / imgw, this.dim.height / imgh);
-            imgw *= scale;
-            imgh *= scale;
-            compress = true;
-          }
-          var xs = (abc.imgAlign.h === 'left' ? 0
-              : abc.imgAlign.h === 'right' ? this.dim.width - imgw
-              : (this.dim.width - imgw) / 2);
-          var ys = (abc.imgAlign.v === 'top' ? 0
-              : abc.imgAlign.v === 'bottom' ? this.dim.height - imgh
-              : (this.dim.height - imgh) / 2);
-          if (compress) {
-            ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys, imgw, imgh);
-          } else
-            ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys);
+        try {
+          if (abc.imgClip) {
+            var r = abc.imgClip.getBounds();
+            var img = abc.img;
+            if (!abc.imgClip.isRect()) {
+              // Prepare a temporary `canvas` object that will contain the clipped image
+              var tmpCanvas = document.createElement('canvas');
+              tmpCanvas.width = r.pos.x + r.dim.width;
+              tmpCanvas.height = r.pos.y + r.dim.height;
+              var tmpCtx = tmpCanvas.getContext('2d');
+              // Set the clipping region
+              abc.imgClip.clip(tmpCtx);
+              // Draw the original image
+              tmpCtx.drawImage(abc.img, 0, 0);
+              // Use the temporary canvas as a source image
+              // (as seen on: [http://stackoverflow.com/questions/7242006/html5-copy-a-canvas-to-image-and-back])
+              img = tmpCanvas;
+            }
+            ctx.drawImage(img,
+                Math.max(0, r.pos.x), Math.max(0, r.pos.y), Math.min(img.width, r.dim.width), Math.min(img.height, r.dim.height),
+                this.pos.x, this.pos.y, this.dim.width, this.dim.height);
+          } else {
+            var imgw, imgh;
+            var compress = false;
+            imgw = abc.img.naturalWidth;
+            if (imgw === 0)
+              imgw = this.dim.width;
+            imgh = abc.img.naturalHeight;
+            if (imgh === 0)
+              imgh = this.dim.height;
+            var scale = 1.0;
+            if (Utils.settings.COMPRESS_IMAGES &&
+                (this.dim.width > 0 && this.dim.height > 0) &&
+                (imgw > this.dim.width || imgh > this.dim.height)) {
+              scale = Math.min(this.dim.width / imgw, this.dim.height / imgh);
+              imgw *= scale;
+              imgh *= scale;
+              compress = true;
+            }
+            var xs = (abc.imgAlign.h === 'left' ? 0
+                : abc.imgAlign.h === 'right' ? this.dim.width - imgw
+                : (this.dim.width - imgw) / 2);
+            var ys = (abc.imgAlign.v === 'top' ? 0
+                : abc.imgAlign.v === 'bottom' ? this.dim.height - imgh
+                : (this.dim.height - imgh) / 2);
+            if (compress) {
+              ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys, imgw, imgh);
+            } else
+              ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys);
 
-          if (abc.avoidOverlapping && abc.text)
-            imgRect = new AWT.Rectangle(
-                Math.max(0, xs), Math.max(0, ys),
-                Math.min(this.dim.width, imgw), Math.min(this.dim.height, imgh));
+            if (abc.avoidOverlapping && abc.text)
+              imgRect = new AWT.Rectangle(
+                  Math.max(0, xs), Math.max(0, ys),
+                  Math.min(this.dim.width, imgw), Math.min(this.dim.height, imgh));
+          }
+        } catch (ex) {
+          console.log('Error: Unable to draw image ' + abc.imgName + ' (' + ex + ')');
         }
       }
       if (abc.text && abc.text.length > 0) {
@@ -631,7 +635,7 @@ define([
           var bgSize = '';
           if (abc.imgClip) {
             var r = abc.imgClip.getBounds();
-            if (this.dim.width < r.dim.width || this.dim.height < r.dim.height){
+            if (this.dim.width < r.dim.width || this.dim.height < r.dim.height) {
               scale = Math.min(this.dim.width / r.dim.width, this.dim.height / r.dim.height);
               bgSize = w * scale + 'px ' + h * scale + 'px';
             }
@@ -640,7 +644,7 @@ define([
               'background-size': bgSize
             });
           } else {
-            if (this.dim.width < w || this.dim.height < h){
+            if (this.dim.width < w || this.dim.height < h) {
               scale = Math.min(this.dim.width / w, this.dim.height / h);
               bgSize = w * scale + 'px ' + h * scale + 'px';
             }
