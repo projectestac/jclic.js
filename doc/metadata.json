@@ -56,9 +56,11 @@
     "src/project/ProjectSettings.js",
     "src/report/ActionReg.js",
     "src/report/ActivityReg.js",
+    "src/report/EncryptMin.js",
     "src/report/Reporter.js",
     "src/report/SequenceReg.js",
     "src/report/SessionReg.js",
+    "src/report/TCPReporter.js",
     "src/shapers/ClassicJigSaw.js",
     "src/shapers/Holes.js",
     "src/shapers/JigSaw.js",
@@ -158,6 +160,7 @@
       "CrossWord": "<p>This class of {@link Activity} shows a {@link TextGrid} initially empty, with some cells<br>marked in negative color that act as word stoppers. A blinking &quot;cursor&quot; indicates the cell that<br>will receive the next character entered by the user on the keyboard.<br><br>The letter in each cell of the grid is always shared by two words: one in horizontal direction<br>and the other one in vertical. Two {@link ActiveBox} objects are placed next to the<br>{@link TextGrid}, hosting the definitions of the horizontal and vertyical words crossing at the<br>cell currently marked by the cursor.<br><br>Two special buttons placed near this boxes allow to write on the grid horizontally or vertically.<br>The aim of the activity is to fill all the text grid with the correct words.<br></p>",
       "DefaultSkin": "<p>This is the default {@link Skin} used by JClic.js</p>",
       "DoublePuzzle": "<p>The aim of this class of {@link Activity} is to put in order the scrambled elements of an<br>{@link ActiveBagContent} that contains an image, sounds, text... or any other media content.<br><br>The activity uses two panels: one with the scrambled cells, and other initially empty where<br>this cells must be placed in order.</p>",
+      "Encryption": "<p>Utilities to encrypt and decrypt strings using simple methods, just to avoid write<br>passwords in plain text in data and configuration files. Do not use it as a<br>secure cryptographic system!</p>\n<p>Based on <a href=\"https://github.com/projectestac/jclic/blob/master/src/utilities/edu/xtec/util/Encryption.java\">Encription</a><br>utilities, created by Albert Llastarri for <a href=\"https://github.com/projectestac/jclic\">JClic</a>. </p>\n<p>IMPORTANT: This is a shortened version of Encryption with only the methods needed to decrypt<br>stored passwords. Full version is on file <code>src/misc/encryption/Encryption.js</code></p>",
       "Evaluator": "<p>This class and its derivatives {@link Evaluator.BasicEvaluator} and<br>{@link Evaluator.ComplexEvaluator} are used to evaluate the answers written by the final users<br>in text activities.</p>",
       "BasicEvaluator": "<p>A basic evaluator that just compares texts, without looking for possible coincidences of text<br>fragments once erroneous characters removed.</p>",
       "ComplexEvaluator": "<p>ComplexEvaluator acts like {@link Evaluator.BasicEvaluator}, but providing feedback about<br>the location of mistakes on the user's answer.</p>",
@@ -191,6 +194,8 @@
       "Shaper": "<p>The function of this class and its subclasses is to draw a set of &quot;shapes&quot; that will be used to<br>place {@link ActiveBox} objects at a specific position, and to determine its dimension and<br>appareance.</p>",
       "SimpleAssociation": "<p>This class of {@link Activity} uses two panels (<code>primary</code> and <code>secondary</code>) formed by<br>{@link ActiveBox} objects filled with data stored in {@link ActiveBagContent} repositories.<br><br>Both panels have the same number of elements, associated one-to-one. A third {@link ActiveBagContent}<br>can be used as alternative content, that will be revealed in the <code>primary</code> panel as the pairings<br>of its cells are solved.</p>",
       "Skin": "<p>This abstract class manages the layout, position ans size of the visual components of JClic:<br>player window, message box, counters, buttons, status... and also the appareance of the main<br>container.<br><br>The basic implementation of Skin is {@link DefaultSkin}.</p>",
+      "TCPReporter": "<p>This special case of {@link Reporter} connects with an external service reporter provides the<br><a href=\"https://github.com/projectestac/jclic/wiki/JClic-Reports-developers-guide\">JClic Reports API</a>.<br>Connection parameters to the reports server (<code>path</code>, <code>service</code>, <code>userId</code>, <code>key</code>, <code>context</code>...)<br>are passed through the <code>options</code> element of {@link JClicPlayer} (acting as {@link PlayStation}).</p>",
+      "ReportBean": "<p>This inner class encapsulates a chunk of information in XML format, ready to be<br>transmitted to the remote reports server.</p>",
       "TextActivityBase": "<p>This class and its visual component {@link TextActivityBase.Panel} are the base for text<br>activities like {@link FillInBlanks}, {@link IdentifyText}, {@link OrderText} and {@link Complete}.</p>",
       "TextActivityDocument": "<p>This is the HTML DOM element used in text activities like {@link FillInBlanks},<br>{@link IdentifyText}, {@link OrderText} and {@link Complete}. It contains the main document of<br>the activity, usually with some elements marked as &quot;targets&quot;. In {@link FillInBlanks}, this<br>targets are encapsulated in {@link TextActivityDocument.TextTarget} objects.</p>",
       "TextTarget": "<p>This class contains the properties and methods of the document elements that are the real<br>targets of user actions in text activities.</p>",
@@ -213,8 +218,10 @@
       "HTMLImageElement": "<p>The HTMLImageElement interface provides special properties and methods (beyond the regular<br>{@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement HTMLElement} interface it<br>also has available to it by inheritance) for manipulating the layout and presentation of<br>&lt;img&gt; elements.</p>",
       "i18next": "<p>An i18next object, used to translate literals</p>",
       "jQuery": "<p>A jQuery object</p>",
+      "jqXHR": "<p>The jQuery XMLHttpRequest (jqXHR) object returned by <code>$.ajax()</code> as of jQuery 1.5 is a superset<br>of the browser's native <a href=\"https://developer.mozilla.org/docs/XMLHttpRequest\">XMLHttpRequest</a> object.<br>As of jQuery 1.5, jqXHR objects implement the {@link external:Promise} interface, giving them<br>all the properties, methods, and behavior of a Promise.</p>",
       "JSZip": "<p>A JSZip object</p>",
-      "MediaRecorder": "<p>The MediaRecorder interface of the {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API MediaRecorder API}<br>provides functionality to easily capture media.</p>"
+      "MediaRecorder": "<p>The MediaRecorder interface of the {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API MediaRecorder API}<br>provides functionality to easily capture media.</p>",
+      "Promise": "<p>The Promise object is used for asynchronous computations. A Promise represents an operation<br>that hasn't completed yet, but is expected in the future.</p>"
     }
   }
 }
