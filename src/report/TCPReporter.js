@@ -182,7 +182,7 @@ define([
               .fail(function (jqXHR, textStatus, errorThrown) {
                 if (++reporter.failCount > reporter.maxFails)
                   reporter.stopReporting();
-                reject('Error reporting data: ' + textStatus);
+                reject('Error reporting results to ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
               })
               .always(function () {
                 // Unset the flag
@@ -253,7 +253,7 @@ define([
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
               reporter.stopReporting();
-              reject('Error initializing the reports system: ' + textStatus);
+              reject('Error initializing reports service ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
             });
       });
     },
@@ -305,7 +305,7 @@ define([
                   })
                   .fail(function (jqXHR, textStatus, errorThrown) {
                     reporter.stopReporting();
-                    reject('Error reporting data: ' + textStatus);
+                    reject('Error creating new reports session in ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
                   });
             });
           } else
@@ -365,7 +365,7 @@ define([
                 resolve(currentGroups);
               })
               .fail(function (jqXHR, textStatus, errorThrown) {
-                reject('Error retrieving group list: ' + textStatus);
+                reject('Error retrieving groups list from ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
               });
         }
       });
@@ -401,7 +401,7 @@ define([
                 resolve(currentUsers);
               })
               .fail(function (jqXHR, textStatus, errorThrown) {
-                reject('Error retrieving the list of users: ' + textStatus);
+                reject('Error retrieving users list from ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
               });
         }
       });
@@ -439,7 +439,7 @@ define([
                 }
               })
               .fail(function (jqXHR, textStatus, errorThrown) {
-                reject('Error retrieving user data: ' + textStatus);
+                reject('Error retrieving user data from ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
               });
         }
       });

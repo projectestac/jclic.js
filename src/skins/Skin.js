@@ -61,6 +61,8 @@ define([
     this.$dlgOverlay = $('<div/>', {class: 'dlgOverlay'}).css({
       'z-index': 98,
       position: 'fixed',
+      left: 0,
+      top: 0,
       width: '100%',
       height: '100%',
       display: 'none'

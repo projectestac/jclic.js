@@ -27,11 +27,18 @@ define([
   // Declaration of JSDoc external objects:
 
   /**
+   * The HTMLElement interface represents any HTML element. Some elements directly implement this
+   * interface, others implement it via an interface that inherits it.
+   * @external HTMLElement
+   * @see {@link https://developer.mozilla.org/ca/docs/Web/API/HTMLElement}
+   */
+
+  /**
    * A jQuery object
    * @external jQuery
    * @see {@link http://api.jquery.com/jQuery/}
    */
-  
+
   /**
    * The jQuery XMLHttpRequest (jqXHR) object returned by `$.ajax()` as of jQuery 1.5 is a superset
    * of the browser's native [XMLHttpRequest](https://developer.mozilla.org/docs/XMLHttpRequest) object.
@@ -64,7 +71,7 @@ define([
    * @external HTMLAudioElement
    * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement
    */
-  
+
   /**
    * The Intl.Collator object is a constructor for collators, objects that enable language sensitive
    * string comparison.
@@ -77,14 +84,14 @@ define([
    * @external JSZip
    * @see {@link https://stuk.github.io/jszip}
    */
-  
+
   /**
    * The MediaRecorder interface of the {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API MediaRecorder API}
    * provides functionality to easily capture media. 
    * @external MediaRecorder
    * @see https://developer.mozilla.org/ca/docs/Web/API/MediaRecorder
    */
-  
+
   /**
    * An i18next object, used to translate literals
    * @external i18next
@@ -97,22 +104,6 @@ define([
    * @external Promise
    * @see https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise
    */
-
-  // JClicObject will be exported as a result
-  var JClicObject = {
-    JClicPlayer: JClicPlayer,
-    JClicProject: JClicProject,
-    AWT: AWT,
-    Utils: Utils,
-    $: $,
-    options: (typeof JClicDataOptions === 'undefined') ? {} : JClicDataOptions,
-    projectFiles: {}    
-  };
-  
-  // Make JClicObject global
-  if(typeof window !== 'undefined'){
-    window.JClicObject = JClicObject;
-  }
 
   /**
    * This is the main JClic method
@@ -129,13 +120,16 @@ define([
    * This method exports the global variable `window.JClicObject`, useful when other scripts
    * need to make direct calls to the main components of JClic.
    * 
-   * The global variable `JClicObject` has four members:
+   * The main members of the global variable `JClicObject` are:
    * - `JClicObject.JClicPlayer` (the {@link JClicPlayer} object)
    * - `JClicObject.JClicProject` (the {@link JClicProject} object)
    * - `JClicObject.AWT` (the {@link AWT} object)
    * - `JClicObject.Utils` (the {@link Utils} object)
-   * - `JClicObject.options` (the main options loaded at startup, usually the content of the global variable `JClicDataOptions`)
    * - `JClicObject.$` (the JQuery object)
+   * - `JClicObject.options` (the main options loaded at startup, usually the content of the global variable `JClicDataOptions`)
+   * - `JClicObject.projectFiles` (used by JSONP to store the content of some files when inaccessible to the browser because CORS or other restrictions)
+   * - `JClicObject.currentPlayers` (array with references to the players currently running)
+   * - `JClicObject.loadProject` (a function that starts a JClicPlayer on a specifc `div`)
    * 
    * @module JClic
    * @example
@@ -148,6 +142,60 @@ define([
    * `<div class ="JClic" data-project="myproject.jclic" data-options='{"fade":"400","lang":"es","reporter":"TCPReporter","user":"test01","path":"localhost:9090"}'></div>`
    * 
    */
+
+  var JClicObject = {
+    JClicPlayer: JClicPlayer,
+    JClicProject: JClicProject,
+    AWT: AWT,
+    Utils: Utils,
+    $: $,
+    options: (typeof JClicDataOptions === 'undefined') ? {} : JClicDataOptions,
+    projectFiles: {},
+    currentPlayers: [],
+    /**
+     * 
+     * Creates a new JClicPlayer hosted on the specified `div`, and loads an specific project on it.
+     * @param {HTMLElement} div - The HTML element (usually a `<div/>`) that will be used as a main container of the player.
+     * @param {string} projectName - The file name or URL of the JClic project to be loaded
+     * @param {object=} options - An optional set of preferences
+     * @returns {JClicPlayer}
+     */
+    loadProject: function (div, projectName, options) {
+
+      options = $.extend(Object.create(JClicObject.options), options ? options : {});
+
+      var player = new JClicPlayer($(div), Utils.normalizeObject(options));
+
+      if (projectName)
+        player.initReporter().then(function () {
+          player.load(projectName);
+        }).catch(function (err) {
+          $(div).empty().removeAttr('style').append($('<h2/>').html(player.getMsg('ERROR'))).append($('<p/>').html(err));
+          var i = JClicObject.currentPlayers.indexOf(player);
+          if (i >= 0)
+            JClicObject.currentPlayers.splice(i, 1);
+          player = null;
+        });
+
+      if (player && options.savePlayersRef !== false)
+        JClicObject.currentPlayers.push(player);
+
+      return player;
+    }
+  };
+
+  // Make JClicObject global and attach resize handler
+  if (typeof window !== 'undefined') {
+    window.JClicObject = JClicObject;
+    $(window).resize(function () {
+      for (var i = 0; i < JClicObject.currentPlayers.length; i++) {
+        var player = JClicObject.currentPlayers[i];
+        if (player && player.skin)
+          player.skin.fit();
+      }
+    });
+  }
+
   // Execute on document ready
   $(function () {
 
@@ -162,11 +210,9 @@ define([
           : typeof JClicObject.projectFile === 'string' ? JClicObject.projectFile
           : null;
 
-      // Search DOM elements with class "JClic"
-      var $JClicDivs = $('div.JClic');
-
-      // Iterate over all JClic DOM elements, initializing players
-      $JClicDivs.each(function () {
+      // Search DOM elements with class "JClic" (usually of type 'div') and iterate over them
+      // initializing players
+      $('.JClic').each(function () {
         var $div = $(this);
 
         var prj = $div.data('project');
@@ -177,17 +223,7 @@ define([
         if (opt)
           options = $.extend(Object.create(options), opt);
 
-        var player = new JClicPlayer($div, Utils.normalizeObject(options));
-
-        $(window).resize(function () {
-          if (player.skin)
-            player.skin.fit();
-        });
-        
-        if (projectName)
-          player.initReporter().then(function(){
-            player.load(projectName);
-          });
+        JClicObject.loadProject(this, projectName, options);
       });
     }
   });
