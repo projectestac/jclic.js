@@ -3,7 +3,7 @@
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
   "version": "0.1.28",
-  "main": "dist/jclic.js",
+  "main": "src/JClic.js",
   "homepage": "http://projectestac.github.io/jclic.js",
   "readmeFilename": "README.md",
   "author": "Francesc Busquets <fbusquets@xtec.cat>",
