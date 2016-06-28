@@ -1,0 +1,47 @@
+.JClic {
+  background-color: blue;
+  width: 700px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.JClic > div {
+  margin: 10px;
+}
+
+.JClicPlayer {
+  flex-grow: 1;
+  background-color: lightblue;
+}
+
+.JClicCtrlCnt {
+  height: 80px;
+  background-color: yellow;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 3px;
+}
+
+.JClicCtrlCnt > div {
+  margin: 3px;
+  background-color: gold;
+  padding: 5px;
+}
+
+.JClicCountCnt {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.JClicMsgBox {
+  flex-grow: 1;
+}
+
+
+
+
+
