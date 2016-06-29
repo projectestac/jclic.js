@@ -1,6 +1,12 @@
 JClic.js changelog
 ==============
 
+### v0.1.29 (not yet released)
+#### Improvements
+- Created `loadProject` function in the global `JClicObject`, thus allowing the creation of JClic players from other scripts
+- Allow JClic.js to be used as a [Node.js](https://nodejs.org) module
+- Added example of Node.js usage in `test/nodejs`
+
 ### v0.1.28 (2016-06-22)
 #### Improvements
 - New class `TCPReporter` allows now to connect with external services like [JClic Reports](http://clic.xtec.cat/en/jclic/reports/index.htm) and [JClic module for Moodle](https://moodle.org/plugins/view.php?id=305)

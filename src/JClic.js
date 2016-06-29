@@ -96,20 +96,19 @@
 
 /* global module, exports, JClicDataProject, JClicDataOptions */
 
-// Override `define` when this file is called directly from node.js
+// Mock `define` when called from a JavaScript environment without native AMD support (like Node.js)
+// For an example of how to call JClic.js in node.js, see:
+// `/test/nodejs/listProjectContents.js`
 if (typeof define === 'undefined') {
-  define = function (dps, callback) {
-    return callback.call(
-        require("jquery"),
-        require("./JClicPlayer"),
-        require("./project/JClicProject"),
-        require("./AWT"),
-        require("./Utils"),
-        require("./Deps"));
+  define = function (deps, callback) {
+    var argsArray = [];
+    for (var p = 0; p < deps.length; p++)
+      argsArray.push(require(deps[p]));
+    return callback.apply(null, argsArray);
   };
 }
 
-// `JClicObject` Will be filled with real members on `define`
+// Initial empty definition of `JClicObject`. Will be filled with real data in `define`
 var JClicObject = {};
 
 define([
@@ -120,7 +119,6 @@ define([
   "./Utils",
   "./Deps"
 ], function ($, JClicPlayer, JClicProject, AWT, Utils, deps) {
-
 
   /**
    * This is the main JClic method
@@ -247,7 +245,7 @@ define([
   return JClicObject;
 });
 
-// Export JClicObject as npm module
+// Export JClicObject as a result
 if (typeof module !== "undefined") {
   exports = JClicObject;
   module.exports = exports;
