@@ -395,7 +395,7 @@ define([
       if (typeof status === 'undefined') {
         if (this.$waitPanel)
           this.$waitPanel.css({
-            display: this.waitCursorCount > 0 ? 'inherit' : 'none'
+            display: this.waitCursorCount > 0 ? 'initial' : 'none'
           });
       } else {
         if (status)
@@ -445,7 +445,7 @@ define([
           skin.$dlgOverlay.css({display: 'none'});
           skin._closeDlg = Skin.prototype._closeDlg;
         };
-        skin.$dlgOverlay.css({display: 'inherit'});
+        skin.$dlgOverlay.css({display: 'initial'});
       });
     },
     /**

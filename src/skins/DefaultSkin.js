@@ -209,8 +209,8 @@ define([
       var mainWidth = autoFit ? $(window).width() : this.ps.options.width;
       var mainHeight = autoFit ? $(window).height() : this.ps.options.height;
       this.$div.css({
-        width: Math.max(this.ps.options.minWidth, Math.min(this.ps.options.maxWidth, mainWidth)),
-        height: Math.max(this.ps.options.minHeight, Math.min(this.ps.options.maxHeight, mainHeight))
+        width: (Math.max(this.ps.options.minWidth, Math.min(this.ps.options.maxWidth, mainWidth))-this.margin) + 'px',
+        height: (Math.max(this.ps.options.minHeight, Math.min(this.ps.options.maxHeight, mainHeight))-this.margin) + 'px'
       });
       
       this.player.doLayout();
@@ -220,15 +220,13 @@ define([
         this.$msgBoxDivCanvas.remove();
         this.$msgBoxDivCanvas = null;
       }
-      var msgBoxRect = new AWT.Rectangle(this.$msgBoxDiv.width(), this.$msgBoxDiv.height());
-      this.$msgBoxDivCanvas = $('<canvas width="' + msgBoxRect.width + '" height="' + msgBoxRect.height + '"/>');
+      var msgBoxRect = new AWT.Rectangle(0, 0, this.$msgBoxDiv.width(), this.$msgBoxDiv.height());
+      console.log('msgBoxDiv: %d x %d', this.$msgBoxDiv.width(), this.$msgBoxDiv.height());
+      this.$msgBoxDivCanvas = $('<canvas width="' + msgBoxRect.dim.width + '" height="' + msgBoxRect.dim.height + '"/>');
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
       // Internal bounds, relative to the origin of `$msgBoxDivCanvas`
-      this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgBoxRect.width, msgBoxRect.height));
-      this.add(msgBoxRect);
-      // Invalidates the msgBox area and calls `Container.update` to paint it
-      this.invalidate(msgBoxRect);      
-      this.update();
+      this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgBoxRect.dim.width, msgBoxRect.dim.height));
+      this.updateContent();
     },
     /**
      * 
@@ -271,7 +269,7 @@ define([
       //
       // Styles used in this skin
       css: '\
-.SKINID {background-color:#3F51B5; padding:9px; display:flex; flex-direction:column;}\
+.SKINID {background-color:#3F51B5; padding:9px; overflow:hidden; display:flex; flex-direction:column;}\
 .SKINID .JClicPlayerCnt {background-color:lightblue; margin:9px; flex-grow:1; position: relative;}\
 .SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
 .SKINID .JClicCtrlCnt {margin:9px 0; display:flex; flex-direction:row; align-items:center;}\
