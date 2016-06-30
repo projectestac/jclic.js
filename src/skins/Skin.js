@@ -49,6 +49,8 @@ define([
     this.skinId = 'JC' + Math.round((100000 + Math.random() * 100000));
 
     this.$div = $div ? $div.addClass(this.skinId) : $('<div/>').addClass('JClic ' + this.skinId);
+    this.$playerCnt = $('<div/>', {class: 'JClicPlayerCnt'});
+    
     this.buttons = Utils.cloneObject(Skin.prototype.buttons);
     this.counters = Utils.cloneObject(Skin.prototype.counters);
     this.msgArea = Utils.cloneObject(Skin.prototype.msgArea);
@@ -65,7 +67,8 @@ define([
       top: 0,
       width: '100%',
       height: '100%',
-      display: 'none'
+      display: 'none',
+      'background-color': 'rgba(30,30,30,0.7)'
     }).on('click', function () {
       if (!skin._isModalDlg)
         // Non-modal dialogs are closed on click outside the main area
@@ -89,6 +92,7 @@ define([
 
     // Basic dialog structure:
     this.$div.append(
+        this.$playerCnt,
         this.$dlgOverlay.append(
             $dlgDiv.append(
                 this.$dlgMainPanel,
@@ -160,6 +164,10 @@ define([
      * The HTML div object used by this Skin
      * @type {external:jQuery} */
     $div: null,
+    /**
+     * The HTML div where JClic Player will be placed
+     * @type {external:jQuery} */
+    $playerCnt: null,
     /**
      * Current name of the skin.
      * @type {string} */
@@ -278,7 +286,7 @@ define([
       if (this.player !== null)
         this.detach();
       this.player = player;
-      this.$div.prepend(this.player.$div);
+      this.$playerCnt.prepend(this.player.$div);
     },
     /**
      * 

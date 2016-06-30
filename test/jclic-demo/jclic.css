@@ -7,21 +7,25 @@
   padding: 10px;
 }
 
-.JClic > div {
-  margin: 10px;
+.JClicPlayerCnt {
+  flex-grow: 1;
+  position: relative;
+  background-color: lightblue;
+  margin: 10px;  
 }
 
-.JClicPlayer {
-  flex-grow: 1;
-  background-color: lightblue;
+.JClicPlayerCnt > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .JClicCtrlCnt {
-  height: 80px;
   background-color: yellow;
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin: 10px;
   padding: 3px;
 }
 
@@ -34,14 +38,30 @@
 .JClicCountCnt {
   display: flex;
   flex-direction: column;
-  align-items: left;
 }
 
 .JClicMsgBox {
   flex-grow: 1;
+  height: 50px;
 }
 
+.dlgOverlay {
+  z-index: 98;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  background-color:rgba(30,30,30,0.7);
+}
 
-
-
-
+.progressAnim {
+  z-index: 99;
+  xdisplay: none;
+  background-image: url(animatedSpin.svg);
+  background-color:rgba(255, 255, 255, 0.6);
+  background-size: 20%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}

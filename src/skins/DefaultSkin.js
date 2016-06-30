@@ -48,51 +48,7 @@ define([
 
     $div.addClass('JCSkin').append($('<style type="text/css"/>').html(this.resources.css.replace(/SKINID/g, this.skinId)));
 
-    this.$msgBoxDiv = $div.children('.JClicMsgBox').first();
-    if (this.$msgBoxDiv === null || this.$msgBoxDiv.length === 0) {
-      this.$msgBoxDiv = $('<div/>', {class: 'JClicMsgBox'});
-      this.$div.append(this.$msgBoxDiv);
-    }
-    //this.$msgBoxDivCanvas = $('<canvas/>');
-    //this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
-    this.msgBox = new ActiveBox();
-    var thisMsgBox = this.msgBox;
-    this.$msgBoxDiv.on('click', function () {
-      thisMsgBox.playMedia(ps);
-    });
-    this.buttons.prev = $('<img/>').on('click',
-        function (evt) {
-          if (skin.ps)
-            skin.ps.actions.prev.processEvent(evt);
-        });
-    this.buttons.prev.get(0).src = this.resources.prevBtn;
-    this.$div.append(this.buttons.prev);
-    this.buttons.next = $('<img/>').on('click',
-        function (evt) {
-          if (skin.ps)
-            skin.ps.actions.next.processEvent(evt);
-        });
-    this.buttons.next.get(0).src = this.resources.nextBtn;
-    this.$div.append(this.buttons.next);
-    if (screenfull && screenfull.enabled) {
-      this.buttons.fullscreen = $('<img/>').on('click',
-          function () {
-            skin.setScreenFull(null);
-          });
-      this.buttons.fullscreen.get(0).src = this.resources.fullScreen;
-      this.$div.append(this.buttons.fullscreen);
-    }
-
-    if (typeof this.ps.options.closeFn === 'function') {
-      var closeFn = this.ps.options.closeFn;
-      this.buttons.close = $('<img/>').on('click',
-          function () {
-            closeFn();
-          });
-      this.buttons.close.get(0).src = this.resources.close;
-      this.$div.append(this.buttons.close);
-    }
-
+    // Add waiting panel    
     // TODO: Change SVG animation (deprecated) to web animation
     this.$waitPanel = $('<div/>').css({
       'background-color': 'rgba(255, 255, 255, .60)',
@@ -103,14 +59,46 @@ define([
       'z-index': 99,
       display: 'none'
     });
-    this.$div.append(this.$waitPanel);
+    this.$playerCnt.append(this.$waitPanel);
 
-    // Create counters
+    // Create the main container for buttons, counters and message box
+    this.$ctrlCnt = $('<div/>', {class: 'JClicCtrlCnt'});
+    this.$div.append(this.$ctrlCnt);
+
+    // Add `prev` button
+    this.buttons.prev = $('<img/>').on('click',
+        function (evt) {
+          if (skin.ps)
+            skin.ps.actions.prev.processEvent(evt);
+        });
+    this.buttons.prev.get(0).src = this.resources.prevBtn;
+    this.$ctrlCnt.append($('<div/>', {class: 'JClicBtn'}).append(this.buttons.prev));
+
+    // Add message box
+    this.$msgBoxDiv = $('<div/>', {class: 'JClicMsgBox'});
+    this.msgBox = new ActiveBox();
+    var thisMsgBox = this.msgBox;
+    this.$msgBoxDiv.on('click', function () {
+      thisMsgBox.playMedia(ps);
+    });
+    this.$ctrlCnt.append(this.$msgBoxDiv);
+
+    // Add `next` button
+    this.buttons.next = $('<img/>').on('click',
+        function (evt) {
+          if (skin.ps)
+            skin.ps.actions.next.processEvent(evt);
+        });
+    this.buttons.next.get(0).src = this.resources.nextBtn;
+    this.$ctrlCnt.append($('<div/>', {class: 'JClicBtn'}).append(this.buttons.next));
+
+    // Add counters    
     if (false !== this.ps.options.counters) {
       // Create counters
       var padding = this.resources.counterIconSize.w + 2;
       var cssWidth = this.countersWidth - padding;
       var cssHeight = this.countersHeight;
+      var $countCnt = $('<div/>', {class: 'JClicCountCnt'});
       $.each(Skin.prototype.counters, function (name) {
         skin.counters[name] = new Counter(name, $('<div/>', {class: 'counter', title: ps.getMsg(name)}).css({
           'width': cssWidth + 'px',
@@ -124,12 +112,39 @@ define([
         }).html('000').on('click', function (evt) {
           if (skin.ps)
             skin.ps.actions.reports.processEvent(evt);
-        }).appendTo(skin.$div));
+        }).appendTo($countCnt));
       });
+      this.$ctrlCnt.append($countCnt);
+    }
+
+    // Add `full screen` button
+    if (screenfull && screenfull.enabled) {
+      this.buttons.fullscreen = $('<img/>').on('click',
+          function () {
+            skin.setScreenFull(null);
+          });
+      this.buttons.fullscreen.get(0).src = this.resources.fullScreen;
+      this.$ctrlCnt.append($('<div/>', {class: 'JClicBtn'}).append(this.buttons.fullscreen));
+    }
+
+    // Add `close` button
+    if (typeof this.ps.options.closeFn === 'function') {
+      var closeFn = this.ps.options.closeFn;
+      this.buttons.close = $('<img/>').on('click',
+          function () {
+            closeFn();
+          });
+      this.buttons.close.get(0).src = this.resources.close;
+      this.$ctrlCnt.append($('<div/>', {class: 'JClicBtn'}).append(this.buttons.close));
     }
   };
+
   DefaultSkin.prototype = {
     constructor: DefaultSkin,
+    /**
+     * The HTML div where buttons, counters and message box are placed 
+     * @type {external:jQuery} */
+    $ctrlCnt: null,
     /**
      * The box used to display the main messages of JClic activities
      * @type {ActiveBox} */
@@ -184,104 +199,35 @@ define([
      * Main method used to build the content of the skin. Resizes and places internal objects.
      */
     doLayout: function () {
-      var margin = this.margin;
-      var prv = this.resources.prevBtnSize;
-      var nxt = this.resources.nextBtnSize;
-      var full = this.resources.fullScreenSize;
-      var close = this.buttons.close ? this.resources.closeSize : {w: 0, h: 0};
+      
       // Set the appropiate fullScreen icon
-      if (this.buttons.fullscreen) {
+      if (this.buttons.fullscreen)
         this.buttons.fullscreen.get(0).src = this.resources[
             screenfull.isFullscreen ? 'fullScreenExit' : 'fullScreen'];
-      } else {
-        full = {w: 0, h: 0};
-      }
-      var cntW = this.counters.time ? this.countersWidth : 0;
-
+        
       var autoFit = this.ps.options.autoFit | (screenfull && screenfull.enabled && screenfull.isFullscreen);
       var mainWidth = autoFit ? $(window).width() : this.ps.options.width;
       var mainHeight = autoFit ? $(window).height() : this.ps.options.height;
       this.$div.css({
-        position: 'relative',
         width: Math.max(this.ps.options.minWidth, Math.min(this.ps.options.maxWidth, mainWidth)),
-        height: Math.max(this.ps.options.minHeight, Math.min(this.ps.options.maxHeight, mainHeight)),
-        'background-color': this.background
+        height: Math.max(this.ps.options.minHeight, Math.min(this.ps.options.maxHeight, mainHeight))
       });
-      var actualSize = new AWT.Dimension(this.$div.width(), this.$div.height());
-      var w = Math.max(100, actualSize.width - 2 * margin);
-      var wMsgBox = w - prv.w - nxt.w - cntW - full.w - close.w;
-      var h = this.msgBoxHeight;
-      var playerHeight = Math.max(100, actualSize.height - 3 * margin - h);
-      var playerCss = {
-        position: 'absolute',
-        width: w + 'px',
-        height: playerHeight + 'px',
-        top: margin + 'px',
-        left: margin + 'px'
-      };
-      this.player.$div.css(playerCss);
+      
       this.player.doLayout();
-      this.$waitPanel.css(playerCss);
+            
       this.msgBox.ctx = null;
       if (this.$msgBoxDivCanvas) {
         this.$msgBoxDivCanvas.remove();
         this.$msgBoxDivCanvas = null;
       }
-      var msgBoxRect = new AWT.Rectangle(margin + prv.w, 2 * margin + playerHeight, wMsgBox, h);
-      this.$msgBoxDiv.css({
-        position: 'absolute',
-        width: msgBoxRect.dim.width + 'px',
-        height: msgBoxRect.dim.height + 'px',
-        top: msgBoxRect.pos.y + 'px',
-        left: msgBoxRect.pos.x + 'px',
-        'background-color': 'lightblue'
-      });
-      this.buttons.prev.css({
-        position: 'absolute',
-        top: msgBoxRect.pos.y + (h - prv.h) / 2 + 'px',
-        left: margin + 'px'
-      });
-      this.buttons.next.css({
-        position: 'absolute',
-        top: msgBoxRect.pos.y + (h - nxt.h) / 2 + 'px',
-        left: msgBoxRect.pos.x + msgBoxRect.dim.width + 'px'
-      });
-      if (this.counters.time) {
-        var x = msgBoxRect.pos.x + msgBoxRect.dim.width + nxt.w;
-        var y = msgBoxRect.pos.y;
-        var skin = this;
-        $.each(this.counters, function (key, val) {
-          val.$div.css({
-            position: 'absolute',
-            left: x,
-            top: y
-          });
-          y += skin.countersHeight;
-        });
-      }
-      if (this.buttons.fullscreen) {
-        this.buttons.fullscreen.css({
-          position: 'absolute',
-          top: msgBoxRect.pos.y + (h - full.h) / 2 + 'px',
-          left: msgBoxRect.pos.x + msgBoxRect.dim.width + nxt.w + cntW + 'px'
-        });
-      }
-
-      if (this.buttons.close) {
-        this.buttons.close.css({
-          position: 'absolute',
-          top: msgBoxRect.pos.y + (h - close.h) / 2 + 'px',
-          left: msgBoxRect.pos.x + msgBoxRect.dim.width + nxt.w + cntW + full.w + 'px'
-        });
-      }
-
-      this.$msgBoxDivCanvas = $('<canvas width="' + wMsgBox + '" height="' + h + '"/>');
+      var msgBoxRect = new AWT.Rectangle(this.$msgBoxDiv.width(), this.$msgBoxDiv.height());
+      this.$msgBoxDivCanvas = $('<canvas width="' + msgBoxRect.width + '" height="' + msgBoxRect.height + '"/>');
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
       // Internal bounds, relative to the origin of `$msgBoxDivCanvas`
-      this.msgBox.setBounds(new AWT.Rectangle(0, 0, wMsgBox, h));
+      this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgBoxRect.width, msgBoxRect.height));
       this.add(msgBoxRect);
       // Invalidates the msgBox area and calls `Container.update` to paint it
-      this.invalidate(msgBoxRect);
+      this.invalidate(msgBoxRect);      
       this.update();
     },
     /**
@@ -325,9 +271,13 @@ define([
       //
       // Styles used in this skin
       css: '\
-.SKINID .JClicPlayer {background-color: olive}\
+.SKINID {background-color:#3F51B5; padding:9px; display:flex; flex-direction:column;}\
+.SKINID .JClicPlayerCnt {background-color:lightblue; margin:9px; flex-grow:1; position: relative;}\
+.SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
+.SKINID .JClicCtrlCnt {margin:9px 0; display:flex; flex-direction:row; align-items:center;}\
+.SKINID .JClicCountCnt {display:flex; flex-direction:column;}\
+.SKINID .JClicMsgBox {height:60px; flex-grow:1; background-color:lightblue;}\
 .SKINID .counter {font-family:Roboto,Sans-serif; color:white; cursor: pointer}\
-.SKINID .dlgOverlay {background-color:rgba(30,30,30,0.7);}\
 .SKINID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
 .SKINID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
 .SKINID .dlgMainPanel {padding:1em 2em; max-height:calc(100vh - 8em); max-width:calc(100vw - 2em); min-width:20em; overflow:auto;}\
