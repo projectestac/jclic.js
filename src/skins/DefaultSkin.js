@@ -51,16 +51,11 @@ define([
         .html((this.resources.mainCSS + this.resources.reportsCSS).replace(/SKINID/g, this.skinId)));
 
     // Add waiting panel    
-    // TODO: Change SVG animation (deprecated) to web animation
-    this.$waitPanel = $('<div/>').css({
-      'background-color': 'rgba(255, 255, 255, .60)',
-      'background-image': 'url(' + Utils.svgToURI(this.resources.waitImg) + ')',
-      'background-repeat': 'no-repeat',
-      'background-size': '20%',
-      'background-position': 'center',
-      'z-index': 99,
-      display: 'none'
-    });
+    this.$waitPanel = $('<div/>')
+        .css({display: 'none', 'background-color':'rgba(255, 255, 255, .60)', 'z-index': 99})
+        .append($('<div/>', {class: 'waitPanel'})
+        .append($(this.resources.waitImgBig))
+        .append($(this.resources.waitImgSmall)));
     this.$playerCnt.append(this.$waitPanel);
 
     // Create the main container for buttons, counters and message box
@@ -264,6 +259,12 @@ define([
 #SKINID {background-color:#3F51B5; padding:9px; overflow:hidden; display:flex; flex-direction:column;}\
 #SKINID .JClicPlayerCnt {background-color:lightblue; margin:9px; flex-grow:1; position:relative;}\
 #SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
+#SKINID .waitPanel {position: relative; width:100%; height:100%;}\
+#SKINID .waitPanel svg {position:absolute; width:60%; height:60%; top:50%; left:50%; animation-iteration-count:infinite; animation-timing-function:linear;}\
+#SKINID .waitPanel #waitImgBig {animation-duration:0.8s; animation-name: rotate-right;}\
+@keyframes rotate-right {from {transform:translate(-50%,-50%) rotate(0);} to {transform:translate(-50%,-50%) rotate(1turn);}}\
+#SKINID .waitPanel #waitImgSmall {animation-duration:0.6s; animation-name:rotate-left;}\
+@keyframes rotate-left {from {transform:translate(-50%,-50%) rotate(0);} to {transform:translate(-50%,-50%) rotate(-1turn);}}\
 #SKINID .JClicCtrlCnt {margin:9px 0; display:flex; flex-direction:row; align-items:center;}\
 #SKINID .JClicCountCnt {display:flex; flex-direction:column;}\
 #SKINID .JClicMsgBox {height:60px; flex-grow:1; background-color:lightblue;}\
@@ -315,7 +316,7 @@ define([
       //
       // Animated image to be shown when loading resources
       // Thanks to Ryan Allen: http://articles.dappergentlemen.com/2015/01/13/svg-spinner/
-      waitImg: '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 80 80" xml:space="preserve">\
+      waitImgBig: '<svg viewBox="0 0 80 80" id="waitImgBig">\
 <path fill="#3F51B5" d="M10,40c0,0,0-0.4,0-1.1c0-0.3,0-0.8,0-1.3c0-0.3,0-0.5,0-0.8c0-0.3,0.1-0.6,0.1-0.9c0.1-0.6,0.1-1.4,0.2-2.1 \
 c0.2-0.8,0.3-1.6,0.5-2.5c0.2-0.9,0.6-1.8,0.8-2.8c0.3-1,0.8-1.9,1.2-3c0.5-1,1.1-2,1.7-3.1c0.7-1,1.4-2.1,2.2-3.1 \
 c1.6-2.1,3.7-3.9,6-5.6c2.3-1.7,5-3,7.9-4.1c0.7-0.2,1.5-0.4,2.2-0.7c0.7-0.3,1.5-0.3,2.3-0.5c0.8-0.2,1.5-0.3,2.3-0.4l1.2-0.1 \
@@ -328,9 +329,9 @@ c-0.2-0.8-0.5-1.6-0.7-2.4c-0.3-0.8-0.7-1.7-1.1-2.6c-0.5-0.9-0.9-1.8-1.5-2.7c-0.6
 c-2-1.5-4.4-2.7-6.9-3.6c-0.6-0.2-1.3-0.4-1.9-0.6c-0.7-0.2-1.3-0.3-1.9-0.4c-1.2-0.3-2.8-0.4-4.2-0.5l-2,0c-0.7,0-1.4,0.1-2.1,0.1 \
 c-0.7,0.1-1.4,0.1-2,0.3c-0.7,0.1-1.3,0.3-2,0.4c-2.6,0.7-5.2,1.7-7.5,3.1c-2.2,1.4-4.3,2.9-6,4.7c-0.9,0.8-1.6,1.8-2.4,2.7 \
 c-0.7,0.9-1.3,1.9-1.9,2.8c-0.5,1-1,1.9-1.4,2.8c-0.4,0.9-0.8,1.8-1,2.6c-0.3,0.9-0.5,1.6-0.7,2.4c-0.2,0.7-0.3,1.4-0.4,2.1 \
-c-0.1,0.3-0.1,0.6-0.2,0.9c0,0.3-0.1,0.6-0.1,0.8c0,0.5-0.1,0.9-0.1,1.3C10,39.6,10,40,10,40z">\
-<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 40 40" to="360 40 40" dur="0.8s" repeatCount="indefinite"/>\
-</path>\
+c-0.1,0.3-0.1,0.6-0.2,0.9c0,0.3-0.1,0.6-0.1,0.8c0,0.5-0.1,0.9-0.1,1.3C10,39.6,10,40,10,40z"/>\
+</svg>',
+      waitImgSmall: '<svg viewBox="0 0 80 80" id="waitImgSmall">\
 <path fill="#3F51B5" d="M62,40.1c0,0,0,0.2-0.1,0.7c0,0.2,0,0.5-0.1,0.8c0,0.2,0,0.3,0,0.5c0,0.2-0.1,0.4-0.1,0.7 \
 c-0.1,0.5-0.2,1-0.3,1.6c-0.2,0.5-0.3,1.1-0.5,1.8c-0.2,0.6-0.5,1.3-0.7,1.9c-0.3,0.7-0.7,1.3-1,2.1c-0.4,0.7-0.9,1.4-1.4,2.1 \
 c-0.5,0.7-1.1,1.4-1.7,2c-1.2,1.3-2.7,2.5-4.4,3.6c-1.7,1-3.6,1.8-5.5,2.4c-2,0.5-4,0.7-6.2,0.7c-1.9-0.1-4.1-0.4-6-1.1 \
@@ -340,9 +341,7 @@ s0,0.2,0.1,0.7c0.1,0.5,0,1.1,0.2,2c0.1,0.4,0.2,0.9,0.3,1.4c0.1,0.5,0.3,1,0.5,1.6
 c0.3,0.6,0.6,1.2,0.9,1.9c0.4,0.6,0.8,1.3,1.2,1.9c0.5,0.6,1,1.3,1.6,1.8c1.1,1.2,2.5,2.3,4,3.2c1.5,0.9,3.2,1.6,5,2.1 \
 c1.8,0.5,3.6,0.6,5.6,0.6c1.8-0.1,3.7-0.4,5.4-1c1.7-0.6,3.3-1.4,4.7-2.4c1.4-1,2.6-2.1,3.6-3.3c0.5-0.6,0.9-1.2,1.3-1.8 \
 c0.4-0.6,0.7-1.2,1-1.8c0.3-0.6,0.6-1.2,0.8-1.8c0.2-0.6,0.4-1.1,0.5-1.7c0.1-0.5,0.2-1,0.3-1.5c0.1-0.4,0.1-0.8,0.1-1.2 \
-c0-0.2,0-0.4,0.1-0.5c0-0.2,0-0.4,0-0.5c0-0.3,0-0.6,0-0.8c0-0.5,0-0.7,0-0.7c0-1.1,0.9-2,2-2s2,0.9,2,2C62,40,62,40.1,62,40.1z">\
-<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 40 40" to="-360 40 40" dur="0.6s" repeatCount="indefinite"/>\
-</path>\
+c0-0.2,0-0.4,0.1-0.5c0-0.2,0-0.4,0-0.5c0-0.3,0-0.6,0-0.8c0-0.5,0-0.7,0-0.7c0-1.1,0.9-2,2-2s2,0.9,2,2C62,40,62,40.1,62,40.1z"/>\
 </svg>',
       //
       // SVG images for 'fullscreen' and 'fullscreen extit' actions.
