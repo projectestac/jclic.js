@@ -371,6 +371,15 @@ define([
       return screenfull && screenfull.enabled;
     },
     /**
+     * Encodes a svg expression into a (data URI)[https://developer.mozilla.org/en-US/docs/Web/HTTP/data_URIs]
+     * suitable for the `src` property of `img` elements
+     * @param {string} svg - The SVG image as XML string
+     * @returns {string} - The resulting Data URI
+     */
+    svgToURI: function(svg){
+      return 'data:image/svg+xml;base64,' + btoa(svg);
+    },
+    /**
      * Global constants
      * @const
      */

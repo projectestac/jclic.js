@@ -398,7 +398,7 @@ define([
       if (!newSkin)
         newSkin = this.defaultSkin;
 
-      if (newSkin !== null && !newSkin.equals(this.skin)) {
+      if (newSkin !== null && newSkin !== this.skin) {
         /*
          * TODO: Save and retrieve skin settings
          var top = null;
