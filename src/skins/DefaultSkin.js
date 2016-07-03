@@ -48,14 +48,14 @@ define([
     AWT.Font.loadGoogleFonts(this.resources.cssFonts);
 
     $('head').append($('<style type="text/css"/>')
-        .html((this.resources.mainCSS + this.resources.reportsCSS).replace(/SKINID/g, this.skinId)));
+        .html((this.resources.mainCSS + this.resources.waitAnimCSS + this.resources.reportsCSS).replace(/SKINID/g, this.skinId)));
 
     // Add waiting panel    
     this.$waitPanel = $('<div/>')
-        .css({display: 'none', 'background-color':'rgba(255, 255, 255, .60)', 'z-index': 99})
+        .css({display: 'none', 'background-color': 'rgba(255, 255, 255, .60)', 'z-index': 99})
         .append($('<div/>', {class: 'waitPanel'})
-        .append($(this.resources.waitImgBig))
-        .append($(this.resources.waitImgSmall)));
+            .append($('<div/>', {class: 'animImgBox'})
+                .append($(this.resources.waitImgBig), $(this.resources.waitImgSmall))));
     this.$playerCnt.append(this.$waitPanel);
 
     // Create the main container for buttons, counters and message box
@@ -259,17 +259,19 @@ define([
 #SKINID {background-color:#3F51B5; padding:9px; overflow:hidden; display:flex; flex-direction:column;}\
 #SKINID .JClicPlayerCnt {background-color:lightblue; margin:9px; flex-grow:1; position:relative;}\
 #SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
-#SKINID .waitPanel {position: relative; width:100%; height:100%;}\
-#SKINID .waitPanel svg {position:absolute; width:60%; height:60%; top:50%; left:50%; animation-iteration-count:infinite; animation-timing-function:linear;}\
-#SKINID .waitPanel #waitImgBig {animation-duration:0.8s; animation-name: rotate-right;}\
-@keyframes rotate-right {from {transform:translate(-50%,-50%) rotate(0);} to {transform:translate(-50%,-50%) rotate(1turn);}}\
-#SKINID .waitPanel #waitImgSmall {animation-duration:0.6s; animation-name:rotate-left;}\
-@keyframes rotate-left {from {transform:translate(-50%,-50%) rotate(0);} to {transform:translate(-50%,-50%) rotate(-1turn);}}\
 #SKINID .JClicCtrlCnt {margin:9px 0; display:flex; flex-direction:row; align-items:center;}\
 #SKINID .JClicCountCnt {display:flex; flex-direction:column;}\
 #SKINID .JClicMsgBox {height:60px; flex-grow:1; background-color:lightblue;}\
 #SKINID .JClicBtn {cursor:pointer}\
 #SKINID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left}',
+      waitAnimCSS: '\
+#SKINID .waitPanel {display:flex; width:100%; height:100%; justify-content:center; align-items:center;}\
+#SKINID .animImgBox {position:relative; width:300px; height:300px; max-width:80%; max-height:80%;}\
+#SKINID .animImgBox svg {position:absolute; width:100%; height:100%; animation-iteration-count:infinite; animation-timing-function:linear;}\
+#SKINID #waitImgBig {animation-duration:0.8s; animation-name:rotate-right;}\
+@keyframes rotate-right {from {transform:rotate(0);} to {transform:rotate(1turn);}}\
+#SKINID #waitImgSmall {animation-duration:0.6s; animation-name:rotate-left;}\
+@keyframes rotate-left {from {transform:rotate(0);} to {transform:rotate(-1turn);}}',
       reportsCSS: '\
 #SKINID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
 #SKINID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
@@ -302,51 +304,31 @@ define([
       // Fonts used in this skin
       cssFonts: ['Roboto'],
       //
-      // SVG image for the 'previous activity' button
-      // See `/misc/skin/default` for original images
+      // Animated image displayed while loading resources
+      // Based on Ryan Allen's [svg-spinner](http://articles.dappergentlemen.com/2015/01/13/svg-spinner/)
+      waitImgBig: '<svg id="waitImgBig" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
+<path fill="#3F51B5" d="m 65.99,40.19 c -0.42,5.33 7.80,4.94 8.11,0.20 C 74.50,34.37 66.35,8.59 42.92,\
+7.98 15.90,7.29 9.96,29.50 9.94,39.41 15.33,-1.66 68.61,7.048 65.99,40.19 Z" />\
+</svg>',
+      waitImgSmall: '<svg id="waitImgSmall" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
+<path fill="#3F51B5"d="m 57.00,39.43 c -0.28,-3.53 5.16,-3.27 5.37,-0.13 0.26,3.99 -5.13,21.04 -20.63,\
+21.44 C 23.85,61.19 19.93,46.50 19.92,39.94 23.48,67.11 58.73,61.35 57.00,39.43 Z"/>\
+</svg>',
+      //
+      // SVG images for action buttons
+      // Based on [Google Material design Icons](https://google.github.io/material-design-icons/)
+      //
+      // Icon for 'previous activity' button
       prevIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>\
 </svg>',
       //
-      // SVG image for the 'next activity' button
-      // See `/misc/skin/default` for original images
+      // Icon for 'next activity' button
       nextIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>\
 </svg>',
       //
-      // Animated image to be shown when loading resources
-      // Thanks to Ryan Allen: http://articles.dappergentlemen.com/2015/01/13/svg-spinner/
-      waitImgBig: '<svg viewBox="0 0 80 80" id="waitImgBig">\
-<path fill="#3F51B5" d="M10,40c0,0,0-0.4,0-1.1c0-0.3,0-0.8,0-1.3c0-0.3,0-0.5,0-0.8c0-0.3,0.1-0.6,0.1-0.9c0.1-0.6,0.1-1.4,0.2-2.1 \
-c0.2-0.8,0.3-1.6,0.5-2.5c0.2-0.9,0.6-1.8,0.8-2.8c0.3-1,0.8-1.9,1.2-3c0.5-1,1.1-2,1.7-3.1c0.7-1,1.4-2.1,2.2-3.1 \
-c1.6-2.1,3.7-3.9,6-5.6c2.3-1.7,5-3,7.9-4.1c0.7-0.2,1.5-0.4,2.2-0.7c0.7-0.3,1.5-0.3,2.3-0.5c0.8-0.2,1.5-0.3,2.3-0.4l1.2-0.1 \
-l0.6-0.1l0.3,0l0.1,0l0.1,0l0,0c0.1,0-0.1,0,0.1,0c1.5,0,2.9-0.1,4.5,0.2c0.8,0.1,1.6,0.1,2.4,0.3c0.8,0.2,1.5,0.3,2.3,0.5 \
-c3,0.8,5.9,2,8.5,3.6c2.6,1.6,4.9,3.4,6.8,5.4c1,1,1.8,2.1,2.7,3.1c0.8,1.1,1.5,2.1,2.1,3.2c0.6,1.1,1.2,2.1,1.6,3.1 \
-c0.4,1,0.9,2,1.2,3c0.3,1,0.6,1.9,0.8,2.7c0.2,0.9,0.3,1.6,0.5,2.4c0.1,0.4,0.1,0.7,0.2,1c0,0.3,0.1,0.6,0.1,0.9 \
-c0.1,0.6,0.1,1,0.1,1.4C74,39.6,74,40,74,40c0.2,2.2-1.5,4.1-3.7,4.3s-4.1-1.5-4.3-3.7c0-0.1,0-0.2,0-0.3l0-0.4c0,0,0-0.3,0-0.9 \
-c0-0.3,0-0.7,0-1.1c0-0.2,0-0.5,0-0.7c0-0.2-0.1-0.5-0.1-0.8c-0.1-0.6-0.1-1.2-0.2-1.9c-0.1-0.7-0.3-1.4-0.4-2.2 \
-c-0.2-0.8-0.5-1.6-0.7-2.4c-0.3-0.8-0.7-1.7-1.1-2.6c-0.5-0.9-0.9-1.8-1.5-2.7c-0.6-0.9-1.2-1.8-1.9-2.7c-1.4-1.8-3.2-3.4-5.2-4.9 \
-c-2-1.5-4.4-2.7-6.9-3.6c-0.6-0.2-1.3-0.4-1.9-0.6c-0.7-0.2-1.3-0.3-1.9-0.4c-1.2-0.3-2.8-0.4-4.2-0.5l-2,0c-0.7,0-1.4,0.1-2.1,0.1 \
-c-0.7,0.1-1.4,0.1-2,0.3c-0.7,0.1-1.3,0.3-2,0.4c-2.6,0.7-5.2,1.7-7.5,3.1c-2.2,1.4-4.3,2.9-6,4.7c-0.9,0.8-1.6,1.8-2.4,2.7 \
-c-0.7,0.9-1.3,1.9-1.9,2.8c-0.5,1-1,1.9-1.4,2.8c-0.4,0.9-0.8,1.8-1,2.6c-0.3,0.9-0.5,1.6-0.7,2.4c-0.2,0.7-0.3,1.4-0.4,2.1 \
-c-0.1,0.3-0.1,0.6-0.2,0.9c0,0.3-0.1,0.6-0.1,0.8c0,0.5-0.1,0.9-0.1,1.3C10,39.6,10,40,10,40z"/>\
-</svg>',
-      waitImgSmall: '<svg viewBox="0 0 80 80" id="waitImgSmall">\
-<path fill="#3F51B5" d="M62,40.1c0,0,0,0.2-0.1,0.7c0,0.2,0,0.5-0.1,0.8c0,0.2,0,0.3,0,0.5c0,0.2-0.1,0.4-0.1,0.7 \
-c-0.1,0.5-0.2,1-0.3,1.6c-0.2,0.5-0.3,1.1-0.5,1.8c-0.2,0.6-0.5,1.3-0.7,1.9c-0.3,0.7-0.7,1.3-1,2.1c-0.4,0.7-0.9,1.4-1.4,2.1 \
-c-0.5,0.7-1.1,1.4-1.7,2c-1.2,1.3-2.7,2.5-4.4,3.6c-1.7,1-3.6,1.8-5.5,2.4c-2,0.5-4,0.7-6.2,0.7c-1.9-0.1-4.1-0.4-6-1.1 \
-c-1.9-0.7-3.7-1.5-5.2-2.6c-1.5-1.1-2.9-2.3-4-3.7c-0.6-0.6-1-1.4-1.5-2c-0.4-0.7-0.8-1.4-1.2-2c-0.3-0.7-0.6-1.3-0.8-2 \
-c-0.2-0.6-0.4-1.2-0.6-1.8c-0.1-0.6-0.3-1.1-0.4-1.6c-0.1-0.5-0.1-1-0.2-1.4c-0.1-0.9-0.1-1.5-0.1-2c0-0.5,0-0.7,0-0.7 \
-s0,0.2,0.1,0.7c0.1,0.5,0,1.1,0.2,2c0.1,0.4,0.2,0.9,0.3,1.4c0.1,0.5,0.3,1,0.5,1.6c0.2,0.6,0.4,1.1,0.7,1.8 \
-c0.3,0.6,0.6,1.2,0.9,1.9c0.4,0.6,0.8,1.3,1.2,1.9c0.5,0.6,1,1.3,1.6,1.8c1.1,1.2,2.5,2.3,4,3.2c1.5,0.9,3.2,1.6,5,2.1 \
-c1.8,0.5,3.6,0.6,5.6,0.6c1.8-0.1,3.7-0.4,5.4-1c1.7-0.6,3.3-1.4,4.7-2.4c1.4-1,2.6-2.1,3.6-3.3c0.5-0.6,0.9-1.2,1.3-1.8 \
-c0.4-0.6,0.7-1.2,1-1.8c0.3-0.6,0.6-1.2,0.8-1.8c0.2-0.6,0.4-1.1,0.5-1.7c0.1-0.5,0.2-1,0.3-1.5c0.1-0.4,0.1-0.8,0.1-1.2 \
-c0-0.2,0-0.4,0.1-0.5c0-0.2,0-0.4,0-0.5c0-0.3,0-0.6,0-0.8c0-0.5,0-0.7,0-0.7c0-1.1,0.9-2,2-2s2,0.9,2,2C62,40,62,40.1,62,40.1z"/>\
-</svg>',
-      //
-      // SVG images for 'fullscreen' and 'fullscreen extit' actions.
-      // By **Google Material design Icons**:
-      // https://google.github.io/material-design-icons/
+      // Full screen on and off:
       fullScreen: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>\
 </svg>',
@@ -354,12 +336,12 @@ c0-0.2,0-0.4,0.1-0.5c0-0.2,0-0.4,0-0.5c0-0.3,0-0.6,0-0.8c0-0.5,0-0.7,0-0.7c0-1.1
 <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>\
 </svg>',
       //
-      // Close button
+      // Close button:
       closeIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
 </svg>',
       //
-      // Icons for counters
+      // Counters:
       time: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">\
 <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>\
 <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>\
