@@ -20,6 +20,10 @@
 // [AutoContentProvider](AutoContentProvider.html)) are loaded at the beginning.
 define([
   "./skins/DefaultSkin",
+  "./skins/OrangeSkin",
+  "./skins/GreenSkin",
+  "./skins/BlueSkin",
+  "./skins/SimpleSkin",
   "./shapers/Rectangular",
   "./shapers/Holes",
   "./shapers/JigSaw",
@@ -44,6 +48,6 @@ define([
   "./activities/textGrid/WordSearch",
   "./activities/textGrid/CrossWord",
   "./report/TCPReporter"
-], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y){
+], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ab, ac){
   return 'Deep classes loaded!';
 });

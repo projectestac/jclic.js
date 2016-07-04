@@ -273,8 +273,8 @@ define([
 
       if (target && target.$span) {
         target.$span.css({
-          color: targetCss.background,
-          background: targetCss.color});
+          color: targetCss['background-color'],
+          'background-color': targetCss.color});
       }
 
       this.currentTarget = target;

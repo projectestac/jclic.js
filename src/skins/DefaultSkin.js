@@ -35,13 +35,15 @@ define([
    * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
    * realize the media objects meeded tot build the Skin.
    * @param {string=} name - The skin class name
-   * @param {external:jQuery=} $div - The DOM element (usually a `div`) to be used as a recipient for
+   * @param {options=} options - Optional parameter with addicional options, used by subclasses
    * this skin. When `null` or `undefined`, a new one will be created.  
    */
-  var DefaultSkin = function (ps, name, $div) {
+  var DefaultSkin = function (ps, name, options) {
+
+    options = options ? options : {};
 
     // DefaultSkin extends [Skin](Skin.html)
-    Skin.call(this, ps, name, $div);
+    Skin.call(this, ps, name);
 
     var skin = this;
 
@@ -85,7 +87,7 @@ define([
     this.$ctrlCnt.append($('<div/>', {class: 'JClicBtn'}).append(this.buttons.next));
 
     // Add counters    
-    if (false !== this.ps.options.counters) {
+    if (false !== this.ps.options.counters && false !== options.counters) {
       // Create counters
       var $countCnt = $('<div/>', {class: 'JClicCountCnt'});
       $.each(Skin.prototype.counters, function (name) {
@@ -97,6 +99,26 @@ define([
             }).appendTo($countCnt));
       });
       this.$ctrlCnt.append($countCnt);
+    }
+
+    // Add info button
+    if (true === this.ps.options.info || true === options.info) {
+      this.buttons.info = $('<img/>', {src: Utils.svgToURI(this.resources.infoIcon)}).on('click',
+          function (evt) {
+            if (skin.ps)
+              skin.ps.actions.info.processEvent(evt);
+          });
+      this.$ctrlCnt.append($('<div/>', {class: 'JClicBtn'}).append(this.buttons.info));
+    }
+
+    // Add reports button
+    if (true === this.ps.options.reportsBtn || true === options.reportsBtn) {
+      this.buttons.about = $('<img/>', {src: Utils.svgToURI(this.resources.reportsIcon)}).on('click',
+          function (evt) {
+            if (skin.ps)
+              skin.ps.actions.reports.processEvent(evt);
+          });
+      this.$ctrlCnt.append($('<div/>', {class: 'JClicBtn'}).append(this.buttons.about));
     }
 
     // Add `full screen` button
@@ -125,7 +147,7 @@ define([
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
      * @type {string}
      */
-    skinId: 'JClicDefaultSkin',    
+    skinId: 'JClicDefaultSkin',
     /**
      * The HTML div where buttons, counters and message box are placed 
      * @type {external:jQuery} */
@@ -142,12 +164,6 @@ define([
      * An HTML `canvas` object created in `$msgBoxDiv`
      * @type {external:jQuery} */
     $msgBoxDivCanvas: null,
-    //
-    // Background, margin and height of the messageBox
-    /**
-     * Background color used to fill the skin base
-     * @type {string} */
-    background: '#3F51B5',
     /**
      * Space (pixels) between the components of this {@link Skin}
      * @type {number} */
@@ -170,9 +186,9 @@ define([
      * `Skin` constructor, and overrided by subclasses if needed.
      * @returns {string}
      */
-    _getStyleSheets: function() {      
+    _getStyleSheets: function () {
       return Skin.prototype._getStyleSheets() + this.resources.mainCSS + this.resources.waitAnimCSS;
-    },    
+    },
     /**
      * 
      * Updates the graphic contents of this skin.<br>
@@ -214,8 +230,8 @@ define([
         this.$msgBoxDivCanvas.remove();
         this.$msgBoxDivCanvas = null;
       }
-      var msgWidth = this.$msgBoxDiv.width(),
-          msgHeight = this.$msgBoxDiv.height();
+      var msgWidth = this.$msgBoxDiv.outerWidth(),
+          msgHeight = this.$msgBoxDiv.outerHeight();
       this.$msgBoxDivCanvas = $('<canvas width="' + msgWidth + '" height="' + msgHeight + '"/>');
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
       this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth, msgHeight));
@@ -314,6 +330,16 @@ define([
       // Close button:
       closeIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
+</svg>',
+      //
+      // Info button:
+      infoIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+<path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>\
+</svg>',
+      //
+      // Reports button
+      reportsIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>\
 </svg>',
       //
       // Counters:

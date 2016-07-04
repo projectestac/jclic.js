@@ -37,9 +37,8 @@ define([
    * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
    * realize the media objects meeded tot build the Skin.
    * @param {string=} name - The skin name
-   * @param {external:jQuery=} $div - The DOM component that will act as a main container of the skin
    */
-  var Skin = function (ps, name, $div) {
+  var Skin = function (ps, name) {
 
     // Skin extends [AWT.Container](AWT.html)
     AWT.Container.call(this);
@@ -52,7 +51,7 @@ define([
     
     var skin = this;
 
-    this.$div = $div ? $div.attr('class', this.skinId) : $('<div/>',{class: this.skinId});
+    this.$div = $('<div/>',{class: this.skinId});
     this.$playerCnt = $('<div/>', {class: 'JClicPlayerCnt'});
     
     this.buttons = Utils.cloneObject(Skin.prototype.buttons);
@@ -186,11 +185,6 @@ define([
      * @type {string} */
     name: 'default',
     /**
-     * Unique ID of this skin
-     * @type {string}
-     */
-    skinId: 'JC' + Math.round((100000 + Math.random() * 100000)),
-    /**
      * Name of the XML file used to retrieve the skin settings.
      * @type {string} */
     fileName: '',
@@ -305,10 +299,12 @@ define([
      * @param {JClicPlayer} player
      */
     attach: function (player) {
-      if (this.player !== null)
-        this.detach();
+      this.detach();
+      if (player !== null && player.skin !== null)
+        player.skin.detach();
       this.player = player;
-      this.$playerCnt.prepend(this.player.$div);
+      this.$playerCnt.prepend(player.$div);
+      player.$topDiv.append(this.$div);
     },
     /**
      * 
@@ -317,13 +313,9 @@ define([
     detach: function () {
       if (this.player !== null) {
         this.player.$div.remove();
+        this.$div.detach();        
         this.player = null;
       }
-      if (this.currentHelpWindow !== null)
-        this.currentHelpWindow.$div.hide();
-      if (this.currentAboutWindow !== null)
-        this.currentAboutWindow.$div.hide();
-      this.setEnabled(false);
     },
     /**
      * 
@@ -331,11 +323,10 @@ define([
      * This function should be used only through `Skin.prototype.getSkin`
      * @param {string} skinName - The name of the searched skin
      * @param {PlayStation} ps - The PlayStation (usually a {@link JClicPlayer}) used to build the new skin.
-     * @param {external:jQuery} $div - The DOM element where the skin will develop
      * @param {external:jQuery} $xml - An XML element with the properties of the new skin
      * @returns {Skin}
      */
-    getSkin: function (skinName, ps, $div, $xml) {
+    getSkin: function (skinName, ps, $xml) {
       var sk = null;
       // look for the skin in the stack of realized skins
       if (skinName && ps) {
@@ -350,7 +341,7 @@ define([
       // if not specified), creates and registers it on `skinStack`
       var cl = Skin.CLASSES[skinName ? skinName : 'DefaultSkin'];
       if (cl) {
-        sk = new cl(ps, skinName, $div);
+        sk = new cl(ps, skinName);
         if ($xml)
           sk.setProperties($xml);
       } else

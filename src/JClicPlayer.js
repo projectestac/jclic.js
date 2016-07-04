@@ -82,7 +82,7 @@ define([
     this.history = new PlayerHistory(this);
     this.audioEnabled = this.options.audioEnabled;
     this.navButtonsAlways = this.options.navButtonsAlways;
-    this.defaultSkin = Skin.prototype.getSkin(null, this, this.$topDiv);
+    this.defaultSkin = Skin.prototype.getSkin(this.options.skin, this);
     this.setSkin(this.defaultSkin);
     this.initTimers();
     this.setSystemMessage("ready");
@@ -399,27 +399,9 @@ define([
         newSkin = this.defaultSkin;
 
       if (newSkin !== null && newSkin !== this.skin) {
-        /*
-         * TODO: Save and retrieve skin settings
-         var top = null;
-         var currentSkinSettings = null;
-         
-         if (this.skin !== null) {
-         currentSkinSettings = this.skin.getCurrentSettings();
-         this.skin.detach();
-         top = this.skin.getParent();
-         top.remove(this.skin);
-         }
-         */
-
         newSkin.attach(this);
         this.skin = newSkin;
         this.skin.doLayout();
-
-        /*
-         if (currentSkinSettings !== null && this.skin !== null)
-         this.skin.setCurrentSettings(currentSkinSettings);
-         */
       }
     },
     /**

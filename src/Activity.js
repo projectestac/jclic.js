@@ -810,7 +810,7 @@ define([
 
       this.skin = null;
       if (this.act.skinFileName && this.act.skinFileName.length > 0)
-        this.skin = this.act.project.mediaBag.getSkinElement(this.act.skinFileName);
+        this.skin = this.act.project.mediaBag.getSkinElement(this.act.skinFileName, this.ps);
 
       this.bgImage = null;
       if (this.act.bgImageFile && this.act.bgImageFile.length > 0) {

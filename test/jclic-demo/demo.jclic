@@ -3194,6 +3194,7 @@
     </cell>
    </messages>
    <settings margin="8" report="true" reportActions="false">
+    <skin name="green" file="@green.xml" />
     <helpWindow showSolution="true" />
     <container bgColor="0xC0C0C0">
      <counters time="true" actions="true" score="true" />

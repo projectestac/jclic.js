@@ -143,8 +143,7 @@ define([
      * @returns {Skin}
      */
     getSkinElement: function (name, ps) {
-      // TODO: Implement loading skins      
-      return Skin.prototype.getSkin('default', ps);
+      return Skin.prototype.getSkin(name, ps);
     }
   };
 

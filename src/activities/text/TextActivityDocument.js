@@ -170,7 +170,7 @@ define([
           case 'background':
             val = Utils.checkColor(val, 'white');
             attr[name] = val;
-            css['background'] = val;
+            css['background-color'] = val;
             break;
           case 'foreground':
             val = Utils.checkColor(val, 'black');
@@ -281,7 +281,7 @@ define([
     css: {
       'font-family': 'Arial,Helvetica,sans-serif',
       'font-size': '17px',
-      background: 'white',
+      'background-color': 'white',
       color: 'black'
     }
   };
