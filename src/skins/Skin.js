@@ -43,10 +43,16 @@ define([
 
     // Skin extends [AWT.Container](AWT.html)
     AWT.Container.call(this);
-
+    
+    if(Skin.registeredStylesheets.indexOf(this.skinId)<0){
+      $('head').append($('<style type="text/css"/>')
+            .html(this._getStyleSheets().replace(/SKINID/g, this.skinId)));
+      Skin.registeredStylesheets.push(this.skinId);
+    }      
+    
     var skin = this;
 
-    this.$div = $div ? $div.attr('id', this.skinId) : $('<div/>',{id: this.skinId}).addClass('JClic');
+    this.$div = $div ? $div.attr('class', this.skinId) : $('<div/>',{class: this.skinId});
     this.$playerCnt = $('<div/>', {class: 'JClicPlayerCnt'});
     
     this.buttons = Utils.cloneObject(Skin.prototype.buttons);
@@ -150,7 +156,11 @@ define([
    * Collection of realized __Skin__ objects.<br>
    * @type {Skin[]} */
   Skin.skinStack = [];
-
+  /**
+   * Collection of skin stylesheets already registered on the current document
+   * @type {string[]} */
+  Skin.registeredStylesheets = [];
+  
   /**
    * List of classes derived from Skin. It should be filled by real skin classes at declaration time.
    * @type {object} */
@@ -158,6 +168,11 @@ define([
 
   Skin.prototype = {
     constructor: Skin,
+    /**
+     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+     * @type {string}
+     */
+    skinId: 'JClicBasicSkin',    
     /**
      * The HTML div object used by this Skin
      * @type {external:jQuery} */
@@ -275,6 +290,15 @@ define([
      * Counter to be incremented or decremented as `waitCursor` is requested or released.
      * @type {number} */
     waitCursorCount: 0,
+    /**
+     * 
+     * Returns the CSS styles used by this skin. This methos should be called only from
+     * `Skin` constructor, and overrided by subclasses if needed.
+     * @returns {string}
+     */
+    _getStyleSheets: function() {      
+      return this.resources.basicCSS + this.resources.reportsCSS;
+    },
     /**
      * 
      * Attaches a {@link JClicPlayer} object to this Skin
@@ -546,6 +570,41 @@ define([
      * Buttons and other graphical resources used by this skin.
      * @type {object} */
     resources: {
+      //
+      // Styles used in this skin
+      basicCSS: '\
+.SKINID {background-color:#3F51B5; padding:9px; overflow:hidden; display:flex; flex-direction:column;}\
+.SKINID .JClicPlayerCnt {background-color:lightblue; margin:9px; flex-grow:1; position:relative;}\
+.SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
+.SKINID .unselectableText {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select: none;}',
+      reportsCSS: '\
+.SKINID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
+.SKINID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
+.SKINID .dlgMainPanel {padding:1em 2em; max-height:calc(100vh - 8em); max-width:calc(100vw - 2em); min-width:20em; overflow:auto;}\
+.SKINID .dlgMainPanel .headTitle {font-size:2.5em; font-weight:bold; margin:auto;}\
+.SKINID .dlgMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
+.SKINID .dlgMainPanel p {font-size:1.1em; margin-bottom:0.5em;}\
+.SKINID .dlgMainPanel table {table-layout:fixed; width:40em; margin:0.5em 0 1.7em 0; border-collapse:collapse;}\
+.SKINID .dlgMainPanel select {min-width:20em; font-size:1.2em; font-family:Roboto,sans-serif; color:#757575;}\
+.SKINID .dlgMainPanel input {margin-left:1em; font-size:1.2em; font-family:Roboto,sans-serif; border-color:lightgray;}\
+.SKINID .infoHead {padding:1em 0em 0.5em;}\
+.SKINID .JCGlobalResults td {padding:0.4em; border-bottom:1px solid #b6b6b6;}\
+.SKINID .JCGlobalResults td:first-child {font-weight:600; width:11em;}\
+.SKINID .JCDetailed td,th {border-bottom:1px solid #b6b6b6; padding:0.3em 0.4em; vertical-align:top; text-align:center; overflow:hidden; text-overflow:ellipsis;}\
+.SKINID .JCDetailed thead {font-weight:600;}\
+.SKINID .JCDetailed th:first-child {width:8em;}\
+.SKINID .JCDetailed th:nth-last-child(4) {width:3em;}\
+.SKINID .JCDetailed th:nth-last-child(-n+3) {width:4.1em; text-align:right;}\
+.SKINID .JCDetailed td:nth-last-child(-n+3) {text-align:right;}\
+.SKINID .JCDetailed .ok {color:#4bae4f; font-weight:600;}\
+.SKINID .JCDetailed .no {color:#f34235; font-weight:600;}\
+.SKINID .JCDetailed tr:last-child {font-weight:bold;}\
+.SKINID .JCDetailed .incomplete {font-style:italic;}\
+.SKINID .dlgBottomPanel {height:3.5em; background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
+.SKINID .dlgBottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
+.SKINID .dlgBottomPanel a {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
+.SKINID .dlgBottomPanel a:hover {background-color:#eee; border-radius:80px;}\
+.SKINID .dlgBottomPanel a:active {background-color:#b3e5fc;}',      
       //
       // Close dialog button
       closeDialog: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\

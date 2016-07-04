@@ -47,9 +47,6 @@ define([
 
     AWT.Font.loadGoogleFonts(this.resources.cssFonts);
 
-    $('head').append($('<style type="text/css"/>')
-        .html((this.resources.mainCSS + this.resources.waitAnimCSS + this.resources.reportsCSS).replace(/SKINID/g, this.skinId)));
-
     // Add waiting panel    
     this.$waitPanel = $('<div/>')
         .css({display: 'none', 'background-color': 'rgba(255, 255, 255, .60)', 'z-index': 99})
@@ -59,7 +56,7 @@ define([
     this.$playerCnt.append(this.$waitPanel);
 
     // Create the main container for buttons, counters and message box
-    this.$ctrlCnt = $('<div/>', {class: 'JClicCtrlCnt'});
+    this.$ctrlCnt = $('<div/>', {class: 'JClicCtrlCnt unselectableText'});
     this.$div.append(this.$ctrlCnt);
 
     // Add `prev` button
@@ -125,10 +122,10 @@ define([
   DefaultSkin.prototype = {
     constructor: DefaultSkin,
     /**
-     * Unique ID of this skin
+     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
      * @type {string}
      */
-    skinId: 'JC' + Math.round((100000 + Math.random() * 100000)),
+    skinId: 'JClicDefaultSkin',    
     /**
      * The HTML div where buttons, counters and message box are placed 
      * @type {external:jQuery} */
@@ -167,6 +164,15 @@ define([
      * Height of counters, in pixels
      * @type {number} */
     countersHeight: 20,
+    /**
+     * 
+     * Returns the CSS styles used by this skin. This methos should be called only from
+     * `Skin` constructor, and overrided by subclasses if needed.
+     * @returns {string}
+     */
+    _getStyleSheets: function() {      
+      return Skin.prototype._getStyleSheets() + this.resources.mainCSS + this.resources.waitAnimCSS;
+    },    
     /**
      * 
      * Updates the graphic contents of this skin.<br>
@@ -256,50 +262,19 @@ define([
       //
       // Styles used in this skin
       mainCSS: '\
-#SKINID {background-color:#3F51B5; padding:9px; overflow:hidden; display:flex; flex-direction:column;}\
-#SKINID .JClicPlayerCnt {background-color:lightblue; margin:9px; flex-grow:1; position:relative;}\
-#SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
-#SKINID .JClicCtrlCnt {margin:9px 0; display:flex; flex-direction:row; align-items:center;}\
-#SKINID .JClicCountCnt {display:flex; flex-direction:column;}\
-#SKINID .JClicMsgBox {height:60px; flex-grow:1; background-color:lightblue;}\
-#SKINID .JClicBtn {cursor:pointer}\
-#SKINID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left}',
+.SKINID .JClicCtrlCnt {margin:9px 0; display:flex; flex-direction:row; align-items:center;}\
+.SKINID .JClicCountCnt {display:flex; flex-direction:column;}\
+.SKINID .JClicMsgBox {height:60px; flex-grow:1; background-color:lightblue;}\
+.SKINID .JClicBtn {cursor:pointer}\
+.SKINID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left}',
       waitAnimCSS: '\
-#SKINID .waitPanel {display:flex; width:100%; height:100%; justify-content:center; align-items:center;}\
-#SKINID .animImgBox {position:relative; width:300px; height:300px; max-width:80%; max-height:80%;}\
-#SKINID .animImgBox svg {position:absolute; width:100%; height:100%; animation-iteration-count:infinite; animation-timing-function:linear;}\
-#SKINID #waitImgBig {animation-duration:0.8s; animation-name:rotate-right;}\
+.SKINID .waitPanel {display:flex; width:100%; height:100%; justify-content:center; align-items:center;}\
+.SKINID .animImgBox {position:relative; width:300px; height:300px; max-width:80%; max-height:80%;}\
+.SKINID .animImgBox svg {position:absolute; width:100%; height:100%; animation-iteration-count:infinite; animation-timing-function:linear;}\
+.SKINID #waitImgBig {animation-duration:0.8s; animation-name:rotate-right;}\
 @keyframes rotate-right {from {transform:rotate(0);} to {transform:rotate(1turn);}}\
-#SKINID #waitImgSmall {animation-duration:0.6s; animation-name:rotate-left;}\
+.SKINID #waitImgSmall {animation-duration:0.6s; animation-name:rotate-left;}\
 @keyframes rotate-left {from {transform:rotate(0);} to {transform:rotate(-1turn);}}',
-      reportsCSS: '\
-#SKINID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
-#SKINID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
-#SKINID .dlgMainPanel {padding:1em 2em; max-height:calc(100vh - 8em); max-width:calc(100vw - 2em); min-width:20em; overflow:auto;}\
-#SKINID .dlgMainPanel .headTitle {font-size:2.5em; font-weight:bold; margin:auto;}\
-#SKINID .dlgMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
-#SKINID .dlgMainPanel p {font-size:1.1em; margin-bottom:0.5em;}\
-#SKINID .dlgMainPanel table {table-layout:fixed; width:40em; margin:0.5em 0 1.7em 0; border-collapse:collapse;}\
-#SKINID .dlgMainPanel select {min-width:20em; font-size:1.2em; font-family:Roboto,sans-serif; color:#757575;}\
-#SKINID .dlgMainPanel input {margin-left:1em; font-size:1.2em; font-family:Roboto,sans-serif; border-color:lightgray;}\
-#SKINID .infoHead {padding:1em 0em 0.5em;}\
-#SKINID .JCGlobalResults td {padding:0.4em; border-bottom:1px solid #b6b6b6;}\
-#SKINID .JCGlobalResults td:first-child {font-weight:600; width:11em;}\
-#SKINID .JCDetailed td,th {border-bottom:1px solid #b6b6b6; padding:0.3em 0.4em; vertical-align:top; text-align:center; overflow:hidden; text-overflow:ellipsis;}\
-#SKINID .JCDetailed thead {font-weight:600;}\
-#SKINID .JCDetailed th:first-child {width:8em;}\
-#SKINID .JCDetailed th:nth-last-child(4) {width:3em;}\
-#SKINID .JCDetailed th:nth-last-child(-n+3) {width:4.1em; text-align:right;}\
-#SKINID .JCDetailed td:nth-last-child(-n+3) {text-align:right;}\
-#SKINID .JCDetailed .ok {color:#4bae4f; font-weight:600;}\
-#SKINID .JCDetailed .no {color:#f34235; font-weight:600;}\
-#SKINID .JCDetailed tr:last-child {font-weight:bold;}\
-#SKINID .JCDetailed .incomplete {font-style:italic;}\
-#SKINID .dlgBottomPanel {height:3.5em; background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
-#SKINID .dlgBottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
-#SKINID .dlgBottomPanel a {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
-#SKINID .dlgBottomPanel a:hover {background-color:#eee; border-radius:80px;}\
-#SKINID .dlgBottomPanel a:active {background-color:#b3e5fc;}',
       //
       // Fonts used in this skin
       cssFonts: ['Roboto'],
