@@ -94,7 +94,7 @@
  * @see https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise
  */
 
-/* global module, exports, JClicDataProject, JClicDataOptions */
+/* global module, exports:true, JClicDataProject, JClicDataOptions */
 
 // Mock `define` when called from a JavaScript environment without native AMD support (like Node.js)
 // For an example of how to call JClic.js in node.js, see:
@@ -247,6 +247,5 @@ define([
 
 // Export JClicObject as a result
 if (typeof module !== "undefined") {
-  exports = JClicObject;
-  module.exports = exports;
+  exports = module.exports = JClicObject;
 }
