@@ -1,8 +1,9 @@
-JClic.js changelog
-==============
 
-### v0.1.29 (not yet released)
+### v0.1.29 (2016-07-05)
 #### Improvements
+- Waiting image changed from SVG animation (deprecated) to CSS keyframes
+- Skin support implemented with (almost) pure CSS
+- Implemented support for stock skins (_standard_, _orange_, _blue_, _green_, _simple_ and _mini_)
 - Created `loadProject` function in the global `JClicObject`, thus allowing the creation of JClic players from other scripts
 - Allow JClic.js to be used as a [Node.js](https://nodejs.org) module
 - Added example of Node.js usage in `test/nodejs`

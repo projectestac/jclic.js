@@ -223,10 +223,16 @@ define([
       var autoFit = this.ps.options.autoFit | (screenfull && screenfull.enabled && screenfull.isFullscreen);
       var mainWidth = autoFit ? $(window).width() : this.ps.options.width;
       var mainHeight = autoFit ? $(window).height() : this.ps.options.height;
+      
+      var width = Math.max(this.ps.options.minWidth, Math.min(this.ps.options.maxWidth, mainWidth)) - this.margin;
+      var height= Math.max(this.ps.options.minHeight, Math.min(this.ps.options.maxHeight, mainHeight)) - this.margin;
+      
       this.$div.css({
-        width: (Math.max(this.ps.options.minWidth, Math.min(this.ps.options.maxWidth, mainWidth)) - this.margin) + 'px',
-        height: (Math.max(this.ps.options.minHeight, Math.min(this.ps.options.maxHeight, mainHeight)) - this.margin) + 'px'
+        width: width + 'px',
+        height: height + 'px'
       });
+      
+      //console.log('autoFit: %d mainW: %d mainH: %d w: %d h: %d rw: %d rh: %d', autoFit, mainWidth, mainHeight, width, height, this.$div.outerWidth(), this.$div.outerHeight());
 
       this.player.doLayout();
 
