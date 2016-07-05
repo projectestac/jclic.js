@@ -1,4 +1,8 @@
 
+### v0.1.30 (Not yet released)
+#### Bug fixes
+- Set color and size for _close_ icon
+
 ### v0.1.29 (2016-07-05)
 #### Improvements
 - Waiting image changed from SVG animation (deprecated) to CSS keyframes

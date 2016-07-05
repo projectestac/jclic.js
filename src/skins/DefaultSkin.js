@@ -137,7 +137,7 @@ define([
     // Add `close` button
     if (typeof this.ps.options.closeFn === 'function') {
       var closeFn = this.ps.options.closeFn;
-      this.buttons.close = $(this.closeIcon).on('click',
+      this.buttons.close = $(Utils.getSvg(this.closeIcon, this.iconWidth, this.iconHeight, this.iconFill)).on('click',
           function () {
             closeFn();
           });
