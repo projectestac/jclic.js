@@ -30,7 +30,7 @@ define([
    * @param {string=} name - The skin class name
    */
   var BlueSkin = function (ps, name) {
-    // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
+    // BlueSkin extends [DefaultSkin](DefaultSkin.html)
     DefaultSkin.call(this, ps, name);
   };
 
@@ -48,23 +48,16 @@ define([
      * @returns {string}
      */
     _getStyleSheets: function () {
-      return DefaultSkin.prototype._getStyleSheets() + this.resources.thisCSS;
+      return DefaultSkin.prototype._getStyleSheets() + this.skinCSS;
     },
-    /**
-     * Buttons and other graphical resources used by this skin.
-     * @type {object} */
-    resources: {
-      //
-      // Styles used in this skin
-      thisCSS: '.SKINID {background-color:#1990FF;}'
-    }
+    // Buttons and other graphical resources used by this skin.
+    //
+    // Styles used in this skin
+    skinCSS: '.SKINID {background-color:#1990FF;}'
   };
-  // Inherit Skin resources prior to merge prototypes
-  var resources = $.extend(Object.create(DefaultSkin.prototype.resources), BlueSkin.prototype.resources);
-  // DefaultSkin extends [Skin](Skin.html)
+
+  // BlueSkin extends [DefaultSkin](DefaultSkin.html)
   BlueSkin.prototype = $.extend(Object.create(DefaultSkin.prototype), BlueSkin.prototype);
-  // Set resources
-  BlueSkin.prototype.resources = resources;
 
   // Register this class in the list of available skins
   Skin.CLASSES['@blue.xml'] = BlueSkin;

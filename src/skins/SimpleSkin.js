@@ -32,12 +32,12 @@ define([
   var SimpleSkin = function (ps, name) {
     // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
     DefaultSkin.call(this, ps, name, {counters: false, reportsBtn: true});
-    
+
     this.$ctrlCnt.detach().prependTo(this.$div);
     this.$msgBoxDiv.detach().appendTo(this.$div);
     // Add a spacing div in substitution of msgBox
-    $('<div/>').css({'flex-grow':1}).insertAfter(this.$ctrlCnt.children(':nth-child(2)'));
-            
+    $('<div/>').css({'flex-grow': 1}).insertAfter(this.$ctrlCnt.children(':nth-child(2)'));
+
   };
 
   SimpleSkin.prototype = {
@@ -54,26 +54,20 @@ define([
      * @returns {string}
      */
     _getStyleSheets: function () {
-      return DefaultSkin.prototype._getStyleSheets() + this.resources.thisCSS;
+      return DefaultSkin.prototype._getStyleSheets() + this.skinCSS;
     },
-    /**
-     * Buttons and other graphical resources used by this skin.
-     * @type {object} */
-    resources: {
-      //
-      // Styles used in this skin
-      thisCSS: '\
+    //
+    // Buttons and other graphical resources used by this skin.
+    //
+    // Styles used in this skin
+    skinCSS: '\
 .SKINID {background-color:#888888;}\
 .SKINID .JClicCtrlCnt {margin:0;}\
 .SKINID .JClicMsgBox {flex-grow:0; margin:0 9px;}'
-    }
   };
-  // Inherit Skin resources prior to merge prototypes
-  var resources = $.extend(Object.create(DefaultSkin.prototype.resources), SimpleSkin.prototype.resources);
+
   // DefaultSkin extends [Skin](Skin.html)
   SimpleSkin.prototype = $.extend(Object.create(DefaultSkin.prototype), SimpleSkin.prototype);
-  // Set resources
-  SimpleSkin.prototype.resources = resources;
 
   // Register this class in the list of available skins
   Skin.CLASSES['@simple.xml'] = SimpleSkin;

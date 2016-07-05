@@ -47,14 +47,14 @@ define([
 
     var skin = this;
 
-    AWT.Font.loadGoogleFonts(this.resources.cssFonts);
+    AWT.Font.loadGoogleFonts(this.cssFonts);
 
     // Add waiting panel    
     this.$waitPanel = $('<div/>')
         .css({display: 'none', 'background-color': 'rgba(255, 255, 255, .60)', 'z-index': 99})
         .append($('<div/>', {class: 'waitPanel'})
             .append($('<div/>', {class: 'animImgBox'})
-                .append($(this.resources.waitImgBig), $(this.resources.waitImgSmall))));
+                .append($(this.waitImgBig), $(this.waitImgSmall))));
     this.$playerCnt.append(this.$waitPanel);
 
     // Create the main container for buttons, counters and message box
@@ -62,8 +62,8 @@ define([
     this.$div.append(this.$ctrlCnt);
 
     // Add `prev` button
-    this.buttons.prev = $(this.resources.prevIcon).on('click',
-        function (evt) {
+    this.buttons.prev = $(Utils.getSvg(this.prevIcon, this.iconWidth, this.iconHeight, this.iconFill))
+        .on('click', function (evt) {
           if (skin.ps)
             skin.ps.actions.prev.processEvent(evt);
         });
@@ -79,8 +79,8 @@ define([
     this.$ctrlCnt.append(this.$msgBoxDiv);
 
     // Add `next` button
-    this.buttons.next = $(this.resources.nextIcon).on('click',
-        function (evt) {
+    this.buttons.next = $(Utils.getSvg(this.nextIcon, this.iconWidth, this.iconHeight, this.iconFill))
+        .on('click', function (evt) {
           if (skin.ps)
             skin.ps.actions.next.processEvent(evt);
         });
@@ -92,7 +92,11 @@ define([
       var $countCnt = $('<div/>', {class: 'JClicCountCnt'});
       $.each(Skin.prototype.counters, function (name) {
         skin.counters[name] = new Counter(name, $('<div/>', {class: 'JClicCounter', title: ps.getMsg(name)})
-            .css({'background-image': 'url(' + Utils.svgToURI(skin.resources[name]) + ')'}).html('000')
+            .css({
+              'background-image': 'url(' + Utils.svgToURI(skin[name + 'Icon'], skin.counterIconWidth, skin.counterIconHeight, skin.counterIconFill) + ')',
+              color: skin.counterIconFill
+            })
+            .html('000')
             .on('click', function (evt) {
               if (skin.ps)
                 skin.ps.actions.reports.processEvent(evt);
@@ -103,8 +107,8 @@ define([
 
     // Add info button
     if (true === this.ps.options.info || true === options.info) {
-      this.buttons.info = $('<img/>', {src: Utils.svgToURI(this.resources.infoIcon)}).on('click',
-          function (evt) {
+      this.buttons.info = $(Utils.getSvg(this.infoIcon, this.iconWidth, this.iconHeight, this.iconFill))
+          .on('click', function (evt) {
             if (skin.ps)
               skin.ps.actions.info.processEvent(evt);
           });
@@ -113,8 +117,8 @@ define([
 
     // Add reports button
     if (true === this.ps.options.reportsBtn || true === options.reportsBtn) {
-      this.buttons.about = $('<img/>', {src: Utils.svgToURI(this.resources.reportsIcon)}).on('click',
-          function (evt) {
+      this.buttons.about = $(Utils.getSvg(this.reportsIcon, this.iconWidth, this.iconHeight, this.iconFill))
+          .on('click', function (evt) {
             if (skin.ps)
               skin.ps.actions.reports.processEvent(evt);
           });
@@ -123,8 +127,8 @@ define([
 
     // Add `full screen` button
     if (screenfull && screenfull.enabled) {
-      this.buttons.fullscreen = $('<img/>', {src: Utils.svgToURI(this.resources.fullScreen)}).on('click',
-          function () {
+      this.buttons.fullscreen = $('<img/>', {src: Utils.svgToURI(this.fullScreenIcon, this.iconWidth, this.iconHeight, this.iconFill)})
+          .on('click', function () {
             skin.setScreenFull(null);
           });
       this.$ctrlCnt.append($('<div/>', {class: 'JClicBtn'}).append(this.buttons.fullscreen));
@@ -133,7 +137,7 @@ define([
     // Add `close` button
     if (typeof this.ps.options.closeFn === 'function') {
       var closeFn = this.ps.options.closeFn;
-      this.buttons.close = $(this.resources.closeIcon).on('click',
+      this.buttons.close = $(this.closeIcon).on('click',
           function () {
             closeFn();
           });
@@ -187,7 +191,7 @@ define([
      * @returns {string}
      */
     _getStyleSheets: function () {
-      return Skin.prototype._getStyleSheets() + this.resources.mainCSS + this.resources.waitAnimCSS;
+      return Skin.prototype._getStyleSheets() + this.mainCSS + this.waitAnimCSS;
     },
     /**
      * 
@@ -212,8 +216,9 @@ define([
 
       // Set the appropiate fullScreen icon
       if (this.buttons.fullscreen)
-        this.buttons.fullscreen.get(0).src = Utils.svgToURI(this.resources[
-            screenfull.isFullscreen ? 'fullScreenExit' : 'fullScreen']);
+        this.buttons.fullscreen.get(0).src = Utils.svgToURI(
+            this[screenfull.isFullscreen ? 'fullScreenExitIcon' : 'fullScreenIcon'],
+            this.iconWidth, this.iconHeight, this.iconFill);
 
       var autoFit = this.ps.options.autoFit | (screenfull && screenfull.enabled && screenfull.isFullscreen);
       var mainWidth = autoFit ? $(window).width() : this.ps.options.width;
@@ -271,19 +276,17 @@ define([
     setEnabled: function ($object, enabled) {
       $object.css('opacity', enabled ? 1.0 : 0.3);
     },
-    /**
-     * Buttons and other graphical resources used by this skin.
-     * @type {object} */
-    resources: {
-      //
-      // Styles used in this skin
-      mainCSS: '\
+    //
+    //Buttons and other graphical resources used by this skin.
+    //
+    // Styles used in this skin
+    mainCSS: '\
 .SKINID .JClicCtrlCnt {margin:9px 0; display:flex; flex-direction:row; align-items:center;}\
 .SKINID .JClicCountCnt {display:flex; flex-direction:column;}\
 .SKINID .JClicMsgBox {height:60px; flex-grow:1; background-color:lightblue;}\
 .SKINID .JClicBtn {cursor:pointer}\
 .SKINID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left}',
-      waitAnimCSS: '\
+    waitAnimCSS: '\
 .SKINID .waitPanel {display:flex; width:100%; height:100%; justify-content:center; align-items:center;}\
 .SKINID .animImgBox {position:relative; width:300px; height:300px; max-width:80%; max-height:80%;}\
 .SKINID .animImgBox svg {position:absolute; width:100%; height:100%; animation-iteration-count:infinite; animation-timing-function:linear;}\
@@ -291,78 +294,84 @@ define([
 @keyframes rotate-right {from {transform:rotate(0);} to {transform:rotate(1turn);}}\
 .SKINID #waitImgSmall {animation-duration:0.6s; animation-name:rotate-left;}\
 @keyframes rotate-left {from {transform:rotate(0);} to {transform:rotate(-1turn);}}',
-      //
-      // Fonts used in this skin
-      cssFonts: ['Roboto'],
-      //
-      // Animated image displayed while loading resources
-      // Based on Ryan Allen's [svg-spinner](http://articles.dappergentlemen.com/2015/01/13/svg-spinner/)
-      waitImgBig: '<svg id="waitImgBig" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
+    //
+    // Fonts used in this skin
+    cssFonts: ['Roboto'],
+    //
+    // Animated image displayed while loading resources
+    // Based on Ryan Allen's [svg-spinner](http://articles.dappergentlemen.com/2015/01/13/svg-spinner/)
+    waitImgBig: '<svg id="waitImgBig" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
 <path fill="#3F51B5" d="m 65.99,40.19 c -0.42,5.33 7.80,4.94 8.11,0.20 C 74.50,34.37 66.35,8.59 42.92,\
 7.98 15.90,7.29 9.96,29.50 9.94,39.41 15.33,-1.66 68.61,7.048 65.99,40.19 Z" />\
 </svg>',
-      waitImgSmall: '<svg id="waitImgSmall" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
+    waitImgSmall: '<svg id="waitImgSmall" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
 <path fill="#3F51B5"d="m 57.00,39.43 c -0.28,-3.53 5.16,-3.27 5.37,-0.13 0.26,3.99 -5.13,21.04 -20.63,\
 21.44 C 23.85,61.19 19.93,46.50 19.92,39.94 23.48,67.11 58.73,61.35 57.00,39.43 Z"/>\
 </svg>',
-      //
-      // SVG images for action buttons
-      // Based on [Google Material design Icons](https://google.github.io/material-design-icons/)
-      //
-      // Icon for 'previous activity' button
-      prevIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+    //
+    // SVG images for action buttons
+    // Based on [Google Material design Icons](https://google.github.io/material-design-icons/)
+    //
+    // Default settings for icons (can be overrided in subclasses)
+    iconWidth: 36,
+    iconHeight: 36,
+    iconFill: '#FFFFFF',
+    //
+    // Icon for 'previous activity' button
+    prevIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>\
 </svg>',
-      //
-      // Icon for 'next activity' button
-      nextIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+    //
+    // Icon for 'next activity' button
+    nextIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>\
 </svg>',
-      //
-      // Full screen on and off:
-      fullScreen: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+    //
+    // Full screen on and off:
+    fullScreenIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>\
 </svg>',
-      fullScreenExit: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+    fullScreenExitIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>\
 </svg>',
-      //
-      // Close button:
-      closeIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+    //
+    // Close button:
+    closeIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
 </svg>',
-      //
-      // Info button:
-      infoIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+    //
+    // Info button:
+    infoIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>\
 </svg>',
-      //
-      // Reports button
-      reportsIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+    //
+    // Reports button
+    reportsIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>\
 </svg>',
-      //
-      // Counters:
-      time: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">\
+    //
+    // Settings for counters:
+    counterIconWidth: 18,
+    counterIconHeight: 18,
+    counterIconFill: '#FFFFFF',
+    // Counters:
+    timeIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">\
 <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>\
 <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>\
 </svg>',
-      score: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">\
+    scoreIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">\
 <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>\
 </svg>',
-      actions: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">\
+    actionsIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">\
 <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>\
 </svg>'
-    }
   };
-  // Inherit Skin resources prior to merge prototypes
-  var resources = $.extend(Object.create(Skin.prototype.resources), DefaultSkin.prototype.resources);
+
   // DefaultSkin extends [Skin](Skin.html)
   DefaultSkin.prototype = $.extend(Object.create(Skin.prototype), DefaultSkin.prototype);
-  // Set resources
-  DefaultSkin.prototype.resources = resources;
 
   // Register this class in the list of available skins
   Skin.CLASSES['DefaultSkin'] = DefaultSkin;
   return DefaultSkin;
+
 });

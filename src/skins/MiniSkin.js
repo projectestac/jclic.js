@@ -1,5 +1,5 @@
-//  File    : OrangeSkin.js  
-//  Created : 04/07/2016  
+//  File    : MiniSkin.js  
+//  Created : 05/07/2016  
 //  By      : fbusquet  
 //
 //  JClic.js  
@@ -21,26 +21,26 @@ define([
 
   /**
    * This is a variant of the default {@link Skin} used by JClic.js
-   * It differs from {@link DefaultSkin} only in some colors
-   * @exports OrangeSkin
+   * It differs from {@link DefaultSkin} in colors and sizes
+   * @exports MiniSkin
    * @class
    * @extends DefaultSkin
    * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
    * realize the media objects meeded tot build the Skin.
    * @param {string=} name - The skin class name
    */
-  var OrangeSkin = function (ps, name) {
-    // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
-    DefaultSkin.call(this, ps, name);
+  var MiniSkin = function (ps, name) {
+    // MiniSkin extends [DefaultSkin](DefaultSkin.html)
+    DefaultSkin.call(this, ps, name, {counters: false, reportsBtn: true});
   };
 
-  OrangeSkin.prototype = {
-    constructor: OrangeSkin,
+  MiniSkin.prototype = {
+    constructor: MiniSkin,
     /**
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
      * @type {string}
      */
-    skinId: 'JClicOrangeSkin',
+    skinId: 'JClicMiniSkin',
     /**
      * 
      * Returns the CSS styles used by this skin. This methos should be called only from
@@ -50,17 +50,25 @@ define([
     _getStyleSheets: function () {
       return DefaultSkin.prototype._getStyleSheets() + this.skinCSS;
     },
+    // Buttons and other graphical resources used by this skin.
     //
-    //Buttons and other graphical resources used by this skin.
-    //
+    iconWidth: 18,
+    iconHeight: 18,
+    iconFill: '#080808',
+    counterIconFill: '#080808',
+    margin: 8,
     // Styles used in this skin
-    skinCSS: '.SKINID {background-color:#FF8B19;}'
+    skinCSS: '\
+.SKINID {background-color:#F4F4F4; padding:4px;}\
+.SKINID .JClicPlayerCnt {margin:4px;}\
+.SKINID .JClicCtrlCnt {margin:4px 0;}\
+.SKINID .JClicMsgBox {height:25px;}'
   };
 
-  // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
-  OrangeSkin.prototype = $.extend(Object.create(DefaultSkin.prototype), OrangeSkin.prototype);
+  // MiniSkin extends [DefaultSkin](DefaultSkin.html)
+  MiniSkin.prototype = $.extend(Object.create(DefaultSkin.prototype), MiniSkin.prototype);
 
   // Register this class in the list of available skins
-  Skin.CLASSES['@orange.xml'] = OrangeSkin;
-  return OrangeSkin;
+  Skin.CLASSES['@mini.xml'] = MiniSkin;
+  return MiniSkin;
 });

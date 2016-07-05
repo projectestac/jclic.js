@@ -42,18 +42,18 @@ define([
 
     // Skin extends [AWT.Container](AWT.html)
     AWT.Container.call(this);
-    
-    if(Skin.registeredStylesheets.indexOf(this.skinId)<0){
+
+    if (Skin.registeredStylesheets.indexOf(this.skinId) < 0) {
       $('head').append($('<style type="text/css"/>')
-            .html(this._getStyleSheets().replace(/SKINID/g, this.skinId)));
+          .html(this._getStyleSheets().replace(/SKINID/g, this.skinId)));
       Skin.registeredStylesheets.push(this.skinId);
-    }      
-    
+    }
+
     var skin = this;
 
-    this.$div = $('<div/>',{class: this.skinId});
+    this.$div = $('<div/>', {class: this.skinId});
     this.$playerCnt = $('<div/>', {class: 'JClicPlayerCnt'});
-    
+
     this.buttons = Utils.cloneObject(Skin.prototype.buttons);
     this.counters = Utils.cloneObject(Skin.prototype.counters);
     this.msgArea = Utils.cloneObject(Skin.prototype.msgArea);
@@ -103,7 +103,7 @@ define([
 
     this.$infoHead = $('<div/>', {class: 'infoHead'})
         .append($('<div/>', {class: 'headTitle'})
-            .append($(this.resources.appLogo).css({width: '1.5em', height: '1.5em', 'vertical-align': 'bottom'}))
+            .append($(this.appLogo).css({width: '1.5em', height: '1.5em', 'vertical-align': 'bottom'}))
             .append($('<span/>').html('JClic.js')))
         .append($('<p/>').css({'margin-top': 0, 'margin-left': '3.5em'})
             .append($('<a/>', {href: 'http://clic.xtec.cat/repo/index.html?page=info'}).html('http://clic.xtec.cat'))
@@ -113,7 +113,7 @@ define([
     this.$reportsPanel = $('<div/>', {class: 'reportsPanel'});
 
     this.$copyBtn = $('<a/>', {title: ps.getMsg('Copy data to clipboard')})
-        .append($(this.resources.copy).css({width: '26px', height: '26px'}))
+        .append($(this.copyIcon).css({width: '26px', height: '26px'}))
         .on('click', function () {
           clipboard.copy({
             'text/plain': '===> ' + ps.getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor') + ' <===',
@@ -130,19 +130,19 @@ define([
         });
 
     this.$closeDlgBtn = $('<a/>', {title: ps.getMsg('Close')})
-        .append($(this.resources.closeDialog).css({width: '26px', height: '26px'}))
+        .append($(this.closeDialogIcon).css({width: '26px', height: '26px'}))
         .on('click', function () {
           skin._closeDlg(true);
         });
 
     this.$okDlgBtn = $('<a/>', {title: ps.getMsg('OK')})
-        .append($(this.resources.okDialog).css({width: '26px', height: '26px'}))
+        .append($(this.okDialogIcon).css({width: '26px', height: '26px'}))
         .on('click', function () {
           skin._closeDlg(true);
         });
 
     this.$cancelDlgBtn = $('<a/>', {title: ps.getMsg('Cancel')})
-        .append($(this.resources.closeDialog).css({width: '26px', height: '26px'}))
+        .append($(this.closeDialogIcon).css({width: '26px', height: '26px'}))
         .on('click', function () {
           skin._closeDlg(false);
         });
@@ -159,7 +159,7 @@ define([
    * Collection of skin stylesheets already registered on the current document
    * @type {string[]} */
   Skin.registeredStylesheets = [];
-  
+
   /**
    * List of classes derived from Skin. It should be filled by real skin classes at declaration time.
    * @type {object} */
@@ -171,7 +171,7 @@ define([
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
      * @type {string}
      */
-    skinId: 'JClicBasicSkin',    
+    skinId: 'JClicBasicSkin',
     /**
      * The HTML div object used by this Skin
      * @type {external:jQuery} */
@@ -290,8 +290,8 @@ define([
      * `Skin` constructor, and overrided by subclasses if needed.
      * @returns {string}
      */
-    _getStyleSheets: function() {      
-      return this.resources.basicCSS + this.resources.reportsCSS;
+    _getStyleSheets: function () {
+      return this.basicCSS + this.reportsCSS;
     },
     /**
      * 
@@ -313,7 +313,7 @@ define([
     detach: function () {
       if (this.player !== null) {
         this.player.$div.remove();
-        this.$div.detach();        
+        this.$div.detach();
         this.player = null;
       }
     },
@@ -557,18 +557,16 @@ define([
     actionStatusChanged: function (act) {
       // To be implemented in subclasses      
     },
-    /**
-     * Buttons and other graphical resources used by this skin.
-     * @type {object} */
-    resources: {
-      //
-      // Styles used in this skin
-      basicCSS: '\
+    // 
+    // Buttons and other graphical resources used by this skin.
+    //
+    // Styles:
+    basicCSS: '\
 .SKINID {background-color:#3F51B5; padding:9px; overflow:hidden; display:flex; flex-direction:column;}\
 .SKINID .JClicPlayerCnt {background-color:lightblue; margin:9px; flex-grow:1; position:relative;}\
 .SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
 .SKINID .unselectableText {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select: none;}',
-      reportsCSS: '\
+    reportsCSS: '\
 .SKINID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
 .SKINID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
 .SKINID .dlgMainPanel {padding:1em 2em; max-height:calc(100vh - 8em); max-width:calc(100vw - 2em); min-width:20em; overflow:auto;}\
@@ -595,31 +593,32 @@ define([
 .SKINID .dlgBottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
 .SKINID .dlgBottomPanel a {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
 .SKINID .dlgBottomPanel a:hover {background-color:#eee; border-radius:80px;}\
-.SKINID .dlgBottomPanel a:active {background-color:#b3e5fc;}',      
-      //
-      // Close dialog button
-      closeDialog: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+.SKINID .dlgBottomPanel a:active {background-color:#b3e5fc;}',
+    //
+    // Icons used in buttons:
+    //
+    // Close dialog button
+    closeDialogIcon: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
 </svg>',
-      //
-      //OK dialog button
-      okDialog: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+    //
+    //OK dialog button
+    okDialogIcon: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>\
 </svg>',
-      //
-      // Copy text button
-      copy: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+    //
+    // Copy text button
+    copyIcon: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>\
 </svg>',
-      //
-      // JClic logo
-      appLogo: '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(.02081 0 0-.02081 5 62.33)">\
+    //
+    // JClic logo
+    appLogo: '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(.02081 0 0-.02081 5 62.33)">\
 <path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1999 519 3 11 999-266 999-266z" fill="none" stroke="#9d6329" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\
 <path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1998 519 3 11 999-266 999-266" fill="#f89c0e"/>\
 <path d="m357 2850l1000-268-267-992-1000 266 267 994z" fill="none" stroke="#86882b" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\n\
 <path d="m357 2850l1000-268-267-992-1000 266 267 994" fill="#d9e70c"/>\n\
 </g></svg>'
-    }
   };
 
   // Skin extends [AWT.Container](AWT.html)

@@ -123,7 +123,8 @@
   </item>
   <item name="skin02.txa" />
   <item name="skin03.txa" />
-  <item name="skin04.txa">
+  <item name="skin04.txa" />
+  <item name="skin05.txa">
    <jump action="RETURN" id="forward" />
   </item>
   <item id="anim" name="anim.ass">
@@ -3169,7 +3170,44 @@
     <style name="targetError" base="target" foreground="0xFFFFFF" background="0xFF0000" />
     <section>
      <p>
-      <text>... and this is a test skin with hand strokes and without counters.</text>
+      <text>... and this is a test skin with hand strokes and without counters (not yet implemented!)</text>
+     </p>
+     <p />
+    </section>
+   </document>
+   <evaluator class="@ComplexEvaluator" />
+  </activity>
+  <activity class="@text.FillInBlanks" name="skin05.txa">
+   <messages>
+    <cell type="initial">
+     <style>
+      <color foreground="0x400080" background="0xFFFFFF" />
+     </style>
+     <p>Mini skin</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <color foreground="0x400080" background="0xFFFFFF" />
+     </style>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <skin name="mini" file="@mini.xml" />
+    <helpWindow showSolution="true" />
+    <container bgColor="0xFFFFFF">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xFFFFFF" border="false">
+     <size width="540" height="150" />
+    </window>
+   </settings>
+   <document>
+    <style name="default" italic="false" bold="false" family="Arial" foreground="0x004080" size="17" background="0xFFFFFF" tabWidth="16" />
+    <style name="target" base="default" target="true" foreground="0x0000FF" background="0xC0C0C0" />
+    <style name="targetError" base="target" foreground="0xFFFFFF" background="0xFF0000" />
+    <section>
+     <p>
+      <text>This is the "mini" skin, suitable for activities embedded in small spaces</text>
      </p>
      <p />
      <p>

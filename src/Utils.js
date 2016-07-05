@@ -153,8 +153,8 @@ define([
     },
     /**
      * Converts java-like color codes (like '0xRRGGBB') to valid CSS values like '#RRGGBB' or 'rgba(r,g,b,a)'
-     * @param {?string} color - A color, as codified in java
-     * @param {?string} defaultColor - The default color to be used
+     * @param {string=} color - A color, as codified in java
+     * @param {string=} defaultColor - The default color to be used
      * @returns {string}
      */
     checkColor: function (color, defaultColor) {
@@ -302,7 +302,7 @@ define([
     /**
      * Gets the full path of `file` relative to `basePath`
      * @param {string} file - The file name
-     * @param {?string} path - The base path
+     * @param {string=} path - The base path
      * @returns {string}
      */
     getRelativePath: function (file, path) {
@@ -371,13 +371,34 @@ define([
       return screenfull && screenfull.enabled;
     },
     /**
-     * Encodes a svg expression into a (data URI)[https://developer.mozilla.org/en-US/docs/Web/HTTP/data_URIs]
-     * suitable for the `src` property of `img` elements
+     * Replaces `width`, `height` and `fill` attributes of a simple SVG image
+     * with the provided values
      * @param {string} svg - The SVG image as XML string
+     * @param {string=} width - Optional setting for "width" property
+     * @param {string=} height - Optional setting for "height" property
+     * @param {string=} fill - Optional setting for "fill" property
+     * @returns {string} - The resulting svg code
+     */
+    getSvg: function(svg, width, height, fill){
+      if(width)
+        svg = svg.replace(/width=\"\d*\"/, 'width="' + width +'"');
+      if(height)
+        svg = svg.replace(/height=\"\d*\"/, 'height="' + height +'"');
+      if(fill)
+        svg = svg.replace(/fill=\"[#A-Za-z0-9]*\"/, 'fill="' + fill +'"');      
+      return svg;
+    },
+    /**
+     * Encodes a svg expression into a (data URI)[https://developer.mozilla.org/en-US/docs/Web/HTTP/data_URIs]
+     * suitable for the `src` property of `img` elements, optionally changing its original size and fill values.
+     * @param {string} svg - The SVG image as XML string
+     * @param {string=} width - Optional setting for "width" property
+     * @param {string=} height - Optional setting for "height" property
+     * @param {string=} fill - Optional setting for "fill" property
      * @returns {string} - The resulting Data URI
      */
-    svgToURI: function(svg){
-      return 'data:image/svg+xml;base64,' + btoa(svg);
+    svgToURI: function(svg, width, height, fill){
+      return 'data:image/svg+xml;base64,' + btoa(Utils.getSvg(svg, width, height, fill));
     },
     /**
      * Global constants

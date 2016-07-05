@@ -24,6 +24,7 @@ define([
   "./skins/GreenSkin",
   "./skins/BlueSkin",
   "./skins/SimpleSkin",
+  "./skins/MiniSkin",
   "./shapers/Rectangular",
   "./shapers/Holes",
   "./shapers/JigSaw",
@@ -48,6 +49,6 @@ define([
   "./activities/textGrid/WordSearch",
   "./activities/textGrid/CrossWord",
   "./report/TCPReporter"
-], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ab, ac){
+], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ab, ac, ad){
   return 'Deep classes loaded!';
 });
