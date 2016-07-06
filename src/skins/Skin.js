@@ -328,6 +328,9 @@ define([
      */
     getSkin: function (skinName, ps, $xml) {
       var sk = null;
+      
+      skinName = skinName ? skinName : '@default.xml';
+      
       // look for the skin in the stack of realized skins
       if (skinName && ps) {
         for (var i = 0; i < Skin.skinStack; i++) {
@@ -339,7 +342,7 @@ define([
 
       // Locates the class of the requested Skin (or [DefaultSkin](DefaultSkin.html)
       // if not specified), creates and registers it on `skinStack`
-      var cl = Skin.CLASSES[skinName ? skinName : 'DefaultSkin'];
+      var cl = Skin.CLASSES[skinName];
       if (cl) {
         sk = new cl(ps, skinName);
         if ($xml)

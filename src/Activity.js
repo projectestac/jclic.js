@@ -731,6 +731,10 @@ define([
      * @type {external:jQuery} */
     $canvas: null,
     /**
+     * The realized current {@link Skin}
+     * @type {Skin} */
+    skin: null,
+    /**
      * `true` when the activity is solved, `false` otherwise
      * @type {boolean} */
     solved: false,
@@ -803,6 +807,10 @@ define([
      */
     buildVisualComponents: function () {
       this.playing = false;
+
+      this.skin = null;
+      if (this.act.skinFileName && this.act.skinFileName.length > 0)
+        this.skin = this.act.project.mediaBag.getSkinElement(this.act.skinFileName, this.ps);
 
       this.bgImage = null;
       if (this.act.bgImageFile && this.act.bgImageFile.length > 0) {

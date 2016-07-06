@@ -59,7 +59,7 @@ define([
      * @type {string[]} */
     languages: null,
     /**
-     * AThe name of an optional 'skin' (visual aspect) can be set for the whole project, or for each {@link Activity}
+     * The name of an optional 'skin' (visual aspect) can be set for the whole project, or for each {@link Activity}
      * @type {string} */
     skinFileName: null,
     /**

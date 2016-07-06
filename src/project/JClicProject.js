@@ -79,6 +79,10 @@ define([
      * @type {MediaBag} */
     mediaBag: null,
     /**
+     * The object that builds and manages the visual interface presented to users
+     * @type {Skin} */
+    skin: null,
+    /**
      * Relative path or absolute URL to be used as a base to access files, usually in conjunction
      * with {@link JClicPlayer#basePath}
      * @type {string} */
@@ -99,7 +103,7 @@ define([
      * @param {?external:JSZip} zip - An optional JSZip object where this project is encapsulated
      * @param {?object} options - An object with miscellaneous options
      * @returns {JClicProject}
-     */    
+     */
     setProperties: function ($xml, path, zip, options) {
       if (path) {
         this.path = path;
@@ -137,10 +141,15 @@ define([
     /**
      * 
      * Builds the {@link Skin}, {@link EventSounds} and {@link MediaBag} fonts associated to this project.
-     * @param {PlayStation} ps - The PkayStation (usually a {@link JClicPlayer}) linked to this project.
+     * @param {PlayStation} ps - The PlayStation (usually a {@link JClicPlayer}) linked to this project.
      */
     realize: function (ps) {
+      // Build skin
+      if (this.skin === null && this.settings.skinFileName !== null && this.settings.skinFileName.length > 0)
+        this.skin = this.mediaBag.getSkinElement(this.settings.skinFileName, ps);
+
       this.settings.eventSounds.realize(ps, this.mediaBag);
+
       // Build all elements of type `font`
       this.mediaBag.buildAll('font');
     },
