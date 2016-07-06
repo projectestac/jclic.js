@@ -79,10 +79,6 @@ define([
      * @type {MediaBag} */
     mediaBag: null,
     /**
-     * The object that builds and manages the visual interface presented to users
-     * @type {Skin} */
-    skin: null,
-    /**
      * Relative path or absolute URL to be used as a base to access files, usually in conjunction
      * with {@link JClicPlayer#basePath}
      * @type {string} */
@@ -144,11 +140,7 @@ define([
      * @param {PlayStation} ps - The PkayStation (usually a {@link JClicPlayer}) linked to this project.
      */
     realize: function (ps) {
-      if (this.skin === null && this.settings.skinFileName !== null && this.settings.skinFileName.length > 0)
-        this.skin = this.mediaBag.getSkinElement(this.settings.skinFileName, ps);
-
       this.settings.eventSounds.realize(ps, this.mediaBag);
-
       // Build all elements of type `font`
       this.mediaBag.buildAll('font');
     },

@@ -434,8 +434,8 @@ define([
 
       var player = this;
 
-      this.forceFinishActivity();
-      this.skin.setWaitCursor(true);
+      player.forceFinishActivity();
+      player.setWaitCursor(true);
 
       // The Activity.Panel object to be obtained as a result of the loading process
       var actp = null;
@@ -455,7 +455,7 @@ define([
 
             // Launch loading of ZIP file in a separated thread
             window.setTimeout(function () {
-              player.skin.setWaitCursor(true);
+              player.setWaitCursor(true);
 
               JSZipUtils.getBinaryContent(fullPath, function (err, data) {
                 if (err) {
@@ -483,15 +483,15 @@ define([
                   player.setSystemMessage('Error reading ZIP file: ', reason);
                 });
               });
-              player.skin.setWaitCursor(false);
+              player.setWaitCursor(false);
             }, 100);
-            this.skin.setWaitCursor(false);
+            player.setWaitCursor(false);
             return;
           } else if (player.localFS && JClicObject && !JClicObject.projectFiles[fullPath]) {
             ScriptJS(fullPath + '.js', function () {
               player.load(project, sequence, activity);
             });
-            this.skin.setWaitCursor(false);
+            player.setWaitCursor(false);
             return;
           }
 
@@ -508,18 +508,18 @@ define([
               prj.mediaBag.buildAll();
               var loops = 0;
               var interval = 500;
-              player.skin.setWaitCursor(true);
+              player.setWaitCursor(true);
               var checkMedia = window.setInterval(function () {
                 // Wait for a maximum time of two minutes
                 if (++loops > player.options.maxWaitTime / interval) {
                   window.clearInterval(checkMedia);
-                  player.skin.setWaitCursor(false);
+                  player.setWaitCursor(false);
                   player.setSystemMessage('Error loading media!');
                   // alert?                    
                 }
                 if (!prj.mediaBag.isWaiting()) {
                   window.clearInterval(checkMedia);
-                  player.skin.setWaitCursor(false);
+                  player.setWaitCursor(false);
                   // Call again `load`, passing the loaded [JClicProject](JClicProject.html) object
                   player.load(prj, sequence, activity);
                 }
@@ -529,7 +529,7 @@ define([
               player.setSystemMessage('Error', errMsg);
               alert('Error!\n' + errMsg);
             }).always(function () {
-              player.skin.setWaitCursor(false);
+              player.setWaitCursor(false);
             });
           };
 
@@ -544,7 +544,7 @@ define([
                 processProjectFile('data:text/xml;charset=UTF-8,' + text);
               }).catch(function (reason) {
                 player.setSystemMessage('Error: Unable to extract ', fName + ' from ZIP file: ' + reason);
-                player.skin.setWaitCursor(false);
+                player.setWaitCursor(false);
               });
               return;
             }
@@ -556,7 +556,7 @@ define([
               fp = 'data:text/xml;charset=UTF-8,' + JClicObject.projectFiles[fullPath];
             } else {
               player.setSystemMessage('Error: Unable to load', fullPath + '.js');
-              player.skin.setWaitCursor(false);
+              player.setWaitCursor(false);
               return;
             }
           }
@@ -672,7 +672,7 @@ define([
           });
         }
       }
-      this.skin.setWaitCursor(false);
+      player.setWaitCursor(false);
     },
     /**
      * 
@@ -937,7 +937,7 @@ define([
         ab.clear();
         this.skin.invalidate(ab).update();
         ab.setContent(abc ? abc : ActiveBoxContent.prototype.EMPTY_CONTENT);
-        // TODO: Transfer this method to Skin
+        // TODO: Move this method to Skin
         this.skin.invalidate(ab).update();
         ab.playMedia(this);
       }

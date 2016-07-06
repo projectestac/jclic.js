@@ -59,8 +59,8 @@ define([
      * @type {string[]} */
     languages: null,
     /**
-     * An optional 'skin' (visual aspect) can be set for the whole project, or for each {@link Activity}
-     * @type {Skin} */
+     * AThe name of an optional 'skin' (visual aspect) can be set for the whole project, or for each {@link Activity}
+     * @type {string} */
     skinFileName: null,
     /**
      * The main {@link EventSounds} object of the project
