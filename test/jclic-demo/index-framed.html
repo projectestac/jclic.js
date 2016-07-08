@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JClic HTML Player Test Page</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="./favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+      .wrapper {
+        display: flex;    
+        flex-flow: row wrap;  
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .wrapper > * {
+        padding: 10px;
+        flex: 1 100%;
+      }
+
+      .header {
+        background: tomato;
+        min-height: 50px;
+      }
+
+      .footer {
+        background: lightgreen;
+      }
+
+      .main {
+        text-align: left;
+        background: deepskyblue;
+      }
+
+      .aside-1 {
+        background: gold;
+      }
+
+      .aside-2 {
+        background: hotpink;
+      }
+
+      @media all and (min-width: 600px) {
+        .aside { flex: 1 auto; }
+      }
+
+      @media all and (min-width: 800px) {
+        .main    { flex: 12 0px; }
+        .aside-1 { order: 1; } 
+        .main    { order: 2; }
+        .aside-2 { order: 3; }
+        .footer  { order: 4; }
+      }
+
+      body {
+        padding: 2em; 
+      }
+      
+      .JClic {
+        height: 400px;
+        background-color: blue;
+      }
+    </style>
+    <!-- script type="text/javascript" src="../../dist/jclic.js"></script -->
+    <script type="text/javascript" data-main="../debug" src="../../node_modules/requirejs/require.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">Header</header>
+      <article class="main">
+        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+        <div class ="JClic" data-project="demo2.jclic" data-options='{"counters":"true","autoFit":"false"}'></div>
+      </article>
+      <aside class="aside aside-1">Aside 1</aside>
+      <aside class="aside aside-2">Aside 2</aside>
+      <footer class="footer">Footer</footer>
+    </div>
+  </body>
+</html>

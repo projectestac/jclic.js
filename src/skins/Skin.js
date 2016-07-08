@@ -504,8 +504,8 @@ define([
      * @returns {AWT.Dimension} the new dimension of the skin
      */
     fit: function () {
-      this.ps.options.width = this.$div.width();
-      this.ps.options.height = this.$div.height();
+      //this.ps.options.width = this.$div.width();
+      //this.ps.options.height = this.$div.height();
       this.doLayout();
       return new AWT.Dimension(this.$div.width(), this.$div.height());
     },

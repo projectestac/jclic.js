@@ -58,6 +58,7 @@ define([
 
     this.$topDiv = $topDiv;
 
+    /*
     if (!options.height && !options.width) {
       if ($topDiv.height() > 0) {
         options.height = $topDiv.height();
@@ -65,6 +66,7 @@ define([
       } else if (typeof options.autoFit === 'undefined')
         options.autoFit = true;
     }
+    */
 
     this.options = $.extend(Object.create(this.options), options);
 
@@ -116,7 +118,7 @@ define([
       // 
       // Initial witdh and height of the JClicPlayer. When not specified, the size of the 
       // `div` element acting as a container will be used.
-      width: 900, height: 600,
+      //width: 900, height: 600,
       //
       // When `true`, the JClicPlayer div element will try to take up all the available surface on
       // the browser's window.

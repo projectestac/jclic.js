@@ -213,6 +213,15 @@ define([
      * Main method used to build the content of the skin. Resizes and places internal objects.
      */
     doLayout: function () {
+      
+      var $parent = this.$div.parent();
+      
+      this.$div.detach();
+
+      console.log("options: %dx%d - this: %dx%d - parent: %dx%d",
+      this.ps.options.width, this.ps.options.height,
+      this.$div.outerWidth(), this.$div.outerHeight(),
+      $parent.outerWidth(), $parent.outerHeight());
 
       // Set the appropiate fullScreen icon
       if (this.buttons.fullscreen)
@@ -221,19 +230,21 @@ define([
             this.iconWidth, this.iconHeight, this.iconFill);
 
       var autoFit = this.ps.options.autoFit | (screenfull && screenfull.enabled && screenfull.isFullscreen);
-      var mainWidth = autoFit ? $(window).width() : this.ps.options.width;
-      var mainHeight = autoFit ? $(window).height() : this.ps.options.height;
+      var mainWidth = autoFit ? $(window).width() : (this.ps.options.width ? this.ps.options.width : $parent.outerWidth());
+      var mainHeight = autoFit ? $(window).height() : (this.ps.options.height ? this.ps.options.height : $parent.outerHeight());
       
       var width = Math.max(this.ps.options.minWidth, Math.min(this.ps.options.maxWidth, mainWidth)) - this.margin;
       var height= Math.max(this.ps.options.minHeight, Math.min(this.ps.options.maxHeight, mainHeight)) - this.margin;
+      
+      console.log('main: %dx%d real: %dx%d', mainWidth, mainHeight, width, height);
       
       this.$div.css({
         width: width + 'px',
         height: height + 'px'
       });
       
-      //console.log('autoFit: %d mainW: %d mainH: %d w: %d h: %d rw: %d rh: %d', autoFit, mainWidth, mainHeight, width, height, this.$div.outerWidth(), this.$div.outerHeight());
-
+      $parent.append(this.$div);
+      
       this.player.doLayout();
 
       this.msgBox.ctx = null;
