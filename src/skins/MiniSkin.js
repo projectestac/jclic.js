@@ -59,9 +59,9 @@ define([
     margin: 8,
     // Styles used in this skin
     skinCSS: '\
-.SKINID {background-color:#F4F4F4; padding:4px;}\
+.SKINID {background-color:#F4F4F4;}\
 .SKINID .JClicPlayerCnt {margin:4px;}\
-.SKINID .JClicCtrlCnt {margin:4px 0;}\
+.SKINID .JClicCtrlCnt {margin:0 2px 4px 2px;}\
 .SKINID .JClicMsgBox {height:25px;}'
   };
 

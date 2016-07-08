@@ -304,7 +304,7 @@ define([
         player.skin.detach();
       this.player = player;
       this.$playerCnt.prepend(player.$div);
-      player.$topDiv.append(this.$div);
+      player.$topDiv.append(this.$div.css('height', player.$topDiv.height()>0 ? '100%' : '100vh'));
     },
     /**
      * 
@@ -565,8 +565,8 @@ define([
     //
     // Styles:
     basicCSS: '\
-.SKINID {background-color:#3F51B5; padding:9px; overflow:hidden; display:flex; flex-direction:column;}\
-.SKINID .JClicPlayerCnt {background-color:lightblue; margin:9px; flex-grow:1; position:relative;}\
+.SKINID {width:100%; background-color:#3F51B5; display:flex; flex-direction:column;}\
+.SKINID .JClicPlayerCnt {background-color:lightblue; margin:18px; flex-grow:1; position:relative;}\
 .SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
 .SKINID .unselectableText {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select: none;}',
     reportsCSS: '\

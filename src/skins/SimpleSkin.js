@@ -62,8 +62,9 @@ define([
     // Styles used in this skin
     skinCSS: '\
 .SKINID {background-color:#888888;}\
-.SKINID .JClicCtrlCnt {margin:0;}\
-.SKINID .JClicMsgBox {flex-grow:0; margin:0 9px;}'
+.SKINID .JClicCtrlCnt {margin:9px;}\
+.SKINID .JClicPlayerCnt {margin:0px 18px 18px;}\
+.SKINID .JClicMsgBox {flex-grow:0; margin:0 18px 18px 18px;}'
   };
 
   // DefaultSkin extends [Skin](Skin.html)

@@ -213,50 +213,37 @@ define([
      * Main method used to build the content of the skin. Resizes and places internal objects.
      */
     doLayout: function () {
-      
-      var $parent = this.$div.parent();
-      
-      this.$div.detach();
-
-      console.log("options: %dx%d - this: %dx%d - parent: %dx%d",
-      this.ps.options.width, this.ps.options.height,
-      this.$div.outerWidth(), this.$div.outerHeight(),
-      $parent.outerWidth(), $parent.outerHeight());
-
-      // Set the appropiate fullScreen icon
+      // Set the fullScreen icon
       if (this.buttons.fullscreen)
         this.buttons.fullscreen.get(0).src = Utils.svgToURI(
             this[screenfull.isFullscreen ? 'fullScreenExitIcon' : 'fullScreenIcon'],
             this.iconWidth, this.iconHeight, this.iconFill);
 
-      var autoFit = this.ps.options.autoFit | (screenfull && screenfull.enabled && screenfull.isFullscreen);
-      var mainWidth = autoFit ? $(window).width() : (this.ps.options.width ? this.ps.options.width : $parent.outerWidth());
-      var mainHeight = autoFit ? $(window).height() : (this.ps.options.height ? this.ps.options.height : $parent.outerHeight());
-      
-      var width = Math.max(this.ps.options.minWidth, Math.min(this.ps.options.maxWidth, mainWidth)) - this.margin;
-      var height= Math.max(this.ps.options.minHeight, Math.min(this.ps.options.maxHeight, mainHeight)) - this.margin;
-      
-      console.log('main: %dx%d real: %dx%d', mainWidth, mainHeight, width, height);
-      
-      this.$div.css({
-        width: width + 'px',
-        height: height + 'px'
-      });
-      
-      $parent.append(this.$div);
-      
+      // Resize player accordingly      
       this.player.doLayout();
 
-      this.msgBox.ctx = null;
-      if (this.$msgBoxDivCanvas) {
-        this.$msgBoxDivCanvas.remove();
-        this.$msgBoxDivCanvas = null;
-      }
+      // Temporary remove canvas to let div get its natural size:
+      if(this.$msgBoxDivCanvas)
+        this.$msgBoxDivCanvas.remove();      
+      
+      // Get current size of message box div without canvas      
       var msgWidth = this.$msgBoxDiv.outerWidth(),
           msgHeight = this.$msgBoxDiv.outerHeight();
-      this.$msgBoxDivCanvas = $('<canvas width="' + msgWidth + '" height="' + msgHeight + '"/>');
+
+      // Replace existing canvas if size has changed
+      if (this.$msgBoxDivCanvas === null ||
+          (this.msgBox.dim.widht !== msgWidth) ||
+          (this.msgBox.dim.height !== msgHeight)) {
+        this.msgBox.ctx = null;
+        if (this.$msgBoxDivCanvas) {
+          this.$msgBoxDivCanvas.remove();
+          this.$msgBoxDivCanvas = null;
+        }
+        this.$msgBoxDivCanvas = $('<canvas width="' + msgWidth + '" height="' + msgHeight + '"/>');
+        this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth+1, msgHeight));
+      }
+      // restore canvas
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
-      this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth, msgHeight));
       this.updateContent();
     },
     /**
@@ -298,10 +285,10 @@ define([
     //
     // Styles used in this skin
     mainCSS: '\
-.SKINID .JClicCtrlCnt {margin:9px 0; display:flex; flex-direction:row; align-items:center;}\
+.SKINID .JClicCtrlCnt {margin:0 9px 18px 9px; display:flex; flex-direction:row; align-items:center;}\
 .SKINID .JClicCountCnt {display:flex; flex-direction:column;}\
 .SKINID .JClicMsgBox {height:60px; flex-grow:1; background-color:lightblue;}\
-.SKINID .JClicBtn {cursor:pointer}\
+.SKINID .JClicBtn {cursor:pointer; line-height:0;}\
 .SKINID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left}',
     waitAnimCSS: '\
 .SKINID .waitPanel {display:flex; width:100%; height:100%; justify-content:center; align-items:center;}\
