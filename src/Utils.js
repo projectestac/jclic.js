@@ -401,6 +401,14 @@ define([
       return 'data:image/svg+xml;base64,' + btoa(Utils.getSvg(svg, width, height, fill));
     },
     /**
+     * Converts the given expression into a valid value for CSS size values
+     * @param {string|number} exp
+     * @returns {string} - A valid CSS value, or `null` if no value provided
+     */
+    toCssSize: function(exp){
+      return (typeof exp === 'undefined' || exp === null) ? null : (isNaN(exp) ? exp : exp + 'px');
+    },
+    /**
      * Global constants
      * @const
      */

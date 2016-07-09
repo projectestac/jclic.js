@@ -304,7 +304,24 @@ define([
         player.skin.detach();
       this.player = player;
       this.$playerCnt.prepend(player.$div);
-      player.$topDiv.append(this.$div.css('height', player.$topDiv.height()>0 ? '100%' : '100vh'));
+
+      // Set skin dimensions
+      var css = {},
+          s = null;
+      if ((s = Utils.toCssSize(this.ps.options.minWidth)) !== null)
+        css['min-width'] = s;
+      if ((s = Utils.toCssSize(this.ps.options.minHeight)) !== null)
+        css['min-height'] = s;
+      if ((s = Utils.toCssSize(this.ps.options.maxWidth)) !== null)
+        css['max-width'] = s;
+      if ((s = Utils.toCssSize(this.ps.options.maxHeight)) !== null)
+        css['max-height'] = s;
+
+      css.width = ((s = Utils.toCssSize(this.ps.options.width)) !== null) ? s : '100%';
+      css.height = ((s = Utils.toCssSize(this.ps.options.height)) !== null) ? s : player.$topDiv.height() > 0 ? '100%' : '100vh';
+      this.$div.css(css);
+      
+      player.$topDiv.append(this.$div);
     },
     /**
      * 
@@ -328,9 +345,9 @@ define([
      */
     getSkin: function (skinName, ps, $xml) {
       var sk = null;
-      
+
       skinName = skinName ? skinName : '@default.xml';
-      
+
       // look for the skin in the stack of realized skins
       if (skinName && ps) {
         for (var i = 0; i < Skin.skinStack; i++) {
@@ -504,8 +521,6 @@ define([
      * @returns {AWT.Dimension} the new dimension of the skin
      */
     fit: function () {
-      //this.ps.options.width = this.$div.width();
-      //this.ps.options.height = this.$div.height();
       this.doLayout();
       return new AWT.Dimension(this.$div.width(), this.$div.height());
     },
