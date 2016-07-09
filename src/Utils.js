@@ -402,11 +402,17 @@ define([
     },
     /**
      * Converts the given expression into a valid value for CSS size values
-     * @param {string|number} exp
+     * @param {string|number} exp - The expression to be evaluated (can be `null` or `undefined`)
+     * @param {Object} css - An optional Object where the resulting expression will be saved, if any
+     * @param {string} key - The key to be used ro save the result in `css`
+     * @param {string} def - Default value to be used when `exp` is `null` or `undefined`
      * @returns {string} - A valid CSS value, or `null` if no value provided
      */
-    toCssSize: function(exp){
-      return (typeof exp === 'undefined' || exp === null) ? null : (isNaN(exp) ? exp : exp + 'px');
+    toCssSize: function (exp, css, key, def) {
+      var result = (typeof exp === 'undefined' || exp === null) ? null : (isNaN(exp) ? exp : exp + 'px');
+      if (css && key && (result || def))
+        css[key] = result !== null ? result : def;
+      return result;
     },
     /**
      * Global constants

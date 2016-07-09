@@ -61,6 +61,6 @@ define([
   OrangeSkin.prototype = $.extend(Object.create(DefaultSkin.prototype), OrangeSkin.prototype);
 
   // Register this class in the list of available skins
-  Skin.CLASSES['@orange.xml'] = OrangeSkin;
+  Skin.CLASSES['orange'] = OrangeSkin;
   return OrangeSkin;
 });

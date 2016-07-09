@@ -71,7 +71,7 @@ define([
   SimpleSkin.prototype = $.extend(Object.create(DefaultSkin.prototype), SimpleSkin.prototype);
 
   // Register this class in the list of available skins
-  Skin.CLASSES['@simple.xml'] = SimpleSkin;
+  Skin.CLASSES['simple'] = SimpleSkin;
   return SimpleSkin;
 });
 

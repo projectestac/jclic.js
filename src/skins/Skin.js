@@ -307,20 +307,16 @@ define([
 
       // Set skin dimensions
       var css = {},
-          s = null;
-      if ((s = Utils.toCssSize(this.ps.options.minWidth)) !== null)
-        css['min-width'] = s;
-      if ((s = Utils.toCssSize(this.ps.options.minHeight)) !== null)
-        css['min-height'] = s;
-      if ((s = Utils.toCssSize(this.ps.options.maxWidth)) !== null)
-        css['max-width'] = s;
-      if ((s = Utils.toCssSize(this.ps.options.maxHeight)) !== null)
-        css['max-height'] = s;
+          topHeight = player.$topDiv.height();
 
-      css.width = ((s = Utils.toCssSize(this.ps.options.width)) !== null) ? s : '100%';
-      css.height = ((s = Utils.toCssSize(this.ps.options.height)) !== null) ? s : player.$topDiv.height() > 0 ? '100%' : '100vh';
+      Utils.toCssSize(this.ps.options.minWidth, css, 'min-width', null);
+      Utils.toCssSize(this.ps.options.minHeight, css, 'min-height', null);
+      Utils.toCssSize(this.ps.options.maxWidth, css, 'max-width', null);
+      Utils.toCssSize(this.ps.options.maxHeight, css, 'max-height', null);
+      Utils.toCssSize(this.ps.options.width, css, 'width', '100%');
+      Utils.toCssSize(this.ps.options.height, css, 'height', topHeight > 0 ? '100%' : '100vh');
       this.$div.css(css);
-      
+
       player.$topDiv.append(this.$div);
     },
     /**
@@ -333,41 +329,6 @@ define([
         this.$div.detach();
         this.player = null;
       }
-    },
-    /**
-     * 
-     * Gets the specified Skin from skinStack, or creates a new one if not found.<br>
-     * This function should be used only through `Skin.prototype.getSkin`
-     * @param {string} skinName - The name of the searched skin
-     * @param {PlayStation} ps - The PlayStation (usually a {@link JClicPlayer}) used to build the new skin.
-     * @param {external:jQuery} $xml - An XML element with the properties of the new skin
-     * @returns {Skin}
-     */
-    getSkin: function (skinName, ps, $xml) {
-      var sk = null;
-
-      skinName = skinName ? skinName : '@default.xml';
-
-      // look for the skin in the stack of realized skins
-      if (skinName && ps) {
-        for (var i = 0; i < Skin.skinStack; i++) {
-          sk = Skin.skinStack[i];
-          if (sk.name === skinName && sk.ps === ps)
-            return sk;
-        }
-      }
-
-      // Locates the class of the requested Skin (or [DefaultSkin](DefaultSkin.html)
-      // if not specified), creates and registers it on `skinStack`
-      var cl = Skin.CLASSES[skinName];
-      if (cl) {
-        sk = new cl(ps, skinName);
-        if ($xml)
-          sk.setProperties($xml);
-      } else
-        console.log('Unknown skin class: ' + skinName);
-
-      return sk;
     },
     /**
      * 
@@ -641,6 +602,47 @@ define([
 
   // Skin extends [AWT.Container](AWT.html)
   Skin.prototype = $.extend(Object.create(AWT.Container.prototype), Skin.prototype);
+
+  /**
+   * 
+   * Gets the specified Skin from skinStack, or creates a new one if not found.<br>
+   * This function should be used only through `Skin.getSkin`
+   * @param {string} skinName - The name of the searched skin
+   * @param {PlayStation} ps - The PlayStation (usually a {@link JClicPlayer}) used to build the new skin.
+   * @param {external:jQuery} $xml - An XML element with the properties of the new skin
+   * @returns {Skin}
+   */
+  Skin.getSkin = function (skinName, ps, $xml) {
+    var sk = null;
+
+    skinName = skinName ? skinName : 'default';
+    
+    // Correct old skin names
+    if (skinName.charAt(0, 1) === '@' && skinName.substr(-4) === '.xml')
+      skinName = skinName.substr(1, skinName.length - 5);
+
+    // look for the skin in the stack of realized skins
+    if (skinName && ps) {
+      for (var i = 0; i < Skin.skinStack; i++) {
+        sk = Skin.skinStack[i];
+        if (sk.name === skinName && sk.ps === ps)
+          return sk;
+      }
+    }
+
+    // Locates the class of the requested Skin (or [DefaultSkin](DefaultSkin.html)
+    // if not specified), creates and registers it on `skinStack`
+    var cl = Skin.CLASSES[skinName];
+    if (cl) {
+      sk = new cl(ps, skinName);
+      if ($xml)
+        sk.setProperties($xml);
+    } else
+      console.log('Unknown skin class: ' + skinName);
+
+    return sk;
+  };
+
 
   return Skin;
 });

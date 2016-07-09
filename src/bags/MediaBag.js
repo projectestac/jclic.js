@@ -143,7 +143,7 @@ define([
      * @returns {Skin}
      */
     getSkinElement: function (name, ps) {
-      return Skin.prototype.getSkin(name, ps);
+      return Skin.getSkin(name, ps);
     }
   };
 

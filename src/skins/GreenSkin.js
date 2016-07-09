@@ -63,6 +63,6 @@ define([
   GreenSkin.prototype = $.extend(Object.create(DefaultSkin.prototype), GreenSkin.prototype);
 
   // Register this class in the list of available skins
-  Skin.CLASSES['@green.xml'] = GreenSkin;
+  Skin.CLASSES['green'] = GreenSkin;
   return GreenSkin;
 });

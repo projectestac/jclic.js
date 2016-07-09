@@ -69,6 +69,6 @@ define([
   MiniSkin.prototype = $.extend(Object.create(DefaultSkin.prototype), MiniSkin.prototype);
 
   // Register this class in the list of available skins
-  Skin.CLASSES['@mini.xml'] = MiniSkin;
+  Skin.CLASSES['mini'] = MiniSkin;
   return MiniSkin;
 });

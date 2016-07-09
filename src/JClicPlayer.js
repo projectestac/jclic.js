@@ -72,7 +72,7 @@ define([
     this.history = new PlayerHistory(this);
     this.audioEnabled = this.options.audioEnabled;
     this.navButtonsAlways = this.options.navButtonsAlways;
-    this.defaultSkin = Skin.prototype.getSkin(this.options.skin, this);
+    this.defaultSkin = Skin.getSkin(this.options.skin, this);
     this.setSkin(this.defaultSkin);
     this.initTimers();
     this.setSystemMessage("ready");
