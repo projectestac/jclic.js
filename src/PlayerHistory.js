@@ -58,7 +58,7 @@ define([
      * Removes all elements from {@link PlayerHistory#sequenceStack sequenceStack}
      */
     clearHistory: function () {
-      this.sequenceStack.length = 0;
+      this.sequenceStack = [0];
     },
     /**
      * 

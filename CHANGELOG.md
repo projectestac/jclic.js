@@ -1,8 +1,7 @@
-
-### v0.1.30 (Not yet released)
+### v0.1.30 (2016-07-11)
 #### Improvements
-- Control of skin and player window done with CSS
-- Updated skin names, no '@___.xml' naming needed (but still supported)
+- Skin and player windows fully styled with CSS
+- Updated skin names. Expressions like '@___.xml' are no longer needed (but still supported)
 
 #### Bug fixes
 - Set color and size for _close_ icon

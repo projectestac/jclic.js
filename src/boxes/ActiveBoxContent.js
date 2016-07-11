@@ -350,13 +350,12 @@ define([
       }
       return result;
     },
-    /**
-     * An empty ActiveBoxContent linked at protoype level.
-     * @type {ActiveBoxContent} */
-    EMPTY_CONTENT: null
   };
 
-  ActiveBoxContent.prototype.EMPTY_CONTENT = new ActiveBoxContent();
+  /**
+   * An empty ActiveBoxContent
+   * @type {ActiveBoxContent} */
+  ActiveBoxContent.EMPTY_CONTENT = new ActiveBoxContent();
 
   return ActiveBoxContent;
 });

@@ -31,8 +31,8 @@ define([
   "./bags/JumpInfo",
   "./boxes/ActiveBoxContent",
   "./report/Reporter"
-], function ($, JSZip, JSZipUtils, ScriptJS, i18n, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin, EventSounds,
-    JClicProject, JumpInfo, ActiveBoxContent, Reporter) {
+], function ($, JSZip, JSZipUtils, ScriptJS, i18n, Utils, AWT, PlayerHistory, ActiveMediaBag, Skin,
+    EventSounds, JClicProject, JumpInfo, ActiveBoxContent, Reporter) {
 
   /**
    * 
@@ -261,11 +261,16 @@ define([
     },
     /**
      * 
-     * This method is called when the container gains the focus for the first time.<br>
-     * Currently not used.
+     * Resets the main components of this player
      */
-    activate: function () {
-      // Do nothing
+    reset: function () {
+      this.removeActivity();
+      this.setSkin(this.defaultSkin);
+      this.history.clearHistory();
+      this.setMsg(null);
+      this.setCounterValue('score', 0);
+      this.setCounterValue('actions', 0);
+      this.setCounterValue('time', 0);      
     },
     /**
      * 
@@ -914,7 +919,7 @@ define([
       if (ab) {
         ab.clear();
         this.skin.invalidate(ab).update();
-        ab.setContent(abc ? abc : ActiveBoxContent.prototype.EMPTY_CONTENT);
+        ab.setContent(abc ? abc : ActiveBoxContent.EMPTY_CONTENT);
         // TODO: Move this method to Skin
         this.skin.invalidate(ab).update();
         ab.playMedia(this);
