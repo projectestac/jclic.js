@@ -2,6 +2,7 @@
 #### Improvements
 - Skin and player windows fully styled with CSS
 - Updated skin names. Expressions like '@___.xml' are no longer needed (but still supported)
+- Added a `reset` method to `JClicPlayer`
 
 #### Bug fixes
 - Set color and size for _close_ icon

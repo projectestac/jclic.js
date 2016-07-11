@@ -270,7 +270,7 @@ define([
       this.setMsg(null);
       this.setCounterValue('score', 0);
       this.setCounterValue('actions', 0);
-      this.setCounterValue('time', 0);      
+      this.setCounterValue('time', 0);
     },
     /**
      * 
