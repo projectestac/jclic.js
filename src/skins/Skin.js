@@ -383,7 +383,7 @@ define([
      * 
      * Sets/unsets the 'wait' state
      * @param {boolean} status - Whether to set or unset the wait status. When `undefined`, the
-     * `waitCursorCount`member is evaluated to decide if the wait state should be activated or deactivated.
+     * `waitCursorCount` member is evaluated to decide if the wait state should be activated or deactivated.
      */
     setWaitCursor: function (status) {
       if (typeof status === 'undefined') {
@@ -392,10 +392,18 @@ define([
             display: this.waitCursorCount > 0 ? 'initial' : 'none'
           });
       } else {
-        if (status)
-          this.waitCursorCount++;
-        else if (--this.waitCursorCount < 0)
-          this.waitCursorCount = 0;
+        switch(status){
+          case true:
+            this.waitCursorCount++;
+            break;
+          case false:
+            if (--this.waitCursorCount < 0)
+              this.waitCursorCount = 0;
+            break;
+          case 'reset':
+            this.waitCursorCount = 0;
+            break;
+        }
         this.setWaitCursor();
       }
     },

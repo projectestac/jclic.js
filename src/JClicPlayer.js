@@ -271,6 +271,8 @@ define([
       this.setCounterValue('score', 0);
       this.setCounterValue('actions', 0);
       this.setCounterValue('time', 0);
+      if(this.skin)
+        this.skin.setWaitCursor('reset');
     },
     /**
      * 
