@@ -149,7 +149,7 @@ define([
      * @type {Skin} */
     skin: null,
     /**
-     * The default Skin to use if none specified
+     * The default Skin to be used if none specified
      * @type {Skin} */
     defaultSkin: null,
     /**
@@ -265,8 +265,10 @@ define([
      */
     reset: function () {
       this.removeActivity();
-      this.setSkin(this.defaultSkin);
+      this.setProject(null);
+      this.activeMediaBag = new ActiveMediaBag();
       this.history.clearHistory();
+      this.setSkin(null);
       this.setMsg(null);
       this.setCounterValue('score', 0);
       this.setCounterValue('actions', 0);
@@ -381,7 +383,7 @@ define([
      */
     setSkin: function (newSkin) {
       if (!newSkin)
-        newSkin = this.defaultSkin;
+        newSkin = (this.project && this.project.skin) ? this.project.skin : this.defaultSkin;
 
       if (newSkin !== null && newSkin !== this.skin) {
         newSkin.attach(this);
@@ -402,8 +404,6 @@ define([
       }
       this.project = (project !== null ? project : new JClicProject());
       this.project.realize(this);
-      if (this.project.skin !== null)
-        this.defaultSkin = this.project.skin;
     },
     /**
      * 

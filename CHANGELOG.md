@@ -1,3 +1,7 @@
+### v0.1.31 (not yet released)
+#### Bug fixes
+- Apply `JClicPlayer.defaultSkin` only when `JClicProject.skin` not specified
+
 ### v0.1.30 (2016-07-11)
 #### Improvements
 - Skin and player windows fully styled with CSS
