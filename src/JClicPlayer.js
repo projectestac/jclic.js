@@ -558,7 +558,7 @@ define([
 
         // start reporter session
         if (this.reporter !== null)
-          this.reporter.newSession(project.name, this);
+          this.reporter.newSession(project);
 
       }
 

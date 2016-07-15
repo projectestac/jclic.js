@@ -322,17 +322,20 @@ define([
           $html.doubleCell(this.ps.getMsg('Reports system:'), this.ps.getMsg(this.descriptionKey) + ' ' + this.descriptionDetail));
       if (this.userId)
         $t.append($html.doubleCell(this.ps.getMsg('User:'), this.userId));
-
-      var numSessions = 0, numSequences = 0, nActivities = 0, nActSolved = 0, nActScore = 0, nActions = 0,
-          percentSolved = 0, tScore = 0, tTime = 0;
+      
+      // TODO: Save results in a Reporter.Info object
+      var numSessions = 0, numSequences = 0, nActivities = 0, reportableActs = 0, nActSolved = 0, nActPlayed = 0,
+          nActScore = 0, nActions = 0, percentSolved = 0, percentPlayed = 0, tScore = 0, tTime = 0, completionScore = 0;
 
       for (var p = 0; p < this.sessions.length; p++) {
         var inf = this.sessions[p].getInfo(true);
+        reportableActs += inf.sReg.reportableActs;
         if (inf.numSequences > 0) {
           numSessions++;
           numSequences += inf.numSequences;
           if (inf.nActivities > 0) {
             nActivities += inf.nActivities;
+            nActPlayed += inf.sReg.actNames.length;
             nActSolved += inf.nActSolved;
             nActions += inf.nActions;
             if (inf.nActScore > 0) {
@@ -343,6 +346,8 @@ define([
           }
         }
       }
+      
+      // TODO: Calc completion
 
       if (numSequences > 0) {
         if (numSessions > 1)
@@ -430,8 +435,7 @@ define([
     /**
      * 
      * This method should be invoked when a new session starts.
-     * @param {JClicProject|string} jcp - The {@link JClicProject} referenced by this session, or
-     * just its name.
+     * @param {JClicProject} jcp - The {@link JClicProject} this session refers to.
      */
     newSession: function (jcp) {
       this.endSession();

@@ -259,9 +259,7 @@ define([
     },
     /**
      * This method should be invoked when a new session starts.
-     * @param {JClicProject|string} jcp - The {@link JClicProject} referenced by this session, or
-     * just its name.
-     * @returns {external:Promise}
+     * @param {JClicProject} jcp - The {@link JClicProject} this session refers to.
      */
     newSession: function (jcp) {
       Reporter.prototype.newSession.call(this, jcp);

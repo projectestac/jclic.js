@@ -75,6 +75,11 @@ define([
      * @type {external:jQuery[]} */
     _activities: null,
     /**
+     * Number of activitities suitable to be included reports
+     * @type {number}
+     */
+    reportableActs: 0,
+    /**
      * The collection of all media elements used in this project
      * @type {MediaBag} */
     mediaBag: null,
@@ -120,12 +125,16 @@ define([
       this.settings.setProperties($xml.children('settings'));
       this.activitySequence.setProperties($xml.children('sequence'));
       this.mediaBag.setProperties($xml.children('mediaBag'));
+      this.reportableActs = 0;
+      this._activities = {};
       var prj = this;
       var $node = $xml.children('activities');
       var $acts = $node.children('activity');
       AWT.Font.checkTree($acts, options);
       $acts.each(function () {
         prj._activities[Utils.nSlash($(this).attr('name'))] = $(this);
+        if($(this).children('settings').attr('report') === 'true')
+          prj.reportableActs++;
       });
       return this;
     },

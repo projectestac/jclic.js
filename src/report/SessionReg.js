@@ -24,23 +24,35 @@ define([
    * It's main component is `sequences`, an array of {@link SequenceReg} objects.
    * @exports SessionReg
    * @class
-   * @param {JClicProject|string} project - The JClicProject referenced by this session, or just its name.
+   * @param {JClicProject} project - The JClicProject referenced by this session.
    * @param {string=} code - Optional code to be used by this SessionReg
    */
   var SessionReg = function (project, code) {
-    this.projectName = project instanceof JClicProject ? project.getName() : project;
-    this.code = project instanceof JClicProject ? project.code : code ? code : null;
+    this.projectName = project.name;
+    this.code = code ? code : project.code;
     this.sequences = [];
+    this.actNames = [];
     this.started = new Date();
     this.info = new SessionReg.Info(this);
+    this.reportableActs = project.reportableActs;
   };
 
   SessionReg.prototype = {
     constructor: SessionReg,
     /**
+     * Number of activities suitable to be reported in this session
+     * @type {number}
+     */
+    reportableActs: 0,
+    /**
+     * Array with unique names of the activities being reported in this session
+     * @type {string[]}
+     */
+    actNames: null,
+    /**
      * List of sequences done in this session
      * @type {SequenceReg[]} */
-    sequences: [],
+    sequences: null,
     /**
      * The sequence currently active
      * @type {SequenceReg} */
@@ -146,8 +158,12 @@ define([
      * @param {Activity} act - The {@link Activity} that has just started
      */
     newActivity: function (act) {
-      if (this.currentSequence)
+      if (this.currentSequence) {
+        // Save activity name if not yet registered
+        if (this.actNames.indexOf(act.name) === -1)
+          this.actNames.push(act.name);
         this.currentSequence.newActivity(act);
+      }
     },
     /**
      * This method should be called when the current activity finishes. Data about user's final results
@@ -220,6 +236,10 @@ define([
      * @type {number} */
     percentSolved: 0,
     /**
+     * Percentage of reportable activities played
+     * @type {number} */
+    percentPlayed: 0,
+    /**
      * Number of actions done by the user while in this working session
      * @type {number} */
     nActions: 0,
@@ -236,7 +256,7 @@ define([
      */
     clear: function () {
       this.numSequences = this.nActivities = this.nActSolved = this.nActScore = 0;
-      this.percentSolved = this.nActions = this.tScore = this.tTime = 0;
+      this.percentSolved = this.percentPlayed = this.nActions = this.tScore = this.tTime = 0;
     },
     /**
      * Computes the value of all global variables based on the data stored in `sequences`
@@ -261,8 +281,11 @@ define([
       }
       if (this.nActScore > 0)
         this.tScore = Math.round(this.tScore / this.nActScore);
-      if (this.nActivities > 0)
+      if (this.nActivities > 0){
         this.percentSolved = Math.round((this.nActSolved * 100) / this.nActivities);
+        if(this.sReg.reportableActs > 0)
+          this.percentPlayed = Math.round((this.sReg.actNames.length * 100) / this.sReg.reportableActs);
+      }
     }
   };
 
