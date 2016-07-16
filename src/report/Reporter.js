@@ -36,10 +36,16 @@ define([
     this.sessions = [];
     this.started = new Date();
     this.initiated = false;
+    this.info = new Reporter.Info(this);
   };
 
   Reporter.prototype = {
     constructor: Reporter,
+    /**
+     * The {@link Reporter.Info} used to calc and store global results.
+     * @type {Reporter.Info}
+     */
+    info: null,
     /**
      * The {@link PlayStation} used to retrieve messages
      * @type {PlayStation} */
@@ -97,6 +103,16 @@ define([
      * Maximum number of incorrect UserID attempts
      * @type {number} */
     MAX_USERID_PROMPT_ATTEMPTS: 3,
+    /**
+     * Returns the `info` element associated to this Reporter.
+     * @param {boolean} recalc - When `true`, global variables will be recalculated.
+     * @returns {Reporter.Info}
+     */
+    getInfo: function (recalc) {
+      if (recalc)
+        this.info.recalc();
+      return this.info;
+    },
     /**
      * 
      * Gets a specific property from this reporting system
@@ -311,6 +327,8 @@ define([
      * @returns {external:jQuery} - A jQuery object with a `div` element containing the full report.
      */
     $print: function () {
+      this.info.recalc();
+
       var $html = Utils.$HTML;
       var result = [];
 
@@ -322,45 +340,18 @@ define([
           $html.doubleCell(this.ps.getMsg('Reports system:'), this.ps.getMsg(this.descriptionKey) + ' ' + this.descriptionDetail));
       if (this.userId)
         $t.append($html.doubleCell(this.ps.getMsg('User:'), this.userId));
-      
-      // TODO: Save results in a Reporter.Info object
-      var numSessions = 0, numSequences = 0, nActivities = 0, reportableActs = 0, nActSolved = 0, nActPlayed = 0,
-          nActScore = 0, nActions = 0, percentSolved = 0, percentPlayed = 0, tScore = 0, tTime = 0, completionScore = 0;
 
-      for (var p = 0; p < this.sessions.length; p++) {
-        var inf = this.sessions[p].getInfo(true);
-        reportableActs += inf.sReg.reportableActs;
-        if (inf.numSequences > 0) {
-          numSessions++;
-          numSequences += inf.numSequences;
-          if (inf.nActivities > 0) {
-            nActivities += inf.nActivities;
-            nActPlayed += inf.sReg.actNames.length;
-            nActSolved += inf.nActSolved;
-            nActions += inf.nActions;
-            if (inf.nActScore > 0) {
-              tScore += (inf.tScore * inf.nActScore);
-              nActScore += inf.nActScore;
-            }
-            tTime += inf.tTime;
-          }
-        }
-      }
-      
-      // TODO: Calc completion
-
-      if (numSequences > 0) {
-        if (numSessions > 1)
-          $t.append($html.doubleCell(this.ps.getMsg('Projects:'), numSessions));
-        $t.append($html.doubleCell(this.ps.getMsg('Sequences:'), numSequences),
-            $html.doubleCell(this.ps.getMsg('Activities done:'), nActivities));
-        if (nActivities > 0) {
-          percentSolved = nActSolved / nActivities;
-          $t.append($html.doubleCell(this.ps.getMsg('Activities solved:'), nActSolved + " (" + Utils.getPercent(percentSolved) + ")"));
-          if (nActScore > 0)
-            $t.append($html.doubleCell(this.ps.getMsg('Global score:'), Utils.getPercent(tScore / (nActScore * 100))));
-          $t.append($html.doubleCell(this.ps.getMsg('Total time in activities:'), Utils.getHMStime(tTime)),
-              $html.doubleCell(this.ps.getMsg('Actions done:'), nActions));
+      if (this.info.numSequences > 0) {
+        if (this.info.numSessions > 1)
+          $t.append($html.doubleCell(this.ps.getMsg('Projects:'), this.info.numSessions));
+        $t.append($html.doubleCell(this.ps.getMsg('Sequences:'), this.info.numSequences),
+            $html.doubleCell(this.ps.getMsg('Activities done:'), this.info.nActivities));
+        if (this.info.nActivities > 0) {
+          $t.append($html.doubleCell(this.ps.getMsg('Activities solved:'), this.info.nActSolved + " (" + Utils.getPercent(this.info.percentSolved) + ")"));
+          if (this.info.nActScore > 0)
+            $t.append($html.doubleCell(this.ps.getMsg('Global score:'), Utils.getPercent(this.info.globalScore)));
+          $t.append($html.doubleCell(this.ps.getMsg('Total time in activities:'), Utils.getHMStime(this.info.tTime)),
+              $html.doubleCell(this.ps.getMsg('Actions done:'), this.info.nActions));
         }
 
         result.push($t);
@@ -368,7 +359,7 @@ define([
         for (var n = 0; n < this.sessions.length; n++) {
           var sr = this.sessions[n];
           if (sr.getInfo(false).numSequences > 0)
-            result = result.concat(sr.$print(this.ps, false, numSessions > 1));
+            result = result.concat(sr.$print(this.ps, false, this.info.numSessions > 1));
         }
       } else
         result.push($('<p/>').html(this.ps.getMsg('No activities done!')));
@@ -501,6 +492,123 @@ define([
       return this.currentSession === null ? null : this.currentSession.getCurrentSequenceTag();
     }
   };
+
+  /**
+   * This object stores the global results of a {@link Reporter}
+   * @class
+   * @param {Reporter} rep - The {@link Reporter} associated tho this `Info` object.
+   */
+  Reporter.Info = function (rep) {
+    this.rep = rep;
+  };
+
+  Reporter.Info.prototype = {
+    constructor: Reporter.Info,
+    /**
+     * The Reporter linked to this Info object
+     * @type {Reporter}
+     */
+    rep: null,
+    /**
+     * Number of sessions registered
+     * @type {number} */
+    numSessions: 0,
+    /**
+     * Number of sequences played
+     * @type {number} */
+    numSequences: 0,
+    /**
+     * Number of activities played
+     * @type {number} */
+    nActivities: 0,
+    /**
+     * Number of activities in existing in the played projects suitable to be reported
+     * @type {number} */
+    reportableActs: 0,
+    /**
+     * Number of activities solved
+     * @type {number} */
+    nActSolved: 0,
+    /**
+     * Number of different activities played
+     * @type {number} */
+    nActPlayed: 0,
+    /**
+     * Global score obtained in all sessions registered by this reporter
+     * @type {number} */
+    nActScore: 0,
+    /**
+     * Number of actions done by the user while in this working session
+     * @type {number} */
+    nActions: 0,
+    /**
+     * Percentage of solved activities
+     * @type {number} */
+    percentSolved: 0,
+    /**
+     * Percentage of reportable activities played
+     * @type {number} */
+    percentPlayed: 0,
+    /**
+     * Sum of the scores of all the activities played
+     * @type {number} */
+    tScore: 0,
+    /**
+     * Global score obtained
+     * @type {number} */
+    globalScore: 0,
+    /**
+     * Sum of the playing time reported by each activity (not always equals to the sum of all session's time)
+     * @type {number} */
+    tTime: 0,
+    /**
+     * Final score based on the percent of reportable activities played. If the user plays all the
+     * activities, this result equals to `globalScore`.
+     */
+    completionScore: 0,
+    /**
+     * Clears all data associated with this Reporter.Info
+     */
+    clear: function () {
+      this.numSessions = this.numSequences = this.nActivities = this.reportableActs = this.nActSolved = this.nActPlayed = 0;
+      this.nActScore = this.nActions = this.percentSolved = this.percentPlayed = this.tScore = this.tTime = this.globalScore = this.completionScore;
+    },
+    /**
+     * Computes the value of all global variables based on the data stored in `sessions`
+     */
+    recalc: function () {
+      this.clear();
+
+      for (var p = 0; p < this.rep.sessions.length; p++) {
+        var inf = this.rep.sessions[p].getInfo(true);
+        this.reportableActs += inf.sReg.reportableActs;
+        if (inf.numSequences > 0) {
+          this.numSessions++;
+          this.numSequences += inf.numSequences;
+          if (inf.nActivities > 0) {
+            this.nActivities += inf.nActivities;
+            this.nActPlayed += inf.sReg.actNames.length;
+            this.nActSolved += inf.nActSolved;
+            this.nActions += inf.nActions;
+            if (inf.nActScore > 0) {
+              this.tScore += (inf.tScore * inf.nActScore);
+              this.nActScore += inf.nActScore;
+            }
+            this.tTime += inf.tTime;
+          }
+        }
+      }
+
+      if (this.nActivities > 0) {
+        this.percentSolved = this.nActSolved / this.nActivities;
+        if (this.reportableActs > 0)
+          this.percentPlayed = this.nActPlayed / this.reportableActs;
+        this.globalScore = this.tScore / (this.nActScore * 100);
+        this.completionScore = this.globalScore * this.percentPlayed;
+      }
+    }
+  };
+
 
   /** 
    * Static list of classes derived from Reporter. It should be filled by Reporter classes at declaration time.

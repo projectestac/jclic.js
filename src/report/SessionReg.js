@@ -213,8 +213,12 @@ define([
   };
 
   SessionReg.Info.prototype = {
-    sReg: null,
     constructor: SessionReg.Info,
+    /**
+     * The SessionReg linked to this Info object
+     * @type {SessionReg}
+     */
+    sReg: null,
     /**
      * Number of sequences played
      * @type {number} */
