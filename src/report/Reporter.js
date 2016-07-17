@@ -336,22 +336,46 @@ define([
 
       var $t = $('<table/>', {class: 'JCGlobalResults'});
       $t.append(
-          $html.doubleCell(this.ps.getMsg('Session started:'), this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
-          $html.doubleCell(this.ps.getMsg('Reports system:'), this.ps.getMsg(this.descriptionKey) + ' ' + this.descriptionDetail));
+          $html.doubleCell(
+              this.ps.getMsg('Session started:'),
+              this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
+          $html.doubleCell(
+              this.ps.getMsg('Reports system:'),
+              this.ps.getMsg(this.descriptionKey) + ' ' + this.descriptionDetail));
       if (this.userId)
-        $t.append($html.doubleCell(this.ps.getMsg('User:'), this.userId));
+        $t.append($html.doubleCell(
+            this.ps.getMsg('User:'),
+            this.userId));
 
       if (this.info.numSequences > 0) {
         if (this.info.numSessions > 1)
-          $t.append($html.doubleCell(this.ps.getMsg('Projects:'), this.info.numSessions));
-        $t.append($html.doubleCell(this.ps.getMsg('Sequences:'), this.info.numSequences),
-            $html.doubleCell(this.ps.getMsg('Activities done:'), this.info.nActivities));
+          $t.append($html.doubleCell(
+              this.ps.getMsg('Projects:'),
+              this.info.numSessions));
+        $t.append($html.doubleCell(
+            this.ps.getMsg('Sequences:'),
+            this.info.numSequences),
+            $html.doubleCell(
+                this.ps.getMsg('Activities done:'),
+                this.info.nActivities + '/' + this.info.reportableActs + " (" + Utils.getPercent(this.info.percentPlayed) + ")"));
         if (this.info.nActivities > 0) {
-          $t.append($html.doubleCell(this.ps.getMsg('Activities solved:'), this.info.nActSolved + " (" + Utils.getPercent(this.info.percentSolved) + ")"));
-          if (this.info.nActScore > 0)
-            $t.append($html.doubleCell(this.ps.getMsg('Global score:'), Utils.getPercent(this.info.globalScore)));
-          $t.append($html.doubleCell(this.ps.getMsg('Total time in activities:'), Utils.getHMStime(this.info.tTime)),
-              $html.doubleCell(this.ps.getMsg('Actions done:'), this.info.nActions));
+          $t.append($html.doubleCell(
+              this.ps.getMsg('Activities solved:'),
+              this.info.nActSolved + " (" + Utils.getPercent(this.info.percentSolved) + ")"));
+          if (this.info.nActScore > 0) {
+            $t.append($html.doubleCell(
+                this.ps.getMsg('Global score:'),
+                Utils.getPercent(this.info.globalScore)));
+            $t.append($html.doubleCell(
+                this.ps.getMsg('Completion score:'),
+                Utils.getPercent(this.info.completionScore)));
+          }
+          $t.append($html.doubleCell(
+              this.ps.getMsg('Total time in activities:'),
+              Utils.getHMStime(this.info.tTime)),
+              $html.doubleCell(
+                  this.ps.getMsg('Actions done:'),
+                  this.info.nActions));
         }
 
         result.push($t);
@@ -570,8 +594,9 @@ define([
      * Clears all data associated with this Reporter.Info
      */
     clear: function () {
-      this.numSessions = this.numSequences = this.nActivities = this.reportableActs = this.nActSolved = this.nActPlayed = 0;
-      this.nActScore = this.nActions = this.percentSolved = this.percentPlayed = this.tScore = this.tTime = this.globalScore = this.completionScore;
+      this.numSessions = this.numSequences = this.nActivities = this.reportableActs = this.nActSolved =
+          this.nActPlayed = this.nActScore = this.nActions = this.percentSolved = this.percentPlayed =
+          this.tScore = this.tTime = this.globalScore = this.completionScore = 0;
     },
     /**
      * Computes the value of all global variables based on the data stored in `sessions`
