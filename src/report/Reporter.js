@@ -19,8 +19,9 @@ define([
   "jquery",
   "./SessionReg",
   "./EncryptMin",
+  "./SCORM",
   "../Utils"
-], function ($, SessionReg, Encryption, Utils) {
+], function ($, SessionReg, Encryption, Scorm, Utils) {
 
   /**
    * This class implements the basic operations related with the processing of times and scores
@@ -37,6 +38,7 @@ define([
     this.started = new Date();
     this.initiated = false;
     this.info = new Reporter.Info(this);
+    this.SCORM = Scorm.getSCORM();
   };
 
   Reporter.prototype = {
@@ -50,6 +52,10 @@ define([
      * The {@link PlayStation} used to retrieve messages
      * @type {PlayStation} */
     ps: null,
+    /**
+     * A valid SCORM bridge, or `null` if no SCORM API detected.
+     */
+    SCORM: null,
     /**
      * User ID currently associated with this reporting system
      * @type {string} */
@@ -105,13 +111,10 @@ define([
     MAX_USERID_PROMPT_ATTEMPTS: 3,
     /**
      * Returns the `info` element associated to this Reporter.
-     * @param {boolean} recalc - When `true`, global variables will be recalculated.
      * @returns {Reporter.Info}
      */
-    getInfo: function (recalc) {
-      if (recalc)
-        this.info.recalc();
-      return this.info;
+    getInfo: function () {
+      return this.info.recalc();
     },
     /**
      * 
@@ -347,6 +350,11 @@ define([
             this.ps.getMsg('User:'),
             this.userId));
 
+      if (this.SCORM)
+        $t.append($html.doubleCell(
+            this.ps.getMsg('Reporting SCORM results for:'),
+            this.SCORM.studentName + this.SCORM.studentId === '' ? '' : ' (' + this.SCORM.studentId + ')'));
+
       if (this.info.numSequences > 0) {
         if (this.info.numSessions > 1)
           $t.append($html.doubleCell(
@@ -368,10 +376,10 @@ define([
           if (this.info.nActScore > 0) {
             $t.append($html.doubleCell(
                 this.ps.getMsg('Partial score:'),
-                Utils.getPercent(this.info.globalScore)));
+                Utils.getPercent(this.info.partialScore)));
             $t.append($html.doubleCell(
                 this.ps.getMsg('Global score:'),
-                Utils.getPercent(this.info.completionScore)));
+                Utils.getPercent(this.info.globalScore)));
           }
           $t.append($html.doubleCell(
               this.ps.getMsg('Total time in activities:'),
@@ -385,7 +393,7 @@ define([
 
         for (var n = 0; n < this.sessions.length; n++) {
           var sr = this.sessions[n];
-          if (sr.getInfo(false).numSequences > 0)
+          if (sr.getInfo().numSequences > 0)
             result = result.concat(sr.$print(this.ps, false, this.info.numSessions > 1));
         }
       } else
@@ -423,8 +431,12 @@ define([
      * Finalizes the current sequence
      */
     endSequence: function () {
-      if (this.currentSession)
+      if (this.currentSession) {
         this.currentSession.endSequence();
+        this.info.valid = false;
+        if(this.SCORM)
+          this.SCORM.commitInfo();
+      }
     },
     /**
      * 
@@ -459,6 +471,7 @@ define([
       this.endSession();
       this.currentSession = new SessionReg(jcp);
       this.sessions.push(this.currentSession);
+      this.info.valid = false;
     },
     /**
      * 
@@ -466,8 +479,10 @@ define([
      * @param {ActivitySequenceElement} ase - The {@link ActivitySequenceElement} referenced by this sequence.
      */
     newSequence: function (ase) {
-      if (this.currentSession)
+      if (this.currentSession) {
         this.currentSession.newSequence(ase);
+        this.info.valid = false;
+      }
     },
     /**
      * 
@@ -475,8 +490,10 @@ define([
      * @param {Activity} act - The {@link Activity} reporter has just started
      */
     newActivity: function (act) {
-      if (this.currentSession)
+      if (this.currentSession) {
         this.currentSession.newActivity(act);
+        this.info.valid = false;
+      }
     },
     /**
      * 
@@ -487,8 +504,10 @@ define([
      * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
      */
     endActivity: function (score, numActions, solved) {
-      if (this.currentSession)
+      if (this.currentSession) {
         this.currentSession.endActivity(score, numActions, solved);
+        this.info.valid = false;
+      }
     },
     /**
      * 
@@ -499,8 +518,10 @@ define([
      * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwhise
      */
     newAction: function (type, source, dest, ok) {
-      if (this.currentSession)
+      if (this.currentSession) {
         this.currentSession.newAction(type, source, dest, ok);
+        this.info.valid = false;
+      }
     },
     /**
      * 
@@ -536,6 +557,10 @@ define([
      * @type {Reporter}
      */
     rep: null,
+    /**
+     * When `false`, data must be recalculated
+     * @type {boolean} */
+    valid: false,
     /**
      * Number of sessions registered
      * @type {number} */
@@ -583,57 +608,61 @@ define([
     /**
      * Global score obtained
      * @type {number} */
-    globalScore: 0,
+    partialScore: 0,
     /**
      * Sum of the playing time reported by each activity (not always equals to the sum of all session's time)
      * @type {number} */
     tTime: 0,
     /**
      * Final score based on the percent of reportable activities played. If the user plays all the
-     * activities, this result equals to `globalScore`.
+     * activities, this result equals to `partialScore`.
      */
-    completionScore: 0,
+    globalScore: 0,
     /**
      * Clears all data associated with this Reporter.Info
      */
     clear: function () {
       this.numSessions = this.numSequences = this.nActivities = this.reportableActs = this.nActSolved =
           this.nActPlayed = this.nActScore = this.nActions = this.ratioSolved = this.ratioPlayed =
-          this.tScore = this.tTime = this.globalScore = this.completionScore = 0;
+          this.tScore = this.tTime = this.partialScore = this.globalScore = 0;
+      this.valid = false;
     },
     /**
      * Computes the value of all global variables based on the data stored in `sessions`
+     * @returns {Reporter.Info} - This "info" object
      */
     recalc: function () {
-      this.clear();
-
-      for (var p = 0; p < this.rep.sessions.length; p++) {
-        var inf = this.rep.sessions[p].getInfo(true);
-        this.reportableActs += inf.sReg.reportableActs;
-        if (inf.numSequences > 0) {
-          this.numSessions++;
-          this.numSequences += inf.numSequences;
-          if (inf.nActivities > 0) {
-            this.nActivities += inf.nActivities;
-            this.nActPlayed += inf.sReg.actNames.length;
-            this.nActSolved += inf.nActSolved;
-            this.nActions += inf.nActions;
-            if (inf.nActScore > 0) {
-              this.tScore += (inf.tScore * inf.nActScore);
-              this.nActScore += inf.nActScore;
+      if (!this.valid) {
+        this.clear();
+        for (var p = 0; p < this.rep.sessions.length; p++) {
+          var inf = this.rep.sessions[p].getInfo();
+          this.reportableActs += inf.sReg.reportableActs;
+          if (inf.numSequences > 0) {
+            this.numSessions++;
+            this.numSequences += inf.numSequences;
+            if (inf.nActivities > 0) {
+              this.nActivities += inf.nActivities;
+              this.nActPlayed += inf.sReg.actNames.length;
+              this.nActSolved += inf.nActSolved;
+              this.nActions += inf.nActions;
+              if (inf.nActScore > 0) {
+                this.tScore += (inf.tScore * inf.nActScore);
+                this.nActScore += inf.nActScore;
+              }
+              this.tTime += inf.tTime;
             }
-            this.tTime += inf.tTime;
           }
         }
+        if (this.nActivities > 0) {
+          this.ratioSolved = this.nActSolved / this.nActivities;
+          if (this.reportableActs > 0)
+            this.ratioPlayed = this.nActPlayed / this.reportableActs;
+          this.partialScore = this.tScore / (this.nActScore * 100);
+          this.globalScore = this.partialScore * this.ratioPlayed;
+        }
+        this.valid = true;
       }
-
-      if (this.nActivities > 0) {
-        this.ratioSolved = this.nActSolved / this.nActivities;
-        if (this.reportableActs > 0)
-          this.ratioPlayed = this.nActPlayed / this.reportableActs;
-        this.globalScore = this.tScore / (this.nActScore * 100);
-        this.completionScore = this.globalScore * this.ratioPlayed;
-      }
+      return this;
     }
   };
 

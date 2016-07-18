@@ -188,5 +188,14 @@ msgstr "Usuario incorrecto"
 msgid "Partial score:"
 msgstr "Puntuació parcial:"
 
+# Number of project's activities played at least one time
 msgid "Activities played at least once:"
 msgstr "Actividades hechas al menos una vez:"
+
+# Used in the reporting system when JClic.js is playing inside an SCORM object
+msgid "Reporting SCORM results for:"
+msgstr "Enviando resultados SCORM para:"
+
+~  
+
+

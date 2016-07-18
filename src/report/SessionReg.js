@@ -122,13 +122,10 @@ define([
     },
     /**
      * Returns the `info` element associated to this SessionReg.
-     * @param {boolean} recalc - When `true`, global variables will be recalculated.
      * @returns {SessionReg.Info}
      */
-    getInfo: function (recalc) {
-      if (recalc)
-        this.info.recalc();
-      return this.info;
+    getInfo: function () {
+      return this.info.recalc();
     },
     /**
      * Closes this session
@@ -143,6 +140,7 @@ define([
       if (this.currentSequence && this.currentSequence.totalTime === 0)
         this.currentSequence.endSequence();
       this.currentSequence = null;
+      this.info.valid = false;
     },
     /**
      * This method should be invoked when a new sequence starts
@@ -152,6 +150,7 @@ define([
       this.endSequence();
       this.currentSequence = new SequenceReg(ase);
       this.sequences.push(this.currentSequence);
+      this.info.valid = false;      
     },
     /**
      * This method should be invoked when the user starts a new activity
@@ -163,6 +162,7 @@ define([
         if (this.actNames.indexOf(act.name) === -1)
           this.actNames.push(act.name);
         this.currentSequence.newActivity(act);
+        this.info.valid = false;        
       }
     },
     /**
@@ -173,8 +173,10 @@ define([
      * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
      */
     endActivity: function (score, numActions, solved) {
-      if (this.currentSequence)
+      if (this.currentSequence){
         this.currentSequence.endActivity(score, numActions, solved);
+        this.info.valid = false;
+      }
     },
     /**
      * Reports a new action done by the user while playing the current activity
@@ -184,8 +186,10 @@ define([
      * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwhise
      */
     newAction: function (type, source, dest, ok) {
-      if (this.currentSequence)
+      if (this.currentSequence){
         this.currentSequence.newAction(type, source, dest, ok);
+        this.info.valid = false;
+      }
     },
     /**
      * Gets the name of the current sequence
@@ -199,7 +203,7 @@ define([
      * @returns {SequenceReg.Info}
      */
     getCurrentSequenceInfo: function () {
-      return this.currentSequence ? this.currentSequence.getInfo(true) : null;
+      return this.currentSequence ? this.currentSequence.getInfo() : null;
     }
   };
 
@@ -219,6 +223,10 @@ define([
      * @type {SessionReg}
      */
     sReg: null,
+    /**
+     * When `false`, this session info needs to be recalculated
+     * @type {boolean} */
+    valid: false,
     /**
      * Number of sequences played
      * @type {number} */
@@ -261,35 +269,41 @@ define([
     clear: function () {
       this.numSequences = this.nActivities = this.nActSolved = this.nActScore = 0;
       this.ratioSolved = this.ratioPlayed = this.nActions = this.tScore = this.tTime = 0;
+      this.valid = false;
     },
     /**
      * Computes the value of all global variables based on the data stored in `sequences`
+     * @returns {SessionReg.Info} - This "info" object
      */
     recalc: function () {
-      this.clear();
-      for (var p = 0; p < this.sReg.sequences.length; p++) {
-        var sri = this.sReg.sequences[p].getInfo(true);
-        if (sri.nActivities > 0) {
-          this.numSequences++;
-          if (sri.nActClosed > 0) {
-            this.nActivities += sri.nActClosed;
-            this.nActions += sri.nActions;
-            if (sri.nActScore > 0) {
-              this.nActScore += sri.nActScore;
-              this.tScore += (sri.tScore * sri.nActScore);
+      if (!this.valid) {
+        this.clear();
+        for (var p = 0; p < this.sReg.sequences.length; p++) {
+          var sri = this.sReg.sequences[p].getInfo();
+          if (sri.nActivities > 0) {
+            this.numSequences++;
+            if (sri.nActClosed > 0) {
+              this.nActivities += sri.nActClosed;
+              this.nActions += sri.nActions;
+              if (sri.nActScore > 0) {
+                this.nActScore += sri.nActScore;
+                this.tScore += (sri.tScore * sri.nActScore);
+              }
+              this.tTime += sri.tTime;
+              this.nActSolved += sri.nActSolved;
             }
-            this.tTime += sri.tTime;
-            this.nActSolved += sri.nActSolved;
           }
         }
+        if (this.nActScore > 0)
+          this.tScore = Math.round(this.tScore / this.nActScore);
+        if (this.nActivities > 0) {
+          this.ratioSolved = this.nActSolved / this.nActivities;
+          if (this.sReg.reportableActs > 0)
+            this.ratioPlayed = this.sReg.actNames.length / this.sReg.reportableActs;
+        }        
+        this.valid = true;
       }
-      if (this.nActScore > 0)
-        this.tScore = Math.round(this.tScore / this.nActScore);
-      if (this.nActivities > 0) {
-        this.ratioSolved = this.nActSolved / this.nActivities;
-        if (this.sReg.reportableActs > 0)
-          this.ratioPlayed = this.sReg.actNames.length / this.sReg.reportableActs;
-      }
+      return this;
     }
   };
 

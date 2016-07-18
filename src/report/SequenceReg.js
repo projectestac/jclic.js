@@ -82,13 +82,10 @@ define([
     },
     /**
      * Returns the `info` element associated to this SequenceReg.
-     * @param {boolean} recalc - When `true`, global variables will be recalculated.
      * @returns {SequenceReg.Info}
      */
-    getInfo: function (recalc) {
-      if (recalc)
-        this.info.recalc();
-      return this.info;
+    getInfo: function () {
+      return this.info.recalc();
     },
     /**
      * This method should be called when the current working session finishes.
@@ -99,6 +96,7 @@ define([
           this.currentActivity.closeActivity();
         var firstActivity = this.activities[0];
         this.totalTime = this.currentActivity.startTime + this.currentActivity.totalTime - firstActivity.startTime;
+        this.info.valid = false;
       }
     },
     /**
@@ -109,6 +107,7 @@ define([
       if (!this.closed) {
         this.currentActivity = new ActivityReg(act);
         this.activities.push(this.currentActivity);
+        this.info.valid = false;
       }
     },
     /**
@@ -119,8 +118,10 @@ define([
      * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
      */
     endActivity: function (score, numActions, solved) {
-      if (this.currentActivity)
+      if (this.currentActivity) {
         this.currentActivity.endActivity(score, numActions, solved);
+        this.info.valid = false;
+      }
     },
     /**
      * Reports a new action done by the user while playing the current activity
@@ -132,6 +133,7 @@ define([
     newAction: function (type, source, dest, ok) {
       if (this.currentActivity) {
         this.currentActivity.newAction(type, source, dest, ok);
+        this.info.valid = false;
       }
     }
   };
@@ -146,8 +148,15 @@ define([
   };
 
   SequenceReg.Info.prototype = {
-    sqReg: null,
     constructor: SequenceReg.Info,
+    /**
+     * The {@link SequenceReg} associated to this "info" object
+     * @type {SequenceReg} */
+    sqReg: null,
+    /**
+     * When `false`, data must be recalculated
+     * @type {boolean} */
+    valid: false,
     /**
      * Number of activities played in this sequence
      * @type {number} */
@@ -186,37 +195,42 @@ define([
     clear: function () {
       this.nActivities = this.nActClosed = this.nActSolved = this.nActScore = 0;
       this.ratioSolved = this.nActions = this.tScore = this.tTime = 0;
+      this.valid = false;
     },
     /**
      * Computes the value of all global variables based on the data stored in `activities`
+     * @returns {SequenceReg.Info} - This "info" object
      */
     recalc: function () {
-      this.clear();
-      this.nActivities = this.sqReg.activities.length;
-      if (this.nActivities > 0) {
-        for (var p = 0; p < this.nActivities; p++) {
-          var ar = this.sqReg.activities[p];
-          if (ar.closed) {
-            this.nActClosed++;
-            this.tTime += ar.totalTime;
-            this.nActions += ar.numActions;
-            if (ar.solved)
-              this.nActSolved++;
-            var r = ar.getPrecision();
-            if (r >= 0) {
-              this.tScore += r;
-              this.nActScore++;
+      if (!this.valid) {
+        this.clear();
+        this.nActivities = this.sqReg.activities.length;
+        if (this.nActivities > 0) {
+          for (var p = 0; p < this.nActivities; p++) {
+            var ar = this.sqReg.activities[p];
+            if (ar.closed) {
+              this.nActClosed++;
+              this.tTime += ar.totalTime;
+              this.nActions += ar.numActions;
+              if (ar.solved)
+                this.nActSolved++;
+              var r = ar.getPrecision();
+              if (r >= 0) {
+                this.tScore += r;
+                this.nActScore++;
+              }
             }
           }
+          if (this.nActClosed > 0)
+            this.ratioSolved = this.nActSolved / this.nActClosed;
+          if (this.nActScore > 0)
+            this.tScore = Math.round(this.tScore / this.nActScore);
         }
-        if (this.nActClosed > 0)
-          this.ratioSolved = this.nActSolved / this.nActClosed;
-        if (this.nActScore > 0)
-          this.tScore = Math.round(this.tScore / this.nActScore);
+        this.valid = true;
       }
+      return this;
     }
   };
 
   return SequenceReg;
-
 });
