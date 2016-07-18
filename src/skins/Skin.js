@@ -565,11 +565,11 @@ define([
 .SKINID .dlgMainPanel input {margin-left:1em; font-size:1.2em; font-family:Roboto,sans-serif; border-color:lightgray;}\
 .SKINID .infoHead {padding:1em 0em 0.5em;}\
 .SKINID .JCGlobalResults td {padding:0.4em; border-bottom:1px solid #b6b6b6;}\
-.SKINID .JCGlobalResults td:first-child {font-weight:600; width:11em;}\
+.SKINID .JCGlobalResults td:first-child {font-weight:600; width:14em;}\
 .SKINID .JCDetailed td,th {border-bottom:1px solid #b6b6b6; padding:0.3em 0.4em; vertical-align:top; text-align:center; overflow:hidden; text-overflow:ellipsis;}\
 .SKINID .JCDetailed thead {font-weight:600;}\
-.SKINID .JCDetailed th:first-child {width:8em;}\
-.SKINID .JCDetailed th:nth-last-child(4) {width:3em;}\
+.SKINID .JCDetailed th:first-child {width:7em;}\
+.SKINID .JCDetailed th:nth-last-child(4) {width:4em;}\
 .SKINID .JCDetailed th:nth-last-child(-n+3) {width:4.1em; text-align:right;}\
 .SKINID .JCDetailed td:nth-last-child(-n+3) {text-align:right;}\
 .SKINID .JCDetailed .ok {color:#4bae4f; font-weight:600;}\

@@ -357,17 +357,20 @@ define([
             this.info.numSequences),
             $html.doubleCell(
                 this.ps.getMsg('Activities done:'),
-                this.info.nActivities + '/' + this.info.reportableActs + " (" + Utils.getPercent(this.info.percentPlayed) + ")"));
+                this.info.nActivities));
+        $t.append($html.doubleCell(
+            this.ps.getMsg('Activities played at least once:'),
+            this.info.nActPlayed + '/' + this.info.reportableActs + " (" + Utils.getPercent(this.info.ratioPlayed) + ")"));
         if (this.info.nActivities > 0) {
           $t.append($html.doubleCell(
               this.ps.getMsg('Activities solved:'),
-              this.info.nActSolved + " (" + Utils.getPercent(this.info.percentSolved) + ")"));
+              this.info.nActSolved + " (" + Utils.getPercent(this.info.ratioSolved) + ")"));
           if (this.info.nActScore > 0) {
             $t.append($html.doubleCell(
-                this.ps.getMsg('Global score:'),
+                this.ps.getMsg('Partial score:'),
                 Utils.getPercent(this.info.globalScore)));
             $t.append($html.doubleCell(
-                this.ps.getMsg('Completion score:'),
+                this.ps.getMsg('Global score:'),
                 Utils.getPercent(this.info.completionScore)));
           }
           $t.append($html.doubleCell(
@@ -568,11 +571,11 @@ define([
     /**
      * Percentage of solved activities
      * @type {number} */
-    percentSolved: 0,
+    ratioSolved: 0,
     /**
      * Percentage of reportable activities played
      * @type {number} */
-    percentPlayed: 0,
+    ratioPlayed: 0,
     /**
      * Sum of the scores of all the activities played
      * @type {number} */
@@ -595,7 +598,7 @@ define([
      */
     clear: function () {
       this.numSessions = this.numSequences = this.nActivities = this.reportableActs = this.nActSolved =
-          this.nActPlayed = this.nActScore = this.nActions = this.percentSolved = this.percentPlayed =
+          this.nActPlayed = this.nActScore = this.nActions = this.ratioSolved = this.ratioPlayed =
           this.tScore = this.tTime = this.globalScore = this.completionScore = 0;
     },
     /**
@@ -625,11 +628,11 @@ define([
       }
 
       if (this.nActivities > 0) {
-        this.percentSolved = this.nActSolved / this.nActivities;
+        this.ratioSolved = this.nActSolved / this.nActivities;
         if (this.reportableActs > 0)
-          this.percentPlayed = this.nActPlayed / this.reportableActs;
+          this.ratioPlayed = this.nActPlayed / this.reportableActs;
         this.globalScore = this.tScore / (this.nActScore * 100);
-        this.completionScore = this.globalScore * this.percentPlayed;
+        this.completionScore = this.globalScore * this.ratioPlayed;
       }
     }
   };

@@ -175,3 +175,10 @@ msgstr ""
 # Error displayed when the user ID does not exist
 msgid "Invalid user"
 msgstr ""
+
+# Score average obtained in the activities already played
+msgid "Partial score:"
+msgstr ""
+
+msgid "Activities played at least once:"
+msgstr ""

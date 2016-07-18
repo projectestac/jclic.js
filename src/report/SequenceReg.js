@@ -161,13 +161,13 @@ define([
      * @type {number} */
     nActSolved: 0,
     /**
-     * Global score obtained in this sequence
+     * Number of activities with score > 0
      * @type {number} */
     nActScore: 0,
     /**
      * Percentage of solved activities
      * @type {number} */
-    percentSolved: 0,
+    ratioSolved: 0,
     /**
      * Number of actions done by the user while in this sequence
      * @type {number} */
@@ -185,7 +185,7 @@ define([
      */
     clear: function () {
       this.nActivities = this.nActClosed = this.nActSolved = this.nActScore = 0;
-      this.percentSolved = this.nActions = this.tScore = this.tTime = 0;
+      this.ratioSolved = this.nActions = this.tScore = this.tTime = 0;
     },
     /**
      * Computes the value of all global variables based on the data stored in `activities`
@@ -210,7 +210,7 @@ define([
           }
         }
         if (this.nActClosed > 0)
-          this.percentSolved = Math.round((this.nActSolved * 100) / this.nActClosed);
+          this.ratioSolved = this.nActSolved / this.nActClosed;
         if (this.nActScore > 0)
           this.tScore = Math.round(this.tScore / this.nActScore);
       }

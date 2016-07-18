@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JClic.js\n"
 "POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
-"PO-Revision-Date: 2016-06-20 12:22+0000\n"
+"PO-Revision-Date: 2016-07-18 07:48+0000\n"
 "Last-Translator: francesc <francesc@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/francesc/jclicjs/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -183,3 +183,10 @@ msgstr "Contraseña incorrecta"
 # Error displayed when the user ID does not exist
 msgid "Invalid user"
 msgstr "Usuario incorrecto"
+
+# Score average obtained in the activities already played
+msgid "Partial score:"
+msgstr "Puntuació parcial:"
+
+msgid "Activities played at least once:"
+msgstr "Actividades hechas al menos una vez:"

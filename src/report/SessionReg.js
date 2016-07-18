@@ -110,8 +110,8 @@ define([
 
         $t.append($('<tr/>').append(
             $html.td(ps.getMsg('Total:')),
-            $html.td(this.info.nActivities),
-            $html.td(this.info.nActSolved),
+            $html.td(this.info.nActivities + ' (' + Utils.getPercent(this.info.ratioPlayed) + ')'),
+            $html.td(this.info.nActSolved + ' (' + Utils.getPercent(this.info.ratioSolved) + ')'),
             $html.td(this.info.nActions),
             $html.td(Utils.getPercent(this.info.tScore / 100)),
             $html.td(Utils.getHMStime(this.info.tTime))));
@@ -232,17 +232,17 @@ define([
      * @type {number} */
     nActSolved: 0,
     /**
-     * Global score obtained in this working session
+     * Number of activities with score > 0
      * @type {number} */
     nActScore: 0,
     /**
      * Percentage of solved activities
      * @type {number} */
-    percentSolved: 0,
+    ratioSolved: 0,
     /**
      * Percentage of reportable activities played
      * @type {number} */
-    percentPlayed: 0,
+    ratioPlayed: 0,
     /**
      * Number of actions done by the user while in this working session
      * @type {number} */
@@ -260,7 +260,7 @@ define([
      */
     clear: function () {
       this.numSequences = this.nActivities = this.nActSolved = this.nActScore = 0;
-      this.percentSolved = this.percentPlayed = this.nActions = this.tScore = this.tTime = 0;
+      this.ratioSolved = this.ratioPlayed = this.nActions = this.tScore = this.tTime = 0;
     },
     /**
      * Computes the value of all global variables based on the data stored in `sequences`
@@ -285,10 +285,10 @@ define([
       }
       if (this.nActScore > 0)
         this.tScore = Math.round(this.tScore / this.nActScore);
-      if (this.nActivities > 0){
-        this.percentSolved = Math.round((this.nActSolved * 100) / this.nActivities);
-        if(this.sReg.reportableActs > 0)
-          this.percentPlayed = Math.round((this.sReg.actNames.length * 100) / this.sReg.reportableActs);
+      if (this.nActivities > 0) {
+        this.ratioSolved = this.nActSolved / this.nActivities;
+        if (this.sReg.reportableActs > 0)
+          this.ratioPlayed = this.sReg.actNames.length / this.sReg.reportableActs;
       }
     }
   };
