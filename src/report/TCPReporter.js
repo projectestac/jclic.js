@@ -290,6 +290,7 @@ define([
               var bean = new TCPReporter.ReportBean('add session');
 
               bean.setParam('project', reporter.currentSession.projectName);
+              bean.setParam('activities', Number(reporter.currentSession.reportableActs));
               bean.setParam('time', Number(reporter.currentSession.started));
               bean.setParam('code', reporter.currentSession.code);
               bean.setParam('user', reporter.userId);

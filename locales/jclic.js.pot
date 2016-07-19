@@ -87,6 +87,10 @@ msgstr ""
 msgid "Global score:"
 msgstr ""
 
+# Explanation of 'global score'
+msgid "(over all project activities)"
+msgstr ""
+
 #: report_total_time
 msgid "Total time in activities:"
 msgstr ""
@@ -176,8 +180,12 @@ msgstr ""
 msgid "Invalid user"
 msgstr ""
 
-# Score average obtained in the activities already played
+# Average score of played activities
 msgid "Partial score:"
+msgstr ""
+
+# Explanation of 'partial score'
+msgid "(over played activities)"
 msgstr ""
 
 # Number of project's activities played at least one time
@@ -187,3 +195,4 @@ msgstr ""
 # Used in the reporting system when JClic.js is playing inside an SCORM object
 msgid "Reporting SCORM results for:"
 msgstr ""
+

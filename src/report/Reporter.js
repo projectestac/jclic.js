@@ -38,7 +38,6 @@ define([
     this.started = new Date();
     this.initiated = false;
     this.info = new Reporter.Info(this);
-    this.SCORM = Scorm.getSCORM();
   };
 
   Reporter.prototype = {
@@ -353,42 +352,43 @@ define([
       if (this.SCORM)
         $t.append($html.doubleCell(
             this.ps.getMsg('Reporting SCORM results for:'),
-            this.SCORM.studentName + this.SCORM.studentId === '' ? '' : ' (' + this.SCORM.studentId + ')'));
+            this.SCORM.studentName + (this.SCORM.studentId === '' ? '' : ' (' + this.SCORM.studentId + ')')));
 
       if (this.info.numSequences > 0) {
         if (this.info.numSessions > 1)
           $t.append($html.doubleCell(
               this.ps.getMsg('Projects:'),
               this.info.numSessions));
-        $t.append($html.doubleCell(
-            this.ps.getMsg('Sequences:'),
-            this.info.numSequences),
+        $t.append(
+            $html.doubleCell(
+                this.ps.getMsg('Sequences:'),
+                this.info.numSequences),
             $html.doubleCell(
                 this.ps.getMsg('Activities done:'),
-                this.info.nActivities));
-        $t.append($html.doubleCell(
-            this.ps.getMsg('Activities played at least once:'),
-            this.info.nActPlayed + '/' + this.info.reportableActs + " (" + Utils.getPercent(this.info.ratioPlayed) + ")"));
+                this.info.nActivities),
+            $html.doubleCell(
+                this.ps.getMsg('Activities played at least once:'),
+                this.info.nActPlayed + '/' + this.info.reportableActs + " (" + Utils.getPercent(this.info.ratioPlayed) + ")"));
         if (this.info.nActivities > 0) {
           $t.append($html.doubleCell(
               this.ps.getMsg('Activities solved:'),
               this.info.nActSolved + " (" + Utils.getPercent(this.info.ratioSolved) + ")"));
-          if (this.info.nActScore > 0) {
-            $t.append($html.doubleCell(
-                this.ps.getMsg('Partial score:'),
-                Utils.getPercent(this.info.partialScore)));
-            $t.append($html.doubleCell(
-                this.ps.getMsg('Global score:'),
-                Utils.getPercent(this.info.globalScore)));
-          }
-          $t.append($html.doubleCell(
-              this.ps.getMsg('Total time in activities:'),
-              Utils.getHMStime(this.info.tTime)),
+          if (this.info.nActScore > 0)
+            $t.append(
+                $html.doubleCell(
+                    this.ps.getMsg('Partial score:'),
+                    Utils.getPercent(this.info.partialScore) + ' ' + this.ps.getMsg('(over played activities)')),
+                $html.doubleCell(
+                    this.ps.getMsg('Global score:'),
+                    Utils.getPercent(this.info.globalScore) + ' ' + this.ps.getMsg('(over all project activities)')));
+          $t.append(
+              $html.doubleCell(
+                  this.ps.getMsg('Total time in activities:'),
+                  Utils.getHMStime(this.info.tTime)),
               $html.doubleCell(
                   this.ps.getMsg('Actions done:'),
                   this.info.nActions));
         }
-
         result.push($t);
 
         for (var n = 0; n < this.sessions.length; n++) {
@@ -416,6 +416,8 @@ define([
       this.sessionContext = Utils.getVal(options.context);
       this.groupCodeFilter = Utils.getVal(options.groupCodeFilter);
       this.userCodeFilter = Utils.getVal(options.userCodeFilter);
+      if (options.SCORM !== 'false')
+        this.SCORM = Scorm.getSCORM(this);
       this.initiated = true;
       return Promise.resolve(true);
     },
@@ -434,8 +436,6 @@ define([
       if (this.currentSession) {
         this.currentSession.endSequence();
         this.info.valid = false;
-        if(this.SCORM)
-          this.SCORM.commitInfo();
       }
     },
     /**
@@ -482,6 +482,8 @@ define([
       if (this.currentSession) {
         this.currentSession.newSequence(ase);
         this.info.valid = false;
+        if (this.SCORM)
+          this.SCORM.commitInfo();
       }
     },
     /**
@@ -691,7 +693,7 @@ define([
     if (Reporter.CLASSES.hasOwnProperty(className)) {
       result = new Reporter.CLASSES[className](ps);
     } else {
-      console.log('Unknown reporter class: ' + className);
+      ps.setSystemMessage('Unknown reporter class: ' + className);
     }
     return result;
   };

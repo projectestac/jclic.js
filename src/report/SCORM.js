@@ -13,7 +13,7 @@
 //  General Public License for more details. You should have received a copy of the GNU General
 //  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
-/* global window, console */
+/* global window */
 
 define([
   "jquery"
@@ -83,8 +83,8 @@ define([
       try {
         result = this.API[this.prefix + 'Initialize']('');
         if (result) {
-          this.studentId = this.getValue(this.core + this.is2004 ? 'learner_id' : 'student_id');
-          this.studentName = this.getValue(this.core + this.is2004 ? 'learner_name' : 'student_name');
+          this.studentId = this.getValue(this.core + (this.is2004 ? 'learner_id' : 'student_id'));
+          this.studentName = this.getValue(this.core + (this.is2004 ? 'learner_name' : 'student_name'));
           this.setValue(this.core + 'score.min', 0);
           this.setValue(this.core + 'score.max', 100);
           var thisScorm = this;
@@ -94,11 +94,9 @@ define([
             thisScorm.API = null;
           });
         }
-
-        console.log('SCORM initialized');
-
+        this.reporter.ps.setSystemMessage('SCORM initialized');
       } catch (ex) {
-        console.log('Error initializing SCORM API: ' + ex);
+        this.reporter.ps.setSystemMessage('Error initializing SCORM API: ' + ex);
       }
       return result;
     },
@@ -112,7 +110,7 @@ define([
       try {
         result = this.API[this.is2004 ? 'Terminate' : 'LMSFinish']('');
       } catch (ex) {
-        console.log('Error terminating SCORM API: ' + ex);
+        this.reporter.ps.setSystemMessage('Error terminating SCORM API: ' + ex);
       }
       return result;
     },
@@ -124,8 +122,7 @@ define([
       this.setValue(this.core + 'score.raw', score);
       this.setValue(this.core + 'session_time', time);
       this.commit();
-
-      console.log('SCORM reported: ' + score + ' - ' + time);
+      this.reporter.ps.setSystemMessage('SCORM results reported: ' + score + ' - ' + time);
     },
     /**
      * 
@@ -137,7 +134,7 @@ define([
       try {
         result = this.API[this.prefix + 'Commit']('');
       } catch (ex) {
-        console.log('Error commiting data to the SCORM API: ' + ex);
+        this.reporter.ps.setSystemMessage('Error commiting data to the SCORM API: ' + ex);
       }
       return result;
     },
@@ -153,7 +150,7 @@ define([
       try {
         result = this.API[this.prefix + 'SetValue'](key, value);
       } catch (ex) {
-        console.log('Error setting value "' + value + '" to "' + key + '" in SCORM API: ' + ex);
+        this.reporter.ps.setSystemMessage('Error setting value "' + value + '" to "' + key + '" in SCORM API: ' + ex);
       }
       return result;
     },
@@ -168,7 +165,7 @@ define([
       try {
         result = this.API[this.prefix + 'GetValue'](key);
       } catch (ex) {
-        console.log('Error retrieving "' + key + '" from the SCORM API: ' + ex);
+        this.reporter.ps.setSystemMessage('Error retrieving "' + key + '" from the SCORM API: ' + ex);
       }
       return result;
     },
@@ -192,7 +189,7 @@ define([
     }
   };
 
-  SCORM.DISCOVER_MAX_TRIES = 500;
+  SCORM.DISCOVER_MAX_TRIES = 50;
 
   // Recursive method to find the SCORM API object
   SCORM.scanForAPI = function (win, tries) {
