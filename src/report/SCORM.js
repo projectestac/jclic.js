@@ -24,7 +24,7 @@ define([
    * exposes the methods needed to notify the results of activities.
    * Both SCORM 1.2 and 2004 are supported.
    * @exports SCORM
-   * @param {object} API - The SCORM API object
+   * @param {object} API - The global SCORM API object
    * @param {Reporter} reporter - The {@link Reporter} associated to this SCORM object
    * @class
    */
@@ -186,12 +186,28 @@ define([
       return this.is2004 ?
           'PT' + h + 'H' + m + 'M' + s + 'S' :
           ('0000' + h).slice(-4) + ':' + ('00' + m).slice(-2) + ':' + ('00' + s).slice(-2);
+    },
+    /**
+     * Gets the SCORM type of this SCORM object
+     * @returns {string}
+     */
+    getScormType: function(){
+      return 'SCORM ' + (this.is2004 ? '2004' : '1.2');
     }
   };
 
+  /**
+   * Maximum recursive attempts allowed to find the global SCORM API object
+   * @type {number} */
   SCORM.DISCOVER_MAX_TRIES = 50;
 
-  // Recursive method to find the SCORM API object
+  /**
+   * 
+   * Recursive function used to find the SCORM "API" object
+   * @param {object} win - The 'window' object to scan for global SCORM API objects
+   * @param {number} tries - Recursive attempts currently achieved
+   * @returns {object} - The global SCORM API object, or `null` if not found
+   */
   SCORM.scanForAPI = function (win, tries) {
     if (win.API_1484_11 && win.API_1184_11.Initialize && win.API_1184_11.SetValue && win.API_1184_11.Commit)
       return win.API_1184_11;
@@ -204,9 +220,10 @@ define([
   };
 
   /**
+   * 
    * Checks for the presence of a SCORM API on the current browser session.
    * @returns {SCORM} - A valid SCORM object, or `null` if no SCORM API was found.
-   * @param {Reporter} reporter - The {@link Reporter} linked to the requested SCROM object
+   * @param {Reporter} reporter - The {@link Reporter} linked to the requested SCORM object
    */
   SCORM.getSCORM = function (reporter) {
     var result = null;

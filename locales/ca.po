@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JClic.js\n"
 "POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
-"PO-Revision-Date: 2016-07-18 07:48+0000\n"
+"PO-Revision-Date: 2016-07-19 11:30+0000\n"
 "Last-Translator: francesc <francesc@gmail.com>\n"
 "Language-Team: Catalan (http://www.transifex.com/francesc/jclicjs/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -88,6 +88,10 @@ msgstr "Activitats resoltes:"
 #: report_global_score
 msgid "Global score:"
 msgstr "Puntuació global:"
+
+# Explanation of 'global score'
+msgid "(out of all project activities)"
+msgstr "(sobre totes les activitats del projecte)"
 
 #: report_total_time
 msgid "Total time in activities:"
@@ -184,15 +188,14 @@ msgstr "Contrasenya incorrecta"
 msgid "Invalid user"
 msgstr "Usuari/ària incorrecte"
 
-# Score average obtained in the activities already played
+# Average score of played activities
 msgid "Partial score:"
 msgstr "Puntuació parcial:"
+
+# Explanation of 'partial score'
+msgid "(out of played activities)"
+msgstr "(sobre les activitats fetes)"
 
 # Number of project's activities played at least one time
 msgid "Activities played at least once:"
 msgstr "Activitats fetes almenys una vegada:"
-
-# Used in the reporting system when JClic.js is playing inside an SCORM object
-msgid "Reporting SCORM results for:"
-msgstr "Enviant resultats SCORM per a:"
-

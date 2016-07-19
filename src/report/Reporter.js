@@ -348,10 +348,9 @@ define([
         $t.append($html.doubleCell(
             this.ps.getMsg('User:'),
             this.userId));
-
-      if (this.SCORM)
+      else if (this.SCORM)
         $t.append($html.doubleCell(
-            this.ps.getMsg('Reporting SCORM results for:'),
+            this.ps.getMsg('User:'),
             this.SCORM.studentName + (this.SCORM.studentId === '' ? '' : ' (' + this.SCORM.studentId + ')')));
 
       if (this.info.numSequences > 0) {
@@ -377,10 +376,10 @@ define([
             $t.append(
                 $html.doubleCell(
                     this.ps.getMsg('Partial score:'),
-                    Utils.getPercent(this.info.partialScore) + ' ' + this.ps.getMsg('(over played activities)')),
+                    Utils.getPercent(this.info.partialScore) + ' ' + this.ps.getMsg('(out of played activities)')),
                 $html.doubleCell(
                     this.ps.getMsg('Global score:'),
-                    Utils.getPercent(this.info.globalScore) + ' ' + this.ps.getMsg('(over all project activities)')));
+                    Utils.getPercent(this.info.globalScore) + ' ' + this.ps.getMsg('(out of all project activities)')));
           $t.append(
               $html.doubleCell(
                   this.ps.getMsg('Total time in activities:'),
@@ -416,8 +415,11 @@ define([
       this.sessionContext = Utils.getVal(options.context);
       this.groupCodeFilter = Utils.getVal(options.groupCodeFilter);
       this.userCodeFilter = Utils.getVal(options.userCodeFilter);
-      if (options.SCORM !== 'false')
+      if (options.SCORM !== 'false'){
         this.SCORM = Scorm.getSCORM(this);
+        if(this.SCORM !== null && this.descriptionKey === Reporter.prototype.descriptionKey)
+          this.descriptionKey = this.SCORM.getScormType();
+      }
       this.initiated = true;
       return Promise.resolve(true);
     },
