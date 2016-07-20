@@ -32,9 +32,22 @@ define([
    * @abstract
    */
   var Utils = {
+    /**
+     * List of valid verbosity levels
+     * @const {string[]} */
     LOG_LEVELS: ['none', 'error', 'warn', 'info', 'debug', 'trace', 'all'],
+    /**
+     * Labels printed on logs for each message type
+     * @const {string[]}
+     */
     LOG_PRINT_LABELS: ['     ', 'ERROR', 'WARN ', 'INFO ', 'DEBUG', 'TRACE', 'ALL  '],
+    /**
+     * Current verbosity level. Default is 2 (only errror and warning messages are printed)
+     * @type {number} */
     LOG_LEVEL: 2, // warn
+    /**
+     * Options of the logging system
+     * @type {object} */
     LOG_OPTIONS: {
       prefix: 'JClic',
       timestamp: true,
@@ -42,11 +55,21 @@ define([
       chainTo: null,
       pipeTo: null
     },
+    /**
+     * Establishes the current verbosity level of the logging system
+     * @param {string} level - One of the valid strings in {@link Utils.LOG_LEVELS}
+     */
     setLogLevel: function (level) {
       var log = Utils.LOG_LEVELS.indexOf(level);
       if (log >= 0)
         Utils.LOG_LEVEL = log;
     },
+    /**
+     * Reports a new message to the logging system
+     * @param {string} type - The type of message. Mus be `error`, `warn`, `info`, `debug` or `trace`.
+     * @param {string} msg - The main message to be logged. Additional parameters can be added, like
+     * in `console.log` (see: [https://developer.mozilla.org/en-US/docs/Web/API/Console/log])
+     */
     log: function (type, msg) {
       var level = Utils.LOG_LEVELS.indexOf(type);
 
@@ -67,9 +90,17 @@ define([
             for (var p = 2; p < arguments.length; p++)
               args.push(arguments[p]);
             console[level === 1 ? 'error' : level === 2 ? 'warn' : 'log'].apply(console, args);
-          } else {
-            level === 1 ? console.error(mainMsg) : level === 2 ? console.warn(mainMsg) : console.log(mainMsg);
-          }
+          } else
+            switch (level) {
+              case 1:
+                console.error(mainMsg);
+                break;
+              case 2:
+                console.warn(mainMsg);
+                break;
+              default:
+                console.log(mainMsg);
+            }
 
           // Call chained logger, if anny
           if (Utils.LOG_OPTIONS.chainTo)

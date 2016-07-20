@@ -102,8 +102,14 @@ define([
                 this.$dlgBottomPanel)));
 
     this.$infoHead = $('<div/>', {class: 'infoHead'})
-        .append($('<div/>', {class: 'headTitle'})
-            .append($(this.appLogo).css({width: '1.5em', height: '1.5em', 'vertical-align': 'bottom'}))
+        .append($('<div/>', {class: 'headTitle unselectableText'})
+            .append($(this.appLogo).css({width: '1.5em', height: '1.5em', 'vertical-align': 'bottom'})
+                .dblclick(function () {
+                  // Double click on JClic logo is a hidden method to increase verbosity on Javascript console
+                  Utils.setLogLevel('all');
+                  Utils.log('trace', 'Log level set to "trace"');
+                  $(this).off('dblclick');
+                }))
             .append($('<span/>').html('JClic.js')))
         .append($('<p/>').css({'margin-top': 0, 'margin-left': '3.5em'})
             .append($('<a/>', {href: 'http://clic.xtec.cat/repo/index.html?page=info'}).html('http://clic.xtec.cat'))
