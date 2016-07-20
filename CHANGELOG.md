@@ -1,6 +1,11 @@
-### v0.1.31 (not yet released)
+### v0.1.31 (2016-07-20)
 #### Bug fixes
-- Apply `JClicPlayer.defaultSkin` only when `JClicProject.skin` not specified
+- Apply `JClicPlayer.defaultSkin` only when `JClicProject.skin` is not specified
+
+#### Improvements
+- Implemented support for SCORM 1.2 and SCORM 2004. Now JClic reports global score and session time when a SCORM API is detected.
+- New method to calculate scores for SCORM: now _"partial score"_ refers to the score average of all played activities and _"global score"_ multiplies it by the ratio between the number of activities played at least once and the total number of activities in the project. For example, when playing a project with 20 activities, a student that has successly finished only one activity will have a _partial score_ of 100%, but its _global score_ will be only 5%. When all activities are played at least once, global and partial scores have the same value.
+- New logging system. Verbosity on the JavaScript console can now be adjusted with a 'logLevel' parameter that can have one of the values: _all_, _trace_, _debug_, _info_, _warn_, _error_ and _none_. Default is: _warn_.
 
 ### v0.1.30 (2016-07-11)
 #### Improvements
