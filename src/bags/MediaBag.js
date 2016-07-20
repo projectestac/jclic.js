@@ -112,7 +112,7 @@ define([
       $.each(this.elements, function (name, element) {
         if (!type || element.name === type) {
           element.build(function () {
-            //console.log(this.name + ' ready');
+            Utils.log('trace', '"%s" ready', name);
           });
         }
       });
@@ -128,7 +128,7 @@ define([
       // TODO: Check loading process!
       $.each(this.elements, function (name, element) {
         if (element.data && !element.ready && !element.checkReady() && !element.checkTimeout()) {
-          console.log('... waiting for ' + name);
+          Utils.log('debug', '... waiting for: %s', name);
           result = true;
           return false;
         }

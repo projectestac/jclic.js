@@ -140,7 +140,7 @@ define([
               break;
 
             default:
-              console.log('[JClic] - Unknown object in activity document: ' + this.nodeName);
+              Utils.log('error', 'Unknown object in activity document: "%s"', this.nodeName);
           }
           if (obj) {
             obj.objectType = this.nodeName;
@@ -211,7 +211,7 @@ define([
             css['white-space'] = 'pre-wrap';
             break;
           default:
-            console.log('Unknown text attribute: ' + name + ': ' + val);
+            Utils.log('warn', 'Unknown text attribute: "%s" = "%s"', name, val);
             attr[name] = val;
             break;
         }

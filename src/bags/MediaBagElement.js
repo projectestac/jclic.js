@@ -165,7 +165,7 @@ define([
                 (arr[afterblock + 1] === 0x2C || arr[afterblock + 1] === 0x21)) {
               if (++frames > 1) {
                 mbe.animated = true;
-                //console.log('Animated GIF detected: '+mbe.fileName);
+                Utils.log('debug', 'Animated GIF detected: %s', mbe.fileName);
                 break;
               }
             }
@@ -265,7 +265,7 @@ define([
                media.data = data;
                media._onReady();
                }).fail(function () {
-               console.log('Error loading ' + media.name);
+               Utils.log('error', 'error loading %s', media.name);
                media.data = null;
                });
                */
@@ -314,7 +314,7 @@ define([
     checkTimeout: function () {
       var result = Date.now() > this.timeout;
       if (result)
-        console.log('Timeout while loading ' + this.name);
+        Utils.log('warn', 'Timeout while loading: %s', this.name);
       return result;
     },
     /**

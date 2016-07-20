@@ -75,7 +75,7 @@ define([
     this.defaultSkin = Skin.getSkin(this.options.skin, this);
     this.setSkin(this.defaultSkin);
     this.initTimers();
-    this.setSystemMessage("ready");
+    Utils.log('info', 'JClicPlayer ready');
   };
 
   JClicPlayer.prototype = {
@@ -273,7 +273,7 @@ define([
       this.setCounterValue('score', 0);
       this.setCounterValue('actions', 0);
       this.setCounterValue('time', 0);
-      if(this.skin)
+      if (this.skin)
         this.skin.setWaitCursor('reset');
     },
     /**
@@ -436,7 +436,7 @@ define([
           if (Utils.endsWith(fullPath, '.jclic.zip')) {
             // TODO: Implement register of zip files in PlayerHistory
             player.zip = null;
-            player.setSystemMessage('Loading ZIP file', fullPath);
+            Utils.log('info', 'Loading ZIP file: %s', fullPath);
 
             // Launch loading of ZIP file in a separated thread
             window.setTimeout(function () {
@@ -444,7 +444,7 @@ define([
 
               JSZipUtils.getBinaryContent(fullPath, function (err, data) {
                 if (err) {
-                  player.setSystemMessage('Error loading ZIP file: ', err);
+                  Utils.log('error', 'Error loading ZIP file: %s', err.toString());
                   return;
                 }
                 new JSZip().loadAsync(data).then(function (zip) {
@@ -462,10 +462,10 @@ define([
                   if (fileName) {
                     player.load(Utils.getPath(player.zip.zipBasePath, fileName), sequence, activity);
                   } else {
-                    player.setSystemMessage('Error: ZIP does not contain any valid jclic file!');
+                    Utils.log('error', 'This ZIP file does not contain any JClic project!');
                   }
                 }).catch(function (reason) {
-                  player.setSystemMessage('Error reading ZIP file: ', reason);
+                  Utils.log('error', 'Error reading ZIP file: %s', reason ? 'unknown reason' : reason.toString());
                 });
               });
               player.setWaitCursor(false);
@@ -484,12 +484,12 @@ define([
           var processProjectFile = function (fp) {
             $.get(fp, null, null, 'xml').done(function (data) {
               if (data === null || typeof data !== 'object') {
-                player.setSystemMessage('ERROR: Project not loaded. Bad data!', project);
+                Utils.log('error', 'Bad data. Project not loaded: %s', project);
                 return;
               }
               var prj = new JClicProject();
               prj.setProperties($(data).find('JClicProject'), fullPath, player.zip, player.options);
-              player.setSystemMessage('Project file loaded and parsed', project);
+              Utils.log('info', 'Project file loaded and parsed: %s', project);
               prj.mediaBag.buildAll();
               var loops = 0;
               var interval = 500;
@@ -499,8 +499,7 @@ define([
                 if (++loops > player.options.maxWaitTime / interval) {
                   window.clearInterval(checkMedia);
                   player.setWaitCursor(false);
-                  player.setSystemMessage('Error loading media!');
-                  // alert?                    
+                  Utils.log('error', 'Error loading media');
                 }
                 if (!prj.mediaBag.isWaiting()) {
                   window.clearInterval(checkMedia);
@@ -511,14 +510,14 @@ define([
               }, interval);
             }).fail(function (jqXHR, textStatus, errorThrown) {
               var errMsg = textStatus + ' (' + errorThrown + ') while loading ' + project;
-              player.setSystemMessage('Error', errMsg);
+              Utils.log(errMsg);
               alert('Error!\n' + errMsg);
             }).always(function () {
               player.setWaitCursor(false);
             });
           };
 
-          this.setSystemMessage('loading project', project);
+          Utils.log('info', 'Loading project: %s', project);
           var fp = fullPath;
 
           // Special case for ZIP files
@@ -528,7 +527,7 @@ define([
               player.zip.file(fName).async('string').then(function (text) {
                 processProjectFile('data:text/xml;charset=UTF-8,' + text);
               }).catch(function (reason) {
-                player.setSystemMessage('Error: Unable to extract ', fName + ' from ZIP file: ' + reason);
+                Utils.log('error', 'Unable to extract "%s" from ZIP file because of: %s', fName, reason ? 'unknown reason' : reason.toString());
                 player.setWaitCursor(false);
               });
               return;
@@ -540,7 +539,7 @@ define([
             if (JClicObject && JClicObject.projectFiles[fullPath]) {
               fp = 'data:text/xml;charset=UTF-8,' + JClicObject.projectFiles[fullPath];
             } else {
-              player.setSystemMessage('Error: Unable to load', fullPath + '.js');
+              Utils.log('error', 'Unable to load: %s.js', fullPath);
               player.setWaitCursor(false);
               return;
             }
@@ -564,7 +563,7 @@ define([
 
       // Step two: load the ActivitySequenceElement
       if (!Utils.isNullOrUndef(sequence)) {
-        this.setSystemMessage('Loading sequence', sequence);
+        Utils.log('info', 'Loading sequence: %s', sequence);
         this.navButtonsDisabled = false;
         // Try to load sequence by tag
         var ase = null;
@@ -590,14 +589,13 @@ define([
         var act = this.project.getActivity(activity);
         if (act) {
           // Success! We have a real [Activity](Activity.html)
-          this.setSystemMessage('Loading activity', activity);
+          Utils.log('info', 'Loading activity: %s', activity);
           act.prepareMedia(this);
           this.project.activitySequence.checkCurrentActivity(act.name);
           actp = act.getActivityPanel(this);
           actp.buildVisualComponents();
         } else {
-          this.setSystemMessage('Error: Missing activity', activity);
-          // Alert ?
+          Utils.log('error', 'Missing activity: %s', activity);
         }
       }
 
@@ -704,7 +702,7 @@ define([
         this.timer.start();
         if (!this.actPanel.act.mustPauseSequence())
           this.startAutoPassTimer();
-        this.setSystemMessage('Activity running', this.actPanel.act.name);
+        Utils.log('info', 'Activity "%s" running', this.actPanel.act.name);
       }
       this.setWaitCursor(false);
     },
@@ -716,7 +714,7 @@ define([
     activityReady: function () {
       if (this.actPanel) {
         this.actPanel.activityReady();
-        this.setSystemMessage('Activity ready');
+        Utils.log('info', 'Activity ready');
       }
     },
     /**
@@ -851,7 +849,7 @@ define([
           break;
 
         default:
-          player.setSystemMessage('unknown media type', mediaContent.mediaType);
+          Utils.log('error', 'Unknown media type: %s', mediaContent.mediaType);
           break;
       }
     },
@@ -876,7 +874,7 @@ define([
      * @param {string} cmd
      */
     runCmd: function (cmd) {
-      this.setSystemMessage('Unsupported call to external command', cmd);
+      Utils.log('warn', 'Unsupported call to external command: "%s"', cmd);
     },
     /**
      * 
@@ -886,7 +884,7 @@ define([
      */
     activityFinished: function (completedOK) {
       this.closeHelpWindow();
-      this.setSystemMessage('activity finished');
+      Utils.log('info', 'Activity finished');
       this.timer.stop();
       this.startAutoPassTimer();
     },
@@ -1010,18 +1008,6 @@ define([
     },
     /**
      * 
-     * Displays debug messages on the console
-     * @param {string} msg1
-     * @param {string} msg2
-     */
-    setSystemMessage: function (msg1, msg2) {
-      if (this.skin !== null)
-        this.skin.setSystemMessage(msg1, msg2);
-      else
-        console.log((msg1 ? msg1 + ' - ' : '') + (msg2 ? msg2 : ''));
-    },
-    /**
-     * 
      * Builds an {@link ActiveMediaPlayer} for the specified {@link MediaContent}
      * @param {MediaContent} mediaContent - The media content to be played
      * @returns {ActiveMediaPlayer}
@@ -1119,7 +1105,7 @@ define([
      * @param {string} docTitle
      */
     setWindowTitle: function (docTitle) {
-      this.setSystemMessage('running', docTitle);
+      Utils.log('info', 'running %s', docTitle);
     }
   };
 

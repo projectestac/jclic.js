@@ -462,7 +462,7 @@ define([
                   Math.min(this.dim.width, imgw), Math.min(this.dim.height, imgh));
           }
         } catch (ex) {
-          console.log('Error: Unable to draw image ' + abc.imgName + ' (' + ex + ')');
+          Utils.log('warn', 'Unable to draw image "%s": %s',abc.imgName, ex.message);
         }
       }
       if (abc.text && abc.text.length > 0) {

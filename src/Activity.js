@@ -82,7 +82,7 @@ define([
         act = new cl(project);
         act.setProperties($xml);
       } else
-        console.log('[JClic] Unknown activity class: ' + className);
+        Utils.log('error', 'Unknown activity class: %s', className);
     }
     return act;
   };

@@ -178,6 +178,9 @@ define([
     loadProject: function (div, projectName, options) {
 
       options = $.extend(Object.create(JClicObject.options), options ? options : {});
+      
+      if(typeof options.logLevel !== 'undefined')
+        Utils.setLogLevel(options.logLevel);
 
       var player = new JClicPlayer($(div), Utils.normalizeObject(options));
 

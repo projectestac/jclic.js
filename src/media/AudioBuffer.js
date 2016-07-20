@@ -16,8 +16,8 @@
 /* global MediaRecorder, navigator, window, URL */
 
 define([
-  "./ActiveMediaPlayer"
-], function (ActiveMediaPlayer) {
+  "../Utils"
+], function (Utils) {
   /**
    * The AudioBuffer object provides sound recording and replaying to activities.
    * @exports AudioBuffer
@@ -116,14 +116,14 @@ define([
                 buffer.chunks.push(e.data);
               };
               buffer.mediaRecorder.onerror = function (e) {
-                console.log('Error recording audio: ' + e);
+                Utils.log('error', 'Error recording audio: %s', e);
                 buffer.mediaRecorder = null;
               };
-              buffer.mediaRecorder.onstart = function (e) {
-                console.log('Recording audio started');
+              buffer.mediaRecorder.onstart = function () {
+                Utils.log('debug', 'Recording audio started');
               };
               buffer.mediaRecorder.onstop = function () {
-                console.log('Recording audio finished');
+                Utils.log('debug', 'Recording audio finished');
 
                 if (buffer.timeoutID) {
                   window.clearTimeout(buffer.timeoutID);
@@ -146,7 +146,7 @@ define([
                 }
               };
               buffer.mediaRecorder.onwarning = function (e) {
-                console.log('Warning recording audio: ' + e);
+                Utils.log('warn', 'Warning recording audio: %s', e);
               };
 
               buffer.playWhenFinished = false;
@@ -158,7 +158,7 @@ define([
 
             },
             function (error) {
-              console.log('Error recording audio: ' + error);
+              Utils.log('error', 'Error recording audio: %s', error);
             });
       }
     },

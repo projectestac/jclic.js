@@ -32,6 +32,51 @@ define([
    * @abstract
    */
   var Utils = {
+    LOG_LEVELS: ['none', 'error', 'warn', 'info', 'debug', 'trace', 'all'],
+    LOG_PRINT_LABELS: ['     ', 'ERROR', 'WARN ', 'INFO ', 'DEBUG', 'TRACE', 'ALL  '],
+    LOG_LEVEL: 2, // warn
+    LOG_OPTIONS: {
+      prefix: 'JClic',
+      timestamp: true,
+      popupOnErrors: false,
+      chainTo: null,
+      pipeTo: null
+    },
+    setLogLevel: function (level) {
+      var log = Utils.LOG_LEVELS.indexOf(level);
+      if (log >= 0)
+        Utils.LOG_LEVEL = log;
+    },
+    log: function (type, msg) {
+      var level = Utils.LOG_LEVELS.indexOf(type);
+
+      // Check if message should currently be logged      
+      if (level < 0 || level <= Utils.LOG_LEVEL) {
+        if (Utils.LOG_OPTIONS.pipeTo)
+          Utils.LOG_OPTIONS.pipeTo.apply(null, arguments);
+        else {
+          var mainMsg = msg;
+          if (Utils.LOG_OPTIONS.timestamp)
+            mainMsg = Utils.getDateTime() + ' ' + mainMsg;
+          mainMsg = Utils.LOG_PRINT_LABELS[level] + ' ' + mainMsg;
+          if (Utils.LOG_OPTIONS.prefix)
+            mainMsg = Utils.LOG_OPTIONS.prefix + ' ' + mainMsg;
+
+          if (arguments.length > 2) {
+            var args = [mainMsg];
+            for (var p = 2; p < arguments.length; p++)
+              args.push(arguments[p]);
+            console[level === 1 ? 'error' : level === 2 ? 'warn' : 'log'].apply(console, args);
+          } else {
+            level === 1 ? console.error(mainMsg) : level === 2 ? console.warn(mainMsg) : console.log(mainMsg);
+          }
+
+          // Call chained logger, if anny
+          if (Utils.LOG_OPTIONS.chainTo)
+            Utils.LOG_OPTIONS.chainTo.apply(null, arguments);
+        }
+      }
+    },
     /**
      * Gets a boolean value from a textual expression
      * @param {string} val - The value to be parsed (`true` for true, null or otherwise for `false`)
@@ -77,7 +122,18 @@ define([
     getHMStime: function (millis) {
       var d = new Date(millis);
       var h = d.getUTCHours(), m = d.getUTCMinutes(), s = d.getUTCSeconds();
-      return (h ? h + 'h ' : '') + ((h || m) ? m + '\'' : '') + s + '"';
+      return (h ? h + 'h ' : '') + ((h || m) ? ('0' + m).slice(-2) + '\'' : '') + ('0' + s).slice(-2) + '"';
+    },
+    /**
+     * Returns a formatted string with the provided date and time
+     * @param {Date} date - The date to be formatted. When `null` or `undefined`, the current date will be used.
+     * @returns {string}
+     */
+    getDateTime: function (date) {
+      if (!date)
+        date = new Date();
+      return date.getFullYear() + '/' + ('0' + date.getMonth()).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + ' ' +
+          ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2) + ':' + ('0' + date.getSeconds()).slice(-2);
     },
     /** @const {number} */
     'FALSE': 0,
@@ -379,13 +435,13 @@ define([
      * @param {string=} fill - Optional setting for "fill" property
      * @returns {string} - The resulting svg code
      */
-    getSvg: function(svg, width, height, fill){
-      if(width)
-        svg = svg.replace(/width=\"\d*\"/, 'width="' + width +'"');
-      if(height)
-        svg = svg.replace(/height=\"\d*\"/, 'height="' + height +'"');
-      if(fill)
-        svg = svg.replace(/fill=\"[#A-Za-z0-9]*\"/, 'fill="' + fill +'"');      
+    getSvg: function (svg, width, height, fill) {
+      if (width)
+        svg = svg.replace(/width=\"\d*\"/, 'width="' + width + '"');
+      if (height)
+        svg = svg.replace(/height=\"\d*\"/, 'height="' + height + '"');
+      if (fill)
+        svg = svg.replace(/fill=\"[#A-Za-z0-9]*\"/, 'fill="' + fill + '"');
       return svg;
     },
     /**
@@ -397,7 +453,7 @@ define([
      * @param {string=} fill - Optional setting for "fill" property
      * @returns {string} - The resulting Data URI
      */
-    svgToURI: function(svg, width, height, fill){
+    svgToURI: function (svg, width, height, fill) {
       return 'data:image/svg+xml;base64,' + btoa(Utils.getSvg(svg, width, height, fill));
     },
     /**
@@ -608,5 +664,6 @@ define([
       }
     }
   };
+
   return Utils;
 });

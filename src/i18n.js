@@ -15,8 +15,9 @@
 
 define([
   'i18next',
-  './GlobalData'
-], function (i18next, GlobalData) {
+  './GlobalData',
+  './Utils'
+], function (i18next, GlobalData, Utils) {
 
   var i18n = {
     /**
@@ -57,7 +58,7 @@ define([
             }
           }
         }
-        if (result >= 0 || (result=match)>=0)
+        if (result >= 0 || (result = match) >= 0)
           break;
       }
       return availableLanguages[result >= 0 ? result : 0];
@@ -80,7 +81,7 @@ define([
         }
       }, function (err, t) {
         if (err)
-          console.log('Error initializing "i18next": ' + err);
+          Utils.log('error', 'Error initializing "i18next": %s', err.message);
         else {
           ps.getMsg = t;
           ps.JClicVersion = GlobalData.version;

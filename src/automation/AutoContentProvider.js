@@ -13,7 +13,9 @@
 //    General Public License for more details. You should have received a copy of the GNU General
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
-define([], function () {
+define([
+  "../Utils"
+], function (Utils) {
 
   /**
    * This abstract class is the base for classes that create on-time automatic content for JClic
@@ -118,9 +120,8 @@ define([], function () {
       if (cl) {
         automation = new cl(project);
         automation.setProperties($xml);
-      }
-      else
-        console.log('Unknown AutoContentProvider class: ' + className);
+      } else
+        Utils.log('error', 'Unknown AutoContentProvider class: %s', className);
     }
     return automation;
   };

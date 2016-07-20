@@ -415,9 +415,9 @@ define([
       this.sessionContext = Utils.getVal(options.context);
       this.groupCodeFilter = Utils.getVal(options.groupCodeFilter);
       this.userCodeFilter = Utils.getVal(options.userCodeFilter);
-      if (options.SCORM !== 'false'){
+      if (options.SCORM !== 'false') {
         this.SCORM = Scorm.getSCORM(this);
-        if(this.SCORM !== null && this.descriptionKey === Reporter.prototype.descriptionKey)
+        if (this.SCORM !== null && this.descriptionKey === Reporter.prototype.descriptionKey)
           this.descriptionKey = this.SCORM.getScormType();
       }
       this.initiated = true;
@@ -695,7 +695,7 @@ define([
     if (Reporter.CLASSES.hasOwnProperty(className)) {
       result = new Reporter.CLASSES[className](ps);
     } else {
-      ps.setSystemMessage('Unknown reporter class: ' + className);
+      Utils.log('error', 'Unknown reporter class: %s', className);
     }
     return result;
   };

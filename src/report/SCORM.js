@@ -16,8 +16,9 @@
 /* global window */
 
 define([
-  "jquery"
-], function ($) {
+  "jquery",
+  "../Utils"
+], function ($, Utils) {
 
   /**
    * This class detects if JClic.js is running in an SCORM environment and, if true,
@@ -94,9 +95,9 @@ define([
             thisScorm.API = null;
           });
         }
-        this.reporter.ps.setSystemMessage('SCORM initialized');
+        Utils.log('debug', 'SCORM initialized');
       } catch (ex) {
-        this.reporter.ps.setSystemMessage('Error initializing SCORM API: ' + ex);
+        Utils.log('error', 'Error initializing SCORM API: %s', ex.message);
       }
       return result;
     },
@@ -110,7 +111,7 @@ define([
       try {
         result = this.API[this.is2004 ? 'Terminate' : 'LMSFinish']('');
       } catch (ex) {
-        this.reporter.ps.setSystemMessage('Error terminating SCORM API: ' + ex);
+        Utils.log('error', 'Error terminating SCORM API: %s', ex.message);
       }
       return result;
     },
@@ -122,7 +123,7 @@ define([
       this.setValue(this.core + 'score.raw', score);
       this.setValue(this.core + 'session_time', time);
       this.commit();
-      this.reporter.ps.setSystemMessage('SCORM results reported: ' + score + ' - ' + time);
+      Utils.log('debug', 'SCORM results reported: %d (%s)', score, time);
     },
     /**
      * 
@@ -134,7 +135,7 @@ define([
       try {
         result = this.API[this.prefix + 'Commit']('');
       } catch (ex) {
-        this.reporter.ps.setSystemMessage('Error commiting data to the SCORM API: ' + ex);
+        Utils.log('error', 'Error commiting data to the SCORM API: %s', ex.message);
       }
       return result;
     },
@@ -150,7 +151,7 @@ define([
       try {
         result = this.API[this.prefix + 'SetValue'](key, value);
       } catch (ex) {
-        this.reporter.ps.setSystemMessage('Error setting value "' + value + '" to "' + key + '" in SCORM API: ' + ex);
+        Utils.log('error', 'Error setting value "%s" to "%s" in SCORM API: %s', value, key, ex.message);
       }
       return result;
     },
@@ -165,7 +166,7 @@ define([
       try {
         result = this.API[this.prefix + 'GetValue'](key);
       } catch (ex) {
-        this.reporter.ps.setSystemMessage('Error retrieving "' + key + '" from the SCORM API: ' + ex);
+        Utils.log('error', 'Error retrieving "%s" from SCORM API: %s', key, ex.message);
       }
       return result;
     },
@@ -191,7 +192,7 @@ define([
      * Gets the SCORM type of this SCORM object
      * @returns {string}
      */
-    getScormType: function(){
+    getScormType: function () {
       return 'SCORM ' + (this.is2004 ? '2004' : '1.2');
     }
   };

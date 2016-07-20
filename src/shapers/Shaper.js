@@ -52,7 +52,7 @@ define([
       shaper = new cl(nx, ny);
     }
     else
-      console.log('Unknown shaper: ' + className);
+      Utils.log('error', 'Unknown shaper: %s', className);
 
     return shaper;
   };

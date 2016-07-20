@@ -30,8 +30,7 @@ define([
     this.className = className;
     if (window.Intl && window.Intl.Collator) {
       this.collator = new window.Intl.Collator();
-    }
-    else {
+    } else {
       this.collator = {
         compare: function (a, b) {
           var result = (this.checkCase ? (a === b) : (a.toUpperCase() === b.toUpperCase()));
@@ -55,9 +54,8 @@ define([
       if (cl) {
         ev = new cl(className);
         ev.setProperties($xml);
-      }
-      else
-        console.log('[JClic] Unknown evaluator class: ' + className);
+      } else
+        Utils.log('error', 'Unknown evaluator class: "%s"', className);
     }
     return ev;
   };
@@ -128,8 +126,7 @@ define([
         for (var i = 0; i < match.length; i++)
           if (this._checkText(text, match[i]))
             return true;
-      }
-      else if (match)
+      } else if (match)
         return this._checkText(text, match);
 
       return false;
@@ -289,15 +286,13 @@ define([
           else
             skipped[i] = true;
           wasSpace = true;
-        }
-        else if (ch === ' ') {
+        } else if (ch === ' ') {
           if (this.checkDoubleSpaces || !wasSpace)
             sb += ch;
           else
             skipped[i] = true;
           wasSpace = true;
-        }
-        else {
+        } else {
           wasSpace = false;
           sb += ch;
         }

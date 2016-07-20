@@ -366,21 +366,6 @@ define([
     },
     /**
      * 
-     * Writes system messages to the javascript console
-     * @param {string} msg1 - Main message
-     * @param {string=} msg2 - Complementary message
-     */
-    setSystemMessage: function (msg1, msg2) {
-      var s = '[JClic: ';
-      if (msg1)
-        s += msg1;
-      if (msg2)
-        s += (msg1 ? ' - ' : '') + msg2;
-      s += ']';
-      console.log(s);
-    },
-    /**
-     * 
      * Sets/unsets the 'wait' state
      * @param {boolean} status - Whether to set or unset the wait status. When `undefined`, the
      * `waitCursorCount` member is evaluated to decide if the wait state should be activated or deactivated.
@@ -392,7 +377,7 @@ define([
             display: this.waitCursorCount > 0 ? 'initial' : 'none'
           });
       } else {
-        switch(status){
+        switch (status) {
           case true:
             this.waitCursorCount++;
             break;
@@ -624,7 +609,7 @@ define([
     var sk = null;
 
     skinName = skinName ? skinName : 'default';
-    
+
     // Correct old skin names
     if (skinName.charAt(0, 1) === '@' && skinName.substr(-4) === '.xml')
       skinName = skinName.substr(1, skinName.length - 5);
@@ -646,7 +631,7 @@ define([
       if ($xml)
         sk.setProperties($xml);
     } else
-      console.log('Unknown skin class: ' + skinName);
+      Utils.log('error', 'Unknown skin class: %s', skinName);
 
     return sk;
   };

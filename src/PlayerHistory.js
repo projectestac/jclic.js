@@ -115,9 +115,8 @@ define([
           this.player.load(null, e.activity, null);
         else {
           if (this.testMode && e.projectPath !== null && e.projectPath.length > 0) {
-            console.log('At this point, a jump to ' + e.projectPath + ' should be performed.');
-          }
-          else {
+            Utils.log('info', 'At this point, a jump to "%s" should be performed.', e.projectPath);
+          } else {
             var prj = e.fullZipPath ? e.fullZipPath : e.projectPath;
             this.player.load(prj, e.activity, null);
           }
@@ -145,9 +144,8 @@ define([
             break;
           case 'EXIT':
             if (this.testMode) {
-              console.log('At this point, the program should exit');
-            }
-            else
+              Utils.log('info', 'At this point, the program should exit.');
+            } else
               this.player.exit(ji.sequence);
             break;
           case 'JUMP':
@@ -159,12 +157,10 @@ define([
                 this.player.load(null, null, ase.activityName);
                 result = true;
               }
-            }
-            else {
+            } else {
               if (this.testMode && ji.projectPath !== null && ji.projectPath.length > 0) {
-                console.log('At this point, a jump to ' + ji.projectPath + ' should be performed.');
-              }
-              else {
+                Utils.log('info', 'At this point, a jump to "%s" should be performed.', ji.projectPath);
+              } else {
                 result = this.jumpToSequence(ji.sequence,
                     ji.projectPath ? Utils.getPath(this.player.project.basePath, ji.projectPath) : null,
                     allowReturn);
