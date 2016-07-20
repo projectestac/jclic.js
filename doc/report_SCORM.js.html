@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Source: activities/textGrid/WordSearch.js</title>
+    <title>Source: report/SCORM.js</title>
     
     
     
@@ -11676,419 +11676,258 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="activities_textGrid_WordSearch.js.html">Source: activities/textGrid/WordSearch.js</h1>
+        <h1 class="page-title" data-filename="report_SCORM.js.html">Source: report/SCORM.js</h1>
         
 
 
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>//    File    : WordSearch.js  
-//    Created : 15/06/2015  
-//    By      : fbusquet  
+            <pre class="prettyprint source linenums"><code>//  File    : SCORM.js  
+//  Created : 18/07/2016  
+//  By      : fbusquet  
 //
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+//  JClic.js  
+//  HTML5 player of [JClic](http://clic.xtec.cat) activities  
+//  http://projectestac.github.io/jclic.js  
+//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
+//  This program is free software: you can redistribute it and/or modify it under the terms of
+//  the GNU General Public License as published by the Free Software Foundation, version. This
+//  program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+//  General Public License for more details. You should have received a copy of the GNU General
+//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+
+/* global window */
 
 define([
   "jquery",
-  "../../Activity",
-  "../../boxes/ActiveBoxGrid",
-  "../../boxes/BoxBag",
-  "../../boxes/BoxConnector",
-  "../../AWT",
-  "../../boxes/TextGrid"
-], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT, TextGrid) {
+  "../Utils"
+], function ($, Utils) {
 
   /**
-   * This class of {@link Activity} shows a {@link TextGrid} with some words placed in horizontal,
-   * vertical or diagonal direction, written right or upside down. The remaining grid cells will be
-   * filled with randomly selected characters.&lt;br>
-   * The aim of the activity is to find all the words hidden on the text grid.&lt;br>
-   * The content of an optional {@link ActiveBagContent} can be revealed on an auxiliary panel as
-   * words are found.
-   * @exports WordSearch
+   * This class detects if JClic.js is running in an SCORM environment and, if true,
+   * exposes the methods needed to notify the results of activities.
+   * Both SCORM 1.2 and 2004 are supported.
+   * @exports SCORM
+   * @param {object} API - The global SCORM API object
+   * @param {Reporter} reporter - The {@link Reporter} associated to this SCORM object
    * @class
-   * @extends Activity
-   * @param {JClicProject} project - The JClic project to which this activity belongs
    */
-  var WordSearch = function (project) {
-    Activity.call(this, project);
-  };
+  var SCORM = function (API, reporter) {
+    this.API = API;
 
-  WordSearch.prototype = {
-    constructor: WordSearch,
-    /**
-     * String array containing all the valid clues.
-     * @type {string[]} */
-    clues: null,
-    /**
-     * Array of integers containing __for each clue__ the index
-     * of an associated {@link ActiveBoxContent} located on the secondary {@link ActiveBoxBag}.&lt;br>
-     * This associated element is optional.
-     * @type {number[]} */
-    clueItems: null,
-    /**
-     * 
-     * Retrieves the minimum number of actions needed to solve this activity
-     * @returns {number}
-     */
-    getMinNumActions: function () {
-      return this.clues.length;
-    },
-    /**
-     * 
-     * This type of activity permits the user to display the solution
-     * @returns {boolean}
-     */
-    helpSolutionAllowed: function () {
-      return true;
-    },
-    /**
-     * 
-     * This kind of activity uses random numbers to generate the filling characters
-     * @returns {boolean}
-     */
-    hasRandom: function () {
-      return true;
+    // Check if 'API' has a function named 'Initialized'
+    if (typeof API.Initialize === 'function')
+      this.is2004 = true;
+    else {
+      // SCORM 1.2
+      this.prefix = 'LMS';
+      this.core = 'cmi.core.';
     }
+
+    this.reporter = reporter;
   };
 
-  // WordSearch extends Activity
-  WordSearch.prototype = $.extend(Object.create(Activity.prototype), WordSearch.prototype);
-
-  /**
-   * The {@link Activity.Panel} where word search activities are played.
-   * @class
-   * @extends Activity.Panel
-   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-   * Java interface.
-   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
-   */
-  WordSearch.Panel = function (act, ps, $div) {
-    Activity.Panel.call(this, act, ps, $div);
-    this.resolvedClues = [];
-  };
-
-  var ActPanelAncestor = Activity.Panel.prototype;
-
-  WordSearch.Panel.prototype = {
-    constructor: WordSearch.Panel,
+  SCORM.prototype = {
+    constructor: SCORM,
     /**
-     * The TextGrid object of this Activity.Panel
-     * @type {TextGrid} */
-    grid: null,
+     * True when the API is of type SCORM 2004, false for SCORM 1.2
+     * @type {boolean} */
+    is2004: false,
     /**
-     * An optional {@link ActiveBoxBag} used to display information associated with the hidden words.
-     * @type {ActiveBoxBag} */
-    bgAlt: null,
+     * The Reporter associated to this SCORM object
+     * @type {Reporter} */
+    reporter: null,
     /**
-     * An array of boolean values indicating which clues have been found
-     * @type {boolean[]} */
-    resolvedClues: null,
+     * Prefix to be used in SCORM function names. Should be 'LMS' for SCORM 1.2
+     */
+    prefix: '',
     /**
-     * The box connector object
-     * @type {BoxConnector} */
-    bc: null,
+     * Prefix used in core SCORM keys. Should be 'cmi.core.' for 1.2 and 'cmi.' for 2004
+     */
+    core: 'cmi.',
     /**
-     * Mouse and touch events intercepted by this panel
-     * @type {string[]} */
-    events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
+     * SCORM API object used to communicate with the LMS
+     * @type {object} */
+    API: null,
+    /**
+     * The student ID retrieved from the SCORM API
+     * @type {string} */
+    studentId: '',
+    /**
+     * The student name retrieved from the SCORM API
+     * @type {string} */
+    studentName: '',
     /**
      * 
-     * Performs miscellaneous cleaning operations
+     * Initializes communication with the SCORM API
+     * @returns {Boolean}
      */
-    clear: function () {
-      if (this.grid) {
-        this.grid.end();
-        this.grid = null;
-      }
-      if (this.bgAlt) {
-        this.bgAlt.end();
-        this.bgAlt = null;
-      }
-    },
-    /**
-     * 
-     * Prepares the visual components of the activity
-     */
-    buildVisualComponents: function () {
-
-      if (this.firstRun)
-        ActPanelAncestor.buildVisualComponents.call(this);
-
-      this.clear();
-
-      var tgc = this.act.tgc;
-      var abcAlt = this.act.abc['secondary'];
-
-      if (abcAlt) {
-        if (abcAlt.imgName)
-          abcAlt.setImgContent(this.act.project.mediaBag, null, false);
-
-        if (this.act.acp !== null) {
-          var contentKit = [abcAlt];
-          this.act.acp.generateContent(0, 0, contentKit, false);
+    initialize: function () {
+      var result = false;
+      try {
+        result = this.API[this.prefix + 'Initialize']('');
+        if (result) {
+          this.studentId = this.getValue(this.core + (this.is2004 ? 'learner_id' : 'student_id'));
+          this.studentName = this.getValue(this.core + (this.is2004 ? 'learner_name' : 'student_name'));
+          this.setValue(this.core + 'score.min', 0);
+          this.setValue(this.core + 'score.max', 100);
+          var thisScorm = this;
+          $(window).on('unload', function () {
+            thisScorm.commitInfo();
+            thisScorm.terminate();
+            thisScorm.API = null;
+          });
         }
+        Utils.log('debug', 'SCORM initialized');
+      } catch (ex) {
+        Utils.log('error', 'Error initializing SCORM API: %s', ex.message);
       }
-
-      if (tgc) {
-        this.grid = TextGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, tgc, false);
-
-        if (abcAlt)
-          this.bgAlt = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abcAlt);
-
-        this.grid.setVisible(true);
-      }
-    },
-    /**
-     * 
-     * Basic initialization procedure
-     */
-    initActivity: function () {
-      ActPanelAncestor.initActivity.call(this);
-
-      if (!this.firstRun)
-        this.buildVisualComponents();
-      else
-        this.firstRun = false;
-
-      if (this.grid) {
-
-        this.grid.setChars(this.act.tgc.text);
-        this.grid.randomize();
-        this.grid.setAllCellsAttribute(TextGrid.prototype.flags.INVERTED, false);
-
-        for (var i = 0; i &lt; this.act.clueItems.length; i++)
-          this.resolvedClues[i] = false;
-
-        if (this.bgAlt) {
-          this.bgAlt.setContent(this.act.abc['secondary']);
-          if (this.act.scramble[0]) {
-            var scrambleArray = [this.bgAlt];
-            this.act.shuffle(scrambleArray, true, true);
-          }
-          this.bgAlt.setVisible(false);
-        }
-
-        this.setAndPlayMsg('initial', 'start');
-        this.invalidate().update();
-        this.playing = true;
-      }
-    },
-    /**
-     * Updates the graphic content of this panel.&lt;br>
-     * This method will be called from {@link AWT.Container#update} when needed.
-     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
-     * it's the whole panel.
-     */
-    updateContent: function (dirtyRegion) {
-      ActPanelAncestor.updateContent.call(this, dirtyRegion);
-      if (this.grid &amp;&amp; this.$canvas) {
-        var canvas = this.$canvas.get(0);
-        var ctx = canvas.getContext('2d');
-        if (!dirtyRegion)
-          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
-        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
-        this.grid.update(ctx, dirtyRegion, this);
-        if (this.bgAlt)
-          this.bgAlt.update(ctx, dirtyRegion, this);
-      }
-      return this;
-    },
-    /**
-     * 
-     * Sets the real dimension of this panel.
-     * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
-     * @returns {AWT.Dimension}
-     */
-    setDimension: function (preferredMaxSize) {
-      if (!this.grid || this.getBounds().equals(preferredMaxSize))
-        return preferredMaxSize;
-      if (this.bgAlt)
-        return BoxBag.layoutDouble(preferredMaxSize, this.grid, this.bgAlt, this.act.boxGridPos, this.act.margin);
-      else
-        return BoxBag.layoutSingle(preferredMaxSize, this.grid, this.act.margin);
-    },
-    /**
-     * 
-     * Sets the size and position of this activity panel
-     * @param {AWT.Rectangle} rect
-     */
-    setBounds: function (rect) {
-      if (this.$canvas)
-        this.$canvas.remove();
-
-      ActPanelAncestor.setBounds.call(this, rect);
-      if (this.grid) {
-        // Create the main canvas
-        this.$canvas = $('&lt;canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
-          position: 'absolute',
-          top: 0,
-          left: 0
-        });
-        this.$div.append(this.$canvas);
-
-        // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context
-        this.bc = new BoxConnector(this, this.$canvas.get(0).getContext('2d'));
-
-        // Repaint all
-        this.invalidate().update();
-      }
-    },
-    /**
-     * 
-     * Calculates the current score
-     * @returns {number}
-     */
-    getCurrentScore: function () {
-      var result = 0;
-      if (this.act.clues)
-        for (var i = 0; i &lt; this.act.clues.length; i++)
-          if (this.resolvedClues[i])
-            result++;
       return result;
     },
     /**
      * 
-     * Main handler used to process mouse, touch, keyboard and edit events
-     * @param {HTMLEvent} event - The HTML event to be processed
-     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
-     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     * Terminates communication with the SCORM API
+     * @returns {Boolean}
      */
-    processEvent: function (event) {
-      if (this.bc &amp;&amp; this.playing) {
-        // 
-        // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
-        var p = null;
-        // 
-        // Two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
-        // `origin` and `dest` points.
-        var bx1, bx2;
-        // 
-        // _touchend_ event don't provide pageX nor pageY information
-        if (event.type === 'touchend') {
-          p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
-        } else {
-          // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
-          var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
-          var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
-          p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
-        }
-
-        // Flag for tracking `mouseup` events
-        var up = false;
-        // Flag for assuring that only one media plays per event (avoid event sounds overlapping
-        // cell's media sounds)
-        var m = false;
-
-        switch (event.type) {
-          case 'touchcancel':
-            // Canvel movement
-            if (this.bc.active)
-              this.bc.end();
-            break;
-
-          case 'mouseup':
-            // Don't consider drag moves below 3 pixels. Can be a "trembling click"
-            if (this.bc.active &amp;&amp; p.distanceTo(this.bc.origin) &lt;= 3) {
-              break;
-            }
-            up = true;
-            /* falls through */
-          case 'touchend':
-          case 'touchstart':
-          case 'mousedown':
-            this.ps.stopMedia(1);
-            if (!this.bc.active) {
-              // A new word selection starts
-              // 
-              // Selection of words can never start with a `mouseup` event
-              if (up)
-                break;
-
-              if (this.grid.contains(p)) {
-                this.playEvent('click');
-                this.bc.begin(p);
-              }
-
-            } else {
-              // Word selection completed
-              //
-              // Find the active boxes behind `bc.origin` and `p`
-              var pt1 = this.grid.getLogicalCoords(this.bc.origin);
-              var pt2 = this.grid.getLogicalCoords(this.bc.dest);
-
-              this.bc.end();
-
-              var s = this.grid.getStringBetween(pt1.x, pt1.y, pt2.x, pt2.y);
-              if (s !== null &amp;&amp; s.length > 0) {
-                var ok = false;
-                for (var c = 0; c &lt; this.act.clues.length; c++) {
-                  if (s === this.act.clues[c]) {
-                    ok = true;
-                    break;
-                  }
-                }
-                var repeated = this.resolvedClues[c];
-                if (ok &amp;&amp; !repeated) {
-                  this.resolvedClues[c] = true;
-                  this.grid.setAttributeBetween(pt1.x, pt1.y, pt2.x, pt2.y, TextGrid.prototype.flags.INVERTED, true);
-                  if (this.bgAlt !== null) {
-                    var k = this.act.clueItems[c];
-                    if (k >= 0 &amp;&amp; k &lt; this.bgAlt.getNumCells()) {
-                      var bx = this.bgAlt.getActiveBox(this.act.clueItems[c]);
-                      if (bx) {
-                        bx.setVisible(true);
-                        m = bx.playMedia(this.ps);
-                      }
-                    }
-                  }
-                }
-                if (!repeated) {
-                  var r = this.getCurrentScore();
-                  this.ps.reportNewAction(this.act, 'ACTION_SELECT', s, null, ok, r);
-                  if (r === this.act.clues.length)
-                    this.finishActivity(true);
-                  else if (!m)
-                    this.playEvent(ok ? 'actionOK' : 'actionError');
-                  this.invalidate();
-                } else if (!ok &amp;&amp; !m)
-                  this.playEvent('actionError');
-              } else
-                this.playEvent('actionError');
-
-              this.update();
-            }
-            break;
-
-          case 'mousemove':
-          case 'touchmove':
-            this.bc.moveTo(p);
-            break;
-        }
-        event.preventDefault();
+    terminate: function () {
+      var result = false;
+      try {
+        result = this.API[this.is2004 ? 'Terminate' : 'LMSFinish']('');
+      } catch (ex) {
+        Utils.log('error', 'Error terminating SCORM API: %s', ex.message);
       }
+      return result;
+    },
+    commitInfo: function () {
+      var info = this.reporter.getInfo(),
+          score = Math.round(info.globalScore * 100),
+          time = this.getTimeExpression(info.tTime);
+
+      this.setValue(this.core + 'score.raw', score);
+      this.setValue(this.core + 'session_time', time);
+      this.commit();
+      Utils.log('debug', 'SCORM results reported: %d (%s)', score, time);
+    },
+    /**
+     * 
+     * Commits current pending data to the SCORM API
+     * @returns {Boolean}
+     */
+    commit: function () {
+      var result = false;
+      try {
+        result = this.API[this.prefix + 'Commit']('');
+      } catch (ex) {
+        Utils.log('error', 'Error commiting data to the SCORM API: %s', ex.message);
+      }
+      return result;
+    },
+    /**
+     * 
+     * Sends a specific value to the SCORM API
+     * @param {tring} key - A SCORM valid key
+     * @param {string|number} value - The value associated with this key
+     * @returns {string}
+     */
+    setValue: function (key, value) {
+      var result = false;
+      try {
+        result = this.API[this.prefix + 'SetValue'](key, value);
+      } catch (ex) {
+        Utils.log('error', 'Error setting value "%s" to "%s" in SCORM API: %s', value, key, ex.message);
+      }
+      return result;
+    },
+    /**
+     * 
+     * Gets a specific value from the SCORM API
+     * @param {tring} key - A SCORM valid key
+     * @returns {string} - The value associated with the provided key, or `null` if not found
+     */
+    getValue: function (key) {
+      var result = false;
+      try {
+        result = this.API[this.prefix + 'GetValue'](key);
+      } catch (ex) {
+        Utils.log('error', 'Error retrieving "%s" from SCORM API: %s', key, ex.message);
+      }
+      return result;
+    },
+    /**
+     * Gets a string expression of the given time (in milliseconds) suitable for a SCORM transaction.
+     * For details see: http://www.ostyn.com/standards/scorm/samples/ISOTimeForSCORM.htm
+     * @param {type} millis - The amount of time, in milliseconds
+     * @returns {String} - An ISO8601 valid expression
+     */
+    getTimeExpression: function (millis) {
+      // See http://www.ostyn.com/standards/scorm/samples/ISOTimeForSCORM.htm
+
+      var d = new Date(millis);
+      var h = d.getUTCHours(),
+          m = d.getUTCMinutes(),
+          s = d.getUTCSeconds();
+
+      return this.is2004 ?
+          'PT' + h + 'H' + m + 'M' + s + 'S' :
+          ('0000' + h).slice(-4) + ':' + ('00' + m).slice(-2) + ':' + ('00' + s).slice(-2);
+    },
+    /**
+     * Gets the SCORM type of this SCORM object
+     * @returns {string}
+     */
+    getScormType: function () {
+      return 'SCORM ' + (this.is2004 ? '2004' : '1.2');
     }
   };
 
-  // WordSearch.Panel extends Activity.Panel
-  WordSearch.Panel.prototype = $.extend(Object.create(ActPanelAncestor), WordSearch.Panel.prototype);
+  /**
+   * Maximum recursive attempts allowed to find the global SCORM API object
+   * @type {number} */
+  SCORM.DISCOVER_MAX_TRIES = 50;
 
-  // Register class in Activity.prototype
-  Activity.CLASSES['@textGrid.WordSearch'] = WordSearch;
+  /**
+   * 
+   * Recursive function used to find the SCORM "API" object
+   * @param {object} win - The 'window' object to scan for global SCORM API objects
+   * @param {number} tries - Recursive attempts currently achieved
+   * @returns {object} - The global SCORM API object, or `null` if not found
+   */
+  SCORM.scanForAPI = function (win, tries) {
+    if (win.API_1484_11 &amp;&amp; win.API_1184_11.Initialize &amp;&amp; win.API_1184_11.SetValue &amp;&amp; win.API_1184_11.Commit)
+      return win.API_1184_11;
+    else if (win.API &amp;&amp; win.API.LMSInitialize &amp;&amp; win.API.LMSSetValue &amp;&amp; win.API.LMSCommit)
+      return win.API;
+    else if (win.parent &amp;&amp; win.parent !== win &amp;&amp; tries++ &lt; SCORM.DISCOVER_MAX_TRIES)
+      return SCORM.scanForAPI(win.parent, tries);
+    else
+      return null;
+  };
 
-  return WordSearch;
+  /**
+   * 
+   * Checks for the presence of a SCORM API on the current browser session.
+   * @returns {SCORM} - A valid SCORM object, or `null` if no SCORM API was found.
+   * @param {Reporter} reporter - The {@link Reporter} linked to the requested SCORM object
+   */
+  SCORM.getSCORM = function (reporter) {
+    var result = null;
+
+    var api = SCORM.scanForAPI(window, 0);
+    if (api === null &amp;&amp; window.opener)
+      api = SCORM.scanForAPI(window.opener, 0);
+
+    if (api) {
+      result = new SCORM(api, reporter);
+      if (!result.initialize())
+        result = null;
+    }
+    return result;
+  };
+
+  return SCORM;
+
 });
 </code></pre>
         </article>
@@ -12102,7 +11941,7 @@ define([
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Jul 20 2016 16:30:31 GMT+0200 (CEST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Jul 20 2016 16:30:30 GMT+0200 (CEST)
         </footer>
     </div>
 </div>
