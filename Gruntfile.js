@@ -34,6 +34,7 @@ module.exports = function (grunt) {
     jshint: {
       files: ['src/**/*.js', '!src/GlobalData.js'],
       options: {
+        browserify: true,
         sub: true,
         multistr: true,
         eqeqeq: true,
@@ -44,7 +45,14 @@ module.exports = function (grunt) {
         noarg: true,
         nonew: true,
         singleGroups: true,
-        undef: true
+        undef: true,
+        globals: {
+          define: true,
+          console: true,
+          alert: true,
+          Promise: true,
+          parseInt: true
+        }
       }
     },
     //

@@ -245,7 +245,7 @@ define([
       var result = null;
       if (activityName !== null) {
         for (var i = 0; result === null && i < this.elements.length; i++) {
-          var ase = getElement(i, false);
+          var ase = this.getElement(i, false);
           if (ase.activityName.toLowerCase() === activityName.toLowerCase())
             result = ase;
         }

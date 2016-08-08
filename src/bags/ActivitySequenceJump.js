@@ -85,7 +85,7 @@ define([
         } else if (this.lowerJump !== null &&
             (rating < this.lowerJump.threshold ||
                 this.lowerJump.time > 0 && time > this.lowerJump.time)) {
-          result = lowerJump;
+          result = this.lowerJump;
         }
       }
       return result;

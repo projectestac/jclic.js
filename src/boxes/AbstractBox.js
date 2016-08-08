@@ -544,7 +544,7 @@ define([
      * @returns {AWT.Rectangle}
      */
     getBorderBounds: function () {
-      var result = new Rectangle(this.getBounds());
+      var result = new AWT.Rectangle(this.getBounds());
       if (this.border || this.marked) {
         var bb = this.getBoxBaseResolve();
         var w = bb[this.marked ? 'markerStroke' : 'borderStroke'].lineWidth;

@@ -350,7 +350,7 @@ define([
      */
     _evalText: function (text, match) {
 
-      var i;
+      var i, k;
 
       if (!this.detail)
         return Evaluator.BasicEvaluator.prototype._evalText.call(this, text, match);

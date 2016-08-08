@@ -261,7 +261,7 @@ define([
      */
     resetIds: function () {
       for (var i = 0; i < this.cells.length; i++) {
-        var bx = cells[i];
+        var bx = this.cells[i];
         if (bx) {
           bx.idOrder = i;
           bx.idAss = i;

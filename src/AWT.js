@@ -1178,7 +1178,7 @@ define([
       var p0 = new AWT.Point(this.enclosingPoints[0]);
       var p1 = new AWT.Point(this.enclosingPoints[0]);
       for (var k = 1; k < l; k++) {
-        var p = this.enclosingPoints[n];
+        var p = this.enclosingPoints[k];
         // Check if `p` is at left or above `p0`
         p0.x = Math.min(p.x, p0.x);
         p0.y = Math.min(p.y, p0.y);
@@ -1475,7 +1475,7 @@ define([
      * @param {function} listener - The listener to be removed
      */
     removeStatusListener: function (listener) {
-      this._statusListeners = $.grep(_statusListeners, function (item) {
+      this._statusListeners = $.grep(this._statusListeners, function (item) {
         return item !== listener;
       });
     },

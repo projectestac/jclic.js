@@ -274,7 +274,7 @@ define([
       var result = false;
       if (color.indexOf('rgba(') === 0) {
         var p = color.lastIndexOf(',');
-        var alpha = parseint(color.substr(p));
+        var alpha = parseInt(color.substr(p));
         result = typeof alpha === 'number' && alpha < 1.0;
       }
       return result;
@@ -666,13 +666,14 @@ define([
         range.selectNodeContents(el);
         var textNodes = Utils.getTextNodesIn(el);
         var foundStart = false;
-        var charCount = 0, endCharCount;
+        var charCount = 0, endCharCount, textNode;
 
-        for (var i = 0, textNode; (textNode = textNodes[i++]); ) {
+        for (var i = 0; i < textNodes.length; i++) {
+          textNode = textNodes[i];
           endCharCount = charCount + textNode.length;
           if (!foundStart && start >= charCount &&
               (start < endCharCount ||
-                  start === endCharCount && i <= textNodes.length)) {
+                  start === endCharCount && i + 1 <= textNodes.length)) {
             range.setStart(textNode, start - charCount);
             foundStart = true;
           }

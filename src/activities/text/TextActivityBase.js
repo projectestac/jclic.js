@@ -17,8 +17,9 @@ define([
   "jquery",
   "../../Activity",
   "../../AWT",
-  "../../boxes/ActiveBox"
-], function ($, Activity, AWT, ActiveBox) {
+  "../../boxes/ActiveBox",
+  "../../boxes/BoxBase"
+], function ($, Activity, AWT, ActiveBox, BoxBase) {
 
   /**
    * This class and its visual component {@link TextActivityBase.Panel} are the base for text

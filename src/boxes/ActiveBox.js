@@ -204,7 +204,7 @@ define([
       this.hasHostedComponent = bx.hasHostedComponent;
       this.setHostedMediaPlayer(bx.hostedMediaPlayer);
       if (this.hostedMediaPlayer)
-        this.hostedMediaPlayer.setVisualComponentVisible(!isInactive() && isVisible());
+        this.hostedMediaPlayer.setVisualComponentVisible(!this.isInactive() && this.isVisible());
     },
     /**
      * 

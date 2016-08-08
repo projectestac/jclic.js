@@ -79,7 +79,7 @@ define([
      */
     setProperties: function ($xml) {
       var actReg = this;
-      $each($xml.get(0).attributes, function () {
+      $.each($xml.get(0).attributes, function () {
         var name = this.name;
         var value = this.value;
         switch (name) {
