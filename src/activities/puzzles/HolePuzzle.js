@@ -181,9 +181,9 @@ define([
           this.act.shuffles++;
         for (var i = 0; i < this.act.shuffles; i++) {
           var pth = this.bg.getCoord(this.hiddenBox);
-          var v = (Math.floor(Math.random() * 2)) === 0 ? 1 : -1;
+          var v = Math.floor(Math.random() * 2) === 0 ? 1 : -1;
 
-          if ((Math.floor(Math.random() * 2)) === 0) {
+          if (Math.floor(Math.random() * 2) === 0) {
             pth.x += v;
             if (pth.x < 0 || pth.x >= this.bg.nCols)
               pth.x -= 2 * v;
@@ -283,7 +283,7 @@ define([
                   var src = bx.getDescription() + '(' + bx.idOrder + ')';
                   var dest = '(' + this.hiddenBox.idLoc + ')';
                   bx.exchangeLocation(this.hiddenBox);
-                  var ok = (bx.idOrder === bx.idLoc);
+                  var ok = bx.idOrder === bx.idLoc;
                   // Check results and notify action
                   var cellsAtPlace = this.bg.countCellsAtEquivalentPlace(true);
                   this.ps.reportNewAction(this.act, 'SELECT', src, dest, ok, cellsAtPlace);

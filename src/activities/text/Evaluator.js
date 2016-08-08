@@ -33,7 +33,7 @@ define([
     } else {
       this.collator = {
         compare: function (a, b) {
-          var result = (this.checkCase ? (a === b) : (a.toUpperCase() === b.toUpperCase()));
+          var result = this.checkCase ? a === b : a.toUpperCase() === b.toUpperCase();
           return result;
         }
       };
@@ -454,11 +454,11 @@ define([
               i = iok + Math.floor((j + 1) / 2) * ((j & 1) !== 0 ? 1 : -1);
               if (i >= lok)
                 continue;
-              is2 = (i < 0 ? is - i : is);
+              is2 = i < 0 ? is - i : is;
               if (is2 >= ls)
                 continue;
               ls2 = (ls2 = ls - is2) > this.checkScope ? this.checkScope : ls2;
-              iok2 = (i < 0 ? 0 : i);
+              iok2 = i < 0 ? 0 : i;
               lok2 = (lok2 = lok - iok2) > this.checkScope ? this.checkScope : lok2;
               var flags2 = [];
               for (var w = 0; w < src.length - is2; w++)

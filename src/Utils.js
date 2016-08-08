@@ -124,7 +124,7 @@ define([
      * @returns {*}
      */
     getVal: function (val, defaultValue) {
-      return (val === '' || val === null || typeof val === 'undefined') ?
+      return val === '' || val === null || typeof val === 'undefined' ?
           (defaultValue ? defaultValue : null) :
           val;
     },
@@ -153,7 +153,7 @@ define([
     getHMStime: function (millis) {
       var d = new Date(millis);
       var h = d.getUTCHours(), m = d.getUTCMinutes(), s = d.getUTCSeconds();
-      return (h ? h + 'h ' : '') + ((h || m) ? ('0' + m).slice(-2) + '\'' : '') + ('0' + s).slice(-2) + '"';
+      return (h ? h + 'h ' : '') + (h || m ? ('0' + m).slice(-2) + '\'' : '') + ('0' + s).slice(-2) + '"';
     },
     /**
      * Returns a formatted string with the provided date and time
@@ -199,7 +199,7 @@ define([
      * @returns {boolean}
      */
     isNullOrUndef: function (val) {
-      return (typeof val === 'undefined' || val === null);
+      return typeof val === 'undefined' || val === null;
     },
     /**
      * Checks if two expressions are equivalent.<br>
@@ -210,7 +210,7 @@ define([
      * @returns {boolean}
      */
     isEquivalent: function (a, b) {
-      return ((typeof a === 'undefined' || a === null) && (typeof b === 'undefined' || b === null)) ||
+      return (typeof a === 'undefined' || a === null) && (typeof b === 'undefined' || b === null) ||
           a === b;
     },
     /**
@@ -275,7 +275,7 @@ define([
       if (color.indexOf('rgba(') === 0) {
         var p = color.lastIndexOf(',');
         var alpha = parseint(color.substr(p));
-        result = (typeof alpha === 'number') && alpha < 1.0;
+        result = typeof alpha === 'number' && alpha < 1.0;
       }
       return result;
     },
@@ -319,7 +319,7 @@ define([
      * @returns {number}
      */
     roundTo: function (v, n) {
-      return (Math.round(v / n)) * n;
+      return Math.round(v / n) * n;
     },
     /**
      * Compares the provided answer against multiple valid options. These valid options are
@@ -393,7 +393,7 @@ define([
      * @returns {string}
      */
     getRelativePath: function (file, path) {
-      if (!path || path === '' | file.indexOf(path) !== 0)
+      if (!path || path === '' || file.indexOf(path) !== 0)
         return file;
       else
         return file.substr(path.length);
@@ -496,7 +496,7 @@ define([
      * @returns {string} - A valid CSS value, or `null` if no value provided
      */
     toCssSize: function (exp, css, key, def) {
-      var result = (typeof exp === 'undefined' || exp === null) ? null : (isNaN(exp) ? exp : exp + 'px');
+      var result = typeof exp === 'undefined' || exp === null ? null : isNaN(exp) ? exp : exp + 'px';
       if (css && key && (result || def))
         css[key] = result !== null ? result : def;
       return result;
@@ -672,7 +672,7 @@ define([
           endCharCount = charCount + textNode.length;
           if (!foundStart && start >= charCount &&
               (start < endCharCount ||
-                  (start === endCharCount && i <= textNodes.length))) {
+                  start === endCharCount && i <= textNodes.length)) {
             range.setStart(textNode, start - charCount);
             foundStart = true;
           }

@@ -82,10 +82,9 @@ define([
             rating > this.upperJump.threshold &&
             (this.upperJump.time <= 0 || time < this.upperJump.time)) {
           result = this.upperJump;
-        }
-        else if (this.lowerJump !== null &&
+        } else if (this.lowerJump !== null &&
             (rating < this.lowerJump.threshold ||
-                (this.lowerJump.time > 0 && time > this.lowerJump.time))) {
+                this.lowerJump.time > 0 && time > this.lowerJump.time)) {
           result = lowerJump;
         }
       }

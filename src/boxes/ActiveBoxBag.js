@@ -94,7 +94,7 @@ define([
           bx.setAltContent(altAbc, fromIndex + i);
       }
 
-      if (abc.backgroundContent !== null && (this.getBackgroundActiveBox() !== null)) {
+      if (abc.backgroundContent !== null && this.getBackgroundActiveBox() !== null) {
         bx = this.getBackgroundActiveBox();
         bx.setContent(abc.backgroundContent);
         if (abc.bb !== bx.boxBase)

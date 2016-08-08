@@ -61,7 +61,7 @@ define([
     i18n.init(this);
 
     /* global location */
-    this.localFS = (location && location.protocol === 'file:');
+    this.localFS = location && location.protocol === 'file:';
 
     this.$div = $('<div/>', {class: 'JClicPlayer'});
     this.project = new JClicProject();
@@ -383,7 +383,7 @@ define([
      */
     setSkin: function (newSkin) {
       if (!newSkin)
-        newSkin = (this.project && this.project.skin) ? this.project.skin : this.defaultSkin;
+        newSkin = this.project && this.project.skin ? this.project.skin : this.defaultSkin;
 
       if (newSkin !== null && newSkin !== this.skin) {
         newSkin.attach(this);
@@ -402,7 +402,7 @@ define([
           this.project.end();
         this.removeActivity();
       }
-      this.project = (project !== null ? project : new JClicProject());
+      this.project = project !== null ? project : new JClicProject();
       this.project.realize(this);
     },
     /**
@@ -770,8 +770,8 @@ define([
           this.bgImageOrigin.x = (width - this.actPanel.bgImage.width) / 2;
           this.bgImageOrigin.y = (height - this.actPanel.bgImage.height) / 2;
           proposedRect.pos.moveTo(this.bgImageOrigin);
-          proposedRect.dim.width -= (this.bgImageOrigin.x - m);
-          proposedRect.dim.height -= (this.bgImageOrigin.y - m);
+          proposedRect.dim.width -= this.bgImageOrigin.x - m;
+          proposedRect.dim.height -= this.bgImageOrigin.y - m;
           proposedRect.dim.width = Math.min(proposedRect.dim.width, width);
           proposedRect.dim.height = Math.min(proposedRect.dim.height, height);
         }

@@ -47,7 +47,7 @@ define([
       // Add English as final option
       tries.push(defaultLanguage ? defaultLanguage : 'en');
 
-      for (var i in tries) {
+      for (var i = 0; i < tries.length; i++) {
         var match = -1;
         for (var n in availableLanguages) {
           if (tries[i].indexOf(availableLanguages[n]) === 0) {

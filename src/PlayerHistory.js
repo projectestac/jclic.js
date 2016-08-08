@@ -111,7 +111,7 @@ define([
       if (this.sequenceStack.length > 0) {
         var e = this.sequenceStack.pop();
         if (e.projectPath === this.player.project.path &&
-            Utils.isEquivalent(e.fullZipPath, (this.player.zip ? this.player.zip.fullZipPath : null)))
+            Utils.isEquivalent(e.fullZipPath, this.player.zip ? this.player.zip.fullZipPath : null))
           this.player.load(null, e.activity, null);
         else {
           if (this.testMode && e.projectPath !== null && e.projectPath.length > 0) {
@@ -192,7 +192,7 @@ define([
           var same = sequence === e.sequence;
           if (path === this.player.project.path) {
             var ase = this.player.project.activitySequence.getElement(e.activity, false);
-            same = (ase !== null && sequence === ase.tag);
+            same = ase !== null && sequence === ase.tag;
           }
           if (same)
             return this.pop();

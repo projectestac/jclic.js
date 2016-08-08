@@ -164,7 +164,7 @@ define([
     AWT: AWT,
     Utils: Utils,
     $: $,
-    options: (typeof JClicDataOptions === 'undefined') ? {} : JClicDataOptions,
+    options: typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions,
     projectFiles: {},
     currentPlayers: [],
     /**
@@ -218,7 +218,7 @@ define([
   $(function () {
 
     // If defined, load the global variable `JClicDataOptions`
-    var options = (typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions);
+    var options = typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions;
     JClicObject.options = options;
 
     if (!options.noInit) {

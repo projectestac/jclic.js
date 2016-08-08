@@ -369,7 +369,7 @@ define([
                 case 'helpWindow':
                   act.helpMsg = Utils.getXmlText(this);
                   act.showSolution = Utils.getBoolean($node.attr('showSolution'), false);
-                  act.helpWindow = (act.helpMsg !== null || act.showSolution);
+                  act.helpWindow = act.helpMsg !== null || act.showSolution;
                   break;
 
                 case 'container':
@@ -586,8 +586,7 @@ define([
      */
     helpWindowAllowed: function () {
       return this.helpWindow &&
-          ((this.helpSolutionAllowed() && this.showSolution) ||
-              this.helpMsg !== null);
+          (this.helpSolutionAllowed() && this.showSolution || this.helpMsg !== null);
     },
     /**
      * 
@@ -618,9 +617,8 @@ define([
      * @returns {boolean}
      */
     hasInfo: function () {
-      return(
-          (this.infoUrl !== null && this.infoUrl.length > 0) ||
-          (this.infoCmd !== null && this.infoCmd.length > 0));
+      return this.infoUrl !== null && this.infoUrl.length > 0 ||
+          this.infoCmd !== null && this.infoCmd.length > 0;
     },
     /**
      * 
@@ -1057,11 +1055,11 @@ define([
      * @param {boolean} eActions - Whether to enable or disable the actions counter
      */
     enableCounters: function (eTime, eScore, eActions) {
-      if (typeof (eTime) === 'undefined')
+      if (typeof eTime === 'undefined')
         eTime = this.act.bTimeCounter;
-      if (typeof (eScore) === 'undefined')
+      if (typeof eScore === 'undefined')
         eScore = this.act.bScoreCounter;
-      if (typeof (eActions) === 'undefined')
+      if (typeof eActions === 'undefined')
         eActions = this.act.bActionsCounter;
 
       this.ps.setCounterEnabled('time', eTime);

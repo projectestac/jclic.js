@@ -137,7 +137,7 @@ define([
      * no movement at all.
      */
     moveTo: function (pt, forcePaint) {
-      if (!this.active || (!forcePaint && this.dest.equals(pt)))
+      if (!this.active || !forcePaint && this.dest.equals(pt))
         return;
 
       // Restore the background
@@ -148,7 +148,7 @@ define([
               0, 0,
               this.bgRect.pos.x, this.bgRect.pos.y,
               this.bgRect.dim.width, this.bgRect.dim.height);
-        } else if(this.parent) {
+        } else if (this.parent) {
           this.parent.updateContent();
         }
       }
@@ -171,8 +171,7 @@ define([
         this.bx.setTemporaryHidden(false);
         this.bx.update(this.ctx, null);
         this.bx.setTemporaryHidden(true);
-      }
-      else {
+      } else {
         // Draw the connecting line
         this.drawLine();
         this.linePainted = true;
@@ -252,8 +251,7 @@ define([
       if (this.compositeOp !== DEFAULT_COMPOSITE_OP) {
         this.ctx.strokeStyle = this.xorColor;
         this.ctx.globalCompositeOperation = this.compositeOp;
-      }
-      else
+      } else
         this.ctx.strokeStyle = this.lineColor;
 
       this.ctx.lineWidth = this.lineWidth;

@@ -129,7 +129,7 @@ define([
      * @returns {string}
      */
     getProperty: function (key, defaultValue) {
-      return (this.dbProperties !== null && this.dbProperties.hasOwnProperty(key)) ?
+      return this.dbProperties !== null && this.dbProperties.hasOwnProperty(key) ?
           this.dbProperties[key] :
           defaultValue;
     },

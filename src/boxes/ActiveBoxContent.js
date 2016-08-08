@@ -209,7 +209,7 @@ define([
       return align;
     },
     isEmpty: function () {
-      return (this.text === null && this.img === null);
+      return this.text === null && this.img === null;
     },
     /**
      * 
@@ -224,16 +224,16 @@ define([
       var result = false;
       if (abc !== null) {
         if (this.isEmpty() && abc.isEmpty())
-          result = (this.id === abc.id);
+          result = this.id === abc.id;
         else
           result = (this.text === null ? abc.text === null
-              : (checkCase ? this.text === abc.text
-                  : this.text.toLocaleLowerCase() === abc.text.toLocaleLowerCase())
+              : checkCase ? this.text === abc.text
+              : this.text.toLocaleLowerCase() === abc.text.toLocaleLowerCase()
               ) &&
               (this.mediaContent === null ? abc.mediaContent === null
                   : this.mediaContent.isEquivalent(abc.mediaContent)
                   ) &&
-              (this.img === abc.img) &&
+              this.img === abc.img &&
               (this.imgClip === null ? abc.imgClip === null
                   : this.imgClip.equals(abc.imgClip));
       }
@@ -250,8 +250,7 @@ define([
         this.rawText = tx;
         this.text = tx;
         this.checkHtmlText(null);
-      }
-      else {
+      } else {
         this.rawText = null;
         this.text = null;
         this.htmlText = null;
@@ -289,7 +288,7 @@ define([
       this.img = img;
       this.imgName = null;
       this.imgClip = imgClip;
-      if(animatedGifFile)
+      if (animatedGifFile)
         this.animatedGifFile = animatedGifFile;
     },
     /**
@@ -298,7 +297,7 @@ define([
      * @param {PlayStation} playStation - Usually a {@link JClicPlayer}
      */
     prepareMedia: function (playStation) {
-      if(!this.amp && this.mediaContent && this.mediaContent.mediaType === 'PLAY_VIDEO'){
+      if (!this.amp && this.mediaContent && this.mediaContent.mediaType === 'PLAY_VIDEO') {
         this.amp = playStation.getActiveMediaPlayer(this.mediaContent);
         this.amp.realize();
       }
@@ -349,7 +348,7 @@ define([
         result += this.mediaContent.getDescription();
       }
       return result;
-    },
+    }
   };
 
   /**

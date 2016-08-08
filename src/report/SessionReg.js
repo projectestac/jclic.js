@@ -95,7 +95,7 @@ define([
 
       if (this.info.numSequences > 0) {
 
-        result.push(($('<p/>').html(writeProjectName ? ps.getMsg('Project') + ' ' + this.projectName : '')));
+        result.push($('<p/>').html(writeProjectName ? ps.getMsg('Project') + ' ' + this.projectName : ''));
 
         $t.append($('<thead/>').append($('<tr/>').append(
             $html.th(ps.getMsg('sequence')),
@@ -150,7 +150,7 @@ define([
       this.endSequence();
       this.currentSequence = new SequenceReg(ase);
       this.sequences.push(this.currentSequence);
-      this.info.valid = false;      
+      this.info.valid = false;
     },
     /**
      * This method should be invoked when the user starts a new activity
@@ -162,7 +162,7 @@ define([
         if (this.actNames.indexOf(act.name) === -1)
           this.actNames.push(act.name);
         this.currentSequence.newActivity(act);
-        this.info.valid = false;        
+        this.info.valid = false;
       }
     },
     /**
@@ -173,7 +173,7 @@ define([
      * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
      */
     endActivity: function (score, numActions, solved) {
-      if (this.currentSequence){
+      if (this.currentSequence) {
         this.currentSequence.endActivity(score, numActions, solved);
         this.info.valid = false;
       }
@@ -186,7 +186,7 @@ define([
      * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwhise
      */
     newAction: function (type, source, dest, ok) {
-      if (this.currentSequence){
+      if (this.currentSequence) {
         this.currentSequence.newAction(type, source, dest, ok);
         this.info.valid = false;
       }
@@ -287,7 +287,7 @@ define([
               this.nActions += sri.nActions;
               if (sri.nActScore > 0) {
                 this.nActScore += sri.nActScore;
-                this.tScore += (sri.tScore * sri.nActScore);
+                this.tScore += sri.tScore * sri.nActScore;
               }
               this.tTime += sri.tTime;
               this.nActSolved += sri.nActSolved;
@@ -300,7 +300,7 @@ define([
           this.ratioSolved = this.nActSolved / this.nActivities;
           if (this.sReg.reportableActs > 0)
             this.ratioPlayed = this.sReg.actNames.length / this.sReg.reportableActs;
-        }        
+        }
         this.valid = true;
       }
       return this;

@@ -103,7 +103,7 @@ define([
      */
     countSolvedTargets: function () {
       var result = 0;
-      for (var i in this.targets) {
+      for (var i = 0; i < this.targets.length; i++) {
         var t = this.targets[i];
         if (t.targetStatus === 'SOLVED')
           result++;
@@ -120,7 +120,7 @@ define([
       var numTargets = this.targets.length;
       for (var i = 0; i < numTargets; i++) {
         var target = this.targets[i];
-        var ok = (target.targetStatus === 'SOLVED');
+        var ok = target.targetStatus === 'SOLVED';
         if (ok)
           targetsOk++;
         target.checkColors();

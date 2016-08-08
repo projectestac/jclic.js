@@ -119,10 +119,10 @@ define([
       // Check if it's an animated GIF
       if (this.ext === 'gif') {
         var anim = $xml.attr('animated');
-        if (typeof anim === 'undefined') {
+        if (typeof anim === 'undefined')
           this.checkAnimatedGif();
-        } else
-          this.animated = (anim === 'true');
+        else
+          this.animated = anim === 'true';
       }
       return this;
     },
@@ -293,12 +293,12 @@ define([
       if (this.data && !this.ready) {
         switch (this.type) {
           case 'image':
-            this.ready = (this.data.complete === true);
+            this.ready = this.data.complete === true;
             break;
           case 'audio':
           case 'video':
           case 'anim':
-            this.ready = (this.data.readyState >= 1);
+            this.ready = this.data.readyState >= 1;
             break;
           default:
             this.ready = true;

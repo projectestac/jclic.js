@@ -345,8 +345,8 @@ define([
             // 
             // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
             // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
-            var x = (event.originalEvent && event.originalEvent.touches) ? event.originalEvent.touches[0].pageX : event.pageX;
-            var y = (event.originalEvent && event.originalEvent.touches) ? event.originalEvent.touches[0].pageY : event.pageY;
+            var x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
+            var y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
             var p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
 
             this.ps.stopMedia(1);
@@ -356,7 +356,7 @@ define([
                 this.setCursorAt(pt.x, pt.y);
                 if (K.TOUCH_DEVICE) {
                   // We are in a touch device, so prompt user to write text:
-                  var d = (this.advance === 'ADVANCE_DOWN');
+                  var d = this.advance === 'ADVANCE_DOWN';
                   var txt = window.prompt((d ? 'Vertical' : 'Horizontal') + ' word:', '');
                   this.writeChars(txt);
                 }

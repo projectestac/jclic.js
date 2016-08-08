@@ -50,8 +50,7 @@ define([
     var cl = Shaper.CLASSES[className];
     if (cl) {
       shaper = new cl(nx, ny);
-    }
-    else
+    } else
       Utils.log('error', 'Unknown shaper: %s', className);
 
     return shaper;
@@ -209,7 +208,7 @@ define([
         // Data should be always divided by the scale (X or Y)
         if (data) {
           for (var i = 0; i < data.length; i++) {
-            data[i] /= (i % 2 ? scaleY : scaleX);
+            data[i] /= i % 2 ? scaleY : scaleX;
           }
         }
         switch (sd[0]) {
@@ -257,7 +256,7 @@ define([
      * @returns {object}
      */
     getShapeData: function (n) {
-      return (n >= 0 && n < this.shapeData.length) ? this.shapeData[n] : null;
+      return n >= 0 && n < this.shapeData.length ? this.shapeData[n] : null;
     },
     /**
      * 

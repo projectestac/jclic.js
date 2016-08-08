@@ -297,7 +297,7 @@ define([
                 var ok = false;
                 var src = bx1.getDescription() + " (" + bx1.idOrder + ")";
                 var dest = "(" + bx2.idLoc + ")";
-                ok = (bx1.idOrder === bx2.idLoc);
+                ok = bx1.idOrder === bx2.idLoc;
                 bx1.exchangeLocation(bx2);
                 // Check results and notify action
                 var cellsAtPlace = this.bg.countCellsAtEquivalentPlace(true);

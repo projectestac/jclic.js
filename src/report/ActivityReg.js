@@ -178,7 +178,7 @@ define([
     newAction: function (type, source, dest, ok) {
       if (!this.closed) {
         this.lastAction = new ActionReg(type, source, dest, ok);
-        this.actions.push(lastAction);
+        this.actions.push(this.lastAction);
       }
     },
     /**
@@ -197,7 +197,7 @@ define([
         if (this.lastAction)
           this.totalTime = this.lastAction.time - this.startTime;
         else
-          this.totalTime = ((new Date()).valueOf()) - this.startTime;
+          this.totalTime = (new Date()).valueOf() - this.startTime;
         this.closed = true;
       }
     },
@@ -214,7 +214,7 @@ define([
           if (this.numActions < this.minActions)
             result = 100;
           else
-            result = Math.round((this.minActions * 100) / this.numActions);
+            result = Math.round(this.minActions * 100 / this.numActions);
         } else {
           result = Math.round(100 * (this.score * this.score) / (this.minActions * this.numActions));
         }

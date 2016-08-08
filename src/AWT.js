@@ -112,7 +112,7 @@ define([
       }
     });
   };
-  
+
   /**
    * Try to load a specific font from http://www.google.com/fonts
    * @param {string} name - The font family name
@@ -1032,8 +1032,8 @@ define([
       // Thanks Steve!!
 
       var kappa = 0.5522848,
-          ox = (this.dim.width / 2) * kappa, // control point offset horizontal
-          oy = (this.dim.height / 2) * kappa, // control point offset vertical
+          ox = kappa * this.dim.width / 2, // control point offset horizontal
+          oy = kappa * this.dim.height / 2, // control point offset vertical
           xe = this.pos.x + this.dim.width, // x-end
           ye = this.pos.y + this.dim.height, // y-end
           xm = this.pos.x + this.dim.width / 2, // x-middle
@@ -1062,7 +1062,7 @@ define([
         // See: http://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse
         // rx and ry are > 0 because we are inside the enclosing rect,
         // so don't care about division by zero
-        result = (Math.pow(p.x - cx, 2) / Math.pow(rx, 2) + Math.pow(p.y - cy, 2) / Math.pow(ry, 2)) <= 1;
+        result = Math.pow(p.x - cx, 2) / Math.pow(rx, 2) + Math.pow(p.y - cy, 2) / Math.pow(ry, 2) <= 1;
       }
       return result;
     },
@@ -1102,7 +1102,7 @@ define([
     // Deep copy of the array of strokes
     if (strokes) {
       this.strokes = [];
-      for (var n in strokes) {
+      for (var n = 0; n < strokes.length; n++) {
         var str = strokes[n];
         str = new AWT.PathStroke(
             // In [Shaper](Shaper.html) objects, strokes have `action`, not `type`
@@ -1157,8 +1157,8 @@ define([
      */
     calcEnclosingRect: function () {
       this.enclosingPoints = [];
-      var n, last = new AWT.Point();
-      for (n in this.strokes) {
+      var last = new AWT.Point();
+      for (var n = 0; n < this.strokes.length; n++) {
         var str = this.strokes[n];
         var points = str.getEnclosingPoints(last);
         if (points.length > 0) {
@@ -1177,7 +1177,7 @@ define([
 
       var p0 = new AWT.Point(this.enclosingPoints[0]);
       var p1 = new AWT.Point(this.enclosingPoints[0]);
-      for (n = 1; n < l; n++) {
+      for (var k = 1; k < l; k++) {
         var p = this.enclosingPoints[n];
         // Check if `p` is at left or above `p0`
         p0.x = Math.min(p.x, p0.x);
@@ -1197,9 +1197,9 @@ define([
     // 
     // Inherits the documentation of `moveBy` in AWT.Shape
     moveBy: function (delta) {
-      for (var str in this.strokes)
+      for (var str = 0; str < this.strokes.length; str++)
         this.strokes[str].moveBy(delta);
-      for (var p in this.enclosingPoints)
+      for (var p = 0; p < this.enclosingPoints.length; p++)
         this.enclosingPoints[p].moveBy(delta);
       this.enclosing.moveBy(delta);
       return this;
@@ -1219,9 +1219,9 @@ define([
     // 
     // Inherits the documentation of `scaleBy` in AWT.Shape
     scaleBy: function (delta) {
-      for (var str in this.strokes)
+      for (var str = 0; str < this.strokes.length; str++)
         this.strokes[str].multBy(delta);
-      for (var p in this.enclosingPoints)
+      for (var p = 0; p < this.enclosingPoints.length; p++)
         this.enclosingPoints[p].multBy(delta);
       this.enclosing.scaleBy(delta);
       return this;
@@ -1269,7 +1269,7 @@ define([
     preparePath: function (ctx) {
       // TODO: Implement filling paths
       ctx.beginPath();
-      for (var n in this.strokes)
+      for (var n = 0; n < this.strokes.length; n++)
         this.strokes[n].stroke(ctx);
       return ctx;
     }
@@ -1292,7 +1292,7 @@ define([
       this.points = [];
       // Check if 'points' is an array of objects of type 'Point'
       if (points[0] instanceof AWT.Point) {
-        for (var p in points)
+        for (var p = 0; p < points.length; p++)
           this.points.push(new AWT.Point(points[p].x, points[p].y));
       }
       // otherwise assume that 'points' contains just numbers
@@ -1332,7 +1332,7 @@ define([
      */
     moveBy: function (delta) {
       if (this.points)
-        for (var p in this.points)
+        for (var p = 0; p < this.points.length; p++)
           this.points[p].moveBy(delta);
       return this;
     },
@@ -1344,7 +1344,7 @@ define([
      */
     multBy: function (delta) {
       if (this.points)
-        for (var p in this.points)
+        for (var p = 0; p < this.points.length; p++)
           this.points[p].multBy(delta);
       return this;
     },

@@ -417,7 +417,7 @@ define([
           else
             point.x = 0;
         }
-        if ((point.x === startX && point.y === startY) ||
+        if (point.x === startX && point.y === startY ||
             this.getCellAttribute(point.x, point.y, attr) === attrState)
           break;
         point.x += dx;
@@ -522,7 +522,7 @@ define([
         if (ch !== this.wild) {
           ch2 = this.answers[py][px];
           if (ch === ch2 ||
-              (!checkCase && ch.toUpperCase() === ch2.toUpperCase()))
+              !checkCase && ch.toUpperCase() === ch2.toUpperCase())
             result = true;
         }
       }
@@ -652,7 +652,7 @@ define([
         if (this.attribute === this.flags.MARKED && !state)
           this.repaintCell(px, py);
         this.attributes[py][px] &= ~attribute;
-        this.attributes[py][px] |= (state ? attribute : 0);
+        this.attributes[py][px] |= state ? attribute : 0;
         if (attribute !== this.flags.MARKED || state)
           this.repaintCell(px, py);
       }
@@ -799,9 +799,9 @@ define([
             if ((attr & this.flags.TRANSPARENT) === 0) {
               isInverted = (attr & this.flags.INVERTED) !== 0;
               isMarked = (attr & this.flags.MARKED) !== 0;
-              isCursor = (this.useCursor && this.cursor.x === px && this.cursor.y === py);
+              isCursor = this.useCursor && this.cursor.x === px && this.cursor.y === py;
               boxBounds = this.getCellRect(px, py);
-              ctx.fillStyle = (isCursor && this.cursorBlink) ?
+              ctx.fillStyle = isCursor && this.cursorBlink ?
                   bb.inactiveColor :
                   isInverted ? bb.textColor : bb.backColor;
               boxBounds.fill(ctx);

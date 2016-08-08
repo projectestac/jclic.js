@@ -17,7 +17,7 @@ define([
   "jquery",
   "./JumpInfo"
 ], function ($, JumpInfo) {
-  
+
   /**
    * This special case of {@link JumpInfo} is used in {@link ActivitySequenceJump} objects to decide
    * the type of jump or action to be performed, based on the results obtained by the user when
@@ -38,10 +38,10 @@ define([
    */
   var ConditionalJumpInfo = function (action, sq, threshold, time) {
     JumpInfo.call(this, action, sq);
-    this.threshold = (typeof threshold === 'number' ? threshold : -1);
-    this.time = (typeof threshold === 'number' ? time : -1);
+    this.threshold = typeof threshold === 'number' ? threshold : -1;
+    this.time = typeof threshold === 'number' ? time : -1;
   };
-  
+
   ConditionalJumpInfo.prototype = {
     constructor: ConditionalJumpInfo,
     /**
@@ -71,5 +71,5 @@ define([
   ConditionalJumpInfo.prototype = $.extend(Object.create(JumpInfo.prototype), ConditionalJumpInfo.prototype);
 
   return ConditionalJumpInfo;
-  
+
 });

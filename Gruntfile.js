@@ -35,7 +35,16 @@ module.exports = function (grunt) {
       files: ['src/**/*.js', '!src/GlobalData.js'],
       options: {
         sub: true,
-        multistr: true
+        multistr: true,
+        eqeqeq: true,
+        esversion: 5,
+        forin: true,
+        freeze: true,
+        futurehostile: true,
+        noarg: true,
+        nonew: true,
+        singleGroups: true,
+        undef: true
       }
     },
     //

@@ -199,9 +199,8 @@ define([
               // Determine if click was done on panel A or panel B
               bx1 = this.bgA.findActiveBox(p);
               bx2 = this.bgB.findActiveBox(p);
-              if ((bx1 && bx1.idAss !== -1 &&
-                  (!this.act.useOrder || bx1.idOrder === this.currentItem)) ||
-                  (!this.act.useOrder && bx2)) {
+              if (bx1 && bx1.idAss !== -1 && (!this.act.useOrder || bx1.idOrder === this.currentItem) ||
+                  !this.act.useOrder && bx2) {
                 // Start the [BoxConnector](BoxConnector.html)
                 if (this.act.dragCells)
                   this.bc.begin(p, bx1 ? bx1 : bx2);
@@ -265,9 +264,9 @@ define([
                   this.finishActivity(true);
                 else if (!m)
                   this.playEvent(ok ? 'actionOk' : 'actionError');
-              } else if ((clickOnBg0 && this.bgA.contains(p)) || (!clickOnBg0 && this.bgB.contains(p))) {
+              } else if (clickOnBg0 && this.bgA.contains(p) || !clickOnBg0 && this.bgB.contains(p)) {
                 // click on grid, out of cell
-                var srcOut = (bx1 ? bx1.getDescription() : bx2 ? bx2.getDescription() : 'null');
+                var srcOut = bx1 ? bx1.getDescription() : bx2 ? bx2.getDescription() : 'null';
                 this.ps.reportNewAction(this.act, 'MATCH', srcOut, 'null', false, this.bgB.countCellsWithIdAss(-1));
                 this.playEvent('actionError');
               }

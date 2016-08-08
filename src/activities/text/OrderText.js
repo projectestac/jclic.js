@@ -118,7 +118,7 @@ define([
     setBounds: function (rect) {
       if (this.$canvas)
         this.$canvas.remove();
-      
+
       ActPanelAncestor.setBounds.call(this, rect);
       if (!this.act.dragCells) {
         // Create the main canvas
@@ -211,7 +211,7 @@ define([
           var lastTarget = null;
           var currentGroup = [];
 
-          for (var i in this.targets) {
+          for (var i = 0; i < this.targets.length; i++) {
             var t = this.targets[i];
             if (lastTarget !== null && lastTarget.$p !== t.$p) {
               groups.push(currentGroup);
@@ -225,7 +225,7 @@ define([
           }
 
           // Scramble group by group
-          for (var g in groups) {
+          for (var g = 0; g < groups.length; g++) {
             this.shuffleTargets(groups[g], this.act.shuffles);
           }
         } else {
@@ -287,7 +287,7 @@ define([
     countSolvedTargets: function () {
       var solved = 0;
       var numTargets = this.targets.length;
-      for (var i=0; i<numTargets; i++) {
+      for (var i = 0; i < numTargets; i++) {
         var t = this.targets[i];
         if (t.num === t.pos)
           solved++;
@@ -300,16 +300,16 @@ define([
      * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
      */
     evaluatePanel: function () {
-      
+
       if (this.bc && this.bc.active)
         this.bc.end();
       this.setCurrentTarget(null);
-      
+
       var targetsOk = 0;
       var numTargets = this.targets.length;
       for (var i = 0; i < numTargets; i++) {
         var target = this.targets[i];
-        var ok = (target.num === target.pos);
+        var ok = target.num === target.pos;
         target.targetStatus = ok ? 'SOLVED' : 'WITH_ERROR';
         if (ok)
           targetsOk++;

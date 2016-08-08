@@ -92,7 +92,7 @@ define([
       $xml.children('style').each(function () {
         var attr = doc.readDocAttributes($(this));
         // Grant always that basic attributes are defined
-        doc.style[attr.name] = (attr.name === 'default' ? $.extend(true, doc.style.default, attr) : attr);
+        doc.style[attr.name] = attr.name === 'default' ? $.extend(true, doc.style.default, attr) : attr;
       });
 
       // Read paragraphs

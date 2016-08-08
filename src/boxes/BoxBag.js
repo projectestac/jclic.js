@@ -93,8 +93,7 @@ define([
 
       if (this.cells.length === 1) {
         AWT.Rectangle.prototype.setBounds.call(this, bx);
-      }
-      else {
+      } else {
         this.add(bx);
       }
       this.preferredBounds.setBounds(this.getBounds());
@@ -115,7 +114,7 @@ define([
      * @returns {AbstractBox}
      */
     getBox: function (n) {
-      return (n < 0 || n >= this.cells.length) ? null : this.cells[n];
+      return n < 0 || n >= this.cells.length ? null : this.cells[n];
     },
     /**
      * 
@@ -346,7 +345,7 @@ define([
     if (d.width > maxSize.width) {
       scale = maxSize.width / d.width;
     }
-    if ((scale * d.height) > maxSize.height) {
+    if (scale * d.height > maxSize.height) {
       scale = maxSize.height / d.height;
     }
     // resize the Resizable object
@@ -425,7 +424,7 @@ define([
     if (d.width > maxSize.width) {
       scale = maxSize.width / d.width;
     }
-    if ((scale * d.height) > maxSize.height) {
+    if (scale * d.height > maxSize.height) {
       scale = maxSize.height / d.height;
     }
     // 

@@ -175,15 +175,15 @@ define([
             break;
         }
       });
-      
+
       n = this.activeBoxContentArray.length;
-      
+
       // Create cells when `activeBoxContentArray` is empty
       if (n === 0 && cellSet.shaper && cellSet.shaper.nCells > 0) {
         n = cellSet.shaper.nCells;
         this.getActiveBoxContent(n - 1);
       }
-      
+
       // Assign ids when cells have empty content (they are just shapes)
       if (n > 0) {
         var empty = true;
@@ -215,7 +215,7 @@ define([
      * @param {PlayStation} playStation - The {@link JClicPlayer}
      */
     prepareMedia: function (playStation) {
-      for(var i=0; i<this.activeBoxContentArray.length; i++){
+      for (var i = 0; i < this.activeBoxContentArray.length; i++) {
         this.activeBoxContentArray[i].prepareMedia(playStation);
       }
     },
@@ -324,7 +324,7 @@ define([
       var mbe = mb.elements[this.imgName];
       if (mb && this.imgName && mbe && mbe.ready) {
         this.img = mbe.data;
-        if(mbe.animated)
+        if (mbe.animated)
           this.animatedGifFile = mbe.getFullPath();
         this.w = this.img.width / this.ncw;
         this.h = this.img.height / this.nch;
@@ -332,8 +332,7 @@ define([
           this.w = Math.round(this.w);
           this.h = Math.round(this.h);
         }
-      }
-      else {
+      } else {
         this.img = null;
         this.w = Math.max(this.w, 10);
         this.h = Math.max(this.h, 10);
@@ -361,7 +360,7 @@ define([
       var n = this.ncw * this.nch;
       for (var i = 0; i < n; i++) {
         this.getActiveBoxContent(i).setTextContent(
-            (i >= txt.length || txt[i] === null) ? '' : txt[i]);
+            i >= txt.length || txt[i] === null ? '' : txt[i]);
       }
     },
     /**

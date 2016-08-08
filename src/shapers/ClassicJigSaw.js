@@ -55,19 +55,18 @@ define([
      */
     hLine: function (sd, type, x, y, w, h, inv) {
       var kx = inv ? -1 : 1;
-      var ky = (type === 1 ? 1 : -1);
+      var ky = type === 1 ? 1 : -1;
 
       if (type === 0) {
         // Flat line
         sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
-      }
-      else {
-        var x0 = x + ((w - w * this.baseWidthFactor) / 2) * kx;
+      } else {
+        var x0 = x + (w - w * this.baseWidthFactor) / 2 * kx;
         var wb = w * (this.baseWidthFactor / 12) * kx;
         // Approximation to the tooth:
         sd.addStroke(new AWT.PathStroke('L', [x0, y]));
         // This is the tooth:
-        var hb = ((h * this.toothHeightFactor) * ky) / 8;
+        var hb = h * this.toothHeightFactor * ky / 8;
         sd.addStroke(new AWT.PathStroke('B', [x0 + 4 * wb, y, x0 + 6 * wb, y - hb, x0 + 4 * wb, y - 3 * hb]));
         sd.addStroke(new AWT.PathStroke('B', [x0 + 2 * wb, y - 5 * hb, x0 + 10 * wb, y - 5 * hb, x0 + 8 * wb, y - 3 * hb]));
         sd.addStroke(new AWT.PathStroke('B', [x0 + 6 * wb, y - 1 * hb, x0 + 8 * wb, y, x0 + 12 * wb, y]));
@@ -88,19 +87,18 @@ define([
      */
     vLine: function (sd, type, x, y, w, h, inv) {
       var ky = inv ? -1 : 1;
-      var kx = (type === 1 ? 1 : -1);
+      var kx = type === 1 ? 1 : -1;
 
       if (type === 0) {
         // Flat line
         sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
-      }
-      else {
-        var y0 = y + ((h - h * this.baseWidthFactor) / 2) * ky;
-        var hb = (h * this.baseWidthFactor) / 12 * ky;
+      } else {
+        var y0 = y + (h - h * this.baseWidthFactor) / 2 * ky;
+        var hb = h * this.baseWidthFactor / 12 * ky;
         // Approximation to the tooth:
         sd.addStroke(new AWT.PathStroke('L', [x, y0]));
         // This is the tooth:
-        var wb = (w * this.toothHeightFactor * kx) / 8;
+        var wb = w * this.toothHeightFactor * kx / 8;
         sd.addStroke(new AWT.PathStroke('B', [x, y0 + 4 * hb, x - wb, y0 + 6 * hb, x - 3 * wb, y0 + 4 * hb]));
         sd.addStroke(new AWT.PathStroke('B', [x - 5 * wb, y0 + 2 * hb, x - 5 * wb, y0 + 10 * hb, x - 3 * wb, y0 + 8 * hb]));
         sd.addStroke(new AWT.PathStroke('B', [x - 1 * wb, y0 + 6 * hb, x, y0 + 8 * hb, x, y0 + 12 * hb]));

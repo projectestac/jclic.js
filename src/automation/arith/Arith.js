@@ -201,12 +201,10 @@ define([
         if (op.wZero && r <= 10) {
           n.vf = 0;
           solved = true;
-        }
-        else if (op.wOne && r > 10 && r <= 20) {
+        } else if (op.wOne && r > 10 && r <= 20) {
           n.vf = 1;
           solved = true;
-        }
-        else if (op.wMinusOne && r > 20 && r <= 30) {
+        } else if (op.wMinusOne && r > 20 && r <= 30) {
           n.vf = -1;
           solved = true;
         }
@@ -292,9 +290,9 @@ define([
                 continue;
               while (va + vb > 9) {
                 if (va > vb)
-                  va = (va > 0 ? Math.floor(Math.random() * va) : 0);
+                  va = va > 0 ? Math.floor(Math.random() * va) : 0;
                 else
-                  vb = (vb > 0 ? Math.floor(Math.random() * vb) : 0);
+                  vb = vb > 0 ? Math.floor(Math.random() * vb) : 0;
               }
               bufa[i] = va.toFixed(0);
               bufb[i] = vb.toFixed(0);
@@ -329,7 +327,7 @@ define([
           o.numR.c = o.numA.c > o.numB.c ? o.numA.c : o.numB.c;
           o.op = 1;
           if (this.resultCarry && o.numA.vf > 0 && o.numB.vf > 0 && o.numA.vf >= o.numB.vf) {
-            q = (o.numR.c === 2 ? 100 : (o.numR.c === 1 ? 10 : 1));
+            q = o.numR.c === 2 ? 100 : o.numR.c === 1 ? 10 : 1;
             bufa = Arith.DecFormat(Math.round(o.numA.vf * q + 0.5), 0, 10).split('');
             bufb = Arith.DecFormat(Math.round(o.numB.vf * q + 0.5), 0, 10).split('');
             for (i = 0; i < 10; i++)
@@ -340,7 +338,7 @@ define([
               vb = parseInt(bufb[i]);
               if (va >= vb)
                 continue;
-              vb = (va > 0 ? Math.floor(Math.random() * va) : 0);
+              vb = va > 0 ? Math.floor(Math.random() * va) : 0;
               bufb[i] = vb.toFixed(0);
             }
 
@@ -392,7 +390,7 @@ define([
             this.genNum(o.numB, this.opB, ri2, rs2);
             if (o.numB.vf !== 0 &&
                 Math.abs(o.numA.vf) >= Math.abs(o.numB.vf) &&
-                (o.numR.vf = (o.numA.vf / o.numB.vf)) >= rlinf &&
+                (o.numR.vf = o.numA.vf / o.numB.vf) >= rlinf &&
                 o.numR.vf <= rlsup)
               break;
           }
@@ -470,8 +468,7 @@ define([
             }
             if (k === i)
               break;
-          }
-          else
+          } else
             break;
         }
         op[i] = o;
@@ -480,8 +477,8 @@ define([
       if (this.resultOrder !== 0) {
         for (i = nCells - 1; i > 0; i--) {
           for (j = 0; j < i; j++) {
-            if ((this.resultOrder === 'SORTASC' && op[j].numR.vf > op[j + 1].numR.vf) ||
-                (this.resultOrder === 'SORTDESC' && op[j].numR.vf < op[j + 1].numR.vf)) {
+            if (this.resultOrder === 'SORTASC' && op[j].numR.vf > op[j + 1].numR.vf ||
+                this.resultOrder === 'SORTDESC' && op[j].numR.vf < op[j + 1].numR.vf) {
               // Switch values
               o = op[j];
               op[j] = op[j + 1];
@@ -546,8 +543,7 @@ define([
             strbx[k] = strb[i];
             ass[i] = k;
             k++;
-          }
-          else
+          } else
             ass[i] = j;
         }
 

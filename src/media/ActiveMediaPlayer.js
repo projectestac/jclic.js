@@ -66,13 +66,13 @@ define([
    * See: https://addpipe.com/blog/mediarecorder-api/
    * @type Boolean
    */
-  ActiveMediaPlayer.REC_ENABLED = (typeof MediaRecorder !== 'undefined' && typeof navigator !== 'undefined');
+  ActiveMediaPlayer.REC_ENABLED = typeof MediaRecorder !== 'undefined' && typeof navigator !== 'undefined';
 
   if (ActiveMediaPlayer.REC_ENABLED) {
-    navigator.getUserMedia = (navigator.getUserMedia ||
+    navigator.getUserMedia = navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia);
+        navigator.msGetUserMedia;
 
     //URL = window.URL || window.webkitURL;
   }

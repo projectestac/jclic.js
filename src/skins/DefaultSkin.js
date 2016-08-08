@@ -223,24 +223,24 @@ define([
       this.player.doLayout();
 
       // Temporary remove canvas to let div get its natural size:
-      if(this.$msgBoxDivCanvas)
-        this.$msgBoxDivCanvas.remove();      
-      
+      if (this.$msgBoxDivCanvas)
+        this.$msgBoxDivCanvas.remove();
+
       // Get current size of message box div without canvas      
       var msgWidth = this.$msgBoxDiv.outerWidth(),
           msgHeight = this.$msgBoxDiv.outerHeight();
 
       // Replace existing canvas if size has changed
       if (this.$msgBoxDivCanvas === null ||
-          (this.msgBox.dim.widht !== msgWidth) ||
-          (this.msgBox.dim.height !== msgHeight)) {
+          this.msgBox.dim.widht !== msgWidth ||
+          this.msgBox.dim.height !== msgHeight) {
         this.msgBox.ctx = null;
         if (this.$msgBoxDivCanvas) {
           this.$msgBoxDivCanvas.remove();
           this.$msgBoxDivCanvas = null;
         }
         this.$msgBoxDivCanvas = $('<canvas width="' + msgWidth + '" height="' + msgHeight + '"/>');
-        this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth+1, msgHeight));
+        this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth + 1, msgHeight));
       }
       // restore canvas
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);

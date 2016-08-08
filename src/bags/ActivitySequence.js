@@ -198,7 +198,7 @@ define([
       var ase = this.getCurrentAct();
       var result = null;
       if (ase !== null) {
-        var asj = (back ? ase.backJump : ase.fwdJump);
+        var asj = back ? ase.backJump : ase.fwdJump;
         if (asj === null) {
           var i = this.currentAct + (back ? -1 : 1);
           if (i >= this.elements.length || i < 0)

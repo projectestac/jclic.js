@@ -322,8 +322,8 @@ define([
               // Determine if click was done on panel A or panel B
               bx1 = this.bgA.findActiveBox(p);
               bx2 = this.bgB.findActiveBox(p);
-              if ((bx1 && (!this.act.useOrder || bx1.idOrder === this.currentItem)) ||
-                  (!this.act.useOrder && bx2) && bx2.idAss !== -1) {
+              if (bx1 && (!this.act.useOrder || bx1.idOrder === this.currentItem) ||
+                  !this.act.useOrder && bx2 && bx2.idAss !== -1) {
                 // Start the [BoxConnector](BoxConnector.html)
                 if (this.act.dragCells)
                   this.bc.begin(p, bx1 ? bx1 : bx2);

@@ -120,11 +120,11 @@ define([
      * @param {number} level - Level at and below what all media players will be muted.
      */
     stopAll: function (level) {
-      if (typeof (level) === 'undefined')
+      if (typeof level === 'undefined')
         level = -1;
       for (var i = 0; i < this.players.length; i++) {
         var amp = this.players[i];
-        if (level === -1 || (amp.mc !== null && amp.mc.level <= level))
+        if (level === -1 || amp.mc !== null && amp.mc.level <= level)
           amp.stop();
       }
     },

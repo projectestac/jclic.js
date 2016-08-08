@@ -650,7 +650,7 @@ define([
               this.nActSolved += inf.nActSolved;
               this.nActions += inf.nActions;
               if (inf.nActScore > 0) {
-                this.tScore += (inf.tScore * inf.nActScore);
+                this.tScore += inf.tScore * inf.nActScore;
                 this.nActScore += inf.nActScore;
               }
               this.tTime += inf.tTime;

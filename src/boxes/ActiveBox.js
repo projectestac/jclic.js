@@ -243,7 +243,7 @@ define([
      * Sets the default value to `idAss`
      */
     setDefaultIdAss: function () {
-      this.idAss = (this.content === null ? -1 : this.content.id);
+      this.idAss = this.content === null ? -1 : this.content.id;
     },
     /**
      * 
@@ -287,7 +287,7 @@ define([
           if (abc.imgClip !== null) {
             $hc.css({
               'background-origin': 'border-box',
-              'background-position': (-abc.imgClip.pos.x) + 'px ' + (-abc.imgClip.pos.y) + 'px'
+              'background-position': -abc.imgClip.pos.x + 'px ' + (-abc.imgClip.pos.y) + 'px'
                   // TODO: Use background-size only when the original image must be compressed
                   //,'background-size': abc.imgClip.dim.width + 'px ' + abc.imgClip.dim.height + 'px'
             });
@@ -445,12 +445,12 @@ define([
               imgh *= scale;
               compress = true;
             }
-            var xs = (abc.imgAlign.h === 'left' ? 0
+            var xs = abc.imgAlign.h === 'left' ? 0
                 : abc.imgAlign.h === 'right' ? this.dim.width - imgw
-                : (this.dim.width - imgw) / 2);
-            var ys = (abc.imgAlign.v === 'top' ? 0
+                : (this.dim.width - imgw) / 2;
+            var ys = abc.imgAlign.v === 'top' ? 0
                 : abc.imgAlign.v === 'bottom' ? this.dim.height - imgh
-                : (this.dim.height - imgh) / 2);
+                : (this.dim.height - imgh) / 2;
             if (compress) {
               ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys, imgw, imgh);
             } else
@@ -462,7 +462,7 @@ define([
                   Math.min(this.dim.width, imgw), Math.min(this.dim.height, imgh));
           }
         } catch (ex) {
-          Utils.log('warn', 'Unable to draw image "%s": %s',abc.imgName, ex.message);
+          Utils.log('warn', 'Unable to draw image "%s": %s', abc.imgName, ex.message);
         }
       }
       if (abc.text && abc.text.length > 0) {
@@ -499,13 +499,13 @@ define([
                 var b = false;
                 switch (i) {
                   case 1:
-                    b = (abc.txtAlign.v === 'bottom');
+                    b = abc.txtAlign.v === 'bottom';
                     break;
                   case 2:
-                    b = (abc.txtAlign.h === 'left');
+                    b = abc.txtAlign.h === 'left';
                     break;
                   case 3:
-                    b = (abc.txtAlign.h === 'right');
+                    b = abc.txtAlign.h === 'right';
                     break;
                 }
                 if (!b)
@@ -640,7 +640,7 @@ define([
               bgSize = w * scale + 'px ' + h * scale + 'px';
             }
             this.$hostedComponent.css({
-              'background-position': (-abc.imgClip.pos.x * scale) + 'px ' + (-abc.imgClip.pos.y * scale) + 'px',
+              'background-position': -abc.imgClip.pos.x * scale + 'px ' + (-abc.imgClip.pos.y) * scale + 'px',
               'background-size': bgSize
             });
           } else {

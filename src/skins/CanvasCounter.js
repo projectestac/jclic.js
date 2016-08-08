@@ -104,13 +104,13 @@ define([
         if (!this.cc.enabled)
           d = 1;
         else {
-          w = (valr / j) % 10;
+          w = valr / j % 10;
           if (w !== 0) {
             k = true;
             d = 11 - w;
           }
           else
-            d = (k || i === 2 ? 11 : 1);
+            d = k || i === 2 ? 11 : 1;
         }
 
         ctx.drawImage(this.img,

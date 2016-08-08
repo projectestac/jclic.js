@@ -56,12 +56,12 @@ define([
           if (row === 0) {
             hLineType[row][col] = 0;
           } else {
-            hLineType[row][col] = 1 + ((this.randomLines ? Math.round(Math.random() * 9) : row + col) % 2);
+            hLineType[row][col] = 1 + (this.randomLines ? Math.round(Math.random() * 9) : row + col) % 2;
           }
           if (col === 0) {
             vLineType[row][col] = 0;
           } else {
-            vLineType[row][col] = 1 + ((this.randomLines ? Math.round(Math.random() * 9) : col + row + 1) % 2);
+            vLineType[row][col] = 1 + (this.randomLines ? Math.round(Math.random() * 9) : col + row + 1) % 2;
           }
           if (col === this.nCols - 1)
             vLineType[row][col + 1] = 0;
@@ -103,19 +103,18 @@ define([
      */
     hLine: function (sd, type, x, y, w, h, inv) {
       var kx = inv ? -1 : 1;
-      var ky = (type === 1 ? 1 : -1);
+      var ky = type === 1 ? 1 : -1;
 
       if (type === 0) {
         // Flat line
         sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
-      }
-      else {
-        var x0 = x + ((w - w * this.baseWidthFactor) / 2) * kx;
+      } else {
+        var x0 = x + (w - w * this.baseWidthFactor) / 2 * kx;
         var wb = w * this.baseWidthFactor * kx;
         // Approximation to the tooth:
         sd.addStroke(new AWT.PathStroke('L', [x0, y]));
         // This is the tooth:
-        var hb = (h * this.toothHeightFactor) * ky;
+        var hb = h * this.toothHeightFactor * ky;
         sd.addStroke(new AWT.PathStroke('L', [x0, y + hb]));
         sd.addStroke(new AWT.PathStroke('L', [x0 + wb, y + hb]));
         sd.addStroke(new AWT.PathStroke('L', [x0 + wb, y]));
@@ -136,14 +135,13 @@ define([
      */
     vLine: function (sd, type, x, y, w, h, inv) {
       var ky = inv ? -1 : 1;
-      var kx = (type === 1 ? 1 : -1);
+      var kx = type === 1 ? 1 : -1;
 
       if (type === 0) {
         // Flat line
         sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
-      }
-      else {
-        var y0 = y + ((h - h * this.baseWidthFactor) / 2) * ky;
+      } else {
+        var y0 = y + (h - h * this.baseWidthFactor) / 2 * ky;
         var hb = h * this.baseWidthFactor * ky;
         // Approximation to the tooth:
         sd.addStroke(new AWT.PathStroke('L', [x, y0]));

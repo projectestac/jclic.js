@@ -152,7 +152,7 @@ define([
         var nc = abcA.getNumCells();
         this.bg.setBorder(abcA.border);
         this.bg.setContent(abcA, null, 0, 0, nc);
-        this.bg.setContent((abcB ? abcB : abcA), null, 0, nc, nc);
+        this.bg.setContent(abcB ? abcB : abcA, null, 0, nc, nc);
         for (var i = 0; i < 2; i++) {
           for (var j = 0; j < nc; j++) {
             var bx = this.bg.getActiveBox(i * nc + j);

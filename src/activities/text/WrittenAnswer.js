@@ -317,9 +317,9 @@ define([
       if (this.bgA || this.bgB) {
         var r = rect.clone();
         if (this.act.boxGridPos === 'AUB')
-          r.height -= (this.bgB.pos.y + this.act.margin / 2);
+          r.height -= this.bgB.pos.y + this.act.margin / 2;
         else if (this.act.boxGridPos === 'AB')
-          r.width -= (this.bgB.pos.x + this.act.margin / 2);
+          r.width -= this.bgB.pos.x + this.act.margin / 2;
 
         // Create the main canvas
         this.$canvas = $('<canvas width="' + r.dim.width + '" height="' + r.dim.height + '"/>').css({
@@ -375,7 +375,7 @@ define([
         var src = bx.getDescription();
         bx.setMarked(false);
         var id = bx.idAss;
-        var txCheck = (id >= 0 ? this.act.abc['answers'].getActiveBoxContent(id).text : '');
+        var txCheck = id >= 0 ? this.act.abc['answers'].getActiveBoxContent(id).text : '';
         var txAnswer = this.$textField.val().trim();
         if (Utils.compareMultipleOptions(txAnswer, txCheck, false)) {
           ok = true;
