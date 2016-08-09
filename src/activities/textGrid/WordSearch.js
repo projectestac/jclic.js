@@ -287,10 +287,6 @@ define([
         // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
         var p = null;
         // 
-        // Two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
-        // `origin` and `dest` points.
-        var bx1, bx2;
-        // 
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();

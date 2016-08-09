@@ -112,8 +112,7 @@ define([
           i, n;
 
       $.each($xml.get(0).attributes, function () {
-        var name = this.name,
-            val = this.value;
+        var val = this.value;
         switch (this.name) {
           case 'id':
             cellSet.id = val;

@@ -365,9 +365,7 @@ define([
         return;
       var abc = this.getCurrentContent();
       var bb = this.getBoxBaseResolve();
-      var jc = null;
       if (!this.isInactive() && abc && abc.htmlText) {
-        var s = abc.htmlText;
         if (abc.innerHtmlText) {
           var css = bb.getCSS();
           css['text-align'] = abc.txtAlign.h.replace('middle', 'center');

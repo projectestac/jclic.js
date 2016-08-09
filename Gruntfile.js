@@ -42,6 +42,7 @@ module.exports = function (grunt) {
         forin: true,
         freeze: true,
         futurehostile: true,
+        latedef: true,
         noarg: true,
         nonew: true,
         singleGroups: true,
