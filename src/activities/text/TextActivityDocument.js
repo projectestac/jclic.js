@@ -181,11 +181,19 @@ define([
             css['font-family'] = val;
             /* falls through */
           case 'name':
-          case 'base':
           case 'style':
             // Attributes specific to named styles:
             attr[name] = val;
             break;
+          case 'base':
+            attr[name] = val;
+            // If base style exists, merge it with current settings
+            if(doc.style[val]){
+              attr = $.extend(true, {}, doc.style[val], attr);
+              if(doc.style[val].css)
+                css = $.extend({}, doc.style[val].css, css);
+            }
+            break;            
           case 'bold':
             val = Utils.getBoolean(val);
             attr[name] = val;
