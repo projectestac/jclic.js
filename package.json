@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "0.1.31",
+  "version": "0.1.32b",
   "main": "src/JClic.js",
   "homepage": "http://projectestac.github.io/jclic.js",
   "readmeFilename": "README.md",
@@ -44,7 +44,7 @@
     "webfontloader": "^1.6.24"
   },
   "devDependencies": {
-    "browserify": "~13.0.0",
+    "browserify": "~13.1.0",
     "deamdify": "~0.2.0",
     "gc-jaguarjs-jsdoc": "0.0.1",
     "grunt": "~1.0.1",

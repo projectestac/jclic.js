@@ -196,7 +196,7 @@ module.exports = function (grunt) {
   grunt.registerTask(
           'build',
           'cleans and compiles all',
-          ['locales', 'clean:dist', 'browserify:dist', 'extract_sourcemap:dist', 'uglify:dist']);
+          ['jshint', 'locales', 'clean:dist', 'browserify:dist', 'extract_sourcemap:dist', 'uglify:dist']);
 
   grunt.registerTask(
           'doc',

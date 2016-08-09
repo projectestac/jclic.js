@@ -1,3 +1,12 @@
+
+### v0.1.32 (not yet released)
+#### Bug fixes
+- Merge styles with its base style (when defined) in `TextActivityDocument`
+- Allow HTML text in `ActiveBox` cells
+
+#### Improvements
+- More strict settings when checking code with [JSHint](http://jshint.com/)
+
 ### v0.1.31 (2016-07-20)
 #### Bug fixes
 - Apply `JClicPlayer.defaultSkin` only when `JClicProject.skin` is not specified
