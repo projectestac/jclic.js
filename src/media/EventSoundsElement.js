@@ -14,8 +14,8 @@
 //    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
 
 define([
-  "../Utils", 
-  "./ActiveMediaPlayer", 
+  "../Utils",
+  "./ActiveMediaPlayer",
   "./MediaContent"
 ], function (Utils, ActiveMediaPlayer, MediaContent) {
   /**
@@ -29,10 +29,9 @@ define([
    */
   var EventSoundsElement = function (id, fileName) {
     this.id = id;
-    if(fileName){
-      if(fileName.indexOf('data:')===0){
-        this.audio = new Audio(fileName);        
-      }
+    if (fileName) {
+      if (Utils.startsWith(fileName, 'data:'))
+        this.audio = new Audio(fileName);
       else
         this.fileName = fileName;
     }
@@ -54,7 +53,7 @@ define([
     player: null,
     /**
      * HTMLAudioElement used to play this sound
-     * @type {HTMLAudioElement} */    
+     * @type {HTMLAudioElement} */
     audio: null,
     /**
      * Reads the properties of this object from an XML element
@@ -70,31 +69,30 @@ define([
      * Instantiates this audio object
      * @param {PlayStation} ps
      * @param {MediaBag} mediaBag
-     */    
-    realize: function(ps, mediaBag){
-      if(!this.audio && this.player === null && this.fileName!==null){
-        this.player = new ActiveMediaPlayer(new MediaContent('PLAY_AUDIO', this.fileName), mediaBag, ps);      
+     */
+    realize: function (ps, mediaBag) {
+      if (!this.audio && this.player === null && this.fileName !== null) {
+        this.player = new ActiveMediaPlayer(new MediaContent('PLAY_AUDIO', this.fileName), mediaBag, ps);
         this.player.realize();
       }
     },
     /**
      * Plays the audioo associated to this event
      */
-    play: function(){
-      if(this.audio){
-        this.audio.currentTime=0;
+    play: function () {
+      if (this.audio) {
+        this.audio.currentTime = 0;
         this.audio.play();
-      }
-      else if(this.player)
+      } else if (this.player)
         this.player.play();
     },
     /**
      * Stops playing the audio associated to this event
      */
-    stop: function(){
-      if(this.audio)
+    stop: function () {
+      if (this.audio)
         this.audio.pause();
-      else if(this.player)
+      else if (this.player)
         this.player.stop();
     }
   };

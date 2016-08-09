@@ -272,7 +272,7 @@ define([
      */
     colorHasTransparency: function (color) {
       var result = false;
-      if (color.indexOf('rgba(') === 0) {
+      if (Utils.startsWith(color, 'rgba(')) {
         var p = color.lastIndexOf(',');
         var alpha = parseInt(color.substr(p));
         result = typeof alpha === 'number' && alpha < 1.0;
@@ -349,11 +349,34 @@ define([
     /**
      * Checks if the given string ends with the specified expression
      * @param {string} text - The string where to find the expression
-     * @param {string} expr - The expression to search
+     * @param {string} expr - The expression to search for. It will not be checked against `undefined` or `null`.
+     * @param {boolean=} trim - When `true`, the `text` string will be trimmed before check
      * @returns {boolean}
      */
-    endsWith: function (text, expr) {
-      return text.indexOf(expr, text.length - expr.length) !== -1;
+    endsWith: function (text, expr, trim) {
+      var result = false;
+      if (typeof text !== 'undefined' && text !== null) {
+        if (trim && text !== null)
+          text = text.trim();
+        result = text.indexOf(expr, text.length - expr.length) !== -1;
+      }
+      return result;      
+    },
+    /**
+     * Checks if the given string starts with the specified expression
+     * @param {string} text - The string where to find the expression
+     * @param {string} expr - The expression to search for. It will not be checked against `undefined` or `null`.
+     * @param {boolean=} trim - When `true`, the `text` string will be trimmed before check
+     * @returns {boolean}
+     */
+    startsWith: function (text, expr, trim) {
+      var result = false;
+      if (typeof text !== 'undefined' && text !== null) {
+        if (trim && text !== null)
+          text = text.trim();
+        result = text.indexOf(expr) === 0;
+      }
+      return result;
     },
     /**
      * Replaces al occurrences of the backslash character (`\`) by a regular slash (`/`)

@@ -249,7 +249,7 @@ define([
       if (tx !== null) {
         this.rawText = tx;
         this.text = tx;
-        this.checkHtmlText(null);
+        this.checkHtmlText();
       } else {
         this.rawText = null;
         this.text = null;
@@ -264,11 +264,11 @@ define([
     checkHtmlText: function () {
       this.htmlText = null;
       this.innerHtmlText = null;
-      if (this.text !== null && this.text.trim().toLocaleLowerCase().indexOf("<html>") === 0) {
+      if (Utils.startsWith(this.text, '<html>', true)) {
         this.htmlText = this.text.trim();
         var s = this.htmlText.toLocaleLowerCase();
-        if (s.indexOf("<body") === -1) {
-          var s2 = s.indexOf("</html>");
+        if (s.indexOf('<body') === -1) {
+          var s2 = s.indexOf('</html>');
           if (s2 >= 0) {
             this.innerHtmlText = this.htmlText.substr(6, s2);
           }

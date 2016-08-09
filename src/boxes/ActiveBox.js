@@ -297,6 +297,10 @@ define([
 
         if (abc.bb !== this.boxBase)
           this.setBoxBase(abc.bb);
+        
+        if(abc.innerHtmlText)
+          this.setHostedComponent($('<div/>').html(abc.innerHtmlText));
+        
         if (abc.hasOwnProperty('border') && this.hasBorder() !== abc.border)
           this.setBorder(abc.border);
         this.setInactive(false);

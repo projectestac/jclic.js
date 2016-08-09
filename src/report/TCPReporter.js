@@ -17,8 +17,9 @@
 
 define([
   "jquery",
-  "./Reporter"
-], function ($, Reporter) {
+  "./Reporter",
+  "../Utils"
+], function ($, Reporter, Utils) {
 
   /**
    * This special case of {@link Reporter} connects with an external service reporter provides the
@@ -209,7 +210,7 @@ define([
       this.serverPath = options.path ? options.path : this.DEFAULT_SERVER_PATH;
       this.descriptionDetail = this.serverPath;
       var serverService = options.service ? options.service : this.DEFAULT_SERVER_SERVICE;
-      if (!serverService.startsWith('/'))
+      if (!Utils.startsWith(serverService, '/'))
         serverService = '/' + serverService;
       var serverProtocol = options.protocol ? options.protocol : this.DEFAULT_SERVER_PROTOCOL;
       this.serviceUrl = serverProtocol + "://" + this.serverPath + serverService;
