@@ -53,10 +53,9 @@ define([
     // JClicPlayer extends AWT.Container
     AWT.Container.call(this);
 
-    if (!options)
-      options = {};
-
     this.$topDiv = $topDiv;
+
+    options = Utils.init(options);
     this.options = $.extend(Object.create(this.options), options);
     i18n.init(this);
 
@@ -264,6 +263,7 @@ define([
      * Resets the main components of this player
      */
     reset: function () {
+      Utils.log('info', 'Restoring player');
       this.removeActivity();
       this.setProject(null);
       this.activeMediaBag = new ActiveMediaBag();

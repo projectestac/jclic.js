@@ -56,6 +56,21 @@ define([
       pipeTo: null
     },
     /**
+     * Initializes the global settings
+     * @param {object} options - An object with global setings
+     * @returns {object} The normalized `options` object
+     */
+    init: function (options) {
+      options = Utils.normalizeObject(options);
+      if (typeof options.logLevel !== 'undefined')
+        Utils.setLogLevel(options.logLevel);
+      if (typeof options.chainLogTo === 'function')
+        Utils.LOG_OPTIONS.chainTo = options.chainLogTo;
+      if (typeof options.pipeLogTo === 'function')
+        Utils.LOG_OPTIONS.pipeTo = options.pipeLogTo;
+      return options;
+    },
+    /**
      * Establishes the current verbosity level of the logging system
      * @param {string} level - One of the valid strings in {@link Utils.LOG_LEVELS}
      */
@@ -360,7 +375,7 @@ define([
           text = text.trim();
         result = text.indexOf(expr, text.length - expr.length) !== -1;
       }
-      return result;      
+      return result;
     },
     /**
      * Checks if the given string starts with the specified expression

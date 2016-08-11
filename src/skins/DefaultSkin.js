@@ -139,6 +139,7 @@ define([
       var closeFn = this.ps.options.closeFn;
       this.buttons.close = $(Utils.getSvg(this.closeIcon, this.iconWidth, this.iconHeight, this.iconFill)).on('click',
           function () {
+            Utils.log('info', 'Closing the player');
             closeFn();
           });
       this.$ctrlCnt.append($('<div/>', {class: 'JClicBtn'}).append(this.buttons.close));
