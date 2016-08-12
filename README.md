@@ -8,52 +8,38 @@
 
 ## JClic and JClic-repo
 
-[JClic](http://clic.xtec.cat) is a free software project from the [Catalan Educational Telematic Network](http://www.xtec.cat) 
-(XTEC) for creating various types of interactive activities such as associations, puzzles, text activities,
-crosswords or puzzles, from elements of text, graphics and multimedia.
+[JClic](http://clic.xtec.cat) is a free software project from the [Catalan Educational Telematic Network](http://www.xtec.cat) (XTEC) for creating various types of interactive activities such as associations, puzzles, text activities, crosswords or puzzles, from elements of text, graphics and multimedia.
 
-The program includes an authoring tool to create activities, a player and a reporting system that stores
-the results obtained by students. All these components, along with some guides and tutorials on how to
-create activities, are available in the [clicZone](http://clic.xtec.cat/en/jclic/download.htm).
+The program includes an authoring tool to create activities, a player and a reporting system that stores the results obtained by students. All these components, along with some guides and tutorials on how to create activities, are available in the [clicZone](http://clic.xtec.cat/en/jclic/download.htm).
 
-JClic is a Java application that runs on Linux, Windows and Mac OS. Full [source code](https://github.com/projectestac/jclic)
-and [documentation](http://projectestac.github.io/jclic/) are available on GitHub.
+JClic is a Java application that runs on Linux, Windows and Mac OS. Full [source code](https://github.com/projectestac/jclic) and [documentation](http://projectestac.github.io/jclic/) are available on GitHub.
 
-Many teachers from different countries have used JClic to create interactive materials for a wide variety
-of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a 
-huge [library](http://clic.xtec.cat/repo) created with [jclic-repo](https://github.com/projectestac/jclic-repo),
-another open source project that will facilitate the publication of collections of JClic projects in
-static web hosting services.
+Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge [library](http://clic.xtec.cat/repo) created with [jclic-repo](https://github.com/projectestac/jclic-repo), another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.
 
 ## Known issues
 
-* This project is a work on progress. Some advanced features are not yet implemented.
 * Support for special skins are not yet implemented. Only stock skins are available.
-* Playing of MIDI files is not yet implemented
-* Loading of big (about 10MB) JClic project files from zipped files can crash on tablets
-and mobile devices with low memory resources. This is due to a
-[known issue](https://github.com/Stuk/jszip/issues/135) of JSZip.
+* Playing of MIDI files not yet implemented
+* Loading of big (about 10MB) JClic project files from zipped files can crash on tablets and mobile devices with low memory resources. This is due to a [known issue](https://github.com/Stuk/jszip/issues/135) of JSZip.
 * The project has been tested only with the latest versions of Chrome/Chromium and Firefox.
 
 ## How to build JClic.js
 
-JClic.js uses [Node.js](https://nodejs.org/) modules encapsulated in [npm](https://www.npmjs.com/)
-packages. First of all, you must have Node.js (which includes 'npm' by default) [installed](https://nodejs.org/download/)
-on your system.
+JClic.js uses [Node.js](https://nodejs.org/) modules encapsulated in [npm](https://www.npmjs.com/) packages. First of all, you must have Node.js (which includes 'npm') [installed](https://nodejs.org/download/) on your system.
 
-To update `npm` to the latest version, run:
+To update `npm` to the latest version open a terminal and launch:
 
 ```
 sudo npm install -g npm
 ```
 
-We use [Grunt](http://gruntjs.com/) for automation of building tasks. You must globally install this package:
+We use [Grunt](http://gruntjs.com/) for automation of building tasks. This package must be globally installed:
 
 ```
 sudo npm install -g grunt-cli
 ```
 
-To install the remaining packages, just go to the project's root directory and launch:
+To install the remaining packages, just go to the project's root directory and write:
 
 ```
 npm install
@@ -61,7 +47,7 @@ npm install
 
 This will install jQuery, Browserify and other needed components into `node_modules` 
 
-To build jclic.js, just launch:
+To build jclic.js, just invoke:
 
 ```
 grunt
@@ -69,7 +55,7 @@ grunt
 
 This will generate the file `jclic.min.js` on the `dist` folder.
 
-To test the module and see the demo on your browser, just launch the test server running:
+To test the module and see the demo on your browser, launch the test server:
 
 ```
 grunt server
@@ -77,9 +63,16 @@ grunt server
 
 Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc
 
-__jclic.js__ is also available as a [NPM](https://www.npmjs.com/package/jclic) and [Bower](https://libraries.io/bower/jclic)
-packages.
+## Sponsors that make possible JClic.js
 
-We are using [Transifex](https://www.transifex.com/francesc/jclicjs) as a platform for translations of JClic.js into many languages. Please read [TRANSLATIONS.md](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md) if you want to contribute to the project creating a new translation or improving the existing ones.
+JClic.js is an open-source project sustained by [XTEC](http://www.xtec.cat), the Telematic Network of the Catalan Ministry of Education.
+
+We use [Transifex](https://www.transifex.com/francesc/jclicjs) as a platform to translate JClic.js into many languages. Please read [TRANSLATIONS.md](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md) if you want to contribute to the project creating a new translation or improving the existing ones.
+
+Checking the operation of JClic.js on different browsers and platforms is possible thanks to [BrowserStack](https://www.browserstack.com)
+
+The production releases of JClic.js are smoothly distributed to the final users thanks to [JSDelivr](http://www.jsdelivr.com/projects/jclic.js)
+
+The project is also available as a [NPM](https://www.npmjs.com/package/jclic) and [Bower](https://libraries.io/bower/jclic) packages.
 
 [![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
