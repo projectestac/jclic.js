@@ -11047,6 +11047,8 @@
             
                 <li data-name="Utils.getXmlText"><a href="Utils.html#.getXmlText">getXmlText</a></li>
             
+                <li data-name="Utils.init"><a href="Utils.html#.init">init</a></li>
+            
                 <li data-name="Utils.isEquivalent"><a href="Utils.html#.isEquivalent">isEquivalent</a></li>
             
                 <li data-name="Utils.isNullOrUndef"><a href="Utils.html#.isNullOrUndef">isNullOrUndef</a></li>
@@ -11068,6 +11070,8 @@
                 <li data-name="Utils.setLogLevel"><a href="Utils.html#.setLogLevel">setLogLevel</a></li>
             
                 <li data-name="Utils.setSelectionRange"><a href="Utils.html#.setSelectionRange">setSelectionRange</a></li>
+            
+                <li data-name="Utils.startsWith"><a href="Utils.html#.startsWith">startsWith</a></li>
             
                 <li data-name="Utils.svgToURI"><a href="Utils.html#.svgToURI">svgToURI</a></li>
             
@@ -11741,6 +11745,21 @@ define([
       pipeTo: null
     },
     /**
+     * Initializes the global settings
+     * @param {object} options - An object with global setings
+     * @returns {object} The normalized `options` object
+     */
+    init: function (options) {
+      options = Utils.normalizeObject(options);
+      if (typeof options.logLevel !== 'undefined')
+        Utils.setLogLevel(options.logLevel);
+      if (typeof options.chainLogTo === 'function')
+        Utils.LOG_OPTIONS.chainTo = options.chainLogTo;
+      if (typeof options.pipeLogTo === 'function')
+        Utils.LOG_OPTIONS.pipeTo = options.pipeLogTo;
+      return options;
+    },
+    /**
      * Establishes the current verbosity level of the logging system
      * @param {string} level - One of the valid strings in {@link Utils.LOG_LEVELS}
      */
@@ -11809,7 +11828,7 @@ define([
      * @returns {*}
      */
     getVal: function (val, defaultValue) {
-      return (val === '' || val === null || typeof val === 'undefined') ?
+      return val === '' || val === null || typeof val === 'undefined' ?
           (defaultValue ? defaultValue : null) :
           val;
     },
@@ -11838,7 +11857,7 @@ define([
     getHMStime: function (millis) {
       var d = new Date(millis);
       var h = d.getUTCHours(), m = d.getUTCMinutes(), s = d.getUTCSeconds();
-      return (h ? h + 'h ' : '') + ((h || m) ? ('0' + m).slice(-2) + '\'' : '') + ('0' + s).slice(-2) + '"';
+      return (h ? h + 'h ' : '') + (h || m ? ('0' + m).slice(-2) + '\'' : '') + ('0' + s).slice(-2) + '"';
     },
     /**
      * Returns a formatted string with the provided date and time
@@ -11884,7 +11903,7 @@ define([
      * @returns {boolean}
      */
     isNullOrUndef: function (val) {
-      return (typeof val === 'undefined' || val === null);
+      return typeof val === 'undefined' || val === null;
     },
     /**
      * Checks if two expressions are equivalent.&lt;br>
@@ -11895,7 +11914,7 @@ define([
      * @returns {boolean}
      */
     isEquivalent: function (a, b) {
-      return ((typeof a === 'undefined' || a === null) &amp;&amp; (typeof b === 'undefined' || b === null)) ||
+      return (typeof a === 'undefined' || a === null) &amp;&amp; (typeof b === 'undefined' || b === null) ||
           a === b;
     },
     /**
@@ -11957,10 +11976,10 @@ define([
      */
     colorHasTransparency: function (color) {
       var result = false;
-      if (color.indexOf('rgba(') === 0) {
+      if (Utils.startsWith(color, 'rgba(')) {
         var p = color.lastIndexOf(',');
-        var alpha = parseint(color.substr(p));
-        result = (typeof alpha === 'number') &amp;&amp; alpha &lt; 1.0;
+        var alpha = parseInt(color.substr(p));
+        result = typeof alpha === 'number' &amp;&amp; alpha &lt; 1.0;
       }
       return result;
     },
@@ -12004,7 +12023,7 @@ define([
      * @returns {number}
      */
     roundTo: function (v, n) {
-      return (Math.round(v / n)) * n;
+      return Math.round(v / n) * n;
     },
     /**
      * Compares the provided answer against multiple valid options. These valid options are
@@ -12034,11 +12053,34 @@ define([
     /**
      * Checks if the given string ends with the specified expression
      * @param {string} text - The string where to find the expression
-     * @param {string} expr - The expression to search
+     * @param {string} expr - The expression to search for. It will not be checked against `undefined` or `null`.
+     * @param {boolean=} trim - When `true`, the `text` string will be trimmed before check
      * @returns {boolean}
      */
-    endsWith: function (text, expr) {
-      return text.indexOf(expr, text.length - expr.length) !== -1;
+    endsWith: function (text, expr, trim) {
+      var result = false;
+      if (typeof text !== 'undefined' &amp;&amp; text !== null) {
+        if (trim &amp;&amp; text !== null)
+          text = text.trim();
+        result = text.indexOf(expr, text.length - expr.length) !== -1;
+      }
+      return result;
+    },
+    /**
+     * Checks if the given string starts with the specified expression
+     * @param {string} text - The string where to find the expression
+     * @param {string} expr - The expression to search for. It will not be checked against `undefined` or `null`.
+     * @param {boolean=} trim - When `true`, the `text` string will be trimmed before check
+     * @returns {boolean}
+     */
+    startsWith: function (text, expr, trim) {
+      var result = false;
+      if (typeof text !== 'undefined' &amp;&amp; text !== null) {
+        if (trim &amp;&amp; text !== null)
+          text = text.trim();
+        result = text.indexOf(expr) === 0;
+      }
+      return result;
     },
     /**
      * Replaces al occurrences of the backslash character (`\`) by a regular slash (`/`)
@@ -12078,7 +12120,7 @@ define([
      * @returns {string}
      */
     getRelativePath: function (file, path) {
-      if (!path || path === '' | file.indexOf(path) !== 0)
+      if (!path || path === '' || file.indexOf(path) !== 0)
         return file;
       else
         return file.substr(path.length);
@@ -12181,7 +12223,7 @@ define([
      * @returns {string} - A valid CSS value, or `null` if no value provided
      */
     toCssSize: function (exp, css, key, def) {
-      var result = (typeof exp === 'undefined' || exp === null) ? null : (isNaN(exp) ? exp : exp + 'px');
+      var result = typeof exp === 'undefined' || exp === null ? null : isNaN(exp) ? exp : exp + 'px';
       if (css &amp;&amp; key &amp;&amp; (result || def))
         css[key] = result !== null ? result : def;
       return result;
@@ -12351,13 +12393,14 @@ define([
         range.selectNodeContents(el);
         var textNodes = Utils.getTextNodesIn(el);
         var foundStart = false;
-        var charCount = 0, endCharCount;
+        var charCount = 0, endCharCount, textNode;
 
-        for (var i = 0, textNode; (textNode = textNodes[i++]); ) {
+        for (var i = 0; i &lt; textNodes.length; i++) {
+          textNode = textNodes[i];
           endCharCount = charCount + textNode.length;
           if (!foundStart &amp;&amp; start >= charCount &amp;&amp;
               (start &lt; endCharCount ||
-                  (start === endCharCount &amp;&amp; i &lt;= textNodes.length))) {
+                  start === endCharCount &amp;&amp; i + 1 &lt;= textNodes.length)) {
             range.setStart(textNode, start - charCount);
             foundStart = true;
           }
@@ -12395,7 +12438,7 @@ define([
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Jul 20 2016 16:30:31 GMT+0200 (CEST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Aug 12 2016 09:10:02 GMT+0200 (CEST)
         </footer>
     </div>
 </div>
