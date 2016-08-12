@@ -11703,51 +11703,61 @@
 
     <section>
         <article class="readme"><p><a target="_blank" href="https://github.com/projectestac/jclic.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a></p>
-<h1>JClic.js</h1><p><strong>JClic.js</strong> is a JavaScript player of <strong>JClic</strong> activities.<br></p>
-<h2>JClic</h2><h2>JClic and JClic-repo</h2><p><a target="_blank" href="http://clic.xtec.cat">JClic</a> is a free software project from the <a target="_blank" href="http://www.xtec.cat">Catalan Educational Telematic Network</a><br>(XTEC) for creating various types of interactive activities such as associations, puzzles, text activities,<br>crosswords or puzzles, from elements of text, graphics and multimedia.</p>
-<p>The program includes an authoring tool to create activities, a player and a reporting system that stores<br>the results obtained by students. All these components, along with some guides and tutorials on how to<br>create activities, are available in the <a target="_blank" href="http://clic.xtec.cat/en/jclic/download.htm">clicZone</a>.</p>
-<p>JClic is a Java application that runs on Linux, Windows and Mac OS. Full <a target="_blank" href="https://github.com/projectestac/jclic">source code</a><br>and <a target="_blank" href="http://projectestac.github.io/jclic/">documentation</a> are available on GitHub.</p>
-<p>Many teachers from different countries have used JClic to create interactive materials for a wide variety<br>of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a<br>huge <a target="_blank" href="http://clic.xtec.cat/repo">library</a> created with <a target="_blank" href="https://github.com/projectestac/jclic-repo">jclic-repo</a>,<br>another open source project that will facilitate the publication of collections of JClic projects in<br>static web hosting services.</p>
-<h2>JClic project files</h2><p>Groups of single <strong>activities</strong> are often grouped in <strong>JClic projects</strong> and organized in one or more<br><strong>sequences</strong> (lists of activities that must be performed in a specific order). The resulting set of<br>activities, sequences and media elements are packaged into <strong>JClic project files</strong> (files with<br>extension &quot;.jclic.zip&quot;).</p>
-<h2>JClic.js components</h2><p>JClic.js makes use of two main libraries:</p>
+<h1>JClic.js</h1><p>A JavaScript player of <strong>JClic</strong> activities.<br></p>
+<h2>JClic and JClic-repo</h2><p><a target="_blank" href="http://clic.xtec.cat">JClic</a> is a free software project from the <a target="_blank" href="http://www.xtec.cat">Catalan Educational Telematic Network</a> (XTEC) for creating various types of interactive activities such as associations, puzzles, text activities, crosswords or puzzles, from elements of text, graphics and multimedia.</p>
+<p>The program includes an authoring tool to create activities, a player and a reporting system that stores the results obtained by students. All these components, along with some guides and tutorials on how to create activities, are available in the <a target="_blank" href="http://clic.xtec.cat/en/jclic/download.htm">clicZone</a>.</p>
+<p>JClic is a Java application that runs on Linux, Windows and Mac OS. Full <a target="_blank" href="https://github.com/projectestac/jclic">source code</a> and <a target="_blank" href="http://projectestac.github.io/jclic/">documentation</a> are available on GitHub.</p>
+<p>Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge <a target="_blank" href="http://clic.xtec.cat/repo">library</a> created with <a target="_blank" href="https://github.com/projectestac/jclic-repo">jclic-repo</a>, another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.</p>
+<h2>JClic project files</h2><p>Groups of single <strong>activities</strong> are often grouped in <strong>JClic projects</strong> and organized in one or more <strong>sequences</strong> (lists of activities that must be performed in a specific order). The resulting set of activities, sequences and media elements are packaged into <strong>JClic project files</strong> (files with extension &quot;.jclic.zip&quot;).</p>
+<h2>JClic.js components</h2><p>JClic.js makes use of:</p>
 <ul>
 <li><a target="_blank" href="https://jquery.com/">jQuery</a> to parse XML documents and manage DOM objects</li>
-<li><a target="_blank" href="https://stuk.github.io/jszip/">JSZip</a> to extract contents from &quot;jclic.zip&quot; files.</li>
+<li><a target="_blank" href="https://stuk.github.io/jszip/">JSZip</a> to extract contents from &quot;jclic.zip&quot; files</li>
+<li><a target="_blank" href="https://github.com/lgarron/clipboard.js">clipboard.js</a> to copy reports data into the user's clipboard</li>
+<li><a target="_blank" href="https://github.com/i18next/i18next">i18next</a> to deal with messages translated into different languages</li>
+<li><a target="_blank" href="https://github.com/sindresorhus/screenfull.js">screenfull.js</a> to allow activities play at full screen</li>
+<li><a target="_blank" href="https://github.com/ded/script.js">script.js</a> to read JClic projects from local file systems as JSONP</li>
+<li><a target="_blank" href="https://github.com/typekit/webfontloader">webfontloader</a> to dynamically load web fonts as needed</li>
 </ul>
 <p>The build brocess of JClic.js is based on:</p>
 <ul>
 <li><a target="_blank" href="https://www.npmjs.com/">npm</a> (the package manager of <a target="_blank" href="https://nodejs.org/">Node.js</a>) to install,<br>update and track package dependencies.</li>
-<li><a target="_blank" href="http://browserify.org/">Browserify</a> to allow the use of npm modules in browsers.</li>
-<li><a target="_blank" href="http://gruntjs.com/">Grunt</a> to automate debug and building tasks.</li>
-<li><a target="_blank" href="http://usejsdoc.org/">JSDoc</a> to generate this documentation.</li>
+<li><a target="_blank" href="http://browserify.org/">Browserify</a> to allow the use of npm modules in browsers</li>
+<li><a target="_blank" href="http://gruntjs.com/">Grunt</a> to automate debug and building tasks</li>
+<li><a target="_blank" href="http://usejsdoc.org/">JSDoc</a> to generate this documentation</li>
+<li><a target="_blank" href="http://jshint.com/">JSHint</a> to detect possible errors and check code quality</li>
 </ul>
-<h2>How to set-up the development environtment</h2><p>First of all, you must have Node.js (which includes 'npm' by default)<br><a target="_blank" href="https://nodejs.org/download/">installed</a> in your system.</p>
-<p>To update <strong>npm</strong> to the latest version run:</p>
-<pre class="prettyprint source"><code>sudo npm install -g npm</code></pre><p>Then you must globally install <strong>Grunt</strong> running:</p>
-<pre class="prettyprint source"><code>sudo npm install -g grunt-cli</code></pre><p>To install the remaining packages, just go to the project's root directory and run:</p>
-<pre class="prettyprint source"><code>npm install</code></pre><p>This will install JQuery and other needed packages into <code>node_modules</code>.</p>
-<p>To build jclic.js, just run:</p>
-<pre class="prettyprint source"><code>grunt</code></pre><p>This will generate the file <code>jclic.min.js</code> inside the <code>dist</code> folder.</p>
-<p>To test the module and see the demo in your browser, just launch the test server running:</p>
+<h2>How to set-up the development environtment</h2><p>JClic.js uses <a target="_blank" href="https://nodejs.org/">Node.js</a> modules encapsulated in <a target="_blank" href="https://www.npmjs.com/">npm</a> packages. First of all, you must have Node.js (which includes 'npm') <a target="_blank" href="https://nodejs.org/download/">installed</a> on your system.</p>
+<p>To update <code>npm</code> to the latest version open a terminal and launch:</p>
+<pre class="prettyprint source"><code>sudo npm install -g npm</code></pre><p>We use <a target="_blank" href="http://gruntjs.com/">Grunt</a> for automation of building tasks. This package must be globally installed:</p>
+<pre class="prettyprint source"><code>sudo npm install -g grunt-cli</code></pre><p>To install the remaining packages, just go to the project's root directory and write:</p>
+<pre class="prettyprint source"><code>npm install</code></pre><p>This will install jQuery, Browserify and other needed components into <code>node_modules</code> </p>
+<p>To build jclic.js, just invoke:</p>
+<pre class="prettyprint source"><code>grunt</code></pre><p>This will generate the file <code>jclic.min.js</code> on the <code>dist</code> folder.</p>
+<p>To test the module and see the demo on your browser, launch the test server:</p>
 <pre class="prettyprint source"><code>grunt server</code></pre><p>You can also build this documentation running <code>grunt doc</code></p>
-<h1>Main classes</h1><p>JClic.js is organized in three main groups of classes: <em>Player</em>, <em>Document</em> and <em>Utilities</em>. In<br>addition to this, the main <a href="module-JClic.html">JClic</a> class provides methods to read JClic project documents,<br>build players, launch activities and communicate with external reporting systems.</p>
-<h2>Player</h2><p><a href="JClicPlayer.html">JClicPlayer</a> loads JClic project files, manages the user interaction and acts as<br>a interface between the browser and JClic classes for multiple functions. The player has:</p>
+<h2>JClic.js main classes</h2><p>JClic.js is organized in three main groups of classes: <em>Player</em>, <em>Document</em> and <em>Utilities</em>. In addition to this, the main <a href="module-JClic.html">JClic</a> class provides methods to read JClic project documents, build players, launch activities and communicate with external reporting systems.</p>
+<p>&nbsp;</p>
+<h4>Player</h4><p><a href="JClicPlayer.html">JClicPlayer</a> loads JClic project files, manages the user interaction and acts as a interface between the browser and JClic classes for multiple functions. The player has:</p>
 <ul>
-<li><a href="Skin.html">Skin</a>: manages the visual appareance. Can have up to three <a href="Counter.html">Counter</a><br>objects.<ul>
+<li><a href="Skin.html">Skin</a>: manages the visual appareance. Can have up to three <a href="Counter.html">Counter</a> objects.<ul>
 <li><a href="DefaultSkin.html">DefaultSkin</a>: is the basic implementation of <em>Skin</em>.</li>
+<li><a href="BlueSkin.html">BlueSkin</a>, <a href="OrangeSkin.html">OrangeSkin</a>, <a href="GreenSkin.html">GreenSkin</a>, <a href="MiniSkin.html">MiniSkin</a> and <a href="SimpleSkin.html">SimpleSkin</a>: are the implementations of the stock skins of JClic.</li>
 </ul>
 </li>
 <li><a href="PlayerHistory.html">PlayerHistory</a>: used to track the user's navigation between activities.</li>
 <li><a href="Reporter.html">Reporter</a>: Used to collect and display scores, times and other data generated by users while playing activities.<ul>
 <li><a href="TCPReporter.html">TCPReporter</a>: Special case of <em>Reporter</em> used to connect with external reporting systems like <a target="_blank" href="http://clic.xtec.cat/en/jclic/reports/index.htm">JClic Reports</a> or the <a target="_blank" href="https://moodle.org/plugins/view.php?id=305">JClic module for Moodle</a>.</li>
+<li><a href="SCORM.js">SCORM</a>: Utility functions to interact with SCORM 1.2 and 2004 when available</li>
 </ul>
 </li>
 </ul>
-<h2>Document classes</h2><p><a href="JClicProject.html">JClicProject</a> encapsulates all data needed to play JClic activities. Its main<br>components are:</p>
+<p>&nbsp;</p>
+<h4>Document classes</h4><p><a href="JClicProject.html">JClicProject</a> encapsulates all data needed to play JClic activities. Its main components are:</p>
 <ul>
 <li><a href="ProjectSettings.html">ProjectSettings</a></li>
 <li>A collection of <a href="Activity.html">Activity</a> objects (see below)</li>
-<li>An <a href="ActivitySequence.html">ActivitySequence</a> formed by<br><a href="ActivitySequenceElement.html">ActivitySequenceElement</a> objects.</li>
+<li>An <a href="ActivitySequence.html">ActivitySequence</a> formed by <a href="ActivitySequenceElement.html">ActivitySequenceElement</a> objects.</li>
 <li>A <a href="MediaBag.html">MediaBag</a> formed by <a href="MediaBagElement.html">MediaBagElement</a> objects.</li>
 </ul>
 <p>The <a href="Activity.html">Activity</a> class has the following subclasses:</p>
@@ -11779,8 +11789,9 @@
 <li>One <a href="TextActivityDocument.html">TextActivityDocument</a></li>
 <li>An <a href="Evaluator.html">Evaluator</a></li>
 </ul>
-<p>At run time, all classes derived from <a href="Activity.html">Activity</a> generate<br>a specific <a href="Activity.Panel.html">Activity.Panel</a>, that is a real DOM object with wich users interact.</p>
-<h2>Utility classes</h2><h4>AWT</h4><p><a href="AWT.html">AWT</a>: contains some classes similar to those defined in the Java<br><a target="_blank" href="http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html">Abstract Window Toolkit</a>:</p>
+<p>At run time, all classes derived from <a href="Activity.html">Activity</a> generate a specific <a href="Activity.Panel.html">Activity.Panel</a>, that is a real DOM object with wich users interact.</p>
+<p>&nbsp;</p>
+<h4>Utility classes</h4><p><strong>AWT:</strong><br><a href="AWT.html">AWT</a>: contains some classes similar to those defined in Java's <a target="_blank" href="http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html">Abstract Window Toolkit</a>:</p>
 <ul>
 <li><a href="AWT.Font.html">AWT.Font</a></li>
 <li><a href="AWT.Gradient.html">AWT.Gradient</a></li>
@@ -11797,25 +11808,27 @@
 <li><a href="AWT.Timer.html">AWT.Timer</a></li>
 <li><a href="AWT.Container.html">AWT.Container</a></li>
 </ul>
-<h4>Boxes</h4><p><a href="AbstractBox.html">AbstractBox</a> is a special class derived from <a href="AWT.Rectangle.html">AWT.Rectangle</a><br>that has the following subclasses:</p>
+<p><strong>Boxes:</strong><br><a href="AbstractBox.html">AbstractBox</a> is a special class derived from <a href="AWT.Rectangle.html">AWT.Rectangle</a> that has the following subclasses:</p>
 <ul>
 <li><a href="ActiveBox.html">ActiveBox</a>: an AbstractBox with active content (see below)</li>
 <li><a href="BoxBag.html">BoxBag</a>: a collection of AbstractBox objects.<ul>
 <li><a href="ActiveBoxBag.html">ActiveBoxBag</a>: a collection of <a href="ActiveBox.html">ActiveBox</a> objects.<ul>
-<li><a href="ActiveBoxGrid.html">ActiveBoxGrid</a>: a special case of ActiveBoxBag with boxes distributed in<br>rows and columns.</li>
+<li><a href="ActiveBoxGrid.html">ActiveBoxGrid</a>: a special case of ActiveBoxBag with boxes distributed in rows and columns.</li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="TextGrid.html">TextGrid</a>: a grid of single letters.</li>
 </ul>
-<h4>Box content</h4><ul>
+<p><strong>Box content:</strong></p>
+<ul>
 <li><a href="ActiveBoxContent.html">ActiveBoxContent</a>: encapsulates the content of a single <em>ActiveBox</em>.</li>
-<li><a href="BoxBase.html">BoxBase</a>: contains style specs (color, gradient, border, font, size...) common to<br>one or more <em>ActiveBoxContent</em> objects. Also used by <em>TextActivityDocument</em> to encapsulate text styles.</li>
+<li><a href="BoxBase.html">BoxBase</a>: contains style specs (color, gradient, border, font, size...) common to one or more <em>ActiveBoxContent</em> objects. Also used by <em>TextActivityDocument</em> to encapsulate text styles.</li>
 <li><a href="ActiveBagContent.html">ActiveBagContent</a>: a collection of <em>ActiveBoxContent</em> objects.</li>
 <li><a href="TextGridContent.html">TextGridContent</a>: encapsulates the content of a <em>TextGrid</em> object.</li>
 </ul>
-<h4>Shapers</h4><ul>
+<p><strong>Shapers:</strong></p>
+<ul>
 <li><a href="Shaper.html">Shaper</a>: describes how to cut a panel in multiple cells.<ul>
 <li><a href="Rectangular.html">Rectangular</a>: divides the panel in rectangular cells.</li>
 <li><a href="Holes.html">Holes</a>: a free-form shaper.</li>
@@ -11827,28 +11840,39 @@
 </ul>
 </li>
 </ul>
-<h4>Media</h4><ul>
+<p><strong>Media:</strong></p>
+<ul>
 <li><a href="EventSounds.html">EventSounds</a>: a collection of <a href="EventSoundsElement.html">EventSoundsElement</a></li>
 <li><a href="ActiveMediaBag.html">ActiveMediaBag</a>: a collection of <a href="MediaContent.html">MediaContent</a></li>
 <li><a href="ActiveMediaPlayer.html">ActiveMediaPlayer</a>: performs playing of <em>MediaContent</em></li>
 </ul>
-<h4>Automation</h4><ul>
+<p><strong>Automation:</strong></p>
+<ul>
 <li><a href="AutoContentProvider.html">AutoContentProvider</a>: builds dynamic content for activities<ul>
 <li><a href="Arith.html">Arith</a>: random generator of menthal arithmetics operations</li>
 </ul>
 </li>
 </ul>
-<h4>Jump between sequence points</h4><ul>
+<p><strong>Jump between sequence points:</strong></p>
+<ul>
 <li><a href="JumpInfo.html">JumpInfo</a>: stores information about what to do when an activity finishes or when the user clicks on a link or button.<ul>
 <li><a href="ActivitySequenceJump.html">ActivitySequenceJump</a>: used by <em>ActivitySequenceElement</em> objects.</li>
 <li><a href="ConditionalJumpInfo.html">ConditionalJumpInfo</a>: used to decide where to jump, based on the current timing and scoring</li>
 </ul>
 </li>
 </ul>
-<h4>Miscellaneous utility classes</h4><ul>
+<p><strong>Miscellaneous utility classes:</strong></p>
+<ul>
 <li><a href="BoxConnector.html">BoxConnector</a></li>
 <li><a href="Utils.html">Utils</a></li>
-</ul></article>
+<li><a href="i18n.js">i18n</a></li>
+</ul>
+<h2>Sponsors that make possible JClic.js</h2><p>JClic is an open-source project supported by <a target="_blank" href="http://www.xtec.cat">XTEC</a>, the Telematic Network of the Catalan Ministry of Education</p>
+<p>We use <a target="_blank" href="https://www.transifex.com/francesc/jclicjs">Transifex</a> as a platform for translations of JClic.js into many languages. Please read <a target="_blank" href="https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md">TRANSLATIONS.md</a> if you want to contribute to the project creating a new translation or improving the existing ones.</p>
+<p>Checking the operation of JClic.js on different browsers and platforms is possible thanks to <a target="_blank" href="https://www.browserstack.com">BrowserStack</a></p>
+<p>The production releases of JClic.js are smoothly distributed to the final users thanks to <a target="_blank" href="http://www.jsdelivr.com/projects/jclic.js">JSDelivr</a> and <a target="_blank" href="http://www.xtec.cat">XTEC</a></p>
+<p><strong>jclic.js</strong> is also available as a <a target="_blank" href="https://www.npmjs.com/package/jclic">NPM</a> and <a target="_blank" href="https://libraries.io/bower/jclic">Bower</a> packages.</p>
+<p><a target="_blank" href="https://gitter.im/projectestac/jclic.js?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/projectestac/jclic.js.svg" alt="Join the chat at https://gitter.im/projectestac/jclic.js"></a></p></article>
     </section>
 
 
@@ -11859,7 +11883,7 @@
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Aug 12 2016 09:10:02 GMT+0200 (CEST)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Aug 12 2016 11:52:54 GMT+0200 (CEST)
         </footer>
     </div>
 </div>
