@@ -69,13 +69,13 @@ The project is also available as a [NPM](https://www.npmjs.com/package/jclic) an
 ## Sponsors that make possible JClic.js
 
 [![XTEC](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-xtec.png?raw=true)](http://www.xtec.cat)<br>
-JClic.js is an open-source project sustained by __[XTEC](http://www.xtec.cat)__, the Telematic Network of the Catalan Ministry of Education.
+JClic.js is an open-source project sustained by [XTEC](http://www.xtec.cat), the Telematic Network of the Catalan Ministry of Education.
 
 [![BrowserStack](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-browserstack.png?raw=true)](https://www.browserstack.com)<br>
-Checking the operation of JClic.js on different browsers and platforms is now possible thanks to virtual machines provided by __[BrowserStack](https://www.browserstack.com)__.
+Checking the operation of JClic.js on different browsers and platforms is now possible thanks to virtual machines provided by [BrowserStack](https://www.browserstack.com).
 
 [![JSDelivr](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-jsdelivr.png?raw=true)](http://www.jsdelivr.com/projects/jclic.js)<br>
-The production releases of JClic.js are smoothly distributed to the final users thanks to the __[JSDelivr](http://www.jsdelivr.com/projects/jclic.js)__ network of servers.
+The production releases of JClic.js are smoothly distributed to the final users thanks to the [JSDelivr](http://www.jsdelivr.com/projects/jclic.js) network of servers.
 
 [![Transifex](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-transifex.png?raw=true)](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md)<br>
-We use __[Transifex](https://www.transifex.com/francesc/jclicjs)__ as a platform to translate JClic.js into many languages. Please read [TRANSLATIONS.md](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md) if you want to contribute to the project creating a new translation or improving the existing ones.
+We use [Transifex](https://www.transifex.com/francesc/jclicjs) as a platform to translate JClic.js into many languages. Please read [TRANSLATIONS.md](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md) if you want to contribute to the project creating a new translation or improving the existing ones.
