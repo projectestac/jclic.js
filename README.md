@@ -3,6 +3,7 @@
 [![Bower version](https://badge.fury.io/bo/jclic.svg)](https://badge.fury.io/bo/jclic)
 [![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
+[![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player of [JClic](https://github.com/projectestac/jclic) activities. See a [demo](http://clic.xtec.cat/repo/player.html?demo_eng/jclic.js/demo.jclic) on how it works.
 
@@ -45,7 +46,7 @@ To install the remaining packages, just go to the project's root directory and w
 npm install
 ```
 
-This will install jQuery, Browserify and other needed components into `node_modules` 
+This will install jQuery, Browserify and other needed components into `node_modules`
 
 To build jclic.js, just invoke:
 
@@ -63,16 +64,18 @@ grunt server
 
 Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc
 
-## Sponsors that make possible JClic.js
-
-JClic.js is an open-source project sustained by [XTEC](http://www.xtec.cat), the Telematic Network of the Catalan Ministry of Education.
-
-We use [Transifex](https://www.transifex.com/francesc/jclicjs) as a platform to translate JClic.js into many languages. Please read [TRANSLATIONS.md](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md) if you want to contribute to the project creating a new translation or improving the existing ones.
-
-Checking the operation of JClic.js on different browsers and platforms is possible thanks to [BrowserStack](https://www.browserstack.com)
-
-The production releases of JClic.js are smoothly distributed to the final users thanks to [JSDelivr](http://www.jsdelivr.com/projects/jclic.js)
-
 The project is also available as a [NPM](https://www.npmjs.com/package/jclic) and [Bower](https://libraries.io/bower/jclic) packages.
 
-[![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+## Sponsors that make possible JClic.js
+
+[![XTEC](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-xtec.png?raw=true)](http://www.xtec.cat)<br>
+JClic.js is an open-source project sustained by __[XTEC](http://www.xtec.cat)__, the Telematic Network of the Catalan Ministry of Education.
+
+[![BrowserStack](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-browserstack.png?raw=true)](https://www.browserstack.com)<br>
+Checking the operation of JClic.js on different browsers and platforms is now possible thanks to virtual machines provided by __[BrowserStack](https://www.browserstack.com)__.
+
+[![JSDelivr](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-jsdelivr.png?raw=true)](http://www.jsdelivr.com/projects/jclic.js)<br>
+The production releases of JClic.js are smoothly distributed to the final users thanks to the __[JSDelivr](http://www.jsdelivr.com/projects/jclic.js)__ network of servers.
+
+[![Transifex](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-transifex.png?raw=true)](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md)<br>
+We use __[Transifex](https://www.transifex.com/francesc/jclicjs)__ as a platform to translate JClic.js into many languages. Please read [TRANSLATIONS.md](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md) if you want to contribute to the project creating a new translation or improving the existing ones.
