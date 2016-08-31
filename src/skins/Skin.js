@@ -540,8 +540,8 @@ define([
     //
     // Styles:
     basicCSS: '\
-.SKINID {width:100%; background-color:#3F51B5; display:flex; flex-direction:column;}\
-.SKINID .JClicPlayerCnt {background-color:lightblue; margin:18px; flex-grow:1; position:relative;}\
+.SKINID {width:100%; background-color:#3F51B5; display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column;}\
+.SKINID .JClicPlayerCnt {background-color:lightblue; margin:18px; -webkit-flex-grow:1; flex-grow:1; position:relative;}\
 .SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
 .SKINID .unselectableText {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select: none;}',
     reportsCSS: '\

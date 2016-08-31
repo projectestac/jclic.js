@@ -286,13 +286,13 @@ define([
     //
     // Styles used in this skin
     mainCSS: '\
-.SKINID .JClicCtrlCnt {margin:0 9px 18px 9px; display:flex; flex-direction:row; align-items:center;}\
-.SKINID .JClicCountCnt {display:flex; flex-direction:column;}\
-.SKINID .JClicMsgBox {height:60px; flex-grow:1; background-color:lightblue;}\
+.SKINID .JClicCtrlCnt {margin:0 9px 18px 9px; display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row; -webkit-align-items:center; align-items:center;}\
+.SKINID .JClicCountCnt {display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column;}\
+.SKINID .JClicMsgBox {height:60px; -webkit-flex-grow:1; flex-grow:1; background-color:lightblue;}\
 .SKINID .JClicBtn {cursor:pointer; line-height:0;}\
 .SKINID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left}',
     waitAnimCSS: '\
-.SKINID .waitPanel {display:flex; width:100%; height:100%; justify-content:center; align-items:center;}\
+.SKINID .waitPanel {display:-webkit-flex; display:flex; width:100%; height:100%; -webkit-justify-content:center; justify-content:center; -webkit-align-items:center; align-items:center;}\
 .SKINID .animImgBox {position:relative; width:300px; height:300px; max-width:80%; max-height:80%;}\
 .SKINID .animImgBox svg {position:absolute; width:100%; height:100%; animation-iteration-count:infinite; animation-timing-function:linear;}\
 .SKINID #waitImgBig {animation-duration:0.8s; animation-name:rotate-right;}\
