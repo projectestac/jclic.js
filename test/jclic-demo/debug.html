@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JClic HTML Player Test Page (debug mode)</title>        
+    <title>JClic HTML Player Test Page (debug mode)</title>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="./favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">                
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" data-main="../debug" src="../../node_modules/requirejs/require.js"></script>
   </head>
   <body style="margin: 0">
     <div class ="JClic"
          data-project="demo.jclic"
-         data-options='{"fade":"400"}'
+         data-options='{"fade":"400", "logLevel":"trace"}'
          data-options-report-with-user='{"reporter":"TCPReporter","path":"localhost:9000","user":"test01","lap":"15"}'
          data-options-reporter='{"reporter":"TCPReporter","path":"localhost:9000"}'
          data-backOptions='{"logLevel":"trace","skin":"@orange.xml","lang":"es","counters":"false","width":"900","height":"600","fade":"400","fontSubstitutions":{"arial":"Roboto Slab"}}'>

@@ -1,17 +1,17 @@
 //  File    : DefaultSkin.js
-//  Created : 12/05/2015  
-//  By      : fbusquet  
+//  Created : 12/05/2015
+//  By      : fbusquet
 //
-//  JClic.js  
-//  HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//  https://github.com/projectestac/jclic.js  
-//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
+//  JClic.js
+//  HTML5 player of [JClic](http://clic.xtec.cat) activities
+//  https://github.com/projectestac/jclic.js
+//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)
 //  This program is free software: you can redistribute it and/or modify it under the terms of
 //  the GNU General Public License as published by the Free Software Foundation, version. This
 //  program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
 //  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 //  General Public License for more details. You should have received a copy of the GNU General
-//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].
 
 define([
   "jquery",
@@ -33,10 +33,10 @@ define([
    * @class
    * @extends Skin
    * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-   * realize the media objects meeded tot build the Skin.
+   * realize the media objects needed tot build the Skin.
    * @param {string=} name - The skin class name
-   * @param {options=} options - Optional parameter with addicional options, used by subclasses
-   * this skin. When `null` or `undefined`, a new one will be created.  
+   * @param {options=} options - Optional parameter with additional options, used by subclasses
+   * this skin. When `null` or `undefined`, a new one will be created.
    */
   var DefaultSkin = function (ps, name, options) {
 
@@ -49,7 +49,7 @@ define([
 
     AWT.Font.loadGoogleFonts(this.cssFonts);
 
-    // Add waiting panel    
+    // Add waiting panel
     this.$waitPanel = $('<div/>')
         .css({display: 'none', 'background-color': 'rgba(255, 255, 255, .60)', 'z-index': 99})
         .append($('<div/>', {class: 'waitPanel'})
@@ -86,7 +86,7 @@ define([
         });
     this.$ctrlCnt.append($('<div/>', {class: 'JClicBtn'}).append(this.buttons.next));
 
-    // Add counters    
+    // Add counters
     if (false !== this.ps.options.counters && false !== options.counters) {
       // Create counters
       var $countCnt = $('<div/>', {class: 'JClicCountCnt'});
@@ -144,6 +144,21 @@ define([
           });
       this.$ctrlCnt.append($('<div/>', {class: 'JClicBtn'}).append(this.buttons.close));
     }
+
+    // Workaround for a bug in Edge and Explorer: SVG objects not implementing `blur` and `focus` methods
+    // See: https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8479637/
+    // This affects Polymer `iron-overlay-behavior`. See: https://github.com/PolymerElements/iron-overlay-behavior/pull/211
+    var nilFunc = null;
+    $.each(this.buttons, function(key, value){
+      if(value && (typeof value[0].focus !== 'function' || typeof value[0].blur !== 'function')){
+        if(nilFunc === null)
+          nilFunc = function(){
+            Utils.log('error', '"blur" and "focus" not defined for SVG objects in Explorer/Edge');
+          };
+        value[0].focus = value[0].blur = nilFunc;
+      }
+    });
+
   };
 
   DefaultSkin.prototype = {
@@ -154,7 +169,7 @@ define([
      */
     skinId: 'JClicDefaultSkin',
     /**
-     * The HTML div where buttons, counters and message box are placed 
+     * The HTML div where buttons, counters and message box are placed
      * @type {external:jQuery} */
     $ctrlCnt: null,
     /**
@@ -186,16 +201,16 @@ define([
      * @type {number} */
     countersHeight: 20,
     /**
-     * 
-     * Returns the CSS styles used by this skin. This methos should be called only from
-     * `Skin` constructor, and overrided by subclasses if needed.
+     *
+     * Returns the CSS styles used by this skin. This method should be called only from
+     * `Skin` constructor, and overridden by subclasses if needed.
      * @returns {string}
      */
     _getStyleSheets: function () {
       return Skin.prototype._getStyleSheets() + this.mainCSS + this.waitAnimCSS;
     },
     /**
-     * 
+     *
      * Updates the graphic contents of this skin.<br>
      * This method should be called from {@link Skin#update}
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`, it's the
@@ -210,7 +225,7 @@ define([
       return Skin.prototype.updateContent.call(this);
     },
     /**
-     * 
+     *
      * Main method used to build the content of the skin. Resizes and places internal objects.
      */
     doLayout: function () {
@@ -220,14 +235,14 @@ define([
             this[screenfull.isFullscreen ? 'fullScreenExitIcon' : 'fullScreenIcon'],
             this.iconWidth, this.iconHeight, this.iconFill);
 
-      // Resize player accordingly      
+      // Resize player accordingly
       this.player.doLayout();
 
       // Temporary remove canvas to let div get its natural size:
       if (this.$msgBoxDivCanvas)
         this.$msgBoxDivCanvas.remove();
 
-      // Get current size of message box div without canvas      
+      // Get current size of message box div without canvas
       var msgWidth = this.$msgBoxDiv.outerWidth(),
           msgHeight = this.$msgBoxDiv.outerHeight();
 
@@ -248,7 +263,7 @@ define([
       this.updateContent();
     },
     /**
-     * 
+     *
      * Gets the {@link ActiveBox} used to display the main messages of activities
      * @returns {ActiveBox}
      */
@@ -256,7 +271,7 @@ define([
       return this.msgBox;
     },
     /**
-     * 
+     *
      * Method used to notify this skin that a specific action has changed its enabled/disabled status
      * @param {AWT.Action} act - The action originating the change event
      */
@@ -273,7 +288,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Enables or disables an object changing its opacity
      * @param {external:jQuery} $object - A JQuery DOM element
      * @param {boolean} enabled
@@ -317,7 +332,7 @@ define([
     // SVG images for action buttons
     // Based on [Google Material design Icons](https://google.github.io/material-design-icons/)
     //
-    // Default settings for icons (can be overrided in subclasses)
+    // Default settings for icons (can be overridden in subclasses)
     iconWidth: 36,
     iconHeight: 36,
     iconFill: '#FFFFFF',
