@@ -1,17 +1,17 @@
-//  File    : JClicPlayer.js  
-//  Created : 28/04/2015  
-//  By      : Francesc Busquets  
+//  File    : JClicPlayer.js
+//  Created : 28/04/2015
+//  By      : Francesc Busquets
 //
-//  JClic.js  
-//  HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//  https://github.com/projectestac/jclic.js  
-//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
+//  JClic.js
+//  HTML5 player of [JClic](http://clic.xtec.cat) activities
+//  https://github.com/projectestac/jclic.js
+//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)
 //  This program is free software: you can redistribute it and/or modify it under the terms of
 //  the GNU General Public License as published by the Free Software Foundation, version. This
 //  program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
 //  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 //  General Public License for more details. You should have received a copy of the GNU General
-//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].
 
 /* global JClicObject */
 
@@ -35,7 +35,7 @@ define([
     EventSounds, JClicProject, JumpInfo, ActiveBoxContent, Reporter) {
 
   /**
-   * 
+   *
    * JClicPlayer is one of the the main classes of the JClic system. It implements the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * interface, needed to read and play JClic projects.<br>
@@ -87,22 +87,22 @@ define([
      * Object with miscellaneous options.
      * @type {object} */
     options: {
-      // 
+      //
       // Max waiting time to have all media loaded (milliseconds)
       maxWaitTime: 120000,
-      // 
+      //
       // Name of the frame where to open links
       infoUrlFrame: '_blank',
-      // 
+      //
       // URL where to navigate to on exit
       exitUrl: null,
-      // 
+      //
       // At the beginning, the audio should be enabled or disabled
       audioEnabled: true,
-      // 
+      //
       // Navigation buttons are always visible (for debugging purposes)
       navButtonsAlways: true,
-      // 
+      //
       // Time (milliseconds) of the fade-in animation of the activity panel. When 0, no animation
       // is performed
       fade: 300
@@ -124,7 +124,8 @@ define([
      * @type {string} */
     basePath: '',
     /**
-     * A {@link external:JSZip} object pointing to a `jclic.zip` file containing the current project.<br>
+     * A {@link external:JSZip} object pointing to a `jclic.zip` or `jclic.scorm.zip` file containing
+     * the current project.<br>
      * Two extra properties will be added to this object when loaded:<br>
      * - __zip.fullZipPath__ {string} - The full path of the ZIP file
      * - __zip.zipBasePath__ {string} - The path to the folder containing the ZIP file
@@ -183,7 +184,7 @@ define([
      * @property {number} actions
      * @property {number} time */
     /**
-     * Current values of the counters     
+     * Current values of the counters
      * @type {JClicPlayer~counterValType} */
     counterVal: {score: 0, actions: 0, time: 0},
     /**
@@ -206,7 +207,7 @@ define([
      * @type {boolean} */
     navButtonsAlways: false,
     /**
-     * 
+     *
      * Builds the {@link AWT.Action} objects for this player
      */
     buildActions: function () {
@@ -259,7 +260,7 @@ define([
       });
     },
     /**
-     * 
+     *
      * Resets the main components of this player
      */
     reset: function () {
@@ -277,14 +278,14 @@ define([
         this.skin.setWaitCursor('reset');
     },
     /**
-     * 
+     *
      * Instructs the player to stop working
      */
     stop: function () {
       this.stopMedia(-1);
     },
     /**
-     * 
+     *
      * Executes miscellaneous finalization routines.
      */
     end: function () {
@@ -307,7 +308,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Creates and initializes the {@link Reporter} member
      * @return {external:Promise}
      */
@@ -320,7 +321,7 @@ define([
       return this.reporter.init();
     },
     /**
-     * 
+     *
      * Creates and initializes objects of type {@link AWT.Timer}
      */
     initTimers: function () {
@@ -357,7 +358,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Closes the help dialog window
      */
     closeHelpWindow: function () {
@@ -366,7 +367,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Returns the JQuery DOM top component (usually, the {@link Skin} `$div` member)
      * @returns {external:jQuery}
      */
@@ -377,7 +378,7 @@ define([
         return this.$div;
     },
     /**
-     * 
+     *
      * Sets the current skin
      * @param {?Skin} newSkin - The skin to use. When `null`, `defaultSkin` will be used.
      */
@@ -392,7 +393,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Sets the current project of this player, without starting any activity
      * @param {JClicProject} project - The project to be set
      */
@@ -406,7 +407,7 @@ define([
       this.project.realize(this);
     },
     /**
-     * 
+     *
      * Loads the specified project and starts playing at the specified activity or sequence tag.
      * @param {?(string|JClicProject)} project - The project to load (if it's a string) or used.
      * When `null` or `undefined`, refers to the current project.
@@ -433,26 +434,43 @@ define([
           var fullPath = Utils.getPath(this.basePath, project);
 
           // Step 0: Check if `project` points to a ZIP file
-          if (Utils.endsWith(fullPath, '.jclic.zip')) {
+          if (Utils.endsWith(fullPath, '.zip')) {
             // TODO: Implement register of zip files in PlayerHistory
             player.zip = null;
             Utils.log('info', 'Loading ZIP file: %s', fullPath);
 
             // Launch loading of ZIP file in a separated thread
-            window.setTimeout(function () {
-              player.setWaitCursor(true);
-
-              JSZipUtils.getBinaryContent(fullPath, function (err, data) {
-                if (err) {
-                  Utils.log('error', 'Error loading ZIP file: %s', err.toString());
-                  return;
-                }
-                new JSZip().loadAsync(data).then(function (zip) {
-                  player.zip = zip;
-                  player.zip.fullZipPath = fullPath;
-                  player.zip.zipBasePath = Utils.getBasePath(fullPath);
+            JSZipUtils.getBinaryContent(fullPath, function (err, data) {
+              if (err) {
+                player.setWaitCursor(false);
+                Utils.log('error', 'Error loading ZIP file: %s', err.toString());
+                return;
+              }
+              new JSZip().loadAsync(data).then(function (zip) {
+                player.zip = zip;
+                player.zip.fullZipPath = fullPath;
+                player.zip.zipBasePath = Utils.getBasePath(fullPath);
+                var fileName = null;
+                // Check if ZIP contains a "project.json" file (as in the ".scorm.zip" files generated by JClic Author)
+                if(player.zip.files['project.json']){
+                  player.zip.files['project.json'].async('string').then(function(content){
+                    try {
+                      var prjson = JSON.parse(content);
+                      // Read the `mainFile` field of `project.json`
+                      if(Utils.endsWith(prjson.mainFile, '.jclic')){
+                        // Load project's main file
+                        player.load(Utils.getPath(player.zip.zipBasePath, prjson.mainFile), sequence, activity);
+                      } else {
+                        Utils.log('error', 'Invalid or null "mainFile" specified in %s - "project.json".', fullPath);
+                      }
+                    } catch(err){
+                      Utils.log('error', 'Error reading "project.json" in %s: %s', fullPath, err ? 'unknown error' : err.toString());
+                    }
+                  }).catch(function(reason){
+                    Utils.log('error', 'Error reading ZIP file: %s', reason ? 'unknown reason' : reason.toString());
+                  });
+                } else {
                   // Find first file with extension '.jclic' inside the zip file
-                  var fileName = null;
                   for (var fn in player.zip.files) {
                     if (Utils.endsWith(fn, '.jclic')) {
                       fileName = fn;
@@ -464,13 +482,13 @@ define([
                   } else {
                     Utils.log('error', 'This ZIP file does not contain any JClic project!');
                   }
-                }).catch(function (reason) {
-                  Utils.log('error', 'Error reading ZIP file: %s', reason ? 'unknown reason' : reason.toString());
-                });
+                }
+                player.setWaitCursor(false);
+              }).catch(function (reason) {
+                Utils.log('error', 'Error reading ZIP file: %s', reason ? 'unknown reason' : reason.toString());
+                player.setWaitCursor(false);
               });
-              player.setWaitCursor(false);
-            }, 100);
-            player.setWaitCursor(false);
+            });
             return;
           } else if (player.localFS && JClicObject && !JClicObject.projectFiles[fullPath]) {
             ScriptJS(fullPath + '.js', function () {
@@ -533,7 +551,7 @@ define([
               return;
             }
           }
-          // Special case for local filesystems (`file:` protocol)
+          // Special case for local file systems (`file:` protocol)
           else if (player.localFS) {
             // Check if file is already loaded in the global variable `JClicObject`
             if (JClicObject && JClicObject.projectFiles[fullPath]) {
@@ -658,11 +676,9 @@ define([
       player.setWaitCursor(false);
     },
     /**
-     * 
+     *
      * Forces the current activity to stop playing.
      */
-    //
-    // Forces to stop playing the current activity
     forceFinishActivity: function () {
       this.timer.stop();
       this.delayedTimer.stop();
@@ -674,7 +690,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Removes the current {@link Activity#Panel} from this player
      */
     removeActivity: function () {
@@ -688,7 +704,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Initializes the activity
      */
     initActivity: function () {
@@ -707,7 +723,7 @@ define([
       this.setWaitCursor(false);
     },
     /**
-     * 
+     *
      * Called by {@link JClicPlayer#load} when the {@link Activity#Panel} is fully visible, just
      * after the JQuery animation effect.
      */
@@ -718,7 +734,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Starts the activity. This method is usually called from text activities with previous text.
      */
     startActivity: function () {
@@ -728,7 +744,7 @@ define([
       this.setWaitCursor(false);
     },
     /**
-     * 
+     *
      * Configures the layout and visual aspect of the player area.
      */
     doLayout: function () {
@@ -776,16 +792,16 @@ define([
           proposedRect.dim.height = Math.min(proposedRect.dim.height, height);
         }
 
-        // Activity.Panel will calc and set its position and size based on the maximum and optimal
+        // Activity.Panel will calculate and set its position and size based on the maximum and optimal
         // available space
-        /* Try with a computed rect instead of "this", to avoid the loss of the right margin
+        /* TODO: Try with a computed rectangle instead of "this", to avoid the loss of the right margin
          * in narrow displays */
         this.actPanel.fitTo(proposedRect, this);
       }
       this.$div.css(mainCss);
     },
     /**
-     * 
+     *
      * Plays the specified media.
      * @param {MediaContent} mediaContent - The media to be played
      * @param {ActiveBox=} mediaPlacement - The cell where the graphic component of this media
@@ -854,7 +870,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Stops currently playing media
      * @param {number=} [level=-1] - Sets the threshold above which all media objects with equal
      * or greater `level` will also also be muted.
@@ -863,12 +879,12 @@ define([
       if (typeof level !== 'number')
         level = -1;
       var player = this;
-      //window.setTimeout(function () {      
+      //window.setTimeout(function () {
       player.activeMediaBag.stopAll(level);
       //}, 0);
     },
     /**
-     * 
+     *
      * Launches the specified system command.<br>
      * Currently not implemented.
      * @param {string} cmd
@@ -877,7 +893,7 @@ define([
       Utils.log('warn', 'Unsupported call to external command: "%s"', cmd);
     },
     /**
-     * 
+     *
      * Called from {@link Activity} when finished.
      * @param {boolean} completedOK - `true` when the activity was successfully completed, `false`
      * otherwise.
@@ -889,7 +905,8 @@ define([
       this.startAutoPassTimer();
     },
     /**
-     * Starts the automatic passing to the next activity, when applicable.
+     *
+     * Starts the automatic jump to next activity, when applicable.
      */
     startAutoPassTimer: function () {
       var ase = this.project.activitySequence.getCurrentAct();
@@ -910,8 +927,8 @@ define([
       return key;
     },
     /**
-     * 
-     * Sets the current main message
+     *
+     * Sets the current main message.
      * @param {ActiveBoxContent} abc - The content of the message
      */
     setMsg: function (abc) {
@@ -926,7 +943,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Launches the active media content associated to the main message, if any.
      */
     playMsg: function () {
@@ -934,7 +951,7 @@ define([
         this.skin.getMsgBox().playMedia(this);
     },
     /**
-     * 
+     *
      * Sets a value to the specified counter
      * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
      * @param {number} newValue - The value to be set
@@ -945,7 +962,7 @@ define([
         this.skin.counters[counter].setValue(newValue);
     },
     /**
-     * 
+     *
      * Gets the current value for the specified counter
      * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
      * @returns {number}
@@ -954,7 +971,7 @@ define([
       return this.counterVal[counter];
     },
     /**
-     * 
+     *
      * Enables or disables a specific counter
      * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
      * @param {boolean} bEnabled - When `true`, the counter will be enabled.
@@ -966,7 +983,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Increments by 1 the value of the specified counter
      * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
      */
@@ -987,7 +1004,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Sets the specified counter in count-down status, starting at `maxValue`.
      * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
      * @param {number} maxValue - The value from which to start counting down
@@ -998,8 +1015,8 @@ define([
         this.skin.counters[counter].setCountDown(maxValue);
     },
     /**
-     * 
-     * Sets / unsets the panel in 'wait' state
+     *
+     * Set/unset the panel in 'wait' state
      * @param {boolean} status
      */
     setWaitCursor: function (status) {
@@ -1007,7 +1024,7 @@ define([
         this.skin.setWaitCursor(status);
     },
     /**
-     * 
+     *
      * Builds an {@link ActiveMediaPlayer} for the specified {@link MediaContent}
      * @param {MediaContent} mediaContent - The media content to be played
      * @returns {ActiveMediaPlayer}
@@ -1019,7 +1036,7 @@ define([
         return null;
     },
     /**
-     * 
+     *
      * Notifies the reporting system that a new activity has started
      * @param {Activity} act - The activity that is sending the notification
      */
@@ -1036,7 +1053,7 @@ define([
       this.setCounterValue('score', 0);
     },
     /**
-     * 
+     *
      * Notifies the reporting system that a new action has been performed on the current activity
      * @param {Activity} act - The activity that is sending the notification
      * @param {string} type - Type of action (match, move, switch...)
@@ -1054,7 +1071,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Notifies the reporting system that the current activity has finished
      * @param {Activity} act - The activity that is sending the notification
      * @param {boolean} solved - Whether the activity was successfully completed or not.
@@ -1064,7 +1081,7 @@ define([
         this.reporter.endActivity(this.counterVal['score'], this.counterVal['actions'], solved);
     },
     /**
-     * 
+     *
      * Shows the help info provided by the activity
      * @param {external:jQuery} $hlpComponent - The jQuery DOM component to be shown.
      * @returns {boolean} - True when the component was successfully displayed
@@ -1076,7 +1093,7 @@ define([
       return false;
     },
     /**
-     * 
+     *
      * Navigates to the requested URL
      * @param {string} url - The URL to navigate to
      * @param {boolean} inFrame - When `true` opens in a new frame
@@ -1090,7 +1107,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Only when `exitUrl` has been specified in `options`, navigates to the specified URL
      * @param {string} url - The URL to navigate to.
      */
@@ -1101,6 +1118,7 @@ define([
         this.displayURL(url, false);
     },
     /**
+     *
      * Sets a title in a specific HTML element, if provided.
      * @param {string} docTitle
      */
