@@ -13,7 +13,7 @@
 //  General Public License for more details. You should have received a copy of the GNU General
 //  Public License along with this program. If not, see [http://www.gnu.org/licenses/].
 
-/* global JClicObject */
+/* global JClicObject, JSON, location, window */
 
 define([
   "jquery",
@@ -409,7 +409,12 @@ define([
     /**
      *
      * Loads the specified project and starts playing at the specified activity or sequence tag.
-     * @param {?(string|JClicProject)} project - The project to load (if it's a string) or used.
+     * @param {?(string|JClicProject)} project - The project to load (if it's a string) or to use (if it's an object of type {@link JClicProject}).
+     * When it's a `string`, it can be the absolute or relative path to:
+     * - A '.jclic' project file
+     * - A '.jclic.zip' compressed project file (containing one '.jclic' file)
+     * - A '.scorm.zip' file, as exported by JClic Author.
+     * - A 'project.json' file, as exported by JClic Author
      * When `null` or `undefined`, refers to the current project.
      * @param {(string|number)=} sequence - Sequence tag or numeric order in the {@link ActivitySequence}
      * to be loaded. If _sequence_ and _activity_ are both `null`, the first {@link ActivitySequenceElement}
@@ -432,6 +437,27 @@ define([
 
           // Param `project` is a file name or URL (otherwise, is a realized `JClicProject` object)
           var fullPath = Utils.getPath(this.basePath, project);
+          
+          // Previous step: Check if `project` points to a "project.json" file
+          if (Utils.endsWith(fullPath, 'project.json')) {
+            Utils.log('info', 'Loading JSON info from: %s', fullPath);
+            $.getJSON(fullPath).done(function (json) {
+              // Read the `mainFile` field of `project.json`
+              if (Utils.endsWith(json['mainFile'], '.jclic')) {
+                // Load project's main file
+                player.load(Utils.getPath(player.basePath, json['mainFile']), sequence, activity);
+              } else {
+                Utils.log('error', 'Invalid or null "mainFile" specified in %s - "project.json".', fullPath);
+              }
+            }).fail(function (jqhxr, textStatus, error) {
+              var errMsg = textStatus + ' (' + error + ') while loading ' + project;
+              Utils.log(errMsg);
+              alert('Error!\n' + errMsg);
+            }).always(function () {
+              player.setWaitCursor(false);
+            });
+            return;
+          }
 
           // Step 0: Check if `project` points to a ZIP file
           if (Utils.endsWith(fullPath, '.zip')) {
@@ -455,11 +481,11 @@ define([
                 if(player.zip.files['project.json']){
                   player.zip.files['project.json'].async('string').then(function(content){
                     try {
-                      var prjson = JSON.parse(content);
+                      var json = JSON.parse(content);
                       // Read the `mainFile` field of `project.json`
-                      if(Utils.endsWith(prjson.mainFile, '.jclic')){
+                      if(Utils.endsWith(json['mainFile'], '.jclic')){
                         // Load project's main file
-                        player.load(Utils.getPath(player.zip.zipBasePath, prjson.mainFile), sequence, activity);
+                        player.load(Utils.getPath(player.zip.zipBasePath, json['mainFile']), sequence, activity);
                       } else {
                         Utils.log('error', 'Invalid or null "mainFile" specified in %s - "project.json".', fullPath);
                       }
