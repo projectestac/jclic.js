@@ -445,7 +445,7 @@ define([
               // Read the `mainFile` field of `project.json`
               if (Utils.endsWith(json['mainFile'], '.jclic')) {
                 // Load project's main file
-                player.load(Utils.getPath(player.basePath, json['mainFile']), sequence, activity);
+                player.load(Utils.getPath(Utils.getBasePath(fullPath), json['mainFile']), sequence, activity);
               } else {
                 Utils.log('error', 'Invalid or null "mainFile" specified in %s - "project.json".', fullPath);
               }
