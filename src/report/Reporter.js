@@ -1,17 +1,17 @@
-//  File    : Reporter.js  
-//  Created : 17/05/2016  
-//  By      : fbusquet  
+//  File    : Reporter.js
+//  Created : 17/05/2016
+//  By      : fbusquet
 //
-//  JClic.js  
-//  HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//  http://projectestac.github.io/jclic.js  
-//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
+//  JClic.js
+//  HTML5 player of [JClic](http://clic.xtec.cat) activities
+//  http://projectestac.github.io/jclic.js
+//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)
 //  This program is free software: you can redistribute it and/or modify it under the terms of
 //  the GNU General Public License as published by the Free Software Foundation, version. This
 //  program is distributed in the hope reporter it will be useful, but WITHOUT ANY WARRANTY; without
 //  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 //  General Public License for more details. You should have received a copy of the GNU General
-//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].
 
 /* global Promise */
 
@@ -101,7 +101,7 @@ define([
     initiated: false,
     /**
      * `true` if the system is connected to a database with user's data.
-     * When `false`, a generic ID will be used. 
+     * When `false`, a generic ID will be used.
      * @type {boolean} */
     bUserBased: null,
     /**
@@ -116,7 +116,7 @@ define([
       return this.info.recalc();
     },
     /**
-     * 
+     *
      * Gets a specific property from this reporting system
      * @param {string} key - Requested property
      * @param {string}+ defaultValue - Default return value when requested property does not exist
@@ -126,7 +126,7 @@ define([
       return defaultValue;
     },
     /**
-     * 
+     *
      * Gets a specific boolean property from this reporting system
      * @param {string} key - Requested property
      * @param {boolean}+ defaultValue - Default return when requested property does not exist
@@ -137,8 +137,8 @@ define([
       return key === null ? defaultValue : s === 'true' ? true : false;
     },
     /**
-     * 
-     * Gets the list of groups or organizations currently registered in the system. This 
+     *
+     * Gets the list of groups or organizations currently registered in the system. This
      * method should be implemented by classes derived of `Reporter`.
      * @returns {external:Promise} - When fulfilled, an array of group data is returned as a result
      */
@@ -146,7 +146,7 @@ define([
       return Promise.reject('No groups defined!');
     },
     /**
-     * 
+     *
      * Gets the list of users currently registered in the system, optionally filtered by
      * a specific group ID. This method should be implemented by classes drived of `Reporter`.
      * @param {string}+ groupId - Optional group ID to be used as a filter criteria
@@ -157,7 +157,7 @@ define([
       return Promise.reject('No users defined in ' + groupId);
     },
     /**
-     * 
+     *
      * Gets extended data associated with a specific user. This is a method intended to be
      * implemented in subclasses.
      * @param {string} userId - The requested user ID
@@ -167,8 +167,8 @@ define([
       return Promise.reject('Unknown user!');
     },
     /**
-     * 
-     * Gets extended data associated with a specific group or organization. This 
+     *
+     * Gets extended data associated with a specific group or organization. This
      * is a method intended to be implemented in subclasses.
      * @param {string} groupId - The requested group ID
      * @returns {external:Promise} - When fulfilled, an object with group data is returned.
@@ -177,7 +177,7 @@ define([
       return Promise.reject('Unknown group!');
     },
     /**
-     * 
+     *
      * Checks if this reporting system manages its own database of users and groups. Defaults to `false`
      * @returns {boolean}
      */
@@ -187,7 +187,7 @@ define([
       return this.bUserBased;
     },
     /**
-     * 
+     *
      * Allows the current user to create a new group, and asks his name
      * @returns {external:Promise} - When fulfilled, the name choosen for the new group is returned.
      */
@@ -196,7 +196,7 @@ define([
       return Promise.reject('Remote creation of groups not yet implemented!');
     },
     /**
-     * 
+     *
      * Allows the current user to create a new user ID, and asks his ID and password
      * @returns {external:Promise} - When fulfilled, an object with the new user ID and password
      * is returned.
@@ -206,7 +206,7 @@ define([
       return Promise.reject('Remote creation of users not yet implemented!');
     },
     /**
-     * 
+     *
      * Allows the current user to select its group or organization from the current groups list
      * @returns {external:Promise}
      */
@@ -217,7 +217,7 @@ define([
           reject('This system does not manage users!');
         else {
           reporter.getGroups().then(function (groupList) {
-            // Creation of new groups not yet implemented!            
+            // Creation of new groups not yet implemented!
             if (!groupList || groupList.length < 1)
               reject('No groups defined!');
             else {
@@ -244,7 +244,7 @@ define([
       });
     },
     /**
-     * 
+     *
      * Asks for a valid user ID fulfilling the promise if found, rejecting it otherwise
      * @param {boolean}+ forcePrompt - Prompt also if `userId` is already defined (default is `false`)
      * @returns {external:Promise}
@@ -324,7 +324,7 @@ define([
       });
     },
     /**
-     * 
+     *
      * Renders the data contained in this report into a DOM tree
      * @returns {external:jQuery} - A jQuery object with a `div` element containing the full report.
      */
@@ -401,7 +401,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Initializes this report system with an optional set of parameters.
      * Returns a {@link external:Promise}, fulfilled when the reporter is fully initialized.
      * @param {?Object} options - Initial settings passed to the reporting system
@@ -415,23 +415,23 @@ define([
       this.sessionContext = Utils.getVal(options.context);
       this.groupCodeFilter = Utils.getVal(options.groupCodeFilter);
       this.userCodeFilter = Utils.getVal(options.userCodeFilter);
-      if (options.SCORM !== 'false') {
+      if (options.SCORM !== false) {
         this.SCORM = Scorm.getSCORM(this);
         if (this.SCORM !== null && this.descriptionKey === Reporter.prototype.descriptionKey)
-          this.descriptionKey = this.SCORM.getScormType();
+        this.descriptionKey = this.SCORM.getScormType();
       }
       this.initiated = true;
       return Promise.resolve(true);
     },
     /**
-     * 
+     *
      * Closes this reporting system
      */
     end: function () {
       this.endSession();
     },
     /**
-     * 
+     *
      * Finalizes the current sequence
      */
     endSequence: function () {
@@ -441,7 +441,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Finalizes the current session
      */
     endSession: function () {
@@ -449,7 +449,7 @@ define([
       this.currentSession = null;
     },
     /**
-     * 
+     *
      * Creates a new group (method to be implemented in subclasses)
      * @param {GroupData} gd
      */
@@ -457,7 +457,7 @@ define([
       throw "No database!";
     },
     /**
-     * 
+     *
      * Creates a new user (method to be implemented in subclasses)
      * @param {UserData} ud
      */
@@ -465,7 +465,7 @@ define([
       throw "No database!";
     },
     /**
-     * 
+     *
      * This method should be invoked when a new session starts.
      * @param {JClicProject} jcp - The {@link JClicProject} this session refers to.
      */
@@ -476,7 +476,7 @@ define([
       this.info.valid = false;
     },
     /**
-     * 
+     *
      * This method should be invoked when a new sequence starts
      * @param {ActivitySequenceElement} ase - The {@link ActivitySequenceElement} referenced by this sequence.
      */
@@ -489,7 +489,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * This method should be invoked when the user starts a new activity
      * @param {Activity} act - The {@link Activity} reporter has just started
      */
@@ -500,7 +500,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * This method should be called when the current activity finishes. Data about user's final results
      * on the activity will then be saved.
      * @param {number} score - The final score, usually in a 0-100 scale.
@@ -514,7 +514,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Reports a new action done by the user while playing the current activity
      * @param {string} type - Type of action (`click`, `write`, `move`, `select`...)
      * @param {string}+ source - Description of the object on which the action is done.
@@ -528,7 +528,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Gets information about the current sequence
      * @returns {SequenceReg.Info}
      */
@@ -536,7 +536,7 @@ define([
       return this.currentSession === null ? null : this.currentSession.getCurrentSequenceInfo();
     },
     /**
-     * 
+     *
      * Gets the name of the current sequence
      * @returns {string}
      */
@@ -671,14 +671,14 @@ define([
   };
 
 
-  /** 
+  /**
    * Static list of classes derived from Reporter. It should be filled by Reporter classes at declaration time.
    * @type {Object}
    */
   Reporter.CLASSES = {'Reporter': Reporter};
 
   /**
-   * 
+   *
    * Creates a new Reporter of the requested class
    * The resulting object must be prepared to operate with a call to its `init` method.
    * @param {string} className - Class name of the requested reporter. When `null`, a basic Reporter is created.

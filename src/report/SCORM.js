@@ -1,17 +1,17 @@
-//  File    : SCORM.js  
-//  Created : 18/07/2016  
-//  By      : fbusquet  
+//  File    : SCORM.js
+//  Created : 18/07/2016
+//  By      : fbusquet
 //
-//  JClic.js  
-//  HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//  http://projectestac.github.io/jclic.js  
-//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
+//  JClic.js
+//  HTML5 player of [JClic](http://clic.xtec.cat) activities
+//  http://projectestac.github.io/jclic.js
+//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)
 //  This program is free software: you can redistribute it and/or modify it under the terms of
 //  the GNU General Public License as published by the Free Software Foundation, version. This
 //  program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
 //  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 //  General Public License for more details. You should have received a copy of the GNU General
-//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].
 
 /* global window */
 
@@ -75,7 +75,7 @@ define([
      * @type {string} */
     studentName: '',
     /**
-     * 
+     *
      * Initializes communication with the SCORM API
      * @returns {Boolean}
      */
@@ -102,7 +102,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Terminates communication with the SCORM API
      * @returns {Boolean}
      */
@@ -126,7 +126,7 @@ define([
       Utils.log('debug', 'SCORM results reported: %d (%s)', score, time);
     },
     /**
-     * 
+     *
      * Commits current pending data to the SCORM API
      * @returns {Boolean}
      */
@@ -140,7 +140,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Sends a specific value to the SCORM API
      * @param {tring} key - A SCORM valid key
      * @param {string|number} value - The value associated with this key
@@ -156,7 +156,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Gets a specific value from the SCORM API
      * @param {tring} key - A SCORM valid key
      * @returns {string} - The value associated with the provided key, or `null` if not found
@@ -203,7 +203,7 @@ define([
   SCORM.DISCOVER_MAX_TRIES = 50;
 
   /**
-   * 
+   *
    * Recursive function used to find the SCORM "API" object
    * @param {object} win - The 'window' object to scan for global SCORM API objects
    * @param {number} tries - Recursive attempts currently achieved
@@ -221,25 +221,29 @@ define([
   };
 
   /**
-   * 
+   *
    * Checks for the presence of a SCORM API on the current browser session.
    * @returns {SCORM} - A valid SCORM object, or `null` if no SCORM API was found.
    * @param {Reporter} reporter - The {@link Reporter} linked to the requested SCORM object
    */
-  SCORM.getSCORM = function (reporter) {
-    var result = null;
+   SCORM.getSCORM = function (reporter) {
+     var result = null;
+     try {
+       var api = SCORM.scanForAPI(window, 0);
+       if (api === null && window.opener)
+       api = SCORM.scanForAPI(window.opener, 0);
 
-    var api = SCORM.scanForAPI(window, 0);
-    if (api === null && window.opener)
-      api = SCORM.scanForAPI(window.opener, 0);
-
-    if (api) {
-      result = new SCORM(api, reporter);
-      if (!result.initialize())
-        result = null;
-    }
-    return result;
-  };
+       if (api) {
+         result = new SCORM(api, reporter);
+         if (!result.initialize())
+         result = null;
+       }
+     } catch (ex) {
+       result = null;
+       Utils.log('warn', 'Unable to use SCORM: %s', ex.toString());
+     }
+     return result;
+   };
 
   return SCORM;
 
