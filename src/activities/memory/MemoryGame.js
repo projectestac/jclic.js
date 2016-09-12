@@ -1,17 +1,32 @@
-//    File    : MemoryGame.js  
-//    Created : 04/06/2015  
-//    By      : fbusquet  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : activities/memory/MemoryGame.js
+ *  Created : 04/06/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -26,7 +41,8 @@ define([
   /**
    * This class of {@link Activity} shows a panel with duplicate {@link ActiveBox} objects initially
    * hidden and scrambled. To complete the activity, all object pairs must be found. Only two objects
-   * are revealed in every move, so the user must remember the content of each cell.<br>
+   * are revealed in every move, so the user must remember the content of each cell.
+   *
    * The cell pairs can have identical content, defined in the `primary` {@link ActiveBagContent} of
    * the activity, or two different contents. In this case, the `secondary` bag elements will have
    * content related to each `primary` element.
@@ -42,7 +58,7 @@ define([
   MemoryGame.prototype = {
     constructor: MemoryGame,
     /**
-     * 
+     *
      * Retrieves the minimum number of actions needed to solve this activity.
      * @returns {number}
      */
@@ -50,7 +66,7 @@ define([
       return this.abc.primary.getNumCells();
     },
     /**
-     * 
+     *
      * Whether or not the activity uses random to scramble internal components
      * @returns {boolean}
      */
@@ -58,8 +74,8 @@ define([
       return true;
     },
     /**
-     * 
-     * When `true`, the activity mut always be scrambled
+     *
+     * When `true`, the activity must always be scrambled
      * @returns {boolean}
      */
     shuffleAlways: function () {
@@ -74,8 +90,8 @@ define([
    * The {@link Activity.Panel} where memory games are played.
    * @class
    * @extends Activity.Panel
-   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
    * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
@@ -101,7 +117,7 @@ define([
      * @type {string[]} */
     events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
     /**
-     * 
+     *
      * Miscellaneous cleaning operations
      */
     clear: function () {
@@ -111,7 +127,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Prepares the visual components of the activity
      */
     buildVisualComponents: function () {
@@ -164,7 +180,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Basic initialization procedure
      */
     initActivity: function () {
@@ -183,8 +199,8 @@ define([
       }
     },
     /**
-     * 
-     * Updates the graphic content of this panel.<br>
+     *
+     * Updates the graphic content of this panel.
      * This method will be called from {@link AWT.Container#update} when needed.
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.
@@ -202,7 +218,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Sets the real dimension of this panel.
      * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
      * @returns {AWT.Dimension}
@@ -213,7 +229,7 @@ define([
       return BoxBag.layoutSingle(preferredMaxSize, this.bg, this.act.margin);
     },
     /**
-     * 
+     *
      * Sets the size and position of this activity panel
      * @param {AWT.Rectangle} rect
      */
@@ -231,7 +247,7 @@ define([
         });
         this.$div.append(this.$canvas);
 
-        // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context        
+        // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context
         this.bc = new BoxConnector(this, this.$canvas.get(0).getContext('2d'));
 
         // Repaint all
@@ -239,7 +255,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Main handler used to process mouse, touch, keyboard and edit events
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
@@ -247,14 +263,14 @@ define([
      */
     processEvent: function (event) {
       if (this.bc && this.playing) {
-        // 
+        //
         // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
         var p = null;
-        // 
+        //
         // Two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
         // `origin` and `dest` points.
         var bx1, bx2;
-        // 
+        //
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
@@ -293,7 +309,7 @@ define([
               if (up)
                 break;
               //
-              // Find the ActiveBox behind the clicked point              
+              // Find the ActiveBox behind the clicked point
               bx1 = this.bg.findActiveBox(p);
               if (bx1 && bx1.idAss !== -1) {
                 // Play cell media or event sound
@@ -310,7 +326,7 @@ define([
             } else {
               // Pairing completed
               //
-              // Find the active boxes behind `bc.origin` and `p`              
+              // Find the active boxes behind `bc.origin` and `p`
               if (this.act.dragCells)
                 bx1 = this.bc.bx;
               else

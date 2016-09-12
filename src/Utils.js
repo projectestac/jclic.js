@@ -1,17 +1,32 @@
-//    File    : Utils.js  
-//    Created : 01/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : Utils.js
+ *  Created : 01/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 /* global Promise, window */
 
@@ -25,7 +40,7 @@ define([
     screenfull = window.screenfull;
 
   /**
-   * 
+   *
    * Miscellaneous utility functions and constants
    * @exports Utils
    * @class
@@ -42,7 +57,7 @@ define([
      */
     LOG_PRINT_LABELS: ['     ', 'ERROR', 'WARN ', 'INFO ', 'DEBUG', 'TRACE', 'ALL  '],
     /**
-     * Current verbosity level. Default is 2 (only errror and warning messages are printed)
+     * Current verbosity level. Default is 2 (only error and warning messages are printed)
      * @type {number} */
     LOG_LEVEL: 2, // warn
     /**
@@ -57,7 +72,7 @@ define([
     },
     /**
      * Initializes the global settings
-     * @param {object} options - An object with global setings
+     * @param {object} options - An object with global settings
      * @returns {object} The normalized `options` object
      */
     init: function (options) {
@@ -83,12 +98,12 @@ define([
      * Reports a new message to the logging system
      * @param {string} type - The type of message. Mus be `error`, `warn`, `info`, `debug` or `trace`.
      * @param {string} msg - The main message to be logged. Additional parameters can be added, like
-     * in `console.log` (see: [https://developer.mozilla.org/en-US/docs/Web/API/Console/log])
+     * in `console.log` (see: {@link https://developer.mozilla.org/en-US/docs/Web/API/Console/log})
      */
     log: function (type, msg) {
       var level = Utils.LOG_LEVELS.indexOf(type);
 
-      // Check if message should currently be logged      
+      // Check if message should currently be logged
       if (level < 0 || level <= Utils.LOG_LEVEL) {
         if (Utils.LOG_OPTIONS.pipeTo)
           Utils.LOG_OPTIONS.pipeTo.apply(null, arguments);
@@ -133,7 +148,7 @@ define([
       return val === 'true' ? true : val === 'false' ? false : defaultValue;
     },
     /**
-     * Gets a value from an given expression that can bel `null`, `undefined` or empty string ('')
+     * Gets a value from an given expression that can be `null`, `undefined` or empty string ('')
      * @param {?*} val - The expression to parse
      * @param {?*} defaultValue - The value to return when `val` is `null`, `''` or `undefined`
      * @returns {*}
@@ -217,7 +232,7 @@ define([
       return typeof val === 'undefined' || val === null;
     },
     /**
-     * Checks if two expressions are equivalent.<br>
+     * Checks if two expressions are equivalent.
      * Returns `true` when both parameters are `null` or `undefined`, and also when both have
      * equivalent values.
      * @param {!*} a
@@ -255,7 +270,7 @@ define([
     },
     /**
      * Converts java-like color codes (like '0xRRGGBB') to valid CSS values like '#RRGGBB' or 'rgba(r,g,b,a)'
-     * @param {string=} color - A color, as codified in java
+     * @param {string=} color - A color, as codified in Java
      * @param {string=} defaultColor - The default color to be used
      * @returns {string}
      */
@@ -338,10 +353,10 @@ define([
     },
     /**
      * Compares the provided answer against multiple valid options. These valid options are
-     * concatenated in a string, separed by pipe chars (`|`). The comparision can be case sensitive.
+     * concatenated in a string, separated by pipe chars (`|`). The comparing can be case sensitive.
      * @param {string} answer - The text to check against to
-     * @param {string} check - String containing one or multiple options, separed by `|`
-     * @param {boolean} checkCase - When true, the comparision will be case-sensitive
+     * @param {string} check - String containing one or multiple options, separated by `|`
+     * @param {boolean} checkCase - When true, the comparing will be case-sensitive
      * @returns {boolean}
      */
     compareMultipleOptions: function (answer, check, checkCase) {
@@ -394,7 +409,7 @@ define([
       return result;
     },
     /**
-     * Replaces al occurrences of the backslash character (`\`) by a regular slash (`/`)
+     * Replaces all occurrences of the backslash character (`\`) by a regular slash (`/`)
      * This is useful to normalize bad path names present in some old JClic projects
      * @param {String} str - The string to be normalized
      * @returns {string}
@@ -514,7 +529,7 @@ define([
       return svg;
     },
     /**
-     * Encodes a svg expression into a (data URI)[https://developer.mozilla.org/en-US/docs/Web/HTTP/data_URIs]
+     * Encodes a svg expression into a {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/data_URIs|data URI}
      * suitable for the `src` property of `img` elements, optionally changing its original size and fill values.
      * @param {string} svg - The SVG image as XML string
      * @param {string=} width - Optional setting for "width" property
@@ -529,7 +544,7 @@ define([
      * Converts the given expression into a valid value for CSS size values
      * @param {string|number} exp - The expression to be evaluated (can be `null` or `undefined`)
      * @param {Object} css - An optional Object where the resulting expression will be saved, if any
-     * @param {string} key - The key to be used ro save the result in `css`
+     * @param {string} key - The key to be used to save the result in `css`
      * @param {string} def - Default value to be used when `exp` is `null` or `undefined`
      * @returns {string} - A valid CSS value, or `null` if no value provided
      */

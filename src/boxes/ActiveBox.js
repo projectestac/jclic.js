@@ -1,17 +1,32 @@
-//    File    : ActiveBox.js  
-//    Created : 18/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : boxes/ActiveBox.js
+ *  Created : 18/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -23,18 +38,20 @@ define([
 ], function ($, AbstractBox, ActiveBoxContent, ActiveBagContent, AWT, Utils) {
   /**
    * Objects of this class are widely used in JClic activities: cells in puzzles and associations,
-   * messages and other objects are active boxes.<br>
+   * messages and other objects are active boxes.
+   *
    * The specific content, size and location of `ActiveBox` objects is determined by its
    * {@link ActiveBoxContent} member. Most ActiveBoxes have only one content, but some of them can
    * have a secondary or "alternative" content stored in the `altContent` field. This content is
-   * used only when the `alternative` flag of the ActiveBox is on.<br>
+   * used only when the `alternative` flag of the ActiveBox is `on`.
+   *
    * Active boxes can host video and interactive media content (specified in the `mediaContent`
    * member of the {@link ActiveBoxContent} through its `hostedMediaPlayer` member.
    * @exports ActiveBox
    * @class
    * @extends AbstractBox
    * @param {?AbstractBox} parent - The AbstractBox to which this ActiveBox belongs
-   * @param {?AWT.Container} container - The container where this box is placed.  
+   * @param {?AWT.Container} container - The container where this box is placed.
    * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * of this box are defined.
    * @param {number=} setIdLoc - A numeric identifier, used to locate this box in a set of sibling objects.
@@ -56,7 +73,7 @@ define([
   };
 
   /**
-   * Factory constructor that creates a new cell inside a JQuery DOM element.<br>
+   * Factory constructor that creates a new cell inside a JQuery DOM element.
    * @param {external:jQuery} $dom - The DOM element that will act as a container
    * @param {ActiveBoxContent} abc - The cell's content. Must not be null and have the `dimension`
    * member initialized.
@@ -108,12 +125,11 @@ define([
      * @type {ActiveMediaPlayer} */
     hostedMediaPlayer: null,
     /**
-     * Indicates that this box is used as a background. When drawing, the clipping region must be
-     * respected.
+     * Indicates that this box is used as a background. When drawing, the clipping region must be respected.
      * @type {boolean} */
     isBackground: false,
     /**
-     * 
+     *
      * Returns the current content used by the box
      * @returns {ActiveBoxContent}
      */
@@ -121,7 +137,7 @@ define([
       return this.isAlternative() ? this.altContent : this.content;
     },
     /**
-     * 
+     *
      * Returns the current content, creating an empty one if needed.
      * @returns {ActiveBoxContent}
      */
@@ -131,7 +147,7 @@ define([
       return this.content;
     },
     /**
-     * 
+     *
      * Clears the current content
      */
     clear: function () {
@@ -145,10 +161,10 @@ define([
       this.invalidate();
     },
     /**
-     * 
+     *
      * Checks if two ActiveBox objects have equivalent content
      * @param {ActiveBox} bx - The ActiveBox to check against this.
-     * @param {boolean=} checkCase - When `true`, the comparision will be case-sensitive.
+     * @param {boolean=} checkCase - When `true`, the comparing will be case-sensitive.
      * @returns {boolean} - `true` if both cells are equivalent.
      */
     isEquivalent: function (bx, checkCase) {
@@ -157,10 +173,10 @@ define([
           this.content.isEquivalent(bx.content, checkCase);
     },
     /**
-     * 
+     *
      * Same functionality as {@link ActiveBox#isEquivalent isEquivalent}, but comparing the current content.
      * @param {ActiveBox} bx - The ActiveBox to check against this.
-     * @param {boolean=} checkCase - When `true`, the comparision will be case-sensitive.
+     * @param {boolean=} checkCase - When `true`, the comparing will be case-sensitive.
      * @returns {boolean}
      */
     isCurrentContentEquivalent: function (bx, checkCase) {
@@ -169,7 +185,7 @@ define([
           this.getCurrentContent().isEquivalent(bx.getCurrentContent(), checkCase);
     },
     /**
-     * 
+     *
      * Swaps the position of two active boxes
      * @param {ActiveBox} bx - The ActiveBox to swap with this one.
      */
@@ -182,9 +198,9 @@ define([
       bx.idLoc = idLoc0;
     },
     /**
-     * 
+     *
      * Copy the content of another ActiveBox into this one
-     * @param {ActiveBox} bx - The ActiveBox from wich to take the content
+     * @param {ActiveBox} bx - The ActiveBox from which to take the content
      */
     copyContent: function (bx) {
       this.idOrder = bx.idOrder;
@@ -207,9 +223,9 @@ define([
         this.hostedMediaPlayer.setVisualComponentVisible(!this.isInactive() && this.isVisible());
     },
     /**
-     * 
+     *
      * Exhanges the content of this ActiveBox with another one
-     * @param {ActiveBox} bx - The ActiveBox with wich to exchange content.
+     * @param {ActiveBox} bx - The ActiveBox with which to exchange the content.
      */
     exchangeContent: function (bx) {
       var bx0 = new ActiveBox(this.getParent(), this.getContainerX(), this.boxBase);
@@ -218,7 +234,7 @@ define([
       bx.copyContent(bx0);
     },
     /**
-     * 
+     *
      * Sets the text content of this ActiveBox.
      * @param {strint} tx - The text to set.
      */
@@ -239,14 +255,14 @@ define([
       this.setHostedMediaPlayer(null);
     },
     /**
-     * 
+     *
      * Sets the default value to `idAss`
      */
     setDefaultIdAss: function () {
       this.idAss = this.content === null ? -1 : this.content.id;
     },
     /**
-     * 
+     *
      * Checks if this ActiveBox is at its original place.
      * @returns {boolean}
      */
@@ -254,7 +270,7 @@ define([
       return this.idOrder === this.idLoc;
     },
     /**
-     * 
+     *
      * Sets the {@link ActiveBoxContent} of this ActiveBox
      * @param {(ActiveBoxContent|ActiveBagContent)} abc - Object containing the content to set.
      * @param {number} i - When `abc` is an {@link ActiveBagContent}, this field indicates an
@@ -297,10 +313,10 @@ define([
 
         if (abc.bb !== this.boxBase)
           this.setBoxBase(abc.bb);
-        
+
         if(abc.innerHtmlText)
           this.setHostedComponent($('<div/>').html(abc.innerHtmlText));
-        
+
         if (abc.hasOwnProperty('border') && this.hasBorder() !== abc.border)
           this.setBorder(abc.border);
         this.setInactive(false);
@@ -314,7 +330,7 @@ define([
       this.invalidate();
     },
     /**
-     * 
+     *
      * Sets the {@link ActiveBoxContent} that will act as an alternative content (`altContent` field)
      * of this ActiveBox,
      * @param {(ActiveBoxContent|ActiveBagContent)} abc - Object containing the content to set.
@@ -345,7 +361,7 @@ define([
       this.invalidate();
     },
     /**
-     * 
+     *
      * Puts this ActiveBox in "alternative" mode, meaning that `altContent` will be used instead of `content`
      */
     switchToAlt: function () {
@@ -359,8 +375,8 @@ define([
       return true;
     },
     /**
-     * 
-     * Checks the presence of content susceptible to be treated as HTML DOM embedded in this ActiveBox.<br>
+     *
+     * Checks the presence of content susceptible to be treated as HTML DOM embedded in this ActiveBox.
      * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas}
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the box.
      */
@@ -378,7 +394,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Checks if the call has a {@link MediaContent} set to `autostart`, and launches it when found.
      */
     checkAutoStartMedia: function () {
@@ -388,7 +404,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Draws the content of this Activebox on the specified canvas context.
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * box content.
@@ -491,7 +507,7 @@ define([
           //
           // Find the rectangle with highest surface, and in accordance
           // with the `txtAlign` values of the current
-          // [ActiveBoxContent](ActiveBoxContent)                  
+          // [ActiveBoxContent](ActiveBoxContent)
           var rmax = rr[0];
           var maxSurface = rmax.dim.width * rmax.dim.height;
           for (var i = 1; i < rr.length; i++) {
@@ -566,7 +582,7 @@ define([
       return true;
     },
     /**
-     * 
+     *
      * Gets the `description` field of the current {@link ActiveBoxContent}
      * @returns {string}
      */
@@ -574,7 +590,7 @@ define([
       return this.content ? this.content.getDescription() : '';
     },
     /**
-     * 
+     *
      * Plays the action or media associated with this ActiveBox
      * @param {PlayStation} ps - Usually, a {@link JClicPlayer}
      */
@@ -587,7 +603,7 @@ define([
       return false;
     },
     /**
-     * 
+     *
      * Sets the hosted media player of this ActiveBox
      * @param {ActiveMediaPlayer} amp - The media player.
      */
@@ -600,7 +616,7 @@ define([
         amp.linkTo(this);
     },
     /**
-     * 
+     *
      * Sets a new size and/or dimension to this box.
      * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
      * upper-left corner of a new rectangle.
@@ -620,7 +636,7 @@ define([
         this.hostedMediaPlayer.checkVisualComponentBounds(this);
     },
     /**
-     * 
+     *
      * Places and resizes {@link AbstractBox#$hostedComponent $hostedComponent}, based on the size
      * and position of this box.
      * @param {boolean} sizeChanged - `true` when this {@link ActiveBox} has changed its size

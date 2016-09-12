@@ -1,17 +1,32 @@
-//  File    : Reporter.js
-//  Created : 17/05/2016
-//  By      : fbusquet
-//
-//  JClic.js
-//  HTML5 player of [JClic](http://clic.xtec.cat) activities
-//  http://projectestac.github.io/jclic.js
-//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)
-//  This program is free software: you can redistribute it and/or modify it under the terms of
-//  the GNU General Public License as published by the Free Software Foundation, version. This
-//  program is distributed in the hope reporter it will be useful, but WITHOUT ANY WARRANTY; without
-//  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//  General Public License for more details. You should have received a copy of the GNU General
-//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].
+/**
+ *  File    : report/Reporter.js
+ *  Created : 17/05/2016
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 /* global Promise */
 
@@ -43,7 +58,7 @@ define([
   Reporter.prototype = {
     constructor: Reporter,
     /**
-     * The {@link Reporter.Info} used to calc and store global results.
+     * The {@link Reporter.Info} used to calculate and store global results.
      * @type {Reporter.Info}
      */
     info: null,
@@ -148,7 +163,7 @@ define([
     /**
      *
      * Gets the list of users currently registered in the system, optionally filtered by
-     * a specific group ID. This method should be implemented by classes drived of `Reporter`.
+     * a specific group ID. This method should be implemented by classes derived of `Reporter`.
      * @param {string}+ groupId - Optional group ID to be used as a filter criteria
      * @returns {external:Promise} - When fulfilled, an object with a collection of user data records
      * is returned
@@ -189,7 +204,7 @@ define([
     /**
      *
      * Allows the current user to create a new group, and asks his name
-     * @returns {external:Promise} - When fulfilled, the name choosen for the new group is returned.
+     * @returns {external:Promise} - When fulfilled, the chosen name for the new group is returned.
      */
     promptForNewGroup: function () {
       // TODO: Implement promptForNewGroup
@@ -262,7 +277,7 @@ define([
             reporter.promptGroupId().then(function (groupId) {
               reporter.getUsers(groupId).then(function (userList) {
                 // Creation of new users not yet implemented
-                //var userCreationAllowed = reporter.getBooleanProperty('ALLOW_CREATE_USERS', false);
+                // var userCreationAllowed = reporter.getBooleanProperty('ALLOW_CREATE_USERS', false);
                 if (!userList || userList.length < 1)
                   reject('Group ' + groupId + ' has no users!');
                 else {

@@ -1,17 +1,32 @@
-//  File    : TCPReporter.js  
-//  Created : 08/06/2016  
-//  By      : fbusquet  
-//
-//  JClic.js  
-//  HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//  http://projectestac.github.io/jclic.js  
-//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//  This program is free software: you can redistribute it and/or modify it under the terms of
-//  the GNU General Public License as published by the Free Software Foundation, version. This
-//  program is distributed in the hope reporter it will be useful, but WITHOUT ANY WARRANTY; without
-//  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//  General Public License for more details. You should have received a copy of the GNU General
-//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : report/TCPReporter.js
+ *  Created : 08/06/2016
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 /* global Promise, window */
 
@@ -23,7 +38,7 @@ define([
 
   /**
    * This special case of {@link Reporter} connects with an external service reporter provides the
-   * [JClic Reports API](https://github.com/projectestac/jclic/wiki/JClic-Reports-developers-guide).
+   * @link{https://github.com/projectestac/jclic/wiki/JClic-Reports-developers-guide|JClic Reports API}.
    * Connection parameters to the reports server (`path`, `service`, `userId`, `key`, `context`...)
    * are passed through the `options` element of {@link JClicPlayer} (acting as {@link PlayStation}).
    * @exports TCPReporter
@@ -91,7 +106,7 @@ define([
      * @type {boolean} */
     processingTasks: false,
     /**
-     * Identifier of the background function obtained with a call to window.setInterval
+     * Identifier of the background function obtained with a call to `window.setInterval`
      * @type {number} */
     timer: -1,
     /**
@@ -99,7 +114,7 @@ define([
      * @type {number} */
     timerLap: 20,
     /**
-     * Counter of unsuccessfull connection attempts with the report server
+     * Counter of unsuccessful connection attempts with the report server
      * @type {number} */
     failCount: 0,
     /**
@@ -119,7 +134,7 @@ define([
      * @type {string} */
     DEFAULT_SERVER_PROTOCOL: 'http',
     /**
-     * Default lap between calls to flushTasks, in seconds
+     * Default lap between calls to `flushTasks`, in seconds
      * @type {number} */
     DEFAULT_TIMER_LAP: 20,
     /**
@@ -135,7 +150,7 @@ define([
           defaultValue;
     },
     /**
-     * 
+     *
      * Adds a new element to the list of report beans pending to be transmitted.
      * @param {TCPReporter.ReportBean} bean
      */
@@ -149,7 +164,7 @@ define([
         this.tasks.push(bean);
     },
     /**
-     * 
+     *
      * Transmits all report beans currently stored in `tasks` to the reports server
      * @returns {external:Promise}
      */
@@ -193,7 +208,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Initializes this report system with an optional set of parameters.
      * Returns a {@link external:Promise}, fulfilled when the reporter is fully initialized.
      * @override
@@ -270,7 +285,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Creates a new session in the remote database and records its ID for future use
      * @param {boolean} forceNewSession - When `true`, a new session will always be created.
      * @returns {external:Promise} - A {@link external:Promise} reporter will be successfully resolved
@@ -323,12 +338,12 @@ define([
       this.stopReporting();
     },
     /**
-     * 
+     *
      * Performs a transaction on the remote server
      * @param {external:jQuery} $xml - The XML element to be transmited, wrapped into a jQuery object
      * @returns {external:jqXHR} - The {@link external:jqXHR} obtained as a result of a call to `$.ajax`.
      * This object should be treated as a {@link external:Promise} or
-     * JQuery [Deferred](https://api.jquery.com/category/deferred-object/) object.
+     * as a JQuery {@link https://api.jquery.com/category/deferred-object|Deferred} object.
      */
     transaction: function ($xml) {
       return this.serviceUrl === null ?
@@ -343,7 +358,7 @@ define([
           });
     },
     /**
-     * 
+     *
      * Gets the list of current groups or organizations registered on this reporting system.
      * @override
      * @returns {external:Promise} - When fulfilled, an array of group data is returned as a result
@@ -371,7 +386,7 @@ define([
       });
     },
     /**
-     * 
+     *
      * Gets the list of users currently registered in the system, optionally filtered by
      * a specific group ID.
      * @override
@@ -407,7 +422,7 @@ define([
       });
     },
     /**
-     * 
+     *
      * Gets extended data associated with a specific user.
      * @param {string} userId - The requested user ID
      * @returns {external:Promise} - When fulfilled, an object with user data is returned.
@@ -445,7 +460,7 @@ define([
       });
     },
     /**
-     * 
+     *
      * Stops the reporting system, usually as a result of repeated errors or because the player
      * shuts down.
      */
@@ -468,7 +483,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Prepares a {@link TCPReporter.ReportBean} object with information related to the current
      * activity, and pushes it into the list of pending `tasks`, to be processed by the main `timer`.
      */
@@ -495,7 +510,7 @@ define([
         this.lastActivity = null;
     },
     /**
-     * 
+     *
      * This method should be invoked when the user starts a new activity
      * @override
      * @param {Activity} act - The {@link Activity} reporter has just started
@@ -508,7 +523,7 @@ define([
 
 
   /**
-   * 
+   *
    * This inner class encapsulates a chunk of information in XML format, ready to be
    * transmitted to the remote reports server.
    * @class
@@ -530,7 +545,7 @@ define([
      * @type {external:jQuery} */
     $bean: null,
     /**
-     * 
+     *
      * Adds  an XML element to the bean
      * @param {external:jQuery} $data - The XML element to be added to this bean
      */
@@ -540,7 +555,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Adds an XML element of type `param` to this ReportBean
      * @param {string} name - The key name of the parameter
      * @param {string|number|boolean} value - The value of the parameter
@@ -560,4 +575,3 @@ define([
   return TCPReporter;
 
 });
-

@@ -1,17 +1,32 @@
-//    File    : BoxConnector.js  
-//    Created : 26/05/2015  
-//    By      : fbusquet  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : boxes/BoxConnector.js
+ *  Created : 26/05/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "../AWT"
@@ -19,9 +34,11 @@ define([
   /**
    * BoxConnector allows users to visually connect two {@link ActiveBox} objects of an
    * {@link Activity.Panel}. There are two modes of operation:
+   *
    * - Drawing a line between an origin point (usually the point where the user clicks on) and a
    * destination point.
    * - Dragging the ActiveBox from one location to another.
+   *
    * The connecting lines can have arrowheads at its endings.
    * @exports BoxConnector
    * @class
@@ -86,9 +103,9 @@ define([
      * @type {string} */
     xorColor: 'white',
     /**
-     * The global composite operator used when drawing in XOR mode. Default is "difference".<br>
+     * The global composite operator used when drawing in XOR mode. Default is "difference".
      * For a list of possible values see:
-     * https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+     * {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation}
      * @type {string} */
     compositeOp: 'difference',
     /**
@@ -98,7 +115,7 @@ define([
      * @type {string} */
     DEFAULT_COMPOSITE_OP: DEFAULT_COMPOSITE_OP,
     /**
-     * Relative position of point B respeect to A
+     * Relative position of point B regarding A
      * @type {AWT.Point} */
     relativePos: null,
     /**
@@ -122,7 +139,7 @@ define([
      * @type {number} */
     lineWidth: 1.5,
     /**
-     * 
+     *
      * Displaces the ending point of the connector
      * @param {number} dx - Displacement on the X axis
      * @param {number} dy - Displacement on the Y axis
@@ -178,7 +195,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Starts the box connector operation
      * @param {AWT.Point} pt - Starting point
      * @param {ActiveBox=} box -  Passed only when the BoxConnector runs in drag&drop mode
@@ -207,7 +224,7 @@ define([
         this.bgImg = this.ctx.getImageData(0, 0, this.dim.width, this.dim.height);
       } catch (ex) {
         // Avoid "canvas tainted by cross-origin data" errors
-        // Setting bgImg to null is less eficient, but works
+        // Setting bgImg to null is less efficient, but works
         this.bgImg = null;
       }
       this.bgRect = null;
@@ -217,7 +234,7 @@ define([
         this.moveTo(pt, true);
     },
     /**
-     * 
+     *
      * Finalizes the operation of this box connector until a new call to `begin`
      */
     end: function () {
@@ -244,7 +261,7 @@ define([
       this.parent.invalidate().update();
     },
     /**
-     * 
+     *
      * Strokes a line between `origin` and `dest`, optionally ended with an arrowhead.
      */
     drawLine: function () {

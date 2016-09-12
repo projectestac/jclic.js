@@ -1,17 +1,32 @@
-//    File    : Arith.js  
-//    Created : 28/05/2015  
-//    By      : fbusquet  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : automation/arith/Arith.js
+ *  Created : 28/05/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -20,8 +35,9 @@ define([
 ], function ($, AutoContentProvider, Utils) {
 
   /**
-   * Arith provides randomly generated menthal arithmetics operations, ready to be used in JClic activities.<br>
-   * The operations can be additions, substractions, multiplications or divides. The unknown of these
+   * Arith provides randomly generated mental arithmetics operations, ready to be used in JClic activities.
+   *
+   * The operations can be additions, subtractions, multiplications or divides. The unknown of these
    * operations can be the result of the operation (`A op B = ?`), any of the two operators
    * (`A op ? = C` or `? op B = C`) or also the operator itself (`A ? B = C`).
    * @exports Arith
@@ -37,7 +53,7 @@ define([
 
   Arith.prototype = {
     constructor: Arith,
-    //      
+    //
     // Miscellaneous constants used by Arith:
     NMAXLOOPS: 60,
     NOSORT: 0, SORTASC: 1, SORTDESC: 2,
@@ -64,7 +80,7 @@ define([
      * @type {boolean} */
     use_add: true,
     /**
-     * Allow substractions
+     * Allow subtractions
      * @type {boolean} */
     use_subst: false,
     /**
@@ -117,12 +133,12 @@ define([
      * @type {string} */
     resultOrder: 'NOSORT',
     /**
-     * Sorting of the operands in commutative operations. Possible values are: 'AGB' (_A greather than B_),
-     * 'BGA' (_B greather tan A_) and 'INDIF' (default)
+     * Sorting of the operands in commutative operations. Possible values are: 'AGB' (_A greater than B_),
+     * 'BGA' (_B greater tan A_) and 'INDIF' (default)
      */
     opCond: 'INDIF',
     /**
-     * 
+     *
      * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
@@ -169,7 +185,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Fills the `n` parameter (an {@link Arith.Num}) with a value in accordance with the
      * specifications of `op` (an {@link Arith.Operand}), between two limits.
      * @param {Arith.Num} n - The number
@@ -227,7 +243,7 @@ define([
       return true;
     },
     /**
-     * 
+     *
      * Fills the provided {@link Arith.Operator} with real values
      * @param {Arith.Operator} o - The operator to use to generate the operation
      * @returns {boolean} - `true` if all was OK
@@ -415,7 +431,7 @@ define([
       return true;
     },
     /**
-     * 
+     *
      * Fills the provided ActiveBagContentKit with randomly generated operations
      * @param {AutoContentProvider.ActiveBagContentKit} kit - The composite object to be filled with data.
      * @returns {boolean} - `true` if all was OK
@@ -677,21 +693,21 @@ define([
     LIM_CH: ["x", "-9999", "-1000", "-999", "-100", "-99", "-50", "-25", "-20", "-10", "-9", "-5",
       "-1", "0", "1", "5", "9", "10", "20", "25", "50", "99", "100", "999", "1000", "9999"],
     NUMLST: 20,
-    // 
+    //
     // Operator members
     /**
      * Lower limit
      * @type {number} */
     limInf: 0,
-    /** 
+    /**
      * Upper limit
      * @type {number} */
     limSup: 10,
-    /** 
+    /**
      * Number of decimal places
      * @type {number} */
     numDec: 0,
-    /** 
+    /**
      * Including 0
      * @type {boolean} */
     wZero: false,
@@ -712,7 +728,7 @@ define([
      * @type {number[]} */
     lst: [],
     /**
-     * 
+     *
      * Loads Arith.Operator settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */

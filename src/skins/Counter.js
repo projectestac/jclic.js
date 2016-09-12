@@ -1,22 +1,37 @@
-//    File    : Counter.js  
-//    Created : 07/05/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : skins/Counter.js
+ *  Created : 07/05/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([], function () {
 
   /**
-   * 
+   *
    * This class encapsulates the operation of a numeric counter, used to display the current
    * values of score, actions and time.
    * @param {string} id - The type of information stored on this counter
@@ -49,7 +64,7 @@ define([], function () {
      * @type {number} */
     countDown: 0,
     /**
-     * Flag indicating if this counter is currently enabled 
+     * Flag indicating if this counter is currently enabled
      * @type {boolean} */
     enabled: true,
     /**
@@ -57,13 +72,13 @@ define([], function () {
      * @type {Number} */
     MAX_DISPLAY_VALUE: 999,
     /**
-     * An optional Counter used as a substractor to display the current value.
-     * Useful to display `errors` substracting `score` from `actions`.
+     * An optional Counter used as a subtractor to display the current value.
+     * Useful to display `errors` subtracting `score` from `actions`.
      * @type {Counter}
      */
     displayDiffFrom: null,
     /**
-     * 
+     *
      * Gets the current display value of this counter
      * @returns {number}
      */
@@ -74,9 +89,9 @@ define([], function () {
       return Math.max(0, Math.min(this.MAX_DISPLAY_VALUE, result));
     },
     /**
-     * 
+     *
      * Paints the value of this counter on screen
-     * (method to be overrided by subclasses)
+     * (method to be overridden by subclasses)
      */
     refreshDisplay: function () {
       if (this.$div) {
@@ -85,7 +100,7 @@ define([], function () {
       }
     },
     /**
-     * 
+     *
      * Enables or disables this counter
      * @param {boolean} enabled - State been assigned to this counter
      */
@@ -94,7 +109,7 @@ define([], function () {
         this.refreshDisplay();
     },
     /**
-     * 
+     *
      * Sets the initial value of the counter
      * @param {number} maxValue - Value from which the countdown will start
      */
@@ -103,7 +118,7 @@ define([], function () {
         this.refreshDisplay();
     },
     /**
-     * 
+     *
      * Increments by one the value of this counter
      */
     incValue: function () {
@@ -112,7 +127,7 @@ define([], function () {
         this.refreshDisplay();
     },
     /**
-     * 
+     *
      * Sets a specific value to this counter
      * @param {number} value - The value to set
      */
@@ -121,7 +136,7 @@ define([], function () {
         this.refreshDisplay();
     }
   };
-  
+
   return Counter;
-  
+
 });

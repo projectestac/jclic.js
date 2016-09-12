@@ -1,17 +1,32 @@
-//    File    : ActiveMediaPlayer.js  
-//    Created : 28/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : media/ActiveMediaPlayer.js
+ *  Created : 28/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 /* global MediaRecorder, navigator */
 
@@ -27,7 +42,7 @@ define([
    * @param {MediaContent} mc - - The content used by this player
    * @param {MediaBag} mb - The project's MediaBag
    * @param {PlayStation} ps - An object implementing the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) interface,
+   * @link{http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation} interface,
    * usually a {@link JClicPlayer}.
    */
   var ActiveMediaPlayer = function (mc, mb, ps) {
@@ -63,7 +78,7 @@ define([
   /**
    * Recording of audio is enabled only when `navigator.getUserMedia` and `MediaRecorder` are defined
    * In 02-Mar-2016 this is implemented only in Firefox 41 and Chrome 49 or later.
-   * See: https://addpipe.com/blog/mediarecorder-api/
+   * See: {@link https://addpipe.com/blog/mediarecorder-api}
    * @type Boolean
    */
   ActiveMediaPlayer.REC_ENABLED = typeof MediaRecorder !== 'undefined' && typeof navigator !== 'undefined';
@@ -111,7 +126,7 @@ define([
      * @type {MediaBagElement} */
     mbe: null,
     /**
-     * 
+     *
      * Generates the objects that will play media
      */
     realize: function () {
@@ -128,7 +143,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Plays the media, realizing it if needed.
      * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
      */
@@ -179,7 +194,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Plays the media when available, without blocking the current thread.
      * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
      */
@@ -190,7 +205,7 @@ define([
       this.playNow(setBx);
     },
     /**
-     * 
+     *
      * Stops the media playing
      */
     stop: function () {
@@ -201,7 +216,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Frees all resources used by this player
      */
     clear: function () {
@@ -215,7 +230,7 @@ define([
       //}
     },
     /**
-     * 
+     *
      * Clears the specified audio buffer
      * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
      */
@@ -228,7 +243,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Clears all audio buffers
      */
     clearAllAudioBuffers: function () {
@@ -237,7 +252,7 @@ define([
           this.clearAudioBuffer(i);
     },
     /**
-     * 
+     *
      * Counts the number of active audio buffers
      * @returns {number}
      */
@@ -250,7 +265,7 @@ define([
       return c;
     },
     /**
-     * 
+     *
      * Stops the playing or recording actions of all audio buffers
      */
     stopAllAudioBuffers: function () {
@@ -260,7 +275,7 @@ define([
             ActiveMediaPlayer.AUDIO_BUFFERS[i].stop();
     },
     /**
-     * 
+     *
      * Stops a specific audio buffer
      * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
      */
@@ -271,7 +286,7 @@ define([
         ActiveMediaPlayer.AUDIO_BUFFERS[buffer].stop();
     },
     /**
-     * 
+     *
      * Checks the position of visual components after a displacement or resizing of its container
      * @param {ActiveBox} bxi - The container where this player is hosted
      */
@@ -286,7 +301,7 @@ define([
       // TODO: Implement setVisualComponentVisible
     },
     /**
-     * 
+     *
      * Sets the ActiveBox associated to this media player
      * @param {?ActiveBox} setBx - The new container of this media. Can be `null`.
      */

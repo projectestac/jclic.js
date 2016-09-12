@@ -1,17 +1,32 @@
-//    File    : Complete.js  
-//    Created : 20/06/2015  
-//    By      : fbusquet  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : activities/text/Complete.js
+ *  Created : 20/06/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -45,8 +60,8 @@ define([
    * The {@link TextActivityBase.Panel} where this kind of text activities are played.
    * @class
    * @extends TextActivityBase.Panel
-   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
    * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
@@ -59,7 +74,7 @@ define([
   Complete.Panel.prototype = {
     constructor: Complete.Panel,
     /**
-     * 
+     *
      * Creates a target DOM element for the provided target.
      * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
      * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
@@ -71,29 +86,29 @@ define([
       return null;
     },
     /**
-     * 
+     *
      * Basic initialization procedure
      */
     initActivity: function () {
       ActPanelAncestor.initActivity.call(this);
       this.$div.find('.JClicTextDocument').attr('contenteditable', 'true').attr('spellcheck', 'false');
       this.playing = true;
-    },    
+    },
     /**
-     * 
+     *
      * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
      * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
      */
-    evaluatePanel: function () {      
-      
+    evaluatePanel: function () {
+
       // TODO: Mark errors!
-      
+
       var currentText = this.$div.find('.JClicTextDocument').text().trim();
-      var originalText = this.act.document.getRawText();      
+      var originalText = this.act.document.getRawText();
       var ok = this.act.ev.checkText(currentText, originalText);
-      
+
       this.ps.reportNewAction(this.act, 'WRITE', currentText, originalText, ok, this.targets.length);
-        
+
       if (ok) {
         this.finishActivity(true);
         return true;
@@ -103,7 +118,7 @@ define([
       return false;
     },
     /**
-     * 
+     *
      * Ordinary ending of the activity, usually called form `processEvent`
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
@@ -111,8 +126,8 @@ define([
       this.$div.find('.JClicTextDocument').attr('contenteditable', 'false');
       return ActPanelAncestor.finishActivity.call(this, result);
     }
-    
-    // TODO: Check fot activity completion without checkButton!
+
+    // TODO: Check for activity completion without check button!
   };
 
   // Complete.Panel extends TextActivityBase.Panel

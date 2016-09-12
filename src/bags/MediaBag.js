@@ -1,17 +1,32 @@
-//    File    : MediaBag.js  
-//    Created : 07/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : bags/MediaBag.js
+ *  Created : 07/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -43,8 +58,8 @@ define([
      * @type {JClicProject} */
     project: null,
     /**
-     * 
-     * Loads this object settings from a specific JQuery XML element 
+     *
+     * Loads this object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties: function ($xml) {
@@ -57,7 +72,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Finds a {@link MediaBagElement} by its name, creating a new one if not found and requested.
      * @param {string} name - The name of the element
      * @param {boolean=} create - When `true`, a new MediaBagElement will be created if not found,
@@ -72,7 +87,7 @@ define([
       return  result;
     },
     /**
-     * 
+     *
      * Gets a {@link MediaBagElement} by its file name.
      * @param {string} fileName - The requested file name
      * @param {boolean=} create - When `true`, a new {@link MediaBagElement} will be created if not
@@ -101,8 +116,9 @@ define([
       return result;
     },
     /**
-     * 
-     * Preload all resources.<br>
+     *
+     * Preload all resources.
+     *
      * __Use with care!__ Calling this method will start loading all the resources defined in the
      * MediaBag, whether used or not in the current activity.
      * @param {string} type - The type of media to be build. When `null` or `undefined`, all
@@ -118,7 +134,7 @@ define([
       });
     },
     /**
-     * 
+     *
      * Checks if there are media waiting to be loaded
      * @returns {boolean}
      */
@@ -136,7 +152,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Loads a {@link Skin} object
      * @param {string} name - The skin name to be loaded
      * @param {string} ps - The {@link PlayStation} linked to the skin

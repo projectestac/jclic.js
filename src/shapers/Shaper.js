@@ -1,17 +1,32 @@
-//    File    : Shaper.js  
-//    Created : 13/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : shapers/Shaper.js
+ *  Created : 13/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -22,7 +37,7 @@ define([
   /**
    * The function of this class and its subclasses is to draw a set of "shapes" that will be used to
    * place {@link ActiveBox} objects at a specific position, and to determine its dimension and
-   * appareance.
+   * appearance.
    * @exports Shaper
    * @class
    * @param {number} nx - Number of columns (in grid-based shapers)
@@ -121,7 +136,7 @@ define([
      * @type {boolean} */
     rectangularShapes: false,
     /**
-     * 
+     *
      * Initializes this Shaper to default values
      * @param {number} nCols - Number of columns
      * @param {number} nRows - Number of rows
@@ -136,8 +151,8 @@ define([
         this.shapeData[i] = new AWT.Shape();
     },
     /**
-     * 
-     * Loads this shaper settings from a specific JQuery XML element 
+     *
+     * Loads this shaper settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element with the shaper data
      */
     setProperties: function ($xml) {
@@ -188,9 +203,9 @@ define([
       return this;
     },
     /**
-     * 
-     * Reads an individual shape from an XML element.<br>
-     * Shapes are arrays of `stroke` objects.<br>
+     *
+     * Reads an individual shape from an XML element.
+     * Shapes are arrays of `stroke` objects.
      * Each `stroke` has an `action` (_move to_, _line to_, _quad to_...) and associated `data`.
      * @param {external:jQuery} $xml - The XML element with the shape data
      * @param {number} scaleX
@@ -231,13 +246,13 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Builds the individual shapes that will form this Shaper
      */
     buildShapes: function () {
     },
     /**
-     * 
+     *
      * Gets a clone of the nth Shape object, scaled and located inside a Rectangle
      * @param {number} n
      * @param {AWT.Rectangle} rect
@@ -259,7 +274,7 @@ define([
       return n >= 0 && n < this.shapeData.length ? this.shapeData[n] : null;
     },
     /**
-     * 
+     *
      * Gets the AWT.Rectangle that contains all shapes of this Shaper.
      * @returns {AWT.Rectangle}
      */
@@ -272,7 +287,7 @@ define([
      * @type {boolean} */
     hasRemainder: false,
     /**
-     * 
+     *
      * When `hasRemainder` is true, this method gets the rectangle containing the full surface where
      * the Shaper develops.
      * @param {AWT.Rectangle} rect - The frame where to move and scale all the shapes

@@ -1,39 +1,54 @@
-//  File    : CanvasCounter.js  
-//  Created : 10/05/2016  
-//  By      : fbusquet  
-//
-//  JClic.js  
-//  HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//  http://projectestac.github.io/jclic.js  
-//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//  This program is free software: you can redistribute it and/or modify it under the terms of
-//  the GNU General Public License as published by the Free Software Foundation, version. This
-//  program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//  General Public License for more details. You should have received a copy of the GNU General
-//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : skins/CanvasCounter.js
+ *  Created : 10/05/2016
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
   "./Counter",
   "../boxes/AbstractBox"
 ], function ($, Counter, AbstractBox) {
-  
+
   /**
-   * 
+   *
    * This special case of [Counter](Counter.html) displays information into an HTML canvas
    * contained in its `box` member.
    * @param {string} id - The type of information stored on this counter
    * @param {?AbstractBox} parent - The AbstractBox to which this one belongs
-   * @param {?AWT.Container} container - The container where this box is placed.  
+   * @param {?AWT.Container} container - The container where this box is placed.
    * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * @param {AWT.Rectangle=} rect - An optional rectangle with the initial position and size of this counter
    */
   var CanvasCounter = function (id, parent, container, boxBase, rect) {
-    
+
     // CanvasCounter extends [Counter](Counter.html)
     Counter.call(this, id);
-    
+
     this.box = new AbstractBox(parent, container, boxBase);
     this.box.cc = this;
     this.box.updateContent = this.updateBoxContent;
@@ -60,7 +75,7 @@ define([
      * @type {AWT.Point} */
     origin: null,
     /**
-     * 
+     *
      * Paints the value of this counter on screen
      * (overrides same method in {@link Counter})
      */
@@ -68,7 +83,7 @@ define([
       this.box.container.invalidate(this.box.getBounds()).update();
     },
     /**
-     * 
+     *
      * Sets the image to be used as a source for drawing the counters
      * @param {external:HTMLImageElement} img - The image to be used as source
      * @param {AWT.Point} origin - The origin of the digit sprites on `img`
@@ -81,16 +96,16 @@ define([
       this.refreshDisplay();
     },
     /**
-     * 
-     * Draws the conunter on the provided Canvas context
+     *
+     * Draws the counter on the provided Canvas context
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * box content.
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
      */
     updateBoxContent: function (ctx, dirtyRegion) {
-      
+
       // NoTE: `this` refers to the `box` member of CanvasCounter
-      
+
       if (this.cc.img === null)
         return false;
 
@@ -133,6 +148,3 @@ define([
   return CanvasCounter;
 
 });
-
-
-

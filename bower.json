@@ -19,7 +19,7 @@
     "puzzle",
     "activities"
   ],
-  "license": "GPL-3.0",
+  "license": "EUPL-1.1",
   "ignore": [
     "src",
     "**/.*",

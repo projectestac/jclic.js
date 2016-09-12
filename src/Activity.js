@@ -1,17 +1,32 @@
-//    File    : Activity.js  
-//    Created : 07/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : Activity.js
+ *  Created : 07/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -53,7 +68,7 @@ define([
   };
 
   /**
-   * 
+   *
    * Classes derived from `Activity` should register themselves by adding a field to
    * `Activity.CLASSES` using its name as identifier and the class constructor as a value.
    * @example
@@ -66,7 +81,7 @@ define([
   };
 
   /**
-   * 
+   *
    * Factory constructor that returns a specific type of Activity based on the `class` attribute
    * declared in the $xml parameter.
    * @param {external:jQuery} $xml - The XML element to be parsed
@@ -89,7 +104,7 @@ define([
 
   Activity.prototype = {
     constructor: Activity,
-    /** 
+    /**
      * The {@link JClicProject} to which this activity belongs
      * @type {JClicProject} */
     project: null,
@@ -178,7 +193,7 @@ define([
      * @type {boolean} */
     useOrder: false,
     /**
-     * Wheter the cells of the activity will be dragged across the screen.<br>
+     * Wheter the cells of the activity will be dragged across the screen.
      * When `false`, a line will be painted to link elements.
      * @type {boolean} */
     dragCells: false,
@@ -210,8 +225,8 @@ define([
      * @type {string} */
     infoUrl: null,
     /**
-     * System command to be launched when the user clicks on the 'info' button. Default is `null`.<br>
-     * Important: this parameter is not currently used
+     * System command to be launched when the user clicks on the 'info' button. Default is `null`.
+     * Important: this parameter is currently not being used
      * @type {string} */
     infoCmd: null,
     /**
@@ -251,7 +266,7 @@ define([
      * Special object used to generate random content at the start of the activity
      * @type {AutoContentProvider} */
     acp: null,
-    //    
+    //
     // Fields used only in certain activity types
     // ------------------------------------------
     //
@@ -276,7 +291,7 @@ define([
      * @type {object}
      * @property {boolean} primary
      * @property {boolean} secondary */
-    /** 
+    /**
      * Object that indicates if box grids A and B must be scrambled.
      * @type {Activity~scrambleType} */
     scramble: {primary: true, secondary: true},
@@ -285,8 +300,8 @@ define([
      * @type {boolean} */
     invAss: false,
     /**
-     * 
-     * Loads this object settings from an XML element 
+     *
+     * Loads this object settings from an XML element
      * @param {external:jQuery} $xml - The jQuery XML element to parse
      */
     setProperties: function ($xml) {
@@ -437,11 +452,11 @@ define([
             break;
 
           case 'automation':
-            // Read the automation settings ('Arith' or other automation engines)        
+            // Read the automation settings ('Arith' or other automation engines)
             act.acp = AutoContentProvider.getProvider($node, act.project);
             break;
 
-            // Settings specific to panel-type activities (puzzles, associations...)           
+            // Settings specific to panel-type activities (puzzles, associations...)
           case 'cells':
             // Read the [ActiveBagContent](ActiveBagContent.html) objects
             var cellSet = new ActiveBagContent().setProperties($node, act.project.mediaBag);
@@ -474,7 +489,7 @@ define([
             });
             break;
 
-            // Element specific to {@link CrossWord} and 
+            // Element specific to {@link CrossWord} and
             // {@link WordSearch} activities:
           case 'textGrid':
             // Read the 'textGrid' element into a {@link TextGridContent}
@@ -494,7 +509,7 @@ define([
             });
             break;
 
-            // Elements specific to text activities:           
+            // Elements specific to text activities:
           case 'checkButton':
             act.checkButtonText = this.textContent ? this.textContent : 'check';
             break;
@@ -529,14 +544,14 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Read an activity message from an XML element
      * @param {external:jQuery} $xml - The XML element to be parsed
      * @returns {ActiveBoxContent}
      */
     readMessage: function ($xml) {
       var msg = new ActiveBoxContent().setProperties($xml, this.project.mediaBag);
-      // 
+      //
       // Allowed types are: `initial`, `final`, `previous`, `finalError`
       msg.type = $xml.attr('type');
       if (Utils.isNullOrUndef(msg.bb))
@@ -544,7 +559,7 @@ define([
       return msg;
     },
     /**
-     * 
+     *
      * Initialises the {@link AutoContentProvider}, when defined.
      */
     initAutoContentProvider: function () {
@@ -552,7 +567,7 @@ define([
         this.acp.init();
     },
     /**
-     * 
+     *
      * Preloads the media content of the activity.
      * @param {PlayStation} ps - The {@link PlayStation} used to realize the media objects.
      */
@@ -572,7 +587,7 @@ define([
       return true;
     },
     /**
-     * 
+     *
      * Whether the activity allows the user to request the solution.
      * @returns {boolean}
      */
@@ -580,7 +595,7 @@ define([
       return false;
     },
     /**
-     * 
+     *
      * Whether the activity allows the user to request help.
      * @returns {boolean}
      */
@@ -589,7 +604,7 @@ define([
           (this.helpSolutionAllowed() && this.showSolution || this.helpMsg !== null);
     },
     /**
-     * 
+     *
      * Retrieves the minimum number of actions needed to solve this activity.
      * @returns {number}
      */
@@ -597,7 +612,7 @@ define([
       return 0;
     },
     /**
-     * 
+     *
      * When this method returns `true`, the automatic jump to the next activity must be paused at
      * this activity.
      * @returns {boolean}
@@ -613,6 +628,7 @@ define([
       return true;
     },
     /**
+     *
      * Whether or not the activity has additional information to be shown.
      * @returns {boolean}
      */
@@ -621,7 +637,7 @@ define([
           this.infoCmd !== null && this.infoCmd.length > 0;
     },
     /**
-     * 
+     *
      * Whether or not the activity uses random to scramble internal components
      * @returns {boolean}
      */
@@ -629,15 +645,15 @@ define([
       return false;
     },
     /**
-     * 
-     * When `true`, the activity mut always be scrambled
+     *
+     * When `true`, the activity must always be scrambled
      * @returns {boolean}
      */
     shuffleAlways: function () {
       return false;
     },
     /**
-     * 
+     *
      * When `true`, the activity makes use of the keyboard
      * @returns {boolean}
      */
@@ -657,7 +673,7 @@ define([
     clear: function () {
     },
     /**
-     * 
+     *
      * Getter method for `windowSize`
      * @returns {AWT.Dimension}
      */
@@ -665,7 +681,7 @@ define([
       return new AWT.Dimension(this.windowSize);
     },
     /**
-     * 
+     *
      * Setter method for `windowSize`
      * @param {AWT.Dimension} windowSize
      */
@@ -673,8 +689,8 @@ define([
       this.windowSize = new AWT.Dimension(windowSize);
     },
     /**
-     * 
-     * Builds the {@link Activity.Panel} object.<br>
+     *
+     * Builds the {@link Activity.Panel} object.
      * Subclasses must update the `Panel` member of its prototypes to produce specific panels.
      * @param {PlayStation} ps - The {@link PlayStation} used to build media objects.
      * @returns {Activity.Panel}
@@ -685,18 +701,18 @@ define([
   };
 
   /**
-   * 
+   *
    * This object is responsible for rendering the contents of the activity on the screen and
-   * managing user's interaction.<br>
-   * Each type of Activity must implement its own `Activity.Panel`.<br>
-   * In JClic, [Activity.Panel](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html)
-   * extends [javax.swing.JPanel](http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html).<br>
+   * managing user's interaction.
+   * Each type of Activity must implement its own `Activity.Panel`.
+   * In JClic, {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html|Activity.Panel}
+   * extends {@link http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html|javax.swing.JPanel}.
    * In this implementation, the JPanel will be replaced by an HTML `div` tag.
    * @class
    * @extends AWT.Container
-   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * @link{http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation}
    * Java interface.
    * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
    */
@@ -779,7 +795,7 @@ define([
     backgroundTransparent: false,
     border: null,
     /**
-     * 
+     *
      * Sets the size and position of this activity panel
      * @param {AWT.Rectangle} rect
      */
@@ -800,7 +816,7 @@ define([
       });
     },
     /**
-     * 
+     *
      * Prepares the visual components of the activity
      */
     buildVisualComponents: function () {
@@ -831,7 +847,7 @@ define([
         'background-color': this.backgroundTransparent ? 'transparent' : this.backgroundColor
       };
 
-      // Border shadow style Material Design, inspired in http://codepen.io/Stenvh/pen/EaeWqW
+      // Border shadow style Material Design, inspired in [http://codepen.io/Stenvh/pen/EaeWqW]
       if (this.border) {
         cssAct['box-shadow'] = '0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)';
         cssAct['border-radius'] = '2px';
@@ -850,11 +866,11 @@ define([
      * it's the whole panel.
      */
     updateContent: function (dirtyRegion) {
-      // To be overrided by subclasses. Here does nothing.
+      // To be overridden by subclasses. Here does nothing.
       return AWT.Container.prototype.updateContent.call(this, dirtyRegion);
     },
     /**
-     * 
+     *
      * Plays the specified event sound
      * @param {string} event - The type of event to be performed
      */
@@ -862,7 +878,7 @@ define([
       this.act.eventSounds.play(event);
     },
     /**
-     * 
+     *
      * Basic initialization procedure, common to all activities.
      */
     initActivity: function () {
@@ -876,7 +892,7 @@ define([
       this.enableCounters();
     },
     /**
-     * 
+     *
      * Called when the activity starts playing
      */
     startActivity: function () {
@@ -886,7 +902,7 @@ define([
       this.playing = true;
     },
     /**
-     * 
+     *
      * Called by {@link JClicPlayer} when this activity panel is fully visible, just after the
      * initialization process.
      */
@@ -894,14 +910,14 @@ define([
       // To be overrided by subclasses
     },
     /**
-     * 
+     *
      * Displays help about the activity
      */
     showHelp: function () {
       // To be overrided by subclasses
     },
     /**
-     * 
+     *
      * Sets the real dimension of this Activity.Panel.
      * @param {AWT.Dimension} maxSize - The maximum surface available for the activity panel
      * @returns {AWT.Dimension}
@@ -923,7 +939,7 @@ define([
         this.attachEvent(this.$div, TOUCH_TEST_EVENT);
     },
     /**
-     * 
+     *
      * Attaches a single event to the specified object
      * @param {external:jQuery} $obj - The object to which the event will be attached
      * @param {string} evt - The event name
@@ -944,7 +960,7 @@ define([
       });
     },
     /**
-     * 
+     *
      * Main handler used to process mouse, touch, keyboard and edit events.
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
@@ -990,7 +1006,7 @@ define([
       // to be overrided by subclasses
     },
     /**
-     * 
+     *
      * Ordinary ending of the activity, usually called form `processEvent`
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
@@ -1010,7 +1026,7 @@ define([
       this.ps.reportEndActivity(this.act, this.solved);
     },
     /**
-     * 
+     *
      * Sets the message to be displayed in the skin message box and optionally plays a sound event.
      * @param {string} msgCode - Type of message (initial, final, finalError...)
      * @param {string=} eventSoundsCode - Optional name of the event sound to be played.
@@ -1026,7 +1042,7 @@ define([
         this.ps.playMsg();
     },
     /**
-     * 
+     *
      * Ends the activity
      */
     end: function () {
@@ -1041,14 +1057,14 @@ define([
       this.clear();
     },
     /**
-     * 
+     *
      * Miscellaneous cleaning operations
      */
     clear: function () {
-      // to be overrided by subclasses
+      // to be overridden by subclasses
     },
     /**
-     * 
+     *
      * Enables or disables the three counters (time, score and actions)
      * @param {boolean} eTime - Whether to enable or disable the time counter
      * @param {boolean} eScore - Whether to enable or disable the score counter
@@ -1071,7 +1087,7 @@ define([
         this.ps.setCountDown('actions', this.act.maxActions);
     },
     /**
-     * 
+     *
      * Shuffles the contents of the activity
      * @param {ActiveBoxBag[]} bg - The sets of boxes to be shuffled
      * @param {boolean} visible - The shuffle process must be animated on the screen (not yet implemented!)

@@ -1,17 +1,32 @@
-//    File    : EventSounds.js  
-//    Created : 01/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : media/EventSounds.js
+ *  Created : 01/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -26,7 +41,7 @@ define([
    * - actionOk
    * - finishedError
    * - finishedOk
-   * 
+   *
    * The sounds are stored in an array of {@link EventSoundsElement} objects.
    * @exports EventSounds
    * @class
@@ -63,7 +78,7 @@ define([
      * @type {boolean} */
     globalEnabled: true,
     /**
-     * 
+     *
      * Reads the object properties from an XML element
      * @param {external:jQuery} $xml - The XML element to be parsed
      */
@@ -77,7 +92,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Instantiates the audio objects needed to play event sounds
      * @param {PlayStation} ps
      * @param {MediaBag} mediaBag
@@ -89,7 +104,7 @@ define([
       });
     },
     /**
-     * 
+     *
      * Plays a specific event sound
      * @param {string} eventName - The identifier of the event to be played
      */
@@ -309,7 +324,7 @@ define([
     }
   };
 
-  // Load default sounds in prototype  
+  // Load default sounds in prototype
   EventSounds.prototype.elements = {
     start: new EventSoundsElement('start', EventSounds.prototype.resources.start),
     click: new EventSoundsElement('click', EventSounds.prototype.resources.click),

@@ -1,17 +1,32 @@
-//    File    : TextGrid.js  
-//    Created : 12/06/2015  
-//    By      : fbusquet  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : boxes/TextGrid.js
+ *  Created : 12/06/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -23,13 +38,14 @@ define([
 
   /**
    * This class is a special type of {@link AbstractBox} that displays a grid of single
-   * characters.<br>
+   * characters.
+   *
    * It's used {@link CrossWord} and {@link WordSearch} activities.
    * @exports TextGrid
    * @class
    * @extends AbstractBox
    * @param {?AbstractBox} parent - The AbstractBox to which this text grid belongs
-   * @param {?AWT.Container} container - The container where this text grid is placed.  
+   * @param {?AWT.Container} container - The container where this text grid is placed.
    * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * @param {number} x - `X` coordinate of the upper left corner of this grid
    * @param {number} y - `Y` coordinate of the upper left corner of this grid
@@ -68,11 +84,11 @@ define([
   /**
    * Factory constructor that creates an empty grid based on a {@link TextGridContent}
    * @param {?AbstractBox} parent - The AbstractBox to which the text grid belongs
-   * @param {?AWT.Container} container - The container where the text grid will be placed.  
+   * @param {?AWT.Container} container - The container where the text grid will be placed.
    * @param {number} x - `X` coordinate of the upper left corner of the grid
    * @param {number} y - `Y` coordinate of the upper left corner of the grid
    * @param {TextGridContent} tgc - Object with the content and other settings of the grid
-   * @param {boolean} wildTransparent - When `true`, the wildcard will be transparent
+   * @param {boolean} wildTransparent - When `true`, the wildcard character will be transparent
    * @returns {TextGrid}
    */
   TextGrid.createEmptyGrid = function (parent, container, x, y, tgc, wildTransparent) {
@@ -141,7 +157,7 @@ define([
      * @type {AWT.Point} */
     cursor: null,
     /**
-     * `true` when the cursor is "blinking" (cell drawed with {@link BoxBase} `inverse` attributes)
+     * `true` when the cursor is "blinking" (cell drawn with {@link BoxBase} `inverse` attributes)
      * @type {boolean} */
     cursorBlink: false,
     /**
@@ -149,7 +165,7 @@ define([
      * @type {AWT.Timer} */
     cursorTimer: null,
     /**
-     * Whether the wildcard is transparent or opaque
+     * Whether the wildcard character is transparent or opaque
      * @type {boolean} */
     wildTransparent: false,
     /**
@@ -174,7 +190,7 @@ define([
       TRANSPARENT: 16
     },
     /**
-     * 
+     *
      * Sets the characters to be placed in the cells of this TextGrid
      * @param {string} text
      */
@@ -197,7 +213,7 @@ define([
       //this.repaint();
     },
     /**
-     * 
+     *
      * Substitutes the current content of all cells with wildcards with a randomly generated char.
      * @see TextGridContent#randomChars
      */
@@ -209,7 +225,7 @@ define([
                 Math.floor(Math.random() * this.randomChars.length));
     },
     /**
-     * 
+     *
      * Clears or sets global attributes to all cells
      * @param {boolean} lockWild - When `true`, the wildcard cells will be marked with special
      * attributes (used in CrossWords to mark black cells)
@@ -234,7 +250,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Sets or unsets the `locked` properties (black cell) to a specific cell.
      * @param {number} px - The logical 'X' coordinate of the cell
      * @param {number} py - The logical 'Y' coordinate of the cell
@@ -253,10 +269,11 @@ define([
       }
     },
     /**
-     * 
+     *
      * For a specific cell located at column `rx` and row `ry`, finds the number of words delimited
      * by wildchars located behind its current position and in the same row and column. Used in
-     * {@link CrossWord} activities to find the definition for a specific cell.<br>
+     * {@link CrossWord} activities to find the definition for a specific cell.
+     *
      * The result is returned as 'x' and 'y' properties of a logical point.
      * @param {type} rx - The 'X' position of the cell
      * @param {type} ry - The 'Y' position of the cell
@@ -303,7 +320,7 @@ define([
       return point;
     },
     /**
-     * 
+     *
      * Whether the blinking cursor must be enabled or disabled.
      * @param {boolean} status
      */
@@ -315,7 +332,7 @@ define([
         this.stopCursorBlink();
     },
     /**
-     * 
+     *
      * Starts the {@link AWT.Timer} that makes the cursor blink.
      */
     startCursorBlink: function () {
@@ -325,7 +342,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Stops the {@link AWT.Timer} that makes the cursor blink.
      */
     stopCursorBlink: function () {
@@ -335,7 +352,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Moves the cursor in the specified x and y directions.
      * @param {number} dx - Amount to move in the 'X' axis
      * @param {number} dy - Amount to move in the 'Y' axis
@@ -353,8 +370,8 @@ define([
       }
     },
     /**
-     * 
-     * Finds the coordinates of the nearest non-locked cell (non wildcard) moving on the indicated
+     *
+     * Finds the coordinates of the nearest non-locked cell (non-wildcard) moving on the indicated
      * 'X' and 'Y' directions.
      * @param {AWT.Point} - Logical coordinates of the starting point
      * @param {number} dx - 0 means no movement, 1 go right, -1 go left.
@@ -377,7 +394,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Finds the first cell with the specified attributes at the specified state, starting
      * at specified point.
      * @param {number} startX - Starting X coordinate
@@ -426,7 +443,7 @@ define([
       return point;
     },
     /**
-     * 
+     *
      * Sets the blinking cursor at a specific point
      * @param {number} px - X coordinate
      * @param {number} py - Y coordinate
@@ -447,7 +464,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Sets the `useCursor` property of this text grid
      * @param {boolean} value
      */
@@ -455,7 +472,7 @@ define([
       this.useCursor = value;
     },
     /**
-     * 
+     *
      * Gets the current position of the blinking cursor
      * @returns {AWT.Point}
      */
@@ -463,7 +480,7 @@ define([
       return this.cursor;
     },
     /**
-     * 
+     *
      * Counts the number of cells of this grid with the specified character
      * @param {string} ch
      * @returns {number}
@@ -480,7 +497,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Gets the number of cells of this grid
      * @returns {number}
      */
@@ -488,7 +505,7 @@ define([
       return this.nRows * this.nCols;
     },
     /**
-     * 
+     *
      * Counts the number of coincidences between the `answers` array and the current content of this grid
      * @param {boolean} checkCase - Make comparisions case-sensitive
      * @returns {number}
@@ -506,7 +523,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Checks if a specific cell is equivalent to the content of `answers` at its position
      * @param {number} px - X coordinate
      * @param {number} py - Y coordinate
@@ -529,11 +546,11 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Gets the logical coordinates (in 'cell' units) of a device point into the grid
      * @param {AWT.Point} devicePoint
      * @returns {AWT.Point}
-     * 
+     *
      */
     getLogicalCoords: function (devicePoint) {
 
@@ -549,7 +566,7 @@ define([
         return null;
     },
     /**
-     * 
+     *
      * Checks if the specified logical coordinates are inside the valid bounds of the grid.
      * @param {number} px - 'X' coordinate
      * @param {number} py - 'Y' coordinate
@@ -559,7 +576,7 @@ define([
       return px < this.nCols && py < this.nRows && px >= 0 && py >= 0;
     },
     /**
-     * 
+     *
      * Sets the specified character as a content of the cell at specified coordinates
      * @param {number} px - 'X' coordinate
      * @param {number} py - 'Y' coordinate
@@ -584,10 +601,10 @@ define([
         return ' ';
     },
     /**
-     * 
-     * Gets the text formed by the letters between two cells that share a straight line on the grid.<br>
+     *
+     * Gets the text formed by the letters between two cells that share a straight line on the grid.
      * The text can be formed horizontally, vertically and diagonal, both in left-to-right or
-     * right-to-left direction.<br>
+     * right-to-left direction.
      * @param {number} x0 - 'X' coordinate of the first cell
      * @param {number} y0 - 'Y' coordinate of the first cell
      * @param {number} x1 - 'X' coordinate of the second cell
@@ -640,7 +657,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Sets or unsets a specifi attrobut to a cell.
      * @param {number} px - The 'X' coordinate of the cell
      * @param {number} py - The 'Y' coordinate of the cell
@@ -658,7 +675,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Sets the specified attribute to all cells.
      * @param {number} attribute - The binary flag representing this attribute. See {@link textGrid#flags}.
      * @param {boolean} state - Whether to set or unset the attribute.
@@ -669,7 +686,7 @@ define([
           this.setAttribute(px, py, attribute, state);
     },
     /**
-     * 
+     *
      * Gets the specified attribute of a cell
      * @param {number} px - The 'X' coordinate of the cell
      * @param {number} py - The 'Y' coordinate of the cell
@@ -683,7 +700,7 @@ define([
         return false;
     },
     /**
-     * 
+     *
      * Gets the rectangle enclosing a specific cell
      * @param {number} px - The 'X' coordinate of the cell
      * @param {number} py - The 'Y' coordinate of the cell
@@ -693,7 +710,7 @@ define([
       return new AWT.Rectangle(this.pos.x + px * this.cellWidth, this.pos.y + py * this.cellHeight, this.cellWidth, this.cellHeight);
     },
     /**
-     * 
+     *
      * Gets the rectangle enclosing a specific cell, including the border thick.
      * @param {number} px - The 'X' coordinate of the cell
      * @param {number} py - The 'Y' coordinate of the cell
@@ -712,7 +729,7 @@ define([
       return  this.getCellRect(px, py).grow(strk.lineWidth, strk.lineWidth);
     },
     /**
-     * 
+     *
      * Repaints a cell
      * @param {number} px - The 'X' coordinate of the cell
      * @param {number} py - The 'Y' coordinate of the cell
@@ -723,7 +740,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Gets the preferred size of this grid
      * @returns {AWT.Dimension}
      */
@@ -731,7 +748,7 @@ define([
       return this.preferredBounds.dim;
     },
     /**
-     * 
+     *
      * Gets the minimum size of this grid
      * @returns {AWT.Dimension}
      */
@@ -739,7 +756,7 @@ define([
       return new AWT.Dimension(this.defaults.MIN_CELL_SIZE * this.nCols, this.defaults.MIN_CELL_SIZE * this.nRows);
     },
     /**
-     * 
+     *
      * Scales the grid to a new size
      * @param {number} scale - The factor used to multiply all coordinates and sizes
      * @returns {AWT.Dimension}
@@ -750,7 +767,7 @@ define([
           Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
     },
     /**
-     * 
+     *
      * Overrides {@link AbstractBox#setBounds}
      * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
      * upper-left corner of a new rectangle.
@@ -764,7 +781,7 @@ define([
       this.cellHeight = this.dim.height / this.nRows;
     },
     /**
-     * 
+     *
      * Overrides {@link AbstractBox#updateContent}
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * grid.
@@ -774,7 +791,7 @@ define([
 
       var bb = this.getBoxBaseResolve();
 
-      // test font size        
+      // test font size
       ctx.font = bb.font.cssFont();
       ctx.textBaseline = 'hanging';
       bb.prepareText(ctx, 'W',
@@ -785,9 +802,9 @@ define([
           attr, isMarked, isInverted, isCursor,
           boxBounds,
           dx, dy, px, py, ry, bxr;
-      // 
+      //
       // TODO: Check in different browsers and devices what is the real font height.
-      // In Chrome on Linux (Gnome), substracting `bb.font._metrics.descent / 4` produces
+      // In Chrome on Linux (Gnome), subtracting `bb.font._metrics.descent / 4` produces
       // good results, but in iPad this correction places the character at the bottom of the cell.
       ry = (this.cellHeight - bb.font.getHeight()) / 2;
 
@@ -846,7 +863,7 @@ define([
       return true;
     },
     /**
-     * 
+     *
      * Makes the cursor blink, alternating between two states. This function should be called only by
      * {@link TextGrid#cursorTimer}
      * @param {boolean} status
@@ -859,7 +876,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Stops the cursor timer if not `null` and active
      */
     end: function () {

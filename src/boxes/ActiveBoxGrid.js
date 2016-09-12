@@ -1,17 +1,32 @@
-//    File    : ActiveBoxGrid.js  
-//    Created : 19/05/2015  
-//    By      : fbusquet  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : boxes/ActiveBoxGrid.js
+ *  Created : 19/05/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -23,14 +38,14 @@ define([
 
   /**
    * This class extends {@link ActiveBoxBag} with constructors that take an argument of type
-   * {@link Shaper} used to build all its {@link ActiveBox}components. It also mantains information
-   * about the number of "rows" and "columns", useful to compute appropiate (integer) values when
+   * {@link Shaper} used to build all its {@link ActiveBox}components. It also maintains information
+   * about the number of "rows" and "columns", useful to compute valid (integer) values when
    * resizing or moving its components.
    * @exports ActiveBoxGrid
    * @class
    * @extends ActiveBoxBag
    * @param {?AbstractBox} parent - The AbstractBox to which this box grid belongs
-   * @param {?AWT.Container} container - The container where this box grid is placed.  
+   * @param {?AWT.Container} container - The container where this box grid is placed.
    * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * @param {number} px - `X` coordinate of the upper left corner of this box grid
    * @param {number} py - `Y` coordinate of the upper left corner of this box grid
@@ -75,11 +90,11 @@ define([
   };
 
   /**
-   * 
+   *
    * This factory constructor creates a new empty grid with the number of cells indicated by the
    * {@link ActiveBagContent} `abc`, not filling the cells with any content.
    * @param {?AbstractBox} parent - The AbstractBox to which this box grid belongs
-   * @param {?AWT.Container} container - The container where this box grid is placed.  
+   * @param {?AWT.Container} container - The container where this box grid is placed.
    * @param {number} px - `X` coordinate of the upper left corner of this box grid
    * @param {number} py - `Y` coordinate of the upper left corner of this box grid
    * @param {ActiveBagContent} abc - Used only to get the number of cells and the shaper (when `sh` is `null`)
@@ -113,7 +128,7 @@ define([
      * @type {number} */
     nRows: 1,
     /**
-     * 
+     *
      * Gets the minimum size of this grid
      * @returns {AWT.Dimension}
      */
@@ -123,7 +138,7 @@ define([
           Utils.settings.MIN_CELL_SIZE * this.nRows);
     },
     /**
-     * 
+     *
      * Gets a scaled size of this grid, rounded to the nearest integer values
      * @param {number} scale - The scale factor
      * @returns {AWT.Dimension}
@@ -134,8 +149,8 @@ define([
           Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
     },
     /**
-     * 
-     * Returns the logical coordinates of the provided {@link ActiveBox}.<br>
+     *
+     * Returns the logical coordinates of the provided {@link ActiveBox}.
      * The units of the result are not pixels, but ordinal numbers (relative positions) of columns
      * and rows in the grid.
      * @param {ActiveBox} bx - The box to process
@@ -147,8 +162,8 @@ define([
       return new AWT.Point(px, py);
     },
     /**
-     * 
-     * Calculates the logical distance between two ActiveBox objects.<br>
+     *
+     * Calculates the logical distance between two {@link ActiveBox} objects.
      * Resulting units are not pixels, but ordinal numbers (relative positions) of columns and rows
      * in the grid.
      * @param {ActiveBox} src - First box

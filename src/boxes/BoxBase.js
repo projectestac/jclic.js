@@ -1,17 +1,32 @@
-//    File    : BoxBase.js  
-//    Created : 12/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : boxes/BoxBase.js
+ *  Created : 12/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -24,7 +39,8 @@ define([
   /**
    * This class contains all the main visual attributes needed to draw {@link AbstractBox} objects:
    * background and foreground colors, gradients, colors for special states (inactive, alternative,
-   * disabled...), margins, fonts, border strokes, etc.<br>
+   * disabled...), margins, fonts, border strokes, etc.
+   *
    * Objects derived from {@link AbstractBox} can have inheritance: boxes that act as "containers"
    * of other boxes (like {@link BoxBag}). Most of the attributes of `BoxBase` can be `null`,
    * meaning that the value of the ancestor -or the default value if the box has no ancestors- must
@@ -124,8 +140,8 @@ define([
      * @type {boolean} */
     flagFontReduced: false,
     /**
-     * 
-     * Loads the BoxBase settings from a specific JQuery XML element 
+     *
+     * Loads the BoxBase settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties: function ($xml) {
@@ -181,7 +197,7 @@ define([
     //
     // Utility functions:
     /**
-     * 
+     *
      * Gets the value of the specified property, scanning down to parents and prototype if not defined.
      * @param {string} property - The property to retrieve
      * @returns {*} - Depends on the type of property
@@ -193,7 +209,7 @@ define([
         return this.parent.get(property);
     },
     /**
-     * 
+     *
      * Sets the value of a specific property.
      * @param {string} property - The property name.
      * @param {*} value - Depends on the type of property
@@ -203,7 +219,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Gets the properties defined in this BoxBase as a collection of CSS attributes
      * @param {object=} css - An optional set of initial CSS properties
      * @param {boolean} inactive - When `true`, get CSS attributes for an inactive cell
@@ -289,7 +305,7 @@ define([
           }
         }
 
-        // Add the line and the calculed dimension to `result`
+        // Add the line and the calculated dimension to `result`
         result.push({
           text: line,
           size: new AWT.Dimension(width, height)

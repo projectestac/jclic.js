@@ -1,3 +1,6 @@
+### v0.1.36 (not yet released)
+#### Improvements
+- Project license changed to EUPL-1.1 (compatible with GPL-2.0)
 
 ### v0.1.35 (2016-09-05)
 #### Bug fixes

@@ -1,17 +1,32 @@
-//    File    : HolePuzzle.js  
-//    Created : 01/06/2015  
-//    By      : francesc  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : activities/puzzles/HolePuzzle.js
+ *  Created : 01/06/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -24,9 +39,11 @@ define([
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT, Rectangular) {
 
   /**
-   * This class of {@link Activity} shows only one panel with scrambled {@link ActiveBox} cells.<br>
+   * This class of {@link Activity} shows only one panel with scrambled {@link ActiveBox} cells.
+   *
    * One of the cells is out of the main panel, thus allowing its neighbors occupy their space.
-   * Only immediate neighbors of the "hole" can move into it.<br>
+   * Only immediate neighbors of the "hole" can move into it.
+   *
    * When all cells are on place, the initially "expulsed" cell comes back home and the activity is done.
    * @exports HolePuzzle
    * @class
@@ -40,7 +57,7 @@ define([
   HolePuzzle.prototype = {
     constructor: HolePuzzle,
     /**
-     * 
+     *
      * Retrieves the minimum number of actions needed to solve this activity.
      * @returns {number}
      */
@@ -48,7 +65,7 @@ define([
       return this.abc.primary.getNumCells();
     },
     /**
-     * 
+     *
      * Whether or not the activity uses random to scramble internal components
      * @returns {boolean}
      */
@@ -56,15 +73,15 @@ define([
       return true;
     },
     /**
-     * 
-     * When `true`, the activity mut always be scrambled
+     *
+     * When `true`, the activity must always be scrambled
      * @returns {boolean}
      */
     shuffleAlways: function () {
       return true;
     },
     /**
-     * 
+     *
      * Whether the activity allows the user to request help.
      * @returns {boolean}
      */
@@ -80,8 +97,8 @@ define([
    * The {@link Activity.Panel} where hole puzzle activities are played.
    * @class
    * @extends Activity.Panel
-   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
    * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
@@ -115,7 +132,7 @@ define([
      * @type {string[]} */
     events: ['click'],
     /**
-     * 
+     *
      * Miscellaneous cleaning operations
      */
     clear: function () {
@@ -129,7 +146,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Prepares the visual components of the activity
      */
     buildVisualComponents: function () {
@@ -163,7 +180,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Basic initialization procedure
      */
     initActivity: function () {
@@ -175,7 +192,7 @@ define([
         this.firstRun = false;
 
       if (this.bg) {
-        // 
+        //
         // This activity has an special shuffle method. Cells can move only to places near the 'hole'
         if (this.act.shuffles % 2 !== 1)
           this.act.shuffles++;
@@ -202,7 +219,7 @@ define([
       }
     },
     /**
-     * Updates the graphic content of this panel.<br>
+     * Updates the graphic content of this panel.
      * This method will be called from {@link AWT.Container#update} when needed.
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.
@@ -221,7 +238,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Sets the real dimension of this panel.
      * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
      * @returns {AWT.Dimension}
@@ -232,7 +249,7 @@ define([
       return BoxBag.layoutDouble(preferredMaxSize, this.bg, this.parkBg, this.act.boxGridPos, this.act.margin);
     },
     /**
-     * 
+     *
      * Sets the size and position of this activity panel
      * @param {AWT.Rectangle} rect
      */
@@ -255,7 +272,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Main handler used to process mouse, touch, keyboard and edit events
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its

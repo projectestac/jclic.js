@@ -1,17 +1,32 @@
-//    File    : JClicProject.js  
-//    Created : 01/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+ /**
+  *  File    : project/JClicProject.js
+  *  Created : 01/04/2015
+  *  By      : Francesc Busquets <francesc@gmail.com>
+  *
+  *  JClic.js
+  *  An HTML5 player of JClic activities
+  *  https://projectestac.github.io/jclic.js
+  *
+  *  @source https://github.com/projectestac/jclic.js
+  *
+  *  @license EUPL-1.1
+  *  @licstart
+  *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+  *
+  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+  *  the European Commission- subsequent versions of the EUPL (the "Licence");
+  *  You may not use this work except in compliance with the Licence.
+  *
+  *  You may obtain a copy of the Licence at:
+  *  https://joinup.ec.europa.eu/software/page/eupl
+  *
+  *  Unless required by applicable law or agreed to in writing, software
+  *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+  *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  *  Licence for the specific language governing permissions and limitations
+  *  under the Licence.
+  *  @licend
+  */
 
 define([
   "jquery",
@@ -24,14 +39,15 @@ define([
 ], function ($, ProjectSettings, ActivitySequence, MediaBag, Activity, Utils, AWT) {
 
   /**
-   * 
+   *
    *  JClicProject contains all the components of a JClic project: activities, sequences, media
-   *  files, descriptors and metadata.<br>
+   *  files, descriptors and metadata.
+   *
    *  This encapsulation is achieved by three auxiliary objects:
-   *  - {@link ProjectSettings}: stores metadata like full tiltle, description, authors, languages,
+   *  - {@link ProjectSettings}: stores metadata like full title, description, authors, languages,
    *  educational topics...
    *  - {@link ActivitySequence}: defines the order in which the activities must be shown.
-   *  - {@link MediaBag}: contains the list of all media files used by the activities    
+   *  - {@link MediaBag}: contains the list of all media files used by the activities
    * @exports JClicProject
    * @class
    */
@@ -75,7 +91,7 @@ define([
      * @type {external:jQuery[]} */
     _activities: null,
     /**
-     * Number of activitities suitable to be included reports
+     * Number of activities suitable to be included reports
      * @type {number}
      */
     reportableActs: 0,
@@ -101,8 +117,8 @@ define([
      * @type {external:JSZip} */
     zip: null,
     /**
-     * 
-     * Loads the project settings from a main jQuery XML element 
+     *
+     * Loads the project settings from a main jQuery XML element
      * @param {external:jQuery} $xml - The XML element
      * @param {string} path - The full path of this project
      * @param {?external:JSZip} zip - An optional JSZip object where this project is encapsulated
@@ -139,7 +155,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Finds activities by name and builds the corresponding {@link Activity} object.
      * @param {string} name - The name of the requested activity
      * @returns {Activity}
@@ -148,7 +164,7 @@ define([
       return Activity.getActivity(this._activities[Utils.nSlash(name)], this);
     },
     /**
-     * 
+     *
      * Builds the {@link Skin}, {@link EventSounds} and {@link MediaBag} fonts associated to this project.
      * @param {PlayStation} ps - The PlayStation (usually a {@link JClicPlayer}) linked to this project.
      */
@@ -163,7 +179,7 @@ define([
       this.mediaBag.buildAll('font');
     },
     /**
-     * 
+     *
      * Run finalizers on realized objects
      */
     end: function () {

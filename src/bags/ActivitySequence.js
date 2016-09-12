@@ -1,17 +1,32 @@
-//    File    : ActivitySequence.js  
-//    Created : 05/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : bags/ActivitySequence.js
+ *  Created : 05/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -24,7 +39,7 @@ define([
   /**
    * This class stores the definition of the sequence to follow to show the activities of a
    * {@link JClicProject}. The sequence are formed by an ordered list of objects of type
-   * {@link ActivitySequenceElement}.<br>
+   * {@link ActivitySequenceElement}.
    * It stores also a transient pointer to the current sequence element.
    * @exports ActivitySequence
    * @class
@@ -46,13 +61,13 @@ define([
      * @type {JClicProject} */
     project: null,
     /**
-     * 
-     * Pointer to the {@link ActivitySequenceElement} currently running (points inside the `elements`
-     * array).
+     *
+     * Pointer to the {@link ActivitySequenceElement} currently running (points inside
+     * the `elements` array).
      * @type {number} */
     currentAct: -1,
     /**
-     * 
+     *
      * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
@@ -65,7 +80,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Returns the index of the specified element in the sequence.
      * @param {ActivitySequenceElement} ase - The element to search.
      * @returns {number} - The requested index, or `null` if not found.
@@ -74,7 +89,7 @@ define([
       return ase === null ? -1 : this.elements.indexOf(ase);
     },
     /**
-     * 
+     *
      * Returns the nth element of the sequence.
      * @param {number} n - Index of the requested element
      * @param {boolean} updateCurrentAct - when `true`, the `currentAct` index will be updated.
@@ -90,8 +105,8 @@ define([
       return result;
     },
     /**
-     * 
-     * Searchs into the sequence for a element with the provided tag
+     *
+     * Search into the sequence for a element with the provided tag
      * @param {string} tag - The tag to search
      * @param {boolean} updateCurrentAct - when `true`, the `currentAct` index will be updated.
      * @returns {ActivitySequenceElement} - The requested element, or `null` if not found.
@@ -113,7 +128,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Gets the sequence element pointed by the `currentAct` member.
      * @returns {ActivitySequenceElement} - The current sequence element, or `null` if not set.
      */
@@ -121,9 +136,9 @@ define([
       return this.getElement(this.currentAct, false);
     },
     /**
-     * 
+     *
      * Checks if it's possible to go forward from the current position in the sequence.
-     * @param {boolean} hasReturn - Indicates whether the history of jumps done since the beggining
+     * @param {boolean} hasReturn - Indicates whether the history of jumps done since the beginning
      * of the JClic session is empty or not. When not empty, a `RETURN` action is still possible.
      * @returns {boolean} - `true` when the user is allowed to go ahead to a next activity,
      * `false` otherwise. */
@@ -147,9 +162,9 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Checks if it's possible to go back from the current position in the sequence.
-     * @param {boolean} hasReturn - Indicates whether the history of jumps done since the beggining
+     * @param {boolean} hasReturn - Indicates whether the history of jumps done since the beginning
      * of the JClic session is empty or not. When not empty, a `RETURN` action is still possible.
      * @returns {boolean} - `true` when the user is allowed to go back to a previous activity,
      * `false` otherwise. */
@@ -173,7 +188,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Gets the current state for the 'next' and 'prev' buttons.
      * @returns {string} - One of the possible values of {@link ActivitySequenceElement#navButtons},
      * thus: `none`, `fwd`, `back` or `both`
@@ -186,7 +201,7 @@ define([
       return flag;
     },
     /**
-     * 
+     *
      * Computes the jump to perform from the current position on the sequence
      * @param {boolean} back - When `true`, the request is for the 'go back' button. Otherwise, is
      * for the 'next' one.
@@ -206,7 +221,7 @@ define([
           result = new JumpInfo('JUMP', i);
         } else {
           var rating = -1;
-          var time = -1;          
+          var time = -1;
           if (reporter !== null) {
             var seqRegInfo = reporter.getCurrentSequenceInfo();
             if (seqRegInfo !== null) {
@@ -220,9 +235,9 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Finds the nearest sequence element with a valid 'tag', looking back in the `elements` list.
-     * @param {number} num - The point of the sequence from which to start looking bak.
+     * @param {number} num - The point of the sequence from which to start looking back.
      * @returns {string} - The nearest 'tag', or `null` if not found.
      */
     getSequenceForElement: function (num) {
@@ -234,9 +249,9 @@ define([
       return tag;
     },
     /**
-     * 
+     *
      * Gets the first {@link ActivitySequenceElement} in the `elements` list pointing to the
-     * specified activity name.<br>
+     * specified activity name.
      * The search is always case-insensitive.
      * @param {string} activityName - The activity to search.
      * @returns {ActivitySequenceElement} The requested element or `null` if not found.
@@ -253,7 +268,7 @@ define([
       return  result;
     },
     /**
-     * 
+     *
      * Utility function to check if the current sequence element corresponds to the specified
      * activity. If negative, the `currentAct` will be accordingly set.
      * @param {string} activityName - The activity to check

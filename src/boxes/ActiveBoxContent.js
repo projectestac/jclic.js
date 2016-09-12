@@ -1,17 +1,32 @@
-//    File    : ActiveBoxContent.js  
-//    Created : 13/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : boxes/ActiveBoxContent.js
+ *  Created : 13/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -24,7 +39,7 @@ define([
   /**
    * This class defines a content that can be displayed by {@link ActiveBox} objects. This content
    * can be a text, an image, a fragment of an image or a combination of text and images. The style
-   * (colours, font and size, borders, shadows, margins, etc.) are specified in the `bb` attribute,
+   * (colors, font and size, borders, shadows, margins, etc.) are specified in the `bb` attribute,
    * always pointing to a {@link BoxBase} object.
    * @exports ActiveBoxContent
    * @class
@@ -96,7 +111,7 @@ define([
      * Numeric identifier used in activities to resolve relationships between cells
      * @type {number} */
     item: -1,
-    // 
+    //
     // Transient properties build and modified at run-time
     /**
      * The realized image used by this box content.
@@ -118,8 +133,8 @@ define([
     // MediaBagElement
     mbe: null,
     /**
-     * 
-     * Loads settings from a specific JQuery XML element 
+     *
+     * Loads settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to be parsed
      * @param {MediaBag} mediaBag - The media bag used to retrieve images and other media
      */
@@ -193,8 +208,8 @@ define([
       return this;
     },
     /**
-     * 
-     * Decode expressions with combined values of horizontal and vertical alugnments in the form:
+     *
+     * Decode expressions with combined values of horizontal and vertical alignments in the form:
      * "(left|middle|right),(top|middle|bottom)"
      * @param {string} str - The string to parse
      * @returns {ActiveBoxContent~alignType}
@@ -212,10 +227,10 @@ define([
       return this.text === null && this.img === null;
     },
     /**
-     * 
+     *
      * Checks if two contents are equivalent
      * @param {ActiveBoxContent} abc - The content to compare with this.
-     * @param {boolean} checkCase - When `true` the comparision will be case-sensitive.
+     * @param {boolean} checkCase - When `true` the comparing will be case-sensitive.
      * @returns {boolean}
      */
     isEquivalent: function (abc, checkCase) {
@@ -240,7 +255,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Sets the text content of this ActiveBox
      * @param {string} tx
      */
@@ -258,7 +273,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Checks if cell's text uses HTML, initializing the `innerHtmlText` member as needed.
      */
     checkHtmlText: function () {
@@ -276,13 +291,13 @@ define([
       }
     },
     /**
-     * 
-     * Sets a fragment of a main image as a graphic content of this cell.<br>
+     *
+     * Sets a fragment of a main image as a graphic content of this cell.
      * Cells cannot have two graphic contents, so `imgName` (the specific image of this cell) should
      * be cleared with this setting.
      * @param {external:HTMLImageElement} img - The image data
      * @param {AWT.Shape} imgClip - A shape that clips the portion of image assigned to this content.
-     * @param {string=} animatedGifFile - When `img` is an animated GIF, its fileName
+     * @param {string=} animatedGifFile - When `img` is an animated GIF, its file name
      */
     setImgContent: function (img, imgClip, animatedGifFile) {
       this.img = img;
@@ -292,7 +307,7 @@ define([
         this.animatedGifFile = animatedGifFile;
     },
     /**
-     * 
+     *
      * Prepares the media content
      * @param {PlayStation} playStation - Usually a {@link JClicPlayer}
      */
@@ -303,7 +318,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Reads and initializes the image associated to this content
      * @param {MediaBag} mediaBag - The media bag of the current project.
      */

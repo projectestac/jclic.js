@@ -1,17 +1,32 @@
-//    File    : JClic.js  
-//    Created : 01/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : JClic.js
+ *  Created : 01/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 // Declaration of JSDoc external objects:
 
@@ -41,7 +56,7 @@
  * The CanvasRenderingContext2D interface provides the 2D rendering context for the drawing surface
  * of a &lt;canvas&gt; element.
  * @external CanvasRenderingContext2D
- * @see https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D}
  */
 
 /**
@@ -50,7 +65,7 @@
  * also has available to it by inheritance) for manipulating the layout and presentation of
  * &lt;img&gt; elements.
  * @external HTMLImageElement
- * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement}
  */
 
 /**
@@ -58,14 +73,14 @@
  * well as methods to manipulate them. It derives from the
  * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement HTMLMediaElement} interface.
  * @external HTMLAudioElement
- * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement}
  */
 
 /**
  * The Intl.Collator object is a constructor for collators, objects that enable language sensitive
  * string comparison.
  * @external Collator
- * @see https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Collator
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Collator}
  */
 
 /**
@@ -76,9 +91,9 @@
 
 /**
  * The MediaRecorder interface of the {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API MediaRecorder API}
- * provides functionality to easily capture media. 
+ * provides functionality to easily capture media.
  * @external MediaRecorder
- * @see https://developer.mozilla.org/ca/docs/Web/API/MediaRecorder
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/API/MediaRecorder}
  */
 
 /**
@@ -91,7 +106,7 @@
  * The Promise object is used for asynchronous computations. A Promise represents an operation
  * that hasn't completed yet, but is expected in the future.
  * @external Promise
- * @see https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise}
  */
 
 /* global module, exports:true, JClicDataProject, JClicDataOptions */
@@ -122,19 +137,19 @@ define([
 
   /**
    * This is the main JClic method
-   * 
+   *
    * Executes on `document.ready()`.
-   * 
+   *
    * The method iterates over all `div` objects with `JClic` class and creates a {@link JClicPlayer}
    * within them. Each player loads the JClic project file specified in the `data-project` attribute of
    * the `div` tag.
-   * 
+   *
    * The `div` elements must preferabily be empty. Inner content may become overlapped by objects
    * created by the JClic player.
-   * 
+   *
    * This method exports the global variable `window.JClicObject`, useful when other scripts
    * need to make direct calls to the main components of JClic.
-   * 
+   *
    * The main members of the global variable `JClicObject` are:
    * - `JClicObject.JClicPlayer` (the {@link JClicPlayer} object)
    * - `JClicObject.JClicProject` (the {@link JClicProject} object)
@@ -144,9 +159,10 @@ define([
    * - `JClicObject.options` (the main options loaded at startup, usually the content of the global variable `JClicDataOptions`)
    * - `JClicObject.projectFiles` (used by JSONP to store the content of some files when inaccessible to the browser because CORS or other restrictions)
    * - `JClicObject.currentPlayers` (array with references to the players currently running)
-   * - `JClicObject.loadProject` (a function that starts a JClicPlayer on a specifc `div`)
-   * 
+   * - `JClicObject.loadProject` (a function that starts a JClicPlayer on a specific `div`)
+   *
    * @module JClic
+   * @exports JClicObject
    * @example
    * Creates a JClic div and loads "myproject.jclic" on it:
    * `<div class ="JClic" data-project="myproject.jclic"></div>`
@@ -155,7 +171,7 @@ define([
    * JSON string. Note that `data-options` should be delimited by apostrophes `'` because quotation
    * marks `"` are used for JSON keys and values:
    * `<div class ="JClic" data-project="myproject.jclic" data-options='{"fade":"400","lang":"es","reporter":"TCPReporter","user":"test01","path":"localhost:9090"}'></div>`
-   * 
+   *
    */
 
   JClicObject = {
@@ -168,7 +184,7 @@ define([
     projectFiles: {},
     currentPlayers: [],
     /**
-     * 
+     *
      * Creates a new JClicPlayer hosted on the specified `div`, and loads an specific project on it.
      * @param {HTMLElement} div - The HTML element (usually a `<div/>`) that will be used as a main container of the player.
      * @param {string} projectName - The file name or URL of the JClic project to be loaded
@@ -178,7 +194,7 @@ define([
     loadProject: function (div, projectName, options) {
 
       options = $.extend(Object.create(JClicObject.options), options ? options : {});
-      
+
       var player = new JClicPlayer($(div), options);
 
       if (projectName)

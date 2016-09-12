@@ -1,17 +1,32 @@
-//    File    : ActiveBagContent.js  
-//    Created : 13/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : boxes/ActiveBagContent.js
+ *  Created : 13/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -28,7 +43,7 @@ define([
    * determining the position and shape of each {@link ActiveBox}, and the {@link BoxBase} (field `bb`),
    * provider of a common visual style.
    * @exports ActiveBagContent
-   * @class 
+   * @class
    * @param {string=} id - An optional text tag identifying this ActiveBagContent
    * @param {number} ncw - In grid-based distributions, number of columns.
    * @param {number} nch - In grid-based distributions, number of rows.
@@ -100,8 +115,8 @@ define([
      * @type {number} */
     defaultIdValue: -1,
     /**
-     * 
-     * Loads the object settings from a specific JQuery XML element 
+     *
+     * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      * @param {MediaBag} mediaBag - The project's MediaBag
      */
@@ -209,7 +224,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Prepares the media content of all elements
      * @param {PlayStation} playStation - The {@link JClicPlayer}
      */
@@ -219,7 +234,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Gets the estimated total width of this content bag
      * @returns {number}
      */
@@ -227,7 +242,7 @@ define([
       return this.w * this.ncw;
     },
     /**
-     * 
+     *
      * Gets the estimated total height of this bag
      * @returns {number}
      */
@@ -235,7 +250,7 @@ define([
       return this.h * this.nch;
     },
     /**
-     * 
+     *
      * Gets the total number of cells of this bag
      * @returns {number}
      */
@@ -243,7 +258,7 @@ define([
       return this.activeBoxContentArray.length;
     },
     /**
-     * 
+     *
      * Checks if the bag is empty
      * @returns {boolean}
      */
@@ -251,7 +266,7 @@ define([
       return this.activeBoxContentArray.length === 0;
     },
     /**
-     * 
+     *
      * Retrieves the {@link Shaper} of this bag building a new one if needed
      * @returns {Shaper}
      */
@@ -261,7 +276,7 @@ define([
       return this.shaper;
     },
     /**
-     * 
+     *
      * Adds a new {@link ActiveBoxContent} to this bag
      * @param {ActiveBoxContent} ab - The ActiveBoxContent to add
      */
@@ -273,8 +288,8 @@ define([
       }
     },
     /**
-     * 
-     * Gets the nth ActiveBoxContent in `activeBoxContentArray`
+     *
+     * Gets the nth {@link ActiveBoxContent} in `activeBoxContentArray`
      * @param {number} i - The index of the content to be retrieved
      * @returns {ActiveBoxContent}
      */
@@ -286,7 +301,7 @@ define([
       return this.activeBoxContentArray[i];
     },
     /**
-     * 
+     *
      * Finds the ActiveBoxContent with specific `id` and `item` values
      * @param {number} id
      * @param {number} item
@@ -304,7 +319,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Sets the content of the cells based on a image spliced by a shaper
      * @param {MediaBag} mb - The MediaBag used to retrieve the image
      * @param {Shaper} sh - The Shaper used to splice the image
@@ -347,7 +362,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Sets the content of this bag based on an array of strings
      * @param {string[]} txt - The array of strings to be used as content.
      * @param {number} setNcw - Number of columns
@@ -363,7 +378,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Sets `id` values to a all the {@link ActiveBoxContent} elements of his bag.
      * @param {number[]} ids -Array of numeric identifiers
      */
@@ -373,7 +388,7 @@ define([
           this.getActiveBoxContent(i).id = ids[i];
     },
     /**
-     * 
+     *
      * Resets the `id` fields of all the {@link ActiveBoxContent} elements to the specified value.
      * @param {number} id - The value to set as `id`
      */
@@ -382,7 +397,7 @@ define([
         this.getActiveBoxContent(i).id = id;
     },
     /**
-     * 
+     *
      * Cheks if the `id` values of all {@link ActiveBoxContent} objects are -1 and, if true,
      * sets new ids to them, with values between 0 and `maxId`
      * @param {number} maxId - The maximum value of identifiers

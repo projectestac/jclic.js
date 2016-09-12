@@ -1,17 +1,32 @@
-//    File    : Skin.js  
-//    Created : 29/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : skins/Skin.js
+ *  Created : 29/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -27,15 +42,15 @@ define([
 
   /**
    * This abstract class manages the layout, position ans size of the visual components of JClic:
-   * player window, message box, counters, buttons, status... and also the appareance of the main
-   * container.<br>
+   * player window, message box, counters, buttons, status... and also the appearance of the main
+   * container.
    * The basic implementation of Skin is {@link DefaultSkin}.
    * @exports Skin
    * @class
    * @abstract
    * @extends AWT.Container
-   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-   * realize the media objects meeded tot build the Skin.
+   * @param {PlayStation} ps - The `PlayStation` (currently a {@link JClicPlayer}) used to load and
+   * realize the media objects needed tot build the Skin.
    * @param {string=} name - The skin name
    */
   var Skin = function (ps, name) {
@@ -158,11 +173,11 @@ define([
   };
 
   /**
-   * Collection of realized __Skin__ objects.<br>
+   * Collection of realized __Skin__ objects.
    * @type {Skin[]} */
   Skin.skinStack = [];
   /**
-   * Collection of skin stylesheets already registered on the current document
+   * Collection of skin style sheets already registered on the current document
    * @type {string[]} */
   Skin.registeredStylesheets = [];
 
@@ -235,7 +250,7 @@ define([
      * @type {Object} */
     _dlgOkValue: null,
     /**
-     * Value to be returned in user-cancelled dialogs
+     * Value to be returned in user-canceled dialogs
      * @type {Object} */
     _dlgCancelValue: null,
     /**
@@ -282,8 +297,8 @@ define([
      * @type {JClicPlayer} */
     player: null,
     /**
-     * The [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-     * used by this Skin. Usually, the same as `player` 
+     * The {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation}
+     * used by this Skin. Usually, the same as `player`
      * @type {PlayStation} */
     ps: null,
     /**
@@ -291,16 +306,16 @@ define([
      * @type {number} */
     waitCursorCount: 0,
     /**
-     * 
-     * Returns the CSS styles used by this skin. This methos should be called only from
-     * `Skin` constructor, and overrided by subclasses if needed.
+     *
+     * Returns the CSS styles used by this skin. This method should be called only from
+     * the `Skin` constructor, and overridden by subclasses if needed.
      * @returns {string}
      */
     _getStyleSheets: function () {
       return this.basicCSS + this.reportsCSS;
     },
     /**
-     * 
+     *
      * Attaches a {@link JClicPlayer} object to this Skin
      * @param {JClicPlayer} player
      */
@@ -326,7 +341,7 @@ define([
       player.$topDiv.append(this.$div);
     },
     /**
-     * 
+     *
      * Detaches the `player` element from this Skin
      */
     detach: function () {
@@ -337,16 +352,16 @@ define([
       }
     },
     /**
-     * 
-     * Loads the object settings from a specific JQuery XML element
+     *
+     * Loads the object settings from a specific jQuery XML element
      * @param {external:jQuery} $xml - The XML element containing the properties of the skin
      */
     setProperties: function ($xml) {
       // To be implemented by subclasses
     },
     /**
-     * 
-     * Updates the graphic contents of this skin.<br>
+     *
+     * Updates the graphic content of this skin.
      * The method should be called from {@link Skin#update}
      * @param {AWT.Rectangle} dirtyRegion - The region to be painted. When `null`, refers to the full
      * skin area.
@@ -356,7 +371,7 @@ define([
       return AWT.Container.prototype.updateContent.call(this, dirtyRegion);
     },
     /**
-     * 
+     *
      * Resets all counters
      * @param {boolean} bEnabled - Leave it enabled/disabled
      */
@@ -371,7 +386,7 @@ define([
       });
     },
     /**
-     * 
+     *
      * Sets/unsets the 'wait' state
      * @param {boolean} status - Whether to set or unset the wait status. When `undefined`, the
      * `waitCursorCount` member is evaluated to decide if the wait state should be activated or deactivated.
@@ -399,7 +414,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Shows a window with clues or help for the current activity
      * @param {external:jQuery} $hlpComponent - A JQuery DOM element with the information to be shown.
      * It can be a string or number. When `null`, the help window (if any) must be closed.
@@ -408,7 +423,7 @@ define([
       // TODO: Implement HelpWindow
     },
     /**
-     * 
+     *
      * Shows a "dialog" panel, useful for displaying information or prompt something to users
      * @param {boolean} modal - When `true`, the dialog should be closed by any click outside the main panel
      * @param {object} options - This object should have two components: `main` and `bottom`, both
@@ -444,11 +459,11 @@ define([
     /**
      * Called when the dialog must be closed, usually only by Skin members.
      * This method is re-defined on each call to `showDlg`, so the `resolve` and `reject`
-     * functions can be safelly called.
+     * functions can be safely called.
      */
     _closeDlg: function () {},
     /**
-     * 
+     *
      * Displays a dialog with a report of the current results achieved by the user.
      * @param {Reporter} reporter - The reporter system currently in use
      * @returns {external:Promise} - The {@link external:Promise} returned by {@link Skin.showDlg}.
@@ -461,7 +476,7 @@ define([
       });
     },
     /**
-     * 
+     *
      * Enables or disables a specific counter
      * @param {string} counter - Which counter
      * @param {boolean} bEnabled - When `true`, the counter will be enabled.
@@ -476,7 +491,7 @@ define([
     doLayout: function () {
     },
     /**
-     * 
+     *
      * adjusts the skin to the dimension of its `$div` container
      * @returns {AWT.Dimension} the new dimension of the skin
      */
@@ -485,12 +500,12 @@ define([
       return new AWT.Dimension(this.$div.width(), this.$div.height());
     },
     /**
-     * 
-     * Sets or unsets the player in screenfull mode, when allowed, using the 
-     * [screenfull.js](https://github.com/sindresorhus/screenfull.js) library.
+     *
+     * Sets or unsets the player in fullscreen mode, when allowed, using the
+     * {@link https://github.com/sindresorhus/screenfull.js|screenfull.js} library.
      * @param {boolean} status - Whether to set or unset the player in fullscreen mode. When `null`
      * or `undefined`, the status toggles between fullscreen and windowed modes.
-     * @returns {boolean} `true` if the request was successfull, `false` otherwise.
+     * @returns {boolean} `true` if the request was successful, `false` otherwise.
      */
     setScreenFull: function (status) {
       if (screenfull && screenfull.enabled && (
@@ -501,7 +516,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Compares two Skin objects
      * @param {Skin} skin - The Skin to compare against this
      * @returns {boolean} - `true` if both skins are equivalent.
@@ -512,7 +527,7 @@ define([
           this.ps === skin.ps;
     },
     /**
-     * 
+     *
      * Gets the {@link ActiveBox} used to display the main messages of activities
      * @returns {ActiveBox}
      */
@@ -528,14 +543,14 @@ define([
       return this.$div;
     },
     /**
-     * 
+     *
      * Method used to notify this skin that a specific action has changed its enabled/disabled status
      * @param {AWT.Action} act - The action originating the change event
      */
     actionStatusChanged: function (act) {
-      // To be implemented in subclasses      
+      // To be implemented in subclasses
     },
-    // 
+    //
     // Buttons and other graphical resources used by this skin.
     //
     // Styles:
@@ -603,8 +618,8 @@ define([
   Skin.prototype = $.extend(Object.create(AWT.Container.prototype), Skin.prototype);
 
   /**
-   * 
-   * Gets the specified Skin from skinStack, or creates a new one if not found.<br>
+   *
+   * Gets the specified Skin from `skinStack`, or creates a new one if not found.
    * This function should be used only through `Skin.getSkin`
    * @param {string} skinName - The name of the searched skin
    * @param {PlayStation} ps - The PlayStation (usually a {@link JClicPlayer}) used to build the new skin.
@@ -630,7 +645,7 @@ define([
     }
 
     // Locates the class of the requested Skin (or [DefaultSkin](DefaultSkin.html)
-    // if not specified), creates and registers it on `skinStack`
+    // if not specified). When not found, a new one is created and registered in `skinStack`
     var cl = Skin.CLASSES[skinName];
     if (cl) {
       sk = new cl(ps, skinName);
@@ -641,7 +656,6 @@ define([
 
     return sk;
   };
-
 
   return Skin;
 });

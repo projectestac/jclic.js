@@ -1,17 +1,32 @@
-//    File    : AutoContentProvider.js  
-//    Created : 13/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : automation/AutoContentProvider.js
+ *  Created : 13/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "../Utils"
@@ -19,7 +34,8 @@ define([
 
   /**
    * This abstract class is the base for classes that create on-time automatic content for JClic
-   * activities, usually using random parameters to assure different content in each session.<br>
+   * activities, usually using random parameters to assure different content in each session.
+   *
    * Activities with `AutoContentProvider` objects rely on them to build new content on every start.
    * @exports AutoContentProvider
    * @class
@@ -37,7 +53,7 @@ define([
      * @type {JClicProject} */
     project: null,
     /**
-     * 
+     *
      * Loads the object settings from a specific jQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
@@ -46,20 +62,20 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Initializes the content provider
      */
     init: function () {
       // To be implemented in real content providers
     },
     /**
-     * 
+     *
      * Builds an {@link AutoContentProvider.ActiveBagContentKit} and generates the automatized content.
      * @param {number} nRows - Number of rows to be processed
      * @param {number} nCols - Number of columns to be processed
      * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
      * objects to be filled with new content.
-     * @param {bolean} useIds - When `true`, the `id` field of {@link ActiveBoxContent} objects is significative
+     * @param {bolean} useIds - When `true`, the `id` field of {@link ActiveBoxContent} objects is significant
      * @returns {boolean} - `true` if the process was OK. `false` otherwise.
      */
     generateContent: function (nRows, nCols, content, useIds) {
@@ -67,7 +83,7 @@ define([
       return this.process(kit);
     },
     /**
-     * 
+     *
      * Generates the automatized content
      * @param {AutoContentProvider.ActiveBagContentKit} kit - The objects to be filled with content
      * @returns {boolean} - `true` if the process was OK. `false` otherwise.
@@ -85,7 +101,7 @@ define([
    * @param {number} nCols - Number of columns to be processed
    * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
    * objects to be filled with new content.
-   * @param {bolean} useIds - `true` when the `id` field of {@link ActiveBoxContent} objects is significative.
+   * @param {bolean} useIds - `true` when the `id` field of {@link ActiveBoxContent} objects is significant.
    */
   AutoContentProvider.ActiveBagContentKit = function (nRows, nCols, content, useIds) {
     this.nRows = nRows;
@@ -97,7 +113,7 @@ define([
   /**
    * Contains the current list of classes derived from AutoContentProvider.<br>
    * This object should be updated by real automation classes at declaration time.<br>
-   * Currently, only two autocontentproviders are defined: {@link Arith} and TagReplace.
+   * Currently, only two types of "AutoContentProvider" are defined: {@link Arith} and TagReplace.
    * @type {object} */
   AutoContentProvider.CLASSES = {
     // TODO: Implement TagReplace
@@ -106,7 +122,7 @@ define([
 
   /**
    * Dynamic constructor that returns a specific type of AutoContentProvider based on the `class`
-   * attribute declared on an $xml element.<br>
+   * attribute declared on an $xml element.
    * It should be called only from {@link Activity#setproperties}
    * @param {external.jQuery} $xml - The XML element to parse
    * @param {JClicProject} project - The JClic project to which this object will be related

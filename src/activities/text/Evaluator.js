@@ -1,17 +1,32 @@
-//    File    : Evaluator.js  
-//    Created : 14/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : activities/text/Evaluator.js
+ *  Created : 14/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -79,8 +94,8 @@ define([
      * @type {boolean} */
     checkCase: false,
     /**
-     * 
-     * Loads the object settings from a specific JQuery XML element 
+     *
+     * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The jQuery XML element to parse
      */
     setProperties: function ($xml) {
@@ -108,14 +123,14 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Initializes this evaluator
      */
     init: function () {
       this.initiated = true;
     },
     /**
-     * 
+     *
      * Checks the given text against a set of valid matches
      * @param {string} text - The text to be checked
      * @param {(string|string[])} match - The valid expression or expressions with which to compare.
@@ -132,7 +147,7 @@ define([
       return false;
     },
     /**
-     * 
+     *
      * Abstract method to be implemented in subclasses.
      * Performs the validation of a string against a single match.
      * @param {string} text - The text to be checked
@@ -143,7 +158,7 @@ define([
       return false;
     },
     /**
-     * 
+     *
      * Evaluates the given text against a set of valid matches, returning an array of flags useful
      * to indicate where the mistakes are located.
      * @param {string} text - The text to be checked
@@ -157,20 +172,20 @@ define([
       return this._evalText(text, match);
     },
     /**
-     * 
-     * Abstract method to be implemented in subclasses.<br>
+     *
+     * Abstract method to be implemented in subclasses.
      * Performs the evaluation of a string against an array of valid matches, returning an array of
      * flags useful to indicate where the mistakes are located.
      * @param {string} text - The text to be checked
      * @param {string} match - A valid expression with which to compare.
      * @returns {number[]} - An array of flags (one number for character) indicating whether each
-     * position is erroneous or ok.
+     * position is erroneous or OK.
      */
     _evalText: function (text, match) {
       return [];
     },
     /**
-     * 
+     *
      * Checks if the given array of flags (usually returned by `evalText`) can be considered as a
      * valid or erroneous answer.
      * @param {number[]} flags
@@ -214,7 +229,7 @@ define([
      * @type {string} */
     PUNCTUATION: '.,;:',
     /**
-     * 
+     *
      * Initializes the {@link Evaluator#collator}.
      */
     init: function () {
@@ -227,7 +242,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Performs the validation of a string against a single match.
      * @param {string} text - The text to be checked
      * @param {string} match - A valid expression with which to compare.
@@ -237,15 +252,15 @@ define([
       return this.collator.compare(this.getClearedText(text), this.getClearedText(match)) === 0;
     },
     /**
-     * 
+     *
      * Performs the evaluation of a string against an array of valid matches, returning an array of
      * flags useful to indicate where the mistakes are located.<br>
-     * In BasicEvaluator, all characters are just marked as 1 (error) or 0 (ok). See
+     * In BasicEvaluator, all characters are just marked as 1 (error) or 0 (OK). See
      * {@link Evaluator.ComplexEvaluator} for more detailed analysis of answers.
      * @param {string} text - The text to be checked
      * @param {string} match - A valid expression with which to compare.
      * @returns {number[]} - An array of flags (one number for character) indicating whether each
-     * position is erroneous or ok.
+     * position is erroneous or OK.
      */
     _evalText: function (text, match) {
       var flags = [];
@@ -256,7 +271,7 @@ define([
       return flags;
     },
     /**
-     * 
+     *
      * Removes double spaces and erroneous characters from a given text expression.
      * @param {string} src - The text to be processed.
      * @param {boolean[]} skipped - An array of boolean indicating which characters should be removed
@@ -329,7 +344,8 @@ define([
     /**
      * When an eror is detected in the analyzed expression, this variable indicates the number of
      * characters the checking pointer will be moved forward and back looking for a coincident
-     * expression.<br>
+     * expression.
+     *
      * For example, comparing the answer "_one lardzy dog_" with the correct answer "_one lazy dog_"
      * will detect an error at position 6 (an "r" instead of "z"). If `checkSteps` is set to 2 or
      * greater, the "_zy dog_" expression at position 8 will be found and evaluated as valid, while
@@ -338,15 +354,15 @@ define([
      * @type {number} */
     checkScope: 6,
     /**
-     * 
+     *
      * Performs the evaluation of a string against an array of valid matches, returning an array of
-     * flags useful to indicate where the mistakes are located.<br>
-     * In BasicEvaluator, all characters are just marked as 1 (error) or 0 (ok). See
+     * flags useful to indicate where the mistakes are located.
+     * In BasicEvaluator, all characters are just marked as 1 (error) or 0 (OK). See
      * {@link Evaluator.ComplexEvaluator} for more detailed analysis of answers.
      * @param {string} text - The text to be checked
      * @param {string} match - A valid expression with which to compare.
      * @returns {number[]} - An array of flags (one number for character) indicating whether each
-     * position is erroneous or ok.
+     * position is erroneous or OK.
      */
     _evalText: function (text, match) {
 
@@ -395,7 +411,7 @@ define([
       return returnFlags;
     },
     /**
-     * 
+     *
      * Counts the number of flags on the provided array that are zero.
      * @param {number[]} flags
      * @returns {number}
@@ -408,18 +424,18 @@ define([
       return r;
     },
     /**
-     * 
-     * Compares two segments of text.<br>
+     *
+     * Compares two segments of text.
      * This function should make recursive calls.
      * @param {string} src - Text to be compared
-     * @param {number} ls - Offset in `src` where to start the comparision
+     * @param {number} ls - Offset in `src` where to start the comparison
      * @param {string} ok - Text to match against.
-     * @param {number} lok - Offset in `ok` where to start the comparision.
+     * @param {number} lok - Offset in `ok` where to start the comparison.
      * @param {number[]} attr - Array of integers that will be filled with information about the
      * validity or error of each character in `src`.
      * @param {boolean} iterate - When `true`, the segment will be iterated looking for other
      * coincident fragments.
-     * @returns {boolean} - `true` if the comparision was valid.
+     * @returns {boolean} - `true` if the comparison was valid.
      */
     compareSegment: function (src, ls, ok, lok, attr, iterate) {
       var is = 0, iok = 0, lastIs = 0;
@@ -489,7 +505,7 @@ define([
     }
   };
 
-  // 
+  //
   // ComplexEvaluator extends BasicEvaluator
   Evaluator.ComplexEvaluator.prototype = $.extend(
       Object.create(Evaluator.BasicEvaluator.prototype),

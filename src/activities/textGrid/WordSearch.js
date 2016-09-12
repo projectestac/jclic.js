@@ -1,17 +1,32 @@
-//    File    : WordSearch.js  
-//    Created : 15/06/2015  
-//    By      : fbusquet  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : activities/textGrid/WordSearch.js
+ *  Created : 15/06/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -26,8 +41,9 @@ define([
   /**
    * This class of {@link Activity} shows a {@link TextGrid} with some words placed in horizontal,
    * vertical or diagonal direction, written right or upside down. The remaining grid cells will be
-   * filled with randomly selected characters.<br>
-   * The aim of the activity is to find all the words hidden on the text grid.<br>
+   * filled with randomly selected characters.
+   *
+   * The aim of the activity is to find all the words hidden on the text grid.
    * The content of an optional {@link ActiveBagContent} can be revealed on an auxiliary panel as
    * words are found.
    * @exports WordSearch
@@ -47,12 +63,12 @@ define([
     clues: null,
     /**
      * Array of integers containing __for each clue__ the index
-     * of an associated {@link ActiveBoxContent} located on the secondary {@link ActiveBoxBag}.<br>
+     * of an associated {@link ActiveBoxContent} located on the secondary {@link ActiveBoxBag}.
      * This associated element is optional.
      * @type {number[]} */
     clueItems: null,
     /**
-     * 
+     *
      * Retrieves the minimum number of actions needed to solve this activity
      * @returns {number}
      */
@@ -60,7 +76,7 @@ define([
       return this.clues.length;
     },
     /**
-     * 
+     *
      * This type of activity permits the user to display the solution
      * @returns {boolean}
      */
@@ -68,7 +84,7 @@ define([
       return true;
     },
     /**
-     * 
+     *
      * This kind of activity uses random numbers to generate the filling characters
      * @returns {boolean}
      */
@@ -84,8 +100,8 @@ define([
    * The {@link Activity.Panel} where word search activities are played.
    * @class
    * @extends Activity.Panel
-   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
    * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
@@ -100,7 +116,7 @@ define([
   WordSearch.Panel.prototype = {
     constructor: WordSearch.Panel,
     /**
-     * The TextGrid object of this Activity.Panel
+     * The {@link TextGrid} object of this Activity.Panel
      * @type {TextGrid} */
     grid: null,
     /**
@@ -120,7 +136,7 @@ define([
      * @type {string[]} */
     events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
     /**
-     * 
+     *
      * Performs miscellaneous cleaning operations
      */
     clear: function () {
@@ -134,7 +150,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Prepares the visual components of the activity
      */
     buildVisualComponents: function () {
@@ -167,7 +183,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Basic initialization procedure
      */
     initActivity: function () {
@@ -202,7 +218,7 @@ define([
       }
     },
     /**
-     * Updates the graphic content of this panel.<br>
+     * Updates the graphic content of this panel.
      * This method will be called from {@link AWT.Container#update} when needed.
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.
@@ -222,7 +238,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Sets the real dimension of this panel.
      * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
      * @returns {AWT.Dimension}
@@ -236,7 +252,7 @@ define([
         return BoxBag.layoutSingle(preferredMaxSize, this.grid, this.act.margin);
     },
     /**
-     * 
+     *
      * Sets the size and position of this activity panel
      * @param {AWT.Rectangle} rect
      */
@@ -262,7 +278,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Calculates the current score
      * @returns {number}
      */
@@ -275,7 +291,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Main handler used to process mouse, touch, keyboard and edit events
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
@@ -283,10 +299,10 @@ define([
      */
     processEvent: function (event) {
       if (this.bc && this.playing) {
-        // 
+        //
         // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
         var p = null;
-        // 
+        //
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
@@ -323,7 +339,7 @@ define([
             this.ps.stopMedia(1);
             if (!this.bc.active) {
               // A new word selection starts
-              // 
+              //
               // Selection of words can never start with a `mouseup` event
               if (up)
                 break;

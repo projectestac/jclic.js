@@ -1,17 +1,32 @@
-//    File    : ComplexAssociation.js  
-//    Created : 03/06/2015  
-//    By      : fbusquet  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : activities/associations/ComplexAssociation.js
+ *  Created : 03/06/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -44,8 +59,8 @@ define([
      * @type {boolean} */
     useIdAss: false,
     /**
-     * 
-     * Loads this object settings from an XML element 
+     *
+     * Loads this object settings from an XML element
      * @param {external:jQuery} $xml - The jQuery XML element to parse
      */
     setProperties: function ($xml) {
@@ -53,7 +68,7 @@ define([
       this.abc['primary'].avoidAllIdsNull(this.abc['secondary'].getNumCells());
     },
     /**
-     * 
+     *
      * Retrieves the minimum number of actions needed to solve this activity.
      * @returns {number}
      */
@@ -72,8 +87,8 @@ define([
    * The {@link Activity.Panel} where complex association activities are played.
    * @class
    * @extends SimpleAssociation.Panel
-   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
    * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
@@ -91,7 +106,7 @@ define([
      * @type {boolean[]} */
     invAssCheck: null,
     /**
-     * 
+     *
      * Prepares the visual components of the activity
      */
     buildVisualComponents: function () {
@@ -124,7 +139,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Checks if all inverse associations are done
      * @returns {boolean}
      */
@@ -138,7 +153,7 @@ define([
       return i === this.invAssCheck.length;
     },
     /**
-     * 
+     *
      * Main handler used to process mouse, touch, keyboard and edit events
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
@@ -146,13 +161,13 @@ define([
      */
     processEvent: function (event) {
       if (this.bc && this.playing) {
-        // 
+        //
         // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
         // and two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
         // `origin` and `dest` points.
         var p = null, bx1, bx2;
 
-        // 
+        //
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
@@ -168,7 +183,7 @@ define([
             // Flag for assuring that only one media plays per event (avoid event sounds overlapping
             // cell's media sounds)
             m = false,
-            // Flag for tracking clicks on the background of grid A        
+            // Flag for tracking clicks on the background of grid A
             clickOnBg0 = false;
 
         switch (event.type) {
@@ -191,7 +206,7 @@ define([
             this.ps.stopMedia(1);
             if (!this.bc.active) {
               // New pairing starts
-              // 
+              //
               // Pairings can never start with a `mouseup` event
               if (up)
                 break;

@@ -1,17 +1,32 @@
-//  File    : JClicPlayer.js
-//  Created : 28/04/2015
-//  By      : Francesc Busquets
-//
-//  JClic.js
-//  HTML5 player of [JClic](http://clic.xtec.cat) activities
-//  https://github.com/projectestac/jclic.js
-//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)
-//  This program is free software: you can redistribute it and/or modify it under the terms of
-//  the GNU General Public License as published by the Free Software Foundation, version. This
-//  program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//  General Public License for more details. You should have received a copy of the GNU General
-//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].
+/**
+ *  File    : JClicPlayer.js
+ *  Created : 28/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 /* global JClicObject, JSON, location, window */
 
@@ -37,7 +52,7 @@ define([
   /**
    *
    * JClicPlayer is one of the the main classes of the JClic system. It implements the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * @link{http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation}
    * interface, needed to read and play JClic projects.<br>
    * JClicPlayer offers to {@link Activity#Panel} objects all the necessary resources and functions:
    * media bags (to load and realize images and other media contents), sequence control, management
@@ -126,7 +141,7 @@ define([
     /**
      * A {@link external:JSZip} object pointing to a `jclic.zip` or `jclic.scorm.zip` file containing
      * the current project.<br>
-     * Two extra properties will be added to this object when loaded:<br>
+     * Two extra properties will be added to this object when loaded:
      * - __zip.fullZipPath__ {string} - The full path of the ZIP file
      * - __zip.zipBasePath__ {string} - The path to the folder containing the ZIP file
      * @type {external:JSZip} */
@@ -202,7 +217,7 @@ define([
     navButtonsDisabled: false,
     /**
      * When this flag is `true`, the navigation buttons are always enabled despite
-     * of the indications made by the activities or the sequence control system.<br>
+     * of the indications made by the activities or the sequence control system.
      * This is used only to debug projects with complicated sequence chaining.
      * @type {boolean} */
     navButtonsAlways: false,
@@ -437,7 +452,7 @@ define([
 
           // Param `project` is a file name or URL (otherwise, is a realized `JClicProject` object)
           var fullPath = Utils.getPath(this.basePath, project);
-          
+
           // Previous step: Check if `project` points to a "project.json" file
           if (Utils.endsWith(fullPath, 'project.json')) {
             Utils.log('info', 'Loading JSON info from: %s', fullPath);
@@ -577,7 +592,7 @@ define([
               return;
             }
           }
-          // Special case for local file systems (`file:` protocol)
+          // Special case for local file systems (using `file` protocol)
           else if (player.localFS) {
             // Check if file is already loaded in the global variable `JClicObject`
             if (JClicObject && JClicObject.projectFiles[fullPath]) {
@@ -911,7 +926,7 @@ define([
     },
     /**
      *
-     * Launches the specified system command.<br>
+     * Launches the specified system command.
      * Currently not implemented.
      * @param {string} cmd
      */

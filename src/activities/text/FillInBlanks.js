@@ -1,17 +1,32 @@
-//    File    : FillInBlanks.js  
-//    Created : 20/06/2015  
-//    By      : fbusquet  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : activities/text/FillInBlanks.js
+ *  Created : 20/06/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -45,7 +60,7 @@ define([
      * @type {boolean} */
     forceOkToAdvance: false,
     /**
-     * 
+     *
      * This kind of activity usually makes use of the keyboard
      * @returns {boolean}
      */
@@ -61,8 +76,8 @@ define([
    * The {@link TextActivityBase.Panel} where fill-in blank activities are played.
    * @class
    * @extends TextActivityBase.Panel
-   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
    * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
@@ -79,8 +94,8 @@ define([
      * @type {boolean} */
     locked: true,
     /**
-     * 
-     * Creates a target DOM element for the provided target. This DOm element can be an editable
+     *
+     * Creates a target DOM element for the provided target. This DOM element can be an editable
      * `span` or a `select` with specific `option` elements (when the target is a drop-down list)
      * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
      * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
@@ -105,7 +120,7 @@ define([
           panel.processEvent(event);
         });
       } else {
-        // Use a `span` element with the `contentEditable` attribute set `on`        
+        // Use a `span` element with the `contentEditable` attribute set `on`
         target.currentText = target.iniText ?
             target.iniText
             : Utils.fillString(target.iniChar, target.numIniChars);
@@ -124,7 +139,7 @@ define([
       return $span;
     },
     /**
-     * 
+     *
      * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
      * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
      */
@@ -150,7 +165,7 @@ define([
       return false;
     },
     /**
-     * 
+     *
      * Checks if the specified TextTarget has a valid answer in its `currentText` field
      * @param {TextActivityDocument.TextTarget} target - The target to check
      * @param {boolean} onlyCheck - When `true`, the cursor will no be re-positioned
@@ -198,9 +213,9 @@ define([
       return ok;
     },
     /**
-     * 
+     *
      * Counts the number of targets with `SOLVED` status
-     * @param {boolean} checkNow - When `true`, all targets will be evaluated. Otherwhise, only the
+     * @param {boolean} checkNow - When `true`, all targets will be evaluated. Otherwise, only the
      * current value of `targetStatus` will be checked.
      * @param {boolean=} mark - When `true`, errors in the target answer will be marked.
      * @returns {number} - The number of targets currently solved.
@@ -219,7 +234,7 @@ define([
       return n;
     },
     /**
-     * 
+     *
      * Visually marks the target as 'solved OK' or 'with errors'.
      * @param {TextActivityDocument.TextTarget} target - The text target to be marked.
      * @param {number[]} attributes -  - Array of flags indicating the status (OK or error) for each
@@ -261,7 +276,7 @@ define([
       target.flagModified = false;
     },
     /**
-     * 
+     *
      * Called by {@link JClicPlayer} when this activity panel is fully visible, just after the
      * initialization process.
      */
@@ -277,7 +292,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Ordinary ending of the activity, usually called form `processEvent`
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
@@ -292,7 +307,7 @@ define([
       return ActPanelAncestor.finishActivity.call(this, result);
     },
     /**
-     * 
+     *
      * Main handler used to process mouse, touch, keyboard and edit events.
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its

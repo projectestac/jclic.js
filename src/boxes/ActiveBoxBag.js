@@ -1,17 +1,32 @@
-//    File    : ActiveBoxBag.js  
-//    Created : 21/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : boxes/ActiveBoxBag.js
+ *  Created : 21/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -28,7 +43,7 @@ define([
    * @class
    * @extends BoxBag
    * @param {?AbstractBox} parent - The AbstractBox to which this box bag belongs
-   * @param {?AWT.Container} container - The container where this box bag is placed.  
+   * @param {?AWT.Container} container - The container where this box bag is placed.
    * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * of this box bag are defined.
    */
@@ -40,7 +55,7 @@ define([
   ActiveBoxBag.prototype = {
     constructor: ActiveBoxBag,
     /**
-     * 
+     *
      * Adds an {@link ActiveBox} to this bag
      * @param {ActiveBox} bx - The ActiveBox to be added to this bag
      */
@@ -50,7 +65,7 @@ define([
       return this.addBox(bx);
     },
     /**
-     * 
+     *
      * Finds an ActiveBox by its relative location (`idLoc` field)
      * @param {number} idLoc
      * @returns {ActiveBox}
@@ -59,7 +74,7 @@ define([
       return this.getBox(idLoc);
     },
     /**
-     * 
+     *
      * Gets the background box
      * @returns {ActiveBox}
      */
@@ -67,7 +82,7 @@ define([
       return this.getBackgroundBox();
     },
     /**
-     * 
+     *
      * Sets the content of members of this ActiveBoxBag, based on one or more {@link ActiveBagContent}
      * objects.
      * @param {ActiveBagContent} abc - The main bag of content
@@ -102,16 +117,16 @@ define([
       }
     },
     /**
-     * 
+     *
      * Finds an ActiveBox by location
-     * @param {AWT.Point} point - The location to search
+     * @param {AWT.Point} point - The location to search for
      * @returns {ActiveBox}
      */
     findActiveBox: function (point) {
       return this.findBox(point);
     },
     /**
-     * 
+     *
      * Clears the content of all boxes
      */
     clearAll: function () {
@@ -121,7 +136,7 @@ define([
         this.getBackgroundActiveBox().clear();
     },
     /**
-     * 
+     *
      * Count the number of cells that are at its original place
      * @returns {number}
      */
@@ -133,9 +148,9 @@ define([
       return cellsAtPlace;
     },
     /**
-     * 
+     *
      * Finds the {@link ActiveBox} that has the specified `idLoc` attribute
-     * @param {number} idLoc - The idLoc to search
+     * @param {number} idLoc - The idLoc to search for
      * @returns {ActiveBox}
      */
     getActiveBoxWithIdLoc: function (idLoc) {
@@ -149,7 +164,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Checks if the place occupied by a cell corresponds to a cell with equivalent content.
      * @param {ActiveBox} bx - The box to check
      * @param {boolean} checkCase - If `true`, check case when comparing texts
@@ -160,7 +175,7 @@ define([
           bx.isEquivalent(this.getActiveBoxWithIdLoc(bx.idOrder), checkCase);
     },
     /**
-     * 
+     *
      * Count the number of cells that are at its original place or equivalent
      * @param {type} checkCase -  - If `true`, check case when comparing texts
      * @returns {number}
@@ -174,7 +189,7 @@ define([
       return cellsAtPlace;
     },
     /**
-     * 
+     *
      * Counts the number of cells that have the provided `idAss` attribute
      * @param {number} idAss - The `idAss` attribute to search
      * @returns {number}
@@ -188,7 +203,7 @@ define([
       return n;
     },
     /**
-     * 
+     *
      * Counts the number of inactive cells
      * @returns {number}
      */
@@ -208,7 +223,7 @@ define([
         this.getActiveBox(i).setDefaultIdAss();
     },
     /**
-     * 
+     *
      * Shuffles the cells
      * @param {number} times - Number of times to shuffle
      * @param {boolean} fitInArea - Ensure that all cells are inside the bag rectangle
@@ -256,7 +271,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Resets the IDs of all cells
      */
     resetIds: function () {
@@ -270,10 +285,10 @@ define([
       }
     },
     /**
-     * 
+     *
      * Gets the index of box located in the `cells` array after the provided index, having the
-     * provided `idAssValid` value as `idAss` attribute.<br>
-     * When `idAssValid` is `null` or `undefined`, searchs for the next cell with `idAss>0`
+     * provided `idAssValid` value as `idAss` attribute.
+     * When `idAssValid` is `null` or `undefined`, search for the next cell with `idAss>0`
      * @param {type} currentItem - The index after to which start scanning
      * @param {type=} idAssValid - The `idAss` attribute value to search
      * @returns {number}

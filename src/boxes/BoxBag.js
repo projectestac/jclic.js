@@ -1,17 +1,32 @@
-//    File    : BoxBag.js  
-//    Created : 21/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : boxes/BoxBag.js
+ *  Created : 21/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -21,15 +36,15 @@ define([
 ], function ($, AbstractBox, AWT, Utils) {
 
   /**
-   * 
-   * BoxBag is a class derivated from {@link AbstractBox} that contains a collection of "boxes"
+   *
+   * BoxBag is a class derived from {@link AbstractBox} that contains a collection of "boxes"
    * (objects also derived from {@link AbstractBox}). This class implements methods to add, remove
    * and retrieve boxes, and to manage some of its properties like visibility, status, location and size.
    * @exports BoxBag
    * @class
    * @extends AbstractBox
    * @param {?AbstractBox} parent - The AbstractBox to which this box bag belongs
-   * @param {?AWT.Container} container - The container where this box bag is placed.  
+   * @param {?AWT.Container} container - The container where this box bag is placed.
    * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    */
   var BoxBag = function (parent, container, boxBase) {
@@ -54,7 +69,7 @@ define([
      * @type {AbstractBox} */
     backgroundBox: null,
     /**
-     * 
+     *
      * Gets the preferred size of this `BoxBag`
      * @returns {AWT.Dimension}
      */
@@ -62,7 +77,7 @@ define([
       return this.preferredBounds.dim;
     },
     /**
-     * 
+     *
      * Gets the minimum size requested by this `BoxBag`
      * @returns {AWT.Dimension}
      */
@@ -73,8 +88,8 @@ define([
           Math.max(Utils.settings.MIN_CELL_SIZE, d.height));
     },
     /**
-     * 
-     * Scales the current size of this box bag, multiplicating all values by a specific factor
+     *
+     * Scales the current size of this box bag, multiplying all values by a specific factor
      * @param {number} scale - The scale factor
      * @returns {AWT.Dimension}
      */
@@ -83,7 +98,7 @@ define([
       return new AWT.Dimension(Math.round(scale * d.width), Math.round(scale * d.height));
     },
     /**
-     * 
+     *
      * Adds an {@link AbstractBox} to the collection of cells
      * @param {AbstractBox} bx - The box to add
      */
@@ -99,7 +114,7 @@ define([
       this.preferredBounds.setBounds(this.getBounds());
     },
     /**
-     * 
+     *
      * Returns the index of a specific box in the `cells` array
      * @param {AbstractBox} bx
      * @returns {number}
@@ -108,7 +123,7 @@ define([
       return bx === null ? -1 : this.cells.indexOf(bx);
     },
     /**
-     * 
+     *
      * Returns the box at a specific index in the `cells` array
      * @param {number} n - The index
      * @returns {AbstractBox}
@@ -117,7 +132,7 @@ define([
       return n < 0 || n >= this.cells.length ? null : this.cells[n];
     },
     /**
-     * 
+     *
      * Gets the background box
      * @returns {AbstractBox}
      */
@@ -125,7 +140,7 @@ define([
       return this.backgroundBox;
     },
     /**
-     * 
+     *
      * Sets the background box
      * @param {AbstractBox} bx
      */
@@ -140,9 +155,9 @@ define([
       this.preferredBounds.setBounds(this.getBounds());
     },
     /**
-     * 
+     *
      * Recalculates the total size of this BoxBag (useful after direct additions o deletions of
-     * elements in the `cells` array).<br>
+     * elements in the `cells` array).
      * Updates `preferredBounds` and the current position and size of the box bag.
      */
     recalcSize: function () {
@@ -164,7 +179,7 @@ define([
       this.dim.height = r.dim.height;
     },
     /**
-     * 
+     *
      * Returns the number of cells stored in this BoxBag
      * @returns {number}
      */
@@ -172,7 +187,7 @@ define([
       return this.cells.length;
     },
     /**
-     * 
+     *
      * Overrides {@link AbstractBox#setBorder} iterating over all the cells stored in this box bag.
      * @param {boolean} newVal - Whether to set or unset the border
      */
@@ -181,7 +196,7 @@ define([
         this.getBox(i).setBorder(newVal);
     },
     /**
-     * 
+     *
      * Overrides {@link AbstractBox#setVisible} iterating over all the cells stored in this box bag.
      * @param {boolean} newVal - Whether to set the cells visible or not
      */
@@ -190,7 +205,7 @@ define([
         this.getBox(i).setVisible(newVal);
     },
     /**
-     * 
+     *
      * Overrides {@link AbstractBox#setAlternative} iterating over all the cells stored in this box bag.
      * @param {boolean} newVal - Whether to set or unset the cells in "alternative" mode
      */
@@ -200,7 +215,7 @@ define([
         this.getBox(i).setAlternative(newVal);
     },
     /**
-     * 
+     *
      * Overrides {@link AbstractBox#setBounds} adjusting the position and size of all cells
      * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
      * upper-left corner of a new rectangle.
@@ -242,8 +257,8 @@ define([
       AbstractBox.prototype.setBounds.call(this, rect);
     },
     /**
-     * 
-     * Performs graphics operations for each cell.<br>
+     *
+     * Performs graphics operations for each cell.
      * Overrides {@link AbstractBox#update}
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * box contents.
@@ -276,7 +291,7 @@ define([
       return true;
     },
     /**
-     * 
+     *
      * Finds the first visible {@link AbstractBox} located under the specified point
      * @param {AWT.Point} p
      * @returns {AbstractBox}
@@ -293,7 +308,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Count the number of cells of this BoxBag that are in "inactive" state
      * @returns {number}
      */
@@ -311,8 +326,8 @@ define([
   BoxBag.prototype = $.extend(Object.create(AbstractBox.prototype), BoxBag.prototype);
 
   /**
-   * Static function that sets the position and dimension of a Resizable object based on a
-   * preferred maximum dimension and a margin.<br>
+   * Static function that sets the position and dimension of a `Resizable` object based on a
+   * preferred maximum dimension and a margin.
    * @param {AWT.Dimension} preferredMaxSize - The preferred maximum size
    * @param {Resizable} rs - A resizable object implementing the methods described in the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html Resizable}
@@ -348,7 +363,7 @@ define([
     if (scale * d.height > maxSize.height) {
       scale = maxSize.height / d.height;
     }
-    // resize the Resizable object
+    // resize the `Resizable` object
     d = rs.getScaledSize(scale);
     rs.setBounds(margin, margin, d.width, d.height);
 
@@ -360,14 +375,14 @@ define([
   };
 
   /**
-   * Static function that sets the position and dimension of two Resizable objects based on a
-   * preferred maximum size, a layout schema and a margin.<br>
+   * Static function that sets the position and dimension of two `Resizable` objects based on a
+   * preferred maximum size, a layout schema and a margin.
    * @param {AWT.Dimension} desiredMaxSize - The preferred maximum size
    * @param {Resizable} rsA - First resizable object implementing the methods described in the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html Resizable}
    * interface of JClic. Currently a {@link BoxBag} or {@link TextGrid}.
    * @param {Resizable} rsB - Second resizable object
-   * @param {string} boxGridPos -  - The layout schema. Possible values are:
+   * @param {string} boxGridPos - The layout schema. Possible values are:
    * - "AB" (_A_ at left, _B_ at right)
    * - "BA" (_B_ at left, _A_ at right)
    * - "AUB" (_A_ above _B_)
@@ -427,7 +442,7 @@ define([
     if (scale * d.height > maxSize.height) {
       scale = maxSize.height / d.height;
     }
-    // 
+    //
     // correct possible minimal infractions
     // ...
     // resize

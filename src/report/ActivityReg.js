@@ -1,17 +1,32 @@
-//  File    : ActivityReg.js  
-//  Created : 17/05/2016  
-//  By      : fbusquet  
-//
-//  JClic.js  
-//  HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//  http://projectestac.github.io/jclic.js  
-//  (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//  This program is free software: you can redistribute it and/or modify it under the terms of
-//  the GNU General Public License as published by the Free Software Foundation, version. This
-//  program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//  General Public License for more details. You should have received a copy of the GNU General
-//  Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : report/ActivityReg.js
+ *  Created : 17/05/2016
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -85,7 +100,7 @@ define([
     numActions: 0,
     /**
      * Provides the data associated with the current activity in an XML format suitable for a
-     * [JClic Reports server](http://clic.xtec.cat/en/jclic/reports/).
+     * {@link http://clic.xtec.cat/en/jclic/reports/|JClic Reports Server}.
      * @returns {external:jQuery}
      */
     $getXML: function () {
@@ -114,7 +129,7 @@ define([
     },
     /**
      * Fills this ActivityReg with data provided in XML format
-     * @param {external:jQuery} $xml -The XML element to be processed, already wrapped as jQUery object
+     * @param {external:jQuery} $xml -The XML element to be processed, already wrapped as jQuery object
      */
     setProperties: function ($xml) {
       var actReg = this;
@@ -149,7 +164,7 @@ define([
     /**
      * Renders the results of this activity into a DOM tree
      * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
-     * @returns {external:jQuery[]} - Am array of jQuery objects of type "td" containing each
+     * @returns {external:jQuery[]} - Array of jQuery objects of type "td" containing each
      * one specific results of the activity.
      */
     $print: function (ps) {
@@ -173,7 +188,7 @@ define([
      * @param {string} type - Type of action (`click`, `write`, `move`, `select`...)
      * @param {string}+ source - Description of the object on which the action is done.
      * @param {string}+ dest - Description of the object that acts as a target of the action (used in pairings)
-     * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwhise
+     * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwise
      */
     newAction: function (type, source, dest, ok) {
       if (!this.closed) {

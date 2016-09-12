@@ -6,7 +6,7 @@
   "main": "src/JClic.js",
   "homepage": "http://projectestac.github.io/jclic.js",
   "readmeFilename": "README.md",
-  "author": "Francesc Busquets <fbusquets@xtec.cat>",
+  "author": "Francesc Busquets <francesc@gmail.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/projectestac/jclic.js.git"
@@ -28,11 +28,11 @@
   },
   "licenses": [
     {
-      "type": "GPL-3.0",
-      "url": "https://spdx.org/licenses/GPL-3.0.html"
+      "type": "EUPL-1.1",
+      "url": "https://spdx.org/licenses/EUPL-1.1.html"
     }
   ],
-  "license": "GPL-3.0",
+  "license": "EUPL-1.1",
   "dependencies": {
     "clipboard-js": "^0.2.0",
     "i18next": "^3.1.0",

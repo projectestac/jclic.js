@@ -1,17 +1,32 @@
-//    File    : WrittenAnswer.js  
-//    Created : 04/06/2015  
-//    By      : fbusquet  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : activities/text/WrittenAnswer.js
+ *  Created : 04/06/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 
 define([
@@ -26,8 +41,10 @@ define([
 
   /**
    * This class of {@link Activity} shows a panel with {@link ActiveBox} objects acting as cells
-   * with questions. The answers to these questions must be written in a separate text field.<br>
-   * The ActiveBox objects are filled with data stored in {@link ActiveBagContent} repositories.<br>
+   * with questions. The answers to these questions must be written in a separate text field.
+   *
+   * The ActiveBox objects are filled with data stored in {@link ActiveBagContent} repositories.
+   *
    * A second {@link ActiveBagContent} can be used as alternative content, revealed as the questions
    * are solved.
    * @exports WrittenAnswer
@@ -50,8 +67,8 @@ define([
      * @type {boolean} */
     useIdAss: true,
     /**
-     * 
-     * Loads this object settings from an XML element 
+     *
+     * Loads this object settings from an XML element
      * @param {external:jQuery} $xml - The jQuery XML element to parse
      */
     setProperties: function ($xml) {
@@ -59,7 +76,7 @@ define([
       this.abc['primary'].avoidAllIdsNull(this.abc['answers'].getNumCells());
     },
     /**
-     * 
+     *
      * Retrieves the minimum number of actions needed to solve this activity
      * @returns {number}
      */
@@ -70,7 +87,7 @@ define([
         return this.abc['primary'].getNumCells() - this.nonAssignedCells;
     },
     /**
-     * 
+     *
      * This activity uses random values to scramble its internal components
      * @returns {boolean}
      */
@@ -78,7 +95,7 @@ define([
       return true;
     },
     /**
-     * 
+     *
      * This activity makes use of the keyboard
      * @returns {boolean}
      */
@@ -86,7 +103,7 @@ define([
       return true;
     },
     /**
-     * 
+     *
      * This activity can permit the user to display the solution
      * @returns {boolean}
      */
@@ -99,11 +116,11 @@ define([
   WrittenAnswer.prototype = $.extend(Object.create(Activity.prototype), WrittenAnswer.prototype);
 
   /**
-   * The {@link Activity.Panel} where writen answer activities are played.
+   * The {@link Activity.Panel} where written answer activities are played.
    * @class
    * @extends Activity.Panel
-   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
    * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
@@ -142,7 +159,7 @@ define([
      * @type {string[]} */
     events: ['click'],
     /**
-     * 
+     *
      * Performs miscellaneous cleaning operations
      */
     clear: function () {
@@ -156,7 +173,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Prepares the visual components of the activity
      */
     buildVisualComponents: function () {
@@ -199,7 +216,7 @@ define([
         var w = abcB.w;
         if (this.act.boxGridPos === 'AUB' || this.act.boxGridPos === 'BUA')
           w = abcA.getTotalWidth();
-        // 
+        //
         // bgB will be used only as a placeholder for `$textField`
         this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1));
 
@@ -239,7 +256,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Basic initialization procedure
      */
     initActivity: function () {
@@ -264,7 +281,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Called by [JClicPlayer](JClicPlayer.html) when this activity panel is fully visible, just
      * after the initialization process.
      */
@@ -273,7 +290,7 @@ define([
       this.setCurrentCell(0);
     },
     /**
-     * Updates the graphic content of this panel.<br>
+     * Updates the graphic content of this panel.
      * This method will be called from {@link AWT.Container#update} when needed.
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.
@@ -292,7 +309,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Sets the real dimension of this panel.
      * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
      * @returns {AWT.Dimension}
@@ -303,7 +320,7 @@ define([
       return BoxBag.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
     },
     /**
-     * 
+     *
      * Sets the size and position of this activity panel
      * @param {AWT.Rectangle} rect
      */
@@ -345,7 +362,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Checks if all inverse associations are done
      * @returns {boolean}
      */
@@ -359,7 +376,7 @@ define([
       return i === this.invAssCheck.length;
     },
     /**
-     * 
+     *
      * Changes the currently selected cell, evaluating the answer written by the user on the text field.
      * @param {number} i - Index into the {@link ActiveBoxBag} of the cell to make active
      */
@@ -440,7 +457,7 @@ define([
         bx.playMedia(this.ps);
     },
     /**
-     * 
+     *
      * Main handler used to process mouse, touch, keyboard and edit events
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its

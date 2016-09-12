@@ -1,17 +1,32 @@
-//    File    : CrossWord.js  
-//    Created : 17/06/2015  
-//    By      : fbusquet  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : activities/textGrid/CrossWord.js
+ *  Created : 17/06/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -30,13 +45,15 @@ define([
   /**
    * This class of {@link Activity} shows a {@link TextGrid} initially empty, with some cells
    * marked in negative color that act as word stoppers. A blinking "cursor" indicates the cell that
-   * will receive the next character entered by the user on the keyboard.<br>
+   * will receive the next character entered by the user on the keyboard.
+   *
    * The letter in each cell of the grid is always shared by two words: one in horizontal direction
-   * and the other one in vertical. Two {@link ActiveBox} objects are placed next to the
-   * {@link TextGrid}, hosting the definitions of the horizontal and vertyical words crossing at the
-   * cell currently marked by the cursor.<br>
+   * and the other one in vertical direction. Two {@link ActiveBox} objects are placed next to the
+   * {@link TextGrid}, hosting the definitions of the horizontal and vertical words crossing at the
+   * cell currently marked by the cursor.
+   *
    * Two special buttons placed near this boxes allow to write on the grid horizontally or vertically.
-   * The aim of the activity is to fill all the text grid with the correct words.<br>
+   * The aim of the activity is to fill all the text grid with the correct words.
    * @exports CrossWord
    * @class
    * @extends Activity
@@ -57,11 +74,11 @@ define([
      * @type {boolean} */
     checkCase: true,
     /**
-     * When `true`, the wildchar of the {@link TextGrid} will be transparent.
+     * When `true`, the wildcard character of the {@link TextGrid} will be transparent.
      * @type {boolean} */
     wildTransparent: false,
     /**
-     * 
+     *
      * Retrieves the minimum number of actions needed to solve this activity
      * @returns {number}
      */
@@ -69,7 +86,7 @@ define([
       return this.tgc.getNumChars() - this.tgc.countWildChars();
     },
     /**
-     * 
+     *
      * Crossword activities always make use of the keyboard
      * @returns {boolean}
      */
@@ -78,7 +95,7 @@ define([
     }
   };
 
-  // 
+  //
   // WordSearch extends Activity
   CrossWord.prototype = $.extend(Object.create(Activity.prototype), CrossWord.prototype);
 
@@ -86,8 +103,8 @@ define([
    * The {@link Activity.Panel} where crossword activities are played.
    * @class
    * @extends Activity.Panel
-   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
    * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
@@ -117,7 +134,7 @@ define([
      * @type {number} */
     numLetters: 0,
     /**
-     * Flag indicating the type of automatic advance of the cursor.<br>
+     * Flag indicating the type of automatic advance of the cursor.
      * Possible values are: `NO_ADVANCE` (default), 'ADVANCE_RIGHT' and 'ADVANCE_DOWN'.
      * TODO: Implement 'ADVANCE_LEFT' for LTR languages
      */
@@ -143,7 +160,7 @@ define([
      * @type {string[]} */
     events: ['click', 'keydown', 'keypress'],
     /**
-     * 
+     *
      * Performs miscellaneous cleaning operations
      */
     clear: function () {
@@ -157,7 +174,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Creates a {@link BoxBag} with a label ("Horizontal" or "Vertical") and an {@link ActiveBox}
      * that will be used to display clues.
      * @param {string} type - `acrossClues` for horizontal clues, 'downClues' for vertical.
@@ -197,7 +214,7 @@ define([
       return bxb;
     },
     /**
-     * 
+     *
      * Prepares the visual components of the activity
      */
     buildVisualComponents: function () {
@@ -238,7 +255,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Basic initialization procedure
      */
     initActivity: function () {
@@ -267,7 +284,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Calculates the current score
      * @returns {number}
      */
@@ -294,7 +311,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Sets the real dimension of this panel.
      * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
      * @returns {AWT.Dimension}
@@ -306,7 +323,7 @@ define([
         return BoxBag.layoutDouble(preferredMaxSize, this.grid, this.bb, this.act.boxGridPos, this.act.margin);
     },
     /**
-     * 
+     *
      * Sets the size and position of this activity panel
      * @param {AWT.Rectangle} rect
      */
@@ -332,7 +349,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Main handler used to process mouse, touch, keyboard and edit events
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
@@ -342,7 +359,7 @@ define([
       if (this.playing) {
         switch (event.type) {
           case 'click':
-            // 
+            //
             // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
             // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
             var x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
@@ -419,8 +436,8 @@ define([
       }
     },
     /**
-     * 
-     * Moves the cursor the specified dx and dy amount (in logical coordinates)
+     *
+     * Moves the cursor the specified `dx` and `dy` amount (in logical coordinates)
      * @param {number} dx - Amount of cells to horizontally move on
      * @param {number} dy - Amount of cells to vertically move on
      */
@@ -440,7 +457,7 @@ define([
       this.cursorPosChanged();
     },
     /**
-     * 
+     *
      * Method called when the cursor moves to a different location
      */
     cursorPosChanged: function () {
@@ -454,9 +471,9 @@ define([
       }
     },
     /**
-     * 
+     *
      * Writes a string on the grid, starting at the specified X and Y logical coordinates, and
-     * following the direction maked by the 'advance' field
+     * following the direction marked by the `advance` field
      * @param {string} txt - Text to write
      * @param {number} x - Starting X logical coordinate
      * @param {number} y - Starting Y logical coordinate
@@ -489,7 +506,7 @@ define([
       this.update();
     },
     /**
-     * 
+     *
      * Sets the status of horizontal and vertical buttons based on the value of `advance`
      */
     setBtnStatus: function () {

@@ -5,7 +5,7 @@ module.exports = function (grunt) {
 
   // Fill `pkg` with the full content of package.json
   var pkg = grunt.file.readJSON('package.json');
-  
+
   // List of curently available languages and map of language '.po' files
   var LANGUAGES = ['en', 'ar', 'ast', 'bs', 'ca', 'ca_ES@valencia', 'cs', 'da', 'de', 'el', 'es', 'eu', 'fr', 'gl', 'he',
                    'it', 'nl', 'pt', 'pt_BR', 'ru', 'tr', 'vec', 'zh_TW'];
@@ -127,6 +127,15 @@ module.exports = function (grunt) {
         options: {
           destination: 'doc',
           configure: 'jsdoc.conf.json',
+          // IMPORTANT:
+          // Add:
+          // 'background-color: @colorStaticBubbleBg;'
+          // 'margin-right: 5px;'
+          // to:
+          // h4.name > span.type-signature
+          // in:
+          // node_modules/gc-jaguarjs-jsdoc/less/main.less (line 75)
+          // and rebuild module 'gc-jaguarjs-jsdoc'
           template: 'node_modules/gc-jaguarjs-jsdoc'
         }
       }

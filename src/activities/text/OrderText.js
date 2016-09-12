@@ -1,17 +1,32 @@
-//    File    : Order.js  
-//    Created : 20/06/2015  
-//    By      : fbusquet  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : activities/text/OrderText.js
+ *  Created : 20/06/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -22,7 +37,7 @@ define([
 ], function ($, Activity, TextActivityBase, BoxConnector, AWT) {
 
   /**
-   * In this type of text activity users must put in order some words or paragrafs that have been
+   * In this type of text activity users must put in order some words or paragraphs that have been
    * initially scrambled.
    * @exports OrderText
    * @class
@@ -44,7 +59,7 @@ define([
      * @type {BoxConnector} */
     bc: null,
     /**
-     * 
+     *
      * Whether or not the activity uses random to scramble internal components
      * @returns {boolean}
      */
@@ -52,15 +67,15 @@ define([
       return true;
     },
     /**
-     * 
-     * When `true`, the activity mut always be scrambled
+     *
+     * When `true`, the activity must always be scrambled
      * @returns {boolean}
      */
     shuffleAlways: function () {
       return true;
     },
     /**
-     * 
+     *
      * Whether the activity allows the user to request help.
      * @returns {boolean}
      */
@@ -76,8 +91,8 @@ define([
    * The {@link TextActivityBase.Panel} where this kind of text activities are played.
    * @class
    * @extends TextActivityBase.Panel
-   * @param {Activity} act - The {@link Activity} to wich this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the 
+   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
    * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
@@ -103,7 +118,7 @@ define([
      * @type {string[]} */
     events: ['click', 'mousemove'],
     /**
-     * 
+     *
      * Prepares the text panel
      */
     buildVisualComponents: function () {
@@ -111,7 +126,7 @@ define([
       ActPanelAncestor.buildVisualComponents.call(this);
     },
     /**
-     * 
+     *
      * Sets the size and position of this activity panel
      * @param {AWT.Rectangle} rect
      */
@@ -139,7 +154,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Creates a target DOM element for the provided target.
      * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
      * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
@@ -186,7 +201,7 @@ define([
       t2.$p = $p;
     },
     /**
-     * 
+     *
      * Basic initialization procedure
      */
     initActivity: function () {
@@ -198,7 +213,7 @@ define([
         this.firstRun = false;
     },
     /**
-     * 
+     *
      * Called when the activity starts playing
      */
     startActivity: function () {
@@ -237,7 +252,7 @@ define([
       this.setBounds(this);
     },
     /**
-     * 
+     *
      * Randomly shuffles a set of targets
      * @param {TextActivityDocument.TextTarget[]} targets - The set of targets to shuffle (can be all
      * document targets or just the targets belonging to the same paragraph, depending on the value of
@@ -261,7 +276,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Sets the current target
      * @param {TextActivityDocument.TextTarget} target - The currently selected target. Can be `null`.
      */
@@ -280,7 +295,7 @@ define([
       this.currentTarget = target;
     },
     /**
-     * 
+     *
      * Counts the number of targets that are at right position
      * @returns {number}
      */
@@ -295,7 +310,7 @@ define([
       return solved;
     },
     /**
-     * 
+     *
      * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
      * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
      */
@@ -325,7 +340,7 @@ define([
       return false;
     },
     /**
-     * 
+     *
      * Ordinary ending of the activity, usually called form `processEvent`
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
@@ -334,7 +349,7 @@ define([
       return ActPanelAncestor.finishActivity.call(this, result);
     },
     /**
-     * 
+     *
      * Main handler used to process mouse, touch, keyboard and edit events.
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
@@ -351,7 +366,7 @@ define([
 
       if (this.bc && this.playing && !this.showingPrevScreen) {
 
-        // 
+        //
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();

@@ -1,17 +1,32 @@
-//    File    : AbstractBox.js  
-//    Created : 18/04/2015  
-//    By      : Francesc Busquets  
-//
-//    JClic.js  
-//    HTML5 player of [JClic](http://clic.xtec.cat) activities  
-//    https://github.com/projectestac/jclic.js  
-//    (c) 2000-2015 Catalan Educational Telematic Network (XTEC)  
-//    This program is free software: you can redistribute it and/or modify it under the terms of
-//    the GNU General Public License as published by the Free Software Foundation, version. This
-//    program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//    General Public License for more details. You should have received a copy of the GNU General
-//    Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+/**
+ *  File    : boxes/AbstractBox.js
+ *  Created : 18/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2016 Ministry of Education of Catalonia (http://xtec.cat)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
 
 define([
   "jquery",
@@ -22,14 +37,15 @@ define([
   /**
    * This abstract class is the base for most graphic components of JClic. It describes an area
    * (by default an {@link AWT.Rectangle}) with some special properties that determine how it must
-   * be drawn on screen.<br>
+   * be drawn on screen.
+   *
    * Some types of boxes can act as containers for other boxes, establishing a hierarchy of dependences.
    * @exports AbstractBox
    * @abstract
    * @class
    * @extends AWT.Rectangle
    * @param {?AbstractBox} parent - The AbstractBox to which this one belongs
-   * @param {?AWT.Container} container - The container where this box is placed.  
+   * @param {?AWT.Container} container - The container where this box is placed.
    * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * of this box are defined.
    */
@@ -106,7 +122,7 @@ define([
      * @type {external:jQuery} */
     $hostedComponent: null,
     /**
-     * 
+     *
      * Setter method for `parent`
      * @param {AbstractBox} parent - The new parent of this box
      */
@@ -114,7 +130,7 @@ define([
       this.parent = parent;
     },
     /**
-     * 
+     *
      * Gets the current parent of this box
      * @returns {AbstractBox}
      */
@@ -122,13 +138,13 @@ define([
       return this.parent;
     },
     /**
-     * 
-     * Finalizer method
+     *
+     * Finisher method
      */
     end: function () {
     },
     /**
-     * 
+     *
      * Setter method for `container`
      * @param {AWT.Container} newContainer - The new Container assigned to this box
      */
@@ -140,7 +156,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Gets the `container` attribute of this box, without checking its parent
      * @returns {?AWT.Container}
      */
@@ -148,7 +164,7 @@ define([
       return this.container;
     },
     /**
-     * 
+     *
      * Gets the container associated to this box, asking its parents when `null`.
      * @returns {?AWT.Container}
      */
@@ -159,7 +175,7 @@ define([
       return ab.container;
     },
     /**
-     * 
+     *
      * Invalidates the zone corresponding to this box in the associated {@link AWT.Container}, if any.
      * @param {AWT.Rectangle} rect - The rectangle to be invalidated. When `null`, it's the full
      * container area.
@@ -172,7 +188,7 @@ define([
         cnt.invalidate(rect);
     },
     /**
-     * 
+     *
      * Sets the {@link BoxBase} of this box
      * @param {BoxBase} boxBase - The new BoxBase
      */
@@ -181,7 +197,7 @@ define([
       this.invalidate();
     },
     /**
-     * 
+     *
      * Gets the real {@link BoxBase} associated to this box, scanning down parent relationships.
      * @returns {BoxBase}
      */
@@ -192,7 +208,7 @@ define([
       return ab.boxBase ? ab.boxBase : BoxBase.prototype.defaultBoxBase;
     },
     /**
-     * 
+     *
      * Sets the shape used to draw the content of this box
      * @param {AWT.Shape} sh - The shape to be set
      */
@@ -204,7 +220,7 @@ define([
       this.invalidate();
     },
     /**
-     * 
+     *
      * Gets the current shape used in this box
      * @returns {AWT.Shape}
      */
@@ -212,7 +228,7 @@ define([
       return this.shape;
     },
     /**
-     * 
+     *
      * Check if this box contains the specified point
      * @param {AWT.Point} p - The point to be checked
      * @returns {boolean}
@@ -223,7 +239,7 @@ define([
           this.shape.contains(p);
     },
     /**
-     * 
+     *
      * Sets a new size and/or dimension to this box
      * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
      * upper-left corner of a new rectangle.
@@ -257,7 +273,7 @@ define([
       return this;
     },
     /**
-     * 
+     *
      * Set a new location for this box. In JClic this method was named `setLocation`
      * @param {(AWT.Point|number)} newPos - A point or the `x` coordinate of a new point.
      * @param {number=} y - The `y` coordinate of a new point.
@@ -268,7 +284,7 @@ define([
       this.setBounds((new AWT.Rectangle(this)).moveTo(newPos));
     },
     /**
-     * 
+     *
      * Sets a new location to this box. In JClic this method was named `translate`.
      * @param {number} dx - The displacement on the X axis
      * @param {number} dy - The displacement on the Y axis
@@ -277,7 +293,7 @@ define([
       this.setBounds((new AWT.Rectangle(this)).moveBy(dx, dy));
     },
     /**
-     * 
+     *
      * Changes the size of this box
      * @param {number} width
      * @param {number} height
@@ -286,7 +302,7 @@ define([
       this.setBounds(new AWT.Rectangle(this.pos, new AWT.Dimension(width, height)));
     },
     /**
-     * 
+     *
      * Checks if this box has border
      * @returns {boolean}
      */
@@ -305,7 +321,7 @@ define([
         this.invalidate();
     },
     /**
-     * 
+     *
      * Checks if this box is fully visible
      * @returns {boolean}
      */
@@ -322,7 +338,7 @@ define([
       this.invalidate();
     },
     /**
-     * 
+     *
      * Makes {@link AbstractBox#$hostedComponent} visible or invisible
      * @param {boolean} val - `true` for visible.
      */
@@ -335,7 +351,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Checks if this box is temporary hidden
      * @returns {boolean}
      */
@@ -343,7 +359,7 @@ define([
       return this.temporaryHidden;
     },
     /**
-     * 
+     *
      * Makes this box temporary hidden (newVal `true`) or resets its original state (newVal `false`)
      * @param {boolean} newVal
      */
@@ -351,7 +367,7 @@ define([
       this.temporaryHidden = newVal;
     },
     /**
-     * 
+     *
      * Checks if this box is currently inactive.
      * @returns {boolean}
      */
@@ -359,7 +375,7 @@ define([
       return this.inactive;
     },
     /**
-     * 
+     *
      * Makes this box active (`false`) or inactive (`true`)
      * @param {boolean} newVal
      */
@@ -379,7 +395,7 @@ define([
       return this.inverted;
     },
     /**
-     * 
+     *
      * Puts this box in `inverted` mode or restores its original state.
      * @param {boolean} newVal
      */
@@ -391,7 +407,7 @@ define([
         this.invalidate();
     },
     /**
-     * 
+     *
      * Checks if this box is `marked`
      * @returns {boolean}
      */
@@ -399,7 +415,7 @@ define([
       return this.marked;
     },
     /**
-     * 
+     *
      * Sets this box in `marked` mode, or restores its original state.
      * @param {boolean} newVal
      */
@@ -414,7 +430,7 @@ define([
         this.invalidate();
     },
     /**
-     * 
+     *
      * Checks if this box has the input focus
      * @returns {boolean}
      */
@@ -422,7 +438,7 @@ define([
       return this.focused;
     },
     /**
-     * 
+     *
      * Sets or unsets the input focus to this box.
      * @param {boolean} newVal
      */
@@ -444,7 +460,7 @@ define([
       return this.alternative;
     },
     /**
-     * 
+     *
      * Sets this box in `alternative` mode, or restores its original state.
      * @param {boolean} newVal
      */
@@ -453,7 +469,7 @@ define([
       this.invalidate();
     },
     /**
-     * 
+     *
      * Draws the content of this box on an HTML `canvas` element. At this level, only background
      * and border are painted/stroked. Derived classes should implement specific drawing tasks in
      * {@link AbstractBox#updateContent}.
@@ -501,7 +517,7 @@ define([
       return true;
     },
     /**
-     * 
+     *
      * Here is on classes derived from {@link AbstractBox} should implement the drawing of its
      * content. Background and border are already painted in {@link AbstractBox#update}.
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
@@ -513,7 +529,7 @@ define([
     updateContent: function (ctx, dirtyRegion) {
     },
     /**
-     * 
+     *
      * Draws the box border
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context where the border
      * will be drawn.
@@ -539,7 +555,7 @@ define([
       }
     },
     /**
-     * 
+     *
      * Returns the enclosing Rectangle of this box including its border (if any)
      * @returns {AWT.Rectangle}
      */
@@ -555,7 +571,7 @@ define([
       return result;
     },
     /**
-     * 
+     *
      * Sets the {@link AbstractBox#$hostedComponent $hostedComponent} member.
      * @param {external:jQuery} $hc - The jQuery DOM component hosted by this box.
      */
@@ -576,16 +592,16 @@ define([
       }
     },
     /**
-     * 
-     * Gets the current {@link AbstractBox#$hostedComponent $hostedComponent} member
+     *
+     * Gets the current {@link AbstractBox#$hostedComponent|$hostedComponent} member
      * @returns {external:jQuery}
      */
     getHostedComponent: function () {
       return this.$hostedComponent;
     },
     /**
-     * 
-     * Sets {@link AbstractBox#$hostedComponent $hostedComponent} colors and other css properties
+     *
+     * Sets {@link AbstractBox#$hostedComponent|$hostedComponent} colors and other css properties
      * based on the current {@link BoxBase} of this box.
      */
     setHostedComponentColors: function () {
@@ -595,8 +611,8 @@ define([
       }
     },
     /**
-     * 
-     * Sets the {@link AbstractBox#$hostedComponent $hostedComponent} border, based on the current
+     *
+     * Sets the {@link AbstractBox#$hostedComponent|$hostedComponent} border, based on the current
      * {@link BoxBase} of this box.
      */
     setHostedComponentBorder: function () {
@@ -610,8 +626,8 @@ define([
       }
     },
     /**
-     * 
-     * Places and resizes {@link AbstractBox#$hostedComponent $hostedComponent}, based on the size
+     *
+     * Places and resizes {@link AbstractBox#$hostedComponent|$hostedComponent}, based on the size
      * and position of this box.
      * @param {boolean} sizeChanged - `true` when this {@link ActiveBox} has changed its size
      */
