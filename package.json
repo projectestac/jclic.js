@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "0.1.35",
+  "version": "0.1.36b",
   "main": "src/JClic.js",
   "homepage": "http://projectestac.github.io/jclic.js",
   "readmeFilename": "README.md",

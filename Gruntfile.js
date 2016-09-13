@@ -24,10 +24,10 @@ module.exports = function (grunt) {
       banner: '\
 // JClic.js version <%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>)\n\
 // HTML5 player of JClic activities\n\
-// (c) 2000-<%= grunt.template.today("yyyy") %> Educational Telematic Network of Catalonia (XTEC)\n\
-// This program can be freely redistributed under the terms of the GNU General Public License\n\
-// WARNING: You are reading a minimized, uglifyed version of jclic.js. Full, readable source\n\
-// code is freely available at: <%= pkg.homepage %>\n'
+// (c) 2000-<%= grunt.template.today("yyyy") %> Catalan Educational Telematic Network (XTEC)\n\
+// This program can be freely redistributed under the terms of the European Union Public License\n\
+// WARNING: You are reading a minimized version of jclic.js. Full source code is freely available at:\n\
+// <%= pkg.homepage %>\n'
     },
     //
     // Check source code for possible inconsistencies or syntax errors
