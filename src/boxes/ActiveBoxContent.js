@@ -65,7 +65,7 @@ define([
      * @type {AWT.Dimension} */
     dimension: null,
     /**
-     * The {@link ActiveBox} can have or not a border despite the settings of {@link BoxBase}.<br>
+     * The {@link ActiveBox} can have or not a border despite the settings of {@link BoxBase}.
      * The default value `null` means not to take in consideration this setting.
      * @type {(null|boolean)} */
     border: null,
@@ -95,7 +95,7 @@ define([
      * @type {ActiveBoxContent~alignType} */
     imgAlign: null,
     /**
-     * The horizontal and vertical alignment of the text inside the cell.<br>
+     * The horizontal and vertical alignment of the text inside the cell.
      * Valid values are: `left`, `middle`, `right`, `top` and `bottom`.
      * @type {ActiveBoxContent~alignType} */
     txtAlign: null,

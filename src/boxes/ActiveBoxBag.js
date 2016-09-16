@@ -35,7 +35,7 @@ define([
 ], function ($, BoxBag, AWT) {
 
   /**
-   * This class is a special case of {@link BoxBag} containing only objects of type {@link ActiveBox}.<br>
+   * This class is a special case of {@link BoxBag} containing only objects of type {@link ActiveBox}.
    * In addition to the members and methods of `BoxBag`, it implements specific methods to deal with
    * {@link ActiveBagContent} objects and with the other specific members of `ActiveBox` like its "ids"
    * (`idOrder`, `idLoc` and `idAss`).

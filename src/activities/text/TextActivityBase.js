@@ -283,7 +283,7 @@ define([
     },
     /**
      *
-     * Creates a target DOM element.<br>
+     * Creates a target DOM element.
      * This method can be overridden in subclasses to create specific types of targets.
      * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
      * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used

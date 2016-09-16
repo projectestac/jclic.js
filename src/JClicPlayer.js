@@ -144,7 +144,7 @@ define([
     basePath: '',
     /**
      * A {@link external:JSZip} object pointing to a `jclic.zip` or `jclic.scorm.zip` file containing
-     * the current project.<br>
+     * the current project.
      * Two extra properties will be added to this object when loaded:
      * - __zip.fullZipPath__ {string} - The full path of the ZIP file
      * - __zip.zipBasePath__ {string} - The path to the folder containing the ZIP file

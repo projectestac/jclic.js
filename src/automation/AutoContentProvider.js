@@ -111,8 +111,8 @@ define([
   };
 
   /**
-   * Contains the current list of classes derived from AutoContentProvider.<br>
-   * This object should be updated by real automation classes at declaration time.<br>
+   * Contains the current list of classes derived from AutoContentProvider.
+   * This object should be updated by real automation classes at declaration time.
    * Currently, only two types of "AutoContentProvider" are defined: {@link Arith} and TagReplace.
    * @type {object} */
   AutoContentProvider.CLASSES = {

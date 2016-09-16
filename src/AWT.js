@@ -272,7 +272,7 @@ define([
      *
      * The {@link https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics TextMetrics} object used
      * by {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D CanvasRenderingContext2D}
-     * does not provide a `heigth` value for rendered text.<br>
+     * does not provide a `heigth` value for rendered text.
      * This {@link http://stackoverflow.com/questions/1134586/how-can-you-find-the-height-of-text-on-an-html-canvas stackoverflow question}
      * has an excellent response by Daniel Earwicker explaining how to measure the
      * vertical dimension of rendered text using a `span` element.
@@ -822,7 +822,7 @@ define([
     /**
      *
      * Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,
-     * to fill a surface or to define a clipping region.<br>
+     * to fill a surface or to define a clipping region.
      * @param {external:CanvasRenderingContext2D} ctx
      */
     preparePath: function (ctx) {

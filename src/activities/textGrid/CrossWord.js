@@ -292,7 +292,7 @@ define([
       return this.grid ? this.grid.countCoincidences(this.act.checkCase) : 0;
     },
     /**
-     * Updates the graphic content of this panel.<br>
+     * Updates the graphic content of this panel.
      * This method will be called from {@link AWT.Container#update} when needed.
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.

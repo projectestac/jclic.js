@@ -542,11 +542,11 @@ define([
     },
     /**
      * Converts the given expression into a valid value for CSS size values
-     * @param {string|number} exp - The expression to be evaluated (can be `null` or `undefined`)
-     * @param {Object} css - An optional Object where the resulting expression will be saved, if any
-     * @param {string} key - The key to be used to save the result in `css`
+     * @param {string|number} exp - The expression to be evaluated (can be a valid value, `null` or `undefined`)
+     * @param {Object} css - An optional Object where the resulting expression (if any) will be saved
+     * @param {string} key - The key under which the result will be stored in `css`
      * @param {string} def - Default value to be used when `exp` is `null` or `undefined`
-     * @returns {string} - A valid CSS value, or `null` if no value provided
+     * @returns {string} - A valid CSS value, or `null` if it can't be found. Default units are `px`
      */
     toCssSize: function (exp, css, key, def) {
       var result = typeof exp === 'undefined' || exp === null ? null : isNaN(exp) ? exp : exp + 'px';

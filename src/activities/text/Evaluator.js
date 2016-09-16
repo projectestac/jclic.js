@@ -254,7 +254,7 @@ define([
     /**
      *
      * Performs the evaluation of a string against an array of valid matches, returning an array of
-     * flags useful to indicate where the mistakes are located.<br>
+     * flags useful to indicate where the mistakes are located.
      * In BasicEvaluator, all characters are just marked as 1 (error) or 0 (OK). See
      * {@link Evaluator.ComplexEvaluator} for more detailed analysis of answers.
      * @param {string} text - The text to be checked
