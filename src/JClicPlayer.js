@@ -387,17 +387,6 @@ define([
     },
     /**
      *
-     * Returns the JQuery DOM top component (usually, the {@link Skin} `$div` member)
-     * @returns {external:jQuery}
-     */
-    getTopComponent: function () {
-      if (this.skin)
-        return this.skin.$getTopComponent();
-      else
-        return this.$div;
-    },
-    /**
-     *
      * Sets the current skin
      * @param {?Skin} newSkin - The skin to use. When `null`, `defaultSkin` will be used.
      */
@@ -405,7 +394,7 @@ define([
       if (!newSkin)
         newSkin = this.project && this.project.skin ? this.project.skin : this.defaultSkin;
 
-      if (newSkin !== null && newSkin !== this.skin) {
+      if (newSkin !== null && (this.skin === null || newSkin.name !== this.skin.name)) {
         newSkin.attach(this);
         this.skin = newSkin;
         this.skin.doLayout();

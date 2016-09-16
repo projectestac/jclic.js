@@ -537,13 +537,6 @@ define([
       return null;
     },
     /**
-     * Gets the JQuery top component, usually the `$div` object enclosing this skin
-     * @returns {external:jQuery}
-     */
-    $getTopComponent: function () {
-      return this.$div;
-    },
-    /**
      *
      * Method used to notify this skin that a specific action has changed its enabled/disabled status
      * @param {AWT.Action} act - The action originating the change event
