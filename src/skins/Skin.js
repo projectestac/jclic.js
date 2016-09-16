@@ -325,20 +325,32 @@ define([
         player.skin.detach();
       this.player = player;
       this.$playerCnt.prepend(player.$div);
-
-      // Set skin dimensions
-      var css = {},
-          topHeight = player.$topDiv.height();
-
-      Utils.toCssSize(this.ps.options.minWidth, css, 'min-width', null);
-      Utils.toCssSize(this.ps.options.minHeight, css, 'min-height', null);
-      Utils.toCssSize(this.ps.options.maxWidth, css, 'max-width', null);
-      Utils.toCssSize(this.ps.options.maxHeight, css, 'max-height', null);
-      Utils.toCssSize(this.ps.options.width, css, 'width', '100%');
-      Utils.toCssSize(this.ps.options.height, css, 'height', topHeight > 0 ? '100%' : '100vh');
-      this.$div.css(css);
       
+      this.setSkinSizes();
+     
       player.$mainContainer.append(this.$div);
+    },
+    /**
+     *
+     * Sets the 'size' CSS values (max, min and compulsory) to the main `div` of this skin
+     * @param {boolean} full - `true` when the skin is in full screen mode
+     */
+    setSkinSizes: function(full){
+      var css = {},
+          topHeight = this.player.$topDiv.height(),
+          nilValue = this.player.fullScreenChecked ? 'inherit' : null;
+      
+      // When `full` no set, detect the current status with screenfull
+      if(typeof full === 'undefined')
+        full = screenfull && screenfull.enabled && screenfull.isFullscreen;
+
+      Utils.toCssSize(full ? '100vw' : this.ps.options.minWidth, css, 'min-width', nilValue);
+      Utils.toCssSize(full ? '100vh' : this.ps.options.minHeight, css, 'min-height', nilValue);
+      Utils.toCssSize(full ? '100vw' : this.ps.options.maxWidth, css, 'max-width', nilValue);
+      Utils.toCssSize(full ? '100vh' : this.ps.options.maxHeight, css, 'max-height', nilValue);
+      Utils.toCssSize(full ? '100vw' : this.ps.options.width, css, 'width', '100%');
+      Utils.toCssSize(full ? '100vh' : this.ps.options.height, css, 'height', topHeight > 0 ? '100%' : '100vh');
+      this.$div.css(css);
     },
     /**
      *
@@ -512,7 +524,12 @@ define([
           status === true && !screenfull.isFullscreen ||
           status === false && !screenfull.isFullScreen ||
           status !== true && status !== false)) {
+        // Save current value of fullScreen for later use
+        var full = screenfull.isFullscreen;
         screenfull.toggle(this.player.$mainContainer[0]);
+        this.player.fullScreenChecked = true;
+        // Firefox don't update `document.fullscreenElement` in real time, so use the saved value instead
+        this.setSkinSizes(!full);
         this.fit();
       }
     },

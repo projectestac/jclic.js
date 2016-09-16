@@ -135,6 +135,10 @@ define([
      * @type {external:jQuery} */
     $mainContainer: null,
     /**
+     * Flag indicatig that this player has switched to full screen at least once
+     * @type {boolean} */
+    fullScreenChecked: false,
+    /**
      * The {@link JClicProject} currently hosted in this player
      * @type {JClicProject} */
     project: null,
