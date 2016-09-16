@@ -337,8 +337,8 @@ define([
       Utils.toCssSize(this.ps.options.width, css, 'width', '100%');
       Utils.toCssSize(this.ps.options.height, css, 'height', topHeight > 0 ? '100%' : '100vh');
       this.$div.css(css);
-
-      player.$topDiv.append(this.$div);
+      
+      player.$mainContainer.append(this.$div);
     },
     /**
      *
@@ -512,7 +512,8 @@ define([
           status === true && !screenfull.isFullscreen ||
           status === false && !screenfull.isFullScreen ||
           status !== true && status !== false)) {
-        screenfull.toggle(this.$div[0]);
+        screenfull.toggle(this.player.$mainContainer[0]);
+        this.fit();
       }
     },
     /**

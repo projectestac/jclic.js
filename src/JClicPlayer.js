@@ -53,7 +53,7 @@ define([
    *
    * JClicPlayer is one of the the main classes of the JClic system. It implements the
    * @link{http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation}
-   * interface, needed to read and play JClic projects.<br>
+   * interface, needed to read and play JClic projects.
    * JClicPlayer offers to {@link Activity#Panel} objects all the necessary resources and functions:
    * media bags (to load and realize images and other media contents), sequence control, management
    * of the reporting system, user interface, display of system messages, etc.
@@ -69,12 +69,12 @@ define([
     AWT.Container.call(this);
 
     this.$topDiv = $topDiv;
-
+    this.$mainContainer = $('<div/>').css({width: '100%', height: '100%'}).appendTo(this.$topDiv);
+    
     options = Utils.init(options);
     this.options = $.extend(Object.create(this.options), options);
     i18n.init(this);
 
-    /* global location */
     this.localFS = location && location.protocol === 'file:';
 
     this.$div = $('<div/>', {class: 'JClicPlayer'});
@@ -123,13 +123,17 @@ define([
       fade: 300
     },
     /**
-     * The JQuery "div" element used by this player
+     * The JQuery "div" element used by this player as stage for activities
      * @type {external:jQuery} */
     $div: null,
     /**
-     * The JQuery top container of all JClic components (also a 'div' DOM element)
+     * The JQuery top container where this player will deploy
      * @type {external:jQuery} */
     $topDiv: null,
+    /**
+     * The main container of all JClic components
+     * @type {external:jQuery} */
+    $mainContainer: null,
     /**
      * The {@link JClicProject} currently hosted in this player
      * @type {JClicProject} */
