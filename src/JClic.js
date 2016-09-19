@@ -218,13 +218,16 @@ define([
   // Make JClicObject global and attach resize handler
   if (typeof window !== 'undefined') {
     window.JClicObject = JClicObject;
-    $(window).resize(function () {
+
+    var fnFit = function () {
       for (var i = 0; i < JClicObject.currentPlayers.length; i++) {
         var player = JClicObject.currentPlayers[i];
         if (player && player.skin)
           player.skin.fit();
       }
-    });
+    };
+    $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', fnFit);
+    $(window).resize(fnFit);
   }
 
   // Execute on document ready

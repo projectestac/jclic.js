@@ -325,9 +325,9 @@ define([
         player.skin.detach();
       this.player = player;
       this.$playerCnt.prepend(player.$div);
-      
+
       this.setSkinSizes();
-     
+
       player.$mainContainer.append(this.$div);
     },
     /**
@@ -339,7 +339,7 @@ define([
       var css = {},
           topHeight = this.player.$topDiv.height(),
           nilValue = this.player.fullScreenChecked ? 'inherit' : null;
-      
+
       // When `full` no set, detect the current status with screenfull
       if(typeof full === 'undefined')
         full = screenfull && screenfull.enabled && screenfull.isFullscreen;
@@ -528,9 +528,8 @@ define([
         var full = screenfull.isFullscreen;
         screenfull.toggle(this.player.$mainContainer[0]);
         this.player.fullScreenChecked = true;
-        // Firefox don't update `document.fullscreenElement` in real time, so use the saved value instead
+        // Firefox don't updates `document.fullscreenElement` in real time, so use the saved value instead
         this.setSkinSizes(!full);
-        this.fit();
       }
     },
     /**
