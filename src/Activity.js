@@ -823,7 +823,7 @@ define([
       this.playing = false;
 
       this.skin = null;
-      if (this.act.skinFileName && this.act.skinFileName.length > 0)
+      if (this.act.skinFileName && this.act.skinFileName.length > 0 && this.act.skinFileName !== this.act.project.settings.skinFileName)
         this.skin = this.act.project.mediaBag.getSkinElement(this.act.skinFileName, this.ps);
 
       this.bgImage = null;
