@@ -183,6 +183,7 @@ define([
      *
      * Reads the properties of this Font from an XML element
      * @param {external:jQuery} $xml - The xml element to be parsed
+     * @returns {AWT.Font}
      */
     setProperties: function ($xml) {
       if ($xml.attr('family'))
@@ -200,7 +201,8 @@ define([
     /**
      *
      * Allows to change the `size` member, recalculating the vertical metrics.
-     * @param {number} size
+     * @param {number} size - The new size to set
+     * @returns {AWT.Font}
      */
     setSize: function (size) {
       var currentSize = this.size;
@@ -208,6 +210,15 @@ define([
       if (currentSize !== size)
         this._metrics.height = -1;
       return this;
+    },
+    /**
+     * 
+     * Increases or decreases the current font size by the specified amount
+     * @param {number} amount - The amount to increase or decrease current size
+     * @returns {AWT.Font}
+     */
+    zoom: function (amount) {
+      return this.setSize(this.size + amount);
     },
     /**
      *
@@ -279,6 +290,8 @@ define([
      * The code has been slighty adapted to deal with Font objects.
      *
      * _Warning_: Do not call this method direcly. Use {@link AWT.Font#getHeight getHeight()} instead
+     * 
+     * @returns {AWT.Font}
      */
     _calcHeight: function () {
       var $text = $('<span/>').html('Hg').css(this.toCss());
@@ -352,6 +365,7 @@ define([
      *
      * Reads the properties of this Gradient from an XML element
      * @param {external:jQuery} $xml - The xml element to be parsed
+     * @returns {AWT.Gradient}
      */
     setProperties: function ($xml) {
       this.c1 = Utils.checkColor($xml.attr('source'), 'black');
@@ -446,6 +460,7 @@ define([
      *
      * Sets the properties of this stroke to a CanvasRenderingContext2D
      * @param {external:CanvasRenderingContext2D} ctx - The canvas 2D rendering context
+     * @returns {external:CanvasRenderingContext2D}
      */
     setStroke: function (ctx) {
       ctx.lineWidth = this.lineWidth;
@@ -486,6 +501,7 @@ define([
      *
      * Reads the properties of this Point from an XML element
      * @param {external:jQuery} $xml - The xml element to be parsed
+     * @returns {AWT.Point}
      */
     setProperties: function ($xml) {
       this.x = Number($xml.attr('x'));
@@ -496,6 +512,7 @@ define([
      *
      * Moves this Point to a new position, by a specified displacement
      * @param {AWT.Point|AWT.Dimension} delta - The amount to move
+     * @returns {AWT.Point}
      */
     moveBy: function (delta) {
       this.x += delta.x ? delta.x : delta.width ? delta.width : 0;
@@ -507,6 +524,7 @@ define([
      * Moves this Point to a new position
      * @param {number|AWT.Point} newPos - The new position, or a x coordinate
      * @param {number=} y - `null` or `undefined` when `newPos` is a Point
+     * @returns {AWT.Point}
      */
     moveTo: function (newPos, y) {
       if (typeof newPos === 'number') {
@@ -522,6 +540,7 @@ define([
      *
      * Multiplies the `x` and `y` coordinates by a specified `delta`
      * @param {AWT.Point|AWT.Dimension} delta - The amount to multiply by.
+     * @returns {AWT.Point}
      */
     multBy: function (delta) {
       this.x *= delta.x ? delta.x : delta.width ? delta.width : 0;
@@ -586,6 +605,7 @@ define([
      *
      * Reads the properties of this Dimension from an XML element
      * @param {external:jQuery} $xml - The xml element to be parsed
+     * @returns {AWT.Dimension}
      */
     setProperties: function ($xml) {
       this.width = Number($xml.attr('width'));
@@ -605,20 +625,20 @@ define([
      *
      * Multiplies the `w` and `h` co-ordinates by a specified `delta`
      * @param {AWT.Point|AWT.Dimension} delta
+     * @returns {AWT.Dimension}
      */
     multBy: function (delta) {
       this.width *= delta.x ? delta.x : delta.width ? delta.width : 0;
       this.height *= delta.y ? delta.y : delta.height ? delta.height : 0;
       return this;
     },
-    //
-    // Sets new values
-    // width can be a number or a Dimension object
     /**
      *
-     * Sets new values for width and height
+     * Sets new values for width and height.
+     * `width` can be a number or another `AWT.Dimension` object
      * @param {number|AWT.Dimension} width - The new width, or a full Dimension to copy it from.
      * @param {number=} height - Not used when `width` is a Dimension
+     * @returns {AWT.Dimension}
      */
     setDimension: function (width, height) {
       if (width instanceof AWT.Dimension) {
@@ -715,6 +735,7 @@ define([
      *
      * Shifts the shape a specified amount in horizontal and vertical directions
      * @param {AWT.Point|AWT.Dimension} delta - The amount to shift the Shape
+     * @returns {AWT.Shape}
      */
     moveBy: function (delta) {
       this.pos.moveBy(delta);
@@ -724,6 +745,7 @@ define([
      *
      * Moves this shape to a new position
      * @param {AWT.Point} newPos - The new position of the shape
+     * @returns {AWT.Shape}
      */
     moveTo: function (newPos) {
       this.pos.moveTo(newPos);
@@ -750,6 +772,7 @@ define([
      *
      * Multiplies the dimension of the Shape by the specified `delta` amount.
      * @param {AWT.Point|AWT.Dimension} delta - Object containing the X and Y ratio to be scaled.
+     * @returns {AWT.Shape}
      */
     scaleBy: function (delta) {
       // Nothing to scale in abstract shapes
@@ -793,6 +816,7 @@ define([
      * @param {external:CanvasRenderingContext2D} ctx - The canvas 2D rendering context where to fill this shape.
      * @param {AWT.Rectangle=} dirtyRegion - The context region to be updated. Used as clipping
      * region when drawing.
+     * @returns {external:CanvasRenderingContext2D} - The provided rendering context
      */
     fill: function (ctx, dirtyRegion) {
       ctx.save();
@@ -808,11 +832,11 @@ define([
       ctx.restore();
       return ctx;
     },
-    //
     /**
      *
      * Draws this shape in the provided HTML canvas 2D rendering context.
      * @param {external:CanvasRenderingContext2D} ctx - The canvas 2D rendering context where to draw the shape.
+     * @returns {external:CanvasRenderingContext2D} - The provided rendering context
      */
     stroke: function (ctx) {
       this.preparePath(ctx);
@@ -824,6 +848,7 @@ define([
      * Prepares an HTML canvas 2D rendering context with a path that can be used to stroke a line,
      * to fill a surface or to define a clipping region.
      * @param {external:CanvasRenderingContext2D} ctx
+     * @returns {external:CanvasRenderingContext2D} - The provided rendering context
      */
     preparePath: function (ctx) {
       // Nothing to do in abstract shapes
@@ -834,6 +859,7 @@ define([
      * Creates a clipping region on the specified HTML canvas 2D rendering context
      * @param {external:CanvasRenderingContext2D} ctx - The rendering context
      * @param {string=} [fillRule='nonzero'] - Can be 'nonzero' (default when not set) or 'evenodd'
+     * @returns {external:CanvasRenderingContext2D} - The provided rendering context
      */
     clip: function (ctx, fillRule) {
       this.preparePath(ctx);
@@ -906,8 +932,11 @@ define([
      * The {@link AWT.Dimension} of the Rectangle
      * @type {AWT.Dimension} */
     dim: new AWT.Dimension(),
-    //
-    // Inherits the documentation of `getBounds` in AWT.Shape
+    /**
+     * 
+     * Gets the enclosing {@link AWT.Rectangle} of this Shape.
+     * @returns {AWT.Rectangle}
+     */
     getBounds: function () {
       return this;
     },
@@ -915,6 +944,7 @@ define([
      *
      * Sets this Rectangle the position and dimension of another one
      * @param {AWT.Rectangle} rect
+     * @returns {AWT.Rectangle}
      */
     setBounds: function (rect) {
       if (!rect)
@@ -925,8 +955,12 @@ define([
       this.dim.height = rect.dim.height;
       return this;
     },
-    //
-    // Inherits the documentation of `equals` in AWT.Shape
+    /**
+     *
+     * Checks if two shapes are equivalent.
+     * @param {AWT.Shape} r - The AWT.Shape to compare against
+     * @returns {boolean}
+     */
     equals: function (r) {
       return r instanceof AWT.Rectangle && this.pos.equals(r.pos) && this.dim.equals(r.dim);
     },
@@ -938,7 +972,12 @@ define([
     clone: function () {
       return new AWT.Rectangle(this);
     },
-    // Inherits the documentation of `scaleBy` in AWT.Shape
+    /**
+     *
+     * Multiplies the dimension of the Shape by the specified `delta` amount.
+     * @param {AWT.Point|AWT.Dimension} delta - Object containing the X and Y ratio to be scaled.
+     * @returns {AWT.Rectangle}
+     */
     scaleBy: function (delta) {
       this.pos.multBy(delta);
       this.dim.multBy(delta);
@@ -949,6 +988,7 @@ define([
      * Expands the boundaries of this shape. This affects the current position and dimension.
      * @param {number} dx - The amount to grow (or decrease) in horizontal direction
      * @param {number} dy - The amount to grow (or decrease) in vertical direction
+     * @returns {AWT.Rectangle}
      */
     grow: function (dx, dy) {
       this.pos.x -= dx;
@@ -969,6 +1009,7 @@ define([
      *
      * Adds the boundaries of another shape to the current one
      * @param {AWT.Shape} shape - The {@link AWT.Shape} to be added
+     * @returns {AWT.Rectangle}
      */
     add: function (shape) {
       var myP2 = this.getOppositeVertex();

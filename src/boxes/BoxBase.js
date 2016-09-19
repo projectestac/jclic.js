@@ -65,10 +65,6 @@ define([
      * @type {object} */
     default: defaultValues,
     /**
-     * Original font specification
-     * @type {AWT.Font} */
-    originalFont: new AWT.Font(),
-    /**
      * Font size can be dynamically reduced to fit the available space if any element using this
      * `BoxBase` requests it. When this happen, this field contains the real font currently used
      * to draw text.
@@ -132,14 +128,6 @@ define([
      * @type {AWT.Stroke} */
     markerStroke: new AWT.Stroke(defaultValues.MARKER_STROKE_WIDTH),
     /**
-     * Counter to control the number of times the size of all fonts have been reduced
-     * @type {number} */
-    resetAllFontsCounter: 0,
-    /**
-     * `true` when the font size has been reduced.
-     * @type {boolean} */
-    flagFontReduced: false,
-    /**
      *
      * Loads the BoxBase settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
@@ -175,7 +163,6 @@ define([
         switch (this.nodeName) {
           case 'font':
             bb.font = (new AWT.Font()).setProperties($node);
-            bb.originalFont = Utils.cloneObject(bb.font);
             break;
 
           case 'gradient':
@@ -200,7 +187,7 @@ define([
      *
      * Gets the value of the specified property, scanning down to parents and prototype if not defined.
      * @param {string} property - The property to retrieve
-     * @returns {*} - Depends on the type of property
+     * @returns {*} - The object or value associated to this property
      */
     get: function (property) {
       if (this.hasOwnProperty(property) || this.parent === null)
@@ -217,6 +204,26 @@ define([
     set: function (property, value) {
       this[property] = value;
       return this;
+    },
+    /**
+     * 
+     * Gets the value of the specified property, scanning down to parents if not defined, and returning
+     * always an own property (not from prototype)
+     * @param {string} property - The property to retrieve
+     * @returns {*} - The object associated to this property
+     */
+    getOwn: function (property) {
+      if (this.hasOwnProperty(property))
+        return this[property];
+      else if (this.parent !== null)
+        return this.parent.getOwn(property);
+      else {
+        if(typeof this[property] === 'object')
+          this[property] = Utils.cloneObject(BoxBase.prototype[property]);
+        else
+          this[property] = BoxBase.prototype[property];
+      }
+      return this[property];
     },
     /**
      *
@@ -298,8 +305,7 @@ define([
           else {
             // No solution found. Try resizing down the font.
             if (this.font.size > defaultValues.MIN_FONT_SIZE) {
-              this.font.setSize(this.font.size - 1);
-              this.flagFontReduced = true;
+              this.getOwn('font').zoom(-1);
               return this.prepareText(ctx, text, maxWidth, maxHeight);
             }
           }
@@ -315,8 +321,7 @@ define([
 
         if (totalHeight > maxHeight && this.font.size > defaultValues.MIN_FONT_SIZE) {
           // Max height exceeded. Try resizing down the font
-          this.font.setSize(this.font.size - 1);
-          this.flagFontReduced = true;
+          this.getOwn('font').zoom(-1);
           return this.prepareText(ctx, text, maxWidth, maxHeight);
         }
       }
