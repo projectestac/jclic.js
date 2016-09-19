@@ -1,4 +1,8 @@
-### v0.1.36 (not yet released)
+### v0.1.36 (2016-09-19)
+#### Bug fixes
+- "Full screen" mode should work now as expected (when available)
+- Avoid resizing of BoxBase prototype font attribute
+
 #### Improvements
 - Project license changed to EUPL-1.1 (compatible with GPL-2.0)
 
