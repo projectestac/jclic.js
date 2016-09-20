@@ -272,12 +272,13 @@ define([
      */
     prepareText: function (ctx, text, maxWidth, maxHeight) {
       var result = [];
-      var height = this.font.getHeight();
+      var font = this.get('font');
+      var height = font.getHeight();
       var totalHeight = 0;
 
       // divide the text in lines
       var lines = text.trim().split('\n');
-      ctx.font = this.font.cssFont();
+      ctx.font = font.cssFont();
       for (var l = 0; l < lines.length; l++) {
         var line = lines[l].trim();
         var width = ctx.measureText(line).width;
@@ -304,7 +305,7 @@ define([
           }
           else {
             // No solution found. Try resizing down the font.
-            if (this.font.size > defaultValues.MIN_FONT_SIZE) {
+            if (font.size > defaultValues.MIN_FONT_SIZE) {
               this.getOwn('font').zoom(-1);
               return this.prepareText(ctx, text, maxWidth, maxHeight);
             }
@@ -319,7 +320,7 @@ define([
 
         totalHeight += height;
 
-        if (totalHeight > maxHeight && this.font.size > defaultValues.MIN_FONT_SIZE) {
+        if (totalHeight > maxHeight && font.size > defaultValues.MIN_FONT_SIZE) {
           // Max height exceeded. Try resizing down the font
           this.getOwn('font').zoom(-1);
           return this.prepareText(ctx, text, maxWidth, maxHeight);
