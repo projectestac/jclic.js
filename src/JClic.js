@@ -193,14 +193,42 @@ define([
      */
     loadProject: function (div, projectName, options) {
 
-      options = $.extend(Object.create(JClicObject.options), options ? options : {});
+      options = Utils.init($.extend(Object.create(JClicObject.options), options ? options : {}));
 
-      var player = new JClicPlayer($(div), options);
+      var player = null;
+
+      // Find if there is another player already running on 'div'
+      for (var i = 0; i < JClicObject.currentPlayers.length; i++) {
+        var pl = JClicObject.currentPlayers[i];
+        if (pl && pl.$topDiv && pl.$topDiv[0] === div) {
+          // Player found! Check if it has the same options
+          Utils.log('debug', 'Existing JClicPlayer found in div. I will try to reuse it.');
+          player = pl;
+          for (var prop in options) {
+            if (options.hasOwnProperty(prop)) {
+              if (!player.options.hasOwnProperty(prop) || player.options[prop] !== options[prop]) {
+                Utils.log('debug', 'Existing JClicPlayer has diferent options! Creating a new one from scratch.');
+                player = null;
+                break;
+              }
+            }
+          }
+          break;
+        }
+      }
+
+      if (player)
+        player.reset();
+      else {
+        Utils.log('debug', 'Creating a new instance of JClicPlayer');
+        player = new JClicPlayer($(div).empty(), options);        
+      }
 
       if (projectName)
         player.initReporter().then(function () {
           player.load(projectName);
         }).catch(function (err) {
+          Utils.log('error', 'Unable to start reporting: %s.\n JClicPlayer will be removed.', err.toString());
           $(div).empty().removeAttr('style').append($('<h2/>').html(player.getMsg('ERROR'))).append($('<p/>').html(err));
           var i = JClicObject.currentPlayers.indexOf(player);
           if (i >= 0)
@@ -208,7 +236,7 @@ define([
           player = null;
         });
 
-      if (player && options.savePlayersRef !== false)
+      if (player && options.savePlayersRef !== false && JClicObject.currentPlayers.indexOf(player) === -1)
         JClicObject.currentPlayers.push(player);
 
       return player;

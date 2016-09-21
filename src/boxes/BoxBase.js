@@ -267,7 +267,7 @@ define([
      * @param {string} text - The text to drawn.
      * @param {number} maxWidth - Maximum width
      * @param {number} maxHeight - Maximum height
-     * @returns {object[]} - An array of objects representing lines of text. Each object has ha `text`
+     * @returns {object[]} - An array of objects representing lines of text. Each object has a `text`
      * member with the text displayed in the line, and a `size` member with the line {@link AWT.Dimension}
      */
     prepareText: function (ctx, text, maxWidth, maxHeight) {
