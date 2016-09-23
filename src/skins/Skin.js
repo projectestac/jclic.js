@@ -133,7 +133,7 @@ define([
 
     this.$reportsPanel = $('<div/>', {class: 'reportsPanel'});
 
-    this.$copyBtn = $('<a/>', {title: ps.getMsg('Copy data to clipboard')})
+    this.$copyBtn = $('<button/>', {title: ps.getMsg('Copy data to clipboard')})
         .append($(this.copyIcon).css({width: '26px', height: '26px'}))
         .on('click', function () {
           clipboard.copy({
@@ -150,19 +150,19 @@ define([
               }));
         });
 
-    this.$closeDlgBtn = $('<a/>', {title: ps.getMsg('Close')})
+    this.$closeDlgBtn = $('<button/>', {title: ps.getMsg('Close')})
         .append($(this.closeDialogIcon).css({width: '26px', height: '26px'}))
         .on('click', function () {
           skin._closeDlg(true);
         });
 
-    this.$okDlgBtn = $('<a/>', {title: ps.getMsg('OK')})
+    this.$okDlgBtn = $('<button/>', {title: ps.getMsg('OK')})
         .append($(this.okDialogIcon).css({width: '26px', height: '26px'}))
         .on('click', function () {
           skin._closeDlg(true);
         });
 
-    this.$cancelDlgBtn = $('<a/>', {title: ps.getMsg('Cancel')})
+    this.$cancelDlgBtn = $('<button/>', {title: ps.getMsg('Cancel')})
         .append($(this.closeDialogIcon).css({width: '26px', height: '26px'}))
         .on('click', function () {
           skin._closeDlg(false);
@@ -572,6 +572,7 @@ define([
     reportsCSS: '\
 .SKINID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
 .SKINID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
+.SKINID .dlgDiv button {background:transparent; padding:0; border:none;}\
 .SKINID .dlgMainPanel {padding:1em 2em; max-height:calc(100vh - 8em); max-width:calc(100vw - 2em); min-width:20em; overflow:auto;}\
 .SKINID .dlgMainPanel .headTitle {font-size:2.5em; font-weight:bold; margin:auto;}\
 .SKINID .dlgMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
