@@ -568,11 +568,11 @@ define([
 .SKINID {width:100%; background-color:#3F51B5; display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column;}\
 .SKINID .JClicPlayerCnt {background-color:lightblue; margin:18px; -webkit-flex-grow:1; flex-grow:1; position:relative;}\
 .SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
+.SKINID button {background:transparent; padding:0; border:none;}\
 .SKINID .unselectableText {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select: none;}',
     reportsCSS: '\
 .SKINID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
 .SKINID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
-.SKINID .dlgDiv button {background:transparent; padding:0; border:none;}\
 .SKINID .dlgMainPanel {padding:1em 2em; max-height:calc(100vh - 8em); max-width:calc(100vw - 2em); min-width:20em; overflow:auto;}\
 .SKINID .dlgMainPanel .headTitle {font-size:2.5em; font-weight:bold; margin:auto;}\
 .SKINID .dlgMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
