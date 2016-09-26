@@ -339,16 +339,12 @@ define([
     },
     /**
      *
-     * Makes {@link AbstractBox#$hostedComponent} visible or invisible
-     * @param {boolean} val - `true` for visible.
+     * Makes {@link AbstractBox#$hostedComponent} visible or invisible, based on the value of
+     * the AbstractBox `visible` flag.
      */
-    setHostedComponentVisible: function (val) {
-      if (this.$hostedComponent) {
-        if (val === false)
-          this.$hostedComponent.css('visibility', 'hidden');
-        else
-          this.$hostedComponent.css('visibility', this.visible && !this.inactive ? 'visible' : 'hidden');
-      }
+    setHostedComponentVisible: function () {
+      if (this.$hostedComponent)
+        this.$hostedComponent.css('visibility', this.visible ? 'visible' : 'hidden');
     },
     /**
      *
@@ -583,7 +579,6 @@ define([
 
       if (this.$hostedComponent) {
         this.setContainer(this.container);
-        this.setHostedComponentVisible(false);
         this.setHostedComponentColors();
         this.setHostedComponentBorder();
         this.setHostedComponentBounds(true);

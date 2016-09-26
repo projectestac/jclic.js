@@ -186,8 +186,9 @@ define([
 
       var sb = new AbstractBox(bxb, this, this.icoBB);
       sb.setBounds(0, 0, this.LABEL_WIDTH, this.act.abc[type].h);
-
-      var $btn = $('<div/>').css({
+      
+      var thisPanel = this;
+      var $btn = $('<button/>', {class: 'StockBtn'}).css({
         'width': this.LABEL_WIDTH,
         'height': this.act.abc[type].h,
         'background-image': 'url(' + (type === 'acrossClues' ? this.hIcon : this.vIcon) + ')',
@@ -195,6 +196,12 @@ define([
         'background-position': 'center',
         'border-radius': 6,
         'z-index': 10
+      }).click(function(){        
+        thisPanel.advance = type === 'acrossClues'
+        ? thisPanel.advance === 'ADVANCE_RIGHT' ? 'NO_ADVANCE' : 'ADVANCE_RIGHT'
+        : thisPanel.advance === 'ADVANCE_DOWN' ? 'NO_ADVANCE' : 'ADVANCE_DOWN';
+        console.log('avance set to: '+thisPanel.advance);
+        thisPanel.setBtnStatus();
       }).appendTo(this.$div);
 
       sb.setHostedComponent($btn);
@@ -382,19 +389,7 @@ define([
               this.hClue.playMedia(this.ps);
             else if (this.vClue.contains(p))
               this.vClue.playMedia(this.ps);
-            else if (this.hClueBtn.contains(p)) {
-              if (this.advance === 'ADVANCE_RIGHT')
-                this.advance = 'NO_ADVANCE';
-              else
-                this.advance = 'ADVANCE_RIGHT';
-              this.setBtnStatus();
-            } else if (this.vClueBtn.contains(p)) {
-              if (this.advance === 'ADVANCE_DOWN')
-                this.advance = 'NO_ADVANCE';
-              else
-                this.advance = 'ADVANCE_DOWN';
-              this.setBtnStatus();
-            } else
+            else
               break;
 
             this.update();
@@ -498,7 +493,7 @@ define([
             this.playEvent('click');
             if (this.advance === 'ADVANCE_DOWN')
               this.moveCursor(0, 1);
-            else
+            else if (this.advance === 'ADVANCE_RIGHT')
               this.moveCursor(1, 0);
           }
         }

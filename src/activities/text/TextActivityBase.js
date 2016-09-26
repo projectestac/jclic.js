@@ -270,7 +270,7 @@ define([
       $dom.append($html);
 
       if (this.act.checkButtonText && !this.showingPrevScreen) {
-        this.$checkButton = $('<button/>', {type: 'button'})
+        this.$checkButton = $('<button/>', {class: 'StockBtn'})
             .html(this.act.checkButtonText)
             .css({position: 'absolute', bottom: '0', left: '0', width: '100%'})
             .on('click', function () {
