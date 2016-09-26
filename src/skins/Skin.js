@@ -57,14 +57,15 @@ define([
 
     // Skin extends [AWT.Container](AWT.html)
     AWT.Container.call(this);
-
+    
     if (Skin.registeredStylesheets.indexOf(this.skinId) < 0) {
       $('head').append($('<style type="text/css"/>')
           .html(this._getStyleSheets().replace(/SKINID/g, this.skinId)));
       Skin.registeredStylesheets.push(this.skinId);
     }
 
-    var skin = this;
+    var skin = this,
+        msg ='';
 
     this.$div = $('<div/>', {class: this.skinId});
     this.$playerCnt = $('<div/>', {class: 'JClicPlayerCnt'});
@@ -94,7 +95,7 @@ define([
       return false;
     });
 
-    var $dlgDiv = $('<div/>', {class: 'dlgDiv'}).css({
+    var $dlgDiv = $('<div/>', {class: 'dlgDiv', role: 'dialog'}).css({
       display: 'inline-block',
       position: 'relative',
       top: '50%',
@@ -105,8 +106,8 @@ define([
       return false;
     });
 
-    this.$dlgMainPanel = $('<div/>', {class: 'dlgMainPanel'});
-    this.$dlgBottomPanel = $('<div/>', {class: 'dlgBottomPanel'});
+    this.$dlgMainPanel = $('<div/>', {class: 'dlgMainPanel', role: 'main'});
+    this.$dlgBottomPanel = $('<div/>', {class: 'dlgBottomPanel', role: 'navigation'});
 
     // Basic dialog structure:
     this.$div.append(
@@ -116,9 +117,10 @@ define([
                 this.$dlgMainPanel,
                 this.$dlgBottomPanel)));
 
-    this.$infoHead = $('<div/>', {class: 'infoHead'})
+    msg = ps.getMsg('JClic logo');
+    this.$infoHead = $('<div/>', {class: 'infoHead'})     
         .append($('<div/>', {class: 'headTitle unselectableText'})
-            .append($(this.appLogo).css({width: '1.5em', height: '1.5em', 'vertical-align': 'bottom'})
+            .append($(this.appLogo, {'aria-label': msg}).css({width: '1.5em', height: '1.5em', 'vertical-align': 'bottom'})
                 .dblclick(function () {
                   // Double click on JClic logo is a hidden method to increase verbosity on Javascript console
                   Utils.setLogLevel('all');
@@ -131,9 +133,10 @@ define([
             .append($('<br>'))
             .append($('<span/>').html(ps.getMsg('Version') + ' ' + this.ps.JClicVersion)));
 
-    this.$reportsPanel = $('<div/>', {class: 'reportsPanel'});
+    this.$reportsPanel = $('<div/>', {class: 'reportsPanel', role: 'document'});
 
-    this.$copyBtn = $('<button/>', {title: ps.getMsg('Copy data to clipboard')})
+    msg = ps.getMsg('Copy data to clipboard');
+    this.$copyBtn = $('<button/>', {title: msg, 'aria-label': msg})
         .append($(this.copyIcon).css({width: '26px', height: '26px'}))
         .on('click', function () {
           clipboard.copy({
@@ -150,19 +153,22 @@ define([
               }));
         });
 
-    this.$closeDlgBtn = $('<button/>', {title: ps.getMsg('Close')})
+    msg = ps.getMsg('Close');
+    this.$closeDlgBtn = $('<button/>', {title: msg, 'aria-label': msg})
         .append($(this.closeDialogIcon).css({width: '26px', height: '26px'}))
         .on('click', function () {
           skin._closeDlg(true);
         });
-
-    this.$okDlgBtn = $('<button/>', {title: ps.getMsg('OK')})
+        
+    msg = ps.getMsg('OK');
+    this.$okDlgBtn = $('<button/>', {title: msg, 'aria-label': msg})
         .append($(this.okDialogIcon).css({width: '26px', height: '26px'}))
         .on('click', function () {
           skin._closeDlg(true);
         });
 
-    this.$cancelDlgBtn = $('<button/>', {title: ps.getMsg('Cancel')})
+    msg = ps.getMsg('Cancel');
+    this.$cancelDlgBtn = $('<button/>', {title: msg, 'aria-label': msg})
         .append($(this.closeDialogIcon).css({width: '26px', height: '26px'}))
         .on('click', function () {
           skin._closeDlg(false);
@@ -463,10 +469,16 @@ define([
           else if (!resolved && reject)
             reject(skin._dlgCancelValue);
           skin.$dlgOverlay.css({display: 'none'});
+          skin.setMainWindowState(true);
           skin._closeDlg = Skin.prototype._closeDlg;
         };
+        skin.setMainWindowState(false);
         skin.$dlgOverlay.css({display: 'initial'});
       });
+    },
+    setMainWindowState: function(status) {
+      //this.$playerCnt.attr('aria-hidden', status ? 'false' : 'true');
+      this.$playerCnt.attr('tabindex', status ? '0' : '-1');
     },
     /**
      * Called when the dialog must be closed, usually only by Skin members.
@@ -595,9 +607,9 @@ define([
 .SKINID .JCDetailed .incomplete {font-style:italic;}\
 .SKINID .dlgBottomPanel {height:3.5em; background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
 .SKINID .dlgBottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
-.SKINID .dlgBottomPanel a {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
-.SKINID .dlgBottomPanel a:hover {background-color:#eee; border-radius:80px;}\
-.SKINID .dlgBottomPanel a:active {background-color:#b3e5fc;}',
+.SKINID .dlgBottomPanel button {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
+.SKINID .dlgBottomPanel button:hover {background-color:#eee; border-radius:80px;}\
+.SKINID .dlgBottomPanel button:active {background-color:#b3e5fc;}',
     //
     // Icons used in buttons:
     //

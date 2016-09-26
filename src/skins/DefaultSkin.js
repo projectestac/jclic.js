@@ -60,7 +60,8 @@ define([
     // DefaultSkin extends [Skin](Skin.html)
     Skin.call(this, ps, name);
 
-    var skin = this;
+    var skin = this,
+        msg = '';
 
     AWT.Font.loadGoogleFonts(this.cssFonts);
 
@@ -73,11 +74,12 @@ define([
     this.$playerCnt.append(this.$waitPanel);
 
     // Create the main container for buttons, counters and message box
-    this.$ctrlCnt = $('<div/>', {class: 'JClicCtrlCnt unselectableText'});
+    this.$ctrlCnt = $('<div/>', {class: 'JClicCtrlCnt unselectableText', role: 'navigation'});
     this.$div.append(this.$ctrlCnt);
 
     // Add `prev` button
-    this.buttons.prev = $('<button/>', {class: 'JClicBtn'})
+    msg = ps.getMsg('Previous activity');
+    this.buttons.prev = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
         .append($(Utils.getSvg(this.prevIcon, this.iconWidth, this.iconHeight, this.iconFill)))
         .on('click', function (evt) {
           if (skin.ps)
@@ -95,7 +97,8 @@ define([
     this.$ctrlCnt.append(this.$msgBoxDiv);
 
     // Add `next` button
-    this.buttons.next = $('<button/>', {class: 'JClicBtn'})
+    msg = ps.getMsg('Next activity');
+    this.buttons.next = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
         .append($(Utils.getSvg(this.nextIcon, this.iconWidth, this.iconHeight, this.iconFill)))
         .on('click', function (evt) {
           if (skin.ps)
@@ -112,7 +115,8 @@ define([
               skin.ps.actions.reports.processEvent(evt);
           });
       $.each(Skin.prototype.counters, function (name) {
-        skin.counters[name] = new Counter(name, $('<div/>', {class: 'JClicCounter', title: ps.getMsg(name)})
+        msg = ps.getMsg(name);
+        skin.counters[name] = new Counter(name, $('<div/>', {class: 'JClicCounter', title: msg, 'aria-label': msg})
             .css({
               'background-image': 'url(' + Utils.svgToURI(skin[name + 'Icon'], skin.counterIconWidth, skin.counterIconHeight, skin.counterIconFill) + ')',
               color: skin.counterIconFill
@@ -123,9 +127,10 @@ define([
       this.$ctrlCnt.append($countCnt);
     }
 
-    // Add info button
+    // Add info button    
     if (true === this.ps.options.info || true === options.info) {
-      this.buttons.info = $('<button/>', {class: 'JClicBtn'})
+      msg = ps.getMsg('Information');
+      this.buttons.info = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
           .append($(Utils.getSvg(this.infoIcon, this.iconWidth, this.iconHeight, this.iconFill)))
           .on('click', function (evt) {
             if (skin.ps)
@@ -136,7 +141,8 @@ define([
 
     // Add reports button
     if (true === this.ps.options.reportsBtn || true === options.reportsBtn) {
-      this.buttons.about = $('<button/>', {class: 'JClicBtn'})
+      msg = ps.getMsg('Reports');
+      this.buttons.about = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
           .append($(Utils.getSvg(this.reportsIcon, this.iconWidth, this.iconHeight, this.iconFill)))
           .on('click', function (evt) {
             if (skin.ps)
@@ -147,7 +153,8 @@ define([
 
     // Add `full screen` button
     if (screenfull && screenfull.enabled) {
-      this.buttons.fullscreen = $('<button/>', {class: 'JClicBtn'})
+      msg = ps.getMsg('Toggle full screen');
+      this.buttons.fullscreen = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
           .append($('<img/>', {src: Utils.svgToURI(this.fullScreenIcon, this.iconWidth, this.iconHeight, this.iconFill)}))
           .on('click', function () {
             skin.setScreenFull(null);
@@ -157,8 +164,9 @@ define([
 
     // Add `close` button
     if (typeof this.ps.options.closeFn === 'function') {
+      msg = ps.getMsg('Close');
       var closeFn = this.ps.options.closeFn;
-      this.buttons.close = $('<button/>', {class: 'JClicBtn'})
+      this.buttons.close = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
           .append($(Utils.getSvg(this.closeIcon, this.iconWidth, this.iconHeight, this.iconFill)))
           .on('click', function () {
             Utils.log('info', 'Closing the player');
@@ -309,6 +317,12 @@ define([
           break;
       }
     },
+    setMainWindowState: function(status) {
+      //this.$playerCnt.attr('aria-hidden', status ? 'false' : 'true');      
+      //this.$ctrlCnt.attr('aria-hidden', status ? 'false' : 'true');    
+      //this.$ctrlCnt.find('.JClicBtn').attr('aria-hidden', status ? 'false' : 'true');
+      this.$ctrlCnt.find('.JClicBtn').attr('tabindex', status ? '0' : '-1');
+    },    
     /**
      *
      * Enables or disables an object changing its opacity

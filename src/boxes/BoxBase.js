@@ -112,9 +112,14 @@ define([
      * @type {boolean} */
     shadow: false,
     /**
-     * Whether the cell's background should be transparent
+     * Whether the cell's background (and its hosted component, if any) should be transparent
      * @type {boolean} */
     transparent: false,
+    /**
+     * Wheter the cell's background should be painted or not. This property has no effect on
+     * hosted components.
+     * @type {boolean} */
+    dontFill: false,
     /**
      * The margin to respect between text elements and the limits of the cell or other elements.
      * @type {number} */

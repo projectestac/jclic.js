@@ -186,7 +186,7 @@ define([
 
       var sb = new AbstractBox(bxb, this, this.icoBB);
       sb.setBounds(0, 0, this.LABEL_WIDTH, this.act.abc[type].h);
-      
+
       var thisPanel = this;
       var $btn = $('<button/>', {class: 'StockBtn'}).css({
         'width': this.LABEL_WIDTH,
@@ -196,12 +196,14 @@ define([
         'background-position': 'center',
         'border-radius': 6,
         'z-index': 10
-      }).click(function(){        
+      }).click(function () {
         thisPanel.advance = type === 'acrossClues'
-        ? thisPanel.advance === 'ADVANCE_RIGHT' ? 'NO_ADVANCE' : 'ADVANCE_RIGHT'
-        : thisPanel.advance === 'ADVANCE_DOWN' ? 'NO_ADVANCE' : 'ADVANCE_DOWN';
-        console.log('avance set to: '+thisPanel.advance);
+            ? thisPanel.advance === 'ADVANCE_RIGHT' ? 'NO_ADVANCE' : 'ADVANCE_RIGHT'
+            : thisPanel.advance === 'ADVANCE_DOWN' ? 'NO_ADVANCE' : 'ADVANCE_DOWN';
         thisPanel.setBtnStatus();
+      }).on('keypress', function(event){
+        if(String.fromCharCode(event.charCode || event.keyCode) === ' ')
+          event.stopPropagation();
       }).appendTo(this.$div);
 
       sb.setHostedComponent($btn);
@@ -541,7 +543,7 @@ define([
     /**
      * BoxBase with the style to be used by the direction buttons.
      * @type {BoxBase} */
-    icoBB: new BoxBase().set('backColor', '#4285F4').set('inactiveColor', '#70A2F6')
+    icoBB: new BoxBase().set('backColor', '#4285F4').set('inactiveColor', '#70A2F6').set('dontFill', true)
   };
 
   // CrossWord.Panel extends Activity.Panel

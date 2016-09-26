@@ -192,3 +192,15 @@ msgstr ""
 msgid "Activities played at least once:"
 msgstr ""
 
+# Caption for "reports" button
+msgid "Reports"
+msgstr ""
+
+# Caption for "full screen" button
+msgid "Toggle full screen"
+msgstr ""
+
+# Label for JClic logo, used in "wai-aria" contexts
+msgid "JClic logo"
+msgstr ""
+

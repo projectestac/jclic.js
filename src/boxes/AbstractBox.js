@@ -489,7 +489,7 @@ define([
        */
 
       var bb = this.getBoxBaseResolve();
-      if (!bb.transparent) {
+      if (!bb.transparent && !bb.dontFill) {
         if (!bb.bgGradient || bb.bgGradient.hasTransparency()) {
           // Prepare the rendering context
           ctx.fillStyle = this.inactive ?
