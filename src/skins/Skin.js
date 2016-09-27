@@ -469,16 +469,21 @@ define([
           else if (!resolved && reject)
             reject(skin._dlgCancelValue);
           skin.$dlgOverlay.css({display: 'none'});
-          skin.setMainWindowState(true);
+          skin.enableMainButtons(true);
           skin._closeDlg = Skin.prototype._closeDlg;
         };
-        skin.setMainWindowState(false);
+        skin.enableMainButtons(false);
         skin.$dlgOverlay.css({display: 'initial'});
       });
     },
-    setMainWindowState: function(status) {
-      //this.$playerCnt.attr('aria-hidden', status ? 'false' : 'true');
-      this.$playerCnt.attr('tabindex', status ? '0' : '-1');
+    /**
+     * 
+     * Enables or disables the `tabindex` attribute of the main buttons. Useful when a modal dialog
+     * overlay is active, to avoid direct access to controls not related with the dialog.
+     * @param {boolean} status - `true` to make main controls navigable, `false` otherwise
+     */
+    enableMainButtons: function(status) {
+      this.$playerCnt.find('button').attr('tabindex', status ? '0' : '-1');
     },
     /**
      * Called when the dialog must be closed, usually only by Skin members.

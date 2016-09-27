@@ -318,10 +318,13 @@ define([
           break;
       }
     },
-    setMainWindowState: function(status) {
-      //this.$playerCnt.attr('aria-hidden', status ? 'false' : 'true');
-      //this.$ctrlCnt.attr('aria-hidden', status ? 'false' : 'true');
-      //this.$ctrlCnt.find('.JClicBtn').attr('aria-hidden', status ? 'false' : 'true');
+    /**
+     * 
+     * Enables or disables the `tabindex` attribute of the main buttons. Useful when a modal dialog
+     * overlay is active, to avoid direct access to controls not related with the dialog.
+     * @param {boolean} status - `true` to make main controls navigable, `false` otherwise
+     */
+    enableMainButtons: function(status) {
       this.$ctrlCnt.find('.JClicBtn,.JClicCountCnt').attr('tabindex', status ? '0' : '-1');
     },
     /**
