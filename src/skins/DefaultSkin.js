@@ -109,7 +109,8 @@ define([
     // Add counters
     if (false !== this.ps.options.counters && false !== options.counters) {
       // Create counters
-      var $countCnt = $('<button/>', {class: 'JClicCountCnt'})
+      msg = ps.getMsg('Reports');
+      var $countCnt = $('<button/>', {class: 'JClicCountCnt', 'aria-label': msg})
           .on('click', function (evt) {
             if (skin.ps)
               skin.ps.actions.reports.processEvent(evt);
@@ -127,7 +128,7 @@ define([
       this.$ctrlCnt.append($countCnt);
     }
 
-    // Add info button    
+    // Add info button
     if (true === this.ps.options.info || true === options.info) {
       msg = ps.getMsg('Information');
       this.buttons.info = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
@@ -318,11 +319,11 @@ define([
       }
     },
     setMainWindowState: function(status) {
-      //this.$playerCnt.attr('aria-hidden', status ? 'false' : 'true');      
-      //this.$ctrlCnt.attr('aria-hidden', status ? 'false' : 'true');    
+      //this.$playerCnt.attr('aria-hidden', status ? 'false' : 'true');
+      //this.$ctrlCnt.attr('aria-hidden', status ? 'false' : 'true');
       //this.$ctrlCnt.find('.JClicBtn').attr('aria-hidden', status ? 'false' : 'true');
-      this.$ctrlCnt.find('.JClicBtn').attr('tabindex', status ? '0' : '-1');
-    },    
+      this.$ctrlCnt.find('.JClicBtn,.JClicCountCnt').attr('tabindex', status ? '0' : '-1');
+    },
     /**
      *
      * Enables or disables an object changing its opacity

@@ -197,9 +197,11 @@ define([
         'border-radius': 6,
         'z-index': 10
       }).click(function () {
-        thisPanel.advance = type === 'acrossClues'
-            ? thisPanel.advance === 'ADVANCE_RIGHT' ? 'NO_ADVANCE' : 'ADVANCE_RIGHT'
-            : thisPanel.advance === 'ADVANCE_DOWN' ? 'NO_ADVANCE' : 'ADVANCE_DOWN';
+        thisPanel.advance = type === 'acrossClues' ?
+          thisPanel.advance === 'ADVANCE_RIGHT' ?
+            'NO_ADVANCE' : 'ADVANCE_RIGHT' :
+          thisPanel.advance === 'ADVANCE_DOWN' ?
+            'NO_ADVANCE' : 'ADVANCE_DOWN';
         thisPanel.setBtnStatus();
       }).on('keypress', function(event){
         if(String.fromCharCode(event.charCode || event.keyCode) === ' ')
