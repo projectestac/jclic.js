@@ -204,3 +204,10 @@ msgstr ""
 msgid "JClic logo"
 msgstr ""
 
+# Role of the main message box, used in "wai-aria" contexts
+msgid "Message"
+msgstr ""
+
+# Role of regular cells, used in "wai-aria" contexts
+msgid "Cell"
+msgstr ""

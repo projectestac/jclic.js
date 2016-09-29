@@ -90,6 +90,7 @@ define([
     // Add message box
     this.$msgBoxDiv = $('<div/>', {class: 'JClicMsgBox'});
     this.msgBox = new ActiveBox();
+    this.msgBox.role = 'Message';
     var thisMsgBox = this.msgBox;
     this.$msgBoxDiv.on('click', function () {
       thisMsgBox.playMedia(ps);
@@ -288,6 +289,7 @@ define([
         }
         this.$msgBoxDivCanvas = $('<canvas width="' + msgWidth + '" height="' + msgHeight + '"/>');
         this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth + 1, msgHeight));
+        this.msgBox.buildAccessibleElement(this.$msgBoxDivCanvas, this.$msgBoxDiv);
       }
       // restore canvas
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);

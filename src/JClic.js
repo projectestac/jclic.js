@@ -194,7 +194,7 @@ define([
     loadProject: function (div, projectName, options) {
 
       options = Utils.init($.extend(Object.create(JClicObject.options), options ? options : {}));
-
+      
       var player = null;
 
       // Find if there is another player already running on 'div'

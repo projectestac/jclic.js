@@ -873,6 +873,13 @@ define([
      */
     isRect: function () {
       return false;
+    },
+    /**
+     * Overwrites the original 'Object.toString' method with a more descriptive text
+     * @returns {String}
+     */
+    toString: function(){
+      return 'Shape enclosed in '+ this.getBounds().getCoords();
     }
   };
 
@@ -1057,6 +1064,21 @@ define([
     // Inherits the documentation of `isRect` in AWT.Shape
     isRect: function () {
       return true;
+    },
+    //
+    // Inherits the documentation of `toString` in AWT.Shape
+    toString: function(){
+      return 'Rectangle ' + this.getCoords();
+    },
+    /**
+     * 
+     * Gets a string with the co-ordinates of the upper-left and lower-right vertexs of this rectangle,
+     * (with values rounded to int)
+     * @returns {String}
+     */
+    getCoords: function() {
+      return '[' + Math.round(this.pos.x) + ',' + Math.round(this.pos.y) + ',' +
+          Math.round(this.pos.x + this.dim.width) + ',' + Math.round(this.pos.y + this.dim.height) + ']';      
     }
   };
   // Rectangle extends Shape
@@ -1140,7 +1162,12 @@ define([
     // Inherits the documentation of `isRect` in AWT.Rectangle
     isRect: function () {
       return false;
-    }
+    },
+    //
+    // Inherits the documentation of `toString` in AWT.Shape
+    toString: function(){
+      return 'Ellipse enclosed in ' + this.getCoords();
+    }    
   };
   // Ellipse extends Rectangle
   AWT.Ellipse.prototype = $.extend(Object.create(AWT.Rectangle.prototype), AWT.Ellipse.prototype);

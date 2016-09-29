@@ -129,6 +129,14 @@ define([
      * @type {boolean} */
     isBackground: false,
     /**
+     * Describes the main role of this ActiveBox on the activity. Useful for "aria" descriptions.
+     * @type {string} */
+    role: 'Cell',
+    /**
+     * DOM element used to display this cell content in wai-aria contexts
+     * @type {external:jQuery} */
+    $accessibleElement: null,
+    /**
      *
      * Returns the current content used by the box
      * @returns {ActiveBoxContent}
@@ -253,6 +261,9 @@ define([
       this.setInactive(false);
       this.checkHostedComponent();
       this.setHostedMediaPlayer(null);
+      
+      if(this.$accessibleElement)
+        this.$accessibleElement.html(this.toString());
     },
     /**
      *
@@ -589,6 +600,10 @@ define([
     getDescription: function () {
       return this.content ? this.content.getDescription() : '';
     },
+    toString: function() {
+      // TODO: Use localized value for this.role
+      return this.role + ': ' + (this.getCurrentContent() || '-').toString();
+    },
     /**
      *
      * Plays the action or media associated with this ActiveBox
@@ -596,6 +611,7 @@ define([
      */
     playMedia: function (ps) {
       var abc = this.getCurrentContent();
+      Utils.log('debug', this.toString());
       if (abc && abc.mediaContent) {
         ps.playMedia(abc.mediaContent, this);
         return true;
@@ -672,6 +688,29 @@ define([
           }
         }
       }
+    },
+    buildAccessibleElement: function($canvas, $clickReceiver) {
+      if(Utils.settings.CANVAS_HITREGIONS) {
+        if(this.$accessibleElement)
+          this.$accessibleElement.remove();
+        var id = Math.random()*100000;
+        this.$accessibleElement = $('<button/>', {tabindex: 0, id: id})
+            .html(this.toString())
+            .click(function(ev){
+              //$clickReceiver.trigger('click');
+            });
+        $canvas.append(this.$accessibleElement);
+        var elem = this.$accessibleElement.get(0);
+        try {
+          var ctx = $canvas.get(0).getContext('2d');
+          this.shape.preparePath(ctx);
+          ctx.addHitRegion({id: 'reg' + id, control: elem});
+          if(Utils.settings.CANVAS_HITREGIONS_FOCUS)
+            ctx.drawFocusIfNeeded(elem);
+        } catch(ex) {
+          Utils.log('error', 'Unable to build accessible element for canvas in: %s (%s)', this.toString(), ex);
+        }
+      }      
     }
   };
 

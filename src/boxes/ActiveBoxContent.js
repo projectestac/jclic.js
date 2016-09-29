@@ -342,6 +342,7 @@ define([
       this.checkHtmlText(mediaBag);
     },
     /**
+     * 
      * Gets a string representing this content, useful for checking if two different contents are
      * equivalent.
      * @returns {string}
@@ -351,10 +352,9 @@ define([
       if (this.text && this.text.length > 0)
         result += this.text;
       else if (this.imgName)
-        result += 'IMG:' + this.imgName;
+        result += 'Image: ' + this.imgName;
       else if (this.imgClip) {
-        var r = this.imgClip.getBounds();
-        result += '[' + r.x + ',' + r.y + ',' + r.width + ',' + r.height + ']';
+        result += this.imgClip.toString();
       }
 
       if (this.mediaContent) {
@@ -363,6 +363,14 @@ define([
         result += this.mediaContent.getDescription();
       }
       return result;
+    },
+    /**
+     * 
+     * Overwrites the original `Object.toString` method, returning `getDescription` instead
+     * @returns {String}
+     */
+    toString: function() {
+      return this.getDescription();
     }
   };
 

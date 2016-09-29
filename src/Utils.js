@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global Promise, window */
+/* global Promise, window, CanvasRenderingContext2D */
 
 define([
   "jquery",
@@ -82,7 +82,7 @@ define([
       if (typeof options.chainLogTo === 'function')
         Utils.LOG_OPTIONS.chainTo = options.chainLogTo;
       if (typeof options.pipeLogTo === 'function')
-        Utils.LOG_OPTIONS.pipeTo = options.pipeLogTo;
+        Utils.LOG_OPTIONS.pipeTo = options.pipeLogTo;      
       return options;
     },
     /**
@@ -650,7 +650,11 @@ define([
       // Amount of time (in milliseconds) to wait before a media resource is loaded
       LOAD_TIMEOUT: 10000,
       // Number of points to be calculated as polygon vertexs when simplifying bezier curves
-      BEZIER_POINTS: 4
+      BEZIER_POINTS: 4,
+      // Check if canvas accessibility features are enabled
+      // See: http://codepen.io/francesc/pen/amwvRp
+      CANVAS_HITREGIONS: typeof CanvasRenderingContext2D.prototype.addHitRegion === 'function',
+      CANVAS_HITREGIONS_FOCUS: typeof CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function'
     },
     //
     // Functions useful to deal with caret position in `contentEditable` DOM elements
