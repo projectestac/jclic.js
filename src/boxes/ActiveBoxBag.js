@@ -31,8 +31,9 @@
 define([
   "jquery",
   "./BoxBag",
-  "../AWT"
-], function ($, BoxBag, AWT) {
+  "../AWT",
+  "../Utils"
+], function ($, BoxBag, AWT, Utils) {
 
   /**
    * This class is a special case of {@link BoxBag} containing only objects of type {@link ActiveBox}.
@@ -310,7 +311,15 @@ define([
           break;
       }
       return i;
+    },
+    buildAccessibleElements: function($canvas, $clickReceiver) {
+      if(Utils.settings.CANVAS_HITREGIONS) {
+        for(var i=0; i<this.cells.length; i++) {
+          this.cells[i].buildAccessibleElement($canvas, $clickReceiver);
+        }
+      }      
     }
+    
   };
 
   // ActiveBoxBag extends BoxBag

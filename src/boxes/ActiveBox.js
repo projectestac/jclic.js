@@ -166,6 +166,8 @@ define([
       if (!this.hasHostedComponent)
         this.setHostedComponent(null);
       this.setHostedMediaPlayer(null);
+      if(this.$accessibleElement)
+        this.$accessibleElement.html('');
       this.invalidate();
     },
     /**
@@ -229,6 +231,8 @@ define([
       this.setHostedMediaPlayer(bx.hostedMediaPlayer);
       if (this.hostedMediaPlayer)
         this.hostedMediaPlayer.setVisualComponentVisible(!this.isInactive() && this.isVisible());
+      if(this.$accessibleElement)
+        this.$accessibleElement.html(this.toString());
     },
     /**
      *
@@ -339,6 +343,8 @@ define([
         this.clear();
 
       this.invalidate();
+      if(this.$accessibleElement)
+        this.$accessibleElement.html(this.toString());
     },
     /**
      *
@@ -359,6 +365,9 @@ define([
       this.checkHostedComponent();
       if (this.isAlternative() && this.hostedMediaPlayer)
         this.setHostedMediaPlayer(null);
+      
+      if(this.$accessibleElement)
+        this.$accessibleElement.html(this.toString());      
     },
     /**
      * Sets the current content of this ActiveBox
@@ -383,6 +392,10 @@ define([
       this.setAlternative(true);
       this.checkHostedComponent();
       this.checkAutoStartMedia();
+      
+      if(this.$accessibleElement)
+        this.$accessibleElement.html(this.toString());      
+      
       return true;
     },
     /**
@@ -693,11 +706,12 @@ define([
       if(Utils.settings.CANVAS_HITREGIONS) {
         if(this.$accessibleElement)
           this.$accessibleElement.remove();
-        var id = Math.random()*100000;
+        var id = Math.round(Math.random()*100000),
+            thisBox = this;
         this.$accessibleElement = $('<button/>', {tabindex: 0, id: id})
             .html(this.toString())
             .click(function(ev){
-              //$clickReceiver.trigger('click');
+              Utils.log('debug', 'Click on accessible element: %s', thisBox.toString());
             });
         $canvas.append(this.$accessibleElement);
         var elem = this.$accessibleElement.get(0);

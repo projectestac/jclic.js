@@ -274,6 +274,12 @@ define([
 
         // Repaint all
         this.invalidate().update();
+        
+        if(this.bgA)
+          this.bgA.buildAccessibleElements(this.$canvas, this.$div);
+        if(this.bgB)
+          this.bgB.buildAccessibleElements(this.$canvas, this.$div);
+        
       }
     },
     /**
