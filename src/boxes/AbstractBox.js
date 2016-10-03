@@ -118,6 +118,10 @@ define([
      * @type {boolean} */
     focused: false,
     /**
+     * Text to be used in accessible contexts
+     * @type {string} */
+    accessibleText: '',
+    /**
      * An external JQuery DOM element hosted by this box
      * @type {external:jQuery} */
     $hostedComponent: null,

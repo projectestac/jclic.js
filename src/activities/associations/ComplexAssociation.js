@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
-*  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -173,8 +173,8 @@ define([
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
         } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
-          var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
-              y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+          var x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
+              y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
           p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 
@@ -225,6 +225,14 @@ define([
                 m |= (bx1 ? bx1 : bx2).playMedia(this.ps);
                 if (!m)
                   this.playEvent('click');
+              }
+
+              // Move the focus to the opposite accessible group
+              var bg = bx1 ? this.bgA : this.bgB;
+              if (bg.$accessibleDiv) {
+                bg = bx1 ? this.bgB : this.bgA;
+                if (bg.$accessibleDiv)
+                  bg.$accessibleDiv.focus();
               }
             } else {
               // Pairing completed
@@ -286,6 +294,10 @@ define([
                 this.playEvent('actionError');
               }
               this.update();
+
+              // Move the focus to the `source` accessible group
+              if (this.bgA.$accessibleDiv)
+                this.bgA.$accessibleDiv.focus();
             }
             break;
 

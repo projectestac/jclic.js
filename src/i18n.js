@@ -98,7 +98,7 @@ define([
         if (err)
           Utils.log('error', 'Error initializing "i18next": %s', err.message);
         else {
-          ps.getMsg = t;
+          Utils.getMsg = ps.getMsg = t;
           ps.JClicVersion = GlobalData.version;
         }
       });

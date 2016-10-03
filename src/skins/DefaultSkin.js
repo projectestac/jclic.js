@@ -92,8 +92,9 @@ define([
     this.msgBox = new ActiveBox();
     this.msgBox.role = 'Message';
     var thisMsgBox = this.msgBox;
-    this.$msgBoxDiv.on('click', function () {
+    this.$msgBoxDiv.on('click', function (ev) {
       thisMsgBox.playMedia(ps);
+      return false;
     });
     this.$ctrlCnt.append(this.$msgBoxDiv);
 

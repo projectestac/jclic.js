@@ -185,6 +185,9 @@ define([
         this.bgA.setContent(abcA, solved ? solved : null);
         this.bgB.setContent(abcB);
 
+        this.bgA.accessibleText = this.ps.getMsg('Source');
+        this.bgB.accessibleText = this.ps.getMsg('Target');
+
         this.bgA.setVisible(true);
         this.bgB.setVisible(true);
       }
@@ -274,12 +277,12 @@ define([
 
         // Repaint all
         this.invalidate().update();
-        
-        if(this.bgA)
-          this.bgA.buildAccessibleElements(this.$canvas, this.$div);
-        if(this.bgB)
-          this.bgB.buildAccessibleElements(this.$canvas, this.$div);
-        
+
+        if (this.bgA)
+          this.bgA.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
+        if (this.bgB)
+          this.bgB.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
+
       }
     },
     /**
@@ -303,8 +306,8 @@ define([
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
         } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
-          var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
-              y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+          var x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
+              y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
           p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 
@@ -356,6 +359,14 @@ define([
                   m = bx1.playMedia(this.ps);
                 if (!m)
                   this.playEvent('click');
+
+                // Move the focus to the opposite accessible group
+                var bg = bx1 ? this.bgA : this.bgB;
+                if (bg.$accessibleDiv) {
+                  bg = bx1 ? this.bgB : this.bgA;
+                  if (bg.$accessibleDiv)
+                    bg.$accessibleDiv.focus();
+                }
               }
             } else {
               // Pairing completed
@@ -410,6 +421,10 @@ define([
                   this.playEvent(ok ? 'actionOk' : 'actionError');
               }
               this.update();
+
+              // Move the focus to the `source` accessible group
+              if (this.bgA.$accessibleDiv)
+                this.bgA.$accessibleDiv.focus();
             }
             break;
 

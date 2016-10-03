@@ -166,7 +166,7 @@ define([
       if (!this.hasHostedComponent)
         this.setHostedComponent(null);
       this.setHostedMediaPlayer(null);
-      if(this.$accessibleElement)
+      if (this.$accessibleElement)
         this.$accessibleElement.html('');
       this.invalidate();
     },
@@ -231,7 +231,7 @@ define([
       this.setHostedMediaPlayer(bx.hostedMediaPlayer);
       if (this.hostedMediaPlayer)
         this.hostedMediaPlayer.setVisualComponentVisible(!this.isInactive() && this.isVisible());
-      if(this.$accessibleElement)
+      if (this.$accessibleElement)
         this.$accessibleElement.html(this.toString());
     },
     /**
@@ -265,8 +265,8 @@ define([
       this.setInactive(false);
       this.checkHostedComponent();
       this.setHostedMediaPlayer(null);
-      
-      if(this.$accessibleElement)
+
+      if (this.$accessibleElement)
         this.$accessibleElement.html(this.toString());
     },
     /**
@@ -329,7 +329,7 @@ define([
         if (abc.bb !== this.boxBase)
           this.setBoxBase(abc.bb);
 
-        if(abc.innerHtmlText)
+        if (abc.innerHtmlText)
           this.setHostedComponent($('<div/>').html(abc.innerHtmlText));
 
         if (abc.hasOwnProperty('border') && this.hasBorder() !== abc.border)
@@ -343,7 +343,7 @@ define([
         this.clear();
 
       this.invalidate();
-      if(this.$accessibleElement)
+      if (this.$accessibleElement)
         this.$accessibleElement.html(this.toString());
     },
     /**
@@ -365,9 +365,11 @@ define([
       this.checkHostedComponent();
       if (this.isAlternative() && this.hostedMediaPlayer)
         this.setHostedMediaPlayer(null);
-      
-      if(this.$accessibleElement)
-        this.$accessibleElement.html(this.toString());      
+
+      if (this.$accessibleElement) {
+        this.$accessibleElement.html(this.toString());
+        this.$accessibleElement.prop('disabled', true);
+      }
     },
     /**
      * Sets the current content of this ActiveBox
@@ -392,10 +394,10 @@ define([
       this.setAlternative(true);
       this.checkHostedComponent();
       this.checkAutoStartMedia();
-      
-      if(this.$accessibleElement)
-        this.$accessibleElement.html(this.toString());      
-      
+
+      if (this.$accessibleElement)
+        this.$accessibleElement.html(this.toString());
+
       return true;
     },
     /**
@@ -613,9 +615,13 @@ define([
     getDescription: function () {
       return this.content ? this.content.getDescription() : '';
     },
-    toString: function() {
-      // TODO: Use localized value for this.role
-      return this.role + ': ' + (this.getCurrentContent() || '-').toString();
+    /**
+     * 
+     * Gets a descriptive text for this ActiveBox
+     * @returns {String}
+     */
+    toString: function () {
+      return Utils.getMsg(this.role) + ' ' + (this.getCurrentContent() || '-').toString();
     },
     /**
      *
@@ -702,29 +708,50 @@ define([
         }
       }
     },
-    buildAccessibleElement: function($canvas, $clickReceiver) {
-      if(Utils.settings.CANVAS_HITREGIONS) {
-        if(this.$accessibleElement)
+    /**
+     * 
+     * Builds a hidden `buton` that will act as a accessible element associated to the canvas area
+     * of this ActiveBox.
+     * The button will be created only when `CanvasRenderingContext2D` has a method named `addHitRegion`.
+     * See https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility
+     * for more information and supported browsers.
+     * @param {external:jQuery} $canvas - The `canvas` where this `ActiveBox` will deploy, wrapped up in a jQuery object
+     * @param {external:jQuery} $clickReceiver - The DOM element that will be notified  when `$accessibleElement` is activated.
+     * @param {external:jQuery=} $canvasGroup - Optional DOM element containing the accessible element. Useful to group cells in associations. When `null`, the element belongs to $canvas.
+     * @param {string=} eventType - Type of event sent to $clickReceiver. Default is `click`.
+     * @returns {external:jQuery} - The accessible element associated to this ActiveBox.
+     */
+    buildAccessibleElement: function ($canvas, $clickReceiver, $canvasGroup, eventType) {
+      if (Utils.settings.CANVAS_HITREGIONS) {
+        if (this.$accessibleElement)
           this.$accessibleElement.remove();
-        var id = Math.round(Math.random()*100000),
+        var id = Math.round(Math.random() * 100000),
             thisBox = this;
-        this.$accessibleElement = $('<button/>', {tabindex: 0, id: id})
+        this.$accessibleElement = $('<button/>', {tabindex: 0, id: 'AE' + id})
             .html(this.toString())
-            .click(function(ev){
+            .click(function () {
               Utils.log('debug', 'Click on accessible element: %s', thisBox.toString());
+              var $event = $.Event(eventType || 'click');
+              var bounds = thisBox.getBounds();
+              var offset = $canvas.offset();
+              $event.pageX = offset.left + bounds.pos.x + bounds.dim.width / 2;
+              $event.pageY = offset.top + bounds.pos.y + bounds.dim.height / 2;
+              $clickReceiver.trigger($event);
+              return false;
             });
-        $canvas.append(this.$accessibleElement);
+        ($canvasGroup || $canvas).append(this.$accessibleElement);
         var elem = this.$accessibleElement.get(0);
         try {
           var ctx = $canvas.get(0).getContext('2d');
           this.shape.preparePath(ctx);
-          ctx.addHitRegion({id: 'reg' + id, control: elem});
-          if(Utils.settings.CANVAS_HITREGIONS_FOCUS)
+          ctx.addHitRegion({id: 'REG' + id, control: elem});
+          if (Utils.settings.CANVAS_HITREGIONS_FOCUS)
             ctx.drawFocusIfNeeded(elem);
-        } catch(ex) {
+        } catch (ex) {
           Utils.log('error', 'Unable to build accessible element for canvas in: %s (%s)', this.toString(), ex);
         }
-      }      
+      }
+      return this.$accessibleElement;
     }
   };
 

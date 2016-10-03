@@ -370,7 +370,15 @@ define([
      * @returns {String}
      */
     toString: function() {
-      return this.getDescription();
+      var result = '';
+      if (this.text && this.text.length > 0)
+        result += this.text;
+      else if (this.imgName)
+        result += this.imgName;
+      else if (this.imgClip)
+        result += Utils.getMsg('A shape within an image');
+      
+      return result;
     }
   };
 

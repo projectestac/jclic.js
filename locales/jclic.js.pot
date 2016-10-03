@@ -192,22 +192,35 @@ msgstr ""
 msgid "Activities played at least once:"
 msgstr ""
 
-# Caption for "reports" button
+# Caption of the 'Reports' button
 msgid "Reports"
 msgstr ""
 
-# Caption for "full screen" button
+# Caption of the 'Full screen' button
 msgid "Toggle full screen"
 msgstr ""
 
-# Label for JClic logo, used in "wai-aria" contexts
+# Label for JClic logo, used in wai-aria contexts
 msgid "JClic logo"
 msgstr ""
 
-# Role of the main message box, used in "wai-aria" contexts
+# Role of the main message box, used in wai-aria contexts
 msgid "Message"
 msgstr ""
 
-# Role of regular cells, used in "wai-aria" contexts
+# Role of regular cells, used in wai-aria contexts
 msgid "Cell"
 msgstr ""
+
+# Name of the group of 'source' cells in associations
+msgid "Source"
+msgstr ""
+
+# Name of the group of 'target' cells in associations
+msgid "Target"
+msgstr ""
+
+# Label used to describe generic shapes within images, used in accessibility contexts
+msgid "A shape within an image"
+msgstr ""
+

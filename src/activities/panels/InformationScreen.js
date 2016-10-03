@@ -184,6 +184,7 @@ define([
           left: 0
         });
         this.$div.append(this.$canvas);
+        this.bg.buildAccessibleElements(this.$canvas, this.$div);
         this.invalidate().update();
       }
     },
@@ -194,7 +195,7 @@ define([
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
      */
-    processEvent: function (event) {
+    processEvent: function (event) {      
       if (this.playing) {
         var p = new AWT.Point(
             event.pageX - this.$div.offset().left,

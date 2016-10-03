@@ -56,6 +56,10 @@ define([
   ActiveBoxBag.prototype = {
     constructor: ActiveBoxBag,
     /**
+     * `div` containing the accessible elements associated to this ActiveBoxBag
+     * @type {external:jQuery} */
+    $accessibleDiv: null,
+    /**
      *
      * Adds an {@link ActiveBox} to this bag
      * @param {ActiveBox} bx - The ActiveBox to be added to this bag
@@ -306,20 +310,33 @@ define([
         if (idAssValid !== IDASSNOTUSED) {
           if (idAssValid === bx.idAss)
             break;
-        }
-        else if (bx.idAss >= 0)
+        } else if (bx.idAss >= 0)
           break;
       }
       return i;
     },
-    buildAccessibleElements: function($canvas, $clickReceiver) {
-      if(Utils.settings.CANVAS_HITREGIONS) {
-        for(var i=0; i<this.cells.length; i++) {
-          this.cells[i].buildAccessibleElement($canvas, $clickReceiver);
-        }
-      }      
+    /**
+     * 
+     * Builds a group of hidden `buton` elements that will act as a accessible objects associated
+     * to the canvas area of this ActiveBoxBag.
+     * The buttons will only be created when `CanvasRenderingContext2D` has a method named `addHitRegion`.
+     * See https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility
+     * for more information and supported browsers.
+     * @param {external:jQuery} $canvas - The `canvas` where this `ActiveBoxBag` will deploy, wrapped up in a jQuery object
+     * @param {external:jQuery} $clickReceiver - The DOM element that will be notified  when a button is clicked.
+     * @param {string=} eventType - Type of event sent to $clickReceiver. Default is `click`.
+     * @returns {external:jQuery} - The $accessibleDiv member, containing the accessible elements associated to this ActiveBoxBag.
+     */
+    buildAccessibleElements: function ($canvas, $clickReceiver, eventType) {
+      if (Utils.settings.CANVAS_HITREGIONS) {
+        this.$accessibleDiv = this.accessibleText !== '' ? $('<div/>', {'aria-label': this.accessibleText, tabindex: 0}) : null;
+        $canvas.append(this.$accessibleDiv);
+        for (var i = 0; i < this.cells.length; i++)
+          this.cells[i].buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType);
+      }
+      return this.$accessibleDiv;
     }
-    
+
   };
 
   // ActiveBoxBag extends BoxBag

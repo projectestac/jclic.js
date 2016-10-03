@@ -48,6 +48,16 @@ define([
    */
   var Utils = {
     /**
+     * Function obtained from `i18next` that will return the translation of the provided key
+     * into the current language.
+     * The real function will be initiated by the constructor of `JClicPlayer`. Meanwhile, it returns always `key`.
+     * @param {string} key - ID of the expression to be translated
+     * @returns {string} - Translated text
+     */
+    getMsg: function (key) {
+      return key;
+    },    
+    /**
      * List of valid verbosity levels
      * @const {string[]} */
     LOG_LEVELS: ['none', 'error', 'warn', 'info', 'debug', 'trace', 'all'],
