@@ -272,6 +272,18 @@ define([
       }
     },
     /**
+     * 
+     * Builds the accessible components needed for this Activity.Panel
+     * This method is called when all main elements are placed and visible, when the activity is ready
+     * to start or when resized.
+     */
+    buildAccessibleComponents: function() {
+      if(this.$canvas && this.accessibleCanvas) {
+        ActPanelAncestor.buildAccessibleComponents.call(this);
+        this.bg.buildAccessibleElements(this.$canvas, this.$div);
+      }
+    },    
+    /**
      *
      * Main handler used to process mouse, touch, keyboard and edit events
      * @param {HTMLEvent} event - The HTML event to be processed

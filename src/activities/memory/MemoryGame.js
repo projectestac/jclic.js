@@ -255,6 +255,19 @@ define([
       }
     },
     /**
+     * 
+     * Builds the accessible components needed for this Activity.Panel
+     * This method is called when all main elements are placed and visible, when the activity is ready
+     * to start or when resized.
+     */
+    buildAccessibleComponents: function() {
+      if(this.$canvas && this.accessibleCanvas) {
+        ActPanelAncestor.buildAccessibleComponents.call(this);
+        this.bg.setCellAttr('accessibleAlwaysActive', true);
+        this.bg.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
+      }
+    },    
+    /**
      *
      * Main handler used to process mouse, touch, keyboard and edit events
      * @param {HTMLEvent} event - The HTML event to be processed
@@ -276,8 +289,8 @@ define([
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
         } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
-          var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
-          var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+          var x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
+          var y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
           p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 

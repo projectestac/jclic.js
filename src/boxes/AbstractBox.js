@@ -122,6 +122,18 @@ define([
      * @type {string} */
     accessibleText: '',
     /**
+     * Describes the main role of this box on the activity. Useful in wai-aria descriptions.
+     * @type {string} */
+    role: 'Cell',
+    /**
+     * DOM element used to display this cell content in wai-aria contexts
+     * @type {external:jQuery} */
+    $accessibleElement: null,
+    /**
+     * Flag indicating that $accessibleElement should be always active
+     * @type {boolean} */
+    accessibleAlwaysActive: false,
+    /**
      * An external JQuery DOM element hosted by this box
      * @type {external:jQuery} */
     $hostedComponent: null,
@@ -384,8 +396,16 @@ define([
       if (this.$hostedComponent) {
         this.setHostedComponentColors();
         this.setHostedComponentVisible();
-      } else
+      } else {
+        if (this.$accessibleElement) {
+          var disabled = this.isInactive() && !this.accessibleAlwaysActive;
+          this.$accessibleElement.prop({
+            disabled: disabled,
+            tabindex: disabled ? -1 : 0
+          });          
+        }
         this.invalidate();
+      }
     },
     /**
      * Checks if this box is in `inactive` state.

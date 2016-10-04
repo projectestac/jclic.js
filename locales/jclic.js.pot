@@ -208,6 +208,10 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
+# Label for the activity panel, used in wai-aria contexts
+msgid "Activity panel"
+msgstr ""
+
 # Role of regular cells, used in wai-aria contexts
 msgid "Cell"
 msgstr ""
@@ -223,4 +227,3 @@ msgstr ""
 # Label used to describe generic shapes within images, used in accessibility contexts
 msgid "A shape within an image"
 msgstr ""
-

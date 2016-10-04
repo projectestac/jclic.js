@@ -163,6 +163,9 @@ define([
         this.bgB = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
 
         this.bgA.setContent(abc);
+        
+        this.bgA.accessibleText = this.ps.getMsg('Source');
+        this.bgB.accessibleText = this.ps.getMsg('Target');
 
         this.bgA.setVisible(true);
         this.bgB.setVisible(true);
@@ -251,6 +254,20 @@ define([
       }
     },
     /**
+     * 
+     * Builds the accessible components needed for this Activity.Panel
+     * This method is called when all main elements are placed and visible, when the activity is ready
+     * to start or when resized.
+     */
+    buildAccessibleComponents: function () {
+      if (this.$canvas && this.accessibleCanvas) {
+        ActPanelAncestor.buildAccessibleComponents.call(this);
+        this.bgA.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
+        this.bgB.setCellAttr('accessibleAlwaysActive', true);
+        this.bgB.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
+      }
+    },    
+    /**
      *
      * Main handler used to process mouse, touch, keyboard and edit events
      * @param {HTMLEvent} event - The HTML event to be processed
@@ -272,8 +289,8 @@ define([
           p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
         } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
-          var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
-          var y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+          var x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
+          var y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
           p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 
@@ -317,6 +334,10 @@ define([
                 // Play cell media or event sound
                 if (!bx1.playMedia(this.ps))
                   this.playEvent('click');
+                
+                // Move the focus to the opposite accessible group
+                if (this.bgB.$accessibleDiv)
+                  this.bgB.$accessibleDiv.focus();                
               }
             } else {
               // Pairing completed
@@ -355,6 +376,10 @@ define([
                   this.playEvent(ok ? 'actionOk' : 'actionError');
               }
               this.update();
+              
+              // Move the focus to the `source` accessible group
+              if (this.bgA.$accessibleDiv)
+                this.bgA.$accessibleDiv.focus();              
             }
             break;
 

@@ -129,14 +129,6 @@ define([
      * @type {boolean} */
     isBackground: false,
     /**
-     * Describes the main role of this ActiveBox on the activity. Useful for "aria" descriptions.
-     * @type {string} */
-    role: 'Cell',
-    /**
-     * DOM element used to display this cell content in wai-aria contexts
-     * @type {external:jQuery} */
-    $accessibleElement: null,
-    /**
      *
      * Returns the current content used by the box
      * @returns {ActiveBoxContent}
@@ -727,7 +719,11 @@ define([
           this.$accessibleElement.remove();
         var id = Math.round(Math.random() * 100000),
             thisBox = this;
-        this.$accessibleElement = $('<button/>', {tabindex: 0, id: 'AE' + id})
+        var disabled = this.isInactive() && !this.accessibleAlwaysActive;
+        this.$accessibleElement = $('<button/>', {
+          tabindex: disabled ? -1 : 0,
+          id: 'AE' + id,
+          disabled: disabled})
             .html(this.toString())
             .click(function () {
               Utils.log('debug', 'Click on accessible element: %s', thisBox.toString());

@@ -187,6 +187,16 @@ define([
       return this.cells.length;
     },
     /**
+     * 
+     * Sets the specified key - value pair to all cells of this bag.
+     * @param {string} key - The key to be established
+     * @param {} value - The value, of any type
+     */
+    setCellAttr: function(key, value){
+      for (var i = 0; i < this.cells.length; i++)
+        this.getBox(i)[key]=value;      
+    },
+    /**
      *
      * Overrides {@link AbstractBox#setBorder} iterating over all the cells stored in this box bag.
      * @param {boolean} newVal - Whether to set or unset the border

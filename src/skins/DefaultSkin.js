@@ -290,7 +290,10 @@ define([
         }
         this.$msgBoxDivCanvas = $('<canvas width="' + msgWidth + '" height="' + msgHeight + '"/>');
         this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth + 1, msgHeight));
-        this.msgBox.buildAccessibleElement(this.$msgBoxDivCanvas, this.$msgBoxDiv);
+        var thisSkin = this;
+        window.setTimeout(function(){
+          thisSkin.msgBox.buildAccessibleElement(thisSkin.$msgBoxDivCanvas, thisSkin.$msgBoxDiv);          
+        }, 0);
       }
       // restore canvas
       this.$msgBoxDiv.append(this.$msgBoxDivCanvas);

@@ -726,7 +726,8 @@ define([
     if ($div)
       this.$div = $div;
     else
-      this.$div = $('<div/>', {class: 'JClicActivity'});
+      this.$div = $('<div/>', {class: 'JClicActivity', 'aria-label': ps.getMsg('Activity panel')});
+    this.accessibleCanvas = Utils.settings.CANVAS_HITREGIONS;
     this.act.initAutoContentProvider();
   };
 
@@ -744,6 +745,12 @@ define([
      * The jQuery main canvas element used by this panel
      * @type {external:jQuery} */
     $canvas: null,
+    /**
+     * True when the navigator implements canvas hit regions
+     * See: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility
+     * @type {boolean}
+     */
+    accessibleCanvas: false,
     /**
      * The realized current {@link Skin}
      * @type {Skin} */
@@ -971,7 +978,7 @@ define([
     },
     /**
      *
-     *  Fits the panel within the `proposed` rectangle. The panel can occupy more space, but always
+     * Fits the panel within the `proposed` rectangle. The panel can occupy more space, but always
      * not surpassing the `bounds` rectangle.
      * @param {AWT.Rectangle} proposed - The proposed rectangle
      * @param {AWT.Rectangle} bounds - The maximum allowed bounds
@@ -997,6 +1004,27 @@ define([
       if (origin.y + d.height > bounds.dim.height)
         origin.y = Math.max(0, bounds.dim.height - d.height);
       this.setBounds(new AWT.Rectangle(origin.x, origin.y, d.width, d.height));
+      
+      // Build accessible components at the end of current tree
+      var thisPanel = this;
+      window.setTimeout(function(){
+        thisPanel.buildAccessibleComponents();
+      }, 0);
+      
+    },
+    /**
+     * 
+     * Builds the accessible components needed for this Activity.Panel
+     * This method is called when all main elements are placed and visible, when the activity is ready
+     * to start or when resized.
+     */
+    buildAccessibleComponents: function() {
+      // Clear existing elements
+      if(this.accessibleCanvas && this.$canvas && this.$canvas.children().length > 0) {
+        this.$canvas.get(0).getContext('2d').clearHitRegions();
+        this.$canvas.empty();          
+      }
+      // Create accessible elements in subclasses
     },
     /**
      *

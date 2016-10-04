@@ -244,6 +244,19 @@ define([
       }
     },
     /**
+     * 
+     * Builds the accessible components needed for this Activity.Panel
+     * This method is called when all main elements are placed and visible, when the activity is ready
+     * to start or when resized.
+     */
+    buildAccessibleComponents: function () {
+      if (this.$canvas && this.accessibleCanvas) {
+        ActPanelAncestor.buildAccessibleComponents.call(this);
+        this.bgA.buildAccessibleElements(this.$canvas, this.$div);
+        this.bgB.buildAccessibleElements(this.$canvas, this.$div);
+      }
+    },    
+    /**
      *
      * Main handler used to process mouse, touch, keyboard and edit events
      * @param {HTMLEvent} event - The HTML event to be processed
@@ -270,6 +283,8 @@ define([
                 if (this.act.useOrder)
                   this.currentItem = this.bgA.getNextItem(this.currentItem);
                 this.ps.reportNewAction(this.act, 'SELECT', bx1.getDescription(), bx2.getDescription(), true, 0);
+                if(bx2.$accessibleElement)
+                  bx2.$accessibleElement.focus();
               } else {
                 bx2.clear();
                 bx2.setInactive(false);

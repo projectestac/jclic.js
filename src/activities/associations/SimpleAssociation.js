@@ -277,12 +277,19 @@ define([
 
         // Repaint all
         this.invalidate().update();
-
-        if (this.bgA)
-          this.bgA.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
-        if (this.bgB)
-          this.bgB.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
-
+      }
+    },
+    /**
+     * 
+     * Builds the accessible components needed for this Activity.Panel
+     * This method is called when all main elements are placed and visible, when the activity is ready
+     * to start or when resized.
+     */
+    buildAccessibleComponents: function () {
+      if (this.$canvas && this.accessibleCanvas) {
+        ActPanelAncestor.buildAccessibleComponents.call(this);
+        this.bgA.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
+        this.bgB.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
       }
     },
     /**

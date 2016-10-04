@@ -184,8 +184,23 @@ define([
           left: 0
         });
         this.$div.append(this.$canvas);
-        this.bg.buildAccessibleElements(this.$canvas, this.$div);
         this.invalidate().update();
+        var thisPanel = this;
+        window.setTimeout(function(){
+          thisPanel.bg.buildAccessibleElements(thisPanel.$canvas, thisPanel.$div);
+        }, 0);        
+      }
+    },
+    /**
+     * 
+     * Builds the accessible components needed for this Activity.Panel
+     * This method is called when all main elements are placed and visible, when the activity is ready
+     * to start or when resized.
+     */
+    buildAccessibleComponents: function() {
+      if(this.$canvas && this.accessibleCanvas) {
+        ActPanelAncestor.buildAccessibleComponents.call(this);
+        this.bg.buildAccessibleElements(this.$canvas, this.$div);
       }
     },
     /**

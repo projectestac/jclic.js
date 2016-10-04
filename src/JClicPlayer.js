@@ -670,9 +670,8 @@ define([
         // Sets the actPanel member to this Activity.Panel
         this.actPanel = actp;
 
-        if (this.options.fade > 0) {
+        if (this.options.fade > 0)
           this.actPanel.$div.css('display', 'none');
-        }
 
         // Places the JQuery DOM element of actPanel within the player main panel
         this.$div.prepend(this.actPanel.$div);
@@ -705,11 +704,9 @@ define([
         this.doLayout();
         this.initActivity();
 
-        if (this.options.fade > 0) {
-          this.actPanel.$div.fadeIn(this.options.fade, function () {
-            player.activityReady();
-          });
-        }
+        this.actPanel.$div.fadeIn(this.options.fade, function () {
+          player.activityReady();
+        });
       }
       player.setWaitCursor(false);
     },
@@ -767,6 +764,7 @@ define([
      */
     activityReady: function () {
       if (this.actPanel) {
+        
         this.actPanel.activityReady();
         Utils.log('info', 'Activity ready');
       }
