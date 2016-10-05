@@ -200,7 +200,7 @@ define([
       // Find if there is another player already running on 'div'
       for (var i = 0; i < JClicObject.currentPlayers.length; i++) {
         var pl = JClicObject.currentPlayers[i];
-        if (pl && pl.$topDiv && pl.$topDiv[0] === div) {
+        if (pl && pl.$topDiv && pl.$topDiv.get(0) === div) {
           // Player found! Check if it has the same options
           Utils.log('debug', 'Existing JClicPlayer found in div. I will try to reuse it.');
           player = pl;

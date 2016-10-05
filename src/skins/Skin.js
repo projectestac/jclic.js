@@ -543,7 +543,7 @@ define([
           status !== true && status !== false)) {
         // Save current value of fullScreen for later use
         var full = screenfull.isFullscreen;
-        screenfull.toggle(this.player.$mainContainer[0]);
+        screenfull.toggle(this.player.$mainContainer.get(0));
         this.player.fullScreenChecked = true;
         // Firefox don't updates `document.fullscreenElement` in real time, so use the saved value instead
         this.setSkinSizes(!full);
