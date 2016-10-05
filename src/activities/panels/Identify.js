@@ -151,16 +151,16 @@ define([
         this.bg.setContent(abc, solved || null);
         this.bg.setAlternative(false);
         this.bg.setDefaultIdAss();
-        this.nonAssignedCells = 0;
-        this.cellsToMatch = 0;
+        this.act.nonAssignedCells = 0;
+        this.act.cellsToMatch = 0;
         var n = this.bg.getNumCells();
         for (var i = 0; i < n; i++) {
           var bx = this.bg.getActiveBox(i);
           var id = bx.idAss;
           if (id === 1)
-            this.cellsToMatch++;
+            this.act.cellsToMatch++;
           else if (id === -1) {
-            this.nonAssignedCells++;
+            this.act.nonAssignedCells++;
             bx.switchToAlt(this.ps);
           }
         }
@@ -284,8 +284,8 @@ define([
                     this.currentItem = this.bg.getNextItem(this.currentItem, 1);
                 }
                 var cellsOk = this.bg.countCellsWithIdAss(-1);
-                this.ps.reportNewAction(this.act, 'SELECT', src, null, ok, cellsOk - this.nonAssignedCells);
-                if (ok && cellsOk === this.cellsToMatch + this.nonAssignedCells)
+                this.ps.reportNewAction(this.act, 'SELECT', src, null, ok, cellsOk - this.act.nonAssignedCells);
+                if (ok && cellsOk === this.act.cellsToMatch + this.act.nonAssignedCells)
                   this.finishActivity(true);
                 else if (!m)
                   this.playEvent(ok ? 'actionOk' : 'actionError');
