@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JClic.js\n"
 "POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
-"PO-Revision-Date: 2016-07-19 11:30+0000\n"
+"PO-Revision-Date: 2016-10-05 15:08+0000\n"
 "Last-Translator: francesc <francesc@gmail.com>\n"
 "Language-Team: Catalan (http://www.transifex.com/francesc/jclicjs/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -199,3 +199,44 @@ msgstr "(sobre les activitats fetes)"
 # Number of project's activities played at least one time
 msgid "Activities played at least once:"
 msgstr "Activitats fetes almenys una vegada:"
+
+# Caption of the 'Reports' button
+msgid "Reports"
+msgstr "Informes"
+
+# Caption of the 'Full screen' button
+msgid "Toggle full screen"
+msgstr "Commuta pantalla completa"
+
+# Label for JClic logo, used in wai-aria contexts
+msgid "JClic logo"
+msgstr "Logotip del JClic"
+
+# Role of the main message box, used in wai-aria contexts
+msgid "message"
+msgstr "missatge"
+
+# Label for the activity panel, used in wai-aria contexts
+msgid "Activity panel"
+msgstr "Tauler d'activitats"
+
+# Role of regular cells, used in wai-aria contexts
+msgid "cell"
+msgstr "cel·la"
+
+# Label for 'image', used in wai-aria contexts
+msgid "image"
+msgstr "imatge"
+
+# Name of the group of 'source' cells in associations
+msgid "source"
+msgstr "origen"
+
+# Name of the group of 'target' cells in associations
+msgid "target"
+msgstr "destí"
+
+# Label used to describe generic shapes within images, used in accessibility
+# contexts
+msgid "image fragment"
+msgstr "fragment d'imatge"
