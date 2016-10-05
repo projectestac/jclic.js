@@ -1,3 +1,14 @@
+### v0.1.37 (2016-10-05)
+#### Bug fixes
+- Fixed incorrect calculation of score in __Identify__ activities
+
+#### Improvements
+- Improved accessibility based on [WAI-ARIA](https://en.wikipedia.org/wiki/WAI-ARIA) specifications (still in progress)
+- Experimental use of [HTML canvas hit regions](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility). In order to use it, flags `ExperimentalCanvasFeatures` (Chrome) or `canvas.hitregions.enabled` (Firefox) must be enabled. Checked with [ChromeVox](http://www.chromevox.com/)
+
+#### Code cleaning and documentation
+- Miscellaneous optimizations: conditional operators, jQuery expressions, allow reuse of JClicPlayer objects, etc. See git log for details
+
 ### v0.1.36 (2016-09-19)
 #### Bug fixes
 - "Full screen" mode should work now as expected (when available)
