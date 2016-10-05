@@ -205,7 +205,7 @@ msgid "JClic logo"
 msgstr ""
 
 # Role of the main message box, used in wai-aria contexts
-msgid "Message"
+msgid "message"
 msgstr ""
 
 # Label for the activity panel, used in wai-aria contexts
@@ -213,17 +213,21 @@ msgid "Activity panel"
 msgstr ""
 
 # Role of regular cells, used in wai-aria contexts
-msgid "Cell"
+msgid "cell"
+msgstr ""
+
+# Label for 'image', used in wai-aria contexts
+msgid "image"
 msgstr ""
 
 # Name of the group of 'source' cells in associations
-msgid "Source"
+msgid "source"
 msgstr ""
 
 # Name of the group of 'target' cells in associations
-msgid "Target"
+msgid "target"
 msgstr ""
 
 # Label used to describe generic shapes within images, used in accessibility contexts
-msgid "A shape within an image"
+msgid "image fragment"
 msgstr ""

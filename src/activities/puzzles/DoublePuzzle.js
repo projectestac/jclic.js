@@ -164,8 +164,8 @@ define([
 
         this.bgA.setContent(abc);
         
-        this.bgA.accessibleText = this.ps.getMsg('Source');
-        this.bgB.accessibleText = this.ps.getMsg('Target');
+        this.bgA.accessibleText = this.ps.getMsg('source');
+        this.bgB.accessibleText = this.ps.getMsg('target');
 
         this.bgA.setVisible(true);
         this.bgB.setVisible(true);

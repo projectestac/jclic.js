@@ -90,7 +90,7 @@ define([
     // Add message box
     this.$msgBoxDiv = $('<div/>', {class: 'JClicMsgBox'});
     this.msgBox = new ActiveBox();
-    this.msgBox.role = 'Message';
+    this.msgBox.role = 'message';
     var thisMsgBox = this.msgBox;
     this.$msgBoxDiv.on('click', function (ev) {
       thisMsgBox.playMedia(ps);

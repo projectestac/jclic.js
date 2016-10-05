@@ -351,17 +351,14 @@ define([
       var result = '';
       if (this.text && this.text.length > 0)
         result += this.text;
-      else if (this.imgName)
-        result += 'Image: ' + this.imgName;
-      else if (this.imgClip) {
-        result += this.imgClip.toString();
-      }
+      if (this.imgName)
+        result += (result.length > 0 ? ' ' : '') + Utils.getMsg('image') + ' ' + this.imgName;
+      if (this.imgClip)
+        result += (result.length > 0 ? ' ' : '') + this.imgClip.toString();
 
-      if (this.mediaContent) {
-        if (result.length > 0)
-          result += ' ';
-        result += this.mediaContent.getDescription();
-      }
+      if (this.mediaContent)
+        result += (result.length > 0 ? ' ' : '') + this.mediaContent.getDescription();
+      
       return result;
     },
     /**
@@ -373,10 +370,10 @@ define([
       var result = '';
       if (this.text && this.text.length > 0)
         result += this.text;
-      else if (this.imgName)
-        result += this.imgName;
-      else if (this.imgClip)
-        result += Utils.getMsg('A shape within an image');
+      if (this.imgName)
+        result += (result.length > 0 ? ' ' : '') + Utils.getMsg('image') + ' ' + this.imgName;
+      if (this.imgClip)
+        result += (result.length > 0 ? ' ' : '') + Utils.getMsg('image fragment');
       
       return result;
     }

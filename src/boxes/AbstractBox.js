@@ -124,7 +124,7 @@ define([
     /**
      * Describes the main role of this box on the activity. Useful in wai-aria descriptions.
      * @type {string} */
-    role: 'Cell',
+    role: 'cell',
     /**
      * DOM element used to display this cell content in wai-aria contexts
      * @type {external:jQuery} */

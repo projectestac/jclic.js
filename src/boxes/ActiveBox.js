@@ -613,7 +613,7 @@ define([
      * @returns {String}
      */
     toString: function () {
-      return Utils.getMsg(this.role) + ' ' + (this.getCurrentContent() || '-').toString();
+      return (this.role !== 'cell' ? Utils.getMsg(this.role) : '') + (this.getCurrentContent() || '-').toString();
     },
     /**
      *
@@ -622,8 +622,8 @@ define([
      */
     playMedia: function (ps) {
       var abc = this.getCurrentContent();
-      Utils.log('debug', this.toString());
       if (abc && abc.mediaContent) {
+        Utils.log('debug', 'Playing: %s' + abc.mediaContent.toString());
         ps.playMedia(abc.mediaContent, this);
         return true;
       }
