@@ -238,7 +238,7 @@ define([
 
         this.$form.append(this.$textField);
 
-        this.bgA.setContent(abcA, solved ? solved : null);
+        this.bgA.setContent(abcA, solved || null);
 
         this.bgA.setDefaultIdAss();
 

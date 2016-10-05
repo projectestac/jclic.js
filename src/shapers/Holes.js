@@ -71,7 +71,7 @@ define([
     getEnclosingShapeData: function () {
       if (!this.showEnclosure)
         return null;
-      return this.enclosing ? this.enclosing : Shaper.prototype.getEnclosingShapeData.call(this);
+      return this.enclosing || Shaper.prototype.getEnclosingShapeData.call(this);
     }
   };
 

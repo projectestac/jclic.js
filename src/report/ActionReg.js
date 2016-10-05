@@ -45,9 +45,9 @@ define([
    */
   var ActionReg = function (type, source, dest, ok) {
     this.type = type;
-    this.source = source ? source : null;
-    this.dest = dest ? dest : null;
-    this.ok = ok ? ok : false;
+    this.source = source || null;
+    this.dest = dest || null;
+    this.ok = ok || false;
     this.time = (new Date()).valueOf();
   };
 

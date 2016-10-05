@@ -107,10 +107,10 @@ define([
     var result = null;
     if (abc) {
       result = new ActiveBoxGrid(parent, container,
-          boxBase ? boxBase : abc.bb,
+          boxBase || abc.bb,
           px, py,
           abc.getTotalWidth(), abc.getTotalHeight(),
-          sh ? sh : abc.getShaper());
+          sh || abc.getShaper());
 
       result.setBorder(abc.border);
     }

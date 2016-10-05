@@ -218,11 +218,11 @@ define([
                   !this.act.useOrder && bx2) {
                 // Start the [BoxConnector](BoxConnector.html)
                 if (this.act.dragCells)
-                  this.bc.begin(p, bx1 ? bx1 : bx2);
+                  this.bc.begin(p, bx1 || bx2);
                 else
                   this.bc.begin(p);
                 // Play cell media or event sound
-                m |= (bx1 ? bx1 : bx2).playMedia(this.ps);
+                m |= (bx1 || bx2).playMedia(this.ps);
                 if (!m)
                   this.playEvent('click');
               }

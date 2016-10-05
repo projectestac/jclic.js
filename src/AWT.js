@@ -484,8 +484,8 @@ define([
       this.x = x.x;
       this.y = x.y;
     } else {
-      this.x = x ? x : 0;
-      this.y = y ? y : 0;
+      this.x = x || 0;
+      this.y = y || 0;
     }
   };
 
@@ -515,8 +515,8 @@ define([
      * @returns {AWT.Point}
      */
     moveBy: function (delta) {
-      this.x += delta.x ? delta.x : delta.width ? delta.width : 0;
-      this.y += delta.y ? delta.y : delta.height ? delta.height : 0;
+      this.x += delta.x || delta.width || 0;
+      this.y += delta.y || delta.height || 0;
       return this;
     },
     /**
@@ -543,8 +543,8 @@ define([
      * @returns {AWT.Point}
      */
     multBy: function (delta) {
-      this.x *= delta.x ? delta.x : delta.width ? delta.width : 0;
-      this.y *= delta.y ? delta.y : delta.height ? delta.height : 0;
+      this.x *= delta.x || delta.width || 0;
+      this.y *= delta.y || delta.height || 0;
       return this;
     },
     /**
@@ -588,8 +588,8 @@ define([
       this.width = h.x - w.x;
       this.height = h.y - w.y;
     } else {
-      this.width = w ? w : 0;
-      this.height = h ? h : 0;
+      this.width = w || 0;
+      this.height = h || 0;
     }
   };
 
@@ -628,8 +628,8 @@ define([
      * @returns {AWT.Dimension}
      */
     multBy: function (delta) {
-      this.width *= delta.x ? delta.x : delta.width ? delta.width : 0;
-      this.height *= delta.y ? delta.y : delta.height ? delta.height : 0;
+      this.width *= delta.x || delta.width || 0;
+      this.height *= delta.y || delta.height || 0;
       return this;
     },
     /**
@@ -722,7 +722,7 @@ define([
    * @param {AWT.Point} pos - The top-left coordinates of this Shape
    */
   AWT.Shape = function (pos) {
-    this.pos = pos ? pos : new AWT.Point();
+    this.pos = pos || new AWT.Point();
   };
 
   AWT.Shape.prototype = {
@@ -863,7 +863,7 @@ define([
      */
     clip: function (ctx, fillRule) {
       this.preparePath(ctx);
-      ctx.clip(fillRule ? fillRule : 'nonzero');
+      ctx.clip(fillRule || 'nonzero');
       return ctx;
     },
     /**
@@ -1188,9 +1188,9 @@ define([
         var str = strokes[n];
         str = new AWT.PathStroke(
             // In [Shaper](Shaper.html) objects, strokes have `action`, not `type`
-            str.type ? str.type : str.action,
+            str.type || str.action,
             // In [Shaper](Shaper.html) objects, strokes have `data`, not `points`
-            str.points ? str.points : str.data);
+            str.points || str.data);
         this.strokes.push(str);
       }
     }
@@ -1585,7 +1585,7 @@ define([
   AWT.Timer = function (actionPerformed, interval, enabled) {
     this.actionPerformed = actionPerformed;
     this.interval = interval;
-    this.setEnabled(enabled ? true : false);
+    this.setEnabled(enabled === true);
   };
 
   AWT.Timer.prototype = {

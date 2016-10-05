@@ -132,7 +132,7 @@ define([
           if (this.testMode && e.projectPath !== null && e.projectPath.length > 0) {
             Utils.log('info', 'At this point, a jump to "%s" should be performed.', e.projectPath);
           } else {
-            var prj = e.fullZipPath ? e.fullZipPath : e.projectPath;
+            var prj = e.fullZipPath || e.projectPath;
             this.player.load(prj, e.activity, null);
           }
         }

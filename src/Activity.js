@@ -511,7 +511,7 @@ define([
 
             // Elements specific to text activities:
           case 'checkButton':
-            act.checkButtonText = this.textContent ? this.textContent : 'check';
+            act.checkButtonText = this.textContent || 'check';
             break;
 
           case 'prevScreen':

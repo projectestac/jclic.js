@@ -60,7 +60,7 @@ define([
         tries.push(window.navigator.language);
 
       // Add English as final option
-      tries.push(defaultLanguage ? defaultLanguage : 'en');
+      tries.push(defaultLanguage || 'en');
 
       for (var i = 0; i < tries.length; i++) {
         var match = -1;

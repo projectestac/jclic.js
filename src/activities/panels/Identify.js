@@ -148,7 +148,7 @@ define([
         this.bg = ActiveBoxGrid.createEmptyGrid(null, this,
             this.act.margin, this.act.margin,
             abc);
-        this.bg.setContent(abc, solved ? solved : null);
+        this.bg.setContent(abc, solved || null);
         this.bg.setAlternative(false);
         this.bg.setDefaultIdAss();
         this.nonAssignedCells = 0;

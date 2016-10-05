@@ -519,7 +519,7 @@ define([
      * color usually means error.
      */
     checkColors: function () {
-      var $element = this.$comboList ? this.$comboList : this.$span;
+      var $element = this.$comboList || this.$span;
       if ($element) {
         var style = this.doc.style[
             this.targetStatus === 'WITH_ERROR' ? 'targetError' :

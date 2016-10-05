@@ -93,7 +93,7 @@ define(["../Utils"], function (Utils) {
      */
     setProperties: function ($xml) {
       this.id = $xml.attr('id');
-      this.action = $xml.attr('action') ? $xml.attr('action') : 'JUMP';
+      this.action = $xml.attr('action') || 'JUMP';
       this.sequence = Utils.nSlash($xml.attr('tag'));
       this.projectPath = Utils.nSlash($xml.attr('project'));
       return this;

@@ -657,7 +657,7 @@ define([
   Skin.getSkin = function (skinName, ps, $xml) {
     var sk = null;
 
-    skinName = skinName ? skinName : 'default';
+    skinName = skinName || 'default';
 
     // Correct old skin names
     if (skinName.charAt(0, 1) === '@' && skinName.substr(-4) === '.xml')

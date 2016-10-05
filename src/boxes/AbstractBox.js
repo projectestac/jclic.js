@@ -221,7 +221,7 @@ define([
       var ab = this;
       while (!ab.boxBase && ab.parent)
         ab = ab.parent;
-      return ab.boxBase ? ab.boxBase : BoxBase.prototype.defaultBoxBase;
+      return ab.boxBase || BoxBase.prototype.defaultBoxBase;
     },
     /**
      *

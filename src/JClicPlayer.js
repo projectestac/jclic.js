@@ -410,12 +410,12 @@ define([
      * @param {JClicProject} project - The project to be set
      */
     setProject: function (project) {
-      if (this.project !== null) {
+      if (this.project) {
         if (this.project !== project)
           this.project.end();
         this.removeActivity();
       }
-      this.project = project !== null ? project : new JClicProject();
+      this.project = project || new JClicProject();
       this.project.realize(this);
     },
     /**

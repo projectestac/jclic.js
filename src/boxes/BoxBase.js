@@ -51,7 +51,7 @@ define([
    * locally set.
    */
   var BoxBase = function (parent) {
-    this.parent = parent ? parent : null;
+    this.parent = parent || null;
   };
 
   BoxBase.prototype = {

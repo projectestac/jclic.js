@@ -358,7 +358,7 @@ define([
                   !this.act.useOrder && bx2 && bx2.idAss !== -1) {
                 // Start the [BoxConnector](BoxConnector.html)
                 if (this.act.dragCells)
-                  this.bc.begin(p, bx1 ? bx1 : bx2);
+                  this.bc.begin(p, bx1 || bx2);
                 else
                   this.bc.begin(p);
                 // Play cell media or event sound

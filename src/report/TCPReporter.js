@@ -222,12 +222,12 @@ define([
       this.initiated = false;
       this.stopReporting();
 
-      this.serverPath = options.path ? options.path : this.DEFAULT_SERVER_PATH;
+      this.serverPath = options.path || this.DEFAULT_SERVER_PATH;
       this.descriptionDetail = this.serverPath;
-      var serverService = options.service ? options.service : this.DEFAULT_SERVER_SERVICE;
+      var serverService = options.service || this.DEFAULT_SERVER_SERVICE;
       if (!Utils.startsWith(serverService, '/'))
         serverService = '/' + serverService;
-      var serverProtocol = options.protocol ? options.protocol : this.DEFAULT_SERVER_PROTOCOL;
+      var serverProtocol = options.protocol || this.DEFAULT_SERVER_PROTOCOL;
       this.serviceUrl = serverProtocol + "://" + this.serverPath + serverService;
 
       var reporter = this;
@@ -242,7 +242,7 @@ define([
               });
               reporter.promptUserId(false).then(function (userId) {
                 reporter.userId = userId;
-                var tl = options.lap ? options.lap : reporter.getProperty('TIME_LAP', this.DEFAULT_TIMER_LAP);
+                var tl = options.lap || reporter.getProperty('TIME_LAP', this.DEFAULT_TIMER_LAP);
                 reporter.timerLap = Math.min(30, Math.max(1, parseInt(tl)));
                 reporter.timer = window.setInterval(
                     function () {

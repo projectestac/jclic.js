@@ -55,7 +55,7 @@ define([
    */
   var DefaultSkin = function (ps, name, options) {
 
-    options = options ? options : {};
+    options = options || {};
 
     // DefaultSkin extends [Skin](Skin.html)
     Skin.call(this, ps, name);

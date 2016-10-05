@@ -44,7 +44,7 @@ define([
    */
   var SessionReg = function (project, code) {
     this.projectName = project.name;
-    this.code = code ? code : project.code;
+    this.code = code || project.code;
     this.sequences = [];
     this.actNames = [];
     this.started = new Date();
