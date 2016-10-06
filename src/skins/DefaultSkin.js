@@ -262,6 +262,8 @@ define([
      * Main method used to build the content of the skin. Resizes and places internal objects.
      */
     doLayout: function () {
+      var skin = this;
+
       // Set the fullScreen icon
       if (this.buttons.fullscreen)
         this.buttons.fullscreen.find('img').get(0).src = Utils.svgToURI(
@@ -271,14 +273,14 @@ define([
       // Resize player accordingly
       this.player.doLayout();
 
-      // Temporary remove canvas to let div get its natural size:
-      if (this.$msgBoxDivCanvas)
-        this.$msgBoxDivCanvas.remove();
-
       // Build canvas at the end of current thread, thus avoiding
       // invalid sizes due to incomplete layout of DOM objects
-      var skin = this;
       window.setTimeout(function () {
+        
+        // Temporary remove canvas to let div get its natural size:
+        if (skin.$msgBoxDivCanvas)
+          skin.$msgBoxDivCanvas.remove();
+
         // Get current size of message box div without canvas
         var msgWidth = skin.$msgBoxDiv.outerWidth(),
             msgHeight = skin.$msgBoxDiv.outerHeight();
