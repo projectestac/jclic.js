@@ -69,7 +69,7 @@ define([
     AWT.Container.call(this);
 
     this.$topDiv = $topDiv;
-    this.$mainContainer = $('<div/>').css({width: '100%', height: '100%'}).appendTo(this.$topDiv);
+    this.$mainContainer = $('<div/>', {class: 'JClicContainer'}).css({width: '100%', height: '100%'}).appendTo(this.$topDiv);
 
     options = Utils.init(options);
     this.options = $.extend(Object.create(this.options), options);

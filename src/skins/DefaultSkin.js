@@ -88,14 +88,14 @@ define([
     this.$ctrlCnt.append(this.buttons.prev);
 
     // Add message box
-    this.$msgBoxDiv = $('<div/>', {class: 'JClicMsgBox'});
     this.msgBox = new ActiveBox();
     this.msgBox.role = 'message';
     var thisMsgBox = this.msgBox;
-    this.$msgBoxDiv.on('click', function (ev) {
-      thisMsgBox.playMedia(ps);
-      return false;
-    });
+    this.$msgBoxDiv = $('<div/>', {class: 'JClicMsgBox'})
+        .click(function () {
+          thisMsgBox.playMedia(ps);
+          return false;
+        });
     this.$ctrlCnt.append(this.$msgBoxDiv);
 
     // Add `next` button
@@ -182,10 +182,10 @@ define([
     // See: [https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8479637/]
     // This affects Polymer `iron-overlay-behavior`. See: [https://github.com/PolymerElements/iron-overlay-behavior/pull/211]
     var nilFunc = null;
-    $.each(this.buttons, function(key, value){
-      if(value && (typeof value[0].focus !== 'function' || typeof value[0].blur !== 'function')){
-        if(nilFunc === null)
-          nilFunc = function(){
+    $.each(this.buttons, function (key, value) {
+      if (value && (typeof value[0].focus !== 'function' || typeof value[0].blur !== 'function')) {
+        if (nilFunc === null)
+          nilFunc = function () {
             Utils.log('error', '"blur" and "focus" not defined for SVG objects in Explorer/Edge');
           };
         value[0].focus = value[0].blur = nilFunc;
@@ -275,29 +275,26 @@ define([
       if (this.$msgBoxDivCanvas)
         this.$msgBoxDivCanvas.remove();
 
-      // Get current size of message box div without canvas
-      var msgWidth = this.$msgBoxDiv.outerWidth(),
-          msgHeight = this.$msgBoxDiv.outerHeight();
+      // Build canvas at the end of current thread, thus avoiding
+      // invalid sizes due to incomplete layout of DOM objects
+      var skin = this;
+      window.setTimeout(function () {
+        // Get current size of message box div without canvas
+        var msgWidth = skin.$msgBoxDiv.outerWidth(),
+            msgHeight = skin.$msgBoxDiv.outerHeight();
 
-      // Replace existing canvas if size has changed
-      if (this.$msgBoxDivCanvas === null ||
-          this.msgBox.dim.widht !== msgWidth ||
-          this.msgBox.dim.height !== msgHeight) {
-        this.msgBox.ctx = null;
-        if (this.$msgBoxDivCanvas) {
-          this.$msgBoxDivCanvas.remove();
-          this.$msgBoxDivCanvas = null;
+        // Replace existing canvas if size has changed
+        if (skin.$msgBoxDivCanvas === null ||
+            skin.msgBox.dim.widht !== msgWidth ||
+            skin.msgBox.dim.height !== msgHeight) {
+          skin.$msgBoxDivCanvas = $('<canvas width="' + msgWidth + '" height="' + msgHeight + '"/>');
+          skin.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth + 1, msgHeight));
+          skin.msgBox.buildAccessibleElement(skin.$msgBoxDivCanvas, skin.$msgBoxDiv);
         }
-        this.$msgBoxDivCanvas = $('<canvas width="' + msgWidth + '" height="' + msgHeight + '"/>');
-        this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth + 1, msgHeight));
-        var thisSkin = this;
-        window.setTimeout(function(){
-          thisSkin.msgBox.buildAccessibleElement(thisSkin.$msgBoxDivCanvas, thisSkin.$msgBoxDiv);          
-        }, 0);
-      }
-      // restore canvas
-      this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
-      this.updateContent();
+        // restore canvas
+        skin.$msgBoxDiv.append(skin.$msgBoxDivCanvas);
+        skin.updateContent();
+      }, 0);
     },
     /**
      *
@@ -330,7 +327,7 @@ define([
      * overlay is active, to avoid direct access to controls not related with the dialog.
      * @param {boolean} status - `true` to make main controls navigable, `false` otherwise
      */
-    enableMainButtons: function(status) {
+    enableMainButtons: function (status) {
       this.$ctrlCnt.find('.JClicBtn,.JClicCountCnt').attr('tabindex', status ? '0' : '-1');
     },
     /**
