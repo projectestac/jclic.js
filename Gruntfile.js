@@ -8,7 +8,7 @@ module.exports = function (grunt) {
 
   // List of curently available languages and map of language '.po' files
   var LANGUAGES = ['en', 'ar', 'ast', 'bs', 'ca', 'ca_ES@valencia', 'cs', 'da', 'de', 'el', 'es', 'eu', 'fr', 'gl', 'he',
-                   'it', 'nl', 'pt', 'pt_BR', 'ru', 'tr', 'vec', 'zh_TW'];
+                   'it', 'ja', 'nl', 'pt', 'pt_BR', 'ru', 'tr', 'vec', 'zh_TW'];
   var LNG_MAP = {};
   for(var p=1; p<LANGUAGES.length; p++)
     LNG_MAP[LANGUAGES[p]] = 'locales/' + LANGUAGES[p] + '.po';
