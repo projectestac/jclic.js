@@ -165,7 +165,7 @@ define([
      */
     getVal: function (val, defaultValue) {
       return val === '' || val === null || typeof val === 'undefined' ?
-          (defaultValue ? defaultValue : null) :
+          defaultValue || null :
           val;
     },
     /**

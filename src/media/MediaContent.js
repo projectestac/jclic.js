@@ -212,6 +212,13 @@ define([
       return result;
     },
     /**
+     * Returns a simplified description of this media content. Useful for accessibility methods.
+     * @returns {string} 
+     */
+    toString: function(){
+      return this.mediaType + (this.mediaFileName ? ' ' + this.mediaFileName : '');
+    },
+    /**
      *
      * Returns an image to be used as icon for representing this media content.
      * @returns {external:HTMLImageElement}

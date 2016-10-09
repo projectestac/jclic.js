@@ -34,7 +34,7 @@
   ],
   "license": "EUPL-1.1",
   "dependencies": {
-    "clipboard-js": "^0.2.0",
+    "clipboard-js": "^0.3.1",
     "i18next": "^3.1.0",
     "jquery": "~3.1.0",
     "jszip": "^3.0.0",
@@ -59,7 +59,7 @@
     "grunt-jsdoc": "^2.0.0",
     "grunt-po-json": "^0.2.0",
     "load-grunt-tasks": "~3.5.0",
-    "requirejs": "~2.2.0",
+    "requirejs": "~2.3.2",
     "xmldom": "^0.1.22"
   },
   "scripts": {

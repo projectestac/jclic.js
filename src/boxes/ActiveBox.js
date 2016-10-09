@@ -623,7 +623,7 @@ define([
     playMedia: function (ps) {
       var abc = this.getCurrentContent();
       if (abc && abc.mediaContent) {
-        Utils.log('debug', 'Playing: %s' + abc.mediaContent.toString());
+        Utils.log('debug', 'Playing: %s', abc.mediaContent.toString());
         ps.playMedia(abc.mediaContent, this);
         return true;
       }
