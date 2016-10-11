@@ -95,7 +95,12 @@ define([
       return false;
     });
 
-    var $dlgDiv = $('<div/>', {class: 'dlgDiv', role: 'dialog'}).css({
+    var $dlgDiv = $('<div/>', {
+      class: 'dlgDiv', 
+      role: 'dialog', 
+      'aria-labelledby': ps.getUniqueId('ReportsLb'),
+      'aria-describedby': ps.getUniqueId('ReportsCnt')
+    }).css({
       display: 'inline-block',
       position: 'relative',
       top: '50%',
@@ -106,7 +111,7 @@ define([
       return false;
     });
 
-    this.$dlgMainPanel = $('<div/>', {class: 'dlgMainPanel', role: 'main'});
+    this.$dlgMainPanel = $('<div/>', {class: 'dlgMainPanel', id: ps.getUniqueId('ReportsCnt')});
     this.$dlgBottomPanel = $('<div/>', {class: 'dlgBottomPanel', role: 'navigation'});
 
     // Basic dialog structure:

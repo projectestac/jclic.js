@@ -348,8 +348,8 @@ define([
 
       var $html = Utils.$HTML;
       var result = [];
-
-      result.push($('<div/>', {class: 'subTitle'}).html(this.ps.getMsg('Current results')));
+      
+      result.push($('<div/>', {class: 'subTitle', id: this.ps.getUniqueId('ReportsLb')}).html(this.ps.getMsg('Current results')));
 
       var $t = $('<table/>', {class: 'JCGlobalResults'});
       $t.append(
