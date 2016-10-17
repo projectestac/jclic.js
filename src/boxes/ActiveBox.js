@@ -725,7 +725,12 @@ define([
           id: 'AE' + id,
           disabled: disabled})
             .html(this.toString())
-            .click(function () {
+            .click(function (ev) {
+              // Check if event was produced by a mouse click
+              if(ev.originalEvent && (ev.originalEvent.pageX !== 0 || ev.originalEvent.pageY !== 0)){
+                // Mouse clicks should be processed odirectly by the canvas, so ignore this accessible event
+                return true;
+              }
               Utils.log('debug', 'Click on accessible element: %s', thisBox.toString());
               var $event = $.Event(eventType || 'click');
               var bounds = thisBox.getBounds();
