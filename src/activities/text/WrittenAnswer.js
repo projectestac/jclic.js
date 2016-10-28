@@ -236,7 +236,7 @@ define([
           'text-align': 'center'
         });
 
-        this.$form.append(this.$textField);
+        this.$div.append(this.$form.append(this.$textField));
 
         this.bgA.setContent(abcA, solved || null);
 
@@ -290,6 +290,7 @@ define([
       this.setCurrentCell(0);
     },
     /**
+     *
      * Updates the graphic content of this panel.
      * This method will be called from {@link AWT.Container#update} when needed.
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
@@ -304,7 +305,6 @@ define([
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
         this.bgA.update(ctx, dirtyRegion, this);
-        //this.bgB.update(ctx, dirtyRegion, this);
       }
       return this;
     },
@@ -327,8 +327,6 @@ define([
     setBounds: function (rect) {
       if (this.$canvas)
         this.$canvas.remove();
-      if (this.$form)
-        this.$form.detach();
 
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bgA || this.bgB) {
@@ -344,7 +342,7 @@ define([
           top: 0,
           left: 0
         });
-        this.$div.append(this.$canvas);
+        this.$div.prepend(this.$canvas);
 
         if (this.$textField) {
           this.$textField.css({
@@ -354,7 +352,6 @@ define([
             height: this.bgB.dim.height,
             zIndex: 9
           });
-          this.$div.append(this.$form);
         }
 
         // Repaint all
@@ -377,7 +374,7 @@ define([
     },
     /**
      *
-     * Changes the currently selected cell, evaluating the answer written by the user on the text field.
+     * Updates the currently selected cell, evaluating the answer written by the user on the text field.
      * @param {number} i - Index into the {@link ActiveBoxBag} of the cell to make active
      */
     setCurrentCell: function (i) {
