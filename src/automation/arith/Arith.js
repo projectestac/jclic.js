@@ -690,9 +690,6 @@ define([
     LIMI25: 7,
     LIMS25: 19,
     NOLIM: 25,
-    LIM_CH: ["x", "-9999", "-1000", "-999", "-100", "-99", "-50", "-25", "-20", "-10", "-9", "-5",
-      "-1", "0", "1", "5", "9", "10", "20", "25", "50", "99", "100", "999", "1000", "9999"],
-    NUMLST: 20,
     //
     // Operator members
     /**
@@ -751,11 +748,11 @@ define([
             break;
 
           case 'from':
-            op.limInf = Number(val);
+            op.limInf = Number(val === 'x' ? 0 : val);
             break;
 
           case 'to':
-            op.limSup = Number(val);
+            op.limSup = Number(val === 'x' ? 0 : val);
             break;
         }
 
