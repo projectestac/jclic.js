@@ -1,3 +1,13 @@
+### v0.1.38 (2016-11-02)
+#### Bug fixes
+- Treat 'x' as zero when parsing data for Arith operators, thus avoiding "NaN" errors in some activities.
+- Avoid keyboard hiding on tablets when in written answer activities.
+- Ignore mouse events on accessible components.
+
+### Improvements
+- Added Japanese to the list of supported languages (thanks to Naofumi!)
+- Improved log system
+
 ### v0.1.37 (2016-10-05)
 #### Bug fixes
 - Fixed incorrect calculation of score in __Identify__ activities
