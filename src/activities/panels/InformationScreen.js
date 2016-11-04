@@ -83,6 +83,11 @@ define([
      * @type {ActiveBoxBag} */
     bg: null,
     /**
+     * Background element (currently a `span`) used to place animated GIFs when needed
+     * @type {external:jQuery}
+     */
+    $animatedBg: null,
+    /**
      * List of mouse, touch and keyboard events intercepted by this panel
      * @type {string[]} */
     events: ['click'],
@@ -109,9 +114,20 @@ define([
 
       var abc = this.act.abc['primary'];
       if (abc) {
-
-        if (abc.imgName)
+        if (abc.imgName) {
           abc.setImgContent(this.act.project.mediaBag, null, false);
+          if (abc.animatedGifFile) {
+            this.$animatedBg = $('<span/>').css({
+              'background-image': 'url(' + abc.animatedGifFile + ')',
+              'background-position': 'center',
+              'background-repeat': 'no-repeat',
+              position: 'absolute',
+              top: 0,
+              left: 0
+            });
+            this.$div.append(this.$animatedBg);
+          }
+        }
 
         if (this.act.acp !== null)
           this.act.acp.generateContent(abc.nch, abc.ncw, [abc], false);
@@ -152,7 +168,7 @@ define([
         if (!dirtyRegion)
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
-        this.bg.update(ctx, dirtyRegion, this);
+        this.bg.update(ctx, dirtyRegion, this.$animatedBg !== null);
       }
       return this;
     },
@@ -183,12 +199,21 @@ define([
           top: 0,
           left: 0
         });
+        
+        // Resize animated gif background
+        if(this.$animatedBg){
+          this.$animatedBg.css({
+            width: rect.dim.width + 'px',
+            height: rect.dim.height + 'px',
+            'background-size': rect.dim.width + 'px ' + rect.dim.height + 'px'
+          });
+        }
         this.$div.append(this.$canvas);
         this.invalidate().update();
         var thisPanel = this;
-        window.setTimeout(function(){
+        window.setTimeout(function () {
           thisPanel.bg.buildAccessibleElements(thisPanel.$canvas, thisPanel.$div);
-        }, 0);        
+        }, 0);
       }
     },
     /**
@@ -197,8 +222,8 @@ define([
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
      */
-    buildAccessibleComponents: function() {
-      if(this.$canvas && this.accessibleCanvas) {
+    buildAccessibleComponents: function () {
+      if (this.$canvas && this.accessibleCanvas) {
         ActPanelAncestor.buildAccessibleComponents.call(this);
         this.bg.buildAccessibleElements(this.$canvas, this.$div);
       }
@@ -210,7 +235,7 @@ define([
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
      */
-    processEvent: function (event) {      
+    processEvent: function (event) {
       if (this.playing) {
         var p = new AWT.Point(
             event.pageX - this.$div.offset().left,
