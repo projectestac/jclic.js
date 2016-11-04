@@ -237,8 +237,8 @@ define([
         if (!dirtyRegion)
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
-        this.bgA.update(ctx, dirtyRegion, this);
-        this.bgB.update(ctx, dirtyRegion, this);
+        this.bgA.update(ctx, dirtyRegion);
+        this.bgB.update(ctx, dirtyRegion);
       }
       return this;
     },
