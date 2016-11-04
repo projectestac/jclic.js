@@ -273,8 +273,9 @@ define([
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * box contents.
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+     * @param {boolean=} noImg - When `true`, the cell's image (if any) will not be painted.
      */
-    update: function (ctx, dirtyRegion) {
+    update: function (ctx, dirtyRegion, noImg) {
 
       if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
         return false;
@@ -283,20 +284,20 @@ define([
         return false;
 
       if (this.backgroundBox !== null)
-        this.backgroundBox.update(ctx, dirtyRegion);
+        this.backgroundBox.update(ctx, dirtyRegion, noImg);
 
       var bx;
       for (var i = 0; i < this.cells.length; i++) {
         bx = this.getBox(i);
         if (!bx.isMarked())
-          bx.update(ctx, dirtyRegion);
+          bx.update(ctx, dirtyRegion, noImg);
       }
 
       // Make a second loop to repaint marked cells
       for (var l = 0; l < this.cells.length; l++) {
         bx = this.getBox(l);
         if (bx.isMarked())
-          bx.update(ctx, dirtyRegion);
+          bx.update(ctx, dirtyRegion, noImg);
       }
       return true;
     },

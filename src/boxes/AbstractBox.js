@@ -496,8 +496,9 @@ define([
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * box content.
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+     * @param {boolean=} noImg - When `true`, the cell's image (if any) will not be painted.
      */
-    update: function (ctx, dirtyRegion) {
+    update: function (ctx, dirtyRegion, noImg) {
       if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
         return false;
 
@@ -531,7 +532,7 @@ define([
       }
 
       if (!this.$hostedComponent)
-        this.updateContent(ctx, dirtyRegion);
+        this.updateContent(ctx, dirtyRegion, noImg);
 
       this.drawBorder(ctx);
       return true;
@@ -543,10 +544,11 @@ define([
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * box content.
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+     * @param {boolean=} noImg - When `true`, the cell's image (if any) will not be painted.
      */
     //
     // Abstract method, to be implemented in subclasses
-    updateContent: function (ctx, dirtyRegion) {
+    updateContent: function (ctx, dirtyRegion, noImg) {
     },
     /**
      *
