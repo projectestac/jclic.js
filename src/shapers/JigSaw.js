@@ -50,10 +50,6 @@ define([
   JigSaw.prototype = {
     constructor: JigSaw,
     /**
-     * Overrides same flag in {@link Shaper#rectangularShapes}
-     * @type {boolean} */
-    rectangularShapes: false,
-    /**
      *
      * Builds the jigsaw shapes based on the number of rows and columns
      */

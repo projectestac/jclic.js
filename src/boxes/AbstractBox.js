@@ -98,6 +98,10 @@ define([
      * @type {boolean} */
     temporaryHidden: false,
     /**
+     * Cells with this attribute will be transparent but with painted border
+     * @type {boolean}*/
+    temporaryTransparent: false,
+    /**
      * Whether this box is active or inactive
      * @type {boolean} */
     inactive: false,
@@ -496,9 +500,8 @@ define([
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * box content.
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
-     * @param {boolean=} noImg - When `true`, the cell's image (if any) will not be painted.
      */
-    update: function (ctx, dirtyRegion, noImg) {
+    update: function (ctx, dirtyRegion) {
       if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
         return false;
 
@@ -514,7 +517,7 @@ define([
        */
 
       var bb = this.getBoxBaseResolve();
-      if (!bb.transparent && !bb.dontFill) {
+      if (!bb.transparent && !bb.dontFill && !this.temporaryTransparent) {
         if (!bb.bgGradient || bb.bgGradient.hasTransparency()) {
           // Prepare the rendering context
           ctx.fillStyle = this.inactive ?
@@ -532,7 +535,7 @@ define([
       }
 
       if (!this.$hostedComponent)
-        this.updateContent(ctx, dirtyRegion, noImg);
+        this.updateContent(ctx, dirtyRegion);
 
       this.drawBorder(ctx);
       return true;
@@ -544,11 +547,10 @@ define([
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * box content.
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
-     * @param {boolean=} noImg - When `true`, the cell's image (if any) will not be painted.
      */
     //
     // Abstract method, to be implemented in subclasses
-    updateContent: function (ctx, dirtyRegion, noImg) {
+    updateContent: function (ctx, dirtyRegion) {
     },
     /**
      *

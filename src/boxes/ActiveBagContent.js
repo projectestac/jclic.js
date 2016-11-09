@@ -267,13 +267,23 @@ define([
     },
     /**
      *
-     * Retrieves the {@link Shaper} of this bag building a new one if needed
+     * Retrieves the {@link Shaper} of this bag, creating a new one if it was _null_
      * @returns {Shaper}
      */
     getShaper: function () {
       if (this.shaper === null)
         this.shaper = Shaper.getShaper('@Rectangular', this.ncw, this.nch);
       return this.shaper;
+    },
+    /**
+     * 
+     * Retrieves the {@link BoxBase} of this bag, creating a new one if it was _null_
+     * @returns {BoxBase}
+     */
+    getBoxBase: function() {
+      if(this.bb === null)
+        this.bb = new BoxBase();
+      return this.bb;      
     },
     /**
      *
@@ -388,13 +398,14 @@ define([
           this.getActiveBoxContent(i).id = ids[i];
     },
     /**
-     *
-     * Resets the `id` fields of all the {@link ActiveBoxContent} elements to the specified value.
-     * @param {number} id - The value to set as `id`
+     * 
+     * Sets `value` to the `key` attribute of all cells
+     * @param {string} key - The key where the value will be stored
+     * @param {*} value - The supplied value. Can be of any type.
      */
-    setAllIdsTo: function (id) {
+    setCellsAttribute: function(key, value){
       for (var i = 0; i < this.activeBoxContentArray.length; i++)
-        this.getActiveBoxContent(i).id = id;
+        this.getActiveBoxContent(i)[key] = value;      
     },
     /**
      *

@@ -130,10 +130,23 @@ define([
       var abc = this.act.abc['primary'];
       var solved = this.act.abc['solvedPrimary'];
       if (abc) {
-
-        if (abc.imgName)
+        
+        if (abc.imgName) {
           abc.setImgContent(this.act.project.mediaBag, null, false);
-
+          if (abc.animatedGifFile && !abc.shaper.rectangularShapes && !this.act.scramble['primary']) {
+            this.$animatedBg = $('<span/>').css({
+              'background-image': 'url(' + abc.animatedGifFile + ')',
+              'background-position': 'center',
+              'background-repeat': 'no-repeat',
+              position: 'absolute',
+              top: 0,
+              left: 0
+            });
+            this.$div.append(this.$animatedBg);
+            abc.setCellsAttribute('temporaryTransparent', true);
+          }
+        }
+        
         if (solved && solved.imgName)
           solved.setImgContent(this.act.project.mediaBag, null, false);
 
@@ -150,6 +163,8 @@ define([
             abc);
         this.bg.setContent(abc, solved || null);
         this.bg.setAlternative(false);
+        if(this.$animatedBg)
+          this.bg.setCellAttr('temporaryTransparent', true);        
         this.bg.setDefaultIdAss();
         this.act.nonAssignedCells = 0;
         this.act.cellsToMatch = 0;
@@ -231,8 +246,16 @@ define([
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bg) {
         this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>');
+        // Resize animated gif background
+        if(this.$animatedBg){
+          this.$animatedBg.css({
+            width: rect.dim.width + 'px',
+            height: rect.dim.height + 'px',
+            'background-size': rect.dim.width + 'px ' + rect.dim.height + 'px'
+          });
+        }
         this.$div.append(this.$canvas);
-        this.invalidate().update();
+        this.invalidate().update();                
       }
     },
     /**

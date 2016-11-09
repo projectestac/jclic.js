@@ -83,11 +83,6 @@ define([
      * @type {ActiveBoxBag} */
     bg: null,
     /**
-     * Background element (currently a `span`) used to place animated GIFs when needed
-     * @type {external:jQuery}
-     */
-    $animatedBg: null,
-    /**
      * List of mouse, touch and keyboard events intercepted by this panel
      * @type {string[]} */
     events: ['click'],
@@ -116,7 +111,7 @@ define([
       if (abc) {
         if (abc.imgName) {
           abc.setImgContent(this.act.project.mediaBag, null, false);
-          if (abc.animatedGifFile) {
+          if (abc.animatedGifFile && !abc.shaper.rectangularShapes) {
             this.$animatedBg = $('<span/>').css({
               'background-image': 'url(' + abc.animatedGifFile + ')',
               'background-position': 'center',
@@ -134,6 +129,8 @@ define([
 
         this.bg = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
         this.bg.setContent(abc);
+        if(this.$animatedBg)
+          this.bg.setCellAttr('temporaryTransparent', true);
         this.bg.setVisible(true);
       }
     },
@@ -168,7 +165,7 @@ define([
         if (!dirtyRegion)
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
-        this.bg.update(ctx, dirtyRegion, this.$animatedBg !== null);
+        this.bg.update(ctx, dirtyRegion);
       }
       return this;
     },
