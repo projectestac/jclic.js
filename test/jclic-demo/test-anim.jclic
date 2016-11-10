@@ -1,0 +1,726 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JClicProject name="prova_animacio" version="0.1.3">
+ <settings>
+  <title>Prova animació</title>
+  <revision description="created" date="11/8/16" />
+  <descriptors />
+ </settings>
+ <sequence>
+  <item id="start" name="menú">
+   <jump action="STOP" id="forward" />
+  </item>
+  <item id="informació" name="informació simple" />
+  <item name="informacio rectangles" />
+  <item name="informació jigsaw" />
+  <item name="informacio retalls">
+   <jump action="RETURN" id="forward" />
+  </item>
+  <item id="identificació" name="identificacio rectangular" />
+  <item name="identificacio rectangular estatica" />
+  <item name="identificacio jigsaw" />
+  <item name="identificació retalls estàtica">
+   <jump action="RETURN" id="forward" />
+  </item>
+  <item id="exploració" name="exploracio amb retalls" />
+  <item name="exploracio rectangular" />
+  <item name="exploracio jigsaw">
+   <jump action="RETURN" id="forward" />
+  </item>
+  <item id="associacions" name="Associació simple rectangles" />
+  <item name="Associació simple retalls" />
+  <item name="associacio complexa rectangular" />
+  <item name="associacio complexa amb retalls">
+   <jump action="RETURN" id="forward" />
+  </item>
+  <item id="resposta escrita" name="resposta escrita retalls" />
+  <item name="resposta escrita rectangles">
+   <jump action="RETURN" id="forward" />
+  </item>
+  <item id="sopa" name="sopa animada">
+   <jump action="RETURN" id="forward" />
+  </item>
+ </sequence>
+ <activities>
+  <activity class="@associations.ComplexAssociation" name="associacio complexa amb retalls" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Complex association with shapes</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="2" cols="3" border="true" image="bb2bmariona.gif" id="primary">
+    <style />
+    <shaper class="@Holes" cols="3" rows="2">
+     <shape comment="0">rectangle:0.03,0.175714,0.316667,0.41</shape>
+     <shape comment="1">rectangle:0.403333,0.405714,0.227778,0.56</shape>
+     <shape comment="2">rectangle:0.638889,0.025714,0.272222,0.304286</shape>
+     <shape comment="3">rectangle:0.032222,0.645714,0.274444,0.35</shape>
+     <shape comment="4">rectangle:0.38,0.048571,0.21,0.31</shape>
+     <shape comment="5">rectangle:0.677778,0.427143,0.244444,0.517143</shape>
+    </shaper>
+    <ids>0 4 2 5 1 3</ids>
+   </cells>
+   <cells rows="6" cols="1" cellWidth="50.0" cellHeight="30.0" border="true" id="secondary">
+    <style />
+    <shaper class="@Rectangular" cols="1" rows="6" />
+    <cell>
+     <p>1</p>
+    </cell>
+    <cell>
+     <p>2</p>
+    </cell>
+    <cell>
+     <p>3</p>
+    </cell>
+    <cell>
+     <p>4</p>
+    </cell>
+    <cell>
+     <p>5</p>
+    </cell>
+    <cell>
+     <p>6</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="false" secondary="true" />
+   <layout position="AB" />
+  </activity>
+  <activity class="@associations.ComplexAssociation" name="associacio complexa rectangular" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Complex association with rectangles</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="2" cols="3" border="true" image="bb2bmariona.gif" id="primary">
+    <style />
+    <shaper class="@Rectangular" cols="3" rows="2" />
+    <ids>0 1 2 3 4 5</ids>
+   </cells>
+   <cells rows="6" cols="1" cellWidth="50.0" cellHeight="30.0" border="true" id="secondary">
+    <style />
+    <shaper class="@Rectangular" cols="1" rows="6" />
+    <cell>
+     <p>1</p>
+    </cell>
+    <cell>
+     <p>2</p>
+    </cell>
+    <cell>
+     <p>3</p>
+    </cell>
+    <cell>
+     <p>4</p>
+    </cell>
+    <cell>
+     <p>5</p>
+    </cell>
+    <cell>
+     <p>6</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="false" secondary="true" />
+   <layout position="AB" />
+  </activity>
+  <activity class="@panels.Explore" name="exploracio amb retalls" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Explore with shapes</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="2" cols="3" border="true" image="bb2bmariona.gif" id="primary">
+    <style />
+    <shaper class="@Holes" cols="3" rows="2">
+     <shape comment="0">rectangle:0.03,0.175714,0.316667,0.41</shape>
+     <shape comment="1">rectangle:0.403333,0.405714,0.227778,0.56</shape>
+     <shape comment="2">rectangle:0.638889,0.025714,0.272222,0.304286</shape>
+     <shape comment="3">rectangle:0.032222,0.645714,0.274444,0.35</shape>
+     <shape comment="4">rectangle:0.38,0.048571,0.21,0.31</shape>
+     <shape comment="5">rectangle:0.677778,0.427143,0.244444,0.517143</shape>
+    </shaper>
+    <ids>0 4 2 5 1 3</ids>
+   </cells>
+   <cells rows="6" cols="1" cellWidth="66.0" cellHeight="23.0" border="true" id="secondary">
+    <style>
+     <font family="Arial" size="24" bold="true" />
+     <color foreground="0xCC0000" background="0xFFCC99" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="6" />
+    <cell>
+     <p>1</p>
+    </cell>
+    <cell>
+     <p>2</p>
+    </cell>
+    <cell>
+     <p>3</p>
+    </cell>
+    <cell>
+     <p>4</p>
+    </cell>
+    <cell>
+     <p>5</p>
+    </cell>
+    <cell>
+     <p>6</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="false" />
+   <layout position="AUB" />
+  </activity>
+  <activity class="@panels.Explore" name="exploracio jigsaw" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Explore with jigsaw puzzle</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="2" cols="3" border="true" image="bb2bmariona.gif" id="primary">
+    <style />
+    <shaper class="@ClassicJigSaw" cols="3" rows="2" />
+    <ids>0 4 2 5 1 3</ids>
+   </cells>
+   <cells rows="6" cols="1" cellWidth="66.0" cellHeight="23.0" border="true" id="secondary">
+    <style>
+     <font family="Arial" size="24" bold="true" />
+     <color foreground="0xCC0000" background="0xFFCC99" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="6" />
+    <cell>
+     <p>1</p>
+    </cell>
+    <cell>
+     <p>2</p>
+    </cell>
+    <cell>
+     <p>3</p>
+    </cell>
+    <cell>
+     <p>4</p>
+    </cell>
+    <cell>
+     <p>5</p>
+    </cell>
+    <cell>
+     <p>6</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="false" />
+   <layout position="AUB" />
+  </activity>
+  <activity class="@panels.Explore" name="exploracio rectangular" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Explore with rectangles</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="2" cols="3" border="true" image="bb2bmariona.gif" id="primary">
+    <style />
+    <shaper class="@Rectangular" cols="3" rows="2" />
+    <ids>0 4 2 5 1 3</ids>
+   </cells>
+   <cells rows="6" cols="1" cellWidth="66.0" cellHeight="23.0" border="true" id="secondary">
+    <style>
+     <font family="Arial" size="24" bold="true" />
+     <color foreground="0xCC0000" background="0xFFCC99" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="6" />
+    <cell>
+     <p>1</p>
+    </cell>
+    <cell>
+     <p>2</p>
+    </cell>
+    <cell>
+     <p>3</p>
+    </cell>
+    <cell>
+     <p>4</p>
+    </cell>
+    <cell>
+     <p>5</p>
+    </cell>
+    <cell>
+     <p>6</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="false" />
+   <layout position="AUB" />
+  </activity>
+  <activity class="@panels.Identify" name="identificacio jigsaw" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Identify with jigsaw puzzle</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="3" cols="3" border="true" image="bb2bmariona.gif" id="primary">
+    <style />
+    <shaper class="@ClassicJigSaw" cols="3" rows="3" />
+    <ids>1 0 0 0 1 0 0 0 1</ids>
+   </cells>
+   <scramble times="31" primary="false" />
+  </activity>
+  <activity class="@panels.Identify" name="identificacio rectangular" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Identify with scrambled rectangles</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="3" cols="3" border="true" image="bb2bmariona.gif" id="primary">
+    <style />
+    <shaper class="@Rectangular" cols="3" rows="3" />
+    <ids>1 0 0 0 1 0 0 0 1</ids>
+   </cells>
+   <scramble times="31" primary="true" />
+  </activity>
+  <activity class="@panels.Identify" name="identificacio rectangular estatica" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Identify with rectangles</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="3" cols="3" border="true" image="bb2bmariona.gif" id="primary">
+    <style />
+    <shaper class="@Rectangular" cols="3" rows="3" />
+    <ids>1 0 0 0 1 0 0 0 1</ids>
+   </cells>
+   <scramble times="31" primary="false" />
+  </activity>
+  <activity class="@panels.Identify" name="identificació retalls estàtica" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Identify with shapes</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="3" cols="3" border="true" image="bb2bmariona.gif" id="primary">
+    <style />
+    <shaper class="@Holes" cols="3" rows="3">
+     <shape comment="0">ellipse:0.052222,0.167143,0.294444,0.312857</shape>
+     <shape comment="1">ellipse:0.644444,0.295714,0.282222,0.351429</shape>
+     <shape comment="2">ellipse:0.04,0.618571,0.325556,0.34</shape>
+     <shape comment="3">rectangle:0.431111,0.407143,0.18,0.532857</shape>
+     <shape comment="4">rectangle:0.416667,0.038571,0.182222,0.29</shape>
+     <shape comment="5">rectangle:0.703333,0.054286,0.213333,0.152857</shape>
+    </shaper>
+    <ids>0 1 1 0 1 0</ids>
+   </cells>
+   <scramble times="31" primary="false" />
+  </activity>
+  <activity class="@panels.InformationScreen" name="informacio rectangles" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Information screen with rectangles</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="3" cols="3" border="true" image="bb2bmariona.gif">
+    <style />
+    <shaper class="@Rectangular" cols="3" rows="3" />
+   </cells>
+  </activity>
+  <activity class="@panels.InformationScreen" name="informacio retalls" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Information screen with shapes</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="1" cols="1" border="true" image="bb2bmariona.gif">
+    <style />
+    <shaper class="@Holes" cols="1" rows="1">
+     <shape comment="0">ellipse:0.393333,0.412857,0.248889,0.587143</shape>
+     <shape comment="1">rectangle:0.025556,0.188571,0.33,0.395714</shape>
+     <shape comment="2">M:0.61,0.052857|L:0.636667,0.292857|L:0.694444,0.35|L:0.693333,0.555714|L:0.647778,0.58|L:0.654444,0.657143|L:0.956667,0.66|L:0.954444,0.227143|L:0.908889,0.232857|L:0.882222,0.008571|L:0.612222,0.021429|L:0.58,0.015714|L:0.61,0.052857</shape>
+    </shaper>
+   </cells>
+  </activity>
+  <activity class="@panels.InformationScreen" name="informació jigsaw" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Information screen with jigsaw puzzle</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="3" cols="3" border="true" image="bb2bmariona.gif">
+    <style />
+    <shaper class="@ClassicJigSaw" cols="3" rows="3" />
+   </cells>
+  </activity>
+  <activity class="@panels.InformationScreen" name="informació simple" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Simple information screen</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="1" cols="1" border="true" image="bb2bmariona.gif">
+    <style />
+    <shaper class="@Rectangular" cols="1" rows="1" />
+   </cells>
+  </activity>
+  <activity class="@panels.InformationScreen" name="menú" code="">
+   <description />
+   <messages />
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="6" cols="1" cellWidth="479.0" cellHeight="64.0" border="true">
+    <style borderStroke="0.7" markerStroke="5.0">
+     <font family="Arial" size="22" bold="true" />
+     <color foreground="0x000099" background="0xFFFFFF" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="6" />
+    <cell>
+     <media type="RUN_CLIC_PACKAGE" level="1" file="informació" />
+     <p>Information screen</p>
+    </cell>
+    <cell>
+     <media type="RUN_CLIC_PACKAGE" level="1" file="identificació" />
+     <p>Identify</p>
+    </cell>
+    <cell>
+     <media type="RUN_CLIC_PACKAGE" level="1" file="exploració" />
+     <p>Explore</p>
+    </cell>
+    <cell>
+     <media type="RUN_CLIC_PACKAGE" level="1" file="associacions" />
+     <p>Assotiation</p>
+    </cell>
+    <cell>
+     <media type="RUN_CLIC_PACKAGE" level="1" file="resposta escrita" />
+     <p>Written answer</p>
+    </cell>
+    <cell>
+     <media type="RUN_CLIC_PACKAGE" level="1" file="sopa" />
+     <p>Scrambled letters</p>
+    </cell>
+   </cells>
+  </activity>
+  <activity class="@text.WrittenAnswer" name="resposta escrita rectangles" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Written answer with rectangles</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="2" cols="2" border="true" image="bb2bmariona.gif" id="primary">
+    <style />
+    <shaper class="@Rectangular" cols="2" rows="2" />
+    <ids>0 1 2 3</ids>
+   </cells>
+   <cells rows="2" cols="2" cellWidth="386.0" cellHeight="24.0" border="true" id="answers">
+    <style />
+    <shaper class="@Rectangular" cols="2" rows="2" />
+    <cell>
+     <p>one</p>
+    </cell>
+    <cell>
+     <p>two</p>
+    </cell>
+    <cell>
+     <p>three</p>
+    </cell>
+    <cell>
+     <p>four</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="false" />
+   <layout position="AUB" />
+  </activity>
+  <activity class="@associations.SimpleAssociation" name="Associació simple rectangles" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Simple association with rectangles</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="3" cols="2" cellWidth="50.0" cellHeight="30.0" border="true" id="primary">
+    <style />
+    <shaper class="@Rectangular" cols="2" rows="3" />
+    <cell>
+     <p>1</p>
+    </cell>
+    <cell>
+     <p>2</p>
+    </cell>
+    <cell>
+     <p>3</p>
+    </cell>
+    <cell>
+     <p>4</p>
+    </cell>
+    <cell>
+     <p>5</p>
+    </cell>
+    <cell>
+     <p>6</p>
+    </cell>
+   </cells>
+   <cells rows="3" cols="2" border="true" image="bb2bmariona.gif" id="secondary">
+    <style />
+    <shaper class="@Rectangular" cols="2" rows="3" />
+   </cells>
+   <scramble times="31" primary="true" secondary="false" />
+   <layout position="AB" />
+  </activity>
+  <activity class="@text.WrittenAnswer" name="resposta escrita retalls" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Written answer with shapes</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="2" cols="2" border="true" image="bb2bmariona.gif" id="primary">
+    <style />
+    <shaper class="@Holes" cols="2" rows="2">
+     <shape comment="0">rectangle:0.016667,0.602857,0.381111,0.385714</shape>
+     <shape comment="1">rectangle:0.012222,0.17,0.355556,0.411429</shape>
+     <shape comment="2">rectangle:0.337778,0.034286,0.311111,0.402857</shape>
+     <shape comment="3">rectangle:0.671111,0.024286,0.266667,0.3</shape>
+    </shaper>
+    <ids>0 1 2 3</ids>
+   </cells>
+   <cells rows="2" cols="2" cellWidth="401.0" cellHeight="22.0" border="true" id="answers">
+    <style />
+    <shaper class="@Rectangular" cols="2" rows="2" />
+    <cell>
+     <p>Històries temporals</p>
+    </cell>
+    <cell>
+     <p>Mini sudokus</p>
+    </cell>
+    <cell>
+     <p>Construccions</p>
+    </cell>
+    <cell>
+     <p>Diagrames de Venn</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="false" />
+   <layout position="AUB" />
+  </activity>
+  <activity class="@textGrid.WordSearch" name="sopa animada" code="">
+   <description />
+   <messages />
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <textGrid rows="6" columns="4" cellWidth="42.0" cellHeight="46.0" border="true">
+    <style>
+     <font family="Arial" size="17" bold="true" />
+     <color foreground="0x3300FF" background="0xFFFFFF" />
+    </style>
+    <text>
+     <row>ONE***</row>
+     <row>TWO***</row>
+     <row>THREE*</row>
+     <row>FOUR**</row>
+    </text>
+   </textGrid>
+   <clues>
+    <clue id="0">ONE</clue>
+    <clue id="1">TWO</clue>
+    <clue id="2">THREE</clue>
+    <clue id="3">FOUR</clue>
+   </clues>
+   <cells rows="2" cols="2" border="true" image="bb2bmariona.gif" id="secondary">
+    <style />
+    <shaper class="@Holes" cols="2" rows="2">
+     <shape comment="0">ellipse:0.03,0.162857,0.292222,0.38</shape>
+     <shape comment="1">ellipse:0.616667,0.05,0.222222,0.425714</shape>
+     <shape comment="2">ellipse:0.047778,0.605714,0.312222,0.314286</shape>
+     <shape comment="3">ellipse:0.497778,0.571429,0.43,0.395714</shape>
+    </shaper>
+   </cells>
+   <layout position="AB" />
+  </activity>
+  <activity class="@associations.SimpleAssociation" name="Associació simple retalls" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Simple association with shapes</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <cells rows="3" cols="2" cellWidth="50.0" cellHeight="30.0" border="true" id="primary">
+    <style borderStroke="0.7" markerStroke="5.0">
+     <font family="Arial" size="17" bold="true" />
+     <color foreground="0xCC3300" background="0xFFCC66" inactive="0xFFCCFF" border="0x0000FF" />
+    </style>
+    <shaper class="@Holes" cols="2" rows="3">
+     <shape comment="0">rectangle:0.05,0.077778,0.26,0.233333</shape>
+     <shape comment="1">rectangle:0.43,0.1,0.41,0.222222</shape>
+     <shape comment="2">rectangle:0.05,0.422222,0.26,0.311111</shape>
+     <shape comment="3">rectangle:0.45,0.411111,0.48,0.266667</shape>
+     <shape comment="4">rectangle:0.06,0.8,0.37,0.177778</shape>
+     <shape comment="5">rectangle:0.51,0.788889,0.42,0.155556</shape>
+    </shaper>
+    <cell>
+     <p>1</p>
+    </cell>
+    <cell>
+     <p>2</p>
+    </cell>
+    <cell>
+     <p>3</p>
+    </cell>
+    <cell>
+     <p>4</p>
+    </cell>
+    <cell>
+     <p>5</p>
+    </cell>
+    <cell>
+     <p>6</p>
+    </cell>
+   </cells>
+   <cells rows="3" cols="2" border="true" image="bb2bmariona.gif" id="secondary">
+    <style />
+    <shaper class="@Holes" cols="2" rows="3">
+     <shape comment="0">rectangle:0.055556,0.092857,0.297778,0.381429</shape>
+     <shape comment="1">rectangle:0.411111,0.052857,0.236667,0.38</shape>
+     <shape comment="2">ellipse:0.737778,0.108571,0.212222,0.335714</shape>
+     <shape comment="3">M:0.7,0.735714|L:0.758889,0.818571|L:0.875556,0.922857|L:0.955556,0.467143|L:0.826667,0.487143|L:0.808889,0.547143|L:0.693333,0.537143|L:0.715556,0.625714|L:0.7,0.735714</shape>
+     <shape comment="4">rectangle:0.381111,0.575714,0.26,0.221429</shape>
+     <shape comment="5">ellipse:0.048889,0.56,0.296667,0.414286</shape>
+    </shaper>
+   </cells>
+   <scramble times="31" primary="true" secondary="false" />
+   <layout position="AB" />
+  </activity>
+ </activities>
+ <mediaBag>
+  <media name="bb2bmariona.gif" file="bb2bmariona.gif" animated="true" />
+ </mediaBag>
+</JClicProject>
+
