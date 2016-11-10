@@ -100,7 +100,7 @@ define([
     /**
      * Cells with this attribute will be transparent but with painted border
      * @type {boolean}*/
-    temporaryTransparent: false,
+    tmpTrans: false,
     /**
      * Whether this box is active or inactive
      * @type {boolean} */
@@ -517,7 +517,7 @@ define([
        */
 
       var bb = this.getBoxBaseResolve();
-      if (!bb.transparent && !bb.dontFill && !this.temporaryTransparent) {
+      if (!bb.transparent && !bb.dontFill && !this.tmpTrans) {
         if (!bb.bgGradient || bb.bgGradient.hasTransparency()) {
           // Prepare the rendering context
           ctx.fillStyle = this.inactive ?

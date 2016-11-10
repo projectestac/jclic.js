@@ -111,26 +111,23 @@ define([
       if (abc) {
         if (abc.imgName) {
           abc.setImgContent(this.act.project.mediaBag, null, false);
-          if (abc.animatedGifFile && !abc.shaper.rectangularShapes) {
+          if (abc.animatedGifFile && !abc.shaper.rectangularShapes)
             this.$animatedBg = $('<span/>').css({
               'background-image': 'url(' + abc.animatedGifFile + ')',
               'background-position': 'center',
               'background-repeat': 'no-repeat',
-              position: 'absolute',
-              top: 0,
-              left: 0
-            });
-            this.$div.append(this.$animatedBg);
-          }
+              position: 'absolute'}).appendTo(this.$div);
         }
 
         if (this.act.acp !== null)
           this.act.acp.generateContent(abc.nch, abc.ncw, [abc], false);
 
-        this.bg = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
+        this.bg = ActiveBoxGrid.createEmptyGrid(null, this,
+            this.act.margin, this.act.margin,
+            abc);
         this.bg.setContent(abc);
-        if(this.$animatedBg)
-          this.bg.setCellAttr('temporaryTransparent', true);
+        if (this.$animatedBg)
+          this.bg.setCellAttr('tmpTrans', true);
         this.bg.setVisible(true);
       }
     },
@@ -196,19 +193,21 @@ define([
           top: 0,
           left: 0
         });
-        
         // Resize animated gif background
-        if(this.$animatedBg){
+        if (this.$animatedBg) {
+          var bgRect = this.bg.getBounds();
           this.$animatedBg.css({
-            width: rect.dim.width + 'px',
-            height: rect.dim.height + 'px',
-            'background-size': rect.dim.width + 'px ' + rect.dim.height + 'px'
+            left: bgRect.pos.x,
+            top: bgRect.pos.y,
+            width: bgRect.dim.width + 'px',
+            height: bgRect.dim.height + 'px',
+            'background-size': bgRect.dim.width + 'px ' + bgRect.dim.height + 'px'
           });
         }
         this.$div.append(this.$canvas);
         this.invalidate().update();
         var thisPanel = this;
-        window.setTimeout(function () {
+        setTimeout(function () {
           thisPanel.bg.buildAccessibleElements(thisPanel.$canvas, thisPanel.$div);
         }, 0);
       }

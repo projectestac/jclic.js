@@ -134,9 +134,16 @@ define([
      *
      * Clears the content of all boxes
      */
-    clearAll: function () {
+    clearAllBoxes: function () {
       for (var i = 0; i < this.cells.length; i++)
         this.getActiveBox(i).clear();
+    },
+    /**
+     *
+     * Clears the content of all boxes and background box
+     */
+    clearAll: function () {
+      this.clearAllBoxes();
       if (this.backgroundBox !== null)
         this.getBackgroundActiveBox().clear();
     },

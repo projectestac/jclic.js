@@ -198,8 +198,15 @@ define([
             this.invAssCheck[i] = false;
         }
 
-        if (abcA.imgName)
+        if (abcA.imgName) {
           abcA.setImgContent(this.act.project.mediaBag, null, false);
+          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramble['primary'])
+            this.$animatedBg = $('<span/>').css({
+              'background-image': 'url(' + abcA.animatedGifFile + ')',
+              'background-position': 'center',
+              'background-repeat': 'no-repeat',
+              position: 'absolute'}).appendTo(this.$div);
+        }
 
         if (solved && solved.imgName)
           solved.setImgContent(this.act.project.mediaBag, null, false);
@@ -239,8 +246,9 @@ define([
         this.$div.append(this.$form.append(this.$textField));
 
         this.bgA.setContent(abcA, solved || null);
-
         this.bgA.setDefaultIdAss();
+        if (this.$animatedBg)
+          this.bgA.setCellAttr('tmpTrans', true);
 
         this.act.nonAssignedCells = 0;
         n = this.bgA.getNumCells();
@@ -342,7 +350,20 @@ define([
           top: 0,
           left: 0
         });
-        this.$div.prepend(this.$canvas);
+
+        // Resize animated gif background
+        if (this.$animatedBg) {
+          var bgRect = this.bgA.getBounds();
+          this.$animatedBg.css({
+            left: bgRect.pos.x,
+            top: bgRect.pos.y,
+            width: bgRect.dim.width + 'px',
+            height: bgRect.dim.height + 'px',
+            'background-size': bgRect.dim.width + 'px ' + bgRect.dim.height + 'px'
+          });
+          this.$canvas.insertAfter(this.$animatedBg);
+        } else
+          this.$div.prepend(this.$canvas);
 
         if (this.$textField) {
           this.$textField.css({

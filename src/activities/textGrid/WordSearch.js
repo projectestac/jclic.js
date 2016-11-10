@@ -68,6 +68,11 @@ define([
      * @type {number[]} */
     clueItems: null,
     /**
+     * Object that indicates if box grids A and B must be scrambled.
+     * (defaults to _false_ in WordSearch activities)
+     * @type {Activity~scrambleType} */
+    scramble: {primary: false, secondary: false},
+    /**
      *
      * Retrieves the minimum number of actions needed to solve this activity
      * @returns {number}
@@ -164,8 +169,15 @@ define([
       var abcAlt = this.act.abc['secondary'];
 
       if (abcAlt) {
-        if (abcAlt.imgName)
+        if (abcAlt.imgName) {
           abcAlt.setImgContent(this.act.project.mediaBag, null, false);
+          if (abcAlt.animatedGifFile && !abcAlt.shaper.rectangularShapes && !this.act.scramble['secondary'])
+            this.$animatedBg = $('<span/>').css({
+              'background-image': 'url(' + abcAlt.animatedGifFile + ')',
+              'background-position': 'center',
+              'background-repeat': 'no-repeat',
+              position: 'absolute'}).appendTo(this.$div);
+        }
 
         if (this.act.acp !== null) {
           var contentKit = [abcAlt];
@@ -176,8 +188,12 @@ define([
       if (tgc) {
         this.grid = TextGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, tgc, false);
 
-        if (abcAlt)
+        if (abcAlt) {
           this.bgAlt = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abcAlt);
+
+          if (this.$animatedBg && this.bgAlt.backgroundBox)
+            this.bgAlt.backgroundBox['tmpTrans'] = true;
+        }
 
         this.grid.setVisible(true);
       }
@@ -205,11 +221,13 @@ define([
 
         if (this.bgAlt) {
           this.bgAlt.setContent(this.act.abc['secondary']);
-          if (this.act.scramble[0]) {
+          if (this.$animatedBg)
+            this.bgAlt.clearAllBoxes();
+          if (this.act.scramble['secondary']) {
             var scrambleArray = [this.bgAlt];
-            this.act.shuffle(scrambleArray, true, true);
+            this.shuffle(scrambleArray, true, true);
           }
-          this.bgAlt.setVisible(false);
+          this.bgAlt.setVisible(this.$animatedBg !== null);
         }
 
         this.setAndPlayMsg('initial', 'start');
@@ -268,6 +286,17 @@ define([
           top: 0,
           left: 0
         });
+        // Resize animated gif background
+        if (this.$animatedBg && this.bgAlt) {
+          var bgRect = this.bgAlt.getBounds();
+          this.$animatedBg.css({
+            left: bgRect.pos.x,
+            top: bgRect.pos.y,
+            width: bgRect.dim.width + 'px',
+            height: bgRect.dim.height + 'px',
+            'background-size': bgRect.dim.width + 'px ' + bgRect.dim.height + 'px'
+          });
+        }
         this.$div.append(this.$canvas);
 
         // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context
@@ -376,7 +405,7 @@ define([
                     if (k >= 0 && k < this.bgAlt.getNumCells()) {
                       var bx = this.bgAlt.getActiveBox(this.act.clueItems[c]);
                       if (bx) {
-                        bx.setVisible(true);
+                        bx.setVisible(this.$animatedBg === null);
                         m = bx.playMedia(this.ps);
                       }
                     }

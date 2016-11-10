@@ -130,23 +130,16 @@ define([
       var abc = this.act.abc['primary'];
       var solved = this.act.abc['solvedPrimary'];
       if (abc) {
-        
         if (abc.imgName) {
           abc.setImgContent(this.act.project.mediaBag, null, false);
-          if (abc.animatedGifFile && !abc.shaper.rectangularShapes && !this.act.scramble['primary']) {
+          if (abc.animatedGifFile && !abc.shaper.rectangularShapes && !this.act.scramble['primary'])
             this.$animatedBg = $('<span/>').css({
               'background-image': 'url(' + abc.animatedGifFile + ')',
               'background-position': 'center',
               'background-repeat': 'no-repeat',
-              position: 'absolute',
-              top: 0,
-              left: 0
-            });
-            this.$div.append(this.$animatedBg);
-            abc.setCellsAttribute('temporaryTransparent', true);
-          }
+              position: 'absolute'}).appendTo(this.$div);
         }
-        
+
         if (solved && solved.imgName)
           solved.setImgContent(this.act.project.mediaBag, null, false);
 
@@ -163,8 +156,8 @@ define([
             abc);
         this.bg.setContent(abc, solved || null);
         this.bg.setAlternative(false);
-        if(this.$animatedBg)
-          this.bg.setCellAttr('temporaryTransparent', true);        
+        if (this.$animatedBg)
+          this.bg.setCellAttr('tmpTrans', true);
         this.bg.setDefaultIdAss();
         this.act.nonAssignedCells = 0;
         this.act.cellsToMatch = 0;
@@ -213,6 +206,8 @@ define([
      * it's the whole panel.
      */
     updateContent: function (dirtyRegion) {
+      ActPanelAncestor.updateContent.call(this, dirtyRegion);
+
       if (this.bg && this.$canvas) {
         var canvas = this.$canvas.get(0);
         var ctx = canvas.getContext('2d');
@@ -245,17 +240,28 @@ define([
 
       ActPanelAncestor.setBounds.call(this, rect);
       if (this.bg) {
-        this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>');
+        this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
+          position: 'absolute',
+          top: 0,
+          left: 0
+        });
         // Resize animated gif background
-        if(this.$animatedBg){
+        if (this.$animatedBg) {
+          var bgRect = this.bg.getBounds();
           this.$animatedBg.css({
-            width: rect.dim.width + 'px',
-            height: rect.dim.height + 'px',
-            'background-size': rect.dim.width + 'px ' + rect.dim.height + 'px'
+            left: bgRect.pos.x,
+            top: bgRect.pos.y,
+            width: bgRect.dim.width + 'px',
+            height: bgRect.dim.height + 'px',
+            'background-size': bgRect.dim.width + 'px ' + bgRect.dim.height + 'px'
           });
         }
         this.$div.append(this.$canvas);
-        this.invalidate().update();                
+        this.invalidate().update();
+        var thisPanel = this;
+        setTimeout(function () {
+          thisPanel.bg.buildAccessibleElements(thisPanel.$canvas, thisPanel.$div);
+        }, 0);
       }
     },
     /**
@@ -264,12 +270,12 @@ define([
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
      */
-    buildAccessibleComponents: function() {
-      if(this.$canvas && this.accessibleCanvas) {
+    buildAccessibleComponents: function () {
+      if (this.$canvas && this.accessibleCanvas) {
         ActPanelAncestor.buildAccessibleComponents.call(this);
         this.bg.buildAccessibleElements(this.$canvas, this.$div);
       }
-    },    
+    },
     /**
      *
      * Main handler used to process mouse, touch, keyboard and edit events

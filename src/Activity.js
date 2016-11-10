@@ -757,9 +757,12 @@ define([
     skin: null,
     /**
      * Background element (currently a `span`) used to place animated GIFs when needed
-     * @type {external:jQuery}
-     */
+     * @type {external:jQuery} */
     $animatedBg: null,    
+    /**
+     * Additional background element for animated GIFs, used in associations
+     * @type {external:jQuery} */
+    $animatedBgB: null,
     /**
      * `true` when the activity is solved, `false` otherwise
      * @type {boolean} */

@@ -163,11 +163,25 @@ define([
 
       if (abcA && abcB) {
 
-        if (abcA.imgName)
+        if (abcA.imgName) {
           abcA.setImgContent(this.act.project.mediaBag, null, false);
+          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramble['primary'])
+            this.$animatedBg = $('<span/>').css({
+              'background-image': 'url(' + abcA.animatedGifFile + ')',
+              'background-position': 'center',
+              'background-repeat': 'no-repeat',
+              position: 'absolute'}).appendTo(this.$div);
+        }
 
-        if (abcB.imgName)
+        if (abcB.imgName) {
           abcB.setImgContent(this.act.project.mediaBag, null, false);
+          if (abcB.animatedGifFile && !abcB.shaper.rectangularShapes && !this.act.scramble['secondary'])
+            this.$animatedBgB = $('<span/>').css({
+              'background-image': 'url(' + abcB.animatedGifFile + ')',
+              'background-position': 'center',
+              'background-repeat': 'no-repeat',
+              position: 'absolute'}).appendTo(this.$div);
+        }
 
         if (solved && solved.imgName)
           solved.setImgContent(this.act.project.mediaBag, null, false);
@@ -183,7 +197,12 @@ define([
         this.bgB = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abcB);
 
         this.bgA.setContent(abcA, solved ? solved : null);
+        if (this.$animatedBg)
+          this.bgA.setCellAttr('tmpTrans', true);
+        
         this.bgB.setContent(abcB);
+        if (this.$animatedBgB)
+          this.bgB.setCellAttr('tmpTrans', true);
 
         this.bgA.accessibleText = this.ps.getMsg('source');
         this.bgB.accessibleText = this.ps.getMsg('target');
@@ -270,6 +289,28 @@ define([
           top: 0,
           left: 0
         });
+        // Resize animated gif backgrounds
+        if (this.$animatedBg) {
+          var bgRect = this.bgA.getBounds();
+          this.$animatedBg.css({
+            left: bgRect.pos.x,
+            top: bgRect.pos.y,
+            width: bgRect.dim.width + 'px',
+            height: bgRect.dim.height + 'px',
+            'background-size': bgRect.dim.width + 'px ' + bgRect.dim.height + 'px'
+          });
+        }
+        // Resize animated gif background
+        if (this.$animatedBgB) {
+          var bgRectB = this.bgB.getBounds();
+          this.$animatedBgB.css({
+            left: bgRectB.pos.x,
+            top: bgRectB.pos.y,
+            width: bgRectB.dim.width + 'px',
+            height: bgRectB.dim.height + 'px',
+            'background-size': bgRectB.dim.width + 'px ' + bgRectB.dim.height + 'px'
+          });
+        }
         this.$div.append(this.$canvas);
 
         // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context

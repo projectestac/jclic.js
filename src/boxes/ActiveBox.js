@@ -160,8 +160,8 @@ define([
       this.setHostedMediaPlayer(null);
       if (this.$accessibleElement)
         this.$accessibleElement.html('');
-      if(this.temporaryTransparent)
-        this.temporaryTransparent = false;
+      if(this.tmpTrans)
+        this.tmpTrans = false;
       this.invalidate();
     },
     /**
@@ -386,7 +386,7 @@ define([
       this.setHostedComponent(null);
       this.setHostedMediaPlayer(null);
       this.setAlternative(true);
-      this.temporaryTransparent = false;
+      this.tmpTrans = false;
       this.checkHostedComponent();
       this.checkAutoStartMedia();
 
@@ -444,7 +444,7 @@ define([
       
       var imgRect = null;      
 
-      if (abc.img && !this.temporaryTransparent) {
+      if (abc.img && !this.tmpTrans) {
         try {
           if (abc.imgClip) {
             var r = abc.imgClip.getBounds();

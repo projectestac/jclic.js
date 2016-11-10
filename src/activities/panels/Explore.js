@@ -143,8 +143,15 @@ define([
 
       if (abcA && abcB) {
 
-        if (abcA.imgName)
+        if (abcA.imgName) {
           abcA.setImgContent(this.act.project.mediaBag, null, false);
+          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramble['primary'])
+            this.$animatedBg = $('<span/>').css({
+              'background-image': 'url(' + abcA.animatedGifFile + ')',
+              'background-position': 'center',
+              'background-repeat': 'no-repeat',
+              position: 'absolute'}).appendTo(this.$div);
+        }
 
         if (abcB.imgName)
           abcB.setImgContent(this.act.project.mediaBag, null, false);
@@ -160,6 +167,8 @@ define([
 
         this.bgA.setContent(abcA);
         this.bgA.setDefaultIdAss();
+        if (this.$animatedBg)
+          this.bgA.setCellAttr('tmpTrans', true);
         this.bgB.getActiveBox(0).setInactive(false);
         this.bgA.setVisible(true);
         this.bgB.setVisible(true);
@@ -237,6 +246,17 @@ define([
           top: 0,
           left: 0
         });
+        // Resize animated gif background
+        if (this.$animatedBg) {
+          var bgRect = this.bgA.getBounds();
+          this.$animatedBg.css({
+            left: bgRect.pos.x,
+            top: bgRect.pos.y,
+            width: bgRect.dim.width + 'px',
+            height: bgRect.dim.height + 'px',
+            'background-size': bgRect.dim.width + 'px ' + bgRect.dim.height + 'px'
+          });
+        }
         this.$div.append(this.$canvas);
 
         // Repaint all
@@ -255,7 +275,7 @@ define([
         this.bgA.buildAccessibleElements(this.$canvas, this.$div);
         this.bgB.buildAccessibleElements(this.$canvas, this.$div);
       }
-    },    
+    },
     /**
      *
      * Main handler used to process mouse, touch, keyboard and edit events
@@ -283,7 +303,7 @@ define([
                 if (this.act.useOrder)
                   this.currentItem = this.bgA.getNextItem(this.currentItem);
                 this.ps.reportNewAction(this.act, 'SELECT', bx1.getDescription(), bx2.getDescription(), true, 0);
-                if(bx2.$accessibleElement)
+                if (bx2.$accessibleElement)
                   bx2.$accessibleElement.focus();
               } else {
                 bx2.clear();
