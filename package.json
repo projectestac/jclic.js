@@ -35,7 +35,7 @@
   "license": "EUPL-1.1",
   "dependencies": {
     "clipboard-js": "^0.3.1",
-    "i18next": "^3.1.0",
+    "i18next": "^4.0.0",
     "jquery": "~3.1.0",
     "jszip": "^3.0.0",
     "jszip-utils": "0.0.2",
