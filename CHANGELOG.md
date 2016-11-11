@@ -1,3 +1,7 @@
+### v0.1.39 (2016-11-11)
+#### Improvements
+- Animated GIF support extended to more activities: now panels with static (not scrambled) cells, using any type of shaper, can have an animated GIF as a main content. This applies to information screen, identify, associations, written answer and word search activities.
+
 ### v0.1.38 (2016-11-02)
 #### Bug fixes
 - Treat 'x' as zero when parsing data for Arith operators, thus avoiding "NaN" errors in some activities.
