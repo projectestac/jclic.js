@@ -313,14 +313,16 @@ define([
             up = true;
             /* falls through */
           case 'touchstart':
-          case 'mousedown':
-            this.ps.stopMedia(1);
+          case 'mousedown':            
             if (!this.bc.active) {
               // New pairing starts
               //
               // Pairings can never start with a `mouseup` event
               if (up)
                 break;
+              else
+                this.ps.stopMedia(1);
+                
               //
               // Find the ActiveBox behind the clicked point
               bx1 = this.bg.findActiveBox(p);
@@ -337,6 +339,7 @@ define([
                   this.bc.begin(p);
               }
             } else {
+              this.ps.stopMedia(1);
               // Pairing completed
               //
               // Find the active boxes behind `bc.origin` and `p`

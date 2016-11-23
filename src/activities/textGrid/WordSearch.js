@@ -364,14 +364,15 @@ define([
             /* falls through */
           case 'touchend':
           case 'touchstart':
-          case 'mousedown':
-            this.ps.stopMedia(1);
+          case 'mousedown':            
             if (!this.bc.active) {
               // A new word selection starts
               //
               // Selection of words can never start with a `mouseup` event
               if (up)
                 break;
+              else
+                this.ps.stopMedia(1);
 
               if (this.grid.contains(p)) {
                 this.playEvent('click');
@@ -379,6 +380,7 @@ define([
               }
 
             } else {
+              this.ps.stopMedia(1);
               // Word selection completed
               //
               // Find the active boxes behind `bc.origin` and `p`

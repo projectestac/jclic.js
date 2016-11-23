@@ -202,14 +202,15 @@ define([
             /* falls through */
           case 'touchend':
           case 'touchstart':
-          case 'mousedown':
-            this.ps.stopMedia(1);
+          case 'mousedown':            
             if (!this.bc.active) {
               // New pairing starts
               //
               // Pairings can never start with a `mouseup` event
               if (up)
                 break;
+              else
+                this.ps.stopMedia(1);
               //
               // Determine if click was done on panel A or panel B
               bx1 = this.bgA.findActiveBox(p);
@@ -235,6 +236,7 @@ define([
                   bg.$accessibleDiv.focus();
               }
             } else {
+              this.ps.stopMedia(1);
               // Pairing completed
               //
               // Find the active boxes behind `bc.origin` and `p`
