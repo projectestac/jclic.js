@@ -383,7 +383,7 @@ define([
             /* falls through */
           case 'touchend':
           case 'touchstart':
-          case 'mousedown':
+          case 'mousedown':            
             this.ps.stopMedia(1);
             if (!this.bc.active) {
               // A new pairing starts
@@ -403,11 +403,10 @@ define([
                 else
                   this.bc.begin(p);
                 // Play cell media or event sound
-                if (bx1)
-                  m = bx1.playMedia(this.ps);
+                m |= (bx1 || bx2).playMedia(this.ps);
                 if (!m)
                   this.playEvent('click');
-
+                
                 // Move the focus to the opposite accessible group
                 var bg = bx1 ? this.bgA : this.bgB;
                 if (bg.$accessibleDiv) {
