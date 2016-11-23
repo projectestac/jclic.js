@@ -1,3 +1,8 @@
+### v0.1.40 (2016-11-23)
+#### Bug fixes
+- Don't stop media on mouseup events
+- Play sounds also in grid B, when available
+
 ### v0.1.39 (2016-11-11)
 #### Improvements
 - Animated GIF support extended to more activities: now panels with static (not scrambled) cells, using any type of shaper, can have an animated GIF as a main content. This applies to information screen, identify, associations, written answer and word search activities.
