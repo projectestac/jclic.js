@@ -35,7 +35,7 @@
   "license": "EUPL-1.1",
   "dependencies": {
     "clipboard-js": "^0.3.1",
-    "i18next": "^4.0.0",
+    "i18next": "^7.0.0",
     "jquery": "~3.1.0",
     "jszip": "^3.0.0",
     "jszip-utils": "0.0.2",
@@ -44,15 +44,15 @@
     "webfontloader": "^1.6.24"
   },
   "devDependencies": {
-    "browserify": "~13.1.0",
+    "browserify": "~14.0.0",
     "deamdify": "~0.2.0",
     "gc-jaguarjs-jsdoc": "0.0.1",
     "grunt": "~1.0.1",
     "grunt-browserify": "~5.0.0",
     "grunt-contrib-clean": "~1.0.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jshint": "~1.0.0",
-    "grunt-contrib-uglify": "~2.0.0",
+    "grunt-contrib-jshint": "~1.1.0",
+    "grunt-contrib-uglify": "~2.1.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-express": "^1.4.1",
     "grunt-extract-sourcemap": "^0.1.17",
