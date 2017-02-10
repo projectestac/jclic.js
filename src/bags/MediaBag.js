@@ -84,7 +84,7 @@ define([
       var result = this.elements[name];
       if (create && !result)
         result = this.getElementByFileName(name, create);
-      return  result;
+      return result;
     },
     /**
      *
@@ -126,7 +126,7 @@ define([
      */
     buildAll: function (type) {
       $.each(this.elements, function (name, element) {
-        if (!type || element.name === type) {
+        if (!type || element.type === type) {
           element.build(function () {
             Utils.log('trace', '"%s" ready', name);
           });
@@ -160,6 +160,20 @@ define([
      */
     getSkinElement: function (name, ps) {
       return Skin.getSkin(name, ps);
+    },
+    /**
+     * 
+     * Get the names of the media elements that are of the given type
+     * @param {string} type - The type of elements to search
+     * @returns {String[]}
+     */
+    getElementsOfType: function (type) {
+      var result = [];
+      $.each(this.elements, function (name, element) {
+        if (element.type === type)
+          result.push(name);
+      });
+      return result;
     }
   };
 

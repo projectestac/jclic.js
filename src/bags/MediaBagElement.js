@@ -154,11 +154,11 @@ define([
       request.responseType = 'arraybuffer';
       request.addEventListener('load', function () {
         var arr = new Uint8Array(request.response),
-            i, len, length = arr.length, frames = 0;
+          i, len, length = arr.length, frames = 0;
 
         // make sure it's a gif (GIF8)
         if (arr[0] !== 0x47 || arr[1] !== 0x49 ||
-            arr[2] !== 0x46 || arr[3] !== 0x38) {
+          arr[2] !== 0x46 || arr[3] !== 0x38) {
           mbe.animated = false;
           return;
         }
@@ -177,8 +177,8 @@ define([
             var blocklength = arr[i + 3];
             var afterblock = i + 4 + blocklength;
             if (afterblock + 1 < length &&
-                arr[afterblock] === 0x00 &&
-                (arr[afterblock + 1] === 0x2C || arr[afterblock + 1] === 0x21)) {
+              arr[afterblock] === 0x00 &&
+              (arr[afterblock + 1] === 0x2C || arr[afterblock + 1] === 0x21)) {
               if (++frames > 1) {
                 mbe.animated = true;
                 Utils.log('debug', 'Animated GIF detected: %s', mbe.fileName);
@@ -235,13 +235,15 @@ define([
           switch (media.type) {
             case 'font':
               var format = media.ext === 'ttf' ? 'truetype'
-                  : media.ext === 'otf' ? 'embedded-opentype'
+                : media.ext === 'otf' ? 'embedded-opentype'
                   : media.ext;
-              $('head').prepend(
-                  '<style type="text/css">' +
-                  '@font-face{font-family:"' + media.name + '";' +
-                  'src:url(' + fullPath + ') format("' + format + '");}' +
-                  '</style>');
+
+              $('head').append(
+                '<style type="text/css">' +
+                '@font-face{font-family:"' + media.name + '";' +
+                'src:url(' + fullPath + ') format("' + format + '");}' +
+                '</style>');
+
               media.data = new AWT.Font(media.name);
               media.ready = true;
               break;

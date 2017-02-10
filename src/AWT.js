@@ -68,7 +68,7 @@ define([
       this.italic = italic;
     if (variant)
       this.variant = variant;
-    this._metrics = {ascent: -1, descent: -1, height: -1};
+    this._metrics = { ascent: -1, descent: -1, height: -1 };
   };
 
   /**
@@ -86,7 +86,6 @@ define([
   AWT.Font.SUBSTITUTIONS = {
     'abc': 'Kalam',
     'a.c.m.e. secret agent': 'Permanent Marker',
-    // 'arial': 'Arimo',
     'comic sans ms': 'Patrick Hand',
     'impact': 'Oswald',
     'massallera': 'Vibur',
@@ -112,6 +111,19 @@ define([
   AWT.Font.checkTree = function ($tree, options) {
 
     var substitutions = AWT.Font.SUBSTITUTIONS;
+    
+    // Load own fonts and remove it from the substitution table
+    if (options && options.ownFonts) {
+      options.ownFonts.forEach(function (name) {
+        if(AWT.Font.ALREADY_LOADED_FONTS.indexOf(name)<0) {
+          WebFont.load({custom: {families: [name]}});
+          AWT.Font.ALREADY_LOADED_FONTS.push(name);
+          delete substitutions[name.trim().toLowerCase()];
+        }
+      });      
+    }
+    
+    // Add custom font substitutions
     if (options && options.fontSubstitutions)
       substitutions = $.extend(Object.create(substitutions), options.fontSubstitutions);
 
@@ -134,7 +146,7 @@ define([
    */
   AWT.Font.loadGoogleFont = function (name) {
     if (name && AWT.Font.ALREADY_LOADED_FONTS.indexOf(name) < 0) {
-      WebFont.load({google: {families: [name]}});
+      WebFont.load({ google: { families: [name] } });
       AWT.Font.ALREADY_LOADED_FONTS.push(name);
     }
   };
@@ -178,7 +190,7 @@ define([
      * attributes. Vertical font metrics are calculated in
      * {@link AWT.Font#_calcHeight|calcHeight()} as needed.
      * @type {{ascent: number, descent: number, height: number}} */
-    _metrics: {ascent: -1, descent: -1, height: -1},
+    _metrics: { ascent: -1, descent: -1, height: -1 },
     /**
      *
      * Reads the properties of this Font from an XML element
@@ -274,10 +286,10 @@ define([
      */
     cssFont: function () {
       return (this.italic ? 'italic ' : 'normal') + ' ' +
-          (this.variant === '' ? 'normal' : this.variant) + ' ' +
-          (this.bold ? 'bold ' : 'normal') + ' ' +
-          this.size + 'pt ' +
-          this.family;
+        (this.variant === '' ? 'normal' : this.variant) + ' ' +
+        (this.bold ? 'bold ' : 'normal') + ' ' +
+        this.size + 'pt ' +
+        this.family;
     },
     /**
      *
@@ -295,13 +307,13 @@ define([
      */
     _calcHeight: function () {
       var $text = $('<span/>').html('Hg').css(this.toCss());
-      var $block = $('<div/>').css({display: 'inline-block', width: '1px', height: '0px'});
+      var $block = $('<div/>').css({ display: 'inline-block', width: '1px', height: '0px' });
       var $div = $('<div/>').append($text, $block);
       $('body').append($div);
       try {
-        $block.css({verticalAlign: 'baseline'});
+        $block.css({ verticalAlign: 'baseline' });
         this._metrics.ascent = $block.offset().top - $text.offset().top;
-        $block.css({verticalAlign: 'bottom'});
+        $block.css({ verticalAlign: 'bottom' });
         this._metrics.height = $block.offset().top - $text.offset().top;
         this._metrics.descent = this._metrics.height - this._metrics.ascent;
       } finally {
@@ -317,10 +329,10 @@ define([
      */
     equals: function (font) {
       return this.family === font.family &&
-          this.size === font.size &&
-          this.bold === font.bold &&
-          this.italic === font.italic &&
-          this.variant === font.variant;
+        this.size === font.size &&
+        this.bold === font.bold &&
+        this.italic === font.italic &&
+        this.variant === font.variant;
     }
   };
 
@@ -397,9 +409,9 @@ define([
      */
     getCss: function () {
       var result = 'linear-gradient(' +
-          (this.angle + 90) + 'deg, ' +
-          this.c1 + ', ' +
-          this.c2;
+        (this.angle + 90) + 'deg, ' +
+        this.c1 + ', ' +
+        this.c2;
       for (var i = 1; i < this.cycles; i++) {
         result += ', ' + (i % 2 > 0 ? this.c1 : this.c2);
       }
@@ -878,8 +890,8 @@ define([
      * Overwrites the original 'Object.toString' method with a more descriptive text
      * @returns {String}
      */
-    toString: function(){
-      return 'Shape enclosed in '+ this.getBounds().getCoords();
+    toString: function () {
+      return 'Shape enclosed in ' + this.getBounds().getCoords();
     }
   };
 
@@ -1023,11 +1035,11 @@ define([
       var rectP2 = shape.getBounds().getOppositeVertex();
 
       this.pos.moveTo(
-          Math.min(this.pos.x, shape.getBounds().pos.x),
-          Math.min(this.pos.y, shape.getBounds().pos.y));
+        Math.min(this.pos.x, shape.getBounds().pos.x),
+        Math.min(this.pos.y, shape.getBounds().pos.y));
       this.dim.setDimension(
-          Math.max(myP2.x, rectP2.x) - this.pos.x,
-          Math.max(myP2.y, rectP2.y) - this.pos.y);
+        Math.max(myP2.x, rectP2.x) - this.pos.x,
+        Math.max(myP2.y, rectP2.y) - this.pos.y);
       return this;
     },
     //
@@ -1067,7 +1079,7 @@ define([
     },
     //
     // Inherits the documentation of `toString` in AWT.Shape
-    toString: function(){
+    toString: function () {
       return 'Rectangle ' + this.getCoords();
     },
     /**
@@ -1076,9 +1088,9 @@ define([
      * (with values rounded to int)
      * @returns {String}
      */
-    getCoords: function() {
+    getCoords: function () {
       return '[' + Math.round(this.pos.x) + ',' + Math.round(this.pos.y) + ',' +
-          Math.round(this.pos.x + this.dim.width) + ',' + Math.round(this.pos.y + this.dim.height) + ']';      
+        Math.round(this.pos.x + this.dim.width) + ',' + Math.round(this.pos.y + this.dim.height) + ']';
     }
   };
   // Rectangle extends Shape
@@ -1109,12 +1121,12 @@ define([
       // Thanks Steve!!
 
       var kappa = 0.5522848,
-          ox = kappa * this.dim.width / 2, // control point offset horizontal
-          oy = kappa * this.dim.height / 2, // control point offset vertical
-          xe = this.pos.x + this.dim.width, // x-end
-          ye = this.pos.y + this.dim.height, // y-end
-          xm = this.pos.x + this.dim.width / 2, // x-middle
-          ym = this.pos.y + this.dim.height / 2;// y-middle
+        ox = kappa * this.dim.width / 2, // control point offset horizontal
+        oy = kappa * this.dim.height / 2, // control point offset vertical
+        xe = this.pos.x + this.dim.width, // x-end
+        ye = this.pos.y + this.dim.height, // y-end
+        xm = this.pos.x + this.dim.width / 2, // x-middle
+        ym = this.pos.y + this.dim.height / 2;// y-middle
 
       ctx.beginPath();
       ctx.moveTo(this.pos.x, ym);
@@ -1165,9 +1177,9 @@ define([
     },
     //
     // Inherits the documentation of `toString` in AWT.Shape
-    toString: function(){
+    toString: function () {
       return 'Ellipse enclosed in ' + this.getCoords();
-    }    
+    }
   };
   // Ellipse extends Rectangle
   AWT.Ellipse.prototype = $.extend(Object.create(AWT.Rectangle.prototype), AWT.Ellipse.prototype);
@@ -1187,10 +1199,10 @@ define([
       for (var n = 0; n < strokes.length; n++) {
         var str = strokes[n];
         str = new AWT.PathStroke(
-            // In [Shaper](Shaper.html) objects, strokes have `action`, not `type`
-            str.type || str.action,
-            // In [Shaper](Shaper.html) objects, strokes have `data`, not `points`
-            str.points || str.data);
+          // In [Shaper](Shaper.html) objects, strokes have `action`, not `type`
+          str.type || str.action,
+          // In [Shaper](Shaper.html) objects, strokes have `data`, not `points`
+          str.points || str.data);
         this.strokes.push(str);
       }
     }
@@ -1445,14 +1457,14 @@ define([
           break;
         case 'Q':
           ctx.quadraticCurveTo(
-              this.points[0].x, this.points[0].y,
-              this.points[1].x, this.points[1].y);
+            this.points[0].x, this.points[0].y,
+            this.points[1].x, this.points[1].y);
           break;
         case 'B':
           ctx.bezierCurveTo(
-              this.points[0].x, this.points[0].y,
-              this.points[1].x, this.points[1].y,
-              this.points[2].x, this.points[2].y);
+            this.points[0].x, this.points[0].y,
+            this.points[1].x, this.points[1].y,
+            this.points[2].x, this.points[2].y);
           break;
         case 'X':
           ctx.closePath();
