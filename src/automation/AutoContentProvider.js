@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "../Utils"
 ], function (Utils) {
@@ -85,10 +87,10 @@ define([
     /**
      *
      * Generates the automatized content
-     * @param {AutoContentProvider.ActiveBagContentKit} kit - The objects to be filled with content
+     * @param {AutoContentProvider.ActiveBagContentKit} _kit - The objects to be filled with content
      * @returns {boolean} - `true` if the process was OK. `false` otherwise.
      */
-    process: function (kit) {
+    process: function (_kit) {
       // To be implemented in subclasses
       return false;
     }

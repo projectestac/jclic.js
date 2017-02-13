@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -173,7 +175,7 @@ define([
     processEvent: function (event) {
 
       if (!ActPanelAncestor.processEvent.call(this, event) ||
-          event.timeStamp === this.lastTimeStamp)
+        event.timeStamp === this.lastTimeStamp)
         return false;
 
       if (event.timeStamp)

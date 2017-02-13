@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -194,7 +196,7 @@ define([
       $marker.remove();
 
       var pos = t1.pos,
-          $p = t1.$p;
+        $p = t1.$p;
       t1.pos = t2.pos;
       t1.$p = t2.$p;
       t2.pos = pos;
@@ -289,7 +291,8 @@ define([
       if (target && target.$span) {
         target.$span.css({
           color: targetCss['background-color'],
-          'background-color': targetCss.color});
+          'background-color': targetCss.color
+        });
       }
 
       this.currentTarget = target;
@@ -373,7 +376,7 @@ define([
         } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           var x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
-              y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+            y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
           p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 

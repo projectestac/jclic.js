@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../AutoContentProvider",
@@ -196,7 +198,7 @@ define([
      */
     genNum: function (n, op, limInf2, limSup2) {
       var r, exp, rang, ls, li, k, v,
-          solved = false;
+        solved = false;
 
       n.c = op.numDec;
       exp = n.c === 0 ? 1 : n.c === 1 ? 10 : 100;
@@ -250,9 +252,9 @@ define([
      */
     genOp: function (o) {
       var i,
-          ops = [], nops, op,
-          rlinf, rlsup, ri2, rs2,
-          q, va, vb, bufa, bufb;
+        ops = [], nops, op,
+        rlinf, rlsup, ri2, rs2,
+        q, va, vb, bufa, bufb;
 
       rlinf = this.resultLimInf;
       rlsup = this.resultLimSup;
@@ -405,9 +407,9 @@ define([
             }
             this.genNum(o.numB, this.opB, ri2, rs2);
             if (o.numB.vf !== 0 &&
-                Math.abs(o.numA.vf) >= Math.abs(o.numB.vf) &&
-                (o.numR.vf = o.numA.vf / o.numB.vf) >= rlinf &&
-                o.numR.vf <= rlsup)
+              Math.abs(o.numA.vf) >= Math.abs(o.numB.vf) &&
+              (o.numR.vf = o.numA.vf / o.numB.vf) >= rlinf &&
+              o.numR.vf <= rlsup)
               break;
           }
           if (o.numB.vf === 0)
@@ -439,23 +441,23 @@ define([
     process: function (kit) {
 
       var nRows = kit.nRows,
-          nCols = kit.nCols,
-          content = kit.content, //Array of ActiveBagContent
-          useIds = kit.useIds,
-          i, j, k,
-          o, op = [], // Array of Arith.Operacio
-          S = this.S, // non-breaking whitespace
-          tipus = [],
-          numTipus, tipX,
-          tipInv = this.exp_caxb,
-          va = '', vb = '', vc = '', operator = '',
-          stra = [], strb = [], strc = [],
-          nColsB = nCols, nRowsB = nRows,
-          nCells = nRows * nCols,
-          ass = null;
+        nCols = kit.nCols,
+        content = kit.content, //Array of ActiveBagContent
+        useIds = kit.useIds,
+        i, j, k,
+        o, op = [], // Array of Arith.Operacio
+        S = this.S, // non-breaking whitespace
+        tipus = [],
+        numTipus, tipX,
+        tipInv = this.exp_caxb,
+        va = '', vb = '', vc = '', operator = '',
+        stra = [], strb = [], strc = [],
+        nColsB = nCols, nRowsB = nRows,
+        nCells = nRows * nCols,
+        ass = null;
 
       if (nRows <= 0 || nCols <= 0 ||
-          content === null || content.length < 1 || content[0] === null)
+        content === null || content.length < 1 || content[0] === null)
         return false;
 
       if (nCells < 2)
@@ -494,7 +496,7 @@ define([
         for (i = nCells - 1; i > 0; i--) {
           for (j = 0; j < i; j++) {
             if (this.resultOrder === 'SORTASC' && op[j].numR.vf > op[j + 1].numR.vf ||
-                this.resultOrder === 'SORTDESC' && op[j].numR.vf < op[j + 1].numR.vf) {
+              this.resultOrder === 'SORTDESC' && op[j].numR.vf < op[j + 1].numR.vf) {
               // Switch values
               o = op[j];
               op[j] = op[j + 1];
@@ -520,29 +522,29 @@ define([
           case 'AXC':
             strb[i] = vb;
             stra[i] = tipInv ?
-                vc + S + "=" + S + va + S + operator + S + "?"
-                : va + S + operator + S + "?" + S + "=" + S + vc;
+              vc + S + "=" + S + va + S + operator + S + "?"
+              : va + S + operator + S + "?" + S + "=" + S + vc;
             break;
 
           case 'XBC':
             strb[i] = va;
             stra[i] = tipInv ?
-                vc + S + "=" + S + "?" + S + operator + S + vb
-                : "?" + S + operator + S + vb + S + "=" + S + vc;
+              vc + S + "=" + S + "?" + S + operator + S + vb
+              : "?" + S + operator + S + vb + S + "=" + S + vc;
             break;
 
           case 'AXBC':
             strb[i] = operator;
             stra[i] = tipInv ?
-                vc + S + "=" + S + va + S + "?" + S + vb
-                : va + S + "?" + S + vb + S + "=" + S + vc;
+              vc + S + "=" + S + va + S + "?" + S + vb
+              : va + S + "?" + S + vb + S + "=" + S + vc;
             break;
 
           default:
             strb[i] = vc;
             stra[i] = tipInv ?
-                "?" + S + "=" + S + va + S + operator + S + vb
-                : va + S + operator + S + vb + S + "=";
+              "?" + S + "=" + S + va + S + operator + S + vb
+              : va + S + operator + S + vb + S + "=";
             break;
         }
       }
@@ -734,7 +736,7 @@ define([
       // Read attributes
       $.each($xml.get(0).attributes, function () {
         var name = this.name,
-            val = this.value;
+          val = this.value;
         switch (name) {
           case 'decimals':
             op.numDec = Number(val);

@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global MediaRecorder, navigator */
+/* global define */
 
 define([
   "jquery",
@@ -54,7 +54,7 @@ define([
           this.clearAudioBuffer(mc.recBuffer);
           ActiveMediaPlayer.AUDIO_BUFFERS[mc.recBuffer] = new AudioBuffer(mc.length);
         }
-        /* falls through */
+      /* falls through */
       case 'PLAY_RECORDED_AUDIO':
         this.useAudioBuffer = true;
         break;
@@ -85,9 +85,9 @@ define([
 
   if (ActiveMediaPlayer.REC_ENABLED) {
     navigator.getUserMedia = navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia;
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.msGetUserMedia;
 
     //URL = window.URL || window.webkitURL;
   }
@@ -145,9 +145,10 @@ define([
     /**
      *
      * Plays the media, realizing it if needed.
-     * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
+     * @param {ActiveBox=} _setBx - The active box where this media will be placed (when video)
      */
-    playNow: function (setBx) {
+    playNow: function (_setBx) {
+      // TODO: Remove unused param "_setBx"
       if (this.useAudioBuffer) {
         if (ActiveMediaPlayer.AUDIO_BUFFERS) {
           var buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer];
@@ -236,8 +237,8 @@ define([
      */
     clearAudioBuffer: function (buffer) {
       if (ActiveMediaPlayer.AUDIO_BUFFERS &&
-          buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length &&
-          ActiveMediaPlayer.AUDIO_BUFFERS[buffer]) {
+        buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length &&
+        ActiveMediaPlayer.AUDIO_BUFFERS[buffer]) {
         ActiveMediaPlayer.AUDIO_BUFFERS[buffer].clear();
         ActiveMediaPlayer.AUDIO_BUFFERS[buffer] = null;
       }
@@ -281,23 +282,23 @@ define([
      */
     stopAudioBuffer: function (buffer) {
       if (ActiveMediaPlayer.AUDIO_BUFFERS &&
-          buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length &&
-          ActiveMediaPlayer.AUDIO_BUFFERS[buffer])
+        buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length &&
+        ActiveMediaPlayer.AUDIO_BUFFERS[buffer])
         ActiveMediaPlayer.AUDIO_BUFFERS[buffer].stop();
     },
     /**
      *
      * Checks the position of visual components after a displacement or resizing of its container
-     * @param {ActiveBox} bxi - The container where this player is hosted
+     * @param {ActiveBox} _bxi - The container where this player is hosted
      */
-    checkVisualComponentBounds: function (bxi) {
+    checkVisualComponentBounds: function (_bxi) {
       // does nothing
     },
     /**
      * Sets the visual component of this player visible or invisible
-     * @param {boolean} state - `true` for visible
+     * @param {boolean} _state - `true` for visible
      */
-    setVisualComponentVisible: function (state) {
+    setVisualComponentVisible: function (_state) {
       // TODO: Implement setVisualComponentVisible
     },
     /**

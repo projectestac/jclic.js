@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./BoxBag",
@@ -184,7 +186,7 @@ define([
      */
     cellIsAtEquivalentPlace: function (bx, checkCase) {
       return bx.isAtPlace() ||
-          bx.isEquivalent(this.getActiveBoxWithIdLoc(bx.idOrder), checkCase);
+        bx.isEquivalent(this.getActiveBoxWithIdLoc(bx.idOrder), checkCase);
     },
     /**
      *
@@ -336,7 +338,7 @@ define([
      */
     buildAccessibleElements: function ($canvas, $clickReceiver, eventType) {
       if (Utils.settings.CANVAS_HITREGIONS) {
-        this.$accessibleDiv = this.accessibleText !== '' ? $('<div/>', {'aria-label': this.accessibleText, tabindex: 0}) : null;
+        this.$accessibleDiv = this.accessibleText !== '' ? $('<div/>', { 'aria-label': this.accessibleText, tabindex: 0 }) : null;
         $canvas.append(this.$accessibleDiv);
         for (var i = 0; i < this.cells.length; i++)
           this.cells[i].buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType);

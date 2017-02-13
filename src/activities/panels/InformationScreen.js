@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -116,15 +118,16 @@ define([
               'background-image': 'url(' + abc.animatedGifFile + ')',
               'background-position': 'center',
               'background-repeat': 'no-repeat',
-              position: 'absolute'}).appendTo(this.$div);
+              position: 'absolute'
+            }).appendTo(this.$div);
         }
 
         if (this.act.acp !== null)
           this.act.acp.generateContent(abc.nch, abc.ncw, [abc], false);
 
         this.bg = ActiveBoxGrid.createEmptyGrid(null, this,
-            this.act.margin, this.act.margin,
-            abc);
+          this.act.margin, this.act.margin,
+          abc);
         this.bg.setContent(abc);
         if (this.$animatedBg)
           this.bg.setCellAttr('tmpTrans', true);
@@ -234,8 +237,8 @@ define([
     processEvent: function (event) {
       if (this.playing) {
         var p = new AWT.Point(
-            event.pageX - this.$div.offset().left,
-            event.pageY - this.$div.offset().top);
+          event.pageX - this.$div.offset().left,
+          event.pageY - this.$div.offset().top);
         this.ps.stopMedia(1);
         var bx = this.bg.findActiveBox(p);
         if (bx) {

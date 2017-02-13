@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "screenfull",
@@ -57,18 +59,18 @@ define([
 
     // Skin extends [AWT.Container](AWT.html)
     AWT.Container.call(this);
-    
+
     if (Skin.registeredStylesheets.indexOf(this.skinId) < 0) {
       $('head').append($('<style type="text/css"/>')
-          .html(this._getStyleSheets().replace(/SKINID/g, this.skinId)));
+        .html(this._getStyleSheets().replace(/SKINID/g, this.skinId)));
       Skin.registeredStylesheets.push(this.skinId);
     }
 
     var skin = this,
-        msg ='';
+      msg = '';
 
-    this.$div = $('<div/>', {class: this.skinId});
-    this.$playerCnt = $('<div/>', {class: 'JClicPlayerCnt'});
+    this.$div = $('<div/>', { class: this.skinId });
+    this.$playerCnt = $('<div/>', { class: 'JClicPlayerCnt' });
 
     this.buttons = Utils.cloneObject(Skin.prototype.buttons);
     this.counters = Utils.cloneObject(Skin.prototype.counters);
@@ -79,7 +81,7 @@ define([
       this.name = name;
 
     // Create dialog overlay and panel
-    this.$dlgOverlay = $('<div/>', {class: 'dlgOverlay'}).css({
+    this.$dlgOverlay = $('<div/>', { class: 'dlgOverlay' }).css({
       'z-index': 98,
       position: 'fixed',
       left: 0,
@@ -96,8 +98,8 @@ define([
     });
 
     var $dlgDiv = $('<div/>', {
-      class: 'dlgDiv', 
-      role: 'dialog', 
+      class: 'dlgDiv',
+      role: 'dialog',
       'aria-labelledby': ps.getUniqueId('ReportsLb'),
       'aria-describedby': ps.getUniqueId('ReportsCnt')
     }).css({
@@ -111,73 +113,73 @@ define([
       return false;
     });
 
-    this.$dlgMainPanel = $('<div/>', {class: 'dlgMainPanel', id: ps.getUniqueId('ReportsCnt')});
-    this.$dlgBottomPanel = $('<div/>', {class: 'dlgBottomPanel', role: 'navigation'});
+    this.$dlgMainPanel = $('<div/>', { class: 'dlgMainPanel', id: ps.getUniqueId('ReportsCnt') });
+    this.$dlgBottomPanel = $('<div/>', { class: 'dlgBottomPanel', role: 'navigation' });
 
     // Basic dialog structure:
     this.$div.append(
-        this.$playerCnt,
-        this.$dlgOverlay.append(
-            $dlgDiv.append(
-                this.$dlgMainPanel,
-                this.$dlgBottomPanel)));
+      this.$playerCnt,
+      this.$dlgOverlay.append(
+        $dlgDiv.append(
+          this.$dlgMainPanel,
+          this.$dlgBottomPanel)));
 
     msg = ps.getMsg('JClic logo');
-    this.$infoHead = $('<div/>', {class: 'infoHead'})     
-        .append($('<div/>', {class: 'headTitle unselectableText'})
-            .append($(this.appLogo, {'aria-label': msg}).css({width: '1.5em', height: '1.5em', 'vertical-align': 'bottom'})
-                .dblclick(function () {
-                  // Double click on JClic logo is a hidden method to increase verbosity on Javascript console
-                  Utils.setLogLevel('all');
-                  Utils.log('trace', 'Log level set to "trace"');
-                  $(this).off('dblclick');
-                }))
-            .append($('<span/>').html('JClic.js')))
-        .append($('<p/>').css({'margin-top': 0, 'margin-left': '3.5em'})
-            .append($('<a/>', {href: 'http://clic.xtec.cat/repo/index.html?page=info'}).html('http://clic.xtec.cat'))
-            .append($('<br>'))
-            .append($('<span/>').html(ps.getMsg('Version') + ' ' + this.ps.JClicVersion)));
+    this.$infoHead = $('<div/>', { class: 'infoHead' })
+      .append($('<div/>', { class: 'headTitle unselectableText' })
+        .append($(this.appLogo, { 'aria-label': msg }).css({ width: '1.5em', height: '1.5em', 'vertical-align': 'bottom' })
+          .dblclick(function () {
+            // Double click on JClic logo is a hidden method to increase verbosity on Javascript console
+            Utils.setLogLevel('all');
+            Utils.log('trace', 'Log level set to "trace"');
+            $(this).off('dblclick');
+          }))
+        .append($('<span/>').html('JClic.js')))
+      .append($('<p/>').css({ 'margin-top': 0, 'margin-left': '3.5em' })
+        .append($('<a/>', { href: 'http://clic.xtec.cat/repo/index.html?page=info' }).html('http://clic.xtec.cat'))
+        .append($('<br>'))
+        .append($('<span/>').html(ps.getMsg('Version') + ' ' + this.ps.JClicVersion)));
 
-    this.$reportsPanel = $('<div/>', {class: 'reportsPanel', role: 'document'});
+    this.$reportsPanel = $('<div/>', { class: 'reportsPanel', role: 'document' });
 
     msg = ps.getMsg('Copy data to clipboard');
-    this.$copyBtn = $('<button/>', {title: msg, 'aria-label': msg})
-        .append($(this.copyIcon).css({width: '26px', height: '26px'}))
-        .on('click', function () {
-          clipboard.copy({
-            'text/plain': '===> ' + ps.getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor') + ' <===',
-            'text/html': skin.$reportsPanel.html()
-          });
-          $(this).parent().append(
-              $('<div/>', {class: 'smallPopup'})
-              .html(ps.getMsg('The data has been copied to clipboard'))
-              .fadeIn()
-              .delay(3000)
-              .fadeOut(function () {
-                $(this).remove();
-              }));
+    this.$copyBtn = $('<button/>', { title: msg, 'aria-label': msg })
+      .append($(this.copyIcon).css({ width: '26px', height: '26px' }))
+      .on('click', function () {
+        clipboard.copy({
+          'text/plain': '===> ' + ps.getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor') + ' <===',
+          'text/html': skin.$reportsPanel.html()
         });
+        $(this).parent().append(
+          $('<div/>', { class: 'smallPopup' })
+            .html(ps.getMsg('The data has been copied to clipboard'))
+            .fadeIn()
+            .delay(3000)
+            .fadeOut(function () {
+              $(this).remove();
+            }));
+      });
 
     msg = ps.getMsg('Close');
-    this.$closeDlgBtn = $('<button/>', {title: msg, 'aria-label': msg})
-        .append($(this.closeDialogIcon).css({width: '26px', height: '26px'}))
-        .on('click', function () {
-          skin._closeDlg(true);
-        });
-        
+    this.$closeDlgBtn = $('<button/>', { title: msg, 'aria-label': msg })
+      .append($(this.closeDialogIcon).css({ width: '26px', height: '26px' }))
+      .on('click', function () {
+        skin._closeDlg(true);
+      });
+
     msg = ps.getMsg('OK');
-    this.$okDlgBtn = $('<button/>', {title: msg, 'aria-label': msg})
-        .append($(this.okDialogIcon).css({width: '26px', height: '26px'}))
-        .on('click', function () {
-          skin._closeDlg(true);
-        });
+    this.$okDlgBtn = $('<button/>', { title: msg, 'aria-label': msg })
+      .append($(this.okDialogIcon).css({ width: '26px', height: '26px' }))
+      .on('click', function () {
+        skin._closeDlg(true);
+      });
 
     msg = ps.getMsg('Cancel');
-    this.$cancelDlgBtn = $('<button/>', {title: msg, 'aria-label': msg})
-        .append($(this.closeDialogIcon).css({width: '26px', height: '26px'}))
-        .on('click', function () {
-          skin._closeDlg(false);
-        });
+    this.$cancelDlgBtn = $('<button/>', { title: msg, 'aria-label': msg })
+      .append($(this.closeDialogIcon).css({ width: '26px', height: '26px' }))
+      .on('click', function () {
+        skin._closeDlg(false);
+      });
 
     // Registers this Skin in the list of realized Skin objects
     Skin.skinStack.push(this);
@@ -346,13 +348,13 @@ define([
      * Sets the 'size' CSS values (max, min and compulsory) to the main `div` of this skin
      * @param {boolean} full - `true` when the skin is in full screen mode
      */
-    setSkinSizes: function(full){
+    setSkinSizes: function (full) {
       var css = {},
-          topHeight = this.player.$topDiv.height(),
-          nilValue = this.player.fullScreenChecked ? 'inherit' : null;
+        topHeight = this.player.$topDiv.height(),
+        nilValue = this.player.fullScreenChecked ? 'inherit' : null;
 
       // When `full` no set, detect the current status with screenfull
-      if(typeof full === 'undefined')
+      if (typeof full === 'undefined')
         full = screenfull && screenfull.enabled && screenfull.isFullscreen;
 
       Utils.toCssSize(full ? '100vw' : this.ps.options.minWidth, css, 'min-width', nilValue);
@@ -377,9 +379,9 @@ define([
     /**
      *
      * Loads the object settings from a specific jQuery XML element
-     * @param {external:jQuery} $xml - The XML element containing the properties of the skin
+     * @param {external:jQuery} _$xml - The XML element containing the properties of the skin
      */
-    setProperties: function ($xml) {
+    setProperties: function (_$xml) {
       // To be implemented by subclasses
     },
     /**
@@ -439,10 +441,10 @@ define([
     /**
      *
      * Shows a window with clues or help for the current activity
-     * @param {external:jQuery} $hlpComponent - A JQuery DOM element with the information to be shown.
+     * @param {external:jQuery} _$hlpComponent - A JQuery DOM element with the information to be shown.
      * It can be a string or number. When `null`, the help window (if any) must be closed.
      */
-    showHelp: function ($hlpComponent) {
+    showHelp: function (_$hlpComponent) {
       // TODO: Implement HelpWindow
     },
     /**
@@ -473,12 +475,12 @@ define([
             resolve(skin._dlgOkValue);
           else if (!resolved && reject)
             reject(skin._dlgCancelValue);
-          skin.$dlgOverlay.css({display: 'none'});
+          skin.$dlgOverlay.css({ display: 'none' });
           skin.enableMainButtons(true);
           skin._closeDlg = Skin.prototype._closeDlg;
         };
         skin.enableMainButtons(false);
-        skin.$dlgOverlay.css({display: 'initial'});
+        skin.$dlgOverlay.css({ display: 'initial' });
       });
     },
     /**
@@ -487,7 +489,7 @@ define([
      * overlay is active, to avoid direct access to controls not related with the dialog.
      * @param {boolean} status - `true` to make main controls navigable, `false` otherwise
      */
-    enableMainButtons: function(status) {
+    enableMainButtons: function (status) {
       this.$playerCnt.find('button').attr('tabindex', status ? '0' : '-1');
     },
     /**
@@ -495,7 +497,7 @@ define([
      * This method is re-defined on each call to `showDlg`, so the `resolve` and `reject`
      * functions can be safely called.
      */
-    _closeDlg: function () {},
+    _closeDlg: function () { },
     /**
      *
      * Displays a dialog with a report of the current results achieved by the user.
@@ -543,9 +545,9 @@ define([
      */
     setScreenFull: function (status) {
       if (screenfull && screenfull.enabled && (
-          status === true && !screenfull.isFullscreen ||
-          status === false && !screenfull.isFullScreen ||
-          status !== true && status !== false)) {
+        status === true && !screenfull.isFullscreen ||
+        status === false && !screenfull.isFullScreen ||
+        status !== true && status !== false)) {
         // Save current value of fullScreen for later use
         var full = screenfull.isFullscreen;
         screenfull.toggle(this.player.$mainContainer.get(0));
@@ -562,8 +564,8 @@ define([
      */
     equals: function (skin) {
       return skin &&
-          this.name === skin.name &&
-          this.ps === skin.ps;
+        this.name === skin.name &&
+        this.ps === skin.ps;
     },
     /**
      *
@@ -577,9 +579,9 @@ define([
     /**
      *
      * Method used to notify this skin that a specific action has changed its enabled/disabled status
-     * @param {AWT.Action} act - The action originating the change event
+     * @param {AWT.Action} _action - The action originating the change event
      */
-    actionStatusChanged: function (act) {
+    actionStatusChanged: function (_action) {
       // To be implemented in subclasses
     },
     //

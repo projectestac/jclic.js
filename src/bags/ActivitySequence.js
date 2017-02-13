@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./JumpInfo",
@@ -265,7 +267,7 @@ define([
             result = ase;
         }
       }
-      return  result;
+      return result;
     },
     /**
      *

@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../AWT",
@@ -255,8 +257,8 @@ define([
      */
     contains: function (p) {
       return this.shape === this ?
-          AWT.Rectangle.prototype.contains.call(this, p) :
-          this.shape.contains(p);
+        AWT.Rectangle.prototype.contains.call(this, p) :
+        this.shape.contains(p);
     },
     /**
      *
@@ -406,7 +408,7 @@ define([
           this.$accessibleElement.prop({
             disabled: disabled,
             tabindex: disabled ? -1 : 0
-          });          
+          });
         }
         this.invalidate();
       }
@@ -521,8 +523,8 @@ define([
         if (!bb.bgGradient || bb.bgGradient.hasTransparency()) {
           // Prepare the rendering context
           ctx.fillStyle = this.inactive ?
-              bb.inactiveColor :
-              this.inverted ? bb.textColor : bb.backColor;
+            bb.inactiveColor :
+            this.inverted ? bb.textColor : bb.backColor;
           // Fill the shape
           this.shape.fill(ctx, dirtyRegion);
         }
@@ -544,13 +546,13 @@ define([
      *
      * Here is on classes derived from {@link AbstractBox} should implement the drawing of its
      * content. Background and border are already painted in {@link AbstractBox#update}.
-     * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
+     * @param {external:CanvasRenderingContext2D} _ctx - The canvas rendering context used to draw the
      * box content.
-     * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+     * @param {AWT.Rectangle=} _dirtyRegion - The area that must be repainted. `null` refers to the whole box.
      */
     //
     // Abstract method, to be implemented in subclasses
-    updateContent: function (ctx, dirtyRegion) {
+    updateContent: function (_ctx, _dirtyRegion) {
     },
     /**
      *
@@ -652,14 +654,14 @@ define([
      *
      * Places and resizes {@link AbstractBox#$hostedComponent|$hostedComponent}, based on the size
      * and position of this box.
-     * @param {boolean} sizeChanged - `true` when this {@link ActiveBox} has changed its size
+     * @param {boolean} _sizeChanged - `true` when this {@link ActiveBox} has changed its size
      */
-    setHostedComponentBounds: function (sizeChanged) {
+    setHostedComponentBounds: function (_sizeChanged) {
       if (this.$hostedComponent) {
         var r = this.getBounds();
         var b = this.border || this.marked ?
-            this.getBoxBaseResolve().get(this.marked ? 'markerStroke' : 'borderStroke').lineWidth :
-            0;
+          this.getBoxBaseResolve().get(this.marked ? 'markerStroke' : 'borderStroke').lineWidth :
+          0;
         this.$hostedComponent.css({
           position: 'absolute',
           width: r.dim.width - 2 * b + 'px',

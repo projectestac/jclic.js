@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "../Utils",
   "./ActiveMediaPlayer",

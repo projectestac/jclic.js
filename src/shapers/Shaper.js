@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../Utils",
@@ -183,7 +185,7 @@ define([
       // Reads the 'enclosing'
       // (main shape area where the other shape elements are placed)
       $xml.children('enclosing:first').each(function () {
-        $(this).children('shape:first').each(function (data) {
+        $(this).children('shape:first').each(function (_data) {
           shaper.enclosing = shaper.readShapeData(this, shaper.scaleX, shaper.scaleY);
           shaper.showEnclosure = true;
           shaper.hasRemainder = true;

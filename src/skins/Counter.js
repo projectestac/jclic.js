@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([], function () {
 
   /**
@@ -84,7 +86,7 @@ define([], function () {
      */
     getDisplayValue: function () {
       var result = this.countDown > 0 ? this.countDown - this.value : this.value;
-      if(this.displayDiffFrom)
+      if (this.displayDiffFrom)
         result = result - this.displayDiffFrom.value;
       return Math.max(0, Math.min(this.MAX_DISPLAY_VALUE, result));
     },

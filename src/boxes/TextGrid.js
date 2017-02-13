@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../AWT",
@@ -93,7 +95,7 @@ define([
    */
   TextGrid.createEmptyGrid = function (parent, container, x, y, tgc, wildTransparent) {
     var result = new TextGrid(parent, container, tgc.bb,
-        x, y, tgc.ncw, tgc.nch, tgc.w, tgc.h, tgc.border);
+      x, y, tgc.ncw, tgc.nch, tgc.w, tgc.h, tgc.border);
     result.wild = tgc.wild;
     result.randomChars = tgc.randomChars;
     result.wildTransparent = wildTransparent;
@@ -222,7 +224,7 @@ define([
         for (var px = 0; px < this.nCols; px++)
           if (this.chars[py][px] === this.wild)
             this.chars[py][px] = this.randomChars.charAt(
-                Math.floor(Math.random() * this.randomChars.length));
+              Math.floor(Math.random() * this.randomChars.length));
     },
     /**
      *
@@ -260,12 +262,12 @@ define([
     setCellLocked: function (px, py, locked) {
       if (px >= 0 && px < this.nCols && py >= 0 && py < this.nRows) {
         this.attributes[py][px] = locked ?
-            this.flags.LOCKED |
-            (this.wildTransparent ?
-                this.flags.TRANSPARENT :
-                this.flags.INVERTED |
-                this.flags.HIDDEN) :
-            this.flags.NORMAL;
+          this.flags.LOCKED |
+          (this.wildTransparent ?
+            this.flags.TRANSPARENT :
+            this.flags.INVERTED |
+            this.flags.HIDDEN) :
+          this.flags.NORMAL;
       }
     },
     /**
@@ -287,9 +289,9 @@ define([
         return null;
 
       var point = new AWT.Point(),
-          inBlack = false,
-          startCount = false,
-          px, py;
+        inBlack = false,
+        startCount = false,
+        px, py;
 
       for (px = 0; px < rx; px++) {
         if ((this.attributes[ry][px] & this.flags.LOCKED) !== 0) {
@@ -362,8 +364,8 @@ define([
       if (this.useCursor) {
 
         var point = this.findNextCellWithAttr(this.cursor.x, this.cursor.y,
-            skipLocked ? this.flags.LOCKED : this.flags.NORMAL,
-            dx, dy, false);
+          skipLocked ? this.flags.LOCKED : this.flags.NORMAL,
+          dx, dy, false);
 
         if (!this.cursor.equals(point))
           this.setCursorAt(point.x, point.y, skipLocked);
@@ -435,7 +437,7 @@ define([
             point.x = 0;
         }
         if (point.x === startX && point.y === startY ||
-            this.getCellAttribute(point.x, point.y, attr) === attrState)
+          this.getCellAttribute(point.x, point.y, attr) === attrState)
           break;
         point.x += dx;
         point.y += dy;
@@ -487,7 +489,7 @@ define([
      */
     countCharsLike: function (ch) {
       var result = 0,
-          px, py;
+        px, py;
 
       for (py = 0; py < this.nRows; py++)
         for (px = 0; px < this.nCols; px++)
@@ -512,7 +514,7 @@ define([
      */
     countCoincidences: function (checkCase) {
       var result = 0,
-          px, py;
+        px, py;
 
       if (this.answers)
         for (py = 0; py < this.nRows; py++)
@@ -532,14 +534,14 @@ define([
      */
     isCellOk: function (px, py, checkCase) {
       var result = false,
-          ch, ch2;
+        ch, ch2;
 
       if (this.isValidCell(px, py)) {
         ch = this.chars[py][px];
         if (ch !== this.wild) {
           ch2 = this.answers[py][px];
           if (ch === ch2 ||
-              !checkCase && ch.toUpperCase() === ch2.toUpperCase())
+            !checkCase && ch.toUpperCase() === ch2.toUpperCase())
             result = true;
         }
       }
@@ -558,7 +560,7 @@ define([
         return null;
 
       var px = Math.floor((devicePoint.x - this.pos.x) / this.cellWidth),
-          py = Math.floor((devicePoint.y - this.pos.y) / this.cellHeight);
+        py = Math.floor((devicePoint.y - this.pos.y) / this.cellHeight);
 
       if (this.isValidCell(px, py)) {
         return new AWT.Point(px, py);
@@ -643,7 +645,7 @@ define([
 
       if (this.isValidCell(x0, y0) && this.isValidCell(x1, y1)) {
         var dx = x1 - x0,
-            dy = y1 - y0;
+          dy = y1 - y0;
 
         if (dx === 0 || dy === 0 || Math.abs(dx) === Math.abs(dy)) {
           var steps = Math.max(Math.abs(dx), Math.abs(dy));
@@ -724,9 +726,9 @@ define([
         return this.getCellRect(px, py);
 
       var bb = this.getBoxBaseResolve(),
-          strk = isMarked ? bb.markerStroke : bb.borderStroke;
+        strk = isMarked ? bb.markerStroke : bb.borderStroke;
 
-      return  this.getCellRect(px, py).grow(strk.lineWidth, strk.lineWidth);
+      return this.getCellRect(px, py).grow(strk.lineWidth, strk.lineWidth);
     },
     /**
      *
@@ -763,8 +765,8 @@ define([
      */
     getScaledSize: function (scale) {
       return new AWT.Dimension(
-          Utils.roundTo(scale * this.preferredBounds.dim.width, this.nCols),
-          Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
+        Utils.roundTo(scale * this.preferredBounds.dim.width, this.nCols),
+        Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
     },
     /**
      *
@@ -795,13 +797,13 @@ define([
       ctx.font = bb.font.cssFont();
       ctx.textBaseline = 'hanging';
       bb.prepareText(ctx, 'W',
-          this.cellWidth - 2 * this.defaults.MIN_INTERNAL_MARGIN,
-          this.cellHeight - 2 * this.defaults.MIN_INTERNAL_MARGIN);
+        this.cellWidth - 2 * this.defaults.MIN_INTERNAL_MARGIN,
+        this.cellHeight - 2 * this.defaults.MIN_INTERNAL_MARGIN);
 
       var ch = [],
-          attr, isMarked, isInverted, isCursor,
-          boxBounds,
-          dx, dy, px, py, ry, bxr;
+        attr, isMarked, isInverted, isCursor,
+        boxBounds,
+        dx, dy, px, py, ry, bxr;
       //
       // TODO: Check in different browsers and devices what is the real font height.
       // In Chrome on Linux (Gnome), subtracting `bb.font._metrics.descent / 4` produces
@@ -819,8 +821,8 @@ define([
               isCursor = this.useCursor && this.cursor.x === px && this.cursor.y === py;
               boxBounds = this.getCellRect(px, py);
               ctx.fillStyle = isCursor && this.cursorBlink ?
-                  bb.inactiveColor :
-                  isInverted ? bb.textColor : bb.backColor;
+                bb.inactiveColor :
+                isInverted ? bb.textColor : bb.backColor;
               boxBounds.fill(ctx);
               ctx.strokeStyle = 'black';
               if ((attr & this.flags.HIDDEN) === 0) {
@@ -837,7 +839,7 @@ define([
                   }
                   // Render text
                   ctx.fillStyle = isInverted ? bb.backColor
-                      : this.isAlternative() ? bb.alternativeColor : bb.textColor;
+                    : this.isAlternative() ? bb.alternativeColor : bb.textColor;
                   ctx.fillText(ch[0], dx, dy);
                 }
               }

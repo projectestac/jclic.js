@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../Utils",
@@ -223,7 +225,7 @@ define([
       else if (this.parent !== null)
         return this.parent.getOwn(property);
       else {
-        if(typeof this[property] === 'object')
+        if (typeof this[property] === 'object')
           this[property] = Utils.cloneObject(BoxBase.prototype[property]);
         else
           this[property] = BoxBase.prototype[property];
@@ -245,12 +247,12 @@ define([
       css = font.toCss(css);
 
       css['color'] = inverse ? this.get('backColor')
-          : alternative ? this.get('alternativeColor')
+        : alternative ? this.get('alternativeColor')
           : this.get('textColor');
 
       var transparent = this.get('transparent');
       css['background-color'] = transparent ? 'transparent'
-          : inactive ? this.get('inactiveColor')
+        : inactive ? this.get('inactiveColor')
           : inverse ? this.get('textColor') : this.get('backColor');
 
       var bgGradient = this.get('bgGradient');

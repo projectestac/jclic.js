@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -71,7 +73,7 @@ define([
      * Object that indicates if box grids A and B must be scrambled.
      * (defaults to _false_ in WordSearch activities)
      * @type {Activity~scrambleType} */
-    scramble: {primary: false, secondary: false},
+    scramble: { primary: false, secondary: false },
     /**
      *
      * Retrieves the minimum number of actions needed to solve this activity
@@ -176,7 +178,8 @@ define([
               'background-image': 'url(' + abcAlt.animatedGifFile + ')',
               'background-position': 'center',
               'background-repeat': 'no-repeat',
-              position: 'absolute'}).appendTo(this.$div);
+              position: 'absolute'
+            }).appendTo(this.$div);
         }
 
         if (this.act.acp !== null) {
@@ -361,10 +364,10 @@ define([
               break;
             }
             up = true;
-            /* falls through */
+          /* falls through */
           case 'touchend':
           case 'touchstart':
-          case 'mousedown':            
+          case 'mousedown':
             if (!this.bc.active) {
               // A new word selection starts
               //

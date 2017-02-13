@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "screenfull",
@@ -38,7 +40,7 @@ define([
   "../Utils"
 ], function ($, screenfull, AWT, Skin, ActiveBox, Counter, Utils) {
 
-// In some cases, require.js does not return a valid value for screenfull. Check it:
+  // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
     screenfull = window.screenfull;
 
@@ -61,71 +63,71 @@ define([
     Skin.call(this, ps, name);
 
     var skin = this,
-        msg = '';
+      msg = '';
 
     AWT.Font.loadGoogleFonts(this.cssFonts);
 
     // Add waiting panel
     this.$waitPanel = $('<div/>')
-        .css({display: 'none', 'background-color': 'rgba(255, 255, 255, .60)', 'z-index': 99})
-        .append($('<div/>', {class: 'waitPanel'})
-            .append($('<div/>', {class: 'animImgBox'})
-                .append($(this.waitImgBig), $(this.waitImgSmall))));
+      .css({ display: 'none', 'background-color': 'rgba(255, 255, 255, .60)', 'z-index': 99 })
+      .append($('<div/>', { class: 'waitPanel' })
+        .append($('<div/>', { class: 'animImgBox' })
+          .append($(this.waitImgBig), $(this.waitImgSmall))));
     this.$playerCnt.append(this.$waitPanel);
 
     // Create the main container for buttons, counters and message box
-    this.$ctrlCnt = $('<div/>', {class: 'JClicCtrlCnt unselectableText', role: 'navigation'});
+    this.$ctrlCnt = $('<div/>', { class: 'JClicCtrlCnt unselectableText', role: 'navigation' });
     this.$div.append(this.$ctrlCnt);
 
     // Add `prev` button
     msg = ps.getMsg('Previous activity');
-    this.buttons.prev = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
-        .append($(Utils.getSvg(this.prevIcon, this.iconWidth, this.iconHeight, this.iconFill)))
-        .on('click', function (evt) {
-          if (skin.ps)
-            skin.ps.actions.prev.processEvent(evt);
-        });
+    this.buttons.prev = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
+      .append($(Utils.getSvg(this.prevIcon, this.iconWidth, this.iconHeight, this.iconFill)))
+      .on('click', function (evt) {
+        if (skin.ps)
+          skin.ps.actions.prev.processEvent(evt);
+      });
     this.$ctrlCnt.append(this.buttons.prev);
 
     // Add message box
     this.msgBox = new ActiveBox();
     this.msgBox.role = 'message';
     var thisMsgBox = this.msgBox;
-    this.$msgBoxDiv = $('<div/>', {class: 'JClicMsgBox'})
-        .click(function () {
-          thisMsgBox.playMedia(ps);
-          return false;
-        });
+    this.$msgBoxDiv = $('<div/>', { class: 'JClicMsgBox' })
+      .click(function () {
+        thisMsgBox.playMedia(ps);
+        return false;
+      });
     this.$ctrlCnt.append(this.$msgBoxDiv);
 
     // Add `next` button
     msg = ps.getMsg('Next activity');
-    this.buttons.next = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
-        .append($(Utils.getSvg(this.nextIcon, this.iconWidth, this.iconHeight, this.iconFill)))
-        .on('click', function (evt) {
-          if (skin.ps)
-            skin.ps.actions.next.processEvent(evt);
-        });
+    this.buttons.next = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
+      .append($(Utils.getSvg(this.nextIcon, this.iconWidth, this.iconHeight, this.iconFill)))
+      .on('click', function (evt) {
+        if (skin.ps)
+          skin.ps.actions.next.processEvent(evt);
+      });
     this.$ctrlCnt.append(this.buttons.next);
 
     // Add counters
     if (false !== this.ps.options.counters && false !== options.counters) {
       // Create counters
       msg = ps.getMsg('Reports');
-      var $countCnt = $('<button/>', {class: 'JClicCountCnt', 'aria-label': msg})
-          .on('click', function (evt) {
-            if (skin.ps)
-              skin.ps.actions.reports.processEvent(evt);
-          });
+      var $countCnt = $('<button/>', { class: 'JClicCountCnt', 'aria-label': msg })
+        .on('click', function (evt) {
+          if (skin.ps)
+            skin.ps.actions.reports.processEvent(evt);
+        });
       $.each(Skin.prototype.counters, function (name) {
         msg = ps.getMsg(name);
-        skin.counters[name] = new Counter(name, $('<div/>', {class: 'JClicCounter', title: msg, 'aria-label': msg})
-            .css({
-              'background-image': 'url(' + Utils.svgToURI(skin[name + 'Icon'], skin.counterIconWidth, skin.counterIconHeight, skin.counterIconFill) + ')',
-              color: skin.counterIconFill
-            })
-            .html('000')
-            .appendTo($countCnt));
+        skin.counters[name] = new Counter(name, $('<div/>', { class: 'JClicCounter', title: msg, 'aria-label': msg })
+          .css({
+            'background-image': 'url(' + Utils.svgToURI(skin[name + 'Icon'], skin.counterIconWidth, skin.counterIconHeight, skin.counterIconFill) + ')',
+            color: skin.counterIconFill
+          })
+          .html('000')
+          .appendTo($countCnt));
       });
       this.$ctrlCnt.append($countCnt);
     }
@@ -133,35 +135,35 @@ define([
     // Add info button
     if (true === this.ps.options.info || true === options.info) {
       msg = ps.getMsg('Information');
-      this.buttons.info = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
-          .append($(Utils.getSvg(this.infoIcon, this.iconWidth, this.iconHeight, this.iconFill)))
-          .on('click', function (evt) {
-            if (skin.ps)
-              skin.ps.actions.info.processEvent(evt);
-          });
+      this.buttons.info = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
+        .append($(Utils.getSvg(this.infoIcon, this.iconWidth, this.iconHeight, this.iconFill)))
+        .on('click', function (evt) {
+          if (skin.ps)
+            skin.ps.actions.info.processEvent(evt);
+        });
       this.$ctrlCnt.append(this.buttons.info);
     }
 
     // Add reports button
     if (true === this.ps.options.reportsBtn || true === options.reportsBtn) {
       msg = ps.getMsg('Reports');
-      this.buttons.about = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
-          .append($(Utils.getSvg(this.reportsIcon, this.iconWidth, this.iconHeight, this.iconFill)))
-          .on('click', function (evt) {
-            if (skin.ps)
-              skin.ps.actions.reports.processEvent(evt);
-          });
+      this.buttons.about = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
+        .append($(Utils.getSvg(this.reportsIcon, this.iconWidth, this.iconHeight, this.iconFill)))
+        .on('click', function (evt) {
+          if (skin.ps)
+            skin.ps.actions.reports.processEvent(evt);
+        });
       this.$ctrlCnt.append(this.buttons.about);
     }
 
     // Add `full screen` button
     if (screenfull && screenfull.enabled) {
       msg = ps.getMsg('Toggle full screen');
-      this.buttons.fullscreen = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
-          .append($('<img/>', {src: Utils.svgToURI(this.fullScreenIcon, this.iconWidth, this.iconHeight, this.iconFill)}))
-          .on('click', function () {
-            skin.setScreenFull(null);
-          });
+      this.buttons.fullscreen = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
+        .append($('<img/>', { src: Utils.svgToURI(this.fullScreenIcon, this.iconWidth, this.iconHeight, this.iconFill) }))
+        .on('click', function () {
+          skin.setScreenFull(null);
+        });
       this.$ctrlCnt.append(this.buttons.fullscreen);
     }
 
@@ -169,12 +171,12 @@ define([
     if (typeof this.ps.options.closeFn === 'function') {
       msg = ps.getMsg('Close');
       var closeFn = this.ps.options.closeFn;
-      this.buttons.close = $('<button/>', {class: 'JClicBtn', title: msg, 'aria-label': msg})
-          .append($(Utils.getSvg(this.closeIcon, this.iconWidth, this.iconHeight, this.iconFill)))
-          .on('click', function () {
-            Utils.log('info', 'Closing the player');
-            closeFn();
-          });
+      this.buttons.close = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
+        .append($(Utils.getSvg(this.closeIcon, this.iconWidth, this.iconHeight, this.iconFill)))
+        .on('click', function () {
+          Utils.log('info', 'Closing the player');
+          closeFn();
+        });
       this.$ctrlCnt.append(this.buttons.close);
     }
 
@@ -267,8 +269,8 @@ define([
       // Set the fullScreen icon
       if (this.buttons.fullscreen)
         this.buttons.fullscreen.find('img').get(0).src = Utils.svgToURI(
-            this[screenfull.isFullscreen ? 'fullScreenExitIcon' : 'fullScreenIcon'],
-            this.iconWidth, this.iconHeight, this.iconFill);
+          this[screenfull.isFullscreen ? 'fullScreenExitIcon' : 'fullScreenIcon'],
+          this.iconWidth, this.iconHeight, this.iconFill);
 
       // Resize player accordingly
       this.player.doLayout();
@@ -276,19 +278,19 @@ define([
       // Build canvas at the end of current thread, thus avoiding
       // invalid sizes due to incomplete layout of DOM objects
       window.setTimeout(function () {
-        
+
         // Temporary remove canvas to let div get its natural size:
         if (skin.$msgBoxDivCanvas)
           skin.$msgBoxDivCanvas.remove();
 
         // Get current size of message box div without canvas
         var msgWidth = skin.$msgBoxDiv.outerWidth(),
-            msgHeight = skin.$msgBoxDiv.outerHeight();
+          msgHeight = skin.$msgBoxDiv.outerHeight();
 
         // Replace existing canvas if size has changed
         if (skin.$msgBoxDivCanvas === null ||
-            skin.msgBox.dim.widht !== msgWidth ||
-            skin.msgBox.dim.height !== msgHeight) {
+          skin.msgBox.dim.widht !== msgWidth ||
+          skin.msgBox.dim.height !== msgHeight) {
           skin.$msgBoxDivCanvas = $('<canvas width="' + msgWidth + '" height="' + msgHeight + '"/>');
           skin.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth + 1, msgHeight));
           skin.msgBox.buildAccessibleElement(skin.$msgBoxDivCanvas, skin.$msgBoxDiv);

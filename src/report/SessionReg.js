@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../Utils",
@@ -106,30 +108,30 @@ define([
 
       var result = [];
 
-      var $t = $('<table/>', {class: 'JCDetailed'});
+      var $t = $('<table/>', { class: 'JCDetailed' });
 
       if (this.info.numSequences > 0) {
 
         result.push($('<p/>').html(writeProjectName ? ps.getMsg('Project') + ' ' + this.projectName : ''));
 
         $t.append($('<thead/>').append($('<tr/>').append(
-            $html.th(ps.getMsg('sequence')),
-            $html.th(ps.getMsg('activity')),
-            $html.th(ps.getMsg('OK')),
-            $html.th(ps.getMsg('actions')),
-            $html.th(ps.getMsg('score')),
-            $html.th(ps.getMsg('time')))));
+          $html.th(ps.getMsg('sequence')),
+          $html.th(ps.getMsg('activity')),
+          $html.th(ps.getMsg('OK')),
+          $html.th(ps.getMsg('actions')),
+          $html.th(ps.getMsg('score')),
+          $html.th(ps.getMsg('time')))));
 
         for (var p = 0; p < this.sequences.length; p++)
           $t.append(this.sequences[p].$print(ps));
 
         $t.append($('<tr/>').append(
-            $html.td(ps.getMsg('Total:')),
-            $html.td(this.info.nActivities + ' (' + Utils.getPercent(this.info.ratioPlayed) + ')'),
-            $html.td(this.info.nActSolved + ' (' + Utils.getPercent(this.info.ratioSolved) + ')'),
-            $html.td(this.info.nActions),
-            $html.td(Utils.getPercent(this.info.tScore / 100)),
-            $html.td(Utils.getHMStime(this.info.tTime))));
+          $html.td(ps.getMsg('Total:')),
+          $html.td(this.info.nActivities + ' (' + Utils.getPercent(this.info.ratioPlayed) + ')'),
+          $html.td(this.info.nActSolved + ' (' + Utils.getPercent(this.info.ratioSolved) + ')'),
+          $html.td(this.info.nActions),
+          $html.td(Utils.getPercent(this.info.tScore / 100)),
+          $html.td(Utils.getHMStime(this.info.tTime))));
       }
       result.push($t);
 

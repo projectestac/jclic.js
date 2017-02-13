@@ -28,6 +28,7 @@
  *  @licend
  */
 
+/* global define */
 
 define([
   "jquery",
@@ -205,7 +206,8 @@ define([
               'background-image': 'url(' + abcA.animatedGifFile + ')',
               'background-position': 'center',
               'background-repeat': 'no-repeat',
-              position: 'absolute'}).appendTo(this.$div);
+              position: 'absolute'
+            }).appendTo(this.$div);
         }
 
         if (solved && solved.imgName)
@@ -227,7 +229,7 @@ define([
         // bgB will be used only as a placeholder for `$textField`
         this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1));
 
-        this.$form = $('<form/>', {id: 'form1', action: '#'});
+        this.$form = $('<form/>', { id: 'form1', action: '#' });
 
         var panel = this;
         this.$form.submit(function (event) {
@@ -237,7 +239,7 @@ define([
           }
         });
 
-        this.$textField = $('<input/>', {type: 'text', size: 200}).css(abcB.bb.getCSS()).css({
+        this.$textField = $('<input/>', { type: 'text', size: 200 }).css(abcB.bb.getCSS()).css({
           position: 'absolute', top: 0, left: 0,
           border: 0, padding: 0, margin: 0,
           'text-align': 'center'
@@ -488,8 +490,8 @@ define([
             event.preventDefault();
             this.ps.stopMedia(1);
             var p = new AWT.Point(
-                event.pageX - this.$div.offset().left,
-                event.pageY - this.$div.offset().top);
+              event.pageX - this.$div.offset().left,
+              event.pageY - this.$div.offset().top);
 
             // Avoid clicks on the text field
             if (this.bgB.contains(p)) {

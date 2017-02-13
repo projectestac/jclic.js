@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./ActiveBoxBag",
@@ -64,10 +66,10 @@ define([
 
     // This will be the enclosing rectangle of this ActiveBox bag
     var r = new AWT.Rectangle(
-        new AWT.Point(px, py),
-        new AWT.Dimension(
-            Math.round(setWidth / this.nCols) * this.nCols,
-            Math.round(setHeight / this.nRows) * this.nRows));
+      new AWT.Point(px, py),
+      new AWT.Dimension(
+        Math.round(setWidth / this.nCols) * this.nCols,
+        Math.round(setHeight / this.nRows) * this.nRows));
 
     // Create all the [ActiveBox](ActiveBox.html) objects based on the
     // shapes provided by the [Shaper](Shaper.html)
@@ -107,10 +109,10 @@ define([
     var result = null;
     if (abc) {
       result = new ActiveBoxGrid(parent, container,
-          boxBase || abc.bb,
-          px, py,
-          abc.getTotalWidth(), abc.getTotalHeight(),
-          sh || abc.getShaper());
+        boxBase || abc.bb,
+        px, py,
+        abc.getTotalWidth(), abc.getTotalHeight(),
+        sh || abc.getShaper());
 
       result.setBorder(abc.border);
     }
@@ -134,8 +136,8 @@ define([
      */
     getMinimumSize: function () {
       return new AWT.Dimension(
-          Utils.settings.MIN_CELL_SIZE * this.nCols,
-          Utils.settings.MIN_CELL_SIZE * this.nRows);
+        Utils.settings.MIN_CELL_SIZE * this.nCols,
+        Utils.settings.MIN_CELL_SIZE * this.nRows);
     },
     /**
      *
@@ -145,8 +147,8 @@ define([
      */
     getScaledSize: function (scale) {
       return new AWT.Dimension(
-          Utils.roundTo(scale * this.preferredBounds.dim.width, this.nCols),
-          Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
+        Utils.roundTo(scale * this.preferredBounds.dim.width, this.nCols),
+        Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
     },
     /**
      *

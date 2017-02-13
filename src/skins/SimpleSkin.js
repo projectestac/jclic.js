@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./Skin",
@@ -46,12 +48,12 @@ define([
    */
   var SimpleSkin = function (ps, name) {
     // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
-    DefaultSkin.call(this, ps, name, {counters: false, reportsBtn: true});
+    DefaultSkin.call(this, ps, name, { counters: false, reportsBtn: true });
 
     this.$ctrlCnt.detach().prependTo(this.$div);
     this.$msgBoxDiv.detach().appendTo(this.$div);
     // Add a spacing div in substitution of msgBox
-    $('<div/>').css({'flex-grow': 1}).insertAfter(this.$ctrlCnt.children(':nth-child(2)'));
+    $('<div/>').css({ 'flex-grow': 1 }).insertAfter(this.$ctrlCnt.children(':nth-child(2)'));
 
   };
 

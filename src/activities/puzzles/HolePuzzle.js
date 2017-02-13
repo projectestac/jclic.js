@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -173,7 +175,7 @@ define([
         this.hiddenBox = this.bg.getActiveBox(this.hiddenBoxIndex);
         this.hiddenBox.setVisible(false);
         this.parkBg = new ActiveBoxGrid(null, this, abc.bb, this.act.margin, this.act.margin,
-            this.hiddenBox.dim.width, this.hiddenBox.dim.height, new Rectangular(1, 1));
+          this.hiddenBox.dim.width, this.hiddenBox.dim.height, new Rectangular(1, 1));
         this.parkBg.setContent(abc, null, this.hiddenBoxIndex, 0, 1);
         this.parkBg.setBorder(this.bg.hasBorder());
         this.parkBg.setVisible(true);
@@ -277,12 +279,12 @@ define([
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
      */
-    buildAccessibleComponents: function() {
-      if(this.$canvas && this.accessibleCanvas) {
+    buildAccessibleComponents: function () {
+      if (this.$canvas && this.accessibleCanvas) {
         ActPanelAncestor.buildAccessibleComponents.call(this);
         this.bg.buildAccessibleElements(this.$canvas, this.$div);
       }
-    },    
+    },
     /**
      *
      * Main handler used to process mouse, touch, keyboard and edit events
@@ -294,8 +296,8 @@ define([
       if (this.playing) {
         var bx;
         var p = new AWT.Point(
-            event.pageX - this.$div.offset().left,
-            event.pageY - this.$div.offset().top);
+          event.pageX - this.$div.offset().left,
+          event.pageY - this.$div.offset().top);
 
         switch (event.type) {
           case 'click':
@@ -322,8 +324,8 @@ define([
                     this.parkBg.setVisible(false);
                     this.finishActivity(true);
                   } else
-                  if (!m)
-                    this.playEvent('click');
+                    if (!m)
+                      this.playEvent('click');
                 }
                 this.update();
               } else {

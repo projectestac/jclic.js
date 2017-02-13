@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define(["../Utils"], function (Utils) {
   /**
    * This class contains information about what things JClic sequence manager has to do in certain

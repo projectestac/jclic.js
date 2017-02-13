@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./Counter",
@@ -52,7 +54,7 @@ define([
     this.box = new AbstractBox(parent, container, boxBase);
     this.box.cc = this;
     this.box.updateContent = this.updateBoxContent;
-    if(rect)
+    if (rect)
       this.box.setBounds(rect);
   };
 
@@ -100,9 +102,9 @@ define([
      * Draws the counter on the provided Canvas context
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * box content.
-     * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+     * @param {AWT.Rectangle=} _dirtyRegion - The area that must be repainted. `null` refers to the whole box.
      */
-    updateBoxContent: function (ctx, dirtyRegion) {
+    updateBoxContent: function (ctx, _dirtyRegion) {
 
       // NoTE: `this` refers to the `box` member of CanvasCounter
 
@@ -115,7 +117,7 @@ define([
 
       var valr = this.getDisplayValue();
 
-      for (var k = false, i = 0, j = 100; i < 3; i++, j /= 10) {
+      for (var k = false, i = 0, j = 100; i < 3; i++ , j /= 10) {
         if (!this.cc.enabled)
           d = 1;
         else {
@@ -129,14 +131,14 @@ define([
         }
 
         ctx.drawImage(this.img,
-            this.cc.origin.x,
-            this.cc.origin.y + this.cc.dSize.height * d,
-            this.cc.origin.x + this.cc.dSize.width,
-            this.cc.origin.y + this.cc.dSize.height * (d + 1),
-            this.pos.x + marginW + this.cc.dSize.width * i,
-            this.pos.y + marginH,
-            this.pos.x + marginW + this.cc.dSize.width * (i + 1),
-            this.pos.y + marginH + this.cc.dSize.height);
+          this.cc.origin.x,
+          this.cc.origin.y + this.cc.dSize.height * d,
+          this.cc.origin.x + this.cc.dSize.width,
+          this.cc.origin.y + this.cc.dSize.height * (d + 1),
+          this.pos.x + marginW + this.cc.dSize.width * i,
+          this.pos.y + marginH,
+          this.pos.x + marginW + this.cc.dSize.width * (i + 1),
+          this.pos.y + marginH + this.cc.dSize.height);
       }
       return true;
     }

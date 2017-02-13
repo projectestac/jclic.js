@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -114,8 +116,8 @@ define([
       panelAncestor.buildVisualComponents.call(this);
 
       var abcA = this.act.abc['primary'],
-          abcB = this.act.abc['secondary'],
-          i, n;
+        abcB = this.act.abc['secondary'],
+        i, n;
 
       if (abcA && abcB) {
         if (this.act.invAss) {
@@ -174,17 +176,17 @@ define([
         } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           var x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
-              y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+            y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
           p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 
         // Flag for tracking `mouseup` events
         var up = false,
-            // Flag for assuring that only one media plays per event (avoid event sounds overlapping
-            // cell's media sounds)
-            m = false,
-            // Flag for tracking clicks on the background of grid A
-            clickOnBg0 = false;
+          // Flag for assuring that only one media plays per event (avoid event sounds overlapping
+          // cell's media sounds)
+          m = false,
+          // Flag for tracking clicks on the background of grid A
+          clickOnBg0 = false;
 
         switch (event.type) {
           case 'touchcancel':
@@ -199,10 +201,10 @@ define([
               break;
             }
             up = true;
-            /* falls through */
+          /* falls through */
           case 'touchend':
           case 'touchstart':
-          case 'mousedown':            
+          case 'mousedown':
             if (!this.bc.active) {
               // New pairing starts
               //
@@ -216,7 +218,7 @@ define([
               bx1 = this.bgA.findActiveBox(p);
               bx2 = this.bgB.findActiveBox(p);
               if (bx1 && bx1.idAss !== -1 && (!this.act.useOrder || bx1.idOrder === this.currentItem) ||
-                  !this.act.useOrder && bx2) {
+                !this.act.useOrder && bx2) {
                 // Start the [BoxConnector](BoxConnector.html)
                 if (this.act.dragCells)
                   this.bc.begin(p, bx1 || bx2);
@@ -255,9 +257,9 @@ define([
               // Check if the pairing was correct
               if (bx1 && bx2 && bx1.idAss !== -1 && !bx2.isInactive()) {
                 var ok = false,
-                    src = bx1.getDescription(),
-                    dest = bx2.getDescription(),
-                    matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idAss);
+                  src = bx1.getDescription(),
+                  dest = bx2.getDescription(),
+                  matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idAss);
 
                 if (bx1.idAss === bx2.idOrder || bx2.getContent().isEquivalent(matchingDest, true)) {
                   // Pairing was OK. Play media and disable involved cells

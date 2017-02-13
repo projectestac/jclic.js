@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./ActivityReg"
@@ -87,7 +89,7 @@ define([
      */
     $print: function (ps) {
       var $trArray = [];
-      var $tr = $('<tr/>').append($('<td/>', {rowspan: this.activities.length}).html(this.name));
+      var $tr = $('<tr/>').append($('<td/>', { rowspan: this.activities.length }).html(this.name));
       for (var p = 0; p < this.activities.length; p++) {
         $tr.append(this.activities[p].$print(ps));
         $trArray.push($tr);

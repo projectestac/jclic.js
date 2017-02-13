@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -163,7 +165,7 @@ define([
         this.bgB = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
 
         this.bgA.setContent(abc);
-        
+
         this.bgA.accessibleText = this.ps.getMsg('source');
         this.bgB.accessibleText = this.ps.getMsg('target');
 
@@ -266,7 +268,7 @@ define([
         this.bgB.setCellAttr('accessibleAlwaysActive', true);
         this.bgB.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
       }
-    },    
+    },
     /**
      *
      * Main handler used to process mouse, touch, keyboard and edit events
@@ -310,7 +312,7 @@ define([
               break;
             }
             up = true;
-            /* falls through */
+          /* falls through */
           case 'touchend':
           case 'touchstart':
           case 'mousedown':
@@ -323,7 +325,7 @@ define([
                 break;
               else
                 this.ps.stopMedia(1);
-                
+
               //
               // Find the ActiveBox behind the clicked point
               bx1 = this.bgA.findActiveBox(p);
@@ -336,10 +338,10 @@ define([
                 // Play cell media or event sound
                 if (!bx1.playMedia(this.ps))
                   this.playEvent('click');
-                
+
                 // Move the focus to the opposite accessible group
                 if (this.bgB.$accessibleDiv)
-                  this.bgB.$accessibleDiv.focus();                
+                  this.bgB.$accessibleDiv.focus();
               }
             } else {
               this.ps.stopMedia(1);
@@ -379,10 +381,10 @@ define([
                   this.playEvent(ok ? 'actionOk' : 'actionError');
               }
               this.update();
-              
+
               // Move the focus to the `source` accessible group
               if (this.bgA.$accessibleDiv)
-                this.bgA.$accessibleDiv.focus();              
+                this.bgA.$accessibleDiv.focus();
             }
             break;
 

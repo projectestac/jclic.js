@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./Skin",
@@ -46,7 +48,7 @@ define([
    */
   var MiniSkin = function (ps, name) {
     // MiniSkin extends [DefaultSkin](DefaultSkin.html)
-    DefaultSkin.call(this, ps, name, {counters: false, reportsBtn: true});
+    DefaultSkin.call(this, ps, name, { counters: false, reportsBtn: true });
   };
 
   MiniSkin.prototype = {

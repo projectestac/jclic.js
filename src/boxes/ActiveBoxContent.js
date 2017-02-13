@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../AWT",
@@ -48,8 +50,8 @@ define([
   var ActiveBoxContent = function (id) {
     if (typeof id !== 'undefined')
       this.id = id;
-    this.imgAlign = {h: 'middle', v: 'middle'};
-    this.txtAlign = {h: 'middle', v: 'middle'};
+    this.imgAlign = { h: 'middle', v: 'middle' };
+    this.txtAlign = { h: 'middle', v: 'middle' };
   };
 
   ActiveBoxContent.prototype = {
@@ -171,7 +173,7 @@ define([
 
           case 'border':
           case 'avoidOverlapping':
-            content [name] = Utils.getBoolean(val);
+            content[name] = Utils.getBoolean(val);
             break;
 
           case 'image':
@@ -215,7 +217,7 @@ define([
      * @returns {ActiveBoxContent~alignType}
      */
     readAlign: function (str) {
-      var align = {h: 'center', v: 'center'};
+      var align = { h: 'center', v: 'center' };
       if (str) {
         var v = str.split(',');
         align.h = v[0].replace('middle', 'center');
@@ -242,15 +244,15 @@ define([
           result = this.id === abc.id;
         else
           result = (this.text === null ? abc.text === null
-              : checkCase ? this.text === abc.text
+            : checkCase ? this.text === abc.text
               : this.text.toLocaleLowerCase() === abc.text.toLocaleLowerCase()
-              ) &&
-              (this.mediaContent === null ? abc.mediaContent === null
-                  : this.mediaContent.isEquivalent(abc.mediaContent)
-                  ) &&
-              this.img === abc.img &&
-              (this.imgClip === null ? abc.imgClip === null
-                  : this.imgClip.equals(abc.imgClip));
+          ) &&
+            (this.mediaContent === null ? abc.mediaContent === null
+              : this.mediaContent.isEquivalent(abc.mediaContent)
+            ) &&
+            this.img === abc.img &&
+            (this.imgClip === null ? abc.imgClip === null
+              : this.imgClip.equals(abc.imgClip));
       }
       return result;
     },
@@ -358,7 +360,7 @@ define([
 
       if (this.mediaContent)
         result += (result.length > 0 ? ' ' : '') + this.mediaContent.getDescription();
-      
+
       return result;
     },
     /**
@@ -366,7 +368,7 @@ define([
      * Overwrites the original `Object.toString` method, returning `getDescription` instead
      * @returns {String}
      */
-    toString: function() {
+    toString: function () {
       var result = '';
       if (this.text && this.text.length > 0)
         result += this.text;
@@ -374,7 +376,7 @@ define([
         result += (result.length > 0 ? ' ' : '') + Utils.getMsg('image') + ' ' + this.imgName;
       if (this.imgClip)
         result += (result.length > 0 ? ' ' : '') + Utils.getMsg('image fragment');
-      
+
       return result;
     }
   };

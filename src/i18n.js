@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   'i18next',
   './GlobalData',

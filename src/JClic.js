@@ -109,7 +109,7 @@
  * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise}
  */
 
-/* global module, exports:true, JClicDataProject, JClicDataOptions */
+/* global define:true, JClicDataProject, JClicDataOptions */
 
 // Mock `define` when called from a JavaScript environment without native AMD support (like Node.js)
 // For an example of how to call JClic.js in node.js, see:
@@ -133,7 +133,7 @@ define([
   "./AWT",
   "./Utils",
   "./Deps"
-], function ($, JClicPlayer, JClicProject, AWT, Utils, deps) {
+], function ($, JClicPlayer, JClicProject, AWT, Utils /*, deps*/) {
 
   /**
    * This is the main JClic method
@@ -194,7 +194,7 @@ define([
     loadProject: function (div, projectName, options) {
 
       options = Utils.init($.extend(Object.create(JClicObject.options), options || {}));
-      
+
       var player = null;
 
       // Find if there is another player already running on 'div'
@@ -221,7 +221,7 @@ define([
         player.reset();
       else {
         Utils.log('debug', 'Creating a new instance of JClicPlayer');
-        player = new JClicPlayer($(div).empty(), options);        
+        player = new JClicPlayer($(div).empty(), options);
       }
 
       if (projectName)
@@ -268,9 +268,9 @@ define([
     if (!options.noInit) {
       // If defined, load the global variable `JClicDataProject` or `JClicObject.projectFile`
       var projectName =
-          typeof JClicDataProject === 'string' ? JClicDataProject
+        typeof JClicDataProject === 'string' ? JClicDataProject
           : typeof JClicObject.projectFile === 'string' ? JClicObject.projectFile
-          : null;
+            : null;
 
       // Search DOM elements with class "JClic" (usually of type 'div') and iterate over them
       // initializing players

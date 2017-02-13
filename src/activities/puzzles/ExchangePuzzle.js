@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -235,12 +237,12 @@ define([
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
      */
-    buildAccessibleComponents: function() {
-      if(this.$canvas && this.accessibleCanvas) {
+    buildAccessibleComponents: function () {
+      if (this.$canvas && this.accessibleCanvas) {
         ActPanelAncestor.buildAccessibleComponents.call(this);
         this.bg.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
       }
-    },    
+    },
     /**
      *
      * Main handler used to process mouse, touch, keyboard and edit events
@@ -285,7 +287,7 @@ define([
               break;
             }
             up = true;
-            /* falls through */
+          /* falls through */
           case 'touchend':
           case 'touchstart':
           case 'mousedown':

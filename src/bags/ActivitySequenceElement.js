@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./ActivitySequenceJump",
@@ -106,7 +108,7 @@ define([
             ase['activityName'] = val;
             break;
           case 'description':
-            // possible navButtons values are: `none`, `fwd`, `back` or `both`
+          // possible navButtons values are: `none`, `fwd`, `back` or `both`
           case 'navButtons':
             ase[name] = val;
             break;

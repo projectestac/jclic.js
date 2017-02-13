@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -137,7 +139,8 @@ define([
               'background-image': 'url(' + abc.animatedGifFile + ')',
               'background-position': 'center',
               'background-repeat': 'no-repeat',
-              position: 'absolute'}).appendTo(this.$div);
+              position: 'absolute'
+            }).appendTo(this.$div);
         }
 
         if (solved && solved.imgName)
@@ -152,8 +155,8 @@ define([
           this.act.acp.generateContent(abc.nch, abc.ncw, contentKit, false);
         }
         this.bg = ActiveBoxGrid.createEmptyGrid(null, this,
-            this.act.margin, this.act.margin,
-            abc);
+          this.act.margin, this.act.margin,
+          abc);
         this.bg.setContent(abc, solved || null);
         this.bg.setAlternative(false);
         if (this.$animatedBg)
@@ -288,8 +291,8 @@ define([
         var bx;
         var m = false;
         var p = new AWT.Point(
-            event.pageX - this.$div.offset().left,
-            event.pageY - this.$div.offset().top);
+          event.pageX - this.$div.offset().left,
+          event.pageY - this.$div.offset().top);
 
         switch (event.type) {
           case 'click':

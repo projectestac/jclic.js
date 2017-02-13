@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Utils",
@@ -47,7 +49,7 @@ define([
    */
   var TextActivityDocument = function () {
     // Make a deep clone of the default style
-    this.style = {'default': $.extend(true, {}, TextActivityDocument.DEFAULT_DOC_STYLE)};
+    this.style = { 'default': $.extend(true, {}, TextActivityDocument.DEFAULT_DOC_STYLE) };
     this.p = [];
     //this.tmb=new TargetMarkerBag();
     this.boxesContent = new ActiveBagContent();
@@ -113,7 +115,7 @@ define([
       // Read paragraphs
       $xml.find('section > p').each(function () {
 
-        var p = {elements: []};
+        var p = { elements: [] };
 
         // Read paragraph attributes
         $.each(this.attributes, function () {
@@ -141,7 +143,7 @@ define([
               break;
 
             case 'text':
-              obj = {text: this.textContent.replace(/\t/g, '&#9;')};
+              obj = { text: this.textContent.replace(/\t/g, '&#9;') };
               var attr = doc.readDocAttributes($child);
               if (!$.isEmptyObject(attr)) {
                 obj.attr = attr;
@@ -194,7 +196,7 @@ define([
             break;
           case 'family':
             css['font-family'] = val;
-            /* falls through */
+          /* falls through */
           case 'name':
           case 'style':
             // Attributes specific to named styles:
@@ -203,9 +205,9 @@ define([
           case 'base':
             attr[name] = val;
             // If base style exists, merge it with current settings
-            if(doc.style[val]){
+            if (doc.style[val]) {
               attr = $.extend(true, {}, doc.style[val], attr);
-              if(doc.style[val].css)
+              if (doc.style[val].css)
                 css = $.extend({}, doc.style[val].css, css);
             }
             break;
@@ -522,7 +524,7 @@ define([
       var $element = this.$comboList || this.$span;
       if ($element) {
         var style = this.doc.style[
-            this.targetStatus === 'WITH_ERROR' ? 'targetError' :
+          this.targetStatus === 'WITH_ERROR' ? 'targetError' :
             this.targetStatus === 'HIDDEN' ? 'default' : 'target'];
         if (style && style.css) {
           $element.css(style.css);

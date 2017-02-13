@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Utils",
@@ -112,9 +114,9 @@ define([
 
       if (target.isList && target.options) {
         // Use a `select` element
-        $span = $('<select/>', {id: idLabel, name: idLabel});
+        $span = $('<select/>', { id: idLabel, name: idLabel });
         for (var i = 0; i < target.options.length; i++)
-          $('<option/>', {value: target.options[i], text: target.options[i]}).appendTo($span);
+          $('<option/>', { value: target.options[i], text: target.options[i] }).appendTo($span);
         target.$comboList = $span.bind('focus change', function (event) {
           event.textTarget = target;
           panel.processEvent(event);
@@ -122,8 +124,8 @@ define([
       } else {
         // Use a `span` element with the `contentEditable` attribute set `on`
         target.currentText = target.iniText ?
-            target.iniText
-            : Utils.fillString(target.iniChar, target.numIniChars);
+          target.iniText
+          : Utils.fillString(target.iniChar, target.numIniChars);
 
         target.$span = $span.text(target.currentText).attr({
           contenteditable: 'true',
@@ -266,9 +268,9 @@ define([
         currentStatus = attributes[0];
         for (i = 0; i < fragments.length; i++) {
           $('<span/>')
-              .text(fragments[i])
-              .css(target.doc.style[currentStatus === 0 ? 'target' : 'targetError'].css)
-              .appendTo(target.$span);
+            .text(fragments[i])
+            .css(target.doc.style[currentStatus === 0 ? 'target' : 'targetError'].css)
+            .appendTo(target.$span);
           currentStatus ^= 1;
         }
       }
@@ -319,8 +321,8 @@ define([
         return false;
 
       var target = event.textTarget,
-          $span = null,
-          pos = 0;
+        $span = null,
+        pos = 0;
 
       switch (event.type) {
         case 'focus':
@@ -329,8 +331,8 @@ define([
               // Clear inner spans used to mark errors
               $span = target.$span;
               pos = Math.min(
-                  target.currentText.length,
-                  Utils.getCaretCharacterOffsetWithin($span.get(0)));
+                target.currentText.length,
+                Utils.getCaretCharacterOffsetWithin($span.get(0)));
               $span.empty();
               $span.text(target.currentText);
               Utils.setSelectionRange($span.get(0), pos, pos);

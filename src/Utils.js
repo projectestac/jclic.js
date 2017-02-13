@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global Promise, window, CanvasRenderingContext2D */
+/* global define, Promise, window, CanvasRenderingContext2D */
 
 define([
   "jquery",

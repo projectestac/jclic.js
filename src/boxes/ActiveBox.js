@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./AbstractBox",
@@ -160,7 +162,7 @@ define([
       this.setHostedMediaPlayer(null);
       if (this.$accessibleElement)
         this.$accessibleElement.html('');
-      if(this.tmpTrans)
+      if (this.tmpTrans)
         this.tmpTrans = false;
       this.invalidate();
     },
@@ -173,8 +175,8 @@ define([
      */
     isEquivalent: function (bx, checkCase) {
       return bx !== null &&
-          this.content !== null &&
-          this.content.isEquivalent(bx.content, checkCase);
+        this.content !== null &&
+        this.content.isEquivalent(bx.content, checkCase);
     },
     /**
      *
@@ -185,8 +187,8 @@ define([
      */
     isCurrentContentEquivalent: function (bx, checkCase) {
       return bx !== null &&
-          this.getCurrentContent() !== null &&
-          this.getCurrentContent().isEquivalent(bx.getCurrentContent(), checkCase);
+        this.getCurrentContent() !== null &&
+        this.getCurrentContent().isEquivalent(bx.getCurrentContent(), checkCase);
     },
     /**
      *
@@ -313,8 +315,8 @@ define([
             $hc.css({
               'background-origin': 'border-box',
               'background-position': -abc.imgClip.pos.x + 'px ' + (-abc.imgClip.pos.y) + 'px'
-                  // TODO: Use background-size only when the original image must be compressed
-                  //,'background-size': abc.imgClip.dim.width + 'px ' + abc.imgClip.dim.height + 'px'
+              // TODO: Use background-size only when the original image must be compressed
+              //,'background-size': abc.imgClip.dim.width + 'px ' + abc.imgClip.dim.height + 'px'
             });
           }
           this.setHostedComponent($hc);
@@ -399,9 +401,8 @@ define([
      *
      * Checks the presence of content susceptible to be treated as HTML DOM embedded in this ActiveBox.
      * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas}
-     * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the box.
      */
-    checkHostedComponent: function (ctx) {
+    checkHostedComponent: function () {
       if (this.hasHostedComponent)
         return;
       var abc = this.getCurrentContent();
@@ -441,8 +442,8 @@ define([
 
       if (dirtyRegion && !this.intersects(dirtyRegion))
         return false;
-      
-      var imgRect = null;      
+
+      var imgRect = null;
 
       if (abc.img && !this.tmpTrans) {
         try {
@@ -464,8 +465,8 @@ define([
               img = tmpCanvas;
             }
             ctx.drawImage(img,
-                Math.max(0, r.pos.x), Math.max(0, r.pos.y), Math.min(img.width, r.dim.width), Math.min(img.height, r.dim.height),
-                this.pos.x, this.pos.y, this.dim.width, this.dim.height);
+              Math.max(0, r.pos.x), Math.max(0, r.pos.y), Math.min(img.width, r.dim.width), Math.min(img.height, r.dim.height),
+              this.pos.x, this.pos.y, this.dim.width, this.dim.height);
           } else {
             var imgw, imgh;
             var compress = false;
@@ -477,18 +478,18 @@ define([
               imgh = this.dim.height;
             var scale = 1.0;
             if (Utils.settings.COMPRESS_IMAGES &&
-                (this.dim.width > 0 && this.dim.height > 0) &&
-                (imgw > this.dim.width || imgh > this.dim.height)) {
+              (this.dim.width > 0 && this.dim.height > 0) &&
+              (imgw > this.dim.width || imgh > this.dim.height)) {
               scale = Math.min(this.dim.width / imgw, this.dim.height / imgh);
               imgw *= scale;
               imgh *= scale;
               compress = true;
             }
             var xs = abc.imgAlign.h === 'left' ? 0
-                : abc.imgAlign.h === 'right' ? this.dim.width - imgw
+              : abc.imgAlign.h === 'right' ? this.dim.width - imgw
                 : (this.dim.width - imgw) / 2;
             var ys = abc.imgAlign.v === 'top' ? 0
-                : abc.imgAlign.v === 'bottom' ? this.dim.height - imgh
+              : abc.imgAlign.v === 'bottom' ? this.dim.height - imgh
                 : (this.dim.height - imgh) / 2;
             if (compress) {
               ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys, imgw, imgh);
@@ -497,8 +498,8 @@ define([
 
             if (abc.avoidOverlapping && abc.text)
               imgRect = new AWT.Rectangle(
-                  Math.max(0, xs), Math.max(0, ys),
-                  Math.min(this.dim.width, imgw), Math.min(this.dim.height, imgh));
+                Math.max(0, xs), Math.max(0, ys),
+                Math.min(this.dim.width, imgw), Math.min(this.dim.height, imgh));
           }
         } catch (ex) {
           Utils.log('warn', 'Unable to draw image "%s": %s', abc.imgName, ex.message);
@@ -577,14 +578,14 @@ define([
         // Default is 'middle'
 
         var y = py + bb.textMargin + (abc.txtAlign.v === 'top' ? 0
-            : abc.txtAlign.v === 'bottom' ?
+          : abc.txtAlign.v === 'bottom' ?
             availHeight - totalHeight : (availHeight - totalHeight) / 2);
 
-        for (var l = 0; l < lines.length; l++, y += lineHeight) {
+        for (var l = 0; l < lines.length; l++ , y += lineHeight) {
           // Calc the horizontal position of each line
           // Default is 'middle'
           var x = px + bb.textMargin + (abc.txtAlign.h === 'left' ? 0
-              : abc.txtAlign.h === 'right' ?
+            : abc.txtAlign.h === 'right' ?
               availWidth - lines[l].size.width
               : (availWidth - lines[l].size.width) / 2);
 
@@ -596,7 +597,7 @@ define([
           }
           // Render text
           ctx.fillStyle = this.isInverted() ? bb.backColor
-              : this.isAlternative() ? bb.alternativeColor : bb.textColor;
+            : this.isAlternative() ? bb.alternativeColor : bb.textColor;
           ctx.fillText(lines[l].text, x, y);
         }
       }
@@ -721,34 +722,35 @@ define([
         if (this.$accessibleElement)
           this.$accessibleElement.remove();
         var id = Math.round(Math.random() * 100000),
-            thisBox = this;
+          thisBox = this;
         var disabled = this.isInactive() && !this.accessibleAlwaysActive;
         this.$accessibleElement = $('<button/>', {
           tabindex: disabled ? -1 : 0,
           id: 'AE' + id,
-          disabled: disabled})
-            .html(this.toString())
-            .click(function (ev) {
-              // Check if event was produced by a mouse click
-              if(ev.originalEvent && (ev.originalEvent.pageX !== 0 || ev.originalEvent.pageY !== 0)){
-                // Mouse clicks should be processed odirectly by the canvas, so ignore this accessible event
-                return true;
-              }
-              Utils.log('debug', 'Click on accessible element: %s', thisBox.toString());
-              var $event = $.Event(eventType || 'click');
-              var bounds = thisBox.getBounds();
-              var offset = $canvas.offset();
-              $event.pageX = offset.left + bounds.pos.x + bounds.dim.width / 2;
-              $event.pageY = offset.top + bounds.pos.y + bounds.dim.height / 2;
-              $clickReceiver.trigger($event);
-              return false;
-            });
+          disabled: disabled
+        })
+          .html(this.toString())
+          .click(function (ev) {
+            // Check if event was produced by a mouse click
+            if (ev.originalEvent && (ev.originalEvent.pageX !== 0 || ev.originalEvent.pageY !== 0)) {
+              // Mouse clicks should be processed odirectly by the canvas, so ignore this accessible event
+              return true;
+            }
+            Utils.log('debug', 'Click on accessible element: %s', thisBox.toString());
+            var $event = $.Event(eventType || 'click');
+            var bounds = thisBox.getBounds();
+            var offset = $canvas.offset();
+            $event.pageX = offset.left + bounds.pos.x + bounds.dim.width / 2;
+            $event.pageY = offset.top + bounds.pos.y + bounds.dim.height / 2;
+            $clickReceiver.trigger($event);
+            return false;
+          });
         ($canvasGroup || $canvas).append(this.$accessibleElement);
         var elem = this.$accessibleElement.get(0);
         try {
           var ctx = $canvas.get(0).getContext('2d');
           this.shape.preparePath(ctx);
-          ctx.addHitRegion({id: 'REG' + id, control: elem});
+          ctx.addHitRegion({ id: 'REG' + id, control: elem });
           if (Utils.settings.CANVAS_HITREGIONS_FOCUS)
             ctx.drawFocusIfNeeded(elem);
         } catch (ex) {

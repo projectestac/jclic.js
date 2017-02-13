@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -150,7 +152,8 @@ define([
               'background-image': 'url(' + abcA.animatedGifFile + ')',
               'background-position': 'center',
               'background-repeat': 'no-repeat',
-              position: 'absolute'}).appendTo(this.$div);
+              position: 'absolute'
+            }).appendTo(this.$div);
         }
 
         if (abcB.imgName)
@@ -287,8 +290,8 @@ define([
       if (this.playing) {
         var bx1, bx2;
         var p = new AWT.Point(
-            event.pageX - this.$div.offset().left,
-            event.pageY - this.$div.offset().top);
+          event.pageX - this.$div.offset().left,
+          event.pageY - this.$div.offset().top);
 
         switch (event.type) {
           case 'click':

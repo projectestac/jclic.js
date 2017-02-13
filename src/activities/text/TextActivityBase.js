@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -154,7 +156,7 @@ define([
       // vertical scroll bar when needed
       $dom.empty().css(doc.style['default'].css).css('overflow', 'auto');
 
-      var $html = $('<div/>', {class: 'JClicTextDocument'}).css({'padding': 4});
+      var $html = $('<div/>', { class: 'JClicTextDocument' }).css({ 'padding': 4 });
 
       //
       // Sets the default style
@@ -166,7 +168,7 @@ define([
       // Process paragraphs
       $.each(doc.p, function () {
         // Creates a new DOM paragraph
-        var $p = $('<p/>').css({margin: 0});
+        var $p = $('<p/>').css({ margin: 0 });
         var empty = true;
 
         // Check if the paragraph has its own style
@@ -179,7 +181,7 @@ define([
         // Check if the paragraph has a special alignment
         if (this.Alignment) {
           var al = Number(this.Alignment);
-          $p.css({'text-align': al === 1 ? 'center' : al === 2 ? 'right' : 'left'});
+          $p.css({ 'text-align': al === 1 ? 'center' : al === 2 ? 'right' : 'left' });
         }
 
         // Process the paragraph elements
@@ -206,10 +208,10 @@ define([
 
             case 'cell':
               // Create a new ActiveBox based on this ActiveBoxContent
-              var box = ActiveBox.createCell($span.css({position: 'relative'}), this);
+              var box = ActiveBox.createCell($span.css({ position: 'relative' }), this);
               // Save the box for future references
               panel.boxes.push(box);
-              $span.css({'display': 'inline-block', 'vertical-align': 'middle'});
+              $span.css({ 'display': 'inline-block', 'vertical-align': 'middle' });
               if (this.mediaContent) {
                 $span.on('click', function (event) {
                   event.preventDefault();
@@ -270,12 +272,12 @@ define([
       $dom.append($html);
 
       if (this.act.checkButtonText && !this.showingPrevScreen) {
-        this.$checkButton = $('<button/>', {class: 'StockBtn'})
-            .html(this.act.checkButtonText)
-            .css({position: 'absolute', bottom: '0', left: '0', width: '100%'})
-            .on('click', function () {
-              panel.evaluatePanel();
-            });
+        this.$checkButton = $('<button/>', { class: 'StockBtn' })
+          .html(this.act.checkButtonText)
+          .css({ position: 'absolute', bottom: '0', left: '0', width: '100%' })
+          .on('click', function () {
+            panel.evaluatePanel();
+          });
         $dom.append(this.$checkButton);
       }
 
@@ -333,10 +335,10 @@ define([
         if (!this.act.prevScreenStyle)
           this.act.prevScreenStyle = new BoxBase();
         this.$div.css(this.act.prevScreenStyle.getCSS()).css('overflow', 'auto');
-        var $html = $('<div/>', {class: 'JClicTextDocument'})
-            .css({'padding': 4})
-            .css(this.act.prevScreenStyle.getCSS())
-            .append(this.act.prevScreenText);
+        var $html = $('<div/>', { class: 'JClicTextDocument' })
+          .css({ 'padding': 4 })
+          .css(this.act.prevScreenStyle.getCSS())
+          .append(this.act.prevScreenText);
         this.$div.append($html);
       }
 
@@ -380,11 +382,11 @@ define([
     /**
      *
      * Main handler used to process mouse, touch, keyboard and edit events
-     * @param {HTMLEvent} event - The HTML event to be processed
+     * @param {HTMLEvent} _event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
      */
-    processEvent: function (event) {
+    processEvent: function (_event) {
       return this.playing;
     }
   };

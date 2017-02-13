@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global Promise, window */
+/* global define */
 
 define([
   "jquery",
@@ -146,8 +146,8 @@ define([
      */
     getProperty: function (key, defaultValue) {
       return this.dbProperties !== null && this.dbProperties.hasOwnProperty(key) ?
-          this.dbProperties[key] :
-          defaultValue;
+        this.dbProperties[key] :
+        defaultValue;
     },
     /**
      *
@@ -170,7 +170,7 @@ define([
      */
     flushTasksPromise: function () {
       if (this.processingTasks || this.currentSessionId === null ||
-          this.tasks.length === 0 || this.serviceUrl === null)
+        this.tasks.length === 0 || this.serviceUrl === null)
         // The task list cannot be processed now. Pass and wait until the next timer cycle:
         return Promise.resolve(true);
       else {
@@ -184,26 +184,26 @@ define([
 
         return new Promise(function (resolve, reject) {
           reporter.transaction(reportBean.$bean)
-              .done(function (data, textStatus, jqXHR) {
-                // TODO: Check returned message for possible errors on the server side
-                reporter.tasks = [];
-                if (reporter.waitingTasks) {
-                  reporter.tasks.concat(reporter.waitingTasks);
-                  reporter.waitingTasks = null;
-                }
-                // Reset the fail counter after a successufull attempt
-                reporter.failCount = 0;
-                resolve(true);
-              })
-              .fail(function (jqXHR, textStatus, errorThrown) {
-                if (++reporter.failCount > reporter.maxFails)
-                  reporter.stopReporting();
-                reject('Error reporting results to ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
-              })
-              .always(function () {
-                // Unset the flag
-                reporter.processingTasks = false;
-              });
+            .done(function (_data, _textStatus, _jqXHR) {
+              // TODO: Check returned message for possible errors on the server side
+              reporter.tasks = [];
+              if (reporter.waitingTasks) {
+                reporter.tasks.concat(reporter.waitingTasks);
+                reporter.waitingTasks = null;
+              }
+              // Reset the fail counter after a successufull attempt
+              reporter.failCount = 0;
+              resolve(true);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+              if (++reporter.failCount > reporter.maxFails)
+                reporter.stopReporting();
+              reject('Error reporting results to ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
+            })
+            .always(function () {
+              // Unset the flag
+              reporter.processingTasks = false;
+            });
         });
       }
     },
@@ -234,43 +234,43 @@ define([
       var bean = new TCPReporter.ReportBean('get_properties');
       return new Promise(function (resolve, reject) {
         reporter.transaction(bean.$bean)
-            .done(function (data, textStatus, jqXHR) {
-              reporter.dbProperties = {};
-              $(data).find('param').each(function () {
-                var $param = $(this);
-                reporter.dbProperties[$param.attr('name')] = $param.attr('value');
-              });
-              reporter.promptUserId(false).then(function (userId) {
-                reporter.userId = userId;
-                var tl = options.lap || reporter.getProperty('TIME_LAP', this.DEFAULT_TIMER_LAP);
-                reporter.timerLap = Math.min(30, Math.max(1, parseInt(tl)));
-                reporter.timer = window.setInterval(
-                    function () {
-                      reporter.flushTasksPromise();
-                    }, reporter.timerLap * 1000);
-                // Warn before leaving the current page with unsaved data:
-                reporter.beforeUnloadFunction = function (event) {
-                  if (reporter.serviceUrl !== null &&
-                      (reporter.tasks.length > 0 || reporter.processingTasks)) {
-                    reporter.flushTasksPromise();
-                    var result = reporter.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
-                    if (event)
-                      event.returnValue = result;
-                    return result;
-                  }
-                };
-                window.addEventListener('beforeunload', reporter.beforeUnloadFunction);
-                reporter.initiated = true;
-                resolve(true);
-              }).catch(function (msg) {
-                reporter.stopReporting();
-                reject('Error getting the user ID: ' + msg);
-              });
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-              reporter.stopReporting();
-              reject('Error initializing reports service ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
+          .done(function (data, _textStatus, _jqXHR) {
+            reporter.dbProperties = {};
+            $(data).find('param').each(function () {
+              var $param = $(this);
+              reporter.dbProperties[$param.attr('name')] = $param.attr('value');
             });
+            reporter.promptUserId(false).then(function (userId) {
+              reporter.userId = userId;
+              var tl = options.lap || reporter.getProperty('TIME_LAP', this.DEFAULT_TIMER_LAP);
+              reporter.timerLap = Math.min(30, Math.max(1, parseInt(tl)));
+              reporter.timer = window.setInterval(
+                function () {
+                  reporter.flushTasksPromise();
+                }, reporter.timerLap * 1000);
+              // Warn before leaving the current page with unsaved data:
+              reporter.beforeUnloadFunction = function (event) {
+                if (reporter.serviceUrl !== null &&
+                  (reporter.tasks.length > 0 || reporter.processingTasks)) {
+                  reporter.flushTasksPromise();
+                  var result = reporter.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
+                  if (event)
+                    event.returnValue = result;
+                  return result;
+                }
+              };
+              window.addEventListener('beforeunload', reporter.beforeUnloadFunction);
+              reporter.initiated = true;
+              resolve(true);
+            }).catch(function (msg) {
+              reporter.stopReporting();
+              reject('Error getting the user ID: ' + msg);
+            });
+          })
+          .fail(function (jqXHR, textStatus, errorThrown) {
+            reporter.stopReporting();
+            reject('Error initializing reports service ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
+          });
       });
     },
     /**
@@ -314,14 +314,14 @@ define([
               bean.setParam('context', reporter.sessionContext);
 
               reporter.transaction(bean.$bean)
-                  .done(function (data, textStatus, jqXHR) {
-                    reporter.currentSessionId = $(data).find('param[name="session"]').attr('value');
-                    resolve(reporter.currentSessionId);
-                  })
-                  .fail(function (jqXHR, textStatus, errorThrown) {
-                    reporter.stopReporting();
-                    reject('Error creating new reports session in ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
-                  });
+                .done(function (data, _textStatus, _jqXHR) {
+                  reporter.currentSessionId = $(data).find('param[name="session"]').attr('value');
+                  resolve(reporter.currentSessionId);
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                  reporter.stopReporting();
+                  reject('Error creating new reports session in ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
+                });
             });
           } else
             reject('Unable to start session in remote server!');
@@ -347,15 +347,15 @@ define([
      */
     transaction: function ($xml) {
       return this.serviceUrl === null ?
-          null :
-          $.ajax({
-            method: 'POST',
-            url: this.serviceUrl,
-            data: '<?xml version="1.0" encoding="UTF-8"?>' +
-                (new XMLSerializer()).serializeToString($xml.get(0)),
-            contentType: 'text/xml',
-            dataType: 'xml'
-          });
+        null :
+        $.ajax({
+          method: 'POST',
+          url: this.serviceUrl,
+          data: '<?xml version="1.0" encoding="UTF-8"?>' +
+          (new XMLSerializer()).serializeToString($xml.get(0)),
+          contentType: 'text/xml',
+          dataType: 'xml'
+        });
     },
     /**
      *
@@ -371,17 +371,17 @@ define([
         else {
           var bean = new TCPReporter.ReportBean('get groups');
           reporter.transaction(bean.$bean)
-              .done(function (data, textStatus, jqXHR) {
-                var currentGroups = [];
-                $(data).find('group').each(function () {
-                  var $group = $(this);
-                  currentGroups.push({id: $group.attr('id'), name: $group.attr('name')});
-                });
-                resolve(currentGroups);
-              })
-              .fail(function (jqXHR, textStatus, errorThrown) {
-                reject('Error retrieving groups list from ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
+            .done(function (data, _textStatus, _jqXHR) {
+              var currentGroups = [];
+              $(data).find('group').each(function () {
+                var $group = $(this);
+                currentGroups.push({ id: $group.attr('id'), name: $group.attr('name') });
               });
+              resolve(currentGroups);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+              reject('Error retrieving groups list from ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
+            });
         }
       });
     },
@@ -404,20 +404,20 @@ define([
           if (typeof groupId !== 'undefined' && groupId !== null)
             bean.setParam('group', groupId);
           reporter.transaction(bean.$bean)
-              .done(function (data, textStatus, jqXHR) {
-                var currentUsers = [];
-                $(data).find('user').each(function () {
-                  var $user = $(this);
-                  var user = {id: $user.attr('id'), name: $user.attr('name')};
-                  if ($user.attr('pwd'))
-                    user.pwd = $user.attr('pwd');
-                  currentUsers.push(user);
-                });
-                resolve(currentUsers);
-              })
-              .fail(function (jqXHR, textStatus, errorThrown) {
-                reject('Error retrieving users list from ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
+            .done(function (data, _textStatus, _jqXHR) {
+              var currentUsers = [];
+              $(data).find('user').each(function () {
+                var $user = $(this);
+                var user = { id: $user.attr('id'), name: $user.attr('name') };
+                if ($user.attr('pwd'))
+                  user.pwd = $user.attr('pwd');
+                currentUsers.push(user);
               });
+              resolve(currentUsers);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+              reject('Error retrieving users list from ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
+            });
         }
       });
     },
@@ -441,21 +441,21 @@ define([
             reject('Invalid user ID');
 
           reporter.transaction(bean.$bean)
-              .done(function (data, textStatus, jqXHR) {
-                var $user = $(data).find('user');
-                if ($user.length !== 1) {
-                  alert(reporter.ps.getMsg('Invalid user'));
-                  resolve('Invalid user ID');
-                } else {
-                  var user = {id: $user.attr('id'), name: $user.attr('name')};
-                  if ($user.attr('pwd'))
-                    user.pwd = $user.attr('pwd');
-                  resolve(user);
-                }
-              })
-              .fail(function (jqXHR, textStatus, errorThrown) {
-                reject('Error retrieving user data from ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
-              });
+            .done(function (data, _textStatus, _jqXHR) {
+              var $user = $(data).find('user');
+              if ($user.length !== 1) {
+                alert(reporter.ps.getMsg('Invalid user'));
+                resolve('Invalid user ID');
+              } else {
+                var user = { id: $user.attr('id'), name: $user.attr('name') };
+                if ($user.attr('pwd'))
+                  user.pwd = $user.attr('pwd');
+                resolve(user);
+              }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+              reject('Error retrieving user data from ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
+            });
         }
       });
     },
@@ -503,8 +503,8 @@ define([
         });
       }
       if (this.currentSession !== null &&
-          this.currentSession.currentSequence !== null &&
-          this.currentSession.currentSequence.currentActivity !== this.lastActivity) {
+        this.currentSession.currentSequence !== null &&
+        this.currentSession.currentSequence.currentActivity !== this.lastActivity) {
         this.lastActivity = this.currentSession.currentSequence.currentActivity;
       } else
         this.lastActivity = null;
@@ -533,7 +533,7 @@ define([
    * @param $data {external:jQuery}+ - Optional XML data to be added to this bean
    */
   TCPReporter.ReportBean = function (id, $data) {
-    this.$bean = $('<bean/>').attr({id: id});
+    this.$bean = $('<bean/>').attr({ id: id });
     if ($data)
       this.appendData($data);
   };
@@ -562,7 +562,7 @@ define([
      */
     setParam: function (name, value) {
       if (typeof value !== 'undefined' && value !== null)
-        this.appendData($('<param/>').attr({name: name, value: value}));
+        this.appendData($('<param/>').attr({ name: name, value: value }));
     }
   };
 

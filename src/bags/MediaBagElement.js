@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../Utils",
@@ -145,9 +147,9 @@ define([
           this.animated = anim === 'true';
       }
       if (this.type === 'font') {
-        this.fontName = (this.name === this.fileName && this.name.lastIndexOf('.') > 0)
-          ? this.name.substring(0, this.name.lastIndexOf('.'))
-          : this.name;
+        this.fontName = this.name === this.fileName && this.name.lastIndexOf('.') > 0 ?
+          this.name.substring(0, this.name.lastIndexOf('.')) :
+          this.name;
       }
       return this;
     },

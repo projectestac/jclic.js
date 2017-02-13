@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./Utils",
@@ -783,10 +785,10 @@ define([
     /**
      *
      * Multiplies the dimension of the Shape by the specified `delta` amount.
-     * @param {AWT.Point|AWT.Dimension} delta - Object containing the X and Y ratio to be scaled.
+     * @param {AWT.Point|AWT.Dimension} _delta - Object containing the X and Y ratio to be scaled.
      * @returns {AWT.Shape}
      */
-    scaleBy: function (delta) {
+    scaleBy: function (_delta) {
       // Nothing to scale in abstract shapes
       return this;
     },
@@ -805,20 +807,20 @@ define([
     /**
      *
      * Checks if the provided {@link AWT.Point} is inside this shape.
-     * @param {AWT.Point} p - The point to check
+     * @param {AWT.Point} _p - The point to check
      * @returns {boolean}
      */
-    contains: function (p) {
+    contains: function (_p) {
       // Nothing to check in abstract shapes
       return false;
     },
     /**
      *
      * Checks if the provided {@link AWT.Rectangle} `r` intersects with this shape.
-     * @param {AWT.Rectangle} r
+     * @param {AWT.Rectangle} _r
      * @returns {boolean}
      */
-    intersects: function (r) {
+    intersects: function (_r) {
       // Nothing to check in abstract shapes
       return false;
     },
@@ -1307,7 +1309,7 @@ define([
     //
     // Inherits the documentation of `equals` in AWT.Shape
     // TODO: Implement comparision of complex paths
-    equals: function (p) {
+    equals: function (_p) {
       return false;
     },
     //
@@ -1534,10 +1536,10 @@ define([
      *
      * Here is where subclasses must define the callback function to be triggered when
      * this AWT.Action object is called
-     * @param {AWT.Action} thisAction - Pointer to this AWT.Action object
-     * @param {object} event - The original action event that has originated this action
+     * @param {AWT.Action} _thisAction - Pointer to this AWT.Action object
+     * @param {object} _event - The original action event that has originated this action
      */
-    actionPerformed: function (thisAction, event) {
+    actionPerformed: function (_thisAction, _event) {
       return this;
     },
     /**
@@ -1621,17 +1623,17 @@ define([
     /**
      *
      * Here is where subclasses must define the function to be performed when this timer ticks.
-     * @param {AWT.Timer} thisTimer
+     * @param {AWT.Timer} _thisTimer
      */
-    actionPerformed: function (thisTimer) {
+    actionPerformed: function (_thisTimer) {
       return this;
     },
     /**
      *
      * This is the method called by `window.setInterval`
-     * @param {Event} event
+     * @param {Event} _event
      */
-    processTimer: function (event) {
+    processTimer: function (_event) {
       this.ticks++;
       if (!this.repeats)
         this.stop();
@@ -1740,10 +1742,10 @@ define([
      *
      * Containers should implement this method to update its graphic contents. It should
      * be called from {@link AWT.Container~update}
-     * @param {AWT.Shape} dirtyRegion - Specifies the area to be updated. When `null`, it's the whole
+     * @param {AWT.Shape} _dirtyRegion - Specifies the area to be updated. When `null`, it's the whole
      * Container.
      */
-    updateContent: function (dirtyRegion) {
+    updateContent: function (_dirtyRegion) {
       // To be overrided by subclasses. Here does nothing.
       return this;
     }

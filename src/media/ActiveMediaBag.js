@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "./ActiveMediaPlayer",
   "../Utils"
@@ -64,11 +66,11 @@ define([
         case 'RECORD_AUDIO':
           if (mc.length <= 0 || mc.length >= Utils.settings.MAX_RECORD_LENGTH)
             break;
-          /* falls through */
+        /* falls through */
         case 'PLAY_RECORDED_AUDIO':
           if (mc.recBuffer < 0 || mc.recBuffer >= 10)
             break;
-          /* falls through */
+        /* falls through */
         case 'PLAY_AUDIO':
         case 'PLAY_MIDI':
         case 'PLAY_VIDEO':

@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global window */
+/* global define */
 
 define([
   "jquery",
@@ -132,8 +132,8 @@ define([
     },
     commitInfo: function () {
       var info = this.reporter.getInfo(),
-          score = Math.round(info.globalScore * 100),
-          time = this.getTimeExpression(info.tTime);
+        score = Math.round(info.globalScore * 100),
+        time = this.getTimeExpression(info.tTime);
 
       this.setValue(this.core + 'score.raw', score);
       this.setValue(this.core + 'session_time', time);
@@ -194,12 +194,12 @@ define([
     getTimeExpression: function (millis) {
       var d = new Date(millis);
       var h = d.getUTCHours(),
-          m = d.getUTCMinutes(),
-          s = d.getUTCSeconds();
+        m = d.getUTCMinutes(),
+        s = d.getUTCSeconds();
 
       return this.is2004 ?
-          'PT' + h + 'H' + m + 'M' + s + 'S' :
-          ('0000' + h).slice(-4) + ':' + ('00' + m).slice(-2) + ':' + ('00' + s).slice(-2);
+        'PT' + h + 'H' + m + 'M' + s + 'S' :
+        ('0000' + h).slice(-4) + ':' + ('00' + m).slice(-2) + ':' + ('00' + s).slice(-2);
     },
     /**
      * Gets the SCORM type of this SCORM object
@@ -239,24 +239,24 @@ define([
    * @returns {SCORM} - A valid SCORM object, or `null` if no SCORM API was found.
    * @param {Reporter} reporter - The {@link Reporter} linked to the requested SCORM object
    */
-   SCORM.getSCORM = function (reporter) {
-     var result = null;
-     try {
-       var api = SCORM.scanForAPI(window, 0);
-       if (api === null && window.opener)
-       api = SCORM.scanForAPI(window.opener, 0);
+  SCORM.getSCORM = function (reporter) {
+    var result = null;
+    try {
+      var api = SCORM.scanForAPI(window, 0);
+      if (api === null && window.opener)
+        api = SCORM.scanForAPI(window.opener, 0);
 
-       if (api) {
-         result = new SCORM(api, reporter);
-         if (!result.initialize())
-         result = null;
-       }
-     } catch (ex) {
-       result = null;
-       Utils.log('warn', 'Unable to use SCORM: %s', ex.toString());
-     }
-     return result;
-   };
+      if (api) {
+        result = new SCORM(api, reporter);
+        if (!result.initialize())
+          result = null;
+      }
+    } catch (ex) {
+      result = null;
+      Utils.log('warn', 'Unable to use SCORM: %s', ex.toString());
+    }
+    return result;
+  };
 
   return SCORM;
 

@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -158,8 +160,8 @@ define([
       this.clear();
 
       var abcA = this.act.abc['primary'],
-          abcB = this.act.abc['secondary'],
-          solved = this.act.abc['solvedPrimary'];
+        abcB = this.act.abc['secondary'],
+        solved = this.act.abc['solvedPrimary'];
 
       if (abcA && abcB) {
 
@@ -170,7 +172,8 @@ define([
               'background-image': 'url(' + abcA.animatedGifFile + ')',
               'background-position': 'center',
               'background-repeat': 'no-repeat',
-              position: 'absolute'}).appendTo(this.$div);
+              position: 'absolute'
+            }).appendTo(this.$div);
         }
 
         if (abcB.imgName) {
@@ -180,7 +183,8 @@ define([
               'background-image': 'url(' + abcB.animatedGifFile + ')',
               'background-position': 'center',
               'background-repeat': 'no-repeat',
-              position: 'absolute'}).appendTo(this.$div);
+              position: 'absolute'
+            }).appendTo(this.$div);
         }
 
         if (solved && solved.imgName)
@@ -199,7 +203,7 @@ define([
         this.bgA.setContent(abcA, solved ? solved : null);
         if (this.$animatedBg)
           this.bgA.setCellAttr('tmpTrans', true);
-        
+
         this.bgB.setContent(abcB);
         if (this.$animatedBgB)
           this.bgB.setCellAttr('tmpTrans', true);
@@ -252,7 +256,7 @@ define([
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
       if (this.bgA && this.bgB && this.$canvas) {
         var canvas = this.$canvas.get(0),
-            ctx = canvas.getContext('2d');
+          ctx = canvas.getContext('2d');
         if (!dirtyRegion)
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
@@ -347,7 +351,7 @@ define([
         // and two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
         // `origin` and `dest` points.
         var p = null,
-            bx1, bx2;
+          bx1, bx2;
         //
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
@@ -355,17 +359,17 @@ define([
         } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           var x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
-              y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+            y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
           p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 
         // Flag for tracking `mouseup` events
         var up = false,
-            // Flag for assuring that only one media plays per event (avoid event sounds overlapping
-            // cell's media sounds)
-            m = false,
-            // Flag for tracking clicks on the background of grid A
-            clickOnBg0 = false;
+          // Flag for assuring that only one media plays per event (avoid event sounds overlapping
+          // cell's media sounds)
+          m = false,
+          // Flag for tracking clicks on the background of grid A
+          clickOnBg0 = false;
 
         switch (event.type) {
           case 'touchcancel':
@@ -380,10 +384,10 @@ define([
               break;
             }
             up = true;
-            /* falls through */
+          /* falls through */
           case 'touchend':
           case 'touchstart':
-          case 'mousedown':            
+          case 'mousedown':
             if (!this.bc.active) {
               // A new pairing starts
               //
@@ -392,13 +396,13 @@ define([
                 break;
               else
                 this.ps.stopMedia(1);
-              
+
               //
               // Determine if click was done on panel A or panel B
               bx1 = this.bgA.findActiveBox(p);
               bx2 = this.bgB.findActiveBox(p);
               if (bx1 && (!this.act.useOrder || bx1.idOrder === this.currentItem) ||
-                  !this.act.useOrder && bx2 && bx2.idAss !== -1) {
+                !this.act.useOrder && bx2 && bx2.idAss !== -1) {
                 // Start the [BoxConnector](BoxConnector.html)
                 if (this.act.dragCells)
                   this.bc.begin(p, bx1 || bx2);
@@ -408,7 +412,7 @@ define([
                 m |= (bx1 || bx2).playMedia(this.ps);
                 if (!m)
                   this.playEvent('click');
-                
+
                 // Move the focus to the opposite accessible group
                 var bg = bx1 ? this.bgA : this.bgB;
                 if (bg.$accessibleDiv) {
@@ -437,9 +441,9 @@ define([
               // Check if the pairing was correct
               if (bx1 && bx2 && bx1.idAss !== -1 && bx2.idAss !== -1) {
                 var ok = false,
-                    src = bx1.getDescription(),
-                    dest = bx2.getDescription(),
-                    matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idOrder);
+                  src = bx1.getDescription(),
+                  dest = bx2.getDescription(),
+                  matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idOrder);
                 if (bx1.idOrder === bx2.idOrder || bx2.getContent().isEquivalent(matchingDest, true)) {
                   // Pairing is OK. Play media and disable involved cells
                   ok = true;

@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -162,8 +164,8 @@ define([
           nch *= 2;
 
         this.bg = new ActiveBoxGrid(null, this, abcA.bb,
-            this.act.margin, this.act.margin,
-            abcA.w * ncw, abcA.h * nch, new Rectangular(ncw, nch));
+          this.act.margin, this.act.margin,
+          abcA.w * ncw, abcA.h * nch, new Rectangular(ncw, nch));
 
         var nc = abcA.getNumCells();
         this.bg.setBorder(abcA.border);
@@ -260,13 +262,13 @@ define([
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
      */
-    buildAccessibleComponents: function() {
-      if(this.$canvas && this.accessibleCanvas) {
+    buildAccessibleComponents: function () {
+      if (this.$canvas && this.accessibleCanvas) {
         ActPanelAncestor.buildAccessibleComponents.call(this);
         this.bg.setCellAttr('accessibleAlwaysActive', true);
         this.bg.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
       }
-    },    
+    },
     /**
      *
      * Main handler used to process mouse, touch, keyboard and edit events
@@ -311,9 +313,9 @@ define([
               break;
             }
             up = true;
-            /* falls through */
+          /* falls through */
           case 'touchstart':
-          case 'mousedown':            
+          case 'mousedown':
             if (!this.bc.active) {
               // New pairing starts
               //
@@ -322,7 +324,7 @@ define([
                 break;
               else
                 this.ps.stopMedia(1);
-                
+
               //
               // Find the ActiveBox behind the clicked point
               bx1 = this.bg.findActiveBox(p);
@@ -355,7 +357,7 @@ define([
                 if (bx1 !== bx2) {
                   var ok = false;
                   if (bx1.idAss === bx2.idAss ||
-                      bx1.getContent().isEquivalent(bx2.getContent(), true)) {
+                    bx1.getContent().isEquivalent(bx2.getContent(), true)) {
                     ok = true;
                     bx1.idAss = -1;
                     bx1.setInactive(false);

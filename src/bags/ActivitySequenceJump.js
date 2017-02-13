@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./JumpInfo",
@@ -94,12 +96,12 @@ define([
       var result = this;
       if (rating >= 0 && time >= 0) {
         if (this.upperJump !== null &&
-            rating > this.upperJump.threshold &&
-            (this.upperJump.time <= 0 || time < this.upperJump.time)) {
+          rating > this.upperJump.threshold &&
+          (this.upperJump.time <= 0 || time < this.upperJump.time)) {
           result = this.upperJump;
         } else if (this.lowerJump !== null &&
-            (rating < this.lowerJump.threshold ||
-                this.lowerJump.time > 0 && time > this.lowerJump.time)) {
+          (rating < this.lowerJump.threshold ||
+            this.lowerJump.time > 0 && time > this.lowerJump.time)) {
           result = this.lowerJump;
         }
       }

@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./AbstractBox",
@@ -84,8 +86,8 @@ define([
     getMinimumSize: function () {
       var d = this.getPreferredSize();
       return new AWT.Dimension(
-          Math.max(Utils.settings.MIN_CELL_SIZE, d.width),
-          Math.max(Utils.settings.MIN_CELL_SIZE, d.height));
+        Math.max(Utils.settings.MIN_CELL_SIZE, d.width),
+        Math.max(Utils.settings.MIN_CELL_SIZE, d.height));
     },
     /**
      *
@@ -192,11 +194,11 @@ define([
      * @param {string} key - The key to be established
      * @param {} value - The value, of any type
      */
-    setCellAttr: function(key, value){
+    setCellAttr: function (key, value) {
       for (var i = 0; i < this.cells.length; i++)
-        this.getBox(i)[key]=value;      
-      if(this.backgroundBox)
-        this.backgroundBox[key]=value;
+        this.getBox(i)[key] = value;
+      if (this.backgroundBox)
+        this.backgroundBox[key] = value;
     },
     /**
      *
@@ -251,19 +253,19 @@ define([
           bx = this.getBox(i);
           p = new AWT.Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y);
           bx.setBounds(
-              dx + this.pos.x + scaleW * p.x,
-              dy + this.pos.y + scaleH * p.y,
-              scaleW * bx.dim.width,
-              scaleH * bx.dim.height);
+            dx + this.pos.x + scaleW * p.x,
+            dy + this.pos.y + scaleH * p.y,
+            scaleW * bx.dim.width,
+            scaleH * bx.dim.height);
         }
         if (this.backgroundBox !== null) {
           bx = this.backgroundBox;
           p = new AWT.Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y);
           bx.setBounds(
-              dx + this.pos.x + scaleW * p.x,
-              dy + this.pos.y + scaleH * p.y,
-              scaleW * bx.dim.width,
-              scaleH * bx.dim.height);
+            dx + this.pos.x + scaleW * p.x,
+            dy + this.pos.y + scaleH * p.y,
+            scaleW * bx.dim.width,
+            scaleH * bx.dim.height);
         }
       }
       AbstractBox.prototype.setBounds.call(this, rect);
@@ -426,16 +428,16 @@ define([
     var da = rsA.getPreferredSize();
     var db = rsB.getPreferredSize();
     var d = new AWT.Dimension(
-        isHLayout ? da.width + db.width : Math.max(da.width, db.width),
-        isHLayout ? Math.max(da.height, db.height) : da.height + db.height
-        );
+      isHLayout ? da.width + db.width : Math.max(da.width, db.width),
+      isHLayout ? Math.max(da.height, db.height) : da.height + db.height
+    );
     // minimal dimensions
     var minSizeA = rsA.getMinimumSize();
     var minSizeB = rsB.getMinimumSize();
     var minSize = new AWT.Dimension(
-        isHLayout ? minSizeA.width + minSizeB.width : Math.max(minSizeA.width, minSizeB.width),
-        isHLayout ? Math.max(minSizeA.height, minSizeB.height) : minSizeA.height + minSizeB.height
-        );
+      isHLayout ? minSizeA.width + minSizeB.width : Math.max(minSizeA.width, minSizeB.width),
+      isHLayout ? Math.max(minSizeA.height, minSizeB.height) : minSizeA.height + minSizeB.height
+    );
     // maximal dimension
     var maxSize = desiredMaxSize;
     // remove margins
@@ -487,13 +489,13 @@ define([
         break;
       default:
         rsA.setBounds(
-            Math.round(margin + scale * ra.pos.x),
-            Math.round(margin + scale * ra.pos.y),
-            da.width, da.height);
+          Math.round(margin + scale * ra.pos.x),
+          Math.round(margin + scale * ra.pos.y),
+          da.width, da.height);
         rsB.setBounds(
-            Math.round(margin + scale * rb.pos.x),
-            Math.round(margin + scale * rb.pos.y),
-            da.width, da.height);
+          Math.round(margin + scale * rb.pos.x),
+          Math.round(margin + scale * rb.pos.y),
+          da.width, da.height);
         break;
     }
 

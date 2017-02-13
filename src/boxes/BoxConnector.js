@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "../AWT"
 ], function (AWT) {
@@ -161,10 +163,10 @@ define([
       if (this.bgRect) {
         if (this.bgImg) {
           this.ctx.putImageData(
-              this.bgImg,
-              0, 0,
-              this.bgRect.pos.x, this.bgRect.pos.y,
-              this.bgRect.dim.width, this.bgRect.dim.height);
+            this.bgImg,
+            0, 0,
+            this.bgRect.pos.x, this.bgRect.pos.y,
+            this.bgRect.dim.width, this.bgRect.dim.height);
         } else if (this.parent) {
           this.parent.updateContent();
         }
@@ -282,14 +284,14 @@ define([
         // Draws the arrow head
         var beta = Math.atan2(this.origin.x - this.dest.x, this.dest.x - this.origin.x);
         var arp = new AWT.Point(this.dest.x - this.arrowLength * Math.cos(beta + this.arrowAngle),
-            this.dest.y + this.arrowLength * Math.sin(beta + this.arrowAngle));
+          this.dest.y + this.arrowLength * Math.sin(beta + this.arrowAngle));
         this.ctx.beginPath();
         this.ctx.moveTo(this.dest.x, this.dest.y);
         this.ctx.lineTo(arp.x, arp.y);
         this.ctx.stroke();
 
         arp.moveTo(this.dest.x - this.arrowLength * Math.cos(beta - this.arrowAngle),
-            this.dest.y + this.arrowLength * Math.sin(beta - this.arrowAngle));
+          this.dest.y + this.arrowLength * Math.sin(beta - this.arrowAngle));
         this.ctx.beginPath();
         this.ctx.moveTo(this.dest.x, this.dest.y);
         this.ctx.lineTo(arp.x, arp.y);

@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "./Utils"
 ], function (Utils) {
@@ -106,11 +108,11 @@ define([
               return;
           }
           this.sequenceStack.push(
-              new this.HistoryElement(
-                  this.player.project.path,
-                  ase.getSequenceForElement(act),
-                  act,
-                  this.player.zip ? this.player.zip.fullZipPath : null));
+            new this.HistoryElement(
+              this.player.project.path,
+              ase.getSequenceForElement(act),
+              act,
+              this.player.zip ? this.player.zip.fullZipPath : null));
         }
       }
     },
@@ -126,7 +128,7 @@ define([
       if (this.sequenceStack.length > 0) {
         var e = this.sequenceStack.pop();
         if (e.projectPath === this.player.project.path &&
-            Utils.isEquivalent(e.fullZipPath, this.player.zip ? this.player.zip.fullZipPath : null))
+          Utils.isEquivalent(e.fullZipPath, this.player.zip ? this.player.zip.fullZipPath : null))
           this.player.load(null, e.activity, null);
         else {
           if (this.testMode && e.projectPath !== null && e.projectPath.length > 0) {
@@ -177,8 +179,8 @@ define([
                 Utils.log('info', 'At this point, a jump to "%s" should be performed.', ji.projectPath);
               } else {
                 result = this.jumpToSequence(ji.sequence,
-                    ji.projectPath ? Utils.getPath(this.player.project.basePath, ji.projectPath) : null,
-                    allowReturn);
+                  ji.projectPath ? Utils.getPath(this.player.project.basePath, ji.projectPath) : null,
+                  allowReturn);
               }
             }
             break;

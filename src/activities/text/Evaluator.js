@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Utils"
@@ -150,11 +152,11 @@ define([
      *
      * Abstract method to be implemented in subclasses.
      * Performs the validation of a string against a single match.
-     * @param {string} text - The text to be checked
-     * @param {string} match - A valid expression with which to compare.
+     * @param {string} _text - The text to be checked
+     * @param {string} _match - A valid expression with which to compare.
      * @returns {boolean} - `true` when the two expressions can be considered equivalent.
      */
-    _checkText: function (text, match) {
+    _checkText: function (_text, _match) {
       return false;
     },
     /**
@@ -176,12 +178,12 @@ define([
      * Abstract method to be implemented in subclasses.
      * Performs the evaluation of a string against an array of valid matches, returning an array of
      * flags useful to indicate where the mistakes are located.
-     * @param {string} text - The text to be checked
-     * @param {string} match - A valid expression with which to compare.
+     * @param {string} _text - The text to be checked
+     * @param {string} _match - A valid expression with which to compare.
      * @returns {number[]} - An array of flags (one number for character) indicating whether each
      * position is erroneous or OK.
      */
-    _evalText: function (text, match) {
+    _evalText: function (_text, _match) {
       return [];
     },
     /**
@@ -440,14 +442,15 @@ define([
     compareSegment: function (src, ls, ok, lok, attr, iterate) {
       var is = 0, iok = 0, lastIs = 0;
       var lastiok = true;
-      var coinci = 0;
+      // TODO: Remove unused var "coinci"
+      //var coinci = 0;
       var result = true;
       var chs = '', chok = '';
 
       if (ls === 0 || lok === 0 || src === null || ok === null)
         return false;
 
-      for (; is < ls; is++, iok++) {
+      for (; is < ls; is++ , iok++) {
         chs = src.charAt(is);
         lastIs = is;
         if (iok >= 0 && iok < lok)
@@ -455,7 +458,7 @@ define([
         else
           chok = 0;
         if (this.collator.compare(chs, chok) === 0) {
-          coinci++;
+          //coinci++;
           attr[is] = 0;
           lastiok = true;
         } else {
@@ -490,8 +493,9 @@ define([
                 if (itcoinc[j] > itcoinc[jmax])
                   jmax = j;
               i = iok + Math.floor((jmax + 1) / 2) * ((jmax & 1) !== 0 ? 1 : -1);
-            } else if (itcoinc[j] > 0)
-              coinci++;
+            } else if (itcoinc[j] > 0) {
+              //coinci++;
+            }
             iok = i;
             lastiok = false;
           }
@@ -508,8 +512,8 @@ define([
   //
   // ComplexEvaluator extends BasicEvaluator
   Evaluator.ComplexEvaluator.prototype = $.extend(
-      Object.create(Evaluator.BasicEvaluator.prototype),
-      Evaluator.ComplexEvaluator.prototype);
+    Object.create(Evaluator.BasicEvaluator.prototype),
+    Evaluator.ComplexEvaluator.prototype);
 
   // List of known Evaluator classes
   Evaluator.CLASSES = {

@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -188,7 +190,7 @@ define([
       sb.setBounds(0, 0, this.LABEL_WIDTH, this.act.abc[type].h);
 
       var thisPanel = this;
-      var $btn = $('<button/>', {class: 'StockBtn'}).css({
+      var $btn = $('<button/>', { class: 'StockBtn' }).css({
         'width': this.LABEL_WIDTH,
         'height': this.act.abc[type].h,
         'background-image': 'url(' + (type === 'acrossClues' ? this.hIcon : this.vIcon) + ')',
@@ -203,8 +205,8 @@ define([
           thisPanel.advance === 'ADVANCE_DOWN' ?
             'NO_ADVANCE' : 'ADVANCE_DOWN';
         thisPanel.setBtnStatus();
-      }).on('keypress', function(event){
-        if(String.fromCharCode(event.charCode || event.keyCode) === ' ')
+      }).on('keypress', function (event) {
+        if (String.fromCharCode(event.charCode || event.keyCode) === ' ')
           event.stopPropagation();
       }).appendTo(this.$div);
 
@@ -471,13 +473,11 @@ define([
     },
     /**
      *
-     * Writes a string on the grid, starting at the specified X and Y logical coordinates, and
+     * Writes a string on the grid starting at the current cursor position and
      * following the direction marked by the `advance` field
      * @param {string} txt - Text to write
-     * @param {number} x - Starting X logical coordinate
-     * @param {number} y - Starting Y logical coordinate
      */
-    writeChars: function (txt, x, y) {
+    writeChars: function (txt) {
       if (txt && txt.length > 0) {
         for (var i = 0; i < txt.length; i++) {
           var cur = this.grid.getCursor();
@@ -519,29 +519,29 @@ define([
      * an SVG file codified in base64.
      * @type {string} */
     hIcon: 'data:image/svg+xml;base64,' +
-        'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
-        'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
-        'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
-        'PjwvcGF0aD48cGF0aCBkPSJNNiAxMGMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTIt' +
-        'LjktMi0yLTJ6bTEyIDBjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyIDItLjkgMi0yLS45LTItMi0y' +
-        'em0tNiAwYy0xLjEgMC0yIC45LTIgMnMuOSAyIDIgMiAyLS45IDItMi0uOS0yLTItMnoiPjwvcGF0' +
-        'aD48L3N2Zz4K',
+    'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+    'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+    'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
+    'PjwvcGF0aD48cGF0aCBkPSJNNiAxMGMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTIt' +
+    'LjktMi0yLTJ6bTEyIDBjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyIDItLjkgMi0yLS45LTItMi0y' +
+    'em0tNiAwYy0xLjEgMC0yIC45LTIgMnMuOSAyIDIgMiAyLS45IDItMi0uOS0yLTItMnoiPjwvcGF0' +
+    'aD48L3N2Zz4K',
     /**
      * Graphic icon for the vertical direction button, represented as a string containing
      * an SVG file codified in base64.
      * @type {string} */
     vIcon: 'data:image/svg+xml;base64,' +
-        'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
-        'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
-        'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
-        'PjwvcGF0aD48cGF0aCBkPSJNMTIgOGMxLjEgMCAyLS45IDItMnMtLjktMi0yLTItMiAuOS0yIDIg' +
-        'LjkgMiAyIDJ6bTAgMmMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6' +
-        'bTAgNmMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6Ij48L3BhdGg+' +
-        'PC9zdmc+Cg==',
+    'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
+    'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
+    'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
+    'PjwvcGF0aD48cGF0aCBkPSJNMTIgOGMxLjEgMCAyLS45IDItMnMtLjktMi0yLTItMiAuOS0yIDIg' +
+    'LjkgMiAyIDJ6bTAgMmMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6' +
+    'bTAgNmMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6Ij48L3BhdGg+' +
+    'PC9zdmc+Cg==',
     /**
      * Sizes of the icons (currently 36 x 36 pixel)
      * @type {Object} */
-    icoSize: {w: 36, h: 36},
+    icoSize: { w: 36, h: 36 },
     /**
      * BoxBase with the style to be used by the direction buttons.
      * @type {BoxBase} */

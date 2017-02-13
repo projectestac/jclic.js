@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../Utils"
@@ -79,7 +81,7 @@ define([
      * @returns {external:jQuery}
      */
     $getXML: function () {
-      var attr = {ok: this.ok, time: this.time};
+      var attr = { ok: this.ok, time: this.time };
       if (this.type)
         attr.type = this.type;
       if (this.source)

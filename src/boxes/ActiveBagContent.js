@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./BoxBase",
@@ -123,8 +125,8 @@ define([
     setProperties: function ($xml, mediaBag) {
 
       var cellSet = this,
-          bug = false,
-          i, n;
+        bug = false,
+        i, n;
 
       $.each($xml.get(0).attributes, function () {
         var val = this.value;
@@ -135,14 +137,14 @@ define([
           case 'image':
             cellSet.imgName = Utils.nSlash(val);
             break;
-            // Bug in JClic beta 1: "columns" is number of rows, and "rows" is number of columns.
-            // Was corrected in beta 2: If "cols" is specified, "rows" are rows and "cols" are columns.
+          // Bug in JClic beta 1: "columns" is number of rows, and "rows" is number of columns.
+          // Was corrected in beta 2: If "cols" is specified, "rows" are rows and "cols" are columns.
           case 'rows':
             cellSet.nch = Number(val);
             break;
           case 'columns':
             bug = true;
-            /* falls through */
+          /* falls through */
           case 'cols':
             cellSet.ncw = Number(val);
             break;
@@ -172,8 +174,8 @@ define([
             break;
           case 'shaper':
             var shaperClassName = $node.attr('class'),
-                nCols = Math.max(1, $node.attr('cols')),
-                nRows = Math.max(1, $node.attr('rows'));
+              nCols = Math.max(1, $node.attr('cols')),
+              nRows = Math.max(1, $node.attr('rows'));
             cellSet.shaper = Shaper.getShaper(shaperClassName, nCols, nRows);
             cellSet.shaper.setProperties($node);
             break;
@@ -280,10 +282,10 @@ define([
      * Retrieves the {@link BoxBase} of this bag, creating a new one if it was _null_
      * @returns {BoxBase}
      */
-    getBoxBase: function() {
-      if(this.bb === null)
+    getBoxBase: function () {
+      if (this.bb === null)
         this.bb = new BoxBase();
-      return this.bb;      
+      return this.bb;
     },
     /**
      *
@@ -384,7 +386,7 @@ define([
       var n = this.ncw * this.nch;
       for (var i = 0; i < n; i++) {
         this.getActiveBoxContent(i).setTextContent(
-            i >= txt.length || txt[i] === null ? '' : txt[i]);
+          i >= txt.length || txt[i] === null ? '' : txt[i]);
       }
     },
     /**
@@ -403,9 +405,9 @@ define([
      * @param {string} key - The key where the value will be stored
      * @param {*} value - The supplied value. Can be of any type.
      */
-    setCellsAttribute: function(key, value){
+    setCellsAttribute: function (key, value) {
       for (var i = 0; i < this.activeBoxContentArray.length; i++)
-        this.getActiveBoxContent(i)[key] = value;      
+        this.getActiveBoxContent(i)[key] = value;
     },
     /**
      *
@@ -416,7 +418,7 @@ define([
     avoidAllIdsNull: function (maxId) {
 
       var i, allIdsNull = true,
-          numCells = this.activeBoxContentArray.length;
+        numCells = this.activeBoxContentArray.length;
 
       for (i = 0; i < numCells; i++) {
         if (this.getActiveBoxContent(i).id !== -1) {

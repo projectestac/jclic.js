@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global define */
+
 //
 // The purpose of this file is to ensure that certain classes derived from the main objects of
 // JClic ([Activity](Activity.html), [Shaper](Shaper.html), [Skin](Skin.html) and
@@ -63,6 +65,6 @@ define([
   "./activities/textGrid/WordSearch",
   "./activities/textGrid/CrossWord",
   "./report/TCPReporter"
-], function(a, b ,c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ab, ac, ad){
+], function () {
   return 'Deep classes loaded!';
 });
