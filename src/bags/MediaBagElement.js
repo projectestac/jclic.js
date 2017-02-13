@@ -74,6 +74,10 @@ define([
      * @type {string} */
     fileName: '',
     /**
+     * The font family name, used only in elements of type 'font'
+     * @type {string} */
+    fontName: '',
+    /**
      * The path to be used as base to access this media element
      * @type {string} */
     basePath: '',
@@ -139,6 +143,11 @@ define([
           this.checkAnimatedGif();
         else
           this.animated = anim === 'true';
+      }
+      if (this.type === 'font') {
+        this.fontName = (this.name === this.fileName && this.name.lastIndexOf('.') > 0)
+          ? this.name.substring(0, this.name.lastIndexOf('.'))
+          : this.name;
       }
       return this;
     },
@@ -240,7 +249,7 @@ define([
 
               $('head').append(
                 '<style type="text/css">' +
-                '@font-face{font-family:"' + media.name + '";' +
+                '@font-face{font-family:"' + media.fontName + '";' +
                 'src:url(' + fullPath + ') format("' + format + '");}' +
                 '</style>');
 

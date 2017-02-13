@@ -111,18 +111,18 @@ define([
   AWT.Font.checkTree = function ($tree, options) {
 
     var substitutions = AWT.Font.SUBSTITUTIONS;
-    
+
     // Load own fonts and remove it from the substitution table
     if (options && options.ownFonts) {
       options.ownFonts.forEach(function (name) {
-        if(AWT.Font.ALREADY_LOADED_FONTS.indexOf(name)<0) {
-          WebFont.load({custom: {families: [name]}});
+        if (AWT.Font.ALREADY_LOADED_FONTS.indexOf(name) < 0) {
+          WebFont.load({ custom: { families: [name] } });
           AWT.Font.ALREADY_LOADED_FONTS.push(name);
           delete substitutions[name.trim().toLowerCase()];
         }
-      });      
+      });
     }
-    
+
     // Add custom font substitutions
     if (options && options.fontSubstitutions)
       substitutions = $.extend(Object.create(substitutions), options.fontSubstitutions);

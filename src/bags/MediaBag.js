@@ -116,6 +116,21 @@ define([
       return result;
     },
     /**
+     * 
+     * Get the names of the media elements that are of the given type.
+     * When the search type is `font`, the `fontName` property is used instead of `name`
+     * @param {string} type - The type of elements to search
+     * @returns {String[]}
+     */
+    getElementsOfType: function (type) {
+      var result = [];
+      $.each(this.elements, function (name, element) {
+        if (element.type === type)
+          result.push(type === 'font' ? element.fontName : name);
+      });
+      return result;
+    },
+    /**
      *
      * Preload all resources.
      *
@@ -160,20 +175,6 @@ define([
      */
     getSkinElement: function (name, ps) {
       return Skin.getSkin(name, ps);
-    },
-    /**
-     * 
-     * Get the names of the media elements that are of the given type
-     * @param {string} type - The type of elements to search
-     * @returns {String[]}
-     */
-    getElementsOfType: function (type) {
-      var result = [];
-      $.each(this.elements, function (name, element) {
-        if (element.type === type)
-          result.push(name);
-      });
-      return result;
     }
   };
 
