@@ -1,3 +1,15 @@
+### v0.1.41 (2017-02-13)
+#### Improvements
+- Use of [es6-promise](https://github.com/stefanpenner/es6-promise) polyfill to support `Promise` in IE11 and other outdated browsers.
+- Explicit loading of fonts included in JClic projects. The `name` attribute of media elements is now used as `font-family` value.
+
+#### Bug fixes
+- Resolve dependencies and browserless issues affecting `listProjectContents.js` (in `test/nodejs`)
+
+#### Miscellaneous
+- Specific developer's settings for [VS-Code](https://code.visualstudio.com/), besides [NetBeans IDE](https://netbeans.org/).
+- Use of [ESLint](http://eslint.org/) instead of [JSHint](http://jshint.com/). Same functionality, but better integration with [VS-Code](https://code.visualstudio.com/).
+
 ### v0.1.40 (2016-11-23)
 #### Bug fixes
 - Don't stop media on mouseup events
