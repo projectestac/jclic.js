@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global define */
+/* global define, Uint8Array */
 
 define([
   "jquery",
@@ -376,7 +376,7 @@ define([
      */
     getFullPathPromise: function () {
       var media = this;
-      return new Promise(function (resolve, reject) {
+      return new Utils.Promise(function (resolve, reject) {
         Utils.getPathPromise(media.basePath, media.fileName, media.zip).then(function (fullPath) {
           media._fullPath = fullPath;
           resolve(fullPath);

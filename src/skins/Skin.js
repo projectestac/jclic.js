@@ -458,7 +458,7 @@ define([
      */
     showDlg: function (modal, options) {
       var skin = this;
-      return new Promise(function (resolve, reject) {
+      return new Utils.Promise(function (resolve, reject) {
         skin._dlgOkValue = 'ok';
         skin._dlgCancelValue = 'cancelled';
         skin._isModalDlg = modal;

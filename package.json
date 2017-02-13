@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "0.1.40",
+  "version": "0.1.41",
   "main": "src/JClic.js",
   "homepage": "http://projectestac.github.io/jclic.js",
   "readmeFilename": "README.md",
@@ -35,6 +35,7 @@
   "license": "EUPL-1.1",
   "dependencies": {
     "clipboard-js": "^0.3.1",
+    "es6-promise": "^4.0.5",
     "i18next": "^7.0.0",
     "jquery": "~3.1.0",
     "jszip": "^3.0.0",

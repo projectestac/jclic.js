@@ -172,7 +172,7 @@ define([
       if (this.processingTasks || this.currentSessionId === null ||
         this.tasks.length === 0 || this.serviceUrl === null)
         // The task list cannot be processed now. Pass and wait until the next timer cycle:
-        return Promise.resolve(true);
+        return Utils.Promise.resolve(true);
       else {
         // Set up the `processingTasks` flag to avoid re-entrant processing
         this.processingTasks = true;
@@ -182,7 +182,7 @@ define([
         for (var i = 0; i < this.tasks.length; i++)
           reportBean.appendData(this.tasks[i].$bean);
 
-        return new Promise(function (resolve, reject) {
+        return new Utils.Promise(function (resolve, reject) {
           reporter.transaction(reportBean.$bean)
             .done(function (_data, _textStatus, _jqXHR) {
               // TODO: Check returned message for possible errors on the server side
@@ -232,7 +232,7 @@ define([
 
       var reporter = this;
       var bean = new TCPReporter.ReportBean('get_properties');
-      return new Promise(function (resolve, reject) {
+      return new Utils.Promise(function (resolve, reject) {
         reporter.transaction(bean.$bean)
           .done(function (data, _textStatus, _jqXHR) {
             reporter.dbProperties = {};
@@ -296,10 +296,10 @@ define([
 
       if (this.currentSessionId !== null && !forceNewSession)
         // A valid session is available, so just return it
-        return Promise.resolve(this.currentSessionId);
+        return Utils.Promise.resolve(this.currentSessionId);
       else
         // A new session must be created:
-        return new Promise(function (resolve, reject) {
+        return new Utils.Promise(function (resolve, reject) {
           if (reporter.initiated && reporter.userId !== null && reporter.currentSession !== null) {
             reporter.flushTasksPromise().then(function () {
               reporter.currentSessionId = null;
@@ -365,7 +365,7 @@ define([
      */
     getGroups: function () {
       var reporter = this;
-      return new Promise(function (resolve, reject) {
+      return new Utils.Promise(function (resolve, reject) {
         if (!reporter.userBased())
           reject('This system does not manage users!');
         else {
@@ -396,7 +396,7 @@ define([
      */
     getUsers: function (groupId) {
       var reporter = this;
-      return new Promise(function (resolve, reject) {
+      return new Utils.Promise(function (resolve, reject) {
         if (!reporter.userBased())
           reject('This system does not manage users!');
         else {
@@ -429,7 +429,7 @@ define([
      */
     getUserData: function (userId) {
       var reporter = this;
-      return new Promise(function (resolve, reject) {
+      return new Utils.Promise(function (resolve, reject) {
         if (!reporter.userBased())
           reject('This system does not manage users!');
         else {

@@ -28,16 +28,20 @@
  *  @licend
  */
 
-/* global define, Promise, window, CanvasRenderingContext2D */
+/* global define */
 
 define([
   "jquery",
-  "screenfull"
-], function ($, screenfull) {
+  "screenfull",
+  "es6-promise"
+], function ($, screenfull, es6p) {
 
   // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
     screenfull = window.screenfull;
+
+  // Use es6-promise for browsers without native support of 'Promise'
+  var Promise = es6p.Promise;
 
   /**
    *
@@ -47,6 +51,10 @@ define([
    * @abstract
    */
   var Utils = {
+    /**
+     * The "Promise" object obtained form es6-promise
+     * @type: {function} */
+    Promise: Promise,
     /**
      * Function obtained from `i18next` that will return the translation of the provided key
      * into the current language.

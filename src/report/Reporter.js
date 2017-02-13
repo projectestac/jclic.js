@@ -158,7 +158,7 @@ define([
      * @returns {external:Promise} - When fulfilled, an array of group data is returned as a result
      */
     getGroups: function () {
-      return Promise.reject('No groups defined!');
+      return Utils.Promise.reject('No groups defined!');
     },
     /**
      *
@@ -169,7 +169,7 @@ define([
      * is returned
      */
     getUsers: function (groupId) {
-      return Promise.reject('No users defined in ' + groupId);
+      return Utils.Promise.reject('No users defined in ' + groupId);
     },
     /**
      *
@@ -179,7 +179,7 @@ define([
      * @returns {external:Promise} - When fulfilled, an object with user data is returned.
      */
     getUserData: function (_userId) {
-      return Promise.reject('Unknown user!');
+      return Utils.Promise.reject('Unknown user!');
     },
     /**
      *
@@ -189,7 +189,7 @@ define([
      * @returns {external:Promise} - When fulfilled, an object with group data is returned.
      */
     getGroupData: function (_groupId) {
-      return Promise.reject('Unknown group!');
+      return Utils.Promise.reject('Unknown group!');
     },
     /**
      *
@@ -208,7 +208,7 @@ define([
      */
     promptForNewGroup: function () {
       // TODO: Implement promptForNewGroup
-      return Promise.reject('Remote creation of groups not yet implemented!');
+      return Utils.Promise.reject('Remote creation of groups not yet implemented!');
     },
     /**
      *
@@ -218,7 +218,7 @@ define([
      */
     promptForNewUser: function () {
       // TODO: Implement promptForNewUser
-      return Promise.reject('Remote creation of users not yet implemented!');
+      return Utils.Promise.reject('Remote creation of users not yet implemented!');
     },
     /**
      *
@@ -227,7 +227,7 @@ define([
      */
     promptGroupId: function () {
       var reporter = this;
-      return new Promise(function (resolve, reject) {
+      return new Utils.Promise(function (resolve, reject) {
         if (!reporter.userBased())
           reject('This system does not manage users!');
         else {
@@ -266,7 +266,7 @@ define([
      */
     promptUserId: function (forcePrompt) {
       var reporter = this;
-      return new Promise(function (resolve, reject) {
+      return new Utils.Promise(function (resolve, reject) {
         if (reporter.userId !== null && !forcePrompt)
           resolve(reporter.userId);
         else if (!reporter.userBased())
@@ -436,7 +436,7 @@ define([
           this.descriptionKey = this.SCORM.getScormType();
       }
       this.initiated = true;
-      return Promise.resolve(true);
+      return Utils.Promise.resolve(true);
     },
     /**
      *
