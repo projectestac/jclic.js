@@ -7849,6 +7849,8 @@
             
                 <li data-name="MediaBag#getElementByFileName"><a href="MediaBag.html#getElementByFileName">getElementByFileName</a></li>
             
+                <li data-name="MediaBag#getElementsOfType"><a href="MediaBag.html#getElementsOfType">getElementsOfType</a></li>
+            
                 <li data-name="MediaBag#getSkinElement"><a href="MediaBag.html#getSkinElement">getSkinElement</a></li>
             
                 <li data-name="MediaBag#isWaiting"><a href="MediaBag.html#isWaiting">isWaiting</a></li>
@@ -7883,6 +7885,8 @@
                 <li data-name="MediaBagElement#ext"><a href="MediaBagElement.html#ext">ext</a></li>
             
                 <li data-name="MediaBagElement#fileName"><a href="MediaBagElement.html#fileName">fileName</a></li>
+            
+                <li data-name="MediaBagElement#fontName"><a href="MediaBagElement.html#fontName">fontName</a></li>
             
                 <li data-name="MediaBagElement#name"><a href="MediaBagElement.html#name">name</a></li>
             
@@ -11363,6 +11367,8 @@
             
                 <li data-name="Utils.LOG_PRINT_LABELS"><a href="Utils.html#.LOG_PRINT_LABELS">LOG_PRINT_LABELS</a></li>
             
+                <li data-name="Utils.Promise"><a href="Utils.html#.Promise">Promise</a></li>
+            
                 <li data-name="Utils.settings"><a href="Utils.html#.settings">settings</a></li>
             
                 <li data-name="Utils.TRUE"><a href="Utils.html#.TRUE">TRUE</a></li>
@@ -12115,6 +12121,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -12245,8 +12253,8 @@ define([
       this.clear();
 
       var abcA = this.act.abc['primary'],
-          abcB = this.act.abc['secondary'],
-          solved = this.act.abc['solvedPrimary'];
+        abcB = this.act.abc['secondary'],
+        solved = this.act.abc['solvedPrimary'];
 
       if (abcA &amp;&amp; abcB) {
 
@@ -12257,7 +12265,8 @@ define([
               'background-image': 'url(' + abcA.animatedGifFile + ')',
               'background-position': 'center',
               'background-repeat': 'no-repeat',
-              position: 'absolute'}).appendTo(this.$div);
+              position: 'absolute'
+            }).appendTo(this.$div);
         }
 
         if (abcB.imgName) {
@@ -12267,7 +12276,8 @@ define([
               'background-image': 'url(' + abcB.animatedGifFile + ')',
               'background-position': 'center',
               'background-repeat': 'no-repeat',
-              position: 'absolute'}).appendTo(this.$div);
+              position: 'absolute'
+            }).appendTo(this.$div);
         }
 
         if (solved &amp;&amp; solved.imgName)
@@ -12286,7 +12296,7 @@ define([
         this.bgA.setContent(abcA, solved ? solved : null);
         if (this.$animatedBg)
           this.bgA.setCellAttr('tmpTrans', true);
-        
+
         this.bgB.setContent(abcB);
         if (this.$animatedBgB)
           this.bgB.setCellAttr('tmpTrans', true);
@@ -12339,7 +12349,7 @@ define([
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
       if (this.bgA &amp;&amp; this.bgB &amp;&amp; this.$canvas) {
         var canvas = this.$canvas.get(0),
-            ctx = canvas.getContext('2d');
+          ctx = canvas.getContext('2d');
         if (!dirtyRegion)
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
@@ -12434,7 +12444,7 @@ define([
         // and two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
         // `origin` and `dest` points.
         var p = null,
-            bx1, bx2;
+          bx1, bx2;
         //
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend') {
@@ -12442,17 +12452,17 @@ define([
         } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           var x = event.originalEvent &amp;&amp; event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
-              y = event.originalEvent &amp;&amp; event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+            y = event.originalEvent &amp;&amp; event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
           p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 
         // Flag for tracking `mouseup` events
         var up = false,
-            // Flag for assuring that only one media plays per event (avoid event sounds overlapping
-            // cell's media sounds)
-            m = false,
-            // Flag for tracking clicks on the background of grid A
-            clickOnBg0 = false;
+          // Flag for assuring that only one media plays per event (avoid event sounds overlapping
+          // cell's media sounds)
+          m = false,
+          // Flag for tracking clicks on the background of grid A
+          clickOnBg0 = false;
 
         switch (event.type) {
           case 'touchcancel':
@@ -12467,10 +12477,10 @@ define([
               break;
             }
             up = true;
-            /* falls through */
+          /* falls through */
           case 'touchend':
           case 'touchstart':
-          case 'mousedown':            
+          case 'mousedown':
             if (!this.bc.active) {
               // A new pairing starts
               //
@@ -12479,13 +12489,13 @@ define([
                 break;
               else
                 this.ps.stopMedia(1);
-              
+
               //
               // Determine if click was done on panel A or panel B
               bx1 = this.bgA.findActiveBox(p);
               bx2 = this.bgB.findActiveBox(p);
               if (bx1 &amp;&amp; (!this.act.useOrder || bx1.idOrder === this.currentItem) ||
-                  !this.act.useOrder &amp;&amp; bx2 &amp;&amp; bx2.idAss !== -1) {
+                !this.act.useOrder &amp;&amp; bx2 &amp;&amp; bx2.idAss !== -1) {
                 // Start the [BoxConnector](BoxConnector.html)
                 if (this.act.dragCells)
                   this.bc.begin(p, bx1 || bx2);
@@ -12495,7 +12505,7 @@ define([
                 m |= (bx1 || bx2).playMedia(this.ps);
                 if (!m)
                   this.playEvent('click');
-                
+
                 // Move the focus to the opposite accessible group
                 var bg = bx1 ? this.bgA : this.bgB;
                 if (bg.$accessibleDiv) {
@@ -12524,9 +12534,9 @@ define([
               // Check if the pairing was correct
               if (bx1 &amp;&amp; bx2 &amp;&amp; bx1.idAss !== -1 &amp;&amp; bx2.idAss !== -1) {
                 var ok = false,
-                    src = bx1.getDescription(),
-                    dest = bx2.getDescription(),
-                    matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idOrder);
+                  src = bx1.getDescription(),
+                  dest = bx2.getDescription(),
+                  matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idOrder);
                 if (bx1.idOrder === bx2.idOrder || bx2.getContent().isEquivalent(matchingDest, true)) {
                   // Pairing is OK. Play media and disable involved cells
                   ok = true;
@@ -12597,7 +12607,7 @@ define([
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Wed Nov 23 2016 15:38:19 GMT+0100 (CET)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Feb 14 2017 13:42:06 GMT+0100 (CET)
         </footer>
     </div>
 </div>

@@ -7849,6 +7849,8 @@
             
                 <li data-name="MediaBag#getElementByFileName"><a href="MediaBag.html#getElementByFileName">getElementByFileName</a></li>
             
+                <li data-name="MediaBag#getElementsOfType"><a href="MediaBag.html#getElementsOfType">getElementsOfType</a></li>
+            
                 <li data-name="MediaBag#getSkinElement"><a href="MediaBag.html#getSkinElement">getSkinElement</a></li>
             
                 <li data-name="MediaBag#isWaiting"><a href="MediaBag.html#isWaiting">isWaiting</a></li>
@@ -7883,6 +7885,8 @@
                 <li data-name="MediaBagElement#ext"><a href="MediaBagElement.html#ext">ext</a></li>
             
                 <li data-name="MediaBagElement#fileName"><a href="MediaBagElement.html#fileName">fileName</a></li>
+            
+                <li data-name="MediaBagElement#fontName"><a href="MediaBagElement.html#fontName">fontName</a></li>
             
                 <li data-name="MediaBagElement#name"><a href="MediaBagElement.html#name">name</a></li>
             
@@ -11363,6 +11367,8 @@
             
                 <li data-name="Utils.LOG_PRINT_LABELS"><a href="Utils.html#.LOG_PRINT_LABELS">LOG_PRINT_LABELS</a></li>
             
+                <li data-name="Utils.Promise"><a href="Utils.html#.Promise">Promise</a></li>
+            
                 <li data-name="Utils.settings"><a href="Utils.html#.settings">settings</a></li>
             
                 <li data-name="Utils.TRUE"><a href="Utils.html#.TRUE">TRUE</a></li>
@@ -12115,6 +12121,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "../../Activity",
@@ -12201,8 +12209,8 @@ define([
       panelAncestor.buildVisualComponents.call(this);
 
       var abcA = this.act.abc['primary'],
-          abcB = this.act.abc['secondary'],
-          i, n;
+        abcB = this.act.abc['secondary'],
+        i, n;
 
       if (abcA &amp;&amp; abcB) {
         if (this.act.invAss) {
@@ -12261,17 +12269,17 @@ define([
         } else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           var x = event.originalEvent &amp;&amp; event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
-              y = event.originalEvent &amp;&amp; event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+            y = event.originalEvent &amp;&amp; event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
           p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 
         // Flag for tracking `mouseup` events
         var up = false,
-            // Flag for assuring that only one media plays per event (avoid event sounds overlapping
-            // cell's media sounds)
-            m = false,
-            // Flag for tracking clicks on the background of grid A
-            clickOnBg0 = false;
+          // Flag for assuring that only one media plays per event (avoid event sounds overlapping
+          // cell's media sounds)
+          m = false,
+          // Flag for tracking clicks on the background of grid A
+          clickOnBg0 = false;
 
         switch (event.type) {
           case 'touchcancel':
@@ -12286,10 +12294,10 @@ define([
               break;
             }
             up = true;
-            /* falls through */
+          /* falls through */
           case 'touchend':
           case 'touchstart':
-          case 'mousedown':            
+          case 'mousedown':
             if (!this.bc.active) {
               // New pairing starts
               //
@@ -12303,7 +12311,7 @@ define([
               bx1 = this.bgA.findActiveBox(p);
               bx2 = this.bgB.findActiveBox(p);
               if (bx1 &amp;&amp; bx1.idAss !== -1 &amp;&amp; (!this.act.useOrder || bx1.idOrder === this.currentItem) ||
-                  !this.act.useOrder &amp;&amp; bx2) {
+                !this.act.useOrder &amp;&amp; bx2) {
                 // Start the [BoxConnector](BoxConnector.html)
                 if (this.act.dragCells)
                   this.bc.begin(p, bx1 || bx2);
@@ -12342,9 +12350,9 @@ define([
               // Check if the pairing was correct
               if (bx1 &amp;&amp; bx2 &amp;&amp; bx1.idAss !== -1 &amp;&amp; !bx2.isInactive()) {
                 var ok = false,
-                    src = bx1.getDescription(),
-                    dest = bx2.getDescription(),
-                    matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idAss);
+                  src = bx1.getDescription(),
+                  dest = bx2.getDescription(),
+                  matchingDest = this.act.abc['secondary'].getActiveBoxContent(bx1.idAss);
 
                 if (bx1.idAss === bx2.idOrder || bx2.getContent().isEquivalent(matchingDest, true)) {
                   // Pairing was OK. Play media and disable involved cells
@@ -12421,7 +12429,7 @@ define([
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Wed Nov 23 2016 15:38:19 GMT+0100 (CET)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Feb 14 2017 13:42:06 GMT+0100 (CET)
         </footer>
     </div>
 </div>

@@ -7849,6 +7849,8 @@
             
                 <li data-name="MediaBag#getElementByFileName"><a href="MediaBag.html#getElementByFileName">getElementByFileName</a></li>
             
+                <li data-name="MediaBag#getElementsOfType"><a href="MediaBag.html#getElementsOfType">getElementsOfType</a></li>
+            
                 <li data-name="MediaBag#getSkinElement"><a href="MediaBag.html#getSkinElement">getSkinElement</a></li>
             
                 <li data-name="MediaBag#isWaiting"><a href="MediaBag.html#isWaiting">isWaiting</a></li>
@@ -7883,6 +7885,8 @@
                 <li data-name="MediaBagElement#ext"><a href="MediaBagElement.html#ext">ext</a></li>
             
                 <li data-name="MediaBagElement#fileName"><a href="MediaBagElement.html#fileName">fileName</a></li>
+            
+                <li data-name="MediaBagElement#fontName"><a href="MediaBagElement.html#fontName">fontName</a></li>
             
                 <li data-name="MediaBagElement#name"><a href="MediaBagElement.html#name">name</a></li>
             
@@ -11363,6 +11367,8 @@
             
                 <li data-name="Utils.LOG_PRINT_LABELS"><a href="Utils.html#.LOG_PRINT_LABELS">LOG_PRINT_LABELS</a></li>
             
+                <li data-name="Utils.Promise"><a href="Utils.html#.Promise">Promise</a></li>
+            
                 <li data-name="Utils.settings"><a href="Utils.html#.settings">settings</a></li>
             
                 <li data-name="Utils.TRUE"><a href="Utils.html#.TRUE">TRUE</a></li>
@@ -12107,7 +12113,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line45">line 45</a>
+            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line47">line 47</a>
         </div>
         
     </div>
@@ -12290,7 +12296,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line127">line 127</a>
+            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line144">line 144</a>
         </div>
         
     </div>
@@ -12414,7 +12420,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line82">line 82</a>
+            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line84">line 84</a>
         </div>
         
     </div>
@@ -12601,7 +12607,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line97">line 97</a>
+            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line99">line 99</a>
         </div>
         
     </div>
@@ -12781,6 +12787,158 @@
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="getElementsOfType">
+            
+            getElementsOfType<span class="signature">(type)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array.&lt;String>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line127">line 127</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Get the names of the media elements that are of the given type.<br>When the search type is <code>font</code>, the <code>fontName</code> property is used instead of <code>name</code></p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The type of elements to search</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        Array.&lt;String>
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="getSkinElement">
             
             getSkinElement<span class="signature">(name, ps)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Skin.html">Skin</a>}</span>
@@ -12788,7 +12946,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line161">line 161</a>
+            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line178">line 178</a>
         </div>
         
     </div>
@@ -12963,7 +13121,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line141">line 141</a>
+            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line158">line 158</a>
         </div>
         
     </div>
@@ -13070,7 +13228,7 @@
 
         
         <div class="tag-source">
-            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line65">line 65</a>
+            <a href="bags_MediaBag.js.html">bags/MediaBag.js</a>, <a href="bags_MediaBag.js.html#line67">line 67</a>
         </div>
         
     </div>
@@ -13199,7 +13357,7 @@
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Wed Nov 23 2016 15:38:30 GMT+0100 (CET)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Feb 14 2017 13:42:17 GMT+0100 (CET)
         </footer>
     </div>
 </div>

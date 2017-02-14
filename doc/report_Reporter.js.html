@@ -7849,6 +7849,8 @@
             
                 <li data-name="MediaBag#getElementByFileName"><a href="MediaBag.html#getElementByFileName">getElementByFileName</a></li>
             
+                <li data-name="MediaBag#getElementsOfType"><a href="MediaBag.html#getElementsOfType">getElementsOfType</a></li>
+            
                 <li data-name="MediaBag#getSkinElement"><a href="MediaBag.html#getSkinElement">getSkinElement</a></li>
             
                 <li data-name="MediaBag#isWaiting"><a href="MediaBag.html#isWaiting">isWaiting</a></li>
@@ -7883,6 +7885,8 @@
                 <li data-name="MediaBagElement#ext"><a href="MediaBagElement.html#ext">ext</a></li>
             
                 <li data-name="MediaBagElement#fileName"><a href="MediaBagElement.html#fileName">fileName</a></li>
+            
+                <li data-name="MediaBagElement#fontName"><a href="MediaBagElement.html#fontName">fontName</a></li>
             
                 <li data-name="MediaBagElement#name"><a href="MediaBagElement.html#name">name</a></li>
             
@@ -11363,6 +11367,8 @@
             
                 <li data-name="Utils.LOG_PRINT_LABELS"><a href="Utils.html#.LOG_PRINT_LABELS">LOG_PRINT_LABELS</a></li>
             
+                <li data-name="Utils.Promise"><a href="Utils.html#.Promise">Promise</a></li>
+            
                 <li data-name="Utils.settings"><a href="Utils.html#.settings">settings</a></li>
             
                 <li data-name="Utils.TRUE"><a href="Utils.html#.TRUE">TRUE</a></li>
@@ -12115,7 +12121,7 @@
  *  @licend
  */
 
-/* global Promise */
+/* global define */
 
 define([
   "jquery",
@@ -12245,7 +12251,7 @@ define([
      * @returns {external:Promise} - When fulfilled, an array of group data is returned as a result
      */
     getGroups: function () {
-      return Promise.reject('No groups defined!');
+      return Utils.Promise.reject('No groups defined!');
     },
     /**
      *
@@ -12256,27 +12262,27 @@ define([
      * is returned
      */
     getUsers: function (groupId) {
-      return Promise.reject('No users defined in ' + groupId);
+      return Utils.Promise.reject('No users defined in ' + groupId);
     },
     /**
      *
      * Gets extended data associated with a specific user. This is a method intended to be
      * implemented in subclasses.
-     * @param {string} userId - The requested user ID
+     * @param {string} _userId - The requested user ID
      * @returns {external:Promise} - When fulfilled, an object with user data is returned.
      */
-    getUserData: function (userId) {
-      return Promise.reject('Unknown user!');
+    getUserData: function (_userId) {
+      return Utils.Promise.reject('Unknown user!');
     },
     /**
      *
      * Gets extended data associated with a specific group or organization. This
      * is a method intended to be implemented in subclasses.
-     * @param {string} groupId - The requested group ID
+     * @param {string} _groupId - The requested group ID
      * @returns {external:Promise} - When fulfilled, an object with group data is returned.
      */
-    getGroupData: function (groupId) {
-      return Promise.reject('Unknown group!');
+    getGroupData: function (_groupId) {
+      return Utils.Promise.reject('Unknown group!');
     },
     /**
      *
@@ -12295,7 +12301,7 @@ define([
      */
     promptForNewGroup: function () {
       // TODO: Implement promptForNewGroup
-      return Promise.reject('Remote creation of groups not yet implemented!');
+      return Utils.Promise.reject('Remote creation of groups not yet implemented!');
     },
     /**
      *
@@ -12305,7 +12311,7 @@ define([
      */
     promptForNewUser: function () {
       // TODO: Implement promptForNewUser
-      return Promise.reject('Remote creation of users not yet implemented!');
+      return Utils.Promise.reject('Remote creation of users not yet implemented!');
     },
     /**
      *
@@ -12314,7 +12320,7 @@ define([
      */
     promptGroupId: function () {
       var reporter = this;
-      return new Promise(function (resolve, reject) {
+      return new Utils.Promise(function (resolve, reject) {
         if (!reporter.userBased())
           reject('This system does not manage users!');
         else {
@@ -12324,15 +12330,15 @@ define([
               reject('No groups defined!');
             else {
               var sel = 0;
-              var $groupSelect = $('&lt;select/>').attr({size: Math.max(3, Math.min(15, groupList.length))});
+              var $groupSelect = $('&lt;select/>').attr({ size: Math.max(3, Math.min(15, groupList.length)) });
               for (var p = 0; p &lt; groupList.length; p++)
-                $groupSelect.append($('&lt;option/>').attr({value: groupList[p].id}).text(groupList[p].name));
+                $groupSelect.append($('&lt;option/>').attr({ value: groupList[p].id }).text(groupList[p].name));
               $groupSelect.change(function () {
                 sel = this.selectedIndex;
               });
               reporter.ps.skin.showDlg(true, {
                 main: [
-                  $('&lt;h2/>', {class: 'subtitle'}).html(reporter.ps.getMsg('Select group:')),
+                  $('&lt;h2/>', { class: 'subtitle' }).html(reporter.ps.getMsg('Select group:')),
                   $groupSelect],
                 bottom: [
                   reporter.ps.skin.$okDlgBtn,
@@ -12353,13 +12359,13 @@ define([
      */
     promptUserId: function (forcePrompt) {
       var reporter = this;
-      return new Promise(function (resolve, reject) {
+      return new Utils.Promise(function (resolve, reject) {
         if (reporter.userId !== null &amp;&amp; !forcePrompt)
           resolve(reporter.userId);
         else if (!reporter.userBased())
           reject('This system does not manage users!');
         else {
-          var $pwdInput = $('&lt;input/>', {type: 'password', size: 8, maxlength: 64});
+          var $pwdInput = $('&lt;input/>', { type: 'password', size: 8, maxlength: 64 });
           if (reporter.getBooleanProperty('SHOW_USER_LIST', true)) {
             reporter.promptGroupId().then(function (groupId) {
               reporter.getUsers(groupId).then(function (userList) {
@@ -12369,17 +12375,17 @@ define([
                   reject('Group ' + groupId + ' has no users!');
                 else {
                   var sel = -1;
-                  var $userSelect = $('&lt;select/>').attr({size: Math.max(3, Math.min(15, userList.length))});
+                  var $userSelect = $('&lt;select/>').attr({ size: Math.max(3, Math.min(15, userList.length)) });
                   for (var p = 0; p &lt; userList.length; p++)
-                    $userSelect.append($('&lt;option/>').attr({value: userList[p].id}).text(userList[p].name));
+                    $userSelect.append($('&lt;option/>').attr({ value: userList[p].id }).text(userList[p].name));
                   $userSelect.change(function () {
                     sel = this.selectedIndex;
                   });
                   reporter.ps.skin.showDlg(true, {
                     main: [
-                      $('&lt;h2/>', {class: 'subtitle'}).html(reporter.ps.getMsg('Select user:')),
+                      $('&lt;h2/>', { class: 'subtitle' }).html(reporter.ps.getMsg('Select user:')),
                       $userSelect,
-                      $('&lt;h2/>', {class: 'subtitle'}).html(reporter.ps.getMsg('Password:')).append($pwdInput)],
+                      $('&lt;h2/>', { class: 'subtitle' }).html(reporter.ps.getMsg('Password:')).append($pwdInput)],
                     bottom: [
                       reporter.ps.skin.$okDlgBtn,
                       reporter.ps.skin.$cancelDlgBtn]
@@ -12399,14 +12405,14 @@ define([
               }).catch(reject);
             }).catch(reject);
           } else {
-            var $userInput = $('&lt;input/>', {type: 'text', size: 8, maxlength: 64});
+            var $userInput = $('&lt;input/>', { type: 'text', size: 8, maxlength: 64 });
             reporter.ps.skin.showDlg(true, {
               main: [
-                $('&lt;div/>').css({'text-align': 'right'})
-                    .append($('&lt;h2/>', {class: 'subtitle'}).html(reporter.ps.getMsg('User:'))
-                        .append($userInput))
-                    .append($('&lt;h2/>', {class: 'subtitle'}).html(reporter.ps.getMsg('Password:'))
-                        .append($pwdInput))],
+                $('&lt;div/>').css({ 'text-align': 'right' })
+                  .append($('&lt;h2/>', { class: 'subtitle' }).html(reporter.ps.getMsg('User:'))
+                    .append($userInput))
+                  .append($('&lt;h2/>', { class: 'subtitle' }).html(reporter.ps.getMsg('Password:'))
+                    .append($pwdInput))],
               bottom: [
                 reporter.ps.skin.$okDlgBtn,
                 reporter.ps.skin.$cancelDlgBtn]
@@ -12435,60 +12441,60 @@ define([
 
       var $html = Utils.$HTML;
       var result = [];
-      
-      result.push($('&lt;div/>', {class: 'subTitle', id: this.ps.getUniqueId('ReportsLb')}).html(this.ps.getMsg('Current results')));
 
-      var $t = $('&lt;table/>', {class: 'JCGlobalResults'});
+      result.push($('&lt;div/>', { class: 'subTitle', id: this.ps.getUniqueId('ReportsLb') }).html(this.ps.getMsg('Current results')));
+
+      var $t = $('&lt;table/>', { class: 'JCGlobalResults' });
       $t.append(
-          $html.doubleCell(
-              this.ps.getMsg('Session started:'),
-              this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
-          $html.doubleCell(
-              this.ps.getMsg('Reports system:'),
-              this.ps.getMsg(this.descriptionKey) + ' ' + this.descriptionDetail));
+        $html.doubleCell(
+          this.ps.getMsg('Session started:'),
+          this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
+        $html.doubleCell(
+          this.ps.getMsg('Reports system:'),
+          this.ps.getMsg(this.descriptionKey) + ' ' + this.descriptionDetail));
       if (this.userId)
         $t.append($html.doubleCell(
-            this.ps.getMsg('User:'),
-            this.userId));
+          this.ps.getMsg('User:'),
+          this.userId));
       else if (this.SCORM)
         $t.append($html.doubleCell(
-            this.ps.getMsg('User:'),
-            this.SCORM.studentName + (this.SCORM.studentId === '' ? '' : ' (' + this.SCORM.studentId + ')')));
+          this.ps.getMsg('User:'),
+          this.SCORM.studentName + (this.SCORM.studentId === '' ? '' : ' (' + this.SCORM.studentId + ')')));
 
       if (this.info.numSequences > 0) {
         if (this.info.numSessions > 1)
           $t.append($html.doubleCell(
-              this.ps.getMsg('Projects:'),
-              this.info.numSessions));
+            this.ps.getMsg('Projects:'),
+            this.info.numSessions));
         $t.append(
-            $html.doubleCell(
-                this.ps.getMsg('Sequences:'),
-                this.info.numSequences),
-            $html.doubleCell(
-                this.ps.getMsg('Activities done:'),
-                this.info.nActivities),
-            $html.doubleCell(
-                this.ps.getMsg('Activities played at least once:'),
-                this.info.nActPlayed + '/' + this.info.reportableActs + " (" + Utils.getPercent(this.info.ratioPlayed) + ")"));
+          $html.doubleCell(
+            this.ps.getMsg('Sequences:'),
+            this.info.numSequences),
+          $html.doubleCell(
+            this.ps.getMsg('Activities done:'),
+            this.info.nActivities),
+          $html.doubleCell(
+            this.ps.getMsg('Activities played at least once:'),
+            this.info.nActPlayed + '/' + this.info.reportableActs + " (" + Utils.getPercent(this.info.ratioPlayed) + ")"));
         if (this.info.nActivities > 0) {
           $t.append($html.doubleCell(
-              this.ps.getMsg('Activities solved:'),
-              this.info.nActSolved + " (" + Utils.getPercent(this.info.ratioSolved) + ")"));
+            this.ps.getMsg('Activities solved:'),
+            this.info.nActSolved + " (" + Utils.getPercent(this.info.ratioSolved) + ")"));
           if (this.info.nActScore > 0)
             $t.append(
-                $html.doubleCell(
-                    this.ps.getMsg('Partial score:'),
-                    Utils.getPercent(this.info.partialScore) + ' ' + this.ps.getMsg('(out of played activities)')),
-                $html.doubleCell(
-                    this.ps.getMsg('Global score:'),
-                    Utils.getPercent(this.info.globalScore) + ' ' + this.ps.getMsg('(out of all project activities)')));
+              $html.doubleCell(
+                this.ps.getMsg('Partial score:'),
+                Utils.getPercent(this.info.partialScore) + ' ' + this.ps.getMsg('(out of played activities)')),
+              $html.doubleCell(
+                this.ps.getMsg('Global score:'),
+                Utils.getPercent(this.info.globalScore) + ' ' + this.ps.getMsg('(out of all project activities)')));
           $t.append(
-              $html.doubleCell(
-                  this.ps.getMsg('Total time in activities:'),
-                  Utils.getHMStime(this.info.tTime)),
-              $html.doubleCell(
-                  this.ps.getMsg('Actions done:'),
-                  this.info.nActions));
+            $html.doubleCell(
+              this.ps.getMsg('Total time in activities:'),
+              Utils.getHMStime(this.info.tTime)),
+            $html.doubleCell(
+              this.ps.getMsg('Actions done:'),
+              this.info.nActions));
         }
         result.push($t);
 
@@ -12520,10 +12526,10 @@ define([
       if (options.SCORM !== false) {
         this.SCORM = Scorm.getSCORM(this);
         if (this.SCORM !== null &amp;&amp; this.descriptionKey === Reporter.prototype.descriptionKey)
-        this.descriptionKey = this.SCORM.getScormType();
+          this.descriptionKey = this.SCORM.getScormType();
       }
       this.initiated = true;
-      return Promise.resolve(true);
+      return Utils.Promise.resolve(true);
     },
     /**
      *
@@ -12553,17 +12559,17 @@ define([
     /**
      *
      * Creates a new group (method to be implemented in subclasses)
-     * @param {GroupData} gd
+     * @param {GroupData} _gd
      */
-    newGroup: function (gd) {
+    newGroup: function (_gd) {
       throw "No database!";
     },
     /**
      *
      * Creates a new user (method to be implemented in subclasses)
-     * @param {UserData} ud
+     * @param {UserData} _ud
      */
-    newUser: function (ud) {
+    newUser: function (_ud) {
       throw "No database!";
     },
     /**
@@ -12729,8 +12735,8 @@ define([
      */
     clear: function () {
       this.numSessions = this.numSequences = this.nActivities = this.reportableActs = this.nActSolved =
-          this.nActPlayed = this.nActScore = this.nActions = this.ratioSolved = this.ratioPlayed =
-          this.tScore = this.tTime = this.partialScore = this.globalScore = 0;
+        this.nActPlayed = this.nActScore = this.nActions = this.ratioSolved = this.ratioPlayed =
+        this.tScore = this.tTime = this.partialScore = this.globalScore = 0;
       this.valid = false;
     },
     /**
@@ -12777,7 +12783,7 @@ define([
    * Static list of classes derived from Reporter. It should be filled by Reporter classes at declaration time.
    * @type {Object}
    */
-  Reporter.CLASSES = {'Reporter': Reporter};
+  Reporter.CLASSES = { 'Reporter': Reporter };
 
   /**
    *
@@ -12817,7 +12823,7 @@ define([
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Wed Nov 23 2016 15:38:20 GMT+0100 (CET)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Feb 14 2017 13:42:07 GMT+0100 (CET)
         </footer>
     </div>
 </div>

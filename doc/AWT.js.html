@@ -7849,6 +7849,8 @@
             
                 <li data-name="MediaBag#getElementByFileName"><a href="MediaBag.html#getElementByFileName">getElementByFileName</a></li>
             
+                <li data-name="MediaBag#getElementsOfType"><a href="MediaBag.html#getElementsOfType">getElementsOfType</a></li>
+            
                 <li data-name="MediaBag#getSkinElement"><a href="MediaBag.html#getSkinElement">getSkinElement</a></li>
             
                 <li data-name="MediaBag#isWaiting"><a href="MediaBag.html#isWaiting">isWaiting</a></li>
@@ -7883,6 +7885,8 @@
                 <li data-name="MediaBagElement#ext"><a href="MediaBagElement.html#ext">ext</a></li>
             
                 <li data-name="MediaBagElement#fileName"><a href="MediaBagElement.html#fileName">fileName</a></li>
+            
+                <li data-name="MediaBagElement#fontName"><a href="MediaBagElement.html#fontName">fontName</a></li>
             
                 <li data-name="MediaBagElement#name"><a href="MediaBagElement.html#name">name</a></li>
             
@@ -11363,6 +11367,8 @@
             
                 <li data-name="Utils.LOG_PRINT_LABELS"><a href="Utils.html#.LOG_PRINT_LABELS">LOG_PRINT_LABELS</a></li>
             
+                <li data-name="Utils.Promise"><a href="Utils.html#.Promise">Promise</a></li>
+            
                 <li data-name="Utils.settings"><a href="Utils.html#.settings">settings</a></li>
             
                 <li data-name="Utils.TRUE"><a href="Utils.html#.TRUE">TRUE</a></li>
@@ -12115,6 +12121,8 @@
  *  @licend
  */
 
+/* global define */
+
 define([
   "jquery",
   "./Utils",
@@ -12155,7 +12163,7 @@ define([
       this.italic = italic;
     if (variant)
       this.variant = variant;
-    this._metrics = {ascent: -1, descent: -1, height: -1};
+    this._metrics = { ascent: -1, descent: -1, height: -1 };
   };
 
   /**
@@ -12173,7 +12181,6 @@ define([
   AWT.Font.SUBSTITUTIONS = {
     'abc': 'Kalam',
     'a.c.m.e. secret agent': 'Permanent Marker',
-    // 'arial': 'Arimo',
     'comic sans ms': 'Patrick Hand',
     'impact': 'Oswald',
     'massallera': 'Vibur',
@@ -12199,6 +12206,19 @@ define([
   AWT.Font.checkTree = function ($tree, options) {
 
     var substitutions = AWT.Font.SUBSTITUTIONS;
+
+    // Load own fonts and remove it from the substitution table
+    if (options &amp;&amp; options.ownFonts) {
+      options.ownFonts.forEach(function (name) {
+        if (AWT.Font.ALREADY_LOADED_FONTS.indexOf(name) &lt; 0) {
+          WebFont.load({ custom: { families: [name] } });
+          AWT.Font.ALREADY_LOADED_FONTS.push(name);
+          delete substitutions[name.trim().toLowerCase()];
+        }
+      });
+    }
+
+    // Add custom font substitutions
     if (options &amp;&amp; options.fontSubstitutions)
       substitutions = $.extend(Object.create(substitutions), options.fontSubstitutions);
 
@@ -12221,7 +12241,7 @@ define([
    */
   AWT.Font.loadGoogleFont = function (name) {
     if (name &amp;&amp; AWT.Font.ALREADY_LOADED_FONTS.indexOf(name) &lt; 0) {
-      WebFont.load({google: {families: [name]}});
+      WebFont.load({ google: { families: [name] } });
       AWT.Font.ALREADY_LOADED_FONTS.push(name);
     }
   };
@@ -12265,7 +12285,7 @@ define([
      * attributes. Vertical font metrics are calculated in
      * {@link AWT.Font#_calcHeight|calcHeight()} as needed.
      * @type {{ascent: number, descent: number, height: number}} */
-    _metrics: {ascent: -1, descent: -1, height: -1},
+    _metrics: { ascent: -1, descent: -1, height: -1 },
     /**
      *
      * Reads the properties of this Font from an XML element
@@ -12361,10 +12381,10 @@ define([
      */
     cssFont: function () {
       return (this.italic ? 'italic ' : 'normal') + ' ' +
-          (this.variant === '' ? 'normal' : this.variant) + ' ' +
-          (this.bold ? 'bold ' : 'normal') + ' ' +
-          this.size + 'pt ' +
-          this.family;
+        (this.variant === '' ? 'normal' : this.variant) + ' ' +
+        (this.bold ? 'bold ' : 'normal') + ' ' +
+        this.size + 'pt ' +
+        this.family;
     },
     /**
      *
@@ -12382,13 +12402,13 @@ define([
      */
     _calcHeight: function () {
       var $text = $('&lt;span/>').html('Hg').css(this.toCss());
-      var $block = $('&lt;div/>').css({display: 'inline-block', width: '1px', height: '0px'});
+      var $block = $('&lt;div/>').css({ display: 'inline-block', width: '1px', height: '0px' });
       var $div = $('&lt;div/>').append($text, $block);
       $('body').append($div);
       try {
-        $block.css({verticalAlign: 'baseline'});
+        $block.css({ verticalAlign: 'baseline' });
         this._metrics.ascent = $block.offset().top - $text.offset().top;
-        $block.css({verticalAlign: 'bottom'});
+        $block.css({ verticalAlign: 'bottom' });
         this._metrics.height = $block.offset().top - $text.offset().top;
         this._metrics.descent = this._metrics.height - this._metrics.ascent;
       } finally {
@@ -12404,10 +12424,10 @@ define([
      */
     equals: function (font) {
       return this.family === font.family &amp;&amp;
-          this.size === font.size &amp;&amp;
-          this.bold === font.bold &amp;&amp;
-          this.italic === font.italic &amp;&amp;
-          this.variant === font.variant;
+        this.size === font.size &amp;&amp;
+        this.bold === font.bold &amp;&amp;
+        this.italic === font.italic &amp;&amp;
+        this.variant === font.variant;
     }
   };
 
@@ -12484,9 +12504,9 @@ define([
      */
     getCss: function () {
       var result = 'linear-gradient(' +
-          (this.angle + 90) + 'deg, ' +
-          this.c1 + ', ' +
-          this.c2;
+        (this.angle + 90) + 'deg, ' +
+        this.c1 + ', ' +
+        this.c2;
       for (var i = 1; i &lt; this.cycles; i++) {
         result += ', ' + (i % 2 > 0 ? this.c1 : this.c2);
       }
@@ -12858,10 +12878,10 @@ define([
     /**
      *
      * Multiplies the dimension of the Shape by the specified `delta` amount.
-     * @param {AWT.Point|AWT.Dimension} delta - Object containing the X and Y ratio to be scaled.
+     * @param {AWT.Point|AWT.Dimension} _delta - Object containing the X and Y ratio to be scaled.
      * @returns {AWT.Shape}
      */
-    scaleBy: function (delta) {
+    scaleBy: function (_delta) {
       // Nothing to scale in abstract shapes
       return this;
     },
@@ -12880,20 +12900,20 @@ define([
     /**
      *
      * Checks if the provided {@link AWT.Point} is inside this shape.
-     * @param {AWT.Point} p - The point to check
+     * @param {AWT.Point} _p - The point to check
      * @returns {boolean}
      */
-    contains: function (p) {
+    contains: function (_p) {
       // Nothing to check in abstract shapes
       return false;
     },
     /**
      *
      * Checks if the provided {@link AWT.Rectangle} `r` intersects with this shape.
-     * @param {AWT.Rectangle} r
+     * @param {AWT.Rectangle} _r
      * @returns {boolean}
      */
-    intersects: function (r) {
+    intersects: function (_r) {
       // Nothing to check in abstract shapes
       return false;
     },
@@ -12965,8 +12985,8 @@ define([
      * Overwrites the original 'Object.toString' method with a more descriptive text
      * @returns {String}
      */
-    toString: function(){
-      return 'Shape enclosed in '+ this.getBounds().getCoords();
+    toString: function () {
+      return 'Shape enclosed in ' + this.getBounds().getCoords();
     }
   };
 
@@ -13110,11 +13130,11 @@ define([
       var rectP2 = shape.getBounds().getOppositeVertex();
 
       this.pos.moveTo(
-          Math.min(this.pos.x, shape.getBounds().pos.x),
-          Math.min(this.pos.y, shape.getBounds().pos.y));
+        Math.min(this.pos.x, shape.getBounds().pos.x),
+        Math.min(this.pos.y, shape.getBounds().pos.y));
       this.dim.setDimension(
-          Math.max(myP2.x, rectP2.x) - this.pos.x,
-          Math.max(myP2.y, rectP2.y) - this.pos.y);
+        Math.max(myP2.x, rectP2.x) - this.pos.x,
+        Math.max(myP2.y, rectP2.y) - this.pos.y);
       return this;
     },
     //
@@ -13154,7 +13174,7 @@ define([
     },
     //
     // Inherits the documentation of `toString` in AWT.Shape
-    toString: function(){
+    toString: function () {
       return 'Rectangle ' + this.getCoords();
     },
     /**
@@ -13163,9 +13183,9 @@ define([
      * (with values rounded to int)
      * @returns {String}
      */
-    getCoords: function() {
+    getCoords: function () {
       return '[' + Math.round(this.pos.x) + ',' + Math.round(this.pos.y) + ',' +
-          Math.round(this.pos.x + this.dim.width) + ',' + Math.round(this.pos.y + this.dim.height) + ']';      
+        Math.round(this.pos.x + this.dim.width) + ',' + Math.round(this.pos.y + this.dim.height) + ']';
     }
   };
   // Rectangle extends Shape
@@ -13196,12 +13216,12 @@ define([
       // Thanks Steve!!
 
       var kappa = 0.5522848,
-          ox = kappa * this.dim.width / 2, // control point offset horizontal
-          oy = kappa * this.dim.height / 2, // control point offset vertical
-          xe = this.pos.x + this.dim.width, // x-end
-          ye = this.pos.y + this.dim.height, // y-end
-          xm = this.pos.x + this.dim.width / 2, // x-middle
-          ym = this.pos.y + this.dim.height / 2;// y-middle
+        ox = kappa * this.dim.width / 2, // control point offset horizontal
+        oy = kappa * this.dim.height / 2, // control point offset vertical
+        xe = this.pos.x + this.dim.width, // x-end
+        ye = this.pos.y + this.dim.height, // y-end
+        xm = this.pos.x + this.dim.width / 2, // x-middle
+        ym = this.pos.y + this.dim.height / 2;// y-middle
 
       ctx.beginPath();
       ctx.moveTo(this.pos.x, ym);
@@ -13252,9 +13272,9 @@ define([
     },
     //
     // Inherits the documentation of `toString` in AWT.Shape
-    toString: function(){
+    toString: function () {
       return 'Ellipse enclosed in ' + this.getCoords();
-    }    
+    }
   };
   // Ellipse extends Rectangle
   AWT.Ellipse.prototype = $.extend(Object.create(AWT.Rectangle.prototype), AWT.Ellipse.prototype);
@@ -13274,10 +13294,10 @@ define([
       for (var n = 0; n &lt; strokes.length; n++) {
         var str = strokes[n];
         str = new AWT.PathStroke(
-            // In [Shaper](Shaper.html) objects, strokes have `action`, not `type`
-            str.type || str.action,
-            // In [Shaper](Shaper.html) objects, strokes have `data`, not `points`
-            str.points || str.data);
+          // In [Shaper](Shaper.html) objects, strokes have `action`, not `type`
+          str.type || str.action,
+          // In [Shaper](Shaper.html) objects, strokes have `data`, not `points`
+          str.points || str.data);
         this.strokes.push(str);
       }
     }
@@ -13382,7 +13402,7 @@ define([
     //
     // Inherits the documentation of `equals` in AWT.Shape
     // TODO: Implement comparision of complex paths
-    equals: function (p) {
+    equals: function (_p) {
       return false;
     },
     //
@@ -13532,14 +13552,14 @@ define([
           break;
         case 'Q':
           ctx.quadraticCurveTo(
-              this.points[0].x, this.points[0].y,
-              this.points[1].x, this.points[1].y);
+            this.points[0].x, this.points[0].y,
+            this.points[1].x, this.points[1].y);
           break;
         case 'B':
           ctx.bezierCurveTo(
-              this.points[0].x, this.points[0].y,
-              this.points[1].x, this.points[1].y,
-              this.points[2].x, this.points[2].y);
+            this.points[0].x, this.points[0].y,
+            this.points[1].x, this.points[1].y,
+            this.points[2].x, this.points[2].y);
           break;
         case 'X':
           ctx.closePath();
@@ -13609,10 +13629,10 @@ define([
      *
      * Here is where subclasses must define the callback function to be triggered when
      * this AWT.Action object is called
-     * @param {AWT.Action} thisAction - Pointer to this AWT.Action object
-     * @param {object} event - The original action event that has originated this action
+     * @param {AWT.Action} _thisAction - Pointer to this AWT.Action object
+     * @param {object} _event - The original action event that has originated this action
      */
-    actionPerformed: function (thisAction, event) {
+    actionPerformed: function (_thisAction, _event) {
       return this;
     },
     /**
@@ -13696,17 +13716,17 @@ define([
     /**
      *
      * Here is where subclasses must define the function to be performed when this timer ticks.
-     * @param {AWT.Timer} thisTimer
+     * @param {AWT.Timer} _thisTimer
      */
-    actionPerformed: function (thisTimer) {
+    actionPerformed: function (_thisTimer) {
       return this;
     },
     /**
      *
      * This is the method called by `window.setInterval`
-     * @param {Event} event
+     * @param {Event} _event
      */
-    processTimer: function (event) {
+    processTimer: function (_event) {
       this.ticks++;
       if (!this.repeats)
         this.stop();
@@ -13815,10 +13835,10 @@ define([
      *
      * Containers should implement this method to update its graphic contents. It should
      * be called from {@link AWT.Container~update}
-     * @param {AWT.Shape} dirtyRegion - Specifies the area to be updated. When `null`, it's the whole
+     * @param {AWT.Shape} _dirtyRegion - Specifies the area to be updated. When `null`, it's the whole
      * Container.
      */
-    updateContent: function (dirtyRegion) {
+    updateContent: function (_dirtyRegion) {
       // To be overrided by subclasses. Here does nothing.
       return this;
     }
@@ -13840,7 +13860,7 @@ define([
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Wed Nov 23 2016 15:38:17 GMT+0100 (CET)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Feb 14 2017 13:42:05 GMT+0100 (CET)
         </footer>
     </div>
 </div>
