@@ -1,3 +1,7 @@
+### v0.1.42 (2017-02-20)
+#### Miscellaneous
+- Export third-party NPM packages in a new member of `Utils` called `pkg`, so external scripts can make use of it through the global vriable `JClicObject`. This change was needed to implement downloading of JClic projects in [JClic Repo](https://github.com/projectestac/jclic-repo).
+
 ### v0.1.41 (2017-02-13)
 #### Improvements
 - Use of [es6-promise](https://github.com/stefanpenner/es6-promise) polyfill to support `Promise` in IE11 and other outdated browsers.
