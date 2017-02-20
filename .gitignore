@@ -1,8 +1,13 @@
 # Back, tmp and log files #
 *.bak
 *~
+*.swp
+._*
+.DS_Store
+Thumbs.db
 *.tmp
 *.log
+npm-debug.log
 
 # Build, dist and doc directories #
 /build/
