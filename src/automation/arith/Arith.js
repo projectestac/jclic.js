@@ -148,6 +148,7 @@ define([
       var arith = this;
       $xml.children().each(function () {
         var $node = $(this);
+        var xNum = '';
         switch (this.nodeName) {
           case 'operand':
             switch ($node.attr('id')) {
@@ -173,8 +174,10 @@ define([
             arith.exp_caxb = Utils.getBoolean($node.attr('inverse'));
             break;
           case 'result':
-            arith.resultLimInf = Utils.getNumber($node.attr('from'), arith.resultLimInf);
-            arith.resultLimSup = Utils.getNumber($node.attr('to'), arith.resultLimSup);
+            xNum = $node.attr('from');
+            arith.resultLimInf = Utils.getNumber(xNum === 'x' ? 0 : xNum, arith.resultLimInf);
+            xNum = $node.attr('to');
+            arith.resultLimSup = Utils.getNumber(xNum === 'x' ? 0 : xNum, arith.resultLimSup);
             arith.resultCarry = Utils.getBoolean($node.attr('notCarry'), arith.resultCarry);
             arith.resultNoDup = !Utils.getBoolean($node.attr('duplicates'), !arith.resultNoDup);
             var s = $node.attr('order');
@@ -233,11 +236,11 @@ define([
           li = ls;
           ls = k;
         }
-        rang = Math.round(ls - li + 1);
+        rang = Math.floor(ls - li + 1);
         if (rang < 0)
           rang = 1;
-        v = (Math.floor(Math.random(rang)) + li) * exp;
-        v = Math.round((Math.floor(Math.random() * rang) + li) * exp);
+        v = (Math.floor(Math.random() * rang) + li) * exp;
+        // v = Math.floor((Math.floor(Math.random() * rang) + li) * exp);
         if (exp > 1)
           v += Math.floor(Math.random() * exp);
         n.vf = v / exp;
@@ -274,16 +277,16 @@ define([
         case 'SUM':
           for (i = 0; i < this.NMAXLOOPS; i++) {
             this.genNum(o.numA, this.opA, this.RES, rlsup);
-            ri2 = o.numA.vf < rlinf ? rlinf - Math.round(o.numA.vf) : this.RES;
-            rs2 = rlsup - Math.round(o.numA.vf);
+            ri2 = o.numA.vf < rlinf ? rlinf - Math.floor(o.numA.vf) : this.RES;
+            rs2 = rlsup - Math.floor(o.numA.vf);
             switch (this.opCond) {
               case 'AGB':
                 if (rs2 === this.RES || rs2 > o.numA.vf)
-                  rs2 = Math.round(o.numA.vf);
+                  rs2 = Math.floor(o.numA.vf);
                 break;
               case 'BGA':
                 if (ri2 === this.RES || ri2 < o.numA.vf)
-                  ri2 = Math.round(o.numA.vf);
+                  ri2 = Math.floor(o.numA.vf);
                 break;
             }
             this.genNum(o.numB, this.opB, ri2, rs2);
@@ -296,8 +299,8 @@ define([
           if (this.resultCarry && o.numA.vf > 0 && o.numB.vf > 0) {
             q = o.numR.c === 2 ? 100 : o.numR.c === 1 ? 10 : 1;
 
-            bufa = Arith.DecFormat(Math.round(o.numA.vf * q + 0.5), 0, 10).split('');
-            bufb = Arith.DecFormat(Math.round(o.numB.vf * q + 0.5), 0, 10).split('');
+            bufa = Arith.DecFormat(Math.floor(o.numA.vf * q + 0.5), 0, 10).split('');
+            bufb = Arith.DecFormat(Math.floor(o.numB.vf * q + 0.5), 0, 10).split('');
             for (i = 0; i < 10; i++)
               if (bufa[i] !== '0' || bufb[i] !== '0')
                 break;
@@ -316,25 +319,25 @@ define([
               bufb[i] = vb.toFixed(0);
             }
 
-            o.numA.vf = parseInt(bufa.join()) / q;
-            o.numB.vf = parseInt(bufb.join()) / q;
-            o.numR.vf = Math.round(o.numA.vf + o.numB.vf + 0.5) / q;
+            o.numA.vf = parseInt(bufa.join('')) / q;
+            o.numB.vf = parseInt(bufb.join('')) / q;
+            o.numR.vf = Math.floor(o.numA.vf + o.numB.vf + 0.5) / q;
           }
           break;
 
         case 'REST':
           for (i = 0; i < this.NMAXLOOPS; i++) {
             this.genNum(o.numA, this.opA, rlinf, this.RES);
-            ri2 = o.numA.vf > rlsup ? Math.round(o.numA.vf - rlsup) : this.RES;
-            rs2 = Math.round(o.numA.vf - rlinf);
+            ri2 = o.numA.vf > rlsup ? Math.floor(o.numA.vf - rlsup) : this.RES;
+            rs2 = Math.floor(o.numA.vf - rlinf);
             switch (this.opCond) {
               case 'AGB':
                 if (rs2 === this.RES || rs2 > o.numA.vf)
-                  rs2 = Math.round(o.numA.vf);
+                  rs2 = Math.floor(o.numA.vf);
                 break;
               case 'BGA':
                 if (ri2 === this.RES || ri2 < o.numA.vf)
-                  ri2 = Math.round(o.numA.vf);
+                  ri2 = Math.floor(o.numA.vf);
                 break;
             }
             this.genNum(o.numB, this.opB, ri2, rs2);
@@ -346,8 +349,8 @@ define([
           o.op = 1;
           if (this.resultCarry && o.numA.vf > 0 && o.numB.vf > 0 && o.numA.vf >= o.numB.vf) {
             q = o.numR.c === 2 ? 100 : o.numR.c === 1 ? 10 : 1;
-            bufa = Arith.DecFormat(Math.round(o.numA.vf * q + 0.5), 0, 10).split('');
-            bufb = Arith.DecFormat(Math.round(o.numB.vf * q + 0.5), 0, 10).split('');
+            bufa = Arith.DecFormat(Math.floor(o.numA.vf * q + 0.5), 0, 10).split('');
+            bufb = Arith.DecFormat(Math.floor(o.numB.vf * q + 0.5), 0, 10).split('');
             for (i = 0; i < 10; i++)
               if (bufb[i] !== '0')
                 break;
@@ -360,9 +363,9 @@ define([
               bufb[i] = vb.toFixed(0);
             }
 
-            o.numA.vf = parseInt(bufa.join()) / q;
-            o.numB.vf = parseInt(bufb.join()) / q;
-            o.numR.vf = Math.round(o.numA.vf - o.numB.vf + 0.5) / q;
+            o.numA.vf = parseInt(bufa.join('')) / q;
+            o.numB.vf = parseInt(bufb.join('')) / q;
+            o.numR.vf = Math.floor(o.numA.vf - o.numB.vf + 0.5) / q;
           }
           break;
 
@@ -374,11 +377,11 @@ define([
             switch (this.opCond) {
               case 'AGB':
                 if (rs2 > o.numA.vf)
-                  rs2 = Math.round(o.numA.vf);
+                  rs2 = Math.floor(o.numA.vf);
                 break;
               case 'BGA':
                 if (ri2 < o.numA.vf)
-                  ri2 = Math.round(o.numA.vf);
+                  ri2 = Math.floor(o.numA.vf);
                 break;
             }
             this.genNum(o.numB, this.opB, ri2, rs2);
@@ -398,11 +401,11 @@ define([
             switch (this.opCond) {
               case 'AGB':
                 if (rs2 > o.numA.vf)
-                  rs2 = Math.round(o.numA.vf);
+                  rs2 = Math.floor(o.numA.vf);
                 break;
               case 'BGA':
                 if (ri2 < o.numA.vf)
-                  ri2 = Math.round(o.numA.vf);
+                  ri2 = Math.floor(o.numA.vf);
                 break;
             }
             this.genNum(o.numB, this.opB, ri2, rs2);
@@ -419,7 +422,7 @@ define([
           q = Math.pow(10, i);
           o.numA.vf *= q;
           o.numR.vf *= q;
-          o.numR.vf = Math.round(o.numR.vf);
+          o.numR.vf = Math.floor(o.numR.vf);
           o.numA.vf = o.numR.vf * o.numB.vf;
           o.numA.vf /= q;
           o.numR.vf /= q;
