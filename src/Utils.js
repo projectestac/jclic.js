@@ -33,8 +33,14 @@
 define([
   "jquery",
   "screenfull",
-  "es6-promise"
-], function ($, screenfull, es6p) {
+  "es6-promise",
+  "clipboard-js",
+  "i18next",
+  "jszip",
+  "jszip-utils",
+  "scriptjs",
+  "webfontloader"
+], function ($, screenfull, es6p, clipboard, i18next, JSZip, JSZipUtils, ScriptJS, WebFont) {
 
   // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
@@ -52,6 +58,23 @@ define([
    */
   var Utils = {
     /**
+     * Exports third-party NPM packages used by JClic, so they become available to other scripts through
+     * the global variable `JClicObject` (defined in {@link JClic})
+     * @example <caption>Example usage of JSZip through JClicObject</caption>
+     * var WebFont = JClicObject.Utils.pkg.WebFont;
+     * WebFont.load({google: {families: ['Roboto']}});
+     * @type: {object} */
+    pkg: {
+      ClipboardJS: clipboard,
+      Promise: Promise,
+      i18next: i18next,
+      $: $,
+      JSZip: JSZip,
+      JSZipUtils: JSZipUtils,
+      ScriptJS: ScriptJS,
+      WebFont: WebFont
+    },
+    /**
      * The "Promise" object obtained form es6-promise
      * @type: {function} */
     Promise: Promise,
@@ -64,7 +87,7 @@ define([
      */
     getMsg: function (key) {
       return key;
-    },    
+    },
     /**
      * List of valid verbosity levels
      * @const {string[]} */
@@ -100,7 +123,7 @@ define([
       if (typeof options.chainLogTo === 'function')
         Utils.LOG_OPTIONS.chainTo = options.chainLogTo;
       if (typeof options.pipeLogTo === 'function')
-        Utils.LOG_OPTIONS.pipeTo = options.pipeLogTo;      
+        Utils.LOG_OPTIONS.pipeTo = options.pipeLogTo;
       return options;
     },
     /**
@@ -173,8 +196,8 @@ define([
      */
     getVal: function (val, defaultValue) {
       return val === '' || val === null || typeof val === 'undefined' ?
-          defaultValue || null :
-          val;
+        defaultValue || null :
+        val;
     },
     /**
      * Gets a number from a string or another number
@@ -212,7 +235,7 @@ define([
       if (!date)
         date = new Date();
       return date.getFullYear() + '/' + ('0' + date.getMonth()).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + ' ' +
-          ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2) + ':' + ('0' + date.getSeconds()).slice(-2);
+        ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2) + ':' + ('0' + date.getSeconds()).slice(-2);
     },
     /** @const {number} */
     'FALSE': 0,
@@ -227,7 +250,7 @@ define([
      */
     getTriState: function (val) {
       return Number(val === 'true' ? Utils.TRUE
-          : val === 'false' ? Utils.FALSE : Utils.DEFAULT);
+        : val === 'false' ? Utils.FALSE : Utils.DEFAULT);
     },
     /**
      * Returns a string with the given `tag` repeated n times
@@ -259,7 +282,7 @@ define([
      */
     isEquivalent: function (a, b) {
       return (typeof a === 'undefined' || a === null) && (typeof b === 'undefined' || b === null) ||
-          a === b;
+        a === b;
     },
     /**
      * Reads paragraphs, identified by `<p></p>` elements, inside XML data
@@ -306,10 +329,10 @@ define([
       if (col.charAt(0) === '#' && col.length > 7) {
         var alpha = parseInt(col.substring(1, 3), 16) / 255.0;
         col = 'rgba(' +
-            parseInt(col.substring(3, 5), 16) + ',' +
-            parseInt(col.substring(5, 7), 16) + ',' +
-            parseInt(col.substring(7, 9), 16) + ',' +
-            alpha + ')';
+          parseInt(col.substring(3, 5), 16) + ',' +
+          parseInt(col.substring(5, 7), 16) + ',' +
+          parseInt(col.substring(7, 9), 16) + ',' +
+          alpha + ')';
       }
       return col;
     },
@@ -515,10 +538,10 @@ define([
         return $('<p/>').html(txt);
       },
       td: function (txt, className) {
-        return $('<td/>', className ? {class: className} : null).html(txt);
+        return $('<td/>', className ? { class: className } : null).html(txt);
       },
       th: function (txt, className) {
-        return $('<th/>', className ? {class: className} : null).html(txt);
+        return $('<th/>', className ? { class: className } : null).html(txt);
       }
     },
     /**
@@ -591,8 +614,10 @@ define([
       MIN_CELL_SIZE: 10,
       //DEFAULT_BG_COLOR: '#D3D3D3', // LightGray
       DEFAULT_BG_COLOR: '#C0C0C0', // LightGray
-      ACTIONS: {ACTION_MATCH: 'MATCH', ACTION_PLACE: 'PLACE',
-        ACTION_WRITE: 'WRITE', ACTION_SELECT: 'SELECT', ACTION_HELP: 'HELP'},
+      ACTIONS: {
+        ACTION_MATCH: 'MATCH', ACTION_PLACE: 'PLACE',
+        ACTION_WRITE: 'WRITE', ACTION_SELECT: 'SELECT', ACTION_HELP: 'HELP'
+      },
       PREVIOUS: 0, MAIN: 1, END: 2, END_ERROR: 3, NUM_MSG: 4,
       MSG_TYPE: ['previous', 'initial', 'final', 'finalError'],
       RANDOM_CHARS: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -747,8 +772,8 @@ define([
           textNode = textNodes[i];
           endCharCount = charCount + textNode.length;
           if (!foundStart && start >= charCount &&
-              (start < endCharCount ||
-                  start === endCharCount && i + 1 <= textNodes.length)) {
+            (start < endCharCount ||
+              start === endCharCount && i + 1 <= textNodes.length)) {
             range.setStart(textNode, start - charCount);
             foundStart = true;
           }
