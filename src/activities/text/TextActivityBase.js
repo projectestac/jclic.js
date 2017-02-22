@@ -141,10 +141,10 @@ define([
     /**
      *
      * Fills a jQuery DOM element (usually a 'div') with the specified {@link TextActivityDocument}.
-     * @param {external:jQuery} $dom - The jQuery DOM object to be filled with the document.
+     * @param {external:jQuery} $div - The jQuery DOM object to be filled with the document.
      * @param {TextActivityDocument} doc - The document
      */
-    setDocContent: function ($dom, doc) {
+    setDocContent: function ($div, doc) {
 
       var panel = this;
 
@@ -154,13 +154,10 @@ define([
       // style of the document.
       // It also sets the 'overflow' CSS attribute to 'auto', which will display a
       // vertical scroll bar when needed
-      $dom.empty().css(doc.style['default'].css).css('overflow', 'auto');
+      $div.empty().css(doc.style['default'].css).css({ display: 'flex', 'flex-direction': 'column' });
 
-      var $html = $('<div/>', { class: 'JClicTextDocument' }).css({ 'padding': 4 });
-
-      //
-      // Sets the default style
-      $html.css(doc.style['default'].css);
+      var $scroller = $('<div/>').css({ 'flex-grow': 1, overflow: 'auto' });
+      var $doc = $('<div/>', { class: 'JClicTextDocument' }).css({ 'padding': 4 }).css(doc.style['default'].css);
 
       var currentPStyle = null;
 
@@ -266,26 +263,26 @@ define([
         }
 
         // Adds the paragraph to the DOM element
-        $html.append($p);
+        $doc.append($p);
       });
 
-      $dom.append($html);
+      $div.append($scroller.append($doc));
 
       if (this.act.checkButtonText && !this.showingPrevScreen) {
         this.$checkButton = $('<button/>', { class: 'StockBtn' })
           .html(this.act.checkButtonText)
-          .css({ position: 'absolute', bottom: '0', left: '0', width: '100%' })
+          .css({ width: '100%', 'flex-shrink': 0 })
           .on('click', function () {
             panel.evaluatePanel();
           });
-        $dom.append(this.$checkButton);
+        $div.append(this.$checkButton);
       }
 
       // Init Evaluator
       if (this.act.ev)
         this.act.ev.init(this.act.project.settings.locales);
 
-      return $dom;
+      return $div;
     },
     /**
      *
