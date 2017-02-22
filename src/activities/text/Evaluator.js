@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2017 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -127,8 +127,9 @@ define([
     /**
      *
      * Initializes this evaluator
+     * @param {string[]} _locales - An array of valid locales, to be used by Intl.Collator
      */
-    init: function () {
+    init: function (_locales) {
       this.initiated = true;
     },
     /**
@@ -233,13 +234,17 @@ define([
     /**
      *
      * Initializes the {@link Evaluator#collator}.
+     * @param {string[]} locales - An array of valid locales to be used by the Inlt.Collator object
      */
-    init: function () {
-      Evaluator.prototype.init.call(this);
+    init: function (locales) {
+      // Call `init` method on ancestor
+      Evaluator.prototype.init.call(this, [locales]);
+
+      // Get canonical locales
       if (window.Intl && window.Intl.Collator) {
-        this.collator = new window.Intl.Collator({
+        this.collator = new window.Intl.Collator(locales, {
           sensitivity: this.checkAccents ? this.checkCase ? 'case' : 'accent' : 'base',
-          ignorePunctuation: this.checkPunctuation
+          ignorePunctuation: !this.checkPunctuation
         });
       }
     },

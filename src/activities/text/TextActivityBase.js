@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2017 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -280,6 +280,10 @@ define([
           });
         $dom.append(this.$checkButton);
       }
+
+      // Init Evaluator
+      if (this.act.ev)
+        this.act.ev.init(this.act.project.settings.locales);
 
       return $dom;
     },

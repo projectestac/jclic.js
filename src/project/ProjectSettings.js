@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2017 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -28,12 +28,13 @@
  *  @licend
  */
 
-/* global define */
+/* global define, window */
 
 define([
   "jquery",
-  "../media/EventSounds"
-], function ($, EventSounds) {
+  "../media/EventSounds",
+  "../Utils"
+], function ($, EventSounds, Utils) {
 
   /**
    * This class contains miscellaneous settings of JClic projects.
@@ -55,6 +56,7 @@ define([
   var ProjectSettings = function (project) {
     this.project = project;
     this.languages = [];
+    this.locales = [];
   };
 
   ProjectSettings.prototype = {
@@ -72,9 +74,14 @@ define([
      * @type {string} */
     description: '',
     /**
-     * JClic projects can use more than one language, so we use a string array
+     * JClic projects can use more than one language, so use a string array
      * @type {string[]} */
     languages: null,
+    /**
+     * Array of canonical locales, as defined in 
+     * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation|Intl}
+     */
+    locales: null,
     /**
      * The name of an optional 'skin' (visual aspect) can be set for the whole project, or for each {@link Activity}
      * @type {string} */
@@ -111,6 +118,26 @@ define([
             break;
         }
       });
+
+      // Try to find an array of valid locales
+      // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
+      if (this.languages.length > 0 && window.Intl && window.Intl.getCanonicalLocales) {
+        this.locales = [];
+        for (var p in this.languages) {
+          // Languages usually are stored in the form: "English (en)"
+          var matches = /\(([a-z,A-Z,-]+)\)/.exec(this.languages[p]);
+          if (matches && matches.length > 1) {
+            try {
+              var canonicals = window.Intl.getCanonicalLocales(matches[1]);
+              if (canonicals)
+                this.locales = this.locales.concat(canonicals);
+            } catch (err) {
+              Utils.log('error', 'Invalid language: %s', this.languages[p]);
+            }
+          }
+        }
+      }
+
       return this;
     }
   };

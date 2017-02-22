@@ -13,7 +13,7 @@
       "name": "Launch Chrome against localhost",
       "type": "chrome",
       "request": "launch",
-      "url": "http://localhost:8080/test/jclic-demo/debug.html",
+      "url": "http://localhost:8080/test/",
       "webRoot": "${workspaceRoot}",
       "runtimeExecutable": "/usr/bin/chromium-browser",
       "runtimeArgs": [
