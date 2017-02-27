@@ -632,7 +632,11 @@ define([
     setHostedComponentColors: function () {
       if (this.$hostedComponent) {
         var bb = this.getBoxBaseResolve();
-        this.$hostedComponent.css(bb.getCSS(null, this.inactive, this.inverted, this.alternative));
+        var css = bb.getCSS(null, this.inactive, this.inverted, this.alternative);
+        // Check if cell has background gradient and animated gif
+        if (this.$hostedComponent.data('background-image') && css['background-image'])
+          css['background-image'] = this.$hostedComponent.data('background-image') + ',' + css['background-image'];
+        this.$hostedComponent.css(css);
       }
     },
     /**

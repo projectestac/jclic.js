@@ -304,12 +304,15 @@ define([
       this.content = abc;
       if (abc) {
         if (abc.animatedGifFile && !this.specialShape) {
+          var url = 'url(' + abc.animatedGifFile + ')';
           var $hc = $('<span/>').css({
-            'background-image': 'url(' + abc.animatedGifFile + ')',
+            'background-image': url,
             //'background-size': 'contain',
             'background-position': 'center',
             'background-repeat': 'no-repeat'
           });
+          // Save background image for later use
+          $hc.data('background-image', url);
 
           if (abc.imgClip !== null) {
             $hc.css({
