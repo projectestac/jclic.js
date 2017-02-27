@@ -89,13 +89,12 @@ define([
     },
     /**
      *
-     * Basic initialization procedure
+     * Called when the activity starts playing
      */
-    initActivity: function () {
-      ActPanelAncestor.initActivity.call(this);
-      this.$div.find('.JClicTextDocument').attr('contenteditable', 'true').attr('spellcheck', 'false');
-      this.playing = true;
-    },
+    startActivity: function () {
+      ActPanelAncestor.startActivity.call(this);
+      this.$div.find('.JClicTextDocument').attr('contenteditable', 'true').attr('spellcheck', 'false');      
+    },    
     /**
      *
      * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
