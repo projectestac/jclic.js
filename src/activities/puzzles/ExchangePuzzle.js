@@ -238,7 +238,7 @@ define([
      * to start or when resized.
      */
     buildAccessibleComponents: function () {
-      if (this.$canvas && this.accessibleCanvas) {
+      if (this.$canvas && this.accessibleCanvas && this.bg) {
         ActPanelAncestor.buildAccessibleComponents.call(this);
         this.bg.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
       }

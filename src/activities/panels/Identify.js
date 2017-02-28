@@ -263,7 +263,8 @@ define([
         this.invalidate().update();
         var thisPanel = this;
         setTimeout(function () {
-          thisPanel.bg.buildAccessibleElements(thisPanel.$canvas, thisPanel.$div);
+          if (thisPanel.bg)
+            thisPanel.bg.buildAccessibleElements(thisPanel.$canvas, thisPanel.$div);
         }, 0);
       }
     },

@@ -333,8 +333,10 @@ define([
     buildAccessibleComponents: function () {
       if (this.$canvas && this.accessibleCanvas) {
         ActPanelAncestor.buildAccessibleComponents.call(this);
-        this.bgA.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
-        this.bgB.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
+        if (this.bgA)
+          this.bgA.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
+        if (this.bgB)
+          this.bgB.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
       }
     },
     /**
