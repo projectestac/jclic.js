@@ -1,10 +1,11 @@
 ### v0.1.43 (2017-02-28)
 #### Bug fixes
 - Allow animated GIFs also over gradients.
-- Solved incorrect startup of 'complete text' activities with previous screen.
+- Solved incorrect startup of "complete text" activities with previous screen.
 - Place "check" button always anchored at bottom of text activities.
 - Properly initialize `Evaluator` with `Intl.Collator` in text activities.
 - Solved problems when rounding and ceiling integers in Arith.
+- Avoid calling `buildAccessibleElements` on null panels
 
 ### v0.1.42 (2017-02-20)
 #### Miscellaneous
