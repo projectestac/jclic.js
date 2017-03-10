@@ -117,7 +117,8 @@ define([
     // Load own fonts and remove it from the substitution table
     if (options && options.ownFonts) {
       options.ownFonts.forEach(function (name) {
-        if (AWT.Font.ALREADY_LOADED_FONTS.indexOf(name) < 0) {
+        // Check WebFont as a workaround to avoid problems with a different version of `webfontloader` in agora.xtec.cat
+        if (AWT.Font.ALREADY_LOADED_FONTS.indexOf(name) < 0 && WebFont && WebFont.load) {
           WebFont.load({ custom: { families: [name] } });
           AWT.Font.ALREADY_LOADED_FONTS.push(name);
           delete substitutions[name.trim().toLowerCase()];
@@ -147,7 +148,8 @@ define([
    * @param {string} name - The font family name
    */
   AWT.Font.loadGoogleFont = function (name) {
-    if (name && AWT.Font.ALREADY_LOADED_FONTS.indexOf(name) < 0) {
+    // Check WebFont as a workaround to avoid problems with a different version of `webfontloader` in agora.xtec.cat
+    if (name && AWT.Font.ALREADY_LOADED_FONTS.indexOf(name) < 0 && WebFont && WebFont.load) {
       WebFont.load({ google: { families: [name] } });
       AWT.Font.ALREADY_LOADED_FONTS.push(name);
     }
