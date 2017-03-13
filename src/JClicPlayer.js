@@ -68,15 +68,28 @@ define([
       // JClicPlayer extends AWT.Container
       AWT.Container.call(this);
 
+      options = Utils.init(options);
+      this.options = $.extend(Object.create(this.options), options);
+
       this.id = 'JC' + (0x10000 + Math.round(Math.random() * 0xFFFF)).toString(16).toUpperCase().substr(1);
 
       this.$topDiv = $topDiv;
+      
+      // Special case: $topDiv inside a TD (like in http://clic.xtec.cat/gali)
+      if ($topDiv && $topDiv.parent().is('td')) {
+        // Always remove 'align' attribut in parent TD
+        $topDiv.parent().removeAttr('align');
+        // Set explicit width and height to fill-in the TD
+        $topDiv.css({
+          width: options.width || '100%',
+          height: options.height || '100%'
+        });
+      }
+
       this.$mainContainer = $('<div/>', { class: 'JClicContainer', id: this.id })
         .css({ width: '100%', height: '100%' })
         .appendTo(this.$topDiv);
 
-      options = Utils.init(options);
-      this.options = $.extend(Object.create(this.options), options);
       i18n.init(this);
 
       this.localFS = location && location.protocol === 'file:';
