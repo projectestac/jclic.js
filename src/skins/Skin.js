@@ -682,12 +682,14 @@ define([
     // Locates the class of the requested Skin (or [DefaultSkin](DefaultSkin.html)
     // if not specified). When not found, a new one is created and registered in `skinStack`
     var cl = Skin.CLASSES[skinName];
-    if (cl) {
-      sk = new cl(ps, skinName);
-      if ($xml)
-        sk.setProperties($xml);
-    } else
-      Utils.log('error', 'Unknown skin class: %s', skinName);
+    if (!cl) {
+      // TODO: Process custom skin XML files
+      Utils.log('warn', 'Unknown skin class: %s', skinName);
+      cl = Skin.CLASSES.default;
+    }
+    sk = new cl(ps, skinName);
+    if ($xml)
+      sk.setProperties($xml);
 
     return sk;
   };
