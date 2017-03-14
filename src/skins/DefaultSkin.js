@@ -67,14 +67,6 @@ define([
 
     AWT.Font.loadGoogleFonts(this.cssFonts);
 
-    // Add waiting panel
-    this.$waitPanel = $('<div/>')
-      .css({ display: 'none', 'background-color': 'rgba(255, 255, 255, .60)', 'z-index': 99 })
-      .append($('<div/>', { class: 'waitPanel' })
-        .append($('<div/>', { class: 'animImgBox' })
-          .append($(this.waitImgBig), $(this.waitImgSmall))));
-    this.$playerCnt.append(this.$waitPanel);
-
     // Create the main container for buttons, counters and message box
     this.$ctrlCnt = $('<div/>', { class: 'JClicCtrlCnt unselectableText', role: 'navigation' });
     this.$div.append(this.$ctrlCnt);
@@ -242,7 +234,7 @@ define([
      * @returns {string}
      */
     _getStyleSheets: function () {
-      return Skin.prototype._getStyleSheets() + this.mainCSS + this.waitAnimCSS;
+      return Skin.prototype._getStyleSheets() + this.mainCSS;
     },
     /**
      *
@@ -264,6 +256,10 @@ define([
      * Main method used to build the content of the skin. Resizes and places internal objects.
      */
     doLayout: function () {
+      
+      // Call method on ancestor
+      Skin.prototype.doLayout.call(this);
+
       var skin = this;
 
       // Set the fullScreen icon
@@ -271,9 +267,6 @@ define([
         this.buttons.fullscreen.find('img').get(0).src = Utils.svgToURI(
           this[screenfull.isFullscreen ? 'fullScreenExitIcon' : 'fullScreenIcon'],
           this.iconWidth, this.iconHeight, this.iconFill);
-
-      // Resize player accordingly
-      this.player.doLayout();
 
       // Build canvas at the end of current thread, thus avoiding
       // invalid sizes due to incomplete layout of DOM objects
@@ -353,28 +346,9 @@ define([
 .SKINID .JClicMsgBox {height:60px; -webkit-flex-grow:1; flex-grow:1; background-color:lightblue;}\
 .SKINID .JClicBtn {cursor:pointer; line-height:0;}\
 .SKINID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left}',
-    waitAnimCSS: '\
-.SKINID .waitPanel {display:-webkit-flex; display:flex; width:100%; height:100%; -webkit-justify-content:center; justify-content:center; -webkit-align-items:center; align-items:center;}\
-.SKINID .animImgBox {position:relative; width:300px; height:300px; max-width:80%; max-height:80%;}\
-.SKINID .animImgBox svg {position:absolute; width:100%; height:100%; animation-iteration-count:infinite; animation-timing-function:linear;}\
-.SKINID #waitImgBig {animation-duration:0.8s; animation-name:rotate-right;}\
-@keyframes rotate-right {from {transform:rotate(0);} to {transform:rotate(1turn);}}\
-.SKINID #waitImgSmall {animation-duration:0.6s; animation-name:rotate-left;}\
-@keyframes rotate-left {from {transform:rotate(0);} to {transform:rotate(-1turn);}}',
     //
     // Fonts used in this skin
     cssFonts: ['Roboto'],
-    //
-    // Animated image displayed while loading resources
-    // Based on Ryan Allen's [svg-spinner](http://articles.dappergentlemen.com/2015/01/13/svg-spinner/)
-    waitImgBig: '<svg id="waitImgBig" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
-<path fill="#3F51B5" d="m 65.99,40.19 c -0.42,5.33 7.80,4.94 8.11,0.20 C 74.50,34.37 66.35,8.59 42.92,\
-7.98 15.90,7.29 9.96,29.50 9.94,39.41 15.33,-1.66 68.61,7.048 65.99,40.19 Z" />\
-</svg>',
-    waitImgSmall: '<svg id="waitImgSmall" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
-<path fill="#3F51B5"d="m 57.00,39.43 c -0.28,-3.53 5.16,-3.27 5.37,-0.13 0.26,3.99 -5.13,21.04 -20.63,\
-21.44 C 23.85,61.19 19.93,46.50 19.92,39.94 23.48,67.11 58.73,61.35 57.00,39.43 Z"/>\
-</svg>',
     //
     // SVG images for action buttons
     // Based on [Google Material design Icons](https://google.github.io/material-design-icons/)

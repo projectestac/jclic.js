@@ -72,6 +72,14 @@ define([
     this.$div = $('<div/>', { class: this.skinId });
     this.$playerCnt = $('<div/>', { class: 'JClicPlayerCnt' });
 
+    // Add waiting panel
+    this.$waitPanel = $('<div/>')
+      .css({ display: 'none', 'background-color': 'rgba(255, 255, 255, .60)', 'z-index': 99 })
+      .append($('<div/>', { class: 'waitPanel' })
+        .append($('<div/>', { class: 'animImgBox' })
+          .append($(this.waitImgBig), $(this.waitImgSmall))));
+    this.$playerCnt.append(this.$waitPanel);
+    
     this.buttons = Utils.cloneObject(Skin.prototype.buttons);
     this.counters = Utils.cloneObject(Skin.prototype.counters);
     this.msgArea = Utils.cloneObject(Skin.prototype.msgArea);
@@ -325,7 +333,7 @@ define([
      * @returns {string}
      */
     _getStyleSheets: function () {
-      return this.basicCSS + this.reportsCSS;
+      return this.basicCSS + this.waitAnimCSS + this.reportsCSS;
     },
     /**
      *
@@ -525,6 +533,8 @@ define([
      * Main method, to be implemented by subclasses
      */
     doLayout: function () {
+      // Resize player
+      this.player.doLayout();
     },
     /**
      *
@@ -594,6 +604,25 @@ define([
 .SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
 .SKINID button:not(.StockBtn) {background:transparent; padding:0; border:none;}\
 .SKINID .unselectableText {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select: none;}',
+    waitAnimCSS: '\
+.SKINID .waitPanel {display:-webkit-flex; display:flex; width:100%; height:100%; -webkit-justify-content:center; justify-content:center; -webkit-align-items:center; align-items:center;}\
+.SKINID .animImgBox {position:relative; width:300px; height:300px; max-width:80%; max-height:80%;}\
+.SKINID .animImgBox svg {position:absolute; width:100%; height:100%; animation-iteration-count:infinite; animation-timing-function:linear;}\
+.SKINID #waitImgBig {animation-duration:0.8s; animation-name:rotate-right;}\
+@keyframes rotate-right {from {transform:rotate(0);} to {transform:rotate(1turn);}}\
+.SKINID #waitImgSmall {animation-duration:0.6s; animation-name:rotate-left;}\
+@keyframes rotate-left {from {transform:rotate(0);} to {transform:rotate(-1turn);}}',
+    //
+    // Animated image displayed while loading resources
+    // Based on Ryan Allen's [svg-spinner](http://articles.dappergentlemen.com/2015/01/13/svg-spinner/)
+    waitImgBig: '<svg id="waitImgBig" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
+<path fill="#3F51B5" d="m 65.99,40.19 c -0.42,5.33 7.80,4.94 8.11,0.20 C 74.50,34.37 66.35,8.59 42.92,\
+7.98 15.90,7.29 9.96,29.50 9.94,39.41 15.33,-1.66 68.61,7.048 65.99,40.19 Z" />\
+</svg>',
+    waitImgSmall: '<svg id="waitImgSmall" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
+<path fill="#3F51B5"d="m 57.00,39.43 c -0.28,-3.53 5.16,-3.27 5.37,-0.13 0.26,3.99 -5.13,21.04 -20.63,\
+21.44 C 23.85,61.19 19.93,46.50 19.92,39.94 23.48,67.11 58.73,61.35 57.00,39.43 Z"/>\
+</svg>',
     reportsCSS: '\
 .SKINID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
 .SKINID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
