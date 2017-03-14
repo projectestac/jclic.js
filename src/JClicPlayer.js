@@ -105,7 +105,7 @@ define([
       this.audioEnabled = this.options.audioEnabled;
       this.navButtonsAlways = this.options.navButtonsAlways;
       this.defaultSkin = Skin.getSkin(this.options.skin, this);
-      this.setSkin(this.defaultSkin);
+      this.setSkin(Skin.getSkin('@empty.xml', this));
       this.initTimers();
       Utils.log('info', 'JClicPlayer ready');
     };
