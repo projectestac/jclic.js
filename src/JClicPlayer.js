@@ -73,14 +73,15 @@ define([
 
       this.id = 'JC' + (0x10000 + Math.round(Math.random() * 0xFFFF)).toString(16).toUpperCase().substr(1);
 
-      this.$topDiv = $topDiv;
+      this.$topDiv = $topDiv || $('<div/>');
+
+      // Avoid side effects of 'align=center' in old HTML pages
+      this.$topDiv.css({'text-align': 'initial'});
       
       // Special case: $topDiv inside a TD (like in http://clic.xtec.cat/gali)
-      if ($topDiv && $topDiv.parent().is('td')) {
-        // Always remove 'align' attribut in parent TD
-        $topDiv.parent().removeAttr('align');
+      if (this.$topDiv.parent().is('td')) {
         // Set explicit width and height to fill-in the TD
-        $topDiv.css({
+        this.$topDiv.css({
           width: options.width || '100%',
           height: options.height || '100%'
         });
