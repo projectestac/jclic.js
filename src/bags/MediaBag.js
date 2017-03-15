@@ -140,33 +140,37 @@ define([
      * MediaBag, whether used or not in the current activity.
      * @param {string} type - The type of media to be build. When `null` or `undefined`, all
      * resources will be build.
+     * @param {function=} callback - Function to be called when each element is ready.
+     * @returns {number} - The total number of elements that will be build
      */
-    buildAll: function (type) {
+    buildAll: function (type, callback) {
+      var count = 0;
       $.each(this.elements, function (name, element) {
         if (!type || element.type === type) {
-          element.build(function () {
-            Utils.log('trace', '"%s" ready', name);
-          });
+          element.build(callback);
+          count++;
         }
       });
+      return count;
     },
     /**
      *
      * Checks if there are media waiting to be loaded
-     * @returns {boolean}
+     * @returns {number} - The amount of media elements already loaded, or -1 if all elements are ready
      */
-    isWaiting: function () {
-      var result = false;
+    countWaitingElements: function () {
+      var ready = 0;
+      var allReady = true;
       // Only for debug purposes: return always 'false'
       // TODO: Check loading process!
       $.each(this.elements, function (name, element) {
         if (element.data && !element.ready && !element.checkReady() && !element.checkTimeout()) {
           Utils.log('debug', '... waiting for: %s', name);
-          result = true;
-          return false;
-        }
+          allReady = false;
+        } else
+          ready++;
       });
-      return result;
+      return allReady ? -1 : ready;
     },
     /**
      *

@@ -72,14 +72,17 @@ define([
     this.$div = $('<div/>', { class: this.skinId });
     this.$playerCnt = $('<div/>', { class: 'JClicPlayerCnt' });
 
-    // Add waiting panel
+    // Add waiting panel and progress bar
+    this.$progress = $('<progress/>', { class: 'progressBar' })
+      .css({ display: 'none' });
     this.$waitPanel = $('<div/>')
       .css({ display: 'none', 'background-color': 'rgba(255, 255, 255, .60)', 'z-index': 99 })
-      .append($('<div/>', { class: 'waitPanel' })
+      .append($('<div/>', { class: 'waitPanel' }).css({ display: 'flex', 'flex-direction': 'column' })
         .append($('<div/>', { class: 'animImgBox' })
-          .append($(this.waitImgBig), $(this.waitImgSmall))));
+          .append($(this.waitImgBig), $(this.waitImgSmall)))
+        .append(this.$progress));
     this.$playerCnt.append(this.$waitPanel);
-    
+
     this.buttons = Utils.cloneObject(Skin.prototype.buttons);
     this.counters = Utils.cloneObject(Skin.prototype.counters);
     this.msgArea = Utils.cloneObject(Skin.prototype.msgArea);
@@ -234,6 +237,14 @@ define([
      * Waiting panel, displayed while loading resources.
      * @type {external:jQuery} */
     $waitPanel: null,
+    /**
+     * Graphic indicator of loading progress
+     * @type {external:jQuery} */
+    $progress: null,
+    /**
+     * Current value of the progress bar
+     * @type {number} */
+    currentProgress: -1,
     /**
      * Main panel used to display modal and non-modal dialogs
      * @type {external:jQuery} */
@@ -447,6 +458,30 @@ define([
       }
     },
     /**
+     * Sets the current value of the progress bar
+     * @param {number} val - The current value. Should be less or equal than `max`. When -1, the progress bar will be hidden.
+     * @param {number=} max - Optional parameter representing the maximum value. When passed, the progress bar will be displayed.
+     */
+    setProgress: function (val, max) {
+      if (this.$progress) {
+        this.currentProgress = val;
+        if (val < 0)
+          this.$progress.css({ display: 'none' });
+        else {
+          if (max) {
+            this.$progress.attr('max', max).css({ display: 'initial' });
+          }
+          this.$progress.attr('value', val);
+        }
+      }
+    },
+    /**
+     * Increments by one the progress bar value
+     */
+    incProgress: function () {
+      this.setProgress(this.currentProgress + 1);
+    },
+    /**
      *
      * Shows a window with clues or help for the current activity
      * @param {external:jQuery} _$hlpComponent - A JQuery DOM element with the information to be shown.
@@ -603,7 +638,8 @@ define([
 .SKINID .JClicPlayerCnt {background-color:lightblue; margin:18px; -webkit-flex-grow:1; flex-grow:1; position:relative;}\
 .SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
 .SKINID button:not(.StockBtn) {background:transparent; padding:0; border:none;}\
-.SKINID .unselectableText {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select: none;}',
+.SKINID .unselectableText {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select: none;}\
+.SKINID .progressBar {width: 250px}',
     waitAnimCSS: '\
 .SKINID .waitPanel {display:-webkit-flex; display:flex; width:100%; height:100%; -webkit-justify-content:center; justify-content:center; -webkit-align-items:center; align-items:center;}\
 .SKINID .animImgBox {position:relative; width:300px; height:300px; max-width:80%; max-height:80%;}\

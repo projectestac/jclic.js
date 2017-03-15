@@ -76,8 +76,8 @@ define([
       this.$topDiv = $topDiv || $('<div/>');
 
       // Avoid side effects of 'align=center' in old HTML pages
-      this.$topDiv.css({'text-align': 'initial'});
-      
+      this.$topDiv.css({ 'text-align': 'initial' });
+
       // Special case: $topDiv inside a TD (like in http://clic.xtec.cat/gali)
       if (this.$topDiv.parent().is('td')) {
         // Set explicit width and height to fill-in the TD
@@ -577,7 +577,12 @@ define([
                 var prj = new JClicProject();
                 prj.setProperties($(data).find('JClicProject'), fullPath, player.zip, player.options);
                 Utils.log('info', 'Project file loaded and parsed: %s', project);
-                prj.mediaBag.buildAll();
+                var elements = prj.mediaBag.buildAll(null, function () {
+                  Utils.log('trace', '"%s" ready', this.name);
+                  player.incProgress(); 
+                });
+                Utils.log('info', 'Media elements to be loaded: %d', elements);
+                player.setProgress(0, elements);
                 var loops = 0;
                 var interval = 500;
                 player.setWaitCursor(true);
@@ -585,10 +590,13 @@ define([
                   // Wait for a maximum time of two minutes
                   if (++loops > player.options.maxWaitTime / interval) {
                     window.clearInterval(checkMedia);
+                    player.setProgress(-1);
                     player.setWaitCursor(false);
                     Utils.log('error', 'Error loading media');
                   }
-                  if (!prj.mediaBag.isWaiting()) {
+                  var waiting = prj.mediaBag.countWaitingElements();
+                  player.setProgress(waiting);
+                  if (waiting === -1) {
                     window.clearInterval(checkMedia);
                     player.setWaitCursor(false);
                     // Call again `load`, passing the loaded [JClicProject](JClicProject.html) object
@@ -1089,6 +1097,22 @@ define([
       setWaitCursor: function (status) {
         if (this.skin)
           this.skin.setWaitCursor(status);
+      },
+      /**
+       * Sets the current value of the progress bar
+       * @param {number} val - The current value. Should be less or equal than `max`. When -1, the progress bar will be hidden.
+       * @param {number=} max - Optional parameter representing the maximum value. When passed, the progress bar will be displayed.
+       */
+      setProgress: function (val, max) {
+        if (this.skin)
+          this.skin.setProgress(val, max);
+      },
+      /**
+       * Increments by one the progress bar value
+       */
+      incProgress: function () {
+        if (this.skin)
+          this.skin.incProgress();
       },
       /**
        *
