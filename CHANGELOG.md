@@ -1,3 +1,15 @@
+### v0.1.44 (2017-03-15)
+#### Improvements
+- `EmptySkin` has been implemented and is now used as initial player skin.
+- JClic java applets generated through `jclicplugin.js` are now always loaded as JClic.js HTML5 elements. This change has been motivated by the fact that [Firefox 52](https://www.mozilla.org/en-US/firefox/52.0/releasenotes/) has dropped support for Java applets.
+- Updated NPM components.
+
+#### Bug fixes
+- Check `AWT.WebFont` to avoid conflicts with other webfont loader packages already loaded.
+- Build always a skin for `JClicPlayer`, even when the requested one does no exist.
+- Force main container width and height when inside a `TD`.
+- Avoid incorrect placement of inner elements when parent container has the `align` attribute defined.
+
 ### v0.1.43 (2017-02-28)
 #### Bug fixes
 - Allow animated GIFs also over gradients.
