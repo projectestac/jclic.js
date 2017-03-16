@@ -598,6 +598,7 @@ define([
                   // player.setProgress(waiting);
                   if (waitingObjects === -1) {
                     window.clearInterval(checkMedia);
+                    player.setProgress(-1);
                     player.setWaitCursor(false);
                     // Call `load` again, passing the loaded [JClicProject](JClicProject.html) as a parameter
                     player.load(prj, sequence, activity);
