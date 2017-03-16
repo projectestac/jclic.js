@@ -246,6 +246,10 @@ define([
      * @type {number} */
     currentProgress: -1,
     /**
+     * Max value of the progress bar
+     * @type {number} */
+    maxProgress: 0,
+    /**
      * Main panel used to display modal and non-modal dialogs
      * @type {external:jQuery} */
     $dlgOverlay: null,
@@ -469,17 +473,21 @@ define([
           this.$progress.css({ display: 'none' });
         else {
           if (max) {
+            this.maxProgress = max;
             this.$progress.attr('max', max).css({ display: 'initial' });
           }
           this.$progress.attr('value', val);
         }
+        Utils.log('trace', 'Progress: %d/%d', this.currentProgress, this.maxProgress);
       }
     },
     /**
-     * Increments by one the progress bar value
+     * Increments the progress bar value by the specified amount, only when the progress bar is running.
+     * @param {number=} val - The amount to increment. When not defined, it's 1.
      */
-    incProgress: function () {
-      this.setProgress(this.currentProgress + 1);
+    incProgress: function (val) {
+      if (this.currentProgress >= 0)
+        this.setProgress(this.currentProgress + (val || 1));
     },
     /**
      *

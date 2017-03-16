@@ -302,7 +302,8 @@ define([
 
             default:
               // TODO: Load the real resource
-              return;
+              Utils.log('trace', 'Media currently not supported: %s', media.name);
+              media.ready = true;
           }
 
           if (media.ready)

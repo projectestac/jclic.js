@@ -578,8 +578,8 @@ define([
                 prj.setProperties($(data).find('JClicProject'), fullPath, player.zip, player.options);
                 Utils.log('info', 'Project file loaded and parsed: %s', project);
                 var elements = prj.mediaBag.buildAll(null, function () {
-                  Utils.log('trace', '"%s" ready', this.name);
-                  player.incProgress(); 
+                  Utils.log('trace', '"%s" ready.', this.name);
+                  player.incProgress(1);                  
                 });
                 Utils.log('info', 'Media elements to be loaded: %d', elements);
                 player.setProgress(0, elements);
@@ -594,12 +594,12 @@ define([
                     player.setWaitCursor(false);
                     Utils.log('error', 'Error loading media');
                   }
-                  var waiting = prj.mediaBag.countWaitingElements();
-                  player.setProgress(waiting);
-                  if (waiting === -1) {
+                  var waitingObjects = prj.mediaBag.countWaitingElements();
+                  // player.setProgress(waiting);
+                  if (waitingObjects === -1) {
                     window.clearInterval(checkMedia);
                     player.setWaitCursor(false);
-                    // Call again `load`, passing the loaded [JClicProject](JClicProject.html) object
+                    // Call `load` again, passing the loaded [JClicProject](JClicProject.html) as a parameter
                     player.load(prj, sequence, activity);
                   }
                 }, interval);
@@ -1108,11 +1108,12 @@ define([
           this.skin.setProgress(val, max);
       },
       /**
-       * Increments by one the progress bar value
+       * Increments the progress bar value by the specified amount, only when the progress bar is running.
+       * @param {number=} val - The amount to increment. When not defined, it's 1.
        */
-      incProgress: function () {
+      incProgress: function (val) {
         if (this.skin)
-          this.skin.incProgress();
+          this.skin.incProgress(val);
       },
       /**
        *
