@@ -60,7 +60,7 @@ define([
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties: function ($xml) {
-      this.className = $xml.attr('class');
+      this.className = ($xml.attr('class')|| '').replace(/^edu\.xtec\.jclic\.automation\./, '@');
       return this;
     },
     /**
@@ -133,7 +133,7 @@ define([
   AutoContentProvider.getProvider = function ($xml, project) {
     var automation = null;
     if ($xml && project) {
-      var className = $xml.attr('class');
+      var className = ($xml.attr('class')|| '').replace(/^edu\.xtec\.jclic\.automation\./, '@');
       var cl = AutoContentProvider.CLASSES[className];
       if (cl) {
         automation = new cl(project);

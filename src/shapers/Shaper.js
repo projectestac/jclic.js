@@ -64,7 +64,7 @@ define([
    */
   Shaper.getShaper = function (className, nx, ny) {
     var shaper = null;
-    var cl = Shaper.CLASSES[className];
+    var cl = Shaper.CLASSES[(className || '').replace(/^edu\.xtec\.jclic\.shapers\./, '@')];
     if (cl) {
       shaper = new cl(nx, ny);
     } else

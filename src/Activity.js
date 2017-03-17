@@ -93,7 +93,7 @@ define([
     Activity.getActivity = function ($xml, project) {
       var act = null;
       if ($xml && project) {
-        var className = $xml.attr('class');
+        var className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.activities\./, '@');
         var cl = Activity.CLASSES[className];
         if (cl) {
           act = new cl(project);
@@ -326,7 +326,7 @@ define([
               break;
 
             case 'class':
-              act.className = val;
+              act.className = val.replace(/^edu\.xtec\.jclic\.activities\./, '@');
               break;
 
             case 'inverse':
