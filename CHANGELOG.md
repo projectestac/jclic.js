@@ -1,3 +1,10 @@
+### v0.1.45 (2017-03-20)
+#### Improvements
+- Display a progress bar (in addition to the rotating animation) while loading project media elements.
+
+#### Bug fixes
+- Transform full activity class names to `@className` expressions, so projects using this naming schema (like [GeoClic](https://clic.xtec.cat/repo/index.html?prj=geoclien)) can now make use of JClic.js.
+
 ### v0.1.44 (2017-03-15)
 #### Improvements
 - `EmptySkin` has been implemented and is now used as initial player skin.
