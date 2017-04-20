@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global define */
+/* global define, document */
 
 define([
   "jquery",
@@ -131,8 +131,9 @@ define([
     DEFAULT_SERVER_SERVICE: '/JClicReportService',
     /**
      * Default server protocol
+     * Use always 'https' except when in 'http' and protocol not set in options
      * @type {string} */
-    DEFAULT_SERVER_PROTOCOL: 'http',
+    DEFAULT_SERVER_PROTOCOL: (document && document.location && document.location.protocol === 'http:') ? 'http' : 'https',
     /**
      * Default lap between calls to `flushTasks`, in seconds
      * @type {number} */
