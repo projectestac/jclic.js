@@ -247,13 +247,13 @@ define([
               reporter.timerLap = Math.min(30, Math.max(1, parseInt(tl)));
               reporter.timer = window.setInterval(
                 function () {
-                  reporter.flushTasksPromise();
+                  reporter.flushTasksPromise().then();
                 }, reporter.timerLap * 1000);
               // Warn before leaving the current page with unsaved data:
               reporter.beforeUnloadFunction = function (event) {
                 if (reporter.serviceUrl !== null &&
                   (reporter.tasks.length > 0 || reporter.processingTasks)) {
-                  reporter.flushTasksPromise();
+                  reporter.flushTasksPromise().then();
                   var result = reporter.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
                   if (event)
                     event.returnValue = result;
@@ -331,12 +331,13 @@ define([
     /**
      * Closes this reporting system
      * @override
+     * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished, or _null_ if not active.
      */
     end: function () {
-      Reporter.prototype.end.call(this);
-      this.reportActivity();
-      this.flushTasksPromise();
-      this.stopReporting();
+      var reporter = this;
+      Reporter.prototype.end.call(reporter);
+      reporter.reportActivity();
+      return reporter.stopReporting();
     },
     /**
      *
@@ -464,24 +465,27 @@ define([
      *
      * Stops the reporting system, usually as a result of repeated errors or because the player
      * shuts down.
+     * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished.
      */
     stopReporting: function () {
+      var result = null;
       if (this.timer >= 0) {
         window.clearInterval(this.timer);
         this.timer = -1;
       }
+      if (this.beforeUnloadFunction) {
+        window.removeEventListener('beforeunload', this.beforeUnloadFunction);
+        this.beforeUnloadFunction = null;
+      }
       if (this.initiated) {
         var reporter = this;
-        this.flushTasksPromise().then(function () {
-          if (reporter.beforeUnloadFunction) {
-            window.removeEventListener('beforeunload', reporter.beforeUnloadFunction);
-            reporter.beforeUnloadFunction = null;
-          }
+        result = this.flushTasksPromise().then(function () {
           reporter.serviceUrl = null;
           reporter.descriptionDetail = reporter.serverPath + ' (' + reporter.ps.getMsg('not connected') + ')';
           reporter.initiated = false;
         });
       }
+      return result || Utils.Promise.resolve(true);
     },
     /**
      *

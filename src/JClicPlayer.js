@@ -341,8 +341,10 @@ define([
       /**
        *
        * Executes miscellaneous finalization routines.
+       * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished.
        */
       end: function () {
+        var result = null;
         this.stopMedia();
         this.closeHelpWindow();
         if (this.actPanel) {
@@ -350,16 +352,17 @@ define([
           this.actPanel.$div.remove();
           this.actPanel = null;
         }
+        if (this.reporter) {
+          result = this.reporter.end();
+          this.reporter = null;
+        }
         if (this.project) {
           this.project.end();
           this.project = null;
         }
         if (this.activeMediaBag)
           this.activeMediaBag.removeAll();
-        if (this.reporter) {
-          this.reporter.end();
-          this.reporter = null;
-        }
+        return result || Utils.Promise.resolve(true);
       },
       /**
        *
@@ -579,7 +582,7 @@ define([
                 Utils.log('info', 'Project file loaded and parsed: %s', project);
                 var elements = prj.mediaBag.buildAll(null, function () {
                   Utils.log('trace', '"%s" ready.', this.name);
-                  player.incProgress(1);                  
+                  player.incProgress(1);
                 });
                 Utils.log('info', 'Media elements to be loaded: %d', elements);
                 player.setProgress(0, elements);
@@ -1195,8 +1198,11 @@ define([
         if (url) {
           if (inFrame)
             window.open(url, this.options.infoUrlFrame);
-          else
-            window.location.href = url;
+          else {
+            this.end().then(function(){
+              window.location.href = url;
+            });
+          }
         }
       },
       /**

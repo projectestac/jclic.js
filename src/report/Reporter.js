@@ -441,9 +441,11 @@ define([
     /**
      *
      * Closes this reporting system
+     * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished.
      */
     end: function () {
       this.endSession();
+      return Utils.Promise.resolve(true);
     },
     /**
      *
