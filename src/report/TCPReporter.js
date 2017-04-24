@@ -106,6 +106,10 @@ define([
      * @type {boolean} */
     processingTasks: false,
     /**
+     * Force processing of pending tasks as soon as possible
+     * @type {boolean} */
+    forceFlush: false,
+    /**
      * Identifier of the background function obtained with a call to `window.setInterval`
      * @type {number} */
     timer: -1,
@@ -171,9 +175,12 @@ define([
      */
     flushTasksPromise: function () {
       if (this.processingTasks || this.currentSessionId === null ||
-        this.tasks.length === 0 || this.serviceUrl === null)
+        this.tasks.length === 0 || this.serviceUrl === null) {
         // The task list cannot be processed now. Pass and wait until the next timer cycle:
+        if (this.processingTasks)
+          this.forceFlush = true;
         return Utils.Promise.resolve(true);
+      }
       else {
         // Set up the `processingTasks` flag to avoid re-entrant processing
         this.processingTasks = true;
@@ -183,26 +190,41 @@ define([
         for (var i = 0; i < this.tasks.length; i++)
           reportBean.appendData(this.tasks[i].$bean);
 
+        Utils.log('debug', 'Reporting:', reportBean.$bean[0]);
+
         return new Utils.Promise(function (resolve, reject) {
           reporter.transaction(reportBean.$bean)
             .done(function (_data, _textStatus, _jqXHR) {
               // TODO: Check returned message for possible errors on the server side
-              reporter.tasks = [];
+              reporter.failCount = 0;
+
+              // Clear waiting tasks
               if (reporter.waitingTasks) {
-                reporter.tasks.concat(reporter.waitingTasks);
+                reporter.tasks = reporter.waitingTasks;
                 reporter.waitingTasks = null;
               }
-              // Reset the fail counter after a successufull attempt
-              reporter.failCount = 0;
-              resolve(true);
+              else {
+                reporter.forceFlush = false;
+                reporter.tasks = [];
+              }
+
+              if (reporter.forceFlush && reporter.tasks.length > 0) {
+                reporter.forceFlush = false;
+                reporter.processingTasks = false;
+                reporter.flushTasksPromise().then(function () {
+                  resolve(true);
+                });
+              }
+              else {
+                reporter.forceFlush = false;
+                resolve(true);
+                reporter.processingTasks = false;
+              }
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
               if (++reporter.failCount > reporter.maxFails)
                 reporter.stopReporting().then();
               reject('Error reporting results to ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
-            })
-            .always(function () {
-              // Unset the flag
               reporter.processingTasks = false;
             });
         });
@@ -335,7 +357,7 @@ define([
      */
     end: function () {
       var reporter = this;
-      reporter.reportActivity();
+      reporter.reportActivity(true);
       return reporter.stopReporting().then(Reporter.prototype.end.bind(reporter));
     },
     /**
@@ -490,8 +512,9 @@ define([
      *
      * Prepares a {@link TCPReporter.ReportBean} object with information related to the current
      * activity, and pushes it into the list of pending `tasks`, to be processed by the main `timer`.
+     * @param {boolean} flushNow - When `true`, the activity data will be sent to server as soon as possible
      */
-    reportActivity: function () {
+    reportActivity: function (flushNow) {
       if (this.lastActivity) {
         if (!this.lastActivity.closed)
           this.lastActivity.closeActivity();
@@ -504,6 +527,8 @@ define([
           bean.setParam('num', actCount);
           bean.appendData(act.$getXML());
           reporter.addTask(bean);
+          if (flushNow)
+            reporter.flushTasksPromise().then();
         });
       }
       if (this.currentSession !== null &&
@@ -521,7 +546,7 @@ define([
      */
     newActivity: function (act) {
       Reporter.prototype.newActivity.call(this, act);
-      this.reportActivity();
+      this.reportActivity(false);
     },
     /**
      *
@@ -534,8 +559,7 @@ define([
      */
     endActivity: function (score, numActions, solved) {
       Reporter.prototype.endActivity.call(this, score, numActions, solved);
-      this.reportActivity();
-      this.flushTasksPromise().then();
+      this.reportActivity(true);
     }
   };
 
