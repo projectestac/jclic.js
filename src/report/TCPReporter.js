@@ -375,7 +375,7 @@ define([
           method: 'POST',
           url: this.serviceUrl,
           data: '<?xml version="1.0" encoding="UTF-8"?>' +
-          (new XMLSerializer()).serializeToString($xml.get(0)),
+          (new XMLSerializer()).serializeToString($xml.get(0)).replace('minactions','minActions').replace('reportactions','reportActions'),
           contentType: 'text/xml',
           dataType: 'xml'
         });
