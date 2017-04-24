@@ -1,3 +1,10 @@
+### v0.1.46 (2017-04-24)
+#### Improvements
+- Use HTTPS as defaul protocol in `TCPReporter`.
+
+#### Bug fixes
+- Flush always pending tasks in `TCPReporter` before exiting.
+
 ### v0.1.45 (2017-03-20)
 #### Improvements
 - Display a progress bar (in addition to the rotating animation) while loading project media elements.
