@@ -347,14 +347,14 @@ define([
         var result = null;
         this.stopMedia();
         this.closeHelpWindow();
+        if (this.reporter) {
+          result = this.reporter.end();
+          this.reporter = null;
+        }
         if (this.actPanel) {
           this.actPanel.end();
           this.actPanel.$div.remove();
           this.actPanel = null;
-        }
-        if (this.reporter) {
-          result = this.reporter.end();
-          this.reporter = null;
         }
         if (this.project) {
           this.project.end();
@@ -1199,7 +1199,7 @@ define([
           if (inFrame)
             window.open(url, this.options.infoUrlFrame);
           else {
-            this.end().then(function(){
+            this.end().then(function () {
               window.location.href = url;
             });
           }
@@ -1211,10 +1211,7 @@ define([
        * @param {string} url - The URL to navigate to.
        */
       exit: function (url) {
-        if (!url)
-          url = this.options.exitUrl;
-        if (url)
-          this.displayURL(url, false);
+        this.displayURL(url || this.options.exitUrl, false);
       },
       /**
        *

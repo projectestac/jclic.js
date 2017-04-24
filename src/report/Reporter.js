@@ -436,6 +436,7 @@ define([
           this.descriptionKey = this.SCORM.getScormType();
       }
       this.initiated = true;
+      Utils.log('debug', 'Basic Reporter initialized');
       return Utils.Promise.resolve(true);
     },
     /**
@@ -444,6 +445,7 @@ define([
      * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished.
      */
     end: function () {
+      Utils.log('debug', 'Basic Reporter ending');
       this.endSession();
       return Utils.Promise.resolve(true);
     },

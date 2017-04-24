@@ -112,7 +112,7 @@ define([
     /**
      * Time between calls to the background function, in seconds
      * @type {number} */
-    timerLap: 20,
+    timerLap: 5,
     /**
      * Counter of unsuccessful connection attempts with the report server
      * @type {number} */
@@ -198,7 +198,7 @@ define([
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
               if (++reporter.failCount > reporter.maxFails)
-                reporter.stopReporting();
+                reporter.stopReporting().then();
               reject('Error reporting results to ' + reporter.serviceUrl + ' [' + textStatus + ' ' + errorThrown + ']');
             })
             .always(function () {
@@ -335,9 +335,8 @@ define([
      */
     end: function () {
       var reporter = this;
-      Reporter.prototype.end.call(reporter);
       reporter.reportActivity();
-      return reporter.stopReporting();
+      return reporter.stopReporting().then(Reporter.prototype.end.bind(reporter));
     },
     /**
      *
@@ -523,6 +522,20 @@ define([
     newActivity: function (act) {
       Reporter.prototype.newActivity.call(this, act);
       this.reportActivity();
+    },
+    /**
+     *
+     * This method should be called when the current activity finishes. Data about user's final results
+     * on the activity will then be saved.
+     * @override
+     * @param {number} score - The final score, usually in a 0-100 scale.
+     * @param {number} numActions - The total number of actions done by the user to solve the activity
+     * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
+     */
+    endActivity: function (score, numActions, solved) {
+      Reporter.prototype.endActivity.call(this, score, numActions, solved);
+      this.reportActivity();
+      this.flushTasksPromise().then();
     }
   };
 
