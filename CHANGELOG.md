@@ -1,6 +1,7 @@
 ### v0.1.46 (2017-04-24)
 #### Improvements
 - Use HTTPS as defaul protocol in `TCPReporter`.
+- Set an empty string as default value in dropdown lists on text activities.
 
 #### Bug fixes
 - Flush always pending tasks in `TCPReporter` before exiting.
