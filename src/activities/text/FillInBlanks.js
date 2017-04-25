@@ -115,6 +115,7 @@ define([
       if (target.isList && target.options) {
         // Use a `select` element
         $span = $('<select/>', { id: idLabel, name: idLabel });
+        $('<option selected/>', { value: '', text: ''}).appendTo($span);
         for (var i = 0; i < target.options.length; i++)
           $('<option/>', { value: target.options[i], text: target.options[i] }).appendTo($span);
         target.$comboList = $span.bind('focus change', function (event) {
