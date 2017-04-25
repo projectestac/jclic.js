@@ -3860,6 +3860,20 @@
       <text> of bees</text>
      </p>
      <p />
+     <!-- p>
+     <text>    Es ist zwanzig </text>
+      <target>
+       <answer>nach</answer>
+       <optionList>
+        <option> </option>
+        <option>vor</option>
+        <option>nach</option>
+        <option>Uhr</option>
+       </optionList>
+       <text>nach</text>
+      </target>
+      <text> zehn.</text>     
+     </p -->
     </section>
    </document>
    <evaluator class="@ComplexEvaluator" />
