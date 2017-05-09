@@ -275,7 +275,7 @@ define([
      * to start or when resized.
      */
     buildAccessibleComponents: function () {
-      if (this.$canvas && this.accessibleCanvas) {
+      if (this.bg && this.$canvas && this.accessibleCanvas) {
         ActPanelAncestor.buildAccessibleComponents.call(this);
         this.bg.buildAccessibleElements(this.$canvas, this.$div);
       }
@@ -283,7 +283,7 @@ define([
     /**
      *
      * Main handler used to process mouse, touch, keyboard and edit events
-     * @param {HTMLEvent} event - The HTML event to be processed
+     * @param {Event} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
      */
@@ -299,18 +299,18 @@ define([
           case 'click':
             this.ps.stopMedia(1);
             // Find the box behind the clicked point
-            bx = this.bg.findActiveBox(p);
+            bx = this.bg ? this.bg.findActiveBox(p) : null;
             if (bx) {
               if (bx.idAss !== -1) {
                 // Check if it's a valid move
                 var ok = false;
                 var src = bx.getDescription();
-                m |= bx.playMedia(this.ps);
+                m = m || bx.playMedia(this.ps);
                 if (bx.idAss === 1 && (!this.act.useOrder || bx.idOrder === this.currentItem)) {
                   ok = true;
                   bx.idAss = -1;
                   if (bx.switchToAlt(this.ps))
-                    m |= bx.playMedia(this.ps);
+                    m = m || bx.playMedia(this.ps);
                   else
                     bx.clear();
                   if (this.act.useOrder)

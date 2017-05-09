@@ -327,7 +327,7 @@ define([
 
               //
               // Find the ActiveBox behind the clicked point
-              bx1 = this.bg.findActiveBox(p);
+              bx1 = this.bg ? this.bg.findActiveBox(p) : null;
               if (bx1 && bx1.idAss !== -1) {
                 // Play cell media or event sound
                 if (!bx1.playMedia(this.ps))
@@ -348,9 +348,9 @@ define([
               if (this.act.dragCells)
                 bx1 = this.bc.bx;
               else
-                bx1 = this.bg.findActiveBox(this.bc.origin);
+                bx1 = this.bg ? this.bg.findActiveBox(this.bc.origin) : null;
               this.bc.end();
-              bx2 = this.bg.findActiveBox(p);
+              bx2 = this.bg ? this.bg.findActiveBox(p) : null;
               //
               // Check if the pairing was OK
               if (bx1 && bx1.idAss !== -1 && bx2 && bx2.idAss !== -1) {
@@ -378,12 +378,14 @@ define([
                     }
                   }
                   var m = bx2.playMedia(this.ps);
-                  var cellsAtPlace = this.bg.countCellsWithIdAss(-1);
-                  this.ps.reportNewAction(this.act, 'MATCH', bx1.getDescription(), bx2.getDescription(), ok, cellsAtPlace / 2);
-                  if (ok && cellsAtPlace === this.bg.getNumCells())
-                    this.finishActivity(true);
-                  else if (!m)
-                    this.playEvent(ok ? 'actionOk' : 'actionError');
+                  if (this.bg) {
+                    var cellsAtPlace = this.bg.countCellsWithIdAss(-1);
+                    this.ps.reportNewAction(this.act, 'MATCH', bx1.getDescription(), bx2.getDescription(), ok, cellsAtPlace / 2);
+                    if (ok && cellsAtPlace === this.bg.getNumCells())
+                      this.finishActivity(true);
+                    else if (!m)
+                      this.playEvent(ok ? 'actionOk' : 'actionError');
+                  }
                 } else {
                   this.playEvent('CLICK');
                   bx1.setInactive(true);

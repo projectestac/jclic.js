@@ -354,7 +354,7 @@ define([
         });
 
         // Resize animated gif background
-        if (this.$animatedBg) {
+        if (this.bgA && this.$animatedBg) {
           var bgRect = this.bgA.getBounds();
           this.$animatedBg.css({
             left: bgRect.pos.x,
@@ -408,50 +408,52 @@ define([
         return;
       if (this.currentCell !== -1) {
         var ok = false;
-        bx = this.bgA.getActiveBoxWithIdLoc(this.currentCell);
-        var src = bx.getDescription();
-        bx.setMarked(false);
-        var id = bx.idAss;
-        var txCheck = id >= 0 ? this.act.abc['answers'].getActiveBoxContent(id).text : '';
-        var txAnswer = this.$textField.val().trim();
-        if (Utils.compareMultipleOptions(txAnswer, txCheck, false)) {
-          ok = true;
-          bx.idAss = -1;
-          // When in multiple-answer, fill-in textField with the first valid option:
-          var p = txCheck.indexOf('|');
-          if (p >= 0)
-            this.$textField.val(txCheck.substring(0, p));
+        bx = this.bgA ? this.bgA.getActiveBoxWithIdLoc(this.currentCell) : null;
+        if (bx) {
+          var src = bx.getDescription();
+          bx.setMarked(false);
+          var id = bx.idAss;
+          var txCheck = id >= 0 ? this.act.abc['answers'].getActiveBoxContent(id).text : '';
+          var txAnswer = this.$textField.val().trim();
+          if (Utils.compareMultipleOptions(txAnswer, txCheck, false)) {
+            ok = true;
+            bx.idAss = -1;
+            // When in multiple-answer, fill-in textField with the first valid option:
+            var p = txCheck.indexOf('|');
+            if (p >= 0)
+              this.$textField.val(txCheck.substring(0, p));
 
-          if (this.act.abc['solvedPrimary']) {
-            bx.switchToAlt(this.ps);
-            m = bx.playMedia(this.ps);
-          } else
-            bx.clear();
-          if (this.act.invAss && id >= 0 && id < this.invAssCheck.length) {
-            this.invAssCheck[id] = true;
+            if (this.act.abc['solvedPrimary']) {
+              bx.switchToAlt(this.ps);
+              m = bx.playMedia(this.ps);
+            } else
+              bx.clear();
+            if (this.act.invAss && id >= 0 && id < this.invAssCheck.length) {
+              this.invAssCheck[id] = true;
+            }
+            if (this.act.useOrder)
+              this.currentItem = this.bgA.getNextItem(this.currentItem);
           }
-          if (this.act.useOrder)
-            this.currentItem = this.bgA.getNextItem(this.currentItem);
-        }
 
-        var cellsPlaced = this.bgA.countCellsWithIdAss(-1);
+          var cellsPlaced = this.bgA.countCellsWithIdAss(-1);
 
-        if (txAnswer.length > 0) {
-          this.ps.reportNewAction(this.act, 'WRITE', src, txAnswer, ok, cellsPlaced);
+          if (txAnswer.length > 0) {
+            this.ps.reportNewAction(this.act, 'WRITE', src, txAnswer, ok, cellsPlaced);
+          }
+          if (ok && (this.checkInvAss() || cellsPlaced === this.bgA.getNumCells())) {
+            this.finishActivity(true);
+            this.$textField.prop('disabled', true);
+            return;
+          } else if (!m && txAnswer.length > 0)
+            this.playEvent(ok ? 'actionOk' : 'actionError');
         }
-        if (ok && (this.checkInvAss() || cellsPlaced === this.bgA.getNumCells())) {
-          this.finishActivity(true);
-          this.$textField.prop('disabled', true);
-          return;
-        } else if (!m && txAnswer.length > 0)
-          this.playEvent(ok ? 'actionOk' : 'actionError');
       }
 
       if (this.act.useOrder)
-        bx = this.bgA.getBox(this.currentItem);
+        bx = this.bgA ? this.bgA.getBox(this.currentItem) : null;
       else
-        bx = this.bgA.getActiveBoxWithIdLoc(i);
-      if (!bx || bx.idAss === -1) {
+        bx = this.bgA ? this.bgA.getActiveBoxWithIdLoc(i) : null;
+      if (this.bgA && (!bx || bx.idAss === -1)) {
         for (var j = 0; j < this.bgA.getNumCells(); j++) {
           bx = this.bgA.getActiveBoxWithIdLoc(j);
           if (bx.idAss !== -1)
@@ -464,7 +466,7 @@ define([
         }
       }
       // Draw border only if it has more than one cell
-      if (bx && this.bgA.getNumCells() > 1)
+      if (bx && this.bgA && this.bgA.getNumCells() > 1)
         bx.setMarked(true);
       if (bx)
         this.currentCell = bx.idLoc;
@@ -499,7 +501,7 @@ define([
               break;
             }
 
-            var bx = this.bgA.findActiveBox(p);
+            var bx = this.bgA ? this.bgA.findActiveBox(p) : null;
             if (bx) {
               if (bx.getContent() && bx.getContent().mediaContent === null)
                 this.playEvent('CLICK');

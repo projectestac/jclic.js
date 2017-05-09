@@ -294,7 +294,7 @@ define([
           left: 0
         });
         // Resize animated gif backgrounds
-        if (this.$animatedBg) {
+        if (this.$animatedBg && this.bgA) {
           var bgRect = this.bgA.getBounds();
           this.$animatedBg.css({
             left: bgRect.pos.x,
@@ -305,7 +305,7 @@ define([
           });
         }
         // Resize animated gif background
-        if (this.$animatedBgB) {
+        if (this.$animatedBgB && this.bgB) {
           var bgRectB = this.bgB.getBounds();
           this.$animatedBgB.css({
             left: bgRectB.pos.x,
@@ -401,8 +401,8 @@ define([
 
               //
               // Determine if click was done on panel A or panel B
-              bx1 = this.bgA.findActiveBox(p);
-              bx2 = this.bgB.findActiveBox(p);
+              bx1 = this.bgA ? this.bgA.findActiveBox(p) : null;
+              bx2 = this.bgB ? this.bgB.findActiveBox(p) : null;
               if (bx1 && (!this.act.useOrder || bx1.idOrder === this.currentItem) ||
                 !this.act.useOrder && bx2 && bx2.idAss !== -1) {
                 // Start the [BoxConnector](BoxConnector.html)
@@ -411,15 +411,15 @@ define([
                 else
                   this.bc.begin(p);
                 // Play cell media or event sound
-                m |= (bx1 || bx2).playMedia(this.ps);
+                m = m || (bx1 || bx2).playMedia(this.ps);
                 if (!m)
                   this.playEvent('click');
 
                 // Move the focus to the opposite accessible group
                 var bg = bx1 ? this.bgA : this.bgB;
-                if (bg.$accessibleDiv) {
+                if (bg && bg.$accessibleDiv) {
                   bg = bx1 ? this.bgB : this.bgA;
-                  if (bg.$accessibleDiv)
+                  if (bg && bg.$accessibleDiv)
                     bg.$accessibleDiv.focus();
                 }
               }
@@ -430,18 +430,18 @@ define([
               // Find the active boxes behind `bc.origin` and `p`
               var origin = this.bc.origin;
               this.bc.end();
-              bx1 = this.bgA.findActiveBox(origin);
+              bx1 = this.bgA ? this.bgA.findActiveBox(origin) : null;
               if (bx1) {
-                bx2 = this.bgB.findActiveBox(p);
+                bx2 = this.bgB ? this.bgB.findActiveBox(p) : null;
               } else {
-                bx2 = this.bgB.findActiveBox(origin);
+                bx2 = this.bgB ? this.bgB.findActiveBox(origin) : null;
                 if (bx2) {
-                  bx1 = this.bgA.findActiveBox(p);
+                  bx1 = this.bgA ? this.bgA.findActiveBox(p) : null;
                   clickOnBg0 = true;
                 }
               }
               // Check if the pairing was correct
-              if (bx1 && bx2 && bx1.idAss !== -1 && bx2.idAss !== -1) {
+              if (bx1 && bx2 && bx1.idAss !== -1 && bx2.idAss !== -1 && this.act.abc['secondary']) {
                 var ok = false,
                   src = bx1.getDescription(),
                   dest = bx2.getDescription(),
@@ -453,22 +453,22 @@ define([
                   bx2.idAss = -1;
                   if (this.act.abc['solvedPrimary']) {
                     bx1.switchToAlt(this.ps);
-                    m |= bx1.playMedia(this.ps);
+                    m = m || bx1.playMedia(this.ps);
                   } else {
                     if (clickOnBg0)
-                      m |= bx1.playMedia(this.ps);
+                      m = m || bx1.playMedia(this.ps);
                     else
-                      m |= bx2.playMedia(this.ps);
+                      m = m || bx2.playMedia(this.ps);
                     bx1.clear();
                   }
                   bx2.clear();
 
-                  if (this.act.useOrder)
+                  if (this.act.useOrder && this.bgA)
                     // Load next item
                     this.currentItem = this.bgA.getNextItem(this.currentItem);
                 }
                 // Check results and notify action
-                var cellsPlaced = this.bgB.countCellsWithIdAss(-1);
+                var cellsPlaced = this.bgB ? this.bgB.countCellsWithIdAss(-1) : 0;
                 this.ps.reportNewAction(this.act, 'MATCH', src, dest, ok, cellsPlaced);
                 // End activity or play event sound
                 if (ok && cellsPlaced === this.bgB.getNumCells())
@@ -479,7 +479,7 @@ define([
               this.update();
 
               // Move the focus to the `source` accessible group
-              if (this.bgA.$accessibleDiv)
+              if (this.bgA && this.bgA.$accessibleDiv)
                 this.bgA.$accessibleDiv.focus();
             }
             break;
