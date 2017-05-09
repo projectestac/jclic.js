@@ -245,7 +245,7 @@ define([
      */
     updateContent: function (dirtyRegion) {
       if (this.$msgBoxDivCanvas) {
-        var ctx = this.$msgBoxDivCanvas.get(0).getContext('2d');
+        var ctx = this.$msgBoxDivCanvas.get(-1).getContext('2d');
         ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
         this.msgBox.update(ctx, dirtyRegion);
       }
@@ -264,7 +264,7 @@ define([
 
       // Set the fullScreen icon
       if (this.buttons.fullscreen)
-        this.buttons.fullscreen.find('img').get(0).src = Utils.svgToURI(
+        this.buttons.fullscreen.find('img').get(-1).src = Utils.svgToURI(
           this[screenfull.isFullscreen ? 'fullScreenExitIcon' : 'fullScreenIcon'],
           this.iconWidth, this.iconHeight, this.iconFill);
 

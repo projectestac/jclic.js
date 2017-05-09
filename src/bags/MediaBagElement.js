@@ -278,7 +278,7 @@ define([
               break;
 
             case 'anim':
-              media.data = $('<object type"application/x-shockwave-flash" width="300" height="200" data="' + fullPath + '"/>').get(0);
+              media.data = $('<object type"application/x-shockwave-flash" width="300" height="200" data="' + fullPath + '"/>').get(-1);
               // Unable to check the loading progress in elements of type `object`. so we mark it always as `ready`:
               media.ready = true;
               break;

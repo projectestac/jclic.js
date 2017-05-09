@@ -160,7 +160,7 @@ define([
       ActPanelAncestor.updateContent.call(this, dirtyRegion);
 
       if (this.bg && this.$canvas) {
-        var canvas = this.$canvas.get(0);
+        var canvas = this.$canvas.get(-1);
         var ctx = canvas.getContext('2d');
         if (!dirtyRegion)
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);

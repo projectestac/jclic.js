@@ -1031,7 +1031,7 @@ define([
       buildAccessibleComponents: function () {
         // Clear existing elements
         if (this.accessibleCanvas && this.$canvas && this.$canvas.children().length > 0) {
-          this.$canvas.get(0).getContext('2d').clearHitRegions();
+          this.$canvas.get(-1).getContext('2d').clearHitRegions();
           this.$canvas.empty();
         }
         // Create accessible elements in subclasses

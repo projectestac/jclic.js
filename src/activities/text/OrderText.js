@@ -148,7 +148,7 @@ define([
         this.$div.append(this.$canvas);
 
         // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context
-        this.bc = new BoxConnector(this, this.$canvas.get(0).getContext('2d'));
+        this.bc = new BoxConnector(this, this.$canvas.get(-1).getContext('2d'));
         this.bc.compositeOp = this.bc.DEFAULT_COMPOSITE_OP;
 
         // Repaint all

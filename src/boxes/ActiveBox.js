@@ -91,7 +91,7 @@ define([
       var rect = new AWT.Rectangle(0, 0, abc.dimension.width, abc.dimension.height);
       box.setBounds(rect);
       $dom.append($canvas);
-      box.update($canvas.get(0).getContext('2d'), rect);
+      box.update($canvas.get(-1).getContext('2d'), rect);
       return box;
     }
   };
@@ -749,9 +749,9 @@ define([
             return false;
           });
         ($canvasGroup || $canvas).append(this.$accessibleElement);
-        var elem = this.$accessibleElement.get(0);
+        var elem = this.$accessibleElement.get(-1);
         try {
-          var ctx = $canvas.get(0).getContext('2d');
+          var ctx = $canvas.get(-1).getContext('2d');
           this.shape.preparePath(ctx);
           ctx.addHitRegion({ id: 'REG' + id, control: elem });
           if (Utils.settings.CANVAS_HITREGIONS_FOCUS)

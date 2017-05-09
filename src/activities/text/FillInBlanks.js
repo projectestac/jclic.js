@@ -209,7 +209,7 @@ define([
 
         if (target.$span) {
           target.$span.focus();
-          Utils.setSelectionRange(target.$span.get(0), 0, 0);
+          Utils.setSelectionRange(target.$span.get(-1), 0, 0);
         } else if (target.$comboList)
           target.$comboList.focus();
       }
@@ -334,10 +334,10 @@ define([
               $span = target.$span;
               pos = Math.min(
                 target.currentText.length,
-                Utils.getCaretCharacterOffsetWithin($span.get(0)));
+                Utils.getCaretCharacterOffsetWithin($span.get(-1)));
               $span.empty();
               $span.text(target.currentText);
-              Utils.setSelectionRange($span.get(0), pos, pos);
+              Utils.setSelectionRange($span.get(-1), pos, pos);
               target.flagModified = true;
             } else if (target.$comboList) {
               target.$comboList.css(target.doc.style['target'].css);
@@ -371,7 +371,7 @@ define([
               if (added > 0) {
                 if (txt.indexOf(target.iniChar) >= 0) {
                   // Remove filling chars
-                  pos = Utils.getCaretCharacterOffsetWithin($span.get(0));
+                  pos = Utils.getCaretCharacterOffsetWithin($span.get(-1));
                   for (var i = 0; i < added; i++) {
                     var p = txt.indexOf(target.iniChar);
                     if (p < 0)
@@ -381,21 +381,21 @@ define([
                       pos--;
                   }
                   $span.text(txt);
-                  Utils.setSelectionRange($span.get(0), pos, pos);
+                  Utils.setSelectionRange($span.get(-1), pos, pos);
                 }
 
                 // Check if current text exceeds max length
                 if (txt.length > target.maxLenResp) {
-                  pos = Utils.getCaretCharacterOffsetWithin($span.get(0));
+                  pos = Utils.getCaretCharacterOffsetWithin($span.get(-1));
                   txt = txt.substr(0, target.maxLenResp);
                   pos = Math.min(pos, txt.length);
                   $span.text(txt);
-                  Utils.setSelectionRange($span.get(0), pos, pos);
+                  Utils.setSelectionRange($span.get(-1), pos, pos);
                 }
               } else if (txt === '') {
                 txt = target.iniChar;
                 $span.text(txt);
-                Utils.setSelectionRange($span.get(0), 0, 0);
+                Utils.setSelectionRange($span.get(-1), 0, 0);
               }
               target.currentText = txt;
             }
