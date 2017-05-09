@@ -231,8 +231,9 @@ define([
      *
      * Instantiates the media content
      * @param {function} callback - Callback method called when the referred resource is ready
+     * @param {PlayStation=} ps - An optional `PlayStation` (currently a {@link JClicPlayer}) used to dynamically load fonts
      */
-    build: function (callback) {
+    build: function (callback, ps) {
       var media = this;
 
       if (callback) {
@@ -249,11 +250,10 @@ define([
                 : media.ext === 'otf' ? 'embedded-opentype'
                   : media.ext;
 
-              $('head').append(
-                '<style type="text/css">' +
-                '@font-face{font-family:"' + media.fontName + '";' +
-                'src:url(' + fullPath + ') format("' + format + '");}' +
-                '</style>');
+              var css = '@font-face{font-family:"' + media.fontName + '";' +
+                'src:url(' + fullPath + ') format("' + format + '");}';
+
+              Utils.appendStyleAtHead(css, ps);
 
               media.data = new AWT.Font(media.name);
               media.ready = true;

@@ -181,7 +181,7 @@ define([
       this.settings.eventSounds.realize(ps, this.mediaBag);
 
       // Build all elements of type `font`
-      this.mediaBag.buildAll('font');
+      this.mediaBag.buildAll('font', null, ps);
     },
     /**
      *

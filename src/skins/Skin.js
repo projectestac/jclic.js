@@ -60,11 +60,8 @@ define([
     // Skin extends [AWT.Container](AWT.html)
     AWT.Container.call(this);
 
-    if (Skin.registeredStylesheets.indexOf(this.skinId) < 0) {
-      $('head').append($('<style type="text/css"/>')
-        .html(this._getStyleSheets().replace(/SKINID/g, this.skinId)));
-      Skin.registeredStylesheets.push(this.skinId);
-    }
+    if (!Skin.registerStyleSheet(this.skinId, ps))
+      Utils.appendStyleAtHead(this._getStyleSheets().replace(/SKINID/g, this.skinId), ps);
 
     var skin = this,
       msg = '';
@@ -198,12 +195,49 @@ define([
 
   /**
    * Collection of realized __Skin__ objects.
-   * @type {Skin[]} */
+   * @type {Skin[]}
+   */
   Skin.skinStack = [];
+
   /**
    * Collection of skin style sheets already registered on the current document
-   * @type {string[]} */
-  Skin.registeredStylesheets = [];
+   * @type {Object}
+   */
+  Skin.rootStyles = {};
+  /**
+   * Counter used to label root nodes with unique IDs
+   * @type {Number}
+   */
+  Skin.lastId = 1;
+
+  /**
+   * Checks if the provided stylesheet ID is already registered in the root node where the current player is placed
+   * @param {String} skinId - The unique identifier of the skin to check
+   * @param {PlayStation=} ps - An optional `PlayStation` (currently a {@link JClicPlayer}) used as a base to find the root node
+   * @returns {Boolean} - _true_ when the skin stylesheet is already defined in the current root node, _false_ otherwise
+   */
+  Skin.registerStyleSheet = function (skinId, ps) {
+    var result = false;
+
+    var root = Utils.getRootHead(ps);
+    if (!root['__JClicID'])
+      root.__JClicID = 'SK' + Skin.lastId++;
+
+    var styles = Skin.rootStyles[root.__JClicID];
+
+    if (!styles) {
+      styles = [];
+      Skin.rootStyles[root.__JClicID] = styles;
+    }
+
+    if (styles.indexOf(skinId) < 0) {
+      Utils.log('trace', 'Stylesheet "%s" has been registered for root node labeled as "%s"', skinId, root.__JClicID);
+      styles.push(skinId);
+    } else
+      result = true;
+
+    return result;
+  }
 
   /**
    * List of classes derived from Skin. It should be filled by real skin classes at declaration time.

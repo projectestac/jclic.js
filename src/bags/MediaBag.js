@@ -141,13 +141,14 @@ define([
      * @param {string} type - The type of media to be build. When `null` or `undefined`, all
      * resources will be build.
      * @param {function=} callback - Function to be called when each element is ready.
-     * @returns {number} - The total number of elements that will be build
+     * @param {PlayStation=} ps - An optional `PlayStation` (currently a {@link JClicPlayer}) used to dynamically load fonts
+     * @returns {number} - The total number of elements that will be build     * 
      */
-    buildAll: function (type, callback) {
+    buildAll: function (type, callback, ps) {
       var count = 0;
       $.each(this.elements, function (name, element) {
         if (!type || element.type === type) {
-          element.build(callback);
+          element.build(callback, ps);
           count++;
         }
       });

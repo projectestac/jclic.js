@@ -596,6 +596,41 @@ define([
       return result;
     },
     /**
+     * Finds the nearest `head` or root node of a given HTMLElement, useful to place `<style/>` elements when
+     * the main component of JClic is behind a shadow-root.
+     * This method will be replaced by a call to [Node.getRootNode()](https://developer.mozilla.org/en-US/docs/Web/API/Node/getRootNode)
+     * when fully supported by all major browsers.
+     * @param {Node=} el - The element from which to start the search
+     * @returns {Node}
+     */
+    getRootHead: function (el) {
+      if (el) {
+        // Skip HTMLElements
+        while (el.parentElement)
+          el = el.parentElement;
+        // Get the parent node of the last HTMLElement
+        if (el instanceof HTMLElement)
+          el = el.parentNode || el;
+        // If the root node has a `head`, take it
+        el = el['head'] || el;
+      }
+      el = el || document.head;
+      return el;
+    },
+    /**
+     * Appends a stylesheet element to the `head` or root node nearest to the given `HTMLElement`.
+     * @param {String} css - The content of the stylesheet
+     * @param {PlayStation=} ps - An optional `PlayStation` (currently a {@link JClicPlayer}) used as a base to find the root node
+     * @returns {HTMLStyleElement} - The appended style element
+     */
+    appendStyleAtHead: function (css, ps) {
+      var root = Utils.getRootHead(ps && ps.$topDiv ? ps.$topDiv[0] : null);
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      style.appendChild(document.createTextNode(css));
+      return root.appendChild(style);
+    },
+    /**
      * Global constants
      * @const
      */

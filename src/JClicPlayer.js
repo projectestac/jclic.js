@@ -583,7 +583,7 @@ define([
                 var elements = prj.mediaBag.buildAll(null, function () {
                   Utils.log('trace', '"%s" ready.', this.name);
                   player.incProgress(1);
-                });
+                }, this);
                 Utils.log('info', 'Media elements to be loaded: %d', elements);
                 player.setProgress(0, elements);
                 var loops = 0;
