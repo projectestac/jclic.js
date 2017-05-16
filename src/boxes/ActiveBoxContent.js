@@ -177,7 +177,7 @@ define([
             break;
 
           case 'image':
-            content.imgName = val;
+            content.imgName = Utils.nSlash(val);
             break;
         }
       });

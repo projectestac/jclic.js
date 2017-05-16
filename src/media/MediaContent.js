@@ -138,10 +138,10 @@ define([
             media['mediaType'] = val;
             break;
           case 'file':
-            media['mediaFileName'] = val;
+            media['mediaFileName'] = Utils.nSlash(val);
             break;
           case 'params':
-            media['externalParam'] = val;
+            media['externalParam'] = Utils.nSlash(val);
             break;
 
           case 'pFrom':
