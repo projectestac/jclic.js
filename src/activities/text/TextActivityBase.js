@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global define */
+/* global define, setTimeout, clearTimeout */
 
 define([
   "jquery",
@@ -74,7 +74,7 @@ define([
      * @type {BoxBase} */
     prevScreenStyle: null,
     /**
-     * Maximum amount of time for showing the previous document text activities.
+     * Maximum amount of time for showing the previous document.
      * @type {number} */
     prevScreenMaxTime: -1,
     /**
@@ -131,6 +131,10 @@ define([
      * The button used to check the activity, only when `Activity.checkButtonText` is not null
      * @type {external:jQuery}*/
     $checkButton: null,
+    /**
+     * System timer used to close the previous document when act.maxTime is reached.
+     * @type {number} */
+    prevScreenTimer: null,
     /**
      *
      * Prepares the text panel
@@ -327,6 +331,18 @@ define([
       if (!this.act.prevScreen)
         return;
 
+      var panel = this;
+      var prevScreenEnd = function () {
+        panel.showingPrevScreen = false;
+        panel.$div.unbind('click');
+        if (panel.prevScreenTimer) {
+          clearTimeout(panel.prevScreenTimer);
+          panel.prevScreenTimer = null;
+        }
+        panel.startActivity();
+        return true;
+      }
+
       this.showingPrevScreen = true;
       this.$div.empty();
 
@@ -347,18 +363,13 @@ define([
       this.ps.setCounterValue('time', 0);
 
       this.ps.setMsg(this.act.messages['previous']);
-      if (this.prevScreenTimer) {
+
+      if (this.act.prevScreenMaxTime > 0) {
         this.ps.setCountDown('time', this.act.prevScreenMaxTime);
-        this.prevScreenTimer.start();
+        this.prevScreenTimer = setTimeout(prevScreenEnd, this.act.prevScreenMaxTime * 1000);
       }
 
-      var panel = this;
-      this.$div.on('click', function () {
-        panel.showingPrevScreen = false;
-        panel.$div.unbind('click');
-        panel.startActivity();
-        return true;
-      });
+      this.$div.on('click', prevScreenEnd);
 
       this.ps.playMsg();
     },

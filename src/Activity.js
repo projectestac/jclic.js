@@ -518,6 +518,7 @@ define([
 
             case 'prevScreen':
               act.prevScreen = true;
+              act.prevScreenMaxTime = $node.attr('maxTime') || -1;
               $node.children().each(function () {
                 switch (this.nodeName) {
                   case 'style':
