@@ -134,7 +134,7 @@ define([
         audioEnabled: true,
         //
         // Navigation buttons are always visible (for debugging purposes)
-        navButtonsAlways: true,
+        navButtonsAlways: false,
         //
         // Time (milliseconds) of the fade-in animation of the activity panel. When 0, no animation
         // is performed
