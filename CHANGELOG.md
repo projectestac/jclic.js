@@ -1,3 +1,16 @@
+### v0.1.47 (2017-05-16)
+#### Improvements
+- Updated French translation, thanks to [Heluga Valka](https://www.transifex.com/user/profile/Heluga/)
+
+#### Bug fixes
+- Control of the maximum display time of previous screen in text activities. This JClic feature was unimplemented until now. Probably closes #12.
+- Backslashes in active media parameters and file names are now always converted to forward slashes. This avoids problems with chaining in big projects distributed among multiple folders.
+- Set default value of `navButtonsAlways` to `false`. Closes #11.
+- Avoid creating `AccessibleElement` when canvas has no surface.
+- Double-check the existence of `ActiveBoxBag` elements before using them.
+- Use index -1 in `jQuery.get` to avoid added `div style-scope` elements in Shadow DOM.
+- Put stylesheets within shadow-root when in shadow DOM.
+
 ### v0.1.46 (2017-04-24)
 #### Improvements
 - Use HTTPS as defaul protocol in `TCPReporter`.
