@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JClicProject name="Sense_nom" version="0.1.3" type="library">
+ <settings>
+  <title>Biblioteca principal</title>
+  <revision description="created" date="3/3/17" />
+  <descriptors />
+ </settings>
+ <sequence>
+  <item id="main" name="main">
+   <jump action="STOP" id="forward" />
+   <jump action="RETURN" id="back" />
+  </item>
+  <item id="1498133936856" name="1498133936856">
+   <jump action="STOP" id="forward" />
+   <jump action="RETURN" id="back" />
+  </item>
+ </sequence>
+ <activities>
+  <activity class="@panels.Menu" name="main">
+   <description>
+    <p>Menú principal</p>
+   </description>
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Menú principal</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <menuElement caption="Matemàtiques" icon="@icofolder.png" sequence="1498133936856" />
+   <menuElement caption="JClic demo (English)" path="jclic-demo/demo.jclic" />
+   <menuElement caption="Phonics" path="phonics/phonics.jclic.zip" />
+   <menuElement caption="Discriminacion auditiva de los animales" path="disc_au1/disc_au1.jclic.zip" />
+   <menuElement caption="Els gegants de Terrrassa" path="geg_terr/geg_terr.jclic.zip" />
+  </activity>
+  <activity class="@panels.Menu" name="1498133936856">
+   <description>
+    <p>Matemàtiques</p>
+   </description>
+   <messages>
+    <cell type="initial">
+     <style />
+     <p>Matemàtiques</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true" />
+   </settings>
+   <menuElement caption="GeoClic" icon="geoclic/thumb.png" path="geoclic/geoclic.jclic" />
+  </activity>
+ </activities>
+ <mediaBag>
+  <media name="geoclic/thumb.png" file="geoclic/thumb.png" />
+ </mediaBag>
+</JClicProject>
+

@@ -302,6 +302,10 @@ define([
        * @type {boolean} */
       invAss: false,
       /**
+       * Array of menu elements, used in activities of type {@link Menu}
+       * @type {array} */
+      menuElements: null,
+      /**
        *
        * Loads this object settings from an XML element
        * @param {external:jQuery} $xml - The jQuery XML element to parse
@@ -489,6 +493,17 @@ define([
                     act[name] = Utils.getBoolean(value);
                 }
               });
+              break;
+
+            // Element specific to {@link Menu} activities:
+            case 'menuElement':
+              act.menuElements.push({
+                caption: $node.attr('caption') || '',
+                icon: $node.attr('icon') || null,
+                projectPath: $node.attr('path') || null,
+                sequence: $node.attr('sequence') || null,
+                description: $node.attr('description') || ''
+              });              
               break;
 
             // Element specific to {@link CrossWord} and

@@ -57,6 +57,7 @@ define([
   "./activities/panels/InformationScreen",
   "./activities/panels/Identify",
   "./activities/panels/Explore",
+  "./activities/panels/Menu",
   "./activities/puzzles/DoublePuzzle",
   "./activities/puzzles/ExchangePuzzle",
   "./activities/puzzles/HolePuzzle",
