@@ -1,3 +1,7 @@
+### v0.1.48 (2017-07-21)
+#### Improvements
+- Implemented the type of activity "Menu", used in legacy JClic libraries. Useful for JClic libraries hosted on school servers: now they can be served as HTML resources just placing an `index.html` in the root folder pointing to the `library.jclic` file, like in [this example](https://clic.xtec.cat/pub/2005/index.html).
+
 ### v0.1.47 (2017-05-16)
 #### Improvements
 - Updated French translation, thanks to [Heluga Valka](https://www.transifex.com/user/profile/Heluga/)
