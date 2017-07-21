@@ -149,7 +149,7 @@ cAXZ0IfsVKS3BTGUMDas0E9NfkO/ovmQBv2v0BJ+xAaYuQX2hCJNtwAAAABJRU5ErkJggg=='
           'aria-label': caption
         }).css({
           'min-width': '80px',
-          'max-width': '160px',
+          'max-width': '200px',
           'min-height': '80px',
           'margin': '4px',
           'padding': '4px',
@@ -162,8 +162,8 @@ cAXZ0IfsVKS3BTGUMDas0E9NfkO/ovmQBv2v0BJ+xAaYuQX2hCJNtwAAAABJRU5ErkJggg=='
         // Set the button icon
         var iconSrc = thisPanel.icons[me.icon || '@ico00.png'];
         var $img = $('<img/>', { src: iconSrc || '' }).css({
-          'max-width': '64px',
-          'max-height': '48px',
+          'max-width': '180px',
+          'max-height': '100px',
           'margin': '4px'
         });
         if (!iconSrc) {
@@ -177,7 +177,7 @@ cAXZ0IfsVKS3BTGUMDas0E9NfkO/ovmQBv2v0BJ+xAaYuQX2hCJNtwAAAABJRU5ErkJggg=='
 
         // Set the button text
         $btn.append($('<span/>').css({
-          'max-width': '150px',
+          'max-width': '180px',
           'overflow': 'hidden',
           'white-space': 'nowrap',
           'text-overflow': 'ellipsis'
