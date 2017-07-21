@@ -62,7 +62,7 @@
     "gruntify-eslint": "^4.0.0",
     "load-grunt-tasks": "~3.5.2",
     "mock-browser": "^0.92.14",
-    "requirejs": "~2.3.3",
+    "requirejs": "~2.3.4",
     "xmldom": "^0.1.27"
   },
   "scripts": {
