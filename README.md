@@ -1,4 +1,4 @@
-#JClic.js
+# JClic.js
 
 [![Bower version](https://badge.fury.io/bo/jclic.svg)](https://badge.fury.io/bo/jclic)
 [![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic)
@@ -65,6 +65,14 @@ grunt server
 Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc
 
 The project is also available as a [NPM](https://www.npmjs.com/package/jclic) and [Bower](https://libraries.io/bower/jclic) packages.
+
+## Direct download
+
+The latest version of the compiled and minified script `jclic.min.js` is currently available at the following locations:
+
+- https://unpkg.com/jclic/dist/jclic.min.js
+- https://clic.xtec.cat/dist/jclic.js/jclic.min.js
+- https://cdn.jsdelivr.net/jclic.js/latest/jclic.min.js
 
 ## Sponsors that make possible JClic.js
 
