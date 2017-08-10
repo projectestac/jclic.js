@@ -63,10 +63,11 @@
     "load-grunt-tasks": "~3.5.2",
     "mock-browser": "^0.92.14",
     "requirejs": "~2.3.4",
+    "webpack": "^3.5.2",
     "xmldom": "^0.1.27"
   },
   "scripts": {
-    "build": "npm install && grunt",
+    "build": "webpack --config webpack-config.js",
     "start": "grunt server"
   }
 }
