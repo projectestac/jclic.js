@@ -3,7 +3,12 @@
 const webpack = require('webpack')
 const path = require('path')
 const pkg = require('./package.json')
+const buildLocales = require('./build-locales')
 const date = new Date()
+
+buildLocales()
+
+console.log('Launching WebPack...')
 
 const banner = `
 JClic.js version ${pkg.version} (${date.toISOString().substr(0, 10)})
