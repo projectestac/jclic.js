@@ -50,6 +50,8 @@ const writeDataToJSFile = function (opt, fileName = 'src/GlobalData.js', verbose
     fs.writeFileSync(fileName, `
 // WARNING: Auto-generated file, based on "language.po" files stored in "/locales". Do not edit!
 // Launch "npm run build-locales" to update this file
+
+/* global define */
 define(${JSON.stringify(opt)})`)
 
   } catch (e) {

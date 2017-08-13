@@ -5,6 +5,7 @@ const path = require('path')
 const pkg = require('./package.json')
 const buildLocales = require('./build-locales')
 const date = new Date()
+const dist = path.resolve(__dirname, 'dist')
 
 buildLocales()
 
@@ -38,8 +39,32 @@ ${pkg.homepage}
 
 const conf = {
   entry: './src/JClic.js',
+  devtool: 'source-map',
+  module: {
+    rules: [
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader",
+        options: {
+          failOnError: true,
+          failOnWarning: true
+        }
+      },
+    ],
+  },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: dist,
+    filename: 'jclic.js'
+  },
+  plugins: []
+}
+
+const confMini = {
+  entry: './src/JClic.js',
+  output: {
+    path: dist,
     filename: 'jclic.min.js'
   },
   plugins: [
@@ -51,6 +76,6 @@ const conf = {
       }
     })
   ]
-};
+}
 
-module.exports = conf
+module.exports = [conf, confMini]
