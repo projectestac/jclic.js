@@ -1,8 +1,10 @@
 
 
-// Todo: clean 'doc' and copy icon
-const fs = require('fs')
-fs.createReadStream('misc/jsdoc/ico.png').pipe(fs.createWriteStream('doc/ico.png'));
+const fs = require('fs-extra')
+
+// Empty "doc" and copy "ico.png"
+fs.emptyDirSync('doc')
+fs.copySync('misc/jsdoc/ico.png', 'doc/ico.png')
 
 module.exports = {
   source: {
@@ -21,29 +23,34 @@ module.exports = {
   },
   plugins: ['plugins/markdown'],
   templates: {
-    logo: 'ico.png',
-    cleverLinks: true,
-    monospaceLinks: true,
+    systemName: 'JClic.js',
+    applicationName: 'JClic.js',
+    footer: '',
+    copyright: '',
+    includeDate: false,
     dateFormat: 'ddd MMM Do YYYY',
+    navType: 'inline',
+    xtheme: 'yeti',
+    theme: 'paper',
+    linenums: true,
+    collapseSymbols: false,
+    inverseNav: true,
     outputSourceFiles: true,
     outputSourcePath: true,
     default: {
       outputSourceFiles: true
     },
-    systemName: 'JClic.js',
-    applicationName: 'JClic.js',
+    syntaxTheme: 'default',
+    sort: true,
+    search: true,
+    
+    logo: 'ico.png',
+    cleverLinks: true,
+    monospaceLinks: true,
     disqus: '',
-    footer: '',
-    copyright: '',
-    navType: 'inline',
-    theme: 'yeti',
-    linenums: true,
-    collapseSymbols: false,
     //analytics: { ua: 'UA-XXXXX-XXX', domain: 'XXXX' },
     googleAnalytics: '',
-    inverseNav: true,
     highlightTutorialCode: true,
-    syntaxTheme: 'default',
     protocol: 'html://',
     openGraph: {
       title: '',

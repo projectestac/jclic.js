@@ -45,20 +45,22 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
-    "eslint": "^4.2.0",
+    "eslint": "^4.5.0",
     "eslint-loader": "^1.9.0",
+    "fs-extra": "^4.0.1",
     "gc-jaguarjs-jsdoc": "0.0.1",
     "jsdoc": "^3.5.4",
     "mock-browser": "^0.92.14",
     "po2json": "^0.4.5",
     "requirejs": "~2.3.4",
-    "webpack": "^3.5.4",
+    "webpack": "^3.5.5",
     "xmldom": "^0.1.27"
   },
   "scripts": {
     "build": "webpack --config webpack-config.js",
     "build-locales": "node build-locales.js",
-    "doc": "jsdoc -c jsdoc.config.js",
-    "start": "grunt server"
+    "build-doc": "jsdoc -c jsdoc.config.js",
+    "start": "grunt server",
+    "lint": "eslint -c .eslintrc.json \"src/**/*.js\""
   }
 }
