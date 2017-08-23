@@ -1,4 +1,21 @@
-
+/**
+ * Suggested changes to make in node_modules/gc-jaguarjs-jsdoc
+ * prior to build the documentation:
+ * 
+ * - Files `less/common.less` and `less/navigation.less`:
+ *   Change all occurrences of `Helvetica` by `Helvetica,sans-serif`
+ * 
+ * - File `less/main.less`, starting at line 76, add to `span.type-signature`:
+ *     background-color: @colorStaticBubbleBg;
+ *     margin-right: 5px;
+ * 
+ * - Finish recompiling with:
+ *     cd node_modules/gc-jaguarjs-jsdoc
+ *     npm i
+ *     grunt less
+ *     (package `grunt-cli` mut be globally installed)
+ * 
+ */
 
 const fs = require('fs-extra')
 

@@ -37,7 +37,7 @@
     "clipboard-js": "^0.3.5",
     "es6-promise": "^4.1.1",
     "i18next": "^8.4.3",
-    "jquery": "~3.2.1",
+    "jquery": "^3.2.1",
     "jszip": "^3.1.3",
     "jszip-utils": "0.0.2",
     "screenfull": "^3.3.1",
@@ -50,6 +50,7 @@
     "fs-extra": "^4.0.1",
     "gc-jaguarjs-jsdoc": "0.0.1",
     "jsdoc": "^3.5.4",
+    "live-server": "^1.2.0",
     "mock-browser": "^0.92.14",
     "po2json": "^0.4.5",
     "requirejs": "~2.3.4",
@@ -60,7 +61,8 @@
     "build": "webpack --config webpack-config.js",
     "build-locales": "node build-locales.js",
     "build-doc": "jsdoc -c jsdoc.config.js",
-    "start": "grunt server",
-    "lint": "eslint -c .eslintrc.json \"src/**/*.js\""
+    "lint": "eslint -c .eslintrc.json \"src/**/*.js\"",
+    "debug": "live-server --open=test/jclic-demo/debug.html -V --watch=src,test",
+    "start": "live-server --open=test/jclic-demo/index.html"
   }
 }

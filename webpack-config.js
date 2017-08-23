@@ -33,7 +33,7 @@ under the Licence.
 
 For full license information of included components please see: jclic.components.LICENSE
 
-WARNING: You are reading a minimized version of JClic.js. Full source available at:
+WARNING: This is a compressed, uglyfied version of JClic.js. Full source code is freely available at:
 ${pkg.homepage}
 `
 
@@ -68,10 +68,10 @@ const confMini = {
     filename: 'jclic.min.js'
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
+    new webpack.optimize.UglifyJsPlugin({      
       sourceMap: true,
       extractComments: {
-        file: 'jclic.components.LICENSE',
+        filename: 'jclic.components.LICENSE',
         banner: banner
       }
     })
