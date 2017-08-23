@@ -2,10 +2,9 @@
 
 [![Bower version](https://badge.fury.io/bo/jclic.svg)](https://badge.fury.io/bo/jclic)
 [![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic)
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
 [![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player of [JClic](https://github.com/projectestac/jclic) activities. See a [demo](http://clic.xtec.cat/repo/player.html?demo_eng/jclic.js/demo.jclic) on how it works.
+[JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player of [JClic](https://github.com/projectestac/jclic) activities. See a [demo](http:s//clic.xtec.cat/projects/demo_eng/jclic.js/index.html) on how it works.
 
 ## JClic and JClic-repo
 
@@ -15,7 +14,7 @@ The program includes an authoring tool to create activities, a player and a repo
 
 JClic is a Java application that runs on Linux, Windows and Mac OS. Full [source code](https://github.com/projectestac/jclic) and [documentation](http://projectestac.github.io/jclic/) are available on GitHub.
 
-Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge [library](http://clic.xtec.cat/repo) created with [jclic-repo](https://github.com/projectestac/jclic-repo), another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.
+Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge [library](https://clic.xtec.cat/repo) created with [jclic-repo](https://github.com/projectestac/jclic-repo), another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.
 
 ## Known issues
 
@@ -28,38 +27,27 @@ Many teachers from different countries have used JClic to create interactive mat
 
 JClic.js uses [Node.js](https://nodejs.org/) modules encapsulated in [npm](https://www.npmjs.com/) packages. First of all, you must have Node.js (which includes 'npm') [installed](https://nodejs.org/download/) on your system.
 
-To update `npm` to the latest version open a terminal and launch:
 
-```
-sudo npm install -g npm
-```
-
-We use [Grunt](http://gruntjs.com/) for automation of building tasks. This package must be globally installed:
-
-```
-sudo npm install -g grunt-cli
-```
-
-To install the remaining packages, just go to the project's root directory and write:
+To install the required packages, just go to the project's root directory and write:
 
 ```
 npm install
 ```
 
-This will install jQuery, Browserify and other needed components into `node_modules`
+This will install jQuery, Webpack and other needed components into `node_modules`
 
 To build jclic.js, just invoke:
 
 ```
-grunt
+npm run build
 ```
 
-This will generate the file `jclic.min.js` on the `dist` folder.
+This will generate the file `dist/jclic.min.js`
 
 To test the module and see the demo on your browser, launch the test server:
 
 ```
-grunt server
+npm start
 ```
 
 Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc
@@ -87,3 +75,4 @@ The production releases of JClic.js are smoothly distributed to the final users 
 
 [![Transifex](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-transifex.png?raw=true)](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md)<br>
 We use [Transifex](https://www.transifex.com/francesc/jclicjs) as a platform to translate JClic.js into many languages. Please read [TRANSLATIONS.md](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md) if you want to contribute to the project creating a new translation or improving the existing ones.
+
