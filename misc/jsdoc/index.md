@@ -32,52 +32,45 @@ JClic.js makes use of:
 * [webfontloader](https://github.com/typekit/webfontloader) to dynamically load web fonts as needed
 
 The build brocess of JClic.js is based on:
-* [npm](https://www.npmjs.com/) (the package manager of [Node.js](https://nodejs.org/)) to install,
+* [npm](https://www.npmjs.com/) (the package manager of [Node.js](https://nodejs.org/)) to build, install,
 update and track package dependencies.
-* [Browserify](http://browserify.org/) to allow the use of npm modules in browsers
-* [Grunt](http://gruntjs.com/) to automate debug and building tasks
-* [JSDoc](http://usejsdoc.org/) to generate this documentation
-* [JSHint](http://jshint.com/) to detect possible errors and check code quality
+* [webpack](https://webpack.js.org) to allow the use of npm modules in browsers and package all scripts and assets into a single, minified javascript file.
+* [JSDoc](http://usejsdoc.org/) to generate this documentation.
+* [JSHint](http://jshint.com/) to detect possible errors and check code quality.
 
 ## How to set-up the development environtment
 
 JClic.js uses [Node.js](https://nodejs.org/) modules encapsulated in [npm](https://www.npmjs.com/) packages. First of all, you must have Node.js (which includes 'npm') [installed](https://nodejs.org/download/) on your system.
 
-To update `npm` to the latest version open a terminal and launch:
-
-```
-sudo npm install -g npm
-```
-
-We use [Grunt](http://gruntjs.com/) for automation of building tasks. This package must be globally installed:
-
-```
-sudo npm install -g grunt-cli
-```
-
-To install the remaining packages, just go to the project's root directory and write:
+To install the required packages, just go to the project's root directory and write:
 
 ```
 npm install
 ```
 
-This will install jQuery, Browserify and other needed components into `node_modules` 
+This will install jQuery, webpack and other needed components into `node_modules` 
 
 To build jclic.js, just invoke:
 
 ```
-grunt
+npm run build
 ```
 
-This will generate the file `jclic.min.js` on the `dist` folder.
+This will generate the file `dist/jclic.min.js`
 
-To test the module and see the demo on your browser, launch the test server:
+To test this resulting bundle and see the demo on your browser, launch the test server:
 
 ```
-grunt server
+npm start
 ```
 
-You can also build this documentation running `grunt doc`
+You can also launch the program in "unbundled" mode, directly invoking the source scripts, useful for debug purposes:
+
+```
+npm run debug
+```
+
+You can also build this documentation running `npm run build-doc`
 
 ## JClic.js main classes
 

@@ -44,10 +44,16 @@ npm run build
 
 This will generate the file `dist/jclic.min.js`
 
-To test the module and see the demo on your browser, launch the test server:
+To test this resulting bundle and see the demo on your browser, launch the test server:
 
 ```
 npm start
+```
+
+You can also launch the program in "unbundled" mode, directly invoking the source scripts, useful for debug purposes:
+
+```
+npm run debug
 ```
 
 Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc

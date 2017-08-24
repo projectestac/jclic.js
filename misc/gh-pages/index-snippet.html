@@ -1,11 +1,11 @@
 <h1 id="jclic.js">JClic.js</h1>
-<p><a href="https://badge.fury.io/bo/jclic"><img src="https://badge.fury.io/bo/jclic.svg" alt="Bower version" /></a> <a href="https://badge.fury.io/js/jclic"><img src="https://badge.fury.io/js/jclic.svg" alt="npm version" /></a> <a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.svg" alt="Built with Grunt" /></a></p>
-<p><a href="https://github.com/projectestac/jclic.js">JClic.js</a> is an HTML5 player of <a href="https://github.com/projectestac/jclic">JClic</a> activities. See a <a href="http://clic.xtec.cat/repo/player.html?demo_eng/jclic.js/demo.jclic">demo</a> on how it works.</p>
+<p><a href="https://badge.fury.io/bo/jclic"><img src="https://badge.fury.io/bo/jclic.svg" alt="Bower version" /></a> <a href="https://badge.fury.io/js/jclic"><img src="https://badge.fury.io/js/jclic.svg" alt="npm version" /></a> <a href="https://gitter.im/projectestac/jclic.js?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/projectestac/jclic.js.svg" alt="Join the chat at https://gitter.im/projectestac/jclic.js" /></a></p>
+<p><a href="https://github.com/projectestac/jclic.js">JClic.js</a> is an HTML5 player of <a href="https://github.com/projectestac/jclic">JClic</a> activities. See a <a href="http:s//clic.xtec.cat/projects/demo_eng/jclic.js/index.html">demo</a> on how it works.</p>
 <h2 id="jclic-and-jclic-repo">JClic and JClic-repo</h2>
 <p><a href="http://clic.xtec.cat">JClic</a> is a free software project from the <a href="http://www.xtec.cat">Catalan Educational Telematic Network</a> (XTEC) for creating various types of interactive activities such as associations, puzzles, text activities, crosswords or puzzles, from elements of text, graphics and multimedia.</p>
 <p>The program includes an authoring tool to create activities, a player and a reporting system that stores the results obtained by students. All these components, along with some guides and tutorials on how to create activities, are available in the <a href="http://clic.xtec.cat/en/jclic/download.htm">clicZone</a>.</p>
 <p>JClic is a Java application that runs on Linux, Windows and Mac OS. Full <a href="https://github.com/projectestac/jclic">source code</a> and <a href="http://projectestac.github.io/jclic/">documentation</a> are available on GitHub.</p>
-<p>Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge <a href="http://clic.xtec.cat/repo">library</a> created with <a href="https://github.com/projectestac/jclic-repo">jclic-repo</a>, another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.</p>
+<p>Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge <a href="https://clic.xtec.cat/repo">library</a> created with <a href="https://github.com/projectestac/jclic-repo">jclic-repo</a>, another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.</p>
 <h2 id="known-issues">Known issues</h2>
 <ul>
 <li>Support for special skins are not yet implemented. Only stock skins are available.</li>
@@ -15,23 +15,27 @@
 </ul>
 <h2 id="how-to-build-jclic.js">How to build JClic.js</h2>
 <p>JClic.js uses <a href="https://nodejs.org/">Node.js</a> modules encapsulated in <a href="https://www.npmjs.com/">npm</a> packages. First of all, you must have Node.js (which includes 'npm') <a href="https://nodejs.org/download/">installed</a> on your system.</p>
-<p>To update <code>npm</code> to the latest version open a terminal and launch:</p>
-<pre><code>sudo npm install -g npm</code></pre>
-<p>We use <a href="http://gruntjs.com/">Grunt</a> for automation of building tasks. This package must be globally installed:</p>
-<pre><code>sudo npm install -g grunt-cli</code></pre>
-<p>To install the remaining packages, just go to the project's root directory and write:</p>
+<p>To install the required packages, just go to the project's root directory and write:</p>
 <pre><code>npm install</code></pre>
-<p>This will install jQuery, Browserify and other needed components into <code>node_modules</code></p>
+<p>This will install jQuery, Webpack and other needed components into <code>node_modules</code></p>
 <p>To build jclic.js, just invoke:</p>
-<pre><code>grunt</code></pre>
-<p>This will generate the file <code>jclic.min.js</code> on the <code>dist</code> folder.</p>
-<p>To test the module and see the demo on your browser, launch the test server:</p>
-<pre><code>grunt server</code></pre>
+<pre><code>npm run build</code></pre>
+<p>This will generate the file <code>dist/jclic.min.js</code></p>
+<p>To test this resulting bundle and see the demo on your browser, launch the test server:</p>
+<pre><code>npm start</code></pre>
+<p>You can also launch the program in &quot;unbundled&quot; mode, directly invoking the source scripts, useful for debug purposes:</p>
+<pre><code>npm run debug</code></pre>
 <p>Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc</p>
-<h2 id="sponsors-that-make-possible-jclic.js">Sponsors that make possible JClic.js</h2>
-<p>JClic.js is an open-source project sustained by <a href="http://www.xtec.cat">XTEC</a>, the Telematic Network of the Catalan Ministry of Education.</p>
-<p>We use <a href="https://www.transifex.com/francesc/jclicjs">Transifex</a> as a platform to translate JClic.js into many languages. Please read <a href="https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md">TRANSLATIONS.md</a> if you want to contribute to the project creating a new translation or improving the existing ones.</p>
-<p>Checking the operation of JClic.js on different browsers and platforms is possible thanks to <a href="https://www.browserstack.com">BrowserStack</a></p>
-<p>The production releases of JClic.js are smoothly distributed to the final users thanks to <a href="http://www.jsdelivr.com/projects/jclic.js">JSDelivr</a></p>
 <p>The project is also available as a <a href="https://www.npmjs.com/package/jclic">NPM</a> and <a href="https://libraries.io/bower/jclic">Bower</a> packages.</p>
-<p><a href="https://gitter.im/projectestac/jclic.js?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/projectestac/jclic.js.svg" alt="Join the chat at https://gitter.im/projectestac/jclic.js" /></a></p>
+<h2 id="direct-download">Direct download</h2>
+<p>The latest version of the compiled and minified script <code>jclic.min.js</code> is currently available at the following locations:</p>
+<ul>
+<li>https://unpkg.com/jclic/dist/jclic.min.js</li>
+<li>https://clic.xtec.cat/dist/jclic.js/jclic.min.js</li>
+<li>https://cdn.jsdelivr.net/jclic.js/latest/jclic.min.js</li>
+</ul>
+<h2 id="sponsors-that-make-possible-jclic.js">Sponsors that make possible JClic.js</h2>
+<p><a href="http://www.xtec.cat"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-xtec.png?raw=true" alt="XTEC" /></a><br> JClic.js is an open-source project sustained by <a href="http://www.xtec.cat">XTEC</a>, the Telematic Network of the Catalan Ministry of Education.</p>
+<p><a href="https://www.browserstack.com"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-browserstack.png?raw=true" alt="BrowserStack" /></a><br> Checking the operation of JClic.js on different browsers and platforms is now possible thanks to virtual machines provided by <a href="https://www.browserstack.com">BrowserStack</a>.</p>
+<p><a href="http://www.jsdelivr.com/projects/jclic.js"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-jsdelivr.png?raw=true" alt="JSDelivr" /></a><br> The production releases of JClic.js are smoothly distributed to the final users thanks to the <a href="http://www.jsdelivr.com/projects/jclic.js">JSDelivr</a> network of servers.</p>
+<p><a href="https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-transifex.png?raw=true" alt="Transifex" /></a><br> We use <a href="https://www.transifex.com/francesc/jclicjs">Transifex</a> as a platform to translate JClic.js into many languages. Please read <a href="https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md">TRANSLATIONS.md</a> if you want to contribute to the project creating a new translation or improving the existing ones.</p>
