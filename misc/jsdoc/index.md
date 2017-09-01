@@ -36,7 +36,7 @@ The build brocess of JClic.js is based on:
 update and track package dependencies.
 * [webpack](https://webpack.js.org) to allow the use of npm modules in browsers and package all scripts and assets into a single, minified javascript file.
 * [JSDoc](http://usejsdoc.org/) to generate this documentation.
-* [JSHint](http://jshint.com/) to detect possible errors and check code quality.
+* [ESLint](https://eslint.org/) to detect possible errors and check code quality.
 
 ## How to set-up the development environtment
 

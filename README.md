@@ -50,7 +50,7 @@ To test this resulting bundle and see the demo on your browser, launch the test 
 npm start
 ```
 
-You can also launch the program in "unbundled" mode, directly invoking the source scripts, useful for debug purposes:
+You can also launch the program in "unbundled" mode, directly invoking the source scripts. This is useful for debugging:
 
 ```
 npm run debug

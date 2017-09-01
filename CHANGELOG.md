@@ -1,3 +1,7 @@
+### v0.1.49 (2017-09-01)
+#### Improvements
+- New NPM scripts to build, debug and launch jclic.js, now based on [webpack](https://webpack.js.org/) instead of [Grunt](https://gruntjs.com/) and [Browserify](http://browserify.org/). See README.md for more information.
+
 ### v0.1.48 (2017-07-21)
 #### Improvements
 - Implemented the type of activity "Menu", used in legacy JClic libraries. Useful for JClic libraries hosted on school servers: now they can be served as HTML resources just placing an `index.html` in the root folder pointing to the `library.jclic` file, like in [this example](https://clic.xtec.cat/pub/2005/index.html).
