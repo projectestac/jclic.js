@@ -28,7 +28,7 @@ li {
   width: 275px;
   height: 100%;
   background-color: #343f4c;
-  font-family: Helvetica;
+  font-family: Helvetica, sans-serif;
   font-weight: 200;
 }
 .navigation .header {
@@ -45,7 +45,7 @@ li {
 .navigation .header .applicationName {
   margin: 0;
   padding: 15px 15px 15px 42px;
-  font: 22px Helvetica;
+  font: 22px Helvetica, sans-serif;
   color: #fff;
 }
 .navigation .header .applicationName a {
@@ -112,7 +112,7 @@ li {
   color: #fff;
 }
 .navigation li.item .title .static {
-  font-family: Helvetica;
+  font-family: Helvetica, sans-serif;
   font-weight: 200;
   font-size: 12px;
   padding: 2px 8px;
@@ -252,7 +252,7 @@ li {
   content: '\f107';
 }
 .main h4.name span.type-signature {
-  font-family: Helvetica;
+  font-family: Helvetica, sans-serif;
   font-weight: 200;
   font-size: 12px;
   padding: 2px 8px;
@@ -261,6 +261,8 @@ li {
   line-height: 18px;
   display: inline-block;
   color: #fff;
+  background-color: #7ca828;
+  margin-right: 5px;
 }
 .main h4.name span.type {
   margin-left: 5px;
@@ -359,7 +361,7 @@ li {
   border-top: 1px solid #e1e1e1;
 }
 .main .nameContainer .inherited {
-  font-family: Helvetica;
+  font-family: Helvetica, sans-serif;
   font-weight: 200;
   font-size: 12px;
   padding: 2px 8px;
