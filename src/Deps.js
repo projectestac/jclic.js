@@ -66,7 +66,8 @@ define([
   "./activities/associations/ComplexAssociation",
   "./activities/textGrid/WordSearch",
   "./activities/textGrid/CrossWord",
-  "./report/TCPReporter"
+  "./report/TCPReporter",
+  "./report/LocalStorageReporter"
 ], function () {
   return 'Deep classes loaded!';
 });
