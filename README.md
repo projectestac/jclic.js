@@ -66,7 +66,7 @@ The latest version of the compiled and minified script `jclic.min.js` is current
 
 - https://unpkg.com/jclic/dist/jclic.min.js
 - https://clic.xtec.cat/dist/jclic.js/jclic.min.js
-- https://cdn.jsdelivr.net/jclic.js/latest/jclic.min.js
+- https://cdn.jsdelivr.net/npm/jclic@latest/dist/jclic.min.js
 
 ## Sponsors that make possible JClic.js
 
