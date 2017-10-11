@@ -98,6 +98,20 @@ define([
       return $trArray;
     },
     /**
+     * 
+     * Builds a complex object with all relevant sequence data, similar to $print
+     * @returns {Object} - An object containing the full sequence data
+     */
+    getData: function () {
+      var result = {
+        sequence: this.name,
+        activities: []
+      };
+      for (var p = 0; p < this.activities.length; p++)
+        result.activities.push(this.activities[p].getData());
+      return result;
+    },
+    /**
      * Returns the `info` element associated to this SequenceReg.
      * @returns {SequenceReg.Info}
      */

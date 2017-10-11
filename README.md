@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic)
 [![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player of [JClic](https://github.com/projectestac/jclic) activities. See a [demo](http:s//clic.xtec.cat/projects/demo_eng/jclic.js/index.html) on how it works.
+[JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player of [JClic](https://github.com/projectestac/jclic) activities. See a [demo](https://clic.xtec.cat/projects/demo_eng/jclic.js/index.html) on how it works.
 
 ## JClic and JClic-repo
 
@@ -66,7 +66,7 @@ The latest version of the compiled and minified script `jclic.min.js` is current
 
 - https://unpkg.com/jclic/dist/jclic.min.js
 - https://clic.xtec.cat/dist/jclic.js/jclic.min.js
-- https://cdn.jsdelivr.net/jclic.js/latest/jclic.min.js
+- https://cdn.jsdelivr.net/npm/jclic@latest/dist/jclic.min.js
 
 ## Sponsors that make possible JClic.js
 

@@ -417,6 +417,45 @@ define([
     },
     /**
      *
+     * Builds a complex object with all relevant reporter data, similar to $print
+     * @returns {Object} - An object containing the full report
+     */
+    getData: function () {
+      this.info.recalc();
+
+      var result = {
+        started: this.started.toISOString(),
+        projects: this.info.numSessions,
+        sequences: this.info.numSequences,
+        activitiesDone: this.info.nActivities,
+        playedOnce: this.info.nActPlayed,
+        reportable: this.info.reportableActs,
+        ratioPlayed: Math.round(this.info.ratioPlayed * 100),
+        activitiesSolved: this.info.nActSolved,
+        ratioSolved: Math.round(this.info.ratioSolved * 100),
+        actScore: this.info.nActScore,
+        partialScore: Math.round(this.info.partialScore * 100),
+        globalScore: Math.round(this.info.globalScore * 100),
+        time: Math.round(this.info.tTime / 10) / 100,
+        actions: this.info.nActions,
+        sessions: []
+      };
+
+      if (this.userId)
+        result.userId = this.userId;
+      else if (this.SCORM)
+        result.user = this.SCORM.studentName + (this.SCORM.studentId === '' ? '' : ' (' + this.SCORM.studentId + ')');
+
+      for (var n = 0; n < this.sessions.length; n++) {
+        var sr = this.sessions[n];
+        if (sr.getInfo().numSequences > 0)
+          result.sessions.push(sr.getData(false, false));
+      }
+
+      return result;
+    },
+    /**
+     *
      * Initializes this report system with an optional set of parameters.
      * Returns a {@link external:Promise}, fulfilled when the reporter is fully initialized.
      * @param {?Object} options - Initial settings passed to the reporting system

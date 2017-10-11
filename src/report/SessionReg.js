@@ -138,6 +138,38 @@ define([
       return result;
     },
     /**
+     * 
+     * Builds a complex object with all relevant session data, similar to $print
+     * @param {booolean} recalcInfo - When `true`, global variables (number of sequences, score, total time...)
+     * will be recalculated from the data stored in the {@link SequenceReg} objects.
+     * @param {booolean} includeEmpty - When `true`, sequences without reported activities will be also included in the results
+     * @returns {Object} - An object containing the full session data
+     */
+    getData: function (recalcInfo, includeEmpty) {
+      if (recalcInfo)
+        this.info.recalc();
+
+      var result = {
+        projectName: this.projectName,
+        played: this.info.nActivities,
+        ratioPlayed: Math.round(this.info.ratioPlayed * 100),
+        solved: this.info.nActSolved,
+        ratioSolved: Math.round(this.info.ratioSolved * 100),
+        actions: this.info.nActions,
+        score: this.info.tScore,
+        time: Math.round(this.info.tTime / 10) / 100,
+        sequences: []
+      };
+
+      for (var p = 0; p < this.sequences.length; p++) {
+        var seq = this.sequences[p].getData();
+        if (includeEmpty || seq.activities.length > 0)
+          result.sequences.push(seq);
+      }
+
+      return result;
+    },
+    /**
      * Returns the `info` element associated to this SessionReg.
      * @returns {SessionReg.Info}
      */
