@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "1.0.1b",
+  "version": "0.1.50",
   "main": "src/JClic.js",
   "jsdelivr": "dist/jclic.min.js",
   "homepage": "http://projectestac.github.io/jclic.js",
@@ -46,7 +46,7 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
-    "eslint": "^4.7.0",
+    "eslint": "^4.8.0",
     "eslint-loader": "^1.9.0",
     "fs-extra": "^4.0.2",
     "gc-jaguarjs-jsdoc": "0.0.1",
