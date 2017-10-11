@@ -130,6 +130,25 @@ define([
       return $result;
     },
     /**
+     * 
+     * Builds a complex object with all relevant data about the activity results
+     * @returns {Object} - An object containing the activity results
+     */
+    getData: function() {
+      var result = {
+        name: this.name,
+        time: Math.round(this.totalTime / 10) / 100,
+        solved: this.solved,
+        score: this.score,
+        minActions: this.minActions,
+        actions: this.numActions
+      };
+      if (this.code)
+        result.code = this.code;
+      return result;
+    },
+
+    /**
      * Fills this ActivityReg with data provided in XML format
      * @param {external:jQuery} $xml -The XML element to be processed, already wrapped as jQuery object
      */
