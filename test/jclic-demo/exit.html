@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Report summary</title>
+  <style>
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>Report summary</h3>
+  <div id="results"></div>
+  <script>
+    const storage = window.sessionStorage
+    let msg = ''
+    let output = document.querySelector('#results')
+    if (storage.length < 1)
+      output.innerHTML = 'No results found!'
+    else
+      for (let i = 0; i < storage.length; i++) {
+        const key = storage.key(i)
+        if (key.startsWith('jclic_')) {
+          const report = JSON.parse(storage.getItem(key))
+          //output.innerHTML = `<p>${storage.getItem(key)}</p>`
+          output.innerHTML = `
+<table>
+<tr><td>Key</td><td>${key}</td></tr>
+<tr><td>Started</td><td>${report.started}</td></tr>
+<tr><td>Projects</td><td>${report.projects}</td></tr>
+<tr><td>Sequences</td><td>${report.sequences}</td></tr>
+<tr><td>Activities done</td><td>${report.activitiesDone}</td></tr>
+<tr><td>Played once</td><td>${report.playedOnce}</td></tr>
+<tr><td>Reportable</td><td>${report.reportable}</td></tr>
+<tr><td>Ratio played</td><td>${report.ratioPlayed}%</td></tr>
+<tr><td>Solved</td><td>${report.activitiesSolved}</td></tr>
+<tr><td>Ratio solved</td><td>${report.ratioSolved}%</td></tr>
+<tr><td>Activities scored</td><td>${report.actScore}</td></tr>
+<tr><td>Partial score</td><td>${report.partialScore}%</td></tr>
+<tr><td>Global score</td><td>${report.globalScore}%</td></tr>
+<tr><td>Total time</td><td>${report.time}</td></tr>
+<tr><td>Actions done</td><td>${report.actions}</td></tr>
+</table>`
+        }
+      }
+  </script>
+</body>
+
+</html>

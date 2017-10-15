@@ -26,7 +26,7 @@
    <jump action="STOP" id="back" />
   </item>
   <item id="menu0.pac" name="menu0.ass">
-   <jump action="STOP" id="forward" />
+   <jump action="EXIT" id="forward" />
    <jump action="STOP" id="back" />
   </item>
   <item name="menuact.ass">
