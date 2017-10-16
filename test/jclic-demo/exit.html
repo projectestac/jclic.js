@@ -8,7 +8,40 @@
   <title>Report summary</title>
   <style>
     body {
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+    }
+
+    td {
+      font-weight: bold;
+    }
+
+    td:not(:first-child) {
+      font-weight: initial;
+    }
+
+    .main {
+      background-color: lightblue;
+    }
+
+    .session {
+      background-color: lightyellow;
+    }
+
+    .activities {
+      margin-top: 1rem;
+      background-color: lightgrey;
+      border-collapse: collapse;
+    }
+
+    .activities td,
+    .activities th {
+      border: 1px solid;
+      padding: 0.4rem;
+    }
+
+    .activities td:not(:first-child),
+    .activities th:not(:first-child) {
+      text-align: right;
     }
   </style>
 </head>
@@ -27,9 +60,49 @@
         const key = storage.key(i)
         if (key.startsWith('jclic_')) {
           const report = JSON.parse(storage.getItem(key))
-          //output.innerHTML = `<p>${storage.getItem(key)}</p>`
-          output.innerHTML = `
-<table>
+          console.log(report)
+
+          let sessionInfo = ''
+          report.sessions.map(session => {
+            let sequenceInfo = ''
+            session.sequences.map(sequence => {
+              sequenceInfo += `
+<table class="activities">
+<thead>
+<tr><th colspan="8">${sequence.sequence}</th></tr>
+<tr><th>Name</th><th>Score</th><th>Precision</th><th>Solved</th><th>Time</th><th>Actions</th><th>MinAct</th><th>Closed</th></tr>
+</thead>
+<tbody>`
+              sequence.activities.map(activity => {
+                sequenceInfo += `<tr>
+<td>${activity.name}</td>
+<td>${activity.score}</td>
+<td>${activity.precision}%</td>
+<td>${activity.solved}</td>
+<td>${activity.time}</td>
+<td>${activity.actions}</td>
+<td>${activity.minActions}</td>
+<td>${activity.closed}</td></tr>`
+              })
+              sequenceInfo += '</tbody></table>'
+            })
+            sessionInfo += `
+<hr>
+<table class="session">
+<tr><td>Project</td><td>${session.projectName}</td></tr>
+<tr><td>Played</td><td>${session.played}</td></tr>
+<tr><td>Solved</td><td>${session.solved}</td></tr>
+<tr><td>Score</td><td>${session.score}</td></tr>
+<tr><td>Time</td><td>${session.time}</td></tr>
+<tr><td>Actions</td><td>${session.actions}</td></tr>
+<tr><td>Ratio played</td><td>${session.ratioPlayed}%</td></tr>
+<tr><td>Ratio solved</td><td>${session.ratioSolved}%</td></tr>
+<tr><td colspan="2">${sequenceInfo}</td></tr>
+</table>`
+
+
+            output.innerHTML = `
+<table class="main">
 <tr><td>Key</td><td>${key}</td></tr>
 <tr><td>Started</td><td>${report.started}</td></tr>
 <tr><td>Projects</td><td>${report.projects}</td></tr>
@@ -45,7 +118,10 @@
 <tr><td>Global score</td><td>${report.globalScore}%</td></tr>
 <tr><td>Total time</td><td>${report.time}</td></tr>
 <tr><td>Actions done</td><td>${report.actions}</td></tr>
-</table>`
+</table>
+${sessionInfo}`
+
+          })
         }
       }
   </script>
