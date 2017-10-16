@@ -131,23 +131,24 @@ define([
     },
     /**
      * 
-     * Builds a complex object with all relevant data about the activity results
-     * @returns {Object} - An object containing the activity results
+     * Builds an object with relevant data about the results obtained by the current student in this activity
+     * @returns {Object} - The results of this activity
      */
-    getData: function() {
+    getData: function () {
       var result = {
         name: this.name,
         time: Math.round(this.totalTime / 10) / 100,
         solved: this.solved,
         score: this.score,
         minActions: this.minActions,
-        actions: this.numActions
+        actions: this.numActions,
+        precision: this.getPrecision(),
+        closed: this.closed
       };
       if (this.code)
         result.code = this.code;
       return result;
     },
-
     /**
      * Fills this ActivityReg with data provided in XML format
      * @param {external:jQuery} $xml -The XML element to be processed, already wrapped as jQuery object
@@ -181,28 +182,6 @@ define([
         action.setProperties($(this));
         actReg.actions.push(action);
       });
-    },
-    /**
-     * Renders the results of this activity into a DOM tree
-     * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
-     * @returns {external:jQuery[]} - Array of jQuery objects of type "td" containing each
-     * one specific results of the activity.
-     */
-    $print: function (ps) {
-      var $html = Utils.$HTML;
-      var result = [];
-      if (this.closed) {
-        result.push($html.td(this.name));
-        result.push(this.solved ? $html.td(ps.getMsg('YES'), 'ok') : $html.td(ps.getMsg('NO'), 'no'));
-        result.push($html.td(this.numActions));
-        result.push($html.td(Utils.getPercent(this.getPrecision() / 100)));
-        result.push($html.td(Utils.getHMStime(this.totalTime)));
-      } else {
-        result.push($html.td(this.name, 'incomplete'));
-        for (var p = 0; p < 4; p++)
-          result.push($html.td('-', 'incomplete'));
-      }
-      return result;
     },
     /**
      * Reports a new action done by the user while playing the current activity

@@ -82,25 +82,9 @@ define([
      * @type {SequenceReg.Info} */
     info: null,
     /**
-     * Renders the results corresponding to this sequence into a DOM tree
-     * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
-     * @returns {external:jQuery[]} - Array of jQuery objects of type "tr" containing each
-     * one data about one activity.
-     */
-    $print: function (ps) {
-      var $trArray = [];
-      var $tr = $('<tr/>').append($('<td/>', { rowspan: this.activities.length }).html(this.name));
-      for (var p = 0; p < this.activities.length; p++) {
-        $tr.append(this.activities[p].$print(ps));
-        $trArray.push($tr);
-        $tr = $('<tr/>');
-      }
-      return $trArray;
-    },
-    /**
      * 
-     * Builds a complex object with all relevant sequence data, similar to $print
-     * @returns {Object} - An object containing the full sequence data
+     * Builds a complex object with data about the results of the activities done in this sequence
+     * @returns {Object} - The sequence results
      */
     getData: function () {
       var result = {

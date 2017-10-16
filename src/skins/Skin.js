@@ -590,11 +590,130 @@ define([
      * @returns {external:Promise} - The {@link external:Promise} returned by {@link Skin.showDlg}.
      */
     showReports: function (reporter) {
-      this.$reportsPanel.html(reporter ? reporter.$print(this.ps) : '');
+      this.$reportsPanel.html(this.$printReport(reporter));
       return this.showDlg(false, {
         main: [this.$infoHead, this.$reportsPanel],
         bottom: [this.$copyBtn, this.$closeDlgBtn]
       });
+    },
+    /**
+     * 
+     * Formats the current report in a DOM tree, ready to be placed in `$reportsPanel`
+     * @param {Reporter} reporter - The reporter system currently in use
+     * @returns {external:jQuery[]} - An array of jQuery objects containing the full report
+     */
+    $printReport: function (reporter) {
+      var result = [];
+      if (reporter) {
+        var $html = Utils.$HTML;
+        var report = reporter.getData();
+        var started = new Date(report.started);
+
+        result.push($('<div/>', { class: 'subTitle', id: this.ps.getUniqueId('ReportsLb') }).html(this.ps.getMsg('Current results')));
+
+        var $t = $('<table/>', { class: 'JCGlobalResults' });
+        $t.append(
+          $html.doubleCell(
+            this.ps.getMsg('Session started:'),
+            started.toLocaleDateString() + ' ' + started.toLocaleTimeString()),
+          $html.doubleCell(
+            this.ps.getMsg('Reports system:'),
+            this.ps.getMsg(report.descriptionKey) + ' ' + report.descriptionDetail));
+        if (report.userId)
+          $t.append($html.doubleCell(
+            this.ps.getMsg('User:'),
+            report.userId));
+        else if (report.user) // SCORM user
+          $t.append($html.doubleCell(
+            this.ps.getMsg('User:'),
+            report.user));
+
+        if (report.sequences > 0) {
+          if (report.sessions.length > 1)
+            $t.append($html.doubleCell(
+              this.ps.getMsg('Projects:'),
+              report.sessions.length));
+          $t.append(
+            $html.doubleCell(
+              this.ps.getMsg('Sequences:'),
+              report.sequences),
+            $html.doubleCell(
+              this.ps.getMsg('Activities done:'),
+              report.activitiesDone),
+            $html.doubleCell(
+              this.ps.getMsg('Activities played at least once:'),
+              report.playedOnce + '/' + report.reportable + " (" + Utils.getPercent(report.ratioPlayed / 100) + ")"));
+          if (report.activitiesDone > 0) {
+            $t.append($html.doubleCell(
+              this.ps.getMsg('Activities solved:'),
+              report.activitiesSolved + " (" + Utils.getPercent(report.ratioSolved / 100) + ")"));
+            if (report.actScore > 0)
+              $t.append(
+                $html.doubleCell(
+                  this.ps.getMsg('Partial score:'),
+                  Utils.getPercent(report.partialScore / 100) + ' ' + this.ps.getMsg('(out of played activities)')),
+                $html.doubleCell(
+                  this.ps.getMsg('Global score:'),
+                  Utils.getPercent(report.globalScore / 100) + ' ' + this.ps.getMsg('(out of all project activities)')));
+            $t.append(
+              $html.doubleCell(
+                this.ps.getMsg('Total time in activities:'),
+                Utils.getHMStime(report.time * 1000)),
+              $html.doubleCell(
+                this.ps.getMsg('Actions done:'),
+                report.actions));
+          }
+          result.push($t);
+
+          for (var n = 0; n < report.sessions.length; n++) {
+            var sr = report.sessions[n];
+            if (sr.sequences.length > 0) {
+              var $t = $('<table/>', { class: 'JCDetailed' });
+              result.push($('<p/>').html(report.sessions.length > 1 ? this.ps.getMsg('Project') + ' ' + sr.projectName : ''));
+              $t.append($('<thead/>').append($('<tr/>').append(
+                $html.th(this.ps.getMsg('sequence')),
+                $html.th(this.ps.getMsg('activity')),
+                $html.th(this.ps.getMsg('OK')),
+                $html.th(this.ps.getMsg('actions')),
+                $html.th(this.ps.getMsg('score')),
+                $html.th(this.ps.getMsg('time')))));
+
+              for (var p = 0; p < sr.sequences.length; p++) {
+                var seq = sr.sequences[p];
+                var $tr = $('<tr/>').append($('<td/>', { rowspan: seq.activities.length }).html(seq.sequence));
+                for (var q = 0; q < seq.activities.length; q++) {
+                  var act = seq.activities[q];
+                  if (act.closed) {
+                    $tr.append($html.td(act.name));
+                    $tr.append(act.solved ? $html.td(this.ps.getMsg('YES'), 'ok') : $html.td(this.ps.getMsg('NO'), 'no'));
+                    $tr.append($html.td(act.actions));
+                    $tr.append($html.td(Utils.getPercent(act.precision / 100)));
+                    $tr.append($html.td(Utils.getHMStime(act.time * 1000)));
+                  } else {
+                    $tr.append($html.td(act.name, 'incomplete'));
+                    for (var r = 0; r < 4; r++)
+                      $tr.append($html.td('-', 'incomplete'));
+                  }
+                  $t.append($tr);
+                  $tr = $('<tr/>');
+                }
+              }
+
+              $t.append($('<tr/>').append(
+                $html.td(this.ps.getMsg('Total:')),
+                $html.td(sr.played + ' (' + Utils.getPercent(sr.ratioPlayed / 100) + ')'),
+                $html.td(sr.solved + ' (' + Utils.getPercent(sr.ratioSolved / 100) + ')'),
+                $html.td(sr.actions),
+                $html.td(Utils.getPercent(sr.score / 100)),
+                $html.td(Utils.getHMStime(sr.time * 1000))));
+
+              result.push($t);
+            }
+          }
+        } else
+          result.push($('<p/>').html(this.ps.getMsg('No activities done!')));
+      }
+      return result;
     },
     /**
      *

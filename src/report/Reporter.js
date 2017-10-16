@@ -340,91 +340,18 @@ define([
     },
     /**
      *
-     * Renders the data contained in this report into a DOM tree
-     * @returns {external:jQuery} - A jQuery object with a `div` element containing the full report.
-     */
-    $print: function () {
-      this.info.recalc();
-
-      var $html = Utils.$HTML;
-      var result = [];
-
-      result.push($('<div/>', { class: 'subTitle', id: this.ps.getUniqueId('ReportsLb') }).html(this.ps.getMsg('Current results')));
-
-      var $t = $('<table/>', { class: 'JCGlobalResults' });
-      $t.append(
-        $html.doubleCell(
-          this.ps.getMsg('Session started:'),
-          this.started.toLocaleDateString() + ' ' + this.started.toLocaleTimeString()),
-        $html.doubleCell(
-          this.ps.getMsg('Reports system:'),
-          this.ps.getMsg(this.descriptionKey) + ' ' + this.descriptionDetail));
-      if (this.userId)
-        $t.append($html.doubleCell(
-          this.ps.getMsg('User:'),
-          this.userId));
-      else if (this.SCORM)
-        $t.append($html.doubleCell(
-          this.ps.getMsg('User:'),
-          this.SCORM.studentName + (this.SCORM.studentId === '' ? '' : ' (' + this.SCORM.studentId + ')')));
-
-      if (this.info.numSequences > 0) {
-        if (this.info.numSessions > 1)
-          $t.append($html.doubleCell(
-            this.ps.getMsg('Projects:'),
-            this.info.numSessions));
-        $t.append(
-          $html.doubleCell(
-            this.ps.getMsg('Sequences:'),
-            this.info.numSequences),
-          $html.doubleCell(
-            this.ps.getMsg('Activities done:'),
-            this.info.nActivities),
-          $html.doubleCell(
-            this.ps.getMsg('Activities played at least once:'),
-            this.info.nActPlayed + '/' + this.info.reportableActs + " (" + Utils.getPercent(this.info.ratioPlayed) + ")"));
-        if (this.info.nActivities > 0) {
-          $t.append($html.doubleCell(
-            this.ps.getMsg('Activities solved:'),
-            this.info.nActSolved + " (" + Utils.getPercent(this.info.ratioSolved) + ")"));
-          if (this.info.nActScore > 0)
-            $t.append(
-              $html.doubleCell(
-                this.ps.getMsg('Partial score:'),
-                Utils.getPercent(this.info.partialScore) + ' ' + this.ps.getMsg('(out of played activities)')),
-              $html.doubleCell(
-                this.ps.getMsg('Global score:'),
-                Utils.getPercent(this.info.globalScore) + ' ' + this.ps.getMsg('(out of all project activities)')));
-          $t.append(
-            $html.doubleCell(
-              this.ps.getMsg('Total time in activities:'),
-              Utils.getHMStime(this.info.tTime)),
-            $html.doubleCell(
-              this.ps.getMsg('Actions done:'),
-              this.info.nActions));
-        }
-        result.push($t);
-
-        for (var n = 0; n < this.sessions.length; n++) {
-          var sr = this.sessions[n];
-          if (sr.getInfo().numSequences > 0)
-            result = result.concat(sr.$print(this.ps, false, this.info.numSessions > 1));
-        }
-      } else
-        result.push($('<p/>').html(this.ps.getMsg('No activities done!')));
-
-      return result;
-    },
-    /**
-     *
-     * Builds a complex object with all relevant reporter data, similar to $print
-     * @returns {Object} - An object containing the full report
+     * Builds a complex object containing all the results reported while playing activities
+     * @returns {Object} - The current results
      */
     getData: function () {
+
+      // Force the re-calculation of all scores
       this.info.recalc();
 
       var result = {
         started: this.started.toISOString(),
+        descriptionKey: this.descriptionKey,
+        descriptionDetail: this.descriptionDetail,
         projects: this.info.numSessions,
         sequences: this.info.numSequences,
         activitiesDone: this.info.nActivities,

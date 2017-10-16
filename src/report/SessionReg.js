@@ -92,54 +92,8 @@ define([
      * @type {string} */
     code: null,
     /**
-     * Renders the results corresponding to this session into a DOM tree
-     * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
-     * @param {boolean} recalcInfo - When `true`, global variables (number of sequences, score, total time...)
-     * will be recalculated from the data stored in the {@link SequenceReg} objects.
-     * @param {boolean} writeProjectName - When `true`, a paragraph with the project name will be
-     * added to the resulting output.
-     * @returns {external:jQuery[]} - Array of jQuery objects containing the full report. The main
-     * object is a `table` element.
-     */
-    $print: function (ps, recalcInfo, writeProjectName) {
-      if (recalcInfo)
-        this.info.recalc();
-      var $html = Utils.$HTML;
-
-      var result = [];
-
-      var $t = $('<table/>', { class: 'JCDetailed' });
-
-      if (this.info.numSequences > 0) {
-
-        result.push($('<p/>').html(writeProjectName ? ps.getMsg('Project') + ' ' + this.projectName : ''));
-
-        $t.append($('<thead/>').append($('<tr/>').append(
-          $html.th(ps.getMsg('sequence')),
-          $html.th(ps.getMsg('activity')),
-          $html.th(ps.getMsg('OK')),
-          $html.th(ps.getMsg('actions')),
-          $html.th(ps.getMsg('score')),
-          $html.th(ps.getMsg('time')))));
-
-        for (var p = 0; p < this.sequences.length; p++)
-          $t.append(this.sequences[p].$print(ps));
-
-        $t.append($('<tr/>').append(
-          $html.td(ps.getMsg('Total:')),
-          $html.td(this.info.nActivities + ' (' + Utils.getPercent(this.info.ratioPlayed) + ')'),
-          $html.td(this.info.nActSolved + ' (' + Utils.getPercent(this.info.ratioSolved) + ')'),
-          $html.td(this.info.nActions),
-          $html.td(Utils.getPercent(this.info.tScore / 100)),
-          $html.td(Utils.getHMStime(this.info.tTime))));
-      }
-      result.push($t);
-
-      return result;
-    },
-    /**
      * 
-     * Builds a complex object with all relevant session data, similar to $print
+     * Builds a complex object with the results of all activities done during this working session
      * @param {booolean} recalcInfo - When `true`, global variables (number of sequences, score, total time...)
      * will be recalculated from the data stored in the {@link SequenceReg} objects.
      * @param {booolean} includeEmpty - When `true`, sequences without reported activities will be also included in the results

@@ -56,12 +56,12 @@ define([
      * Description of this reporting system
      * @override
      * @type {string} */
-    descriptionKey: 'Reporting to session storage',
+    descriptionKey: 'Reporting to local storage',
     /**
      * Additional info to display after the reporter's `description`
      * @override
      * @type {string} */
-    descriptionDetail: '(not set)',
+    descriptionDetail: '(browser session)',
     /**
      * Key used to save the report into sessionStorage 
      * @type {string} */
