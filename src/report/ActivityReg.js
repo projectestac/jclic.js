@@ -124,9 +124,9 @@ define([
         attr.reportActions = true;
 
       var $result = $('<activity/>', attr);
-      for (var p = 0; p < this.actions.length; p++) {
-        $result.append(this.actions[p].$getXML());
-      }
+      this.actions.forEach(function (ac) {
+        $result.append(ac.$getXML());
+      }, this);
       return $result;
     },
     /**

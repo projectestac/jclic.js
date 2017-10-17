@@ -238,8 +238,9 @@ define([
             else {
               var sel = 0;
               var $groupSelect = $('<select/>').attr({ size: Math.max(3, Math.min(15, groupList.length)) });
-              for (var p = 0; p < groupList.length; p++)
-                $groupSelect.append($('<option/>').attr({ value: groupList[p].id }).text(groupList[p].name));
+              groupList.forEach(function (g) {
+                $groupSelect.append($('<option/>').attr({ value: g.id }).text(g.name));
+              }, this);
               $groupSelect.change(function () {
                 sel = this.selectedIndex;
               });
@@ -283,8 +284,9 @@ define([
                 else {
                   var sel = -1;
                   var $userSelect = $('<select/>').attr({ size: Math.max(3, Math.min(15, userList.length)) });
-                  for (var p = 0; p < userList.length; p++)
-                    $userSelect.append($('<option/>').attr({ value: userList[p].id }).text(userList[p].name));
+                  userList.forEach(function (u) {
+                    $userSelect.append($('<option/>').attr({ value: u.id }).text(u.name));
+                  }, this);
                   $userSelect.change(function () {
                     sel = this.selectedIndex;
                   });
@@ -373,11 +375,10 @@ define([
       else if (this.SCORM)
         result.user = this.SCORM.studentName + (this.SCORM.studentId === '' ? '' : ' (' + this.SCORM.studentId + ')');
 
-      for (var n = 0; n < this.sessions.length; n++) {
-        var sr = this.sessions[n];
+      this.sessions.forEach(function (sr) {
         if (sr.getInfo().numSequences > 0)
           result.sessions.push(sr.getData(false, false));
-      }
+      }, this);
 
       return result;
     },
@@ -623,8 +624,8 @@ define([
     recalc: function () {
       if (!this.valid) {
         this.clear();
-        for (var p = 0; p < this.rep.sessions.length; p++) {
-          var inf = this.rep.sessions[p].getInfo();
+        this.rep.sessions.forEach(function (ses) {
+          var inf = ses.getInfo();
           this.reportableActs += inf.sReg.reportableActs;
           if (inf.numSequences > 0) {
             this.numSessions++;
@@ -641,7 +642,7 @@ define([
               this.tTime += inf.tTime;
             }
           }
-        }
+        }, this);
         if (this.nActivities > 0) {
           this.ratioSolved = this.nActSolved / this.nActivities;
           if (this.reportableActs > 0)

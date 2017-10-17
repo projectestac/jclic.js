@@ -665,8 +665,7 @@ define([
           }
           result.push($t);
 
-          for (var n = 0; n < report.sessions.length; n++) {
-            var sr = report.sessions[n];
+          report.sessions.forEach(function(sr) {
             if (sr.sequences.length > 0) {
               var $t = $('<table/>', { class: 'JCDetailed' });
               result.push($('<p/>').html(report.sessions.length > 1 ? this.ps.getMsg('Project') + ' ' + sr.projectName : ''));
@@ -678,11 +677,9 @@ define([
                 $html.th(this.ps.getMsg('score')),
                 $html.th(this.ps.getMsg('time')))));
 
-              for (var p = 0; p < sr.sequences.length; p++) {
-                var seq = sr.sequences[p];
+              sr.sequences.forEach(function(seq) {
                 var $tr = $('<tr/>').append($('<td/>', { rowspan: seq.activities.length }).html(seq.sequence));
-                for (var q = 0; q < seq.activities.length; q++) {
-                  var act = seq.activities[q];
+                seq.activities.forEach(function(act) {
                   if (act.closed) {
                     $tr.append($html.td(act.name));
                     $tr.append(act.solved ? $html.td(this.ps.getMsg('YES'), 'ok') : $html.td(this.ps.getMsg('NO'), 'no'));
@@ -696,8 +693,8 @@ define([
                   }
                   $t.append($tr);
                   $tr = $('<tr/>');
-                }
-              }
+                }, this);
+              }, this);
 
               $t.append($('<tr/>').append(
                 $html.td(this.ps.getMsg('Total:')),
@@ -709,7 +706,7 @@ define([
 
               result.push($t);
             }
-          }
+          }, this);
         } else
           result.push($('<p/>').html(this.ps.getMsg('No activities done!')));
       }
@@ -898,7 +895,7 @@ define([
 
     // look for the skin in the stack of realized skins
     if (skinName && ps) {
-      for (var i = 0; i < Skin.skinStack; i++) {
+      for (var i = 0; i < Skin.skinStack.length; i++) {
         sk = Skin.skinStack[i];
         if (sk.name === skinName && sk.ps === ps)
           return sk;

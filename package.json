@@ -55,7 +55,7 @@
     "mock-browser": "^0.92.14",
     "po2json": "^0.4.5",
     "requirejs": "~2.3.5",
-    "webpack": "^3.7.1",
+    "webpack": "^3.8.1",
     "xmldom": "^0.1.27"
   },
   "scripts": {

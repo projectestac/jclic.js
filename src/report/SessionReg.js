@@ -115,11 +115,11 @@ define([
         sequences: []
       };
 
-      for (var p = 0; p < this.sequences.length; p++) {
-        var seq = this.sequences[p].getData();
+      this.sequences.forEach(function (s) {
+        var seq = s.getData();
         if (includeEmpty || seq.activities.length > 0)
           result.sequences.push(seq);
-      }
+      }, this);
 
       return result;
     },
@@ -281,8 +281,8 @@ define([
     recalc: function () {
       if (!this.valid) {
         this.clear();
-        for (var p = 0; p < this.sReg.sequences.length; p++) {
-          var sri = this.sReg.sequences[p].getInfo();
+        this.sReg.sequences.forEach(function (sr) {
+          var sri = sr.getInfo();
           if (sri.nActivities > 0) {
             this.numSequences++;
             if (sri.nActClosed > 0) {
@@ -296,7 +296,7 @@ define([
               this.nActSolved += sri.nActSolved;
             }
           }
-        }
+        }, this);
         if (this.nActScore > 0)
           this.tScore = Math.round(this.tScore / this.nActScore);
         if (this.nActivities > 0) {

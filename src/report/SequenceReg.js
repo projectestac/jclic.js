@@ -91,8 +91,9 @@ define([
         sequence: this.name,
         activities: []
       };
-      for (var p = 0; p < this.activities.length; p++)
-        result.activities.push(this.activities[p].getData());
+      this.activities.forEach(function (act) {
+        result.activities.push(act.getData());
+      }, this);
       return result;
     },
     /**
@@ -221,8 +222,7 @@ define([
         this.clear();
         this.nActivities = this.sqReg.activities.length;
         if (this.nActivities > 0) {
-          for (var p = 0; p < this.nActivities; p++) {
-            var ar = this.sqReg.activities[p];
+          this.sqReg.activities.forEach(function (ar) {
             if (ar.closed) {
               this.nActClosed++;
               this.tTime += ar.totalTime;
@@ -235,7 +235,7 @@ define([
                 this.nActScore++;
               }
             }
-          }
+          }, this);
           if (this.nActClosed > 0)
             this.ratioSolved = this.nActSolved / this.nActClosed;
           if (this.nActScore > 0)
