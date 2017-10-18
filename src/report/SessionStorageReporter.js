@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global define, document */
+/* global define, window */
 
 define([
   "jquery",

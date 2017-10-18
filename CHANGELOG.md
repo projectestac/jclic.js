@@ -1,3 +1,9 @@
+### v1.0.0 (2017-10-18)
+#### Improvements
+- Major version number updated to 1.x to be compliant with [semver](http://semver.org/). With this change, the project goes from _Initial development_ (0.x) to _Public API_ (1.x).
+- New class `report/SessionStorageReporter`, storing report results in [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage) or [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
+- jclic.js is also available at [CDNJS](https://cdnjs.com/libraries/jclic.js), thanks to [Peter Dave Hello](https://github.com/PeterDaveHello) and [LboAnn](https://github.com/extend1994).
+
 ### v0.1.49 (2017-09-01)
 #### Improvements
 - New NPM scripts to build, debug and launch jclic.js, now based on [webpack](https://webpack.js.org/) instead of [Grunt](https://gruntjs.com/) and [Browserify](http://browserify.org/). See README.md for more information.
