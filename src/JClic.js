@@ -109,6 +109,13 @@
  * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise}
  */
 
+ /**
+ * The Storage interface of the Web Storage API provides access to the session storage or local storage for a particular domain,
+ * allowing you to for example add, modify or delete stored data items.
+ * @external Storage
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Storage}
+ */
+
 /* global define:true, JClicDataProject, JClicDataOptions */
 
 // Mock `define` when called from a JavaScript environment without native AMD support (like Node.js)

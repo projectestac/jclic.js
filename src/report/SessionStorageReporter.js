@@ -53,10 +53,14 @@ define([
   SessionStorageReporter.prototype = {
     constructor: SessionStorageReporter,
     /**
+     * Type of storage to be used. Defaults to `window.sessionStorage`
+     * @type {external:Storage} */
+    storage: window.sessionStorage,
+    /**
      * Description of this reporting system
      * @override
      * @type {string} */
-    descriptionKey: 'Reporting to local storage',
+    descriptionKey: 'Reporting to session storage',
     /**
      * Additional info to display after the reporter's `description`
      * @override
@@ -67,6 +71,23 @@ define([
      * @type {string} */
     key: null,
     /**
+     *
+     * Initializes this report system with an optional set of parameters.
+     * Returns a {@link external:Promise}, fulfilled when the reporter is fully initialized.
+     * @override
+     * @param {?Object} options - Initial settings passed to the reporting system
+     * @returns {external:Promise}
+     */
+    init: function (options) {
+      if (typeof options === 'undefined' || options === null)
+        options = this.ps.options;
+      if(options.storage === 'local'){
+        this.storage = window.localStorage;
+        this.descriptionKey = 'Reporting to local storage';
+      }
+      return Reporter.prototype.init.call(this, options);
+    },
+    /**
      * 
      * Saves the current report data to sessionStorage
      */
@@ -74,7 +95,7 @@ define([
       // Update results out of current thread
       var thisReporter = this;
       window.setTimeout(function () {
-        window.sessionStorage.setItem(thisReporter.key, JSON.stringify(thisReporter.getData()));
+        thisReporter.storage.setItem(thisReporter.key, JSON.stringify(thisReporter.getData()));
       }, 0);
     },
     /**
