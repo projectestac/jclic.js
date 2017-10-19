@@ -34,6 +34,7 @@ define([
   "jquery",
   "../Utils"
 ], function ($, Utils) {
+  
   /**
    * This class stores information about one specific action done by the current user while playing
    * an activity.

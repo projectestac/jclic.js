@@ -328,7 +328,7 @@ define([
      * @type {boolean} */
     _isModalDlg: false,
     /**
-     * Div inside @link{$dlgOverlay} where JClicPlayer will place the information to be shown
+     * Div inside {@link $dlgOverlay} where JClicPlayer will place the information to be shown
      * @type {external:jQuery} */
     $reportsPanel: null,
     /**

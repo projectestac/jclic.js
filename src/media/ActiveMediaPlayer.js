@@ -42,7 +42,7 @@ define([
    * @param {MediaContent} mc - - The content used by this player
    * @param {MediaBag} mb - The project's MediaBag
    * @param {PlayStation} ps - An object implementing the
-   * @link{http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation} interface,
+   * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation} interface,
    * usually a {@link JClicPlayer}.
    */
   var ActiveMediaPlayer = function (mc, mb, ps) {

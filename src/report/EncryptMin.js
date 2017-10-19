@@ -38,8 +38,8 @@ define([], function () {
    * passwords in plain text in data and configuration files. Do not use it as a
    * secure cryptographic system!
    *
-   * Based on @link{https://github.com/projectestac/jclic/blob/master/src/utilities/edu/xtec/util/Encryption.java|Encryption}
-   * utilities, created by Albert Llastarri for {@link https://github.com/projectestac/jclic|JClic}.
+   * Based on {@link https://github.com/projectestac/jclic/blob/master/src/utilities/edu/xtec/util/Encryption.java Encryption}
+   * utilities, created by Albert Llastarri for {@link https://github.com/projectestac/jclic JClic}.
    *
    * IMPORTANT: This is a shortened version of Encryption with only the methods needed to decrypt
    * stored passwords. Full version is on file `src/misc/encryption/Encryption.js`

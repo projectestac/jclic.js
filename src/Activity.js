@@ -723,14 +723,14 @@ define([
      * This object is responsible for rendering the contents of the activity on the screen and
      * managing user's interaction.
      * Each type of Activity must implement its own `Activity.Panel`.
-     * In JClic, {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html|Activity.Panel}
-     * extends {@link http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html|javax.swing.JPanel}.
+     * In JClic, {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html Activity.Panel}
+     * extends {@link http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html javax.swing.JPanel}.
      * In this implementation, the JPanel will be replaced by an HTML `div` tag.
      * @class
      * @extends AWT.Container
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-     * @link{http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation}
+     * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation}
      * Java interface.
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */

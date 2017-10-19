@@ -39,7 +39,7 @@ define([
    * This class stores miscellaneous data obtained by the current user playing an {@link Activity}.
    * @exports ActivityReg
    * @class
-   * @param {Activity} act - The [@link Activity} referenced by this object.
+   * @param {Activity} act - The {@link Activity} referenced by this object.
    */
   var ActivityReg = function (act) {
     this.name = act.name;

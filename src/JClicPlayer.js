@@ -52,8 +52,8 @@ define([
     /**
      *
      * JClicPlayer is one of the the main classes of the JClic system. It implements the
-     * @link{http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation}
-     * interface, needed to read and play JClic projects.
+     * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation}
+     * interface, needed to host JClic activities.
      * JClicPlayer offers to {@link Activity#Panel} objects all the necessary resources and functions:
      * media bags (to load and realize images and other media contents), sequence control, management
      * of the reporting system, user interface, display of system messages, etc.
@@ -1223,7 +1223,7 @@ define([
       }
     };
 
-    // JClicPlayer extends AWT.Container
+    // JClicPlayer extends AWT.Container (and implements PlayStation)
     JClicPlayer.prototype = $.extend(Object.create(AWT.Container.prototype), JClicPlayer.prototype);
 
     return JClicPlayer;
