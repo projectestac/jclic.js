@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Source: automation/AutoContentProvider.js</title>
+    <title>Class: SessionStorageReporter</title>
     
     
     
@@ -12814,166 +12814,3841 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="automation_AutoContentProvider.js.html">Source: automation/AutoContentProvider.js</h1>
+        <h1 class="page-title" data-filename="SessionStorageReporter.html">Class: SessionStorageReporter</h1>
         
 
 
+
+<section>
+
+<header>
+    <h2>
+    SessionStorageReporter
+    </h2>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- *  File    : automation/AutoContentProvider.js
- *  Created : 13/04/2015
- *  By      : Francesc Busquets &lt;francesc@gmail.com>
- *
- *  JClic.js
- *  An HTML5 player of JClic activities
- *  https://projectestac.github.io/jclic.js
- *
- *  @source https://github.com/projectestac/jclic.js
- *
- *  @license EUPL-1.1
- *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
- *
- *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
- *  the European Commission- subsequent versions of the EUPL (the "Licence");
- *  You may not use this work except in compliance with the Licence.
- *
- *  You may obtain a copy of the Licence at:
- *  https://joinup.ec.europa.eu/software/page/eupl
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
- *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- *  Licence for the specific language governing permissions and limitations
- *  under the Licence.
- *  @licend
- */
+</header>
 
-/* global define */
+<article>
+    <div class="container-overview">
+    
 
-define([
-  "../Utils"
-], function (Utils) {
+    
+        
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="SessionStorageReporter">
+            
+            new SessionStorageReporter<span class="signature">(ps)</span>
+        </h4>
 
-  /**
-   * This abstract class is the base for classes that create on-time automatic content for JClic
-   * activities, usually using random parameters to assure different content in each session.
-   *
-   * Activities with `AutoContentProvider` objects rely on them to build new content on every start.
-   * @exports AutoContentProvider
-   * @class
-   * @param {JClicProject} project - The JClic project to which this content provider belongs.
-   */
-  var AutoContentProvider = function (project) {
-    this.project = project;
-  };
+        
+        <div class="tag-source">
+            <a href="report_SessionStorageReporter.js.html">report/SessionStorageReporter.js</a>, <a href="report_SessionStorageReporter.js.html#line50">line 50</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>This JClic <a href="Reporter.html"><code>Reporter</code></a> writes persistent data to the browser local session storage. It uses some of<br>the <a target="_blank" href="https://github.com/projectestac/jclic/wiki/JClic-Reports-developers-guide">JClic Reports API</a>.<br>Connection parameters (<code>key</code>, <code>context</code>...) are passed through the <code>options</code> element of <a href="JClicPlayer.html"><code>JClicPlayer</code></a> (acting as <code>PlayStation</code>).<br>Set <code>storage=local</code> in <code>options</code> to store reports in <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage"><code>window.localStorage</code></a><br>instead of <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage"><code>window.sessionStorage</code></a> (default).</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>ps</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">PlayStation</span>
 
 
-  AutoContentProvider.prototype = {
-    constructor: AutoContentProvider,
-    /**
-     * The JClic project to which AutoContentProvider belongs
-     * @type {JClicProject} */
-    project: null,
-    /**
-     *
-     * Loads the object settings from a specific jQuery XML element
-     * @param {external:jQuery} $xml - The XML element to parse
-     */
-    setProperties: function ($xml) {
-      this.className = ($xml.attr('class')|| '').replace(/^edu\.xtec\.jclic\.automation\./, '@');
-      return this;
-    },
-    /**
-     *
-     * Initializes the content provider
-     */
-    init: function () {
-      // To be implemented in real content providers
-    },
-    /**
-     *
-     * Builds an {@link AutoContentProvider.ActiveBagContentKit} and generates the automatized content.
-     * @param {number} nRows - Number of rows to be processed
-     * @param {number} nCols - Number of columns to be processed
-     * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
-     * objects to be filled with new content.
-     * @param {bolean} useIds - When `true`, the `id` field of {@link ActiveBoxContent} objects is significant
-     * @returns {boolean} - `true` if the process was OK. `false` otherwise.
-     */
-    generateContent: function (nRows, nCols, content, useIds) {
-      var kit = new AutoContentProvider.ActiveBagContentKit(nRows, nCols, content, useIds);
-      return this.process(kit);
-    },
-    /**
-     *
-     * Generates the automatized content
-     * @param {AutoContentProvider.ActiveBagContentKit} _kit - The objects to be filled with content
-     * @returns {boolean} - `true` if the process was OK. `false` otherwise.
-     */
-    process: function (_kit) {
-      // To be implemented in subclasses
-      return false;
-    }
-  };
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The <code>PlayStation</code> used to retrieve settings and localized messages</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
 
-  /**
-   * Utility object used to encapsulate multiple sets of box contents
-   * @class
-   * @param {number} nRows - Number of rows to be processed
-   * @param {number} nCols - Number of columns to be processed
-   * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
-   * objects to be filled with new content.
-   * @param {bolean} useIds - `true` when the `id` field of {@link ActiveBoxContent} objects is significant.
-   */
-  AutoContentProvider.ActiveBagContentKit = function (nRows, nCols, content, useIds) {
-    this.nRows = nRows;
-    this.nCols = nCols;
-    this.content = content;
-    this.useIds = useIds;
-  };
+        
 
-  /**
-   * Contains the current list of classes derived from AutoContentProvider.
-   * This object should be updated by real automation classes at declaration time.
-   * Currently, only two types of "AutoContentProvider" are defined: {@link Arith} and TagReplace.
-   * @type {object} */
-  AutoContentProvider.CLASSES = {
-    // TODO: Implement TagReplace
-    '@tagreplace.TagReplace': AutoContentProvider
-  };
+        
 
-  /**
-   * Dynamic constructor that returns a specific type of AutoContentProvider based on the `class`
-   * attribute declared on an $xml element.
-   * It should be called only from {@link Activity#setproperties}
-   * @param {external.jQuery} $xml - The XML element to parse
-   * @param {JClicProject} project - The JClic project to which this object will be related
-   * @returns {AutoContentProvider}
-   */
-  AutoContentProvider.getProvider = function ($xml, project) {
-    var automation = null;
-    if ($xml &amp;&amp; project) {
-      var className = ($xml.attr('class')|| '').replace(/^edu\.xtec\.jclic\.automation\./, '@');
-      var cl = AutoContentProvider.CLASSES[className];
-      if (cl) {
-        automation = new cl(project);
-        automation.setProperties($xml);
-      } else
-        Utils.log('error', 'Unknown AutoContentProvider class: %s', className);
-    }
-    return automation;
-  };
+        
 
-  return AutoContentProvider;
+        
 
-});
-</code></pre>
-        </article>
-    </section>
+        
 
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        <ul>
+            <li><a href="Reporter.html">Reporter</a></li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="bUserBased">bUserBased<span class="type-signature type boolean">boolean</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p><code>true</code> if the system is connected to a database with user's data.<br>When <code>false</code>, a generic ID will be used.</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="currentSession">currentSession<span class="type-signature type sessionreg"><a href="SessionReg.html">SessionReg</a></span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Currently active session</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="descriptionDetail">descriptionDetail<span class="type-signature type string">string</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Additional info to display after the reporter's <code>description</code></p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="descriptionKey">descriptionKey<span class="type-signature type string">string</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Description of this reporting system</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="groupCodeFilter">groupCodeFilter<span class="type-signature type string">string</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Optional filter key to be used in the group selection dialog</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="info">info<span class="type-signature type reporter.info"><a href="Reporter.Info.html">Reporter.Info</a></span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>The <a href="Reporter.Info.html"><code>Reporter.Info</code></a> used to calculate and store global results.</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="initiated">initiated<span class="type-signature type boolean">boolean</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p><code>true</code> if the system was successfully initiated, <code>false</code> otherwise</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="key">key<span class="type-signature type string">string</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Key used to save the report into sessionStorage</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="MAX_USERID_PROMPT_ATTEMPTS">MAX_USERID_PROMPT_ATTEMPTS<span class="type-signature type number">number</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Maximum number of incorrect UserID attempts</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="ps">ps<span class="type-signature type playstation">PlayStation</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>The <code>PlayStation</code> used to retrieve messages</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="SCORM">SCORM</h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>A valid SCORM bridge, or <code>null</code> if no SCORM API detected.</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="sessionContext">sessionContext<span class="type-signature type string">string</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>A second optional key to be reported as a field in session records</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="sessionKey">sessionKey<span class="type-signature type string">string</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Optional key to be added as a field in session records</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="sessions">sessions<span class="type-signature type array.<sessionreg>">Array.&lt;<a href="SessionReg.html">SessionReg</a>></span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Array of sessions included in this report</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="started">started<span class="type-signature type date">Date</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Starting date and time of this report</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="storage">storage<span class="type-signature type external:storage"><a href="external-Storage.html">external:Storage</a></span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Type of storage to be used. Defaults to <code>window.sessionStorage</code></p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="userCodeFilter">userCodeFilter<span class="type-signature type string">string</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Another optional filter key to be used in the user selection dialog</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="userId">userId<span class="type-signature type string">string</span> </h4>
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>User ID currently associated with this reporting system</p>
+    </div>
+    
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="end">
+            
+                <span class="inherited"><a href="Reporter.html#end">inherited</a></span>
+            
+            end<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="external-Promise.html">external:Promise</a>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line414">line 414</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Closes this reporting system</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="external-Promise.html">external:Promise</a>
+                        
+                    
+            </td>
+            <td class="description last"><ul>
+<li>A promise to be fullfilled when all pending tasks are finished.</li>
+</ul></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="endActivity">
+            
+                <span class="inherited"><a href="Reporter.html#endActivity">inherited</a></span>
+            
+            endActivity<span class="signature">(score, numActions, solved)</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line496">line 496</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>This method should be called when the current activity finishes. Data about user's final results<br>on the activity will then be saved.</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>score</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The final score, usually in a 0-100 scale.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>numActions</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The total number of actions done by the user to solve the activity</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>solved</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p><code>true</code> if the activity was finally solved, <code>false</code> otherwise.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="endSequence">
+            
+                <span class="inherited"><a href="Reporter.html#endSequence">inherited</a></span>
+            
+            endSequence<span class="signature">()</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line423">line 423</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Finalizes the current sequence</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="endSession">
+            
+                <span class="inherited"><a href="Reporter.html#endSession">inherited</a></span>
+            
+            endSession<span class="signature">()</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line433">line 433</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Finalizes the current session</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="getBooleanProperty">
+            
+                <span class="inherited"><a href="Reporter.html#getBooleanProperty">inherited</a></span>
+            
+            getBooleanProperty<span class="signature">(key, +)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line150">line 150</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Gets a specific boolean property from this reporting system</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Requested property</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>+</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>defaultValue - Default return when requested property does not exist</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        boolean
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="getCurrentSequenceInfo">
+            
+                <span class="inherited"><a href="Reporter.html#getCurrentSequenceInfo">inherited</a></span>
+            
+            getCurrentSequenceInfo<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="SequenceReg.Info.html">SequenceReg.Info</a>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line521">line 521</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Gets information about the current sequence</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="SequenceReg.Info.html">SequenceReg.Info</a>
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="getCurrentSequenceTag">
+            
+                <span class="inherited"><a href="Reporter.html#getCurrentSequenceTag">inherited</a></span>
+            
+            getCurrentSequenceTag<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{string}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line529">line 529</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Gets the name of the current sequence</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="getData">
+            
+                <span class="inherited"><a href="Reporter.html#getData">inherited</a></span>
+            
+            getData<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line348">line 348</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Builds a complex object containing all the results reported while playing activities</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        Object
+                        
+                    
+            </td>
+            <td class="description last"><ul>
+<li>The current results</li>
+</ul></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="getGroupData">
+            
+                <span class="inherited"><a href="Reporter.html#getGroupData">inherited</a></span>
+            
+            getGroupData<span class="signature">(_groupId)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="external-Promise.html">external:Promise</a>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line191">line 191</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Gets extended data associated with a specific group or organization. This<br>is a method intended to be implemented in subclasses.</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>_groupId</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The requested group ID</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="external-Promise.html">external:Promise</a>
+                        
+                    
+            </td>
+            <td class="description last"><ul>
+<li>When fulfilled, an object with group data is returned.</li>
+</ul></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="getGroups">
+            
+                <span class="inherited"><a href="Reporter.html#getGroups">inherited</a></span>
+            
+            getGroups<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="external-Promise.html">external:Promise</a>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line160">line 160</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Gets the list of groups or organizations currently registered in the system. This<br>method should be implemented by classes derived of <code>Reporter</code>.</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="external-Promise.html">external:Promise</a>
+                        
+                    
+            </td>
+            <td class="description last"><ul>
+<li>When fulfilled, an array of group data is returned as a result</li>
+</ul></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="getInfo">
+            
+                <span class="inherited"><a href="Reporter.html#getInfo">inherited</a></span>
+            
+            getInfo<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Reporter.Info.html">Reporter.Info</a>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line130">line 130</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Returns the <code>info</code> element associated to this Reporter.</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="Reporter.Info.html">Reporter.Info</a>
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="getProperty">
+            
+                <span class="inherited"><a href="Reporter.html#getProperty">inherited</a></span>
+            
+            getProperty<span class="signature">(key, +)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{string}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line140">line 140</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Gets a specific property from this reporting system</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Requested property</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>+</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>defaultValue - Default return value when requested property does not exist</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="getUserData">
+            
+                <span class="inherited"><a href="Reporter.html#getUserData">inherited</a></span>
+            
+            getUserData<span class="signature">(_userId)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="external-Promise.html">external:Promise</a>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line181">line 181</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Gets extended data associated with a specific user. This is a method intended to be<br>implemented in subclasses.</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>_userId</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The requested user ID</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="external-Promise.html">external:Promise</a>
+                        
+                    
+            </td>
+            <td class="description last"><ul>
+<li>When fulfilled, an object with user data is returned.</li>
+</ul></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="getUsers">
+            
+                <span class="inherited"><a href="Reporter.html#getUsers">inherited</a></span>
+            
+            getUsers<span class="signature">(+)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="external-Promise.html">external:Promise</a>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line171">line 171</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Gets the list of users currently registered in the system, optionally filtered by<br>a specific group ID. This method should be implemented by classes derived of <code>Reporter</code>.</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>+</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>groupId - Optional group ID to be used as a filter criteria</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="external-Promise.html">external:Promise</a>
+                        
+                    
+            </td>
+            <td class="description last"><ul>
+<li>When fulfilled, an object with a collection of user data records<br>is returned</li>
+</ul></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="init">
+            
+                <span class="inherited"><a href="Reporter.html#init">inherited</a></span>
+            
+            init<span class="signature">(options)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="external-Promise.html">external:Promise</a>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line392">line 392</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Initializes this report system with an optional set of parameters.<br>Returns a <a href="external-Promise.html"><code>external:Promise</code></a>, fulfilled when the reporter is fully initialized.</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        <span class="nullable">nullable</span>
+                    
+                        
+                    
+                
+                <p>Initial settings passed to the reporting system</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="external-Promise.html">external:Promise</a>
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="newAction">
+            
+                <span class="inherited"><a href="Reporter.html#newAction">inherited</a></span>
+            
+            newAction<span class="signature">(type, +, +, ok)</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line510">line 510</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Reports a new action done by the user while playing the current activity</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Type of action (<code>click</code>, <code>write</code>, <code>move</code>, <code>select</code>...)</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>+</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>source - Description of the object on which the action is done.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>+</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>dest - Description of the object reporter acts as a target of the action (usually in pairings)</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>ok</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p><code>true</code> if the action was OK, <code>false</code>, <code>null</code> or <code>undefined</code> otherwhise</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="newActivity">
+            
+                <span class="inherited"><a href="Reporter.html#newActivity">inherited</a></span>
+            
+            newActivity<span class="signature">(act)</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line482">line 482</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>This method should be invoked when the user starts a new activity</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>act</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Activity.html">Activity</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The <a href="Activity.html"><code>Activity</code></a> reporter has just started</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="newGroup">
+            
+                <span class="inherited"><a href="Reporter.html#newGroup">inherited</a></span>
+            
+            newGroup<span class="signature">(_gd)</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line442">line 442</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Creates a new group (method to be implemented in subclasses)</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>_gd</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">GroupData</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="newSequence">
+            
+                <span class="inherited"><a href="Reporter.html#newSequence">inherited</a></span>
+            
+            newSequence<span class="signature">(ase)</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line469">line 469</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>This method should be invoked when a new sequence starts</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>ase</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ActivitySequenceElement.html">ActivitySequenceElement</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The <a href="ActivitySequenceElement.html"><code>ActivitySequenceElement</code></a> referenced by this sequence.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="newSession">
+            
+                <span class="inherited"><a href="Reporter.html#newSession">inherited</a></span>
+            
+            newSession<span class="signature">(jcp)</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line458">line 458</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>This method should be invoked when a new session starts.</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>jcp</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="JClicProject.html">JClicProject</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The <a href="JClicProject.html"><code>JClicProject</code></a> this session refers to.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="newUser">
+            
+                <span class="inherited"><a href="Reporter.html#newUser">inherited</a></span>
+            
+            newUser<span class="signature">(_ud)</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line450">line 450</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Creates a new user (method to be implemented in subclasses)</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>_ud</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">UserData</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="promptForNewGroup">
+            
+                <span class="inherited"><a href="Reporter.html#promptForNewGroup">inherited</a></span>
+            
+            promptForNewGroup<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="external-Promise.html">external:Promise</a>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line209">line 209</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Allows the current user to create a new group, and asks his name</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="external-Promise.html">external:Promise</a>
+                        
+                    
+            </td>
+            <td class="description last"><ul>
+<li>When fulfilled, the chosen name for the new group is returned.</li>
+</ul></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="promptForNewUser">
+            
+                <span class="inherited"><a href="Reporter.html#promptForNewUser">inherited</a></span>
+            
+            promptForNewUser<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="external-Promise.html">external:Promise</a>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line219">line 219</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Allows the current user to create a new user ID, and asks his ID and password</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="external-Promise.html">external:Promise</a>
+                        
+                    
+            </td>
+            <td class="description last"><ul>
+<li>When fulfilled, an object with the new user ID and password<br>is returned.</li>
+</ul></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="promptGroupId">
+            
+                <span class="inherited"><a href="Reporter.html#promptGroupId">inherited</a></span>
+            
+            promptGroupId<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="external-Promise.html">external:Promise</a>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line228">line 228</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Allows the current user to select its group or organization from the current groups list</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="external-Promise.html">external:Promise</a>
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="promptUserId">
+            
+                <span class="inherited"><a href="Reporter.html#promptUserId">inherited</a></span>
+            
+            promptUserId<span class="signature">(+)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="external-Promise.html">external:Promise</a>}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line268">line 268</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Asks for a valid user ID fulfilling the promise if found, rejecting it otherwise</p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+            
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>+</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>forcePrompt - Prompt also if <code>userId</code> is already defined (default is <code>false</code>)</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="external-Promise.html">external:Promise</a>
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="saveCurrentReport">
+            
+            saveCurrentReport<span class="signature">()</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_SessionStorageReporter.js.html">report/SessionStorageReporter.js</a>, <a href="report_SessionStorageReporter.js.html#line96">line 96</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Saves the current report data to sessionStorage</p>
+    </div>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="userBased">
+            
+                <span class="inherited"><a href="Reporter.html#userBased">inherited</a></span>
+            
+            userBased<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+        </h4>
+
+        
+        <div class="tag-source">
+            <a href="report_Reporter.js.html">report/Reporter.js</a>, <a href="report_Reporter.js.html#line199">line 199</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd class="folded">
+    
+    <div class="description">
+        <p>Checks if this reporting system manages its own database of users and groups. Defaults to <code>false</code></p>
+    </div>
+    
+
+    
+    <div class="expandable">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <h5>Returns:</h5>
+            
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        boolean
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+        
+
+        
+    </div>
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    <div class="expandable-toggle">
+        <i class="fa"></i>
+    </div>
+    
+</dd>
+
+        </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -12982,7 +16657,7 @@ define([
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Oct 19 2017 16:28:35 GMT+0200 (CEST)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Oct 19 2017 16:28:43 GMT+0200 (CEST)
         </footer>
     </div>
 </div>
