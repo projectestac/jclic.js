@@ -23,22 +23,22 @@
   <!-- item id="demo.pac" name="pres0.ass" delay="50" -->
   <item id="demo.pac" name="pres0.ass" >
    <jump tag="menu0.pac" id="forward" />
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="back" />
   </item>
   <item id="menu0.pac" name="menu0.ass">
-   <jump action="EXIT" id="forward" />
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="forward" />
+   <jump action="RETURN" id="back" />
   </item>
   <item name="menuact.ass">
-   <jump action="STOP" id="forward" />
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="forward" />
+   <jump action="RETURN" id="back" />
   </item>
   <item id="menunou.pac" name="nou">
    <jump tag="menu0.pac" id="forward" />
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="back" />
   </item>
   <item id="menupuz.pac" name="menupuz.ass">
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="back" />
   </item>
   <item name="puz01.puz" />
   <item name="puz02.puz" />
@@ -54,14 +54,14 @@
    <jump tag="menuact.pac" id="forward" />
   </item>
   <item id="menuact.pac" name="menuact.ass">
-   <jump action="STOP" id="forward" />
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="forward" />
+   <jump action="RETURN" id="back" />
   </item>
   <item id="menuass.pac" name="menuass.ass">
    <description>
     <p>association examples</p>
    </description>
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="back" />
   </item>
   <item name="ass01.ass" />
   <item name="ass02.ass" />
@@ -78,7 +78,7 @@
    <description>
     <p>scrambled letters examples</p>
    </description>
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="back" />
   </item>
   <item name="sop01.sop" />
   <item name="sop02.sop" />
@@ -89,7 +89,7 @@
    <description>
     <p>crossword examples</p>
    </description>
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="back" />
   </item>
   <item name="crw01.crw" />
   <item name="crw02.crw">
@@ -99,7 +99,7 @@
    <description>
     <p>text activity examples</p>
    </description>
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="back" />
   </item>
   <item name="ass08.ass" />
   <item name="txa01.txa" />
@@ -119,7 +119,7 @@
    <jump tag="menuact.pac" id="forward" />
   </item>
   <item id="skins" name="skin01.txa">
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="back" />
   </item>
   <item name="skin02.txa" />
   <item name="skin03.txa" />
@@ -128,7 +128,7 @@
    <jump action="RETURN" id="forward" />
   </item>
   <item id="anim" name="anim.ass">
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="back" />
   </item>
   <item name="anim1" />
   <item name="puzanim.puz" />
@@ -138,10 +138,10 @@
   </item>
   <item id="sounds" name="sounds">
    <jump action="RETURN" id="forward" />
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="back" />
   </item>
   <item id="features" name="novetats">
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="back" />
   </item>
   <item name="maxTimeSample" />
   <item name="maxActionsSample" />
@@ -155,7 +155,7 @@
    <jump action="RETURN" id="forward" />
   </item>
   <item id="shapers" name="shape1">
-   <jump action="STOP" id="back" />
+   <jump action="RETURN" id="back" />
   </item>
   <item name="shape3" />
   <item name="shape2" />

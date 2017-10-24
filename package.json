@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "1.0.0",
+  "version": "1.0.1b",
   "main": "src/JClic.js",
   "jsdelivr": "dist/jclic.min.js",
   "homepage": "http://projectestac.github.io/jclic.js",
@@ -37,7 +37,7 @@
   "dependencies": {
     "clipboard-js": "^0.3.5",
     "es6-promise": "^4.1.1",
-    "i18next": "^10.0.1",
+    "i18next": "^10.0.3",
     "jquery": "^3.2.1",
     "jszip": "^3.1.4",
     "jszip-utils": "0.0.2",

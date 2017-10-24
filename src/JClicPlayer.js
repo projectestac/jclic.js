@@ -130,6 +130,9 @@ define([
         // URL where to navigate to on exit
         exitUrl: null,
         //
+        // When `true` and no elements on sequence stack, RETURN acts as EXIT
+        returnAsExit: false,
+        //
         // At the beginning, the audio should be enabled or disabled
         audioEnabled: true,
         //
@@ -731,7 +734,7 @@ define([
 
           if (this.skin) {
             // Enable or disable actions
-            var hasReturn = this.history.storedElementsCount() > 0;
+            var hasReturn = this.history.storedElementsCount() > 0 || this.options.returnAsExit;
             var navBtnFlag = this.navButtonsAlways ?
               'both' : this.navButtonsDisabled ?
                 'none' : this.project.activitySequence.getNavButtonsFlag();
@@ -739,7 +742,7 @@ define([
               this.project.activitySequence.hasNextAct(hasReturn));
             this.actions['prev'].setEnabled((navBtnFlag === 'back' || navBtnFlag === 'both') &&
               this.project.activitySequence.hasPrevAct(hasReturn));
-            this.actions['return'].setEnabled(this.history.storedElementsCount() > 0);
+            this.actions['return'].setEnabled(hasReturn);
             this.actions['help'].setEnabled(this.actPanel.act.helpWindowAllowed());
             this.actions['reset'].setEnabled(this.actPanel.act.canReinit());
             this.actions['info'].setEnabled(this.actPanel.act.hasInfo());
@@ -924,9 +927,10 @@ define([
             break;
 
           case 'RETURN':
-            player.history.pop();
-            break;
-
+            if(player.history.storedElementsCount() > 0 || !player.options.returnAsExit){
+              player.history.pop();            
+              break;
+            }
           case 'EXIT':
             ji = new JumpInfo('EXIT', fn);
             player.history.processJump(ji, false);

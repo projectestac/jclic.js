@@ -157,8 +157,10 @@ define([
           case 'STOP':
             break;
           case 'RETURN':
-            result = this.pop();
-            break;
+            if (this.sequenceStack.length > 0 || !this.player.options.returnAsExit) {
+              result = this.pop();
+              break;
+            }
           case 'EXIT':
             if (this.testMode) {
               Utils.log('info', 'At this point, the program should exit.');
