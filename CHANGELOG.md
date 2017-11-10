@@ -1,3 +1,7 @@
+### v1.0.1 (2017-11-10)
+#### Improvements
+- New startup parameter `returnAsExit` treats `ActivitySequence` elements of type `return` as if they where of type `exit`, only when `PlayerHistory.sequenceStack` is empty.
+
 ### v1.0.0 (2017-10-18)
 #### Improvements
 - Major version number updated to 1.x to be compliant with [semver](http://semver.org/). With this change, the project goes from _Initial development_ (0.x) to _Public API_ (1.x).
