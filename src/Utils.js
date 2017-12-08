@@ -33,21 +33,17 @@
 define([
   "jquery",
   "screenfull",
-  "es6-promise",
   "clipboard-js",
   "i18next",
   "jszip",
   "jszip-utils",
   "scriptjs",
   "webfontloader"
-], function ($, screenfull, es6p, clipboard, i18next, JSZip, JSZipUtils, ScriptJS, WebFont) {
+], function ($, screenfull, clipboard, i18next, JSZip, JSZipUtils, ScriptJS, WebFont) {
 
   // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
-    screenfull = window.screenfull;
-
-  // Use es6-promise for browsers without native support of 'Promise'
-  var Promise = es6p.Promise;
+    screenfull = window.screenfull
 
   /**
    *
@@ -56,28 +52,23 @@ define([
    * @class
    * @abstract
    */
-  var Utils = {
+  const Utils = {
     /**
      * Exports third-party NPM packages used by JClic, so they become available to other scripts through
      * the global variable `JClicObject` (defined in {@link JClic})
      * @example <caption>Example usage of JSZip through JClicObject</caption>
-     * var WebFont = JClicObject.Utils.pkg.WebFont;
+     * var WebFont = window.JClicObject.Utils.pkg.WebFont;
      * WebFont.load({google: {families: ['Roboto']}});
      * @type: {object} */
     pkg: {
       ClipboardJS: clipboard,
-      Promise: Promise,
       i18next: i18next,
       $: $,
       JSZip: JSZip,
       JSZipUtils: JSZipUtils,
       ScriptJS: ScriptJS,
-      WebFont: WebFont
+      WebFont: WebFont,
     },
-    /**
-     * The "Promise" object obtained form es6-promise
-     * @type: {function} */
-    Promise: Promise,
     /**
      * Function obtained from `i18next` that will return the translation of the provided key
      * into the current language.
@@ -85,9 +76,7 @@ define([
      * @param {string} key - ID of the expression to be translated
      * @returns {string} - Translated text
      */
-    getMsg: function (key) {
-      return key;
-    },
+    getMsg: key => key,
     /**
      * List of valid verbosity levels
      * @const {string[]} */
@@ -109,31 +98,31 @@ define([
       timestamp: true,
       popupOnErrors: false,
       chainTo: null,
-      pipeTo: null
+      pipeTo: null,
     },
     /**
      * Initializes the global settings
      * @param {object} options - An object with global settings
      * @returns {object} The normalized `options` object
      */
-    init: function (options) {
-      options = Utils.normalizeObject(options);
+    init: options => {
+      options = Utils.normalizeObject(options)
       if (typeof options.logLevel !== 'undefined')
-        Utils.setLogLevel(options.logLevel);
+        Utils.setLogLevel(options.logLevel)
       if (typeof options.chainLogTo === 'function')
-        Utils.LOG_OPTIONS.chainTo = options.chainLogTo;
+        Utils.LOG_OPTIONS.chainTo = options.chainLogTo
       if (typeof options.pipeLogTo === 'function')
-        Utils.LOG_OPTIONS.pipeTo = options.pipeLogTo;
-      return options;
+        Utils.LOG_OPTIONS.pipeTo = options.pipeLogTo
+      return options
     },
     /**
      * Establishes the current verbosity level of the logging system
      * @param {string} level - One of the valid strings in {@link Utils.LOG_LEVELS}
      */
-    setLogLevel: function (level) {
-      var log = Utils.LOG_LEVELS.indexOf(level);
+    setLogLevel: level => {
+      const log = Utils.LOG_LEVELS.indexOf(level)
       if (log >= 0)
-        Utils.LOG_LEVEL = log;
+        Utils.LOG_LEVEL = log
     },
     /**
      * Reports a new message to the logging system
@@ -142,40 +131,18 @@ define([
      * in `console.log` (see: {@link https://developer.mozilla.org/en-US/docs/Web/API/Console/log})
      */
     log: function (type, msg) {
-      var level = Utils.LOG_LEVELS.indexOf(type);
+      const level = Utils.LOG_LEVELS.indexOf(type)
 
       // Check if message should currently be logged
       if (level < 0 || level <= Utils.LOG_LEVEL) {
         if (Utils.LOG_OPTIONS.pipeTo)
-          Utils.LOG_OPTIONS.pipeTo.apply(null, arguments);
+          Utils.LOG_OPTIONS.pipeTo.apply(null, arguments)
         else {
-          var mainMsg = msg;
-          if (Utils.LOG_OPTIONS.timestamp)
-            mainMsg = Utils.getDateTime() + ' ' + mainMsg;
-          mainMsg = Utils.LOG_PRINT_LABELS[level] + ' ' + mainMsg;
-          if (Utils.LOG_OPTIONS.prefix)
-            mainMsg = Utils.LOG_OPTIONS.prefix + ' ' + mainMsg;
-
-          if (arguments.length > 2) {
-            var args = [mainMsg];
-            for (var p = 2; p < arguments.length; p++)
-              args.push(arguments[p]);
-            console[level === 1 ? 'error' : level === 2 ? 'warn' : 'log'].apply(console, args);
-          } else
-            switch (level) {
-              case 1:
-                console.error(mainMsg);
-                break;
-              case 2:
-                console.warn(mainMsg);
-                break;
-              default:
-                console.log(mainMsg);
-            }
-
+          const mainMsg = `${Utils.LOG_OPTIONS.prefix || ''} ${Utils.LOG_PRINT_LABELS[level]} ${Utils.LOG_OPTIONS.timestamp ? Utils.getDateTime() : ''} ${msg}`
+          console[level === 1 ? 'error' : level === 2 ? 'warn' : 'log'].apply(console, [mainMsg].concat(arguments.slice(2)))
           // Call chained logger, if anny
           if (Utils.LOG_OPTIONS.chainTo)
-            Utils.LOG_OPTIONS.chainTo.apply(null, arguments);
+            Utils.LOG_OPTIONS.chainTo.apply(null, arguments)
         }
       }
     },
@@ -185,37 +152,27 @@ define([
      * @param {boolean=} [defaultValue=false] - The default value to return when `val` is false
      * @returns {number}
      */
-    getBoolean: function (val, defaultValue) {
-      return val === 'true' ? true : val === 'false' ? false : defaultValue;
-    },
+    getBoolean: (val, defaultValue = false) => val === 'true' ? true : val === 'false' ? false : defaultValue,
     /**
      * Gets a value from an given expression that can be `null`, `undefined` or empty string ('')
      * @param {?*} val - The expression to parse
-     * @param {?*} defaultValue - The value to return when `val` is `null`, `''` or `undefined`
+     * @param {?*} [defaultValue=null] - The value to return when `val` is `null`, `''` or `undefined`
      * @returns {*}
      */
-    getVal: function (val, defaultValue) {
-      return val === '' || val === null || typeof val === 'undefined' ?
-        defaultValue || null :
-        val;
-    },
+    getVal: (val, defaultValue = null) => (val === '' || val === null || typeof val === 'undefined') ? defaultValue : val,
     /**
      * Gets a number from a string or another number
      * @param {?*} val - The expression to parse
-     * @param {number} defaultValue - The default value
+     * @param {number} [defaultValue=0] - The default value
      * @returns {number}
      */
-    getNumber: function (val, defaultValue) {
-      return Number(Utils.getVal(val, defaultValue));
-    },
+    getNumber: (val, defaultValue) => Number(Utils.getVal(val, defaultValue)),
     /**
      * Gets the plain percent expression (without decimals) of the given value
      * @param {number} val - The value to be expressed as a percentile
      * @returns {string}
      */
-    getPercent: function (val) {
-      return Math.round(val * 100) + '%';
-    },
+    getPercent: val => `${Math.round(val * 100)}%`,
     /**
      * Returns a given time in [00h 00'00"] format
      * @param {number} millis - Amount of milliseconds to be processed
@@ -507,7 +464,7 @@ define([
      * @param {string} path - The filename
      * @param {?external:JSZip} zip - An optional {@link external:JSZip} object where to look
      * for the file
-     * @returns {external:Promise}
+     * @returns {Promise}
      */
     getPathPromise: function (basePath, path, zip) {
       if (zip) {

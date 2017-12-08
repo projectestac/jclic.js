@@ -539,11 +539,11 @@ define([
      * @param {object} options - This object should have two components: `main` and `bottom`, both
      * containing a jQuery HTML element (or array of elements) to be placed on the main and bottom panels
      * of the dialog.
-     * @returns {external:Promise} - A {@link external:Promise} that will be fulfilled when the dialog is closed.
+     * @returns {Promise} - A Promise that will be fulfilled when the dialog is closed.
      */
     showDlg: function (modal, options) {
       var skin = this;
-      return new Utils.Promise(function (resolve, reject) {
+      return new Promise(function (resolve, reject) {
         skin._dlgOkValue = 'ok';
         skin._dlgCancelValue = 'cancelled';
         skin._isModalDlg = modal;
@@ -587,7 +587,7 @@ define([
      *
      * Displays a dialog with a report of the current results achieved by the user.
      * @param {Reporter} reporter - The reporter system currently in use
-     * @returns {external:Promise} - The {@link external:Promise} returned by {@link Skin.showDlg}.
+     * @returns {Promise} - The Promise returned by {@link Skin.showDlg}.
      */
     showReports: function (reporter) {
       this.$reportsPanel.html(this.$printReport(reporter));

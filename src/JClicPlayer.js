@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global define, JClicObject, JSON, location, window */
+/* global define, JSON, location, window */
 
 define([
   "jquery",
@@ -344,7 +344,7 @@ define([
       /**
        *
        * Executes miscellaneous finalization routines.
-       * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished.
+       * @returns {Promise} - A promise to be fullfilled when all pending tasks are finished.
        */
       end: function () {
         var result = null;
@@ -365,12 +365,12 @@ define([
         }
         if (this.activeMediaBag)
           this.activeMediaBag.removeAll();
-        return result || Utils.Promise.resolve(true);
+        return result || Promise.resolve(true);
       },
       /**
        *
        * Creates and initializes the {@link Reporter} member
-       * @return {external:Promise}
+       * @return {Promise}
        */
       initReporter: function () {
         if (this.reporter) {
@@ -565,7 +565,7 @@ define([
                 });
               });
               return;
-            } else if (player.localFS && JClicObject && !JClicObject.projectFiles[fullPath]) {
+            } else if (player.localFS && window.JClicObject && !window.JClicObject.projectFiles[fullPath]) {
               ScriptJS(fullPath + '.js', function () {
                 player.load(project, sequence, activity);
               });
@@ -638,8 +638,8 @@ define([
             // Special case for local file systems (using `file` protocol)
             else if (player.localFS) {
               // Check if file is already loaded in the global variable `JClicObject`
-              if (JClicObject && JClicObject.projectFiles[fullPath]) {
-                fp = 'data:text/xml;charset=UTF-8,' + JClicObject.projectFiles[fullPath];
+              if (window.JClicObject && window.JClicObject.projectFiles[fullPath]) {
+                fp = 'data:text/xml;charset=UTF-8,' + window.JClicObject.projectFiles[fullPath];
               } else {
                 Utils.log('error', 'Unable to load: %s.js', fullPath);
                 player.setWaitCursor(false);

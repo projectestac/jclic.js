@@ -155,41 +155,41 @@ define([
      *
      * Gets the list of groups or organizations currently registered in the system. This
      * method should be implemented by classes derived of `Reporter`.
-     * @returns {external:Promise} - When fulfilled, an array of group data is returned as a result
+     * @returns {Promise} - When fulfilled, an array of group data is returned as a result
      */
     getGroups: function () {
-      return Utils.Promise.reject('No groups defined!');
+      return Promise.reject('No groups defined!');
     },
     /**
      *
      * Gets the list of users currently registered in the system, optionally filtered by
      * a specific group ID. This method should be implemented by classes derived of `Reporter`.
      * @param {string}+ groupId - Optional group ID to be used as a filter criteria
-     * @returns {external:Promise} - When fulfilled, an object with a collection of user data records
+     * @returns {Promise} - When fulfilled, an object with a collection of user data records
      * is returned
      */
     getUsers: function (groupId) {
-      return Utils.Promise.reject('No users defined in ' + groupId);
+      return Promise.reject('No users defined in ' + groupId);
     },
     /**
      *
      * Gets extended data associated with a specific user. This is a method intended to be
      * implemented in subclasses.
      * @param {string} _userId - The requested user ID
-     * @returns {external:Promise} - When fulfilled, an object with user data is returned.
+     * @returns {Promise} - When fulfilled, an object with user data is returned.
      */
     getUserData: function (_userId) {
-      return Utils.Promise.reject('Unknown user!');
+      return Promise.reject('Unknown user!');
     },
     /**
      *
      * Gets extended data associated with a specific group or organization. This
      * is a method intended to be implemented in subclasses.
      * @param {string} _groupId - The requested group ID
-     * @returns {external:Promise} - When fulfilled, an object with group data is returned.
+     * @returns {Promise} - When fulfilled, an object with group data is returned.
      */
     getGroupData: function (_groupId) {
-      return Utils.Promise.reject('Unknown group!');
+      return Promise.reject('Unknown group!');
     },
     /**
      *
@@ -204,30 +204,30 @@ define([
     /**
      *
      * Allows the current user to create a new group, and asks his name
-     * @returns {external:Promise} - When fulfilled, the chosen name for the new group is returned.
+     * @returns {Promise} - When fulfilled, the chosen name for the new group is returned.
      */
     promptForNewGroup: function () {
       // TODO: Implement promptForNewGroup
-      return Utils.Promise.reject('Remote creation of groups not yet implemented!');
+      return Promise.reject('Remote creation of groups not yet implemented!');
     },
     /**
      *
      * Allows the current user to create a new user ID, and asks his ID and password
-     * @returns {external:Promise} - When fulfilled, an object with the new user ID and password
+     * @returns {Promise} - When fulfilled, an object with the new user ID and password
      * is returned.
      */
     promptForNewUser: function () {
       // TODO: Implement promptForNewUser
-      return Utils.Promise.reject('Remote creation of users not yet implemented!');
+      return Promise.reject('Remote creation of users not yet implemented!');
     },
     /**
      *
      * Allows the current user to select its group or organization from the current groups list
-     * @returns {external:Promise}
+     * @returns {Promise}
      */
     promptGroupId: function () {
       var reporter = this;
-      return new Utils.Promise(function (resolve, reject) {
+      return new Promise(function (resolve, reject) {
         if (!reporter.userBased())
           reject('This system does not manage users!');
         else {
@@ -263,11 +263,11 @@ define([
      *
      * Asks for a valid user ID fulfilling the promise if found, rejecting it otherwise
      * @param {boolean}+ forcePrompt - Prompt also if `userId` is already defined (default is `false`)
-     * @returns {external:Promise}
+     * @returns {Promise}
      */
     promptUserId: function (forcePrompt) {
       var reporter = this;
-      return new Utils.Promise(function (resolve, reject) {
+      return new Promise(function (resolve, reject) {
         if (reporter.userId !== null && !forcePrompt)
           resolve(reporter.userId);
         else if (!reporter.userBased())
@@ -385,9 +385,9 @@ define([
     /**
      *
      * Initializes this report system with an optional set of parameters.
-     * Returns a {@link external:Promise}, fulfilled when the reporter is fully initialized.
+     * Returns a Promise, fulfilled when the reporter is fully initialized.
      * @param {?Object} options - Initial settings passed to the reporting system
-     * @returns {external:Promise}
+     * @returns {Promise}
      */
     init: function (options) {
       if (!options)
@@ -404,17 +404,17 @@ define([
       }
       this.initiated = true;
       Utils.log('debug', 'Basic Reporter initialized');
-      return Utils.Promise.resolve(true);
+      return Promise.resolve(true);
     },
     /**
      *
      * Closes this reporting system
-     * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished.
+     * @returns {Promise} - A Promise object to be fullfilled when all pending tasks are finished.
      */
     end: function () {
       Utils.log('debug', 'Basic Reporter ending');
       this.endSession();
-      return Utils.Promise.resolve(true);
+      return Promise.resolve(true);
     },
     /**
      *

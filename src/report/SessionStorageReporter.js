@@ -75,10 +75,10 @@ define([
       /**
        *
        * Initializes this report system with an optional set of parameters.
-       * Returns a {@link external:Promise}, fulfilled when the reporter is fully initialized.
+       * Returns a Promise, fulfilled when the reporter is fully initialized.
        * @override
        * @param {?Object} options - Initial settings passed to the reporting system
-       * @returns {external:Promise}
+       * @returns {Promise}
        */
       init: function (options) {
         if (typeof options === 'undefined' || options === null)

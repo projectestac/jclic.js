@@ -172,7 +172,7 @@ define([
       /**
        *
        * Transmits all report beans currently stored in `tasks` to the reports server
-       * @returns {external:Promise}
+       * @returns {Promise}
        */
       flushTasksPromise: function () {
         if (this.processingTasks || this.currentSessionId === null ||
@@ -180,7 +180,7 @@ define([
           // The task list cannot be processed now. Pass and wait until the next timer cycle:
           if (this.processingTasks)
             this.forceFlush = true;
-          return Utils.Promise.resolve(true);
+          return Promise.resolve(true);
         }
         else {
           // Set up the `processingTasks` flag to avoid re-entrant processing
@@ -193,7 +193,7 @@ define([
 
           Utils.log('debug', 'Reporting:', reportBean.$bean[0]);
 
-          return new Utils.Promise(function (resolve, reject) {
+          return new Promise(function (resolve, reject) {
             reporter.transaction(reportBean.$bean)
               .done(function (_data, _textStatus, _jqXHR) {
                 // TODO: Check returned message for possible errors on the server side
@@ -234,10 +234,10 @@ define([
       /**
        *
        * Initializes this report system with an optional set of parameters.
-       * Returns a {@link external:Promise}, fulfilled when the reporter is fully initialized.
+       * Returns a Promise, fulfilled when the reporter is fully initialized.
        * @override
        * @param {?Object} options - Initial settings passed to the reporting system
-       * @returns {external:Promise}
+       * @returns {Promise}
        */
       init: function (options) {
         if (typeof options === 'undefined' || options === null)
@@ -256,7 +256,7 @@ define([
 
         var reporter = this;
         var bean = new TCPReporter.ReportBean('get_properties');
-        return new Utils.Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
           reporter.transaction(bean.$bean)
             .done(function (data, _textStatus, _jqXHR) {
               reporter.dbProperties = {};
@@ -312,7 +312,7 @@ define([
        *
        * Creates a new session in the remote database and records its ID for future use
        * @param {boolean} forceNewSession - When `true`, a new session will always be created.
-       * @returns {external:Promise} - A {@link external:Promise} reporter will be successfully resolved
+       * @returns {Promise} - A Promise reporter will be successfully resolved
        * only when `currentSessionId` have a valid value.
        */
       createDBSession: function (forceNewSession) {
@@ -320,10 +320,10 @@ define([
 
         if (this.currentSessionId !== null && !forceNewSession)
           // A valid session is available, so just return it
-          return Utils.Promise.resolve(this.currentSessionId);
+          return Promise.resolve(this.currentSessionId);
         else
           // A new session must be created:
-          return new Utils.Promise(function (resolve, reject) {
+          return new Promise(function (resolve, reject) {
             if (reporter.initiated && reporter.userId !== null && reporter.currentSession !== null) {
               reporter.flushTasksPromise().then(function () {
                 reporter.currentSessionId = null;
@@ -354,7 +354,7 @@ define([
       /**
        * Closes this reporting system
        * @override
-       * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished, or _null_ if not active.
+       * @returns {Promise} - A promise to be fullfilled when all pending tasks are finished, or _null_ if not active.
        */
       end: function () {
         var reporter = this;
@@ -366,7 +366,7 @@ define([
        * Performs a transaction on the remote server
        * @param {external:jQuery} $xml - The XML element to be transmited, wrapped into a jQuery object
        * @returns {external:jqXHR} - The {@link external:jqXHR} obtained as a result of a call to `$.ajax`.
-       * This object should be treated as a {@link external:Promise} or
+       * This object should be treated as a Promise or
        * as a JQuery {@link https://api.jquery.com/category/deferred-object|Deferred} object.
        */
       transaction: function ($xml) {
@@ -385,11 +385,11 @@ define([
        *
        * Gets the list of current groups or organizations registered on this reporting system.
        * @override
-       * @returns {external:Promise} - When fulfilled, an array of group data is returned as a result
+       * @returns {Promise} - When fulfilled, an array of group data is returned as a result
        */
       getGroups: function () {
         var reporter = this;
-        return new Utils.Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
           if (!reporter.userBased())
             reject('This system does not manage users!');
           else {
@@ -415,12 +415,12 @@ define([
        * a specific group ID.
        * @override
        * @param {string}+ groupId - Optional group ID to be used as a filter criteria
-       * @returns {external:Promise} - When fulfilled, an object with a collection of user data records
+       * @returns {Promise} - When fulfilled, an object with a collection of user data records
        * is returned
        */
       getUsers: function (groupId) {
         var reporter = this;
-        return new Utils.Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
           if (!reporter.userBased())
             reject('This system does not manage users!');
           else {
@@ -449,11 +449,11 @@ define([
        *
        * Gets extended data associated with a specific user.
        * @param {string} userId - The requested user ID
-       * @returns {external:Promise} - When fulfilled, an object with user data is returned.
+       * @returns {Promise} - When fulfilled, an object with user data is returned.
        */
       getUserData: function (userId) {
         var reporter = this;
-        return new Utils.Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
           if (!reporter.userBased())
             reject('This system does not manage users!');
           else {
@@ -487,7 +487,7 @@ define([
        *
        * Stops the reporting system, usually as a result of repeated errors or because the player
        * shuts down.
-       * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished.
+       * @returns {Promise} - A promise to be fullfilled when all pending tasks are finished.
        */
       stopReporting: function () {
         var result = null;
@@ -507,7 +507,7 @@ define([
             reporter.initiated = false;
           });
         }
-        return result || Utils.Promise.resolve(true);
+        return result || Promise.resolve(true);
       },
       /**
        *
