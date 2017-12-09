@@ -46,6 +46,14 @@ define([
     screenfull = window.screenfull
 
   /**
+   * Returns the two-digits text expression representing the given number (lesser than 100) zero-padded at left
+   * Useful for representing hours, minutes and seconds
+   * @param {number} val - The number to be processed
+   * @returns {string}
+   */
+  const _zp = val => `0${val}`.slice(-2)
+
+  /**
    *
    * Miscellaneous utility functions and constants
    * @exports Utils
@@ -132,17 +140,18 @@ define([
      */
     log: function (type, msg) {
       const level = Utils.LOG_LEVELS.indexOf(type)
+      const args = Array.prototype.slice.call(arguments)
 
       // Check if message should currently be logged
       if (level < 0 || level <= Utils.LOG_LEVEL) {
         if (Utils.LOG_OPTIONS.pipeTo)
-          Utils.LOG_OPTIONS.pipeTo.apply(null, arguments)
+          Utils.LOG_OPTIONS.pipeTo.apply(null, args)
         else {
           const mainMsg = `${Utils.LOG_OPTIONS.prefix || ''} ${Utils.LOG_PRINT_LABELS[level]} ${Utils.LOG_OPTIONS.timestamp ? Utils.getDateTime() : ''} ${msg}`
-          console[level === 1 ? 'error' : level === 2 ? 'warn' : 'log'].apply(console, [mainMsg].concat(arguments.slice(2)))
+          console[level === 1 ? 'error' : level === 2 ? 'warn' : 'log'].apply(console, [mainMsg].concat(args.slice(2)))
           // Call chained logger, if anny
           if (Utils.LOG_OPTIONS.chainTo)
-            Utils.LOG_OPTIONS.chainTo.apply(null, arguments)
+            Utils.LOG_OPTIONS.chainTo.apply(null, args)
         }
       }
     },
@@ -178,22 +187,17 @@ define([
      * @param {number} millis - Amount of milliseconds to be processed
      * @returns {string}
      */
-    getHMStime: function (millis) {
-      var d = new Date(millis);
-      var h = d.getUTCHours(), m = d.getUTCMinutes(), s = d.getUTCSeconds();
-      return (h ? h + 'h ' : '') + (h || m ? ('0' + m).slice(-2) + '\'' : '') + ('0' + s).slice(-2) + '"';
+    getHMStime: millis => {
+      const d = new Date(millis)
+      const h = d.getUTCHours(), m = d.getUTCMinutes(), s = d.getUTCSeconds()
+      return `${h ? h + 'h ' : ''}${h || m ? _zp(m) + '\'' : ''}${_zp(s)}"`
     },
     /**
      * Returns a formatted string with the provided date and time
      * @param {Date} date - The date to be formatted. When `null` or `undefined`, the current date will be used.
      * @returns {string}
      */
-    getDateTime: function (date) {
-      if (!date)
-        date = new Date();
-      return date.getFullYear() + '/' + ('0' + date.getMonth()).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + ' ' +
-        ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2) + ':' + ('0' + date.getSeconds()).slice(-2);
-    },
+    getDateTime: (date = new Date()) => `${date.getFullYear()}/${_zp(date.getMonth() + 1)}/${_zp(date.getDate())} ${_zp(date.getHours())}:${_zp(date.getMinutes())}:${_zp(date.getSeconds())}`,
     /** @const {number} */
     'FALSE': 0,
     /** @const {number} */
@@ -205,30 +209,20 @@ define([
      * @param {?string} val - The text to be parsed
      * @returns {number}
      */
-    getTriState: function (val) {
-      return Number(val === 'true' ? Utils.TRUE
-        : val === 'false' ? Utils.FALSE : Utils.DEFAULT);
-    },
+    getTriState: val => val === 'true' ? Utils.TRUE : val === 'false' ? Utils.FALSE : Utils.DEFAULT,
     /**
      * Returns a string with the given `tag` repeated n times
      * @param {string} tag - The tag to be repeated
      * @param {number} repeats - The number of times to repeat the tag
      * @returns {string}
      */
-    fillString: function (tag, repeats) {
-      var s = '';
-      for (var i = 0; i < repeats; i++)
-        s += tag;
-      return s;
-    },
+    fillString: (tag, repeats = 0) => Array(repeats).fill(tag).join(''),
     /**
      * Checks if the provided value is 'null' or 'undefined'.
      * @param {*} val - The value to be parsed
      * @returns {boolean}
      */
-    isNullOrUndef: function (val) {
-      return typeof val === 'undefined' || val === null;
-    },
+    isNullOrUndef: val => typeof val === 'undefined' || val === null,
     /**
      * Checks if two expressions are equivalent.
      * Returns `true` when both parameters are `null` or `undefined`, and also when both have
@@ -237,21 +231,18 @@ define([
      * @param {!*} b
      * @returns {boolean}
      */
-    isEquivalent: function (a, b) {
-      return (typeof a === 'undefined' || a === null) && (typeof b === 'undefined' || b === null) ||
-        a === b;
-    },
+    isEquivalent: (a, b) => (typeof a === 'undefined' || a === null) && (typeof b === 'undefined' || b === null) || a === b,
     /**
      * Reads paragraphs, identified by `<p></p>` elements, inside XML data
      * @param {object} xml - The DOM-XML element to be parsed
      * @returns {string}
      */
-    getXmlText: function (xml) {
-      var text = '';
+    getXmlText: xml => {
+      let text = ''
       $(xml).children('p').each(function () {
-        text += '<p>' + this.textContent + '</p>';
-      });
-      return text;
+        text += `<p>${this.textContent}</p>`
+      })
+      return text
     },
     /**
      * Creates a string suitable to be used in the 'style' attribute of HTML tags, filled with the
@@ -259,96 +250,71 @@ define([
      * @param {object} cssObj
      * @returns {string}
      */
-    cssToString: function (cssObj) {
-      var s = '';
-      $.each(cssObj, function (key, value) {
-        s += key + ': ' + value + ';';
-      });
-      return s;
-    },
+    cssToString: cssObj => Object.keys(cssObj).reduce((s, key) => `${s}${key}:${cssObj[key]};`, ''),
     /**
      * Converts java-like color codes (like '0xRRGGBB') to valid CSS values like '#RRGGBB' or 'rgba(r,g,b,a)'
      * @param {string=} color - A color, as codified in Java
      * @param {string=} defaultColor - The default color to be used
      * @returns {string}
      */
-    checkColor: function (color, defaultColor) {
-
-      if (typeof color === 'undefined' || color === null) {
-        color = defaultColor;
-        if (typeof color === 'undefined' || color === null)
-          color = Utils.settings.BoxBase.BACK_COLOR;
-      }
-
-      var col = color.replace('0x', '#');
-
+    checkColor: (color, defaultColor = Utils.settings.BoxBase.BACK_COLOR) => {
+      if (typeof color === 'undefined' || color === null)
+        color = defaultColor
+      color = color.replace('0x', '#');
       // Check for Alpha value
-      if (col.charAt(0) === '#' && col.length > 7) {
-        var alpha = parseInt(col.substring(1, 3), 16) / 255.0;
-        col = 'rgba(' +
-          parseInt(col.substring(3, 5), 16) + ',' +
-          parseInt(col.substring(5, 7), 16) + ',' +
-          parseInt(col.substring(7, 9), 16) + ',' +
-          alpha + ')';
+      if (color.charAt(0) === '#' && color.length > 7) {
+        const alpha = parseInt(color.substring(1, 3), 16) / 255.0
+        color = `rgba(${parseInt(color.substring(3, 5), 16)},${parseInt(color.substring(5, 7), 16)},${parseInt(color.substring(7, 9), 16)},${alpha})`
       }
-      return col;
+      return color
     },
     /**
      * Checks if the provided color has an alpha value less than 1
      * @param {string} color - The color to be analyzed
      * @returns {boolean}
      */
-    colorHasTransparency: function (color) {
-      var result = false;
+    colorHasTransparency: color => {
       if (Utils.startsWith(color, 'rgba(')) {
-        var p = color.lastIndexOf(',');
-        var alpha = parseInt(color.substr(p));
-        result = typeof alpha === 'number' && alpha < 1.0;
+        var alpha = parseInt(color.substr(color.lastIndexOf(',')))
+        return typeof alpha === 'number' && alpha < 1.0
       }
-      return result;
+      return false
     },
     /**
-     * Clones the provided object
+     * Clones the provided object using jQuery.extend with deep clone option
      * @param {object} obj
      * @returns {object}
      */
-    cloneObject: function (obj) {
-      return $.extend(true, {}, obj);
-    },
+    cloneObject: obj => $.extend(true, {}, obj),
     /**
      * Converts string values to number or boolean when needed
      * @param {Object} obj - The object to be processed
      * @returns {Object} - A new object with normalized content
      */
-    normalizeObject: function (obj) {
-      var result = {};
+    normalizeObject: obj => {
+      const result = {};
       if (obj)
         $.each(obj, function (key, value) {
-          var s;
-          if (typeof value === 'string' && (s = value.trim().toLowerCase()) !== '') {
-            value = s === 'true' ? true : s === 'false' ? false : isNaN(s) ? value : Number(s);
-          }
-          result[key] = value;
-        });
-      return result;
+          let s;
+          if (typeof value === 'string' && (s = value.trim().toLowerCase()) !== '')
+            value = s === 'true' ? true : s === 'false' ? false : isNaN(s) ? value : Number(s)
+          result[key] = value
+        })
+      return result
     },
     /**
      * Check if the given char is a separator
      * @param {string} ch - A string with a single character
      * @returns {boolean}
      */
-    isSeparator: function (ch) {
-      return ' .,;-|'.indexOf(ch) >= 0;
-    },
+    isSeparator: ch => ' .,;-|'.includes(ch),
     /**
      * Rounds `v` to the nearest multiple of `n`
      * @param {number} v
      * @param {number} n - Cannot be zero!
      * @returns {number}
      */
-    roundTo: function (v, n) {
-      return Math.round(v / n) * n;
-    },
+    roundTo: (v, n) => Math.round(v / n) * n,
     /**
      * Compares the provided answer against multiple valid options. These valid options are
      * concatenated in a string, separated by pipe chars (`|`). The comparing can be case sensitive.
@@ -357,85 +323,56 @@ define([
      * @param {boolean} checkCase - When true, the comparing will be case-sensitive
      * @returns {boolean}
      */
-    compareMultipleOptions: function (answer, check, checkCase) {
+    compareMultipleOptions: (answer, check, checkCase) => {
       if (answer === null || answer.length === 0 || check === null || check.length === 0)
-        return false;
-
+        return false
       if (!checkCase)
-        answer = answer.toUpperCase();
-
-      answer = answer.trim();
-
-      var tokens = check.split('|');
-      for (var i = 0; i < tokens.length; i++) {
-        var s = checkCase ? tokens[i] : tokens[i].toUpperCase();
-        if (s.trim() === answer)
-          return true;
+        answer = answer.toUpperCase()
+      answer = answer.trim()
+      for (let token of check.split('|')) {
+        if (answer === (checkCase ? token : token.toUpperCase()).trim())
+          return true
       }
-      return false;
+      return false
     },
     /**
      * Checks if the given string ends with the specified expression
      * @param {string} text - The string where to find the expression
-     * @param {string} expr - The expression to search for. It will not be checked against `undefined` or `null`.
+     * @param {string} expr - The expression to search for.
      * @param {boolean=} trim - When `true`, the `text` string will be trimmed before check
      * @returns {boolean}
      */
-    endsWith: function (text, expr, trim) {
-      var result = false;
-      if (typeof text !== 'undefined' && text !== null) {
-        if (trim && text !== null)
-          text = text.trim();
-        result = text.indexOf(expr, text.length - expr.length) !== -1;
-      }
-      return result;
-    },
+    endsWith: (text = '', expr, trim) => typeof text === 'string' && (trim ? text.trim() : text).endsWith(expr),
     /**
      * Checks if the given string starts with the specified expression
      * @param {string} text - The string where to find the expression
-     * @param {string} expr - The expression to search for. It will not be checked against `undefined` or `null`.
+     * @param {string} expr - The expression to search for.
      * @param {boolean=} trim - When `true`, the `text` string will be trimmed before check
      * @returns {boolean}
      */
-    startsWith: function (text, expr, trim) {
-      var result = false;
-      if (typeof text !== 'undefined' && text !== null) {
-        if (trim && text !== null)
-          text = text.trim();
-        result = text.indexOf(expr) === 0;
-      }
-      return result;
-    },
+    startsWith: (text = '', expr, trim) => typeof text === 'string' && (trim ? text.trim() : text).indexOf(expr) === 0,
     /**
      * Replaces all occurrences of the backslash character (`\`) by a regular slash (`/`)
      * This is useful to normalize bad path names present in some old JClic projects
      * @param {String} str - The string to be normalized
      * @returns {string}
      */
-    nSlash: function (str) {
-      return str ? str.replace(/\\/g, '/') : str;
-    },
+    nSlash: str => str ? str.replace(/\\/g, '/') : str,
     /**
      * Checks if the given expression is an absolute URL
      * @param {string} exp - The expression to be checked
      * @returns {boolean}
      */
-    isURL: function (exp) {
-      var path = /^(filesystem:)?(https?|file|data|ftps?):/i;
-      return path.test(exp);
-    },
+    isURL: exp => /^(filesystem:)?(https?|file|data|ftps?):/i.test(exp),
     /**
      * Gets the base path of the given file path (absolute or full URL). This base path always ends
      * with `/`, meaning it can be concatenated with relative paths without adding a separator.
      * @param {type} path - The full path to be parsed
      * @returns {string}
      */
-    getBasePath: function (path) {
-      var result = '';
-      var p = path.lastIndexOf('/');
-      if (p >= 0)
-        result = path.substring(0, p + 1);
-      return result;
+    getBasePath: path => {
+      const p = path.lastIndexOf('/')
+      return p >= 0 ? path.substring(0, p + 1) : ''
     },
     /**
      * Gets the full path of `file` relative to `basePath`
@@ -443,21 +380,14 @@ define([
      * @param {string=} path - The base path
      * @returns {string}
      */
-    getRelativePath: function (file, path) {
-      if (!path || path === '' || file.indexOf(path) !== 0)
-        return file;
-      else
-        return file.substr(path.length);
-    },
+    getRelativePath: (file, path) => (!path || path === '' || file.indexOf(path) !== 0) ? file : file.substr(path.length),
     /**
      * Gets the complete path of a relative or absolute URL, using the provided `basePath`
      * @param {string} basePath - The base URL
      * @param {string} path - The filename
      * @returns {string}
      */
-    getPath: function (basePath, path) {
-      return Utils.isURL(path) ? path : basePath + path;
-    },
+    getPath: (basePath, path) => Utils.isURL(path) ? path : basePath + path,
     /**
      * Gets a promise with the complete path of a relative or absolute URL, using the provided `basePath`
      * @param {string} basePath - The base URL
@@ -466,48 +396,36 @@ define([
      * for the file
      * @returns {Promise}
      */
-    getPathPromise: function (basePath, path, zip) {
+    getPathPromise: (basePath, path, zip) => {
       if (zip) {
-        var fName = Utils.getRelativePath(basePath + path, zip.zipBasePath);
+        const fName = Utils.getRelativePath(basePath + path, zip.zipBasePath);
         if (zip.files[fName]) {
-          return new Promise(function (resolve, reject) {
-            zip.file(fName).async('base64').then(function (data) {
-              var ext = path.toLowerCase().split('.').pop();
-              var mime = Utils.settings.MIME_TYPES[ext];
-              if (!mime)
-                mime = 'application/octet-stream';
-              resolve('data:' + mime + ';base64,' + data);
-            }).catch(reject);
-          });
+          return new Promise((resolve, reject) => {
+            zip.file(fName).async('base64').then(data => {
+              const ext = path.toLowerCase().split('.').pop()
+              const mime = Utils.settings.MIME_TYPES[ext] || 'application/octet-stream'
+              resolve(`data:${mime};base64,${data}`)
+            }).catch(reject)
+          })
         }
       }
-      return Promise.resolve(Utils.getPath(basePath, path));
+      return Promise.resolve(Utils.getPath(basePath, path))
     },
     /**
      * Utility object that provides several methods to build simple and complex DOM objects
      * @type {object}
      */
     $HTML: {
-      doubleCell: function (a, b) {
-        return $('<tr/>').append($('<td/>').html(a)).append($('<td/>').html(b));
-      },
-      p: function (txt) {
-        return $('<p/>').html(txt);
-      },
-      td: function (txt, className) {
-        return $('<td/>', className ? { class: className } : null).html(txt);
-      },
-      th: function (txt, className) {
-        return $('<th/>', className ? { class: className } : null).html(txt);
-      }
+      doubleCell: (a, b) => $('<tr/>').append($('<td/>').html(a)).append($('<td/>').html(b)),
+      p: txt => $('<p/>').html(txt),
+      td: (txt, className) => $('<td/>', className ? { class: className } : null).html(txt),
+      th: (txt, className) => $('<th/>', className ? { class: className } : null).html(txt),
     },
     /**
      * Checks if the current browser allows to put HTML elements in full screen mode
      * @returns {boolean}
      */
-    screenFullAllowed: function () {
-      return screenfull && screenfull.enabled;
-    },
+    screenFullAllowed: () => screenfull && screenfull.enabled,
     /**
      * Replaces `width`, `height` and `fill` attributes of a simple SVG image
      * with the provided values
@@ -517,13 +435,13 @@ define([
      * @param {string=} fill - Optional setting for "fill" property
      * @returns {string} - The resulting svg code
      */
-    getSvg: function (svg, width, height, fill) {
+    getSvg: (svg, width, height, fill) => {
       if (width)
-        svg = svg.replace(/width=\"\d*\"/, 'width="' + width + '"');
+        svg = svg.replace(/width=\"\d*\"/, `width="${width}"`)
       if (height)
-        svg = svg.replace(/height=\"\d*\"/, 'height="' + height + '"');
+        svg = svg.replace(/height=\"\d*\"/, `height="${height}"`)
       if (fill)
-        svg = svg.replace(/fill=\"[#A-Za-z0-9]*\"/, 'fill="' + fill + '"');
+        svg = svg.replace(/fill=\"[#A-Za-z0-9]*\"/, `fill="${fill}"`)
       return svg;
     },
     /**
@@ -535,9 +453,7 @@ define([
      * @param {string=} fill - Optional setting for "fill" property
      * @returns {string} - The resulting Data URI
      */
-    svgToURI: function (svg, width, height, fill) {
-      return 'data:image/svg+xml;base64,' + btoa(Utils.getSvg(svg, width, height, fill));
-    },
+    svgToURI: (svg, width, height, fill) => 'data:image/svg+xml;base64,' + btoa(Utils.getSvg(svg, width, height, fill)),
     /**
      * Converts the given expression into a valid value for CSS size values
      * @param {string|number} exp - The expression to be evaluated (can be a valid value, `null` or `undefined`)
@@ -546,8 +462,8 @@ define([
      * @param {string} def - Default value to be used when `exp` is `null` or `undefined`
      * @returns {string} - A valid CSS value, or `null` if it can't be found. Default units are `px`
      */
-    toCssSize: function (exp, css, key, def) {
-      var result = typeof exp === 'undefined' || exp === null ? null : isNaN(exp) ? exp : exp + 'px';
+    toCssSize: (exp, css, key, def) => {
+      const result = typeof exp === 'undefined' || exp === null ? null : isNaN(exp) ? exp : exp + 'px';
       if (css && key && (result || def))
         css[key] = result !== null ? result : def;
       return result;
@@ -560,19 +476,18 @@ define([
      * @param {Node=} el - The element from which to start the search
      * @returns {Node}
      */
-    getRootHead: function (el) {
+    getRootHead: el => {
       if (el) {
         // Skip HTMLElements
         while (el.parentElement)
-          el = el.parentElement;
+          el = el.parentElement
         // Get the parent node of the last HTMLElement
         if (el instanceof HTMLElement)
-          el = el.parentNode || el;
+          el = el.parentNode || el
         // If the root node has a `head`, take it
-        el = el['head'] || el;
+        el = el['head'] || el
       }
-      el = el || document.head;
-      return el;
+      return el || document.head
     },
     /**
      * Appends a stylesheet element to the `head` or root node nearest to the given `HTMLElement`.
@@ -580,12 +495,12 @@ define([
      * @param {PlayStation=} ps - An optional `PlayStation` (currently a {@link JClicPlayer}) used as a base to find the root node
      * @returns {HTMLStyleElement} - The appended style element
      */
-    appendStyleAtHead: function (css, ps) {
-      var root = Utils.getRootHead(ps && ps.$topDiv ? ps.$topDiv[0] : null);
-      var style = document.createElement('style');
-      style.type = 'text/css';
-      style.appendChild(document.createTextNode(css));
-      return root.appendChild(style);
+    appendStyleAtHead: (css, ps) => {
+      const root = Utils.getRootHead(ps && ps.$topDiv ? ps.$topDiv[0] : null)
+      const style = document.createElement('style')
+      style.type = 'text/css'
+      style.appendChild(document.createTextNode(css))
+      return root.appendChild(style)
     },
     /**
      * Global constants
@@ -702,28 +617,28 @@ define([
      * @param {object} element - A DOM element
      * @returns {number}
      */
-    getCaretCharacterOffsetWithin: function (element) {
-      var caretOffset = 0;
-      var doc = element.ownerDocument || element.document;
-      var win = doc.defaultView || doc.parentWindow;
-      var sel;
+    getCaretCharacterOffsetWithin: element => {
+      let caretOffset = 0
+      const doc = element.ownerDocument || element.document
+      const win = doc.defaultView || doc.parentWindow
+      let sel
       if (typeof win.getSelection !== "undefined") {
-        sel = win.getSelection();
+        sel = win.getSelection()
         if (sel.rangeCount > 0) {
-          var range = win.getSelection().getRangeAt(0);
-          var preCaretRange = range.cloneRange();
-          preCaretRange.selectNodeContents(element);
-          preCaretRange.setEnd(range.endContainer, range.endOffset);
-          caretOffset = preCaretRange.toString().length;
+          const range = win.getSelection().getRangeAt(0)
+          const preCaretRange = range.cloneRange()
+          preCaretRange.selectNodeContents(element)
+          preCaretRange.setEnd(range.endContainer, range.endOffset)
+          caretOffset = preCaretRange.toString().length
         }
       } else if ((sel = doc.selection) && sel.type !== "Control") {
-        var textRange = sel.createRange();
-        var preCaretTextRange = doc.body.createTextRange();
-        preCaretTextRange.moveToElementText(element);
-        preCaretTextRange.setEndPoint("EndToEnd", textRange);
-        caretOffset = preCaretTextRange.text.length;
+        const textRange = sel.createRange()
+        const preCaretTextRange = doc.body.createTextRange()
+        preCaretTextRange.moveToElementText(element)
+        preCaretTextRange.setEndPoint("EndToEnd", textRange)
+        caretOffset = preCaretTextRange.text.length
       }
-      return caretOffset;
+      return caretOffset
     },
     /**
      * Utility function called by {@link Utils~getCaretCharacterOffsetWithin}
@@ -731,16 +646,16 @@ define([
      * @returns {object[]}
      */
     getTextNodesIn: function (node) {
-      var textNodes = [];
+      const textNodes = [];
       if (node.nodeType === 3) {
-        textNodes.push(node);
+        textNodes.push(node)
       } else {
-        var children = node.childNodes;
-        for (var i = 0, len = children.length; i < len; ++i) {
+        const children = node.childNodes
+        for (let i = 0, len = children.length; i < len; ++i) {
           textNodes.push.apply(textNodes, Utils.getTextNodesIn(children[i]));
         }
       }
-      return textNodes;
+      return textNodes
     },
     /**
      * Sets the selection range (or the cursor position, when `start` and `end` are the same) to a
@@ -750,44 +665,44 @@ define([
      * @param {type} end - The end position of the selection. When null or identical to `start`,
      * indicates a cursor position.
      */
-    setSelectionRange: function (el, start, end) {
+    setSelectionRange: (el, start, end) => {
       if (Utils.isNullOrUndef(end))
-        end = start;
+        end = start
       if (document.createRange && window.getSelection) {
-        var range = document.createRange();
-        range.selectNodeContents(el);
-        var textNodes = Utils.getTextNodesIn(el);
-        var foundStart = false;
-        var charCount = 0, endCharCount, textNode;
+        const range = document.createRange()
+        range.selectNodeContents(el)
+        const textNodes = Utils.getTextNodesIn(el)
+        let foundStart = false
+        let charCount = 0, endCharCount, textNode
 
-        for (var i = 0; i < textNodes.length; i++) {
-          textNode = textNodes[i];
-          endCharCount = charCount + textNode.length;
+        for (let i = 0; i < textNodes.length; i++) {
+          textNode = textNodes[i]
+          endCharCount = charCount + textNode.length
           if (!foundStart && start >= charCount &&
             (start < endCharCount ||
               start === endCharCount && i + 1 <= textNodes.length)) {
-            range.setStart(textNode, start - charCount);
-            foundStart = true;
+            range.setStart(textNode, start - charCount)
+            foundStart = true
           }
           if (foundStart && end <= endCharCount) {
-            range.setEnd(textNode, end - charCount);
-            break;
+            range.setEnd(textNode, end - charCount)
+            break
           }
-          charCount = endCharCount;
+          charCount = endCharCount
         }
-        var sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
+        const sel = window.getSelection()
+        sel.removeAllRanges()
+        sel.addRange(range)
       } else if (document.selection && document.body.createTextRange) {
-        var textRange = document.body.createTextRange();
-        textRange.moveToElementText(el);
-        textRange.collapse(true);
-        textRange.moveEnd("character", end);
-        textRange.moveStart("character", start);
-        textRange.select();
+        const textRange = document.body.createTextRange()
+        textRange.moveToElementText(el)
+        textRange.collapse(true)
+        textRange.moveEnd('character', end)
+        textRange.moveStart('character', start)
+        textRange.select()
       }
     }
-  };
+  }
 
-  return Utils;
+  return Utils
 });
