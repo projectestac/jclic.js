@@ -330,7 +330,8 @@ define([
                 var src = bx1.getDescription() + " (" + bx1.idOrder + ")";
                 var dest = "(" + bx2.idLoc + ")";
                 ok = bx1.idOrder === bx2.idLoc;
-                bx1.exchangeLocation(bx2);
+                //bx1.exchangeLocation(bx2);
+                this.bg.swapCellPositions(bx1, bx2, true);
                 // Check results and notify action
                 var cellsAtPlace = this.bg.countCellsAtEquivalentPlace(true);
                 this.ps.reportNewAction(this.act, 'PLACE', src, dest, ok, cellsAtPlace);
