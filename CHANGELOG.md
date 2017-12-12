@@ -1,3 +1,7 @@
+### v1.0.2 (2017-12-12)
+#### Bug fixes
+- Corrected a bug detected in cell placement inside ActiveBoxBag, affecting some exchange puzzles with gigsaw and other special shapers.
+
 ### v1.0.1 (2017-11-10)
 #### Improvements
 - New startup parameter `returnAsExit` treats `ActivitySequence` elements of type `return` as if they where of type `exit`, only when `PlayerHistory.sequenceStack` is empty.
