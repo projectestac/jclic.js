@@ -269,20 +269,62 @@ define([
           }
         }
 
-        var maxX = this.pos.x + this.dim.width;
-        var maxY = this.pos.y + this.dim.height;
         for (i = 0; i < nc; i++) {
           bx = this.getActiveBox(i);
           var px = pos[i].x;
           var py = pos[i].y;
-          if (fitInArea) {
-            px = Math.min(Math.max(px, this.pos.x), maxX - bx.dim.width);
-            py = Math.min(Math.max(py, this.pos.y), maxY - bx.dim.height);
-          }
           bx.moveTo(new AWT.Point(px, py));
+          if (fitInArea)
+            this.fitCellsInArea([bx]);
           bx.idLoc = idLoc[i];
         }
       }
+    },
+    /**
+     *
+     * Fits cells inside the ActiveBoxBag area. Useful when non-rectangular cells exchange its positions.
+     * @param {ActiveBox[]} boxes - The boxes to be checked
+     */
+    fitCellsInArea: function (boxes) {
+      var maxX = this.pos.x + this.dim.width;
+      var maxY = this.pos.y + this.dim.height;
+
+      for (var i = 0; i < boxes.length; i++) {
+        var bx = boxes[i];
+
+        // Save original position
+        if (!bx.pos0)
+          bx.pos0 = new AWT.Point(bx.pos);
+
+        var px = Math.min(Math.max(bx.pos.x, this.pos.x), maxX - bx.dim.width);
+        var py = Math.min(Math.max(bx.pos.y, this.pos.y), maxY - bx.dim.height);
+        if (px !== bx.pos.x || py !== bx.pos.y)
+          bx.moveTo(new AWT.Point(px, py));
+      }
+    },
+    /**
+     * 
+     * Exchange the positions of two cells inside the ActiveBoxBag area.
+     * @param {ActiveBox} bxa - The first box
+     * @param {ActiveBox} bxb - The second box
+     * @param {boolean} fitInArea - Ensure that all cells are inside the bag rectangle
+     */
+    swapCellPositions: function (bxa, bxb, fitInArea) {
+      // Save backup of bxb significant properties
+      var posB = new AWT.Point(bxb.pos);
+      var posB0 = bxb.pos0;
+      var idLocB = bxb.idLoc;
+
+      bxb.moveTo(bxa.pos0 || bxa.pos);
+      bxb.pos0 = bxa.pos0;
+      bxb.idLoc = bxa.idLoc;
+
+      bxa.moveTo(posB0 || posB);
+      bxa.pos0 = posB0;
+      bxa.idLoc = idLocB;
+
+      if (fitInArea)
+        this.fitCellsInArea([bxa, bxb]);
     },
     /**
      *
