@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "1.0.2",
+  "version": "1.0.3b",
   "main": "src/JClic.js",
   "jsdelivr": "dist/jclic.min.js",
   "homepage": "http://projectestac.github.io/jclic.js",
@@ -36,8 +36,8 @@
   "license": "EUPL-1.1",
   "dependencies": {
     "clipboard-js": "^0.3.6",
-    "es6-promise": "^4.1.1",
-    "i18next": "^10.2.1",
+    "es6-promise": "^4.2.2",
+    "i18next": "^10.2.2",
     "jquery": "^3.2.1",
     "jszip": "^3.1.5",
     "jszip-utils": "0.0.2",
@@ -46,7 +46,7 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
-    "eslint": "^4.13.1",
+    "eslint": "^4.15.0",
     "eslint-loader": "^1.9.0",
     "fs-extra": "^5.0.0",
     "gc-jaguarjs-jsdoc": "0.0.1",
