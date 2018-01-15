@@ -106,7 +106,18 @@ define([
       var doc = this;
 
       // Read named styles
-      $xml.children('style').each(function () {
+
+      // Sort styles according to its "base" dependencies
+      var styles = $xml.children('style').toArray().sort(function (a, b) {
+        var aName = a.attributes.name.value, aBase = a.attributes.base ? a.attributes.base.value : null;
+        var bName = b.attributes.name.value, bBase = b.attributes.base ? b.attributes.base.value : null;
+        // Put 'default' always first, then each style below their base (if any)
+        return aName === 'default' ? -1 : bName === 'default' ? 1
+          : aBase === bName ? 1 : bBase === aName ? -1
+            : !aBase ? -1 : !bBase ? 1 : 0;
+      });
+      // Process the ordered list of styles
+      $.each(styles, function () {
         var attr = doc.readDocAttributes($(this));
         // Grant always that basic attributes are defined
         doc.style[attr.name] = attr.name === 'default' ? $.extend(true, doc.style.default, attr) : attr;
