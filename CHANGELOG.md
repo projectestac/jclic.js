@@ -1,3 +1,12 @@
+### v1.0.3 (2018-01-15)
+#### Bug fixes
+- Check always the ordering of cascading styles text activities.
+- Always detect carriage returns in activities of type "fill-in blanks".
+
+### v1.0.2 (2017-12-12)
+#### Bug fixes
+- Corrected a bug detected in cell placement inside ActiveBoxBag, affecting some exchange puzzles with gigsaw and other special shapers.
+
 ### v1.0.1 (2017-11-10)
 #### Improvements
 - New startup parameter `returnAsExit` treats `ActivitySequence` elements of type `return` as if they where of type `exit`, only when `PlayerHistory.sequenceStack` is empty.

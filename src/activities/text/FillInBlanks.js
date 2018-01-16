@@ -355,8 +355,8 @@ define([
             $span = target.$span;
             var txt = $span.html();
             // Check for `enter` key
-            if (txt.indexOf('<br>') >= 0) {
-              txt = txt.replace(/<br>/g, '');
+            if (/(<br>|\n|\r)/.test(txt)) {
+              txt = txt.replace(/(<br>|\n|\r)/g, '');
               $span.html(txt);
               target.currentText = $span.text();
               return this.$checkButton ? false : this.checkTarget(target, false, 1);

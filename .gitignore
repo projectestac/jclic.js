@@ -8,6 +8,7 @@ Thumbs.db
 *.tmp
 *.log
 npm-debug.log
+package-lock.json
 
 # Build, dist and doc directories #
 /build/

@@ -111,6 +111,10 @@ define([
      * @type {number} */
     idAss: -1,
     /**
+     * Backup of the original position of the cell, useful when the real position must be restored after a temporary change.
+     * @type {AWT.Point} */
+    pos0: null,    
+    /**
      * Main content of this box
      * @type {ActiveBoxContent} */
     content: null,
