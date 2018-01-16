@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -260,7 +260,7 @@ define([
     checkColor: (color, defaultColor = Utils.settings.BoxBase.BACK_COLOR) => {
       if (typeof color === 'undefined' || color === null)
         color = defaultColor
-      color = color.replace('0x', '#');
+      color = color.replace('0x', '#')
       // Check for Alpha value
       if (color.charAt(0) === '#' && color.length > 7) {
         const alpha = parseInt(color.substring(1, 3), 16) / 255.0
@@ -292,10 +292,10 @@ define([
      * @returns {Object} - A new object with normalized content
      */
     normalizeObject: obj => {
-      const result = {};
+      const result = {}
       if (obj)
         $.each(obj, function (key, value) {
-          let s;
+          let s
           if (typeof value === 'string' && (s = value.trim().toLowerCase()) !== '')
             value = s === 'true' ? true : s === 'false' ? false : isNaN(s) ? value : Number(s)
           result[key] = value
@@ -398,7 +398,7 @@ define([
      */
     getPathPromise: (basePath, path, zip) => {
       if (zip) {
-        const fName = Utils.getRelativePath(basePath + path, zip.zipBasePath);
+        const fName = Utils.getRelativePath(basePath + path, zip.zipBasePath)
         if (zip.files[fName]) {
           return new Promise((resolve, reject) => {
             zip.file(fName).async('base64').then(data => {
@@ -442,7 +442,7 @@ define([
         svg = svg.replace(/height=\"\d*\"/, `height="${height}"`)
       if (fill)
         svg = svg.replace(/fill=\"[#A-Za-z0-9]*\"/, `fill="${fill}"`)
-      return svg;
+      return svg
     },
     /**
      * Encodes a svg expression into a {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/data_URIs|data URI}
@@ -463,10 +463,10 @@ define([
      * @returns {string} - A valid CSS value, or `null` if it can't be found. Default units are `px`
      */
     toCssSize: (exp, css, key, def) => {
-      const result = typeof exp === 'undefined' || exp === null ? null : isNaN(exp) ? exp : exp + 'px';
+      const result = typeof exp === 'undefined' || exp === null ? null : isNaN(exp) ? exp : `${exp}px`
       if (css && key && (result || def))
-        css[key] = result !== null ? result : def;
-      return result;
+        css[key] = result !== null ? result : def
+      return result
     },
     /**
      * Finds the nearest `head` or root node of a given HTMLElement, useful to place `<style/>` elements when
@@ -646,13 +646,13 @@ define([
      * @returns {object[]}
      */
     getTextNodesIn: function (node) {
-      const textNodes = [];
+      const textNodes = []
       if (node.nodeType === 3) {
         textNodes.push(node)
       } else {
         const children = node.childNodes
         for (let i = 0, len = children.length; i < len; ++i) {
-          textNodes.push.apply(textNodes, Utils.getTextNodesIn(children[i]));
+          textNodes.push.apply(textNodes, Utils.getTextNodesIn(children[i]))
         }
       }
       return textNodes
@@ -705,4 +705,4 @@ define([
   }
 
   return Utils
-});
+})
