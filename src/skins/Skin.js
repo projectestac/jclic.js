@@ -40,7 +40,7 @@ define([
 
   // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
-    screenfull = window.screenfull;
+    screenfull = window.screenfull
 
   /**
    * This abstract class manages the layout, position ans size of the visual components of JClic:
@@ -108,7 +108,7 @@ define([
         return false
       })
 
-      var $dlgDiv = $('<div/>', {
+      const $dlgDiv = $('<div/>', {
         class: 'dlgDiv',
         role: 'dialog',
         'aria-labelledby': ps.getUniqueId('ReportsLb'),
@@ -159,7 +159,7 @@ define([
           clipboard.copy({
             'text/plain': `===> ${ps.getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor')} <===`,
             'text/html': this.$reportsPanel.html()
-          });
+          })
           this.$copyBtn.parent().append(
             $('<div/>', { class: 'smallPopup' })
               .html(ps.getMsg('The data has been copied to clipboard'))
@@ -334,9 +334,9 @@ define([
     resetAllCounters(bEnabled) {
       $.each(this.counters, (name, counter) => {
         if (counter !== null) {
-          counter.value = 0;
-          counter.countDown = 0;
-          counter.enabled = bEnabled;
+          counter.value = 0
+          counter.countDown = 0
+          counter.enabled = bEnabled
           counter.refreshDisplay()
         }
       })
@@ -486,7 +486,7 @@ define([
         const
           $html = Utils.$HTML,
           report = reporter.getData(),
-          started = new Date(report.started);
+          started = new Date(report.started)
 
         result.push($('<div/>', { class: 'subTitle', id: this.ps.getUniqueId('ReportsLb') }).html(this.ps.getMsg('Current results')))
 
@@ -634,7 +634,7 @@ define([
         status === false && !screenfull.isFullScreen ||
         status !== true && status !== false)) {
         // Save current value of fullScreen for later use
-        var full = screenfull.isFullscreen
+        const full = screenfull.isFullscreen
         screenfull.toggle(this.player.$mainContainer.get(-1))
         this.player.fullScreenChecked = true
         // Firefox don't updates `document.fullscreenElement` in real time, so use the saved value instead
@@ -650,7 +650,7 @@ define([
     equals(skin) {
       return skin &&
         this.name === skin.name &&
-        this.ps === skin.ps;
+        this.ps === skin.ps
     }
 
     /**
@@ -690,12 +690,11 @@ define([
    */
   Skin.lastId = 1
 
-
   /**
    * List of classes derived from Skin. It should be filled by real skin classes at declaration time.
    * @type {object}
    */
-  Skin.CLASSES = {};
+  Skin.CLASSES = {}
 
   Object.assign(Skin.prototype, {
     /**

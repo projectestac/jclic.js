@@ -61,6 +61,7 @@ define([
      * @extends AWT.Container
      */
     class JClicPlayer extends AWT.Container {
+
       /**
        * JClicPlayer constructor
        * @param {external:jQuery} $topDiv - The HTML `div` element where this JClicPlayer will deploy.
@@ -142,16 +143,16 @@ define([
           }),
           'reports': new AWT.Action('reports', () => this.showReports()),
           'audio': new AWT.Action('audio', () => {
-            this.audioEnabled = !this.audioEnabled;
+            this.audioEnabled = !this.audioEnabled
             if (!this.audioEnabled)
-              this.stopMedia();
+              this.stopMedia()
             EventSounds.prototype.globalEnabled = this.audioEnabled
           })
-        };
+        }
 
         $.each(this.actions, (key, value) => {
-          value.addStatusListener(action => { if (this.skin) this.skin.actionStatusChanged(action); });
-        });
+          value.addStatusListener(action => { if (this.skin) this.skin.actionStatusChanged(action) })
+        })
       }
 
       /**
@@ -301,11 +302,11 @@ define([
        */
       load(project, sequence, activity) {
 
-        this.forceFinishActivity();
-        this.setWaitCursor(true);
+        this.forceFinishActivity()
+        this.setWaitCursor(true)
 
         // The Activity.Panel object to be obtained as a result of the loading process
-        let actp = null;
+        let actp = null
 
         // step one: load the project
         if (project) {
@@ -370,7 +371,7 @@ define([
                       }
                     }).catch(reason => {
                       Utils.log('error', `Error reading ZIP file: ${reason ? reason.toString() : 'unknown reason'}`)
-                    });
+                    })
                   } else {
                     // Find first file with extension '.jclic' inside the zip file
                     fileName = Object.keys(this.zip.files).find(fn => fn.endsWith('.jclic')) || null
@@ -420,7 +421,7 @@ define([
                     Utils.log('error', 'Error loading media')
                   }
                   const waitingObjects = prj.mediaBag.countWaitingElements()
-                  // player.setProgress(waiting);
+                  // player.setProgress(waiting)
                   if (waitingObjects === -1) {
                     window.clearInterval(checkMedia)
                     this.setProgress(-1)
@@ -576,13 +577,13 @@ define([
        * Forces the current activity to stop playing.
        */
       forceFinishActivity() {
-        this.timer.stop();
-        this.delayedTimer.stop();
+        this.timer.stop()
+        this.delayedTimer.stop()
         if (this.actPanel) {
-          this.closeHelpWindow();
-          this.actPanel.forceFinishActivity();
-          this.stopMedia();
-          this.activeMediaBag.removeAll();
+          this.closeHelpWindow()
+          this.actPanel.forceFinishActivity()
+          this.stopMedia()
+          this.activeMediaBag.removeAll()
         }
       }
 
@@ -591,7 +592,7 @@ define([
        * Removes the current {@link Activity#Panel} from this player
        */
       removeActivity() {
-        this.forceFinishActivity();
+        this.forceFinishActivity()
         if (this.actPanel) {
           this.actPanel.end()
           this.actPanel.$div.remove()
@@ -722,7 +723,7 @@ define([
               if (amp)
                 amp.play(mediaPlacement)
             }
-            break;
+            break
 
           case 'RUN_CLIC_PACKAGE':
             ji = new JumpInfo('JUMP', fn)
@@ -774,7 +775,7 @@ define([
           level = -1
         //window.setTimeout( ()=> {
         this.activeMediaBag.stopAll(level)
-        //}, 0);
+        //}, 0)
       }
 
       /**
@@ -901,7 +902,7 @@ define([
        * @param {number} maxValue - The value from which to start counting down
        */
       setCountDown(counter, maxValue) {
-        //this.counterVal[counter] = maxValue;
+        //this.counterVal[counter] = maxValue
         if (this.skin && this.skin.counters[counter])
           this.skin.counters[counter].setCountDown(maxValue)
       }

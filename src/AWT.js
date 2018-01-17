@@ -45,15 +45,16 @@ define([
    * {@link AWT.Ellipse}, {@link AWT.Path}, {@link AWT.PathStroke}, {@link AWT.Action},
    * {@link AWT.Timer} and {@link AWT.Container}.
    * @exports AWT
-   * @class
    * @abstract
    */
   const AWT = {}
 
   /**
    * AWT.Font contains properties and provides methods to manage fonts
+   * @class
    */
   AWT.Font = class {
+
     /**
      * AWT.Font constructor
      * @param {string=} [family='Arial']
@@ -195,6 +196,7 @@ define([
       }
       return this._metrics.height
     }
+
     /**
      * Translates the Font properties into CSS statements
      * @param {Object} css - The object where to add CSS properties. When null or undefined, a new
@@ -334,8 +336,10 @@ define([
 
   /**
    * Contains parameters and methods to draw complex color gradients
+   * @class
    */
   AWT.Gradient = class {
+
     /**
      * AWT.Gradient constructor
      * @param {string} c1 - The initial color, in any CSS-valid form.
@@ -390,7 +394,7 @@ define([
      */
     getCss() {
       let result = `linear-gradient(${(this.angle + 90)}deg, ${this.c1}, ${this.c2}`
-      for (var i = 1; i < this.cycles; i++)
+      for (let i = 1; i < this.cycles; i++)
         result = `${result}, ${i % 2 > 0 ? this.c1 : this.c2}`
       return `${result})`
     }
@@ -426,8 +430,10 @@ define([
   /**
    * Contains properties used to draw lines in HTML `canvas` elements.
    * @see {@link http://bucephalus.org/text/CanvasHandbook/CanvasHandbook.html#line-caps-and-joins}
+   * @class
    */
   AWT.Stroke = class {
+
     /**
      * AWT.Stroke constructor
      * @param {number=} [lineWidth=1] - The line width of the stroke
@@ -483,8 +489,10 @@ define([
 
   /**
    * Contains the `x` andy `y` coordinates of a point, and provides some useful methods.
+   * @class
    */
   AWT.Point = class {
+
     /**
      * AWT.Point constructor
      * @param {number|AWT.Point} x - When `x` is an `AWT.Point` object, a clone of it will be created.
@@ -589,8 +597,10 @@ define([
 
   /**
    * This class encapsulates `width` and `height` properties.
+   * @class
    */
   AWT.Dimension = class {
+
     /**
      * AWT.Dimension constructor
      * @param {number|AWT.Point} w - The width of this Dimension, or the upper-left vertex of a
@@ -634,9 +644,9 @@ define([
      * @returns {AWT.Dimension}
      */
     multBy(delta) {
-      this.width *= delta.x || delta.width || 0;
-      this.height *= delta.y || delta.height || 0;
-      return this;
+      this.width *= delta.x || delta.width || 0
+      this.height *= delta.y || delta.height || 0
+      return this
     }
 
     /**
@@ -675,7 +685,6 @@ define([
   })
 
   /**
-   *
    * Calculates some of the points included in a quadratic Bézier curve
    * The number of points being calculated is defined in Utils.settings.BEZIER_POINTS
    * @see {@link https://en.wikipedia.org/wiki/B%C3%A9zier_curve}
@@ -695,7 +704,7 @@ define([
       result = [],
       pxa = new AWT.Point(),
       pxb = new AWT.Point()
-    for (var i = 0; i < numPoints; i++) {
+    for (let i = 0; i < numPoints; i++) {
       const n = (i + 1) / (numPoints + 1)
       pxa.x = p0.x + (p1.x - p0.x) * n
       pxa.y = p0.y - (p0.y - p1.y) * n
@@ -707,7 +716,6 @@ define([
   }
 
   /**
-   *
    * Calculates some of the points included in a cubic Bézier (curve with two control points)
    * The number of points being calculated is defined in Utils.settings.BEZIER_POINTS
    * @param {AWT.Point} p0 - Starting point of the cubic Bézier curve
@@ -734,8 +742,10 @@ define([
   /**
    * Shape is a generic abstract class for rectangles, ellipses and stroke-free shapes.
    * @abstract
+   * @class
    */
   AWT.Shape = class {
+
     /**
      * AWT.Shape  constructor
      * @param {AWT.Point} pos - The top-left coordinates of this Shape
@@ -788,7 +798,7 @@ define([
      */
     scaleBy(_delta) {
       // Nothing to scale in abstract shapes
-      return this;
+      return this
     }
 
     /**
@@ -830,7 +840,7 @@ define([
      * @returns {external:CanvasRenderingContext2D} - The provided rendering context
      */
     fill(ctx, dirtyRegion) {
-      ctx.save();
+      ctx.save()
       if (dirtyRegion && dirtyRegion.getSurface() > 0) {
         // Clip the dirty region
         ctx.beginPath()
@@ -845,7 +855,6 @@ define([
     }
 
     /**
-     *
      * Draws this shape in the provided HTML canvas 2D rendering context.
      * @param {external:CanvasRenderingContext2D} ctx - The canvas 2D rendering context where to draw the shape.
      * @returns {external:CanvasRenderingContext2D} - The provided rendering context
@@ -917,9 +926,11 @@ define([
    * new AWT.Rectangle([x0, y0, x1, y1]);
    * // Four single numbers, meaning the same coordinates as above:
    * new AWT.Rectangle(x0, y0, x1, y1);
+   * @class
    * @extends AWT.Shape
    */
   AWT.Rectangle = class extends AWT.Shape {
+
     /**
      * AWT.Rectangle constructor
      * @param {AWT.Point|AWT.Rectangle|number|number[]} pos
@@ -1060,7 +1071,7 @@ define([
     intersects(r) {
       const
         p1 = this.pos, p2 = this.getOppositeVertex(),
-        r1 = r.pos, r2 = r.getOppositeVertex();
+        r1 = r.pos, r2 = r.getOppositeVertex()
       return r2.x >= p1.x && r1.x <= p2.x && r2.y >= p1.y && r1.y <= p2.y
     }
 
@@ -1115,9 +1126,11 @@ define([
 
   /**
    * The Ellipse shape has the same constructor options as {@link AWT.Rectangle}
+   * @class
    * @extends AWT.Rectangle
    */
   AWT.Ellipse = class extends AWT.Rectangle {
+
     /**
      * AWT.Ellipse constructor
      * @param {AWT.Point|AWT.Rectangle|number|number[]} pos
@@ -1144,7 +1157,7 @@ define([
         xe = this.pos.x + this.dim.width, // x-end
         ye = this.pos.y + this.dim.height, // y-end
         xm = this.pos.x + this.dim.width / 2, // x-middle
-        ym = this.pos.y + this.dim.height / 2;// y-middle
+        ym = this.pos.y + this.dim.height / 2 // y-middle
 
       ctx.beginPath()
       ctx.moveTo(this.pos.x, ym)
@@ -1210,9 +1223,11 @@ define([
   /**
    * A `Path` is a {@link AWT.Shape} formed by a serie of strokes, represented by
    * {@link AWT.PathStroke} objects
+   * @class
    * @extends AWT.Shape
    */
   AWT.Path = class extends AWT.Shape {
+
     /**
      * AWT.Path constructor
      * @param {AWT.PathStroke[]} strokes - The array of {@link AWT.PathStroke} objects defining this Path.
@@ -1221,7 +1236,7 @@ define([
       super()
       // Deep copy of the array of strokes
       if (strokes) {
-        this.strokes = [];
+        this.strokes = []
         // In [Shaper](Shaper.html) objects, strokes have `action` instead of `type` and `data` instead of `points`
         strokes.forEach(str => this.strokes.push(new AWT.PathStroke(str.type || str.action, str.points || str.data)))
       }
@@ -1388,8 +1403,10 @@ define([
 
   /**
    * PathStroke is the basic component of {@link AWT.Path} objects
+   * @class
    */
   AWT.PathStroke = class {
+
     /**
      * AWT.PathStroke constructor
      * @param {string} type - The type of stroke. Possible values are: `M` (move to), `L` (line to),
@@ -1445,7 +1462,6 @@ define([
     }
 
     /**
-     *
      * Draws this PathStroke in the provided HTML canvas context
      * @param {external:CanvasRenderingContext2D} ctx - The HTML canvas 2D rendering context
      */
@@ -1515,17 +1531,19 @@ define([
 
   /**
    * This class encapsulates actions that can be linked to buttons, menus and other active objects
+   * @class
    */
   AWT.Action = class {
+
     /**
      * AWT.Action constructor
      * @param {string} name - The name of this Action
      * @param {function} actionPerformed - The callback function to be triggered by this Action
      */
     constructor(name, actionPerformed) {
-      this.name = name;
-      this.actionPerformed = actionPerformed;
-      this._statusListeners = [];
+      this.name = name
+      this.actionPerformed = actionPerformed
+      this._statusListeners = []
     }
 
     /**
@@ -1539,14 +1557,11 @@ define([
     }
 
     /**
-     *
      * This is the method to be passed to DOM event triggers
      * @example
-     * var myFunc = function(){
-     *   alert('Hello!');
-     * };
-     * var myAction = new AWT.Action('hello', myFunc);
-     * $( "#foo" ).bind( "click", myAction.processEvent);
+     * const myFunc = () => { alert('Hello!') }
+     * const myAction = new AWT.Action('hello', myFunc)
+     * $( "#foo" ).bind( "click", myAction.processEvent)
      * @param {object} event - The event object passed by the DOM event trigger
      */
     processEvent(event) {
@@ -1554,7 +1569,6 @@ define([
     }
 
     /**
-     *
      * Adds a status listener
      * @param {function} listener - The callback method to be called when the status of this
      * Action changes
@@ -1564,7 +1578,6 @@ define([
     }
 
     /**
-     *
      * Removes a previously registered status listener
      * @param {function} listener - The listener to be removed
      */
@@ -1573,7 +1586,6 @@ define([
     }
 
     /**
-     *
      * Enables or disables this action
      * @param {boolean} enabled
      */
@@ -1605,8 +1617,10 @@ define([
 
   /**
    * This class provides a timer that will launch a function at specific intervals
+   * @class
    */
   AWT.Timer = class {
+
     /**
      * AWT.Timer constructor
      * @param {function} actionPerformed - The function to be triggered when the timer is enabled.
@@ -1620,7 +1634,6 @@ define([
     }
 
     /**
-     *
      * Here is where subclasses must define the function to be performed when this timer ticks.
      * @param {AWT.Timer} _thisTimer
      */
@@ -1629,7 +1642,6 @@ define([
     }
 
     /**
-     *
      * This is the method called by `window.setInterval`
      * @param {Event} _event
      */
@@ -1641,7 +1653,6 @@ define([
     }
 
     /**
-     *
      * Enables or disables this timer
      * @param {boolean} enabled - Indicates if the timer should be enabled or disabled
      * @param {boolean=} [retainCounter=false] - When `true`, the ticks counter will not be cleared
@@ -1713,9 +1724,11 @@ define([
    * Logic object that takes care of an "invalidated" rectangle that will be repainted
    * at the next update of a 2D object, usually an HTML Canvas.
    * AWT.Container has the same constructor options as {@link AWT.Rectangle}
+   * @class
    * @extends AWT.Rectangle
    */
   AWT.Container = class extends AWT.Rectangle {
+
     /**
      * AWT.Container constructor
      * @param {AWT.Point|AWT.Rectangle|number|number[]} pos
@@ -1770,5 +1783,5 @@ define([
     invalidatedRect: null,
   })
 
-  return AWT;
-});
+  return AWT
+})
