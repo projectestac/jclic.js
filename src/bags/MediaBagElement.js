@@ -356,7 +356,7 @@ define([
       if (this._whenReady) {
         for (var i = 0; i < this._whenReady.length; i++) {
           var callback = this._whenReady[i];
-          callback.apply(this);
+          callback.call(this, this);
         }
         this._whenReady = null;
       }

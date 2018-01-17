@@ -1579,7 +1579,7 @@ define([
      */
     setEnabled(enabled) {
       this.enabled = enabled
-      this._statusListeners.forEach(listener => listener.call(this))
+      this._statusListeners.forEach(listener => listener.call(this, this))
       return this
     }
   }
