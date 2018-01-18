@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -46,10 +46,10 @@ define([
     BoxBase, AutoContentProvider, TextGridContent, Evaluator, TextActivityDocument) {
 
     // Direct access to global setings
-    var K = Utils.settings;
+    const K = Utils.settings
 
     // Event used for detecting touch devices
-    var TOUCH_TEST_EVENT = 'touchstart';
+    const TOUCH_TEST_EVENT = 'touchstart'
 
     /**
      * Activity is the abstract base class of JClic activities. It defines also the inner class
@@ -60,17 +60,455 @@ define([
      * @exports Activity
      * @class
      * @abstract
-     * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
      */
-    var Activity = function (project) {
-      this.project = project;
-      this.eventSounds = new EventSounds(this.project.settings.eventSounds);
-      this.messages = {};
-      this.abc = {};
-    };
+    class Activity {
+      /**
+       * Activity constructor
+       * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+       */
+      constructor(project) {
+        this.project = project
+        this.eventSounds = new EventSounds(this.project.settings.eventSounds)
+        this.messages = {}
+        this.abc = {}
+      }
+
+      /**
+       * Factory constructor that returns a specific type of Activity based on the `class` attribute
+       * declared in the $xml parameter.
+       * @param {external:jQuery} $xml - The XML element to be parsed
+       * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+       * @returns {Activity}
+       */
+      static getActivity($xml, project) {
+        let act = null
+        if ($xml && project) {
+          const
+            className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.activities\./, '@'),
+            cl = Activity.CLASSES[className]
+          if (cl) {
+            act = new cl(project)
+            act.setProperties($xml)
+          } else
+            Utils.log('error', `Unknown activity class: ${className}`)
+        }
+        return act
+      }
+
+      /**
+       * Loads this object settings from an XML element
+       * @param {external:jQuery} $xml - The jQuery XML element to parse
+       */
+      setProperties($xml) {
+
+        const act = this
+
+        // Read attributes
+        $.each($xml.get(0).attributes, function () {
+          var name = this.name;
+          var val = this.value;
+          switch (name) {
+            // Generic attributes:
+            case 'name':
+              val = Utils.nSlash(val);
+            /* falls through */
+            case 'code':
+            case 'type':
+            case 'description':
+              act[name] = val;
+              break;
+
+            case 'class':
+              act.className = val.replace(/^edu\.xtec\.jclic\.activities\./, '@');
+              break;
+
+            case 'inverse':
+              act.invAss = Utils.getBoolean(val, false);
+              break;
+
+            case 'autoJump':
+            case 'forceOkToAdvance':
+            case 'amongParagraphs':
+              act[name] = Utils.getBoolean(val, false);
+              break;
+          }
+        });
+
+        // Read specific nodes
+        $xml.children().each(function () {
+          var $node = $(this);
+          switch (this.nodeName) {
+            case 'settings':
+              // Read more attributes
+              $.each($node.get(0).attributes, function () {
+                var name = this.name;
+                var val = this.value;
+                switch (name) {
+                  case 'infoUrl':
+                  case 'infoCmd':
+                    act[name] = val;
+                    break;
+
+                  case 'margin':
+                  case 'maxTime':
+                  case 'maxActions':
+                    act[name] = Number(val);
+                    break;
+
+                  case 'report':
+                    act['includeInReports'] = Utils.getBoolean(val, false);
+                    break;
+                  case 'countDownTime':
+                  case 'countDownActions':
+                  case 'reportActions':
+                  case 'useOrder':
+                  case 'dragCells':
+                    act[name] = Utils.getBoolean(val, false);
+                    break;
+                }
+              });
+
+              // Read elements of _settings_
+              $node.children().each(function () {
+                var $node = $(this);
+                switch (this.nodeName) {
+                  case 'skin':
+                    act.skinFileName = $node.attr('file');
+                    break;
+
+                  case 'helpWindow':
+                    act.helpMsg = Utils.getXmlText(this);
+                    act.showSolution = Utils.getBoolean($node.attr('showSolution'), false);
+                    act.helpWindow = act.helpMsg !== null || act.showSolution;
+                    break;
+
+                  case 'container':
+                    // Read settings related to the 'container'
+                    // (the main panel containing the activity and other elements)
+                    act.bgColor = Utils.checkColor($node.attr('bgColor'), Utils.settings.BoxBase.BACK_COLOR);
+
+                    $node.children().each(function () {
+                      var $child = $(this);
+                      switch (this.nodeName) {
+                        case 'image':
+                          act.bgImageFile = $child.attr('name');
+                          act.tiledBgImg = Utils.getBoolean($child.attr('tiled'), false);
+                          break;
+                        case 'counters':
+                          act.bTimeCounter = Utils.getBoolean($child.attr('time'), true);
+                          act.bActionsCounter = Utils.getBoolean($child.attr('actions'), true);
+                          act.bScoreCounter = Utils.getBoolean($child.attr('score'), true);
+                          break;
+                        case 'gradient':
+                          act.bgGradient = new AWT.Gradient().setProperties($child);
+                          break;
+                      }
+                    });
+                    break;
+
+                  case 'window':
+                    // Read settings related to the 'window'
+                    // (the panel where the activity deploys its content)
+                    act.activityBgColor = Utils.checkColor($node.attr('bgColor'), K.DEFAULT_BG_COLOR);
+                    act.transparentBg = Utils.getBoolean($node.attr('transparent'), false);
+                    act.border = Utils.getBoolean($node.attr('border'), false);
+                    $node.children().each(function () {
+                      var $child = $(this);
+                      switch (this.nodeName) {
+                        case 'gradient':
+                          act.activityBgGradient = new AWT.Gradient().setProperties($child);
+                          break;
+                        case 'position':
+                          act.absolutePosition = new AWT.Point().setProperties($child);
+                          act.absolutePositioned = true;
+                          break;
+                        case 'size':
+                          act.windowSize = new AWT.Dimension().setProperties($child);
+                          break;
+                      }
+                    });
+                    break;
+
+                  case 'eventSounds':
+                    // eventSounds is already created in constructor,
+                    // just read properties
+                    act.eventSounds.setProperties($node);
+                    break;
+                }
+              });
+              break;
+
+            case 'messages':
+              $node.children('cell').each(function () {
+                var m = act.readMessage($(this));
+                // Possible message types are: `initial`, `final`, `previous`, `finalError`
+                act.messages[m.type] = m;
+              });
+              break;
+
+            case 'automation':
+              // Read the automation settings ('Arith' or other automation engines)
+              act.acp = AutoContentProvider.getProvider($node, act.project);
+              break;
+
+            // Settings specific to panel-type activities (puzzles, associations...)
+            case 'cells':
+              // Read the [ActiveBagContent](ActiveBagContent.html) objects
+              var cellSet = new ActiveBagContent().setProperties($node, act.project.mediaBag);
+              // Valid ids:
+              // - Panel activities: 'primary', 'secondary', solvedPrimary'
+              // - Textpanel activities: 'acrossClues', 'downClues', 'answers'
+              act.abc[cellSet.id] = cellSet;
+              break;
+
+            case 'scramble':
+              // Read the 'scramble' mode
+              act.shuffles = Number($node.attr('times'));
+              act.scramble.primary = Utils.getBoolean($node.attr('primary'));
+              act.scramble.secondary = Utils.getBoolean($node.attr('secondary'));
+              break;
+
+            case 'layout':
+              $.each($node.get(0).attributes, function () {
+                var name = this.name;
+                var value = this.value;
+                switch (name) {
+                  case 'position':
+                    act.boxGridPos = value;
+                    break;
+                  case 'wildTransparent':
+                  case 'upperCase':
+                  case 'checkCase':
+                    act[name] = Utils.getBoolean(value);
+                }
+              });
+              break;
+
+            // Element specific to {@link Menu} activities:
+            case 'menuElement':
+              act.menuElements.push({
+                caption: $node.attr('caption') || '',
+                icon: $node.attr('icon') || null,
+                projectPath: $node.attr('path') || null,
+                sequence: $node.attr('sequence') || null,
+                description: $node.attr('description') || ''
+              });
+              break;
+
+            // Element specific to {@link CrossWord} and
+            // {@link WordSearch} activities:
+            case 'textGrid':
+              // Read the 'textGrid' element into a {@link TextGridContent}
+              act.tgc = new TextGridContent().setProperties($node);
+              break;
+
+            // Read the clues of {@link WordSearch} activities
+            case 'clues':
+              // Read the array of clues
+              act.clues = [];
+              act.clueItems = [];
+              var i = 0;
+              $node.children('clue').each(function () {
+                act.clueItems[i] = Number($(this).attr('id'));
+                act.clues[i] = this.textContent;
+                i++;
+              });
+              break;
+
+            // Elements specific to text activities:
+            case 'checkButton':
+              act.checkButtonText = this.textContent || 'check';
+              break;
+
+            case 'prevScreen':
+              act.prevScreen = true;
+              act.prevScreenMaxTime = $node.attr('maxTime') || -1;
+              $node.children().each(function () {
+                switch (this.nodeName) {
+                  case 'style':
+                    act.prevScreenStyle = new BoxBase().setProperties($(this));
+                    break;
+                  case 'p':
+                    if (act.prevScreenText === null)
+                      act.prevScreenText = '';
+                    act.prevScreenText += '<p>' + this.textContent + '</p>';
+                    break;
+                }
+              });
+              break;
+
+            case 'evaluator':
+              act.ev = Evaluator.getEvaluator($node);
+              break;
+
+            case 'document':
+              // Read main document of text activities
+              act.document = new TextActivityDocument().setProperties($node, act.project.mediaBag);
+              break;
+          }
+        })
+        return this
+      }
+
+      /**
+       *
+       * Read an activity message from an XML element
+       * @param {external:jQuery} $xml - The XML element to be parsed
+       * @returns {ActiveBoxContent}
+       */
+      readMessage($xml) {
+        const msg = new ActiveBoxContent().setProperties($xml, this.project.mediaBag)
+        //
+        // Allowed types are: `initial`, `final`, `previous`, `finalError`
+        msg.type = $xml.attr('type')
+        if (Utils.isNullOrUndef(msg.bb))
+          msg.bb = new BoxBase(null)
+        return msg
+      }
+
+      /**
+       * Initialises the {@link AutoContentProvider}, when defined.
+       */
+      initAutoContentProvider() {
+        if (this.acp !== null)
+          this.acp.init()
+      }
+
+      /**
+       * Preloads the media content of the activity.
+       * @param {PlayStation} ps - The {@link PlayStation} used to realize the media objects.
+       */
+      prepareMedia(ps) {
+        this.eventSounds.realize(ps, this.project.mediaBag)
+        $.each(this.messages, function (key, msg) {
+          if (msg !== null)
+            msg.prepareMedia(ps)
+        })
+        $.each(this.abc, function (key, abc) {
+          if (abc !== null)
+            abc.prepareMedia(ps)
+        })
+        return true
+      }
+
+      /**
+       * Whether the activity allows the user to request the solution.
+       * @returns {boolean}
+       */
+      helpSolutionAllowed() {
+        return false
+      }
+
+      /**
+       * Whether the activity allows the user to request help.
+       * @returns {boolean}
+       */
+      helpWindowAllowed() {
+        return this.helpWindow &&
+          (this.helpSolutionAllowed() && this.showSolution || this.helpMsg !== null)
+      }
+
+      /**
+       * Retrieves the minimum number of actions needed to solve this activity.
+       * @returns {number}
+       */
+      getMinNumActions() {
+        return 0
+      }
+
+      /**
+       * When this method returns `true`, the automatic jump to the next activity must be paused at
+       * this activity.
+       * @returns {boolean}
+       */
+      mustPauseSequence() {
+        return this.getMinNumActions() !== 0
+      }
+
+      /**
+       * Whether or not the activity can be reset
+       * @returns {boolean}
+       */
+      canReinit() {
+        return true
+      }
+
+      /**
+       * Whether or not the activity has additional information to be shown.
+       * @returns {boolean}
+       */
+      hasInfo() {
+        return this.infoUrl !== null && this.infoUrl.length > 0 ||
+          this.infoCmd !== null && this.infoCmd.length > 0
+      }
+
+      /**
+       * Whether or not the activity uses random to scramble internal components
+       * @returns {boolean}
+       */
+      hasRandom() {
+        return false
+      }
+
+      /**
+       * When `true`, the activity must always be scrambled
+       * @returns {boolean}
+       */
+      shuffleAlways() {
+        return false
+      }
+
+      /**
+       * When `true`, the activity makes use of the keyboard
+       * @returns {boolean}
+       */
+      needsKeyboard() {
+        return false
+      }
+
+      /**
+       * Called when the activity must be disposed
+       */
+      end() {
+        this.eventSounds.close()
+        this.clear()
+      }
+
+      /**
+       * Called when the activity must reset its internal components
+       */
+      clear() {
+      }
+
+      /**
+       *
+       * Getter method for `windowSize`
+       * @returns {AWT.Dimension}
+       */
+      getWindowSize() {
+        return new AWT.Dimension(this.windowSize)
+      }
+
+      /**
+       * Setter method for `windowSize`
+       * @param {AWT.Dimension} windowSize
+       */
+      setWindowSize(windowSize) {
+        this.windowSize = new AWT.Dimension(windowSize)
+      }
+
+      /**
+       * Builds the {@link Activity.Panel} object.
+       * Subclasses must update the `Panel` member of its prototypes to produce specific panels.
+       * @param {PlayStation} ps - The {@link PlayStation} used to build media objects.
+       * @returns {Activity.Panel}
+       */
+      getActivityPanel(ps) {
+        return new this.constructor.Panel(this, ps)
+      }
+    }
 
     /**
-     *
      * Classes derived from `Activity` should register themselves by adding a field to
      * `Activity.CLASSES` using its name as identifier and the class constructor as a value.
      * @example
@@ -80,32 +518,9 @@ define([
      */
     Activity.CLASSES = {
       '@panels.Menu': Activity
-    };
+    }
 
-    /**
-     *
-     * Factory constructor that returns a specific type of Activity based on the `class` attribute
-     * declared in the $xml parameter.
-     * @param {external:jQuery} $xml - The XML element to be parsed
-     * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
-     * @returns {Activity}
-     */
-    Activity.getActivity = function ($xml, project) {
-      var act = null;
-      if ($xml && project) {
-        var className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.activities\./, '@');
-        var cl = Activity.CLASSES[className];
-        if (cl) {
-          act = new cl(project);
-          act.setProperties($xml);
-        } else
-          Utils.log('error', 'Unknown activity class: %s', className);
-      }
-      return act;
-    };
-
-    Activity.prototype = {
-      constructor: Activity,
+    Object.assign(Activity.prototype, {
       /**
        * The {@link JClicProject} to which this activity belongs
        * @type {JClicProject} */
@@ -305,421 +720,9 @@ define([
        * Array of menu elements, used in activities of type {@link Menu}
        * @type {array} */
       menuElements: null,
-      /**
-       *
-       * Loads this object settings from an XML element
-       * @param {external:jQuery} $xml - The jQuery XML element to parse
-       */
-      setProperties: function ($xml) {
-
-        var act = this;
-
-        // Read attributes
-        $.each($xml.get(0).attributes, function () {
-          var name = this.name;
-          var val = this.value;
-          switch (name) {
-            // Generic attributes:
-            case 'name':
-              val = Utils.nSlash(val);
-            /* falls through */
-            case 'code':
-            case 'type':
-            case 'description':
-              act[name] = val;
-              break;
-
-            case 'class':
-              act.className = val.replace(/^edu\.xtec\.jclic\.activities\./, '@');
-              break;
-
-            case 'inverse':
-              act.invAss = Utils.getBoolean(val, false);
-              break;
-
-            case 'autoJump':
-            case 'forceOkToAdvance':
-            case 'amongParagraphs':
-              act[name] = Utils.getBoolean(val, false);
-              break;
-          }
-        });
-
-        // Read specific nodes
-        $xml.children().each(function () {
-          var $node = $(this);
-          switch (this.nodeName) {
-            case 'settings':
-              // Read more attributes
-              $.each($node.get(0).attributes, function () {
-                var name = this.name;
-                var val = this.value;
-                switch (name) {
-                  case 'infoUrl':
-                  case 'infoCmd':
-                    act[name] = val;
-                    break;
-
-                  case 'margin':
-                  case 'maxTime':
-                  case 'maxActions':
-                    act[name] = Number(val);
-                    break;
-
-                  case 'report':
-                    act['includeInReports'] = Utils.getBoolean(val, false);
-                    break;
-                  case 'countDownTime':
-                  case 'countDownActions':
-                  case 'reportActions':
-                  case 'useOrder':
-                  case 'dragCells':
-                    act[name] = Utils.getBoolean(val, false);
-                    break;
-                }
-              });
-
-              // Read elements of _settings_
-              $node.children().each(function () {
-                var $node = $(this);
-                switch (this.nodeName) {
-                  case 'skin':
-                    act.skinFileName = $node.attr('file');
-                    break;
-
-                  case 'helpWindow':
-                    act.helpMsg = Utils.getXmlText(this);
-                    act.showSolution = Utils.getBoolean($node.attr('showSolution'), false);
-                    act.helpWindow = act.helpMsg !== null || act.showSolution;
-                    break;
-
-                  case 'container':
-                    // Read settings related to the 'container'
-                    // (the main panel containing the activity and other elements)
-                    act.bgColor = Utils.checkColor($node.attr('bgColor'), Utils.settings.BoxBase.BACK_COLOR);
-
-                    $node.children().each(function () {
-                      var $child = $(this);
-                      switch (this.nodeName) {
-                        case 'image':
-                          act.bgImageFile = $child.attr('name');
-                          act.tiledBgImg = Utils.getBoolean($child.attr('tiled'), false);
-                          break;
-                        case 'counters':
-                          act.bTimeCounter = Utils.getBoolean($child.attr('time'), true);
-                          act.bActionsCounter = Utils.getBoolean($child.attr('actions'), true);
-                          act.bScoreCounter = Utils.getBoolean($child.attr('score'), true);
-                          break;
-                        case 'gradient':
-                          act.bgGradient = new AWT.Gradient().setProperties($child);
-                          break;
-                      }
-                    });
-                    break;
-
-                  case 'window':
-                    // Read settings related to the 'window'
-                    // (the panel where the activity deploys its content)
-                    act.activityBgColor = Utils.checkColor($node.attr('bgColor'), K.DEFAULT_BG_COLOR);
-                    act.transparentBg = Utils.getBoolean($node.attr('transparent'), false);
-                    act.border = Utils.getBoolean($node.attr('border'), false);
-                    $node.children().each(function () {
-                      var $child = $(this);
-                      switch (this.nodeName) {
-                        case 'gradient':
-                          act.activityBgGradient = new AWT.Gradient().setProperties($child);
-                          break;
-                        case 'position':
-                          act.absolutePosition = new AWT.Point().setProperties($child);
-                          act.absolutePositioned = true;
-                          break;
-                        case 'size':
-                          act.windowSize = new AWT.Dimension().setProperties($child);
-                          break;
-                      }
-                    });
-                    break;
-
-                  case 'eventSounds':
-                    // eventSounds is already created in constructor,
-                    // just read properties
-                    act.eventSounds.setProperties($node);
-                    break;
-                }
-              });
-              break;
-
-            case 'messages':
-              $node.children('cell').each(function () {
-                var m = act.readMessage($(this));
-                // Possible message types are: `initial`, `final`, `previous`, `finalError`
-                act.messages[m.type] = m;
-              });
-              break;
-
-            case 'automation':
-              // Read the automation settings ('Arith' or other automation engines)
-              act.acp = AutoContentProvider.getProvider($node, act.project);
-              break;
-
-            // Settings specific to panel-type activities (puzzles, associations...)
-            case 'cells':
-              // Read the [ActiveBagContent](ActiveBagContent.html) objects
-              var cellSet = new ActiveBagContent().setProperties($node, act.project.mediaBag);
-              // Valid ids:
-              // - Panel activities: 'primary', 'secondary', solvedPrimary'
-              // - Textpanel activities: 'acrossClues', 'downClues', 'answers'
-              act.abc[cellSet.id] = cellSet;
-              break;
-
-            case 'scramble':
-              // Read the 'scramble' mode
-              act.shuffles = Number($node.attr('times'));
-              act.scramble.primary = Utils.getBoolean($node.attr('primary'));
-              act.scramble.secondary = Utils.getBoolean($node.attr('secondary'));
-              break;
-
-            case 'layout':
-              $.each($node.get(0).attributes, function () {
-                var name = this.name;
-                var value = this.value;
-                switch (name) {
-                  case 'position':
-                    act.boxGridPos = value;
-                    break;
-                  case 'wildTransparent':
-                  case 'upperCase':
-                  case 'checkCase':
-                    act[name] = Utils.getBoolean(value);
-                }
-              });
-              break;
-
-            // Element specific to {@link Menu} activities:
-            case 'menuElement':
-              act.menuElements.push({
-                caption: $node.attr('caption') || '',
-                icon: $node.attr('icon') || null,
-                projectPath: $node.attr('path') || null,
-                sequence: $node.attr('sequence') || null,
-                description: $node.attr('description') || ''
-              });              
-              break;
-
-            // Element specific to {@link CrossWord} and
-            // {@link WordSearch} activities:
-            case 'textGrid':
-              // Read the 'textGrid' element into a {@link TextGridContent}
-              act.tgc = new TextGridContent().setProperties($node);
-              break;
-
-            // Read the clues of {@link WordSearch} activities
-            case 'clues':
-              // Read the array of clues
-              act.clues = [];
-              act.clueItems = [];
-              var i = 0;
-              $node.children('clue').each(function () {
-                act.clueItems[i] = Number($(this).attr('id'));
-                act.clues[i] = this.textContent;
-                i++;
-              });
-              break;
-
-            // Elements specific to text activities:
-            case 'checkButton':
-              act.checkButtonText = this.textContent || 'check';
-              break;
-
-            case 'prevScreen':
-              act.prevScreen = true;
-              act.prevScreenMaxTime = $node.attr('maxTime') || -1;
-              $node.children().each(function () {
-                switch (this.nodeName) {
-                  case 'style':
-                    act.prevScreenStyle = new BoxBase().setProperties($(this));
-                    break;
-                  case 'p':
-                    if (act.prevScreenText === null)
-                      act.prevScreenText = '';
-                    act.prevScreenText += '<p>' + this.textContent + '</p>';
-                    break;
-                }
-              });
-              break;
-
-            case 'evaluator':
-              act.ev = Evaluator.getEvaluator($node);
-              break;
-
-            case 'document':
-              // Read main document of text activities
-              act.document = new TextActivityDocument().setProperties($node, act.project.mediaBag);
-              break;
-          }
-        });
-
-        return this;
-      },
-      /**
-       *
-       * Read an activity message from an XML element
-       * @param {external:jQuery} $xml - The XML element to be parsed
-       * @returns {ActiveBoxContent}
-       */
-      readMessage: function ($xml) {
-        var msg = new ActiveBoxContent().setProperties($xml, this.project.mediaBag);
-        //
-        // Allowed types are: `initial`, `final`, `previous`, `finalError`
-        msg.type = $xml.attr('type');
-        if (Utils.isNullOrUndef(msg.bb))
-          msg.bb = new BoxBase(null);
-        return msg;
-      },
-      /**
-       *
-       * Initialises the {@link AutoContentProvider}, when defined.
-       */
-      initAutoContentProvider: function () {
-        if (this.acp !== null)
-          this.acp.init();
-      },
-      /**
-       *
-       * Preloads the media content of the activity.
-       * @param {PlayStation} ps - The {@link PlayStation} used to realize the media objects.
-       */
-      prepareMedia: function (ps) {
-
-        this.eventSounds.realize(ps, this.project.mediaBag);
-
-        $.each(this.messages, function (key, msg) {
-          if (msg !== null)
-            msg.prepareMedia(ps);
-        });
-
-        $.each(this.abc, function (key, abc) {
-          if (abc !== null)
-            abc.prepareMedia(ps);
-        });
-        return true;
-      },
-      /**
-       *
-       * Whether the activity allows the user to request the solution.
-       * @returns {boolean}
-       */
-      helpSolutionAllowed: function () {
-        return false;
-      },
-      /**
-       *
-       * Whether the activity allows the user to request help.
-       * @returns {boolean}
-       */
-      helpWindowAllowed: function () {
-        return this.helpWindow &&
-          (this.helpSolutionAllowed() && this.showSolution || this.helpMsg !== null);
-      },
-      /**
-       *
-       * Retrieves the minimum number of actions needed to solve this activity.
-       * @returns {number}
-       */
-      getMinNumActions: function () {
-        return 0;
-      },
-      /**
-       *
-       * When this method returns `true`, the automatic jump to the next activity must be paused at
-       * this activity.
-       * @returns {boolean}
-       */
-      mustPauseSequence: function () {
-        return this.getMinNumActions() !== 0;
-      },
-      /**
-       * Whether or not the activity can be reset
-       * @returns {boolean}
-       */
-      canReinit: function () {
-        return true;
-      },
-      /**
-       *
-       * Whether or not the activity has additional information to be shown.
-       * @returns {boolean}
-       */
-      hasInfo: function () {
-        return this.infoUrl !== null && this.infoUrl.length > 0 ||
-          this.infoCmd !== null && this.infoCmd.length > 0;
-      },
-      /**
-       *
-       * Whether or not the activity uses random to scramble internal components
-       * @returns {boolean}
-       */
-      hasRandom: function () {
-        return false;
-      },
-      /**
-       *
-       * When `true`, the activity must always be scrambled
-       * @returns {boolean}
-       */
-      shuffleAlways: function () {
-        return false;
-      },
-      /**
-       *
-       * When `true`, the activity makes use of the keyboard
-       * @returns {boolean}
-       */
-      needsKeyboard: function () {
-        return false;
-      },
-      /**
-       * Called when the activity must be disposed
-       */
-      end: function () {
-        this.eventSounds.close();
-        this.clear();
-      },
-      /**
-       * Called when the activity must reset its internal components
-       */
-      clear: function () {
-      },
-      /**
-       *
-       * Getter method for `windowSize`
-       * @returns {AWT.Dimension}
-       */
-      getWindowSize: function () {
-        return new AWT.Dimension(this.windowSize);
-      },
-      /**
-       *
-       * Setter method for `windowSize`
-       * @param {AWT.Dimension} windowSize
-       */
-      setWindowSize: function (windowSize) {
-        this.windowSize = new AWT.Dimension(windowSize);
-      },
-      /**
-       *
-       * Builds the {@link Activity.Panel} object.
-       * Subclasses must update the `Panel` member of its prototypes to produce specific panels.
-       * @param {PlayStation} ps - The {@link PlayStation} used to build media objects.
-       * @returns {Activity.Panel}
-       */
-      getActivityPanel: function (ps) {
-        return new this.constructor.Panel(this, ps);
-      }
-    };
+    })
 
     /**
-     *
      * This object is responsible for rendering the contents of the activity on the screen and
      * managing user's interaction.
      * Each type of Activity must implement its own `Activity.Panel`.
@@ -728,29 +731,351 @@ define([
      * In this implementation, the JPanel will be replaced by an HTML `div` tag.
      * @class
      * @extends AWT.Container
-     * @param {Activity} act - The {@link Activity} to which this Panel belongs
-     * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-     * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation}
-     * Java interface.
-     * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
-    Activity.Panel = function (act, ps, $div) {
-      // Activity.Panel extends AWT.Container
-      AWT.Container.call(this);
-      this.act = act;
-      this.ps = ps;
-      this.minimumSize = new AWT.Dimension(100, 100);
-      this.preferredSize = new AWT.Dimension(500, 400);
-      if ($div)
-        this.$div = $div;
-      else
-        this.$div = $('<div/>', { class: 'JClicActivity', 'aria-label': ps.getMsg('Activity panel') });
-      this.accessibleCanvas = Utils.settings.CANVAS_HITREGIONS;
-      this.act.initAutoContentProvider();
-    };
+    Activity.Panel = class extends AWT.Container {
+      /**
+       * Activity.Panel constructor
+       * @param {Activity} act - The {@link Activity} to which this Panel belongs
+       * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+       * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation}
+       * Java interface.
+       * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+       */
+      constructor(act, ps, $div) {
+        // Activity.Panel extends AWT.Container
+        super()
+        this.act = act
+        this.ps = ps
+        this.minimumSize = new AWT.Dimension(100, 100)
+        this.preferredSize = new AWT.Dimension(500, 400)
+        if ($div)
+          this.$div = $div
+        else
+          this.$div = $('<div/>', { class: 'JClicActivity', 'aria-label': ps.getMsg('Activity panel') })
+        this.accessibleCanvas = Utils.settings.CANVAS_HITREGIONS
+        this.act.initAutoContentProvider()
+      }
 
-    Activity.Panel.prototype = {
-      constructor: Activity.Panel,
+      /**
+       * Sets the size and position of this activity panel
+       * @param {AWT.Rectangle} rect
+       */
+      setBounds(rect) {
+        this.pos.x = rect.pos.x
+        this.pos.y = rect.pos.y
+        this.dim.width = rect.dim.width
+        this.dim.height = rect.dim.height
+
+        this.invalidate(rect)
+        this.$div.css({
+          position: 'relative',
+          left: rect.pos.x,
+          top: rect.pos.y,
+          width: rect.dim.width,
+          height: rect.dim.height
+        })
+      }
+
+      /**
+       * Prepares the visual components of the activity
+       */
+      buildVisualComponents() {
+        this.playing = false
+        this.skin = null
+        if (this.act.skinFileName && this.act.skinFileName.length > 0 && this.act.skinFileName !== this.act.project.settings.skinFileName)
+          this.skin = this.act.project.mediaBag.getSkinElement(this.act.skinFileName, this.ps)
+
+        this.bgImage = null
+        if (this.act.bgImageFile && this.act.bgImageFile.length > 0) {
+          var mbe = this.act.project.mediaBag.getElement(this.act.bgImageFile, true)
+          if (mbe)
+            this.bgImage = mbe.data
+        }
+
+        this.backgroundColor = this.act.activityBgColor
+
+        if (this.act.transparentBg)
+          this.backgroundTransparent = true
+
+        // TODO: fix bevel-border type
+        if (this.act.border)
+          this.border = true
+
+        var cssAct = {
+          display: 'block',
+          'background-color': this.backgroundTransparent ? 'transparent' : this.backgroundColor
+        }
+
+        // Border shadow style Material Design, inspired in [http://codepen.io/Stenvh/pen/EaeWqW]
+        if (this.border) {
+          cssAct['box-shadow'] = '0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)'
+          cssAct['border-radius'] = '2px'
+          cssAct['color'] = '#272727'
+        }
+
+        if (this.act.activityBgGradient)
+          cssAct['background-image'] = this.act.activityBgGradient.getCss()
+
+        this.$div.css(cssAct)
+      }
+
+      /**
+       * Activities should implement this method to update the graphic content of its panel. The method
+       * will be called from {@link AWT.Container#update} when needed.
+       * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+       * it's the whole panel.
+       */
+      updateContent(dirtyRegion) {
+        // To be overridden by subclasses. Here does nothing.
+        return super.updateContent(dirtyRegion)
+      }
+
+      /**
+       * Plays the specified event sound
+       * @param {string} event - The type of event to be performed
+       */
+      playEvent(event) {
+        this.act.eventSounds.play(event)
+      }
+
+      /**
+       * Basic initialization procedure, common to all activities.
+       */
+      initActivity() {
+        if (this.playing) {
+          this.playing = false
+          this.ps.reportEndActivity(this.act, this.solved)
+        }
+        this.solved = false
+        this.ps.reportNewActivity(this.act, 0)
+        this.attachEvents()
+        this.enableCounters()
+      }
+
+      /**
+       * Called when the activity starts playing
+       */
+      startActivity() {
+        this.playing = true
+      }
+
+      /**
+       * Called by {@link JClicPlayer} when this activity panel is fully visible, just after the
+       * initialization process.
+       */
+      activityReady() {
+        // To be overrided by subclasses
+      }
+
+      /**
+       * Displays help about the activity
+       */
+      showHelp() {
+        // To be overrided by subclasses
+      }
+
+      /**
+       * Sets the real dimension of this Activity.Panel.
+       * @param {AWT.Dimension} maxSize - The maximum surface available for the activity panel
+       * @returns {AWT.Dimension}
+       */
+      setDimension(maxSize) {
+        return new AWT.Dimension(
+          Math.min(maxSize.width, this.act.windowSize.width),
+          Math.min(maxSize.height, this.act.windowSize.height))
+      }
+
+      /**
+       * Attaches the events specified in the `events` member to the `$div` member
+       */
+      attachEvents() {
+        this.events.forEach(ev => this.attachEvent(this.$div, ev))
+        // Prepare handler to check if we are in a touch device
+        if (!K.TOUCH_DEVICE && $.inArray(TOUCH_TEST_EVENT, this.events) === -1)
+          this.attachEvent(this.$div, TOUCH_TEST_EVENT)
+      }
+
+      /**
+       * Attaches a single event to the specified object
+       * @param {external:jQuery} $obj - The object to which the event will be attached
+       * @param {string} evt - The event name
+       */
+      attachEvent($obj, evt) {
+        $obj.on(evt, this, event => {
+          if (event.type === TOUCH_TEST_EVENT) {
+            if (!K.TOUCH_DEVICE)
+              K.TOUCH_DEVICE = true
+            if ($.inArray(TOUCH_TEST_EVENT, this.events) === -1) {
+              // Disconnect handler
+              $obj.off(TOUCH_TEST_EVENT)
+              return
+            }
+          }
+          return event.data.processEvent.call(event.data, event)
+        })
+      }
+
+      /**
+       * Main handler used to process mouse, touch, keyboard and edit events.
+       * @param {HTMLEvent} event - The HTML event to be processed
+       * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+       * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+       */
+      processEvent(_event) {
+        return false
+      }
+
+      /**
+       * Fits the panel within the `proposed` rectangle. The panel can occupy more space, but always
+       * not surpassing the `bounds` rectangle.
+       * @param {AWT.Rectangle} proposed - The proposed rectangle
+       * @param {AWT.Rectangle} bounds - The maximum allowed bounds
+       */
+      fitTo(proposed, bounds) {
+        const origin = new AWT.Point()
+        if (this.act.absolutePositioned && this.act.absolutePosition !== null) {
+          origin.x = Math.max(0, this.act.absolutePosition.x + proposed.pos.x)
+          origin.y = Math.max(0, this.act.absolutePosition.y + proposed.pos.y)
+          proposed.dim.width -= this.act.absolutePosition.x
+          proposed.dim.height -= this.act.absolutePosition.y
+        }
+        const d = this.setDimension(new AWT.Dimension(
+          Math.max(2 * this.act.margin + Utils.settings.MINIMUM_WIDTH, proposed.dim.width),
+          Math.max(2 * this.act.margin + Utils.settings.MINIMUM_HEIGHT, proposed.dim.height)))
+        if (!this.act.absolutePositioned) {
+          origin.moveTo(
+            Math.max(0, proposed.pos.x + (proposed.dim.width - d.width) / 2),
+            Math.max(0, proposed.pos.y + (proposed.dim.height - d.height) / 2))
+        }
+        if (origin.x + d.width > bounds.dim.width)
+          origin.x = Math.max(0, bounds.dim.width - d.width)
+        if (origin.y + d.height > bounds.dim.height)
+          origin.y = Math.max(0, bounds.dim.height - d.height)
+        this.setBounds(new AWT.Rectangle(origin.x, origin.y, d.width, d.height))
+
+        // Build accessible components at the end of current tree
+        window.setTimeout(() => this.buildAccessibleComponents(), 0)
+      }
+
+      /**
+       * 
+       * Builds the accessible components needed for this Activity.Panel
+       * This method is called when all main elements are placed and visible, when the activity is ready
+       * to start or when resized.
+       */
+      buildAccessibleComponents() {
+        // Clear existing elements
+        if (this.accessibleCanvas && this.$canvas && this.$canvas.children().length > 0) {
+          this.$canvas.get(-1).getContext('2d').clearHitRegions()
+          this.$canvas.empty()
+        }
+        // Create accessible elements in subclasses
+      }
+
+      /**
+       *  Forces the ending of the activity.
+       */
+      forceFinishActivity() {
+        // to be overrided by subclasses
+      }
+
+      /**
+       * Ordinary ending of the activity, usually called form `processEvent`
+       * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
+       */
+      finishActivity(result) {
+        this.playing = false
+        this.solved = result
+
+        if (this.bc !== null)
+          this.bc.end()
+
+        if (result) {
+          this.setAndPlayMsg('final', 'finishedOk')
+        } else {
+          this.setAndPlayMsg('finalError', 'finishedError')
+        }
+        this.ps.activityFinished(this.solved)
+        this.ps.reportEndActivity(this.act, this.solved)
+      }
+
+      /**
+       * Sets the message to be displayed in the skin message box and optionally plays a sound event.
+       * @param {string} msgCode - Type of message (initial, final, finalError...)
+       * @param {string=} eventSoundsCode - Optional name of the event sound to be played.
+       */
+      setAndPlayMsg(msgCode, eventSoundsCode) {
+        const msg = this.act.messages[msgCode] || null
+        this.ps.setMsg(msg)
+        if (msg === null || msg.mediaContent === null)
+          this.playEvent(eventSoundsCode)
+        else
+          this.ps.playMsg()
+      }
+
+      /**
+       * Ends the activity
+       */
+      end() {
+        this.forceFinishActivity()
+        if (this.playing) {
+          if (this.bc !== null)
+            this.bc.end()
+          this.ps.reportEndActivity(this.act, this.solved)
+          this.playing = false
+          this.solved = false
+        }
+        this.clear()
+      }
+
+      /**
+       * Miscellaneous cleaning operations
+       */
+      clear() {
+        // to be overridden by subclasses
+      }
+
+      /**
+       * Enables or disables the three counters (time, score and actions)
+       * @param {boolean} eTime - Whether to enable or disable the time counter
+       * @param {boolean} eScore - Whether to enable or disable the score counter
+       * @param {boolean} eActions - Whether to enable or disable the actions counter
+       */
+      enableCounters(eTime, eScore, eActions) {
+        if (typeof eTime === 'undefined')
+          eTime = this.act.bTimeCounter
+        if (typeof eScore === 'undefined')
+          eScore = this.act.bScoreCounter
+        if (typeof eActions === 'undefined')
+          eActions = this.act.bActionsCounter
+
+        this.ps.setCounterEnabled('time', eTime)
+        if (this.act.countDownTime)
+          this.ps.setCountDown('time', this.act.maxTime)
+        this.ps.setCounterEnabled('score', eScore)
+        this.ps.setCounterEnabled('actions', eActions)
+        if (this.act.countDownActions)
+          this.ps.setCountDown('actions', this.act.maxActions)
+      }
+
+      /**
+       * Shuffles the contents of the activity
+       * @param {ActiveBoxBag[]} bg - The sets of boxes to be shuffled
+       * @param {boolean} visible - The shuffle process must be animated on the screen (not yet implemented!)
+       * @param {boolean} fitInArea - Shuffled pieces cannot go out of the current area
+       */
+      shuffle(bg, visible, fitInArea) {
+        const steps = this.act.shuffles
+        let i = steps
+        while (i > 0) {
+          const k = i > steps ? steps : i
+          bg.forEach(abb => { if (abb) abb.scrambleCells(k, fitInArea) })
+          i -= steps
+        }
+      }
+    }
+
+    Object.assign(Activity.Panel.prototype, {
       /**
        * The Activity this panel is related to
        * @type {Activity} */
@@ -827,343 +1152,7 @@ define([
       backgroundColor: null,
       backgroundTransparent: false,
       border: null,
-      /**
-       *
-       * Sets the size and position of this activity panel
-       * @param {AWT.Rectangle} rect
-       */
-      setBounds: function (rect) {
+    })
 
-        this.pos.x = rect.pos.x;
-        this.pos.y = rect.pos.y;
-        this.dim.width = rect.dim.width;
-        this.dim.height = rect.dim.height;
-
-        this.invalidate(rect);
-        this.$div.css({
-          position: 'relative',
-          left: rect.pos.x,
-          top: rect.pos.y,
-          width: rect.dim.width,
-          height: rect.dim.height
-        });
-      },
-      /**
-       *
-       * Prepares the visual components of the activity
-       */
-      buildVisualComponents: function () {
-        this.playing = false;
-
-        this.skin = null;
-        if (this.act.skinFileName && this.act.skinFileName.length > 0 && this.act.skinFileName !== this.act.project.settings.skinFileName)
-          this.skin = this.act.project.mediaBag.getSkinElement(this.act.skinFileName, this.ps);
-
-        this.bgImage = null;
-        if (this.act.bgImageFile && this.act.bgImageFile.length > 0) {
-          var mbe = this.act.project.mediaBag.getElement(this.act.bgImageFile, true);
-          if (mbe)
-            this.bgImage = mbe.data;
-        }
-
-        this.backgroundColor = this.act.activityBgColor;
-
-        if (this.act.transparentBg)
-          this.backgroundTransparent = true;
-
-        // TODO: fix bevel-border type
-        if (this.act.border)
-          this.border = true;
-
-        var cssAct = {
-          display: 'block',
-          'background-color': this.backgroundTransparent ? 'transparent' : this.backgroundColor
-        };
-
-        // Border shadow style Material Design, inspired in [http://codepen.io/Stenvh/pen/EaeWqW]
-        if (this.border) {
-          cssAct['box-shadow'] = '0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)';
-          cssAct['border-radius'] = '2px';
-          cssAct['color'] = '#272727';
-        }
-
-        if (this.act.activityBgGradient) {
-          cssAct['background-image'] = this.act.activityBgGradient.getCss();
-        }
-        this.$div.css(cssAct);
-      },
-      /**
-       * Activities should implement this method to update the graphic content of its panel. The method
-       * will be called from {@link AWT.Container#update} when needed.
-       * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
-       * it's the whole panel.
-       */
-      updateContent: function (dirtyRegion) {
-        // To be overridden by subclasses. Here does nothing.
-        return AWT.Container.prototype.updateContent.call(this, dirtyRegion);
-      },
-      /**
-       *
-       * Plays the specified event sound
-       * @param {string} event - The type of event to be performed
-       */
-      playEvent: function (event) {
-        this.act.eventSounds.play(event);
-      },
-      /**
-       *
-       * Basic initialization procedure, common to all activities.
-       */
-      initActivity: function () {
-        if (this.playing) {
-          this.playing = false;
-          this.ps.reportEndActivity(this.act, this.solved);
-        }
-        this.solved = false;
-        this.ps.reportNewActivity(this.act, 0);
-        this.attachEvents();
-        this.enableCounters();
-      },
-      /**
-       *
-       * Called when the activity starts playing
-       */
-      startActivity: function () {
-        //var msg = this.act.messages['initial'];
-        //if (msg)
-        //  this.ps.setMsg(msg);
-        this.playing = true;
-      },
-      /**
-       *
-       * Called by {@link JClicPlayer} when this activity panel is fully visible, just after the
-       * initialization process.
-       */
-      activityReady: function () {
-        // To be overrided by subclasses
-      },
-      /**
-       *
-       * Displays help about the activity
-       */
-      showHelp: function () {
-        // To be overrided by subclasses
-      },
-      /**
-       *
-       * Sets the real dimension of this Activity.Panel.
-       * @param {AWT.Dimension} maxSize - The maximum surface available for the activity panel
-       * @returns {AWT.Dimension}
-       */
-      setDimension: function (maxSize) {
-        return new AWT.Dimension(
-          Math.min(maxSize.width, this.act.windowSize.width),
-          Math.min(maxSize.height, this.act.windowSize.height));
-      },
-      /**
-       * Attaches the events specified in the `events` member to the `$div` member
-       */
-      attachEvents: function () {
-        for (var i = 0; i < this.events.length; i++) {
-          this.attachEvent(this.$div, this.events[i]);
-        }
-        // Prepare handler to check if we are in a touch device
-        if (!K.TOUCH_DEVICE && $.inArray(TOUCH_TEST_EVENT, this.events) === -1)
-          this.attachEvent(this.$div, TOUCH_TEST_EVENT);
-      },
-      /**
-       *
-       * Attaches a single event to the specified object
-       * @param {external:jQuery} $obj - The object to which the event will be attached
-       * @param {string} evt - The event name
-       */
-      attachEvent: function ($obj, evt) {
-        var act = this;
-        $obj.on(evt, this, function (event) {
-          if (event.type === TOUCH_TEST_EVENT) {
-            if (!K.TOUCH_DEVICE)
-              K.TOUCH_DEVICE = true;
-            if ($.inArray(TOUCH_TEST_EVENT, act.events) === -1) {
-              // Disconnect handler
-              $obj.off(TOUCH_TEST_EVENT);
-              return;
-            }
-          }
-          return event.data.processEvent.call(event.data, event);
-        });
-      },
-      /**
-       *
-       * Main handler used to process mouse, touch, keyboard and edit events.
-       * @param {HTMLEvent} event - The HTML event to be processed
-       * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
-       * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
-       */
-      processEvent: function (_event) {
-        return false;
-      },
-      /**
-       *
-       * Fits the panel within the `proposed` rectangle. The panel can occupy more space, but always
-       * not surpassing the `bounds` rectangle.
-       * @param {AWT.Rectangle} proposed - The proposed rectangle
-       * @param {AWT.Rectangle} bounds - The maximum allowed bounds
-       */
-      fitTo: function (proposed, bounds) {
-        var origin = new AWT.Point();
-        if (this.act.absolutePositioned && this.act.absolutePosition !== null) {
-          origin.x = Math.max(0, this.act.absolutePosition.x + proposed.pos.x);
-          origin.y = Math.max(0, this.act.absolutePosition.y + proposed.pos.y);
-          proposed.dim.width -= this.act.absolutePosition.x;
-          proposed.dim.height -= this.act.absolutePosition.y;
-        }
-        var d = this.setDimension(new AWT.Dimension(
-          Math.max(2 * this.act.margin + Utils.settings.MINIMUM_WIDTH, proposed.dim.width),
-          Math.max(2 * this.act.margin + Utils.settings.MINIMUM_HEIGHT, proposed.dim.height)));
-        if (!this.act.absolutePositioned) {
-          origin.moveTo(
-            Math.max(0, proposed.pos.x + (proposed.dim.width - d.width) / 2),
-            Math.max(0, proposed.pos.y + (proposed.dim.height - d.height) / 2));
-        }
-        if (origin.x + d.width > bounds.dim.width)
-          origin.x = Math.max(0, bounds.dim.width - d.width);
-        if (origin.y + d.height > bounds.dim.height)
-          origin.y = Math.max(0, bounds.dim.height - d.height);
-        this.setBounds(new AWT.Rectangle(origin.x, origin.y, d.width, d.height));
-
-        // Build accessible components at the end of current tree
-        var thisPanel = this;
-        window.setTimeout(function () {
-          thisPanel.buildAccessibleComponents();
-        }, 0);
-
-      },
-      /**
-       * 
-       * Builds the accessible components needed for this Activity.Panel
-       * This method is called when all main elements are placed and visible, when the activity is ready
-       * to start or when resized.
-       */
-      buildAccessibleComponents: function () {
-        // Clear existing elements
-        if (this.accessibleCanvas && this.$canvas && this.$canvas.children().length > 0) {
-          this.$canvas.get(-1).getContext('2d').clearHitRegions();
-          this.$canvas.empty();
-        }
-        // Create accessible elements in subclasses
-      },
-      /**
-       *
-       *  Forces the ending of the activity.
-       */
-      forceFinishActivity: function () {
-        // to be overrided by subclasses
-      },
-      /**
-       *
-       * Ordinary ending of the activity, usually called form `processEvent`
-       * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
-       */
-      finishActivity: function (result) {
-        this.playing = false;
-        this.solved = result;
-
-        if (this.bc !== null)
-          this.bc.end();
-
-        if (result) {
-          this.setAndPlayMsg('final', 'finishedOk');
-        } else {
-          this.setAndPlayMsg('finalError', 'finishedError');
-        }
-        this.ps.activityFinished(this.solved);
-        this.ps.reportEndActivity(this.act, this.solved);
-      },
-      /**
-       *
-       * Sets the message to be displayed in the skin message box and optionally plays a sound event.
-       * @param {string} msgCode - Type of message (initial, final, finalError...)
-       * @param {string=} eventSoundsCode - Optional name of the event sound to be played.
-       */
-      setAndPlayMsg: function (msgCode, eventSoundsCode) {
-        var msg = this.act.messages[msgCode];
-        if (!msg)
-          msg = null;
-        this.ps.setMsg(msg);
-        if (msg === null || msg.mediaContent === null)
-          this.playEvent(eventSoundsCode);
-        else
-          this.ps.playMsg();
-      },
-      /**
-       *
-       * Ends the activity
-       */
-      end: function () {
-        this.forceFinishActivity();
-        if (this.playing) {
-          if (this.bc !== null)
-            this.bc.end();
-          this.ps.reportEndActivity(this.act, this.solved);
-          this.playing = false;
-          this.solved = false;
-        }
-        this.clear();
-      },
-      /**
-       *
-       * Miscellaneous cleaning operations
-       */
-      clear: function () {
-        // to be overridden by subclasses
-      },
-      /**
-       *
-       * Enables or disables the three counters (time, score and actions)
-       * @param {boolean} eTime - Whether to enable or disable the time counter
-       * @param {boolean} eScore - Whether to enable or disable the score counter
-       * @param {boolean} eActions - Whether to enable or disable the actions counter
-       */
-      enableCounters: function (eTime, eScore, eActions) {
-        if (typeof eTime === 'undefined')
-          eTime = this.act.bTimeCounter;
-        if (typeof eScore === 'undefined')
-          eScore = this.act.bScoreCounter;
-        if (typeof eActions === 'undefined')
-          eActions = this.act.bActionsCounter;
-
-        this.ps.setCounterEnabled('time', eTime);
-        if (this.act.countDownTime)
-          this.ps.setCountDown('time', this.act.maxTime);
-        this.ps.setCounterEnabled('score', eScore);
-        this.ps.setCounterEnabled('actions', eActions);
-        if (this.act.countDownActions)
-          this.ps.setCountDown('actions', this.act.maxActions);
-      },
-      /**
-       *
-       * Shuffles the contents of the activity
-       * @param {ActiveBoxBag[]} bg - The sets of boxes to be shuffled
-       * @param {boolean} visible - The shuffle process must be animated on the screen (not yet implemented!)
-       * @param {boolean} fitInArea - Shuffled pieces cannot go out of the current area
-       */
-      shuffle: function (bg, visible, fitInArea) {
-        var steps = this.act.shuffles;
-        var i = steps;
-        while (i > 0) {
-          var k = i > steps ? steps : i;
-          for (var b = 0; b < bg.length; b++) {
-            var abb = bg[b];
-            if (abb !== null)
-              abb.scrambleCells(k, fitInArea);
-          }
-          i -= steps;
-        }
-      }
-    };
-
-    // Activity.Panel extends AWT.Container
-    Activity.Panel.prototype = $.extend(Object.create(AWT.Container.prototype), Activity.Panel.prototype);
-
-    return Activity;
-  });
+    return Activity
+  })
