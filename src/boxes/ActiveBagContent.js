@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -46,20 +46,341 @@ define([
    * provider of a common visual style.
    * @exports ActiveBagContent
    * @class
-   * @param {string=} id - An optional text tag identifying this ActiveBagContent
-   * @param {number} ncw - In grid-based distributions, number of columns.
-   * @param {number} nch - In grid-based distributions, number of rows.
    */
-  var ActiveBagContent = function (id, ncw, nch) {
-    if (id)
-      this.id = id;
-    this.activeBoxContentArray = [];
-    this.ncw = Math.max(1, ncw);
-    this.nch = Math.max(1, nch);
-  };
+  class ActiveBagContent {
+    /**
+     * ActiveBagContent constructor
+     * @param {string=} id - An optional text tag identifying this ActiveBagContent
+     * @param {number} ncw - In grid-based distributions, number of columns.
+     * @param {number} nch - In grid-based distributions, number of rows.
+     */
+    constructor(id, ncw, nch) {
+      if (id)
+        this.id = id
+      this.activeBoxContentArray = []
+      this.ncw = Math.max(1, ncw)
+      this.nch = Math.max(1, nch)
+    }
 
-  ActiveBagContent.prototype = {
-    constructor: ActiveBagContent,
+    /**
+     * Loads the object settings from a specific JQuery XML element
+     * @param {external:jQuery} $xml - The XML element to parse
+     * @param {MediaBag} mediaBag - The project's MediaBag
+     */
+    setProperties($xml, mediaBag) {
+
+      let bug = false
+
+      $.each($xml.get(0).attributes, (name, val) => {
+        switch (name) {
+          case 'id':
+            this.id = val
+            break
+          case 'image':
+            this.imgName = Utils.nSlash(val)
+            break
+          // Bug in JClic beta 1: "columns" is number of rows, and "rows" is number of columns.
+          // Was corrected in beta 2: If "cols" is specified, "rows" are rows and "cols" are columns.
+          case 'rows':
+            this.nch = Number(val)
+            break
+          case 'columns':
+            bug = true;
+          /* falls through */
+          case 'cols':
+            this.ncw = Number(val)
+            break;
+          case 'cellWidth':
+            this.w = Number(val)
+            break;
+          case 'cellHeight':
+            this.h = Number(val)
+            break;
+          case 'border':
+            this.border = Utils.getBoolean(val)
+            break
+        }
+      })
+
+      if (bug) {
+        let n = this.ncw
+        this.ncw = cellSet.nch
+        this.nch = n
+      }
+
+      $xml.children().each((n, child) => {
+        var $node = $(child);
+        switch (child.nodeName) {
+          case 'style':
+            this.bb = new BoxBase(null).setProperties($node)
+            break
+          case 'shaper':
+            const shaperClassName = $node.attr('class'),
+              nCols = Math.max(1, $node.attr('cols')),
+              nRows = Math.max(1, $node.attr('rows'))
+            this.shaper = Shaper.getShaper(shaperClassName, nCols, nRows)
+            this.shaper.setProperties($node)
+            break
+          case 'ids':
+            // Used in special cases where all cells have empty content with only 'ids'
+            var ids = child.textContent.split(' ')
+            for (i = 0; i < ids.length; i++)
+              this.activeBoxContentArray[i] = new ActiveBoxContent(Number(ids[i]))
+            break;
+          case 'cell':
+            var abc = new ActiveBoxContent().setProperties($node, mediaBag)
+            this.activeBoxContentArray.push(abc)
+            break
+        }
+      })
+
+      let n = this.activeBoxContentArray.length
+
+      // Create cells when `activeBoxContentArray` is empty
+      if (n === 0 && cellSet.shaper && cellSet.shaper.nCells > 0) {
+        n = cellSet.shaper.nCells
+        this.getActiveBoxContent(n - 1)
+      }
+
+      // Assign ids when cells have empty content (they are just shapes)
+      if (n > 0) {
+        let empty = true
+        for (let i = 0; i < n; i++) {
+          var bxc = this.getActiveBoxContent(i)
+          if (bxc.id !== -1 || bxc.item !== -1 || !bxc.isEmpty()) {
+            empty = false
+            break
+          }
+        }
+        if (empty) {
+          for (let i = 0; i < n; i++)
+            this.getActiveBoxContent(i).id = i
+        }
+      }
+
+      // Link [BoxBase](BoxBase.html) objects of `activeBoxContentArray` elements to `bb`
+      if (this.bb) {
+        $.each(this.activeBoxContentArray, (i, cellContent) => {
+          if (cellContent.bb)
+            cellContent.bb.parent = this.bb
+        })
+      }
+      return this
+    }
+
+    /**
+     * Prepares the media content of all elements
+     * @param {PlayStation} playStation - The {@link JClicPlayer}
+     */
+    prepareMedia(playStation) {
+      this.activeBoxContentArray.forEach(abc => abc.prepareMedia(playStation))
+    }
+
+    /**
+     * Gets the estimated total width of this content bag
+     * @returns {number}
+     */
+    getTotalWidth() {
+      return this.w * this.ncw
+    }
+
+    // SEGUIR AQUI ============================================>>>
+
+
+
+    /**
+     *
+     * Gets the estimated total height of this bag
+     * @returns {number}
+     */
+    getTotalHeight: function () {
+      return this.h * this.nch;
+    },
+  /**
+   *
+   * Gets the total number of cells of this bag
+   * @returns {number}
+   */
+  getNumCells: function () {
+    return this.activeBoxContentArray.length;
+  },
+  /**
+   *
+   * Checks if the bag is empty
+   * @returns {boolean}
+   */
+  isEmpty: function () {
+    return this.activeBoxContentArray.length === 0;
+  },
+  /**
+   *
+   * Retrieves the {@link Shaper} of this bag, creating a new one if it was _null_
+   * @returns {Shaper}
+   */
+  getShaper: function () {
+    if (this.shaper === null)
+      this.shaper = Shaper.getShaper('@Rectangular', this.ncw, this.nch);
+    return this.shaper;
+  },
+  /**
+   * 
+   * Retrieves the {@link BoxBase} of this bag, creating a new one if it was _null_
+   * @returns {BoxBase}
+   */
+  getBoxBase: function () {
+    if (this.bb === null)
+      this.bb = new BoxBase();
+    return this.bb;
+  },
+  /**
+   *
+   * Adds a new {@link ActiveBoxContent} to this bag
+   * @param {ActiveBoxContent} ab - The ActiveBoxContent to add
+   */
+  addActiveBoxContent: function (ab) {
+    this.activeBoxContentArray.push(ab);
+    if (this.ncw === 0 || this.nch === 0) {
+      this.ncw = 1;
+      this.nch = 1;
+    }
+  },
+  /**
+   *
+   * Gets the nth {@link ActiveBoxContent} in `activeBoxContentArray`
+   * @param {number} i - The index of the content to be retrieved
+   * @returns {ActiveBoxContent}
+   */
+  getActiveBoxContent: function (i) {
+    if (i >= this.activeBoxContentArray.length) {
+      for (var j = this.activeBoxContentArray.length; j <= i; j++)
+        this.activeBoxContentArray.push(new ActiveBoxContent());
+    }
+    return this.activeBoxContentArray[i];
+  },
+  /**
+   *
+   * Finds the ActiveBoxContent with specific `id` and `item` values
+   * @param {number} id
+   * @param {number} item
+   * @returns {ActiveBoxContent}
+   */
+  getActiveBoxContentWith: function (id, item) {
+    var result = null;
+    for (var i = 0; i < this.activeBoxContentArray.length; i++) {
+      var abxcnt = this.activeBoxContentArray[i];
+      if (abxcnt.id === id && abxcnt.item === item) {
+        result = abxcnt;
+        break;
+      }
+    }
+    return result;
+  },
+  /**
+   *
+   * Sets the content of the cells based on a image spliced by a shaper
+   * @param {MediaBag} mb - The MediaBag used to retrieve the image
+   * @param {Shaper} sh - The Shaper used to splice the image
+   * @param {boolean} roundSizes - When `true`, the size and coordinates of cells will be rounded
+   * to the nearest integer values.
+   */
+  setImgContent: function (mb, sh, roundSizes) {
+    if (sh)
+      this.setShaper(sh);
+
+    if (this.shaper.className === '@Holes')
+      this.shaper.hasRemainder = true;
+
+    this.ncw = this.shaper.nCols;
+    this.nch = this.shaper.nRows;
+    var mbe = mb.elements[this.imgName];
+    if (mb && this.imgName && mbe && mbe.ready) {
+      this.img = mbe.data;
+      if (mbe.animated)
+        this.animatedGifFile = mbe.getFullPath();
+      this.w = this.img.width / this.ncw;
+      this.h = this.img.height / this.nch;
+      if (roundSizes) {
+        this.w = Math.round(this.w);
+        this.h = Math.round(this.h);
+      }
+    } else {
+      this.img = null;
+      this.w = Math.max(this.w, 10);
+      this.h = Math.max(this.h, 10);
+    }
+
+    var r = new AWT.Rectangle(0, 0, this.w * this.ncw, this.h * this.nch);
+    for (var i = 0; i < this.shaper.nCells; i++) {
+      this.getActiveBoxContent(i).setImgContent(this.img, this.shaper.getShape(i, r), this.animatedGifFile);
+    }
+    if (this.shaper.hasRemainder) {
+      this.backgroundContent = new ActiveBoxContent();
+      this.backgroundContent.setImgContent(this.img, this.shaper.getRemainderShape(r));
+    }
+  },
+  /**
+   *
+   * Sets the content of this bag based on an array of strings
+   * @param {string[]} txt - The array of strings to be used as content.
+   * @param {number} setNcw - Number of columns
+   * @param {number} setNch - Number of rows
+   */
+  setTextContent: function (txt, setNcw, setNch) {
+    this.ncw = Math.max(1, setNcw);
+    this.nch = Math.max(1, setNch);
+    var n = this.ncw * this.nch;
+    for (var i = 0; i < n; i++) {
+      this.getActiveBoxContent(i).setTextContent(
+        i >= txt.length || txt[i] === null ? '' : txt[i]);
+    }
+  },
+  /**
+   *
+   * Sets `id` values to a all the {@link ActiveBoxContent} elements of his bag.
+   * @param {number[]} ids -Array of numeric identifiers
+   */
+  setIds: function (ids) {
+    for (var i = 0; i < this.activeBoxContentArray.length; i++)
+      if (i < ids.length)
+        this.getActiveBoxContent(i).id = ids[i];
+  },
+  /**
+   * 
+   * Sets `value` to the `key` attribute of all cells
+   * @param {string} key - The key where the value will be stored
+   * @param {*} value - The supplied value. Can be of any type.
+   */
+  setCellsAttribute: function (key, value) {
+    for (var i = 0; i < this.activeBoxContentArray.length; i++)
+      this.getActiveBoxContent(i)[key] = value;
+  },
+  /**
+   *
+   * Cheks if the `id` values of all {@link ActiveBoxContent} objects are -1 and, if true,
+   * sets new ids to them, with values between 0 and `maxId`
+   * @param {number} maxId - The maximum value of identifiers
+   */
+  avoidAllIdsNull: function (maxId) {
+
+    var i, allIdsNull = true,
+      numCells = this.activeBoxContentArray.length;
+
+    for (i = 0; i < numCells; i++) {
+      if (this.getActiveBoxContent(i).id !== -1) {
+        allIdsNull = false;
+        break;
+      }
+    }
+    if (allIdsNull) {
+      maxId = Math.max(1, maxId);
+      for (i = 0; i < numCells; i++) {
+        this.getActiveBoxContent(i).id = i % maxId;
+      }
+    }
+  }    
+  }
+
+  Object.assign(ActiveBagContent.prototype, {
     /**
      * The global identifier of this object: `primary`, `secondary`...
      * @type {string} */
@@ -116,324 +437,8 @@ define([
      * The default value to be assigned at the 'id' field of children
      * @type {number} */
     defaultIdValue: -1,
-    /**
-     *
-     * Loads the object settings from a specific JQuery XML element
-     * @param {external:jQuery} $xml - The XML element to parse
-     * @param {MediaBag} mediaBag - The project's MediaBag
-     */
-    setProperties: function ($xml, mediaBag) {
+  })
 
-      var cellSet = this,
-        bug = false,
-        i, n;
+return ActiveBagContent
 
-      $.each($xml.get(0).attributes, function () {
-        var val = this.value;
-        switch (this.name) {
-          case 'id':
-            cellSet.id = val;
-            break;
-          case 'image':
-            cellSet.imgName = Utils.nSlash(val);
-            break;
-          // Bug in JClic beta 1: "columns" is number of rows, and "rows" is number of columns.
-          // Was corrected in beta 2: If "cols" is specified, "rows" are rows and "cols" are columns.
-          case 'rows':
-            cellSet.nch = Number(val);
-            break;
-          case 'columns':
-            bug = true;
-          /* falls through */
-          case 'cols':
-            cellSet.ncw = Number(val);
-            break;
-          case 'cellWidth':
-            cellSet.w = Number(val);
-            break;
-          case 'cellHeight':
-            cellSet.h = Number(val);
-            break;
-          case 'border':
-            cellSet.border = Utils.getBoolean(val);
-            break;
-        }
-      });
-
-      if (bug) {
-        n = cellSet.ncw;
-        cellSet.ncw = cellSet.nch;
-        cellSet.nch = n;
-      }
-
-      $xml.children().each(function () {
-        var $node = $(this);
-        switch (this.nodeName) {
-          case 'style':
-            cellSet.bb = new BoxBase(null).setProperties($node);
-            break;
-          case 'shaper':
-            var shaperClassName = $node.attr('class'),
-              nCols = Math.max(1, $node.attr('cols')),
-              nRows = Math.max(1, $node.attr('rows'));
-            cellSet.shaper = Shaper.getShaper(shaperClassName, nCols, nRows);
-            cellSet.shaper.setProperties($node);
-            break;
-          case 'ids':
-            // Used in special cases where all cells have empty content with only 'ids'
-            var ids = this.textContent.split(' ');
-            for (i = 0; i < ids.length; i++)
-              cellSet.activeBoxContentArray[i] = new ActiveBoxContent(Number(ids[i]));
-            break;
-          case 'cell':
-            var abc = new ActiveBoxContent().setProperties($node, mediaBag);
-            cellSet.activeBoxContentArray.push(abc);
-            break;
-        }
-      });
-
-      n = this.activeBoxContentArray.length;
-
-      // Create cells when `activeBoxContentArray` is empty
-      if (n === 0 && cellSet.shaper && cellSet.shaper.nCells > 0) {
-        n = cellSet.shaper.nCells;
-        this.getActiveBoxContent(n - 1);
-      }
-
-      // Assign ids when cells have empty content (they are just shapes)
-      if (n > 0) {
-        var empty = true;
-        for (i = 0; i < n; i++) {
-          var bxc = this.getActiveBoxContent(i);
-          if (bxc.id !== -1 || bxc.item !== -1 || !bxc.isEmpty()) {
-            empty = false;
-            break;
-          }
-        }
-        if (empty) {
-          for (i = 0; i < n; i++)
-            this.getActiveBoxContent(i).id = i;
-        }
-      }
-
-      // Link [BoxBase](BoxBase.html) objects of `activeBoxContentArray` elements to `bb`
-      if (cellSet.bb) {
-        $.each(cellSet.activeBoxContentArray, function (i, cellContent) {
-          if (cellContent.bb)
-            cellContent.bb.parent = cellSet.bb;
-        });
-      }
-      return this;
-    },
-    /**
-     *
-     * Prepares the media content of all elements
-     * @param {PlayStation} playStation - The {@link JClicPlayer}
-     */
-    prepareMedia: function (playStation) {
-      for (var i = 0; i < this.activeBoxContentArray.length; i++) {
-        this.activeBoxContentArray[i].prepareMedia(playStation);
-      }
-    },
-    /**
-     *
-     * Gets the estimated total width of this content bag
-     * @returns {number}
-     */
-    getTotalWidth: function () {
-      return this.w * this.ncw;
-    },
-    /**
-     *
-     * Gets the estimated total height of this bag
-     * @returns {number}
-     */
-    getTotalHeight: function () {
-      return this.h * this.nch;
-    },
-    /**
-     *
-     * Gets the total number of cells of this bag
-     * @returns {number}
-     */
-    getNumCells: function () {
-      return this.activeBoxContentArray.length;
-    },
-    /**
-     *
-     * Checks if the bag is empty
-     * @returns {boolean}
-     */
-    isEmpty: function () {
-      return this.activeBoxContentArray.length === 0;
-    },
-    /**
-     *
-     * Retrieves the {@link Shaper} of this bag, creating a new one if it was _null_
-     * @returns {Shaper}
-     */
-    getShaper: function () {
-      if (this.shaper === null)
-        this.shaper = Shaper.getShaper('@Rectangular', this.ncw, this.nch);
-      return this.shaper;
-    },
-    /**
-     * 
-     * Retrieves the {@link BoxBase} of this bag, creating a new one if it was _null_
-     * @returns {BoxBase}
-     */
-    getBoxBase: function () {
-      if (this.bb === null)
-        this.bb = new BoxBase();
-      return this.bb;
-    },
-    /**
-     *
-     * Adds a new {@link ActiveBoxContent} to this bag
-     * @param {ActiveBoxContent} ab - The ActiveBoxContent to add
-     */
-    addActiveBoxContent: function (ab) {
-      this.activeBoxContentArray.push(ab);
-      if (this.ncw === 0 || this.nch === 0) {
-        this.ncw = 1;
-        this.nch = 1;
-      }
-    },
-    /**
-     *
-     * Gets the nth {@link ActiveBoxContent} in `activeBoxContentArray`
-     * @param {number} i - The index of the content to be retrieved
-     * @returns {ActiveBoxContent}
-     */
-    getActiveBoxContent: function (i) {
-      if (i >= this.activeBoxContentArray.length) {
-        for (var j = this.activeBoxContentArray.length; j <= i; j++)
-          this.activeBoxContentArray.push(new ActiveBoxContent());
-      }
-      return this.activeBoxContentArray[i];
-    },
-    /**
-     *
-     * Finds the ActiveBoxContent with specific `id` and `item` values
-     * @param {number} id
-     * @param {number} item
-     * @returns {ActiveBoxContent}
-     */
-    getActiveBoxContentWith: function (id, item) {
-      var result = null;
-      for (var i = 0; i < this.activeBoxContentArray.length; i++) {
-        var abxcnt = this.activeBoxContentArray[i];
-        if (abxcnt.id === id && abxcnt.item === item) {
-          result = abxcnt;
-          break;
-        }
-      }
-      return result;
-    },
-    /**
-     *
-     * Sets the content of the cells based on a image spliced by a shaper
-     * @param {MediaBag} mb - The MediaBag used to retrieve the image
-     * @param {Shaper} sh - The Shaper used to splice the image
-     * @param {boolean} roundSizes - When `true`, the size and coordinates of cells will be rounded
-     * to the nearest integer values.
-     */
-    setImgContent: function (mb, sh, roundSizes) {
-      if (sh)
-        this.setShaper(sh);
-
-      if (this.shaper.className === '@Holes')
-        this.shaper.hasRemainder = true;
-
-      this.ncw = this.shaper.nCols;
-      this.nch = this.shaper.nRows;
-      var mbe = mb.elements[this.imgName];
-      if (mb && this.imgName && mbe && mbe.ready) {
-        this.img = mbe.data;
-        if (mbe.animated)
-          this.animatedGifFile = mbe.getFullPath();
-        this.w = this.img.width / this.ncw;
-        this.h = this.img.height / this.nch;
-        if (roundSizes) {
-          this.w = Math.round(this.w);
-          this.h = Math.round(this.h);
-        }
-      } else {
-        this.img = null;
-        this.w = Math.max(this.w, 10);
-        this.h = Math.max(this.h, 10);
-      }
-
-      var r = new AWT.Rectangle(0, 0, this.w * this.ncw, this.h * this.nch);
-      for (var i = 0; i < this.shaper.nCells; i++) {
-        this.getActiveBoxContent(i).setImgContent(this.img, this.shaper.getShape(i, r), this.animatedGifFile);
-      }
-      if (this.shaper.hasRemainder) {
-        this.backgroundContent = new ActiveBoxContent();
-        this.backgroundContent.setImgContent(this.img, this.shaper.getRemainderShape(r));
-      }
-    },
-    /**
-     *
-     * Sets the content of this bag based on an array of strings
-     * @param {string[]} txt - The array of strings to be used as content.
-     * @param {number} setNcw - Number of columns
-     * @param {number} setNch - Number of rows
-     */
-    setTextContent: function (txt, setNcw, setNch) {
-      this.ncw = Math.max(1, setNcw);
-      this.nch = Math.max(1, setNch);
-      var n = this.ncw * this.nch;
-      for (var i = 0; i < n; i++) {
-        this.getActiveBoxContent(i).setTextContent(
-          i >= txt.length || txt[i] === null ? '' : txt[i]);
-      }
-    },
-    /**
-     *
-     * Sets `id` values to a all the {@link ActiveBoxContent} elements of his bag.
-     * @param {number[]} ids -Array of numeric identifiers
-     */
-    setIds: function (ids) {
-      for (var i = 0; i < this.activeBoxContentArray.length; i++)
-        if (i < ids.length)
-          this.getActiveBoxContent(i).id = ids[i];
-    },
-    /**
-     * 
-     * Sets `value` to the `key` attribute of all cells
-     * @param {string} key - The key where the value will be stored
-     * @param {*} value - The supplied value. Can be of any type.
-     */
-    setCellsAttribute: function (key, value) {
-      for (var i = 0; i < this.activeBoxContentArray.length; i++)
-        this.getActiveBoxContent(i)[key] = value;
-    },
-    /**
-     *
-     * Cheks if the `id` values of all {@link ActiveBoxContent} objects are -1 and, if true,
-     * sets new ids to them, with values between 0 and `maxId`
-     * @param {number} maxId - The maximum value of identifiers
-     */
-    avoidAllIdsNull: function (maxId) {
-
-      var i, allIdsNull = true,
-        numCells = this.activeBoxContentArray.length;
-
-      for (i = 0; i < numCells; i++) {
-        if (this.getActiveBoxContent(i).id !== -1) {
-          allIdsNull = false;
-          break;
-        }
-      }
-      if (allIdsNull) {
-        maxId = Math.max(1, maxId);
-        for (i = 0; i < numCells; i++) {
-          this.getActiveBoxContent(i).id = i % maxId;
-        }
-      }
-    }
-  };
-
-  return ActiveBagContent;
-});
+})

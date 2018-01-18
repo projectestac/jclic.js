@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -42,37 +42,40 @@ define([
    * @exports SimpleSkin
    * @class
    * @extends DefaultSkin
-   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-   * realize the media objects meeded tot build the Skin.
-   * @param {string=} name - The skin class name
    */
-  var SimpleSkin = function (ps, name) {
-    // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
-    DefaultSkin.call(this, ps, name, { counters: false, reportsBtn: true });
+  class SimpleSkin extends DefaultSkin {
+    /**
+     * SimpleSkin constructor
+     * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+     * realize the media objects meeded tot build the Skin.
+     * @param {string=} name - The skin class name
+     */
+    constructor(ps, name) {
+      // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
+      super(ps, name, { counters: false, reportsBtn: true })
 
-    this.$ctrlCnt.detach().prependTo(this.$div);
-    this.$msgBoxDiv.detach().appendTo(this.$div);
-    // Add a spacing div in substitution of msgBox
-    $('<div/>').css({ 'flex-grow': 1 }).insertAfter(this.$ctrlCnt.children(':nth-child(2)'));
+      this.$ctrlCnt.detach().prependTo(this.$div)
+      this.$msgBoxDiv.detach().appendTo(this.$div)
+      // Add a spacing div in substitution of msgBox
+      $('<div/>').css({ 'flex-grow': 1 }).insertAfter(this.$ctrlCnt.children(':nth-child(2)'))
+    }
 
-  };
+    /**
+     * Returns the CSS styles used by this skin. This method should be called only from
+     * `Skin` constructor, and overridden by subclasses if needed.
+     * @returns {string}
+     */
+    _getStyleSheets() {
+      return super._getStyleSheets() + this.skinCSS
+    }
+  }
 
-  SimpleSkin.prototype = {
-    constructor: SimpleSkin,
+  Object.assign(SimpleSkin.prototype, {
     /**
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
      * @type {string}
      */
     skinId: 'JClicSimpleSkin',
-    /**
-     *
-     * Returns the CSS styles used by this skin. This method should be called only from
-     * `Skin` constructor, and overridden by subclasses if needed.
-     * @returns {string}
-     */
-    _getStyleSheets: function () {
-      return DefaultSkin.prototype._getStyleSheets() + this.skinCSS;
-    },
     //
     // Buttons and other graphical resources used by this skin.
     //
@@ -82,12 +85,11 @@ define([
 .SKINID .JClicCtrlCnt {margin:9px;}\
 .SKINID .JClicPlayerCnt {margin:0px 18px 18px;}\
 .SKINID .JClicMsgBox {flex-grow:0; margin:0 18px 18px 18px;}'
-  };
-
-  // DefaultSkin extends [Skin](Skin.html)
-  SimpleSkin.prototype = $.extend(Object.create(DefaultSkin.prototype), SimpleSkin.prototype);
+  })
 
   // Register this class in the list of available skins
-  Skin.CLASSES['simple'] = SimpleSkin;
-  return SimpleSkin;
-});
+  Skin.CLASSES['simple'] = SimpleSkin
+
+  return SimpleSkin
+
+})

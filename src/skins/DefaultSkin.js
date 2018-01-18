@@ -191,7 +191,7 @@ define([
      * @returns {string}
      */
     _getStyleSheets() {
-      return Skin.prototype._getStyleSheets() + this.mainCSS
+      return super._getStyleSheets() + this.mainCSS
     }
 
     /**

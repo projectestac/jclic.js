@@ -253,7 +253,7 @@ define([
 
     /**
      * Returns the CSS styles used by this skin. This method should be called only from
-     * the `Skin` constructor, and overridden by subclasses if needed.
+     * the `Skin` constructor, and overridded by subclasses if needed.
      * @returns {string}
      */
     _getStyleSheets() {
