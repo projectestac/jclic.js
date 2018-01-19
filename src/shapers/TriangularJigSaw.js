@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -42,17 +42,18 @@ define([
    * @exports TriangularJigSaw
    * @class
    * @extends JigSaw
-   * @param {number} nx - Number of columns
-   * @param {number} ny - Number of rows
    */
-  var TriangularJigSaw = function (nx, ny) {
-    JigSaw.call(this, nx, ny);
-  };
-
-  TriangularJigSaw.prototype = {
-    constructor: TriangularJigSaw,
+  class TriangularJigSaw extends JigSaw {
     /**
-     *
+     * TriangularJigSaw constructor
+     * @param {number} nx - Number of columns
+     * @param {number} ny - Number of rows
+     */
+    constructor(nx, ny) {
+      super(nx, ny)
+    }
+
+    /**
      * Overrides {@link JigSaw#hLine}
      * @param {AWT.Path} sd - The Path to which the line will be added
      * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, and 2 means tooth down
@@ -62,28 +63,29 @@ define([
      * @param {number} h - Height of the piece
      * @param {boolean} inv - The line must be drawn right to left
      */
-    hLine: function (sd, type, x, y, w, h, inv) {
-      var kx = inv ? -1 : 1;
-      var ky = type === 1 ? 1 : -1;
+    hLine(sd, type, x, y, w, h, inv) {
+      const
+        kx = inv ? -1 : 1,
+        ky = type === 1 ? 1 : -1
 
-      if (type === 0) {
+      if (type === 0)
         // Flat line
-        sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
-      } else {
-        var x0 = x + (w - w * this.baseWidthFactor) / 2 * kx;
-        var wb = w * this.baseWidthFactor * kx;
+        sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]))
+      else {
+        const x0 = x + (w - w * this.baseWidthFactor) / 2 * kx
+        const wb = w * this.baseWidthFactor * kx
         // Approximation to the tooth:
-        sd.addStroke(new AWT.PathStroke('L', [x0, y]));
+        sd.addStroke(new AWT.PathStroke('L', [x0, y]))
         // This is the tooth:
-        var hb = h * this.toothHeightFactor * ky;
-        sd.addStroke(new AWT.PathStroke('L', [x0 + wb / 2, y + hb]));
-        sd.addStroke(new AWT.PathStroke('L', [x0 + wb, y]));
+        const hb = h * this.toothHeightFactor * ky
+        sd.addStroke(new AWT.PathStroke('L', [x0 + wb / 2, y + hb]))
+        sd.addStroke(new AWT.PathStroke('L', [x0 + wb, y]))
         // Draw the remaining line
-        sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
+        sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]))
       }
-    },
+    }
+
     /**
-     *
      * Overrides {@link JigSaw#vLine}
      * @param {AWT.Path} sd - The Path to which the line will be added
      * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, and 2 means tooth left
@@ -93,33 +95,34 @@ define([
      * @param {number} h - Height of the piece
      * @param {boolean} inv - The line must be drawn bottom to top
      */
-    vLine: function (sd, type, x, y, w, h, inv) {
-      var ky = inv ? -1 : 1;
-      var kx = type === 1 ? 1 : -1;
+    vLine(sd, type, x, y, w, h, inv) {
+      const
+        ky = inv ? -1 : 1,
+        kx = type === 1 ? 1 : -1
 
-      if (type === 0) {
+      if (type === 0)
         // Flat line
-        sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
-      } else {
-        var y0 = y + (h - h * this.baseWidthFactor) / 2 * ky;
-        var hb = h * this.baseWidthFactor * ky;
+        sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]))
+      else {
+        const
+          y0 = y + (h - h * this.baseWidthFactor) / 2 * ky,
+          hb = h * this.baseWidthFactor * ky
+
         // Approximation to the tooth:
-        sd.addStroke(new AWT.PathStroke('L', [x, y0]));
+        sd.addStroke(new AWT.PathStroke('L', [x, y0]))
         // This is the tooth:
-        var wb = w * this.toothHeightFactor * kx;
-        sd.addStroke(new AWT.PathStroke('L', [x + wb, y0 + hb / 2]));
-        sd.addStroke(new AWT.PathStroke('L', [x, y0 + hb]));
+        const wb = w * this.toothHeightFactor * kx
+        sd.addStroke(new AWT.PathStroke('L', [x + wb, y0 + hb / 2]))
+        sd.addStroke(new AWT.PathStroke('L', [x, y0 + hb]))
         // Draw the remaining line
-        sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
+        sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]))
       }
     }
-  };
-
-  // TriangularJigSaw extends JigSaw
-  TriangularJigSaw.prototype = $.extend(Object.create(JigSaw.prototype), TriangularJigSaw.prototype);
+  }
 
   // Register this class in the list of known shapers
-  Shaper.CLASSES['@TriangularJigSaw'] = TriangularJigSaw;
+  Shaper.CLASSES['@TriangularJigSaw'] = TriangularJigSaw
 
-  return TriangularJigSaw;
-});
+  return TriangularJigSaw
+
+})

@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -42,39 +42,206 @@ define([
    * appearance.
    * @exports Shaper
    * @class
-   * @param {number} nx - Number of columns (in grid-based shapers)
-   * @param {number} ny - Number of rows (in grid-based shapers)
    */
-  var Shaper = function (nx, ny) {
-    this.reset(nx, ny);
-  };
+  class Shaper {
+    /**
+     * Shaper constructor
+     * @param {number} nx - Number of columns (in grid-based shapers)
+     * @param {number} ny - Number of rows (in grid-based shapers)
+     */
+    constructor(nx, ny) {
+      this.reset(nx, ny)
+    }
+
+    /**
+     * Factory constructor that returns a Shaper of the requested class.
+     * @param {string} className - The class name of the requested Shaper.
+     * @param {number} nx - Number of columns (in grid-based shapers)
+     * @param {number} ny - Number of rows (in grid-based shapers)
+     * @returns {Shaper}
+     */
+    static getShaper(className, nx, ny) {
+      const cl = Shaper.CLASSES[(className || '').replace(/^edu\.xtec\.jclic\.shapers\./, '@')]
+      if (!cl)
+        Utils.log('error', `Unknown shaper: ${className}`)
+      return cl ? new cl(nx, ny) : null
+    }
+
+    /**
+     * Initializes this Shaper to default values
+     * @param {number} nCols - Number of columns
+     * @param {number} nRows - Number of rows
+     */
+    reset(nCols, nRows) {
+      this.nCols = nCols
+      this.nRows = nRows
+      this.nCells = nRows * nCols
+      this.initiated = false
+      this.shapeData = []
+      for (let i = 0; i < this.nCells; i++)
+        this.shapeData[i] = new AWT.Shape()
+    }
+
+    /**
+     * Loads this shaper settings from a specific JQuery XML element
+     * @param {external:jQuery} $xml - The XML element with the shaper data
+     */
+    setProperties($xml) {
+      $.each($xml.get(0).attributes, (name, value) => {
+        switch (name) {
+          case 'class':
+            this.className = value
+            break
+          case 'cols':
+            this.nCols = Number(value)
+            break
+          case 'rows':
+            this.nRows = Number(value)
+            break
+          case 'baseWidthFactor':
+          case 'toothHeightFactor':
+          case 'scaleX':
+          case 'scaleY':
+            this[name] = Number(value)
+            break
+          case 'randomLines':
+          case 'showEnclosure':
+            this[name] = Utils.getBoolean(value, true)
+            break
+        }
+      })
+
+      // Reads the 'enclosing'
+      // (main shape area where the other shape elements are placed)
+      $xml.children('enclosing:first').each((_n, child) => {
+        $(child).children('shape:first').each((_n, child2) => {
+          this.enclosing = Shaper.readShapeData(child2, this.scaleX, this.scaleY)
+          this.showEnclosure = true
+          this.hasRemainder = true
+        })
+      })
+
+      // Read the shape elements
+      $xml.children('shape').each((n, child) => {
+        this.shapeData[n] = Shaper.readShapeData(child, this.scaleX, this.scaleY)
+      })
+
+      // Correction needed for '@Holes' shaper
+      if (this.shapeData.length > 0 /* && this.shapeData.length !== this.nRows * this.nCols */) {
+        //this.nRows = this.shapeData.length
+        //this.nCols = 1
+        //this.nCells = this.nCols * this.nRows
+        this.nCells = this.shapeData.length
+      }
+      return this
+    }
+
+    /**
+     * Reads an individual shape from an XML element.
+     * Shapes are arrays of `stroke` objects.
+     * Each `stroke` has an `action` (_move to_, _line to_, _quad to_...) and associated `data`.
+     * @param {external:jQuery} $xml - The XML element with the shape data
+     * @param {number} scaleX
+     * @param {number} scaleY
+     * @returns {AWT.Shape}
+     */
+    static readShapeData($xml, scaleX, scaleY) {
+      const shd = []
+      let result = null
+      $.each($xml.textContent.split('|'), function (_n, txt) {
+        const sd = txt.split(':')
+        // Possible strokes are: `rectangle`, `ellipse`, `M`, `L`, `Q`, `B`, `X`
+        // Also possible, but not currently used in JClic: `roundRectangle` and `pie`
+        let data = sd.length > 1 ? sd[1].split(',') : null
+        //
+        // Data should be always divided by the scale (X or Y)
+        if (data)
+          data = data.map((d, n) => d / n % 2 ? scaleY : scaleX)
+
+        switch (sd[0]) {
+          case 'rectangle':
+            result = new AWT.Rectangle(data[0], data[1], data[2], data[3])
+            break
+          case 'ellipse':
+            result = new AWT.Ellipse(data[0], data[1], data[2], data[3])
+            break
+          default:
+            // It's an `AWT.PathStroke`
+            shd.push(new AWT.PathStroke(sd[0], data))
+            break
+        }
+      })
+
+      return result || shd.length > 0 ? new AWT.Path(shd) : null
+    }
+
+    /**
+     * Builds the individual shapes that will form this Shaper
+     */
+    buildShapes() {
+    }
+
+    /**
+     * Gets a clone of the nth Shape object, scaled and located inside a Rectangle
+     * @param {number} n
+     * @param {AWT.Rectangle} rect
+     * @returns {AWT.Shape}
+     */
+    getShape(n, rect) {
+      if (!this.initiated)
+        this.buildShapes()
+      if (n >= this.nCells || this.shapeData[n] === null)
+        return null
+      return this.shapeData[n].getShape(rect)
+    }
+
+    /**
+     * Gets the nth Shape data object
+     * @param {number} n
+     * @returns {object}
+     */
+    getShapeData(n) {
+      return n >= 0 && n < this.shapeData.length ? this.shapeData[n] : null
+    }
+
+    /**
+     * Gets the AWT.Rectangle that contains all shapes of this Shaper.
+     * @returns {AWT.Rectangle}
+     */
+    getEnclosingShapeData() {
+      return new AWT.Rectangle(0, 0, 1, 1)
+    }
+
+    /**
+     * When `hasRemainder` is true, this method gets the rectangle containing the full surface where
+     * the Shaper develops.
+     * @param {AWT.Rectangle} rect - The frame where to move and scale all the shapes
+     * @returns {AWT.Rectangle}
+     */
+    getRemainderShape(rect) {
+      if (!this.hasRemainder)
+        return null
+
+      if (!this.initiated)
+        this.buildShapes()
+
+      const sh = this.getEnclosingShapeData()
+      const r = sh ? sh.getShape(rect) : new AWT.Rectangle()
+      for (let i = 0; i < this.nCells; i++) {
+        if (this.shapeData[i])
+          r.add(this.shapeData[i].getShape(rect), false)
+      }
+      return r
+    }
+  }
 
   /**
    * List of known classes derived from Shaper. It should be filled by real shaper classes at
    * declaration time.
    * @type {object} */
-  Shaper.CLASSES = {};
+  Shaper.CLASSES = {}
 
-  /**
-   * Factory constructor that returns a Shaper of the requested class.
-   * @param {string} className - The class name of the requested Shaper.
-   * @param {number} nx - Number of columns (in grid-based shapers)
-   * @param {number} ny - Number of rows (in grid-based shapers)
-   * @returns {Shaper}
-   */
-  Shaper.getShaper = function (className, nx, ny) {
-    var shaper = null;
-    var cl = Shaper.CLASSES[(className || '').replace(/^edu\.xtec\.jclic\.shapers\./, '@')];
-    if (cl) {
-      shaper = new cl(nx, ny);
-    } else
-      Utils.log('error', 'Unknown shaper: %s', className);
-
-    return shaper;
-  };
-
-  Shaper.prototype = {
-    constructor: Shaper,
+  Object.assign(Shaper.prototype, {
     /**
      * This shaper class name
      * @type {string} */
@@ -138,185 +305,11 @@ define([
      * @type {boolean} */
     rectangularShapes: false,
     /**
-     *
-     * Initializes this Shaper to default values
-     * @param {number} nCols - Number of columns
-     * @param {number} nRows - Number of rows
-     */
-    reset: function (nCols, nRows) {
-      this.nCols = nCols;
-      this.nRows = nRows;
-      this.nCells = nRows * nCols;
-      this.initiated = false;
-      this.shapeData = [];
-      for (var i = 0; i < this.nCells; i++)
-        this.shapeData[i] = new AWT.Shape();
-    },
-    /**
-     *
-     * Loads this shaper settings from a specific JQuery XML element
-     * @param {external:jQuery} $xml - The XML element with the shaper data
-     */
-    setProperties: function ($xml) {
-      var shaper = this;
-      $.each($xml.get(0).attributes, function () {
-        switch (this.name) {
-          case 'class':
-            shaper.className = this.value;
-            break;
-          case 'cols':
-            shaper.nCols = Number(this.value);
-            break;
-          case 'rows':
-            shaper.nRows = Number(this.value);
-            break;
-          case 'baseWidthFactor':
-          case 'toothHeightFactor':
-          case 'scaleX':
-          case 'scaleY':
-            shaper[this.name] = Number(this.value);
-            break;
-          case 'randomLines':
-          case 'showEnclosure':
-            shaper[this.name] = Utils.getBoolean(this.value, true);
-            break;
-        }
-      });
-      // Reads the 'enclosing'
-      // (main shape area where the other shape elements are placed)
-      $xml.children('enclosing:first').each(function () {
-        $(this).children('shape:first').each(function (_data) {
-          shaper.enclosing = shaper.readShapeData(this, shaper.scaleX, shaper.scaleY);
-          shaper.showEnclosure = true;
-          shaper.hasRemainder = true;
-        });
-      });
-      // Read the shape elements
-      $xml.children('shape').each(function (i, data) {
-        shaper.shapeData[i] = shaper.readShapeData(data, shaper.scaleX, shaper.scaleY);
-      });
-      // Correction needed for '@Holes' shaper
-      if (shaper.shapeData.length > 0 /* && shaper.shapeData.length !== shaper.nRows * shaper.nCols */) {
-        //shaper.nRows = shaper.shapeData.length;
-        //shaper.nCols = 1;
-        //shaper.nCells = shaper.nCols * shaper.nRows;
-        shaper.nCells = shaper.shapeData.length;
-      }
-      return this;
-    },
-    /**
-     *
-     * Reads an individual shape from an XML element.
-     * Shapes are arrays of `stroke` objects.
-     * Each `stroke` has an `action` (_move to_, _line to_, _quad to_...) and associated `data`.
-     * @param {external:jQuery} $xml - The XML element with the shape data
-     * @param {number} scaleX
-     * @param {number} scaleY
-     * @returns {AWT.Shape}
-     */
-    readShapeData: function ($xml, scaleX, scaleY) {
-      var shd = [], result = null;
-      $.each($xml.textContent.split('|'), function () {
-        var sd = this.split(':');
-        // Possible strokes are: `rectangle`, `ellipse`, `M`, `L`, `Q`, `B`, `X`
-        // Also possible, but not currently used in JClic: `roundRectangle` and `pie`
-        var data = sd.length > 1 ? sd[1].split(',') : null;
-        //
-        // Data should be always divided by the scale (X or Y)
-        if (data) {
-          for (var i = 0; i < data.length; i++) {
-            data[i] /= i % 2 ? scaleY : scaleX;
-          }
-        }
-        switch (sd[0]) {
-          case 'rectangle':
-            result = new AWT.Rectangle(data[0], data[1], data[2], data[3]);
-            break;
-          case 'ellipse':
-            result = new AWT.Ellipse(data[0], data[1], data[2], data[3]);
-            break;
-          default:
-            // It's an `AWT.PathStroke`
-            shd.push(new AWT.PathStroke(sd[0], data));
-            break;
-        }
-      });
-
-      if (!result && shd.length > 0)
-        result = new AWT.Path(shd);
-
-      return result;
-    },
-    /**
-     *
-     * Builds the individual shapes that will form this Shaper
-     */
-    buildShapes: function () {
-    },
-    /**
-     *
-     * Gets a clone of the nth Shape object, scaled and located inside a Rectangle
-     * @param {number} n
-     * @param {AWT.Rectangle} rect
-     * @returns {AWT.Shape}
-     */
-    getShape: function (n, rect) {
-      if (!this.initiated)
-        this.buildShapes();
-      if (n >= this.nCells || this.shapeData[n] === null)
-        return null;
-      return this.shapeData[n].getShape(rect);
-    },
-    /**
-     * Gets the nth Shape data object
-     * @param {number} n
-     * @returns {object}
-     */
-    getShapeData: function (n) {
-      return n >= 0 && n < this.shapeData.length ? this.shapeData[n] : null;
-    },
-    /**
-     *
-     * Gets the AWT.Rectangle that contains all shapes of this Shaper.
-     * @returns {AWT.Rectangle}
-     */
-    getEnclosingShapeData: function () {
-      return new AWT.Rectangle(0, 0, 1, 1);
-    },
-    /**
      * Flag indicating if this Shaper deploys over a surface biggest than the rectangle enclosing
      * all its shapes
      * @type {boolean} */
     hasRemainder: false,
-    /**
-     *
-     * When `hasRemainder` is true, this method gets the rectangle containing the full surface where
-     * the Shaper develops.
-     * @param {AWT.Rectangle} rect - The frame where to move and scale all the shapes
-     * @returns {AWT.Rectangle}
-     */
-    getRemainderShape: function (rect) {
-      var r = null;
+  })
 
-      if (!this.hasRemainder)
-        return null;
-
-      if (!this.initiated)
-        this.buildShapes();
-
-      var sh = this.getEnclosingShapeData();
-      if (sh)
-        r = sh.getShape(rect);
-      else
-        r = new AWT.Rectangle();
-
-      for (var i = 0; i < this.nCells; i++) {
-        if (this.shapeData[i])
-          r.add(this.shapeData[i].getShape(rect), false);
-      }
-      return r;
-    }
-  };
-
-  return Shaper;
-});
+  return Shaper
+})
