@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -34,24 +34,22 @@ define([
   "./ActiveMediaPlayer",
   "../Utils"
 ], function (ActiveMediaPlayer, Utils) {
+
   /**
    * This class stores a collection of realized {@link ActiveMediaPlayer} objects, related to a
    * {@link JClicProject} or {@link Activity}.
    * @exports ActiveMediaBag
    * @class
    */
-  var ActiveMediaBag = function () {
-    this.players = [];
-  };
+  class ActiveMediaBag {
+    /**
+     * ActiveMediaBag constructor
+     */
+    constructor() {
+      this.players = []
+    }
 
-  ActiveMediaBag.prototype = {
-    constructor: ActiveMediaBag,
     /**
-     * The collection of {@link ActiveMediaPlayer} objects stored in this media bag.
-     * @type {ActiveMediaPlayer[]} */
-    players: [],
-    /**
-     *
      * Creates a new {@link ActiveMediaPlayer} linked to this media bag
      * @param {MediaContent} mc - The content used by the new player
      * @param {MediaBag} mb - The project's MediaBag
@@ -60,27 +58,28 @@ define([
      * usually a {@link JClicPlayer}.
      * @returns {ActiveMediaPlayer}
      */
-    createActiveMediaPlayer: function (mc, mb, ps) {
-      var amp = null;
+    createActiveMediaPlayer(mc, mb, ps) {
+      let amp = null
       switch (mc.mediaType) {
         case 'RECORD_AUDIO':
           if (mc.length <= 0 || mc.length >= Utils.settings.MAX_RECORD_LENGTH)
-            break;
+            break
         /* falls through */
         case 'PLAY_RECORDED_AUDIO':
           if (mc.recBuffer < 0 || mc.recBuffer >= 10)
-            break;
+            break
         /* falls through */
         case 'PLAY_AUDIO':
         case 'PLAY_MIDI':
         case 'PLAY_VIDEO':
-          amp = new ActiveMediaPlayer(mc, mb, ps);
-          break;
+          amp = new ActiveMediaPlayer(mc, mb, ps)
+          break
       }
       if (amp !== null)
-        this.players.push(amp);
-      return amp;
-    },
+        this.players.push(amp)
+      return amp
+    }
+
     /**
      * Looks for an already existing {@link ActiveMediaPlayer} equivalent to the requested.
      * When not found, a new one is created and and returned.
@@ -91,72 +90,61 @@ define([
      * usually a {@link JClicPlayer}.
      * @returns {ActiveMediaPlayer}
      */
-    getActiveMediaPlayer: function (mc, mb, ps) {
-      var amp = null;
-      for (var i = 0; i < this.players.length; i++) {
-        amp = this.players[i];
-        if (amp.mc === mc || amp.mc.isEquivalent(mc))
-          break;
-        amp = null;
-      }
-      if (amp === null)
-        amp = this.createActiveMediaPlayer(mc, mb, ps);
-      return amp;
-    },
+    getActiveMediaPlayer(mc, mb, ps) {
+      return this.players.find(p => p.mc === mc || p.mc.isEquivalent(mc))
+        || this.createActiveMediaPlayer(mc, mb, ps)
+    }
+
     /**
-     *
      * Removes from the list of players the {@link ActiveMediaPlayer} related to the specified {@link MediaContent}.
      * @param {MediaContent} mc - The media content to look for.
      */
-    removeActiveMediaPlayer: function (mc) {
-      var amp = null;
-      var i;
-      for (i = 0; i < this.players.length; i++) {
-        amp = this.players[i];
-        if (amp.mc === mc)
-          break;
-        amp = null;
-      }
-      if (amp !== null) {
-        amp.clear();
+    removeActiveMediaPlayer(mc) {
+      const i = this.players.findIndex(p => p.mc === mc)
+      if (i >= 0) {
+        this.players[i].clear()
         // removes the element pointed by 'i'
-        this.players.splice(i, 1);
+        this.players.splice(i, 1)
       }
-    },
+    }
+
     /**
-     *
      * Realizes all the media elements stored in this bag
      */
-    realizeAll: function () {
-      for (var i = 0; i < this.players.length; i++)
-        this.players[i].realize();
-    },
+    realizeAll() {
+      this.players.forEach(p => p.realize())
+    }
+
     /**
-     *
      * Stops playing all media elements stored in this bag
      * @param {number} level - Level at and below what all media players will be muted.
      */
-    stopAll: function (level) {
+    stopAll(level) {
       if (typeof level === 'undefined')
-        level = -1;
-      for (var i = 0; i < this.players.length; i++) {
-        var amp = this.players[i];
+        level = -1
+      this.players.forEach(amp => {
         if (level === -1 || amp.mc !== null && amp.mc.level <= level)
-          amp.stop();
-      }
-    },
+          amp.stop()
+      })
+    }
+
     /**
-     *
      * Removes all players from this media bag
      */
-    removeAll: function () {
-      for (var i = 0; i < this.players.length; i++)
-        this.players[i].clear();
+    removeAll() {
+      this.players.forEach(p => p.clear())
       // Empty the `players` array
-      this.players.length = 0;
-      ActiveMediaPlayer.prototype.clearAllAudioBuffers();
+      this.players.length = 0
+      ActiveMediaPlayer.prototype.clearAllAudioBuffers()
     }
-  };
+  }
 
-  return ActiveMediaBag;
-});
+  Object.assign(ActiveMediaBag.prototype, {
+    /**
+     * The collection of {@link ActiveMediaPlayer} objects stored in this media bag.
+     * @type {ActiveMediaPlayer[]} */
+    players: [],
+  })
+
+  return ActiveMediaBag
+})

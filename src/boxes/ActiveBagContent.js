@@ -104,7 +104,7 @@ define([
 
       if (bug) {
         let n = this.ncw
-        this.ncw = cellSet.nch
+        this.ncw = this.nch
         this.nch = n
       }
 
