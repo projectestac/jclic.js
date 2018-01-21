@@ -192,13 +192,13 @@ define([
      * Checks if the given array of flags (usually returned by `evalText`) can be considered as a
      * valid or erroneous answer.
      * @param {number[]} flags
-     * @returns {boolean} - `true` when all flags are 0 (meaning no error).
+     * @returns {boolean} - `true` when there is at least one flag and all flags are 0 (meaning no error).
      */
     isOk: function (flags) {
       for (var i = 0; i < flags.length; i++)
         if (flags[i] !== 0)
           return false;
-      return true;
+      return flags.length > 0;
     }
   };
 
