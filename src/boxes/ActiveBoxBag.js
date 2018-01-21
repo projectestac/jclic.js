@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -45,51 +45,48 @@ define([
    * @exports ActiveBoxBag
    * @class
    * @extends BoxBag
-   * @param {?AbstractBox} parent - The AbstractBox to which this box bag belongs
-   * @param {?AWT.Container} container - The container where this box bag is placed.
-   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
-   * of this box bag are defined.
    */
-  var ActiveBoxBag = function (parent, container, boxBase) {
-    // ActiveBoxBag extends BoxBag
-    BoxBag.call(this, parent, container, boxBase);
-  };
+  class ActiveBoxBag extends BoxBag {
+    /**
+     * ActiveBoxBag constructor
+     * @param {?AbstractBox} parent - The AbstractBox to which this box bag belongs
+     * @param {?AWT.Container} container - The container where this box bag is placed.
+     * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+     * of this box bag are defined.
+     */
+    constructor(parent, container, boxBase) {
+      // ActiveBoxBag extends BoxBag
+      super(parent, container, boxBase)
+    }
 
-  ActiveBoxBag.prototype = {
-    constructor: ActiveBoxBag,
     /**
-     * `div` containing the accessible elements associated to this ActiveBoxBag
-     * @type {external:jQuery} */
-    $accessibleDiv: null,
-    /**
-     *
      * Adds an {@link ActiveBox} to this bag
      * @param {ActiveBox} bx - The ActiveBox to be added to this bag
      */
-    addActiveBox: function (bx) {
-      bx.idLoc = this.cells.length;
-      bx.idOrder = bx.idLoc;
-      return this.addBox(bx);
-    },
+    addActiveBox(bx) {
+      bx.idLoc = this.cells.length
+      bx.idOrder = bx.idLoc
+      return this.addBox(bx)
+    }
+
     /**
-     *
      * Finds an ActiveBox by its relative location (`idLoc` field)
      * @param {number} idLoc
      * @returns {ActiveBox}
      */
-    getActiveBox: function (idLoc) {
-      return this.getBox(idLoc);
-    },
+    getActiveBox(idLoc) {
+      return this.getBox(idLoc)
+    }
+
     /**
-     *
      * Gets the background box
      * @returns {ActiveBox}
      */
-    getBackgroundActiveBox: function () {
-      return this.getBackgroundBox();
-    },
+    getBackgroundActiveBox() {
+      return this.getBackgroundBox()
+    }
+
     /**
-     *
      * Sets the content of members of this ActiveBoxBag, based on one or more {@link ActiveBagContent}
      * objects.
      * @param {ActiveBagContent} abc - The main bag of content
@@ -98,250 +95,255 @@ define([
      * @param {number=} toCell - Starts filling the box located at this position on the ActiveBoxBag
      * @param {type=} numCells - Acts only with a limited number of elements.
      */
-    setContent: function (abc, altAbc, fromIndex, toCell, numCells) {
-
-      var bx;
+    setContent(abc, altAbc, fromIndex, toCell, numCells) {
       if (!fromIndex)
-        fromIndex = 0;
+        fromIndex = 0
       if (!toCell)
-        toCell = 0;
+        toCell = 0
       if (!numCells)
-        numCells = this.cells.length;
+        numCells = this.cells.length
 
-      for (var i = 0; i < numCells; i++) {
-        bx = this.getActiveBox(toCell + i);
-        bx.setContent(abc, fromIndex + i);
-        bx.setAlternative(false);
+      for (let i = 0; i < numCells; i++) {
+        const bx = this.getActiveBox(toCell + i)
+        bx.setContent(abc, fromIndex + i)
+        bx.setAlternative(false)
         if (altAbc)
-          bx.setAltContent(altAbc, fromIndex + i);
+          bx.setAltContent(altAbc, fromIndex + i)
       }
 
       if (abc.backgroundContent !== null && this.getBackgroundActiveBox() !== null) {
-        bx = this.getBackgroundActiveBox();
-        bx.setContent(abc.backgroundContent);
+        const bx = this.getBackgroundActiveBox()
+        bx.setContent(abc.backgroundContent)
         if (abc.bb !== bx.boxBase)
-          bx.setBoxBase(abc.bb);
+          bx.setBoxBase(abc.bb)
       }
-    },
+    }
+
     /**
-     *
      * Finds an ActiveBox by location
      * @param {AWT.Point} point - The location to search for
      * @returns {ActiveBox}
      */
-    findActiveBox: function (point) {
-      return this.findBox(point);
-    },
+    findActiveBox(point) {
+      return this.findBox(point)
+    }
+
     /**
-     *
      * Clears the content of all boxes
      */
-    clearAllBoxes: function () {
-      for (var i = 0; i < this.cells.length; i++)
-        this.getActiveBox(i).clear();
-    },
+    clearAllBoxes() {
+      for (let i = 0; i < this.cells.length; i++)
+        this.getActiveBox(i).clear()
+    }
+
     /**
-     *
      * Clears the content of all boxes and background box
      */
-    clearAll: function () {
-      this.clearAllBoxes();
+    clearAll() {
+      this.clearAllBoxes()
       if (this.backgroundBox !== null)
-        this.getBackgroundActiveBox().clear();
-    },
+        this.getBackgroundActiveBox().clear()
+    }
+
     /**
-     *
      * Count the number of cells that are at its original place
      * @returns {number}
      */
-    countCellsAtPlace: function () {
-      var cellsAtPlace = 0;
-      for (var i = 0; i < this.cells.length; i++)
+    countCellsAtPlace() {
+      let cellsAtPlace = 0
+      for (let i = 0; i < this.cells.length; i++)
         if (this.getActiveBox(i).isAtPlace())
-          cellsAtPlace++;
-      return cellsAtPlace;
-    },
+          cellsAtPlace++
+      return cellsAtPlace
+    }
+
     /**
-     *
      * Finds the {@link ActiveBox} that has the specified `idLoc` attribute
      * @param {number} idLoc - The idLoc to search for
      * @returns {ActiveBox}
      */
-    getActiveBoxWithIdLoc: function (idLoc) {
-      var result = null;
-      for (var bx, i = 0; i < this.cells.length; i++) {
+    getActiveBoxWithIdLoc(idLoc) {
+      let result = null
+      for (let bx, i = 0; i < this.cells.length; i++) {
         if ((bx = this.getActiveBox(i)).idLoc === idLoc) {
-          result = bx;
-          break;
+          result = bx
+          break
         }
       }
-      return result;
-    },
+      return result
+    }
+
     /**
-     *
      * Checks if the place occupied by a cell corresponds to a cell with equivalent content.
      * @param {ActiveBox} bx - The box to check
      * @param {boolean} checkCase - If `true`, check case when comparing texts
      * @returns {boolean}
      */
-    cellIsAtEquivalentPlace: function (bx, checkCase) {
+    cellIsAtEquivalentPlace(bx, checkCase) {
       return bx.isAtPlace() ||
-        bx.isEquivalent(this.getActiveBoxWithIdLoc(bx.idOrder), checkCase);
-    },
+        bx.isEquivalent(this.getActiveBoxWithIdLoc(bx.idOrder), checkCase)
+    }
+
     /**
-     *
      * Count the number of cells that are at its original place or equivalent
      * @param {type} checkCase -  - If `true`, check case when comparing texts
      * @returns {number}
      */
-    countCellsAtEquivalentPlace: function (checkCase) {
-      var cellsAtPlace = 0;
-      for (var i = 0; i < this.cells.length; i++) {
+    countCellsAtEquivalentPlace(checkCase) {
+      let cellsAtPlace = 0
+      for (let i = 0; i < this.cells.length; i++) {
         if (this.cellIsAtEquivalentPlace(this.getActiveBox(i), checkCase))
-          cellsAtPlace++;
+          cellsAtPlace++
       }
-      return cellsAtPlace;
-    },
+      return cellsAtPlace
+    }
+
     /**
-     *
      * Counts the number of cells that have the provided `idAss` attribute
      * @param {number} idAss - The `idAss` attribute to search
      * @returns {number}
      */
-    countCellsWithIdAss: function (idAss) {
-      var n = 0;
-      for (var i = 0; i < this.cells.length; i++) {
+    countCellsWithIdAss(idAss) {
+      let n = 0
+      for (let i = 0; i < this.cells.length; i++) {
         if (this.getActiveBox(i).idAss === idAss)
-          n++;
+          n++
       }
-      return n;
-    },
+      return n
+    }
+
     /**
-     *
      * Counts the number of inactive cells
      * @returns {number}
      */
-    countInactiveCells: function () {
-      var n = 0;
-      for (var i = 0; i < this.cells.length; i++) {
+    countInactiveCells() {
+      let n = 0
+      for (let i = 0; i < this.cells.length; i++) {
         if (this.getActiveBox(i).isInactive())
-          n++;
+          n++
       }
-      return n;
-    },
+      return n
+    }
+
     /**
      * Resets the default `idAss` attribute on all cells
      */
-    setDefaultIdAss: function () {
-      for (var i = 0; i < this.cells.length; i++)
-        this.getActiveBox(i).setDefaultIdAss();
-    },
+    setDefaultIdAss() {
+      for (let i = 0; i < this.cells.length; i++)
+        this.getActiveBox(i).setDefaultIdAss()
+    }
+
     /**
-     *
      * Shuffles the cells
      * @param {number} times - Number of times to shuffle
      * @param {boolean} fitInArea - Ensure that all cells are inside the bag rectangle
      */
-    scrambleCells: function (times, fitInArea) {
-      var nc = this.cells.length;
+    scrambleCells(times, fitInArea) {
+      let nc = this.cells.length
       if (nc >= 2) {
         // Array of AWT.Point objects
-        var pos = [];
-        var idLoc = [];
-        var i, bx;
-        for (i = 0; i < nc; i++) {
-          bx = this.getActiveBox(i);
-          pos[i] = new AWT.Point(bx.pos);
-          idLoc[i] = bx.idLoc;
+        const
+          pos = [],
+          idLoc = [],
+          p = new AWT.Point()
+
+        for (let i = 0; i < nc; i++) {
+          const bx = this.getActiveBox(i)
+          pos[i] = new AWT.Point(bx.pos)
+          idLoc[i] = bx.idLoc
         }
-        var p = new AWT.Point();
-        var j;
-        for (i = 0; i < times; i++) {
-          var r1 = Math.floor(Math.random() * nc);
-          var r2 = Math.floor(Math.random() * nc);
+
+        for (let i = 0; i < times; i++) {
+          const
+            r1 = Math.floor(Math.random() * nc),
+            r2 = Math.floor(Math.random() * nc)
           if (r1 !== r2) {
-            p.moveTo(pos[r1]);
-            pos[r1].moveTo(pos[r2]);
-            pos[r2].moveTo(p);
-            j = idLoc[r1];
-            idLoc[r1] = idLoc[r2];
-            idLoc[r2] = j;
+            p.moveTo(pos[r1])
+            pos[r1].moveTo(pos[r2])
+            pos[r2].moveTo(p)
+            const j = idLoc[r1]
+            idLoc[r1] = idLoc[r2]
+            idLoc[r2] = j
           }
         }
 
-        for (i = 0; i < nc; i++) {
-          bx = this.getActiveBox(i);
-          var px = pos[i].x;
-          var py = pos[i].y;
-          bx.moveTo(new AWT.Point(px, py));
+        for (let i = 0; i < nc; i++) {
+          const
+            bx = this.getActiveBox(i),
+            px = pos[i].x,
+            py = pos[i].y
+          bx.moveTo(new AWT.Point(px, py))
           if (fitInArea)
-            this.fitCellsInArea([bx]);
-          bx.idLoc = idLoc[i];
+            this.fitCellsInArea([bx])
+          bx.idLoc = idLoc[i]
         }
       }
-    },
+    }
+
     /**
-     *
      * Fits cells inside the ActiveBoxBag area. Useful when non-rectangular cells exchange its positions.
      * @param {ActiveBox[]} boxes - The boxes to be checked
      */
-    fitCellsInArea: function (boxes) {
-      var maxX = this.pos.x + this.dim.width;
-      var maxY = this.pos.y + this.dim.height;
+    fitCellsInArea(boxes) {
+      const
+        maxX = this.pos.x + this.dim.width,
+        maxY = this.pos.y + this.dim.height
 
-      for (var i = 0; i < boxes.length; i++) {
-        var bx = boxes[i];
+      for (let i = 0; i < boxes.length; i++) {
+        const bx = boxes[i]
 
         // Save original position
         if (!bx.pos0)
-          bx.pos0 = new AWT.Point(bx.pos);
+          bx.pos0 = new AWT.Point(bx.pos)
 
-        var px = Math.min(Math.max(bx.pos.x, this.pos.x), maxX - bx.dim.width);
-        var py = Math.min(Math.max(bx.pos.y, this.pos.y), maxY - bx.dim.height);
+        const
+          px = Math.min(Math.max(bx.pos.x, this.pos.x), maxX - bx.dim.width),
+          py = Math.min(Math.max(bx.pos.y, this.pos.y), maxY - bx.dim.height)
         if (px !== bx.pos.x || py !== bx.pos.y)
-          bx.moveTo(new AWT.Point(px, py));
+          bx.moveTo(new AWT.Point(px, py))
       }
-    },
+    }
+
     /**
-     * 
      * Exchange the positions of two cells inside the ActiveBoxBag area.
      * @param {ActiveBox} bxa - The first box
      * @param {ActiveBox} bxb - The second box
      * @param {boolean} fitInArea - Ensure that all cells are inside the bag rectangle
      */
-    swapCellPositions: function (bxa, bxb, fitInArea) {
+    swapCellPositions(bxa, bxb, fitInArea) {
       // Save backup of bxb significant properties
-      var posB = new AWT.Point(bxb.pos);
-      var posB0 = bxb.pos0;
-      var idLocB = bxb.idLoc;
+      const
+        posB = new AWT.Point(bxb.pos),
+        posB0 = bxb.pos0,
+        idLocB = bxb.idLoc
 
-      bxb.moveTo(bxa.pos0 || bxa.pos);
-      bxb.pos0 = bxa.pos0;
-      bxb.idLoc = bxa.idLoc;
+      bxb.moveTo(bxa.pos0 || bxa.pos)
+      bxb.pos0 = bxa.pos0
+      bxb.idLoc = bxa.idLoc
 
-      bxa.moveTo(posB0 || posB);
-      bxa.pos0 = posB0;
-      bxa.idLoc = idLocB;
+      bxa.moveTo(posB0 || posB)
+      bxa.pos0 = posB0
+      bxa.idLoc = idLocB
 
       if (fitInArea)
-        this.fitCellsInArea([bxa, bxb]);
-    },
+        this.fitCellsInArea([bxa, bxb])
+    }
+
     /**
-     *
      * Resets the IDs of all cells
      */
-    resetIds: function () {
-      for (var i = 0; i < this.cells.length; i++) {
-        var bx = this.cells[i];
+    resetIds() {
+      for (let i = 0; i < this.cells.length; i++) {
+        const bx = this.cells[i]
         if (bx) {
-          bx.idOrder = i;
-          bx.idAss = i;
-          bx.idLoc = i;
+          bx.idOrder = i
+          bx.idAss = i
+          bx.idLoc = i
         }
       }
-    },
+    }
+
     /**
-     *
      * Gets the index of box located in the `cells` array after the provided index, having the
      * provided `idAssValid` value as `idAss` attribute.
      * When `idAssValid` is `null` or `undefined`, search for the next cell with `idAss>0`
@@ -349,25 +351,25 @@ define([
      * @param {type=} idAssValid - The `idAss` attribute value to search
      * @returns {number}
      */
-    getNextItem: function (currentItem, idAssValid) {
-      var IDASSNOTUSED = -12345;
+    getNextItem(currentItem, idAssValid) {
+      const IDASSNOTUSED = -12345
       if (!idAssValid)
-        idAssValid = IDASSNOTUSED;
-      var i;
-      for (i = currentItem + 1; i < this.cells.length; i++) {
-        var bx = this.cells[i];
+        idAssValid = IDASSNOTUSED
+      let i = currentItem + 1
+      for (; i < this.cells.length; i++) {
+        const bx = this.cells[i]
         if (!bx)
-          break;
+          break
         if (idAssValid !== IDASSNOTUSED) {
           if (idAssValid === bx.idAss)
-            break;
+            break
         } else if (bx.idAss >= 0)
-          break;
+          break
       }
-      return i;
-    },
+      return i
+    }
+
     /**
-     * 
      * Builds a group of hidden `buton` elements that will act as a accessible objects associated
      * to the canvas area of this ActiveBoxBag.
      * The buttons will only be created when `CanvasRenderingContext2D` has a method named `addHitRegion`.
@@ -378,20 +380,23 @@ define([
      * @param {string=} eventType - Type of event sent to $clickReceiver. Default is `click`.
      * @returns {external:jQuery} - The $accessibleDiv member, containing the accessible elements associated to this ActiveBoxBag.
      */
-    buildAccessibleElements: function ($canvas, $clickReceiver, eventType) {
+    buildAccessibleElements($canvas, $clickReceiver, eventType) {
       if (Utils.settings.CANVAS_HITREGIONS) {
-        this.$accessibleDiv = this.accessibleText !== '' ? $('<div/>', { 'aria-label': this.accessibleText, tabindex: 0 }) : null;
-        $canvas.append(this.$accessibleDiv);
-        for (var i = 0; i < this.cells.length; i++)
-          this.cells[i].buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType);
+        this.$accessibleDiv = this.accessibleText !== '' ? $('<div/>', { 'aria-label': this.accessibleText, tabindex: 0 }) : null
+        $canvas.append(this.$accessibleDiv)
+        for (let i = 0; i < this.cells.length; i++)
+          this.cells[i].buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType)
       }
-      return this.$accessibleDiv;
+      return this.$accessibleDiv
     }
+  }
 
-  };
+  Object.assign(ActiveBoxBag.prototype, {
+    /**
+     * `div` containing the accessible elements associated to this ActiveBoxBag
+     * @type {external:jQuery} */
+    $accessibleDiv: null,
+  })
 
-  // ActiveBoxBag extends BoxBag
-  ActiveBoxBag.prototype = $.extend(Object.create(BoxBag.prototype), ActiveBoxBag.prototype);
-
-  return ActiveBoxBag;
-});
+  return ActiveBoxBag
+})

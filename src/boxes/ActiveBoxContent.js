@@ -45,17 +45,262 @@ define([
    * always pointing to a {@link BoxBase} object.
    * @exports ActiveBoxContent
    * @class
-   * @param {string=} id - An optional identifier.
    */
-  var ActiveBoxContent = function (id) {
-    if (typeof id !== 'undefined')
-      this.id = id;
-    this.imgAlign = { h: 'middle', v: 'middle' };
-    this.txtAlign = { h: 'middle', v: 'middle' };
-  };
+  class ActiveBoxContent {
+    /**
+     * ActiveBoxContent constructor
+     * @param {string=} id - An optional identifier.
+     */
+    constructor(id) {
+      if (typeof id !== 'undefined')
+        this.id = id
+      this.imgAlign = { h: 'middle', v: 'middle' }
+      this.txtAlign = { h: 'middle', v: 'middle' }
+    }
 
-  ActiveBoxContent.prototype = {
-    constructor: ActiveBoxContent,
+    /**
+     *
+     * Loads settings from a specific JQuery XML element
+     * @param {external:jQuery} $xml - The XML element to be parsed
+     * @param {MediaBag} mediaBag - The media bag used to retrieve images and other media
+     */
+    setProperties($xml, mediaBag) {
+      //
+      // Read attributes
+      $.each($xml.get(0).attributes, (name, val) => {
+        switch (this.name) {
+          case 'id':
+          case 'item':
+            this[name] = Number(val)
+            break
+
+          case 'width':
+          case 'height':
+            if (this.dimension === null)
+              this.dimension = new AWT.Dimension(0, 0)
+            this.dimension[name] = Number(val)
+            break
+
+          case 'txtAlign':
+          case 'imgAlign':
+            this[name] = this.readAlign(val)
+            break
+
+          case 'hAlign':
+            // Old style
+            this['txtAlign'] = this.readAlign(val + ',center')
+            this['imgAlign'] = this.readAlign(val + ',center')
+            break
+
+          case 'border':
+          case 'avoidOverlapping':
+            this[name] = Utils.getBoolean(val)
+            break
+
+          case 'image':
+            this.imgName = Utils.nSlash(val)
+            break
+        }
+      })
+
+      //
+      // Read inner elements
+      $xml.children().each(child => {
+        const $node = $(child)
+        switch (child.nodeName) {
+          case 'style':
+            this.bb = new BoxBase(null).setProperties($node)
+            break
+          case 'media':
+            this.mediaContent = new MediaContent().setProperties($node)
+            break
+          case 'p':
+            if (this.text === null)
+              this.text = ''
+            else
+              this.text += '\n'
+            this.text += child.textContent
+            break
+        }
+      })
+
+      if (mediaBag)
+        this.realizeContent(mediaBag)
+
+      return this
+    }
+
+    /**
+     * Decode expressions with combined values of horizontal and vertical alignments in the form:
+     * "(left|middle|right),(top|middle|bottom)"
+     * @param {string} str - The string to parse
+     * @returns {ActiveBoxContent~alignType}
+     */
+    readAlign(str) {
+      const align = { h: 'center', v: 'center' }
+      if (str) {
+        const v = str.split(',')
+        align.h = v[0].replace('middle', 'center')
+        align.v = v[1].replace('middle', 'center')
+      }
+      return align
+    }
+
+    /**
+     * Checks if this is an empty content (`text` and `img` are _null_)
+     */
+    isEmpty() {
+      return this.text === null && this.img === null
+    }
+
+    /**
+     * Checks if two contents are equivalent
+     * @param {ActiveBoxContent} abc - The content to compare with this.
+     * @param {boolean} checkCase - When `true` the comparing will be case-sensitive.
+     * @returns {boolean}
+     */
+    isEquivalent(abc, checkCase) {
+      if (abc === this)
+        return true
+      let result = false
+      if (abc !== null) {
+        if (this.isEmpty() && abc.isEmpty())
+          result = this.id === abc.id
+        else
+          result = (this.text === null ? abc.text === null
+            : checkCase ? this.text === abc.text
+              : this.text.toLocaleLowerCase() === abc.text.toLocaleLowerCase()
+          ) &&
+            (this.mediaContent === null ? abc.mediaContent === null
+              : this.mediaContent.isEquivalent(abc.mediaContent)
+            ) &&
+            this.img === abc.img &&
+            (this.imgClip === null ? abc.imgClip === null
+              : this.imgClip.equals(abc.imgClip))
+      }
+      return result
+    }
+
+    /**
+     * Sets the text content of this ActiveBox
+     * @param {string} tx
+     */
+    setTextContent(tx) {
+      // only plain text allowed!
+      if (tx !== null) {
+        this.rawText = tx
+        this.text = tx
+        this.checkHtmlText()
+      } else {
+        this.rawText = null
+        this.text = null
+        this.htmlText = null
+        this.innerHtmlText = null
+      }
+    }
+
+    /**
+     * Checks if cell's text uses HTML, initializing the `innerHtmlText` member as needed.
+     */
+    checkHtmlText() {
+      this.htmlText = null
+      this.innerHtmlText = null
+      if (Utils.startsWith(this.text, '<html>', true)) {
+        this.htmlText = this.text.trim()
+        const s = this.htmlText.toLocaleLowerCase()
+        if (s.indexOf('<body') === -1) {
+          const s2 = s.indexOf('</html>')
+          if (s2 >= 0)
+            this.innerHtmlText = this.htmlText.substr(6, s2)
+        }
+      }
+    }
+
+    /**
+     * Sets a fragment of a main image as a graphic content of this cell.
+     * Cells cannot have two graphic contents, so `imgName` (the specific image of this cell) should
+     * be cleared with this setting.
+     * @param {external:HTMLImageElement} img - The image data
+     * @param {AWT.Shape} imgClip - A shape that clips the portion of image assigned to this content.
+     * @param {string=} animatedGifFile - When `img` is an animated GIF, its file name
+     */
+    setImgContent(img, imgClip, animatedGifFile) {
+      this.img = img
+      this.imgName = null
+      this.imgClip = imgClip
+      if (animatedGifFile)
+        this.animatedGifFile = animatedGifFile
+    }
+
+    /**
+     * Prepares the media content
+     * @param {PlayStation} playStation - Usually a {@link JClicPlayer}
+     */
+    prepareMedia(playStation) {
+      if (!this.amp && this.mediaContent && this.mediaContent.mediaType === 'PLAY_VIDEO') {
+        this.amp = playStation.getActiveMediaPlayer(this.mediaContent)
+        this.amp.realize()
+      }
+    }
+
+    /**
+     * Reads and initializes the image associated to this content
+     * @param {MediaBag} mediaBag - The media bag of the current project.
+     */
+    realizeContent(mediaBag) {
+      if (this.imgName !== null && this.imgName.length > 0) {
+        this.mbe = mediaBag.getElement(this.imgName, true)
+        if (this.mbe) {
+          this.mbe.build(() => {
+            this.img = this.mbe.data
+            this.animatedGifFile = this.mbe.animated ? this.mbe.getFullPath() : null
+          })
+        }
+      }
+      if (this.mediaContent !== null) {
+        if (this.imgName === null && (this.text === null || this.text.length === 0)) {
+          this.img = this.mediaContent.getIcon()
+          this.animatedGifFile = null
+        }
+      }
+      this.checkHtmlText(mediaBag)
+    }
+
+    /**
+     * Gets a string representing this content, useful for checking if two different contents are
+     * equivalent.
+     * @returns {string}
+     */
+    getDescription() {
+      let result = this.text && this.text.length > 0 ? this.text : ''
+      if (this.imgName)
+        result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image')} ${this.imgName}`
+      if (this.imgClip)
+        result = `${result}${result.length > 0 ? ' ' : ''}${this.imgClip.toString()}`
+
+      if (this.mediaContent)
+        result = `${result}${result.length > 0 ? ' ' : ''}${this.mediaContent.getDescription()}`
+
+      return result
+    }
+
+    /**
+     * 
+     * Overwrites the original `Object.toString` method, returning `getDescription` instead
+     * @returns {String}
+     */
+    toString() {
+      let result = this.text && this.text.length > 0 ? this.text : ''
+      if (this.imgName)
+        result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image')} ${this.imgName}`
+      if (this.imgClip)
+        result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image fragment')}`
+
+      return result
+    }
+  }
+
+  Object.assign(ActiveBoxContent.prototype, {
     /**
      * The {@link BoxBase} attribute of this content. Can be `null`, meaning {@link ActiveBox} will
      * try to find a suitable style scanning down through its own BoxBase, their parent's and, finally,
@@ -134,257 +379,12 @@ define([
     amp: null,
     // MediaBagElement
     mbe: null,
-    /**
-     *
-     * Loads settings from a specific JQuery XML element
-     * @param {external:jQuery} $xml - The XML element to be parsed
-     * @param {MediaBag} mediaBag - The media bag used to retrieve images and other media
-     */
-    setProperties: function ($xml, mediaBag) {
-      var content = this;
-      //
-      // Read attributes
-      $.each($xml.get(0).attributes, function () {
-        var name = this.name;
-        var val = this.value;
-        switch (this.name) {
-          case 'id':
-          case 'item':
-            content[name] = Number(val);
-            break;
-
-          case 'width':
-          case 'height':
-            if (content.dimension === null)
-              content.dimension = new AWT.Dimension(0, 0);
-            content.dimension[name] = Number(val);
-            break;
-
-          case 'txtAlign':
-          case 'imgAlign':
-            content[name] = content.readAlign(val);
-            break;
-
-          case 'hAlign':
-            // Old style
-            content['txtAlign'] = content.readAlign(val + ',center');
-            content['imgAlign'] = content.readAlign(val + ',center');
-            break;
-
-          case 'border':
-          case 'avoidOverlapping':
-            content[name] = Utils.getBoolean(val);
-            break;
-
-          case 'image':
-            content.imgName = Utils.nSlash(val);
-            break;
-        }
-      });
-
-      //
-      // Read inner elements
-      $xml.children().each(function () {
-        var $node = $(this);
-        switch (this.nodeName) {
-          case 'style':
-            content.bb = new BoxBase(null).setProperties($node);
-            break;
-          case 'media':
-            content.mediaContent = new MediaContent().setProperties($node);
-            break;
-          case 'p':
-            if (content.text === null)
-              content.text = '';
-            else
-              content.text += '\n';
-            //content.text += '<p>' + this.textContent + '</p>';
-            content.text += this.textContent;
-            break;
-        }
-      });
-
-      if (mediaBag)
-        this.realizeContent(mediaBag);
-
-      return this;
-    },
-    /**
-     *
-     * Decode expressions with combined values of horizontal and vertical alignments in the form:
-     * "(left|middle|right),(top|middle|bottom)"
-     * @param {string} str - The string to parse
-     * @returns {ActiveBoxContent~alignType}
-     */
-    readAlign: function (str) {
-      var align = { h: 'center', v: 'center' };
-      if (str) {
-        var v = str.split(',');
-        align.h = v[0].replace('middle', 'center');
-        align.v = v[1].replace('middle', 'center');
-      }
-      return align;
-    },
-    isEmpty: function () {
-      return this.text === null && this.img === null;
-    },
-    /**
-     *
-     * Checks if two contents are equivalent
-     * @param {ActiveBoxContent} abc - The content to compare with this.
-     * @param {boolean} checkCase - When `true` the comparing will be case-sensitive.
-     * @returns {boolean}
-     */
-    isEquivalent: function (abc, checkCase) {
-      if (abc === this)
-        return true;
-      var result = false;
-      if (abc !== null) {
-        if (this.isEmpty() && abc.isEmpty())
-          result = this.id === abc.id;
-        else
-          result = (this.text === null ? abc.text === null
-            : checkCase ? this.text === abc.text
-              : this.text.toLocaleLowerCase() === abc.text.toLocaleLowerCase()
-          ) &&
-            (this.mediaContent === null ? abc.mediaContent === null
-              : this.mediaContent.isEquivalent(abc.mediaContent)
-            ) &&
-            this.img === abc.img &&
-            (this.imgClip === null ? abc.imgClip === null
-              : this.imgClip.equals(abc.imgClip));
-      }
-      return result;
-    },
-    /**
-     *
-     * Sets the text content of this ActiveBox
-     * @param {string} tx
-     */
-    setTextContent: function (tx) {
-      // only plain text!
-      if (tx !== null) {
-        this.rawText = tx;
-        this.text = tx;
-        this.checkHtmlText();
-      } else {
-        this.rawText = null;
-        this.text = null;
-        this.htmlText = null;
-        this.innerHtmlText = null;
-      }
-    },
-    /**
-     *
-     * Checks if cell's text uses HTML, initializing the `innerHtmlText` member as needed.
-     */
-    checkHtmlText: function () {
-      this.htmlText = null;
-      this.innerHtmlText = null;
-      if (Utils.startsWith(this.text, '<html>', true)) {
-        this.htmlText = this.text.trim();
-        var s = this.htmlText.toLocaleLowerCase();
-        if (s.indexOf('<body') === -1) {
-          var s2 = s.indexOf('</html>');
-          if (s2 >= 0) {
-            this.innerHtmlText = this.htmlText.substr(6, s2);
-          }
-        }
-      }
-    },
-    /**
-     *
-     * Sets a fragment of a main image as a graphic content of this cell.
-     * Cells cannot have two graphic contents, so `imgName` (the specific image of this cell) should
-     * be cleared with this setting.
-     * @param {external:HTMLImageElement} img - The image data
-     * @param {AWT.Shape} imgClip - A shape that clips the portion of image assigned to this content.
-     * @param {string=} animatedGifFile - When `img` is an animated GIF, its file name
-     */
-    setImgContent: function (img, imgClip, animatedGifFile) {
-      this.img = img;
-      this.imgName = null;
-      this.imgClip = imgClip;
-      if (animatedGifFile)
-        this.animatedGifFile = animatedGifFile;
-    },
-    /**
-     *
-     * Prepares the media content
-     * @param {PlayStation} playStation - Usually a {@link JClicPlayer}
-     */
-    prepareMedia: function (playStation) {
-      if (!this.amp && this.mediaContent && this.mediaContent.mediaType === 'PLAY_VIDEO') {
-        this.amp = playStation.getActiveMediaPlayer(this.mediaContent);
-        this.amp.realize();
-      }
-    },
-    /**
-     *
-     * Reads and initializes the image associated to this content
-     * @param {MediaBag} mediaBag - The media bag of the current project.
-     */
-    realizeContent: function (mediaBag) {
-      var content = this;
-      if (this.imgName !== null && this.imgName.length > 0) {
-        this.mbe = mediaBag.getElement(this.imgName, true);
-        if (this.mbe) {
-          this.mbe.build(function () {
-            content.img = content.mbe.data;
-            content.animatedGifFile = content.mbe.animated ? content.mbe.getFullPath() : null;
-          });
-        }
-      }
-      if (this.mediaContent !== null) {
-        if (this.imgName === null && (this.text === null || this.text.length === 0)) {
-          this.img = this.mediaContent.getIcon();
-          this.animatedGifFile = null;
-        }
-      }
-      this.checkHtmlText(mediaBag);
-    },
-    /**
-     * 
-     * Gets a string representing this content, useful for checking if two different contents are
-     * equivalent.
-     * @returns {string}
-     */
-    getDescription: function () {
-      var result = '';
-      if (this.text && this.text.length > 0)
-        result += this.text;
-      if (this.imgName)
-        result += (result.length > 0 ? ' ' : '') + Utils.getMsg('image') + ' ' + this.imgName;
-      if (this.imgClip)
-        result += (result.length > 0 ? ' ' : '') + this.imgClip.toString();
-
-      if (this.mediaContent)
-        result += (result.length > 0 ? ' ' : '') + this.mediaContent.getDescription();
-
-      return result;
-    },
-    /**
-     * 
-     * Overwrites the original `Object.toString` method, returning `getDescription` instead
-     * @returns {String}
-     */
-    toString: function () {
-      var result = '';
-      if (this.text && this.text.length > 0)
-        result += this.text;
-      if (this.imgName)
-        result += (result.length > 0 ? ' ' : '') + Utils.getMsg('image') + ' ' + this.imgName;
-      if (this.imgClip)
-        result += (result.length > 0 ? ' ' : '') + Utils.getMsg('image fragment');
-
-      return result;
-    }
-  };
+  })
 
   /**
    * An empty ActiveBoxContent
    * @type {ActiveBoxContent} */
-  ActiveBoxContent.EMPTY_CONTENT = new ActiveBoxContent();
+  ActiveBoxContent.EMPTY_CONTENT = new ActiveBoxContent()
 
-  return ActiveBoxContent;
-});
+  return ActiveBoxContent
+})

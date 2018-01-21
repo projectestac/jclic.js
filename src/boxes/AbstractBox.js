@@ -50,7 +50,6 @@ define([
   class AbstractBox extends AWT.Rectangle {
     /**
      * AbstractBox constructor
-     * 
      * @param {?AbstractBox} parent - The AbstractBox to which this one belongs
      * @param {?AWT.Container} container - The container where this box is placed.
      * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
@@ -96,7 +95,7 @@ define([
     setContainer(newContainer) {
       this.container = newContainer
       if (this.$hostedComponent && this.container && this.container.$div) {
-        this.$hostedComponent.detach();
+        this.$hostedComponent.detach()
         this.container.$div.append(this.$hostedComponent)
       }
     }
@@ -147,7 +146,7 @@ define([
     getBoxBaseResolve() {
       let ab = this
       while (!ab.boxBase && ab.parent)
-        ab = ab.parent;
+        ab = ab.parent
       return ab.boxBase || BoxBase.prototype.defaultBoxBase
     }
 
@@ -326,7 +325,7 @@ define([
         this.setHostedComponentVisible()
       } else {
         if (this.$accessibleElement) {
-          var disabled = this.isInactive() && !this.accessibleAlwaysActive
+          const disabled = this.isInactive() && !this.accessibleAlwaysActive
           this.$accessibleElement.prop({
             disabled: disabled,
             tabindex: disabled ? -1 : 0
@@ -438,10 +437,10 @@ define([
 
       /**
        * TODO: Implement clipping
-       Shape saveClip=new Area(g2.getClip());
-       Area clip=new Area(saveClip);
-       clip.intersect(new Area(shape));
-       g2.setClip(clip);
+       Shape saveClip=new Area(g2.getClip())
+       Area clip=new Area(saveClip)
+       clip.intersect(new Area(shape))
+       g2.setClip(clip)
        */
 
       const bb = this.getBoxBaseResolve()
@@ -492,7 +491,7 @@ define([
 
         // Prepare stroke settings
         ctx.strokeStyle = bb.borderColor
-        bb[this.marked ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
+        bb[this.marked ? 'markerStroke' : 'borderStroke'].setStroke(ctx)
         if (this.marked)
           ctx.globalCompositeOperation = 'xor'
 

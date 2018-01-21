@@ -405,5 +405,4 @@ define([
   })
 
   return ActiveBagContent
-
 })

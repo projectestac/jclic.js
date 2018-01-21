@@ -36,7 +36,7 @@ define([
   "../AWT"
 ], function ($, Utils, AWT) {
 
-  var defaultValues = Utils.settings.BoxBase;
+  const defaultValues = Utils.settings.BoxBase
 
   /**
    * This class contains all the main visual attributes needed to draw {@link AbstractBox} objects:
@@ -49,15 +49,217 @@ define([
    * be used.
    * @exports BoxBase
    * @class
-   * @param {BoxBase=} parent - Another BoxBase object used to determine the value of properties not
-   * locally set.
    */
-  var BoxBase = function (parent) {
-    this.parent = parent || null;
-  };
+  class BoxBase {
+    /**
+     * BoxBase constructor
+     * @param {BoxBase=} parent - Another BoxBase object used to determine the value of properties not
+     * locally set.
+     */
+    constructor(parent) {
+      this.parent = parent || null
+    }
 
-  BoxBase.prototype = {
-    constructor: BoxBase,
+    /**
+     * Loads the BoxBase settings from a specific JQuery XML element
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
+    setProperties($xml) {
+      //
+      // Read attributes
+      $.each($xml.get(0).attributes, (name, val) => {
+        switch (name) {
+          case 'shadow':
+          case 'transparent':
+            this[name] = Utils.getBoolean(val, false)
+            break
+          case 'margin':
+            this[name] = Number(val)
+            break
+          case 'borderStroke':
+            this.borderStroke = new AWT.Stroke(Number(val))
+            break
+          case 'markerStroke':
+            this.markerStroke = new AWT.Stroke(Number(val))
+            break
+        }
+      })
+      //
+      // Read inner elements
+      $xml.children().each(child => {
+        const $node = $(child)
+        switch (child.nodeName) {
+          case 'font':
+            this.font = (new AWT.Font()).setProperties($node)
+            break
+
+          case 'gradient':
+            this.bgGradient = new AWT.Gradient().setProperties($node)
+            break
+
+          case 'color':
+            this.textColor = Utils.checkColor($node.attr('foreground'), this.textColor)
+            this.backColor = Utils.checkColor($node.attr('background'), this.backColor)
+            this.shadowColor = Utils.checkColor($node.attr('shadow'), this.shadowColor)
+            this.inactiveColor = Utils.checkColor($node.attr('inactive'), this.inactiveColor)
+            this.alternativeColor = Utils.checkColor($node.attr('alternative'), this.alternativeColor)
+            this.borderColor = Utils.checkColor($node.attr('border'), this.borderColor)
+            break
+        }
+      })
+      return this
+    }
+
+    /**
+     * Gets the value of the specified property, scanning down to parents and prototype if not defined.
+     * @param {string} property - The property to retrieve
+     * @returns {*} - The object or value associated to this property
+     */
+    get(property) {
+      if (this.hasOwnProperty(property) || this.parent === null)
+        return this[property]
+      else
+        return this.parent.get(property)
+    }
+
+    /**
+     * Sets the value of a specific property.
+     * @param {string} property - The property name.
+     * @param {*} value - Depends on the type of property
+     */
+    set(property, value) {
+      this[property] = value
+      return this
+    }
+
+    /**
+     * Gets the value of the specified property, scanning down to parents if not defined, and returning
+     * always an own property (not from prototype)
+     * @param {string} property - The property to retrieve
+     * @returns {*} - The object associated to this property
+     */
+    getOwn(property) {
+      if (this.hasOwnProperty(property))
+        return this[property]
+      else if (this.parent !== null)
+        return this.parent.getOwn(property)
+      else {
+        if (typeof this[property] === 'object')
+          this[property] = Utils.cloneObject(BoxBase.prototype[property])
+        else
+          this[property] = BoxBase.prototype[property]
+      }
+      return this[property]
+    }
+
+    /**
+     * Gets the properties defined in this BoxBase as a collection of CSS attributes
+     * @param {object=} css - An optional set of initial CSS properties
+     * @param {boolean} inactive - When `true`, get CSS attributes for an inactive cell
+     * @param {boolean} inverse - When `true`, get CSS attributes for an inverse cell
+     * @param {boolean} alternative - When `true`, get CSS attributes for an alternative cell
+     * @returns {object}
+     */
+    getCSS(css, inactive, inverse, alternative) {
+      // (css will be created by [AWT.Font.toCss](AWT.html) if null or undefined)
+      const font = this.get('font')
+      css = font.toCss(css)
+
+      css['color'] = inverse ? this.get('backColor')
+        : alternative ? this.get('alternativeColor')
+          : this.get('textColor')
+
+      const transparent = this.get('transparent')
+      css['background-color'] = transparent ? 'transparent'
+        : inactive ? this.get('inactiveColor')
+          : inverse ? this.get('textColor') : this.get('backColor')
+
+      const bgGradient = this.get('bgGradient')
+      if (bgGradient && !transparent)
+        css['background-image'] = bgGradient.getCss()
+
+      if (this.shadow === 1) {
+        const delta = Math.max(1, Math.round(font.size / 10))
+        const color = this.get('shadowColor')
+        css['text-shadow'] = `${delta}px ${delta}px 3px ${color}`
+      }
+      return css
+    }
+
+    /**
+     * This utility method computes the width and height of text lines rendered on an HTML
+     * __canvas__ element, reducing the font size of the BoxBase as needed when they exceed the maximum
+     * width and/or height.
+     * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the text.
+     * @param {string} text - The text to drawn.
+     * @param {number} maxWidth - Maximum width
+     * @param {number} maxHeight - Maximum height
+     * @returns {object[]} - An array of objects representing lines of text. Each object has a `text`
+     * member with the text displayed in the line, and a `size` member with the line {@link AWT.Dimension}
+     */
+    prepareText(ctx, text, maxWidth, maxHeight) {
+      const
+        result = [],
+        font = this.get('font'),
+        height = font.getHeight()
+      let totalHeight = 0
+
+      // divide the text in lines
+      const lines = text.trim().split('\n')
+      ctx.font = font.cssFont()
+      for (let l = 0; l < lines.length; l++) {
+        let line = lines[l].trim()
+        let width = ctx.measureText(line).width
+        if (width > maxWidth) {
+          // retain the last string offset that was inside maxWidth
+          let
+            lastOK = 0,
+            lastOKWidth = 0
+          for (let p = 0; p < line.length; p++) {
+            // Find next separator
+            if (Utils.isSeparator(line[p])) {
+              const w = ctx.measureText(line.substr(0, p).trim()).width
+              if (w > maxWidth)
+                break
+              lastOK = p
+              lastOKWidth = w
+            }
+          }
+          if (lastOK > 0) {
+            // Add a new line with the tail of the line
+            lines.splice(l + 1, 0, line.substr(lastOK + 1).trim())
+            // Adjust the current line
+            line = lines[l] = line.substr(0, lastOK).trim()
+            width = lastOKWidth
+          }
+          else {
+            // No solution found. Try resizing down the font.
+            if (font.size > defaultValues.MIN_FONT_SIZE) {
+              this.getOwn('font').zoom(-1)
+              return this.prepareText(ctx, text, maxWidth, maxHeight)
+            }
+          }
+        }
+
+        // Add the line and the calculated dimension to `result`
+        result.push({
+          text: line,
+          size: new AWT.Dimension(width, height)
+        })
+
+        totalHeight += height
+
+        if (totalHeight > maxHeight && font.size > defaultValues.MIN_FONT_SIZE) {
+          // Max height exceeded. Try resizing down the font
+          this.getOwn('font').zoom(-1)
+          return this.prepareText(ctx, text, maxWidth, maxHeight)
+        }
+      }
+      return result
+    }
+  }
+
+  Object.assign(BoxBase.prototype, {
     /**
      * The parent BoxBase object
      * @type {BoxBase} */
@@ -134,210 +336,9 @@ define([
      * The stroke used to draw a border around marked cells.
      * @type {AWT.Stroke} */
     markerStroke: new AWT.Stroke(defaultValues.MARKER_STROKE_WIDTH),
-    /**
-     *
-     * Loads the BoxBase settings from a specific JQuery XML element
-     * @param {external:jQuery} $xml - The XML element to parse
-     */
-    setProperties: function ($xml) {
+  })
 
-      var bb = this;
-      //
-      // Read attributes
-      $.each($xml.get(0).attributes, function () {
-        var name = this.name;
-        var val = this.value;
-        switch (this.name) {
-          case 'shadow':
-          case 'transparent':
-            bb[name] = Utils.getBoolean(val, false);
-            break;
-          case 'margin':
-            bb[name] = Number(val);
-            break;
-          case 'borderStroke':
-            bb.borderStroke = new AWT.Stroke(Number(val));
-            break;
-          case 'markerStroke':
-            bb.markerStroke = new AWT.Stroke(Number(val));
-            break;
-        }
-      });
-      //
-      // Read inner elements
-      $xml.children().each(function () {
-        var $node = $(this);
-        switch (this.nodeName) {
-          case 'font':
-            bb.font = (new AWT.Font()).setProperties($node);
-            break;
+  BoxBase.prototype.defaultBoxBase = new BoxBase()
 
-          case 'gradient':
-            bb.bgGradient = new AWT.Gradient().setProperties($node);
-            break;
-
-          case 'color':
-            bb.textColor = Utils.checkColor($node.attr('foreground'), bb.textColor);
-            bb.backColor = Utils.checkColor($node.attr('background'), bb.backColor);
-            bb.shadowColor = Utils.checkColor($node.attr('shadow'), bb.shadowColor);
-            bb.inactiveColor = Utils.checkColor($node.attr('inactive'), bb.inactiveColor);
-            bb.alternativeColor = Utils.checkColor($node.attr('alternative'), bb.alternativeColor);
-            bb.borderColor = Utils.checkColor($node.attr('border'), bb.borderColor);
-            break;
-        }
-      });
-      return this;
-    },
-    //
-    // Utility functions:
-    /**
-     *
-     * Gets the value of the specified property, scanning down to parents and prototype if not defined.
-     * @param {string} property - The property to retrieve
-     * @returns {*} - The object or value associated to this property
-     */
-    get: function (property) {
-      if (this.hasOwnProperty(property) || this.parent === null)
-        return this[property];
-      else
-        return this.parent.get(property);
-    },
-    /**
-     *
-     * Sets the value of a specific property.
-     * @param {string} property - The property name.
-     * @param {*} value - Depends on the type of property
-     */
-    set: function (property, value) {
-      this[property] = value;
-      return this;
-    },
-    /**
-     * 
-     * Gets the value of the specified property, scanning down to parents if not defined, and returning
-     * always an own property (not from prototype)
-     * @param {string} property - The property to retrieve
-     * @returns {*} - The object associated to this property
-     */
-    getOwn: function (property) {
-      if (this.hasOwnProperty(property))
-        return this[property];
-      else if (this.parent !== null)
-        return this.parent.getOwn(property);
-      else {
-        if (typeof this[property] === 'object')
-          this[property] = Utils.cloneObject(BoxBase.prototype[property]);
-        else
-          this[property] = BoxBase.prototype[property];
-      }
-      return this[property];
-    },
-    /**
-     *
-     * Gets the properties defined in this BoxBase as a collection of CSS attributes
-     * @param {object=} css - An optional set of initial CSS properties
-     * @param {boolean} inactive - When `true`, get CSS attributes for an inactive cell
-     * @param {boolean} inverse - When `true`, get CSS attributes for an inverse cell
-     * @param {boolean} alternative - When `true`, get CSS attributes for an alternative cell
-     * @returns {object}
-     */
-    getCSS: function (css, inactive, inverse, alternative) {
-      // (css will be created by [AWT.Font.toCss](AWT.html) if null or undefined)
-      var font = this.get('font');
-      css = font.toCss(css);
-
-      css['color'] = inverse ? this.get('backColor')
-        : alternative ? this.get('alternativeColor')
-          : this.get('textColor');
-
-      var transparent = this.get('transparent');
-      css['background-color'] = transparent ? 'transparent'
-        : inactive ? this.get('inactiveColor')
-          : inverse ? this.get('textColor') : this.get('backColor');
-
-      var bgGradient = this.get('bgGradient');
-      if (bgGradient && !transparent)
-        css['background-image'] = bgGradient.getCss();
-
-      if (this.shadow === 1) {
-        var delta = Math.max(1, Math.round(font.size / 10));
-        var color = this.get('shadowColor');
-        css['text-shadow'] = delta + 'px ' + delta + 'px 3px ' + color;
-      }
-      return css;
-    },
-    /**
-     * This is utility function computes the width and height of text lines rendered on an HTML
-     * __canvas__ element, reducing the font size of the BoxBase as needed when they exceed the maximum
-     * width and/or height.
-     * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the text.
-     * @param {string} text - The text to drawn.
-     * @param {number} maxWidth - Maximum width
-     * @param {number} maxHeight - Maximum height
-     * @returns {object[]} - An array of objects representing lines of text. Each object has a `text`
-     * member with the text displayed in the line, and a `size` member with the line {@link AWT.Dimension}
-     */
-    prepareText: function (ctx, text, maxWidth, maxHeight) {
-      var result = [];
-      var font = this.get('font');
-      var height = font.getHeight();
-      var totalHeight = 0;
-
-      // divide the text in lines
-      var lines = text.trim().split('\n');
-      ctx.font = font.cssFont();
-      for (var l = 0; l < lines.length; l++) {
-        var line = lines[l].trim();
-        var width = ctx.measureText(line).width;
-        if (width > maxWidth) {
-          // retain the last string offset that was inside maxWidth
-          var lastOK = 0;
-          var lastOKWidth = 0;
-          for (var p = 0; p < line.length; p++) {
-            // Find next separator
-            if (Utils.isSeparator(line[p])) {
-              var w = ctx.measureText(line.substr(0, p).trim()).width;
-              if (w > maxWidth)
-                break;
-              lastOK = p;
-              lastOKWidth = w;
-            }
-          }
-          if (lastOK > 0) {
-            // Add a new line with the tail of the line
-            lines.splice(l + 1, 0, line.substr(lastOK + 1).trim());
-            // Adjust the current line
-            line = lines[l] = line.substr(0, lastOK).trim();
-            width = lastOKWidth;
-          }
-          else {
-            // No solution found. Try resizing down the font.
-            if (font.size > defaultValues.MIN_FONT_SIZE) {
-              this.getOwn('font').zoom(-1);
-              return this.prepareText(ctx, text, maxWidth, maxHeight);
-            }
-          }
-        }
-
-        // Add the line and the calculated dimension to `result`
-        result.push({
-          text: line,
-          size: new AWT.Dimension(width, height)
-        });
-
-        totalHeight += height;
-
-        if (totalHeight > maxHeight && font.size > defaultValues.MIN_FONT_SIZE) {
-          // Max height exceeded. Try resizing down the font
-          this.getOwn('font').zoom(-1);
-          return this.prepareText(ctx, text, maxWidth, maxHeight);
-        }
-      }
-      return result;
-    }
-  };
-
-  BoxBase.prototype.defaultBoxBase = new BoxBase();
-
-  return BoxBase;
-});
+  return BoxBase
+})
