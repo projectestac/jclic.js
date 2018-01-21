@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -35,27 +35,75 @@ define([
   "./ActiveMediaPlayer",
   "./MediaContent"
 ], function (Utils, ActiveMediaPlayer, MediaContent) {
+
   /**
    * The EventSoundsElement object contains the description of a specific sound to be played when
    * one of the JClic events are fired.
    * For a full list of the JClic events see: {@link EventSounds}
    * @exports EventSoundsElement
    * @class
-   * @param {string} id - The identifier of this media sound
-   * @param {string=} fileName - An optional file name or URL containing the sound data
    */
-  var EventSoundsElement = function (id, fileName) {
-    this.id = id;
-    if (fileName) {
-      if (Utils.startsWith(fileName, 'data:'))
-        this.audio = new Audio(fileName);
-      else
-        this.fileName = fileName;
+  class EventSoundsElement {
+    /**
+     * EventSoundsElement constructor
+     * @param {string} id - The identifier of this media sound
+     * @param {string=} fileName - An optional file name or URL containing the sound data
+     */
+    constructor(id, fileName) {
+      this.id = id
+      if (fileName) {
+        if (Utils.startsWith(fileName, 'data:'))
+          this.audio = new Audio(fileName)
+        else
+          this.fileName = fileName
+      }
     }
-  };
 
-  EventSoundsElement.prototype = {
-    constructor: EventSoundsElement,
+    /**
+     * Reads the properties of this object from an XML element
+     * @param {external:jQuery} $xml - The XML element to be parsed
+     */
+    setProperties($xml) {
+      this.fileName = $xml.attr('file')
+      this.enabled = Utils.getTriState($xml.attr('enabled'))
+      return this
+    }
+
+    /**
+     * Instantiates this audio object
+     * @param {PlayStation} ps
+     * @param {MediaBag} mediaBag
+     */
+    realize(ps, mediaBag) {
+      if (!this.audio && this.player === null && this.fileName !== null) {
+        this.player = new ActiveMediaPlayer(new MediaContent('PLAY_AUDIO', this.fileName), mediaBag, ps)
+        this.player.realize()
+      }
+    }
+
+    /**
+     * Plays the audio associated to this event
+     */
+    play() {
+      if (this.audio) {
+        this.audio.currentTime = 0
+        this.audio.play()
+      } else if (this.player)
+        this.player.play()
+    }
+
+    /**
+     * Stops playing the audio associated to this event
+     */
+    stop() {
+      if (this.audio)
+        this.audio.pause()
+      else if (this.player)
+        this.player.stop()
+    }
+  }
+
+  Object.assign(EventSoundsElement.prototype, {
     /**
      * The sound file used by this element
      * @type {string} */
@@ -72,46 +120,7 @@ define([
      * HTMLAudioElement used to play this sound
      * @type {HTMLAudioElement} */
     audio: null,
-    /**
-     * Reads the properties of this object from an XML element
-     * @param {external:jQuery} $xml - The XML element to be parsed
-     */
-    setProperties: function ($xml) {
-      this.fileName = $xml.attr('file');
-      this.enabled = Utils.getTriState($xml.attr('enabled'));
-      return this;
-    },
-    /**
-     *
-     * Instantiates this audio object
-     * @param {PlayStation} ps
-     * @param {MediaBag} mediaBag
-     */
-    realize: function (ps, mediaBag) {
-      if (!this.audio && this.player === null && this.fileName !== null) {
-        this.player = new ActiveMediaPlayer(new MediaContent('PLAY_AUDIO', this.fileName), mediaBag, ps);
-        this.player.realize();
-      }
-    },
-    /**
-     * Plays the audio associated to this event
-     */
-    play: function () {
-      if (this.audio) {
-        this.audio.currentTime = 0;
-        this.audio.play();
-      } else if (this.player)
-        this.player.play();
-    },
-    /**
-     * Stops playing the audio associated to this event
-     */
-    stop: function () {
-      if (this.audio)
-        this.audio.pause();
-      else if (this.player)
-        this.player.stop();
-    }
-  };
-  return EventSoundsElement;
-});
+  })
+
+  return EventSoundsElement
+})

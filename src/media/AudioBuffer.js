@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -37,22 +37,118 @@ define([
    * The AudioBuffer object provides sound recording and replaying to activities.
    * @exports AudioBuffer
    * @class
-   * @param {number=} seconds - The maximum amount of time allowed to be recorded by this AudioBuffer
    */
-  var AudioBuffer = function (seconds) {
-    if (seconds)
-      this.seconds = seconds;
-    this.chunks = [];
-  };
+  class AudioBuffer {
+    /**
+     * AudioBuffer constructor
+     * @param {number=} seconds - The maximum amount of time allowed to be recorded by this AudioBuffer
+     */
+    constructor(seconds) {
+      if (seconds)
+        this.seconds = seconds
+      this.chunks = []
+    }
+
+    /**
+     * Starts playing the currently recorded audio, if any.
+     */
+    play() {
+      this.stop()
+      if (this.mediaPlayer) {
+        this.mediaPlayer.currentTime = 0
+        this.mediaPlayer.play()
+      } else {
+        this.playWhenFinished = true
+      }
+    }
+
+    /**
+     * Stops the current operation, either recording or playing audio
+     */
+    stop() {
+      if (this.mediaRecorder && this.mediaRecorder.state === 'recording')
+        this.mediaRecorder.stop()
+      else if (this.mediaPlayer && !this.mediaPlayer.paused)
+        this.mediaPlayer.pause()
+    }
+
+    /**
+     * Starts recording audio, or stops the recording if already started.
+     */
+    record() {
+      if (this.mediaRecorder && this.mediaRecorder.state === 'recording')
+        this.mediaRecorder.stop()
+      else {
+        this.stop()
+        this.mediaPlayer = null
+
+        // TODO: update navigator.getUserMedia to navigator.mediaDevices.getUserMedia (with promises)
+        // when supported in Chrome/Chromium
+        // (in v. 49 this is supported only when "experimental web extensions" flag is enabled)
+        // See: https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia
+
+        navigator.getUserMedia(
+          { audio: true },
+          stream => {
+            this.mediaRecorder = new MediaRecorder(stream)
+            this.mediaRecorder.ondataavailable = e => this.chunks.push(e.data)
+            this.mediaRecorder.onerror = e => {
+              Utils.log('error', `Error recording audio: ${e}`)
+              this.mediaRecorder = null
+            }
+            this.mediaRecorder.onstart = () => Utils.log('debug', 'Recording audio started')
+            this.mediaRecorder.onstop = () => {
+              Utils.log('debug', 'Recording audio finished')
+
+              if (this.timeoutID) {
+                window.clearTimeout(this.timeoutID)
+                this.timeoutID = null
+              }
+
+              const options = {}
+              if (this.chunks.length > 0 && this.chunks[0].type)
+                options.type = this.chunks[0].type
+              const blob = new Blob(this.chunks, options)
+              this.chunks = []
+              this.mediaPlayer = document.createElement('audio')
+              this.mediaPlayer.src = URL.createObjectURL(blob)
+              this.mediaPlayer.pause()
+              this.mediaRecorder = null
+              if (this.playWhenFinished) {
+                this.playWhenFinished = false
+                this.mediaPlayer.play()
+              }
+            }
+            this.mediaRecorder.onwarning = e => Utils.log('warn', `Warning recording audio: ${e}`)
+
+            this.playWhenFinished = false
+            this.mediaRecorder.start()
+            this.timeoutID = window.setTimeout(() => {
+              if (this.mediaRecorder)
+                this.mediaRecorder.stop()
+            }, this.seconds * 1000)
+          },
+          error => Utils.log('error', `Error recording audio: ${error}`)
+        )
+      }
+    }
+
+    /**
+     * Clears all data associated to this AudioBuffer
+     */
+    clear() {
+      this.stop()
+      this.mediaPlayer = null
+    }
+  }
 
   /**
    * Maximum amount of time allowed for recordings (in seconds)
    * @type {number}
    */
-  AudioBuffer.MAX_RECORD_LENGTH = 20;
+  AudioBuffer.MAX_RECORD_LENGTH = 20
 
-  AudioBuffer.prototype = {
-    constructor: AudioBuffer,
+  Object.assign(AudioBuffer.prototype, {
     /**
      * Maximum length of recordings allowed to this AudioBuffer (in seconds)
      * @type {number}
@@ -84,109 +180,7 @@ define([
      * @type {boolean}
      */
     playWhenFinished: false,
-    /**
-     *
-     * Starts playing the currently recorded audio, if any.
-     */
-    play: function () {
-      this.stop();
-      if (this.mediaPlayer) {
-        this.mediaPlayer.currentTime = 0;
-        this.mediaPlayer.play();
-      } else {
-        this.playWhenFinished = true;
-      }
-    },
-    /**
-     *
-     * Stops the current operation, either recording or playing audio
-     */
-    stop: function () {
-      if (this.mediaRecorder && this.mediaRecorder.state === 'recording')
-        this.mediaRecorder.stop();
-      else if (this.mediaPlayer && !this.mediaPlayer.paused)
-        this.mediaPlayer.pause();
-    },
-    /**
-     *
-     * Starts recording audio, or stops the recording if already started.
-     */
-    record: function () {
-      if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
-        this.mediaRecorder.stop();
-      } else {
-        this.stop();
-        var buffer = this;
-        this.mediaPlayer = null;
+  })
 
-        // TODO: update navigator.getUserMedia to navigator.mediaDevices.getUserMedia (with promises)
-        // when supported in Chrome/Chromium
-        // (in v. 49 this is supported only when "experimental web extensions" flag is enabled)
-        // See: https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia
-
-        navigator.getUserMedia(
-          { audio: true },
-          function (stream) {
-            buffer.mediaRecorder = new MediaRecorder(stream);
-            buffer.mediaRecorder.ondataavailable = function (e) {
-              buffer.chunks.push(e.data);
-            };
-            buffer.mediaRecorder.onerror = function (e) {
-              Utils.log('error', 'Error recording audio: %s', e);
-              buffer.mediaRecorder = null;
-            };
-            buffer.mediaRecorder.onstart = function () {
-              Utils.log('debug', 'Recording audio started');
-            };
-            buffer.mediaRecorder.onstop = function () {
-              Utils.log('debug', 'Recording audio finished');
-
-              if (buffer.timeoutID) {
-                window.clearTimeout(buffer.timeoutID);
-                buffer.timeoutID = null;
-              }
-
-              var options = {};
-              if (buffer.chunks.length > 0 && buffer.chunks[0].type)
-                options.type = buffer.chunks[0].type;
-              var blob = new Blob(buffer.chunks, options);
-              buffer.chunks = [];
-              buffer.mediaPlayer = document.createElement('audio');
-              var url = URL.createObjectURL(blob);
-              buffer.mediaPlayer.src = url;
-              buffer.mediaPlayer.pause();
-              buffer.mediaRecorder = null;
-              if (buffer.playWhenFinished) {
-                buffer.playWhenFinished = false;
-                buffer.mediaPlayer.play();
-              }
-            };
-            buffer.mediaRecorder.onwarning = function (e) {
-              Utils.log('warn', 'Warning recording audio: %s', e);
-            };
-
-            buffer.playWhenFinished = false;
-            buffer.mediaRecorder.start();
-            buffer.timeoutID = window.setTimeout(function () {
-              if (buffer.mediaRecorder)
-                buffer.mediaRecorder.stop();
-            }, buffer.seconds * 1000);
-
-          },
-          function (error) {
-            Utils.log('error', 'Error recording audio: %s', error);
-          });
-      }
-    },
-    /**
-     *
-     * Clears all data associated to this AudioBuffer
-     */
-    clear: function () {
-      this.stop();
-      this.mediaPlayer = null;
-    }
-  };
-
-  return AudioBuffer;
-});
+  return AudioBuffer
+})
