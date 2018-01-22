@@ -129,7 +129,7 @@ li {
 }
 .navigation li.item .subtitle {
   margin-top: 10px;
-  font: 400 16px Helvetica;
+  font: 400 16px Helvetica, sans-serif;
   color: #0087e5;
   display: block;
 }
@@ -252,6 +252,8 @@ li {
   content: '\f107';
 }
 .main h4.name span.type-signature {
+  background-color: #7ca828;
+  margin-right: 5px;
   font-family: Helvetica, sans-serif;
   font-weight: 200;
   font-size: 12px;
@@ -261,8 +263,6 @@ li {
   line-height: 18px;
   display: inline-block;
   color: #fff;
-  background-color: #7ca828;
-  margin-right: 5px;
 }
 .main h4.name span.type {
   margin-left: 5px;
