@@ -3923,7 +3923,7 @@
       <target>
        <answer>inhabitants</answer>
        <response fill="_" length="11" maxLength="11" />
-       <info>
+       <info mode="onDemand" maxTime="5">
         <cell width="80" height="30">
          <style shadow="true">
           <font family="Arial" size="13" bold="true" />

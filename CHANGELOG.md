@@ -1,6 +1,9 @@
-### v1.0.4b 
+### v1.0.4 (2018-01-22)
+#### Improvements
+- Text activities can now display pop-up windows and play helper sounds of targets, as in JClic Player.
+
 #### Bug fixes
-- Avoid false positives with empty responses in text activities
+- Avoid false positives with empty responses in text activities.
 
 ### v1.0.3 (2018-01-15)
 #### Bug fixes

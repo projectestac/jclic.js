@@ -342,6 +342,11 @@ define([
             } else if (target.$comboList) {
               target.$comboList.css(target.doc.style['target'].css);
             }
+
+            if (target.$popup && (target.infoMode === 'always' || target.infoMode === 'onError' && target.targetStatus === 'WITH_ERROR'))
+              this.showPopup(target.$popup, target.popupMaxTime, target.popupDelay);
+            else
+              this.showPopup(null);
           }
           break;
 
