@@ -386,6 +386,10 @@ define([
      * @type {string} */
     infoMode: 'no_info',
     /**
+     * Key that triggers the associated popup when `infoMode` is `onDemand`
+     * @type {string} */
+    popupKey: 'F1',
+    /**
      * An optional {@link ActiveBoxContent} with information about this TextTarget
      * @type {ActiveBoxContent} */
     popupContent: null,
@@ -417,6 +421,10 @@ define([
      * The paragraph element where $span is currently located
      * @type {external:jQuery} */
     $p: null,
+    /**
+     * The span element containing the popup
+     * @type {external:jQuery} */
+    $popup: null,
     /**
      * Current text in the $span element
      * @type {string} */

@@ -102,22 +102,12 @@ define([
    */
   TextActivityBase.Panel = function (act, ps, $div) {
     Activity.Panel.call(this, act, ps, $div);
-    this.boxes = [];
-    this.popups = [];
     this.targets = [];
   };
 
   var ActPanelAncestor = Activity.Panel.prototype;
   TextActivityBase.Panel.prototype = {
     constructor: TextActivityBase.Panel,
-    /**
-     * Array of ActiveBox objects contained in this Panel
-     * @type {ActiveBox[]} */
-    boxes: null,
-    /**
-     * Array of ActiveBox objects used as pop-up elements
-     * @type {ActiveBox[]} */
-    popups: null,
     /**
      * Array of jQuery DOM elements (usually of type 'span') containing the targets of this activity
      * @type {external.jQuery[]} */
@@ -135,6 +125,18 @@ define([
      * System timer used to close the previous document when act.maxTime is reached.
      * @type {number} */
     prevScreenTimer: null,
+    /**
+     * The popup currently been displayed
+     * @type {external: jQuery} */
+    $currentPopup: null,
+    /**
+     * A timer controlling the time the current popup will be displayed
+     * @type {number} */
+    currentPopupTimer: 0,
+    /**
+     * A timer prepared to display a popup after a while
+     * @type {number} */
+    popupWaitTimer: 0,
     /**
      *
      * Prepares the text panel
@@ -164,6 +166,7 @@ define([
       var $doc = $('<div/>', { class: 'JClicTextDocument' }).css({ 'padding': 4 }).css(doc.style['default'].css);
 
       var currentPStyle = null;
+      var popupSpans = [];
 
       //
       // Process paragraphs
@@ -210,8 +213,6 @@ define([
             case 'cell':
               // Create a new ActiveBox based on this ActiveBoxContent
               var box = ActiveBox.createCell($span.css({ position: 'relative' }), this);
-              // Save the box for future references
-              panel.boxes.push(box);
               $span.css({ 'display': 'inline-block', 'vertical-align': 'middle' });
               if (this.mediaContent) {
                 $span.on('click', function (event) {
@@ -232,6 +233,29 @@ define([
               }
 
               var target = this;
+              var $popup = null;
+              // Process target popups
+              if (target.infoMode !== 'no_info' && target.popupContent) {
+                $popup = $('<span/>').css({ position: 'absolute', 'padding-top': '2pt', display: 'none' });
+                // Create a new ActiveBox based on popupContent
+                var popupBox = ActiveBox.createCell($popup, target.popupContent);
+                if (target.popupContent.mediaContent) {
+                  $popup.on('click', function (event) {
+                    event.preventDefault();
+                    panel.ps.stopMedia(1);
+                    if (popupBox)
+                      popupBox.playMedia(panel.ps);
+                    else if (target.popupContent.mediaContent)
+                      panel.ps.playMedia(target.popupContent.mediaContent);
+                    return false;
+                  });
+                }
+                $p.append($popup);
+                target.$popup = $popup;
+                // Save for later setting of top-margin
+                popupSpans.push({ p: $p, span: $popup });
+              }
+
               $span = panel.$createTargetElement(target, $span);
               target.num = panel.targets.length;
               target.pos = target.num;
@@ -255,6 +279,16 @@ define([
                   target.targetStatus = 'HIDDEN';
                 }
                 $p.append($span);
+
+                // Catch on-demand popups with F1
+                if ($popup !== null && target.infoMode === 'onDemand') {
+                  $span.keydown(function (ev) {
+                    if (ev.key === target.popupKey) {
+                      ev.preventDefault();
+                      panel.showPopup($popup, target.popupMaxTime, target.popupDelay);
+                    }
+                  })
+                }
               }
               target.$p = $p;
               break;
@@ -280,6 +314,11 @@ define([
             panel.evaluatePanel();
           });
         $div.append(this.$checkButton);
+      }
+
+      // Place popups below its target baseline
+      for (var i = 0; i < popupSpans.length; i++) {
+        popupSpans[i].span.css({ 'margin-top': popupSpans[i].p.css('font-size') });
       }
 
       // Init Evaluator
@@ -389,6 +428,7 @@ define([
     finishActivity: function (result) {
       if (this.$checkButton)
         this.$checkButton.prop('disabled', true);
+      this.showPopup(null);
       ActPanelAncestor.finishActivity.call(this, result);
     },
     /**
@@ -400,6 +440,56 @@ define([
      */
     processEvent: function (_event) {
       return this.playing;
+    },
+    /**
+     * 
+     * @param {external: jQuery} $popup - The popup to display, or _null _ to just hide the current popup
+     * @param {number} maxTime - The maximum time to mantain the popup on screen, in seconds
+     * @param {number} waitTime - When set, indicates the number of seconds to wait before show the popup
+     */
+    showPopup: function ($popup, maxTime, waitTime) {
+
+      // Hide current popup
+      if (this.$currentPopup) {
+        this.$currentPopup.css({ display: 'none' });
+        this.$currentPopup = null;
+        if (this.currentPopupTimer) {
+          window.clearTimeout(this.currentPopupTimer);
+          this.currentPopupTimer = 0;
+        }
+      }
+
+      // Clear popupWaitTimer
+      if (this.popupWaitTimer) {
+        window.clearTimeout(this.popupWaitTimer);
+        this.popupWaitTimer = 0;
+      }
+
+      // Prepare popup timer
+      if (waitTime) {
+        var thisPanel = this;
+        this.popupWaitTimer = window.setTimeout(function () {
+          thisPanel.showPopup($popup, maxTime);
+        }, waitTime * 1000);
+        return;
+      }
+
+      if ($popup) {
+        $popup.css({ display: '' })
+        $popup.click();
+
+        this.$currentPopup = $popup
+        if (maxTime) {
+          var thisPanel = this;
+          this.currentPopupTimer = window.setTimeout(function () {
+            $popup.css({ display: 'none' });
+            if (thisPanel.$currentPopup === $popup) {
+              thisPanel.$currentPopup = null;
+              thisPanel.currentPopupTimer = 0;
+            }
+          }, maxTime * 1000);
+        }
+      }
     }
   };
 
