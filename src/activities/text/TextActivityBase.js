@@ -250,10 +250,9 @@ define([
                     return false;
                   });
                 }
-                $p.append($popup);
                 target.$popup = $popup;
                 // Save for later setting of top-margin
-                popupSpans.push({ p: $p, span: $popup });
+                popupSpans.push({ p: $p, span: $popup, box: popupBox });
               }
 
               $span = panel.$createTargetElement(target, $span);
@@ -278,18 +277,29 @@ define([
                 } else {
                   target.targetStatus = 'HIDDEN';
                 }
-                $p.append($span);
 
-                // Catch on-demand popups with F1
+                // Catch on-demand popups with `F1`, cancel with `Escape`
                 if ($popup !== null && target.infoMode === 'onDemand') {
                   $span.keydown(function (ev) {
                     if (ev.key === target.popupKey) {
                       ev.preventDefault();
                       panel.showPopup($popup, target.popupMaxTime, target.popupDelay);
+                    } else if (ev.key === 'Escape') {
+                      ev.preventDefault();
+                      panel.showPopup(null);
                     }
                   })
                 }
               }
+
+              if ($popup && $span) {
+                if (target.isList)
+                  $p.append($span).append($popup);
+                else
+                  $p.append($popup).append($span);
+              } else if ($span)
+                $p.append($span);
+
               target.$p = $p;
               break;
           }
@@ -317,9 +327,8 @@ define([
       }
 
       // Place popups below its target baseline
-      for (var i = 0; i < popupSpans.length; i++) {
+      for (var i = 0; i < popupSpans.length; i++)
         popupSpans[i].span.css({ 'margin-top': popupSpans[i].p.css('font-size') });
-      }
 
       // Init Evaluator
       if (this.act.ev)

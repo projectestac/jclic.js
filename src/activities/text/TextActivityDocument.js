@@ -509,7 +509,7 @@ define([
             });
             if (!target.popupContent) {
               $node.children('cell').each(function () {
-                target.popupContent = new ActiveBoxContent().setProperties($(this, mediaBag));
+                target.popupContent = new ActiveBoxContent().setProperties($(this), mediaBag);
               });
             }
             break;
