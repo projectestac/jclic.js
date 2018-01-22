@@ -129,7 +129,7 @@ define([
             break
         }
       })
-      $xml.children('action').each((child) => {
+      $xml.children('action').each((_n, child) => {
         const action = new ActionReg()
         action.setProperties($(child))
         this.actions.push(action)

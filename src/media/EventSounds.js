@@ -67,7 +67,7 @@ define([
      * @param {external:jQuery} $xml - The XML element to be parsed
      */
     setProperties($xml) {
-      $xml.children().each(child => {
+      $xml.children().each((_n, child) => {
         const id = child.getAttribute('id')
         this.elements[id] = new EventSoundsElement(id)
         this.elements[id].setProperties($(child))

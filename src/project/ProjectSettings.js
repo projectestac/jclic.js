@@ -68,7 +68,7 @@ define([
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties($xml) {
-      $xml.children().each(child => {
+      $xml.children().each((_n, child) => {
         switch (this.nodeName) {
           case 'title':
             this.title = child.textContent

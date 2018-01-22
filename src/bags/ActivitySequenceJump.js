@@ -47,16 +47,62 @@ define([
    * @exports ActivitySequenceJump
    * @class
    * @extends JumpInfo
-   * @param {string} action - Must be one of the described actions.
-   * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
-   * cardinal number in the list.
    */
-  var ActivitySequenceJump = function (action, sq) {
-    JumpInfo.call(this, action, sq);
-  };
+  class ActivitySequenceJump extends JumpInfo {
+    /**
+     * ActivitySequenceJump constructor
+     * @param {string} action - Must be one of the described actions.
+     * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
+     * cardinal number in the list.
+     */
+    constructor(action, sq) {
+      super(action, sq)
+    }
 
-  ActivitySequenceJump.prototype = {
-    constructor: ActivitySequenceJump,
+    /**
+     * Loads the object settings from a specific JQuery XML element.
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
+    setProperties($xml) {
+      super.setProperties($xml)
+
+      // Read conditional jumps
+      $xml.children('jump').each((_n, child) => {
+        const condJmp = new ConditionalJumpInfo().setProperties($(child))
+        if (condJmp.id === 'upper')
+          this.upperJump = condJmp
+        else if (condJmp.id === 'lower')
+          this.lowerJump = condJmp
+      })
+      return this
+    }
+
+    /**
+     * Resolves what {@link JumpInfo} must be taken, based on a done time and average rating obtained
+     * in activities.
+     * @param {number} rating - Average rating obtained by the user in the activities done during the
+     * last sequence stretch.
+     * @param {number} time - Total time spend doing the activities.
+     * @returns {JumpInfo}
+     */
+    resolveJump(rating, time) {
+      let result = this
+      if (rating >= 0 && time >= 0) {
+        if (this.upperJump !== null &&
+          rating > this.upperJump.threshold &&
+          (this.upperJump.time <= 0 || time < this.upperJump.time)) {
+          result = this.upperJump
+        } else if (this.lowerJump !== null &&
+          (rating < this.lowerJump.threshold ||
+            this.lowerJump.time > 0 && time > this.lowerJump.time)) {
+          result = this.lowerJump
+        }
+      }
+      return result
+    }
+  }
+
+  Object.assign(ActivitySequenceJump.prototype, {
     /**
      * Optional jump to be performed when the results (score and time) are above a specific threshold.
      * @type {ConditionalJumpInfo} */
@@ -65,52 +111,7 @@ define([
      * Optional jump to be performed when the results (score or time) are below a specific threshold.
      * @type {ConditionalJumpInfo} */
     lowerJump: null,
-    /**
-     *
-     * Loads the object settings from a specific JQuery XML element.
-     * @param {external:jQuery} $xml - The XML element to parse
-     */
-    setProperties: function ($xml) {
-      JumpInfo.prototype.setProperties.call(this, $xml);
-      // Read conditional jumps
-      var asj = this;
-      $xml.children('jump').each(function () {
-        var condJmp = new ConditionalJumpInfo().setProperties($(this));
-        if (condJmp.id === 'upper')
-          asj.upperJump = condJmp;
-        else if (condJmp.id === 'lower')
-          asj.lowerJump = condJmp;
-      });
-      return this;
-    },
-    /**
-     *
-     * Resolves what {@link JumpInfo} must be taken, based on a done time and average rating obtained
-     * in activities.
-     * @param {number} rating - Average rating obtained by the user in the activities done during the
-     * last sequence stretch.
-     * @param {number} time - Total time spend doing the activities.
-     * @returns {JumpInfo}
-     */
-    resolveJump: function (rating, time) {
-      var result = this;
-      if (rating >= 0 && time >= 0) {
-        if (this.upperJump !== null &&
-          rating > this.upperJump.threshold &&
-          (this.upperJump.time <= 0 || time < this.upperJump.time)) {
-          result = this.upperJump;
-        } else if (this.lowerJump !== null &&
-          (rating < this.lowerJump.threshold ||
-            this.lowerJump.time > 0 && time > this.lowerJump.time)) {
-          result = this.lowerJump;
-        }
-      }
-      return result;
-    }
-  };
+  })
 
-  // ActivitySequenceJump extends JumpInfo
-  ActivitySequenceJump.prototype = $.extend(Object.create(JumpInfo.prototype), ActivitySequenceJump.prototype);
-
-  return ActivitySequenceJump;
-});
+  return ActivitySequenceJump
+})

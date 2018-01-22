@@ -86,7 +86,7 @@ define([
       })
       //
       // Read inner elements
-      $xml.children().each(child => {
+      $xml.children().each((_n, child) => {
         const $node = $(child)
         switch (child.nodeName) {
           case 'font':

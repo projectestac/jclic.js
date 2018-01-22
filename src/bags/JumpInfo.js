@@ -31,6 +31,7 @@
 /* global define */
 
 define(["../Utils"], function (Utils) {
+
   /**
    * This class contains information about what things JClic sequence manager has to do in certain
    * circumstances, such as:
@@ -47,24 +48,40 @@ define(["../Utils"], function (Utils) {
    * @class
    * @see {@link ActivitySequenceJump}
    * @see {@link ConditionalJumpInfo}
-   * @param {string} action - Must be one of the described actions.
-   * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
-   * cardinal number in the list.
    */
-  var JumpInfo = function (action, sq) {
-    this.action = action;
-    switch (typeof sq) {
-      case 'string':
-        this.sequence = sq;
-        break;
-      case 'number':
-        this.actNum = sq;
-        break;
+  class JumpInfo {
+    /**
+     * JumpInfo constructor
+     * @param {string} action - Must be one of the described actions.
+     * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
+     * cardinal number in the list.
+     */
+    constructor(action, sq) {
+      this.action = action
+      switch (typeof sq) {
+        case 'string':
+          this.sequence = sq
+          break
+        case 'number':
+          this.actNum = sq
+          break
+      }
     }
-  };
 
-  JumpInfo.prototype = {
-    constructor: JumpInfo,
+    /**
+     * Loads the object settings from a specific JQuery XML element
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
+    setProperties($xml) {
+      this.id = $xml.attr('id')
+      this.action = $xml.attr('action') || 'JUMP'
+      this.sequence = Utils.nSlash($xml.attr('tag'))
+      this.projectPath = Utils.nSlash($xml.attr('project'))
+      return this
+    }
+  }
+
+  Object.assign(JumpInfo.prototype, {
     /**
      * The JumpInfo identifier
      * - For regular jumps: 'forward', 'back'
@@ -88,20 +105,7 @@ define(["../Utils"], function (Utils) {
      * Path of another JClic project to jump to
      * @type {string} */
     projectPath: undefined,
-    /**
-     *
-     * Loads the object settings from a specific JQuery XML element
-     * @param {external:jQuery} $xml - The XML element to parse
-     */
-    setProperties: function ($xml) {
-      this.id = $xml.attr('id');
-      this.action = $xml.attr('action') || 'JUMP';
-      this.sequence = Utils.nSlash($xml.attr('tag'));
-      this.projectPath = Utils.nSlash($xml.attr('project'));
-      return this;
-    }
-  };
+  })
 
-  return JumpInfo;
-
-});
+  return JumpInfo
+})

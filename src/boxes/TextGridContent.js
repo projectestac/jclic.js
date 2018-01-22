@@ -87,7 +87,7 @@ define([
       })
 
       // Read inner elements
-      $xml.children('style:first').each(child => {
+      $xml.children('style:first').each((_n, child) => {
         this.bb = new BoxBase().setProperties($(child))
       })
 

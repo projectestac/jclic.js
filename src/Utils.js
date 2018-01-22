@@ -239,9 +239,7 @@ define([
      */
     getXmlText: xml => {
       let text = ''
-      $(xml).children('p').each(function () {
-        text += `<p>${this.textContent}</p>`
-      })
+      $(xml).children('p').each((_n, child) => { text += `<p>${child.textContent}</p>` })
       return text
     },
     /**
