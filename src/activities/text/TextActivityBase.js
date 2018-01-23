@@ -437,6 +437,10 @@ define([
     finishActivity: function (result) {
       if (this.$checkButton)
         this.$checkButton.prop('disabled', true);
+      this.targets.forEach(function (t) {
+        if (t.$comboList)
+          t.$comboList.attr('disabled', true);
+      });
       this.showPopup(null);
       ActPanelAncestor.finishActivity.call(this, result);
     },
