@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -44,14 +44,34 @@ define([
    * @exports Identify
    * @class
    * @extends Activity
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
    */
-  var Identify = function (project) {
-    Activity.call(this, project);
-  };
+  class Identify extends Activity {
+    /**
+     * Identify constructor
+     * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+     */
+    constructor(project) {
+      super(project)
+    }
 
-  Identify.prototype = {
-    constructor: Identify,
+    /**
+     * Retrieves the minimum number of actions needed to solve this activity
+     * @returns {number}
+     */
+    getMinNumActions() {
+      return this.cellsToMatch
+    }
+
+    /**
+     * Whether or not the activity uses random to scramble internal components
+     * @returns {boolean}
+     */
+    hasRandom() {
+      return true
+    }
+  }
+
+  Object.assign(Identify.prototype, {
     /**
      * Number of not assigned cells (calculated in {@link Identify.Panel#buildVisualComponents})
      * @type {number} */
@@ -61,26 +81,7 @@ define([
      * {@link Identify.Panel#buildVisualComponents})
      * @type {number} */
     cellsToMatch: 1,
-    /**
-     *
-     * Retrieves the minimum number of actions needed to solve this activity
-     * @returns {number}
-     */
-    getMinNumActions: function () {
-      return this.cellsToMatch;
-    },
-    /**
-     *
-     * Whether or not the activity uses random to scramble internal components
-     * @returns {boolean}
-     */
-    hasRandom: function () {
-      return true;
-    }
-  };
-
-  // Identify extends Activity
-  Identify.prototype = $.extend(Object.create(Activity.prototype), Identify.prototype);
+  })
 
   /**
    * The {@link Activity.Panel} where identify activities are played.
@@ -90,256 +91,250 @@ define([
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
-   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
    */
-  Identify.Panel = function (act, ps, $div) {
-    Activity.Panel.call(this, act, ps, $div);
-  };
-
-  var ActPanelAncestor = Activity.Panel.prototype;
-
-  Identify.Panel.prototype = {
-    constructor: Identify.Panel,
+  Identify.Panel = class extends Activity.Panel {
     /**
-     * The {@link ActiveBoxBag} containing the information to be displayed on the panel.
+     * Identify.Panel constructor
+     * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
-    bg: null,
+    constructor(act, ps, $div) {
+      super(act, ps, $div)
+    }
+
     /**
-     * List of mouse, touch and keyboard events intercepted by this panel
-     * @type {string[]} */
-    events: ['click'],
-    /**
-     *
      * Miscellaneous cleaning operations
      */
-    clear: function () {
+    clear() {
       if (this.bg) {
-        this.bg.end();
-        this.bg = null;
+        this.bg.end()
+        this.bg = null
       }
-    },
+    }
+
     /**
-     *
      * Prepares the visual components of the activity
      */
-    buildVisualComponents: function () {
-
+    buildVisualComponents() {
       if (this.firstRun)
-        ActPanelAncestor.buildVisualComponents.call(this);
-
-      this.clear();
-
-      var abc = this.act.abc['primary'];
-      var solved = this.act.abc['solvedPrimary'];
+        super.buildVisualComponents()
+      this.clear()
+      const
+        abc = this.act.abc['primary'],
+        solved = this.act.abc['solvedPrimary']
       if (abc) {
         if (abc.imgName) {
-          abc.setImgContent(this.act.project.mediaBag, null, false);
+          abc.setImgContent(this.act.project.mediaBag, null, false)
           if (abc.animatedGifFile && !abc.shaper.rectangularShapes && !this.act.scramble['primary'])
             this.$animatedBg = $('<span/>').css({
-              'background-image': 'url(' + abc.animatedGifFile + ')',
+              'background-image': `url(${abc.animatedGifFile})`,
               'background-position': 'center',
               'background-repeat': 'no-repeat',
               position: 'absolute'
-            }).appendTo(this.$div);
+            }).appendTo(this.$div)
         }
 
         if (solved && solved.imgName)
-          solved.setImgContent(this.act.project.mediaBag, null, false);
+          solved.setImgContent(this.act.project.mediaBag, null, false)
 
         if (this.act.acp !== null) {
-          var contentKit = [abc];
+          const contentKit = [abc]
           if (solved) {
-            contentKit.push(null);
-            contentKit.push(solved);
+            contentKit.push(null)
+            contentKit.push(solved)
           }
-          this.act.acp.generateContent(abc.nch, abc.ncw, contentKit, false);
+          this.act.acp.generateContent(abc.nch, abc.ncw, contentKit, false)
         }
         this.bg = ActiveBoxGrid.createEmptyGrid(null, this,
           this.act.margin, this.act.margin,
-          abc);
-        this.bg.setContent(abc, solved || null);
-        this.bg.setAlternative(false);
+          abc)
+        this.bg.setContent(abc, solved || null)
+        this.bg.setAlternative(false)
         if (this.$animatedBg)
-          this.bg.setCellAttr('tmpTrans', true);
-        this.bg.setDefaultIdAss();
-        this.act.nonAssignedCells = 0;
-        this.act.cellsToMatch = 0;
-        var n = this.bg.getNumCells();
-        for (var i = 0; i < n; i++) {
-          var bx = this.bg.getActiveBox(i);
-          var id = bx.idAss;
+          this.bg.setCellAttr('tmpTrans', true)
+        this.bg.setDefaultIdAss()
+        this.act.nonAssignedCells = 0
+        this.act.cellsToMatch = 0
+        const n = this.bg.getNumCells()
+        for (let i = 0; i < n; i++) {
+          const
+            bx = this.bg.getActiveBox(i),
+            id = bx.idAss
           if (id === 1)
-            this.act.cellsToMatch++;
+            this.act.cellsToMatch++
           else if (id === -1) {
-            this.act.nonAssignedCells++;
-            bx.switchToAlt(this.ps);
+            this.act.nonAssignedCells++
+            bx.switchToAlt(this.ps)
           }
         }
-        this.bg.setVisible(true);
+        this.bg.setVisible(true)
       }
-    },
+    }
+
     /**
-     *
      * Basic initialization procedure
      */
-    initActivity: function () {
-      ActPanelAncestor.initActivity.call(this);
-
+    initActivity() {
+      super.initActivity()
       if (!this.firstRun)
-        this.buildVisualComponents();
+        this.buildVisualComponents()
       else
-        this.firstRun = false;
+        this.firstRun = false
 
       if (this.bg) {
         if (this.act.scramble['primary'])
-          this.shuffle([this.bg], true, true);
+          this.shuffle([this.bg], true, true)
 
         if (this.useOrder)
-          this.currentItem = this.bg.getNextItem(-1);
+          this.currentItem = this.bg.getNextItem(-1)
 
-        this.setAndPlayMsg('initial', 'start');
-        this.invalidate().update();
-        this.playing = true;
+        this.setAndPlayMsg('initial', 'start')
+        this.invalidate().update()
+        this.playing = true
       }
-    },
+    }
+
     /**
      * Updates the graphic content of this panel.
      * This method will be called from {@link AWT.Container#update} when needed.
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.
      */
-    updateContent: function (dirtyRegion) {
-      ActPanelAncestor.updateContent.call(this, dirtyRegion);
+    updateContent(dirtyRegion) {
+      super.updateContent(dirtyRegion)
 
       if (this.bg && this.$canvas) {
-        var canvas = this.$canvas.get(-1);
-        var ctx = canvas.getContext('2d');
+        const
+          canvas = this.$canvas.get(-1),
+          ctx = canvas.getContext('2d')
         if (!dirtyRegion)
-          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
-        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
-        this.bg.update(ctx, dirtyRegion);
+          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height)
+        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height)
+        this.bg.update(ctx, dirtyRegion)
       }
-      return ActPanelAncestor.updateContent.call(this, dirtyRegion);
-    },
+      return super.updateContent(dirtyRegion)
+    }
+
     /**
-     *
      * Sets the real dimension of this panel.
      * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
      * @returns {AWT.Dimension}
      */
-    setDimension: function (preferredMaxSize) {
-      if (this.getBounds().equals(preferredMaxSize))
-        return preferredMaxSize;
-      return BoxBag.layoutSingle(preferredMaxSize, this.bg, this.act.margin);
-    },
+    setDimension(preferredMaxSize) {
+      return this.getBounds().equals(preferredMaxSize) ?
+        preferredMaxSize :
+        BoxBag.layoutSingle(preferredMaxSize, this.bg, this.act.margin)
+    }
+
     /**
-     *
      * Sets the size and position of this activity panel
      * @param {AWT.Rectangle} rect
      */
-    setBounds: function (rect) {
+    setBounds(rect) {
       if (this.$canvas)
-        this.$canvas.remove();
+        this.$canvas.remove()
 
-      ActPanelAncestor.setBounds.call(this, rect);
+      super.setBounds(rect)
       if (this.bg) {
-        this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
+        this.$canvas = $(`<canvas width="${rect.dim.width}" height="${rect.dim.height}"/>`).css({
           position: 'absolute',
           top: 0,
           left: 0
-        });
+        })
         // Resize animated gif background
         if (this.$animatedBg) {
-          var bgRect = this.bg.getBounds();
+          const bgRect = this.bg.getBounds()
           this.$animatedBg.css({
             left: bgRect.pos.x,
             top: bgRect.pos.y,
-            width: bgRect.dim.width + 'px',
-            height: bgRect.dim.height + 'px',
-            'background-size': bgRect.dim.width + 'px ' + bgRect.dim.height + 'px'
-          });
+            width: `${bgRect.dim.width}px`,
+            height: `${bgRect.dim.height}px`,
+            'background-size': `${bgRect.dim.width}px ${bgRect.dim.height}px`
+          })
         }
-        this.$div.append(this.$canvas);
-        this.invalidate().update();
-        var thisPanel = this;
-        setTimeout(function () {
-          if (thisPanel.bg)
-            thisPanel.bg.buildAccessibleElements(thisPanel.$canvas, thisPanel.$div);
-        }, 0);
+        this.$div.append(this.$canvas)
+        this.invalidate().update()
+        setTimeout(() => {
+          if (this.bg)
+            this.bg.buildAccessibleElements(this.$canvas, this.$div)
+        }, 0)
       }
-    },
+    }
+
     /**
-     * 
      * Builds the accessible components needed for this Activity.Panel
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
      */
-    buildAccessibleComponents: function () {
+    buildAccessibleComponents() {
       if (this.bg && this.$canvas && this.accessibleCanvas) {
-        ActPanelAncestor.buildAccessibleComponents.call(this);
-        this.bg.buildAccessibleElements(this.$canvas, this.$div);
+        super.buildAccessibleComponents()
+        this.bg.buildAccessibleElements(this.$canvas, this.$div)
       }
-    },
+    }
+
     /**
-     *
      * Main handler used to process mouse, touch, keyboard and edit events
      * @param {Event} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
      */
-    processEvent: function (event) {
+    processEvent(event) {
       if (this.playing) {
-        var bx;
-        var m = false;
-        var p = new AWT.Point(
+        const p = new AWT.Point(
           event.pageX - this.$div.offset().left,
-          event.pageY - this.$div.offset().top);
-
+          event.pageY - this.$div.offset().top)
         switch (event.type) {
           case 'click':
-            this.ps.stopMedia(1);
+            this.ps.stopMedia(1)
             // Find the box behind the clicked point
-            bx = this.bg ? this.bg.findActiveBox(p) : null;
+            const bx = this.bg ? this.bg.findActiveBox(p) : null
             if (bx) {
               if (bx.idAss !== -1) {
                 // Check if it's a valid move
-                var ok = false;
-                var src = bx.getDescription();
-                m = m || bx.playMedia(this.ps);
+                let ok = false
+                const src = bx.getDescription()
+                let m = m || bx.playMedia(this.ps)
                 if (bx.idAss === 1 && (!this.act.useOrder || bx.idOrder === this.currentItem)) {
-                  ok = true;
-                  bx.idAss = -1;
+                  ok = true
+                  bx.idAss = -1
                   if (bx.switchToAlt(this.ps))
-                    m = m || bx.playMedia(this.ps);
+                    m = m || bx.playMedia(this.ps)
                   else
-                    bx.clear();
+                    bx.clear()
                   if (this.act.useOrder)
-                    this.currentItem = this.bg.getNextItem(this.currentItem, 1);
+                    this.currentItem = this.bg.getNextItem(this.currentItem, 1)
                 }
-                var cellsOk = this.bg.countCellsWithIdAss(-1);
-                this.ps.reportNewAction(this.act, 'SELECT', src, null, ok, cellsOk - this.act.nonAssignedCells);
+                const cellsOk = this.bg.countCellsWithIdAss(-1)
+                this.ps.reportNewAction(this.act, 'SELECT', src, null, ok, cellsOk - this.act.nonAssignedCells)
                 if (ok && cellsOk === this.act.cellsToMatch + this.act.nonAssignedCells)
-                  this.finishActivity(true);
+                  this.finishActivity(true)
                 else if (!m)
-                  this.playEvent(ok ? 'actionOk' : 'actionError');
-                this.update();
+                  this.playEvent(ok ? 'actionOk' : 'actionError')
+                this.update()
               } else {
-                this.playEvent('actionError');
+                this.playEvent('actionError')
               }
             }
-            break;
+            break
         }
-        event.preventDefault();
+        event.preventDefault()
       }
     }
-  };
+  }
 
-  // Identify.Panel extends Activity.Panel
-  Identify.Panel.prototype = $.extend(Object.create(ActPanelAncestor), Identify.Panel.prototype);
+  Object.assign(Identify.Panel.prototype, {
+    /**
+     * The {@link ActiveBoxBag} containing the information to be displayed on the panel.
+     * @type {ActiveBoxBag} */
+    bg: null,
+    /**
+     * List of mouse, touch and keyboard events intercepted by this panel
+     * @type {string[]} */
+    events: ['click'],
+  })
 
   // Register class in Activity.prototype
-  Activity.CLASSES['@panels.Identify'] = Identify;
+  Activity.CLASSES['@panels.Identify'] = Identify
 
-  return Identify;
-
-});
+  return Identify
+})
