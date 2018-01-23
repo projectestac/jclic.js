@@ -332,7 +332,7 @@ define([
      * @param {boolean} bEnabled - Leave it enabled/disabled
      */
     resetAllCounters(bEnabled) {
-      $.each(this.counters, (name, counter) => {
+      $.each(this.counters, (_name, counter) => {
         if (counter !== null) {
           counter.value = 0
           counter.countDown = 0

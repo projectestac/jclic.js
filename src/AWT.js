@@ -102,14 +102,14 @@ define([
       if (options && options.fontSubstitutions)
         substitutions = Object.assign({}, substitutions, options.fontSubstitutions)
 
-      $tree.find('style[family],font[family]').each(function () {
-        const $this = $(this),
-          name = $this.attr('family').trim().toLowerCase()
+      $tree.find('style[family],font[family]').each((_n, style) => {
+        const $style = $(style),
+          name = $style.attr('family').trim().toLowerCase()
         if (name in substitutions) {
           const newName = substitutions[name]
           if (newName !== '') {
             AWT.Font.loadGoogleFont(newName)
-            $this.attr('family', newName)
+            $style.attr('family', newName)
           }
         }
       })
@@ -917,15 +917,15 @@ define([
    * @example
    * // Calling AWT.Rectangle() with different sets of parameters
    * // An AWT.Point and an AWT.Dimension:
-   * new AWT.Rectangle(pos, dim);
+   * new AWT.Rectangle(pos, dim)
    * // Another AWT.Rectangle, to be cloned:
-   * new AWT.Rectangle(rect);
+   * new AWT.Rectangle(rect)
    * // Two AWT.Point objects containing the coordinates of upper-left and lower-right vertexs:
-   * new AWT.Rectangle(p0, p1);
+   * new AWT.Rectangle(p0, p1)
    * // An array of four numbers with the coordinates of the same vertexs:
-   * new AWT.Rectangle([x0, y0, x1, y1]);
+   * new AWT.Rectangle([x0, y0, x1, y1])
    * // Four single numbers, meaning the same coordinates as above:
-   * new AWT.Rectangle(x0, y0, x1, y1);
+   * new AWT.Rectangle(x0, y0, x1, y1)
    * @class
    * @extends AWT.Shape
    */

@@ -101,257 +101,246 @@ define([
        */
       setProperties($xml) {
 
-        const act = this
-
         // Read attributes
-        $.each($xml.get(0).attributes, function () {
-          var name = this.name;
-          var val = this.value;
+        $.each($xml.get(0).attributes, (name, val) => {
           switch (name) {
             // Generic attributes:
             case 'name':
-              val = Utils.nSlash(val);
+              val = Utils.nSlash(val)
             /* falls through */
             case 'code':
             case 'type':
             case 'description':
-              act[name] = val;
-              break;
+              this[name] = val
+              break
 
             case 'class':
-              act.className = val.replace(/^edu\.xtec\.jclic\.activities\./, '@');
-              break;
+              this.className = val.replace(/^edu\.xtec\.jclic\.activities\./, '@')
+              break
 
             case 'inverse':
-              act.invAss = Utils.getBoolean(val, false);
-              break;
+              this.invAss = Utils.getBoolean(val, false)
+              break
 
             case 'autoJump':
             case 'forceOkToAdvance':
             case 'amongParagraphs':
-              act[name] = Utils.getBoolean(val, false);
-              break;
+              this[name] = Utils.getBoolean(val, false)
+              break
           }
-        });
+        })
 
         // Read specific nodes
-        $xml.children().each(function () {
-          var $node = $(this);
-          switch (this.nodeName) {
+        $xml.children().each((_n, child) => {
+          const $node = $(child)
+          switch (child.nodeName) {
             case 'settings':
               // Read more attributes
-              $.each($node.get(0).attributes, function () {
-                var name = this.name;
-                var val = this.value;
+              $.each($node.get(0).attributes, (name, val) => {
                 switch (name) {
                   case 'infoUrl':
                   case 'infoCmd':
-                    act[name] = val;
-                    break;
+                    this[name] = val
+                    break
 
                   case 'margin':
                   case 'maxTime':
                   case 'maxActions':
-                    act[name] = Number(val);
-                    break;
+                    this[name] = Number(val)
+                    break
 
                   case 'report':
-                    act['includeInReports'] = Utils.getBoolean(val, false);
-                    break;
+                    this.includeInReports = Utils.getBoolean(val, false)
+                    break
                   case 'countDownTime':
                   case 'countDownActions':
                   case 'reportActions':
                   case 'useOrder':
                   case 'dragCells':
-                    act[name] = Utils.getBoolean(val, false);
-                    break;
+                    this[name] = Utils.getBoolean(val, false)
+                    break
                 }
-              });
+              })
 
               // Read elements of _settings_
-              $node.children().each(function () {
-                var $node = $(this);
-                switch (this.nodeName) {
+              $node.children().each((_n, child) => {
+                const $node = $(child)
+                switch (child.nodeName) {
                   case 'skin':
-                    act.skinFileName = $node.attr('file');
-                    break;
+                    this.skinFileName = $node.attr('file')
+                    break
 
                   case 'helpWindow':
-                    act.helpMsg = Utils.getXmlText(this);
-                    act.showSolution = Utils.getBoolean($node.attr('showSolution'), false);
-                    act.helpWindow = act.helpMsg !== null || act.showSolution;
-                    break;
+                    this.helpMsg = Utils.getXmlText(this)
+                    this.showSolution = Utils.getBoolean($node.attr('showSolution'), false)
+                    this.helpWindow = this.helpMsg !== null || this.showSolution
+                    break
 
                   case 'container':
                     // Read settings related to the 'container'
                     // (the main panel containing the activity and other elements)
-                    act.bgColor = Utils.checkColor($node.attr('bgColor'), Utils.settings.BoxBase.BACK_COLOR);
+                    this.bgColor = Utils.checkColor($node.attr('bgColor'), Utils.settings.BoxBase.BACK_COLOR)
 
-                    $node.children().each(function () {
-                      var $child = $(this);
-                      switch (this.nodeName) {
+                    $node.children().each((_n, child) => {
+                      const $child = $(child)
+                      switch (child.nodeName) {
                         case 'image':
-                          act.bgImageFile = $child.attr('name');
-                          act.tiledBgImg = Utils.getBoolean($child.attr('tiled'), false);
-                          break;
+                          this.bgImageFile = $child.attr('name')
+                          this.tiledBgImg = Utils.getBoolean($child.attr('tiled'), false)
+                          break
                         case 'counters':
-                          act.bTimeCounter = Utils.getBoolean($child.attr('time'), true);
-                          act.bActionsCounter = Utils.getBoolean($child.attr('actions'), true);
-                          act.bScoreCounter = Utils.getBoolean($child.attr('score'), true);
-                          break;
+                          this.bTimeCounter = Utils.getBoolean($child.attr('time'), true)
+                          this.bActionsCounter = Utils.getBoolean($child.attr('actions'), true)
+                          this.bScoreCounter = Utils.getBoolean($child.attr('score'), true)
+                          break
                         case 'gradient':
-                          act.bgGradient = new AWT.Gradient().setProperties($child);
-                          break;
+                          this.bgGradient = new AWT.Gradient().setProperties($child)
+                          break
                       }
-                    });
-                    break;
+                    })
+                    break
 
                   case 'window':
                     // Read settings related to the 'window'
                     // (the panel where the activity deploys its content)
-                    act.activityBgColor = Utils.checkColor($node.attr('bgColor'), K.DEFAULT_BG_COLOR);
-                    act.transparentBg = Utils.getBoolean($node.attr('transparent'), false);
-                    act.border = Utils.getBoolean($node.attr('border'), false);
-                    $node.children().each(function () {
-                      var $child = $(this);
-                      switch (this.nodeName) {
+                    this.activityBgColor = Utils.checkColor($node.attr('bgColor'), K.DEFAULT_BG_COLOR)
+                    this.transparentBg = Utils.getBoolean($node.attr('transparent'), false)
+                    this.border = Utils.getBoolean($node.attr('border'), false)
+                    $node.children().each((_n, child) => {
+                      const $child = $(child)
+                      switch (child.nodeName) {
                         case 'gradient':
-                          act.activityBgGradient = new AWT.Gradient().setProperties($child);
-                          break;
+                          this.activityBgGradient = new AWT.Gradient().setProperties($child)
+                          break
                         case 'position':
-                          act.absolutePosition = new AWT.Point().setProperties($child);
-                          act.absolutePositioned = true;
-                          break;
+                          this.absolutePosition = new AWT.Point().setProperties($child)
+                          this.absolutePositioned = true
+                          break
                         case 'size':
-                          act.windowSize = new AWT.Dimension().setProperties($child);
-                          break;
+                          this.windowSize = new AWT.Dimension().setProperties($child)
+                          break
                       }
-                    });
-                    break;
+                    })
+                    break
 
                   case 'eventSounds':
                     // eventSounds is already created in constructor,
                     // just read properties
-                    act.eventSounds.setProperties($node);
-                    break;
+                    this.eventSounds.setProperties($node)
+                    break
                 }
-              });
-              break;
+              })
+              break
 
             case 'messages':
-              $node.children('cell').each(function () {
-                var m = act.readMessage($(this));
+              $node.children('cell').each((_n, child)=> {
+                const m = this.readMessage($(child))
                 // Possible message types are: `initial`, `final`, `previous`, `finalError`
-                act.messages[m.type] = m;
-              });
-              break;
+                this.messages[m.type] = m
+              })
+              break
 
             case 'automation':
               // Read the automation settings ('Arith' or other automation engines)
-              act.acp = AutoContentProvider.getProvider($node, act.project);
-              break;
+              this.acp = AutoContentProvider.getProvider($node, this.project)
+              break
 
             // Settings specific to panel-type activities (puzzles, associations...)
             case 'cells':
               // Read the [ActiveBagContent](ActiveBagContent.html) objects
-              var cellSet = new ActiveBagContent().setProperties($node, act.project.mediaBag);
+              const cellSet = new ActiveBagContent().setProperties($node, this.project.mediaBag)
               // Valid ids:
               // - Panel activities: 'primary', 'secondary', solvedPrimary'
               // - Textpanel activities: 'acrossClues', 'downClues', 'answers'
-              act.abc[cellSet.id] = cellSet;
-              break;
+              this.abc[cellSet.id] = cellSet
+              break
 
             case 'scramble':
               // Read the 'scramble' mode
-              act.shuffles = Number($node.attr('times'));
-              act.scramble.primary = Utils.getBoolean($node.attr('primary'));
-              act.scramble.secondary = Utils.getBoolean($node.attr('secondary'));
-              break;
+              this.shuffles = Number($node.attr('times'))
+              this.scramble.primary = Utils.getBoolean($node.attr('primary'))
+              this.scramble.secondary = Utils.getBoolean($node.attr('secondary'))
+              break
 
             case 'layout':
-              $.each($node.get(0).attributes, function () {
-                var name = this.name;
-                var value = this.value;
+              $.each($node.get(0).attributes, (name, value) => {
                 switch (name) {
                   case 'position':
-                    act.boxGridPos = value;
-                    break;
+                    this.boxGridPos = value
+                    break
                   case 'wildTransparent':
                   case 'upperCase':
                   case 'checkCase':
-                    act[name] = Utils.getBoolean(value);
+                    this[name] = Utils.getBoolean(value)
                 }
-              });
-              break;
+              })
+              break
 
             // Element specific to {@link Menu} activities:
             case 'menuElement':
-              act.menuElements.push({
+              this.menuElements.push({
                 caption: $node.attr('caption') || '',
                 icon: $node.attr('icon') || null,
                 projectPath: $node.attr('path') || null,
                 sequence: $node.attr('sequence') || null,
                 description: $node.attr('description') || ''
-              });
-              break;
+              })
+              break
 
             // Element specific to {@link CrossWord} and
             // {@link WordSearch} activities:
             case 'textGrid':
               // Read the 'textGrid' element into a {@link TextGridContent}
-              act.tgc = new TextGridContent().setProperties($node);
-              break;
+              this.tgc = new TextGridContent().setProperties($node)
+              break
 
             // Read the clues of {@link WordSearch} activities
             case 'clues':
               // Read the array of clues
-              act.clues = [];
-              act.clueItems = [];
-              var i = 0;
-              $node.children('clue').each(function () {
-                act.clueItems[i] = Number($(this).attr('id'));
-                act.clues[i] = this.textContent;
-                i++;
-              });
-              break;
+              this.clues = []
+              this.clueItems = []
+              $node.children('clue').each((n, child) => {
+                this.clueItems[n] = Number($(child).attr('id'))
+                this.clues[n] = child.textContent
+              })
+              break
 
             // Elements specific to text activities:
             case 'checkButton':
-              act.checkButtonText = this.textContent || 'check';
-              break;
+              this.checkButtonText = this.textContent || 'check'
+              break
 
             case 'prevScreen':
-              act.prevScreen = true;
-              act.prevScreenMaxTime = $node.attr('maxTime') || -1;
-              $node.children().each(function () {
-                switch (this.nodeName) {
+              this.prevScreen = true
+              this.prevScreenMaxTime = $node.attr('maxTime') || -1
+              $node.children().each((_n, child) => {
+                switch (child.nodeName) {
                   case 'style':
-                    act.prevScreenStyle = new BoxBase().setProperties($(this));
-                    break;
+                    this.prevScreenStyle = new BoxBase().setProperties($(child))
+                    break
                   case 'p':
-                    if (act.prevScreenText === null)
-                      act.prevScreenText = '';
-                    act.prevScreenText += '<p>' + this.textContent + '</p>';
-                    break;
+                    if (this.prevScreenText === null)
+                      this.prevScreenText = ''
+                    this.prevScreenText += `<p>${child.textContent}</p>`
+                    break
                 }
-              });
-              break;
+              })
+              break
 
             case 'evaluator':
-              act.ev = Evaluator.getEvaluator($node);
-              break;
+              this.ev = Evaluator.getEvaluator($node)
+              break
 
             case 'document':
               // Read main document of text activities
-              act.document = new TextActivityDocument().setProperties($node, act.project.mediaBag);
-              break;
+              this.document = new TextActivityDocument().setProperties($node, this.project.mediaBag)
+              break
           }
         })
         return this
       }
 
       /**
-       *
        * Read an activity message from an XML element
        * @param {external:jQuery} $xml - The XML element to be parsed
        * @returns {ActiveBoxContent}
@@ -380,11 +369,10 @@ define([
        */
       prepareMedia(ps) {
         this.eventSounds.realize(ps, this.project.mediaBag)
-        $.each(this.messages, function (key, msg) {
-          if (msg !== null)
-            msg.prepareMedia(ps)
+        $.each(this.messages, (_key, msg) => {
+          if (msg !== null) msg.prepareMedia(ps)
         })
-        $.each(this.abc, function (key, abc) {
+        $.each(this.abc, (_key, abc) => {
           if (abc !== null)
             abc.prepareMedia(ps)
         })
@@ -513,7 +501,7 @@ define([
      * `Activity.CLASSES` using its name as identifier and the class constructor as a value.
      * @example
      * // To be included at the end of MyActivity class:
-     * Activity.CLASSES['custom@myActivity'] = MyActivity;
+     * Activity.CLASSES['custom@myActivity'] = MyActivity
      * @type {object}
      */
     Activity.CLASSES = {
@@ -787,7 +775,7 @@ define([
 
         this.bgImage = null
         if (this.act.bgImageFile && this.act.bgImageFile.length > 0) {
-          var mbe = this.act.project.mediaBag.getElement(this.act.bgImageFile, true)
+          const mbe = this.act.project.mediaBag.getElement(this.act.bgImageFile, true)
           if (mbe)
             this.bgImage = mbe.data
         }
@@ -801,7 +789,7 @@ define([
         if (this.act.border)
           this.border = true
 
-        var cssAct = {
+        const cssAct = {
           display: 'block',
           'background-color': this.backgroundTransparent ? 'transparent' : this.backgroundColor
         }

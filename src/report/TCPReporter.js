@@ -171,7 +171,7 @@ define([
           this.transaction(bean.$bean)
             .done((data, _textStatus, _jqXHR) => {
               this.dbProperties = {}
-              $(data).find('param').each(param => {
+              $(data).find('param').each((_n, param) => {
                 const $param = $(param)
                 this.dbProperties[$param.attr('name')] = $param.attr('value')
               })
@@ -303,7 +303,7 @@ define([
             this.transaction(bean.$bean)
               .done((data, _textStatus, _jqXHR) => {
                 const currentGroups = []
-                $(data).find('group').each((gr) => {
+                $(data).find('group').each((_n, gr) => {
                   const $group = $(gr)
                   currentGroups.push({ id: $group.attr('id'), name: $group.attr('name') })
                 })
@@ -335,7 +335,7 @@ define([
             this.transaction(bean.$bean)
               .done((data, _textStatus, _jqXHR) => {
                 const currentUsers = []
-                $(data).find('user').each(usr => {
+                $(data).find('user').each((_n, usr) => {
                   const $user = $(usr)
                   const user = { id: $user.attr('id'), name: $user.attr('name') }
                   if ($user.attr('pwd'))

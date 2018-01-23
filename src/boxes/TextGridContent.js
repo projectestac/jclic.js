@@ -91,7 +91,7 @@ define([
         this.bb = new BoxBase().setProperties($(child))
       })
 
-      $xml.find('text:first > row').each(el => this.text.push(el.textContent))
+      $xml.find('text:first > row').each((_n, el) => this.text.push(el.textContent))
 
       for (let i = this.text.length; i < this.nch; i++)
         this.text[i] = ''

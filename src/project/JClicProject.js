@@ -95,7 +95,7 @@ define([
       if (ownFonts.length > 0)
         options.ownFonts = (options.ownFonts || []).concat(ownFonts)
       AWT.Font.checkTree($acts, options)
-      $acts.each(act => {
+      $acts.each((_n, act) => {
         const $act = $(act)
         this._activities[Utils.nSlash($act.attr('name'))] = $act
         if ($act.children('settings').attr('report') === 'true')

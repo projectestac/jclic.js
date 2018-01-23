@@ -260,11 +260,11 @@ define([
 
       // Search DOM elements with class "JClic" (usually of type 'div') and iterate over them
       // initializing players
-      $('.JClic').each(function () {
+      $('.JClic').each((_n, element) => {
         JClicObject.loadProject(
-          this,
-          $(this).data('project') || projectName,
-          Object.assign({}, JClicObject.options, $(this).data('options')))
+          element,
+          $(element).data('project') || projectName,
+          Object.assign({}, JClicObject.options, $(element).data('options')))
       })
     }
   })

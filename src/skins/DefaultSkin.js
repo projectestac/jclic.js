@@ -111,7 +111,7 @@ define([
             if (this.ps)
               this.ps.actions.reports.processEvent(evt)
           })
-        $.each(Skin.prototype.counters, name => {
+        $.each(Skin.prototype.counters, (name, _val) => {
           msg = ps.getMsg(name)
           this.counters[name] = new Counter(name, $('<div/>', { class: 'JClicCounter', title: msg, 'aria-label': msg })
             .css({
@@ -176,7 +176,7 @@ define([
       // See: [https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8479637/]
       // This affects Polymer `iron-overlay-behavior`. See: [https://github.com/PolymerElements/iron-overlay-behavior/pull/211]
       let nilFunc = null
-      $.each(this.buttons, function (key, value) {
+      $.each(this.buttons, function (_key, value) {
         if (value && (typeof value[0].focus !== 'function' || typeof value[0].blur !== 'function')) {
           if (nilFunc === null)
             nilFunc = () => Utils.log('error', '"blur" and "focus" not defined for SVG objects in Explorer/Edge')

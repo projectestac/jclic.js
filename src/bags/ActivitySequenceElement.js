@@ -82,7 +82,7 @@ define([
       })
 
       // Iterate on 'jump' elements to load fwdJump and/or backJump
-      $xml.children('jump').each((n, data) => {
+      $xml.children('jump').each((_n, data) => {
         const jmp = new ActivitySequenceJump().setProperties($(data))
         if (jmp.id === 'forward')
           this.fwdJump = jmp

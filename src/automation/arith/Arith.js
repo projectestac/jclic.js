@@ -77,7 +77,7 @@ define([
     static DecFormat(val, dec, pre) {
       let result = val.toFixed(dec)
       if (pre) {
-        var n = result.indexOf('.')
+        let n = result.indexOf('.')
         if (n < 0)
           n = result.length
         for (; n < pre; n++)
@@ -110,18 +110,18 @@ define([
             this.use_subst = Utils.getBoolean($node.attr('minus'))
             this.use_mult = Utils.getBoolean($node.attr('multiply'))
             this.use_div = Utils.getBoolean($node.attr('divide'))
-            break;
+            break
           case 'unknown':
             this.exp_abx = Utils.getBoolean($node.attr('result'))
             this.exp_xbc = Utils.getBoolean($node.attr('first'))
             this.exp_axc = Utils.getBoolean($node.attr('last'))
             this.exp_axbc = Utils.getBoolean($node.attr('operand'))
             this.exp_caxb = Utils.getBoolean($node.attr('inverse'))
-            break;
+            break
           case 'result':
             xNum = $node.attr('from')
             this.resultLimInf = Utils.getNumber(xNum === 'x' ? 0 : xNum, this.resultLimInf)
-            xNum = $node.attr('to');
+            xNum = $node.attr('to')
             this.resultLimSup = Utils.getNumber(xNum === 'x' ? 0 : xNum, this.resultLimSup)
             this.resultCarry = Utils.getBoolean($node.attr('notCarry'), this.resultCarry)
             this.resultNoDup = !Utils.getBoolean($node.attr('duplicates'), !this.resultNoDup)
@@ -202,7 +202,7 @@ define([
         rlinf = this.resultLimInf,
         rlsup = this.resultLimSup
 
-      let nops = 0;
+      let nops = 0
       if (this.use_add)
         ops[nops++] = 'SUM'
       if (this.use_subst)
@@ -216,7 +216,7 @@ define([
       switch (op) {
         case 'SUM':
           for (i = 0; i < NMAXLOOPS; i++) {
-            this.genNum(o.numA, this.opA, this.RES, rlsup);
+            this.genNum(o.numA, this.opA, this.RES, rlsup)
             ri2 = o.numA.vf < rlinf ? rlinf - Math.floor(o.numA.vf) : this.RES
             rs2 = rlsup - Math.floor(o.numA.vf)
             switch (this.opCond) {
@@ -318,11 +318,11 @@ define([
               case 'AGB':
                 if (rs2 > o.numA.vf)
                   rs2 = Math.floor(o.numA.vf)
-                break;
+                break
               case 'BGA':
                 if (ri2 < o.numA.vf)
                   ri2 = Math.floor(o.numA.vf)
-                break;
+                break
             }
             this.genNum(o.numB, this.opB, ri2, rs2)
             o.numR.vf = o.numA.vf * o.numB.vf
@@ -342,11 +342,11 @@ define([
               case 'AGB':
                 if (rs2 > o.numA.vf)
                   rs2 = Math.floor(o.numA.vf)
-                break;
+                break
               case 'BGA':
                 if (ri2 < o.numA.vf)
                   ri2 = Math.floor(o.numA.vf)
-                break;
+                break
             }
             this.genNum(o.numB, this.opB, ri2, rs2)
             if (o.numB.vf !== 0 &&
@@ -404,7 +404,7 @@ define([
       if (nCells < 2)
         return false
 
-      numTipus = 0;
+      numTipus = 0
       if (this.exp_abx)
         tipus[numTipus++] = 'ABX'
       if (this.exp_axc)
@@ -461,22 +461,22 @@ define([
 
         switch (tipX) {
           case 'AXC':
-            strb[i] = vb;
+            strb[i] = vb
             stra[i] = tipInv ? `${vc}${S}=${S}${va}${S}${operator}${S}?` : `${va}${S}${operator}${S}?${S}=${S}${vc}`
             break
 
           case 'XBC':
-            strb[i] = va;
+            strb[i] = va
             stra[i] = tipInv ? `${vc}${S}=${S}?${S}${operator}${S}${vb}` : `?${S}${operator}${S}${vb}${S}=${S}${vc}`
             break
 
           case 'AXBC':
-            strb[i] = operator;
+            strb[i] = operator
             stra[i] = tipInv ? `${vc}${S}=${S}${va}${S}?${S}${vb}` : `${va}${S}?${S}${vb}${S}=${S}${vc}`
             break
 
           default:
-            strb[i] = vc;
+            strb[i] = vc
             stra[i] = tipInv ? `?${S}=${S}${va}${S}${operator}${S}${vb}` : `${va}${S}${operator}${S}${vb}${S}=`
             break
         }
@@ -485,7 +485,7 @@ define([
       if (useIds) {
         ass = []
         let strbx = []
-        k = 0;
+        k = 0
         for (i = 0; i < nCells; i++) {
           for (j = 0; j < k; j++)
             if (strb[i] === strbx[j])
@@ -674,14 +674,14 @@ define([
         switch (name) {
           case 'decimals':
             this.numDec = Number(val)
-            break;
+            break
 
           case 'values':
             const values = val.split(' ')
             for (let i = 0; i < values.length; i++)
               this.lst[i] = Number(values[i])
             this.fromList = this.lst.length
-            break;
+            break
 
           case 'from':
             this.limInf = Number(val === 'x' ? 0 : val)
@@ -692,8 +692,8 @@ define([
             break
         }
 
-        $xml.children().each((child) => {
-          var $node = $(child);
+        $xml.children().each((_n, child) => {
+          const $node = $(child)
           switch (child.nodeName) {
             case 'include':
               this.wZero = Utils.getBoolean($node.attr('zero'))
@@ -744,8 +744,8 @@ define([
 
   Arith.Num = class {
     constructor() {
-      this.vf = 0.0; // The number value
-      this.c = 0; // Number of decimals to be used when representing the number
+      this.vf = 0.0 // The number value
+      this.c = 0 // Number of decimals to be used when representing the number
     }
     format() {
       return Arith.DecFormat(this.vf, this.c)
