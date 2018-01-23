@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -41,37 +41,56 @@ define([
    * Activities with `AutoContentProvider` objects rely on them to build new content on every start.
    * @exports AutoContentProvider
    * @class
-   * @param {JClicProject} project - The JClic project to which this content provider belongs.
    */
-  var AutoContentProvider = function (project) {
-    this.project = project;
-  };
-
-
-  AutoContentProvider.prototype = {
-    constructor: AutoContentProvider,
+  class AutoContentProvider {
     /**
-     * The JClic project to which AutoContentProvider belongs
-     * @type {JClicProject} */
-    project: null,
+     * AutoContentProvider constructor
+     * @param {JClicProject} project - The JClic project to which this content provider belongs.
+     */
+    constructor(project) {
+      this.project = project
+    }
+
     /**
-     *
+     * Dynamic constructor that returns a specific type of AutoContentProvider based on the `class`
+     * attribute declared on an $xml element.
+     * It should be called only from {@link Activity#setproperties}
+     * @param {external.jQuery} $xml - The XML element to parse
+     * @param {JClicProject} project - The JClic project to which this object will be related
+     * @returns {AutoContentProvider}
+     */
+    static getProvider($xml, project) {
+      let automation = null
+      if ($xml && project) {
+        const
+          className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.automation\./, '@'),
+          cl = AutoContentProvider.CLASSES[className]
+        if (cl) {
+          automation = new cl(project)
+          automation.setProperties($xml)
+        } else
+          Utils.log('error', `Unknown AutoContentProvider class: ${className}`)
+      }
+      return automation
+    }
+
+    /**
      * Loads the object settings from a specific jQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties: function ($xml) {
-      this.className = ($xml.attr('class')|| '').replace(/^edu\.xtec\.jclic\.automation\./, '@');
-      return this;
-    },
+    setProperties($xml) {
+      this.className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.automation\./, '@')
+      return this
+    }
+
     /**
-     *
      * Initializes the content provider
      */
-    init: function () {
+    init() {
       // To be implemented in real content providers
-    },
+    }
+
     /**
-     *
      * Builds an {@link AutoContentProvider.ActiveBagContentKit} and generates the automatized content.
      * @param {number} nRows - Number of rows to be processed
      * @param {number} nCols - Number of columns to be processed
@@ -80,24 +99,30 @@ define([
      * @param {bolean} useIds - When `true`, the `id` field of {@link ActiveBoxContent} objects is significant
      * @returns {boolean} - `true` if the process was OK. `false` otherwise.
      */
-    generateContent: function (nRows, nCols, content, useIds) {
-      var kit = new AutoContentProvider.ActiveBagContentKit(nRows, nCols, content, useIds);
-      return this.process(kit);
-    },
+    generateContent(nRows, nCols, content, useIds) {
+      return this.process(new AutoContentProvider.ActiveBagContentKit(nRows, nCols, content, useIds))
+    }
+
     /**
-     *
      * Generates the automatized content
      * @param {AutoContentProvider.ActiveBagContentKit} _kit - The objects to be filled with content
      * @returns {boolean} - `true` if the process was OK. `false` otherwise.
      */
-    process: function (_kit) {
+    process(_kit) {
       // To be implemented in subclasses
-      return false;
+      return false
     }
-  };
+  }
+
+  Object.assign(AutoContentProvider.prototype, {
+    /**
+     * The JClic project to which AutoContentProvider belongs
+     * @type {JClicProject} */
+    project: null,
+  })
 
   /**
-   * Utility object used to encapsulate multiple sets of box contents
+   * Utility class used to encapsulate multiple sets of box contents
    * @class
    * @param {number} nRows - Number of rows to be processed
    * @param {number} nCols - Number of columns to be processed
@@ -105,12 +130,14 @@ define([
    * objects to be filled with new content.
    * @param {bolean} useIds - `true` when the `id` field of {@link ActiveBoxContent} objects is significant.
    */
-  AutoContentProvider.ActiveBagContentKit = function (nRows, nCols, content, useIds) {
-    this.nRows = nRows;
-    this.nCols = nCols;
-    this.content = content;
-    this.useIds = useIds;
-  };
+  AutoContentProvider.ActiveBagContentKit = class {
+    constructor(nRows, nCols, content, useIds) {
+      this.nRows = nRows
+      this.nCols = nCols
+      this.content = content
+      this.useIds = useIds
+    }
+  }
 
   /**
    * Contains the current list of classes derived from AutoContentProvider.
@@ -120,30 +147,7 @@ define([
   AutoContentProvider.CLASSES = {
     // TODO: Implement TagReplace
     '@tagreplace.TagReplace': AutoContentProvider
-  };
+  }
 
-  /**
-   * Dynamic constructor that returns a specific type of AutoContentProvider based on the `class`
-   * attribute declared on an $xml element.
-   * It should be called only from {@link Activity#setproperties}
-   * @param {external.jQuery} $xml - The XML element to parse
-   * @param {JClicProject} project - The JClic project to which this object will be related
-   * @returns {AutoContentProvider}
-   */
-  AutoContentProvider.getProvider = function ($xml, project) {
-    var automation = null;
-    if ($xml && project) {
-      var className = ($xml.attr('class')|| '').replace(/^edu\.xtec\.jclic\.automation\./, '@');
-      var cl = AutoContentProvider.CLASSES[className];
-      if (cl) {
-        automation = new cl(project);
-        automation.setProperties($xml);
-      } else
-        Utils.log('error', 'Unknown AutoContentProvider class: %s', className);
-    }
-    return automation;
-  };
-
-  return AutoContentProvider;
-
-});
+  return AutoContentProvider
+})
