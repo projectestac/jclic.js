@@ -60,7 +60,7 @@ define([
      */
     setProperties($xml) {
       // Read attributes
-      $.each($xml.get(0).attributes, (name, val) => {
+      Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
           case 'rows':
             // WARNING: Due to a bug in JClic, the meaning of "rows" and "columns" must be

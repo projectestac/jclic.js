@@ -116,6 +116,13 @@
 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Storage}
 */
 
+/**
+ * The NamedNodeMap interface represents a collection of Attr objects. Objects inside a NamedNodeMap are not in any particular
+ * order, unlike NodeList, although they may be accessed by an index as in an array.
+ * @external NamedNodeMap
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap}
+ */
+
 /* global define:true */
 
 // Mock `define` when called from a JavaScript environment without native AMD support (like Node.js)

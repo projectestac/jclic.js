@@ -71,7 +71,7 @@ define([
 
       let bug = false
 
-      $.each($xml.get(0).attributes, (name, val) => {
+      Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
           case 'id':
             this.id = val

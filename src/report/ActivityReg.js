@@ -109,7 +109,7 @@ define([
      * @param {external:jQuery} $xml -The XML element to be processed, already wrapped as jQuery object
      */
     setProperties($xml) {
-      $.each($xml.get(0).attributes, (name, value) => {
+      Utils.attrForEach($xml.get(0).attributes, (name, value) => {
         switch (name) {
           case 'name':
           case 'code':

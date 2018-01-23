@@ -87,7 +87,7 @@ define([
      * @param {external:jQuery} $xml - The XML element with the shaper data
      */
     setProperties($xml) {
-      $.each($xml.get(0).attributes, (name, value) => {
+      Utils.attrForEach($xml.get(0).attributes, (name, value) => {
         switch (name) {
           case 'class':
             this.className = value

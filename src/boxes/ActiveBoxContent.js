@@ -67,7 +67,7 @@ define([
     setProperties($xml, mediaBag) {
       //
       // Read attributes
-      $.each($xml.get(0).attributes, (name, val) => {
+      Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (this.name) {
           case 'id':
           case 'item':

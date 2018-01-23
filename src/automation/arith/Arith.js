@@ -670,7 +670,7 @@ define([
      */
     setProperties($xml) {
       // Read attributes
-      $.each($xml.get(0).attributes, (name, val) => {
+      Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
           case 'decimals':
             this.numDec = Number(val)

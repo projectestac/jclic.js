@@ -62,7 +62,7 @@ define([
     setProperties($xml) {
 
       // Iterate on all provided attributes
-      $.each($xml.get(0).attributes, (name, val) => {
+      Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
           case 'id':
             this['tag'] = Utils.nSlash(val)
@@ -96,22 +96,27 @@ define([
   Object.assign(ActivitySequenceElement.prototype, {
     /**
      * Optional unique identifier of this element in the {@link ActivitySequence}.
+     * @name ActivitySequenceElement#tag
      * @type {string} */
     tag: null,
     /**
      * Optional description of this sequence element.
+     * @name ActivitySequenceElement#description
      * @type {string} */
     description: null,
     /**
      * Name of the {@link Activity} pointed by this element.
+     * @name ActivitySequenceElement#activityName
      * @type {string} */
     activityName: '',
     /**
      * Jump to be processed by the 'next' button action
+     * @name ActivitySequenceElement#fwdJump
      * @type {ActivitySequenceJump} */
     fwdJump: null,
     /**
      * Jump to be processed by the 'prev' button action.
+     * @name ActivitySequenceElement#backJump
      * @type {ActivitySequenceJump} */
     backJump: null,
     /**
@@ -120,10 +125,12 @@ define([
      * - 'fwd'
      * - 'back'
      * - 'both'
+     * @name ActivitySequenceElement#navButtons
      * @type {string} */
     navButtons: 'both',
     /**
      * Time delay (in seconds) before passing to the next/prev activity
+     * @name ActivitySequenceElement#delay
      * @type {number} */
     delay: 0,
   })

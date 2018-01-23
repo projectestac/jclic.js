@@ -501,6 +501,17 @@ define([
       return root.appendChild(style)
     },
     /**
+     * Traverses all the attributes defined in an Element, calling a function with its name and value as a parameters
+     * @param {external:NamedNodeMap} attributes - The [Element.attributes](https://developer.mozilla.org/en-US/docs/Web/API/Element/attributes)
+     * object to be traversed
+     * @param {function} callback - The function to be called for each [Attr](https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap)
+     * object. It should take two parametres: `name` and `value`
+     */
+    attrForEach(attributes, callback) {
+      for (let i = 0; i < attributes.length; i++)
+        callback(attributes[i].name, attributes[i].value)
+    },
+    /**
      * Global constants
      * @const
      */

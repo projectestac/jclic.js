@@ -62,7 +62,7 @@ define([
      * @param {external:jQuery} $xml
      */
     setProperties($xml) {
-      $.each($xml.get(0).attributes, (name, val) => {
+      Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
           case 'type':
             this['mediaType'] = val

@@ -102,7 +102,7 @@ define([
       setProperties($xml) {
 
         // Read attributes
-        $.each($xml.get(0).attributes, (name, val) => {
+        Utils.attrForEach($xml.get(0).attributes, (name, val) => {
           switch (name) {
             // Generic attributes:
             case 'name':
@@ -136,7 +136,7 @@ define([
           switch (child.nodeName) {
             case 'settings':
               // Read more attributes
-              $.each($node.get(0).attributes, (name, val) => {
+              Utils.attrForEach($node.get(0).attributes, (name, val) => {
                 switch (name) {
                   case 'infoUrl':
                   case 'infoCmd':
@@ -233,7 +233,7 @@ define([
               break
 
             case 'messages':
-              $node.children('cell').each((_n, child)=> {
+              $node.children('cell').each((_n, child) => {
                 const m = this.readMessage($(child))
                 // Possible message types are: `initial`, `final`, `previous`, `finalError`
                 this.messages[m.type] = m
@@ -263,7 +263,7 @@ define([
               break
 
             case 'layout':
-              $.each($node.get(0).attributes, (name, value) => {
+              Utils.attrForEach($node.get(0).attributes, (name, value) => {
                 switch (name) {
                   case 'position':
                     this.boxGridPos = value
