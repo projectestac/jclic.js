@@ -115,7 +115,8 @@ define([
       // (main shape area where the other shape elements are placed)
       $xml.children('enclosing:first').each((_n, child) => {
         $(child).children('shape:first').each((_n, child2) => {
-          this.enclosing = Shaper.readShapeData(child2, this.scaleX, this.scaleY)
+          let sh = Shaper.readShapeData(child2, this.scaleX, this.scaleY)
+          this.enclosing = sh
           this.showEnclosure = true
           this.hasRemainder = true
         })
@@ -145,10 +146,10 @@ define([
      * @param {number} scaleY
      * @returns {AWT.Shape}
      */
-    static readShapeData($xml, scaleX, scaleY) {
+    static readShapeData(xml, scaleX, scaleY) {
       const shd = []
       let result = null
-      $.each($xml.textContent.split('|'), function (_n, txt) {
+      $.each(xml.textContent.split('|'), (_n, txt) => {
         const sd = txt.split(':')
         // Possible strokes are: `rectangle`, `ellipse`, `M`, `L`, `Q`, `B`, `X`
         // Also possible, but not currently used in JClic: `roundRectangle` and `pie`
@@ -156,7 +157,7 @@ define([
         //
         // Data should be always divided by the scale (X or Y)
         if (data)
-          data = data.map((d, n) => d / n % 2 ? scaleY : scaleX)
+          data = data.map((d, n) => d / (n % 2 ? scaleY : scaleX))
 
         switch (sd[0]) {
           case 'rectangle':
@@ -172,7 +173,7 @@ define([
         }
       })
 
-      return result || shd.length > 0 ? new AWT.Path(shd) : null
+      return !result && shd.length > 0 ? new AWT.Path(shd) : result
     }
 
     /**

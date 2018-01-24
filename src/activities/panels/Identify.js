@@ -283,6 +283,9 @@ define([
         const p = new AWT.Point(
           event.pageX - this.$div.offset().left,
           event.pageY - this.$div.offset().top)
+        // Flag for assuring that only one media plays per event (avoid event sounds overlapping
+        // cell's media sounds)
+        let m = false
         switch (event.type) {
           case 'click':
             this.ps.stopMedia(1)
@@ -293,7 +296,7 @@ define([
                 // Check if it's a valid move
                 let ok = false
                 const src = bx.getDescription()
-                let m = m || bx.playMedia(this.ps)
+                m = m || bx.playMedia(this.ps)
                 if (bx.idAss === 1 && (!this.act.useOrder || bx.idOrder === this.currentItem)) {
                   ok = true
                   bx.idAss = -1

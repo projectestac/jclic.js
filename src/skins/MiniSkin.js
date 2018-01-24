@@ -91,5 +91,4 @@ define([
   Skin.CLASSES['mini'] = MiniSkin
 
   return MiniSkin
-  
-});
+})

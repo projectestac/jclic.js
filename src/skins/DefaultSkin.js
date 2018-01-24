@@ -176,7 +176,7 @@ define([
       // See: [https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8479637/]
       // This affects Polymer `iron-overlay-behavior`. See: [https://github.com/PolymerElements/iron-overlay-behavior/pull/211]
       let nilFunc = null
-      $.each(this.buttons, function (_key, value) {
+      $.each(this.buttons, (_key, value) => {
         if (value && (typeof value[0].focus !== 'function' || typeof value[0].blur !== 'function')) {
           if (nilFunc === null)
             nilFunc = () => Utils.log('error', '"blur" and "focus" not defined for SVG objects in Explorer/Edge')

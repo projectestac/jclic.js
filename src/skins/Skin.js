@@ -556,7 +556,7 @@ define([
                 $html.th(this.ps.getMsg('score')),
                 $html.th(this.ps.getMsg('time')))))
 
-              sr.sequences.forEach(function (seq) {
+              sr.sequences.forEach(seq => {
                 let $tr = $('<tr/>').append($('<td/>', { rowspan: seq.activities.length }).html(seq.sequence))
                 seq.activities.forEach(act => {
                   if (act.closed) {
@@ -572,8 +572,8 @@ define([
                   }
                   $t.append($tr)
                   $tr = $('<tr/>')
-                }, this)
-              }, this)
+                })
+              })
 
               $t.append($('<tr/>').append(
                 $html.td(this.ps.getMsg('Total:')),

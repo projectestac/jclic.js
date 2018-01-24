@@ -201,8 +201,8 @@ define([
      * Translates the Font properties into CSS statements
      * @param {Object} css - The object where to add CSS properties. When null or undefined, a new
      * object will be created and returned.
-     * @returns {Object} - A set of CSS property-values pairs, ready to be used in JQuery
-     * [.css(properties)](http://api.jquery.com/css/#css-properties) function.
+     * @returns {Object} - A set of CSS property-values pairs, ready to be used by JQuery
+     * [.css(properties)](http://api.jquery.com/css/#css-properties).
      */
     toCss(css) {
       if (!css)
@@ -1538,7 +1538,7 @@ define([
     /**
      * AWT.Action constructor
      * @param {string} name - The name of this Action
-     * @param {function} actionPerformed - The callback function to be triggered by this Action
+     * @param {function} actionPerformed - The callback to be triggered by this Action
      */
     constructor(name, actionPerformed) {
       this.name = name
@@ -1547,7 +1547,7 @@ define([
     }
 
     /**
-     * Here is where subclasses must define the callback function to be triggered when
+     * Here is where subclasses must define the callback to be triggered when
      * this AWT.Action object is called
      * @param {AWT.Action} _thisAction - Pointer to this AWT.Action object
      * @param {object} _event - The original action event that has originated this action

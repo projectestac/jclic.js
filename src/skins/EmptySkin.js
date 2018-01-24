@@ -82,5 +82,4 @@ define([
   Skin.CLASSES['empty'] = EmptySkin
 
   return EmptySkin
-
 })

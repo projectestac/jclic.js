@@ -132,8 +132,7 @@ define([
      * Clears the content of all boxes
      */
     clearAllBoxes() {
-      for (let i = 0; i < this.cells.length; i++)
-        this.getActiveBox(i).clear()
+      this.cells.forEach(bx => bx.clear())
     }
 
     /**
@@ -150,11 +149,7 @@ define([
      * @returns {number}
      */
     countCellsAtPlace() {
-      let cellsAtPlace = 0
-      for (let i = 0; i < this.cells.length; i++)
-        if (this.getActiveBox(i).isAtPlace())
-          cellsAtPlace++
-      return cellsAtPlace
+      return this.cells.reduce((n, bx) => bx.isAtPlace() ? ++n : n, 0)
     }
 
     /**
@@ -163,14 +158,7 @@ define([
      * @returns {ActiveBox}
      */
     getActiveBoxWithIdLoc(idLoc) {
-      let result = null
-      for (let bx, i = 0; i < this.cells.length; i++) {
-        if ((bx = this.getActiveBox(i)).idLoc === idLoc) {
-          result = bx
-          break
-        }
-      }
-      return result
+      return this.cells.find(bx => bx.idLoc === idLoc) || null
     }
 
     /**
@@ -190,12 +178,7 @@ define([
      * @returns {number}
      */
     countCellsAtEquivalentPlace(checkCase) {
-      let cellsAtPlace = 0
-      for (let i = 0; i < this.cells.length; i++) {
-        if (this.cellIsAtEquivalentPlace(this.getActiveBox(i), checkCase))
-          cellsAtPlace++
-      }
-      return cellsAtPlace
+      return this.cells.reduce((n, bx) => this.cellIsAtEquivalentPlace(bx, checkCase) ? ++n : n, 0)
     }
 
     /**
@@ -204,33 +187,14 @@ define([
      * @returns {number}
      */
     countCellsWithIdAss(idAss) {
-      let n = 0
-      for (let i = 0; i < this.cells.length; i++) {
-        if (this.getActiveBox(i).idAss === idAss)
-          n++
-      }
-      return n
-    }
-
-    /**
-     * Counts the number of inactive cells
-     * @returns {number}
-     */
-    countInactiveCells() {
-      let n = 0
-      for (let i = 0; i < this.cells.length; i++) {
-        if (this.getActiveBox(i).isInactive())
-          n++
-      }
-      return n
+      return this.cells.reduce((n, bx) => bx.idAss === idAss ? ++n : n, 0)
     }
 
     /**
      * Resets the default `idAss` attribute on all cells
      */
     setDefaultIdAss() {
-      for (let i = 0; i < this.cells.length; i++)
-        this.getActiveBox(i).setDefaultIdAss()
+      this.cells.map(bx => bx.setDefaultIdAss())
     }
 
     /**
@@ -289,9 +253,7 @@ define([
         maxX = this.pos.x + this.dim.width,
         maxY = this.pos.y + this.dim.height
 
-      for (let i = 0; i < boxes.length; i++) {
-        const bx = boxes[i]
-
+      boxes.forEach(bx => {
         // Save original position
         if (!bx.pos0)
           bx.pos0 = new AWT.Point(bx.pos)
@@ -301,7 +263,7 @@ define([
           py = Math.min(Math.max(bx.pos.y, this.pos.y), maxY - bx.dim.height)
         if (px !== bx.pos.x || py !== bx.pos.y)
           bx.moveTo(new AWT.Point(px, py))
-      }
+      })
     }
 
     /**
@@ -333,14 +295,13 @@ define([
      * Resets the IDs of all cells
      */
     resetIds() {
-      for (let i = 0; i < this.cells.length; i++) {
-        const bx = this.cells[i]
+      this.cells.forEach((bx, i) => {
         if (bx) {
           bx.idOrder = i
           bx.idAss = i
           bx.idLoc = i
         }
-      }
+      })
     }
 
     /**
@@ -384,8 +345,7 @@ define([
       if (Utils.settings.CANVAS_HITREGIONS) {
         this.$accessibleDiv = this.accessibleText !== '' ? $('<div/>', { 'aria-label': this.accessibleText, tabindex: 0 }) : null
         $canvas.append(this.$accessibleDiv)
-        for (let i = 0; i < this.cells.length; i++)
-          this.cells[i].buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType)
+        this.cells.forEach(bx => bx.buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType))
       }
       return this.$accessibleDiv
     }

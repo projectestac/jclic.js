@@ -279,11 +279,12 @@ define([
       return false
     },
     /**
-     * Clones the provided object using jQuery.extend with deep clone option
+     * Clones the provided object
+     * See: https://stackoverflow.com/questions/41474986/how-to-clone-a-javascript-es6-class-instance
      * @param {object} obj
      * @returns {object}
      */
-    cloneObject: obj => $.extend(true, {}, obj),
+    cloneObject: obj => Object.assign(Object.create(Object.getPrototypeOf(obj)), obj),
     /**
      * Converts string values to number or boolean when needed
      * @param {Object} obj - The object to be processed
@@ -292,7 +293,7 @@ define([
     normalizeObject: obj => {
       const result = {}
       if (obj)
-        $.each(obj, function (key, value) {
+        $.each(obj, (key, value) => {
           let s
           if (typeof value === 'string' && (s = value.trim().toLowerCase()) !== '')
             value = s === 'true' ? true : s === 'false' ? false : isNaN(s) ? value : Number(s)

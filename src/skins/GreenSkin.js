@@ -86,5 +86,4 @@ define([
   Skin.CLASSES['green'] = GreenSkin
 
   return GreenSkin
-
 })

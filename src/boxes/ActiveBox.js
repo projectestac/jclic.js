@@ -697,7 +697,9 @@ define([
       if (Utils.settings.CANVAS_HITREGIONS) {
         if (this.$accessibleElement)
           this.$accessibleElement.remove()
-        if ($canvas.width() > 0 && $canvas.height() > 0) {
+
+        const canvas = $canvas.get(-1)
+        if (canvas.width > 0 && canvas.height > 0) {
           const
             id = Math.round(Math.random() * 100000),
             disabled = this.isInactive() && !this.accessibleAlwaysActive
@@ -706,27 +708,28 @@ define([
             id: `AE${id}`,
             disabled: disabled
           })
-            .html(this.toString())
-            .click(ev => {
-              // Check if event was produced by a mouse click
-              if (ev.originalEvent && (ev.originalEvent.pageX !== 0 || ev.originalEvent.pageY !== 0)) {
-                // Mouse clicks should be processed odirectly by the canvas, so ignore this accessible event
-                return true
-              }
-              Utils.log('debug', `Click on accessible element: ${this.toString()}`)
-              const
-                $event = $.Event(eventType || 'click'),
-                bounds = this.getBounds(),
-                offset = $canvas.offset()
-              $event.pageX = offset.left + bounds.pos.x + bounds.dim.width / 2
-              $event.pageY = offset.top + bounds.pos.y + bounds.dim.height / 2
-              $clickReceiver.trigger($event)
-              return false
-            })
-            ($canvasGroup || $canvas).append(this.$accessibleElement)
+          .html(this.toString())
+          .click(ev => {
+            // Check if event was produced by a mouse click
+            if (ev.originalEvent && (ev.originalEvent.pageX !== 0 || ev.originalEvent.pageY !== 0)) {
+              // Mouse clicks should be processed odirectly by the canvas, so ignore this accessible event
+              return true
+            }
+            Utils.log('debug', `Click on accessible element: ${this.toString()}`)
+            const
+              $event = $.Event(eventType || 'click'),
+              bounds = this.getBounds(),
+              offset = $canvas.offset()
+            $event.pageX = offset.left + bounds.pos.x + bounds.dim.width / 2
+            $event.pageY = offset.top + bounds.pos.y + bounds.dim.height / 2
+            $clickReceiver.trigger($event)
+            return false
+          })
+          const $dest = $canvasGroup || $canvas
+          $dest.append(this.$accessibleElement)
           const elem = this.$accessibleElement.get(-1)
           try {
-            const ctx = $canvas.get(-1).getContext('2d')
+            const ctx = canvas.getContext('2d')
             this.shape.preparePath(ctx)
             ctx.addHitRegion({ id: `REG${id}`, control: elem })
             if (Utils.settings.CANVAS_HITREGIONS_FOCUS)

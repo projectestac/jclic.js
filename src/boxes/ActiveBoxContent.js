@@ -68,7 +68,7 @@ define([
       //
       // Read attributes
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
-        switch (this.name) {
+        switch (name) {
           case 'id':
           case 'item':
             this[name] = Number(val)

@@ -351,8 +351,7 @@ define([
      * @param {} value - The value, of any type
      */
     setCellAttr(key, value) {
-      for (let i = 0; i < this.cells.length; i++)
-        this.getBox(i)[key] = value
+      this.cells.forEach(bx => bx[key] = value)
       if (this.backgroundBox)
         this.backgroundBox[key] = value
     }
@@ -362,8 +361,7 @@ define([
      * @param {boolean} newVal - Whether to set or unset the border
      */
     setBorder(newVal) {
-      for (let i = 0; i < this.cells.length; i++)
-        this.getBox(i).setBorder(newVal)
+      this.cells.forEach(bx => bx.setBorder(newVal))
     }
 
     /**
@@ -371,8 +369,7 @@ define([
      * @param {boolean} newVal - Whether to set the cells visible or not
      */
     setVisible(newVal) {
-      for (let i = 0; i < this.cells.length; i++)
-        this.getBox(i).setVisible(newVal)
+      this.cells.forEach(bx => bx.setVisible(newVal))
     }
 
     /**
@@ -381,8 +378,7 @@ define([
      */
     setAlternative(newVal) {
       super.setAlternative(newVal)
-      for (let i = 0; i < this.cells.length; i++)
-        this.getBox(i).setAlternative(newVal)
+      this.cells.forEach(bx => bx.setAlternative(newVal))
     }
 
     /**
@@ -404,16 +400,14 @@ define([
           scaleH = rect.dim.height / this.dim.height,
           dx = rect.pos.x - this.pos.x,
           dy = rect.pos.y - this.pos.y
-        for (let i = 0; i < this.cells.length; i++) {
-          const
-            bx = this.getBox(i),
-            p = new AWT.Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y)
+        this.cells.forEach(bx => {
+          const p = new AWT.Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y)
           bx.setBounds(
             dx + this.pos.x + scaleW * p.x,
             dy + this.pos.y + scaleH * p.y,
             scaleW * bx.dim.width,
             scaleH * bx.dim.height)
-        }
+        })
         if (this.backgroundBox !== null) {
           const
             bx = this.backgroundBox,
@@ -446,18 +440,16 @@ define([
       if (this.backgroundBox !== null)
         this.backgroundBox.update(ctx, dirtyRegion)
 
-      for (let i = 0; i < this.cells.length; i++) {
-        const bx = this.getBox(i)
+      this.cells.forEach(bx => {
         if (!bx.isMarked())
           bx.update(ctx, dirtyRegion)
-      }
+      })
 
       // Make a second loop to repaint marked cells
-      for (let l = 0; l < this.cells.length; l++) {
-        const bx = this.getBox(l)
+      this.cells.forEach(bx => {
         if (bx.isMarked())
           bx.update(ctx, dirtyRegion)
-      }
+      })
       return true
     }
 
@@ -483,12 +475,7 @@ define([
      * @returns {number}
      */
     countInactiveCells() {
-      let n = 0
-      for (let i = 0; i < this.cells.length; i++) {
-        if (this.getBox(i).isInactive())
-          n++
-      }
-      return n
+      return this.cells.reduce((n, bx) => bx.isInactive() ? ++n : n, 0)
     }
   }
 

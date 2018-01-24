@@ -72,7 +72,7 @@ define([
      * @returns {AWT.Rectangle}
      */
     getEnclosingShapeData() {
-      return this.showEnclosure ? this.enclosing || super.getEnclosingShapeData() : null
+      return this.showEnclosure ? (this.enclosing || super.getEnclosingShapeData()) : null
     }
   }
 

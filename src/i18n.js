@@ -96,7 +96,7 @@ define([
           'ca_ES@valencia': {translation: GlobalData.messages['ca_ES@valencia']},
           es: {translation: GlobalData.messages.es}
         }
-      }, function (err, t) {
+      }, (err, t) => {
         if (err)
           Utils.log('error', 'Error initializing "i18next": %s', err.message)
         else {

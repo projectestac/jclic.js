@@ -62,7 +62,7 @@ define([
      * @returns {string}
      */
     _getStyleSheets() {
-      return super._getStyleSheets() + this.skinCSS;
+      return super._getStyleSheets() + this.skinCSS
     }
   }
 
@@ -83,5 +83,4 @@ define([
   Skin.CLASSES['orange'] = OrangeSkin
 
   return OrangeSkin
-
 })
