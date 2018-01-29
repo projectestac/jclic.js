@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -51,14 +51,61 @@ define([
    * @exports WrittenAnswer
    * @class
    * @extends Activity
-   * @param {JClicProject} project - The JClic project to which this activity belongs
    */
-  var WrittenAnswer = function (project) {
-    Activity.call(this, project);
-  };
+  class WrittenAnswer extends Activity {
+    /**
+     * WrittenAnswer constructor
+     * @param {JClicProject} project - The JClic project to which this activity belongs
+     */
+    constructor(project) {
+      super(project)
+    }
 
-  WrittenAnswer.prototype = {
-    constructor: WrittenAnswer,
+    /**
+     * Loads this object settings from an XML element
+     * @param {external:jQuery} $xml - The jQuery XML element to parse
+     */
+    setProperties($xml) {
+      super.setProperties($xml)
+      this.abc['primary'].avoidAllIdsNull(this.abc['answers'].getNumCells())
+    }
+
+    /**
+     * Retrieves the minimum number of actions needed to solve this activity
+     * @returns {number}
+     */
+    getMinNumActions() {
+      return this.invAss ?
+        this.abc['answers'].getNumCells() :
+        this.abc['primary'].getNumCells() - this.nonAssignedCells
+    }
+
+    /**
+     * This activity uses random values to scramble its internal components
+     * @returns {boolean}
+     */
+    hasRandom() {
+      return true
+    }
+
+    /**
+     * This activity makes use of the keyboard
+     * @returns {boolean}
+     */
+    needsKeyboard() {
+      return true
+    }
+
+    /**
+     * This activity can permit the user to display the solution
+     * @returns {boolean}
+     */
+    helpSolutionAllowed() {
+      return true
+    }
+  }
+
+  Object.assign(WrittenAnswer.prototype, {
     /**
      * Number of unassigned cells
      * @type {number} */
@@ -67,74 +114,368 @@ define([
      * Whether to use or not the cell's `idAss` field to check if pairings match
      * @type {boolean} */
     useIdAss: true,
-    /**
-     *
-     * Loads this object settings from an XML element
-     * @param {external:jQuery} $xml - The jQuery XML element to parse
-     */
-    setProperties: function ($xml) {
-      Activity.prototype.setProperties.call(this, $xml);
-      this.abc['primary'].avoidAllIdsNull(this.abc['answers'].getNumCells());
-    },
-    /**
-     *
-     * Retrieves the minimum number of actions needed to solve this activity
-     * @returns {number}
-     */
-    getMinNumActions: function () {
-      if (this.invAss)
-        return this.abc['answers'].getNumCells();
-      else
-        return this.abc['primary'].getNumCells() - this.nonAssignedCells;
-    },
-    /**
-     *
-     * This activity uses random values to scramble its internal components
-     * @returns {boolean}
-     */
-    hasRandom: function () {
-      return true;
-    },
-    /**
-     *
-     * This activity makes use of the keyboard
-     * @returns {boolean}
-     */
-    needsKeyboard: function () {
-      return true;
-    },
-    /**
-     *
-     * This activity can permit the user to display the solution
-     * @returns {boolean}
-     */
-    helpSolutionAllowed: function () {
-      return true;
-    }
-  };
-
-  // InformationScreen extends Activity
-  WrittenAnswer.prototype = $.extend(Object.create(Activity.prototype), WrittenAnswer.prototype);
+  })
 
   /**
    * The {@link Activity.Panel} where written answer activities are played.
    * @class
    * @extends Activity.Panel
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-   * Java interface.
-   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
    */
-  WrittenAnswer.Panel = function (act, ps, $div) {
-    Activity.Panel.call(this, act, ps, $div);
-  };
+  WrittenAnswer.Panel = class extends Activity.Panel {
+    /**
+     * WrittenAnswer.Panel constructor
+     * @param {Activity} act - The {@link Activity} to which this Panel belongs
+     * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+     * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+     * Java interface.
+     * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+     */
+    constructor(act, ps, $div) {
+      super(act, ps, $div)
+    }
 
+    /**
+     * Performs miscellaneous cleaning operations
+     */
+    clear() {
+      if (this.bgA) {
+        this.bgA.end()
+        this.bgA = null
+      }
+      if (this.bgB) {
+        this.bgB.end()
+        this.bgB = null
+      }
+    }
 
-  var ActPanelAncestor = Activity.Panel.prototype;
+    /**
+     * Prepares the visual components of the activity
+     */
+    buildVisualComponents() {
+      if (this.firstRun)
+        super.buildVisualComponents()
 
-  WrittenAnswer.Panel.prototype = {
-    constructor: WrittenAnswer.Panel,
+      this.clear()
+
+      const
+        abcA = this.act.abc['primary'],
+        abcB = this.act.abc['answers'],
+        solved = this.act.abc['solvedPrimary']
+
+      if (abcA && abcB) {
+        if (this.act.invAss)
+          this.invAssCheck = Array(abcB.getNumCells()).fill(false)
+
+        if (abcA.imgName) {
+          abcA.setImgContent(this.act.project.mediaBag, null, false)
+          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramble['primary'])
+            this.$animatedBg = $('<span/>').css({
+              'background-image': 'url(' + abcA.animatedGifFile + ')',
+              'background-position': 'center',
+              'background-repeat': 'no-repeat',
+              position: 'absolute'
+            }).appendTo(this.$div)
+        }
+
+        if (solved && solved.imgName)
+          solved.setImgContent(this.act.project.mediaBag, null, false)
+
+        if (this.act.acp !== null) {
+          const contentKit = [abcA, abcB]
+          if (solved)
+            contentKit.push(solved)
+          this.act.acp.generateContent(abcA.nch, abcA.ncw, contentKit, false)
+        }
+
+        this.bgA = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abcA)
+
+        let w = abcB.w
+        if (this.act.boxGridPos === 'AUB' || this.act.boxGridPos === 'BUA')
+          w = abcA.getTotalWidth()
+        //
+        // bgB will be used only as a placeholder for `$textField`
+        this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1))
+        this.$form = $('<form/>', { id: 'form1', action: '#' })
+        this.$form.submit(event => {
+          event.preventDefault()
+          if (this.playing) {
+            this.setCurrentCell(this.currentCell)
+          }
+        })
+
+        this.$textField = $('<input/>', { type: 'text', size: 200 }).css(abcB.bb.getCSS()).css({
+          position: 'absolute', top: 0, left: 0,
+          border: 0, padding: 0, margin: 0,
+          'text-align': 'center'
+        })
+
+        this.$div.append(this.$form.append(this.$textField))
+        this.bgA.setContent(abcA, solved || null)
+        this.bgA.setDefaultIdAss()
+        if (this.$animatedBg)
+          this.bgA.setCellAttr('tmpTrans', true)
+
+        this.act.nonAssignedCells = 0
+        for (let i = 0; i < this.bgA.getNumCells(); i++) {
+          var bx = this.bgA.getActiveBox(i)
+          if (bx.idAss === -1) {
+            this.act.nonAssignedCells++
+            bx.switchToAlt(this.ps)
+          }
+        }
+        this.bgA.setVisible(true)
+        this.bgB.setVisible(false)
+      }
+    }
+
+    /**
+     * Basic initialization procedure
+     */
+    initActivity() {
+      super.initActivity()
+      if (!this.firstRun)
+        this.buildVisualComponents()
+      else
+        this.firstRun = false
+
+      if (this.bgA && this.bgB) {
+        // Scramble cells
+        if (this.act.scramble.primary)
+          this.shuffle([this.bgA], true, true)
+
+        if (this.useOrder)
+          this.currentItem = this.bgA.getNextItem(-1)
+
+        this.setAndPlayMsg('initial', 'start')
+        this.invalidate().update()
+        this.playing = true
+      }
+    }
+
+    /**
+     * Called by [JClicPlayer](JClicPlayer.html) when this activity panel is fully visible, just
+     * after the initialization process.
+     */
+    activityReady() {
+      super.activityReady()
+      this.setCurrentCell(0)
+    }
+
+    /**
+     * Updates the graphic content of this panel.
+     * This method will be called from {@link AWT.Container#update} when needed.
+     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+     * it's the whole panel.
+     */
+    updateContent(dirtyRegion) {
+      super.updateContent(dirtyRegion)
+      if (this.bgA && this.$canvas) {
+        const
+          canvas = this.$canvas.get(-1),
+          ctx = canvas.getContext('2d')
+        if (!dirtyRegion)
+          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height)
+        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height)
+        this.bgA.update(ctx, dirtyRegion)
+      }
+      return this
+    }
+
+    /**
+     * Sets the real dimension of this panel.
+     * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+     * @returns {AWT.Dimension}
+     */
+    setDimension(preferredMaxSize) {
+      return (!this.bgA || !this.bgB || this.getBounds().equals(preferredMaxSize)) ?
+        preferredMaxSize :
+        BoxBag.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin)
+    }
+
+    /**
+     * Sets the size and position of this activity panel
+     * @param {AWT.Rectangle} rect
+     */
+    setBounds(rect) {
+      if (this.$canvas)
+        this.$canvas.remove()
+
+      super.setBounds(rect)
+      if (this.bgA || this.bgB) {
+        const r = rect.clone()
+        if (this.act.boxGridPos === 'AUB')
+          r.height -= this.bgB.pos.y + this.act.margin / 2
+        else if (this.act.boxGridPos === 'AB')
+          r.width -= this.bgB.pos.x + this.act.margin / 2
+
+        // Create the main canvas
+        this.$canvas = $('<canvas width="' + r.dim.width + '" height="' + r.dim.height + '"/>').css({
+          position: 'absolute',
+          top: 0,
+          left: 0
+        })
+
+        // Resize animated gif background
+        if (this.bgA && this.$animatedBg) {
+          var bgRect = this.bgA.getBounds()
+          this.$animatedBg.css({
+            left: bgRect.pos.x,
+            top: bgRect.pos.y,
+            width: bgRect.dim.width + 'px',
+            height: bgRect.dim.height + 'px',
+            'background-size': bgRect.dim.width + 'px ' + bgRect.dim.height + 'px'
+          })
+          this.$canvas.insertAfter(this.$animatedBg)
+        } else
+          this.$div.prepend(this.$canvas)
+
+        if (this.$textField) {
+          this.$textField.css({
+            top: this.bgB.pos.y,
+            left: this.bgB.pos.x,
+            width: this.bgB.dim.width,
+            height: this.bgB.dim.height,
+            zIndex: 9
+          })
+        }
+        // Repaint all
+        this.invalidate().update()
+      }
+    }
+
+    /**
+     * Checks if all inverse associations are done
+     * @returns {boolean}
+     */
+    checkInvAss() {
+      return this.act.invAss && this.invAssCheck && this.invAssCheck.every(chk => chk)
+    }
+
+    /**
+     * Updates the currently selected cell, evaluating the answer written by the user on the text field.
+     * @param {number} i - Index into the {@link ActiveBoxBag} of the cell to make active
+     */
+    setCurrentCell(i) {
+      if (!this.playing)
+        return
+
+      let
+        bx = null,
+        m = false
+
+      if (this.currentCell !== -1) {
+        let ok = false
+        bx = this.bgA ? this.bgA.getActiveBoxWithIdLoc(this.currentCell) : null
+        if (bx) {
+          bx.setMarked(false)
+          const
+            src = bx.getDescription(),
+            id = bx.idAss,
+            txCheck = id >= 0 ? this.act.abc['answers'].getActiveBoxContent(id).text : '',
+            txAnswer = this.$textField.val().trim()
+          if (Utils.compareMultipleOptions(txAnswer, txCheck, false)) {
+            ok = true
+            bx.idAss = -1
+            // When in multiple-answer, fill-in textField with the first valid option:
+            const p = txCheck.indexOf('|')
+            if (p >= 0)
+              this.$textField.val(txCheck.substring(0, p))
+
+            if (this.act.abc['solvedPrimary']) {
+              bx.switchToAlt(this.ps)
+              m = bx.playMedia(this.ps)
+            } else
+              bx.clear()
+            if (this.act.invAss && id >= 0 && id < this.invAssCheck.length) {
+              this.invAssCheck[id] = true
+            }
+            if (this.act.useOrder)
+              this.currentItem = this.bgA.getNextItem(this.currentItem)
+          }
+
+          const cellsPlaced = this.bgA.countCellsWithIdAss(-1)
+          if (txAnswer.length > 0) {
+            this.ps.reportNewAction(this.act, 'WRITE', src, txAnswer, ok, cellsPlaced)
+          }
+          if (ok && (this.checkInvAss() || cellsPlaced === this.bgA.getNumCells())) {
+            this.finishActivity(true)
+            this.$textField.prop('disabled', true)
+            return
+          } else if (!m && txAnswer.length > 0)
+            this.playEvent(ok ? 'actionOk' : 'actionError')
+        }
+      }
+
+      bx = this.bgA ?
+        this.act.useOrder ?
+          this.bgA.getBox(this.currentItem) :
+          this.bgA.getActiveBoxWithIdLoc(i) :
+        null
+
+      if (this.bgA && (!bx || bx.idAss === -1)) {
+        for (var j = 0; j < this.bgA.getNumCells(); j++) {
+          bx = this.bgA.getActiveBoxWithIdLoc(j)
+          if (bx.idAss !== -1)
+            break
+        }
+        if (bx && bx.idAss === -1) {
+          this.finishActivity(false)
+          this.$textField.prop('disabled', true)
+          return
+        }
+      }
+      // Draw border only if it has more than one cell
+      if (bx && this.bgA && this.bgA.getNumCells() > 1)
+        bx.setMarked(true)
+      if (bx)
+        this.currentCell = bx.idLoc
+      this.$textField.val('')
+      this.$textField.focus()
+      this.invalidate().update()
+      if (bx)
+        bx.playMedia(this.ps)
+    }
+
+    /**
+     * Main handler used to process mouse, touch, keyboard and edit events
+     * @param {HTMLEvent} event - The HTML event to be processed
+     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+     */
+    processEvent(event) {
+      if (this.playing) {
+        switch (event.type) {
+          case 'click':
+            event.preventDefault()
+            this.ps.stopMedia(1)
+            const p = new AWT.Point(
+              event.pageX - this.$div.offset().left,
+              event.pageY - this.$div.offset().top)
+
+            // Avoid clicks on the text field
+            if (this.bgB.contains(p)) {
+              this.$textField.focus()
+              break
+            }
+
+            const bx = this.bgA ? this.bgA.findActiveBox(p) : null
+            if (bx) {
+              if (bx.getContent() && bx.getContent().mediaContent === null)
+                this.playEvent('CLICK')
+              this.setCurrentCell(bx.idLoc)
+            }
+            break
+
+          case 'edit':
+            event.preventDefault()
+            this.setCurrentCell(this.currentCell)
+            return false
+        }
+      }
+    }
+  }
+
+  Object.assign(WrittenAnswer.Panel.prototype, {
     /**
      * The input text field where users write the answers
      * @type {external:jQuery} */
@@ -159,370 +500,10 @@ define([
      * Mouse events intercepted by this panel
      * @type {string[]} */
     events: ['click'],
-    /**
-     *
-     * Performs miscellaneous cleaning operations
-     */
-    clear: function () {
-      if (this.bgA) {
-        this.bgA.end();
-        this.bgA = null;
-      }
-      if (this.bgB) {
-        this.bgB.end();
-        this.bgB = null;
-      }
-    },
-    /**
-     *
-     * Prepares the visual components of the activity
-     */
-    buildVisualComponents: function () {
-
-      var n, i;
-
-      if (this.firstRun)
-        ActPanelAncestor.buildVisualComponents.call(this);
-
-      this.clear();
-
-      var abcA = this.act.abc['primary'];
-      var abcB = this.act.abc['answers'];
-      var solved = this.act.abc['solvedPrimary'];
-
-      if (abcA && abcB) {
-
-        if (this.act.invAss) {
-          this.invAssCheck = [];
-          n = abcB.getNumCells();
-          for (i = 0; i < n; i++)
-            this.invAssCheck[i] = false;
-        }
-
-        if (abcA.imgName) {
-          abcA.setImgContent(this.act.project.mediaBag, null, false);
-          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramble['primary'])
-            this.$animatedBg = $('<span/>').css({
-              'background-image': 'url(' + abcA.animatedGifFile + ')',
-              'background-position': 'center',
-              'background-repeat': 'no-repeat',
-              position: 'absolute'
-            }).appendTo(this.$div);
-        }
-
-        if (solved && solved.imgName)
-          solved.setImgContent(this.act.project.mediaBag, null, false);
-
-        if (this.act.acp !== null) {
-          var contentKit = [abcA, abcB];
-          if (solved)
-            contentKit.push(solved);
-          this.act.acp.generateContent(abcA.nch, abcA.ncw, contentKit, false);
-        }
-
-        this.bgA = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abcA);
-
-        var w = abcB.w;
-        if (this.act.boxGridPos === 'AUB' || this.act.boxGridPos === 'BUA')
-          w = abcA.getTotalWidth();
-        //
-        // bgB will be used only as a placeholder for `$textField`
-        this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1));
-
-        this.$form = $('<form/>', { id: 'form1', action: '#' });
-
-        var panel = this;
-        this.$form.submit(function (event) {
-          event.preventDefault();
-          if (panel.playing) {
-            panel.setCurrentCell(panel.currentCell);
-          }
-        });
-
-        this.$textField = $('<input/>', { type: 'text', size: 200 }).css(abcB.bb.getCSS()).css({
-          position: 'absolute', top: 0, left: 0,
-          border: 0, padding: 0, margin: 0,
-          'text-align': 'center'
-        });
-
-        this.$div.append(this.$form.append(this.$textField));
-
-        this.bgA.setContent(abcA, solved || null);
-        this.bgA.setDefaultIdAss();
-        if (this.$animatedBg)
-          this.bgA.setCellAttr('tmpTrans', true);
-
-        this.act.nonAssignedCells = 0;
-        n = this.bgA.getNumCells();
-        for (i = 0; i < n; i++) {
-          var bx = this.bgA.getActiveBox(i);
-          if (bx.idAss === -1) {
-            this.act.nonAssignedCells++;
-            bx.switchToAlt(this.ps);
-          }
-        }
-        this.bgA.setVisible(true);
-        this.bgB.setVisible(false);
-      }
-    },
-    /**
-     *
-     * Basic initialization procedure
-     */
-    initActivity: function () {
-      ActPanelAncestor.initActivity.call(this);
-
-      if (!this.firstRun)
-        this.buildVisualComponents();
-      else
-        this.firstRun = false;
-
-      if (this.bgA && this.bgB) {
-        // Scramble cells
-        if (this.act.scramble.primary)
-          this.shuffle([this.bgA], true, true);
-
-        if (this.useOrder)
-          this.currentItem = this.bgA.getNextItem(-1);
-
-        this.setAndPlayMsg('initial', 'start');
-        this.invalidate().update();
-        this.playing = true;
-      }
-    },
-    /**
-     *
-     * Called by [JClicPlayer](JClicPlayer.html) when this activity panel is fully visible, just
-     * after the initialization process.
-     */
-    activityReady: function () {
-      ActPanelAncestor.activityReady.call(this);
-      this.setCurrentCell(0);
-    },
-    /**
-     *
-     * Updates the graphic content of this panel.
-     * This method will be called from {@link AWT.Container#update} when needed.
-     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
-     * it's the whole panel.
-     */
-    updateContent: function (dirtyRegion) {
-      ActPanelAncestor.updateContent.call(this, dirtyRegion);
-      if (this.bgA && this.$canvas) {
-        var canvas = this.$canvas.get(-1);
-        var ctx = canvas.getContext('2d');
-        if (!dirtyRegion)
-          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
-        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
-        this.bgA.update(ctx, dirtyRegion);
-      }
-      return this;
-    },
-    /**
-     *
-     * Sets the real dimension of this panel.
-     * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
-     * @returns {AWT.Dimension}
-     */
-    setDimension: function (preferredMaxSize) {
-      if (!this.bgA || !this.bgB || this.getBounds().equals(preferredMaxSize))
-        return preferredMaxSize;
-      return BoxBag.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
-    },
-    /**
-     *
-     * Sets the size and position of this activity panel
-     * @param {AWT.Rectangle} rect
-     */
-    setBounds: function (rect) {
-      if (this.$canvas)
-        this.$canvas.remove();
-
-      ActPanelAncestor.setBounds.call(this, rect);
-      if (this.bgA || this.bgB) {
-        var r = rect.clone();
-        if (this.act.boxGridPos === 'AUB')
-          r.height -= this.bgB.pos.y + this.act.margin / 2;
-        else if (this.act.boxGridPos === 'AB')
-          r.width -= this.bgB.pos.x + this.act.margin / 2;
-
-        // Create the main canvas
-        this.$canvas = $('<canvas width="' + r.dim.width + '" height="' + r.dim.height + '"/>').css({
-          position: 'absolute',
-          top: 0,
-          left: 0
-        });
-
-        // Resize animated gif background
-        if (this.bgA && this.$animatedBg) {
-          var bgRect = this.bgA.getBounds();
-          this.$animatedBg.css({
-            left: bgRect.pos.x,
-            top: bgRect.pos.y,
-            width: bgRect.dim.width + 'px',
-            height: bgRect.dim.height + 'px',
-            'background-size': bgRect.dim.width + 'px ' + bgRect.dim.height + 'px'
-          });
-          this.$canvas.insertAfter(this.$animatedBg);
-        } else
-          this.$div.prepend(this.$canvas);
-
-        if (this.$textField) {
-          this.$textField.css({
-            top: this.bgB.pos.y,
-            left: this.bgB.pos.x,
-            width: this.bgB.dim.width,
-            height: this.bgB.dim.height,
-            zIndex: 9
-          });
-        }
-
-        // Repaint all
-        this.invalidate().update();
-      }
-    },
-    /**
-     *
-     * Checks if all inverse associations are done
-     * @returns {boolean}
-     */
-    checkInvAss: function () {
-      var i;
-      if (!this.act.invAss || !this.invAssCheck)
-        return false;
-      for (i = 0; i < this.invAssCheck.length; i++)
-        if (!this.invAssCheck[i])
-          break;
-      return i === this.invAssCheck.length;
-    },
-    /**
-     *
-     * Updates the currently selected cell, evaluating the answer written by the user on the text field.
-     * @param {number} i - Index into the {@link ActiveBoxBag} of the cell to make active
-     */
-    setCurrentCell: function (i) {
-      var bx = null;
-      var m = false;
-
-      if (!this.playing)
-        return;
-      if (this.currentCell !== -1) {
-        var ok = false;
-        bx = this.bgA ? this.bgA.getActiveBoxWithIdLoc(this.currentCell) : null;
-        if (bx) {
-          var src = bx.getDescription();
-          bx.setMarked(false);
-          var id = bx.idAss;
-          var txCheck = id >= 0 ? this.act.abc['answers'].getActiveBoxContent(id).text : '';
-          var txAnswer = this.$textField.val().trim();
-          if (Utils.compareMultipleOptions(txAnswer, txCheck, false)) {
-            ok = true;
-            bx.idAss = -1;
-            // When in multiple-answer, fill-in textField with the first valid option:
-            var p = txCheck.indexOf('|');
-            if (p >= 0)
-              this.$textField.val(txCheck.substring(0, p));
-
-            if (this.act.abc['solvedPrimary']) {
-              bx.switchToAlt(this.ps);
-              m = bx.playMedia(this.ps);
-            } else
-              bx.clear();
-            if (this.act.invAss && id >= 0 && id < this.invAssCheck.length) {
-              this.invAssCheck[id] = true;
-            }
-            if (this.act.useOrder)
-              this.currentItem = this.bgA.getNextItem(this.currentItem);
-          }
-
-          var cellsPlaced = this.bgA.countCellsWithIdAss(-1);
-
-          if (txAnswer.length > 0) {
-            this.ps.reportNewAction(this.act, 'WRITE', src, txAnswer, ok, cellsPlaced);
-          }
-          if (ok && (this.checkInvAss() || cellsPlaced === this.bgA.getNumCells())) {
-            this.finishActivity(true);
-            this.$textField.prop('disabled', true);
-            return;
-          } else if (!m && txAnswer.length > 0)
-            this.playEvent(ok ? 'actionOk' : 'actionError');
-        }
-      }
-
-      if (this.act.useOrder)
-        bx = this.bgA ? this.bgA.getBox(this.currentItem) : null;
-      else
-        bx = this.bgA ? this.bgA.getActiveBoxWithIdLoc(i) : null;
-      if (this.bgA && (!bx || bx.idAss === -1)) {
-        for (var j = 0; j < this.bgA.getNumCells(); j++) {
-          bx = this.bgA.getActiveBoxWithIdLoc(j);
-          if (bx.idAss !== -1)
-            break;
-        }
-        if (bx && bx.idAss === -1) {
-          this.finishActivity(false);
-          this.$textField.prop('disabled', true);
-          return;
-        }
-      }
-      // Draw border only if it has more than one cell
-      if (bx && this.bgA && this.bgA.getNumCells() > 1)
-        bx.setMarked(true);
-      if (bx)
-        this.currentCell = bx.idLoc;
-      this.$textField.val('');
-      this.$textField.focus();
-
-      this.invalidate().update();
-
-      if (bx)
-        bx.playMedia(this.ps);
-    },
-    /**
-     *
-     * Main handler used to process mouse, touch, keyboard and edit events
-     * @param {HTMLEvent} event - The HTML event to be processed
-     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
-     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
-     */
-    processEvent: function (event) {
-      if (this.playing) {
-        switch (event.type) {
-          case 'click':
-            event.preventDefault();
-            this.ps.stopMedia(1);
-            var p = new AWT.Point(
-              event.pageX - this.$div.offset().left,
-              event.pageY - this.$div.offset().top);
-
-            // Avoid clicks on the text field
-            if (this.bgB.contains(p)) {
-              this.$textField.focus();
-              break;
-            }
-
-            var bx = this.bgA ? this.bgA.findActiveBox(p) : null;
-            if (bx) {
-              if (bx.getContent() && bx.getContent().mediaContent === null)
-                this.playEvent('CLICK');
-              this.setCurrentCell(bx.idLoc);
-            }
-            break;
-
-          case 'edit':
-            event.preventDefault();
-            this.setCurrentCell(this.currentCell);
-            return false;
-        }
-      }
-    }
-  };
-
-  // WrittenAnswer.Panel extends Activity.Panel
-  WrittenAnswer.Panel.prototype = $.extend(Object.create(ActPanelAncestor), WrittenAnswer.Panel.prototype);
+  })
 
   // Register class in Activity.prototype
-  Activity.CLASSES['@text.WrittenAnswer'] = WrittenAnswer;
+  Activity.CLASSES['@text.WrittenAnswer'] = WrittenAnswer
 
-  return WrittenAnswer;
-});
+  return WrittenAnswer
+})

@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -47,17 +47,221 @@ define([
    * @exports TextActivityDocument
    * @class
    */
-  var TextActivityDocument = function () {
-    // Make a deep clone of the default style
-    this.style = { 'default': $.extend(true, {}, TextActivityDocument.DEFAULT_DOC_STYLE) };
-    this.p = [];
-    //this.tmb=new TargetMarkerBag();
-    this.boxesContent = new ActiveBagContent();
-    this.popupsContent = new ActiveBagContent();
-  };
+  class TextActivityDocument {
+    /**
+     * TextActivityDocument constructor
+     */
+    constructor() {
+      // Make a deep clone of the default style
+      this.style = { 'default': $.extend(true, {}, TextActivityDocument.DEFAULT_DOC_STYLE) }
+      this.p = []
+      //this.tmb=new TargetMarkerBag();
+      this.boxesContent = new ActiveBagContent()
+      this.popupsContent = new ActiveBagContent()
+    }
 
-  TextActivityDocument.prototype = {
-    constructor: TextActivityDocument,
+    /**
+     * Loads the document settings from a specific JQuery XML element
+     * @param {external:jQuery} $xml - The XML element to parse
+     * @param {MediaBag} mediaBag - The media bag used to load images and media content
+     */
+    setProperties($xml, mediaBag) {
+      // Read named styles
+      // Sort styles according to its "base" dependencies
+      const styles = $xml.children('style').toArray().sort((a, b) => {
+        var aName = a.attributes.name.value, aBase = a.attributes.base ? a.attributes.base.value : null
+        var bName = b.attributes.name.value, bBase = b.attributes.base ? b.attributes.base.value : null
+        // Put 'default' always first, then each style below their base (if any)
+        return aName === 'default' ? -1 : bName === 'default' ? 1
+          : aBase === bName ? 1 : bBase === aName ? -1
+            : !aBase ? -1 : !bBase ? 1 : 0
+      })
+      // Process the ordered list of styles
+      styles.forEach(style => {
+        const attr = this.readDocAttributes($(style))
+        // Grant always that basic attributes are defined
+        this.style[attr.name] = attr.name === 'default' ? Object.assign({}, this.style.default, attr) : attr
+      })
+
+      // Read paragraphs
+      $xml.find('section > p').each((_n, par) => {
+
+        const p = { elements: [] }
+
+        // Read paragraph attributes
+        Utils.attrForEach(par.attributes, (name, value) => {
+          switch (name) {
+            case 'style':
+              p[name] = value
+              break;
+            case 'bidiLevel':
+            case 'Alignment':
+              p[name] = Number(value)
+              break
+          }
+        })
+
+        // Read paragraph objects
+        $(par).children().each((_n, child) => {
+          let obj
+          const $child = $(child)
+          switch (child.nodeName) {
+
+            case 'cell':
+              obj = new ActiveBoxContent().setProperties($child, mediaBag)
+              break
+
+            case 'text':
+              obj = { text: child.textContent.replace(/\t/g, '&#9;') }
+              const attr = this.readDocAttributes($child)
+              if (!$.isEmptyObject(attr)) {
+                obj.attr = attr
+              }
+              break
+
+            case 'target':
+              obj = new TextActivityDocument.TextTarget(this, child.textContent.replace(/\t/g, '&#9;'))
+              obj.setProperties($child, mediaBag)
+              this.numTargets++
+              break
+
+            default:
+              Utils.log('error', `Unknown object in activity document: "${child.nodeName}"`)
+          }
+          if (obj) {
+            obj.objectType = child.nodeName
+            p.elements.push(obj)
+          }
+        })
+
+        this.p.push(p)
+      })
+      return this
+    }
+
+    /**
+     * Reads sets of text attributes, sometimes in form of named styles
+     * @param {external:jQuery} $xml - The XML element to parse
+     * @returns {object}
+     */
+    readDocAttributes($xml) {
+      let
+        attr = {},
+        css = {}
+      Utils.attrForEach($xml.get(0).attributes, (name, val) => {
+        switch (name) {
+          case 'background':
+            val = Utils.checkColor(val, 'white')
+            attr[name] = val
+            css['background-color'] = val
+            break
+          case 'foreground':
+            val = Utils.checkColor(val, 'black')
+            attr[name] = val
+            css['color'] = val
+            break
+          case 'family':
+            css['font-family'] = val
+          /* falls through */
+          case 'name':
+          case 'style':
+            // Attributes specific to named styles:
+            attr[name] = val
+            break
+          case 'base':
+            attr[name] = val
+            // If base style exists, merge it with current settings
+            if (this.style[val]) {
+              attr = Object.apply({}, this.style[val], attr)
+              if (this.style[val].css)
+                css = Object.apply({}, this.style[val].css, css)
+            }
+            break
+          case 'bold':
+            val = Utils.getBoolean(val)
+            attr[name] = val
+            css['font-weight'] = val ? 'bold' : 'normal'
+            break
+          case 'italic':
+            val = Utils.getBoolean(val)
+            attr[name] = val
+            css['font-style'] = val ? 'italic' : 'normal'
+            break
+          case 'target':
+            attr[name] = Utils.getBoolean(val)
+            break
+          case 'size':
+            attr[name] = Number(val)
+            css['font-size'] = `${val}px`
+            break
+          case 'tabWidth':
+            // `tab-size` CSS attribute is only set when the document has a specific `tabWidth`
+            // setting. It must be accompanied of `white-space:pre` to successfully work.
+            this.tabSpc = val
+            css['tab-size'] = this.tabSpc
+            css['white-space'] = 'pre-wrap'
+            break
+          default:
+            Utils.log('warn', `Unknown text attribute: "${name}" = "${val}"`)
+            attr[name] = val
+            break
+        }
+      })
+
+      if (!$.isEmptyObject(css))
+        attr['css'] = css
+
+      return attr
+    }
+
+    /**
+     * Gets the full text of this document in raw format
+     * @returns {String} - The text of the document.
+     */
+    getRawText() {
+      const $html = $('<div/>')
+      // Process paragraphs
+      this.p.forEach(p => {
+        // Creates a new DOM paragraph
+        const $p = $('<p/>')
+        let empty = true
+        // Process the paragraph elements
+        p.elements.forEach(element => {
+          switch (element.objectType) {
+            case 'text':
+            case 'target':
+              $p.append(element.text)
+              break
+            case 'cell':
+              // cells are not considered raw text of the document
+              break
+            default:
+              break
+          }
+          empty = false
+        })
+        if (empty) {
+          // Don't leave paragraphs empty
+          $p.html('&nbsp;')
+        }
+        // Adds the paragraph to the DOM element
+        $html.append($p)
+      })
+      return $html.text().trim()
+    }
+
+    /**
+     * Gets a `style` object filled with default attributes plus attributes present in the
+     * requested style name.
+     * @param {string} name - The requested style name
+     * @returns {Object} - The result of combining `default` with the requested style
+     */
+    getFullStyle(name) {
+      return Object.assign({}, this.style.default, this.style[name] ? this.style[name] : {})
+    }
+  }
+
+  Object.assign(TextActivityDocument.prototype, {
     /**
      * Number of blank spaces between tabulators.
      * @type {number} */
@@ -95,216 +299,7 @@ define([
      * The main document, represented as a collection of DOM objects
      * @type {object} */
     p: null,
-    /**
-     *
-     * Loads the document settings from a specific JQuery XML element
-     * @param {external:jQuery} $xml - The XML element to parse
-     * @param {MediaBag} mediaBag - The media bag used to load images and media content
-     */
-    setProperties: function ($xml, mediaBag) {
-
-      var doc = this;
-
-      // Read named styles
-
-      // Sort styles according to its "base" dependencies
-      var styles = $xml.children('style').toArray().sort(function (a, b) {
-        var aName = a.attributes.name.value, aBase = a.attributes.base ? a.attributes.base.value : null;
-        var bName = b.attributes.name.value, bBase = b.attributes.base ? b.attributes.base.value : null;
-        // Put 'default' always first, then each style below their base (if any)
-        return aName === 'default' ? -1 : bName === 'default' ? 1
-          : aBase === bName ? 1 : bBase === aName ? -1
-            : !aBase ? -1 : !bBase ? 1 : 0;
-      });
-      // Process the ordered list of styles
-      $.each(styles, function () {
-        var attr = doc.readDocAttributes($(this));
-        // Grant always that basic attributes are defined
-        doc.style[attr.name] = attr.name === 'default' ? $.extend(true, doc.style.default, attr) : attr;
-      });
-
-      // Read paragraphs
-      $xml.find('section > p').each(function () {
-
-        var p = { elements: [] };
-
-        // Read paragraph attributes
-        $.each(this.attributes, function () {
-          var name = this.name;
-          var value = this.value;
-          switch (this.name) {
-            case 'style':
-              p[name] = value;
-              break;
-            case 'bidiLevel':
-            case 'Alignment':
-              p[name] = Number(value);
-              break;
-          }
-        });
-
-        // Read paragraph objects
-        $(this).children().each(function () {
-          var obj;
-          var $child = $(this);
-          switch (this.nodeName) {
-
-            case 'cell':
-              obj = new ActiveBoxContent().setProperties($child, mediaBag);
-              break;
-
-            case 'text':
-              obj = { text: this.textContent.replace(/\t/g, '&#9;') };
-              var attr = doc.readDocAttributes($child);
-              if (!$.isEmptyObject(attr)) {
-                obj.attr = attr;
-              }
-              break;
-
-            case 'target':
-              obj = new TextActivityDocument.TextTarget(doc, this.textContent.replace(/\t/g, '&#9;'));
-              obj.setProperties($child, mediaBag);
-              doc.numTargets++;
-              break;
-
-            default:
-              Utils.log('error', 'Unknown object in activity document: "%s"', this.nodeName);
-          }
-          if (obj) {
-            obj.objectType = this.nodeName;
-            p.elements.push(obj);
-          }
-        });
-
-        doc.p.push(p);
-      });
-
-      return this;
-    },
-    /**
-     *
-     * Reads sets of text attributes, sometimes in form of named styles
-     * @param {external:jQuery} $xml - The XML element to parse
-     * @returns {object}
-     */
-    readDocAttributes: function ($xml) {
-      var attr = {};
-      var css = {};
-      var doc = this;
-      $.each($xml.get(0).attributes, function () {
-        var name = this.name;
-        var val = this.value;
-        switch (name) {
-          case 'background':
-            val = Utils.checkColor(val, 'white');
-            attr[name] = val;
-            css['background-color'] = val;
-            break;
-          case 'foreground':
-            val = Utils.checkColor(val, 'black');
-            attr[name] = val;
-            css['color'] = val;
-            break;
-          case 'family':
-            css['font-family'] = val;
-          /* falls through */
-          case 'name':
-          case 'style':
-            // Attributes specific to named styles:
-            attr[name] = val;
-            break;
-          case 'base':
-            attr[name] = val;
-            // If base style exists, merge it with current settings
-            if (doc.style[val]) {
-              attr = $.extend(true, {}, doc.style[val], attr);
-              if (doc.style[val].css)
-                css = $.extend({}, doc.style[val].css, css);
-            }
-            break;
-          case 'bold':
-            val = Utils.getBoolean(val);
-            attr[name] = val;
-            css['font-weight'] = val ? 'bold' : 'normal';
-            break;
-          case 'italic':
-            val = Utils.getBoolean(val);
-            attr[name] = val;
-            css['font-style'] = val ? 'italic' : 'normal';
-            break;
-          case 'target':
-            attr[name] = Utils.getBoolean(val);
-            break;
-          case 'size':
-            attr[name] = Number(val);
-            css['font-size'] = val + 'px';
-            break;
-          case 'tabWidth':
-            // `tab-size` CSS attribute is only set when the document has a specific `tabWidth`
-            // setting. It must be accompanied of `white-space:pre` to successfully work.
-            doc.tabSpc = val;
-            css['tab-size'] = doc.tabSpc;
-            css['white-space'] = 'pre-wrap';
-            break;
-          default:
-            Utils.log('warn', 'Unknown text attribute: "%s" = "%s"', name, val);
-            attr[name] = val;
-            break;
-        }
-      });
-
-      if (!$.isEmptyObject(css))
-        attr['css'] = css;
-
-      return attr;
-    },
-    /**
-     *
-     * Gets the full text of this document in raw format
-     * @returns {String} - The text of the document.
-     */
-    getRawText: function () {
-      var $html = $('<div/>');
-      // Process paragraphs
-      $.each(this.p, function () {
-        // Creates a new DOM paragraph
-        var $p = $('<p/>');
-        var empty = true;
-        // Process the paragraph elements
-        $.each(this.elements, function () {
-          switch (this.objectType) {
-            case 'text':
-            case 'target':
-              $p.append(this.text);
-              break;
-            case 'cell':
-              // cells are not considered raw text of the document
-              break;
-            default:
-              break;
-          }
-          empty = false;
-        });
-        if (empty) {
-          // Don't leave paragraphs empty
-          $p.html('&nbsp;');
-        }
-        // Adds the paragraph to the DOM element
-        $html.append($p);
-      });
-      return $html.text().trim();
-    },
-    /**
-     * Gets a `style` object filled with default attributes plus attributes present in the
-     * requested style name.
-     * @param {string} name - The requested style name
-     * @returns {Object} - The result of combining `default` with the requested style
-     */
-    getFullStyle: function (name) {
-      var st = $.extend(true, {}, this.style.default);
-      return $.extend(true, st, this.style[name] ? this.style[name] : {});
-    }
-  };
+  })
 
   /**
    * Default style for new documents
@@ -320,26 +315,140 @@ define([
       'background-color': 'white',
       color: 'black'
     }
-  };
-
+  }
 
   /**
    * This class contains the properties and methods of the document elements that are the real
    * targets of user actions in text activities.
    * @class
-   * @param {TextActivityDocument} doc - The document to which this target belongs.
-   * @param {string} text - Main text of this target.
    */
-  TextActivityDocument.TextTarget = function (doc, text) {
-    this.doc = doc;
-    this.text = text;
-    this.numIniChars = text.length;
-    this.answers = [text];
-    this.maxLenResp = this.numIniChars;
-  };
+  TextActivityDocument.TextTarget = class {
+    /**
+     * TextActivityDocument.TextTarget constructor
+     * @param {TextActivityDocument} doc - The document to which this target belongs.
+     * @param {string} text - Main text of this target.
+     */
+    constructor(doc, text) {
+      this.doc = doc
+      this.text = text
+      this.numIniChars = text.length
+      this.answers = [text]
+      this.maxLenResp = this.numIniChars
+    }
 
-  TextActivityDocument.TextTarget.prototype = {
-    constructor: TextActivityDocument.TextTarget,
+    /**
+     * Resets the TextTarget status
+     * @param {string=} status - The `targetStatus` to be established. Default is `NOT_EDITED`
+     */
+    reset(status) {
+      this.targetStatus = status ? status : 'NOT_EDITED'
+      this.flagModified = false
+    }
+
+    /**
+     * Loads the text target settings from a specific JQuery XML element
+     * @param {external:jQuery} $xml - The XML element to parse
+     * @param {MediaBag} mediaBag - The media bag used to load images and media content
+     */
+    setProperties($xml, mediaBag) {
+      let firstAnswer = true
+      // Read specific nodes
+      $xml.children().each((_n, child) => {
+        const $node = $(child)
+        switch (child.nodeName) {
+          case 'answer':
+            if (firstAnswer) {
+              firstAnswer = false
+              this.answers = []
+            }
+            if (this.answers === null)
+              this.answers = []
+            this.answers.push(this.textContent)
+            break
+
+          case 'optionList':
+            $node.children('option').each((_n, opChild) => {
+              this.isList = true
+              if (this.options === null)
+                this.options = []
+              this.options.push(opChild.textContent)
+            })
+            break
+
+          case 'response':
+            this.iniChar = Utils.getVal($node.attr('fill'), this.iniChar).charAt(0)
+            this.numIniChars = Utils.getNumber($node.attr('length'), this.numIniChars)
+            this.maxLenResp = Utils.getNumber($node.attr('maxLength'), this.maxLenResp)
+            this.iniText = Utils.getVal($node.attr('show'), this.iniText)
+            break
+
+          case 'info':
+            this.infoMode = Utils.getVal($node.attr('mode'), 'always')
+            this.popupDelay = Utils.getNumber($node.attr('delay'), this.popupDelay)
+            this.popupMaxTime = Utils.getNumber($node.attr('maxTime'), this.popupMaxTime)
+            $node.children('media').each((_n, media) => {
+              this.onlyPlay = true
+              this.popupContent = new ActiveBoxContent()
+              this.popupContent.mediaContent = new MediaContent().setProperties($(media))
+            });
+            if (!this.popupContent) {
+              $node.children('cell').each((_n, cell) => {
+                this.popupContent = new ActiveBoxContent().setProperties($(cell), mediaBag)
+              })
+            }
+            break
+
+          case 'text':
+            this.text = this.textContent.replace(/\t/g, '&#9;')
+            const attr = TextActivityDocument.prototype.readDocAttributes($(child))
+            if (!$.isEmptyObject(attr))
+              this.attr = attr
+            break
+
+          default:
+            break
+        }
+      })
+    }
+
+    /**
+     * Gets a string with all valid answers of this TextTarget. Useful for reporting users' activity.
+     * @returns {string}
+     */
+    getAnswers() {
+      return this.answers ? this.answers.join('|') : ''
+    }
+
+    /**
+     * Sets specific colors to the target jQuery element, based on its `targetStatus` value. Red
+     * color usually means error.
+     */
+    checkColors() {
+      const $element = this.$comboList || this.$span
+      if ($element) {
+        const style = this.doc.style[
+          this.targetStatus === 'WITH_ERROR' ? 'targetError' :
+            this.targetStatus === 'HIDDEN' ? 'default' : 'target']
+        if (style && style.css) {
+          $element.css(style.css)
+        }
+      }
+    }
+
+    /**
+     * Fills the `currentText` member with the text currently hosted in $span or selected in $comboList
+     * @returns {String} - The current text of this target
+     */
+    readCurrentText() {
+      if (this.$span)
+        this.currentText = this.$span.text()
+      else if (this.$comboList)
+        this.currentText = this.$comboList.val()
+      return this.currentText
+    }
+  }
+
+  Object.assign(TextActivityDocument.TextTarget.prototype, {
     /**
      * The {@link TextActivityDocument} to which this target belongs
      * @type {TextActivityDocument} */
@@ -450,120 +559,7 @@ define([
      * Pointer to the activity panel containing this TextTarget
      * @type {TextActivityBase.Panel} */
     parentPane: null,
-    /**
-     *
-     * Resets the TextTarget status
-     * @param {string=} status - The `targetStatus` to be established. Default is `NOT_EDITED`
-     */
-    reset: function (status) {
-      this.targetStatus = status ? status : 'NOT_EDITED';
-      this.flagModified = false;
-    },
-    /**
-     *
-     * Loads the text target settings from a specific JQuery XML element
-     * @param {external:jQuery} $xml - The XML element to parse
-     * @param {MediaBag} mediaBag - The media bag used to load images and media content
-     */
-    setProperties: function ($xml, mediaBag) {
-      var target = this;
-      var firstAnswer = true;
-      // Read specific nodes
-      $xml.children().each(function () {
-        var $node = $(this);
-        switch (this.nodeName) {
-          case 'answer':
-            if (firstAnswer) {
-              firstAnswer = false;
-              target.answers = [];
-            }
-            if (target.answers === null)
-              target.answers = [];
-            target.answers.push(this.textContent);
-            break;
+  })
 
-          case 'optionList':
-            $node.children('option').each(function () {
-              target.isList = true;
-              if (target.options === null)
-                target.options = [];
-              target.options.push(this.textContent);
-            });
-            break;
-
-          case 'response':
-            target.iniChar = Utils.getVal($node.attr('fill'), target.iniChar).charAt(0);
-            target.numIniChars = Utils.getNumber($node.attr('length'), target.numIniChars);
-            target.maxLenResp = Utils.getNumber($node.attr('maxLength'), target.maxLenResp);
-            target.iniText = Utils.getVal($node.attr('show'), target.iniText);
-            break;
-
-          case 'info':
-            target.infoMode = Utils.getVal($node.attr('mode'), 'always');
-            target.popupDelay = Utils.getNumber($node.attr('delay'), target.popupDelay);
-            target.popupMaxTime = Utils.getNumber($node.attr('maxTime'), target.popupMaxTime);
-            $node.children('media').each(function () {
-              target.onlyPlay = true;
-              target.popupContent = new ActiveBoxContent();
-              target.popupContent.mediaContent = new MediaContent().setProperties($(this));
-            });
-            if (!target.popupContent) {
-              $node.children('cell').each(function () {
-                target.popupContent = new ActiveBoxContent().setProperties($(this), mediaBag);
-              });
-            }
-            break;
-
-          case 'text':
-            target.text = this.textContent.replace(/\t/g, '&#9;');
-            var attr = TextActivityDocument.prototype.readDocAttributes($(this));
-            if (!$.isEmptyObject(attr))
-              target.attr = attr;
-            break;
-
-          default:
-            break;
-        }
-      });
-    },
-    /**
-     *
-     * Gets a string with all valid answers of this TextTarget. Useful for reporting users' activity.
-     * @returns {string}
-     */
-    getAnswers: function () {
-      return this.answers ? this.answers.join('|') : '';
-    },
-    /**
-     *
-     * Sets specific colors to the target jQuery element, based on its `targetStatus` value. Red
-     * color usually means error.
-     */
-    checkColors: function () {
-      var $element = this.$comboList || this.$span;
-      if ($element) {
-        var style = this.doc.style[
-          this.targetStatus === 'WITH_ERROR' ? 'targetError' :
-            this.targetStatus === 'HIDDEN' ? 'default' : 'target'];
-        if (style && style.css) {
-          $element.css(style.css);
-        }
-      }
-    },
-    /**
-     *
-     * Fills the `currentText` member with the text currently hosted in $span or selected in $comboList
-     * @returns {String} - The current text of this target
-     */
-    readCurrentText: function () {
-      if (this.$span)
-        this.currentText = this.$span.text();
-      else if (this.$comboList)
-        this.currentText = this.$comboList.val();
-      return this.currentText;
-    }
-  };
-
-  return TextActivityDocument;
-
-});
+  return TextActivityDocument
+})
