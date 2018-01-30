@@ -375,7 +375,7 @@ define([
      * @param {number[]} flags
      * @returns {number}
      */
-    static countFlagsOk(flags) {
+    countFlagsOk(flags) {
       return flags.reduce((n, v) => v == 0 ? ++n : n, 0)
     }
 

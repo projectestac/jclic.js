@@ -195,7 +195,6 @@ define([
                 break
               }
 
-              // TODO: Clone `element` as `target`, so references to transient components ($span) are garbage-collected!
               const target = element
               let $popup = null
               // Process target popups
@@ -247,7 +246,7 @@ define([
                   $span.keydown(ev => {
                     if (ev.key === target.popupKey) {
                       ev.preventDefault()
-                      this.showPopup($popup, this.popupMaxTime, target.popupDelay)
+                      this.showPopup($popup, target.popupMaxTime, target.popupDelay)
                     } else if (ev.key === 'Escape') {
                       ev.preventDefault()
                       this.showPopup(null)

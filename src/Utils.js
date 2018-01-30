@@ -284,7 +284,8 @@ define([
      * @param {object} obj
      * @returns {object}
      */
-    cloneObject: obj => Object.assign(Object.create(Object.getPrototypeOf(obj)), obj),
+    //cloneObject: obj => Object.assign(Object.create(Object.getPrototypeOf(obj)), obj),
+    cloneObject: obj => $.extend(true, Object.create(Object.getPrototypeOf(obj)), obj),
     /**
      * Converts string values to number or boolean when needed
      * @param {Object} obj - The object to be processed

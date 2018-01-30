@@ -80,7 +80,8 @@ define([
       styles.forEach(style => {
         const attr = this.readDocAttributes($(style))
         // Grant always that basic attributes are defined
-        this.style[attr.name] = attr.name === 'default' ? Object.assign({}, this.style.default, attr) : attr
+        this.style[attr.name] = attr.name === 'default' ? $.extend(true, this.style.default, attr) : attr
+        //this.style[attr.name] = attr.name === 'default' ? Object.assign(this.style.default, attr) : attr
       })
 
       // Read paragraphs
@@ -172,9 +173,11 @@ define([
             attr[name] = val
             // If base style exists, merge it with current settings
             if (this.style[val]) {
-              attr = Object.apply({}, this.style[val], attr)
+              //attr = Object.apply({}, this.style[val], attr)
+              attr = $.extend(true, {}, this.style[val], attr)              
               if (this.style[val].css)
-                css = Object.apply({}, this.style[val].css, css)
+                //css = Object.apply({}, this.style[val].css, css)
+                css = $.extend({}, this.style[val].css, css)
             }
             break
           case 'bold':
@@ -257,7 +260,9 @@ define([
      * @returns {Object} - The result of combining `default` with the requested style
      */
     getFullStyle(name) {
-      return Object.assign({}, this.style.default, this.style[name] ? this.style[name] : {})
+      const st = $.extend(true, {}, this.style.default)
+      return $.extend(true, st, this.style[name] ? this.style[name] : {})
+      //return Object.assign({}, this.style.default, this.style[name] ? this.style[name] : {})
     }
   }
 
@@ -363,7 +368,7 @@ define([
             }
             if (this.answers === null)
               this.answers = []
-            this.answers.push(this.textContent)
+            this.answers.push(child.textContent)
             break
 
           case 'optionList':
@@ -399,8 +404,8 @@ define([
             break
 
           case 'text':
-            this.text = this.textContent.replace(/\t/g, '&#9;')
-            const attr = TextActivityDocument.prototype.readDocAttributes($(child))
+            this.text = child.textContent.replace(/\t/g, '&#9;')
+            const attr = this.doc.readDocAttributes($(child))
             if (!$.isEmptyObject(attr))
               this.attr = attr
             break

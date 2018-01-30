@@ -201,7 +201,6 @@ define([
   }
 
   Object.assign(PlayerHistory.prototype, {
-    constructor: PlayerHistory,
     /**
      * The {@link JClicPlayer} object to which this `PlayerHistory` belongs
      * @type {JClicPlayer} */

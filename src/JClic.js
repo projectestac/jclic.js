@@ -123,7 +123,7 @@
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap}
  */
 
-/* global define:true */
+/* global define:true, JClicDataProject, JClicDataOptions */
 
 // Mock `define` when called from a JavaScript environment without native AMD support (like Node.js)
 // For an example of how to call JClic.js in node.js, see:
@@ -188,7 +188,7 @@ define([
     AWT: AWT,
     Utils: Utils,
     $: $,
-    options: {},
+    options: typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions,
     projectFiles: {},
     currentPlayers: [],
     /**
@@ -201,7 +201,8 @@ define([
      */
     loadProject: function (div, projectName, options) {
 
-      options = Utils.init(Object.assign({}, JClicObject.options, options))
+      //options = Utils.init(Object.assign({}, JClicObject.options, options))
+      options = Utils.init($.extend(Object.create(JClicObject.options), options || {}))
       let player = null
 
       // Find if there is another player already running on 'div'
@@ -258,20 +259,31 @@ define([
   // Execute on document ready
   $(function () {
     // If defined, load the global variable `JClicDataOptions`
-    JClicObject.options = Object.assign({}, window.JClicDataOptions)
+    let options = typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions
+    JClicObject.options = options
 
-    if (!JClicObject.options.noInit) {
+    if (!options.noInit) {
       // If defined, load the global variable `JClicDataProject` or `JClicObject.projectFile`
-      const projectName =
-        typeof window.JClicDataProject === 'string' ? window.JClicDataProject : typeof JClicObject.projectFile === 'string' ? JClicObject.projectFile : null
+      let projectName =
+        typeof JClicDataProject === 'string' ?
+          JClicDataProject :
+          typeof JClicObject.projectFile === 'string' ?
+            JClicObject.projectFile :
+            null
 
       // Search DOM elements with class "JClic" (usually of type 'div') and iterate over them
       // initializing players
       $('.JClic').each((_n, element) => {
-        JClicObject.loadProject(
-          element,
-          $(element).data('project') || projectName,
-          Object.assign({}, JClicObject.options, $(element).data('options')))
+        const $div = $(element)
+        const prj = $div.data('project')
+        if (prj)
+          projectName = prj
+
+        const opt = $div.data('options')
+        if (opt)
+          options = $.extend(Object.create(options), opt)
+
+        JClicObject.loadProject(element, projectName, options)
       })
     }
   })

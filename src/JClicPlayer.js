@@ -72,7 +72,9 @@ define([
         // JClicPlayer extends AWT.Container
         super()
         // Build cascading options
-        this.options = Object.assign({}, this.options, Utils.init(options))
+        //this.options = Object.assign({}, this.options, Utils.init(options))
+        options = Utils.init(options)
+        this.options = $.extend(Object.create(this.options), options)
         // Generate unique ID
         this.id = `JC${(0x10000 + Math.round(Math.random() * 0xFFFF)).toString(16).toUpperCase().substr(1)}`
         // Identify the HTML element where this player will deploy

@@ -100,7 +100,8 @@ define([
 
       // Add custom font substitutions
       if (options && options.fontSubstitutions)
-        substitutions = Object.assign({}, substitutions, options.fontSubstitutions)
+        //substitutions = Object.assign({}, substitutions, options.fontSubstitutions)
+        substitutions = $.extend(Object.create(substitutions), options.fontSubstitutions)
 
       $tree.find('style[family],font[family]').each((_n, style) => {
         const $style = $(style),

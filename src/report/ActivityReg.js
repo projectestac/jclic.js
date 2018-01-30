@@ -210,7 +210,6 @@ define([
   }
 
   Object.assign(ActivityReg.prototype, {
-    constructor: ActivityReg,
     /**
      * Name of the associated activity
      * @type {string} */
