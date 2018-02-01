@@ -122,7 +122,7 @@ define([
      */
     static loadGoogleFont(name) {
       // Check WebFont as a workaround to avoid problems with a different version of `webfontloader` in agora.xtec.cat
-      if (name && AWT.Font.ALREADY_LOADED_FONTS.includes(name) && WebFont && WebFont.load) {
+      if (name && !AWT.Font.ALREADY_LOADED_FONTS.includes(name) && WebFont && WebFont.load) {
         WebFont.load({ google: { families: [name] } })
         AWT.Font.ALREADY_LOADED_FONTS.push(name)
       }
