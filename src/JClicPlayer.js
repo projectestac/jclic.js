@@ -733,22 +733,22 @@ define([
               // Relative path computed in History.processJump
               ji.projectPath = mediaContent.externalParam
             }
-            this.history.processJump(ji, true)
+            window.setTimeout(() => this.history.processJump(ji, true), 0)
             break
 
           case 'RUN_CLIC_ACTIVITY':
             this.history.push()
-            this.load(null, null, fn)
+            window.setTimeout(() => this.load(null, null, fn), 0)
             break
 
           case 'RETURN':
             if (this.history.storedElementsCount() > 0 || !this.options.returnAsExit) {
-              this.history.pop()
+              window.setTimeout(() => this.history.pop(), 0)
               break
             }
           case 'EXIT':
             ji = new JumpInfo('EXIT', fn)
-            this.history.processJump(ji, false)
+            window.setTimeout(() => this.history.processJump(ji, false), 0)
             break
 
           case 'RUN_EXTERNAL':
@@ -758,7 +758,7 @@ define([
           case 'URL':
             if (fn)
               // When mediaContent.level is 2 or more, the URL will be opened in a separate window.
-              this.displayURL(fn, mediaContent.level > 1)
+              window.setTimeout(() => this.displayURL(fn, mediaContent.level > 1), 0)
             break
 
           default:
