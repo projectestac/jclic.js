@@ -90,7 +90,7 @@ define([
   }
 
   /**
-   * The {@link ActivityPanel} where exchange puzzle activities are played.
+   * The {@link ActivityPanel} where activities of type {@link ExchangePuzzle} are played.
    * @class
    * @extends ActivityPanel
    */
@@ -353,6 +353,9 @@ define([
     events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
   })
 
+  /**
+   * Panel class associated to this type of activity: {@link ExchangePuzzlePanel}
+   * @type {class} */
   ExchangePuzzle.Panel = ExchangePuzzlePanel
 
   // Register class in Activity.prototype
