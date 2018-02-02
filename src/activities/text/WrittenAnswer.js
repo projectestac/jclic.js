@@ -117,13 +117,13 @@ define([
   })
 
   /**
-   * The {@link Activity.Panel} where written answer activities are played.
+   * The {@link ActivityPanel} where written answer activities are played.
    * @class
-   * @extends Activity.Panel
+   * @extends ActivityPanel
    */
-  WrittenAnswer.Panel = class extends Activity.Panel {
+  class WrittenAnswerPanel extends Activity.Panel {
     /**
-     * WrittenAnswer.Panel constructor
+     * WrittenAnswerPanel constructor
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -475,7 +475,7 @@ define([
     }
   }
 
-  Object.assign(WrittenAnswer.Panel.prototype, {
+  Object.assign(WrittenAnswerPanel.prototype, {
     /**
      * The input text field where users write the answers
      * @type {external:jQuery} */
@@ -501,6 +501,8 @@ define([
      * @type {string[]} */
     events: ['click'],
   })
+
+  WrittenAnswer.Panel = WrittenAnswerPanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@text.WrittenAnswer'] = WrittenAnswer

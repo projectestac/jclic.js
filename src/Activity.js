@@ -489,7 +489,7 @@ define([
        * Builds the {@link Activity.Panel} object.
        * Subclasses must update the `Panel` member of its prototypes to produce specific panels.
        * @param {PlayStation} ps - The {@link PlayStation} used to build media objects.
-       * @returns {Activity.Panel}
+       * @returns {ActivityPanel}
        */
       getActivityPanel(ps) {
         return new this.constructor.Panel(this, ps)
@@ -713,16 +713,16 @@ define([
     /**
      * This object is responsible for rendering the contents of the activity on the screen and
      * managing user's interaction.
-     * Each type of Activity must implement its own `Activity.Panel`.
+     * Each type of Activity must implement its own `ActivityPanel`.
      * In JClic, {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html Activity.Panel}
      * extends {@link http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html javax.swing.JPanel}.
      * In this implementation, the JPanel will be replaced by an HTML `div` tag.
      * @class
      * @extends AWT.Container
      */
-    Activity.Panel = class extends AWT.Container {
+    class ActivityPanel extends AWT.Container {
       /**
-       * Activity.Panel constructor
+       * ActivityPanel constructor
        * @param {Activity} act - The {@link Activity} to which this Panel belongs
        * @param {JClicPlayer} ps - Any object implementing the methods defined in the
        * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation}
@@ -730,7 +730,7 @@ define([
        * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
        */
       constructor(act, ps, $div) {
-        // Activity.Panel extends AWT.Container
+        // ActivityPanel extends AWT.Container
         super()
         this.act = act
         this.ps = ps
@@ -863,7 +863,7 @@ define([
       }
 
       /**
-       * Sets the real dimension of this Activity.Panel.
+       * Sets the real dimension of this ActivityPanel.
        * @param {AWT.Dimension} maxSize - The maximum surface available for the activity panel
        * @returns {AWT.Dimension}
        */
@@ -947,7 +947,7 @@ define([
 
       /**
        * 
-       * Builds the accessible components needed for this Activity.Panel
+       * Builds the accessible components needed for this ActivityPanel
        * This method is called when all main elements are placed and visible, when the activity is ready
        * to start or when resized.
        */
@@ -1063,7 +1063,7 @@ define([
       }
     }
 
-    Object.assign(Activity.Panel.prototype, {
+    Object.assign(ActivityPanel.prototype, {
       /**
        * The Activity this panel is related to
        * @type {Activity} */
@@ -1124,15 +1124,15 @@ define([
        * @type {PlayStation} */
       ps: null,
       /**
-       * The minimum size of this kind of Activity.Panel
+       * The minimum size of this kind of ActivityPanel
        * @type {AWT.Dimension} */
       minimumSize: null,
       /**
-       * The preferred size of this kind of Activity.Panel
+       * The preferred size of this kind of ActivityPanel
        * @type {AWT.Dimension} */
       preferredSize: null,
       /**
-       * List of events intercepted by this Activity.Panel. Current events are: 'keydown', 'keyup',
+       * List of events intercepted by this ActivityPanel. Current events are: 'keydown', 'keyup',
        * 'keypress', 'mousedown', 'mouseup', 'click', 'dblclick', 'mousemove', 'mouseenter',
        * 'mouseleave', 'mouseover', 'mouseout', 'touchstart', 'touchend', 'touchmove' and 'touchcancel'.
        * @type {string[]} */
@@ -1141,6 +1141,8 @@ define([
       backgroundTransparent: false,
       border: null,
     })
+
+    Activity.Panel = ActivityPanel
 
     return Activity
   })

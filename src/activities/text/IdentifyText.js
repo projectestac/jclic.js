@@ -54,13 +54,13 @@ define([
   }
 
   /**
-   * The {@link TextActivityBase.Panel} where this kind of text activities are played.
+   * The {@link TextActivityBasePanel} where this kind of text activities are played.
    * @class
-   * @extends TextActivityBase.Panel
+   * @extends TextActivityBasePanel
    */
-  IdentifyText.Panel = class extends TextActivityBase.Panel {
+  class IdentifyTextPanel extends TextActivityBase.Panel {
     /**
-     * IdentifyText.Panel constructor
+     * IdentifyTextPanel constructor
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -192,7 +192,7 @@ define([
     }
   }
 
-  Object.assign(IdentifyText.Panel.prototype, {
+  Object.assign(IdentifyTextPanel.prototype, {
     /**
      * Flag indicating if targets must be visually marked when the activity begins. In this type of
      * activity should be always `false` to avoid revealing the words o letters that must be found.
@@ -204,6 +204,8 @@ define([
      */
     lastTimeStamp: 0,
   })
+
+  IdentifyText.Panel = IdentifyTextPanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@text.Identify'] = IdentifyText

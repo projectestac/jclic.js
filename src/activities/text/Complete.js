@@ -54,13 +54,13 @@ define([
   }
 
   /**
-   * The {@link TextActivityBase.Panel} where this kind of text activities are played.
+   * The {@link TextActivityBasePanel} where this kind of text activities are played.
    * @class
-   * @extends TextActivityBase.Panel
+   * @extends TextActivityBasePanel
    */
-  Complete.Panel = class extends TextActivityBase.Panel {
+  class CompletePanel extends TextActivityBase.Panel {
     /**
-     * Complete.Panel constructor
+     * CompletePanel constructor
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -122,6 +122,8 @@ define([
       return super.finishActivity(result)
     }
   }
+
+  Complete.Panel = CompletePanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@text.Complete'] = Complete

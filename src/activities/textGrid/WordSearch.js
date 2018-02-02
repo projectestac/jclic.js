@@ -105,13 +105,13 @@ define([
   })
 
   /**
-   * The {@link Activity.Panel} where word search activities are played.
+   * The {@link ActivityPanel} where word search activities are played.
    * @class
-   * @extends Activity.Panel
+   * @extends ActivityPanel
    */
-  WordSearch.Panel = class extends Activity.Panel {
+  class WordSearchPanel extends Activity.Panel {
     /**
-     * WordSearch.Panel constructor
+     * WordSearchPanel constructor
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -405,9 +405,9 @@ define([
     }
   }
 
-  Object.assign(WordSearch.Panel.prototype, {
+  Object.assign(WordSearchPanel.prototype, {
     /**
-     * The {@link TextGrid} object of this Activity.Panel
+     * The {@link TextGrid} object of this ActivityPanel
      * @type {TextGrid} */
     grid: null,
     /**
@@ -427,6 +427,8 @@ define([
      * @type {string[]} */
     events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
   })
+
+  WordSearch.Panel = WordSearchPanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@textGrid.WordSearch'] = WordSearch

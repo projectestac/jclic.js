@@ -61,17 +61,17 @@ define([
   }
 
   /**
-   * The {@link Activity.Panel} where information screen show its content.
+   * The {@link ActivityPanel} where information screen show its content.
    * @class
-   * @extends Activity.Panel
+   * @extends ActivityPanel
    * @param {Activity} act - The {@link Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
    */
-  InformationScreen.Panel = class extends Activity.Panel {
+  class InformationScreenPanel extends Activity.Panel {
     /**
-     * InformationScreen.Panel constructor
+     * InformationScreenPanel constructor
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
@@ -200,7 +200,7 @@ define([
     }
 
     /**
-     * Builds the accessible components needed for this Activity.Panel
+     * Builds the accessible components needed for this ActivityPanel
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
      */
@@ -233,7 +233,7 @@ define([
     }
   }
 
-  Object.assign(InformationScreen.Panel.prototype, {
+  Object.assign(InformationScreenPanel.prototype, {
     /**
      * The {@link ActiveBoxBag} containing the information to be displayed.
      * @type {ActiveBoxBag} */
@@ -243,6 +243,8 @@ define([
      * @type {string[]} */
     events: ['click'],
   })
+
+  InformationScreen.Panel = InformationScreenPanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@panels.InformationScreen'] = InformationScreen

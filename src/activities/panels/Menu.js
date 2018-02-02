@@ -59,17 +59,17 @@ define([
   }
 
   /**
-   * The {@link Activity.Panel} where Menu will show its content.
+   * The {@link ActivityPanel} where Menu will show its content.
    * @class
-   * @extends Activity.Panel
+   * @extends ActivityPanel
    * @param {Activity} act - The {@link Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
    */
-  Menu.Panel = class extends Activity.Panel {
+  class MenuPanel extends Activity.Panel {
     /**
-     * Menu.Panel constructor
+     * MenuPanel constructor
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
@@ -180,7 +180,7 @@ define([
     }
   }
 
-  Object.assign(Menu.Panel.prototype, {
+  Object.assign(MenuPanel.prototype, {
     /**
      * Default icons used in buttons, inherited from JClic
      */
@@ -217,6 +217,8 @@ AAABdFJOUwBA5thmAAAAgklEQVQ4y9WSQQ6AIAwEsVtFwf+/14JGbcHeTHSuO9kFQggfBE8BFwLR+mBw
 cAXZ0IfsVKS3BTGUMDas0E9NfkO/ovmQBv2v0BJ+xAaYuQX2hCJNtwAAAABJRU5ErkJggg=='
     },
   })
+
+  Menu.Panel = MenuPanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@panels.Menu'] = Menu

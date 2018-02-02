@@ -73,28 +73,28 @@ define([
 
   Object.assign(Identify.prototype, {
     /**
-     * Number of not assigned cells (calculated in {@link Identify.Panel#buildVisualComponents})
+     * Number of not assigned cells (calculated in {@link IdentifyPanel#buildVisualComponents})
      * @type {number} */
     nonAssignedCells: 0,
     /**
      * Number of cells the user must identify to complete the activity (calculated in
-     * {@link Identify.Panel#buildVisualComponents})
+     * {@link IdentifyPanel#buildVisualComponents})
      * @type {number} */
     cellsToMatch: 1,
   })
 
   /**
-   * The {@link Activity.Panel} where identify activities are played.
+   * The {@link ActivityPanel} where identify activities are played.
    * @class
-   * @extends Activity.Panel
+   * @extends ActivityPanel
    * @param {Activity} act - The {@link Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
    */
-  Identify.Panel = class extends Activity.Panel {
+  class IdentifyPanel extends Activity.Panel {
     /**
-     * Identify.Panel constructor
+     * IdentifyPanel constructor
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
@@ -261,7 +261,7 @@ define([
     }
 
     /**
-     * Builds the accessible components needed for this Activity.Panel
+     * Builds the accessible components needed for this ActivityPanel
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
      */
@@ -325,7 +325,7 @@ define([
     }
   }
 
-  Object.assign(Identify.Panel.prototype, {
+  Object.assign(IdentifyPanel.prototype, {
     /**
      * The {@link ActiveBoxBag} containing the information to be displayed on the panel.
      * @type {ActiveBoxBag} */
@@ -335,6 +335,8 @@ define([
      * @type {string[]} */
     events: ['click'],
   })
+
+  Identify.Panel = IdentifyPanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@panels.Identify'] = Identify

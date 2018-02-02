@@ -90,13 +90,13 @@ define([
   }
 
   /**
-   * The {@link Activity.Panel} where exchange puzzle activities are played.
+   * The {@link ActivityPanel} where exchange puzzle activities are played.
    * @class
-   * @extends Activity.Panel
+   * @extends ActivityPanel
    */
-  ExchangePuzzle.Panel = class extends Activity.Panel {
+  class ExchangePuzzlePanel extends Activity.Panel {
     /**
-     * ExchangePuzzle.Panel constructor
+     * ExchangePuzzlePanel constructor
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -217,7 +217,7 @@ define([
     }
 
     /**
-     * Builds the accessible components needed for this Activity.Panel
+     * Builds the accessible components needed for this ActivityPanel
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
      */
@@ -338,7 +338,7 @@ define([
     }
   }
 
-  Object.assign(ExchangePuzzle.Panel.prototype, {
+  Object.assign(ExchangePuzzlePanel.prototype, {
     /**
      * The {@link ActiveBoxBag} object containing the information to be displayed in the panel.
      * @type {ActiveBoxBag} */
@@ -352,6 +352,8 @@ define([
      * @type {string[]} */
     events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
   })
+
+  ExchangePuzzle.Panel = ExchangePuzzlePanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@puzzles.ExchangePuzzle'] = ExchangePuzzle

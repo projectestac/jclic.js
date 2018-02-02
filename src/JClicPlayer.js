@@ -307,7 +307,7 @@ define([
         this.forceFinishActivity()
         this.setWaitCursor(true)
 
-        // The Activity.Panel object to be obtained as a result of the loading process
+        // The ActivityPanel object to be obtained as a result of the loading process
         let actp = null
 
         // step one: load the project
@@ -523,7 +523,7 @@ define([
 
         // Step four: put the activity panel on place
 
-        // Remove the current Activity.Panel
+        // Remove the current ActivityPanel
         if (this.actPanel !== null) {
           this.actPanel.end()
           this.actPanel.$div.remove()
@@ -531,9 +531,9 @@ define([
           this.setCounterValue('time', 0)
         }
 
-        // Attach the new Activity.Panel
+        // Attach the new ActivityPanel
         if (actp) {
-          // Sets the actPanel member to this Activity.Panel
+          // Sets the actPanel member to this ActivityPanel
           this.actPanel = actp
 
           if (this.options.fade > 0)
@@ -683,7 +683,7 @@ define([
 
           if (this.actPanel.bgImage && !act.tiledBgImg && act.absolutePositioned) {
             // Special case: when the activity has a background image not tiled, and an absolute
-            // position has been specified, the Activity.Panel must be placed at this absolute
+            // position has been specified, the ActivityPanel must be placed at this absolute
             // position, relative to the background image
             this.bgImageOrigin.x = (width - this.actPanel.bgImage.width) / 2
             this.bgImageOrigin.y = (height - this.actPanel.bgImage.height) / 2
@@ -694,7 +694,7 @@ define([
             proposedRect.dim.height = Math.min(proposedRect.dim.height, height)
           }
 
-          // Activity.Panel will calculate and set its position and size based on the maximum and optimal
+          // ActivityPanel will calculate and set its position and size based on the maximum and optimal
           // available space
           /* TODO: Try with a computed rectangle instead of "this", to avoid the loss of the right margin
            * in narrow displays */

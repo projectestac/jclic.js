@@ -87,13 +87,13 @@ define([
   })
 
   /**
-   * The {@link Activity.Panel} where complex association activities are played.
+   * The {@link ActivityPanel} where complex association activities are played.
    * @class
-   * @extends SimpleAssociation.Panel
+   * @extends SimpleAssociationPanel
    */
-  ComplexAssociation.Panel = class extends SimpleAssociation.Panel {
+  class ComplexAssociationPanel extends SimpleAssociation.Panel {
     /**
-     * ComplexAssociation.Panel prototype
+     * ComplexAssociationPanel prototype
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -303,12 +303,14 @@ define([
     }
   }
 
-  Object.assign(ComplexAssociation.Panel.prototype, {
+  Object.assign(ComplexAssociationPanel.prototype, {
     /**
      * Array for storing checked associations
      * @type {boolean[]} */
     invAssCheck: null,
   })
+
+  ComplexAssociation.Panel = ComplexAssociationPanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@associations.ComplexAssociation'] = ComplexAssociation

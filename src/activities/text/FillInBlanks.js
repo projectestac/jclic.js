@@ -76,13 +76,13 @@ define([
   })
 
   /**
-   * The {@link TextActivityBase.Panel} where fill-in blank activities are played.
+   * The {@link TextActivityBasePanel} where fill-in blank activities are played.
    * @class
-   * @extends TextActivityBase.Panel
+   * @extends TextActivityBasePanel
    */
-  FillInBlanks.Panel = class extends TextActivityBase.Panel {
+  class FillInBlanksPanel extends TextActivityBase.Panel {
     /**
-     * FillInBlanks.Panel constructor
+     * FillInBlanksPanel constructor
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -102,9 +102,9 @@ define([
      * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
      */
     $createTargetElement(target, $span) {
-      
+
       $span.addClass('JClicTextTarget')
-      
+
       const idLabel = `target${`000${this.targets.length - 1}`.slice(-3)}`
       if (target.isList && target.options && target.options.length > 0) {
         // Use a `select` element
@@ -397,12 +397,14 @@ define([
     }
   }
 
-  Object.assign(FillInBlanks.Panel.prototype, {
+  Object.assign(FillInBlanksPanel.prototype, {
     /**
      * Flag indicating if the activity is open or locked
      * @type {boolean} */
     locked: true,
   })
+
+  FillInBlanks.Panel = FillInBlanksPanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@text.FillInBlanks'] = FillInBlanks

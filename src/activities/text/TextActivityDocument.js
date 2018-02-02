@@ -562,7 +562,7 @@ define([
     flagModified: false,
     /**
      * Pointer to the activity panel containing this TextTarget
-     * @type {TextActivityBase.Panel} */
+     * @type {TextActivityBasePanel} */
     parentPane: null,
   })
 

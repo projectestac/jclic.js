@@ -100,13 +100,13 @@ define([
   })
 
   /**
-   * The {@link Activity.Panel} where simple association activities are played.
+   * The {@link ActivityPanel} where simple association activities are played.
    * @class
-   * @extends Activity.Panel
+   * @extends ActivityPanel
    */
-  SimpleAssociation.Panel = class extends Activity.Panel {
+  class SimpleAssociationPanel extends Activity.Panel {
     /**
-     * SimpleAssociation.Panel constructor
+     * SimpleAssociationPanel constructor
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -308,7 +308,7 @@ define([
     }
 
     /**
-     * Builds the accessible components needed for this Activity.Panel
+     * Builds the accessible components needed for this ActivityPanel
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
      */
@@ -476,7 +476,7 @@ define([
     }
   }
 
-  Object.assign(SimpleAssociation.Panel.prototype, {
+  Object.assign(SimpleAssociationPanel.prototype, {
     /**
      * The {@link ActiveBoxBag} object containing the information to be displayed in the `primary` panel
      * @type {ActiveBoxBag} */
@@ -494,6 +494,8 @@ define([
      * @type {string[]} */
     events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
   })
+
+  SimpleAssociation.Panel = SimpleAssociationPanel
 
   //
   // Register class in Activity.prototype

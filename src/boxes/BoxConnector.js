@@ -36,7 +36,7 @@ define([
 
   /**
    * BoxConnector allows users to visually connect two {@link ActiveBox} objects of an
-   * {@link Activity.Panel}. There are two modes of operation:
+   * {@link ActivityPanel}. There are two modes of operation:
    *
    * - Drawing a line between an origin point (usually the point where the user clicks on) and a
    * destination point.
@@ -231,7 +231,7 @@ define([
      * @type {external:HTMLImageElement} */
     bgImg: null,
     /**
-     * The rectangle of {@link Activity.Panel} saved in `bgImg`
+     * The rectangle of {@link ActivityPanel} saved in `bgImg`
      * @type {AWT.Rectangle} */
     bgRect: null,
     /**

@@ -91,13 +91,13 @@ define([
   })
 
   /**
-   * The {@link TextActivityBase.Panel} where this kind of text activities are played.
+   * The {@link TextActivityBasePanel} where this kind of text activities are played.
    * @class
-   * @extends TextActivityBase.Panel
+   * @extends TextActivityBasePanel
    */
-  OrderText.Panel = class extends TextActivityBase.Panel {
+  class OrderTextPanel extends TextActivityBase.Panel {
     /**
-     * OrderText.Panel constructor
+     * OrderTextPanel constructor
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -386,8 +386,8 @@ define([
     }
   }
 
-  // Properties and methods specific to OrderText.Panel
-  Object.assign(OrderText.Panel.prototype, {
+  // Properties and methods specific to OrderTextPanel
+  Object.assign(OrderTextPanel.prototype, {
     /**
      * Currently selected text target
      * @type {TextActivityDocument.TextTarget} */
@@ -401,6 +401,8 @@ define([
      * @type {string[]} */
     events: ['click', 'mousemove'],
   })
+
+  OrderText.Panel = OrderTextPanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@text.Order'] = OrderText

@@ -753,7 +753,7 @@ define([
      * @param {boolean} status
      */
     blink(status) {
-      // TODO: Move blink and timer to Activity.Panel
+      // TODO: Move blink and timer to ActivityPanel
       if (this.useCursor) {
         this.cursorBlink = status === 1 ? true : status === -1 ? false : !this.cursorBlink
         this.repaintCell(this.cursor.x, this.cursor.y)

@@ -94,13 +94,13 @@ define([
   }
 
   /**
-   * The {@link Activity.Panel} where hole puzzle activities are played.
+   * The {@link ActivityPanel} where hole puzzle activities are played.
    * @class
-   * @extends Activity.Panel
+   * @extends ActivityPanel
    */
-  HolePuzzle.Panel = class extends Activity.Panel {
+  class HolePuzzlePanel extends Activity.Panel {
     /**
-     * HolePuzzle.Panel constructor
+     * HolePuzzlePanel constructor
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -250,7 +250,7 @@ define([
     }
 
     /**
-     * Builds the accessible components needed for this Activity.Panel
+     * Builds the accessible components needed for this ActivityPanel
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
      */
@@ -314,7 +314,7 @@ define([
     }
   }
 
-  Object.assign(HolePuzzle.Panel.prototype, {
+  Object.assign(HolePuzzlePanel.prototype, {
     /**
      * The {@link ActiveBoxBag} object containing the information to be displayed in the panel.
      * @type {ActiveBoxBag} */
@@ -337,6 +337,8 @@ define([
      * @type {string[]} */
     events: ['click'],
   })
+
+  HolePuzzle.Panel = HolePuzzlePanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@puzzles.HolePuzzle'] = HolePuzzle

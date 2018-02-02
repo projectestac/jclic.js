@@ -102,13 +102,13 @@ define([
   })
 
   /**
-   * The {@link Activity.Panel} where crossword activities are played.
+   * The {@link ActivityPanel} where crossword activities are played.
    * @class
-   * @extends Activity.Panel
+   * @extends ActivityPanel
    */
-  CrossWord.Panel = class extends Activity.Panel {
+  class CrossWordPanel extends Activity.Panel {
     /**
-     * CrossWord.Panel constructor
+     * CrossWordPanel constructor
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -466,13 +466,13 @@ define([
     }
   }
 
-  Object.assign(CrossWord.Panel.prototype, {
+  Object.assign(CrossWordPanel.prototype, {
     /**
      * The default width of the 'Horizontal' and 'Vertical' buttons (currently 40 pixels)
      * @type {number} */
     LABEL_WIDTH: 40,
     /**
-     * The text grid of this Activity.Panel
+     * The text grid of this ActivityPanel
      * @type {textGrid} */
     grid: null,
     /**
@@ -542,6 +542,8 @@ define([
      * @type {BoxBase} */
     icoBB: new BoxBase().set('backColor', '#4285F4').set('inactiveColor', '#70A2F6').set('dontFill', true)
   })
+
+  CrossWord.Panel = CrossWordPanel
 
   // Register class in Activity.prototype
   Activity.CLASSES['@textGrid.CrossWord'] = CrossWord

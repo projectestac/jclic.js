@@ -39,7 +39,7 @@ define([
 ], function ($, Activity, AWT, ActiveBox, BoxBase) {
 
   /**
-   * This class and its visual component {@link TextActivityBase.Panel} are the base for text
+   * This class and its visual component {@link TextActivityBasePanel} are the base for text
    * activities like {@link FillInBlanks}, {@link IdentifyText}, {@link OrderText} and {@link Complete}.
    * @exports TextActivityBase
    * @class
@@ -92,13 +92,13 @@ define([
   })
 
   /**
-   * The {@link Activity.Panel} where text activities are played.
+   * The {@link ActivityPanel} where text activities are played.
    * @class
-   * @extends Activity.Panel
+   * @extends ActivityPanel
    */
-  TextActivityBase.Panel = class extends Activity.Panel {
+  class TextActivityBasePanel extends Activity.Panel {
     /**
-     * TextActivityBase.Panel constructor
+     * TextActivityBasePanel constructor
      * @param {Activity} act - The {@link Activity} to which this Panel belongs
      * @param {JClicPlayer} ps - Any object implementing the methods defined in the
      * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -414,7 +414,7 @@ define([
     }
 
     /**
-     * @param {external: jQuery} $popup - The popup to display, or _null _ to just hide the current popup
+     * @param {external:jQuery} $popup - The popup to display, or _null _ to just hide the current popup
      * @param {number} maxTime - The maximum time to mantain the popup on screen, in seconds
      * @param {number} waitTime - When set, indicates the number of seconds to wait before show the popup
      */
@@ -462,10 +462,10 @@ define([
     }
   }
 
-  Object.assign(TextActivityBase.Panel.prototype, {
+  Object.assign(TextActivityBasePanel.prototype, {
     /**
      * Array of jQuery DOM elements (usually of type 'span') containing the targets of this activity
-     * @type {external.jQuery[]} */
+     * @type {external:jQuery[]} */
     targets: null,
     /**
      * Flag indicating if targets must be visually marked at the beginning of the activity.
@@ -482,7 +482,7 @@ define([
     prevScreenTimer: null,
     /**
      * The popup currently been displayed
-     * @type {external: jQuery} */
+     * @type {external:jQuery} */
     $currentPopup: null,
     /**
      * A timer controlling the time the current popup will be displayed
@@ -493,6 +493,8 @@ define([
      * @type {number} */
     popupWaitTimer: 0,
   })
+
+  TextActivityBase.Panel = TextActivityBasePanel
 
   return TextActivityBase
 })
