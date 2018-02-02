@@ -203,27 +203,34 @@ define([
   Object.assign(PlayerHistory.prototype, {
     /**
      * The {@link JClicPlayer} object to which this `PlayerHistory` belongs
+     * @name PlayerHistory#player
      * @type {JClicPlayer} */
     player: null,
     /**
      * This is the main member of the class. PlayerHistory puts and retrieves
      * on it information about the proects and activities done by the current user.
+     * @name PlayerHistory#sequenceStack
      * @type {PlayerHistory#HistoryElement[]} */
     sequenceStack: [],
     /**
      * When in test mode, jumps are only simulated.
+     * @name PlayerHistory#testMode
      * @type {boolean} */
     testMode: false,
     /**
      * Inner class used to store history elements.
+     * @name PlayerHistory#HistoryElement
      * @class
-     * @param {string} projectPath - The full path of the project file
-     * @param {?string} sequence - The nearest sequence tag
-     * @param {number} activity - The index of the current activity on the project's {@link ActivitySequence}
-     * @param {?type} fullZipPath - If `projectPath` resides in a {@link external:JSZip JSZip} object,
-     * the full path of the zip file.
      */
     HistoryElement: class {
+      /**
+       * HistoryElement constructor
+       * @param {string} projectPath - The full path of the project file
+       * @param {?string} sequence - The nearest sequence tag
+       * @param {number} activity - The index of the current activity on the project's {@link ActivitySequence}
+       * @param {?type} fullZipPath - If `projectPath` resides in a {@link external:JSZip JSZip} object,
+       * the full path of the zip file.
+       */
       constructor(projectPath, sequence, activity, fullZipPath) {
         this.projectPath = projectPath
         this.sequence = sequence
@@ -234,5 +241,4 @@ define([
   })
 
   return PlayerHistory
-
 })

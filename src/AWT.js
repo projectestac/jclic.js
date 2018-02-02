@@ -40,23 +40,19 @@ define([
    * This object contains utility clases for painting graphics and images,
    * as found in the Java [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html)
    *
-   * The objects defined here are: {@link AWT.Font}, {@link AWT.Gradient}, {@link AWT.Stroke},
-   * {@link AWT.Point}, {@link AWT.Dimension}, {@link AWT.Shape}, {@link AWT.Rectangle},
-   * {@link AWT.Ellipse}, {@link AWT.Path}, {@link AWT.PathStroke}, {@link AWT.Action},
-   * {@link AWT.Timer} and {@link AWT.Container}.
-   * @exports AWT
-   * @abstract
+   * The objects defined here are: {@link Font}, {@link Gradient}, {@link Stroke},
+   * {@link Point}, {@link Dimension}, {@link Shape}, {@link Rectangle},
+   * {@link Ellipse}, {@link Path}, {@link PathStroke}, {@link Action},
+   * {@link Timer} and {@link Container}.
    */
-  const AWT = {}
 
   /**
-   * AWT.Font contains properties and provides methods to manage fonts
+   * Font contains properties and provides methods to manage fonts
    * @class
    */
-  AWT.Font = class {
-
+  class Font {
     /**
-     * AWT.Font constructor
+     * Font constructor
      * @param {string=} [family='Arial']
      * @param {number=} [size=17]
      * @param {number=} [bold=0]
@@ -82,17 +78,17 @@ define([
      * substitution list, replacing the `family` attribute and loading the alternative font when needed.
      * @param {external:jQuery} $tree - The xml element to be processed
      * @param {Object=} options - Optional param that can contain a `fontSubstitutions` attribute with
-     * a substition table to be added to {@link AWT.Font.SUBSTITUTIONS}
+     * a substition table to be added to {@link Font.SUBSTITUTIONS}
      */
     static checkTree($tree, options) {
-      let substitutions = AWT.Font.SUBSTITUTIONS
+      let substitutions = Font.SUBSTITUTIONS
       // Load own fonts and remove it from the substitution table
       if (options && options.ownFonts) {
         options.ownFonts.forEach(name => {
           // Check WebFont as a workaround to avoid problems with a different version of `webfontloader` in agora.xtec.cat
-          if (AWT.Font.ALREADY_LOADED_FONTS.indexOf(name) < 0 && WebFont && WebFont.load) {
+          if (Font.ALREADY_LOADED_FONTS.indexOf(name) < 0 && WebFont && WebFont.load) {
             WebFont.load({ custom: { families: [name] } })
-            AWT.Font.ALREADY_LOADED_FONTS.push(name)
+            Font.ALREADY_LOADED_FONTS.push(name)
             delete substitutions[name.trim().toLowerCase()]
           }
         })
@@ -109,7 +105,7 @@ define([
         if (name in substitutions) {
           const newName = substitutions[name]
           if (newName !== '') {
-            AWT.Font.loadGoogleFont(newName)
+            Font.loadGoogleFont(newName)
             $style.attr('family', newName)
           }
         }
@@ -122,9 +118,9 @@ define([
      */
     static loadGoogleFont(name) {
       // Check WebFont as a workaround to avoid problems with a different version of `webfontloader` in agora.xtec.cat
-      if (name && !AWT.Font.ALREADY_LOADED_FONTS.includes(name) && WebFont && WebFont.load) {
+      if (name && !Font.ALREADY_LOADED_FONTS.includes(name) && WebFont && WebFont.load) {
         WebFont.load({ google: { families: [name] } })
-        AWT.Font.ALREADY_LOADED_FONTS.push(name)
+        Font.ALREADY_LOADED_FONTS.push(name)
       }
     }
 
@@ -134,13 +130,13 @@ define([
      */
     static loadGoogleFonts(fonts) {
       if (fonts && fonts.forEach)
-        fonts.forEach(name => AWT.Font.loadGoogleFont(name))
+        fonts.forEach(name => Font.loadGoogleFont(name))
     }
 
     /**
      * Reads the properties of this Font from an XML element
      * @param {external:jQuery} $xml - The xml element to be parsed
-     * @returns {AWT.Font}
+     * @returns {Font}
      */
     setProperties($xml) {
       if ($xml.attr('family'))
@@ -159,7 +155,7 @@ define([
     /**
      * Allows to change the `size` member, recalculating the vertical metrics.
      * @param {number} size - The new size to set
-     * @returns {AWT.Font}
+     * @returns {Font}
      */
     setSize(size) {
       const currentSize = this.size
@@ -172,7 +168,7 @@ define([
     /**
      * Increases or decreases the current font size by the specified amount
      * @param {number} amount - The amount to increase or decrease current size
-     * @returns {AWT.Font}
+     * @returns {Font}
      */
     zoom(amount) {
       return this.setSize(this.size + amount)
@@ -185,14 +181,14 @@ define([
     getHeight() {
       if (this._metrics.height < 0) {
         // Look for an equivalent font already calculated
-        const font = AWT.Font.ALREADY_CALCULATED_FONTS.find(font => font.equals(this))
+        const font = Font.ALREADY_CALCULATED_FONTS.find(font => font.equals(this))
         if (font)
           Object.assign(this._metrics, font._metrics)
 
         if (this._metrics.height < 0) {
           this._calcHeight()
           if (this._metrics.height > 0)
-            AWT.Font.ALREADY_CALCULATED_FONTS.push(this)
+            Font.ALREADY_CALCULATED_FONTS.push(this)
         }
       }
       return this._metrics.height
@@ -237,9 +233,9 @@ define([
      * vertical dimension of rendered text using a `span` element.
      * The code has been slighty adapted to deal with Font objects.
      *
-     * _Warning_: Do not call this method direcly. Use {@link AWT.Font#getHeight getHeight()} instead
+     * _Warning_: Do not call this method direcly. Use {@link Font#getHeight getHeight()} instead
      * 
-     * @returns {AWT.Font}
+     * @returns {Font}
      */
     _calcHeight() {
       const
@@ -262,7 +258,7 @@ define([
 
     /**
      * Checks if two Font objects are equivalent
-     * @param {AWT#Font} font - The AWT.Font object to compare against this one
+     * @param {Font} font - The Font object to compare against this one
      * @returns {Boolean} - `true` if both objects are equivalent, `false` otherwise
      */
     equals(font) {
@@ -276,11 +272,11 @@ define([
 
   /**
    * Array of font objects with already calculated heights */
-  AWT.Font.ALREADY_CALCULATED_FONTS = []
+  Font.ALREADY_CALCULATED_FONTS = []
 
   /**
    * Array of font names already loaded from Google Fonts */
-  AWT.Font.ALREADY_LOADED_FONTS = []
+  Font.ALREADY_LOADED_FONTS = []
 
   /**
    * Google Fonts equivalent for special fonts used in some JClic projects.
@@ -290,7 +286,7 @@ define([
    * For example:
    * `<div class ="JClic" data-project="demo.jclic" data-options='{"fontSubstitutions":{"arial":"Arimo"}}'/>`
    */
-  AWT.Font.SUBSTITUTIONS = {
+  Font.SUBSTITUTIONS = {
     'abc': 'Kalam',
     'a.c.m.e. secret agent': 'Permanent Marker',
     'comic sans ms': 'Patrick Hand',
@@ -304,33 +300,38 @@ define([
     'zurichcalligraphic': 'Felipa'
   }
 
-  Object.assign(AWT.Font.prototype, {
+  Object.assign(Font.prototype, {
     /**
      * The `font-family` property
+     * @name Font#family
      * @type {string} */
     family: 'Arial',
     /**
      * The font size
-     * __Warning__: Do not change `size` directly. Use the {@link AWT.Font#setSize|setSize()}
+     * __Warning__: Do not change `size` directly. Use the {@link Font#setSize|setSize()}
      * method instead.
+     * @name Font#size
      * @type {number} */
     size: 17,
     /**
      * The font _bold_ value
+     * @name Font#bold
      * @type {number} */
     bold: 0,
     /**
      * The font _italic_ value
+     * @name Font#italic
      * @type {number} */
     italic: 0,
     /**
      * The font _variant_ value
+     * @name Font#variant
      * @type {string}*/
     variant: '',
     /**
      * The font *_metrics* property contains the values for `ascent`, `descent` and `height`
      * attributes. Vertical font metrics are calculated in
-     * {@link AWT.Font#_calcHeight|calcHeight()} as needed.
+     * {@link Font#_calcHeight|calcHeight()} as needed.
      * @type {{ascent: number, descent: number, height: number}} */
     _metrics: { ascent: -1, descent: -1, height: -1 },
   })
@@ -339,10 +340,9 @@ define([
    * Contains parameters and methods to draw complex color gradients
    * @class
    */
-  AWT.Gradient = class {
-
+  class Gradient {
     /**
-     * AWT.Gradient constructor
+     * Gradient constructor
      * @param {string} c1 - The initial color, in any CSS-valid form.
      * @param {string} c2 - The final color, in any CSS-valid form.
      * @param {number=} [angle=0] - The inclination of the gradient relative to the horizontal line.
@@ -362,7 +362,7 @@ define([
     /**
      * Reads the properties of this Gradient from an XML element
      * @param {external:jQuery} $xml - The xml element to be parsed
-     * @returns {AWT.Gradient}
+     * @returns {Gradient}
      */
     setProperties($xml) {
       this.c1 = Utils.checkColor($xml.attr('source'), 'black')
@@ -376,8 +376,8 @@ define([
      * Creates a {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasGradient|CanvasGradient}
      * based on the provided context and rectangle.
      * @param {external:CanvasRenderingContext2D} ctx - The 2D rendering context
-     * @param {AWT.Rectangle} rect - The rectangle where this gradient will be applied to
-     * @returns {AWT.Gradient}
+     * @param {Rectangle} rect - The rectangle where this gradient will be applied to
+     * @returns {Gradient}
      */
     getGradient(ctx, rect) {
       const
@@ -409,21 +409,25 @@ define([
     }
   }
 
-  Object.assign(AWT.Gradient.prototype, {
+  Object.assign(Gradient.prototype, {
     /**
      * Initial color
+     * @name Gradient#c1
      * @type {string} */
     c1: 'white',
     /**
      * Final color
+     * @name Gradient#c2
      * @type {string} */
     c2: 'black',
     /**
      * Tilt angle
+     * @name Gradient#angle
      * @type {number} */
     angle: 0,
     /**
      * Number of repetitions of the gradient
+     * @name Gradient#cycles
      * @type {number} */
     cycles: 1,
   })
@@ -433,10 +437,9 @@ define([
    * @see {@link http://bucephalus.org/text/CanvasHandbook/CanvasHandbook.html#line-caps-and-joins}
    * @class
    */
-  AWT.Stroke = class {
-
+  class Stroke {
     /**
-     * AWT.Stroke constructor
+     * Stroke constructor
      * @param {number=} [lineWidth=1] - The line width of the stroke
      * @param {string=} [lineCap='butt'] - The line ending type. Possible values are: `butt`, `round`
      * and `square`.
@@ -469,21 +472,25 @@ define([
     }
   }
 
-  Object.assign(AWT.Stroke.prototype, {
+  Object.assign(Stroke.prototype, {
     /**
      * The line width
+     * @name Stroke#lineWidth
      * @type {number} */
     lineWidth: 1.0,
     /**
      * The line ending type (`butt`, `round` or `square`)
+     * @name Stroke#lineCap
      * @type {string} */
     lineCap: 'butt',
     /**
      * The drawing used when two lines join (`round`, `bevel` or `miter`)
+     * @name Stroke#lineJoin
      * @type {string} */
     lineJoin: 'miter',
     /**
      * Ratio between the miter length and half `lineWidth`
+     * @name Stroke#miterLimit
      * @type {number} */
     miterLimit: 10.0,
   })
@@ -492,15 +499,14 @@ define([
    * Contains the `x` andy `y` coordinates of a point, and provides some useful methods.
    * @class
    */
-  AWT.Point = class {
-
+  class Point {
     /**
-     * AWT.Point constructor
-     * @param {number|AWT.Point} x - When `x` is an `AWT.Point` object, a clone of it will be created.
-     * @param {number=} y - Not used when `x` is an `AWT.Point`
+     * Point constructor
+     * @param {number|Point} x - When `x` is an `Point` object, a clone of it will be created.
+     * @param {number=} y - Not used when `x` is an `Point`
      */
     constructor(x, y) {
-      if (x instanceof AWT.Point) {
+      if (x instanceof Point) {
         // Special case: constructor passing another point as unique parameter
         this.x = x.x
         this.y = x.y
@@ -513,7 +519,7 @@ define([
     /**
      * Reads the properties of this Point from an XML element
      * @param {external:jQuery} $xml - The xml element to be parsed
-     * @returns {AWT.Point}
+     * @returns {Point}
      */
     setProperties($xml) {
       this.x = Number($xml.attr('x'))
@@ -523,8 +529,8 @@ define([
 
     /**
      * Moves this Point to a new position, by a specified displacement
-     * @param {AWT.Point|AWT.Dimension} delta - The amount to move
-     * @returns {AWT.Point}
+     * @param {Point|Dimension} delta - The amount to move
+     * @returns {Point}
      */
     moveBy(delta) {
       this.x += delta.x || delta.width || 0
@@ -534,9 +540,9 @@ define([
 
     /**
      * Moves this Point to a new position
-     * @param {number|AWT.Point} newPos - The new position, or a x coordinate
+     * @param {number|Point} newPos - The new position, or a x coordinate
      * @param {number=} y - `null` or `undefined` when `newPos` is a Point
-     * @returns {AWT.Point}
+     * @returns {Point}
      */
     moveTo(newPos, y) {
       if (typeof newPos === 'number') {
@@ -551,8 +557,8 @@ define([
 
     /**
      * Multiplies the `x` and `y` coordinates by a specified `delta`
-     * @param {AWT.Point|AWT.Dimension} delta - The amount to multiply by.
-     * @returns {AWT.Point}
+     * @param {Point|Dimension} delta - The amount to multiply by.
+     * @returns {Point}
      */
     multBy(delta) {
       this.x *= delta.x || delta.width || 0
@@ -562,7 +568,7 @@ define([
 
     /**
      * Checks if two points are at the same place
-     * @param {AWT.Point} p - The Point to check against to
+     * @param {Point} p - The Point to check against to
      * @returns {boolean}
      */
     equals(p) {
@@ -571,7 +577,7 @@ define([
 
     /**
      * Calculates the distance between two points
-     * @param {AWT.Point} point - The Point to calculate the distance against to
+     * @param {Point} point - The Point to calculate the distance against to
      * @returns {number} - The distance between the two points.
      */
     distanceTo(point) {
@@ -580,18 +586,20 @@ define([
 
     /**
      * Clones this point
-     * @returns {AWT.Point}
+     * @returns {Point}
      */
     clone() {
-      return new AWT.Point(this)
+      return new Point(this)
     }
   }
 
-  Object.assign(AWT.Point.prototype, {
+  Object.assign(Point.prototype, {
     /**
+     * @name Point#x
      * @type {number} */
     x: 0,
     /**
+     * @name Point#y
      * @type {number} */
     y: 0,
   })
@@ -600,17 +608,16 @@ define([
    * This class encapsulates `width` and `height` properties.
    * @class
    */
-  AWT.Dimension = class {
-
+  class Dimension {
     /**
-     * AWT.Dimension constructor
-     * @param {number|AWT.Point} w - The width of this Dimension, or the upper-left vertex of a
+     * Dimension constructor
+     * @param {number|Point} w - The width of this Dimension, or the upper-left vertex of a
      * virtual Rectangle
-     * @param {number|AWT.Point} h - The height of this Dimension, or the bottom-right vertex of a
+     * @param {number|Point} h - The height of this Dimension, or the bottom-right vertex of a
      * virtual Rectangle
      */
     constructor(w, h) {
-      if (w instanceof AWT.Point && h instanceof AWT.Point) {
+      if (w instanceof Point && h instanceof Point) {
         this.width = h.x - w.x
         this.height = h.y - w.y
       } else {
@@ -622,7 +629,7 @@ define([
     /**
      * Reads the properties of this Dimension from an XML element
      * @param {external:jQuery} $xml - The xml element to be parsed
-     * @returns {AWT.Dimension}
+     * @returns {Dimension}
      */
     setProperties($xml) {
       this.width = Number($xml.attr('width'))
@@ -632,7 +639,7 @@ define([
 
     /**
      * Check if two dimensions are equivalent
-     * @param {AWT.Dimension} d
+     * @param {Dimension} d
      * @returns {Boolean}
      */
     equals(d) {
@@ -641,8 +648,8 @@ define([
 
     /**
      * Multiplies the `w` and `h` co-ordinates by a specified `delta`
-     * @param {AWT.Point|AWT.Dimension} delta
-     * @returns {AWT.Dimension}
+     * @param {Point|Dimension} delta
+     * @returns {Dimension}
      */
     multBy(delta) {
       this.width *= delta.x || delta.width || 0
@@ -652,13 +659,13 @@ define([
 
     /**
      * Sets new values for width and height.
-     * `width` can be a number or another `AWT.Dimension` object
-     * @param {number|AWT.Dimension} width - The new width, or a full Dimension to copy it from.
+     * `width` can be a number or another `Dimension` object
+     * @param {number|Dimension} width - The new width, or a full Dimension to copy it from.
      * @param {number=} height - Not used when `width` is a Dimension
-     * @returns {AWT.Dimension}
+     * @returns {Dimension}
      */
     setDimension(width, height) {
-      if (width instanceof AWT.Dimension) {
+      if (width instanceof Dimension) {
         height = width.height
         width = width.width
       }
@@ -676,89 +683,35 @@ define([
     }
   }
 
-  Object.assign(AWT.Dimension.prototype, {
+  Object.assign(Dimension.prototype, {
     /**
+     * @name Dimension#width
      * @type {number} */
     width: 0,
     /**
+     * @name Dimension#height
      * @type {number} */
     height: 0,
   })
-
-  /**
-   * Calculates some of the points included in a quadratic Bézier curve
-   * The number of points being calculated is defined in Utils.settings.BEZIER_POINTS
-   * @see {@link https://en.wikipedia.org/wiki/B%C3%A9zier_curve}
-   * @see {@link https://www.jasondavies.com/animated-bezier/}
-   *
-   * @param {AWT.Point} p0 - Starting point of the quadratic Bézier curve
-   * @param {AWT.Point} p1 - Control point
-   * @param {AWT.Point} p2 - Ending point
-   * @param {number=} numPoints - The number of intermediate points to calculate. When not defined,
-   * the value will be obtained from {@link Utils.settings.BEZIER_POINTS}.
-   * @returns {AWT.Point[]} - Array with some intermediate points from the resulting Bézier curve
-   */
-  AWT.getQuadraticPoints = (p0, p1, p2, numPoints) => {
-    if (!numPoints)
-      numPoints = Utils.settings.BEZIER_POINTS
-    const
-      result = [],
-      pxa = new AWT.Point(),
-      pxb = new AWT.Point()
-    for (let i = 0; i < numPoints; i++) {
-      const n = (i + 1) / (numPoints + 1)
-      pxa.x = p0.x + (p1.x - p0.x) * n
-      pxa.y = p0.y - (p0.y - p1.y) * n
-      pxb.x = p1.x + (p2.x - p1.x) * n
-      pxb.y = p1.y + (p2.y - p1.y) * n
-      result.push(new AWT.Point(pxa.x + (pxb.x - pxa.x) * n, pxa.y - (pxa.y - pxb.y) * n))
-    }
-    return result
-  }
-
-  /**
-   * Calculates some of the points included in a cubic Bézier (curve with two control points)
-   * The number of points being calculated is defined in Utils.settings.BEZIER_POINTS
-   * @param {AWT.Point} p0 - Starting point of the cubic Bézier curve
-   * @param {AWT.Point} p1 - First control point
-   * @param {AWT.Point} p2 - Second control point
-   * @param {AWT.Point} p3 - Ending point
-   * @param {number=} numPoints - The number of intermediate points to calculate. When not defined,
-   * the value will be obtained from {@link Utils.settings.BEZIER_POINTS}.
-   * @returns {AWT.Point[]} - Array with some intermediate points from the resulting Bézier curve
-   */
-  AWT.getCubicPoints = (p0, p1, p2, p3, numPoints) => {
-    const result = []
-    if (!numPoints)
-      numPoints = Utils.settings.BEZIER_POINTS
-    const pr = AWT.getQuadraticPoints(p0, p1, p2, numPoints)
-    const pq = AWT.getQuadraticPoints(p1, p2, p3, numPoints)
-    for (let i = 0; i < numPoints; i++) {
-      const n = (i + 1) / (numPoints + 1)
-      result.push(new AWT.Point(pr[i].x + (pq[i].x - pr[i].x) * n, pr[i].y - (pr[0].y - pq[0].y) * n))
-    }
-    return result
-  }
 
   /**
    * Shape is a generic abstract class for rectangles, ellipses and stroke-free shapes.
    * @abstract
    * @class
    */
-  AWT.Shape = class {
-
+  class Shape {
     /**
-     * AWT.Shape  constructor
-     * @param {AWT.Point} pos - The top-left coordinates of this Shape
+     * Shape  constructor
+     * @param {Point} pos - The top-left coordinates of this Shape
      */
     constructor(pos) {
-      this.pos = pos || new AWT.Point()
+      this.pos = pos || new Point()
     }
 
     /**
      * Shifts the shape a specified amount in horizontal and vertical directions
-     * @param {AWT.Point|AWT.Dimension} delta - The amount to shift the Shape
-     * @returns {AWT.Shape}
+     * @param {Point|Dimension} delta - The amount to shift the Shape
+     * @returns {Shape}
      */
     moveBy(delta) {
       this.pos.moveBy(delta)
@@ -767,8 +720,8 @@ define([
 
     /**
      * Moves this shape to a new position
-     * @param {AWT.Point} newPos - The new position of the shape
-     * @returns {AWT.Shape}
+     * @param {Point} newPos - The new position of the shape
+     * @returns {Shape}
      */
     moveTo(newPos) {
       this.pos.moveTo(newPos)
@@ -776,16 +729,16 @@ define([
     }
 
     /**
-     * Gets the enclosing {@link AWT.Rectangle} of this Shape.
-     * @returns {AWT.Rectangle}
+     * Gets the enclosing {@link Rectangle} of this Shape.
+     * @returns {Rectangle}
      */
     getBounds() {
-      return new AWT.Rectangle(this.pos)
+      return new Rectangle(this.pos)
     }
 
     /**
      * Checks if two shapes are equivalent.
-     * @param {AWT.Shape} p - The AWT.Shape to compare against
+     * @param {Shape} p - The Shape to compare against
      * @returns {boolean}
      */
     equals(p) {
@@ -794,8 +747,8 @@ define([
 
     /**
      * Multiplies the dimension of the Shape by the specified `delta` amount.
-     * @param {AWT.Point|AWT.Dimension} _delta - Object containing the X and Y ratio to be scaled.
-     * @returns {AWT.Shape}
+     * @param {Point|Dimension} _delta - Object containing the X and Y ratio to be scaled.
+     * @returns {Shape}
      */
     scaleBy(_delta) {
       // Nothing to scale in abstract shapes
@@ -805,17 +758,17 @@ define([
     /**
      * Gets a clone of this shape moved to the `pos` component of the rectangle and scaled
      * by its `dim` value.
-     * @param {AWT.Rectangle} rect - The rectangle to be taken as a base for moving and scaling
+     * @param {Rectangle} rect - The rectangle to be taken as a base for moving and scaling
      * this shape.
-     * @returns {AWT.Shape}
+     * @returns {Shape}
      */
     getShape(rect) {
       return this.clone().scaleBy(rect.dim).moveBy(rect.pos)
     }
 
     /**
-     * Checks if the provided {@link AWT.Point} is inside this shape.
-     * @param {AWT.Point} _p - The point to check
+     * Checks if the provided {@link Point} is inside this shape.
+     * @param {Point} _p - The point to check
      * @returns {boolean}
      */
     contains(_p) {
@@ -824,8 +777,8 @@ define([
     }
 
     /**
-     * Checks if the provided {@link AWT.Rectangle} `r` intersects with this shape.
-     * @param {AWT.Rectangle} _r
+     * Checks if the provided {@link Rectangle} `r` intersects with this shape.
+     * @param {Rectangle} _r
      * @returns {boolean}
      */
     intersects(_r) {
@@ -836,7 +789,7 @@ define([
     /**
      * Fills the Shape with the current style in the provided HTML canvas context
      * @param {external:CanvasRenderingContext2D} ctx - The canvas 2D rendering context where to fill this shape.
-     * @param {AWT.Rectangle=} dirtyRegion - The context region to be updated. Used as clipping
+     * @param {Rectangle=} dirtyRegion - The context region to be updated. Used as clipping
      * region when drawing.
      * @returns {external:CanvasRenderingContext2D} - The provided rendering context
      */
@@ -890,7 +843,7 @@ define([
     }
 
     /**
-     * Shorthand method for determining if a Shape is an {@link AWT.Rectangle}
+     * Shorthand method for determining if a Shape is an {@link Rectangle}
      * @returns {Boolean}
      */
     isRect() {
@@ -906,71 +859,71 @@ define([
     }
   }
 
-  Object.assign(AWT.Shape.prototype, {
+  Object.assign(Shape.prototype, {
     /**
      * The current position of the shape
-     * @type {AWT.Point} */
-    pos: new AWT.Point(),
+     * @name Shape#pos
+     * @type {Point} */
+    pos: new Point(),
   })
 
   /**
-   * The rectangular {@link AWT.Shape} accepts five different sets of parameters:
+   * The rectangular {@link Shape} accepts five different sets of parameters:
    * @example
-   * // Calling AWT.Rectangle() with different sets of parameters
-   * // An AWT.Point and an AWT.Dimension:
-   * new AWT.Rectangle(pos, dim)
-   * // Another AWT.Rectangle, to be cloned:
-   * new AWT.Rectangle(rect)
-   * // Two AWT.Point objects containing the coordinates of upper-left and lower-right vertexs:
-   * new AWT.Rectangle(p0, p1)
+   * // Calling Rectangle() with different sets of parameters
+   * // An Point and an Dimension:
+   * new Rectangle(pos, dim)
+   * // Another Rectangle, to be cloned:
+   * new Rectangle(rect)
+   * // Two Point objects containing the coordinates of upper-left and lower-right vertexs:
+   * new Rectangle(p0, p1)
    * // An array of four numbers with the coordinates of the same vertexs:
-   * new AWT.Rectangle([x0, y0, x1, y1])
+   * new Rectangle([x0, y0, x1, y1])
    * // Four single numbers, meaning the same coordinates as above:
-   * new AWT.Rectangle(x0, y0, x1, y1)
+   * new Rectangle(x0, y0, x1, y1)
    * @class
-   * @extends AWT.Shape
+   * @extends Shape
    */
-  AWT.Rectangle = class extends AWT.Shape {
-
+  class Rectangle extends Shape {
     /**
-     * AWT.Rectangle constructor
-     * @param {AWT.Point|AWT.Rectangle|number|number[]} pos
-     * @param {AWT.Dimension|number=} dim
+     * Rectangle constructor
+     * @param {Point|Rectangle|number|number[]} pos
+     * @param {Dimension|number=} dim
      * @param {number=} w
      * @param {number=} h
      */
     constructor(pos, dim, w, h) {
       let p = pos, d = dim
       // Special case: constructor with a Rectangle as a unique parameter
-      if (pos instanceof AWT.Rectangle) {
-        d = new AWT.Dimension(pos.dim.width, pos.dim.height)
-        p = new AWT.Point(pos.pos.x, pos.pos.y)
-      } else if (pos instanceof AWT.Point) {
-        p = new AWT.Point(pos.x, pos.y)
-        if (dim instanceof AWT.Dimension)
-          d = new AWT.Dimension(dim.width, dim.height)
+      if (pos instanceof Rectangle) {
+        d = new Dimension(pos.dim.width, pos.dim.height)
+        p = new Point(pos.pos.x, pos.pos.y)
+      } else if (pos instanceof Point) {
+        p = new Point(pos.x, pos.y)
+        if (dim instanceof Dimension)
+          d = new Dimension(dim.width, dim.height)
       } else if (pos instanceof Array) {
         // Assume `pos` is an array of numbers indicating: x0, y0, x1, y1
-        p = new AWT.Point(pos[0], pos[1])
-        d = new AWT.Dimension(pos[2] - pos[0], pos[3] - pos[1])
+        p = new Point(pos[0], pos[1])
+        d = new Dimension(pos[2] - pos[0], pos[3] - pos[1])
       } else if (typeof w === 'number' && typeof h === 'number') {
         // width and height passed. Treat all parameters as co-ordinates:
-        p = new AWT.Point(pos, dim)
-        d = new AWT.Dimension(w, h)
+        p = new Point(pos, dim)
+        d = new Dimension(w, h)
       }
       super(p)
 
-      if (d instanceof AWT.Dimension)
+      if (d instanceof Dimension)
         this.dim = d
-      else if (d instanceof AWT.Point)
-        this.dim = new AWT.Dimension(d.x - this.pos.x, d.y - this.pos.y)
+      else if (d instanceof Point)
+        this.dim = new Dimension(d.x - this.pos.x, d.y - this.pos.y)
       else
-        this.dim = new AWT.Dimension()
+        this.dim = new Dimension()
     }
 
     /**
-     * Gets the enclosing {@link AWT.Rectangle} of this Shape.
-     * @returns {AWT.Rectangle}
+     * Gets the enclosing {@link Rectangle} of this Shape.
+     * @returns {Rectangle}
      */
     getBounds() {
       return this
@@ -978,12 +931,12 @@ define([
 
     /**
      * Sets this Rectangle the position and dimension of another one
-     * @param {AWT.Rectangle} rect
-     * @returns {AWT.Rectangle}
+     * @param {Rectangle} rect
+     * @returns {Rectangle}
      */
     setBounds(rect) {
       if (!rect)
-        rect = new AWT.Rectangle()
+        rect = new Rectangle()
       this.pos.x = rect.pos.x
       this.pos.y = rect.pos.y
       this.dim.width = rect.dim.width
@@ -993,25 +946,25 @@ define([
 
     /**
      * Checks if two shapes are equivalent.
-     * @param {AWT.Shape} r - The AWT.Shape to compare against
+     * @param {Shape} r - The Shape to compare against
      * @returns {boolean}
      */
     equals(r) {
-      return r instanceof AWT.Rectangle && this.pos.equals(r.pos) && this.dim.equals(r.dim)
+      return r instanceof Rectangle && this.pos.equals(r.pos) && this.dim.equals(r.dim)
     }
 
     /**
      * Clones this Rectangle
-     * @returns {AWT.Rectangle}
+     * @returns {Rectangle}
      */
     clone() {
-      return new AWT.Rectangle(this)
+      return new Rectangle(this)
     }
 
     /**
      * Multiplies the dimension of the Shape by the specified `delta` amount.
-     * @param {AWT.Point|AWT.Dimension} delta - Object containing the X and Y ratio to be scaled.
-     * @returns {AWT.Rectangle}
+     * @param {Point|Dimension} delta - Object containing the X and Y ratio to be scaled.
+     * @returns {Rectangle}
      */
     scaleBy(delta) {
       this.pos.multBy(delta)
@@ -1023,7 +976,7 @@ define([
      * Expands the boundaries of this shape. This affects the current position and dimension.
      * @param {number} dx - The amount to grow (or decrease) in horizontal direction
      * @param {number} dy - The amount to grow (or decrease) in vertical direction
-     * @returns {AWT.Rectangle}
+     * @returns {Rectangle}
      */
     grow(dx, dy) {
       this.pos.x -= dx
@@ -1034,17 +987,17 @@ define([
     }
 
     /**
-     * Gets the {@link AWT.Point} corresponding to the lower-right vertex of the Rectangle.
-     * @returns {AWT.Point}
+     * Gets the {@link Point} corresponding to the lower-right vertex of the Rectangle.
+     * @returns {Point}
      */
     getOppositeVertex() {
-      return new AWT.Point(this.pos.x + this.dim.width, this.pos.y + this.dim.height)
+      return new Point(this.pos.x + this.dim.width, this.pos.y + this.dim.height)
     }
 
     /**
      * Adds the boundaries of another shape to the current one
-     * @param {AWT.Shape} shape - The {@link AWT.Shape} to be added
-     * @returns {AWT.Rectangle}
+     * @param {Shape} shape - The {@link Shape} to be added
+     * @returns {Rectangle}
      */
     add(shape) {
       const
@@ -1061,14 +1014,14 @@ define([
     }
 
     //
-    // Inherits the documentation of `contains` in AWT.Shape
+    // Inherits the documentation of `contains` in Shape
     contains(p) {
       const p2 = this.getOppositeVertex()
       return p.x >= this.pos.x && p.x <= p2.x && p.y >= this.pos.y && p.y <= p2.y
     }
 
     //
-    // Inherits the documentation of `intersects` in AWT.Shape
+    // Inherits the documentation of `intersects` in Shape
     intersects(r) {
       const
         p1 = this.pos, p2 = this.getOppositeVertex(),
@@ -1077,7 +1030,7 @@ define([
     }
 
     //
-    // Inherits the documentation of `preparePath` in AWT.Shape
+    // Inherits the documentation of `preparePath` in Shape
     preparePath(ctx) {
       ctx.beginPath()
       ctx.rect(this.pos.x, this.pos.y, this.dim.width, this.dim.height)
@@ -1085,25 +1038,25 @@ define([
     }
 
     //
-    // Inherits the documentation of `getSurface` in AWT.Shape
+    // Inherits the documentation of `getSurface` in Shape
     getSurface() {
       return this.dim.getSurface()
     }
 
     //
-    // Inherits the documentation of `isEmpty` in AWT.Shape
+    // Inherits the documentation of `isEmpty` in Shape
     isEmpty() {
       return this.getSurface() === 0
     }
 
     //
-    // Inherits the documentation of `isRect` in AWT.Shape
+    // Inherits the documentation of `isRect` in Shape
     isRect() {
       return true
     }
 
     //
-    // Inherits the documentation of `toString` in AWT.Shape
+    // Inherits the documentation of `toString` in Shape
     toString() {
       return `Rectangle ${this.getCoords()}`
     }
@@ -1118,24 +1071,24 @@ define([
     }
   }
 
-  Object.assign(AWT.Rectangle.prototype, {
+  Object.assign(Rectangle.prototype, {
     /**
-     * The {@link AWT.Dimension} of the Rectangle
-     * @type {AWT.Dimension} */
-    dim: new AWT.Dimension(),
+     * The {@link Dimension} of the Rectangle
+     * @name Rectangle#dim
+     * @type {Dimension} */
+    dim: new Dimension(),
   })
 
   /**
-   * The Ellipse shape has the same constructor options as {@link AWT.Rectangle}
+   * The Ellipse shape has the same constructor options as {@link Rectangle}
    * @class
-   * @extends AWT.Rectangle
+   * @extends Rectangle
    */
-  AWT.Ellipse = class extends AWT.Rectangle {
-
+  class Ellipse extends Rectangle {
     /**
-     * AWT.Ellipse constructor
-     * @param {AWT.Point|AWT.Rectangle|number|number[]} pos
-     * @param {AWT.Dimension|number=} dim
+     * Ellipse constructor
+     * @param {Point|Rectangle|number|number[]} pos
+     * @param {Dimension|number=} dim
      * @param {number=} w
      * @param {number=} h
      */
@@ -1144,7 +1097,7 @@ define([
     }
 
     //
-    // Inherits the documentation of `preparePath` in AWT.Rectangle
+    // Inherits the documentation of `preparePath` in Rectangle
     preparePath(ctx) {
 
       // Using the solution 'drawEllipseWithBezier' proposed by Steve Tranby in:
@@ -1171,7 +1124,7 @@ define([
     }
 
     //
-    // Inherits the documentation of `contains` in AWT.Shape
+    // Inherits the documentation of `contains` in Shape
     contains(p) {
       // First check if the point is inside the enclosing rectangle
       let result = super.contains(p)
@@ -1191,47 +1144,46 @@ define([
     }
 
     //
-    // Inherits the documentation of `getSurface` in AWT.Rectangle
+    // Inherits the documentation of `getSurface` in Rectangle
     getSurface() {
       return Math.PI * this.dim.width / 2 * this.dim.height / 2
     }
 
     //
-    // Inherits the documentation of `equals` in AWT.Rectangle
+    // Inherits the documentation of `equals` in Rectangle
     equals(e) {
-      return e instanceof AWT.Ellipse && super.equals(e)
+      return e instanceof Ellipse && super.equals(e)
     }
 
     //
-    // Inherits the documentation of `clone` in AWT.Rectangle
+    // Inherits the documentation of `clone` in Rectangle
     clone() {
-      return new AWT.Ellipse(this.pos, this.dim)
+      return new Ellipse(this.pos, this.dim)
     }
 
     //
-    // Inherits the documentation of `isRect` in AWT.Rectangle
+    // Inherits the documentation of `isRect` in Rectangle
     isRect() {
       return false
     }
 
     //
-    // Inherits the documentation of `toString` in AWT.Shape
+    // Inherits the documentation of `toString` in Shape
     toString() {
       return `Ellipse enclosed in ${this.getCoords()}`
     }
   }
 
   /**
-   * A `Path` is a {@link AWT.Shape} formed by a serie of strokes, represented by
-   * {@link AWT.PathStroke} objects
+   * A `Path` is a {@link Shape} formed by a serie of strokes, represented by
+   * {@link PathStroke} objects
    * @class
-   * @extends AWT.Shape
+   * @extends Shape
    */
-  AWT.Path = class extends AWT.Shape {
-
+  class Path extends Shape {
     /**
-     * AWT.Path constructor
-     * @param {AWT.PathStroke[]} strokes - The array of {@link AWT.PathStroke} objects defining this Path.
+     * Path constructor
+     * @param {PathStroke[]} strokes - The array of {@link PathStroke} objects defining this Path.
      */
     constructor(strokes) {
       super()
@@ -1239,24 +1191,24 @@ define([
       if (strokes) {
         this.strokes = []
         // In [Shaper](Shaper.html) objects, strokes have `action` instead of `type` and `data` instead of `points`
-        strokes.forEach(str => this.strokes.push(new AWT.PathStroke(str.type || str.action, str.points || str.data)))
+        strokes.forEach(str => this.strokes.push(new PathStroke(str.type || str.action, str.points || str.data)))
       }
       // Calculate the enclosing rectangle
-      this.enclosing = new AWT.Rectangle()
+      this.enclosing = new Rectangle()
       this.enclosingPoints = []
       this.calcEnclosingRect()
       this.pos = this.enclosing.pos
     }
 
     //
-    // Inherits the documentation of `clone` in AWT.Shape
+    // Inherits the documentation of `clone` in Shape
     clone() {
-      return new AWT.Path(this.strokes.map(str => str.clone()))
+      return new Path(this.strokes.map(str => str.clone()))
     }
 
     /**
-     * Adds a {@link AWT.PathStroke} to `strokes`
-     * @param {AWT.PathStroke} stroke
+     * Adds a {@link PathStroke} to `strokes`
+     * @param {PathStroke} stroke
      */
     addStroke(stroke) {
       this.strokes.push(stroke)
@@ -1265,14 +1217,14 @@ define([
 
     /**
      * Calculates the polygon and the rectangle that (approximately) encloses this shape
-     * @returns {AWT.Rectangle}
+     * @returns {Rectangle}
      */
     calcEnclosingRect() {
       this.enclosingPoints = []
-      let last = new AWT.Point()
+      let last = new Point()
       this.strokes.forEach(str => {
         str.getEnclosingPoints(last).forEach(pt => {
-          last = new AWT.Point(pt)
+          last = new Point(pt)
           this.enclosingPoints.push(last)
         })
       })
@@ -1283,8 +1235,8 @@ define([
         l--
       }
       const
-        p0 = new AWT.Point(this.enclosingPoints[0]),
-        p1 = new AWT.Point(this.enclosingPoints[0])
+        p0 = new Point(this.enclosingPoints[0]),
+        p1 = new Point(this.enclosingPoints[0])
 
       for (let k = 1; k < l; k++) {
         const p = this.enclosingPoints[k]
@@ -1295,18 +1247,18 @@ define([
         p1.x = Math.max(p.x, p1.x)
         p1.y = Math.max(p.y, p1.y)
       }
-      this.enclosing.setBounds(new AWT.Rectangle(p0, new AWT.Dimension(p0, p1)))
+      this.enclosing.setBounds(new Rectangle(p0, new Dimension(p0, p1)))
       return this.enclosing
     }
 
     //
-    // Inherits the documentation of `getBounds` in AWT.Shape
+    // Inherits the documentation of `getBounds` in Shape
     getBounds() {
       return this.enclosing
     }
 
     //
-    // Inherits the documentation of `moveBy` in AWT.Shape
+    // Inherits the documentation of `moveBy` in Shape
     moveBy(delta) {
       this.strokes.forEach(str => str.moveBy(delta))
       this.enclosingPoints.forEach(pt => pt.moveBy(delta))
@@ -1315,20 +1267,20 @@ define([
     }
 
     //
-    // Inherits the documentation of `moveTo` in AWT.Shape
+    // Inherits the documentation of `moveTo` in Shape
     moveTo(newPos) {
-      return this.moveBy(new AWT.Dimension(newPos.x - this.pos.x, newPos.y - this.pos.y))
+      return this.moveBy(new Dimension(newPos.x - this.pos.x, newPos.y - this.pos.y))
     }
 
     //
-    // Inherits the documentation of `equals` in AWT.Shape
+    // Inherits the documentation of `equals` in Shape
     // TODO: Implement comparision of complex paths
     equals(_p) {
       return false
     }
 
     //
-    // Inherits the documentation of `scaleBy` in AWT.Shape
+    // Inherits the documentation of `scaleBy` in Shape
     scaleBy(delta) {
       this.strokes.forEach(str => str.multBy(delta))
       this.enclosingPoints.forEach(pt => pt.multBy(delta))
@@ -1337,7 +1289,7 @@ define([
     }
 
     //
-    // Inherits the documentation of `contains` in AWT.Shape
+    // Inherits the documentation of `contains` in Shape
     contains(p) {
       let result = this.enclosing.contains(p)
       if (result) {
@@ -1371,14 +1323,14 @@ define([
     }
 
     //
-    // Inherits the documentation of `intersects` in AWT.Shape
+    // Inherits the documentation of `intersects` in Shape
     // TODO: Implement a check algorithm based on the real shape
     intersects(r) {
       return this.enclosing.intersects(r)
     }
 
     //
-    // Inherits the documentation of `preparePath` in AWT.Shape
+    // Inherits the documentation of `preparePath` in Shape
     preparePath(ctx) {
       // TODO: Implement filling paths
       ctx.beginPath()
@@ -1387,62 +1339,119 @@ define([
     }
   }
 
-  Object.assign(AWT.Path.prototype, {
+  Object.assign(Path.prototype, {
     /**
      * The strokes forming this Path.
-     * @type {AWT.PathStroke[]} */
+     * @name Path#strokes
+     * @type {PathStroke[]} */
     strokes: [],
     /**
-     * The {@link AWT.Rectangle} enclosing this Path (when drawing, this Rectangle don't include border width!)
-     * @type {AWT.Rectangle} */
-    enclosing: new AWT.Rectangle(),
+     * The {@link Rectangle} enclosing this Path (when drawing, this Rectangle don't include border width!)
+     * @name Path#enclosing
+     * @type {Rectangle} */
+    enclosing: new Rectangle(),
     /**
      * Set of vertexs of a polygon close to the real path of this shape
-     * @type {AWT.Point[]} */
+     * @name Path#enclosingPoints
+     * @type {Point[]} */
     enclosingPoints: [],
   })
 
   /**
-   * PathStroke is the basic component of {@link AWT.Path} objects
+   * PathStroke is the basic component of {@link Path} objects
    * @class
    */
-  AWT.PathStroke = class {
-
+  class PathStroke {
     /**
-     * AWT.PathStroke constructor
+     * PathStroke constructor
      * @param {string} type - The type of stroke. Possible values are: `M` (move to), `L` (line to),
      * `Q` (quadratic to), `B` (bezier to) and `X` (close path).
-     * @param {AWT.Point[]} points - The array of {@link AWT.Point} objects used in this Stroke.
+     * @param {Point[]} points - The array of {@link Point} objects used in this Stroke.
      */
     constructor(type, points) {
       this.type = type
       // Points are deep cloned, to avoid change the original values
       if (points && points.length > 0) {
         // Check if 'points' is an array of objects of type 'Point'
-        if (points[0] instanceof AWT.Point)
-          this.points = points.map(p => new AWT.Point(p))
+        if (points[0] instanceof Point)
+          this.points = points.map(p => new Point(p))
         // otherwise assume that 'points' contains just numbers
         // to be readed in pairs of x and y co-ordinates
         else {
           this.points = []
           for (let i = 0; i < points.length; i += 2)
-            this.points.push(new AWT.Point(points[i], points[i + 1]))
+            this.points.push(new Point(points[i], points[i + 1]))
         }
       }
     }
 
     /**
+     * Calculates some of the points included in a quadratic Bézier curve
+     * The number of points being calculated is defined in Utils.settings.BEZIER_POINTS
+     * @see {@link https://en.wikipedia.org/wiki/B%C3%A9zier_curve}
+     * @see {@link https://www.jasondavies.com/animated-bezier/}
+     *
+     * @param {Point} p0 - Starting point of the quadratic Bézier curve
+     * @param {Point} p1 - Control point
+     * @param {Point} p2 - Ending point
+     * @param {number=} numPoints - The number of intermediate points to calculate. When not defined,
+     * the value will be obtained from {@link Utils.settings.BEZIER_POINTS}.
+     * @returns {Point[]} - Array with some intermediate points from the resulting Bézier curve
+     */
+    static getQuadraticPoints(p0, p1, p2, numPoints) {
+      if (!numPoints)
+        numPoints = Utils.settings.BEZIER_POINTS
+      const
+        result = [],
+        pxa = new Point(),
+        pxb = new Point()
+      for (let i = 0; i < numPoints; i++) {
+        const n = (i + 1) / (numPoints + 1)
+        pxa.x = p0.x + (p1.x - p0.x) * n
+        pxa.y = p0.y - (p0.y - p1.y) * n
+        pxb.x = p1.x + (p2.x - p1.x) * n
+        pxb.y = p1.y + (p2.y - p1.y) * n
+        result.push(new Point(pxa.x + (pxb.x - pxa.x) * n, pxa.y - (pxa.y - pxb.y) * n))
+      }
+      return result
+    }
+
+    /**
+     * Calculates some of the points included in a cubic Bézier (curve with two control points)
+     * The number of points being calculated is defined in Utils.settings.BEZIER_POINTS
+     * @param {Point} p0 - Starting point of the cubic Bézier curve
+     * @param {Point} p1 - First control point
+     * @param {Point} p2 - Second control point
+     * @param {Point} p3 - Ending point
+     * @param {number=} numPoints - The number of intermediate points to calculate. When not defined,
+     * the value will be obtained from {@link Utils.settings.BEZIER_POINTS}.
+     * @returns {Point[]} - Array with some intermediate points from the resulting Bézier curve
+     */
+    static getCubicPoints(p0, p1, p2, p3, numPoints) {
+      const result = []
+      if (!numPoints)
+        numPoints = Utils.settings.BEZIER_POINTS
+      const pr = PathStroke.getQuadraticPoints(p0, p1, p2, numPoints)
+      const pq = PathStroke.getQuadraticPoints(p1, p2, p3, numPoints)
+      for (let i = 0; i < numPoints; i++) {
+        const n = (i + 1) / (numPoints + 1)
+        result.push(new Point(pr[i].x + (pq[i].x - pr[i].x) * n, pr[i].y - (pr[0].y - pq[0].y) * n))
+      }
+      return result
+    }
+
+    /**
      * Clones this PathStroke
-     * @returns {AWT.PathStroke}
+     * @returns {PathStroke}
      */
     clone() {
       // The constructors of PathStroke always make a deep copy of the `points` array
-      return new AWT.PathStroke(this.type, this.points)
+      return new PathStroke(this.type, this.points)
     }
 
     /**
      * Increments or decrements by `delta` the x and y coordinates of all points
-     * @param {AWT.Point|AWT.Dimension} delta - The amount to add to the `x` and `y`
+     * @param {Point|Dimension} delta - The amount to add to the `x` and `y`
      * coordinates of each point.
      */
     moveBy(delta) {
@@ -1453,8 +1462,8 @@ define([
 
     /**
      * Multiplies each point coordinates by the `x` and `y` (or `w` and `h`) values of the
-     * passed {@link AWT.Point} or {@link AWT.Dimension}.
-     * @param {AWT.Point|AWT.Dimension} delta
+     * passed {@link Point} or {@link Dimension}.
+     * @param {Point|Dimension} delta
      */
     multBy(delta) {
       if (this.points)
@@ -1495,8 +1504,8 @@ define([
     /**
      * Gets the set of points that will be included as a vertexs on the owner's shape
      * enclosing polygon.
-     * @param {AWT.Point} from - The starting point for this stroke
-     * @returns {AWT.Point[]}
+     * @param {Point} from - The starting point for this stroke
+     * @returns {Point[]}
      */
     getEnclosingPoints(from) {
       let result = []
@@ -1506,11 +1515,11 @@ define([
           result.push(this.points[0])
           break
         case 'Q':
-          result = AWT.getQuadraticPoints(from, this.points[0], this.points[1])
+          result = PathStroke.getQuadraticPoints(from, this.points[0], this.points[1])
           result.push(this.points[1])
           break
         case 'B':
-          result = AWT.getCubicPoints(from, this.points[0], this.points[1], this.points[2])
+          result = PathStroke.getCubicPoints(from, this.points[0], this.points[1], this.points[2])
           result.push(this.points[2])
           break
       }
@@ -1518,15 +1527,17 @@ define([
     }
   }
 
-  Object.assign(AWT.PathStroke.prototype, {
+  Object.assign(PathStroke.prototype, {
     /**
      * The Stroke type. Possible values are: `M` (move to), `L` (line to), `Q` (quadratic to),
      * `B` (bezier to) and `X` (close path).
+     * @name PathStroke#type
      * @type {string} */
     type: 'X',
     /**
      * The array of points used by this stroke. Can be `null`.
-     * @type {AWT.Point[]} */
+     * @name PathStroke#points
+     * @type {Point[]} */
     points: null,
   })
 
@@ -1534,10 +1545,9 @@ define([
    * This class encapsulates actions that can be linked to buttons, menus and other active objects
    * @class
    */
-  AWT.Action = class {
-
+  class Action {
     /**
-     * AWT.Action constructor
+     * Action constructor
      * @param {string} name - The name of this Action
      * @param {function} actionPerformed - The callback to be triggered by this Action
      */
@@ -1549,8 +1559,8 @@ define([
 
     /**
      * Here is where subclasses must define the callback to be triggered when
-     * this AWT.Action object is called
-     * @param {AWT.Action} _thisAction - Pointer to this AWT.Action object
+     * this Action object is called
+     * @param {Action} _thisAction - Pointer to this Action object
      * @param {object} _event - The original action event that has originated this action
      */
     actionPerformed(_thisAction, _event) {
@@ -1561,7 +1571,7 @@ define([
      * This is the method to be passed to DOM event triggers
      * @example
      * const myFunc = () => { alert('Hello!') }
-     * const myAction = new AWT.Action('hello', myFunc)
+     * const myAction = new Action('hello', myFunc)
      * $( "#foo" ).bind( "click", myAction.processEvent)
      * @param {object} event - The event object passed by the DOM event trigger
      */
@@ -1597,17 +1607,20 @@ define([
     }
   }
 
-  Object.assign(AWT.Action.prototype, {
+  Object.assign(Action.prototype, {
     /**
      * The action's name
+     * @name Action#name
      * @type {string} */
     name: null,
     /**
      * An optional description
+     * @name Action#description
      * @type {string} */
     description: null,
     /**
      * Action status. `true` means enabled, `false` disabled
+     * @name Action#enabled
      * @type {boolean} */
     enabled: false,
     /**
@@ -1620,10 +1633,9 @@ define([
    * This class provides a timer that will launch a function at specific intervals
    * @class
    */
-  AWT.Timer = class {
-
+  class Timer {
     /**
-     * AWT.Timer constructor
+     * Timer constructor
      * @param {function} actionPerformed - The function to be triggered when the timer is enabled.
      * @param {number} interval - The interval between action calls, specified in milliseconds.
      * @param {boolean=} [enabled=false] - Flag to indicate if the timer will be initially enabled.
@@ -1636,7 +1648,7 @@ define([
 
     /**
      * Here is where subclasses must define the function to be performed when this timer ticks.
-     * @param {AWT.Timer} _thisTimer
+     * @param {Timer} _thisTimer
      */
     actionPerformed(_thisTimer) {
       return this
@@ -1702,21 +1714,25 @@ define([
     }
   }
 
-  Object.assign(AWT.Timer.prototype, {
+  Object.assign(Timer.prototype, {
     /**
      * The timer interval, in milliseconds
+     * @name Timer#interval
      * @type {number} */
     interval: 0,
     /**
      * The ticks counter
+     * @name Timer#ticks
      * @type {number} */
     ticks: 0,
     /**
      * The object returned by `window.setInterval`
+     * @name Timer#timer
      * @type {object} */
     timer: null,
     /**
      * When `true`, the timer should repeat until `stop` is called
+     * @name Timer#repeats
      * @type {boolean} */
     repeats: true,
   })
@@ -1724,16 +1740,15 @@ define([
   /**
    * Logic object that takes care of an "invalidated" rectangle that will be repainted
    * at the next update of a 2D object, usually an HTML Canvas.
-   * AWT.Container has the same constructor options as {@link AWT.Rectangle}
+   * Container has the same constructor options as {@link Rectangle}
    * @class
-   * @extends AWT.Rectangle
+   * @extends Rectangle
    */
-  AWT.Container = class extends AWT.Rectangle {
-
+  class Container extends Rectangle {
     /**
-     * AWT.Container constructor
-     * @param {AWT.Point|AWT.Rectangle|number|number[]} pos
-     * @param {AWT.Dimension|number=} dim
+     * Container constructor
+     * @param {Point|Rectangle|number|number[]} pos
+     * @param {Dimension|number=} dim
      * @param {number=} w
      * @param {number=} h
      */
@@ -1743,7 +1758,7 @@ define([
 
     /**
      * Adds the provided rectangle to the invalidated area.
-     * @param {AWT.Rectangle} rect
+     * @param {Rectangle} rect
      */
     invalidate(rect) {
       if (rect) {
@@ -1767,8 +1782,8 @@ define([
 
     /**
      * Containers should implement this method to update its graphic contents. It should
-     * be called from {@link AWT.Container~update}
-     * @param {AWT.Shape} _dirtyRegion - Specifies the area to be updated. When `null`, it's the whole
+     * be called from {@link Container~update}
+     * @param {Shape} _dirtyRegion - Specifies the area to be updated. When `null`, it's the whole
      * Container.
      */
     updateContent(_dirtyRegion) {
@@ -1777,12 +1792,28 @@ define([
     }
   }
 
-  Object.assign(AWT.Container.prototype, {
+  Object.assign(Container.prototype, {
     /**
      * The currently "invalidated" area
-     * @type {AWT.Rectangle} */
+     * @name Container#invalidatedRect
+     * @type {Rectangle} */
     invalidatedRect: null,
   })
 
-  return AWT
+  // Returns a composite object with all classes
+  return {
+    Font,
+    Gradient,
+    Stroke,
+    Point,
+    Dimension,
+    Shape,
+    Rectangle,
+    Ellipse,
+    Path,
+    PathStroke,
+    Action,
+    Timer,
+    Container
+  }
 })

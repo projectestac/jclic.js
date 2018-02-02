@@ -181,7 +181,6 @@ define([
    * `<div class ="JClic" data-project="myproject.jclic" data-options='{"fade":"400","lang":"es","reporter":"TCPReporter","user":"test01","path":"localhost:9090"}'></div>`
    *
    */
-
   Object.assign(JClicObject, {
     JClicPlayer: JClicPlayer,
     JClicProject: JClicProject,

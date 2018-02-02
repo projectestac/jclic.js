@@ -97,7 +97,7 @@ define([
           .appendTo(this.$topDiv)
 
         // Attach the localization
-        i18n.init(this)
+        i18n(this)
 
         // Intitialize other elements
         this.localFS = location && location.protocol === 'file:'
