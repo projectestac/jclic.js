@@ -61,6 +61,7 @@ define([
 
     /**
      * Shapes are already loaded by {@link Shaper}, so this function just sets `initiated` to `true`
+     * @override
      */
     buildShapes() {
       if (this.nCells > 0)
@@ -69,6 +70,7 @@ define([
 
     /**
      * Gets the rectangle that contains all shapes
+     * @override
      * @returns {AWT.Rectangle}
      */
     getEnclosingShapeData() {

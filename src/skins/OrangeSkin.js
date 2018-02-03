@@ -59,6 +59,7 @@ define([
      *
      * Returns the CSS styles used by this skin. This method should be called only from
      * `Skin` constructor, and overridden by subclasses if needed.
+     * @override
      * @returns {string}
      */
     _getStyleSheets() {
@@ -70,6 +71,7 @@ define([
     /**
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
      * @name OrangeSkin#skinId
+     * @override
      * @type {string} */
     skinId: 'JClicOrangeSkin',
     /**

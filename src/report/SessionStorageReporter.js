@@ -121,11 +121,13 @@ define([
       descriptionKey: 'Reporting to session storage',
       /**
        * Additional info to display after the reporter's `description`
+       * @name SessionStorageReporter#descriptionDetail
        * @override
        * @type {string} */
       descriptionDetail: '(browser session)',
       /**
-       * Key used to save the report into sessionStorage 
+       * Key used to save the report into sessionStorage
+       * @name SessionStorageReporter#key 
        * @type {string} */
       key: null,
     })

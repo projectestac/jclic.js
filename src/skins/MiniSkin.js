@@ -59,6 +59,7 @@ define([
     /**
      * Returns the CSS styles used by this skin. This method should be called only from
      * `Skin` constructor, and overridden by subclasses if needed.
+     * @override
      * @returns {string}
      */
     _getStyleSheets() {
@@ -70,6 +71,7 @@ define([
     /**
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
      * @name MiniSkin#skinId
+     * @override
      * @type {string}
      */
     skinId: 'JClicMiniSkin',
@@ -78,26 +80,31 @@ define([
     /**
      * Icon width
      * @name MiniSkin#iconWidth
+     * @override
      * @type {number} */
     iconWidth: 18,
     /**
      * Icon height
      * @name MiniSkin#iconHeight
+     * @override
      * @type {number} */
     iconHeight: 18,
     /**
      * Fill color for icons
      * @name MiniSkin#iconFill
+     * @override
      * @type {string} */
     iconFill: '#080808',
     /**
      * Fill-in color for counters
      * @name MiniSkin#counterIconFill
+     * @override
      * @type {string} */
     counterIconFill: '#080808',
     /**
      * Default margin between elements
      * @name MiniSkin#margin
+     * @override
      * @type {number} */
     margin: 8,
     /**

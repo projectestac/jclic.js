@@ -55,6 +55,7 @@ define([
 
     /**
      * Builds the rectangular shapes based on the number of rows and columns
+     * @override
      */
     buildShapes() {
       const
@@ -73,6 +74,7 @@ define([
     /**
      * Overrides same flag in {@link Shaper#rectangularShapes}
      * @name Rectangular#rectangularShapes
+     * @override
      * @type {boolean} */
     rectangularShapes: true,
   })
@@ -81,5 +83,4 @@ define([
   Shaper.CLASSES['@Rectangular'] = Rectangular
 
   return Rectangular
-
 })

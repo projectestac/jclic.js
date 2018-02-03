@@ -114,31 +114,38 @@ define([
   Object.assign(ProjectSettings.prototype, {
     /**
      * The JClicProject to which this ProjectSettings belongs
+     * @name ProjectSettings#project
      * @type {JClicProject} */
     project: null,
     /**
      * The project title
+     * @name ProjectSettings#title
      * @type {string} */
     title: 'Untitled',
     /**
      * Project's description. Can have multiple paragraphs, separated by `<p>`
+     * @name ProjectSettings#description
      * @type {string} */
     description: '',
     /**
      * JClic projects can use more than one language, so use a string array
+     * @name ProjectSettings#languages
      * @type {string[]} */
     languages: null,
     /**
      * Array of canonical locales, as defined in 
      * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation|Intl}
-     */
+     * @name ProjectSettings#locales
+     * @type {string[]} */
     locales: null,
     /**
      * The name of an optional 'skin' (visual aspect) can be set for the whole project, or for each {@link Activity}
+     * @name ProjectSettings#skinFileName
      * @type {string} */
     skinFileName: null,
     /**
      * The main {@link EventSounds} object of the project
+     * @name ProjectSettings#eventSounds
      * @type {EventSounds} */
     eventSounds: new EventSounds(),
   })

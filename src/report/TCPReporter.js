@@ -71,7 +71,7 @@ define([
 
       /**
        * Adds a new element to the list of report beans pending to be transmitted.
-       * @param {TCPReporter.ReportBean} bean
+       * @param {ReportBean} bean
        */
       addTask(bean) {
         if (this.processingTasks) {
@@ -99,7 +99,7 @@ define([
           // Set up the `processingTasks` flag to avoid re-entrant processing
           this.processingTasks = true
 
-          const reportBean = new TCPReporter.ReportBean('multiple')
+          const reportBean = new ReportBean('multiple')
           for (let i = 0; i < this.tasks.length; i++)
             reportBean.appendData(this.tasks[i].$bean)
 
@@ -166,7 +166,7 @@ define([
         const serverProtocol = options.protocol || this.DEFAULT_SERVER_PROTOCOL
         this.serviceUrl = `${serverProtocol}://${this.serverPath}${serverService}`
 
-        const bean = new TCPReporter.ReportBean('get_properties')
+        const bean = new ReportBean('get_properties')
         return new Promise((resolve, reject) => {
           this.transaction(bean.$bean)
             .done((data, _textStatus, _jqXHR) => {
@@ -208,6 +208,7 @@ define([
 
       /**
        * This method should be invoked when a new session starts.
+       * @override
        * @param {JClicProject} jcp - The {@link JClicProject} this session refers to.
        */
       newSession(jcp) {
@@ -234,7 +235,7 @@ define([
             if (this.initiated && this.userId !== null && this.currentSession !== null) {
               this.flushTasksPromise().then(() => {
                 this.currentSessionId = null
-                const bean = new TCPReporter.ReportBean('add session')
+                const bean = new ReportBean('add session')
 
                 bean.setParam('project', this.currentSession.projectName)
                 bean.setParam('activities', Number(this.currentSession.reportableActs))
@@ -299,7 +300,7 @@ define([
           if (!this.userBased())
             reject('This system does not manage users!')
           else {
-            const bean = new TCPReporter.ReportBean('get groups')
+            const bean = new ReportBean('get groups')
             this.transaction(bean.$bean)
               .done((data, _textStatus, _jqXHR) => {
                 const currentGroups = []
@@ -329,7 +330,7 @@ define([
           if (!this.userBased())
             reject('This system does not manage users!')
           else {
-            const bean = new TCPReporter.ReportBean('get users')
+            const bean = new ReportBean('get users')
             if (typeof groupId !== 'undefined' && groupId !== null)
               bean.setParam('group', groupId)
             this.transaction(bean.$bean)
@@ -361,7 +362,7 @@ define([
           if (!this.userBased())
             reject('This system does not manage users!')
           else {
-            const bean = new TCPReporter.ReportBean('get user data')
+            const bean = new ReportBean('get user data')
 
             if (typeof userId !== 'undefined' && userId !== null)
               bean.setParam('user', userId)
@@ -414,7 +415,7 @@ define([
       }
 
       /**
-       * Prepares a {@link TCPReporter.ReportBean} object with information related to the current
+       * Prepares a {@link ReportBean} object with information related to the current
        * activity, and pushes it into the list of pending `tasks`, to be processed by the main `timer`.
        * @param {boolean} flushNow - When `true`, the activity data will be sent to server as soon as possible
        */
@@ -426,7 +427,7 @@ define([
             actCount = this.actCount++,
             act = this.lastActivity
           this.createDBSession(false).then(() => {
-            const bean = new TCPReporter.ReportBean('add activity')
+            const bean = new ReportBean('add activity')
             bean.setParam('session', this.currentSessionId)
             bean.setParam('num', actCount)
             bean.appendData(act.$getXML())
@@ -470,91 +471,110 @@ define([
     Object.assign(TCPReporter.prototype, {
       /**
        * Description of this reporting system
+       * @name TCPReporter#descriptionKey
        * @override
        * @type {string} */
       descriptionKey: 'Reporting to remote server',
       /**
        * Additional info to display after the reporter's `description`
+       * @name TCPReporter#descriptionDetail
        * @override
        * @type {string} */
       descriptionDetail: '(not connected)',
       /**
        * Main path of the reports server (without protocol nor service)
-       * @type {string}
-       */
+       * @name TCPReporter#serverPath
+       * @type {string} */
       serverPath: '',
       /**
        * Function to be called by the browser before leaving the current page
-       * @type {function}
-       */
+       * @name TCPReporter#beforeUnloadFunction
+       * @type {function} */
       beforeUnloadFunction: null,
       /**
        * Identifier of the current session, provided by the server
+       * @name TCPReporter#currentSessionId
        * @type {string} */
       currentSessionId: '',
       /**
        * Last activity reported
+       * @name TCPReporter#lastActivity
        * @type {ActivityReg} */
       lastActivity: null,
       /**
        * Number of activities processed
+       * @name TCPReporter#actCount
        * @type {number} */
       actCount: 0,
       /**
        * Service URL of the JClic Reports server
+       * @name TCPReporter#serviceUrl
        * @type {string} */
       serviceUrl: null,
       /**
        * Object used to store specific properties of the connected reports system
+       * @name TCPReporter#dbProperties
        * @type {object} */
       dbProperties: null,
       /**
-       * List of {@link TCPReporter.ReportBean} objects pending to be processed
-       * @type {TCPReporter.ReportBean[]} */
+       * List of {@link ReportBean} objects pending to be processed
+       * @name TCPReporter#tasks
+       * @type {ReportBean[]} */
       tasks: null,
       /**
        * Waiting list of tasks, to be used while `tasks` is being processed
-       * @type {TCPReporter.ReportBean[]} */
+       * @name TCPReporter#waitingTasks
+       * @type {ReportBean[]} */
       waitingTasks: null,
       /**
        * Flag used to indicate if `transaction` is currently running
+       * @name TCPReporter#processingTasks
        * @type {boolean} */
       processingTasks: false,
       /**
        * Force processing of pending tasks as soon as possible
+       * @name TCPReporter#forceFlush
        * @type {boolean} */
       forceFlush: false,
       /**
        * Identifier of the background function obtained with a call to `window.setInterval`
+       * @name TCPReporter#timer
        * @type {number} */
       timer: -1,
       /**
        * Time between calls to the background function, in seconds
+       * @name TCPReporter#timerLap
        * @type {number} */
       timerLap: 5,
       /**
        * Counter of unsuccessful connection attempts with the report server
+       * @name TCPReporter#failCount
        * @type {number} */
       failCount: 0,
       /**
        * Maximum number of failed attempts allowed before disconnecting
+       * @name TCPReporter#maxFails
        * @type {number} */
       maxFails: 5,
       /**
        * Default path of JClic Reports Server
+       * @name TCPReporter#DEFAULT_SERVER_PATH
        * @type {string} */
       DEFAULT_SERVER_PATH: 'localhost:9000',
       /**
        * Default name for the reports service
+       * @name TCPReporter#DEFAULT_SERVER_SERVICE
        * @type {string} */
       DEFAULT_SERVER_SERVICE: '/JClicReportService',
       /**
        * Default server protocol
        * Use always 'https' except when in 'http' and protocol not set in options
+       * @name TCPReporter#DEFAULT_SERVER_PROTOCOL
        * @type {string} */
       DEFAULT_SERVER_PROTOCOL: (document && document.location && document.location.protocol === 'http:') ? 'http' : 'https',
       /**
        * Default lap between calls to `flushTasks`, in seconds
+       * @name TCPReporter#DEFAULT_TIMER_LAP
        * @type {number} */
       DEFAULT_TIMER_LAP: 20,
     })
@@ -565,9 +585,9 @@ define([
      * transmitted to the remote reports server.
      * @class
      */
-    TCPReporter.ReportBean = class {
+    class ReportBean {
       /**
-       * TCPReporter.ReportBean constructor
+       * ReportBean constructor
        * @param id {string} - The main identifier of this ReportBean. Current valid values are:
        * `get property`, `get_properties`, `add session`, `add activity`, `get groups`, `get users`,
        * `get user data`, `get group data`, `new group`, `new user` and `multiple`.
@@ -600,12 +620,15 @@ define([
       }
     }
 
-    Object.assign(TCPReporter.ReportBean.prototype, {
+    Object.assign(ReportBean.prototype, {
       /**
        * The main jQuery XML object managed by this ReportBean
+       * @name ReportBean#$bean
        * @type {external:jQuery} */
       $bean: null,
     })
+
+    TCPReporter.ReportBean = ReportBean
 
     // Register class in Reporter.CLASSES
     Reporter.CLASSES['TCPReporter'] = TCPReporter

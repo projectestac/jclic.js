@@ -58,6 +58,7 @@ define([
      *
      * Returns the CSS styles used by this skin. This method should be called only from
      * `Skin` constructor, and overridden by subclasses if needed.
+     * @override
      * @returns {string}
      */
     _getStyleSheets() {
@@ -69,11 +70,13 @@ define([
     /**
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
      * @name EmptySkin#skinId
+     * @override
      * @type {string} */
     skinId: 'JClicEmptySkin',
     /**
      * Styles used in this skin
      * @name EmptySkin#skinCSS
+     * @override
      * @type {string} */
     mainCSS: '.SKINID .JClicPlayerCnt {margin:0;}'
   })

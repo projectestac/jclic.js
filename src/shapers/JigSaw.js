@@ -55,6 +55,7 @@ define([
 
     /**
      * Builds the jigsaw shapes based on the number of rows and columns
+     * @override
      */
     buildShapes() {
       // Create two two-dimension arrays for storing the type of horizontal and vertical lines

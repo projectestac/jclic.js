@@ -55,6 +55,7 @@ define([
 
     /**
      * Overrides {@link JigSaw#hLine}
+     * @override
      * @param {AWT.Path} sd - The Path to which the line will be added
      * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, and 2 means tooth down
      * @param {number} x - X coordinate of the starting point
@@ -87,6 +88,7 @@ define([
 
     /**
      * Overrides {@link JigSaw#vLine}
+     * @override
      * @param {AWT.Path} sd - The Path to which the line will be added
      * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, and 2 means tooth left
      * @param {number} x - X coordinate of the starting point
@@ -124,5 +126,4 @@ define([
   Shaper.CLASSES['@TriangularJigSaw'] = TriangularJigSaw
 
   return TriangularJigSaw
-
 })

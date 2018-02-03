@@ -140,58 +140,71 @@ define([
   Object.assign(JClicProject.prototype, {
     /**
      * The project's name
+     * @name JClicProject#name
      * @type {string} */
     name: 'unknown',
     /**
      * The version of the XML file format used to save the project (currently 0.1.3)
+     * @name JClicProject#version
      * @type {string} */
     version: '0.1.3',
     /**
      * Optional property that can be used by reporting systems
+     * @name JClicProject#type
      * @type {string} */
     type: null,
     /**
      * Optional property that can be used by reporting systems
+     * @name JClicProject#code
      * @type {string} */
     code: null,
     /**
      * Object containing the project settings
+     * @name JClicProject#settings
      * @type {ProjectSettings} */
     settings: null,
     /**
-     * Object containing the order in which the activities must be presented
+     * Object containing the order in which the activities should be played
+     * @name JClicProject#activitySequence
      * @type {ActivitySequence} */
     activitySequence: null,
     /**
      * Array of jQuery xml elements containing the data of each activity. Don't rely on this object
      * to retrieve real activities. Use the method {@link @JClicProject#getActivity} instead.
+     * @name JClicProject#_activities
      * @private
      * @type {external:jQuery[]} */
     _activities: null,
     /**
      * Number of activities suitable to be included reports
+     * @name JClicProject#reportableActs
      * @type {number}
      */
     reportableActs: 0,
     /**
      * The collection of all media elements used in this project
+     * @name JClicProject#mediaBag
      * @type {MediaBag} */
     mediaBag: null,
     /**
      * The object that builds and manages the visual interface presented to users
+     * @name JClicProject#skin
      * @type {Skin} */
     skin: null,
     /**
      * Relative path or absolute URL to be used as a base to access files, usually in conjunction
      * with {@link JClicPlayer#basePath}
+     * @name JClicProject#basePath
      * @type {string} */
     basePath: '',
     /**
      * Full path of this project
+     * @name JClicProject#path
      * @type {string} */
     path: null,
     /**
      * The JSZip object where this project is stored (can be `null`)
+     * @name JClicProject#zip
      * @type {external:JSZip} */
     zip: null,
   })

@@ -188,6 +188,7 @@ define([
     /**
      * Returns the CSS styles used by this skin. This method should be called only from
      * `Skin` constructor, and overridden by subclasses if needed.
+     * @override
      * @returns {string}
      */
     _getStyleSheets() {
@@ -197,6 +198,7 @@ define([
     /**
      * Updates the graphic contents of this skin.
      * This method should be called from {@link Skin#update}
+     * @override
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`, it's the
      * whole panel.
      */
@@ -211,11 +213,12 @@ define([
 
     /**
      * Main method used to build the content of the skin. Resizes and places internal objects.
+     * @override
      */
     doLayout() {
 
       // Call method on ancestor
-      super.doLayout(this)
+      super.doLayout()
 
       // Set the fullScreen icon
       if (this.buttons.fullscreen)
@@ -298,6 +301,7 @@ define([
     /**
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
      * @name DefaultSkin#skinId
+     * @override
      * @type {string}
      */
     skinId: 'JClicDefaultSkin',

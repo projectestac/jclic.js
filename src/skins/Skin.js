@@ -319,6 +319,7 @@ define([
     /**
      * Updates the graphic content of this skin.
      * The method should be called from {@link Skin#update}
+     * @override
      * @param {AWT.Rectangle} dirtyRegion - The region to be painted. When `null`, refers to the full
      * skin area.
      */
@@ -857,7 +858,7 @@ define([
     //
     /**
      * Main styles
-     * @name Skin#skinCSS
+     * @name Skin#basicCSS
      * @type {string} */
     basicCSS: '\
 .SKINID {width:100%; background-color:#3F51B5; display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column;}\
