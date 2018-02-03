@@ -69,13 +69,13 @@ define([
   Object.assign(OrangeSkin.prototype, {
     /**
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @type {string}
-     */
+     * @name OrangeSkin#skinId
+     * @type {string} */
     skinId: 'JClicOrangeSkin',
     /**
      * Styles used in this skin
-     * @type {string}
-     */
+     * @name OrangeSkin#skinCSS
+     * @type {string} */
     skinCSS: '.SKINID {background-color:#FF8B19;}'
   })
 

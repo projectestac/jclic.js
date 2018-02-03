@@ -245,40 +245,49 @@ define([
   Object.assign(Shaper.prototype, {
     /**
      * This shaper class name
+     * @name Shaper#className
      * @type {string} */
     className: 'Shaper',
     /**
      * Number of columns (useful in grid-based shapers)
+     * @name Shaper#nCols
      * @type {number} */
     nCols: 0,
     /**
      * Number of rows (useful in grid-based shapers)
+     * @name Shaper#nRows
      * @type {number} */
     nRows: 0,
     /**
      * Number of cells managed by this shaper
+     * @name Shaper#nCells
      * @type {number} */
     nCells: 0,
     /**
      * Contains the specific definition of each shape
+     * @name Shaper#shapeData
      * @type {object} */
     shapeData: null,
     /**
      * Flag used to check if the `Shaper` has been initialized against a real surface
+     * @name Shaper#initiated
      * @type {boolean} */
     initiated: false,
     //
     // Fields used only in JigSaw shapers
     /**
      * In {@link JigSaw}, ratio between the base width of the tooth and the total length of the side.
+     * @name Shaper#baseWidthFactor
      * @type {number} */
     baseWidthFactor: 1.0 / 3,
     /**
      * In {@link JigSaw}, ratio between the tooth height and the total length of the side.
+     * @name Shaper#toothHeightFactor
      * @type {number} */
     toothHeightFactor: 1.0 / 6,
     /**
      * In {@link JigSaw}, whether the tooths take random directions or not
+     * @name Shaper#randomLines
      * @type {boolean} */
     randomLines: false,
     //
@@ -286,28 +295,34 @@ define([
     /**
      * In {@link Holes}, scale to be applied to horizontal positions and lengths to achieve the real
      * value of the shape placed on a real surface.
+     * @name Shaper#scaleX
      * @type {number} */
     scaleX: 1.0,
     /**
      * In {@link Holes}, scale to be applied to vertical positions and lengths to achieve the real
      * value of the shape placed on a real surface.
+     * @name Shaper#scaleY
      * @type {number} */
     scaleY: 1.0,
     /**
      * In {@link Holes}, the enclosing area where all shapes are placed.
+     * @name Shaper#enclosing
      * @type {AWT.Shape} */
     enclosing: null,
     /**
      * In {@link Holes}, when `true`, the enclosing area will be drawn
+     * @name Shaper#showEnclosure
      * @type {boolean} */
     showEnclosure: false,
     /**
      * Flag indicating if this shaper organizes its cells in rows and columns
+     * @name Shaper#rectangularShapes
      * @type {boolean} */
     rectangularShapes: false,
     /**
      * Flag indicating if this Shaper deploys over a surface biggest than the rectangle enclosing
      * all its shapes
+     * @name Shaper#hasRemainder
      * @type {boolean} */
     hasRemainder: false,
   })

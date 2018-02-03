@@ -55,7 +55,7 @@ define([
       this.sequences = []
       this.actNames = []
       this.started = new Date()
-      this.info = new SessionReg.Info(this)
+      this.info = new SessionRegInfo(this)
       this.reportableActs = project.reportableActs
     }
 
@@ -92,7 +92,7 @@ define([
 
     /**
      * Returns the `info` element associated to this SessionReg.
-     * @returns {SessionReg.Info}
+     * @returns {SessionRegInfo}
      */
     getInfo() {
       return this.info.recalc()
@@ -188,37 +188,42 @@ define([
   Object.assign(SessionReg.prototype, {
     /**
      * Number of activities suitable to be reported in this session
-     * @type {number}
-     */
+     * @name SessionReg#reportableActs
+     * @type {number} */
     reportableActs: 0,
     /**
      * Array with unique names of the activities being reported in this session
-     * @type {string[]}
-     */
+     * @name SessionReg#actNames
+     * @type {string[]} */
     actNames: null,
     /**
      * List of sequences done in this session
+     * @name SessionReg#sequences
      * @type {SequenceReg[]} */
     sequences: null,
     /**
      * The sequence currently active
+     * @name SessionReg#currentSequence
      * @type {SequenceReg} */
     currentSequence: null,
     /**
      * Starting date and time of this session
+     * @name SessionReg#started
      * @type {Date} */
     started: null,
     /**
      * Name of the {@link JClicProject} associated to this session
+     * @name SessionReg#projectName
      * @type {string} */
     projectName: '',
     /**
      * Current session info
-     * @type {SessionReg.Info}
-     */
+     * @name SessionReg#info
+     * @type {SessionRegInfo} */
     info: null,
     /**
      * Optional code to be used with this session
+     * @name SessionReg#code
      * @type {string} */
     code: null,
   })
@@ -227,9 +232,9 @@ define([
    * This object stores the global results of a {@link SessionReg}
    * @class
    */
-  SessionReg.Info = class {
+  class SessionRegInfo {
     /**
-     * SessionReg.Info constructor
+     * SessionRegInfo constructor
      * @param {SessionReg} sReg - The {@link SessionReg} associated tho this `Info` object.
      */
     constructor(sReg) {
@@ -247,7 +252,7 @@ define([
 
     /**
      * Computes the value of all global variables based on the data stored in `sequences`
-     * @returns {SessionReg.Info} - This "info" object
+     * @returns {SessionRegInfo} - This "info" object
      */
     recalc() {
       if (!this.valid) {
@@ -281,53 +286,65 @@ define([
     }
   }
 
-  Object.assign(SessionReg.Info.prototype, {
+  Object.assign(SessionRegInfo.prototype, {
     /**
      * The SessionReg linked to this Info object
-     * @type {SessionReg}
-     */
+     * @name SessionRegInfo#sReg
+     * @type {SessionReg} */
     sReg: null,
     /**
      * When `false`, this session info needs to be recalculated
+     * @name SessionRegInfo#valid
      * @type {boolean} */
     valid: false,
     /**
      * Number of sequences played
+     * @name SessionRegInfo#numSequences
      * @type {number} */
     numSequences: 0,
     /**
      * Number of activities played
+     * @name SessionRegInfo#nActivities
      * @type {number} */
     nActivities: 0,
     /**
      * Number of activities solved
+     * @name SessionRegInfo#nActSolved
      * @type {number} */
     nActSolved: 0,
     /**
      * Number of activities with score > 0
+     * @name SessionRegInfo#nActScore
      * @type {number} */
     nActScore: 0,
     /**
      * Percentage of solved activities
+     * @name SessionRegInfo#ratioSolved
      * @type {number} */
     ratioSolved: 0,
     /**
      * Percentage of reportable activities played
+     * @name SessionRegInfo#ratioPlayed
      * @type {number} */
     ratioPlayed: 0,
     /**
      * Number of actions done by the user while in this working session
+     * @name SessionRegInfo#nActions
      * @type {number} */
     nActions: 0,
     /**
      * Sum of the scores of all the activities played
+     * @name SessionRegInfo#tScore
      * @type {number} */
     tScore: 0,
     /**
      * Sum of the playing time reported by each activity (not always equals to the session's total time)
+     * @name SessionRegInfo#tTime
      * @type {number} */
     tTime: 0,
   })
+
+  SessionReg.Info = SessionRegInfo
 
   return SessionReg
 })

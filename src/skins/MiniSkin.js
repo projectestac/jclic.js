@@ -69,17 +69,41 @@ define([
   Object.assign(MiniSkin.prototype, {
     /**
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+     * @name MiniSkin#skinId
      * @type {string}
      */
     skinId: 'JClicMiniSkin',
     // Buttons and other graphical resources used by this skin.
     //
+    /**
+     * Icon width
+     * @name MiniSkin#iconWidth
+     * @type {number} */
     iconWidth: 18,
+    /**
+     * Icon height
+     * @name MiniSkin#iconHeight
+     * @type {number} */
     iconHeight: 18,
+    /**
+     * Fill color for icons
+     * @name MiniSkin#iconFill
+     * @type {string} */
     iconFill: '#080808',
+    /**
+     * Fill-in color for counters
+     * @name MiniSkin#counterIconFill
+     * @type {string} */
     counterIconFill: '#080808',
+    /**
+     * Default margin between elements
+     * @name MiniSkin#margin
+     * @type {number} */
     margin: 8,
-    // Styles used in this skin
+    /**
+     * Styles used in this skin
+     * @name MiniSkin#skinCSS
+     * @type {string} */
     skinCSS: '\
 .SKINID {background-color:#F4F4F4;}\
 .SKINID .JClicPlayerCnt {margin:4px;}\

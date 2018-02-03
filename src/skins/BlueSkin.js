@@ -68,12 +68,13 @@ define([
   Object.assign(BlueSkin.prototype, {
     /**
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @type {string}
-     */
+     * @name BlueSkin#skinId
+     * @type {string} */
     skinId: 'JClicBlueSkin',
-    // Buttons and other graphical resources used by this skin.
-    //
-    // Styles used in this skin
+    /**
+     * Styles used in this skin
+     * @name BlueSkin#skinCSS
+     * @type {string} */
     skinCSS: '.SKINID {background-color:#1990FF;}'
   })
 

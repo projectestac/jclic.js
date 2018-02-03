@@ -72,6 +72,7 @@ define([
   Object.assign(Rectangular.prototype, {
     /**
      * Overrides same flag in {@link Shaper#rectangularShapes}
+     * @name Rectangular#rectangularShapes
      * @type {boolean} */
     rectangularShapes: true,
   })

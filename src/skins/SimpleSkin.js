@@ -73,13 +73,13 @@ define([
   Object.assign(SimpleSkin.prototype, {
     /**
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @type {string}
-     */
+     * @name SimpleSkin#skinId
+     * @type {string} */
     skinId: 'JClicSimpleSkin',
-    //
-    // Buttons and other graphical resources used by this skin.
-    //
-    // Styles used in this skin
+    /**
+     * Styles used in this skin
+     * @name SimpleSkin#skinCSS
+     * @type {string} */
     skinCSS: '\
 .SKINID {background-color:#888888;}\
 .SKINID .JClicCtrlCnt {margin:9px;}\

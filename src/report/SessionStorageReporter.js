@@ -110,10 +110,12 @@ define([
     Object.assign(SessionStorageReporter.prototype, {
       /**
        * Type of storage to be used. Defaults to `window.sessionStorage`
+       * @name SessionStorageReporter#storage
        * @type {external:Storage} */
       storage: window.sessionStorage,
       /**
        * Description of this reporting system
+       * @name SessionStorageReporter#descriptionKey
        * @override
        * @type {string} */
       descriptionKey: 'Reporting to session storage',

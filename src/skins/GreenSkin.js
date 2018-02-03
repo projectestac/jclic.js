@@ -70,15 +70,25 @@ define([
   Object.assign(GreenSkin.prototype, {
     /**
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @type {string}
-     */
+     * @name GreenSkin#skinId
+     * @type {string} */
     skinId: 'JClicGreenSkin',
     //
-    // Buttons and other graphical resources used by this skin.
-    //
+    // Buttons and other graphical resources used by this skin:
+    /**
+     * Fill color for icons
+     * @name GreenSkin#iconFill
+     * @type {string} */    
     iconFill: '#20640E',
+    /**
+     * Fill-in color for counters
+     * @name GreenSkin#counterIconFill
+     * @type {string} */        
     counterIconFill: '#20640E',
-    // Styles used in this skin
+    /**
+     * Styles used in this skin
+     * @name GreenSkin#skinCSS
+     * @type {string} */
     skinCSS: '.SKINID {background-color:#4AFF19;}'
   })
 

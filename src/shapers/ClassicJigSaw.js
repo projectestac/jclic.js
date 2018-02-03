@@ -127,10 +127,12 @@ define([
   Object.assign(ClassicJigSaw.prototype, {
     /**
      * ClassicJigSaw needs a biggest base width
+     * @name ClassicJigSaw#baseWidthFactor
      * @type {number} */
     baseWidthFactor: 3.0 / 4,
     /**
      * ClassicJigSaw needs a biggest base height factor
+     * @name ClassicJigSaw#toothHeightFactor
      * @type {number} */
     toothHeightFactor: 3.0 / 5,
   })

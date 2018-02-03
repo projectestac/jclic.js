@@ -100,23 +100,28 @@ define([
   Object.assign(ActionReg.prototype, {
     /**
      * The type of action (`click`, `write`, `move`, `select`...)
+     * @name ActionReg#type
      * @type {string} */
     type: 'unknown',
     /**
      * Description of the object on which the action was done
+     * @name ActionReg#source
      * @type {string} */
     source: null,
     /**
      * Description of the object that has acted as a target of the action (used in pairings)
+     * @name ActionReg#dest
      * @type {string} */
     dest: null,
     /**
      * Time stamp taken when the action was done
+     * @name ActionReg#time
      * @type {number} */
     time: 0,
     /**
      * `true` if the action was OK
-     */
+     * @name ActionReg#isOk
+     * @type {boolean} */
     isOk: false,
   })
 
