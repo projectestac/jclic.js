@@ -188,7 +188,7 @@ define([
       if (this.grid) {
         this.grid.setChars(this.act.tgc.text)
         this.grid.randomize()
-        this.grid.setAllCellsAttribute(TextGrid.prototype.flags.INVERTED, false)
+        this.grid.setAllCellsAttribute(TextGrid.flags.INVERTED, false)
 
         this.resolvedClues = Array(this.act.clueItems.length).fill(false)
 
@@ -366,7 +366,7 @@ define([
                 const repeated = this.resolvedClues[c]
                 if (ok && !repeated) {
                   this.resolvedClues[c] = true
-                  this.grid.setAttributeBetween(pt1.x, pt1.y, pt2.x, pt2.y, TextGrid.prototype.flags.INVERTED, true)
+                  this.grid.setAttributeBetween(pt1.x, pt1.y, pt2.x, pt2.y, TextGrid.flags.INVERTED, true)
                   if (this.bgAlt !== null) {
                     const k = this.act.clueItems[c]
                     if (k >= 0 && k < this.bgAlt.getNumCells()) {

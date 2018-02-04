@@ -172,10 +172,12 @@ define([
   Object.assign(ActiveBoxGrid.prototype, {
     /**
      * Number of columns of this box grid
+     * @name ActiveBoxGrid#nCols
      * @type {number} */
     nCols: 1,
     /**
      * Number of rows of this box grid
+     * @name ActiveBoxGrid#nRows
      * @type {number} */
     nRows: 1,
   })

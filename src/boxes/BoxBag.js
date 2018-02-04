@@ -358,6 +358,7 @@ define([
 
     /**
      * Overrides {@link AbstractBox#setBorder} iterating over all the cells stored in this box bag.
+     * @override
      * @param {boolean} newVal - Whether to set or unset the border
      */
     setBorder(newVal) {
@@ -366,6 +367,7 @@ define([
 
     /**
      * Overrides {@link AbstractBox#setVisible} iterating over all the cells stored in this box bag.
+     * @override
      * @param {boolean} newVal - Whether to set the cells visible or not
      */
     setVisible(newVal) {
@@ -374,6 +376,7 @@ define([
 
     /**
      * Overrides {@link AbstractBox#setAlternative} iterating over all the cells stored in this box bag.
+     * @override
      * @param {boolean} newVal - Whether to set or unset the cells in "alternative" mode
      */
     setAlternative(newVal) {
@@ -383,6 +386,7 @@ define([
 
     /**
      * Overrides {@link AbstractBox#setBounds} adjusting the position and size of all cells
+     * @override
      * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
      * upper-left corner of a new rectangle.
      * @param {number=} ry - `y` coordinate of the upper-left corner of the new rectangle.
@@ -425,12 +429,12 @@ define([
     /**
      * Performs graphics operations for each cell.
      * Overrides {@link AbstractBox#update}
+     * @override
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * box contents.
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
      */
     update(ctx, dirtyRegion) {
-
       if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
         return false
 
@@ -481,15 +485,18 @@ define([
 
   Object.assign(BoxBag.prototype, {
     /**
-     * The array of cells.
+     * The array of cells
+     * @name BoxBag#cells
      * @type {AbstractBox[]} */
     cells: [],
     /**
      * Rectangle containing the preferred bounds of the BoxBag
+     * @name BoxBag#preferredBounds
      * @type {AWT.Rectangle} */
     preferredBounds: new AWT.Rectangle(),
     /**
      * An optional box used as a background by this BoxBag
+     * @name BoxBag#backgroundBox
      * @type {AbstractBox} */
     backgroundBox: null,
   })

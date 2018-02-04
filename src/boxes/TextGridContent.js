@@ -136,39 +136,48 @@ define([
   Object.assign(TextGridContent.prototype, {
     /**
      * Grid columns
+     * @name TextGridContent#ncw
      * @type {number} */
     ncw: 1,
     /**
      * Grid rows
+     * @name TextGridContent#nch
      * @type {number} */
     nch: 1,
     /**
      * Width of cells
+     * @name TextGridContent#w
      * @type {number} */
     w: 20,
     /**
      * Height of cells
+     * @name TextGridContent#h
      * @type {number} */
     h: 20,
     /**
      * Whether the cells must be surrounded by a border or not
+     * @name TextGridContent#border
      * @type {boolean} */
     border: false,
     /**
      * The {@link BoxBase} object with visual settings of the text grid
+     * @name TextGridContent#bb
      * @type {BoxBase} */
     bb: null,
     /**
      * An array of String objects containing the chars of cells. One string per row, one character of
      * this string per cell.
+     * @name TextGridContent#text
      * @type {string[]} */
     text: null,
     /**
      * The letter used as wildcard
+     * @name TextGridContent#wild
      * @type {string} */
     wild: '*',
     /**
      * A String with the chars to take as source when randomly filling empty cells
+     * @name TextGridContent#randomChars
      * @type {string} */
     randomChars: Utils.settings.RANDOM_CHARS,
   })

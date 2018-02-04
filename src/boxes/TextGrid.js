@@ -39,6 +39,27 @@ define([
 ], function ($, AWT, Utils, AbstractBox, TextGridContent) {
 
   /**
+   * Default values
+   * @type {object} */
+  const defaults = {
+    MIN_CELL_SIZE: 12,
+    DEFAULT_CELL_SIZE: 20,
+    MIN_INTERNAL_MARGIN: 2
+  }
+
+  /**
+   * Binary flags used to mark status
+   * @type {object} */
+  const flags = {
+    NORMAL: 0,
+    INVERTED: 1,
+    HIDDEN: 2,
+    LOCKED: 4,
+    MARKED: 8,
+    TRANSPARENT: 16
+  }
+
+  /**
    * This class is a special type of {@link AbstractBox} that displays a grid of single
    * characters.
    *
@@ -68,8 +89,8 @@ define([
       this.pos.y = y
       this.nCols = Math.max(1, ncw)
       this.nRows = Math.max(1, nch)
-      this.cellWidth = Math.max(cellW, this.defaults.MIN_CELL_SIZE)
-      this.cellHeight = Math.max(cellH, this.defaults.MIN_CELL_SIZE)
+      this.cellWidth = Math.max(cellW, defaults.MIN_CELL_SIZE)
+      this.cellHeight = Math.max(cellH, defaults.MIN_CELL_SIZE)
       this.dim.width = cellW * this.nCols
       this.dim.height = cellH * this.nRows
       this.setChars(' ')
@@ -118,7 +139,7 @@ define([
           if (px >= line.length)
             this.chars[py][px] = ' '
           this.answers[py][px] = this.chars[py][px]
-          this.attributes[py][px] = this.flags.NORMAL
+          this.attributes[py][px] = flags.NORMAL
         }
       }
     }
@@ -142,17 +163,17 @@ define([
      * @param {boolean} clearChars - When `true`, the current content of cells will be erased.
      */
     setCellAttributes(lockWild, clearChars) {
-      let atr = this.flags.LOCKED
+      let atr = flags.LOCKED
       if (this.wildTransparent)
-        atr |= this.flags.TRANSPARENT
+        atr |= flags.TRANSPARENT
       else
-        atr |= this.flags.INVERTED | this.flags.HIDDEN
+        atr |= flags.INVERTED | flags.HIDDEN
       for (let py = 0; py < this.nRows; py++) {
         for (let px = 0; px < this.nCols; px++) {
           if (lockWild && this.chars[py][px] === this.wild)
             this.attributes[py][px] = atr
           else {
-            this.attributes[py][px] = this.flags.NORMAL
+            this.attributes[py][px] = flags.NORMAL
             if (clearChars)
               this.chars[py][px] = ' '
           }
@@ -170,12 +191,12 @@ define([
     setCellLocked(px, py, locked) {
       if (px >= 0 && px < this.nCols && py >= 0 && py < this.nRows) {
         this.attributes[py][px] = locked ?
-          this.flags.LOCKED |
+          flags.LOCKED |
           (this.wildTransparent ?
-            this.flags.TRANSPARENT :
-            this.flags.INVERTED |
-            this.flags.HIDDEN) :
-          this.flags.NORMAL
+            flags.TRANSPARENT :
+            flags.INVERTED |
+            flags.HIDDEN) :
+          flags.NORMAL
       }
     }
 
@@ -201,7 +222,7 @@ define([
         startCount = false
 
       for (let px = 0; px < rx; px++) {
-        if ((this.attributes[ry][px] & this.flags.LOCKED) !== 0) {
+        if ((this.attributes[ry][px] & flags.LOCKED) !== 0) {
           if (!inBlack) {
             if (startCount)
               point.x++
@@ -215,7 +236,7 @@ define([
       inBlack = false
       startCount = false
       for (let py = 0; py < ry; py++) {
-        if ((this.attributes[py][rx] & this.flags.LOCKED) !== 0) {
+        if ((this.attributes[py][rx] & flags.LOCKED) !== 0) {
           if (!inBlack) {
             if (startCount)
               point.y++
@@ -270,7 +291,7 @@ define([
     moveCursor(dx, dy, skipLocked) {
       if (this.useCursor) {
         const point = this.findNextCellWithAttr(this.cursor.x, this.cursor.y,
-          skipLocked ? this.flags.LOCKED : this.flags.NORMAL,
+          skipLocked ? flags.LOCKED : flags.NORMAL,
           dx, dy, false)
 
         if (!this.cursor.equals(point))
@@ -295,7 +316,7 @@ define([
           scan.y += dy
           if (scan.x < 0 || scan.x >= this.nCols || scan.y < 0 || scan.y >= this.nRows)
             break
-          if (!this.getCellAttribute(scan.x, scan.y, this.flags.LOCKED))
+          if (!this.getCellAttribute(scan.x, scan.y, flags.LOCKED))
             result = scan
         }
       }
@@ -307,7 +328,7 @@ define([
      * at specified point.
      * @param {number} startX - Starting X coordinate
      * @param {number} startY - Starting Y coordinate
-     * @param {number} attr - Attribute to check. See {@link TextGrid#flags}.
+     * @param {number} attr - Attribute to check. See {@link TextGrid.flags}.
      * @param {number} dx - 0 means no movement, 1 go right, -1 go left.
      * @param {number} dy - 0 means no movement, 1 go down, -1 go up.
      * @param {boolean} attrState - Desired state (enabled or disabled) of `attr`
@@ -363,7 +384,7 @@ define([
         this.cursor.x = px
         this.cursor.y = py
         this.useCursor = true
-        if (skipLocked && this.getCellAttribute(px, py, this.flags.LOCKED)) {
+        if (skipLocked && this.getCellAttribute(px, py, flags.LOCKED)) {
           this.moveCursor(1, 0, skipLocked)
         } else {
           if (this.cursorEnabled)
@@ -529,7 +550,7 @@ define([
      * @param {number} y0 - 'Y' coordinate of the first cell
      * @param {number} x1 - 'X' coordinate of the second cell
      * @param {number} y1 - 'Y' coordinate of the second cell
-     * @param {number} attribute - The binary flag representing this attribute. See {@link textGrid#flags}.
+     * @param {number} attribute - The binary flag representing this attribute. See {@link TextGrid.flags}.
      * @param {boolean} value - Whether to set or unset the attribute.
      */
     setAttributeBetween(x0, y0, x1, y1, attribute, value) {
@@ -554,23 +575,23 @@ define([
      * Sets or unsets a specifi attrobut to a cell.
      * @param {number} px - The 'X' coordinate of the cell
      * @param {number} py - The 'Y' coordinate of the cell
-     * @param {number} attribute - The binary flag representing this attribute. See {@link textGrid#flags}.
+     * @param {number} attribute - The binary flag representing this attribute. See {@link TextGrid.flags}.
      * @param {boolean} state - Whether to set or unset the attribute.
      */
     setAttribute(px, py, attribute, state) {
       if (this.isValidCell(px, py)) {
-        if (this.attribute === this.flags.MARKED && !state)
+        if (this.attribute === flags.MARKED && !state)
           this.repaintCell(px, py)
         this.attributes[py][px] &= ~attribute
         this.attributes[py][px] |= state ? attribute : 0
-        if (attribute !== this.flags.MARKED || state)
+        if (attribute !== flags.MARKED || state)
           this.repaintCell(px, py)
       }
     }
 
     /**
      * Sets the specified attribute to all cells.
-     * @param {number} attribute - The binary flag representing this attribute. See {@link textGrid#flags}.
+     * @param {number} attribute - The binary flag representing this attribute. See {@link TextGrid.flags}.
      * @param {boolean} state - Whether to set or unset the attribute.
      */
     setAllCellsAttribute(attribute, state) {
@@ -583,7 +604,7 @@ define([
      * Gets the specified attribute of a cell
      * @param {number} px - The 'X' coordinate of the cell
      * @param {number} py - The 'Y' coordinate of the cell
-     * @param {number} attribute - The binary flag representing this attribute. See {@link textGrid#flags}.
+     * @param {number} attribute - The binary flag representing this attribute. See {@link TextGrid.flags}.
      * @returns {boolean} - `true` if the cell has this attribute, `false` otherwise.
      */
     getCellAttribute(px, py, attribute) {
@@ -607,7 +628,7 @@ define([
      * @returns {AWT.Rectangle}
      */
     getCellBorderBounds(px, py) {
-      const isMarked = this.getCellAttribute(px, py, this.flags.MARKED)
+      const isMarked = this.getCellAttribute(px, py, flags.MARKED)
       if (!this.border && !isMarked)
         return this.getCellRect(px, py)
 
@@ -641,7 +662,7 @@ define([
      * @returns {AWT.Dimension}
      */
     getMinimumSize() {
-      return new AWT.Dimension(this.defaults.MIN_CELL_SIZE * this.nCols, this.defaults.MIN_CELL_SIZE * this.nRows)
+      return new AWT.Dimension(defaults.MIN_CELL_SIZE * this.nCols, defaults.MIN_CELL_SIZE * this.nRows)
     }
 
     /**
@@ -657,6 +678,7 @@ define([
 
     /**
      * Overrides {@link AbstractBox#setBounds}
+     * @override
      * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
      * upper-left corner of a new rectangle.
      * @param {number=} y - `y` coordinate of the upper-left corner of the new rectangle.
@@ -671,6 +693,7 @@ define([
 
     /**
      * Overrides {@link AbstractBox#updateContent}
+     * @override
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * grid.
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
@@ -682,8 +705,8 @@ define([
       ctx.font = bb.font.cssFont()
       ctx.textBaseline = 'hanging'
       bb.prepareText(ctx, 'W',
-        this.cellWidth - 2 * this.defaults.MIN_INTERNAL_MARGIN,
-        this.cellHeight - 2 * this.defaults.MIN_INTERNAL_MARGIN)
+        this.cellWidth - 2 * defaults.MIN_INTERNAL_MARGIN,
+        this.cellHeight - 2 * defaults.MIN_INTERNAL_MARGIN)
 
       const ch = []
       //
@@ -697,9 +720,9 @@ define([
           const bxr = this.getCellBorderBounds(px, py)
           if (bxr.intersects(dirtyRegion)) {
             const attr = this.attributes[py][px]
-            if ((attr & this.flags.TRANSPARENT) === 0) {
-              const isInverted = (attr & this.flags.INVERTED) !== 0
-              const isMarked = (attr & this.flags.MARKED) !== 0
+            if ((attr & flags.TRANSPARENT) === 0) {
+              const isInverted = (attr & flags.INVERTED) !== 0
+              const isMarked = (attr & flags.MARKED) !== 0
               const isCursor = this.useCursor && this.cursor.x === px && this.cursor.y === py
               const boxBounds = this.getCellRect(px, py)
               ctx.fillStyle = isCursor && this.cursorBlink ?
@@ -707,7 +730,7 @@ define([
                 isInverted ? bb.textColor : bb.backColor
               boxBounds.fill(ctx)
               ctx.strokeStyle = 'black'
-              if ((attr & this.flags.HIDDEN) === 0) {
+              if ((attr & flags.HIDDEN) === 0) {
                 ch[0] = this.chars[py][px]
                 if (ch[0]) {
                   const dx = boxBounds.pos.x + (this.cellWidth - ctx.measureText(ch[0]).width) / 2
@@ -774,92 +797,101 @@ define([
   Object.assign(TextGrid.prototype, {
     /**
      * Number of rows
+     * @name TextGrid#nRows
      * @type {number} */
     nRows: 1,
     /**
      * Number of columns
+     * @name TextGrid#nCols
      * @type {number} */
     nCols: 1,
     /**
      * Two-dimension array of characters
+     * @name TextGrid#chars
      * @type {string[][]} */
     chars: null,
     /**
      * Two-dimension array with the expected characters, used to check user's answers.
+     * @name TextGrid#answers
      * @type {string[][]} */
     answers: null,
     /**
      * Two-dimension array of bytes used as containers of boolean attributes
-     * @see textGrid#flags
+     * @name TextGrid#attributes
+     * @see TextGrid.flags
      * @type {number[][]} */
     attributes: null,
     /**
      * The cell width, in pixels
+     * @name TextGrid#cellWidth
      * @type {number} */
     cellWidth: 20,
     /**
      * The cell height, in pixels
+     * @name TextGrid#cellHeight
      * @type {number} */
     cellHeight: 20,
     /**
      * The preferred bounds of this grid
+     * @name TextGrid#preferredBounds
      * @type {AWT.Rectangle} */
     preferredBounds: null,
     /**
      * The character to be used as wildcard
+     * @name TextGrid#wild
      * @type {string} */
     wild: TextGridContent.prototype.wild,
     /**
      * Characters that can be used when randomizing the content of this grid
+     * @name TextGrid#randomChars
      * @see TextGridContent#randomChars
      * @type {string} */
     randomChars: TextGridContent.prototype.randomChars,
     /**
      * Whether the blinking cursor is enabled or disabled
+     * @name TextGrid#cursorEnabled
      * @type {boolean} */
     cursorEnabled: false,
     /**
      * Whether this grid uses a blinking cursor or not
+     * @name TextGrid#useCursor
      * @type {boolean} */
     useCursor: false,
     /**
      * The current position of the cursor
+     * @name TextGrid#cursor
      * @type {AWT.Point} */
     cursor: null,
     /**
      * `true` when the cursor is "blinking" (cell drawn with {@link BoxBase} `inverse` attributes)
+     * @name TextGrid#cursorBlink
      * @type {boolean} */
     cursorBlink: false,
     /**
      * Controls the blinking of the cursor
+     * @name TextGrid#cursorTimer
      * @type {AWT.Timer} */
     cursorTimer: null,
     /**
      * Whether the wildcard character is transparent or opaque
+     * @name TextGrid#wildTransparent
      * @type {boolean} */
     wildTransparent: false,
-    /**
-     * Default values
-     * @constant
-     * @type {object} */
-    defaults: {
-      MIN_CELL_SIZE: 12,
-      DEFAULT_CELL_SIZE: 20,
-      MIN_INTERNAL_MARGIN: 2
-    },
-    /**
-     * Binary flags used to mark status
-     * @constant
-     * @type {object} */
-    flags: {
-      NORMAL: 0,
-      INVERTED: 1,
-      HIDDEN: 2,
-      LOCKED: 4,
-      MARKED: 8,
-      TRANSPARENT: 16
-    },
   })
+
+  /**
+   * TextGrid default values
+   * @name TextGrid.defaults
+   * @constant
+   * @type {object} */
+  TextGrid.defaults = defaults
+
+  /**
+   * Binary flags used to mark status
+   * @name TextGrid.flags
+   * @constant
+   * @type {object} */
+  TextGrid.flags = flags
 
   return TextGrid
 })
