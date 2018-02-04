@@ -106,18 +106,22 @@ define([
   Object.assign(EventSoundsElement.prototype, {
     /**
      * The sound file used by this element
+     * @name EventSoundsElement#fileName
      * @type {string} */
     fileName: null,
     /**
      * Whether the sound for this event is enabled or not
+     * @name EventSoundsElement#enabled
      * @type {boolean} */
     enabled: Utils.DEFAULT,
     /**
      * Media player used to play this sound
+     * @name EventSoundsElement#player
      * @type {ActiveMediaPlayer} */
     player: null,
     /**
      * HTMLAudioElement used to play this sound
+     * @name EventSoundsElement#audio
      * @type {HTMLAudioElement} */
     audio: null,
   })

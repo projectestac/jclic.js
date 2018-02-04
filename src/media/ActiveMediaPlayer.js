@@ -282,26 +282,32 @@ define([
   Object.assign(ActiveMediaPlayer.prototype, {
     /**
      * The MediaContent associated to this player.
+     * @name ActiveMediaPlayer#mc
      * @type {MediaContent} */
     mc: null,
     /**
      * The player to which this player belongs.
+     * @name ActiveMediaPlayer#ps
      * @type {JClicPlayer} */
     ps: null,
     /**
      * MediaPlayers should be linked to {@link ActiveBox} objects.
+     * @name ActiveMediaPlayer#bx
      * @type {ActiveBox} */
     bx: null,
     /**
      * The visual component for videos, usually a `video` HTML element
+     * @name ActiveMediaPlayer#$visualComponent
      * @type {external:jQuery} */
     $visualComponent: null,
     /**
      * When `true`, this player makes use of a recording audio buffer
+     * @name ActiveMediaPlayer#useAudioBuffer
      * @type {boolean} */
     useAudioBuffer: false,
     /**
      * The {@link MediaBagElement} containing the reference to the media to be played
+     * @name ActiveMediaPlayer#mbe
      * @type {MediaBagElement} */
     mbe: null,
   })

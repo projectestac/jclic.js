@@ -354,6 +354,7 @@ define([
   Object.assign(ActiveBoxBag.prototype, {
     /**
      * `div` containing the accessible elements associated to this ActiveBoxBag
+     * @name ActiveBoxBag#$accessibleDiv
      * @type {external:jQuery} */
     $accessibleDiv: null,
   })

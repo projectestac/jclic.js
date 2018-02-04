@@ -188,13 +188,10 @@ define([
     setTextContent(tx) {
       // only plain text allowed!
       if (tx !== null) {
-        this.rawText = tx
         this.text = tx
         this.checkHtmlText()
       } else {
-        this.rawText = null
         this.text = null
-        this.htmlText = null
         this.innerHtmlText = null
       }
     }
@@ -203,15 +200,14 @@ define([
      * Checks if cell's text uses HTML, initializing the `innerHtmlText` member as needed.
      */
     checkHtmlText() {
-      this.htmlText = null
       this.innerHtmlText = null
       if (Utils.startsWith(this.text, '<html>', true)) {
-        this.htmlText = this.text.trim()
-        const s = this.htmlText.toLocaleLowerCase()
+        const htmlText = this.text.trim()
+        const s = htmlText.toLocaleLowerCase()
         if (s.indexOf('<body') === -1) {
           const s2 = s.indexOf('</html>')
           if (s2 >= 0)
-            this.innerHtmlText = this.htmlText.substr(6, s2)
+            this.innerHtmlText = htmlText.substr(6, s2)
         }
       }
     }
@@ -305,31 +301,38 @@ define([
      * The {@link BoxBase} attribute of this content. Can be `null`, meaning {@link ActiveBox} will
      * try to find a suitable style scanning down through its own BoxBase, their parent's and, finally,
      * the default values defined in `BoxBase.prototype`.
+     * @name ActiveBoxContent#bb
      * @type {BoxBase} */
     bb: null,
     /**
      * Optimal dimension of any {@link ActiveBox} taking this content.
+     * @name ActiveBoxContent#dimension
      * @type {AWT.Dimension} */
     dimension: null,
     /**
      * The {@link ActiveBox} can have or not a border despite the settings of {@link BoxBase}.
      * The default value `null` means not to take in consideration this setting.
+     * @name ActiveBoxContent#border
      * @type {(null|boolean)} */
     border: null,
     /**
      * The text to display on the {@link ActiveBox}. It can have up to two paragraphs.
+     * @name ActiveBoxContent#text
      * @type {string} */
     text: null,
     /**
      * The name of the image file to display on the {@link ActiveBox}.
+     * @name ActiveBoxContent#imgName
      * @type {string} */
     imgName: null,
     /**
      * An optional shape used to clip the image.
+     * @name ActiveBoxContent#imgClip
      * @type {AWT.Shape} */
     imgClip: null,
     /**
      * The media content associated with this object.
+     * @name ActiveBoxContent#mediaContent
      * @type {MediaContent} */
     mediaContent: null,
     /**
@@ -339,45 +342,56 @@ define([
      * @property {string} v - Valud values are: `top`, `middle`, `bottom` */
     /**
      * The horizontal and vertical alignment of the image inside the cell.
+     * @name ActiveBoxContent#imgAlign
      * @type {ActiveBoxContent~alignType} */
     imgAlign: null,
     /**
      * The horizontal and vertical alignment of the text inside the cell.
      * Valid values are: `left`, `middle`, `right`, `top` and `bottom`.
+     * @name ActiveBoxContent#txtAlign
      * @type {ActiveBoxContent~alignType} */
     txtAlign: null,
     /**
      * Whether to avoid overlapping of image and text inside the cell when both are present.
+     * @name ActiveBoxContent#avoidOverlapping
      * @type {boolean} */
     avoidOverlapping: false,
     /**
      * Numeric identifier used in activities to resolve relationships between cells
+     * @name ActiveBoxContent#id
      * @type {number} */
     id: -1,
     /**
      * Numeric identifier used in activities to resolve relationships between cells
+     * @name ActiveBoxContent#item
      * @type {number} */
     item: -1,
     //
     // Transient properties build and modified at run-time
     /**
      * The realized image used by this box content.
+     * @name ActiveBoxContent#img
      * @type {external:HTMLImageElement} */
     img: null,
     /**
      * When `img` is an animated GIF file, this field should contain its file name
-     */
+     * @name ActiveBoxContent#animatedGifFile
+     * @type {string} */
     animatedGifFile: null,
-    //
-    //
-    userData: null,
-    rawText: null,
-    htmlText: null,
+    /**
+     * When not null, this content should be treated as an HTML element
+     * @name ActiveBoxContent#innerHtmlText
+     * @type {string} */
     innerHtmlText: null,
-    animated: false,
-    // ActiveMediaPlayer
+    /**
+     * The {@link ActiveMediaPlayer} associated with this content. Updated at run-time.
+     * @name ActiveBoxContent#amp
+     * @type {ActiveMediaPlayer} */
     amp: null,
-    // MediaBagElement
+    /**
+     * The {@link MediaBagElement} associated with this content, if any. Updated at run-time.
+     * @name ActiveBoxContent#mbe
+     * @type {MediaBagElement} */
     mbe: null,
   })
 

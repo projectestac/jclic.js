@@ -224,7 +224,6 @@ define([
         tx = ''
       if (!this.content)
         this.content = new ActiveBoxContent()
-      this.content.rawText = tx
       this.content.text = tx
       this.content.mediaContent = null
       this.content.img = null
@@ -383,10 +382,8 @@ define([
       const
         abc = this.getCurrentContent(),
         bb = this.getBoxBaseResolve()
-      if (!this.isInactive() && abc && abc.htmlText) {
-        if (abc.innerHtmlText)
-          bb.getCSS()['text-align'] = abc.txtAlign.h.replace('middle', 'center')
-      }
+      if (!this.isInactive() && abc && abc.innerHtmlText)
+        bb.getCSS()['text-align'] = abc.txtAlign.h.replace('middle', 'center')
     }
 
     /**
@@ -401,6 +398,7 @@ define([
 
     /**
      * Draws the content of this Activebox on the specified canvas context.
+     * @override
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
      * box content.
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
@@ -625,6 +623,7 @@ define([
 
     /**
      * Sets a new size and/or dimension to this box.
+     * @override
      * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
      * upper-left corner of a new rectangle.
      * @param {number=} y - `y` coordinate of the upper-left corner of the new rectangle.
@@ -646,6 +645,7 @@ define([
     /**
      * Places and resizes {@link AbstractBox#$hostedComponent $hostedComponent}, based on the size
      * and position of this box.
+     * @override
      * @param {boolean} sizeChanged - `true` when this {@link ActiveBox} has changed its size
      */
     setHostedComponentBounds(sizeChanged) {
@@ -708,23 +708,23 @@ define([
             id: `AE${id}`,
             disabled: disabled
           })
-          .html(this.toString())
-          .click(ev => {
-            // Check if event was produced by a mouse click
-            if (ev.originalEvent && (ev.originalEvent.pageX !== 0 || ev.originalEvent.pageY !== 0)) {
-              // Mouse clicks should be processed odirectly by the canvas, so ignore this accessible event
-              return true
-            }
-            Utils.log('debug', `Click on accessible element: ${this.toString()}`)
-            const
-              $event = $.Event(eventType || 'click'),
-              bounds = this.getBounds(),
-              offset = $canvas.offset()
-            $event.pageX = offset.left + bounds.pos.x + bounds.dim.width / 2
-            $event.pageY = offset.top + bounds.pos.y + bounds.dim.height / 2
-            $clickReceiver.trigger($event)
-            return false
-          })
+            .html(this.toString())
+            .click(ev => {
+              // Check if event was produced by a mouse click
+              if (ev.originalEvent && (ev.originalEvent.pageX !== 0 || ev.originalEvent.pageY !== 0)) {
+                // Mouse clicks should be processed odirectly by the canvas, so ignore this accessible event
+                return true
+              }
+              Utils.log('debug', `Click on accessible element: ${this.toString()}`)
+              const
+                $event = $.Event(eventType || 'click'),
+                bounds = this.getBounds(),
+                offset = $canvas.offset()
+              $event.pageX = offset.left + bounds.pos.x + bounds.dim.width / 2
+              $event.pageY = offset.top + bounds.pos.y + bounds.dim.height / 2
+              $clickReceiver.trigger($event)
+              return false
+            })
           const $dest = $canvasGroup || $canvas
           $dest.append(this.$accessibleElement)
           const elem = this.$accessibleElement.get(-1)
@@ -746,38 +746,47 @@ define([
   Object.assign(ActiveBox.prototype, {
     /**
      * Identifier used to set the relative position of this box in a set.
+     * @name ActiveBox#idOrder
      * @type {number} */
     idOrder: -1,
     /**
      * Identifier used to set a relative position in the space.
+     * @name ActiveBox#idLoc
      * @type {number} */
     idLoc: -1,
     /**
      * Identifier used to establish relationships between cells of different sets (in associations)
+     * @name ActiveBox#idAss
      * @type {number} */
     idAss: -1,
     /**
      * Backup of the original position of the cell, useful when the real position must be restored after a temporary change.
+     * @name ActiveBox#pos0
      * @type {AWT.Point} */
     pos0: null,
     /**
      * Main content of this box
+     * @name ActiveBox#content
      * @type {ActiveBoxContent} */
     content: null,
     /**
      * Alternative content of this box
+     * @name ActiveBox#altContent
      * @type {ActiveBoxContent} */
     altContent: null,
     /**
      * Flag to check if this box has a 'hosted component'
+     * @name ActiveBox#hostedComponent
      * @type {boolean} */
     hasHostedComponent: false,
     /**
      * The media player associated to this box
+     * @name ActiveBox#hostedMediaPlayer
      * @type {ActiveMediaPlayer} */
     hostedMediaPlayer: null,
     /**
      * Indicates that this box is used as a background. When drawing, the clipping region must be respected.
+     * @name ActiveBox#isBackground
      * @type {boolean} */
     isBackground: false,
   })

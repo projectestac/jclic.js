@@ -142,6 +142,7 @@ define([
   Object.assign(ActiveMediaBag.prototype, {
     /**
      * The collection of {@link ActiveMediaPlayer} objects stored in this media bag.
+     * @name ActiveMediaBag#players
      * @type {ActiveMediaPlayer[]} */
     players: [],
   })

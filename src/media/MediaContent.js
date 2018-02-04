@@ -174,7 +174,7 @@ define([
           icon = 'default'
           break
       }
-      return icon ? MediaContent.icoImg[icon] : null
+      return icon ? MediaContent.ICONS[icon] : null
     }
   }
 
@@ -183,69 +183,84 @@ define([
      * The type of media. Valid values are: `UNKNOWN`, `PLAY_AUDIO`, `PLAY_VIDEO`,
      * `PLAY_MIDI`, `PLAY_CDAUDIO`, `RECORD_AUDIO`, `PLAY_RECORDED_AUDIO`, `RUN_CLIC_ACTIVITY`,
      * `RUN_CLIC_PACKAGE`, `RUN_EXTERNAL`, `URL`, `EXIT` and `RETURN`
+     * @name MediaContent#mediaType
      * @type {string} */
     mediaType: 'UNKNOWN',
     /**
      * The priority level is important when different medias want to play together. Objects with
      * highest priority level can mute lower ones.
+     * @name MediaContent#level
      * @type {number} */
     level: 1,
     /**
      * Media file name
+     * @name MediaContent#mediaFileName
      * @type {String} */
     mediaFileName: null,
     /**
      * Optional parameters passed to external calls
+     * @name MediaContent#externalParams
      * @type {string} */
     externalParam: null,
     /**
      * Special setting used to play only a fragment of media. `-1` means not used (plays full
      * length, from the beginning)
+     * @name MediaContent#from
      * @type {number} */
     from: -1,
     /**
      * Special setting used to play only a fragment of media. `-1` means not used (plays to the end
      * of the media)
+     * @name MediaContent#to
      * @type {number} */
     to: -1,
     /**
      * When `mediaType` is `RECORD_AUDIO`, this member stores the maximum length of the recorded
      * sound, in seconds.
+     * @name MediaContent#length
      * @type {number} */
     length: 3,
     /**
      * When `mediaType` is `RECORD_AUDIO`, this member stores the buffer ID where the recording
      * will be stored.
+     * @name MediaContent#recBuffer
      * @type {number} */
     recBuffer: 0,
     /**
      * Whether to stretch or not the video size to fit the cell space.
+     * @name MediaContent#stretch
      * @type {boolean} */
     stretch: false,
     /**
      * When `true`, the video plays out of the cell, centered on the activity window.
+     * @name MediaContent#free
      * @type {boolean} */
     free: false,
     /**
      * Places the video window at a specific location.
+     * @name MediaContent#absLocation
      * @type {AWT.Point} */
     absLocation: null,
     /**
      * When {@link MediaContent#absLocation} is not `null`, this field indicates from where to
      * measure its coordinates. Valid values are: `BOX`, `WINDOW` or `FRAME`.
+     * @name MediaContent#absLocationFrom
      * @type {string} */
     absLocationFrom: null,
     /**
      * `true` when the video window must catch mouse clicks.
+     * @name MediaContent#catchMouseEvents
      * @type {boolean} */
     catchMouseEvents: false,
     /**
      * Whether to repeat the media in loop, or just one time.
+     * @name MediaContent#loop
      * @type {boolean} */
     loop: false,
     /**
      * When `true`, the media will automatically start playing when the associated {@link ActiveBox}
      * become active.
+     * @name MediaContent#autoStart
      * @type {boolean} */
     autoStart: false,
   })
@@ -253,7 +268,7 @@ define([
   /**
    * Default icons for media types.
    * @type {object} */
-  MediaContent.icoData = {
+  const ICONS = {
     default: 'data:image/svg+xml;base64,' +
       'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGhlaWdodD0iNDgiIHZp' +
       'ZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAw' +
@@ -303,14 +318,15 @@ define([
 
   /**
    * Collection of icon {@link external:HTMLImageElement} objects
+   * @name MediaContent.ICONS
    * @type {object} */
-  MediaContent.icoImg = {}
+  MediaContent.ICONS = {}
 
   // Load the icons
-  $.each(MediaContent.icoData, (key, value) => {
+  $.each(ICONS, (key, value) => {
     const img = new Image()
     img.src = value
-    MediaContent.icoImg[key] = img
+    MediaContent.ICONS[key] = img
   })
 
   return MediaContent
