@@ -117,6 +117,7 @@ define([
   Object.assign(AutoContentProvider.prototype, {
     /**
      * The JClic project to which AutoContentProvider belongs
+     * @name AutoContentProvider#project
      * @type {JClicProject} */
     project: null,
   })

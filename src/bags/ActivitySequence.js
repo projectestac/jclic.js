@@ -285,15 +285,18 @@ define([
   Object.assign(ActivitySequence.prototype, {
     /**
      * The ordered list of {@link ActivitySequenceElement} objects
+     * @name ActivitySequence#elements
      * @type {ActivitySequenceElement[]} */
     elements: null,
     /**
      * The JClic project to which this ActivitySequence belongs.
+     * @name ActivitySequence#project
      * @type {JClicProject} */
     project: null,
     /**
      * Pointer to the {@link ActivitySequenceElement} currently running (points inside
      * the `elements` array).
+     * @name ActivitySequence#currentAct
      * @type {number} */
     currentAct: -1,
   })

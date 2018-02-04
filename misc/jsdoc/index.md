@@ -128,19 +128,19 @@ At run time, all classes derived from [Activity](Activity.html) generate a speci
 #### Utility classes
 
 __AWT:__
-[AWT](AWT.html): contains some classes similar to those defined in Java's [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html):
-* [AWT.Font](AWT.Font.html)
-* [AWT.Gradient](AWT.Gradient.html)
-* [AWT.Stroke](AWT.Stroke.html)
-* [AWT.Point](AWT.Point.html)
-* [AWT.Dimension](AWT.Dimension.html)
-* [AWT.Shape](AWT.Shape.html)
-  * [AWT.Rectangle](AWT.Rectangle.html)
-  * [AWT.Ellipse](AWT.Ellipse.html)
-  * [AWT.Path](AWT.Path.html): formed by [AWT.PathStroke](AWT.PathStroke.html) elements
-* [AWT.Action](AWT.Action.html)
-* [AWT.Timer](AWT.Timer.html)
-* [AWT.Container](AWT.Container.html)
+AWT contains some classes similar to those defined in Java's [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html):
+* [Font](Font.html)
+* [Gradient](Gradient.html)
+* [Stroke](Stroke.html)
+* [Point](Point.html)
+* [Dimension](Dimension.html)
+* [Shape](Shape.html)
+  * [Rectangle](Rectangle.html)
+  * [Ellipse](Ellipse.html)
+  * [Path](Path.html): formed by [PathStroke](PathStroke.html) elements
+* [Action](Action.html)
+* [Timer](Timer.html)
+* [Container](Container.html)
 
 __Boxes:__
 [AbstractBox](AbstractBox.html) is a special class derived from [AWT.Rectangle](AWT.Rectangle.html) that has the following subclasses:

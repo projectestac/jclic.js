@@ -56,6 +56,7 @@ define([
 
     /**
      * Whether or not the activity uses random to scramble internal components
+     * @override
      * @returns {boolean}
      */
     hasRandom() {
@@ -64,6 +65,7 @@ define([
 
     /**
      * When `true`, the activity must always be scrambled
+     * @override
      * @returns {boolean}
      */
     shuffleAlways() {
@@ -72,6 +74,7 @@ define([
 
     /**
      * Whether the activity allows the user to request help.
+     * @override
      * @returns {boolean}
      */
     helpSolutionAllowed() {
@@ -82,16 +85,18 @@ define([
   Object.assign(OrderText.prototype, {
     /**
      * Whether to allow or not to scramble words among different paragraphs.
+     * @name OrderText#amongParagraphs
      * @type {boolean} */
     amongParagraphs: false,
     /**
      * The box connector
+     * @name OrderText#bc
      * @type {BoxConnector} */
     bc: null,
   })
 
   /**
-   * The {@link TextActivityBasePanel} where this kind of text activities are played.
+   * The {@link TextActivityBasePanel} where {@link OrderText} activities are played.
    * @class
    * @extends TextActivityBasePanel
    */
@@ -110,6 +115,7 @@ define([
 
     /**
      * Prepares the text panel
+     * @override
      */
     buildVisualComponents() {
       this.act.document.style['target'].css.cursor = 'pointer'
@@ -118,6 +124,7 @@ define([
 
     /**
      * Sets the size and position of this activity panel
+     * @override
      * @param {AWT.Rectangle} rect
      */
     setBounds(rect) {
@@ -146,6 +153,7 @@ define([
 
     /**
      * Creates a target DOM element for the provided target.
+     * @override
      * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
      * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
      * to store the target, or replaced by another type of object.
@@ -190,6 +198,7 @@ define([
 
     /**
      * Basic initialization procedure
+     * @override
      */
     initActivity() {
       super.initActivity()
@@ -201,6 +210,7 @@ define([
 
     /**
      * Called when the activity starts playing
+     * @override
      */
     startActivity() {
       super.startActivity()
@@ -284,6 +294,7 @@ define([
 
     /**
      * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
+     * @override
      * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
      */
     evaluatePanel() {
@@ -311,6 +322,7 @@ define([
 
     /**
      * Ordinary ending of the activity, usually called form `processEvent`
+     * @override
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
     finishActivity(result) {
@@ -320,6 +332,7 @@ define([
 
     /**
      * Main handler used to process mouse, touch, keyboard and edit events.
+     * @override
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
@@ -390,18 +403,25 @@ define([
   Object.assign(OrderTextPanel.prototype, {
     /**
      * Currently selected text target
+     * @name OrderTextPanel#currentTarget
      * @type {TextActivityDocument.TextTarget} */
     currentTarget: null,
     /**
      * The box connector
+     * @name OrderTextPanel#bc
      * @type {BoxConnector} */
     bc: null,
     /**
      * List of mouse, touch and keyboard events intercepted by this panel
+     * @override
+     * @name OrderTextPanel#events
      * @type {string[]} */
     events: ['click', 'mousemove'],
   })
 
+  /**
+   * Panel class associated to this type of activity: {@link OrderTextPanel}
+   * @type {class} */
   OrderText.Panel = OrderTextPanel
 
   // Register class in Activity.prototype

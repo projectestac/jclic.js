@@ -63,6 +63,7 @@ define([
 
     /**
      * Retrieves the minimum number of actions needed to solve this activity
+     * @override
      * @returns {number}
      */
     getMinNumActions() {
@@ -71,6 +72,7 @@ define([
 
     /**
      * This type of activity permits the user to display the solution
+     * @override
      * @returns {boolean}
      */
     helpSolutionAllowed() {
@@ -79,6 +81,7 @@ define([
 
     /**
      * This kind of activity uses random numbers to generate the filling characters
+     * @override
      * @returns {boolean}
      */
     hasRandom() {
@@ -89,23 +92,26 @@ define([
   Object.assign(WordSearch.prototype, {
     /**
      * String array containing all the valid clues.
+     * @name WordSearch#clues
      * @type {string[]} */
     clues: null,
     /**
      * Array of integers containing __for each clue__ the index
      * of an associated {@link ActiveBoxContent} located on the secondary {@link ActiveBoxBag}.
      * This associated element is optional.
+     * @name WordSearch#clueItems
      * @type {number[]} */
     clueItems: null,
     /**
      * Object that indicates if box grids A and B must be scrambled.
      * (defaults to _false_ in WordSearch activities)
+     * @name WordSearch#scramble
      * @type {Activity~scrambleType} */
     scramble: { primary: false, secondary: false },
   })
 
   /**
-   * The {@link ActivityPanel} where word search activities are played.
+   * The {@link ActivityPanel} where {@link WordSearch} activities are played.
    * @class
    * @extends ActivityPanel
    */
@@ -125,6 +131,7 @@ define([
 
     /**
      * Performs miscellaneous cleaning operations
+     * @override
      */
     clear() {
       if (this.grid) {
@@ -139,6 +146,7 @@ define([
 
     /**
      * Prepares the visual components of the activity
+     * @override
      */
     buildVisualComponents() {
       if (this.firstRun)
@@ -177,6 +185,7 @@ define([
 
     /**
      * Basic initialization procedure
+     * @override
      */
     initActivity() {
       super.initActivity()
@@ -210,6 +219,7 @@ define([
     /**
      * Updates the graphic content of this panel.
      * This method will be called from {@link AWT.Container#update} when needed.
+     * @override
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.
      */
@@ -231,6 +241,7 @@ define([
 
     /**
      * Sets the real dimension of this panel.
+     * @override
      * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
      * @returns {AWT.Dimension}
      */
@@ -245,6 +256,7 @@ define([
 
     /**
      * Sets the size and position of this activity panel
+     * @override
      * @param {AWT.Rectangle} rect
      */
     setBounds(rect) {
@@ -289,6 +301,7 @@ define([
 
     /**
      * Main handler used to process mouse, touch, keyboard and edit events
+     * @override
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
@@ -408,26 +421,35 @@ define([
   Object.assign(WordSearchPanel.prototype, {
     /**
      * The {@link TextGrid} object of this ActivityPanel
+     * @name WordSearchPanel#grid
      * @type {TextGrid} */
     grid: null,
     /**
      * An optional {@link ActiveBoxBag} used to display information associated with the hidden words.
+     * @name WordSearchPanel#bgAlt
      * @type {ActiveBoxBag} */
     bgAlt: null,
     /**
      * An array of boolean values indicating which clues have been found
+     * @name WordSearchPanel#resolvedClues
      * @type {boolean[]} */
     resolvedClues: null,
     /**
      * The box connector object
+     * @name WordSearchPanel#bc
      * @type {BoxConnector} */
     bc: null,
     /**
      * Mouse and touch events intercepted by this panel
+     * @override
+     * @name WordSearchPanel#events
      * @type {string[]} */
     events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
   })
 
+  /**
+   * Panel class associated to this type of activity: {@link WordSearchPanel}
+   * @type {class} */
   WordSearch.Panel = WordSearchPanel
 
   // Register class in Activity.prototype

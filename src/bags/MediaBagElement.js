@@ -309,65 +309,73 @@ define([
   Object.assign(MediaBagElement.prototype, {
     /**
      * The name of this element. Usually is the same as `fileName`
+     * @name MediaBagElement#name
      * @type {string} */
     name: '',
     /**
      * The name of the file where this element is stored
+     * @name MediaBagElement#fileName
      * @type {string} */
     fileName: '',
     /**
      * The font family name, used only in elements of type 'font'
+     * @name MediaBagElement#fontName
      * @type {string} */
     fontName: '',
     /**
      * The path to be used as base to access this media element
+     * @name MediaBagElement#basePath
      * @type {string} */
     basePath: '',
     /**
      * An optional JSZip object that can act as a container of this media
+     * @name MediaBagElement#zip
      * @type {external:JSZip} */
     zip: null,
     /**
      * When loaded, this field will store the realized media object
+     * @name MediaBagElement#data
      * @type {object} */
     data: null,
     /**
      * Flag indicating that `data` is ready to be used
+     * @name MediaBagElement#ready
      * @type {boolean} */
     ready: false,
     /**
      * Array of callback methods to be called when the resource becomes ready
+     * @name MediaBagElement#_whenReady
+     * @private
      * @type {function[]} */
     _whenReady: null,
     /**
      * Normalized extension of `fileName`, useful to determine the media type
+     * @name MediaBagElement#ext
      * @type {string} */
     ext: '',
     /**
      * The resource type ('audio', 'image', 'midi', 'video', 'font')
+     * @name MediaBagElement#type
      * @type {string} */
     type: null,
     /**
      * Time set to load the resource before leaving
+     * @name MediaBagElement#timeout
      * @type {number} */
     timeout: 0,
     //
     /**
      * Flag used for animated GIFs
+     * @name MediaBagElement#animated
      * @type {boolean} */
     animated: false,
     /**
      * Full path obtained after a successful call to getFullPathPromise
+     * @name MediaBagElement#_fullPath
+     * @private
      * @type {string}
      */
     _fullPath: null,
-    //
-    // Other fields present in JClic, currently not used:
-    // usageCount: 0,
-    // projectFlag: false,
-    // saveFlag: true,
-    // hasThumb: false,
-    //
   })
 
   return MediaBagElement

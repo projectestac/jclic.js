@@ -71,6 +71,7 @@ define([
 
     /**
      * Retrieves the minimum number of actions needed to solve this activity
+     * @override
      * @returns {number}
      */
     getMinNumActions() {
@@ -79,6 +80,7 @@ define([
 
     /**
      * Crossword activities always make use of the keyboard
+     * @override
      * @returns {boolean}
      */
     needsKeyboard() {
@@ -89,20 +91,23 @@ define([
   Object.assign(CrossWord.prototype, {
     /**
      * Whether all letters of the {@link TextGrid} should be displayed in upper case
+     * @name CrossWord#upperCase
      * @type {boolean} */
     upperCase: true,
     /**
      * Whether the case is significant to evaluate answers
+     * @name CrossWord#checkCase
      * @type {boolean} */
     checkCase: true,
     /**
      * When `true`, the wildcard character of the {@link TextGrid} will be transparent.
+     * @name CrossWord#wildTransparent
      * @type {boolean} */
     wildTransparent: false,
   })
 
   /**
-   * The {@link ActivityPanel} where crossword activities are played.
+   * The {@link ActivityPanel} where {@link CrossWord} activities are played.
    * @class
    * @extends ActivityPanel
    */
@@ -121,6 +126,7 @@ define([
 
     /**
      * Performs miscellaneous cleaning operations
+     * @override
      */
     clear() {
       if (this.grid) {
@@ -184,6 +190,7 @@ define([
 
     /**
      * Prepares the visual components of the activity
+     * @override
      */
     buildVisualComponents() {
       if (this.firstRun)
@@ -223,6 +230,7 @@ define([
 
     /**
      * Basic initialization procedure
+     * @override
      */
     initActivity() {
       super.initActivity()
@@ -258,6 +266,7 @@ define([
     /**
      * Updates the graphic content of this panel.
      * This method will be called from {@link AWT.Container#update} when needed.
+     * @override
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.
      */
@@ -278,6 +287,7 @@ define([
 
     /**
      * Sets the real dimension of this panel.
+     * @override
      * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
      * @returns {AWT.Dimension}
      */
@@ -289,6 +299,7 @@ define([
 
     /**
      * Sets the size and position of this activity panel
+     * @override
      * @param {AWT.Rectangle} rect
      */
     setBounds(rect) {
@@ -313,6 +324,7 @@ define([
 
     /**
      * Main handler used to process mouse, touch, keyboard and edit events
+     * @override
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
@@ -469,49 +481,61 @@ define([
   Object.assign(CrossWordPanel.prototype, {
     /**
      * The default width of the 'Horizontal' and 'Vertical' buttons (currently 40 pixels)
+     * @name CrossWordPanel#LABEL_WIDTH
      * @type {number} */
     LABEL_WIDTH: 40,
     /**
      * The text grid of this ActivityPanel
+     * @name CrossWordPanel#grid
      * @type {textGrid} */
     grid: null,
     /**
      * A BoxBag used to place the across and down clues, and the `toggle direction` button.
+     * @name CrossWordPanel#bb
      * @type {BoxBag} */
     bb: null,
     /**
      * The total number of letters of this cross word
+     * @name CrossWordPanel#numLetters
      * @type {number} */
     numLetters: 0,
     /**
      * Flag indicating the type of automatic advance of the cursor.
      * Possible values are: `NO_ADVANCE` (default), 'ADVANCE_RIGHT' and 'ADVANCE_DOWN'.
      * TODO: Implement 'ADVANCE_LEFT' for LTR languages
-     */
+     * @name CrossWordPanel#advance
+     * @type {string} */
     advance: 'NO_ADVANCE',
     /**
      * The ActiveBox object used to display the 'across' clues
+     * @name CrossWordPanel#hClue
      * @type {ActiveBox} */
     hClue: null,
     /**
      * The ActiveBox object used to display the 'down' clues
+     * @name CrossWordPanel#vClue
      * @type {ActiveBox} */
     vClue: null,
     /**
      * Button used to set the advance mode to 'ADVANCE_RIGHT'
+     * @name CrossWordPanel#hClueBtn
      * @type {ActiveBox} */
     hClueBtn: null,
     /**
      * Button used to set the advance mode to 'ADVANCE_BOTTOM'
+     * @name CrossWordPanel#vClueBtn
      * @type {ActiveBox} */
     vClueBtn: null,
     /**
      * Mouse and touch events intercepted by this panel
+     * @override
+     * @name CrossWordPanel#events
      * @type {string[]} */
     events: ['click', 'keydown', 'keypress'],
     /**
      * Graphic icon for the horizontal direction button, represented as a string containing
      * an SVG file codified in base64.
+     * @name CrossWordPanel#hIcon
      * @type {string} */
     hIcon: 'data:image/svg+xml;base64,' +
       'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
@@ -524,6 +548,7 @@ define([
     /**
      * Graphic icon for the vertical direction button, represented as a string containing
      * an SVG file codified in base64.
+     * @name CrossWordPanel#vIcon
      * @type {string} */
     vIcon: 'data:image/svg+xml;base64,' +
       'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
@@ -535,14 +560,19 @@ define([
       'PC9zdmc+Cg==',
     /**
      * Sizes of the icons (currently 36 x 36 pixel)
+     * @name CrossWordPanel#icoSize
      * @type {Object} */
     icoSize: { w: 36, h: 36 },
     /**
      * BoxBase with the style to be used by the direction buttons.
+     * @name CrossWordPanel#icoBB
      * @type {BoxBase} */
     icoBB: new BoxBase().set('backColor', '#4285F4').set('inactiveColor', '#70A2F6').set('dontFill', true)
   })
 
+  /**
+   * Panel class associated to this type of activity: {@link CrossWordPanel}
+   * @type {class} */
   CrossWord.Panel = CrossWordPanel
 
   // Register class in Activity.prototype

@@ -43,7 +43,7 @@ define([
    * This is the HTML DOM element used in text activities like {@link FillInBlanks},
    * {@link IdentifyText}, {@link OrderText} and {@link Complete}. It contains the main document of
    * the activity, usually with some elements marked as "targets". In {@link FillInBlanks}, this
-   * targets are encapsulated in {@link TextActivityDocument.TextTarget} objects.
+   * targets are encapsulated in {@link TextTarget} objects.
    * @exports TextActivityDocument
    * @class
    */
@@ -121,7 +121,7 @@ define([
               break
 
             case 'target':
-              obj = new TextActivityDocument.TextTarget(this, child.textContent.replace(/\t/g, '&#9;'))
+              obj = new TextTarget(this, child.textContent.replace(/\t/g, '&#9;'))
               obj.setProperties($child, mediaBag)
               this.numTargets++
               break
@@ -174,7 +174,7 @@ define([
             // If base style exists, merge it with current settings
             if (this.style[val]) {
               //attr = Object.apply({}, this.style[val], attr)
-              attr = $.extend(true, {}, this.style[val], attr)              
+              attr = $.extend(true, {}, this.style[val], attr)
               if (this.style[val].css)
                 //css = Object.apply({}, this.style[val].css, css)
                 css = $.extend({}, this.style[val].css, css)
@@ -269,39 +269,48 @@ define([
   Object.assign(TextActivityDocument.prototype, {
     /**
      * Number of blank spaces between tabulators.
+     * @name TextActivityDocument#tabSpc
      * @type {number} */
     tabSpc: 12,
     /**
      * Index of the last {@link ActiveBox} activated.
+     * @name TextActivityDocument#lastBoxId
      * @type {number} */
     lastBoxId: 0,
     /**
      * A bag of {@link TargetMarker} objects
+     * @name TextActivityDocument#tmb
      * @type {object} */
     tmb: null,
     /**
      * Number of targets
+     * @name TextActivityDocument#numTargets
      * @type {number} */
     numTargets: 0,
     /**
      * Type of targets used in this activity. Possible values are: `TT_FREE`, `TT_CHAR`, `TT_WORD`
      * and `TT_PARAGRAPH`.
+     * @name TextActivityDocument#targetType
      * @type {string} */
     targetType: 'TT_FREE',
     /**
      * Bag with the content of the boxes embedded in the document.
+     * @name TextActivityDocument#boxesContent
      * @type {ActiveBagContent} */
     boxesContent: null,
     /**
      * Bag with the content of the pop-ups used by this activity.
+     * @name TextActivityDocument#popupsContent
      * @type {ActiveBagContent} */
     popupsContent: null,
     /**
      * Collection of named styles of the document
+     * @name TextActivityDocument#style
      * @type {object} */
     style: null,
     /**
      * The main document, represented as a collection of DOM objects
+     * @name TextActivityDocument#p
      * @type {object} */
     p: null,
   })
@@ -327,9 +336,9 @@ define([
    * targets of user actions in text activities.
    * @class
    */
-  TextActivityDocument.TextTarget = class {
+  class TextTarget {
     /**
-     * TextActivityDocument.TextTarget constructor
+     * TextTarget constructor
      * @param {TextActivityDocument} doc - The document to which this target belongs.
      * @param {string} text - Main text of this target.
      */
@@ -453,71 +462,87 @@ define([
     }
   }
 
-  Object.assign(TextActivityDocument.TextTarget.prototype, {
+  Object.assign(TextTarget.prototype, {
     /**
      * The {@link TextActivityDocument} to which this target belongs
+     * @name TextTarget#doc
      * @type {TextActivityDocument} */
     doc: null,
     /**
      * The current text displayed by this TextTarget
+     * @name TextTarget#text
      * @type {string} */
     text: null,
     /**
      * A set of optional attributes for `text`
+     * @name TextTarget#attr
      * @type {object} */
     attr: null,
     /**
      * `true` when the target is a drop-down list
+     * @name TextTarget#isList
      * @type {boolean} */
     isList: false,
     /**
      * Number of characters initially displayed on the text field
+     * @name TextTarget#numIniChars
      * @type {number} */
     numIniChars: 1,
     /**
      * Character used to fill-in the text field
+     * @name TextTarget#iniChar
      * @type {string} */
     iniChar: '_',
     /**
      * Maximum length of the answer
+     * @name TextTarget#maxLenResp
      * @type {number} */
     maxLenResp: 0,
     /**
      * Array of valid answers
+     * @name TextTarget#answers
      * @type {string[]} */
     answers: null,
     /**
      * Set of specific options
+     * @name TextTarget#options
      * @type {object} */
     options: null,
     /**
      * Text displayed by the target when the activity begins
+     * @name TextTarget#iniText
      * @type {string} */
     iniText: null,
     /**
      * Type of additional information offered to the user. Possible values are: `no_info`, `always`,
      * `onError` and `onDemand`.
+     * @name TextTarget#infoMode
      * @type {string} */
     infoMode: 'no_info',
     /**
      * Key that triggers the associated popup when `infoMode` is `onDemand`
+     * @name TextTarget#popupKey
      * @type {string} */
     popupKey: 'F1',
     /**
      * An optional {@link ActiveBoxContent} with information about this TextTarget
+     * @name TextTarget#popupContent
      * @type {ActiveBoxContent} */
     popupContent: null,
     /**
      * Time (seconds) to wait before showing the additional information
+     * @name TextTarget#popupDelay
      * @type {number} */
     popupDelay: 0,
     /**
      * Maximum amount of time (seconds) that the additional information will be shown
+     * @name TextTarget#popupMaxTime
      * @type {number} */
     popupMaxTime: 0,
     /**
      * When this flag is `true` and `popupContent` contains audio, no visual feedback will be
      * provided (meaning that audio will be just played)
+     * @name TextTarget#onlyPlay
      * @type {boolean} */
     onlyPlay: false,
     //
@@ -525,46 +550,58 @@ define([
     //
     /**
      * The drop-down list associated to this target
+     * @name TextTarget#$comboList
      * @type {external:jQuery} */
     $comboList: null,
     /**
      * The span element associated to this target
+     * @name TextTarget#$span
      * @type {external:jQuery} */
     $span: null,
     /**
      * The paragraph element where $span is currently located
+     * @name TextTarget#$p
      * @type {external:jQuery} */
     $p: null,
     /**
      * The span element containing the popup
+     * @name TextTarget#$popup
      * @type {external:jQuery} */
     $popup: null,
     /**
      * Current text in the $span element
+     * @name TextTarget#currentText
      * @type {string} */
     currentText: '',
     /**
      * Ordinal number of this target in the collection of targets
+     * @name TextTarget#num
      * @type {number} */
     num: 0,
     /**
      * Current ordinal position of this target in the document
+     * @name TextTarget#pos
      * (used in {@link OrderText} activities)
      * @type {number} */
     pos: 0,
     /**
      * Current status of the target. Valid values are: `NOT_EDITED`, `EDITED`, `SOLVED`, `WITH_ERROR` and `HIDDEN`
+     * @name TextTarget#targetStatus
      * @type {string} */
     targetStatus: 'NOT_EDITED',
     /**
      * Flag to control if the initial content of this TextTarget has been modified
+     * @name TextTarget#flagModified
      * @type {boolean} */
     flagModified: false,
     /**
      * Pointer to the activity panel containing this TextTarget
+     * @name TextTarget#parentPane
      * @type {TextActivityBasePanel} */
     parentPane: null,
   })
+
+  TextActivityDocument.TextTarget = TextTarget
 
   return TextActivityDocument
 })

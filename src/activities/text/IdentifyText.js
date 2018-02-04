@@ -54,7 +54,7 @@ define([
   }
 
   /**
-   * The {@link TextActivityBasePanel} where this kind of text activities are played.
+   * The {@link TextActivityBasePanel} where {@link IdentifyText} activities are played.
    * @class
    * @extends TextActivityBasePanel
    */
@@ -73,6 +73,7 @@ define([
 
     /**
      * Creates a target DOM element for the provided target.
+     * @override
      * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
      * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
      * to store the target, or replaced by another type of object.
@@ -91,6 +92,7 @@ define([
 
     /**
      * Basic initialization procedure
+     * @override
      */
     initActivity() {
       super.initActivity(this)
@@ -108,6 +110,7 @@ define([
 
     /**
      * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
+     * @override
      * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
      */
     evaluatePanel() {
@@ -129,6 +132,7 @@ define([
 
     /**
      * Ordinary ending of the activity, usually called form `processEvent`
+     * @override
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
     finishActivity(result) {
@@ -138,6 +142,7 @@ define([
 
     /**
      * Main handler used to process mouse, touch, keyboard and edit events.
+     * @override
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
@@ -196,15 +201,20 @@ define([
     /**
      * Flag indicating if targets must be visually marked when the activity begins. In this type of
      * activity should be always `false` to avoid revealing the words o letters that must be found.
+     * @name IdentifyTextPanel#targetsMarked
      * @type {boolean} */
     targetsMarked: false,
     /**
      * Used to avoid duplicate event processing
+     * @name IdentifyTextPanel#lastTimeStamp
      * @type {number}
      */
     lastTimeStamp: 0,
   })
 
+  /**
+   * Panel class associated to this type of activity: {@link IdentifyTextPanel}
+   * @type {class} */
   IdentifyText.Panel = IdentifyTextPanel
 
   // Register class in Activity.prototype

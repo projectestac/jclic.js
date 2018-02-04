@@ -105,10 +105,12 @@ define([
   Object.assign(ActivitySequenceJump.prototype, {
     /**
      * Optional jump to be performed when the results (score and time) are above a specific threshold.
+     * @name ActivitySequenceJump#upperJump
      * @type {ConditionalJumpInfo} */
     upperJump: null,
     /**
      * Optional jump to be performed when the results (score or time) are below a specific threshold.
+     * @name ActivitySequenceJump#lowerJump
      * @type {ConditionalJumpInfo} */
     lowerJump: null,
   })

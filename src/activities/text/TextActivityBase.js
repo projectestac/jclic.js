@@ -56,6 +56,7 @@ define([
 
     /**
      * Retrieves the minimum number of actions needed to solve this activity
+     * @override
      * @returns {number}
      */
     getMinNumActions() {
@@ -66,33 +67,39 @@ define([
   Object.assign(TextActivityBase.prototype, {
     /**
      * This is the object used to evaluate user's answers in text activities.
+     * @name TextActivityBase#ev
      * @type {Evaluator} */
     ev: null,
     /**
      * This is the label used by text activities for the `check` button, when present.
+     * @name TextActivityBase#checkButtonText
      * @type {string} */
     checkButtonText: null,
     /**
      * When `true`, a text will be shown before the beginning of the activity.
+     * @name TextActivityBase#prevScreen
      * @type {boolean} */
     prevScreen: false,
     /**
      * Optional text to be shown before the beginning of the activity. When `null`, this text is
      * the main document.
+     * @name TextActivityBase#prevScreenText
      * @type {string} */
     prevScreenText: null,
     /**
      * The style of the optional text to be shown before the beginning of the activity.
+     * @name TextActivityBase#prevScreenStyle
      * @type {BoxBase} */
     prevScreenStyle: null,
     /**
      * Maximum amount of time for showing the previous document.
+     * @name TextActivityBase#prevScreenMaxTime
      * @type {number} */
     prevScreenMaxTime: -1,
   })
 
   /**
-   * The {@link ActivityPanel} where text activities are played.
+   * The {@link ActivityPanel} where text activities (based on {@link TextActivityBase}) are played.
    * @class
    * @extends ActivityPanel
    */
@@ -117,7 +124,6 @@ define([
      */
     setDocContent($div, doc) {
 
-      //
       // Empties the container of any pre-existing content
       // and sets the background and other attributes indicated by the main
       // style of the document.
@@ -312,6 +318,7 @@ define([
 
     /**
      * Basic initialization procedure, common to all activities.
+     * @override
      */
     initActivity() {
       if (this.act.prevScreen)
@@ -322,6 +329,7 @@ define([
 
     /**
      * Called when the activity starts playing
+     * @override
      */
     startActivity() {
       super.initActivity()
@@ -390,6 +398,7 @@ define([
 
     /**
      * Ordinary ending of the activity, usually called form `processEvent`
+     * @override
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
     finishActivity(result) {
@@ -405,6 +414,7 @@ define([
 
     /**
      * Main handler used to process mouse, touch, keyboard and edit events
+     * @override
      * @param {HTMLEvent} _event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
@@ -419,7 +429,6 @@ define([
      * @param {number} waitTime - When set, indicates the number of seconds to wait before show the popup
      */
     showPopup($popup, maxTime, waitTime) {
-
       // Hide current popup
       if (this.$currentPopup) {
         this.$currentPopup.css({ display: 'none' })
@@ -465,35 +474,45 @@ define([
   Object.assign(TextActivityBasePanel.prototype, {
     /**
      * Array of jQuery DOM elements (usually of type 'span') containing the targets of this activity
+     * @name TextActivityBasePanel#targets
      * @type {external:jQuery[]} */
     targets: null,
     /**
      * Flag indicating if targets must be visually marked at the beginning of the activity.
      * Should be `true` except for {@link IdentifyText} activities.
+     * @name TextActivityBasePanel#targetsMarked
      * @type {boolean} */
     targetsMarked: true,
     /**
      * The button used to check the activity, only when `Activity.checkButtonText` is not null
+     * @name TextActivityBasePanel#$checkButton
      * @type {external:jQuery}*/
     $checkButton: null,
     /**
      * System timer used to close the previous document when act.maxTime is reached.
+     * @name TextActivityBasePanel#prevScreenTimer
      * @type {number} */
     prevScreenTimer: null,
     /**
      * The popup currently been displayed
+     * @name TextActivityBasePanel#$currentPopup
      * @type {external:jQuery} */
     $currentPopup: null,
     /**
      * A timer controlling the time the current popup will be displayed
+     * @name TextActivityBasePanel#currentPopupTimer
      * @type {number} */
     currentPopupTimer: 0,
     /**
      * A timer prepared to display a popup after a while
+     * @name TextActivityBasePanel#popupWaitTimer
      * @type {number} */
     popupWaitTimer: 0,
   })
 
+  /**
+   * Panel class associated to this type of activity: {@link TextActivityBasePanel}
+   * @type {class} */
   TextActivityBase.Panel = TextActivityBasePanel
 
   return TextActivityBase

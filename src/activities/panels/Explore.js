@@ -58,6 +58,7 @@ define([
 
     /**
      * Activities of this type never end, so automatic sequences must pause here
+     * @override
      * @returns {boolean}
      */
     mustPauseSequence() {
@@ -66,6 +67,7 @@ define([
 
     /**
      * Retrieves the minimum number of actions needed to solve this activity
+     * @override
      * @returns {number}
      */
     getMinNumActions() {
@@ -75,6 +77,7 @@ define([
     /**
      * Usually this activity don't use random to scramble internal components, but in some cases
      * can make use of it.
+     * @override
      * @returns {boolean}
      */
     hasRandom() {
@@ -83,7 +86,7 @@ define([
   }
 
   /**
-   * The {@link ActivityPanel} where exploration activities are played.
+   * The {@link ActivityPanel} where {@link Explore} activities are played.
    * @class
    * @extends ActivityPanel
    * @param {Activity} act - The {@link Activity} to which this Panel belongs
@@ -102,6 +105,7 @@ define([
 
     /**
      * Miscellaneous cleaning operations
+     * @override
      */
     clear() {
       if (this.bgA) {
@@ -116,6 +120,7 @@ define([
 
     /**
      * Prepares the visual components of the activity
+     * @override
      */
     buildVisualComponents() {
       if (this.firstRun)
@@ -159,6 +164,7 @@ define([
 
     /**
      * Basic initialization procedure
+     * @override
      */
     initActivity() {
       super.initActivity()
@@ -184,6 +190,7 @@ define([
     /**
      * Updates the graphic content of this panel.
      * This method will be called from {@link AWT.Container#update} when needed.
+     * @override
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.
      */
@@ -204,6 +211,7 @@ define([
 
     /**
      * Sets the real dimension of this panel.
+     * @override
      * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
      * @returns {AWT.Dimension}
      */
@@ -215,6 +223,7 @@ define([
 
     /**
      * Sets the size and position of this activity panel
+     * @override
      * @param {AWT.Rectangle} rect
      */
     setBounds(rect) {
@@ -250,6 +259,7 @@ define([
      * Builds the accessible components needed for this ActivityPanel
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
+     * @override
      */
     buildAccessibleComponents() {
       if (this.$canvas && this.accessibleCanvas) {
@@ -263,6 +273,7 @@ define([
 
     /**
      * Main handler used to process mouse, touch, keyboard and edit events
+     * @override
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
@@ -303,19 +314,26 @@ define([
   Object.assign(ExplorePanel.prototype, {
     /**
      * The {@link ActiveBoxBag} object containing the information to be displayed in the `primary` panel
+     * @name ExplorePanel#bgA
      * @type {ActiveBoxBag} */
     bgA: null,
     /**
      * The {@link ActiveBoxBag} object containing the information associated to `primary` elements.
      * Only one of this elements will be showed for each click done in the `primary` panel.
+     * @name ExplorePanel#bgB
      * @type {ActiveBoxBag} */
     bgB: null,
     /**
      * List of mouse, touch and keyboard events intercepted by this panel
+     * @override
+     * @name ExplorePanel#events
      * @type {string[]} */
     events: ['click'],
   })
 
+  /**
+   * Panel class associated to this type of activity: {@link ExplorePanel}
+   * @type {class} */
   Explore.Panel = ExplorePanel
 
   // Register class in Activity.prototype

@@ -56,6 +56,7 @@ define([
 
     /**
      * Loads this object settings from an XML element
+     * @override
      * @param {external:jQuery} $xml - The jQuery XML element to parse
      */
     setProperties($xml) {
@@ -65,6 +66,7 @@ define([
 
     /**
      * Retrieves the minimum number of actions needed to solve this activity.
+     * @override
      * @returns {number}
      */
     getMinNumActions() {
@@ -78,16 +80,18 @@ define([
   Object.assign(ComplexAssociation.prototype, {
     /**
      * Number of unassigned cells
+     * @name ComplexAssociation#nonAssignedCells
      * @type {number} */
     nonAssignedCells: 0,
     /**
      * Uses cell's `idAss` field to check if pairings match
+     * @name ComplexAssociation#useIdAss
      * @type {boolean} */
     useIdAss: false,
   })
 
   /**
-   * The {@link ActivityPanel} where complex association activities are played.
+   * The {@link ActivityPanel} where {@link ComplexAssociation} activities are played.
    * @class
    * @extends SimpleAssociationPanel
    */
@@ -106,9 +110,9 @@ define([
 
     /**
      * Prepares the visual components of the activity
+     * @override
      */
     buildVisualComponents() {
-
       super.buildVisualComponents()
 
       const
@@ -124,7 +128,7 @@ define([
           if (bx.idAss === -1) {
             this.act.nonAssignedCells++
             bx.switchToAlt(this.ps)
-          }          
+          }
         })
       }
     }
@@ -141,6 +145,7 @@ define([
 
     /**
      * Main handler used to process mouse, touch, keyboard and edit events
+     * @override
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
@@ -306,10 +311,14 @@ define([
   Object.assign(ComplexAssociationPanel.prototype, {
     /**
      * Array for storing checked associations
+     * @name ComplexAssociation#Panel#invAssCheck
      * @type {boolean[]} */
     invAssCheck: null,
   })
 
+  /**
+   * Panel class associated to this type of activity: {@link ComplexAssociationPanel}
+   * @type {class} */
   ComplexAssociation.Panel = ComplexAssociationPanel
 
   // Register class in Activity.prototype

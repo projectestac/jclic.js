@@ -88,6 +88,7 @@ define([
 
     /**
      * Loads the object settings from a specific JQuery XML element
+     * @override
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties($xml) {
@@ -378,6 +379,7 @@ define([
 
     /**
      * Fills the provided ActiveBagContentKit with randomly generated operations
+     * @override
      * @param {AutoContentProvider.ActiveBagContentKit} kit - The composite object to be filled with data.
      * @returns {boolean} - `true` if all was OK
      */
@@ -582,73 +584,90 @@ define([
     // Operations use two operators:
     /**
      * First operator
+     * @name Arith#opA
      * @type {Arith.Operator} */
     opA: null,
     /**
      * Second operator
+     * @name Arith#opB
      * @type {Arith.Operator} */
     opB: null,
     /**
      * Allow additions
+     * @name Arith#use_add
      * @type {boolean} */
     use_add: true,
     /**
      * Allow subtractions
+     * @name Arith#use_subst
      * @type {boolean} */
     use_subst: false,
     /**
      * Allow multiplications
+     * @name Arith#use_mult
      * @type {boolean} */
     use_mult: false,
     /**
      * Allow divides
+     * @name Arith#use_div
      * @type {boolean} */
     use_div: false,
     /**
      * Allow expressions of type `A op B = X`
+     * @name Arith#exp_abx
      * @type {boolean} */
     exp_abx: true,
     /**
      * Allow expressions of type `A op X = C`
+     * @name Arith#exp_axc
      * @type {boolean} */
     exp_axc: false,
     /**
      * Allow expressions of type `X op B = C`
+     * @name Arith#exp_xbc
      * @type {boolean} */
     exp_xbc: false,
     /**
      * Allow expressions of type `A x B = C`
+     * @name Arith#exp_axbc
      * @type {boolean} */
     exp_axbc: false,
     /**
      * Allow inverse expressions, like `C = A op B`
+     * @name Arith#exp_caxb
      * @type {boolean} */
     exp_caxb: false,
     /**
      * Lower limit of the result
+     * @name Arith#resultLimInf
      * @type {number} */
     resultLimInf: 0,
     /**
      * Upper limit of the result
+     * @name Arith#resultLimSup
      * @type {number} */
     resultLimSup: 9999,
     /**
      * Allow carry operations
      * @see {@link https://en.wikipedia.org/wiki/Carry_(arithmetic)}
+     * @name Arith#resultCarry
      * @type {boolean} */
     resultCarry: false,
     /**
      * Avoid operations with the same result
+     * @name Arith#resultNoDup
      * @type {boolean} */
     resultNoDup: false,
     /**
      * Type of sorting of results. Possible values are: 'NOSORT', 'SORTASC' and 'SORTDESC'
+     * @name Arith#resultOrder
      * @type {string} */
     resultOrder: 'NOSORT',
     /**
      * Sorting of the operands in commutative operations. Possible values are: 'AGB' (_A greater than B_),
      * 'BGA' (_B greater tan A_) and 'INDIF' (default)
-     */
+     * @name Arith#opCond
+     * @type {string} */
     opCond: 'INDIF',
   })
 
@@ -710,34 +729,42 @@ define([
   Object.assign(Arith.Operator.prototype, {
     /**
      * Lower limit
+     * @name Arith.Operator#limInf
      * @type {number} */
     limInf: 0,
     /**
      * Upper limit
+     * @name Arith.Operator#limSup
      * @type {number} */
     limSup: 10,
     /**
      * Number of decimal places
+     * @name Arith.Operator#numDec
      * @type {number} */
     numDec: 0,
     /**
      * Including 0
+     * @name Arith.Operator#wZero
      * @type {boolean} */
     wZero: false,
     /**
      * Including 1
+     * @name Arith.Operator#wOne
      * @type {boolean} */
     wOne: false,
     /**
      * Including -1
+     * @name Arith.Operator#wMinusOne
      * @type {boolean} */
     wMinusOne: false,
     /**
      * Take values from list. This member stores the list length.
+     * @name Arith.Operator#fromList
      * @type {number} */
     fromList: 0,
     /**
      * The list of possible values
+     * @name Arith.Operator#lst
      * @type {number[]} */
     lst: [],
   })
@@ -747,6 +774,7 @@ define([
       this.vf = 0.0 // The number value
       this.c = 0 // Number of decimals to be used when representing the number
     }
+
     format() {
       return Arith.DecFormat(this.vf, this.c)
     }

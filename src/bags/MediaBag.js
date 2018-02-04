@@ -182,11 +182,13 @@ define([
 
   Object.assign(MediaBag.prototype, {
     /**
-     * The collection of {@link MediaBagElement} objects:
+     * The collection of {@link MediaBagElement} objects
+     * @name MediaBag#elements
      * @type {object} */
     elements: null,
     /**
      * The JClic project to which this MediaBag belongs
+     * @name MediaBag#project
      * @type {JClicProject} */
     project: null,
   })

@@ -61,7 +61,7 @@ define([
   }
 
   /**
-   * The {@link ActivityPanel} where information screen show its content.
+   * The {@link ActivityPanel} where {@link InformationScreen} activities should display its content
    * @class
    * @extends ActivityPanel
    * @param {Activity} act - The {@link Activity} to which this Panel belongs
@@ -80,6 +80,7 @@ define([
 
     /**
      * Miscellaneous cleaning operations
+     * @override
      */
     clear() {
       if (this.bg) {
@@ -90,6 +91,7 @@ define([
 
     /**
      * Prepares the visual components of the activity
+     * @override
      */
     buildVisualComponents() {
       if (this.firstRun)
@@ -123,6 +125,7 @@ define([
 
     /**
      * Basic initialization procedure
+     * @override
      */
     initActivity() {
       super.initActivity()
@@ -139,6 +142,7 @@ define([
     /**
      * Updates the graphic content of this panel.
      * This method will be called from {@link AWT.Container#update} when needed.
+     * @override
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.
      */
@@ -158,6 +162,7 @@ define([
 
     /**
      * Sets the real dimension of this panel.
+     * @override
      * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
      * @returns {AWT.Dimension}
      */
@@ -169,6 +174,7 @@ define([
 
     /**
      * Sets the size and position of this activity panel
+     * @override
      * @param {AWT.Rectangle} rect
      */
     setBounds(rect) {
@@ -203,6 +209,7 @@ define([
      * Builds the accessible components needed for this ActivityPanel
      * This method is called when all main elements are placed and visible, when the activity is ready
      * to start or when resized.
+     * @override
      */
     buildAccessibleComponents() {
       if (this.$canvas && this.accessibleCanvas && this.bg) {
@@ -213,6 +220,7 @@ define([
 
     /**
      * Main handler used to process mouse, touch, keyboard and edit events
+     * @override
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
@@ -236,14 +244,20 @@ define([
   Object.assign(InformationScreenPanel.prototype, {
     /**
      * The {@link ActiveBoxBag} containing the information to be displayed.
+     * @name InformationScreenPanel#bg
      * @type {ActiveBoxBag} */
     bg: null,
     /**
      * List of mouse, touch and keyboard events intercepted by this panel
+     * @override
+     * @name InformationScreenPanel#events
      * @type {string[]} */
     events: ['click'],
   })
 
+  /**
+   * Panel class associated to this type of activity: {@link InformationScreenPanel}
+   * @type {class} */
   InformationScreen.Panel = InformationScreenPanel
 
   // Register class in Activity.prototype

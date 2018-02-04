@@ -176,18 +176,22 @@ define([
   Object.assign(Evaluator.prototype, {
     /**
      * The type of evaluator.
+     * @name Evaluator#className
      * @type {string} */
     className: null,
     /**
      * Whether this evaluator has been initialized or not.
+     * @name Evaluator#initiated
      * @type {boolean} */
     initiated: false,
     /**
      * The Intl.Collator object used to compare strings, when available.
+     * @name Evaluator#collator
      * @type {external:Collator} */
     collator: null,
     /**
      * Whether uppercase and lowercase expressions must be considered equivalent or not.
+     * @name Evaluator#checkcase
      * @type {boolean} */
     checkCase: false,
   })
@@ -209,6 +213,7 @@ define([
 
     /**
      * Initializes the {@link Evaluator#collator}.
+     * @override
      * @param {string[]} locales - An array of valid locales to be used by the Inlt.Collator object
      */
     init(locales) {
@@ -226,6 +231,7 @@ define([
 
     /**
      * Performs the validation of a string against a single match.
+     * @override
      * @param {string} text - The text to be checked
      * @param {string} match - A valid expression with which to compare.
      * @returns {boolean} - `true` when the two expressions can be considered equivalent.
@@ -239,6 +245,7 @@ define([
      * flags useful to indicate where the mistakes are located.
      * In BasicEvaluator, all characters are just marked as 1 (error) or 0 (OK). See
      * {@link ComplexEvaluator} for more detailed analysis of answers.
+     * @override
      * @param {string} text - The text to be checked
      * @param {string} match - A valid expression with which to compare.
      * @returns {number[]} - An array of flags (one number for character) indicating whether each
@@ -289,18 +296,22 @@ define([
   Object.assign(BasicEvaluator.prototype, {
     /**
      * Whether accented letters must be considered equivalent or not.
+     * @name BasicEvaluator#checkAccents
      * @type {boolean} */
     checkAccents: true,
     /**
      * Whether to check or not dots, commas and other punctuation marks when comparing texts.
+     * @name BasicEvaluator#checkPunctuation
      * @type {boolean} */
     checkPunctuation: true,
     /**
      * Whether to check or not the extra spaces added between words.
+     * @name BasicEvaluator#checkDoubleSpaces
      * @type {boolean} */
     checkDoubleSpaces: false,
     /**
      * String containing all the characters considered as punctuation marks (currently ".,;:")
+     * @name BasicEvaluator#PUNCTUATION
      * @type {string} */
     PUNCTUATION: '.,;:',
   })
@@ -325,6 +336,7 @@ define([
      * flags useful to indicate where the mistakes are located.
      * In BasicEvaluator, all characters are just marked as 1 (error) or 0 (OK). See
      * {@link ComplexEvaluator} for more detailed analysis of answers.
+     * @override
      * @param {string} text - The text to be checked
      * @param {string} match - A valid expression with which to compare.
      * @returns {number[]} - An array of flags (one number for character) indicating whether each
@@ -464,11 +476,13 @@ define([
   Object.assign(ComplexEvaluator.prototype, {
     /**
      * Whether to detail or not the location of errors found on the analyzed text.
+     * @name ComplexEvaluator#detail
      * @type {boolean} */
     detail: true,
     /**
      * Number of times to repeat the evaluation process if an error is found, eliminating in each
      * cycle the extra characters that caused the error.
+     * @name ComplexEvaluator#checkSteps
      * @type {number} */
     checkSteps: 3,
     /**
@@ -481,6 +495,7 @@ define([
      * greater, the "_zy dog_" expression at position 8 will be found and evaluated as valid, while
      * a value of 1 or less will not found any coincident expression beyond the error position, thus
      * evaluating all the remaining sentence as erroneous.
+     * @name ComplexEvaluator#checkScope
      * @type {number} */
     checkScope: 6,
   })

@@ -63,6 +63,7 @@ define([
 
     /**
      * Loads this object settings from an XML element
+     * @override
      * @param {external:jQuery} $xml - The jQuery XML element to parse
      */
     setProperties($xml) {
@@ -72,6 +73,7 @@ define([
 
     /**
      * Retrieves the minimum number of actions needed to solve this activity
+     * @override
      * @returns {number}
      */
     getMinNumActions() {
@@ -82,6 +84,7 @@ define([
 
     /**
      * This activity uses random values to scramble its internal components
+     * @override
      * @returns {boolean}
      */
     hasRandom() {
@@ -90,6 +93,7 @@ define([
 
     /**
      * This activity makes use of the keyboard
+     * @override
      * @returns {boolean}
      */
     needsKeyboard() {
@@ -98,6 +102,7 @@ define([
 
     /**
      * This activity can permit the user to display the solution
+     * @override
      * @returns {boolean}
      */
     helpSolutionAllowed() {
@@ -108,16 +113,18 @@ define([
   Object.assign(WrittenAnswer.prototype, {
     /**
      * Number of unassigned cells
+     * @name WrittenAnswer#nonAssignedCells
      * @type {number} */
     nonAssignedCells: 0,
     /**
      * Whether to use or not the cell's `idAss` field to check if pairings match
+     * @name WrittenAnswer#useIdAss
      * @type {boolean} */
     useIdAss: true,
   })
 
   /**
-   * The {@link ActivityPanel} where written answer activities are played.
+   * The {@link ActivityPanel} where {@link WrittenAnswer} activities are played.
    * @class
    * @extends ActivityPanel
    */
@@ -136,6 +143,7 @@ define([
 
     /**
      * Performs miscellaneous cleaning operations
+     * @override
      */
     clear() {
       if (this.bgA) {
@@ -150,6 +158,7 @@ define([
 
     /**
      * Prepares the visual components of the activity
+     * @override
      */
     buildVisualComponents() {
       if (this.firstRun)
@@ -230,6 +239,7 @@ define([
 
     /**
      * Basic initialization procedure
+     * @override
      */
     initActivity() {
       super.initActivity()
@@ -255,6 +265,7 @@ define([
     /**
      * Called by [JClicPlayer](JClicPlayer.html) when this activity panel is fully visible, just
      * after the initialization process.
+     * @override
      */
     activityReady() {
       super.activityReady()
@@ -264,6 +275,7 @@ define([
     /**
      * Updates the graphic content of this panel.
      * This method will be called from {@link AWT.Container#update} when needed.
+     * @override
      * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
      * it's the whole panel.
      */
@@ -283,6 +295,7 @@ define([
 
     /**
      * Sets the real dimension of this panel.
+     * @override
      * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
      * @returns {AWT.Dimension}
      */
@@ -294,6 +307,7 @@ define([
 
     /**
      * Sets the size and position of this activity panel
+     * @override
      * @param {AWT.Rectangle} rect
      */
     setBounds(rect) {
@@ -438,6 +452,7 @@ define([
 
     /**
      * Main handler used to process mouse, touch, keyboard and edit events
+     * @override
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
@@ -478,30 +493,40 @@ define([
   Object.assign(WrittenAnswerPanel.prototype, {
     /**
      * The input text field where users write the answers
+     * @name WrittenAnswerPanel#$textField
      * @type {external:jQuery} */
     $textField: null,
     /**
      * Array for storing checked associations
+     * @name WrittenAnswerPanel#invAssCheck
      * @type {boolean[]} */
     invAssCheck: null,
     /**
      * The {@link ActiveBoxBag} object containing the questions
+     * @name WrittenAnswerPanel#bgA
      * @type {ActiveBoxBag} */
     bgA: null,
     /**
      * An optional {@link ActiveBoxBag} with content displayed as cells are solved.
+     * @name WrittenAnswerPanel#bgB
      * @type {ActiveBoxBag} */
     bgB: null,
     /**
      * The currently selected cell
+     * @name WrittenAnswerPanel#currentCell
      * @type {number} */
     currentCell: -1,
     /**
      * Mouse events intercepted by this panel
+     * @override
+     * @name WrittenAnswerPanel#events
      * @type {string[]} */
     events: ['click'],
   })
 
+  /**
+   * Panel class associated to this type of activity: {@link WrittenAnswerPanel}
+   * @type {class} */
   WrittenAnswer.Panel = WrittenAnswerPanel
 
   // Register class in Activity.prototype

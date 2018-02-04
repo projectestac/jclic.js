@@ -54,7 +54,7 @@ define([
   }
 
   /**
-   * The {@link TextActivityBasePanel} where this kind of text activities are played.
+   * The {@link TextActivityBasePanel} where {@link Complete} activities are played.
    * @class
    * @extends TextActivityBasePanel
    */
@@ -73,6 +73,7 @@ define([
 
     /**
      * Creates a target DOM element for the provided target.
+     * @override
      * @param {TextActivityDocument.TextTarget} _target - The target related to the DOM object to be created
      * @param {external:jQuery} _$span -  - An initial DOM object (usually a `span`) that can be used
      * to store the target, or replaced by another type of object.
@@ -85,6 +86,7 @@ define([
 
     /**
      * Called when the activity starts playing
+     * @override
      */
     startActivity() {
       super.startActivity()
@@ -93,6 +95,7 @@ define([
 
     /**
      * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
+     * @override
      * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
      */
     evaluatePanel() {
@@ -123,6 +126,9 @@ define([
     }
   }
 
+  /**
+   * Panel class associated to this type of activity: {@link CompletePanel}
+   * @type {class} */
   Complete.Panel = CompletePanel
 
   // Register class in Activity.prototype

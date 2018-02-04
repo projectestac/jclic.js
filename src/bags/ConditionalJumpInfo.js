@@ -82,10 +82,12 @@ define([
   Object.assign(ConditionalJumpInfo.prototype, {
     /**
      * Threshold above or below which the action will be triggered, depending on the type of JumpInfo.
+     * @name ConditionalJumpInfo#threshold
      * @type {number} */
     threshold: -1,
     /**
      * Delay to be applied in automatic jumps.
+     * @name ConditionalJumpInfo#time
      * @type {number} */
     time: -1,
   })

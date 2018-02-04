@@ -56,6 +56,7 @@ define([
 
     /**
      * This kind of activity usually makes use of the keyboard
+     * @override
      * @returns {boolean}
      */
     needsKeyboard() {
@@ -66,17 +67,19 @@ define([
   Object.assign(FillInBlanks.prototype, {
     /**
      * Whether to jump or not to the next target when the current one is solved.
+     * @name FillInBlanks#autoJump
      * @type {boolean} */
     autoJump: false,
     /**
      * Whether to block or not the jump to other targets until the current one
      * is resolved.
+     * @name FillInBlanks#forceOkToAdvance
      * @type {boolean} */
     forceOkToAdvance: false,
   })
 
   /**
-   * The {@link TextActivityBasePanel} where fill-in blank activities are played.
+   * The {@link TextActivityBasePanel} where {@link FillInBlanks} activities are played.
    * @class
    * @extends TextActivityBasePanel
    */
@@ -96,6 +99,7 @@ define([
     /**
      * Creates a target DOM element for the provided target. This DOM element can be an editable
      * `span` or a `select` with specific `option` elements (when the target is a drop-down list)
+     * @override
      * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
      * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
      * to store the target, or replaced by another type of object.
@@ -137,6 +141,7 @@ define([
 
     /**
      * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
+     * @override
      * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
      */
     evaluatePanel() {
@@ -265,6 +270,7 @@ define([
     /**
      * Called by {@link JClicPlayer} when this activity panel is fully visible, just after the
      * initialization process.
+     * @override
      */
     activityReady() {
       super.activityReady()
@@ -278,6 +284,7 @@ define([
 
     /**
      * Ordinary ending of the activity, usually called form `processEvent`
+     * @override
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
     finishActivity(result) {
@@ -292,6 +299,7 @@ define([
 
     /**
      * Main handler used to process mouse, touch, keyboard and edit events.
+     * @override
      * @param {HTMLEvent} event - The HTML event to be processed
      * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
@@ -400,10 +408,14 @@ define([
   Object.assign(FillInBlanksPanel.prototype, {
     /**
      * Flag indicating if the activity is open or locked
+     * @name FillInBlanksPanel#locked
      * @type {boolean} */
     locked: true,
   })
 
+  /**
+   * Panel class associated to this type of activity: {@link FillInBlanksPanel}
+   * @type {class} */
   FillInBlanks.Panel = FillInBlanksPanel
 
   // Register class in Activity.prototype

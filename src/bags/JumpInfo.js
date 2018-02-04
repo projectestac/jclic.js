@@ -86,23 +86,28 @@ define(["../Utils"], function (Utils) {
      * The JumpInfo identifier
      * - For regular jumps: 'forward', 'back'
      * - For conditional jumps: 'upper', 'lower'
+     * @name JumpInfo#id
      * @type {string} */
     id: null,
     /**
      * The current action.
      * Possible values are: `JUMP`, `STOP`, `RETURN` and `EXIT`.
+     * @name JumpInfo#action
      * @type {string} */
     action: undefined,
     /**
      * Activity number in the sequence list
+     * @name JumpInfo#actNum
      * @type {number} */
     actNum: -1,
     /**
      * Current sequence tag
+     * @name JumpInfo#sequence
      * @type {string} */
     sequence: undefined,
     /**
      * Path of another JClic project to jump to
+     * @name JumpInfo#projectPath
      * @type {string} */
     projectPath: undefined,
   })
