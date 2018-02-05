@@ -414,6 +414,7 @@ define([
           if (ok && (this.checkInvAss() || cellsPlaced === this.bgA.getNumCells())) {
             this.finishActivity(true)
             this.$textField.prop('disabled', true)
+            this.invalidate().update()
             return
           } else if (!m && txAnswer.length > 0)
             this.playEvent(ok ? 'actionOk' : 'actionError')
@@ -435,6 +436,7 @@ define([
         if (bx && bx.idAss === -1) {
           this.finishActivity(false)
           this.$textField.prop('disabled', true)
+          this.invalidate().update()
           return
         }
       }
@@ -474,14 +476,14 @@ define([
             }
 
             const bx = this.bgA ? this.bgA.findActiveBox(p) : null
-            if (bx) {
+            if (bx && !bx.isInactive()) {
               if (bx.getContent() && bx.getContent().mediaContent === null)
                 this.playEvent('CLICK')
               this.setCurrentCell(bx.idLoc)
             }
             break
 
-          case 'edit':
+          case 'change':
             event.preventDefault()
             this.setCurrentCell(this.currentCell)
             return false
@@ -521,7 +523,7 @@ define([
      * @override
      * @name WrittenAnswerPanel#events
      * @type {string[]} */
-    events: ['click'],
+    events: ['click', 'change'],
   })
 
   /**
