@@ -1,3 +1,7 @@
+### v1.0.5 (2018-02-05)
+#### Bug fixes
+- WrittenAnswer activities: always update the alternative content off cells when done
+
 ### v1.0.4 (2018-01-22)
 #### Improvements
 - Text activities can now display pop-up windows and play helper sounds of targets, as in JClic Player.
