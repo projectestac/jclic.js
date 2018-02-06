@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -45,137 +45,142 @@ define([
    * @exports TextGridContent
    * @class
    */
-  var TextGridContent = function () {
-    this.bb = new BoxBase(null);
-    this.text = [];
-  };
+  class TextGridContent {
+    /**
+     * TextGridContent constructor
+     */
+    constructor() {
+      this.bb = new BoxBase(null)
+      this.text = []
+    }
 
-  TextGridContent.prototype = {
-    constructor: TextGridContent,
     /**
-     * Grid columns
-     * @type {number} */
-    ncw: 1,
-    /**
-     * Grid rows
-     * @type {number} */
-    nch: 1,
-    /**
-     * Width of cells
-     * @type {number} */
-    w: 20,
-    /**
-     * Height of cells
-     * @type {number} */
-    h: 20,
-    /**
-     * Whether the cells must be surrounded by a border or not
-     * @type {boolean} */
-    border: false,
-    /**
-     * The {@link BoxBase} object with visual settings of the text grid
-     * @type {BoxBase} */
-    bb: null,
-    /**
-     * An array of String objects containing the chars of cells. One string per row, one character of
-     * this string per cell.
-     * @type {string[]} */
-    text: null,
-    /**
-     * The letter used as wildcard
-     * @type {string} */
-    wild: '*',
-    /**
-     * A String with the chars to take as source when randomly filling empty cells
-     * @type {string} */
-    randomChars: Utils.settings.RANDOM_CHARS,
-    /**
-     *
      * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml
      */
-    setProperties: function ($xml) {
-
-      var textGrid = this;
-
+    setProperties($xml) {
       // Read attributes
-      $.each($xml.get(0).attributes, function () {
-        var name = this.name;
-        var val = this.value;
+      Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
           case 'rows':
             // WARNING: Due to a bug in JClic, the meaning of "rows" and "columns" must be
             // interchanged:
-            textGrid.ncw = Number(val);
-            break;
+            this.ncw = Number(val)
+            break
           case 'columns':
-            textGrid.nch = Number(val);
-            break;
+            this.nch = Number(val)
+            break
           case 'cellWidth':
-            textGrid.w = Number(val);
-            break;
+            this.w = Number(val)
+            break
           case 'cellHeight':
-            textGrid.h = Number(val);
-            break;
+            this.h = Number(val)
+            break
           case 'border':
-            textGrid.border = Utils.getBoolean(val);
-            break;
+            this.border = Utils.getBoolean(val)
+            break
           case 'wild':
           case 'randomChars':
-            textGrid[name] = val;
-            break;
+            this[name] = val
+            break
         }
-      });
+      })
 
       // Read inner elements
-      $xml.children('style:first').each(function () {
-        textGrid.bb = new BoxBase().setProperties($(this));
-      });
+      $xml.children('style:first').each((_n, child) => {
+        this.bb = new BoxBase().setProperties($(child))
+      })
 
-      $xml.find('text:first > row').each(function () {
-        textGrid.text.push(this.textContent);
-      });
+      $xml.find('text:first > row').each((_n, el) => this.text.push(el.textContent))
 
-      for (var i = textGrid.text.length; i < textGrid.nch; i++)
-        textGrid.text[i] = '';
+      for (let i = this.text.length; i < this.nch; i++)
+        this.text[i] = ''
 
-      return this;
-    },
+      return this
+    }
+
     /**
-     *
      * Counts the number of wildcard characters present in this TextGrid
      * @returns {number}
      */
-    countWildChars: function () {
-      var result = 0;
+    countWildChars() {
+      let result = 0
       if (this.text)
-        for (var y = 0; y < this.nch; y++)
-          for (var x = 0; x < this.ncw; x++)
+        for (let y = 0; y < this.nch; y++)
+          for (let x = 0; x < this.ncw; x++)
             if (this.text[y].charAt(x) === this.wild)
-              result++;
-      return result;
-    },
+              result++
+      return result
+    }
+
     /**
-     *
      * Counts the total number of characters, including wildcard characters.
      * @returns {Number}
      */
-    getNumChars: function () {
-      return this.ncw * this.nch;
-    },
+    getNumChars() {
+      return this.ncw * this.nch
+    }
+
     /**
-     *
      * Sets the specified character as a content of the cell located at specific coordinates
      * @param {number} x - The X coordinate of the cell
      * @param {number} y - The X coordinate of the cell
      * @param {string} ch - The character to be placed on the specified cell
      */
-    setCharAt: function (x, y, ch) {
+    setCharAt(x, y, ch) {
       if (x >= 0 && x < this.ncw && y >= 0 && y < this.nch)
-        this.text[y] = this.text[y].substring(0, x) + ch + this.text[y].substring(x + 1);
+        this.text[y] = this.text[y].substring(0, x) + ch + this.text[y].substring(x + 1)
     }
-  };
+  }
 
-  return TextGridContent;
+  Object.assign(TextGridContent.prototype, {
+    /**
+     * Grid columns
+     * @name TextGridContent#ncw
+     * @type {number} */
+    ncw: 1,
+    /**
+     * Grid rows
+     * @name TextGridContent#nch
+     * @type {number} */
+    nch: 1,
+    /**
+     * Width of cells
+     * @name TextGridContent#w
+     * @type {number} */
+    w: 20,
+    /**
+     * Height of cells
+     * @name TextGridContent#h
+     * @type {number} */
+    h: 20,
+    /**
+     * Whether the cells must be surrounded by a border or not
+     * @name TextGridContent#border
+     * @type {boolean} */
+    border: false,
+    /**
+     * The {@link BoxBase} object with visual settings of the text grid
+     * @name TextGridContent#bb
+     * @type {BoxBase} */
+    bb: null,
+    /**
+     * An array of String objects containing the chars of cells. One string per row, one character of
+     * this string per cell.
+     * @name TextGridContent#text
+     * @type {string[]} */
+    text: null,
+    /**
+     * The letter used as wildcard
+     * @name TextGridContent#wild
+     * @type {string} */
+    wild: '*',
+    /**
+     * A String with the chars to take as source when randomly filling empty cells
+     * @name TextGridContent#randomChars
+     * @type {string} */
+    randomChars: Utils.settings.RANDOM_CHARS,
+  })
 
-});
+  return TextGridContent
+})

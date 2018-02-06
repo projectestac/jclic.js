@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -39,103 +39,57 @@ define([
    * This class stores miscellaneous data obtained by the current user playing an {@link Activity}.
    * @exports ActivityReg
    * @class
-   * @param {Activity} act - The {@link Activity} referenced by this object.
    */
-  var ActivityReg = function (act) {
-    this.name = act.name;
-    this.code = act.code;
-    this.actions = [];
-    this.startTime = (new Date()).valueOf();
-    this.minActions = act.getMinNumActions();
-    this.reportActions = act.reportActions;
-  };
+  class ActivityReg {
+    /**
+     * ActivityReg constructor
+     * @param {Activity} act - The {@link Activity} referenced by this object.
+     */
+    constructor(act) {
+      this.name = act.name
+      this.code = act.code
+      this.actions = []
+      this.startTime = (new Date()).valueOf()
+      this.minActions = act.getMinNumActions()
+      this.reportActions = act.reportActions
+    }
 
-  ActivityReg.prototype = {
-    constructor: ActivityReg,
-    /**
-     * Name of the associated activity
-     * @type {string} */
-    name: '',
-    /**
-     * Optional code assigned to this activity, used for later filtering
-     * @type {string} */
-    code: '',
-    /**
-     * Timestamp when the user starts playing the activity
-     * @type {number} */
-    startTime: 0,
-    /**
-     * Total time spent by the user in the activity, measured in milliseconds
-     * @type {number} */
-    totalTime: 0,
-    /**
-     * Collection of actions done by the user while playing the activity
-     * @type {ActionReg[]} */
-    actions: [],
-    /**
-     * `true` only when the user has finished and solved the activity
-     * @type {boolean} */
-    solved: false,
-    /**
-     * Last {@link ActionReg} performed by the user in this activity
-     * @type {ActionReg} */
-    lastAction: null,
-    /**
-     * Final score obtained by the current user in this activity
-     * @type {number} */
-    score: 0,
-    /**
-     * Minimum number of actions needed to solve the activity
-     * @type {number} */
-    minActions: 0,
-    /**
-     * `true` when the activity has finished, `false` for the activity that is currently playing
-     * @type {boolean} */
-    closed: false,
-    /**
-     * `true` when this type of activity should record specific actions done by the users
-     * @type {boolean} */
-    reportActions: false,
-    /**
-     * Number of actions done by the user playing this activity
-     * @type {number} */
-    numActions: 0,
     /**
      * Provides the data associated with the current activity in an XML format suitable for a
      * {@link http://clic.xtec.cat/en/jclic/reports/|JClic Reports Server}.
      * @returns {external:jQuery}
      */
-    $getXML: function () {
-      var attr = {
+    $getXML() {
+      const attr = {
         start: this.startTime,
         time: this.totalTime,
         solved: this.solved,
         score: this.score,
         minActions: this.minActions,
         actions: this.numActions
-      };
+      }
       if (this.name)
-        attr.name = this.name;
+        attr.name = this.name
       if (this.code)
-        attr.code = this.code;
+        attr.code = this.code
       if (!this.closed)
-        attr.closed = false;
+        attr.closed = false
       if (this.reportActions)
-        attr.reportActions = true;
+        attr.reportActions = true
 
-      var $result = $('<activity/>', attr);
-      this.actions.forEach(function (ac) {
-        $result.append(ac.$getXML());
-      }, this);
-      return $result;
-    },
+      const $result = $('<activity/>', attr)
+      this.actions.forEach(ac => {
+        $result.append(ac.$getXML())
+      })
+      return $result
+    }
+
     /**
-     * 
      * Builds an object with relevant data about the results obtained by the current student in this activity
      * @returns {Object} - The results of this activity
      */
-    getData: function () {
-      var result = {
+    getData() {
+      const result = {
         name: this.name,
         time: Math.round(this.totalTime / 10) / 100,
         solved: this.solved,
@@ -144,45 +98,44 @@ define([
         actions: this.numActions,
         precision: this.getPrecision(),
         closed: this.closed
-      };
+      }
       if (this.code)
-        result.code = this.code;
-      return result;
-    },
+        result.code = this.code
+      return result
+    }
+
     /**
      * Fills this ActivityReg with data provided in XML format
      * @param {external:jQuery} $xml -The XML element to be processed, already wrapped as jQuery object
      */
-    setProperties: function ($xml) {
-      var actReg = this;
-      $.each($xml.get(0).attributes, function () {
-        var name = this.name;
-        var value = this.value;
+    setProperties($xml) {
+      Utils.attrForEach($xml.get(0).attributes, (name, value) => {
         switch (name) {
           case 'name':
           case 'code':
-            actReg[name] = value;
-            break;
+            this[name] = value
+            break
           case 'start':
           case 'time':
           case 'score':
           case 'minActions':
           case 'actions':
-            actReg[name] = Number(value);
-            break;
+            this[name] = Number(value)
+            break
           case 'solved':
           case 'closed':
           case 'reportActions':
-            actReg[name] = Utils.getBoolean(value, false);
-            break;
+            this[name] = Utils.getBoolean(value, false)
+            break
         }
-      });
-      $xml.children('action').each(function () {
-        var action = new ActionReg();
-        action.setProperties($(this));
-        actReg.actions.push(action);
-      });
-    },
+      })
+      $xml.children('action').each((_n, child) => {
+        const action = new ActionReg()
+        action.setProperties($(child))
+        this.actions.push(action)
+      })
+    }
+
     /**
      * Reports a new action done by the user while playing the current activity
      * @param {string} type - Type of action (`click`, `write`, `move`, `select`...)
@@ -190,52 +143,55 @@ define([
      * @param {string}+ dest - Description of the object that acts as a target of the action (used in pairings)
      * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwise
      */
-    newAction: function (type, source, dest, ok) {
+    newAction(type, source, dest, ok) {
       if (!this.closed) {
-        this.lastAction = new ActionReg(type, source, dest, ok);
-        this.actions.push(this.lastAction);
+        this.lastAction = new ActionReg(type, source, dest, ok)
+        this.actions.push(this.lastAction)
       }
-    },
+    }
+
     /**
      * Retrieves a specific {@link ActionReg} element from `actions`
      * @param {number} index - The nth action to be retrieved
      * @returns {ActionReg}
      */
-    getActionReg: function (index) {
-      return index >= this.actions.length ? null : this.actions[index];
-    },
+    getActionReg(index) {
+      return index >= this.actions.length ? null : this.actions[index]
+    }
+
     /**
      * Closes the current activity, adjusting total time if needed
      */
-    closeActivity: function () {
+    closeActivity() {
       if (!this.closed) {
         if (this.lastAction)
-          this.totalTime = this.lastAction.time - this.startTime;
+          this.totalTime = this.lastAction.time - this.startTime
         else
-          this.totalTime = (new Date()).valueOf() - this.startTime;
-        this.closed = true;
+          this.totalTime = (new Date()).valueOf() - this.startTime
+        this.closed = true
       }
-    },
+    }
+
     /**
      * calculates the final score obtained by the user in this activity.
      * The algorithm used takes in account the minimal number of actions needed, the actions
      * really done by the user, and if the activity was finally solved or not.
      * @returns {number}
      */
-    getPrecision: function () {
-      var result = 0;
+    getPrecision() {
+      let result = 0
       if (this.closed && this.minActions > 0 && this.numActions > 0) {
         if (this.solved) {
           if (this.numActions < this.minActions)
-            result = 100;
+            result = 100
           else
-            result = Math.round(this.minActions * 100 / this.numActions);
-        } else {
-          result = Math.round(100 * (this.score * this.score) / (this.minActions * this.numActions));
-        }
+            result = Math.round(this.minActions * 100 / this.numActions)
+        } else
+          result = Math.round(100 * (this.score * this.score) / (this.minActions * this.numActions))
       }
-      return result;
-    },
+      return result
+    }
+
     /**
      * This method should be called when the current activity finishes. Data about user's final results
      * on the activity will then be saved.
@@ -243,16 +199,78 @@ define([
      * @param {number} numActions - The total number of actions done by the user to solve the activity
      * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
      */
-    endActivity: function (score, numActions, solved) {
+    endActivity(score, numActions, solved) {
       if (!this.closed) {
-        this.solved = solved;
-        this.numActions = numActions;
-        this.score = score;
-        this.closeActivity();
+        this.solved = solved
+        this.numActions = numActions
+        this.score = score
+        this.closeActivity()
       }
     }
-  };
+  }
 
-  return ActivityReg;
+  Object.assign(ActivityReg.prototype, {
+    /**
+     * Name of the associated activity
+     * @name ActivityReg#name
+     * @type {string} */
+    name: '',
+    /**
+     * Optional code assigned to this activity, used for later filtering
+     * @name ActivityReg#code
+     * @type {string} */
+    code: '',
+    /**
+     * Timestamp when the user starts playing the activity
+     * @name ActivityReg#startTime
+     * @type {number} */
+    startTime: 0,
+    /**
+     * Total time spent by the user in the activity, measured in milliseconds
+     * @name ActivityReg#totalTime
+     * @type {number} */
+    totalTime: 0,
+    /**
+     * Collection of actions done by the user while playing the activity
+     * @name ActivityReg#actions
+     * @type {ActionReg[]} */
+    actions: [],
+    /**
+     * `true` only when the user has finished and solved the activity
+     * @name ActivityReg#solved
+     * @type {boolean} */
+    solved: false,
+    /**
+     * Last {@link ActionReg} performed by the user in this activity
+     * @name ActivityReg#lastAction
+     * @type {ActionReg} */
+    lastAction: null,
+    /**
+     * Final score obtained by the current user in this activity
+     * @name ActivityReg#score
+     * @type {number} */
+    score: 0,
+    /**
+     * Minimum number of actions needed to solve the activity
+     * @name ActivityReg#minActions
+     * @type {number} */
+    minActions: 0,
+    /**
+     * `true` when the activity has finished, `false` for the activity that is currently playing
+     * @name ActivityReg#closed
+     * @type {boolean} */
+    closed: false,
+    /**
+     * `true` when this type of activity should record specific actions done by the users
+     * @name ActivityReg#reportActions
+     * @type {boolean} */
+    reportActions: false,
+    /**
+     * Number of actions done by the user playing this activity
+     * @name ActivityReg#numActions
+     * @type {number} */
+    numActions: 0,
+  })
 
-});
+  return ActivityReg
+})

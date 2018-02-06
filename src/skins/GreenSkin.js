@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -42,44 +42,62 @@ define([
    * @exports GreenSkin
    * @class
    * @extends DefaultSkin
-   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-   * realize the media objects needed to build this Skin.
-   * @param {string=} name - The skin class name
    */
-  var GreenSkin = function (ps, name) {
-    // GreenSkin extends [DefaultSkin](DefaultSkin.html)
-    DefaultSkin.call(this, ps, name);
-  };
-
-  GreenSkin.prototype = {
-    constructor: GreenSkin,
+  class GreenSkin extends DefaultSkin {
     /**
-     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @type {string}
+     * GreenSkin constructor
+     * 
+     * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+     * realize the media objects needed to build this Skin.
+     * @param {string=} name - The skin class name
      */
-    skinId: 'JClicGreenSkin',
+    constructor(ps, name) {
+      // GreenSkin extends [DefaultSkin](DefaultSkin.html)
+      super(ps, name)
+    }
+
     /**
-     *
      * Returns the CSS styles used by this skin. This method should be called only from
      * `Skin` constructor, and overridden by subclasses if needed.
+     * @override
      * @returns {string}
      */
-    _getStyleSheets: function () {
-      return DefaultSkin.prototype._getStyleSheets() + this.skinCSS;
-    },
-    //
-    // Buttons and other graphical resources used by this skin.
-    //
-    iconFill: '#20640E',
-    counterIconFill: '#20640E',
-    // Styles used in this skin
-    skinCSS: '.SKINID {background-color:#4AFF19;}'
-  };
+    _getStyleSheets() {
+      return super._getStyleSheets() + this.skinCSS
+    }
+    
+  }
 
-  // GreenSkin extends [DefaultSkin](DefaultSkin.html)
-  GreenSkin.prototype = $.extend(Object.create(DefaultSkin.prototype), GreenSkin.prototype);
+  Object.assign(GreenSkin.prototype, {
+    /**
+     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+     * @name GreenSkin#skinId
+     * @override
+     * @type {string} */
+    skinId: 'JClicGreenSkin',
+    //
+    // Buttons and other graphical resources used by this skin:
+    /**
+     * Fill color for icons
+     * @name GreenSkin#iconFill
+     * @override
+     * @type {string} */    
+    iconFill: '#20640E',
+    /**
+     * Fill-in color for counters
+     * @name GreenSkin#counterIconFill
+     * @override
+     * @type {string} */        
+    counterIconFill: '#20640E',
+    /**
+     * Styles used in this skin
+     * @name GreenSkin#skinCSS
+     * @type {string} */
+    skinCSS: '.SKINID {background-color:#4AFF19;}'
+  })
 
   // Register this class in the list of available skins
-  Skin.CLASSES['green'] = GreenSkin;
-  return GreenSkin;
-});
+  Skin.CLASSES['green'] = GreenSkin
+
+  return GreenSkin
+})

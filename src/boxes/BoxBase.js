@@ -36,7 +36,7 @@ define([
   "../AWT"
 ], function ($, Utils, AWT) {
 
-  var defaultValues = Utils.settings.BoxBase;
+  const defaultValues = Utils.settings.BoxBase
 
   /**
    * This class contains all the main visual attributes needed to draw {@link AbstractBox} objects:
@@ -49,191 +49,110 @@ define([
    * be used.
    * @exports BoxBase
    * @class
-   * @param {BoxBase=} parent - Another BoxBase object used to determine the value of properties not
-   * locally set.
    */
-  var BoxBase = function (parent) {
-    this.parent = parent || null;
-  };
+  class BoxBase {
+    /**
+     * BoxBase constructor
+     * @param {BoxBase=} parent - Another BoxBase object used to determine the value of properties not
+     * locally set.
+     */
+    constructor(parent) {
+      this.parent = parent || null
+    }
 
-  BoxBase.prototype = {
-    constructor: BoxBase,
     /**
-     * The parent BoxBase object
-     * @type {BoxBase} */
-    parent: null,
-    /**
-     * Default values
-     * @type {object} */
-    default: defaultValues,
-    /**
-     * Font size can be dynamically reduced to fit the available space if any element using this
-     * `BoxBase` requests it. When this happen, this field contains the real font currently used
-     * to draw text.
-     * @type {AWT.Font} */
-    font: new AWT.Font(),
-    /**
-     * The current font size of this BoxBase. Can be dynamically adjusted when drawing.
-     * @type {number} */
-    dynFontSize: 0,
-    /**
-     * Counts the number of times the `dynFontSize` has been reset. This is useful to avoid excessive
-     * recursive loops searching the optimal font size.
-     * @type {number} */
-    resetFontCounter: 0,
-    /**
-     * The background color
-     * @type {string} */
-    backColor: defaultValues.BACK_COLOR,
-    /**
-     * The background gradient. Default is `null`.
-     * @type {AWT.Gradient} */
-    bgGradient: null,
-    /**
-     * The color used to write text.
-     * @type {string} */
-    textColor: defaultValues.TEXT_COLOR,
-    /**
-     * The color used to draw a shadow below regular text.
-     * @type {string} */
-    shadowColor: defaultValues.SHADOW_COLOR,
-    /**
-     * The color of the border.
-     * @type {string} */
-    borderColor: defaultValues.BORDER_COLOR,
-    /**
-     * The color used to draw text when a cell is in `inactive` state.
-     * @type {string} */
-    inactiveColor: defaultValues.INACTIVE_COLOR,
-    /**
-     * The color used to draw text when a cell is in `alternative` state.
-     * @type {string} */
-    alternativeColor: defaultValues.ALTERNATIVE_COLOR,
-    /**
-     * Whether the text should have a shadow or not
-     * @type {boolean} */
-    shadow: false,
-    /**
-     * Whether the cell's background (and its hosted component, if any) should be transparent
-     * @type {boolean} */
-    transparent: false,
-    /**
-     * Wheter the cell's background should be painted or not. This property has no effect on
-     * hosted components.
-     * @type {boolean} */
-    dontFill: false,
-    /**
-     * The margin to respect between text elements and the limits of the cell or other elements.
-     * @type {number} */
-    textMargin: defaultValues.AC_MARGIN,
-    /**
-     * The stroke used to draw the border.
-     * @type {AWT.Stroke} */
-    borderStroke: new AWT.Stroke(defaultValues.BORDER_STROKE_WIDTH),
-    /**
-     * The stroke used to draw a border around marked cells.
-     * @type {AWT.Stroke} */
-    markerStroke: new AWT.Stroke(defaultValues.MARKER_STROKE_WIDTH),
-    /**
-     *
      * Loads the BoxBase settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties: function ($xml) {
-
-      var bb = this;
+    setProperties($xml) {
       //
       // Read attributes
-      $.each($xml.get(0).attributes, function () {
-        var name = this.name;
-        var val = this.value;
-        switch (this.name) {
+      Utils.attrForEach($xml.get(0).attributes, (name, val) => {
+        switch (name) {
           case 'shadow':
           case 'transparent':
-            bb[name] = Utils.getBoolean(val, false);
-            break;
+            this[name] = Utils.getBoolean(val, false)
+            break
           case 'margin':
-            bb[name] = Number(val);
-            break;
+            this[name] = Number(val)
+            break
           case 'borderStroke':
-            bb.borderStroke = new AWT.Stroke(Number(val));
-            break;
+            this.borderStroke = new AWT.Stroke(Number(val))
+            break
           case 'markerStroke':
-            bb.markerStroke = new AWT.Stroke(Number(val));
-            break;
+            this.markerStroke = new AWT.Stroke(Number(val))
+            break
         }
-      });
+      })
       //
       // Read inner elements
-      $xml.children().each(function () {
-        var $node = $(this);
-        switch (this.nodeName) {
+      $xml.children().each((_n, child) => {
+        const $node = $(child)
+        switch (child.nodeName) {
           case 'font':
-            bb.font = (new AWT.Font()).setProperties($node);
-            break;
+            this.font = (new AWT.Font()).setProperties($node)
+            break
 
           case 'gradient':
-            bb.bgGradient = new AWT.Gradient().setProperties($node);
-            break;
+            this.bgGradient = new AWT.Gradient().setProperties($node)
+            break
 
           case 'color':
-            bb.textColor = Utils.checkColor($node.attr('foreground'), bb.textColor);
-            bb.backColor = Utils.checkColor($node.attr('background'), bb.backColor);
-            bb.shadowColor = Utils.checkColor($node.attr('shadow'), bb.shadowColor);
-            bb.inactiveColor = Utils.checkColor($node.attr('inactive'), bb.inactiveColor);
-            bb.alternativeColor = Utils.checkColor($node.attr('alternative'), bb.alternativeColor);
-            bb.borderColor = Utils.checkColor($node.attr('border'), bb.borderColor);
-            break;
+            this.textColor = Utils.checkColor($node.attr('foreground'), this.textColor)
+            this.backColor = Utils.checkColor($node.attr('background'), this.backColor)
+            this.shadowColor = Utils.checkColor($node.attr('shadow'), this.shadowColor)
+            this.inactiveColor = Utils.checkColor($node.attr('inactive'), this.inactiveColor)
+            this.alternativeColor = Utils.checkColor($node.attr('alternative'), this.alternativeColor)
+            this.borderColor = Utils.checkColor($node.attr('border'), this.borderColor)
+            break
         }
-      });
-      return this;
-    },
-    //
-    // Utility functions:
+      })
+      return this
+    }
+
     /**
-     *
      * Gets the value of the specified property, scanning down to parents and prototype if not defined.
      * @param {string} property - The property to retrieve
      * @returns {*} - The object or value associated to this property
      */
-    get: function (property) {
+    get(property) {
       if (this.hasOwnProperty(property) || this.parent === null)
-        return this[property];
+        return this[property]
       else
-        return this.parent.get(property);
-    },
+        return this.parent.get(property)
+    }
+
     /**
-     *
      * Sets the value of a specific property.
      * @param {string} property - The property name.
      * @param {*} value - Depends on the type of property
      */
-    set: function (property, value) {
-      this[property] = value;
-      return this;
-    },
+    set(property, value) {
+      this[property] = value
+      return this
+    }
+
     /**
-     * 
      * Gets the value of the specified property, scanning down to parents if not defined, and returning
      * always an own property (not from prototype)
      * @param {string} property - The property to retrieve
      * @returns {*} - The object associated to this property
      */
-    getOwn: function (property) {
+    getOwn(property) {
       if (this.hasOwnProperty(property))
-        return this[property];
+        return this[property]
       else if (this.parent !== null)
-        return this.parent.getOwn(property);
+        return this.parent.getOwn(property)
       else {
         if (typeof this[property] === 'object')
-          this[property] = Utils.cloneObject(BoxBase.prototype[property]);
+          this[property] = Utils.cloneObject(BoxBase.prototype[property])
         else
-          this[property] = BoxBase.prototype[property];
+          this[property] = BoxBase.prototype[property]
       }
-      return this[property];
-    },
+      return this[property]
+    }
+
     /**
-     *
      * Gets the properties defined in this BoxBase as a collection of CSS attributes
      * @param {object=} css - An optional set of initial CSS properties
      * @param {boolean} inactive - When `true`, get CSS attributes for an inactive cell
@@ -241,33 +160,34 @@ define([
      * @param {boolean} alternative - When `true`, get CSS attributes for an alternative cell
      * @returns {object}
      */
-    getCSS: function (css, inactive, inverse, alternative) {
+    getCSS(css, inactive, inverse, alternative) {
       // (css will be created by [AWT.Font.toCss](AWT.html) if null or undefined)
-      var font = this.get('font');
-      css = font.toCss(css);
+      const font = this.get('font')
+      css = font.toCss(css)
 
       css['color'] = inverse ? this.get('backColor')
         : alternative ? this.get('alternativeColor')
-          : this.get('textColor');
+          : this.get('textColor')
 
-      var transparent = this.get('transparent');
+      const transparent = this.get('transparent')
       css['background-color'] = transparent ? 'transparent'
         : inactive ? this.get('inactiveColor')
-          : inverse ? this.get('textColor') : this.get('backColor');
+          : inverse ? this.get('textColor') : this.get('backColor')
 
-      var bgGradient = this.get('bgGradient');
+      const bgGradient = this.get('bgGradient')
       if (bgGradient && !transparent)
-        css['background-image'] = bgGradient.getCss();
+        css['background-image'] = bgGradient.getCss()
 
       if (this.shadow === 1) {
-        var delta = Math.max(1, Math.round(font.size / 10));
-        var color = this.get('shadowColor');
-        css['text-shadow'] = delta + 'px ' + delta + 'px 3px ' + color;
+        const delta = Math.max(1, Math.round(font.size / 10))
+        const color = this.get('shadowColor')
+        css['text-shadow'] = `${delta}px ${delta}px 3px ${color}`
       }
-      return css;
-    },
+      return css
+    }
+
     /**
-     * This is utility function computes the width and height of text lines rendered on an HTML
+     * This utility method computes the width and height of text lines rendered on an HTML
      * __canvas__ element, reducing the font size of the BoxBase as needed when they exceed the maximum
      * width and/or height.
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the text.
@@ -277,44 +197,46 @@ define([
      * @returns {object[]} - An array of objects representing lines of text. Each object has a `text`
      * member with the text displayed in the line, and a `size` member with the line {@link AWT.Dimension}
      */
-    prepareText: function (ctx, text, maxWidth, maxHeight) {
-      var result = [];
-      var font = this.get('font');
-      var height = font.getHeight();
-      var totalHeight = 0;
+    prepareText(ctx, text, maxWidth, maxHeight) {
+      const
+        result = [],
+        font = this.get('font'),
+        height = font.getHeight()
+      let totalHeight = 0
 
       // divide the text in lines
-      var lines = text.trim().split('\n');
-      ctx.font = font.cssFont();
-      for (var l = 0; l < lines.length; l++) {
-        var line = lines[l].trim();
-        var width = ctx.measureText(line).width;
+      const lines = text.trim().split('\n')
+      ctx.font = font.cssFont()
+      for (let l = 0; l < lines.length; l++) {
+        let line = lines[l].trim()
+        let width = ctx.measureText(line).width
         if (width > maxWidth) {
           // retain the last string offset that was inside maxWidth
-          var lastOK = 0;
-          var lastOKWidth = 0;
-          for (var p = 0; p < line.length; p++) {
+          let
+            lastOK = 0,
+            lastOKWidth = 0
+          for (let p = 0; p < line.length; p++) {
             // Find next separator
             if (Utils.isSeparator(line[p])) {
-              var w = ctx.measureText(line.substr(0, p).trim()).width;
+              const w = ctx.measureText(line.substr(0, p).trim()).width
               if (w > maxWidth)
-                break;
-              lastOK = p;
-              lastOKWidth = w;
+                break
+              lastOK = p
+              lastOKWidth = w
             }
           }
           if (lastOK > 0) {
             // Add a new line with the tail of the line
-            lines.splice(l + 1, 0, line.substr(lastOK + 1).trim());
+            lines.splice(l + 1, 0, line.substr(lastOK + 1).trim())
             // Adjust the current line
-            line = lines[l] = line.substr(0, lastOK).trim();
-            width = lastOKWidth;
+            line = lines[l] = line.substr(0, lastOK).trim()
+            width = lastOKWidth
           }
           else {
             // No solution found. Try resizing down the font.
             if (font.size > defaultValues.MIN_FONT_SIZE) {
-              this.getOwn('font').zoom(-1);
-              return this.prepareText(ctx, text, maxWidth, maxHeight);
+              this.getOwn('font').zoom(-1)
+              return this.prepareText(ctx, text, maxWidth, maxHeight)
             }
           }
         }
@@ -323,21 +245,118 @@ define([
         result.push({
           text: line,
           size: new AWT.Dimension(width, height)
-        });
+        })
 
-        totalHeight += height;
+        totalHeight += height
 
         if (totalHeight > maxHeight && font.size > defaultValues.MIN_FONT_SIZE) {
           // Max height exceeded. Try resizing down the font
-          this.getOwn('font').zoom(-1);
-          return this.prepareText(ctx, text, maxWidth, maxHeight);
+          this.getOwn('font').zoom(-1)
+          return this.prepareText(ctx, text, maxWidth, maxHeight)
         }
       }
-      return result;
+      return result
     }
-  };
+  }
 
-  BoxBase.prototype.defaultBoxBase = new BoxBase();
+  Object.assign(BoxBase.prototype, {
+    /**
+     * The parent BoxBase object
+     * @name BoxBase#parent
+     * @type {BoxBase} */
+    parent: null,
+    /**
+     * Default values
+     * @name BoxBase#defaultValues
+     * @type {object} */
+    default: defaultValues,
+    /**
+     * Font size can be dynamically reduced to fit the available space if any element using this
+     * `BoxBase` requests it. When this happen, this field contains the real font currently used
+     * to draw text.
+     * @name BoxBase#font
+     * @type {AWT.Font} */
+    font: new AWT.Font(),
+    /**
+     * The current font size of this BoxBase. Can be dynamically adjusted when drawing.
+     * @name BoxBase#dynFontSize
+     * @type {number} */
+    dynFontSize: 0,
+    /**
+     * Counts the number of times the `dynFontSize` has been reset. This is useful to avoid excessive
+     * recursive loops searching the optimal font size.
+     * @name BoxBase#resetFontCounter
+     * @type {number} */
+    resetFontCounter: 0,
+    /**
+     * The background color
+     * @name BoxBase#backColor
+     * @type {string} */
+    backColor: defaultValues.BACK_COLOR,
+    /**
+     * The background gradient. Default is `null`.
+     * @name BoxBase#bgGradient
+     * @type {AWT.Gradient} */
+    bgGradient: null,
+    /**
+     * The color used to write text.
+     * @name BoxBase#textColor
+     * @type {string} */
+    textColor: defaultValues.TEXT_COLOR,
+    /**
+     * The color used to draw a shadow below regular text.
+     * @name BoxBase#shadowColor
+     * @type {string} */
+    shadowColor: defaultValues.SHADOW_COLOR,
+    /**
+     * The color of the border.
+     * @name BoxBase#borderColor
+     * @type {string} */
+    borderColor: defaultValues.BORDER_COLOR,
+    /**
+     * The color used to draw text when a cell is in `inactive` state.
+     * @name BoxBase#inactiveColor
+     * @type {string} */
+    inactiveColor: defaultValues.INACTIVE_COLOR,
+    /**
+     * The color used to draw text when a cell is in `alternative` state.
+     * @name BoxBase#alternativeColor
+     * @type {string} */
+    alternativeColor: defaultValues.ALTERNATIVE_COLOR,
+    /**
+     * Whether the text should have a shadow or not
+     * @name BoxBase#shadow
+     * @type {boolean} */
+    shadow: false,
+    /**
+     * Whether the cell's background (and its hosted component, if any) should be transparent
+     * @name BoxBase#transparent
+     * @type {boolean} */
+    transparent: false,
+    /**
+     * Wheter the cell's background should be painted or not. This property has no effect on
+     * hosted components.
+     * @name BoxBase#dontFill
+     * @type {boolean} */
+    dontFill: false,
+    /**
+     * The margin to respect between text elements and the limits of the cell or other elements.
+     * @name BoxBase#textMargin
+     * @type {number} */
+    textMargin: defaultValues.AC_MARGIN,
+    /**
+     * The stroke used to draw the border.
+     * @name BoxBase#borderStroke
+     * @type {AWT.Stroke} */
+    borderStroke: new AWT.Stroke(defaultValues.BORDER_STROKE_WIDTH),
+    /**
+     * The stroke used to draw a border around marked cells.
+     * @name BoxBase#markerStroke
+     * @type {AWT.Stroke} */
+    markerStroke: new AWT.Stroke(defaultValues.MARKER_STROKE_WIDTH),
+  })
 
-  return BoxBase;
-});
+  BoxBase.prototype.defaultBoxBase = new BoxBase()
+
+  return BoxBase
+})

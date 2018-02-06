@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -42,50 +42,84 @@ define([
    * @exports MiniSkin
    * @class
    * @extends DefaultSkin
-   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-   * realize the media objects meeded tot build the Skin.
-   * @param {string=} name - The skin class name
    */
-  var MiniSkin = function (ps, name) {
-    // MiniSkin extends [DefaultSkin](DefaultSkin.html)
-    DefaultSkin.call(this, ps, name, { counters: false, reportsBtn: true });
-  };
+  class MiniSkin extends DefaultSkin {
+    /**
+     * MiniSkin constructor
+     * 
+     * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+     * realize the media objects meeded tot build the Skin.
+     * @param {string=} name - The skin class name
+     */
+    constructor(ps, name) {
+      // MiniSkin extends [DefaultSkin](DefaultSkin.html)
+      super(ps, name, { counters: false, reportsBtn: true })
+    }
 
-  MiniSkin.prototype = {
-    constructor: MiniSkin,
+    /**
+     * Returns the CSS styles used by this skin. This method should be called only from
+     * `Skin` constructor, and overridden by subclasses if needed.
+     * @override
+     * @returns {string}
+     */
+    _getStyleSheets() {
+      return super._getStyleSheets() + this.skinCSS
+    }
+  }
+
+  Object.assign(MiniSkin.prototype, {
     /**
      * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+     * @name MiniSkin#skinId
+     * @override
      * @type {string}
      */
     skinId: 'JClicMiniSkin',
-    /**
-     *
-     * Returns the CSS styles used by this skin. This method should be called only from
-     * `Skin` constructor, and overridden by subclasses if needed.
-     * @returns {string}
-     */
-    _getStyleSheets: function () {
-      return DefaultSkin.prototype._getStyleSheets() + this.skinCSS;
-    },
     // Buttons and other graphical resources used by this skin.
     //
+    /**
+     * Icon width
+     * @name MiniSkin#iconWidth
+     * @override
+     * @type {number} */
     iconWidth: 18,
+    /**
+     * Icon height
+     * @name MiniSkin#iconHeight
+     * @override
+     * @type {number} */
     iconHeight: 18,
+    /**
+     * Fill color for icons
+     * @name MiniSkin#iconFill
+     * @override
+     * @type {string} */
     iconFill: '#080808',
+    /**
+     * Fill-in color for counters
+     * @name MiniSkin#counterIconFill
+     * @override
+     * @type {string} */
     counterIconFill: '#080808',
+    /**
+     * Default margin between elements
+     * @name MiniSkin#margin
+     * @override
+     * @type {number} */
     margin: 8,
-    // Styles used in this skin
+    /**
+     * Styles used in this skin
+     * @name MiniSkin#skinCSS
+     * @type {string} */
     skinCSS: '\
 .SKINID {background-color:#F4F4F4;}\
 .SKINID .JClicPlayerCnt {margin:4px;}\
 .SKINID .JClicCtrlCnt {margin:0 2px 4px 2px;}\
 .SKINID .JClicMsgBox {height:25px;}'
-  };
-
-  // MiniSkin extends [DefaultSkin](DefaultSkin.html)
-  MiniSkin.prototype = $.extend(Object.create(DefaultSkin.prototype), MiniSkin.prototype);
+  })
 
   // Register this class in the list of available skins
-  Skin.CLASSES['mini'] = MiniSkin;
-  return MiniSkin;
-});
+  Skin.CLASSES['mini'] = MiniSkin
+
+  return MiniSkin
+})

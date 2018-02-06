@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -40,43 +40,49 @@ define([
    * @exports EmptySkin
    * @class
    * @extends Skin
-   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-   * realize the media objects needed tot build the Skin.
-   * @param {string=} name - The skin class name
    */
-  var EmptySkin = function (ps, name) {
-    // EmptySkin extends [Skin](Skin.html)
-    Skin.call(this, ps, name);
-  };
+  class EmptySkin extends Skin {
 
-  EmptySkin.prototype = {
-    constructor: EmptySkin,
     /**
-     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @type {string}
+     * EmptySkin constructor
+     * 
+     * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+     * realize the media objects needed tot build the Skin.
+     * @param {string=} name - The skin class name
      */
-    skinId: 'JClicEmptySkin',
+    constructor(ps, name) {
+      // EmptySkin extends [Skin](Skin.html)
+      super(ps, name)
+    }
     /**
      *
      * Returns the CSS styles used by this skin. This method should be called only from
      * `Skin` constructor, and overridden by subclasses if needed.
+     * @override
      * @returns {string}
      */
-    _getStyleSheets: function () {
-      return Skin.prototype._getStyleSheets() + this.mainCSS;
-    },
-    //
-    //Buttons and other graphical resources used by this skin.
-    //
-    // Styles used in this skin
-    mainCSS: '.SKINID .JClicPlayerCnt {margin:0;}'
-  };
+    _getStyleSheets() {
+      return super._getStyleSheets() + this.mainCSS
+    }
+  }
 
-  // EmptySkin extends [Skin](Skin.html)
-  EmptySkin.prototype = $.extend(Object.create(Skin.prototype), EmptySkin.prototype);
+  Object.assign(EmptySkin.prototype, {
+    /**
+     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+     * @name EmptySkin#skinId
+     * @override
+     * @type {string} */
+    skinId: 'JClicEmptySkin',
+    /**
+     * Styles used in this skin
+     * @name EmptySkin#skinCSS
+     * @override
+     * @type {string} */
+    mainCSS: '.SKINID .JClicPlayerCnt {margin:0;}'
+  })
 
   // Register this class in the list of available skins
-  Skin.CLASSES['empty'] = EmptySkin;
-  return EmptySkin;
+  Skin.CLASSES['empty'] = EmptySkin
 
-});
+  return EmptySkin
+})

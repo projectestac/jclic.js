@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -51,29 +51,72 @@ define([
    * @exports ActivitySequenceElement
    * @class
    */
-  var ActivitySequenceElement = function () {
-  };
+  class ActivitySequenceElement {
+    constructor() {
+    }
 
-  ActivitySequenceElement.prototype = {
-    constructor: ActivitySequenceElement,
+    /**
+     * Loads the object settings from a specific JQuery XML element
+     * @param {external:jQuery} $xml
+     */
+    setProperties($xml) {
+
+      // Iterate on all provided attributes
+      Utils.attrForEach($xml.get(0).attributes, (name, val) => {
+        switch (name) {
+          case 'id':
+            this['tag'] = Utils.nSlash(val)
+            break
+          case 'name':
+            this['activityName'] = val
+            break
+          case 'description':
+          // possible navButtons values are: `none`, `fwd`, `back` or `both`
+          case 'navButtons':
+            this[name] = val
+            break
+          case 'delay':
+            this[name] = Number(val)
+            break
+        }
+      })
+
+      // Iterate on 'jump' elements to load fwdJump and/or backJump
+      $xml.children('jump').each((_n, data) => {
+        const jmp = new ActivitySequenceJump().setProperties($(data))
+        if (jmp.id === 'forward')
+          this.fwdJump = jmp
+        else if (jmp.id === 'back')
+          this.backJump = jmp
+      })
+      return this
+    }
+  }
+
+  Object.assign(ActivitySequenceElement.prototype, {
     /**
      * Optional unique identifier of this element in the {@link ActivitySequence}.
+     * @name ActivitySequenceElement#tag
      * @type {string} */
     tag: null,
     /**
      * Optional description of this sequence element.
+     * @name ActivitySequenceElement#description
      * @type {string} */
     description: null,
     /**
      * Name of the {@link Activity} pointed by this element.
+     * @name ActivitySequenceElement#activityName
      * @type {string} */
     activityName: '',
     /**
      * Jump to be processed by the 'next' button action
+     * @name ActivitySequenceElement#fwdJump
      * @type {ActivitySequenceJump} */
     fwdJump: null,
     /**
      * Jump to be processed by the 'prev' button action.
+     * @name ActivitySequenceElement#backJump
      * @type {ActivitySequenceJump} */
     backJump: null,
     /**
@@ -82,55 +125,15 @@ define([
      * - 'fwd'
      * - 'back'
      * - 'both'
+     * @name ActivitySequenceElement#navButtons
      * @type {string} */
     navButtons: 'both',
     /**
      * Time delay (in seconds) before passing to the next/prev activity
+     * @name ActivitySequenceElement#delay
      * @type {number} */
     delay: 0,
-    /**
-     *
-     * Loads the object settings from a specific JQuery XML element
-     * @param {external:jQuery} $xml
-     */
-    setProperties: function ($xml) {
+  })
 
-      // Iterate on all provided attributes
-      var ase = this;
-      $.each($xml.get(0).attributes, function () {
-        var name = this.name;
-        var val = this.value;
-        switch (name) {
-          case 'id':
-            ase['tag'] = Utils.nSlash(val);
-            break;
-          case 'name':
-            ase['activityName'] = val;
-            break;
-          case 'description':
-          // possible navButtons values are: `none`, `fwd`, `back` or `both`
-          case 'navButtons':
-            ase[name] = val;
-            break;
-          case 'delay':
-            ase[name] = Number(val);
-            break;
-        }
-      });
-
-      // Iterate on 'jump' elements to load fwdJump and/or backJump
-      $xml.children('jump').each(function () {
-        var jmp = new ActivitySequenceJump().setProperties($(this));
-        if (jmp.id === 'forward')
-          ase.fwdJump = jmp;
-        else if (jmp.id === 'back')
-          ase.backJump = jmp;
-      });
-
-      return this;
-    }
-  };
-
-  return ActivitySequenceElement;
-
-});
+  return ActivitySequenceElement
+})

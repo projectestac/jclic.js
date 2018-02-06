@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -42,42 +42,47 @@ define([
    * @exports OrangeSkin
    * @class
    * @extends DefaultSkin
-   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-   * realize the media objects meeded tot build the Skin.
-   * @param {string=} name - The skin class name
    */
-  var OrangeSkin = function (ps, name) {
-    // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
-    DefaultSkin.call(this, ps, name);
-  };
-
-  OrangeSkin.prototype = {
-    constructor: OrangeSkin,
+  class OrangeSkin extends DefaultSkin {
     /**
-     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @type {string}
+     * OrangeSkin constructor
+     * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+     * realize the media objects meeded tot build the Skin.
+     * @param {string=} name - The skin class name
      */
-    skinId: 'JClicOrangeSkin',
+    constructor(ps, name) {
+      // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
+      super(ps, name)
+    }
+
     /**
      *
      * Returns the CSS styles used by this skin. This method should be called only from
      * `Skin` constructor, and overridden by subclasses if needed.
+     * @override
      * @returns {string}
      */
-    _getStyleSheets: function () {
-      return DefaultSkin.prototype._getStyleSheets() + this.skinCSS;
-    },
+    _getStyleSheets() {
+      return super._getStyleSheets() + this.skinCSS
+    }
+  }
+
+  Object.assign(OrangeSkin.prototype, {
+    /**
+     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+     * @name OrangeSkin#skinId
+     * @override
+     * @type {string} */
+    skinId: 'JClicOrangeSkin',
     /**
      * Styles used in this skin
-     * @type {string}
-     */
+     * @name OrangeSkin#skinCSS
+     * @type {string} */
     skinCSS: '.SKINID {background-color:#FF8B19;}'
-  };
-
-  // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
-  OrangeSkin.prototype = $.extend(Object.create(DefaultSkin.prototype), OrangeSkin.prototype);
+  })
 
   // Register this class in the list of available skins
-  Skin.CLASSES['orange'] = OrangeSkin;
-  return OrangeSkin;
-});
+  Skin.CLASSES['orange'] = OrangeSkin
+
+  return OrangeSkin
+})

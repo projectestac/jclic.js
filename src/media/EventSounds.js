@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -35,6 +35,7 @@ define([
   "./EventSoundsElement",
   "../Utils"
 ], function ($, EventSoundsElement, Utils) {
+
   /**
    * The EventSounds objects contains specific sounds to be played when JClic events are fired:
    * - start
@@ -47,79 +48,58 @@ define([
    * The sounds are stored in an array of {@link EventSoundsElement} objects.
    * @exports EventSounds
    * @class
-   * @param {EventSounds=} parent - Another EventSounds object that will act as a parent of this one,
-   * used to resolve which sound must be played for events when not defined here.
    */
-  var EventSounds = function (parent) {
-    if (parent) {
-      this.elements = {};
-      var thisElements = this.elements;
-      $.each(parent.elements, function (key, value) {
-        thisElements[key] = value;
-      });
+  class EventSounds {
+    /**
+     * EventSounds constructor
+     * @param {EventSounds=} parent - Another EventSounds object that will act as a parent of this one,
+     * used to resolve which sound must be played for events when not defined here.
+     */
+    constructor(parent) {
+      if (parent)
+        this.elements = Object.assign({}, this.elements, parent.elements)
     }
-  };
 
-  EventSounds.prototype = {
-    constructor: EventSounds,
     /**
-     * The 'parent' EventSounds object.
-     * @type {EventSounds} */
-    eventSoundsParent: null,
-    /**
-     * Collection of {@link EventSoundsElement} objects
-     * @type {object} */
-    elements: {},
-    /**
-     * Whether this event sounds are enabled or not
-     * @type {boolean} */
-    enabled: Utils.DEFAULT,
-    /**
-     * This attribute is intended to be used at prototype level, to indicate a globally disabled
-     * or enabled state.
-     * @type {boolean} */
-    globalEnabled: true,
-    /**
-     *
      * Reads the object properties from an XML element
      * @param {external:jQuery} $xml - The XML element to be parsed
      */
-    setProperties: function ($xml) {
-      var elements = this.elements;
-      $xml.children().each(function () {
-        var id = this.getAttribute('id');
-        elements[id] = new EventSoundsElement(id);
-        elements[id].setProperties($(this));
-      });
-      return this;
-    },
+    setProperties($xml) {
+      $xml.children().each((_n, child) => {
+        const id = child.getAttribute('id')
+        this.elements[id] = new EventSoundsElement(id)
+        this.elements[id].setProperties($(child))
+      })
+      return this
+    }
+
     /**
-     *
      * Instantiates the audio objects needed to play event sounds
      * @param {PlayStation} ps
      * @param {MediaBag} mediaBag
      */
-    realize: function (ps, mediaBag) {
-      $.each(this.elements, function (key, value) {
-        // Values are {EventSoundElement} objects
-        value.realize(ps, mediaBag);
-      });
-    },
+    realize(ps, mediaBag) {
+      // Values are {EventSoundElement} objects
+      $.each(this.elements, (key, value) => value.realize(ps, mediaBag))
+    }
+
     /**
-     *
      * Plays a specific event sound
      * @param {string} eventName - The identifier of the event to be played
      */
-    play: function (eventName) {
-      var sound = this.elements[eventName];
+    play(eventName) {
+      const sound = this.elements[eventName]
       if (sound)
-        sound.play();
-    },
-    /**
-     * Audio data for default event sounds
-     * @type {object} */
-    resources: {
-      start: 'data:audio/mp3;base64,' +
+        sound.play()
+    }
+  }
+
+  /**
+   * Audio data for default event sounds
+   * @name EventSounds.MEDIA
+   * @type {object} */
+  EventSounds.MEDIA = {
+    start: 'data:audio/mp3;base64,' +
       '//NAxAARGk5RdUEQANIEZEBAPGPyIAAYAKMY/6EaQn8hP+c/yEb//kITU7oc9Cf6nPnPoT/8nQhC' +
       'KEEEnDizkAwM8ThYH1Bj/EAYEhyUGghyivv7fn0vtsLdYI0CiTQE+aaqfH3BW37/80LEFhl6nvZf' +
       'j1ACplLtsfx19gOQfBp7iHeEWRj8WxiLLI6khikjEI9IvsePycfERCSpPJ9s95IbO1O/tRX70XQi' +
@@ -152,7 +132,7 @@ define([
       'qqqqqqqqqqqqqqqqqqqqqqqqqv/zQMSQDcslQAoAR1mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq' +
       'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq' +
       'qqqqqqqqqqqq',
-      click: 'data:audio/mp3;base64,' +
+    click: 'data:audio/mp3;base64,' +
       '//NAxAASsyJgIUEQAY///gX8///yfyHO/8hCEafoRp3nPQgAAEUAABBCEIT//QhCKQhNGyEIQhCN' +
       'ITU5//OQhCN7f/yEZQAAIynOc5CEIhGnABGY/4gAIQZ4h4h4d3Z2Z9Jba5XWhWP/80LEEBhJOxcf' +
       'iUAC9BEda+oiKFQsViiMpvHFC98pLjySjUNeKoYxMpwIT21HmHlEhx83A9K5vDAuZUQxzq7nJPgE' +
@@ -172,7 +152,7 @@ define([
       'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsR3EnAF9kgARgBVVVVVVVVVVVVVVVVVVVVV' +
       'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV' +
       'VVVVVVVVVVVVVVVVVVVVVVVVVQ==',
-      actionOk: 'data:audio/mp3;base64,' +
+    actionOk: 'data:audio/mp3;base64,' +
       '//NAxAAT+gKmPUFoAI81KAANYQZECuQAASjAD820006kC+buYDgGEGEKIcsCYAUQYA6JeI2JmS5w' +
       'cY5yXL6b1IJpp6kG////9X+h/oaaaadAvpvBA5/9QIDQQOQ+cbQllsQQAKTggvn/80LECxdCcupd' +
       'jFACwA8cFoNFZuosRJUe3E48kEhWIRueePjSdR4T9XMQ4SwB/BZ1GQNAtHHOPzOFryImV2zlb//r' +
@@ -199,7 +179,7 @@ define([
       'HjzvOh0JndVbtdYykkFQmdDoaDqCIaLKTEFNRTMuOTkuNaqqqqqqqqqqqqqqqqr/80LEXRFYBf5I' +
       'CEYAqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq' +
       'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqo=',
-      actionError: 'data:audio/mp3;base64,' +
+    actionError: 'data:audio/mp3;base64,' +
       '//M4xAAUuVJUAUgYARcXFz4DgFAeKHAeChiIie7u+iaIibgYuAYGcTz3OIhf/Xd38v+J6J7u+gGB' +
       'iw8P8PDw8PDHRw8/+O6GADo/h78BEQz8HAHh5+v+A4A6H/8AAEfIiZmZBXlicwVCsWj1//M4xAwY' +
       'WvL/H4goAHY5EADTzSBEDUpfz/OhTMPGC+NAMWAgfAcAgHFSjhZD1PCRAUQFBjMUxMhGGuOVyndn' +
@@ -221,7 +201,7 @@ define([
       '//qn///YxTAwQIGhyP/u7O/3P2eqNZ2k4so4sp2NFAYhnZ2couBNTEFNRTMuOTkuNVVVVVVV//M4' +
       'xDoKqz1wDACNy1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV' +
       'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV',
-      finishedOk: 'data:audio/mp3;base64,' +
+    finishedOk: 'data:audio/mp3;base64,' +
       '//NAxAAQiXIEAUIQAPnfO/OdyAYGehP/U5Gqd+c/8785zoBi3QhCMpCVP+SpwM6AYGODH/8TvB+s' +
       'PiMP5cMCcPygIAg7/lAff4IAgcBCD6ofD4diQbC0WaISi0SB3EAzA8WZgeALXg3/80LEGBoDGyZf' +
       'glACgsRODRuWFcnMLm+eQEhRVQz5IePy5Icm/2Yn5GLY58hG3/J0JyAkq54WhVHosmkTmr//OYkI' +
@@ -279,7 +259,7 @@ define([
       'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV' +
       '//NAxLwR22HQAAgKnVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV' +
       'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=',
-      finishedError: 'data:audio/mp3;base64,' +
+    finishedError: 'data:audio/mp3;base64,' +
       '/+MgxAAT5BX8AUEoAP///mNkc/////1Oc/6noc/9f///85/0O///r/kI2jf+pCf/Of/6HP/znOc7' +
       'znPkIQgfFzvIRjhwOChCEIQOB8Ph853yHOc/zvEA4AAAAABF/UgSPmQKhhYBw4f/4yLECxVpXpgB' +
       'mYgAKgCEXoz6Bj24G4gxlPDKhgAUoFxwtiGufjWFsGbKgF+Fh4noT/8i5uaFcZgLm1i2k0Mbam8Z' +
@@ -323,18 +303,33 @@ define([
       'Naqqqqqqqqqqqqqqqqqqqqqqqv/jIMRjEaCVZAp5hlCqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq' +
       'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq' +
       'qqqqqqqqqqqq'
-    }
-  };
+  }
 
-  // Load default sounds in prototype
-  EventSounds.prototype.elements = {
-    start: new EventSoundsElement('start', EventSounds.prototype.resources.start),
-    click: new EventSoundsElement('click', EventSounds.prototype.resources.click),
-    actionOk: new EventSoundsElement('actionOk', EventSounds.prototype.resources.actionOk),
-    actionError: new EventSoundsElement('actionError', EventSounds.prototype.resources.actionError),
-    finishedOk: new EventSoundsElement('finishedOk', EventSounds.prototype.resources.finishedOk),
-    finishedError: new EventSoundsElement('finishedError', EventSounds.prototype.resources.finishedError)
-  };
+  Object.assign(EventSounds.prototype, {
+    /**
+     * Collection of {@link EventSoundsElement} objects
+     * @name EventSounds#elements
+     * @type {object} */
+    elements: {
+      start: new EventSoundsElement('start', EventSounds.MEDIA.start),
+      click: new EventSoundsElement('click', EventSounds.MEDIA.click),
+      actionOk: new EventSoundsElement('actionOk', EventSounds.MEDIA.actionOk),
+      actionError: new EventSoundsElement('actionError', EventSounds.MEDIA.actionError),
+      finishedOk: new EventSoundsElement('finishedOk', EventSounds.MEDIA.finishedOk),
+      finishedError: new EventSoundsElement('finishedError', EventSounds.MEDIA.finishedError)
+    },
+    /**
+     * Whether this event sounds are enabled or not
+     * @name EventSounds#enabled
+     * @type {boolean} */
+    enabled: Utils.DEFAULT,
+    /**
+     * This attribute is intended to be used at prototype level, to indicate a globally disabled
+     * or enabled state.
+     * @name EventSounds#globalEnabled
+     * @type {boolean} */
+    globalEnabled: true,
+  })
 
-  return EventSounds;
-});
+  return EventSounds
+})

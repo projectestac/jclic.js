@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2017 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -51,96 +51,104 @@ define([
    * - revisions
    * @exports ProjectSettings
    * @class
-   * @param {JClicProject} project - The project to which this settings belongs
    */
-  var ProjectSettings = function (project) {
-    this.project = project;
-    this.languages = [];
-    this.locales = [];
-  };
+  class ProjectSettings {
+    /**
+     * ProjectSettings constructor
+     * @param {JClicProject} project - The project to which this settings belongs
+     */
+    constructor(project) {
+      this.project = project
+      this.languages = []
+      this.locales = []
+    }
 
-  ProjectSettings.prototype = {
-    constructor: ProjectSettings,
+    /**
+     * Reads the ProjectSettings values from a JQuery XML element
+     * @param {external:jQuery} $xml - The XML element to parse
+     */
+    setProperties($xml) {
+      $xml.children().each((_n, child) => {
+        switch (this.nodeName) {
+          case 'title':
+            this.title = child.textContent
+            break
+          case 'description':
+            this.description = child.textContent
+            break
+          case 'language':
+            this.languages.push(child.textContent)
+            break
+          case 'eventSounds':
+            this.eventSounds = new EventSounds()
+            this.eventSounds.setProperties($(child))
+            break
+          case 'skin':
+            this.skinFileName = $(child).attr('file')
+            break
+        }
+      })
+
+      // Try to find an array of valid locales
+      // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
+      if (this.languages.length > 0 && window.Intl && window.Intl.getCanonicalLocales) {
+        this.locales = []
+        this.languages.forEach(lang => {
+          // Languages usually are stored in the form: "English (en)"
+          const matches = /\(([a-z,A-Z,-]+)\)/.exec(lang)
+          if (matches && matches.length > 1) {
+            try {
+              const canonicals = window.Intl.getCanonicalLocales(matches[1])
+              if (canonicals)
+                this.locales = this.locales.concat(canonicals)
+            } catch (err) {
+              Utils.log('error', `Invalid language: ${lang}`)
+            }
+          }
+        })
+      }
+      return this
+    }
+  }
+
+  Object.assign(ProjectSettings.prototype, {
     /**
      * The JClicProject to which this ProjectSettings belongs
+     * @name ProjectSettings#project
      * @type {JClicProject} */
     project: null,
     /**
      * The project title
+     * @name ProjectSettings#title
      * @type {string} */
     title: 'Untitled',
     /**
      * Project's description. Can have multiple paragraphs, separated by `<p>`
+     * @name ProjectSettings#description
      * @type {string} */
     description: '',
     /**
      * JClic projects can use more than one language, so use a string array
+     * @name ProjectSettings#languages
      * @type {string[]} */
     languages: null,
     /**
      * Array of canonical locales, as defined in 
      * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation|Intl}
-     */
+     * @name ProjectSettings#locales
+     * @type {string[]} */
     locales: null,
     /**
      * The name of an optional 'skin' (visual aspect) can be set for the whole project, or for each {@link Activity}
+     * @name ProjectSettings#skinFileName
      * @type {string} */
     skinFileName: null,
     /**
      * The main {@link EventSounds} object of the project
+     * @name ProjectSettings#eventSounds
      * @type {EventSounds} */
     eventSounds: new EventSounds(),
-    //
-    /**
-     *
-     * Reads the ProjectSettings values from a JQuery XML element
-     * @param {external:jQuery} $xml - The XML element to parse
-     */
-    setProperties: function ($xml) {
-      var settings = this;
-      $xml.children().each(function () {
-        switch (this.nodeName) {
-          case 'title':
-            settings.title = this.textContent;
-            break;
-          case 'description':
-            settings.description = this.textContent;
-            break;
-          case 'language':
-            settings.languages.push(this.textContent);
-            break;
-          case 'eventSounds':
-            settings.eventSounds = new EventSounds();
-            settings.eventSounds.setProperties($(this));
-            break;
-          case 'skin':
-            settings.skinFileName = $(this).attr('file');
-            break;
-        }
-      });
+  })
 
-      // Try to find an array of valid locales
-      // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
-      if (this.languages.length > 0 && window.Intl && window.Intl.getCanonicalLocales) {
-        this.locales = [];
-        for (var p in this.languages) {
-          // Languages usually are stored in the form: "English (en)"
-          var matches = /\(([a-z,A-Z,-]+)\)/.exec(this.languages[p]);
-          if (matches && matches.length > 1) {
-            try {
-              var canonicals = window.Intl.getCanonicalLocales(matches[1]);
-              if (canonicals)
-                this.locales = this.locales.concat(canonicals);
-            } catch (err) {
-              Utils.log('error', 'Invalid language: %s', this.languages[p]);
-            }
-          }
-        }
-      }
-
-      return this;
-    }
-  };
-
-  return ProjectSettings;
-});
+  return ProjectSettings
+})

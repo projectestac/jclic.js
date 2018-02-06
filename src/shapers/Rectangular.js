@@ -42,41 +42,45 @@ define([
    * @exports Rectangular
    * @class
    * @extends Shaper
-   * @param {number} nx - Number of columns
-   * @param {number} ny - Number of rows
    */
-  var Rectangular = function (nx, ny) {
-    Shaper.call(this, nx, ny);
-  };
-
-  Rectangular.prototype = {
-    constructor: Rectangular,
+  class Rectangular extends Shaper {
     /**
-     * Overrides same flag in {@link Shaper#rectangularShapes}
-     * @type {boolean} */
-    rectangularShapes: true,
-    /**
-     *
-     * Builds the rectangular shapes based on the number of rows and columns
+     * Rectangular constructor
+     * @param {number} nx - Number of columns
+     * @param {number} ny - Number of rows
      */
-    buildShapes: function () {
-      var w = 1 / this.nCols;
-      var h = 1 / this.nRows;
-      for (var y = 0; y < this.nRows; y++) {
-        for (var x = 0; x < this.nCols; x++) {
-          this.shapeData[y * this.nCols + x] = new AWT.Rectangle(new AWT.Point(x * w, y * h), new AWT.Dimension(w, h));
+    constructor(nx, ny) {
+      super(nx, ny)
+    }
+
+    /**
+     * Builds the rectangular shapes based on the number of rows and columns
+     * @override
+     */
+    buildShapes() {
+      const
+        w = 1 / this.nCols,
+        h = 1 / this.nRows
+      for (let y = 0; y < this.nRows; y++) {
+        for (let x = 0; x < this.nCols; x++) {
+          this.shapeData[y * this.nCols + x] = new AWT.Rectangle(new AWT.Point(x * w, y * h), new AWT.Dimension(w, h))
         }
       }
-      this.initiated = true;
+      this.initiated = true
     }
-  };
+  }
 
-  // Rectangular extends Shaper
-  Rectangular.prototype = $.extend(Object.create(Shaper.prototype), Rectangular.prototype);
+  Object.assign(Rectangular.prototype, {
+    /**
+     * Overrides same flag in {@link Shaper#rectangularShapes}
+     * @name Rectangular#rectangularShapes
+     * @override
+     * @type {boolean} */
+    rectangularShapes: true,
+  })
 
   // Register this class in the list of known shapers
-  Shaper.CLASSES['@Rectangular'] = Rectangular;
+  Shaper.CLASSES['@Rectangular'] = Rectangular
 
-  return Rectangular;
-
-});
+  return Rectangular
+})

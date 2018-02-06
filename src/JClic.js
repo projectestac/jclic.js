@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -46,7 +46,7 @@
 /**
  * The jQuery XMLHttpRequest (jqXHR) object returned by `$.ajax()` as of jQuery 1.5 is a superset
  * of the browser's native [XMLHttpRequest](https://developer.mozilla.org/docs/XMLHttpRequest) object.
- * As of jQuery 1.5, jqXHR objects implement the {@link external:Promise} interface, giving them
+ * As of jQuery 1.5, jqXHR objects implement the Promise interface, giving them
  * all the properties, methods, and behavior of a Promise.
  * @external jqXHR
  * @see {@link https://api.jquery.com/jQuery.ajax/#jqXHR}
@@ -109,11 +109,18 @@
  * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise}
  */
 
- /**
- * The Storage interface of the Web Storage API provides access to the session storage or local storage for a particular domain,
- * allowing you to for example add, modify or delete stored data items.
- * @external Storage
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Storage}
+/**
+* The Storage interface of the Web Storage API provides access to the session storage or local storage for a particular domain,
+* allowing you to for example add, modify or delete stored data items.
+* @external Storage
+* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Storage}
+*/
+
+/**
+ * The NamedNodeMap interface represents a collection of Attr objects. Objects inside a NamedNodeMap are not in any particular
+ * order, unlike NodeList, although they may be accessed by an index as in an array.
+ * @external NamedNodeMap
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap}
  */
 
 /* global define:true, JClicDataProject, JClicDataOptions */
@@ -121,17 +128,11 @@
 // Mock `define` when called from a JavaScript environment without native AMD support (like Node.js)
 // For an example of how to call JClic.js in node.js, see:
 // `/test/nodejs/listProjectContents.js`
-if (typeof define === 'undefined') {
-  define = function (deps, callback) {
-    var argsArray = [];
-    for (var p = 0; p < deps.length; p++)
-      argsArray.push(require(deps[p]));
-    return callback.apply(null, argsArray);
-  };
-}
+if (typeof define === 'undefined')
+  define = function (deps, callback) { return callback.apply(null, deps.map(dep => require(dep))) }
 
-// Initial empty definition of `JClicObject`. Will be filled with real data in `define`
-var JClicObject = {};
+// Initial empty definition of `JClicObject`, to be filled with real data in `define`
+const JClicObject = {};
 
 define([
   "jquery",
@@ -180,8 +181,7 @@ define([
    * `<div class ="JClic" data-project="myproject.jclic" data-options='{"fade":"400","lang":"es","reporter":"TCPReporter","user":"test01","path":"localhost:9090"}'></div>`
    *
    */
-
-  JClicObject = {
+  Object.assign(JClicObject, {
     JClicPlayer: JClicPlayer,
     JClicProject: JClicProject,
     AWT: AWT,
@@ -200,106 +200,97 @@ define([
      */
     loadProject: function (div, projectName, options) {
 
-      options = Utils.init($.extend(Object.create(JClicObject.options), options || {}));
-
-      var player = null;
+      //options = Utils.init(Object.assign({}, JClicObject.options, options))
+      options = Utils.init($.extend(Object.create(JClicObject.options), options || {}))
+      let player = null
 
       // Find if there is another player already running on 'div'
-      for (var i = 0; i < JClicObject.currentPlayers.length; i++) {
-        var pl = JClicObject.currentPlayers[i];
+      for (const pl of JClicObject.currentPlayers) {
         if (pl && pl.$topDiv && pl.$topDiv.get(-1) === div) {
           // Player found! Check if it has the same options
-          Utils.log('debug', 'Existing JClicPlayer found in div. I will try to reuse it.');
-          player = pl;
-          for (var prop in options) {
-            if (options.hasOwnProperty(prop)) {
-              if (!player.options.hasOwnProperty(prop) || player.options[prop] !== options[prop]) {
-                Utils.log('debug', 'Existing JClicPlayer has diferent options! Creating a new one from scratch.');
-                player = null;
-                break;
-              }
+          Utils.log('debug', 'Existing JClicPlayer found in div. I will try to reuse it.')
+          player = pl
+          for (const prop of Object.getOwnPropertyNames(options)) {
+            if (!player.options.hasOwnProperty(prop) || player.options[prop] !== options[prop]) {
+              Utils.log('debug', 'Existing JClicPlayer has diferent options! Creating a new one from scratch.')
+              player = null
+              break
             }
           }
-          break;
+          break
         }
       }
 
       if (player)
-        player.reset();
+        player.reset()
       else {
-        Utils.log('debug', 'Creating a new instance of JClicPlayer');
-        player = new JClicPlayer($(div).empty(), options);
+        Utils.log('debug', 'Creating a new instance of JClicPlayer')
+        player = new JClicPlayer($(div).empty(), options)
       }
 
       if (projectName)
-        player.initReporter().then(function () {
-          player.load(projectName);
-        }).catch(function (err) {
-          Utils.log('error', 'Unable to start reporting: %s.\n JClicPlayer will be removed.', err.toString());
-          $(div).empty().removeAttr('style').append($('<h2/>').html(player.getMsg('ERROR'))).append($('<p/>').html(err));
-          var i = JClicObject.currentPlayers.indexOf(player);
-          if (i >= 0)
-            JClicObject.currentPlayers.splice(i, 1);
-          player = null;
-        });
+        player.initReporter()
+          .then(() => player.load(projectName))
+          .catch(err => {
+            Utils.log('error', `Unable to start reporting: ${err.toString()}.\n JClicPlayer will be removed.'`)
+            $(div).empty().removeAttr('style').append($('<h2/>').html(player.getMsg('ERROR'))).append($('<p/>').html(err))
+            const i = JClicObject.currentPlayers.indexOf(player)
+            if (i >= 0)
+              JClicObject.currentPlayers.splice(i, 1)
+            player = null
+          })
 
       if (player && options.savePlayersRef !== false && JClicObject.currentPlayers.indexOf(player) === -1)
-        JClicObject.currentPlayers.push(player);
+        JClicObject.currentPlayers.push(player)
 
-      return player;
+      return player
     }
-  };
+  })
 
   // Make JClicObject global and attach resize handler
   if (typeof window !== 'undefined') {
-    window.JClicObject = JClicObject;
-
-    var fnFit = function () {
-      for (var i = 0; i < JClicObject.currentPlayers.length; i++) {
-        var player = JClicObject.currentPlayers[i];
-        if (player && player.skin)
-          player.skin.fit();
-      }
-    };
+    window.JClicObject = JClicObject
+    const fnFit = () => JClicObject.currentPlayers.forEach(player => { if (player && player.skin) player.skin.fit() })
     $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', fnFit);
     $(window).resize(fnFit);
   }
 
   // Execute on document ready
   $(function () {
-
     // If defined, load the global variable `JClicDataOptions`
-    var options = typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions;
-    JClicObject.options = options;
+    let options = typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions
+    JClicObject.options = options
 
     if (!options.noInit) {
       // If defined, load the global variable `JClicDataProject` or `JClicObject.projectFile`
-      var projectName =
-        typeof JClicDataProject === 'string' ? JClicDataProject
-          : typeof JClicObject.projectFile === 'string' ? JClicObject.projectFile
-            : null;
+      let projectName =
+        typeof JClicDataProject === 'string' ?
+          JClicDataProject :
+          typeof JClicObject.projectFile === 'string' ?
+            JClicObject.projectFile :
+            null
 
       // Search DOM elements with class "JClic" (usually of type 'div') and iterate over them
       // initializing players
-      $('.JClic').each(function () {
-        var $div = $(this);
-
-        var prj = $div.data('project');
+      $('.JClic').each((_n, element) => {
+        const $div = $(element)
+        const prj = $div.data('project')
         if (prj)
-          projectName = prj;
+          projectName = prj
 
-        var opt = $div.data('options');
+        const opt = $div.data('options')
         if (opt)
-          options = $.extend(Object.create(options), opt);
+          options = $.extend(Object.create(options), opt)
 
-        JClicObject.loadProject(this, projectName, options);
-      });
+        JClicObject.loadProject(element, projectName, options)
+      })
     }
-  });
-  return JClicObject;
-});
+  })
+
+  return JClicObject
+})
 
 // Export JClicObject as a result
-if (typeof module !== "undefined") {
-  exports = module.exports = JClicObject;
+if (typeof module !== 'undefined') {
+  exports = module.exports = JClicObject
 }

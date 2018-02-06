@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -41,7 +41,6 @@ define([
 ], function ($, ProjectSettings, ActivitySequence, MediaBag, Activity, Utils, AWT) {
 
   /**
-   *
    *  JClicProject contains all the components of a JClic project: activities, sequences, media
    *  files, descriptors and metadata.
    *
@@ -53,73 +52,18 @@ define([
    * @exports JClicProject
    * @class
    */
-  var JClicProject = function () {
-    this.settings = new ProjectSettings(this);
-    this.activitySequence = new ActivitySequence(this);
-    this._activities = {};
-    this.mediaBag = new MediaBag(this);
-  };
-
-  JClicProject.prototype = {
-    constructor: JClicProject,
+  class JClicProject {
     /**
-     * The project's name
-     * @type {string} */
-    name: 'unknown',
-    /**
-     * The version of the XML file format used to save the project (currently 0.1.3)
-     * @type {string} */
-    version: '0.1.3',
-    /**
-     * Optional property that can be used by reporting systems
-     * @type {string} */
-    type: null,
-    /**
-     * Optional property that can be used by reporting systems
-     * @type {string} */
-    code: null,
-    /**
-     * Object containing the project settings
-     * @type {ProjectSettings} */
-    settings: null,
-    /**
-     * Object containing the order in which the activities must be presented
-     * @type {ActivitySequence} */
-    activitySequence: null,
-    /**
-     * Array of jQuery xml elements containing the data of each activity. Don't rely on this object
-     * to retrieve real activities. Use the method {@link @JClicProject#getActivity} instead.
-     * @private
-     * @type {external:jQuery[]} */
-    _activities: null,
-    /**
-     * Number of activities suitable to be included reports
-     * @type {number}
+     * JClicProject constructor
      */
-    reportableActs: 0,
+    constructor() {
+      this.settings = new ProjectSettings(this)
+      this.activitySequence = new ActivitySequence(this)
+      this._activities = {}
+      this.mediaBag = new MediaBag(this)
+    }
+
     /**
-     * The collection of all media elements used in this project
-     * @type {MediaBag} */
-    mediaBag: null,
-    /**
-     * The object that builds and manages the visual interface presented to users
-     * @type {Skin} */
-    skin: null,
-    /**
-     * Relative path or absolute URL to be used as a base to access files, usually in conjunction
-     * with {@link JClicPlayer#basePath}
-     * @type {string} */
-    basePath: '',
-    /**
-     * Full path of this project
-     * @type {string} */
-    path: null,
-    /**
-     * The JSZip object where this project is stored (can be `null`)
-     * @type {external:JSZip} */
-    zip: null,
-    /**
-     *
      * Loads the project settings from a main jQuery XML element
      * @param {external:jQuery} $xml - The XML element
      * @param {string} path - The full path of this project
@@ -127,70 +71,143 @@ define([
      * @param {?object} options - An object with miscellaneous options
      * @returns {JClicProject}
      */
-    setProperties: function ($xml, path, zip, options) {
+    setProperties($xml, path, zip, options) {
       if (path) {
-        this.path = path;
+        this.path = path
         if (path.file)
-          this.basePath = path;
+          this.basePath = path
         else
-          this.basePath = Utils.getBasePath(path);
+          this.basePath = Utils.getBasePath(path)
       }
-      this.zip = zip;
-      this.name = $xml.attr('name');
-      this.version = $xml.attr('version');
-      this.type = $xml.attr('type');
-      this.code = $xml.attr('code');
-      this.settings.setProperties($xml.children('settings'));
-      this.activitySequence.setProperties($xml.children('sequence'));
-      this.mediaBag.setProperties($xml.children('mediaBag'));
-      this.reportableActs = 0;
-      this._activities = {};
-      var prj = this;
-      var $node = $xml.children('activities');
-      var $acts = $node.children('activity');
-      var ownFonts = this.mediaBag.getElementsOfType('font');
+      this.zip = zip
+      this.name = $xml.attr('name')
+      this.version = $xml.attr('version')
+      this.type = $xml.attr('type')
+      this.code = $xml.attr('code')
+      this.settings.setProperties($xml.children('settings'))
+      this.activitySequence.setProperties($xml.children('sequence'))
+      this.mediaBag.setProperties($xml.children('mediaBag'))
+      this.reportableActs = 0
+      this._activities = {}
+      const $node = $xml.children('activities')
+      const $acts = $node.children('activity')
+      const ownFonts = this.mediaBag.getElementsOfType('font')
       if (ownFonts.length > 0)
-        options.ownFonts = (options.ownFonts || []).concat(ownFonts);
-      AWT.Font.checkTree($acts, options);
-      $acts.each(function () {
-        prj._activities[Utils.nSlash($(this).attr('name'))] = $(this);
-        if ($(this).children('settings').attr('report') === 'true')
-          prj.reportableActs++;
-      });
-      return this;
-    },
+        options.ownFonts = (options.ownFonts || []).concat(ownFonts)
+      AWT.Font.checkTree($acts, options)
+      $acts.each((_n, act) => {
+        const $act = $(act)
+        this._activities[Utils.nSlash($act.attr('name'))] = $act
+        if ($act.children('settings').attr('report') === 'true')
+          this.reportableActs++
+      })
+      return this
+    }
+
     /**
-     *
      * Finds activities by name and builds the corresponding {@link Activity} object.
      * @param {string} name - The name of the requested activity
      * @returns {Activity}
      */
-    getActivity: function (name) {
-      return Activity.getActivity(this._activities[Utils.nSlash(name)], this);
-    },
+    getActivity(name) {
+      return Activity.getActivity(this._activities[Utils.nSlash(name)], this)
+    }
+
     /**
      *
      * Builds the {@link Skin}, {@link EventSounds} and {@link MediaBag} fonts associated to this project.
      * @param {PlayStation} ps - The PlayStation (usually a {@link JClicPlayer}) linked to this project.
      */
-    realize: function (ps) {
+    realize(ps) {
       // Build skin
       if (this.skin === null && this.settings.skinFileName !== null && this.settings.skinFileName.length > 0)
-        this.skin = this.mediaBag.getSkinElement(this.settings.skinFileName, ps);
+        this.skin = this.mediaBag.getSkinElement(this.settings.skinFileName, ps)
 
-      this.settings.eventSounds.realize(ps, this.mediaBag);
+      this.settings.eventSounds.realize(ps, this.mediaBag)
 
       // Build all elements of type `font`
-      this.mediaBag.buildAll('font', null, ps);
-    },
+      this.mediaBag.buildAll('font', null, ps)
+    }
+
     /**
-     *
      * Run finalizers on realized objects
      */
-    end: function () {
+    end() {
       // TODO: Implement JClicProject.end()
     }
-  };
+  }
 
-  return JClicProject;
-});
+  Object.assign(JClicProject.prototype, {
+    /**
+     * The project's name
+     * @name JClicProject#name
+     * @type {string} */
+    name: 'unknown',
+    /**
+     * The version of the XML file format used to save the project (currently 0.1.3)
+     * @name JClicProject#version
+     * @type {string} */
+    version: '0.1.3',
+    /**
+     * Optional property that can be used by reporting systems
+     * @name JClicProject#type
+     * @type {string} */
+    type: null,
+    /**
+     * Optional property that can be used by reporting systems
+     * @name JClicProject#code
+     * @type {string} */
+    code: null,
+    /**
+     * Object containing the project settings
+     * @name JClicProject#settings
+     * @type {ProjectSettings} */
+    settings: null,
+    /**
+     * Object containing the order in which the activities should be played
+     * @name JClicProject#activitySequence
+     * @type {ActivitySequence} */
+    activitySequence: null,
+    /**
+     * Array of jQuery xml elements containing the data of each activity. Don't rely on this object
+     * to retrieve real activities. Use the method {@link @JClicProject#getActivity} instead.
+     * @name JClicProject#_activities
+     * @private
+     * @type {external:jQuery[]} */
+    _activities: null,
+    /**
+     * Number of activities suitable to be included reports
+     * @name JClicProject#reportableActs
+     * @type {number}
+     */
+    reportableActs: 0,
+    /**
+     * The collection of all media elements used in this project
+     * @name JClicProject#mediaBag
+     * @type {MediaBag} */
+    mediaBag: null,
+    /**
+     * The object that builds and manages the visual interface presented to users
+     * @name JClicProject#skin
+     * @type {Skin} */
+    skin: null,
+    /**
+     * Relative path or absolute URL to be used as a base to access files, usually in conjunction
+     * with {@link JClicPlayer#basePath}
+     * @name JClicProject#basePath
+     * @type {string} */
+    basePath: '',
+    /**
+     * Full path of this project
+     * @name JClicProject#path
+     * @type {string} */
+    path: null,
+    /**
+     * The JSZip object where this project is stored (can be `null`)
+     * @name JClicProject#zip
+     * @type {external:JSZip} */
+    zip: null,
+  })
+
+  return JClicProject
+})

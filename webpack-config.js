@@ -38,9 +38,18 @@ ${pkg.homepage}
 `
 
 const conf = {
-  entry: './src/JClic.js',
+  entry: ['babel-polyfill', './src/JClic.js'],
   devtool: 'source-map',
   module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015']
+        }
+      }
+    ],
     rules: [
       {
         enforce: "pre",
@@ -62,13 +71,24 @@ const conf = {
 }
 
 const confMini = {
-  entry: './src/JClic.js',
+  entry: ['babel-polyfill', './src/JClic.js'],
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015']
+        }
+      }
+    ],
+  },
   output: {
     path: dist,
     filename: 'jclic.min.js'
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({      
+    new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       extractComments: {
         filename: 'jclic.components.LICENSE',

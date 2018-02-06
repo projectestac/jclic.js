@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -34,98 +34,73 @@ define([
   "jquery",
   "./ActivityReg"
 ], function ($, ActivityReg) {
+
   /**
    * This class stores the results of the activities related to an {@link ActivitySequenceElement}.
    * It's main component is an array of {@link ActivityReg} elements.
    * @exports SequenceReg
    * @class
-   * @param {ActivitySequenceElement} ase - The {@link ActivitySequenceElement} related to this sequence.
    */
-  var SequenceReg = function (ase) {
-    this.name = ase.tag;
-    this.description = ase.description;
-    this.activities = [];
-    this.currentActivity = null;
-    this.totalTime = 0;
-    this.closed = false;
-    this.info = new SequenceReg.Info(this);
-  };
+  class SequenceReg {
+    /**
+     * SequenceReg constructor
+     * @param {ActivitySequenceElement} ase - The {@link ActivitySequenceElement} related to this sequence.
+     */
+    constructor(ase) {
+      this.name = ase.tag
+      this.description = ase.description
+      this.activities = []
+      this.currentActivity = null
+      this.totalTime = 0
+      this.closed = false
+      this.info = new SequenceRegInfo(this)
+    }
 
-  SequenceReg.prototype = {
-    constructor: SequenceReg,
     /**
-     * The `tag` member of the associated {@link ActivitySequenceElement}
-     * @type {string} */
-    name: '',
-    /**
-     * Optional description given to the {@link ActivitySequenceElement}
-     * @type {string} */
-    description: '',
-    /**
-     * Collection of all the {@link ActivityReg} elements done during this sequence.
-     * @type {ActivityReg[]} */
-    activities: [],
-    /**
-     * Registry linked to the {@link Activity} that is currently running
-     * @type {ActivityReg} */
-    currentActivity: null,
-    /**
-     * Total time spent on the activities of this sequence
-     * @type {number} */
-    totalTime: 0,
-    /**
-     * Flag indicating if the sequence is closed or already available for more activities
-     * @type {boolean} */
-    closed: false,
-    /**
-     * Object with global information associated to this sequence
-     * @type {SequenceReg.Info} */
-    info: null,
-    /**
-     * 
      * Builds a complex object with data about the results of the activities done in this sequence
      * @returns {Object} - The sequence results
      */
-    getData: function () {
-      var result = {
+    getData() {
+      const result = {
         sequence: this.name,
         activities: []
-      };
-      this.activities.forEach(function (act) {
-        result.activities.push(act.getData());
-      }, this);
-      return result;
-    },
+      }
+      this.activities.forEach(act => result.activities.push(act.getData()))
+      return result
+    }
+
     /**
      * Returns the `info` element associated to this SequenceReg.
-     * @returns {SequenceReg.Info}
+     * @returns {SequenceRegInfo}
      */
-    getInfo: function () {
-      return this.info.recalc();
-    },
+    getInfo() {
+      return this.info.recalc()
+    }
+
     /**
      * This method should be called when the current working session finishes.
      */
-    endSequence: function () {
+    endSequence() {
       if (this.currentActivity && this.activities.length > 0) {
         if (!this.currentActivity.closed)
-          this.currentActivity.closeActivity();
-        var firstActivity = this.activities[0];
-        this.totalTime = this.currentActivity.startTime + this.currentActivity.totalTime - firstActivity.startTime;
-        this.info.valid = false;
+          this.currentActivity.closeActivity()
+        this.totalTime = this.currentActivity.startTime + this.currentActivity.totalTime - this.activities[0].startTime
+        this.info.valid = false
       }
-    },
+    }
+
     /**
      * This method should be invoked when the user starts a new activity
      * @param {Activity} act - The {@link Activity} that has just started
      */
-    newActivity: function (act) {
+    newActivity(act) {
       if (!this.closed) {
-        this.currentActivity = new ActivityReg(act);
-        this.activities.push(this.currentActivity);
-        this.info.valid = false;
+        this.currentActivity = new ActivityReg(act)
+        this.activities.push(this.currentActivity)
+        this.info.valid = false
       }
-    },
+    }
+
     /**
      * This method should be called when the current activity finishes. Data about user's final results
      * on the activity will then be saved.
@@ -133,12 +108,13 @@ define([
      * @param {number} numActions - The total number of actions done by the user to solve the activity
      * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
      */
-    endActivity: function (score, numActions, solved) {
+    endActivity(score, numActions, solved) {
       if (this.currentActivity) {
-        this.currentActivity.endActivity(score, numActions, solved);
-        this.info.valid = false;
+        this.currentActivity.endActivity(score, numActions, solved)
+        this.info.valid = false
       }
-    },
+    }
+
     /**
      * Reports a new action done by the user while playing the current activity
      * @param {string} type - Type of action (`click`, `write`, `move`, `select`...)
@@ -146,106 +122,162 @@ define([
      * @param {string}+ dest - Description of the object that acts as a target of the action (used in pairings)
      * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwise
      */
-    newAction: function (type, source, dest, ok) {
+    newAction(type, source, dest, ok) {
       if (this.currentActivity) {
-        this.currentActivity.newAction(type, source, dest, ok);
-        this.info.valid = false;
+        this.currentActivity.newAction(type, source, dest, ok)
+        this.info.valid = false
       }
     }
-  };
+  }
+
+  Object.assign(SequenceReg.prototype, {
+    /**
+     * The `tag` member of the associated {@link ActivitySequenceElement}
+     * @name SequenceReg#name
+     * @type {string} */
+    name: '',
+    /**
+     * Optional description given to the {@link ActivitySequenceElement}
+     * @name SequenceReg#description
+     * @type {string} */
+    description: '',
+    /**
+     * Collection of all the {@link ActivityReg} elements done during this sequence.
+     * @name SequenceReg#activities
+     * @type {ActivityReg[]} */
+    activities: [],
+    /**
+     * Registry linked to the {@link Activity} that is currently running
+     * @name SequenceReg#currentActivity
+     * @type {ActivityReg} */
+    currentActivity: null,
+    /**
+     * Total time spent on the activities of this sequence
+     * @name SequenceReg#totalTime
+     * @type {number} */
+    totalTime: 0,
+    /**
+     * Flag indicating if the sequence is closed or already available for more activities
+     * @name SequenceReg#closed
+     * @type {boolean} */
+    closed: false,
+    /**
+     * Object with global information associated to this sequence
+     * @name SequenceReg#info
+     * @type {SequenceRegInfo} */
+    info: null,
+  })
 
   /**
    * This object stores the global results of a {@link SequenceReg}
    * @class
-   * @param {SequenceReg} sqReg - The {@link SequenceReg} associated tho this `Info` object.
    */
-  SequenceReg.Info = function (sqReg) {
-    this.sqReg = sqReg;
-  };
+  class SequenceRegInfo {
+    /**
+     * SequenceRegInfo constructor
+     * @param {SequenceReg} sqReg - The {@link SequenceReg} associated tho this `Info` object.
+     */
+    constructor(sqReg) {
+      this.sqReg = sqReg
+    }
 
-  SequenceReg.Info.prototype = {
-    constructor: SequenceReg.Info,
+    /**
+     * Clears all global data associated with this sequence
+     */
+    clear() {
+      this.nActivities = this.nActClosed = this.nActSolved = this.nActScore = 0
+      this.ratioSolved = this.nActions = this.tScore = this.tTime = 0
+      this.valid = false
+    }
+
+    /**
+     * Computes the value of all global variables based on the data stored in `activities`
+     * @returns {SequenceRegInfo} - This "info" object
+     */
+    recalc() {
+      if (!this.valid) {
+        this.clear()
+        this.nActivities = this.sqReg.activities.length
+        if (this.nActivities > 0) {
+          this.sqReg.activities.forEach(ar => {
+            if (ar.closed) {
+              this.nActClosed++
+              this.tTime += ar.totalTime
+              this.nActions += ar.numActions
+              if (ar.solved)
+                this.nActSolved++
+              const r = ar.getPrecision()
+              if (r >= 0) {
+                this.tScore += r
+                this.nActScore++
+              }
+            }
+          })
+          if (this.nActClosed > 0)
+            this.ratioSolved = this.nActSolved / this.nActClosed
+          if (this.nActScore > 0)
+            this.tScore = Math.round(this.tScore / this.nActScore)
+        }
+        this.valid = true
+      }
+      return this
+    }
+  }
+
+  Object.assign(SequenceRegInfo.prototype, {
     /**
      * The {@link SequenceReg} associated to this "info" object
+     * @name SequenceRegInfo#sqReg
      * @type {SequenceReg} */
     sqReg: null,
     /**
      * When `false`, data must be recalculated
+     * @name SequenceRegInfo#valid
      * @type {boolean} */
     valid: false,
     /**
      * Number of activities played in this sequence
+     * @name SequenceRegInfo#nActivities
      * @type {number} */
     nActivities: 0,
     /**
      * Number of activities already closed
+     * @name SequenceRegInfo#nActClosed
      * @type {number} */
     nActClosed: 0,
     /**
      * Number of activities solved
+     * @name SequenceRegInfo#nActSolved
      * @type {number} */
     nActSolved: 0,
     /**
      * Number of activities with score > 0
+     * @name SequenceRegInfo#nActScore
      * @type {number} */
     nActScore: 0,
     /**
      * Percentage of solved activities
+     * @name SequenceRegInfo#ratioSolved
      * @type {number} */
     ratioSolved: 0,
     /**
      * Number of actions done by the user while in this sequence
+     * @name SequenceRegInfo#nActions
      * @type {number} */
     nActions: 0,
     /**
      * Sum of the scores of all the activities played
+     * @name SequenceRegInfo#tScore
      * @type {number} */
     tScore: 0,
     /**
      * Sum of the playing time reported by each activity (not always equals to the sequence's total time)
+     * @name SequenceRegInfo#tTime
      * @type {number} */
     tTime: 0,
-    /**
-     * Clears all global data associated with this sequence
-     */
-    clear: function () {
-      this.nActivities = this.nActClosed = this.nActSolved = this.nActScore = 0;
-      this.ratioSolved = this.nActions = this.tScore = this.tTime = 0;
-      this.valid = false;
-    },
-    /**
-     * Computes the value of all global variables based on the data stored in `activities`
-     * @returns {SequenceReg.Info} - This "info" object
-     */
-    recalc: function () {
-      if (!this.valid) {
-        this.clear();
-        this.nActivities = this.sqReg.activities.length;
-        if (this.nActivities > 0) {
-          this.sqReg.activities.forEach(function (ar) {
-            if (ar.closed) {
-              this.nActClosed++;
-              this.tTime += ar.totalTime;
-              this.nActions += ar.numActions;
-              if (ar.solved)
-                this.nActSolved++;
-              var r = ar.getPrecision();
-              if (r >= 0) {
-                this.tScore += r;
-                this.nActScore++;
-              }
-            }
-          }, this);
-          if (this.nActClosed > 0)
-            this.ratioSolved = this.nActSolved / this.nActClosed;
-          if (this.nActScore > 0)
-            this.tScore = Math.round(this.tScore / this.nActScore);
-        }
-        this.valid = true;
-      }
-      return this;
-    }
-  };
+  })
 
-  return SequenceReg;
-});
+  SequenceReg.Info = SequenceRegInfo
+
+  return SequenceReg
+})
