@@ -332,6 +332,8 @@ define([
      * The font *_metrics* property contains the values for `ascent`, `descent` and `height`
      * attributes. Vertical font metrics are calculated in
      * {@link Font#_calcHeight|calcHeight()} as needed.
+     * @name Font#_metrics
+     * @private
      * @type {{ascent: number, descent: number, height: number}} */
     _metrics: { ascent: -1, descent: -1, height: -1 },
   })
@@ -1625,6 +1627,8 @@ define([
     enabled: false,
     /**
      * Array of callback functions to be triggered when the `enabled` flag changes
+     * @name Action#_statusListeners
+     * @private
      * @type {function[]} */
     _statusListeners: null,
   })

@@ -580,8 +580,8 @@ define([
     num: 0,
     /**
      * Current ordinal position of this target in the document
-     * @name TextTarget#pos
      * (used in {@link OrderText} activities)
+     * @name TextTarget#pos
      * @type {number} */
     pos: 0,
     /**

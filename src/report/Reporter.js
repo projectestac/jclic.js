@@ -673,7 +673,7 @@ define([
     nActScore: 0,
     /**
      * Number of actions done by the user while in this working session
-     * nActions
+     * @name ReporterInfo#nActions
      * @type {number} */
     nActions: 0,
     /**

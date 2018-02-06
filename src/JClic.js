@@ -144,7 +144,7 @@ define([
 ], function ($, JClicPlayer, JClicProject, AWT, Utils /*, deps*/) {
 
   /**
-   * This is the main JClic method
+   * This is the main method of JClic
    *
    * Executes on `document.ready()`.
    *
