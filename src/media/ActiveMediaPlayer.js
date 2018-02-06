@@ -65,12 +65,7 @@ define([
           break
         case 'PLAY_AUDIO':
         case 'PLAY_VIDEO':
-          var fn = mc.mediaFileName
-          //if (mc.from > 0 || mc.to > 0) {
-          // TODO: Check media ranges. Currently not running always as expected.
-          //  fn = fn + '#t=' + (mc.from > 0 ? mc.from / 1000 : 0) + ',' + (mc.to > 0 ? mc.to / 1000 : 9999);
-          //}
-          this.mbe = mb.getElement(fn, true)
+          this.mbe = mb.getElement(mc.mediaFileName, true)
           break
         case 'PLAY_MIDI':
           // TODO: Implement MIDI playing
@@ -104,7 +99,7 @@ define([
       // TODO: Remove unused param "_setBx"
       if (this.useAudioBuffer) {
         if (ActiveMediaPlayer.AUDIO_BUFFERS) {
-          var buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer]
+          const buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer]
           if (buffer) {
             if (this.mc.mediaType === 'RECORD_AUDIO') {
               buffer.record()
@@ -114,36 +109,27 @@ define([
           }
         }
       } else if (this.mbe) {
-        //if (this.mbe.data)
-        //  this.mbe.data.trigger('pause');
-        var mediaplayer = this
-        this.mbe.build(function () {
-          var armed = false
-
-          // `this` points here to the [MediaBagElement](MediaBagElement) object `mbe`
-          var thisData = this.data
-          var $thisData = $(thisData)
-
+        this.mbe.build(() => {
+          let armed = false
+          const $player = $(this.mbe.data)
           // Clear previous event handlers
-          $thisData.off()
-
+          $player.off()
           // If there is a time fragment specified, prepare to stop when the `to` position is reached
-          if (mediaplayer.mc.to > 0) {
-            $thisData.on('timeupdate', function () {
-              // `this` points here to the HTML audio element
-              if (armed && thisData.currentTime >= mediaplayer.mc.to / 1000) {
-                $thisData.off('timeupdate')
-                thisData.pause()
+          if (this.mc.to > 0) {
+            $player.on('timeupdate', () => {
+              if (armed && this.mbe.data.currentTime >= this.mc.to / 1000) {
+                $player.off('timeupdate')
+                this.mbe.data.pause()
               }
             })
           }
-          // Seek the media position
-          var t = mediaplayer.mc.from > 0 ? mediaplayer.mc.from / 1000 : 0
           // Launch the media despite of its readyState
           armed = true
-          thisData.pause()
-          thisData.currentTime = t
-          thisData.play()
+          this.mbe.data.pause()
+          // Seek the media position
+          this.mbe.data.currentTime = this.mc.from > 0 ? this.mc.from / 1000 : 0
+          // Start playing when current thread finishes
+          window.setTimeout(() => this.mbe.data.play(), 0)
         })
       }
     }
@@ -197,8 +183,7 @@ define([
      */
     clearAllAudioBuffers() {
       if (ActiveMediaPlayer.AUDIO_BUFFERS)
-        for (let i = 0; i < ActiveMediaPlayer.AUDIO_BUFFERS.length; i++)
-          this.clearAudioBuffer(i)
+        ActiveMediaPlayer.AUDIO_BUFFERS.forEach((_buffer, n) => this.clearAudioBuffer(n))
     }
 
     /**
