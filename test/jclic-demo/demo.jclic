@@ -3155,7 +3155,6 @@
     </cell>
    </messages>
    <settings margin="8" report="true" reportActions="false">
-    <skin name="scractch" file="scratch.xml" />
     <helpWindow showSolution="true" />
     <container bgColor="0xFFFFFF">
      <counters time="true" actions="true" score="true" />
@@ -5233,7 +5232,6 @@
  <mediaBag>
   <media name="zebra.mp4" file="zebra.mp4" />
   <media name="bici.gif" file="bici.gif" animated="false" />
-  <media name="bici2.gif" file="bici2.gif" animated="false" />
   <media name="camio.gif" file="camio.gif" animated="false" />
   <media name="casa.gif" file="casa.gif" animated="false" />
   <media name="cireres.gif" file="cireres.gif" animated="false" />
@@ -5270,7 +5268,6 @@
   <media name="bressol.mid" file="bressol.mid" />
   <media name="mozart.mid" file="mozart.mid" />
   <media name="novena.mid" file="novena.mid" />
-  <media name="scratch.png" file="scratch.png" />
   <media name="test1.swf" file="test1.swf" />
   <media name="HandSign" file="handsign.ttf" />
   <media name="bycicle.mp3" file="bycicle.mp3" />
@@ -5283,7 +5280,6 @@
   <media name="pop.mp3" file="pop.mp3" />
   <media name="whistledown.mp3" file="whistledown.mp3" />
   <media name="whistleup.mp3" file="whistleup.mp3" />
-  <media name="scratch.xml" file="scratch.xml" />
  </mediaBag>
 </JClicProject>
 
