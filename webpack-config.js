@@ -37,19 +37,11 @@ WARNING: This is a compressed, uglyfied version of JClic.js. Full source code is
 ${pkg.homepage}
 `
 
-const conf = {
-  entry: ['babel-polyfill', './src/JClic.js'],
+// Full bundle with the original ES6 code
+const es6 = {
+  entry: ['./src/JClic.js'],
   devtool: 'source-map',
   module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015']
-        }
-      }
-    ],
     rules: [
       {
         enforce: "pre",
@@ -65,12 +57,35 @@ const conf = {
   },
   output: {
     path: dist,
+    filename: 'jclic-es6.js'
+  },
+  plugins: []
+}
+
+// Full bundle transpiled to ES5 with Babel
+const es5 = {
+  entry: ['babel-polyfill', './src/JClic.js'],
+  devtool: 'source-map',
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015']
+        }
+      }
+    ],
+  },
+  output: {
+    path: dist,
     filename: 'jclic.js'
   },
   plugins: []
 }
 
-const confMini = {
+// Minified ES5 bundle
+const es5mini = {
   entry: ['babel-polyfill', './src/JClic.js'],
   module: {
     loaders: [
@@ -98,4 +113,5 @@ const confMini = {
   ]
 }
 
-module.exports = [conf, confMini]
+module.exports = [es6, es5, es5mini]
+
