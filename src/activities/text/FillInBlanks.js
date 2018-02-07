@@ -134,6 +134,17 @@ define([
         }).bind('focus input blur', event => {
           event.textTarget = target
           this.processEvent(event)
+        }).bind('keydown keyup', event => {
+          // Catch `enter` key in Firefox
+          if (event.keyCode === 13) {
+            event.preventDefault()
+            if (event.type === 'keydown') {
+              // Simulate a `blur` event
+              event.textTarget = target
+              event.type = 'blur'
+              this.processEvent(event)
+            }
+          }
         })
       }
       return $span
