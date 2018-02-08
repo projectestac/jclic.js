@@ -168,7 +168,7 @@ define([
      * @returns {boolean} - `true` when there is at least one flag and all flags are 0 (meaning no error).
      */
     isOk(flags) {
-      return flags.length > 0 && !flags.some(f => f !== 0)
+      return flags && flags.length > 0 && !flags.some(f => f !== 0)
     }
   }
 

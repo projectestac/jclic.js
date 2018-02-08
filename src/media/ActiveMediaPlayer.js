@@ -110,26 +110,28 @@ define([
         }
       } else if (this.mbe) {
         this.mbe.build(() => {
-          let armed = false
-          const $player = $(this.mbe.data)
-          // Clear previous event handlers
-          $player.off()
-          // If there is a time fragment specified, prepare to stop when the `to` position is reached
-          if (this.mc.to > 0) {
-            $player.on('timeupdate', () => {
-              if (armed && this.mbe.data.currentTime >= this.mc.to / 1000) {
-                $player.off('timeupdate')
-                this.mbe.data.pause()
-              }
-            })
+          if (this.mbe.data) {
+            let armed = false
+            const $player = $(this.mbe.data)
+            // Clear previous event handlers
+            $player.off()
+            // If there is a time fragment specified, prepare to stop when the `to` position is reached
+            if (this.mc.to > 0) {
+              $player.on('timeupdate', () => {
+                if (armed && this.mbe.data.currentTime >= this.mc.to / 1000) {
+                  $player.off('timeupdate')
+                  this.mbe.data.pause()
+                }
+              })
+            }
+            // Launch the media despite of its readyState
+            armed = true
+            if (!this.mbe.data.paused && !this.mbe.data.ended && this.mbe.data.currentTime)
+              this.mbe.data.pause()
+            // Seek the media position
+            this.mbe.data.currentTime = this.mc.from > 0 ? this.mc.from / 1000 : 0
+            this.mbe.data.play()
           }
-          // Launch the media despite of its readyState
-          armed = true
-          if (!this.mbe.data.paused && !this.mbe.data.ended && this.mbe.data.currentTime)
-            this.mbe.data.pause()
-          // Seek the media position
-          this.mbe.data.currentTime = this.mc.from > 0 ? this.mc.from / 1000 : 0
-          this.mbe.data.play()
         })
       }
     }
@@ -188,17 +190,15 @@ define([
      * @returns {number}
      */
     countActiveBuffers() {
-      return ActiveMediaPlayer.AUDIO_BUFFERS.reduce((c, ab) => c + ab ? 1 : 0, 0)
+      return ActiveMediaPlayer.AUDIO_BUFFERS ? ActiveMediaPlayer.AUDIO_BUFFERS.reduce((c, ab) => c + ab ? 1 : 0, 0) : 0
     }
 
     /**
      * Stops the playing or recording actions of all audio buffers
      */
     stopAllAudioBuffers() {
-      ActiveMediaPlayer.AUDIO_BUFFERS.forEach(ab => {
-        if (ab)
-          ab.stop()
-      })
+      if (ActiveMediaPlayer.AUDIO_BUFFERS)
+        ActiveMediaPlayer.AUDIO_BUFFERS.forEach(ab => ab ? ab.stop() : null)
     }
 
     /**
