@@ -96,7 +96,7 @@ define([
         'place-content': 'center',
         'overflow-y': 'auto'
       })
-      this.act.menuElements.forEach((_n, me) => {
+      this.act.menuElements.forEach((me) => {
         // Create a button for each menu element
         const caption = me.description || me.caption || 'JClic'
         const $btn = $('<button/>', {
