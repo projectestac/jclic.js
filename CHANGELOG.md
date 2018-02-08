@@ -1,3 +1,14 @@
+### v1.1.0 (2018-02-08)
+#### Improvements
+- All the code has been updated to [ECMAScript6](http://es6-features.org) (ES6), taking advantage of new JavaScript features (classes, constants, arrow functions, array methods...) in modern browsers. The main file `jclic.min.js` will maintain compability with older browsers for some time, since it is transpiled to ES5 thanks to [Babel](https://babeljs.io/) and [Webpack](https://webpack.js.org).
+- Updated test files.
+- All media is now played at the end of the current event handling, so it's not blocked by mobile browsers (see [this thread](https://bugs.chromium.org/p/chromium/issues/detail?id=178297) for more information about this issue)
+- New JSDoc-Bootstrap theme for the [API Docs](http://projectestac.github.io/jclic.js/doc/index.html)
+
+#### Bug fixes
+- Catch `Enter` key in written answer activities.
+- Disable drop-down lists at the end of text activities
+
 ### v1.0.5 (2018-02-05)
 #### Bug fixes
 - WrittenAnswer activities: always update the alternative content off cells when done

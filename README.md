@@ -21,7 +21,7 @@ Many teachers from different countries have used JClic to create interactive mat
 * Support for special skins are not yet implemented. Only stock skins are available.
 * Playing of MIDI files not yet implemented
 * Loading of big (about 10MB) JClic project files from zipped files can crash on tablets and mobile devices with low memory resources. This is due to a [known issue](https://github.com/Stuk/jszip/issues/135) of JSZip.
-* The project has been tested only with the latest versions of Chrome/Chromium and Firefox.
+* The project is regulary checked with the latest versions of Chrome/Chromium, Firefox and Edge. Please update your web browsers!
 
 ## How to build JClic.js
 
@@ -42,7 +42,7 @@ To build jclic.js, just invoke:
 npm run build
 ```
 
-This will generate the file `dist/jclic.min.js`
+This will generate the main file `dist/jclic.min.js`
 
 To test this resulting bundle and see the demo on your browser, launch the test server:
 
