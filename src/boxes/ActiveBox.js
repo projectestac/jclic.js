@@ -597,12 +597,13 @@ define([
     /**
      * Plays the action or media associated with this ActiveBox
      * @param {PlayStation} ps - Usually, a {@link JClicPlayer}
+     * @param {function[]} delayedActions - If set, store the the action in this array for future execution
      */
-    playMedia(ps) {
+    playMedia(ps, delayedActions = null) {
       const abc = this.getCurrentContent()
       if (abc && abc.mediaContent) {
         Utils.log('debug', `Playing: ${abc.mediaContent.toString()}`)
-        ps.playMedia(abc.mediaContent, this)
+        ps.playMedia(abc.mediaContent, this, delayedActions)
         return true
       }
       return false

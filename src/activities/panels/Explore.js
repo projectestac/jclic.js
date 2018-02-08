@@ -282,7 +282,10 @@ define([
       if (this.playing) {
         const p = new AWT.Point(
           event.pageX - this.$div.offset().left,
-          event.pageY - this.$div.offset().top)
+          event.pageY - this.$div.offset().top),
+          // Array to be filled with actions to be executed at the end of event processing
+          delayedActions = []
+
         switch (event.type) {
           case 'click':
             this.ps.stopMedia(1)
@@ -291,7 +294,7 @@ define([
               const bx2 = this.bgB.getActiveBox(0)
               if (bx1.idAss !== -1 && (!this.act.useOrder || bx1.idOrder === this.currentItem)) {
                 bx2.setContent(this.act.abc['secondary'], bx1.idAss)
-                if (!bx2.playMedia(this.ps) && !bx1.playMedia(this.ps))
+                if (!bx2.playMedia(this.ps, delayedActions) && !bx1.playMedia(this.ps, delayedActions))
                   this.playEvent('CLICK')
                 if (this.act.useOrder)
                   this.currentItem = this.bgA.getNextItem(this.currentItem)
@@ -306,6 +309,7 @@ define([
             }
             break
         }
+        delayedActions.forEach(action => action())
         event.preventDefault()
       }
     }

@@ -368,8 +368,9 @@ define([
     /**
      * Updates the currently selected cell, evaluating the answer written by the user on the text field.
      * @param {number} i - Index into the {@link ActiveBoxBag} of the cell to make active
+     * @param {function[]} delayedActions - If set, store the the action in this array for future execution
      */
-    setCurrentCell(i) {
+    setCurrentCell(i, delayedActions = null) {
       if (!this.playing)
         return
 
@@ -397,7 +398,7 @@ define([
 
             if (this.act.abc['solvedPrimary']) {
               bx.switchToAlt(this.ps)
-              m = bx.playMedia(this.ps)
+              m = bx.playMedia(this.ps, delayedActions)
             } else
               bx.clear()
             if (this.act.invAss && id >= 0 && id < this.invAssCheck.length) {
@@ -449,7 +450,7 @@ define([
       this.$textField.focus()
       this.invalidate().update()
       if (bx)
-        bx.playMedia(this.ps)
+        bx.playMedia(this.ps, delayedActions)
     }
 
     /**
@@ -461,6 +462,8 @@ define([
      */
     processEvent(event) {
       if (this.playing) {
+        // Array to be filled with actions to be executed at the end of event processing
+        const delayedActions = []
         switch (event.type) {
           case 'click':
             event.preventDefault()
@@ -479,15 +482,17 @@ define([
             if (bx && !bx.isInactive()) {
               if (bx.getContent() && bx.getContent().mediaContent === null)
                 this.playEvent('CLICK')
-              this.setCurrentCell(bx.idLoc)
+              this.setCurrentCell(bx.idLoc, delayedActions)
             }
             break
 
           case 'change':
             event.preventDefault()
-            this.setCurrentCell(this.currentCell)
-            return false
+            this.setCurrentCell(this.currentCell, delayedActions)
+            break
         }
+        delayedActions.forEach(action => action())
+        return false
       }
     }
   }

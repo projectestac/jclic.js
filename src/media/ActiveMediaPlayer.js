@@ -81,7 +81,7 @@ define([
     realize() {
       if (this.mbe) {
         this.mbe.build(mbe => {
-          if (mbe.data.pause)
+          if (mbe.data && mbe.data.pause && !mbe.data.paused && !mbe.data.ended && mbe.data.currentTime)
             mbe.data.pause()
           if ((mbe.type === 'video' || mbe.type === 'anim') && mbe.data) {
             this.$visualComponent = $(mbe.data)
@@ -125,11 +125,11 @@ define([
           }
           // Launch the media despite of its readyState
           armed = true
-          this.mbe.data.pause()
+          if (!this.mbe.data.paused && !this.mbe.data.ended && this.mbe.data.currentTime)
+            this.mbe.data.pause()
           // Seek the media position
           this.mbe.data.currentTime = this.mc.from > 0 ? this.mc.from / 1000 : 0
-          // Start playing when current thread finishes
-          window.setTimeout(() => this.mbe.data.play(), 0)
+          this.mbe.data.play()
         })
       }
     }
@@ -139,8 +139,6 @@ define([
      * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
      */
     play(setBx) {
-      // TODO: invoke in a separate thread, not blocking the current one
-      // _In Java was javax.swing.SwingUtilities.invokeLater(new Runnable(){})_
       this.stopAllAudioBuffers()
       this.playNow(setBx)
     }
@@ -151,9 +149,8 @@ define([
     stop() {
       if (this.useAudioBuffer)
         this.stopAudioBuffer(this.mc.recBuffer)
-      else if (this.mbe && this.mbe.data && !this.mbe.data.paused && this.mbe.data.pause)
+      else if (this.mbe && this.mbe.data && this.mbe.data.pause && !this.mbe.data.paused && !this.mbe.data.ended && this.mbe.data.currentTime)
         this.mbe.data.pause()
-
     }
 
     /**

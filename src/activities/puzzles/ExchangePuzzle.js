@@ -256,6 +256,8 @@ define([
         // Two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
         // `origin` and `dest` points.
         let bx1, bx2
+        // Array to be filled with actions to be executed at the end of event processing
+        const delayedActions = []
         //
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend')
@@ -305,7 +307,7 @@ define([
                 else
                   this.bc.begin(p)
                 // Play cell media or event sound
-                if (!bx1.playMedia(this.ps))
+                if (!bx1.playMedia(this.ps, delayedActions))
                   this.playEvent('click')
               }
             } else {
@@ -345,6 +347,7 @@ define([
             this.bc.moveTo(p)
             break
         }
+        delayedActions.forEach(action => action())
         event.preventDefault()
       }
     }

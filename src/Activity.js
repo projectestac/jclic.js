@@ -1041,8 +1041,6 @@ define([
         this.ps.setMsg(msg)
         if (msg === null || msg.mediaContent === null)
           this.playEvent(eventSoundsCode)
-        else
-          this.ps.playMsg()
       }
 
       /**

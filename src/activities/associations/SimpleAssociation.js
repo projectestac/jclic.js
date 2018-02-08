@@ -366,7 +366,9 @@ define([
           // cell's media sounds)
           m = false,
           // Flag for tracking clicks on the background of grid A
-          clickOnBg0 = false
+          clickOnBg0 = false,
+          // Array to be filled with actions to be executed at the end of event processing
+          delayedActions = []
 
         switch (event.type) {
           case 'touchcancel':
@@ -405,7 +407,7 @@ define([
                 else
                   this.bc.begin(p)
                 // Play cell media or event sound
-                m = m || (bx1 || bx2).playMedia(this.ps)
+                m = m || (bx1 || bx2).playMedia(this.ps, delayedActions)
                 if (!m)
                   this.playEvent('click')
 
@@ -448,12 +450,12 @@ define([
                   bx2.idAss = -1
                   if (this.act.abc['solvedPrimary']) {
                     bx1.switchToAlt(this.ps)
-                    m = m || bx1.playMedia(this.ps)
+                    m = m || bx1.playMedia(this.ps, delayedActions)
                   } else {
                     if (clickOnBg0)
-                      m = m || bx1.playMedia(this.ps)
+                      m = m || bx1.playMedia(this.ps, delayedActions)
                     else
-                      m = m || bx2.playMedia(this.ps)
+                      m = m || bx2.playMedia(this.ps, delayedActions)
                     bx1.clear()
                   }
                   bx2.clear()
@@ -484,6 +486,7 @@ define([
             this.bc.moveTo(p)
             break
         }
+        delayedActions.forEach(action => action())
         event.preventDefault()
       }
     }

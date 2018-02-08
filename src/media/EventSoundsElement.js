@@ -87,8 +87,7 @@ define([
     play() {
       if (this.audio) {
         this.audio.currentTime = 0
-        // Start playing at the end of current thread
-        window.setTimeout(() => this.audio.play(), 0)
+        this.audio.play()
       } else if (this.player)
         this.player.play()
     }

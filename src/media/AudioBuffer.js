@@ -56,8 +56,7 @@ define([
       this.stop()
       if (this.mediaPlayer) {
         this.mediaPlayer.currentTime = 0
-        // Start playing at the end of current thread
-        window.setTimeout(() => this.mediaPlayer.play(), 0)
+        this.mediaPlayer.play()
       } else {
         this.playWhenFinished = true
       }

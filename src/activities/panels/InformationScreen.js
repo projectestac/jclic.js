@@ -230,12 +230,15 @@ define([
         const p = new AWT.Point(
           event.pageX - this.$div.offset().left,
           event.pageY - this.$div.offset().top)
+        // Array to be filled with actions to be executed at the end of event processing
+        const delayedActions = []
         this.ps.stopMedia(1)
         const bx = this.bg.findActiveBox(p)
         if (bx) {
-          if (!bx.playMedia(this.ps))
+          if (!bx.playMedia(this.ps, delayedActions))
             this.playEvent('click')
         }
+        delayedActions.forEach(action => action())
         event.preventDefault()
       }
     }

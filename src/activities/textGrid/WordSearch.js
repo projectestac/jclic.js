@@ -328,6 +328,8 @@ define([
         // Flag for assuring that only one media plays per event (avoid event sounds overlapping
         // cell's media sounds)
         let m = false
+        // Array to be filled with actions to be executed at the end of event processing
+        const delayedActions = []
 
         switch (event.type) {
           case 'touchcancel':
@@ -386,7 +388,7 @@ define([
                       const bx = this.bgAlt.getActiveBox(this.act.clueItems[c])
                       if (bx) {
                         bx.setVisible(this.$animatedBg === null)
-                        m = bx.playMedia(this.ps)
+                        m = bx.playMedia(this.ps, delayedActions)
                       }
                     }
                   }
@@ -413,6 +415,7 @@ define([
             this.bc.moveTo(p)
             break
         }
+        delayedActions.forEach(action => action())
         event.preventDefault()
       }
     }

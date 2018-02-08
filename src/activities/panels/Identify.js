@@ -298,6 +298,9 @@ define([
         // Flag for assuring that only one media plays per event (avoid event sounds overlapping
         // cell's media sounds)
         let m = false
+        // Array to be filled with actions to be executed at the end of event processing
+        const delayedActions = []
+
         switch (event.type) {
           case 'click':
             this.ps.stopMedia(1)
@@ -308,12 +311,12 @@ define([
                 // Check if it's a valid move
                 let ok = false
                 const src = bx.getDescription()
-                m = m || bx.playMedia(this.ps)
+                m = m || bx.playMedia(this.ps, delayedActions)
                 if (bx.idAss === 1 && (!this.act.useOrder || bx.idOrder === this.currentItem)) {
                   ok = true
                   bx.idAss = -1
                   if (bx.switchToAlt(this.ps))
-                    m = m || bx.playMedia(this.ps)
+                    m = m || bx.playMedia(this.ps, delayedActions)
                   else
                     bx.clear()
                   if (this.act.useOrder)
@@ -332,6 +335,7 @@ define([
             }
             break
         }
+        delayedActions.forEach(action => action())
         event.preventDefault()
       }
     }
