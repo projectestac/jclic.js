@@ -226,12 +226,13 @@ define([
 
         // Set a click listener method
         // $btn.on('click', function...) does not work!
-        $btn[0].addEventListener('click', () => {
+        $btn[0].addEventListener('click', (ev) => {
           const mc = new MediaContent(me.projectPath ? 'RUN_CLIC_PACKAGE' : 'RUN_CLIC_ACTIVITY', me.sequence)
           if (me.projectPath)
             mc.externalParam = me.projectPath
           Utils.log('info', `Launching ${me.projectPath || ''} ${me.sequence || ''}`)
           this.ps.playMedia(mc)
+          ev.preventDefault()
         })
 
         // Place the created button on the container

@@ -370,6 +370,8 @@ define([
         const p = new AWT.Point(
           event.pageX - this.$div.offset().left,
           event.pageY - this.$div.offset().top)
+        // Array to be filled with actions to be executed at the end of event processing
+        const delayedActions = []
 
         switch (event.type) {
           case 'click':
@@ -382,7 +384,7 @@ define([
                 const pt = this.bg.getCoordDist(bx, this.hiddenBox);
                 if (Math.abs(pt.x) + Math.abs(pt.y) === 1) {
                   // Ok, the cell is adjacent to the hole. Complete the move.
-                  let m = bx.playMedia(this.ps)
+                  let m = bx.playMedia(this.ps, delayedActions)
                   const
                     src = `${bx.getDescription()} (${bx.idOrder})`,
                     dest = `(${this.hiddenBox.idLoc})`
@@ -407,6 +409,7 @@ define([
             }
             break
         }
+        delayedActions.forEach(action => action())
         event.preventDefault()
       }
     }

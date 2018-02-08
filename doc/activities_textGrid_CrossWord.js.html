@@ -425,7 +425,9 @@ define([
             const
               x = event.originalEvent &amp;&amp; event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
               y = event.originalEvent &amp;&amp; event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY,
-              p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top)
+              p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top),
+              // Array to be filled with actions to be executed at the end of event processing
+              delayedActions = []
 
             this.ps.stopMedia(1)
             if (this.grid.contains(p)) {
@@ -440,13 +442,14 @@ define([
                 }
               }
             } else if (this.hClue.contains(p))
-              this.hClue.playMedia(this.ps)
+              this.hClue.playMedia(this.ps, delayedActions)
             else if (this.vClue.contains(p))
-              this.vClue.playMedia(this.ps)
+              this.vClue.playMedia(this.ps, delayedActions)
             else
               break
 
             this.update()
+            delayedActions.forEach(action => action())
             break
 
           case 'keypress':

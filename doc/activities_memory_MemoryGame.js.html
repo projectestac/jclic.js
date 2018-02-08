@@ -363,7 +363,9 @@ define([
         //
         // Two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
         // `origin` and `dest` points.
-        let bx1, bx2
+        let bx1, bx2,
+          // Array to be filled with actions to be executed at the end of event processing
+          delayedActions = []
         //
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend')
@@ -408,7 +410,7 @@ define([
               bx1 = this.bg ? this.bg.findActiveBox(p) : null
               if (bx1 &amp;&amp; bx1.idAss !== -1) {
                 // Play cell media or event sound
-                if (!bx1.playMedia(this.ps))
+                if (!bx1.playMedia(this.ps, delayedActions))
                   this.playEvent('click')
                 bx1.setInactive(false)
                 // Start the [BoxConnector](BoxConnector.html)
@@ -455,7 +457,7 @@ define([
                         this.bc.begin(p)
                     }
                   }
-                  let m = bx2.playMedia(this.ps)
+                  let m = bx2.playMedia(this.ps, delayedActions)
                   if (this.bg) {
                     const cellsAtPlace = this.bg.countCellsWithIdAss(-1)
                     this.ps.reportNewAction(this.act, 'MATCH', bx1.getDescription(), bx2.getDescription(), ok, cellsAtPlace / 2)
@@ -480,6 +482,7 @@ define([
             this.bc.moveTo(p)
             break
         }
+        delayedActions.forEach(action => action())
         event.preventDefault()
       }
     }

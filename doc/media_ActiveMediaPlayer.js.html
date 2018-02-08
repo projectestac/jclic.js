@@ -151,12 +151,7 @@ define([
           break
         case 'PLAY_AUDIO':
         case 'PLAY_VIDEO':
-          var fn = mc.mediaFileName
-          //if (mc.from > 0 || mc.to > 0) {
-          // TODO: Check media ranges. Currently not running always as expected.
-          //  fn = fn + '#t=' + (mc.from > 0 ? mc.from / 1000 : 0) + ',' + (mc.to > 0 ? mc.to / 1000 : 9999);
-          //}
-          this.mbe = mb.getElement(fn, true)
+          this.mbe = mb.getElement(mc.mediaFileName, true)
           break
         case 'PLAY_MIDI':
           // TODO: Implement MIDI playing
@@ -172,7 +167,7 @@ define([
     realize() {
       if (this.mbe) {
         this.mbe.build(mbe => {
-          if (mbe.data.pause)
+          if (mbe.data &amp;&amp; mbe.data.pause &amp;&amp; !mbe.data.paused &amp;&amp; !mbe.data.ended &amp;&amp; mbe.data.currentTime)
             mbe.data.pause()
           if ((mbe.type === 'video' || mbe.type === 'anim') &amp;&amp; mbe.data) {
             this.$visualComponent = $(mbe.data)
@@ -190,7 +185,7 @@ define([
       // TODO: Remove unused param "_setBx"
       if (this.useAudioBuffer) {
         if (ActiveMediaPlayer.AUDIO_BUFFERS) {
-          var buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer]
+          const buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer]
           if (buffer) {
             if (this.mc.mediaType === 'RECORD_AUDIO') {
               buffer.record()
@@ -200,36 +195,29 @@ define([
           }
         }
       } else if (this.mbe) {
-        //if (this.mbe.data)
-        //  this.mbe.data.trigger('pause');
-        var mediaplayer = this
-        this.mbe.build(function () {
-          var armed = false
-
-          // `this` points here to the [MediaBagElement](MediaBagElement) object `mbe`
-          var thisData = this.data
-          var $thisData = $(thisData)
-
-          // Clear previous event handlers
-          $thisData.off()
-
-          // If there is a time fragment specified, prepare to stop when the `to` position is reached
-          if (mediaplayer.mc.to > 0) {
-            $thisData.on('timeupdate', function () {
-              // `this` points here to the HTML audio element
-              if (armed &amp;&amp; thisData.currentTime >= mediaplayer.mc.to / 1000) {
-                $thisData.off('timeupdate')
-                thisData.pause()
-              }
-            })
+        this.mbe.build(() => {
+          if (this.mbe.data) {
+            let armed = false
+            const $player = $(this.mbe.data)
+            // Clear previous event handlers
+            $player.off()
+            // If there is a time fragment specified, prepare to stop when the `to` position is reached
+            if (this.mc.to > 0) {
+              $player.on('timeupdate', () => {
+                if (armed &amp;&amp; this.mbe.data.currentTime >= this.mc.to / 1000) {
+                  $player.off('timeupdate')
+                  this.mbe.data.pause()
+                }
+              })
+            }
+            // Launch the media despite of its readyState
+            armed = true
+            if (!this.mbe.data.paused &amp;&amp; !this.mbe.data.ended &amp;&amp; this.mbe.data.currentTime)
+              this.mbe.data.pause()
+            // Seek the media position
+            this.mbe.data.currentTime = this.mc.from > 0 ? this.mc.from / 1000 : 0
+            this.mbe.data.play()
           }
-          // Seek the media position
-          var t = mediaplayer.mc.from > 0 ? mediaplayer.mc.from / 1000 : 0
-          // Launch the media despite of its readyState
-          armed = true
-          thisData.pause()
-          thisData.currentTime = t
-          thisData.play()
         })
       }
     }
@@ -239,8 +227,6 @@ define([
      * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
      */
     play(setBx) {
-      // TODO: invoke in a separate thread, not blocking the current one
-      // _In Java was javax.swing.SwingUtilities.invokeLater(new Runnable(){})_
       this.stopAllAudioBuffers()
       this.playNow(setBx)
     }
@@ -251,9 +237,8 @@ define([
     stop() {
       if (this.useAudioBuffer)
         this.stopAudioBuffer(this.mc.recBuffer)
-      else if (this.mbe &amp;&amp; this.mbe.data &amp;&amp; !this.mbe.data.paused &amp;&amp; this.mbe.data.pause)
+      else if (this.mbe &amp;&amp; this.mbe.data &amp;&amp; this.mbe.data.pause &amp;&amp; !this.mbe.data.paused &amp;&amp; !this.mbe.data.ended &amp;&amp; this.mbe.data.currentTime)
         this.mbe.data.pause()
-
     }
 
     /**
@@ -283,8 +268,7 @@ define([
      */
     clearAllAudioBuffers() {
       if (ActiveMediaPlayer.AUDIO_BUFFERS)
-        for (let i = 0; i &lt; ActiveMediaPlayer.AUDIO_BUFFERS.length; i++)
-          this.clearAudioBuffer(i)
+        ActiveMediaPlayer.AUDIO_BUFFERS.forEach((_buffer, n) => this.clearAudioBuffer(n))
     }
 
     /**
@@ -292,17 +276,15 @@ define([
      * @returns {number}
      */
     countActiveBuffers() {
-      return ActiveMediaPlayer.AUDIO_BUFFERS.reduce((c, ab) => c + ab ? 1 : 0, 0)
+      return ActiveMediaPlayer.AUDIO_BUFFERS ? ActiveMediaPlayer.AUDIO_BUFFERS.reduce((c, ab) => c + ab ? 1 : 0, 0) : 0
     }
 
     /**
      * Stops the playing or recording actions of all audio buffers
      */
     stopAllAudioBuffers() {
-      ActiveMediaPlayer.AUDIO_BUFFERS.forEach(ab => {
-        if (ab)
-          ab.stop()
-      })
+      if (ActiveMediaPlayer.AUDIO_BUFFERS)
+        ActiveMediaPlayer.AUDIO_BUFFERS.forEach(ab => ab ? ab.stop() : null)
     }
 
     /**

@@ -793,12 +793,14 @@ define([
        * Plays the specified media.
        * @param {MediaContent} mediaContent - The media to be played
        * @param {ActiveBox=} mediaPlacement - The cell where the graphic component of this media
+       * @param {function[]=} delayedActions - If set, store the the action in this array for future execution
        * should be placed (used with video objects)
        */
-      playMedia(mediaContent, mediaPlacement) {
+      playMedia(mediaContent, mediaPlacement = null, delayedActions = null) {
 
         let ji = null
         const fn = mediaContent.mediaFileName
+        let action = null
 
         switch (mediaContent.mediaType) {
           case 'PLAY_AUDIO':
@@ -809,7 +811,7 @@ define([
             if (this.audioEnabled) {
               const amp = this.activeMediaBag.getActiveMediaPlayer(mediaContent, this.project.mediaBag, this)
               if (amp)
-                amp.play(mediaPlacement)
+                action = () => amp.play(mediaPlacement)
             }
             break
 
@@ -819,38 +821,44 @@ define([
               // Relative path computed in History.processJump
               ji.projectPath = mediaContent.externalParam
             }
-            window.setTimeout(() => this.history.processJump(ji, true), 0)
+            action = () => this.history.processJump(ji, true)
             break
 
           case 'RUN_CLIC_ACTIVITY':
             this.history.push()
-            window.setTimeout(() => this.load(null, null, fn), 0)
+            action = () => this.load(null, null, fn)
             break
 
           case 'RETURN':
             if (this.history.storedElementsCount() > 0 || !this.options.returnAsExit) {
-              window.setTimeout(() => this.history.pop(), 0)
+              action = () => this.history.pop()
               break
             }
           case 'EXIT':
             ji = new JumpInfo('EXIT', fn)
-            window.setTimeout(() => this.history.processJump(ji, false), 0)
+            action = () => this.history.processJump(ji, false)
             break
 
           case 'RUN_EXTERNAL':
-            this.runCmd(fn)
+            action = () => this.runCmd(fn)
             break
 
           case 'URL':
             if (fn)
               // When mediaContent.level is 2 or more, the URL will be opened in a separate window.
-              window.setTimeout(() => this.displayURL(fn, mediaContent.level > 1), 0)
+              action = () => this.displayURL(fn, mediaContent.level > 1)
             break
 
           default:
             Utils.log('error', `Unknown media type: ${mediaContent.mediaType}`)
             break
         }
+
+        // Execute the action or pass callback
+        if (delayedActions &amp;&amp; action)
+          delayedActions.push(action)
+        else if (action)
+          action()
       }
 
       /**
@@ -861,9 +869,7 @@ define([
       stopMedia(level) {
         if (typeof level !== 'number')
           level = -1
-        //window.setTimeout( ()=> {
         this.activeMediaBag.stopAll(level)
-        //}, 0)
       }
 
       /**
