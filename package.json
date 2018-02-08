@@ -66,7 +66,7 @@
     "build-locales": "node build-locales.js",
     "build-doc": "jsdoc -c jsdoc.config.js",
     "lint": "eslint -c .eslintrc.json \"src/**/*.js\"",
-    "debug": "live-server --open=test/jclic-demo/debug.html -V --watch=src,test",
-    "start": "live-server --open=test/jclic-demo/index.html"
+    "debug": "live-server --open=test/jclic-demo/index.html -V --watch=src,test",
+    "start": "live-server --open=test/jclic-demo/index-min.html"
   }
 }
