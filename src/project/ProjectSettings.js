@@ -69,7 +69,7 @@ define([
      */
     setProperties($xml) {
       $xml.children().each((_n, child) => {
-        switch (this.nodeName) {
+        switch (child.nodeName) {
           case 'title':
             this.title = child.textContent
             break
