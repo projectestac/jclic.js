@@ -241,9 +241,19 @@ define([
       // if not specified). When not found, a new one is created and registered in `skinStack`
       let cl = Skin.CLASSES[skinName]
       if (!cl) {
-        // TODO: Process custom skin XML files
-        Utils.log('warn', `Unknown skin class: ${skinName}`)
-        cl = Skin.CLASSES.default
+        // Process custom skin XML files
+        const mbe = ps.project.mediaBag.getElement(skinName, false)
+        if (mbe && mbe.data)
+          $xml = $(mbe.data)
+
+        if ($xml
+          && $xml.find('skin').attr('class') === 'edu.xtec.jclic.skins.BasicSkin'
+          && $xml.find('skin').attr('image')) {
+          cl = Skin.CLASSES.custom
+        } else {
+          Utils.log('warn', `Unknown skin class: ${skinName}`)
+          cl = Skin.CLASSES.default
+        }
       }
       sk = new cl(ps, skinName)
       if ($xml)

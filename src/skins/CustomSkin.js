@@ -56,6 +56,14 @@ define([
       super(ps, name)
     }
     /**
+     * Loads the object settings from a specific jQuery XML element
+     * @param {external:jQuery} _$xml - The XML element containing the properties of the skin
+     */
+    setProperties(_$xml) {
+      this.imgName = _$xml.find('skin').attr('image')
+      console.log(this.imgName)
+    }
+    /**
      *
      * Returns the CSS styles used by this skin. This method should be called only from
      * `Skin` constructor, and overridden by subclasses if needed.
@@ -74,6 +82,11 @@ define([
      * @override
      * @type {string} */
     skinId: 'JClicCustomSkin',
+    /**
+     * The name of the image file to be used as a base of this skin.
+     * @name CustomSkin#imgName
+     * @type {string} */
+    imgName: null,
     /**
      * Styles used in this skin
      * @name CustomSkin#skinCSS
