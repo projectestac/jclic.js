@@ -42,6 +42,7 @@ define([
   "./skins/SimpleSkin",
   "./skins/MiniSkin",
   "./skins/EmptySkin",
+  "./skins/CustomSkin",
   "./shapers/Rectangular",
   "./shapers/Holes",
   "./shapers/JigSaw",

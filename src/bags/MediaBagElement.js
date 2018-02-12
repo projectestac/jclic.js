@@ -218,8 +218,14 @@ define([
               break
 
             case 'xml':
-              this.data = ''
-              this.ready = true
+              $.get(fullPath, null, null, 'xml').done(data =>{
+                this.data = data
+                this._onReady()
+              }).fail(err => {
+                Utils.log('error', `Error loading ${this.name}: ${err}`)
+              })
+              //this.data = ''
+              //this.ready = true
               // Since we are not yet supporting complex skins, there
               // is no need to read XML files
               break
