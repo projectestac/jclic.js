@@ -243,43 +243,54 @@ define([
       return text
     },
     /**
-     * Parses the provided XML element node, returning a complex object with its content
-     * @param {object} xml - The XML element to parse
+     * Parses the provided XML element node, returning a complex object
+     * @param {object} xml - The root XML element to parse
      * @returns {object}
      */
     parseXmlNode: xml => {
+      // Initialize the resulting object
       const result = {}
+      // Direct copy of root element attributes as object properties
       if (xml.attributes)
         Utils.attrForEach(xml.attributes, (name, value) => result[name] = value)
-      if (xml.children.length) {
-        const keys = []
-        for (let n = 0; n < xml.children.length; n++) {
-          const child = xml.children[n]
-          const ch = Utils.parseXmlNode(child)
-          if (typeof result[child.nodeName] === 'undefined') {
-            result[child.nodeName] = {}
-            keys.push(child.nodeName)
-          }
-          if (ch.id) {
-            result[child.nodeName][ch.id] = ch
-          } else {
-            const n = Object.keys(result[child.nodeName]).length
-            result[child.nodeName][n] = ch
+      // Process children elements
+      const keys = []
+      for (let n = 0; n < xml.children.length; n++) {
+        const child = xml.children[n]
+        // Recursive processing of children
+        const ch = Utils.parseXmlNode(child)
+        // Store the result into a temporary object named as the child node name,
+        if (!result[child.nodeName]) {
+          // Create object and save key for later processing
+          result[child.nodeName] = {}
+          keys.push(child.nodeName)
+        }
+        // Use 'id' (or an incremental number if 'id' is not set) as a key
+        if (ch.id)
+          result[child.nodeName][ch.id] = ch
+        else {
+          const n = Object.keys(result[child.nodeName]).length
+          result[child.nodeName][n] = ch
+        }
+      }
+      // Check temporary objects, converting it to an array, a single object or a complex object
+      keys.forEach(k => {
+        // Retrieve temporary object from `keys`
+        const kx = Object.keys(result[k])
+        // If all keys are numbers, convert object into an array (or leave it as a single object)
+        if (!kx.find(kk => isNaN(kk))) {
+          if (kx.length === 1)
+            // Array with a single element. Leave it as a simple object:
+            result[k] = result[k][0]
+          else {
+            // Object with numeric keys. Convert it to array:
+            const arr = []
+            kx.forEach(kk => arr.push(result[k][kk]))
+            result[k] = arr
           }
         }
-        keys.forEach(k => {
-          const kx = Object.keys(result[k])
-          if (!kx.find(kk => isNaN(kk))) {
-            if (kx.length === 1) {
-              result[k] = result[k][0]
-            } else {
-              const arr = []
-              kx.forEach(kk => arr.push(result[k][kk]))
-              result[k] = arr
-            }
-          }
-        })
-      }
+      })
+      // Save text content, if any:
       if (xml.textContent)
         result.textContent = xml.textContent
       return result
