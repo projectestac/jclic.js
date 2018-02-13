@@ -243,6 +243,48 @@ define([
       return text
     },
     /**
+     * Parses the provided XML element node, returning a complex object with its content
+     * @param {object} xml - The XML element to parse
+     * @returns {object}
+     */
+    parseXmlNode: xml => {
+      const result = {}
+      if (xml.attributes)
+        Utils.attrForEach(xml.attributes, (name, value) => result[name] = value)
+      if (xml.children.length) {
+        const keys = []
+        for (let n = 0; n < xml.children.length; n++) {
+          const child = xml.children[n]
+          const ch = Utils.parseXmlNode(child)
+          if (typeof result[child.nodeName] === 'undefined') {
+            result[child.nodeName] = {}
+            keys.push(child.nodeName)
+          }
+          if (ch.id) {
+            result[child.nodeName][ch.id] = ch
+          } else {
+            const n = Object.keys(result[child.nodeName]).length
+            result[child.nodeName][n] = ch
+          }
+        }
+        keys.forEach(k => {
+          const kx = Object.keys(result[k])
+          if (!kx.find(kk => isNaN(kk))) {
+            if (kx.length === 1) {
+              result[k] = result[k][0]
+            } else {
+              const arr = []
+              kx.forEach(kk => arr.push(result[k][kk]))
+              result[k] = arr
+            }
+          }
+        })
+      }
+      if (xml.textContent)
+        result.textContent = xml.textContent
+      return result
+    },
+    /**
      * Creates a string suitable to be used in the 'style' attribute of HTML tags, filled with the
      * CSS attributes contained in the provided object.
      * @param {object} cssObj

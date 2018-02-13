@@ -32,8 +32,9 @@
 
 define([
   "jquery",
-  "./Skin"
-], function ($, Skin) {
+  "./Skin",
+  "../Utils"
+], function ($, Skin, Utils) {
 
   /**
    * Custom {@link Skin} for JClic.js, built assembling specific cuts of a canvas (usually a PNG file) defined in a XML file
@@ -61,7 +62,8 @@ define([
      */
     setProperties(_$xml) {
       this.imgName = _$xml.find('skin').attr('image')
-      console.log(this.imgName)
+      this.prop = Utils.parseXmlNode(_$xml[0].children[0])
+      console.log(this.prop)
     }
     /**
      *
