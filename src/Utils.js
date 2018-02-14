@@ -252,7 +252,7 @@ define([
       const result = {}
       // Direct copy of root element attributes as object properties
       if (xml.attributes)
-        Utils.attrForEach(xml.attributes, (name, value) => result[name] = value)
+        Utils.attrForEach(xml.attributes, (name, value) => result[name] = /^-?\d*$/.test(value) ? Number(value) : value)
       // Process children elements
       const keys = []
       for (let n = 0; n < xml.children.length; n++) {
@@ -291,7 +291,7 @@ define([
         }
       })
       // Save text content, if any:
-      if (xml.textContent)
+      if (xml.children.length === 0 && xml.textContent)
         result.textContent = xml.textContent
       return result
     },

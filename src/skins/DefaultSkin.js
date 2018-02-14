@@ -56,14 +56,12 @@ define([
      * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
      * realize the media objects needed tot build the Skin.
      * @param {string=} name - The skin class name
-     * @param {options=} options - Optional parameter with additional options, used by subclasses
+     * @param {object=} options - Optional parameter with additional options, used by subclasses
      * this skin. When `null` or `undefined`, a new one will be created.
      */
-    constructor(ps, name, options) {
+    constructor(ps, name = null, options = {}) {
       // DefaultSkin extends [Skin](Skin.html)
-      super(ps, name)
-
-      options = options || {}
+      super(ps, name, options)
       let msg = ''
 
       AWT.Font.loadGoogleFonts(this.cssFonts)

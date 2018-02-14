@@ -51,20 +51,22 @@ define([
      * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
      * realize the media objects needed tot build the Skin.
      * @param {string=} name - The skin class name
+     * @param {object=} options - Optional parameter with additional options
      */
-    constructor(ps, name) {
+    constructor(ps, name = null, options = null) {
       // CustomSkin extends [Skin](Skin.html)
-      super(ps, name)
+      super(ps, name, options)
+      console.log(this.options)
+
+      this.$mainPanel = $('<div/>', { class: 'JClicCustomMainPanel' })
+      this.$gridPanel = $('<div/>', { class: 'JClicGridPanel' })
+      for (let i = 0; i < 9; i++)
+          this.$gridPanel.append($('<div/>', { class: `JClicCell JClicCell${i + 1}` }))
+      this.$mainPanel.append(this.$gridPanel)
+      this.$playerCnt.detach().addClass('JClicPlayerCell').appendTo(this.$mainPanel)
+      this.$div.prepend(this.$mainPanel)
     }
-    /**
-     * Loads the object settings from a specific jQuery XML element
-     * @param {external:jQuery} _$xml - The XML element containing the properties of the skin
-     */
-    setProperties(_$xml) {
-      this.imgName = _$xml.find('skin').attr('image')
-      this.prop = Utils.parseXmlNode(_$xml[0].children[0])
-      console.log(this.prop)
-    }
+    
     /**
      *
      * Returns the CSS styles used by this skin. This method should be called only from
@@ -73,7 +75,39 @@ define([
      * @returns {string}
      */
     _getStyleSheets() {
-      return super._getStyleSheets() + this.mainCSS
+      const
+        ph0 = this.options.rectangle.frame.left,
+        ph1 = ph0 + this.options.rectangle.player.left,
+        ph2 = ph0 + this.options.slicer.left,
+        ph3 = ph0 + this.options.slicer.right,
+        ph4 = ph1 + this.options.rectangle.player.width,
+        ph5 = ph0 + this.options.rectangle.frame.width,
+        pv0 = this.options.rectangle.frame.top,
+        pv1 = pv0 + this.options.rectangle.player.top,
+        pv2 = pv0 + this.options.slicer.top,
+        pv3 = pv0 + this.options.slicer.bottom,
+        pv4 = pv1 + this.options.rectangle.player.height,
+        pv5 = pv0 + this.options.rectangle.frame.height
+        
+
+      return `${super._getStyleSheets()}
+${this.mainCSS}
+.SKINID .JClicCustomMainPanel {flex-grow:1;position:relative;}
+.SKINID .JClicGridPanel {position:absolute;width:100%;height:100%;display:grid;
+grid-template-columns:${ph2-ph0}px 1fr ${ph5-ph3}px;
+grid-template-rows:${pv2-pv0}px 1fr ${pv5-pv3}px;}
+.SKINID .JClicCell {background:url(${this.options.image});background-repeat:no-repeat;background-color: ${Utils.checkColor(this.options.color.fill.value)}}
+.SKINID .JClicPlayerCell {position:absolute;top:${pv1-pv0}px;right:${ph5-ph4}px;bottom:${pv5-pv4}px;left:${ph1-ph0}px;}
+.SKINID .JClicCell1 {background-position:-${ph0}px -${pv0}px}
+.SKINID .JClicCell2 {background-position:-${ph2}px -${pv0}px}
+.SKINID .JClicCell3 {background-position:-${ph3}px -${pv0}px}
+.SKINID .JClicCell4 {background-position:-${ph0}px -${pv2}px}
+.SKINID .JClicCell5 {background-position:-${ph2}px -${pv2}px}
+.SKINID .JClicCell6 {background-position:-${ph3}px -${pv2}px}
+.SKINID .JClicCell7 {background-position:-${ph0}px -${pv3}px}
+.SKINID .JClicCell8 {background-position:-${ph2}px -${pv3}px}
+.SKINID .JClicCell9 {background-position:-${ph3}px -${pv3}px}
+`
     }
   }
 

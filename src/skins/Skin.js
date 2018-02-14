@@ -58,11 +58,18 @@ define([
      * @param {PlayStation} ps - The `PlayStation` (currently a {@link JClicPlayer}) used to load and
      * realize the media objects needed tot build the Skin.
      * @param {string=} name - The skin name
+     * @param {object=} options - Optional parameter with additional options
      */
-    constructor(ps, name) {
+    constructor(ps, name = null, options = {}) {
 
       // Skin extends [AWT.Container](AWT.html)
       super()
+
+      // Save parameters for later use
+      this.ps = ps
+      if (name !== null)
+        this.name = name
+      this.options = options
 
       if (!Skin.registerStyleSheet(this.skinId, ps))
         Utils.appendStyleAtHead(this._getStyleSheets().replace(/SKINID/g, this.skinId), ps)
@@ -86,10 +93,6 @@ define([
       this.buttons = Utils.cloneObject(Skin.prototype.buttons)
       this.counters = Utils.cloneObject(Skin.prototype.counters)
       this.msgArea = Utils.cloneObject(Skin.prototype.msgArea)
-      if (ps)
-        this.ps = ps
-      if (name)
-        this.name = name
 
       // Create dialog overlay and panel
       this.$dlgOverlay = $('<div/>', { class: 'dlgOverlay' }).css({
@@ -219,11 +222,10 @@ define([
      * This function should be used only through `Skin.getSkin`
      * @param {string} skinName - The name of the searched skin
      * @param {PlayStation} ps - The PlayStation (usually a {@link JClicPlayer}) used to build the new skin.
-     * @param {external:jQuery} $xml - An XML element with the properties of the new skin
+     * @param {object=} options - Optional parameter with additional options
      * @returns {Skin}
      */
-    static getSkin(skinName, ps, $xml) {
-      let sk = null
+    static getSkin(skinName = 'default', ps, options = {}) {
       skinName = skinName || 'default'
 
       // Correct old skin names
@@ -232,7 +234,8 @@ define([
 
       // look for the skin in the stack of realized skins
       if (skinName && ps) {
-        sk = Skin.skinStack.find(s => s.name === skinName && s.ps === ps)
+        // TODO: Check also `options`!
+        const sk = Skin.skinStack.find(s => s.name === skinName && s.ps === ps)
         if (sk)
           return sk
       }
@@ -244,21 +247,18 @@ define([
         // Process custom skin XML files
         const mbe = ps.project.mediaBag.getElement(skinName, false)
         if (mbe && mbe.data)
-          $xml = $(mbe.data)
+          options = Object.assign({}, options, mbe.data)
 
-        if ($xml
-          && $xml.find('skin').attr('class') === 'edu.xtec.jclic.skins.BasicSkin'
-          && $xml.find('skin').attr('image')) {
+        if (options.class === 'edu.xtec.jclic.skins.BasicSkin')
           cl = Skin.CLASSES.custom
-        } else {
+        else {
           Utils.log('warn', `Unknown skin class: ${skinName}`)
           cl = Skin.CLASSES.default
         }
       }
-      sk = new cl(ps, skinName)
-      if ($xml)
-        sk.setProperties($xml)
-      return sk
+
+      // Build and return the requested skin
+      return new cl(ps, skinName, options)
     }
 
     /**
@@ -316,14 +316,6 @@ define([
         this.$div.detach()
         this.player = null
       }
-    }
-
-    /**
-     * Loads the object settings from a specific jQuery XML element
-     * @param {external:jQuery} _$xml - The XML element containing the properties of the skin
-     */
-    setProperties(_$xml) {
-      // To be implemented by subclasses
     }
 
     /**
@@ -728,6 +720,11 @@ define([
      * @name Skin#name
      * @type {string} */
     name: 'default',
+    /**
+     * Specific options of this skin
+     * @name Skin#options
+     * @type {object} */
+    options: {},
     /**
      * Name of the XML file used to retrieve the skin settings.
      * @name Skin#fileName

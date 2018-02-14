@@ -50,10 +50,11 @@ define([
      * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
      * realize the media objects needed to build this Skin.
      * @param {string=} name - The skin class name
+     * @param {object=} options - Optional parameter with additional options
      */
-    constructor(ps, name) {
+    constructor(ps, name = null, options = {}) {
       // GreenSkin extends [DefaultSkin](DefaultSkin.html)
-      super(ps, name)
+      super(ps, name, options)
     }
 
     /**
@@ -65,7 +66,7 @@ define([
     _getStyleSheets() {
       return super._getStyleSheets() + this.skinCSS
     }
-    
+
   }
 
   Object.assign(GreenSkin.prototype, {
@@ -81,13 +82,13 @@ define([
      * Fill color for icons
      * @name GreenSkin#iconFill
      * @override
-     * @type {string} */    
+     * @type {string} */
     iconFill: '#20640E',
     /**
      * Fill-in color for counters
      * @name GreenSkin#counterIconFill
      * @override
-     * @type {string} */        
+     * @type {string} */
     counterIconFill: '#20640E',
     /**
      * Styles used in this skin

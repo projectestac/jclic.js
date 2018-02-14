@@ -49,10 +49,11 @@ define([
      * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
      * realize the media objects needed to build the Skin.
      * @param {string=} name - The skin class name
+     * @param {object=} options - Optional parameter with additional options
      */
-    constructor(ps, name) {
+    constructor(ps, name = null, options = {}) {
       // BlueSkin extends [DefaultSkin](DefaultSkin.html)
-      super(ps, name)
+      super(ps, name, options)
     }
 
     /**
@@ -82,6 +83,6 @@ define([
 
   // Register this class in the list of available skins
   Skin.CLASSES['blue'] = BlueSkin
-  
+
   return BlueSkin
 })

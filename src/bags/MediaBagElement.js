@@ -218,8 +218,8 @@ define([
               break
 
             case 'xml':
-              $.get(fullPath, null, null, 'xml').done(data =>{
-                this.data = data
+              $.get(fullPath, null, null, 'xml').done(xmlData =>{
+                this.data = Utils.parseXmlNode(xmlData.children[0])
                 this._onReady()
               }).fail(err => {
                 Utils.log('error', `Error loading ${this.name}: ${err}`)
