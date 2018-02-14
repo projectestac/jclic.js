@@ -522,6 +522,20 @@ define([
       return result
     },
     /**
+     * Gets a clip of the give image data, in a URL base64 encoded format
+     * @param {object} img - The binary data of the realized image, usually obtained from a {@link MediaBagElement}
+     * @param {AWT.Rectangle} rect - A rectangle containing the requested clip
+     * @returns {string} - The URL with the image clip, as a PNG file encoded in base64
+     */
+    getImgClipUrl: (img, rect) => {
+      const canvas = document.createElement('canvas')
+      canvas.width = rect.dim.width
+      canvas.height = rect.dim.height
+      const ctx = canvas.getContext('2d')
+      ctx.drawImage(img, rect.pos.x, rect.pos.y, rect.dim.width, rect.dim.height, 0, 0, rect.dim.width, rect.dim.height)
+      return canvas.toDataURL()
+    },
+    /**
      * Finds the nearest `head` or root node of a given HTMLElement, useful to place `<style/>` elements when
      * the main component of JClic is behind a shadow-root.
      * This method will be replaced by a call to [Node.getRootNode()](https://developer.mozilla.org/en-US/docs/Web/API/Node/getRootNode)

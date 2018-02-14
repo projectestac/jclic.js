@@ -33,8 +33,9 @@
 define([
   "jquery",
   "./Skin",
-  "../Utils"
-], function ($, Skin, Utils) {
+  "../Utils",
+  "../AWT"
+], function ($, Skin, Utils, AWT) {
 
   /**
    * Custom {@link Skin} for JClic.js, built assembling specific cuts of a canvas (usually a PNG file) defined in a XML file
@@ -61,12 +62,12 @@ define([
       this.$mainPanel = $('<div/>', { class: 'JClicCustomMainPanel' })
       this.$gridPanel = $('<div/>', { class: 'JClicGridPanel' })
       for (let i = 0; i < 9; i++)
-          this.$gridPanel.append($('<div/>', { class: `JClicCell JClicCell${i + 1}` }))
+        this.$gridPanel.append($('<div/>', { class: `JClicCell JClicCell${i + 1}` }))
       this.$mainPanel.append(this.$gridPanel)
       this.$playerCnt.detach().addClass('JClicPlayerCell').appendTo(this.$mainPanel)
       this.$div.prepend(this.$mainPanel)
     }
-    
+
     /**
      *
      * Returns the CSS styles used by this skin. This method should be called only from
@@ -87,27 +88,33 @@ define([
         pv2 = pv0 + this.options.slicer.top,
         pv3 = pv0 + this.options.slicer.bottom,
         pv4 = pv1 + this.options.rectangle.player.height,
-        pv5 = pv0 + this.options.rectangle.frame.height
-        
+        pv5 = pv0 + this.options.rectangle.frame.height,
+        imgElement = this.ps.project.mediaBag.getElement(this.options.image, true),
+        box1 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv0, ph3 - ph2, pv2 - pv0)) : '',
+        box2 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv2 - pv0, ph2 - ph0, pv3 - pv2)) : '',
+        box3 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3 - ph0, pv2 - pv0, ph5 - ph3, pv3 - pv2)) : '',
+        box4 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : ''
 
-      return `${super._getStyleSheets()}
-${this.mainCSS}
+      const skinLayout = `
 .SKINID .JClicCustomMainPanel {flex-grow:1;position:relative;}
-.SKINID .JClicGridPanel {position:absolute;width:100%;height:100%;display:grid;
-grid-template-columns:${ph2-ph0}px 1fr ${ph5-ph3}px;
-grid-template-rows:${pv2-pv0}px 1fr ${pv5-pv3}px;}
+.SKINID .JClicGridPanel {position:absolute;width:100%;height:100%;display:grid;grid-template-columns:${ph2 - ph0}px 1fr ${ph5 - ph3}px;grid-template-rows:${pv2 - pv0}px 1fr ${pv5 - pv3}px;}
 .SKINID .JClicCell {background:url(${this.options.image});background-repeat:no-repeat;background-color: ${Utils.checkColor(this.options.color.fill.value)}}
-.SKINID .JClicPlayerCell {position:absolute;top:${pv1-pv0}px;right:${ph5-ph4}px;bottom:${pv5-pv4}px;left:${ph1-ph0}px;}
+.SKINID .JClicPlayerCell {position:absolute;top:${pv1 - pv0}px;right:${ph5 - ph4}px;bottom:${pv5 - pv4}px;left:${ph1 - ph0}px;}
 .SKINID .JClicCell1 {background-position:-${ph0}px -${pv0}px}
-.SKINID .JClicCell2 {background-position:-${ph2}px -${pv0}px}
+.SKINID .JClicCell2 {background-image:url(${box1});background-repeat:repeat-x;}
 .SKINID .JClicCell3 {background-position:-${ph3}px -${pv0}px}
-.SKINID .JClicCell4 {background-position:-${ph0}px -${pv2}px}
+.SKINID .JClicCell4 {background-image:url(${box2});background-repeat:repeat-y;}
 .SKINID .JClicCell5 {background-position:-${ph2}px -${pv2}px}
-.SKINID .JClicCell6 {background-position:-${ph3}px -${pv2}px}
+.SKINID .JClicCell6 {background-image:url(${box3});background-repeat:repeat-y;}
 .SKINID .JClicCell7 {background-position:-${ph0}px -${pv3}px}
-.SKINID .JClicCell8 {background-position:-${ph2}px -${pv3}px}
-.SKINID .JClicCell9 {background-position:-${ph3}px -${pv3}px}
-`
+.SKINID .JClicCell8 {background-image:url(${box4});background-repeat:repeat-x;}
+.SKINID .JClicCell9 {background-position:-${ph3}px -${pv3}px}`
+
+      if(this.options.buttons) {
+        // TODO: Implement button styles
+      }
+
+      return `${super._getStyleSheets()}${this.mainCSS}${skinLayout}`
     }
   }
 
