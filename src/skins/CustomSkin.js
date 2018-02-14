@@ -66,6 +66,16 @@ define([
       this.$mainPanel.append(this.$gridPanel)
       this.$playerCnt.detach().addClass('JClicPlayerCell').appendTo(this.$mainPanel)
       this.$div.prepend(this.$mainPanel)
+
+      if (options.buttons) {
+        if (options.buttons.button.next) {
+          // Add `next` button
+          const msg = ps.getMsg('Next activity')
+          this.buttons.next = $('<button/>', { class: 'JClicBtn JClicCell JClicBtnNext', title: msg, 'aria-label': msg })
+            .on('click', evt => ps.actions.next.processEvent(evt))
+          this.$mainPanel.append(this.buttons.next)
+        }
+      }
     }
 
     /**
@@ -110,11 +120,31 @@ define([
 .SKINID .JClicCell8 {background-image:url(${box4});background-repeat:repeat-x;}
 .SKINID .JClicCell9 {background-position:-${ph3}px -${pv3}px}`
 
-      if(this.options.buttons) {
-        // TODO: Implement button styles
+      let btStyles = ''
+      if (this.options.buttons) {
+        const bt = this.options.buttons
+        let w = 30, h = 30, offset = {}
+        if (bt.settings) {
+          if (bt.settings.dimension) {
+            w = bt.settings.dimension.width || w
+            h = bt.settings.dimension.height || h
+          }
+          offset = bt.settings.offset || offset
+        }
+        if (bt.button.next) {
+          const
+            btn = bt.button.next,
+            x = btn.point.pos.left,
+            xp = x < ph2 ? `left:${x}` : `right:${ph5 - x}`,
+            y = btn.point.pos.top,
+            yp = y < pv2 ? `top:${y}` : `bottom:${pv5 - y}`,
+            xs = btn.point.source.left,
+            ys = btn.point.source.top
+          btStyles += `.SKINID .JClicBtnNext {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background-position:-${xs}px -${ys}px;}`
+        }
       }
 
-      return `${super._getStyleSheets()}${this.mainCSS}${skinLayout}`
+      return `${super._getStyleSheets()}${this.mainCSS}${skinLayout}${btStyles}`
     }
   }
 
