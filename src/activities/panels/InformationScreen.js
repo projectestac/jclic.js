@@ -201,7 +201,7 @@ define([
         }
         this.$div.append(this.$canvas)
         this.invalidate().update()
-        setTimeout(() => this.bg.buildAccessibleElements(this.$canvas, this.$div), 0)
+        setTimeout(() => this.bg ? this.bg.buildAccessibleElements(this.$canvas, this.$div) : null, 0)
       }
     }
 
