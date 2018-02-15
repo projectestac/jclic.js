@@ -34,8 +34,9 @@ define([
   "jquery",
   "./Skin",
   "../Utils",
-  "../AWT"
-], function ($, Skin, Utils, AWT) {
+  "../AWT",
+  "../boxes/ActiveBox"
+], function ($, Skin, Utils, AWT, ActiveBox) {
 
   /**
    * Custom {@link Skin} for JClic.js, built assembling specific cuts of a canvas (usually a PNG file) defined in a XML file
@@ -57,7 +58,7 @@ define([
     constructor(ps, name = null, options = null) {
       // CustomSkin extends [Skin](Skin.html)
       super(ps, name, options)
-      console.log(this.options)
+      //console.log(this.options)
 
       this.$mainPanel = $('<div/>', { class: 'JClicCustomMainPanel' })
       this.$gridPanel = $('<div/>', { class: 'JClicGridPanel' })
@@ -67,15 +68,29 @@ define([
       this.$playerCnt.detach().addClass('JClicPlayerCell').appendTo(this.$mainPanel)
       this.$div.prepend(this.$mainPanel)
 
+      // Add buttons
       if (options.buttons) {
-        if (options.buttons.button.next) {
-          // Add `next` button
-          const msg = ps.getMsg('Next activity')
-          this.buttons.next = $('<button/>', { class: 'JClicBtn JClicCell JClicBtnNext', title: msg, 'aria-label': msg })
-            .on('click', evt => ps.actions.next.processEvent(evt))
-          this.$mainPanel.append(this.buttons.next)
-        }
+        Object.keys(options.buttons.button).forEach(k => {
+          const k2 = k === 'about' ? 'reports' : k
+          const msg = ps.getMsg(this.msgKeys[k2] || k2)
+          this.buttons[k2] = $('<button/>', { class: `JClicBtn-${k2}`, title: msg, 'aria-label': msg, disabled: typeof this.msgKeys[k2] === 'undefined' })
+            .on('click', evt => { if (ps.actions[k2]) ps.actions[k2].processEvent(evt) })
+          this.$mainPanel.append(this.buttons[k2])
+        })
       }
+
+      // Add message box
+      if (options.rectangle.messages) {
+        this.msgBox = new ActiveBox()
+        this.msgBox.role = 'message'
+        this.$msgBoxDiv = $('<div/>', { class: 'JClicMsgBox' })
+          .click(() => {
+            this.msgBox.playMedia(ps)
+            return false
+          })
+        this.$mainPanel.append(this.$msgBoxDiv)
+      }
+
     }
 
     /**
@@ -123,28 +138,64 @@ define([
       let btStyles = ''
       if (this.options.buttons) {
         const bt = this.options.buttons
-        let w = 30, h = 30, offset = {}
+        let wBase = 30, hBase = 30, offsetBase = {}
         if (bt.settings) {
           if (bt.settings.dimension) {
-            w = bt.settings.dimension.width || w
-            h = bt.settings.dimension.height || h
+            wBase = bt.settings.dimension.width || wBase
+            hBase = bt.settings.dimension.height || hBase
           }
-          offset = bt.settings.offset || offset
+          if (bt.settings.offset)
+            Object.assign(offsetBase, bt.settings.offset)
         }
-        if (bt.button.next) {
+        Object.keys(this.options.buttons.button).forEach(k => {
           const
-            btn = bt.button.next,
+            btn = bt.button[k],
+            k2 = k === 'about' ? 'reports' : k
+          let w = wBase, h = hBase, offset = offsetBase
+          if (btn.settings) {
+            if (btn.settings.dimension) {
+              w = btn.settings.dimension.width || w
+              h = btn.settings.dimension.height || h
+            }
+            if (btn.settings.offset)
+              offset = Object.assign({}, offsetBase, btn.settings.offset)
+          }
+          const
             x = btn.point.pos.left,
-            xp = x < ph2 ? `left:${x}` : `right:${ph5 - x}`,
+            xp = x < ph2 ? `left:${x}` : `right:${ph5 - x - w}`,
             y = btn.point.pos.top,
-            yp = y < pv2 ? `top:${y}` : `bottom:${pv5 - y}`,
+            yp = y < pv2 ? `top:${y}` : `bottom:${pv5 - y - h}`,
             xs = btn.point.source.left,
             ys = btn.point.source.top
-          btStyles += `.SKINID .JClicBtnNext {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background-position:-${xs}px -${ys}px;}`
-        }
+          btStyles += `.SKINID .JClicBtn-${k2} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${this.options.image}) !important;background-position:-${xs}px -${ys}px !important;}`
+          if (offset.active)
+            btStyles += `.SKINID .JClicBtn-${k2}:active {background-position:-${xs + offset.active.right}px -${ys + offset.active.down}px !important;}`
+          if (offset.over)
+            btStyles += `.SKINID .JClicBtn-${k2}:hover {background-position:-${xs + offset.over.right}px -${ys + offset.over.down}px !important;}`
+          if (offset.disabled)
+            btStyles += `.SKINID .JClicBtn-${k2}:disabled {background-position:-${xs + offset.disabled.right}px -${ys + offset.disabled.down}px !important;}`
+        })
       }
 
-      return `${super._getStyleSheets()}${this.mainCSS}${skinLayout}${btStyles}`
+      let bMsgBox = ''
+      if (this.options.rectangle.messages) {
+        const
+          bx = this.options.rectangle.messages,
+          left = ph0 + bx.left,
+          right = ph5 - bx.width - bx.left - ph0,
+          tb = bx.top < pv2 ? `top:${bx.top}` : `bottom:${pv5 - bx.height - bx.top}`
+        bMsgBox = `.SKINID .JClicMsgBox {position:absolute;left:${left}px;right:${right}px;height:${bx.height}px;${tb}px;}`
+      }
+
+      return `${super._getStyleSheets()}${this.mainCSS}${skinLayout}${btStyles}${bMsgBox}`
+    }
+
+    /**
+     * Gets the {@link ActiveBox} used to display the main messages of activities
+     * @returns {ActiveBox}
+     */
+    getMsgBox() {
+      return this.msgBox
     }
   }
 
@@ -165,7 +216,20 @@ define([
      * @name CustomSkin#skinCSS
      * @override
      * @type {string} */
-    mainCSS: '.SKINID .JClicPlayerCnt {margin:0;}'
+    mainCSS: '.SKINID .JClicPlayerCnt {margin:0;}',
+    /**
+     * Key ids of currently supported buttons, associated with its helper literal
+     * @name CustomSkin#msgKeys
+     * @type {object} */
+    msgKeys: {
+      next: 'Next activity',
+      prev: 'Previous activity',
+      info: 'Information',
+      help: 'Help',
+      reports: 'Reports',
+      // TODO: Implement audio on/off!
+      audio: 'Audio on/off',
+    },
   })
 
   // Register this class in the list of available skins

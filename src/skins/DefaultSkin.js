@@ -194,22 +194,6 @@ define([
     }
 
     /**
-     * Updates the graphic contents of this skin.
-     * This method should be called from {@link Skin#update}
-     * @override
-     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`, it's the
-     * whole panel.
-     */
-    updateContent(dirtyRegion) {
-      if (this.$msgBoxDivCanvas) {
-        const ctx = this.$msgBoxDivCanvas.get(-1).getContext('2d')
-        ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight)
-        this.msgBox.update(ctx, dirtyRegion)
-      }
-      return super.updateContent()
-    }
-
-    /**
      * Main method used to build the content of the skin. Resizes and places internal objects.
      * @override
      */
@@ -223,32 +207,6 @@ define([
         this.buttons.fullscreen.find('img').get(-1).src = Utils.svgToURI(
           this[screenfull.isFullscreen ? 'fullScreenExitIcon' : 'fullScreenIcon'],
           this.iconWidth, this.iconHeight, this.iconFill)
-
-      // Build canvas at the end of current thread, thus avoiding
-      // invalid sizes due to incomplete layout of DOM objects
-      window.setTimeout(() => {
-
-        // Temporary remove canvas to let div get its natural size:
-        if (this.$msgBoxDivCanvas)
-          this.$msgBoxDivCanvas.remove()
-
-        // Get current size of message box div without canvas
-        const
-          msgWidth = this.$msgBoxDiv.outerWidth(),
-          msgHeight = this.$msgBoxDiv.outerHeight()
-
-        // Replace existing canvas if size has changed
-        if (this.$msgBoxDivCanvas === null ||
-          this.msgBox.dim.widht !== msgWidth ||
-          this.msgBox.dim.height !== msgHeight) {
-          this.$msgBoxDivCanvas = $(`<canvas width="${msgWidth}" height="${msgHeight}"/>`)
-          this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth + 1, msgHeight))
-          this.msgBox.buildAccessibleElement(this.$msgBoxDivCanvas, this.$msgBoxDiv)
-        }
-        // restore canvas
-        this.$msgBoxDiv.append(this.$msgBoxDivCanvas)
-        this.updateContent()
-      }, 0)
     }
 
     /**
@@ -308,21 +266,6 @@ define([
      * @name DefaultSkin#$ctrlCnt
      * @type {external:jQuery} */
     $ctrlCnt: null,
-    /**
-     * The box used to display the main messages of JClic activities
-     * @name DefaultSkin#msgBox
-     * @type {ActiveBox} */
-    msgBox: null,
-    /**
-     * The `div` DOM object where `msgBox` is located
-     * @name DefaultSkin#$msgBoxDiv
-     * @type {external:jQuery} */
-    $msgBoxDiv: null,
-    /*
-     * An HTML `canvas` object created in `$msgBoxDiv`
-     * @name DefaultSkin#$msgBoxDivCanvas
-     * @type {external:jQuery} */
-    $msgBoxDivCanvas: null,
     /**
      * Space (pixels) between the components of this {@link Skin}
      * @name DefaultSkin#margin

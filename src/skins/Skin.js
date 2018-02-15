@@ -319,15 +319,19 @@ define([
     }
 
     /**
-     * Updates the graphic content of this skin.
-     * The method should be called from {@link Skin#update}
+     * Updates the graphic contents of this skin.
+     * This method should be called from {@link Skin#update}
      * @override
-     * @param {AWT.Rectangle} dirtyRegion - The region to be painted. When `null`, refers to the full
-     * skin area.
+     * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`, it's the
+     * whole panel.
      */
     updateContent(dirtyRegion) {
-      // To be overrided. Does nothing in abstract Skin.
-      return super.updateContent(dirtyRegion)
+      if (this.$msgBoxDivCanvas) {
+        const ctx = this.$msgBoxDivCanvas.get(-1).getContext('2d')
+        ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight)
+        this.msgBox.update(ctx, dirtyRegion)
+      }
+      return super.updateContent()
     }
 
     /**
@@ -596,7 +600,6 @@ define([
     }
 
     /**
-     *
      * Enables or disables a specific counter
      * @param {string} counter - Which counter
      * @param {boolean} bEnabled - When `true`, the counter will be enabled.
@@ -607,15 +610,41 @@ define([
     }
 
     /**
-     * Main method, to be implemented by subclasses
+     * Main method used to build the content of the skin. Resizes and places internal objects.
      */
     doLayout() {
       // Resize player
       this.player.doLayout()
+
+      // Build canvas at the end of current thread, thus avoiding
+      // invalid sizes due to incomplete layout of DOM objects
+      if (this.$msgBoxDiv)
+        window.setTimeout(() => {
+
+          // Temporary remove canvas to let div get its natural size:
+          if (this.$msgBoxDivCanvas)
+            this.$msgBoxDivCanvas.remove()
+
+          // Get current size of message box div without canvas
+          const
+            msgWidth = this.$msgBoxDiv.outerWidth(),
+            msgHeight = this.$msgBoxDiv.outerHeight()
+
+          // Replace existing canvas if size has changed
+          if (this.$msgBoxDivCanvas === null ||
+            this.msgBox.dim.widht !== msgWidth ||
+            this.msgBox.dim.height !== msgHeight) {
+            this.$msgBoxDivCanvas = $(`<canvas width="${msgWidth}" height="${msgHeight}"/>`)
+            this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth + 1, msgHeight))
+            this.msgBox.buildAccessibleElement(this.$msgBoxDivCanvas, this.$msgBoxDiv)
+          }
+          // restore canvas
+          this.$msgBoxDiv.append(this.$msgBoxDivCanvas)
+          this.updateContent()
+        }, 0)
     }
 
     /**
-     *
      * adjusts the skin to the dimension of its `$div` container
      * @returns {AWT.Dimension} the new dimension of the skin
      */
@@ -750,6 +779,21 @@ define([
      * @name Skin#maxProgress
      * @type {number} */
     maxProgress: 0,
+    /**
+     * The box used to display the main messages of JClic activities
+     * @name DefaultSkin#msgBox
+     * @type {ActiveBox} */
+    msgBox: null,
+    /**
+     * The `div` DOM object where `msgBox` is located
+     * @name DefaultSkin#$msgBoxDiv
+     * @type {external:jQuery} */
+    $msgBoxDiv: null,
+    /*
+     * An HTML `canvas` object created in `$msgBoxDiv`
+     * @name DefaultSkin#$msgBoxDivCanvas
+     * @type {external:jQuery} */
+    $msgBoxDivCanvas: null,
     /**
      * Main panel used to display modal and non-modal dialogs
      * @name Skin#$dlgOverlay
