@@ -74,6 +74,8 @@ define([
      */
     constructor(act, ps, $div) {
       super(act, ps, $div)
+      // This kind of activity will always clean the "last project skin" setting
+      ps.lastProjectSkin = null
     }
 
     /**

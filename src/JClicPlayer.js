@@ -334,7 +334,7 @@ define([
                 alert(`Error!\n${errMsg}`)
               }).always(
                 () => this.setWaitCursor(false)
-                )
+              )
               return
             }
 
@@ -547,8 +547,12 @@ define([
           // Sets the current skin
           if (this.actPanel.skin)
             this.setSkin(this.actPanel.skin)
-          else if (this.project.skin)
+          else if (this.project.skin) {
             this.setSkin(this.project.skin)
+            this.lastProjectSkin = this.project.skin
+          }
+          else if (this.lastProjectSkin)
+            this.setSkin(this.lastProjectSkin)
           else
             this.setSkin(null)
 
@@ -1142,6 +1146,11 @@ define([
        * @name JClicPlayer#defaultSkin
        * @type {Skin} */
       defaultSkin: null,
+      /**
+       * The last skin directly specified by a {@link JClicProject}
+       * @name JClicPlayer#defaultSkin
+       * @type {Skin} */
+      lastProjectSkin: null,
       /**
        * Object containing references to realized media objects, ready to play.
        * @name JClicPlayer#activeMediaBag
