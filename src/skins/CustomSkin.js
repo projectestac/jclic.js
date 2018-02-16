@@ -125,29 +125,32 @@ define([
         pv4 = pv1 + this.options.rectangle.player.height,
         pv5 = pv0 + this.options.rectangle.frame.height,
         imgElement = this.ps.project.mediaBag.getElement(this.options.image, true),
-        box1 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv0, ph3 - ph2, pv2 - pv0)) : '',
-        box2 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv2 - pv0, ph2 - ph0, pv3 - pv2)) : '',
-        box3 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3 - ph0, pv2 - pv0, ph5 - ph3, pv3 - pv2)) : '',
-        box4 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : ''
+        box1 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv0, ph2 - ph0, pv2 - pv0)) : '',
+        box2 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv0, ph3 - ph2, pv2 - pv0)) : '',
+        box3 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv0, ph5 - ph3, pv2 - pv0)) : '',
+        box4 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv2 - pv0, ph2 - ph0, pv3 - pv2)) : '',
+        box6 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3 - ph0, pv2 - pv0, ph5 - ph3, pv3 - pv2)) : '',
+        box7 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv3 - pv0, ph2 - ph0, pv5 - pv3)) : '',
+        box8 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : '',
+        box9 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv3 - pv0, ph5 - ph3, pv5 - pv3)) : ''
 
       let css = `
 .ID .JClicCustomMainPanel {flex-grow:1;position:relative;background-color: ${Utils.checkColor(this.options.color.fill.value)};}
 .ID .JClicGridPanel {position:absolute;width:100%;height:100%;display:grid;grid-template-columns:${ph2 - ph0}px 1fr ${ph5 - ph3}px;grid-template-rows:${pv2 - pv0}px 1fr ${pv5 - pv3}px;}
-.ID .JClicCell {background-image:url(${this.options.image});background-repeat:no-repeat;}
+.ID .JClicCell {background-repeat:no-repeat;background-size:contain;}
 .ID .JClicPlayerCell {position:absolute;top:${pv1 - pv0}px;right:${ph5 - ph4}px;bottom:${pv5 - pv4}px;left:${ph1 - ph0}px;}
-.ID .JClicCell1 {background-position:-${ph0}px -${pv0}px}
-.ID .JClicCell2 {background-image:url(${box1});background-repeat:repeat-x;}
-.ID .JClicCell3 {background-position:-${ph3}px -${pv0}px}
-.ID .JClicCell4 {background-image:url(${box2});background-repeat:repeat-y;}
-.ID .JClicCell5 {background-position:-${ph2}px -${pv2}px}
-.ID .JClicCell6 {background-image:url(${box3});background-repeat:repeat-y;}
-.ID .JClicCell7 {background-position:-${ph0}px -${pv3}px}
-.ID .JClicCell8 {background-image:url(${box4});background-repeat:repeat-x;}
-.ID .JClicCell9 {background-position:-${ph3}px -${pv3}px}`
+.ID .JClicCell1 {background-image:url(${box1});}
+.ID .JClicCell2 {background-image:url(${box2});background-repeat:repeat-x;}
+.ID .JClicCell3 {background-image:url(${box3});}
+.ID .JClicCell4 {background-image:url(${box4});background-repeat:repeat-y;}
+.ID .JClicCell5 {}
+.ID .JClicCell6 {background-image:url(${box6});background-repeat:repeat-y;}
+.ID .JClicCell7 {background-image:url(${box7});}
+.ID .JClicCell8 {background-image:url(${box8});background-repeat:repeat-x;}
+.ID .JClicCell9 {background-image:url(${box9});}`
 
       let cssHalf = `
 .ID .JClicGridPanel {grid-template-columns:${Math.round((ph2 - ph0) / 2)}px 1fr ${Math.round((ph5 - ph3) / 2)}px;grid-template-rows:${Math.round((pv2 - pv0) / 2)}px 1fr ${Math.round((pv5 - pv3) / 2)}px;}
-.ID .JClicCellx {transform: scale(0.5);}
 .ID .JClicPlayerCell {top:${Math.round((pv1 - pv0) / 2)}px;right:${Math.round((ph5 - ph4) / 2)}px;bottom:${Math.round((pv5 - pv4) / 2)}px;left:${Math.round((ph1 - ph0) / 2)}px;}`
 
       if (this.options.buttons) {
@@ -178,10 +181,10 @@ define([
           const
             x = btn.point.pos.left,
             xp = x < ph2 ? `left:${x}` : `right:${ph5 - x - w}`,
-            xpHalf = x < ph2 ? `left:${Math.round(x/2)}` : `right:${Math.round((ph5 - x - w)/2)}`,
+            xpHalf = x < ph2 ? `left:${Math.round(x / 2 - w / 4)}` : `right:${Math.round((ph5 - x - w) / 2 - w / 4)}`,
             y = btn.point.pos.top,
             yp = y < pv2 ? `top:${y}` : `bottom:${pv5 - y - h}`,
-            ypHalf = y < pv2 ? `top:${Math.round(y/2)}` : `bottom:${Math.round((pv5 - y - h)/2)}`,
+            ypHalf = y < pv2 ? `top:${Math.round(y / 2 - h / 4)}` : `bottom:${Math.round((pv5 - y - h) / 2 - h / 4)}`,
             xs = btn.point.source.left,
             ys = btn.point.source.top
           css += `.ID .Btn-${k2} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${this.options.image}) !important;background-position:-${xs}px -${ys}px !important;}\n`
@@ -210,7 +213,7 @@ define([
       // TODO: Implement animation
       // TODO: Implement status messages
 
-      return `${super._getStyleSheets()}${this.mainCSS}${css}@media (max-width:${maxw}px){${cssHalf}}`
+      return `${super._getStyleSheets()}${this.mainCSS}${css}@media (max-width:${maxw}px),(max-height:${maxh}px){${cssHalf}}`
     }
 
     /**
