@@ -113,10 +113,10 @@ define([
      * @name MiniSkin#skinCSS
      * @type {string} */
     skinCSS: '\
-.SKINID {background-color:#F4F4F4;}\
-.SKINID .JClicPlayerCnt {margin:4px;}\
-.SKINID .JClicCtrlCnt {margin:0 2px 4px 2px;}\
-.SKINID .JClicMsgBox {height:25px;}'
+.ID {background-color:#F4F4F4;}\
+.ID .JClicPlayerCnt {margin:4px;}\
+.ID .JClicCtrlCnt {margin:0 2px 4px 2px;}\
+.ID .JClicMsgBox {height:25px;}'
   })
 
   // Register this class in the list of available skins

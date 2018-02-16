@@ -267,12 +267,12 @@ define([
      * @name DefaultSkin#mainCSS
      * @type {string} */
     mainCSS: '\
-.SKINID .JClicCtrlCnt {margin:0 9px 18px 9px; display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row; -webkit-align-items:center; align-items:center;}\
-.SKINID .JClicCountCnt {display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column;}\
-.SKINID .JClicMsgBox {height:60px; -webkit-flex-grow:1; flex-grow:1; background-color:lightblue;}\
-.SKINID .JClicBtn {cursor:pointer; line-height:0;}\
-.SKINID .JClicBtn:disabled {cursor:inherit; opacity:0.3;}\
-.SKINID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left}',
+.ID .JClicCtrlCnt {margin:0 9px 18px 9px; display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row; -webkit-align-items:center; align-items:center;}\
+.ID .JClicCountCnt {display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column;}\
+.ID .JClicMsgBox {height:60px; -webkit-flex-grow:1; flex-grow:1; background-color:lightblue;}\
+.ID .JClicBtn {cursor:pointer; line-height:0;}\
+.ID .JClicBtn:disabled {cursor:inherit; opacity:0.3;}\
+.ID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left}',
     /**
      * Fonts used in this skin
      * @name DefaultSkin#cssFonts

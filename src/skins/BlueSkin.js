@@ -78,7 +78,7 @@ define([
      * Styles used in this skin
      * @name BlueSkin#skinCSS
      * @type {string} */
-    skinCSS: '.SKINID {background-color:#1990FF;}'
+    skinCSS: '.ID {background-color:#1990FF;}'
   })
 
   // Register this class in the list of available skins

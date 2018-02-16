@@ -72,7 +72,7 @@ define([
       this.options = options
 
       if (!Skin.registerStyleSheet(this.skinId, ps))
-        Utils.appendStyleAtHead(this._getStyleSheets().replace(/SKINID/g, this.skinId), ps)
+        Utils.appendStyleAtHead(this._getStyleSheets().replace(/\.ID/g, `.${this.skinId}`), ps)
 
       let msg = ''
 
@@ -926,23 +926,23 @@ define([
      * @name Skin#basicCSS
      * @type {string} */
     basicCSS: '\
-.SKINID {width:100%; background-color:#3F51B5; display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column;}\
-.SKINID .JClicPlayerCnt {background-color:lightblue; margin:18px; -webkit-flex-grow:1; flex-grow:1; position:relative;}\
-.SKINID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
-.SKINID button:not(.StockBtn) {background:transparent; padding:0; border:none;}\
-.SKINID .unselectableText {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select: none;}\
-.SKINID .progressBar {width: 250px}',
+.ID {width:100%; background-color:#3F51B5; display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column;}\
+.ID .JClicPlayerCnt {background-color:lightblue; margin:18px; -webkit-flex-grow:1; flex-grow:1; position:relative;}\
+.ID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
+.ID button:not(.StockBtn) {background:transparent; padding:0; border:none;}\
+.ID .unselectableText {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select: none;}\
+.ID .progressBar {width: 250px}',
     /**
      * Waiting screen styles
      * @name Skin#waitAnimCSS
      * @type {string} */
     waitAnimCSS: '\
-.SKINID .waitPanel {display:-webkit-flex; display:flex; width:100%; height:100%; -webkit-justify-content:center; justify-content:center; -webkit-align-items:center; align-items:center;}\
-.SKINID .animImgBox {position:relative; width:300px; height:300px; max-width:80%; max-height:80%;}\
-.SKINID .animImgBox svg {position:absolute; width:100%; height:100%; animation-iteration-count:infinite; animation-timing-function:linear;}\
-.SKINID #waitImgBig {animation-duration:0.8s; animation-name:rotate-right;}\
+.ID .waitPanel {display:-webkit-flex; display:flex; width:100%; height:100%; -webkit-justify-content:center; justify-content:center; -webkit-align-items:center; align-items:center;}\
+.ID .animImgBox {position:relative; width:300px; height:300px; max-width:80%; max-height:80%;}\
+.ID .animImgBox svg {position:absolute; width:100%; height:100%; animation-iteration-count:infinite; animation-timing-function:linear;}\
+.ID #waitImgBig {animation-duration:0.8s; animation-name:rotate-right;}\
 @keyframes rotate-right {from {transform:rotate(0);} to {transform:rotate(1turn);}}\
-.SKINID #waitImgSmall {animation-duration:0.6s; animation-name:rotate-left;}\
+.ID #waitImgSmall {animation-duration:0.6s; animation-name:rotate-left;}\
 @keyframes rotate-left {from {transform:rotate(0);} to {transform:rotate(-1turn);}}',
     /**
      * Animated image displayed while loading resources
@@ -966,33 +966,33 @@ define([
      * @name Skin#reportsCSS
      * @type {string} */
     reportsCSS: '\
-.SKINID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
-.SKINID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
-.SKINID .dlgMainPanel {padding:1em 2em; max-height:calc(100vh - 8em); max-width:calc(100vw - 2em); min-width:20em; overflow:auto;}\
-.SKINID .dlgMainPanel .headTitle {font-size:2.5em; font-weight:bold; margin:auto;}\
-.SKINID .dlgMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
-.SKINID .dlgMainPanel p {font-size:1.1em; margin-bottom:0.5em;}\
-.SKINID .dlgMainPanel table {table-layout:fixed; width:40em; margin:0.5em 0 1.7em 0; border-collapse:collapse;}\
-.SKINID .dlgMainPanel select {min-width:20em; font-size:1.2em; font-family:Roboto,sans-serif; color:#757575;}\
-.SKINID .dlgMainPanel input {margin-left:1em; font-size:1.2em; font-family:Roboto,sans-serif; border-color:lightgray;}\
-.SKINID .infoHead {padding:1em 0em 0.5em;}\
-.SKINID .JCGlobalResults td {padding:0.4em; border-bottom:1px solid #b6b6b6;}\
-.SKINID .JCGlobalResults td:first-child {font-weight:600; width:14em;}\
-.SKINID .JCDetailed td,th {border-bottom:1px solid #b6b6b6; padding:0.3em 0.4em; vertical-align:top; text-align:center; overflow:hidden; text-overflow:ellipsis;}\
-.SKINID .JCDetailed thead {font-weight:600;}\
-.SKINID .JCDetailed th:first-child {width:7em;}\
-.SKINID .JCDetailed th:nth-last-child(4) {width:4em;}\
-.SKINID .JCDetailed th:nth-last-child(-n+3) {width:4.1em; text-align:right;}\
-.SKINID .JCDetailed td:nth-last-child(-n+3) {text-align:right;}\
-.SKINID .JCDetailed .ok {color:#4bae4f; font-weight:600;}\
-.SKINID .JCDetailed .no {color:#f34235; font-weight:600;}\
-.SKINID .JCDetailed tr:last-child {font-weight:bold;}\
-.SKINID .JCDetailed .incomplete {font-style:italic;}\
-.SKINID .dlgBottomPanel {height:3.5em; background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
-.SKINID .dlgBottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
-.SKINID .dlgBottomPanel button {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
-.SKINID .dlgBottomPanel button:hover {background-color:#eee; border-radius:80px;}\
-.SKINID .dlgBottomPanel button:active {background-color:#b3e5fc;}',
+.ID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
+.ID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
+.ID .dlgMainPanel {padding:1em 2em; max-height:calc(100vh - 8em); max-width:calc(100vw - 2em); min-width:20em; overflow:auto;}\
+.ID .dlgMainPanel .headTitle {font-size:2.5em; font-weight:bold; margin:auto;}\
+.ID .dlgMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
+.ID .dlgMainPanel p {font-size:1.1em; margin-bottom:0.5em;}\
+.ID .dlgMainPanel table {table-layout:fixed; width:40em; margin:0.5em 0 1.7em 0; border-collapse:collapse;}\
+.ID .dlgMainPanel select {min-width:20em; font-size:1.2em; font-family:Roboto,sans-serif; color:#757575;}\
+.ID .dlgMainPanel input {margin-left:1em; font-size:1.2em; font-family:Roboto,sans-serif; border-color:lightgray;}\
+.ID .infoHead {padding:1em 0em 0.5em;}\
+.ID .JCGlobalResults td {padding:0.4em; border-bottom:1px solid #b6b6b6;}\
+.ID .JCGlobalResults td:first-child {font-weight:600; width:14em;}\
+.ID .JCDetailed td,th {border-bottom:1px solid #b6b6b6; padding:0.3em 0.4em; vertical-align:top; text-align:center; overflow:hidden; text-overflow:ellipsis;}\
+.ID .JCDetailed thead {font-weight:600;}\
+.ID .JCDetailed th:first-child {width:7em;}\
+.ID .JCDetailed th:nth-last-child(4) {width:4em;}\
+.ID .JCDetailed th:nth-last-child(-n+3) {width:4.1em; text-align:right;}\
+.ID .JCDetailed td:nth-last-child(-n+3) {text-align:right;}\
+.ID .JCDetailed .ok {color:#4bae4f; font-weight:600;}\
+.ID .JCDetailed .no {color:#f34235; font-weight:600;}\
+.ID .JCDetailed tr:last-child {font-weight:bold;}\
+.ID .JCDetailed .incomplete {font-style:italic;}\
+.ID .dlgBottomPanel {height:3.5em; background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
+.ID .dlgBottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
+.ID .dlgBottomPanel button {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
+.ID .dlgBottomPanel button:hover {background-color:#eee; border-radius:80px;}\
+.ID .dlgBottomPanel button:active {background-color:#b3e5fc;}',
     //
     // Icons used in buttons:
     //

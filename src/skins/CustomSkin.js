@@ -73,7 +73,7 @@ define([
         Object.keys(options.buttons.button).forEach(k => {
           const k2 = k === 'about' ? 'reports' : k
           const msg = ps.getMsg(this.msgKeys[k2] || k2)
-          this.buttons[k2] = $('<button/>', { class: `JCBtn JClicBtn-${k2}`, title: msg, 'aria-label': msg, disabled: typeof this.msgKeys[k2] === 'undefined' })
+          this.buttons[k2] = $('<button/>', { class: `JClicBtn Btn-${k2}`, title: msg, 'aria-label': msg, disabled: typeof this.msgKeys[k2] === 'undefined' })
             .on('click', evt => { if (ps.actions[k2]) ps.actions[k2].processEvent(evt) })
           this.$mainPanel.append(this.buttons[k2])
         })
@@ -98,7 +98,7 @@ define([
      * @param {boolean} status - `true` to make main controls navigable, `false` otherwise
      */
     enableMainButtons(status) {
-      this.$mainPanel.find('.JCBtn').attr('tabindex', status ? '0' : '-1')
+      this.$mainPanel.find('.JClicBtn').attr('tabindex', status ? '0' : '-1')
     }
 
     /**
@@ -128,19 +128,19 @@ define([
         box3 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3 - ph0, pv2 - pv0, ph5 - ph3, pv3 - pv2)) : '',
         box4 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : '',
         skinLayout = `
-.SKINID .JClicCustomMainPanel {flex-grow:1;position:relative;}
-.SKINID .JClicGridPanel {position:absolute;width:100%;height:100%;display:grid;grid-template-columns:${ph2 - ph0}px 1fr ${ph5 - ph3}px;grid-template-rows:${pv2 - pv0}px 1fr ${pv5 - pv3}px;}
-.SKINID .JClicCell {background:url(${this.options.image});background-repeat:no-repeat;background-color: ${Utils.checkColor(this.options.color.fill.value)}}
-.SKINID .JClicPlayerCell {position:absolute;top:${pv1 - pv0}px;right:${ph5 - ph4}px;bottom:${pv5 - pv4}px;left:${ph1 - ph0}px;}
-.SKINID .JClicCell1 {background-position:-${ph0}px -${pv0}px}
-.SKINID .JClicCell2 {background-image:url(${box1});background-repeat:repeat-x;}
-.SKINID .JClicCell3 {background-position:-${ph3}px -${pv0}px}
-.SKINID .JClicCell4 {background-image:url(${box2});background-repeat:repeat-y;}
-.SKINID .JClicCell5 {background-position:-${ph2}px -${pv2}px}
-.SKINID .JClicCell6 {background-image:url(${box3});background-repeat:repeat-y;}
-.SKINID .JClicCell7 {background-position:-${ph0}px -${pv3}px}
-.SKINID .JClicCell8 {background-image:url(${box4});background-repeat:repeat-x;}
-.SKINID .JClicCell9 {background-position:-${ph3}px -${pv3}px}`
+.ID .JClicCustomMainPanel {flex-grow:1;position:relative;}
+.ID .JClicGridPanel {position:absolute;width:100%;height:100%;display:grid;grid-template-columns:${ph2 - ph0}px 1fr ${ph5 - ph3}px;grid-template-rows:${pv2 - pv0}px 1fr ${pv5 - pv3}px;}
+.ID .JClicCell {background:url(${this.options.image});background-repeat:no-repeat;background-color: ${Utils.checkColor(this.options.color.fill.value)}}
+.ID .JClicPlayerCell {position:absolute;top:${pv1 - pv0}px;right:${ph5 - ph4}px;bottom:${pv5 - pv4}px;left:${ph1 - ph0}px;}
+.ID .JClicCell1 {background-position:-${ph0}px -${pv0}px}
+.ID .JClicCell2 {background-image:url(${box1});background-repeat:repeat-x;}
+.ID .JClicCell3 {background-position:-${ph3}px -${pv0}px}
+.ID .JClicCell4 {background-image:url(${box2});background-repeat:repeat-y;}
+.ID .JClicCell5 {background-position:-${ph2}px -${pv2}px}
+.ID .JClicCell6 {background-image:url(${box3});background-repeat:repeat-y;}
+.ID .JClicCell7 {background-position:-${ph0}px -${pv3}px}
+.ID .JClicCell8 {background-image:url(${box4});background-repeat:repeat-x;}
+.ID .JClicCell9 {background-position:-${ph3}px -${pv3}px}`
 
       let btStyles = ''
 
@@ -175,13 +175,13 @@ define([
             yp = y < pv2 ? `top:${y}` : `bottom:${pv5 - y - h}`,
             xs = btn.point.source.left,
             ys = btn.point.source.top
-          btStyles += `.SKINID .JClicBtn-${k2} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${this.options.image}) !important;background-position:-${xs}px -${ys}px !important;}`
+          btStyles += `.ID .Btn-${k2} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${this.options.image}) !important;background-position:-${xs}px -${ys}px !important;}\n`
           if (offset.active)
-            btStyles += `.SKINID .JClicBtn-${k2}:active {background-position:-${xs + offset.active.right}px -${ys + offset.active.down}px !important;}`
+            btStyles += `.ID .Btn-${k2}:active {background-position:-${xs + offset.active.right}px -${ys + offset.active.down}px !important;}\n`
           if (offset.over)
-            btStyles += `.SKINID .JClicBtn-${k2}:hover {background-position:-${xs + offset.over.right}px -${ys + offset.over.down}px !important;}`
+            btStyles += `.ID .Btn-${k2}:hover {background-position:-${xs + offset.over.right}px -${ys + offset.over.down}px !important;}\n`
           if (offset.disabled)
-            btStyles += `.SKINID .JClicBtn-${k2}:disabled {background-position:-${xs + offset.disabled.right}px -${ys + offset.disabled.down}px !important;}`
+            btStyles += `.ID .Btn-${k2}:disabled {background-position:-${xs + offset.disabled.right}px -${ys + offset.disabled.down}px !important;}\n`
         })
       }
 
@@ -191,7 +191,7 @@ define([
           left = ph0 + bx.left,
           right = ph5 - bx.width - bx.left - ph0,
           tb = bx.top < pv2 ? `top:${bx.top}` : `bottom:${pv5 - bx.height - bx.top}`
-        btStyles += `.SKINID .JClicMsgBox {position:absolute;left:${left}px;right:${right}px;height:${bx.height}px;${tb}px;}`
+        btStyles += `.ID .JClicMsgBox {position:absolute;left:${left}px;right:${right}px;height:${bx.height}px;${tb}px;}`
       }
 
       // TODO: Implement counters
@@ -227,7 +227,9 @@ define([
      * @name CustomSkin#skinCSS
      * @override
      * @type {string} */
-    mainCSS: '.SKINID .JClicPlayerCnt {margin:0;}',
+    mainCSS: '\
+.ID .JClicPlayerCnt {margin:0;}\
+.ID .JClicBtn:focus {outline:0}',
     /**
      * Key ids of currently supported buttons, associated with its helper literal
      * @name CustomSkin#msgKeys

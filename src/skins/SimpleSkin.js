@@ -84,10 +84,10 @@ define([
      * @name SimpleSkin#skinCSS
      * @type {string} */
     skinCSS: '\
-.SKINID {background-color:#888888;}\
-.SKINID .JClicCtrlCnt {margin:9px;}\
-.SKINID .JClicPlayerCnt {margin:0px 18px 18px;}\
-.SKINID .JClicMsgBox {flex-grow:0; margin:0 18px 18px 18px;}'
+.ID {background-color:#888888;}\
+.ID .JClicCtrlCnt {margin:9px;}\
+.ID .JClicPlayerCnt {margin:0px 18px 18px;}\
+.ID .JClicMsgBox {flex-grow:0; margin:0 18px 18px 18px;}'
   })
 
   // Register this class in the list of available skins

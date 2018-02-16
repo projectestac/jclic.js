@@ -79,7 +79,7 @@ define([
      * @name EmptySkin#skinCSS
      * @override
      * @type {string} */
-    mainCSS: '.SKINID .JClicPlayerCnt {margin:0;}'
+    mainCSS: '.ID .JClicPlayerCnt {margin:0;}'
   })
 
   // Register this class in the list of available skins

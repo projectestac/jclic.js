@@ -94,7 +94,7 @@ define([
      * Styles used in this skin
      * @name GreenSkin#skinCSS
      * @type {string} */
-    skinCSS: '.SKINID {background-color:#4AFF19;}'
+    skinCSS: '.ID {background-color:#4AFF19;}'
   })
 
   // Register this class in the list of available skins

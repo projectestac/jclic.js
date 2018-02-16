@@ -79,7 +79,7 @@ define([
      * Styles used in this skin
      * @name OrangeSkin#skinCSS
      * @type {string} */
-    skinCSS: '.SKINID {background-color:#FF8B19;}'
+    skinCSS: '.ID {background-color:#FF8B19;}'
   })
 
   // Register this class in the list of available skins
