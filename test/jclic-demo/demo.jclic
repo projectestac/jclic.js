@@ -3162,6 +3162,7 @@
     <window bgColor="0xFFFFFF" border="false">
      <size width="540" height="150" />
     </window>
+    <skin file="scratch.xml" />
    </settings>
    <document>
     <style name="default" italic="false" bold="false" family="Arial" foreground="0x004080" size="17" background="0xFFFFFF" tabWidth="16" />
@@ -5280,6 +5281,8 @@
   <media name="pop.mp3" file="pop.mp3" />
   <media name="whistledown.mp3" file="whistledown.mp3" />
   <media name="whistleup.mp3" file="whistleup.mp3" />
+  <media name="scratch.xml" file="scratch.xml" />
+  <media name="scratch.png" file="scratch.png" />
  </mediaBag>
 </JClicProject>
 

@@ -616,7 +616,7 @@ define([
       // Resize player
       this.player.doLayout()
 
-      // Build canvas at the end of current thread, thus avoiding
+      // Build ths canvas at the end of current thread, thus avoiding
       // invalid sizes due to incomplete layout of DOM objects
       if (this.$msgBoxDiv)
         window.setTimeout(() => {
@@ -675,6 +675,28 @@ define([
     }
 
     /**
+     * Method used to notify this skin that a specific action has changed its enabled/disabled status
+     * @param {AWT.Action} _action - The action originating the change event
+     */
+    actionStatusChanged(act) {
+      if (act.name && this.buttons[act.name])
+        this.setEnabled(this.buttons[act.name], act.enabled)
+    }
+
+    /**
+     * Enables or disables an object
+     * @param {external:jQuery} $object - A JQuery DOM element
+     * @override
+     * @param {boolean} enabled
+     */
+    setEnabled($object, enabled) {
+      if ($object && enabled)
+        $object.removeAttr('disabled')
+      else if ($object)
+        $object.attr('disabled', true)
+    }
+
+    /**
      * Compares two Skin objects
      * @param {Skin} skin - The Skin to compare against this
      * @returns {boolean} - `true` if both skins are equivalent.
@@ -694,14 +716,6 @@ define([
       return null
     }
 
-    /**
-     *
-     * Method used to notify this skin that a specific action has changed its enabled/disabled status
-     * @param {AWT.Action} _action - The action originating the change event
-     */
-    actionStatusChanged(_action) {
-      // To be implemented in subclasses
-    }
   }
 
   /**

@@ -198,7 +198,6 @@ define([
      * @override
      */
     doLayout() {
-
       // Call method on ancestor
       super.doLayout()
 
@@ -218,38 +217,12 @@ define([
     }
 
     /**
-     * Method used to notify this skin that a specific action has changed its enabled/disabled status
-     * @param {AWT.Action} act - The action originating the change event
-     */
-    actionStatusChanged(act) {
-      switch (act.name) {
-        case 'next':
-          this.setEnabled(this.buttons.next, act.enabled)
-          break
-        case 'prev':
-          this.setEnabled(this.buttons.prev, act.enabled)
-          break
-        default:
-          break
-      }
-    }
-
-    /**
      * Enables or disables the `tabindex` attribute of the main buttons. Useful when a modal dialog
      * overlay is active, to avoid direct access to controls not related with the dialog.
      * @param {boolean} status - `true` to make main controls navigable, `false` otherwise
      */
     enableMainButtons(status) {
       this.$ctrlCnt.find('.JClicBtn,.JClicCountCnt').attr('tabindex', status ? '0' : '-1')
-    }
-
-    /**
-     * Enables or disables an object changing its opacity
-     * @param {external:jQuery} $object - A JQuery DOM element
-     * @param {boolean} enabled
-     */
-    setEnabled($object, enabled) {
-      $object.css('opacity', enabled ? 1.0 : 0.3).prop('disabled', !enabled)
     }
   }
 
@@ -298,6 +271,7 @@ define([
 .SKINID .JClicCountCnt {display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column;}\
 .SKINID .JClicMsgBox {height:60px; -webkit-flex-grow:1; flex-grow:1; background-color:lightblue;}\
 .SKINID .JClicBtn {cursor:pointer; line-height:0;}\
+.SKINID .JClicBtn:disabled {cursor:inherit; opacity:0.3;}\
 .SKINID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left}',
     /**
      * Fonts used in this skin

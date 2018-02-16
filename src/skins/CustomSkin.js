@@ -73,7 +73,7 @@ define([
         Object.keys(options.buttons.button).forEach(k => {
           const k2 = k === 'about' ? 'reports' : k
           const msg = ps.getMsg(this.msgKeys[k2] || k2)
-          this.buttons[k2] = $('<button/>', { class: `JClicBtn-${k2}`, title: msg, 'aria-label': msg, disabled: typeof this.msgKeys[k2] === 'undefined' })
+          this.buttons[k2] = $('<button/>', { class: `JCBtn JClicBtn-${k2}`, title: msg, 'aria-label': msg, disabled: typeof this.msgKeys[k2] === 'undefined' })
             .on('click', evt => { if (ps.actions[k2]) ps.actions[k2].processEvent(evt) })
           this.$mainPanel.append(this.buttons[k2])
         })
@@ -90,7 +90,15 @@ define([
           })
         this.$mainPanel.append(this.$msgBoxDiv)
       }
+    }
 
+    /**
+     * Enables or disables the `tabindex` attribute of the main buttons. Useful when a modal dialog
+     * overlay is active, to avoid direct access to controls not related with the dialog.
+     * @param {boolean} status - `true` to make main controls navigable, `false` otherwise
+     */
+    enableMainButtons(status) {
+      this.$mainPanel.find('.JCBtn').attr('tabindex', status ? '0' : '-1')
     }
 
     /**
@@ -118,9 +126,8 @@ define([
         box1 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv0, ph3 - ph2, pv2 - pv0)) : '',
         box2 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv2 - pv0, ph2 - ph0, pv3 - pv2)) : '',
         box3 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3 - ph0, pv2 - pv0, ph5 - ph3, pv3 - pv2)) : '',
-        box4 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : ''
-
-      const skinLayout = `
+        box4 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : '',
+        skinLayout = `
 .SKINID .JClicCustomMainPanel {flex-grow:1;position:relative;}
 .SKINID .JClicGridPanel {position:absolute;width:100%;height:100%;display:grid;grid-template-columns:${ph2 - ph0}px 1fr ${ph5 - ph3}px;grid-template-rows:${pv2 - pv0}px 1fr ${pv5 - pv3}px;}
 .SKINID .JClicCell {background:url(${this.options.image});background-repeat:no-repeat;background-color: ${Utils.checkColor(this.options.color.fill.value)}}
@@ -136,6 +143,7 @@ define([
 .SKINID .JClicCell9 {background-position:-${ph3}px -${pv3}px}`
 
       let btStyles = ''
+
       if (this.options.buttons) {
         const bt = this.options.buttons
         let wBase = 30, hBase = 30, offsetBase = {}
@@ -177,17 +185,20 @@ define([
         })
       }
 
-      let bMsgBox = ''
       if (this.options.rectangle.messages) {
         const
           bx = this.options.rectangle.messages,
           left = ph0 + bx.left,
           right = ph5 - bx.width - bx.left - ph0,
           tb = bx.top < pv2 ? `top:${bx.top}` : `bottom:${pv5 - bx.height - bx.top}`
-        bMsgBox = `.SKINID .JClicMsgBox {position:absolute;left:${left}px;right:${right}px;height:${bx.height}px;${tb}px;}`
+        btStyles += `.SKINID .JClicMsgBox {position:absolute;left:${left}px;right:${right}px;height:${bx.height}px;${tb}px;}`
       }
 
-      return `${super._getStyleSheets()}${this.mainCSS}${skinLayout}${btStyles}${bMsgBox}`
+      // TODO: Implement counters
+      // TODO: Implement animation
+      // TODO: Implement status messages
+
+      return `${super._getStyleSheets()}${this.mainCSS}${skinLayout}${btStyles}`
     }
 
     /**
@@ -229,6 +240,7 @@ define([
       reports: 'Reports',
       // TODO: Implement audio on/off!
       audio: 'Audio on/off',
+      reset: 'Reset activity',      
     },
   })
 
