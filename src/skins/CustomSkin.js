@@ -110,6 +110,8 @@ define([
      */
     _getStyleSheets() {
       const
+        maxw = this.options.dimension.preferredSize.width,
+        maxh = this.options.dimension.preferredSize.height,
         ph0 = this.options.rectangle.frame.left,
         ph1 = ph0 + this.options.rectangle.player.left,
         ph2 = ph0 + this.options.slicer.left,
@@ -126,11 +128,12 @@ define([
         box1 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv0, ph3 - ph2, pv2 - pv0)) : '',
         box2 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv2 - pv0, ph2 - ph0, pv3 - pv2)) : '',
         box3 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3 - ph0, pv2 - pv0, ph5 - ph3, pv3 - pv2)) : '',
-        box4 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : '',
-        skinLayout = `
-.ID .JClicCustomMainPanel {flex-grow:1;position:relative;}
+        box4 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : ''
+
+      let css = `
+.ID .JClicCustomMainPanel {flex-grow:1;position:relative;background-color: ${Utils.checkColor(this.options.color.fill.value)};}
 .ID .JClicGridPanel {position:absolute;width:100%;height:100%;display:grid;grid-template-columns:${ph2 - ph0}px 1fr ${ph5 - ph3}px;grid-template-rows:${pv2 - pv0}px 1fr ${pv5 - pv3}px;}
-.ID .JClicCell {background:url(${this.options.image});background-repeat:no-repeat;background-color: ${Utils.checkColor(this.options.color.fill.value)}}
+.ID .JClicCell {background-image:url(${this.options.image});background-repeat:no-repeat;}
 .ID .JClicPlayerCell {position:absolute;top:${pv1 - pv0}px;right:${ph5 - ph4}px;bottom:${pv5 - pv4}px;left:${ph1 - ph0}px;}
 .ID .JClicCell1 {background-position:-${ph0}px -${pv0}px}
 .ID .JClicCell2 {background-image:url(${box1});background-repeat:repeat-x;}
@@ -142,9 +145,13 @@ define([
 .ID .JClicCell8 {background-image:url(${box4});background-repeat:repeat-x;}
 .ID .JClicCell9 {background-position:-${ph3}px -${pv3}px}`
 
-      let btStyles = ''
+      let cssHalf = `
+.ID .JClicGridPanel {grid-template-columns:${Math.round((ph2 - ph0) / 2)}px 1fr ${Math.round((ph5 - ph3) / 2)}px;grid-template-rows:${Math.round((pv2 - pv0) / 2)}px 1fr ${Math.round((pv5 - pv3) / 2)}px;}
+.ID .JClicCellx {transform: scale(0.5);}
+.ID .JClicPlayerCell {top:${Math.round((pv1 - pv0) / 2)}px;right:${Math.round((ph5 - ph4) / 2)}px;bottom:${Math.round((pv5 - pv4) / 2)}px;left:${Math.round((ph1 - ph0) / 2)}px;}`
 
       if (this.options.buttons) {
+        cssHalf += '.ID .JClicBtn {transform: scale(0.5);}'
         const bt = this.options.buttons
         let wBase = 30, hBase = 30, offsetBase = {}
         if (bt.settings) {
@@ -171,17 +178,20 @@ define([
           const
             x = btn.point.pos.left,
             xp = x < ph2 ? `left:${x}` : `right:${ph5 - x - w}`,
+            xpHalf = x < ph2 ? `left:${Math.round(x/2)}` : `right:${Math.round((ph5 - x - w)/2)}`,
             y = btn.point.pos.top,
             yp = y < pv2 ? `top:${y}` : `bottom:${pv5 - y - h}`,
+            ypHalf = y < pv2 ? `top:${Math.round(y/2)}` : `bottom:${Math.round((pv5 - y - h)/2)}`,
             xs = btn.point.source.left,
             ys = btn.point.source.top
-          btStyles += `.ID .Btn-${k2} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${this.options.image}) !important;background-position:-${xs}px -${ys}px !important;}\n`
+          css += `.ID .Btn-${k2} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${this.options.image}) !important;background-position:-${xs}px -${ys}px !important;}\n`
+          cssHalf += `.ID .Btn-${k2} {${xpHalf}px;${ypHalf}px;}\n`
           if (offset.active)
-            btStyles += `.ID .Btn-${k2}:active {background-position:-${xs + offset.active.right}px -${ys + offset.active.down}px !important;}\n`
+            css += `.ID .Btn-${k2}:active {background-position:-${xs + offset.active.right}px -${ys + offset.active.down}px !important;}\n`
           if (offset.over)
-            btStyles += `.ID .Btn-${k2}:hover {background-position:-${xs + offset.over.right}px -${ys + offset.over.down}px !important;}\n`
+            css += `.ID .Btn-${k2}:hover {background-position:-${xs + offset.over.right}px -${ys + offset.over.down}px !important;}\n`
           if (offset.disabled)
-            btStyles += `.ID .Btn-${k2}:disabled {background-position:-${xs + offset.disabled.right}px -${ys + offset.disabled.down}px !important;}\n`
+            css += `.ID .Btn-${k2}:disabled {background-position:-${xs + offset.disabled.right}px -${ys + offset.disabled.down}px !important;}\n`
         })
       }
 
@@ -190,15 +200,17 @@ define([
           bx = this.options.rectangle.messages,
           left = ph0 + bx.left,
           right = ph5 - bx.width - bx.left - ph0,
-          tb = bx.top < pv2 ? `top:${bx.top}` : `bottom:${pv5 - bx.height - bx.top}`
-        btStyles += `.ID .JClicMsgBox {position:absolute;left:${left}px;right:${right}px;height:${bx.height}px;${tb}px;}`
+          tb = bx.top < pv2 ? `top:${bx.top}` : `bottom:${pv5 - bx.height - bx.top}`,
+          tbHalf = bx.top < pv2 ? `top:${Math.round(bx.top / 2)}` : `bottom:${Math.round((pv5 - bx.height - bx.top) / 2)}`
+        css += `.ID .JClicMsgBox {position:absolute;left:${left}px;right:${right}px;height:${bx.height}px;${tb}px;}`
+        cssHalf += `.ID .JClicMsgBox {left:${Math.round(left / 2)}px;right:${Math.round(right / 2)}px;height:${Math.round(bx.height / 2)}px;${tbHalf}px;}`
       }
 
       // TODO: Implement counters
       // TODO: Implement animation
       // TODO: Implement status messages
 
-      return `${super._getStyleSheets()}${this.mainCSS}${skinLayout}${btStyles}`
+      return `${super._getStyleSheets()}${this.mainCSS}${css}@media (max-width:${maxw}px){${cssHalf}}`
     }
 
     /**
@@ -242,7 +254,7 @@ define([
       reports: 'Reports',
       // TODO: Implement audio on/off!
       audio: 'Audio on/off',
-      reset: 'Reset activity',      
+      reset: 'Reset activity',
     },
   })
 
