@@ -63,12 +63,12 @@ define([
 
     /**
      * Returns the CSS styles used by this skin. This method should be called only from
-     * `Skin` constructor, and overridden by subclasses if needed.
-     * @override
+     * the `Skin` constructor, and overridded by subclasses if needed.
+     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
      * @returns {string}
      */
-    _getStyleSheets() {
-      return super._getStyleSheets() + this.skinCSS
+    _getStyleSheets(media = 'default') {
+      return `${super._getStyleSheets(media)}${media === 'default' ? this.skinCSS : media === 'half' ? this.skinCSSHalf : media === 'twoThirds' ? this.skinCSSTwoThirds : ''}`
     }
   }
 
@@ -87,7 +87,15 @@ define([
 .ID {background-color:#888888;}\
 .ID .JClicCtrlCnt {margin:9px;}\
 .ID .JClicPlayerCnt {margin:0px 18px 18px;}\
-.ID .JClicMsgBox {flex-grow:0; margin:0 18px 18px 18px;}'
+.ID .JClicMsgBox {flex-grow:0; margin:0 18px 18px 18px;}',
+    skinCSSHalf: '\
+.ID .JClicCtrlCnt {margin:4px;}\
+.ID .JClicPlayerCnt {margin:0px 9px 9px;}\
+.ID .JClicMsgBox {margin:0 9px 9px 9px;}',
+    skinCSSTwoThirds: '\
+.ID .JClicCtrlCnt {margin:6px;}\
+.ID .JClicPlayerCnt {margin:0px 12px 12px;}\
+.ID .JClicMsgBox {margin:0 12px 12px 12px;}',
   })
 
   // Register this class in the list of available skins

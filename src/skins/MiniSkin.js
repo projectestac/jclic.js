@@ -59,12 +59,12 @@ define([
 
     /**
      * Returns the CSS styles used by this skin. This method should be called only from
-     * `Skin` constructor, and overridden by subclasses if needed.
-     * @override
+     * the `Skin` constructor, and overridded by subclasses if needed.
+     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
      * @returns {string}
      */
-    _getStyleSheets() {
-      return super._getStyleSheets() + this.skinCSS
+    _getStyleSheets(media = 'default') {
+      return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '')
     }
   }
 
@@ -116,7 +116,21 @@ define([
 .ID {background-color:#F4F4F4;}\
 .ID .JClicPlayerCnt {margin:4px;}\
 .ID .JClicCtrlCnt {margin:0 2px 4px 2px;}\
-.ID .JClicMsgBox {height:25px;}'
+.ID .JClicMsgBox {height:25px;}',
+    /**
+     * Styles used in this skin, sized to half its regular size.
+     * (_null_ here because MiniSkin it's already very small)
+     * @name MiniSkin#mainCSSHalf
+     * @override
+     * @type {string} */
+    mainCSSHalf: '',
+    /**
+     * Styles used in this skin, sized to two thirds of its regular size
+     * (_null_ here because MiniSkin it's already very small)
+     * @name MiniSkin#mainCSSTwoThirds
+     * @override
+     * @type {string} */
+    mainCSSTwoThirds: '',
   })
 
   // Register this class in the list of available skins

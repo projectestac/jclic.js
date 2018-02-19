@@ -71,8 +71,16 @@ define([
         this.name = name
       this.options = options
 
-      if (!Skin.registerStyleSheet(this.skinId, ps))
-        Utils.appendStyleAtHead(this._getStyleSheets().replace(/\.ID/g, `.${this.skinId}`), ps)
+      if (!Skin.registerStyleSheet(this.skinId, ps)) {
+        let css = this._getStyleSheets('default')
+        let twoThirds = this._getStyleSheets('twoThirds')
+        if (twoThirds.length > 0)
+          css += ` @media (max-width:${this.twoThirdsMedia.width}px),(max-height:${this.twoThirdsMedia.height}px){${twoThirds}}`
+        let half = this._getStyleSheets('half')
+        if (half.length > 0)
+          css += ` @media (max-width:${this.halfMedia.width}px),(max-height:${this.halfMedia.height}px){${half}}`
+        Utils.appendStyleAtHead(css.replace(/\.ID/g, `.${this.skinId}`), ps)
+      }
 
       let msg = ''
 
@@ -249,7 +257,10 @@ define([
         if (mbe && mbe.data)
           options = Object.assign({}, options, mbe.data)
 
-        if (options.class === 'edu.xtec.jclic.skins.BasicSkin')
+        if (options.class === 'edu.xtec.jclic.skins.BasicSkin'
+          && options.image
+          && ps.project.mediaBag.getElement(options.image, false)
+          && ps.project.mediaBag.getElement(options.image, false).data)
           cl = Skin.CLASSES.custom
         else {
           Utils.log('warn', `Unknown skin class: ${skinName}`)
@@ -264,10 +275,11 @@ define([
     /**
      * Returns the CSS styles used by this skin. This method should be called only from
      * the `Skin` constructor, and overridded by subclasses if needed.
+     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
      * @returns {string}
      */
-    _getStyleSheets() {
-      return this.basicCSS + this.waitAnimCSS + this.reportsCSS
+    _getStyleSheets(media = 'default') {
+      return media === 'default' ? (this.basicCSS + this.waitAnimCSS + this.reportsCSS) : ''
     }
 
     /**
@@ -1026,7 +1038,17 @@ define([
 <path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1998 519 3 11 999-266 999-266" fill="#f89c0e"/>\
 <path d="m357 2850l1000-268-267-992-1000 266 267 994z" fill="none" stroke="#86882b" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\n\
 <path d="m357 2850l1000-268-267-992-1000 266 267 994" fill="#d9e70c"/>\n\
-</g></svg>'
+</g></svg>',
+    /**
+     * Screen sizes (width and height) below which will half sized elements will be used
+     * @name DefaultSkin#halfMedia
+     * @type {object} */
+    halfMedia: { width: 376, height: 282 },
+    /**
+     * Screen sizes (width and height) below which will two-thirds sized elements will be used
+     * @name DefaultSkin#twoThirdsMedia
+     * @type {object} */
+    twoThirdsMedia: { width: 420, height: 315 },
   })
 
   return Skin

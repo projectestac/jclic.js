@@ -185,12 +185,12 @@ define([
 
     /**
      * Returns the CSS styles used by this skin. This method should be called only from
-     * `Skin` constructor, and overridden by subclasses if needed.
-     * @override
+     * the `Skin` constructor, and overridded by subclasses if needed.
+     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
      * @returns {string}
      */
-    _getStyleSheets() {
-      return super._getStyleSheets() + this.mainCSS
+    _getStyleSheets(media = 'default') {
+      return `${super._getStyleSheets(media)}${media === 'default' ? this.mainCSS : media === 'half' ? this.mainCSSHalf : media === 'twoThirds' ? this.mainCSSTwoThirds : ''}`
     }
 
     /**
@@ -273,6 +273,26 @@ define([
 .ID .JClicBtn {cursor:pointer; line-height:0;}\
 .ID .JClicBtn:disabled {cursor:inherit; opacity:0.3;}\
 .ID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left}',
+    /**
+     * Styles used in this skin, sized to half its regular size
+     * @name DefaultSkin#mainCSSHalf
+     * @type {string} */
+    mainCSSHalf: '\
+.ID .JClicPlayerCnt {margin:9px;}\
+.ID .JClicCtrlCnt {margin:0 4px 9px 4px;}\
+.ID .JClicCtrlCnt button svg,img {width:18px; height:18px;}\
+.ID .JClicMsgBox {height:30px;}\
+.ID .JClicCounter {width:20px; height:10px; margin-left:-15px; transform:scale(0.5);}',
+    /**
+     * Styles used in this skin, sized to two thirds of its regular size
+     * @name DefaultSkin#mainCSSTwoThirds
+     * @type {string} */
+    mainCSSTwoThirds: '\
+.ID .JClicPlayerCnt {margin:12px;}\
+.ID .JClicCtrlCnt {margin: 0 6px 12px 6px;}\
+.ID .JClicCtrlCnt button svg,img {width:24px; height:24px;}\
+.ID .JClicMsgBox {height:40px;}\
+.ID .JClicCounter {width:27px; height:13px; margin-left:-10px; transform:scale(0.666);}',
     /**
      * Fonts used in this skin
      * @name DefaultSkin#cssFonts
@@ -387,7 +407,7 @@ define([
      * @type {string} */
     actionsIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">\
 <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>\
-</svg>'
+</svg>',
   })
 
   // Register this class in the list of available skins

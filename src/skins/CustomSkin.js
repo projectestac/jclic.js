@@ -102,16 +102,23 @@ define([
     }
 
     /**
-     *
      * Returns the CSS styles used by this skin. This method should be called only from
-     * `Skin` constructor, and overridden by subclasses if needed.
-     * @override
+     * the `Skin` constructor, and overridded by subclasses if needed.
+     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
      * @returns {string}
      */
-    _getStyleSheets() {
+    _getStyleSheets(media = 'default') {
       const
         maxw = this.options.dimension.preferredSize.width,
-        maxh = this.options.dimension.preferredSize.height,
+        maxh = this.options.dimension.preferredSize.height
+
+      this.twoThirdsMedia = { width: maxw, height: maxh }
+      this.halfMedia = {
+        width: Math.round(2 * maxw / 3),
+        height: Math.round(2 * maxh / 3)
+      }
+      
+      const
         ph0 = this.options.rectangle.frame.left,
         ph1 = ph0 + this.options.rectangle.player.left,
         ph2 = ph0 + this.options.slicer.left,
@@ -153,8 +160,13 @@ define([
 .ID .JClicGridPanel {grid-template-columns:${Math.round((ph2 - ph0) / 2)}px 1fr ${Math.round((ph5 - ph3) / 2)}px;grid-template-rows:${Math.round((pv2 - pv0) / 2)}px 1fr ${Math.round((pv5 - pv3) / 2)}px;}
 .ID .JClicPlayerCell {top:${Math.round((pv1 - pv0) / 2)}px;right:${Math.round((ph5 - ph4) / 2)}px;bottom:${Math.round((pv5 - pv4) / 2)}px;left:${Math.round((ph1 - ph0) / 2)}px;}`
 
+      let cssTwoThirds = `
+.ID .JClicGridPanel {grid-template-columns:${Math.round(2 * (ph2 - ph0) / 3)}px 1fr ${Math.round(2 * (ph5 - ph3) / 3)}px;grid-template-rows:${Math.round(2 * (pv2 - pv0) / 3)}px 1fr ${Math.round(2 * (pv5 - pv3) / 3)}px;}
+.ID .JClicPlayerCell {top:${Math.round(2 * (pv1 - pv0) / 3)}px;right:${Math.round(2 * (ph5 - ph4) / 3)}px;bottom:${Math.round(2 * (pv5 - pv4) / 3)}px;left:${Math.round(2 * (ph1 - ph0) / 3)}px;}`
+
       if (this.options.buttons) {
         cssHalf += '.ID .JClicBtn {transform: scale(0.5);}'
+        cssTwoThirds += '.ID .JClicBtn {transform: scale(0.666);}'
         const bt = this.options.buttons
         let wBase = 30, hBase = 30, offsetBase = {}
         if (bt.settings) {
@@ -182,13 +194,16 @@ define([
             x = btn.point.pos.left,
             xp = x < ph2 ? `left:${x}` : `right:${ph5 - x - w}`,
             xpHalf = x < ph2 ? `left:${Math.round(x / 2 - w / 4)}` : `right:${Math.round((ph5 - x - w) / 2 - w / 4)}`,
+            xpTwoThirds = x < ph2 ? `left:${Math.round(2 * x / 3 - w / 6)}` : `right:${Math.round(2 * (ph5 - x - w) / 3 - w / 6)}`,
             y = btn.point.pos.top,
             yp = y < pv2 ? `top:${y}` : `bottom:${pv5 - y - h}`,
             ypHalf = y < pv2 ? `top:${Math.round(y / 2 - h / 4)}` : `bottom:${Math.round((pv5 - y - h) / 2 - h / 4)}`,
+            ypTwoThirds = y < pv2 ? `top:${Math.round(2 * y / 3 - h / 6)}` : `bottom:${Math.round(2 * (pv5 - y - h) / 3 - h / 6)}`,
             xs = btn.point.source.left,
             ys = btn.point.source.top
           css += `.ID .Btn-${k2} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${this.options.image}) !important;background-position:-${xs}px -${ys}px !important;}\n`
           cssHalf += `.ID .Btn-${k2} {${xpHalf}px;${ypHalf}px;}\n`
+          cssTwoThirds += `.ID .Btn-${k2} {${xpTwoThirds}px;${ypTwoThirds}px;}\n`
           if (offset.active)
             css += `.ID .Btn-${k2}:active {background-position:-${xs + offset.active.right}px -${ys + offset.active.down}px !important;}\n`
           if (offset.over)
@@ -204,16 +219,19 @@ define([
           left = ph0 + bx.left,
           right = ph5 - bx.width - bx.left - ph0,
           tb = bx.top < pv2 ? `top:${bx.top}` : `bottom:${pv5 - bx.height - bx.top}`,
-          tbHalf = bx.top < pv2 ? `top:${Math.round(bx.top / 2)}` : `bottom:${Math.round((pv5 - bx.height - bx.top) / 2)}`
+          tbHalf = bx.top < pv2 ? `top:${Math.round(bx.top / 2)}` : `bottom:${Math.round((pv5 - bx.height - bx.top) / 2)}`,
+          tbTwoThirds = bx.top < pv2 ? `top:${Math.round(2 * bx.top / 3)}` : `bottom:${Math.round(2 * (pv5 - bx.height - bx.top) / 3)}`
+
         css += `.ID .JClicMsgBox {position:absolute;left:${left}px;right:${right}px;height:${bx.height}px;${tb}px;}`
         cssHalf += `.ID .JClicMsgBox {left:${Math.round(left / 2)}px;right:${Math.round(right / 2)}px;height:${Math.round(bx.height / 2)}px;${tbHalf}px;}`
+        cssTwoThirds += `.ID .JClicMsgBox {left:${Math.round(2 * left / 3)}px;right:${Math.round(2 * right / 3)}px;height:${Math.round(2 * bx.height / 3)}px;${tbTwoThirds}px;}`
       }
 
       // TODO: Implement counters
       // TODO: Implement animation
       // TODO: Implement status messages
-
-      return `${super._getStyleSheets()}${this.mainCSS}${css}@media (max-width:${maxw}px),(max-height:${maxh}px){${cssHalf}}`
+      
+      return `${super._getStyleSheets(media)}${media === 'default' ? (this.mainCSS + css) : media === 'half' ? cssHalf : media === 'twoThirds' ? cssTwoThirds : ''}`
     }
 
     /**

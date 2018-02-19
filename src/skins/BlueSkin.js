@@ -58,12 +58,12 @@ define([
 
     /**
      * Returns the CSS styles used by this skin. This method should be called only from
-     * `Skin` constructor, and overridden by subclasses if needed.
-     * @override
+     * the `Skin` constructor, and overridded by subclasses if needed.
+     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
      * @returns {string}
      */
-    _getStyleSheets() {
-      return super._getStyleSheets() + this.skinCSS
+    _getStyleSheets(media = 'default') {
+      return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '')
     }
   }
 
