@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>JClic.js Source: project/ProjectSettings.js</title>
+	<title>JClic.js Source: skins/CustomSkin.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -79,14 +79,14 @@
 		<div id="main">
 			
 
-		<h1 class="page-title">Source: project/ProjectSettings.js</h1>
+		<h1 class="page-title">Source: skins/CustomSkin.js</h1>
     
 <section>
     <article>
         <pre
             class="sunlight-highlight-javascript linenums">/**
- *  File    : project/ProjectSettings.js
- *  Created : 01/04/2015
+ *  File    : skins/CustomSkin.js
+ *  Created : 12/02/2018
  *  By      : Francesc Busquets &lt;francesc@gmail.com>
  *
  *  JClic.js
@@ -114,129 +114,261 @@
  *  @licend
  */
 
-/* global define, window */
+/* global define */
 
 define([
   "jquery",
-  "../media/EventSounds",
-  "../Utils"
-], function ($, EventSounds, Utils) {
+  "./Skin",
+  "../Utils",
+  "../AWT",
+  "../boxes/ActiveBox"
+], function ($, Skin, Utils, AWT, ActiveBox) {
 
   /**
-   * This class contains miscellaneous settings of JClic projects.
-   *
-   * In addition to the members of this class, there can be other properties in JClic project files
-   * that are not currently loaded:
-   * - iconFileName
-   * - descriptors
-   * - area
-   * - level
-   * - locale
-   * - authors
-   * - organizations
-   * - revisions
-   * @exports ProjectSettings
+   * Custom {@link Skin} for JClic.js, built assembling specific cuts of a canvas (usually a PNG file) defined in a XML file
+   * WARNING: This class is still under constuction!
+   * @exports CustomSkin
    * @class
+   * @extends Skin
    */
-  class ProjectSettings {
+  class CustomSkin extends Skin {
+
     /**
-     * ProjectSettings constructor
-     * @param {JClicProject} project - The project to which this settings belongs
+     * CustomSkin constructor
+     * 
+     * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+     * realize the media objects needed tot build the Skin.
+     * @param {string=} name - The skin class name
+     * @param {object=} options - Optional parameter with additional options
      */
-    constructor(project) {
-      this.project = project
-      this.languages = []
-      this.locales = []
+    constructor(ps, name = null, options = null) {
+      // CustomSkin extends [Skin](Skin.html)
+      super(ps, name, options)
+      //console.log(this.options)
+
+      this.$mainPanel = $('&lt;div/>', { class: 'JClicCustomMainPanel' })
+      this.$gridPanel = $('&lt;div/>', { class: 'JClicGridPanel' })
+      for (let i = 0; i &lt; 9; i++)
+        this.$gridPanel.append($('&lt;div/>', { class: `JClicCell JClicCell${i + 1}` }))
+      this.$mainPanel.append(this.$gridPanel)
+      this.$playerCnt.detach().addClass('JClicPlayerCell').appendTo(this.$mainPanel)
+      this.$div.prepend(this.$mainPanel)
+
+      // Add buttons
+      if (options.buttons) {
+        Object.keys(options.buttons.button).forEach(k => {
+          const k2 = k === 'about' ? 'reports' : k
+          const msg = ps.getMsg(this.msgKeys[k2] || k2)
+          this.buttons[k2] = $('&lt;button/>', { class: `JClicBtn Btn-${k2}`, title: msg, 'aria-label': msg, disabled: typeof this.msgKeys[k2] === 'undefined' })
+            .on('click', evt => { if (ps.actions[k2]) ps.actions[k2].processEvent(evt) })
+          this.$mainPanel.append(this.buttons[k2])
+        })
+      }
+
+      // Add message box
+      if (options.rectangle.messages) {
+        this.msgBox = new ActiveBox()
+        this.msgBox.role = 'message'
+        this.$msgBoxDiv = $('&lt;div/>', { class: 'JClicMsgBox' })
+          .click(() => {
+            this.msgBox.playMedia(ps)
+            return false
+          })
+        this.$mainPanel.append(this.$msgBoxDiv)
+      }
     }
 
     /**
-     * Reads the ProjectSettings values from a JQuery XML element
-     * @param {external:jQuery} $xml - The XML element to parse
+     * Enables or disables the `tabindex` attribute of the main buttons. Useful when a modal dialog
+     * overlay is active, to avoid direct access to controls not related with the dialog.
+     * @param {boolean} status - `true` to make main controls navigable, `false` otherwise
      */
-    setProperties($xml) {
-      $xml.children().each((_n, child) => {
-        switch (child.nodeName) {
-          case 'title':
-            this.title = child.textContent
-            break
-          case 'description':
-            this.description = child.textContent
-            break
-          case 'language':
-            this.languages.push(child.textContent)
-            break
-          case 'eventSounds':
-            this.eventSounds = new EventSounds()
-            this.eventSounds.setProperties($(child))
-            break
-          case 'skin':
-            this.skinFileName = $(child).attr('file')
-            break
-        }
-      })
+    enableMainButtons(status) {
+      this.$mainPanel.find('.JClicBtn').attr('tabindex', status ? '0' : '-1')
+    }
 
-      // Try to find an array of valid locales
-      // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
-      if (this.languages.length > 0 &amp;&amp; window.Intl &amp;&amp; window.Intl.getCanonicalLocales) {
-        this.locales = []
-        this.languages.forEach(lang => {
-          // Languages usually are stored in the form: "English (en)"
-          const matches = /\(([a-z,A-Z,-]+)\)/.exec(lang)
-          if (matches &amp;&amp; matches.length > 1) {
-            try {
-              const canonicals = window.Intl.getCanonicalLocales(matches[1])
-              if (canonicals)
-                this.locales = this.locales.concat(canonicals)
-            } catch (err) {
-              Utils.log('error', `Invalid language: ${lang}`)
-            }
+    /**
+     * Returns the CSS styles used by this skin. This method should be called only from
+     * the `Skin` constructor, and overridded by subclasses if needed.
+     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
+     * @returns {string}
+     */
+    _getStyleSheets(media = 'default') {
+      const
+        maxw = this.options.dimension.preferredSize.width,
+        maxh = this.options.dimension.preferredSize.height
+
+      this.twoThirdsMedia = { width: maxw, height: maxh }
+      this.halfMedia = {
+        width: Math.round(2 * maxw / 3),
+        height: Math.round(2 * maxh / 3)
+      }
+      
+      const
+        ph0 = this.options.rectangle.frame.left,
+        ph1 = ph0 + this.options.rectangle.player.left,
+        ph2 = ph0 + this.options.slicer.left,
+        ph3 = ph0 + this.options.slicer.right,
+        ph4 = ph1 + this.options.rectangle.player.width,
+        ph5 = ph0 + this.options.rectangle.frame.width,
+        pv0 = this.options.rectangle.frame.top,
+        pv1 = pv0 + this.options.rectangle.player.top,
+        pv2 = pv0 + this.options.slicer.top,
+        pv3 = pv0 + this.options.slicer.bottom,
+        pv4 = pv1 + this.options.rectangle.player.height,
+        pv5 = pv0 + this.options.rectangle.frame.height,
+        imgElement = this.ps.project.mediaBag.getElement(this.options.image, true),
+        box1 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv0, ph2 - ph0, pv2 - pv0)) : '',
+        box2 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv0, ph3 - ph2, pv2 - pv0)) : '',
+        box3 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv0, ph5 - ph3, pv2 - pv0)) : '',
+        box4 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv2 - pv0, ph2 - ph0, pv3 - pv2)) : '',
+        box6 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3 - ph0, pv2 - pv0, ph5 - ph3, pv3 - pv2)) : '',
+        box7 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv3 - pv0, ph2 - ph0, pv5 - pv3)) : '',
+        box8 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : '',
+        box9 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv3 - pv0, ph5 - ph3, pv5 - pv3)) : ''
+
+      let css = `
+.ID .JClicCustomMainPanel {flex-grow:1;position:relative;background-color: ${Utils.checkColor(this.options.color.fill.value)};}
+.ID .JClicGridPanel {position:absolute;width:100%;height:100%;display:grid;grid-template-columns:${ph2 - ph0}px 1fr ${ph5 - ph3}px;grid-template-rows:${pv2 - pv0}px 1fr ${pv5 - pv3}px;}
+.ID .JClicCell {background-repeat:no-repeat;background-size:contain;}
+.ID .JClicPlayerCell {position:absolute;top:${pv1 - pv0}px;right:${ph5 - ph4}px;bottom:${pv5 - pv4}px;left:${ph1 - ph0}px;}
+.ID .JClicCell1 {background-image:url(${box1});}
+.ID .JClicCell2 {background-image:url(${box2});background-repeat:repeat-x;}
+.ID .JClicCell3 {background-image:url(${box3});}
+.ID .JClicCell4 {background-image:url(${box4});background-repeat:repeat-y;}
+.ID .JClicCell5 {}
+.ID .JClicCell6 {background-image:url(${box6});background-repeat:repeat-y;}
+.ID .JClicCell7 {background-image:url(${box7});}
+.ID .JClicCell8 {background-image:url(${box8});background-repeat:repeat-x;}
+.ID .JClicCell9 {background-image:url(${box9});}`
+
+      let cssHalf = `
+.ID .JClicGridPanel {grid-template-columns:${Math.round((ph2 - ph0) / 2)}px 1fr ${Math.round((ph5 - ph3) / 2)}px;grid-template-rows:${Math.round((pv2 - pv0) / 2)}px 1fr ${Math.round((pv5 - pv3) / 2)}px;}
+.ID .JClicPlayerCell {top:${Math.round((pv1 - pv0) / 2)}px;right:${Math.round((ph5 - ph4) / 2)}px;bottom:${Math.round((pv5 - pv4) / 2)}px;left:${Math.round((ph1 - ph0) / 2)}px;}`
+
+      let cssTwoThirds = `
+.ID .JClicGridPanel {grid-template-columns:${Math.round(2 * (ph2 - ph0) / 3)}px 1fr ${Math.round(2 * (ph5 - ph3) / 3)}px;grid-template-rows:${Math.round(2 * (pv2 - pv0) / 3)}px 1fr ${Math.round(2 * (pv5 - pv3) / 3)}px;}
+.ID .JClicPlayerCell {top:${Math.round(2 * (pv1 - pv0) / 3)}px;right:${Math.round(2 * (ph5 - ph4) / 3)}px;bottom:${Math.round(2 * (pv5 - pv4) / 3)}px;left:${Math.round(2 * (ph1 - ph0) / 3)}px;}`
+
+      if (this.options.buttons) {
+        cssHalf += '.ID .JClicBtn {transform: scale(0.5);}'
+        cssTwoThirds += '.ID .JClicBtn {transform: scale(0.666);}'
+        const bt = this.options.buttons
+        let wBase = 30, hBase = 30, offsetBase = {}
+        if (bt.settings) {
+          if (bt.settings.dimension) {
+            wBase = bt.settings.dimension.width || wBase
+            hBase = bt.settings.dimension.height || hBase
           }
+          if (bt.settings.offset)
+            Object.assign(offsetBase, bt.settings.offset)
+        }
+        Object.keys(this.options.buttons.button).forEach(k => {
+          const
+            btn = bt.button[k],
+            k2 = k === 'about' ? 'reports' : k
+          let w = wBase, h = hBase, offset = offsetBase
+          if (btn.settings) {
+            if (btn.settings.dimension) {
+              w = btn.settings.dimension.width || w
+              h = btn.settings.dimension.height || h
+            }
+            if (btn.settings.offset)
+              offset = Object.assign({}, offsetBase, btn.settings.offset)
+          }
+          const
+            x = btn.point.pos.left,
+            xp = x &lt; ph2 ? `left:${x}` : `right:${ph5 - x - w}`,
+            xpHalf = x &lt; ph2 ? `left:${Math.round(x / 2 - w / 4)}` : `right:${Math.round((ph5 - x - w) / 2 - w / 4)}`,
+            xpTwoThirds = x &lt; ph2 ? `left:${Math.round(2 * x / 3 - w / 6)}` : `right:${Math.round(2 * (ph5 - x - w) / 3 - w / 6)}`,
+            y = btn.point.pos.top,
+            yp = y &lt; pv2 ? `top:${y}` : `bottom:${pv5 - y - h}`,
+            ypHalf = y &lt; pv2 ? `top:${Math.round(y / 2 - h / 4)}` : `bottom:${Math.round((pv5 - y - h) / 2 - h / 4)}`,
+            ypTwoThirds = y &lt; pv2 ? `top:${Math.round(2 * y / 3 - h / 6)}` : `bottom:${Math.round(2 * (pv5 - y - h) / 3 - h / 6)}`,
+            xs = btn.point.source.left,
+            ys = btn.point.source.top
+          css += `.ID .Btn-${k2} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${this.options.image}) !important;background-position:-${xs}px -${ys}px !important;}\n`
+          cssHalf += `.ID .Btn-${k2} {${xpHalf}px;${ypHalf}px;}\n`
+          cssTwoThirds += `.ID .Btn-${k2} {${xpTwoThirds}px;${ypTwoThirds}px;}\n`
+          if (offset.active)
+            css += `.ID .Btn-${k2}:active {background-position:-${xs + offset.active.right}px -${ys + offset.active.down}px !important;}\n`
+          if (offset.over)
+            css += `.ID .Btn-${k2}:hover {background-position:-${xs + offset.over.right}px -${ys + offset.over.down}px !important;}\n`
+          if (offset.disabled)
+            css += `.ID .Btn-${k2}:disabled {background-position:-${xs + offset.disabled.right}px -${ys + offset.disabled.down}px !important;}\n`
         })
       }
-      return this
+
+      if (this.options.rectangle.messages) {
+        const
+          bx = this.options.rectangle.messages,
+          left = ph0 + bx.left,
+          right = ph5 - bx.width - bx.left - ph0,
+          tb = bx.top &lt; pv2 ? `top:${bx.top}` : `bottom:${pv5 - bx.height - bx.top}`,
+          tbHalf = bx.top &lt; pv2 ? `top:${Math.round(bx.top / 2)}` : `bottom:${Math.round((pv5 - bx.height - bx.top) / 2)}`,
+          tbTwoThirds = bx.top &lt; pv2 ? `top:${Math.round(2 * bx.top / 3)}` : `bottom:${Math.round(2 * (pv5 - bx.height - bx.top) / 3)}`
+
+        css += `.ID .JClicMsgBox {position:absolute;left:${left}px;right:${right}px;height:${bx.height}px;${tb}px;}`
+        cssHalf += `.ID .JClicMsgBox {left:${Math.round(left / 2)}px;right:${Math.round(right / 2)}px;height:${Math.round(bx.height / 2)}px;${tbHalf}px;}`
+        cssTwoThirds += `.ID .JClicMsgBox {left:${Math.round(2 * left / 3)}px;right:${Math.round(2 * right / 3)}px;height:${Math.round(2 * bx.height / 3)}px;${tbTwoThirds}px;}`
+      }
+
+      // TODO: Implement counters
+      // TODO: Implement animation
+      // TODO: Implement status messages
+      
+      return `${super._getStyleSheets(media)}${media === 'default' ? (this.mainCSS + css) : media === 'half' ? cssHalf : media === 'twoThirds' ? cssTwoThirds : ''}`
+    }
+
+    /**
+     * Gets the {@link ActiveBox} used to display the main messages of activities
+     * @returns {ActiveBox}
+     */
+    getMsgBox() {
+      return this.msgBox
     }
   }
 
-  Object.assign(ProjectSettings.prototype, {
+  Object.assign(CustomSkin.prototype, {
     /**
-     * The JClicProject to which this ProjectSettings belongs
-     * @name ProjectSettings#project
-     * @type {JClicProject} */
-    project: null,
-    /**
-     * The project title
-     * @name ProjectSettings#title
+     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+     * @name CustomSkin#skinId
+     * @override
      * @type {string} */
-    title: 'Untitled',
+    skinId: 'JClicCustomSkin',
     /**
-     * Project's description. Can have multiple paragraphs, separated by `&lt;p>`
-     * @name ProjectSettings#description
+     * The name of the image file to be used as a base of this skin.
+     * @name CustomSkin#imgName
      * @type {string} */
-    description: '',
+    imgName: null,
     /**
-     * JClic projects can use more than one language, so use a string array
-     * @name ProjectSettings#languages
-     * @type {string[]} */
-    languages: null,
-    /**
-     * Array of canonical locales, as defined in 
-     * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation|Intl}
-     * @name ProjectSettings#locales
-     * @type {string[]} */
-    locales: null,
-    /**
-     * The name of an optional 'skin' (visual aspect) can be set for the whole project, or for each {@link Activity}
-     * @name ProjectSettings#skinFileName
+     * Styles used in this skin
+     * @name CustomSkin#skinCSS
+     * @override
      * @type {string} */
-    skinFileName: null,
+    mainCSS: '\
+.ID .JClicPlayerCnt {margin:0;}\
+.ID .JClicBtn:focus {outline:0}',
     /**
-     * The main {@link EventSounds} object of the project
-     * @name ProjectSettings#eventSounds
-     * @type {EventSounds} */
-    eventSounds: new EventSounds(),
+     * Key ids of currently supported buttons, associated with its helper literal
+     * @name CustomSkin#msgKeys
+     * @type {object} */
+    msgKeys: {
+      next: 'Next activity',
+      prev: 'Previous activity',
+      info: 'Information',
+      help: 'Help',
+      reports: 'Reports',
+      // TODO: Implement audio on/off!
+      audio: 'Audio on/off',
+      reset: 'Reset activity',
+    },
   })
 
-  return ProjectSettings
+  // Register this class in the list of available skins
+  Skin.CLASSES['custom'] = CustomSkin
+
+  return CustomSkin
 })
 </pre>
     </article>
