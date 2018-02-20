@@ -1,3 +1,12 @@
+### v1.1.3 (2018-02-20)
+#### Improvements
+- Improved responsiveness: Now skin elements are reduced to 2/3 or 1/2 of its original size when running on mobile devices with small screens.
+- Basic functionality of JClic "legacy custom skins" (based on XML files) are now supported in browsers compatible with [CSS Grid Layout](https://caniuse.com/#feat=css-grid). This feature is currently used in many great JClic projects created by [Imma Palahí](https://clic.xtec.cat/repo/index.html?lang=ca&author=Imma%20Palahi).
+
+#### Bug fixes
+- Solved a bug in Menu.js
+- Check for null values on AUDIO_BUFFERS and mbe.data
+
 ### v1.1.0 (2018-02-08)
 #### Improvements
 - All the code has been updated to [ECMAScript6](http://es6-features.org) (ES6), taking advantage of new JavaScript features (classes, constants, arrow functions, array methods...) in modern browsers. The main file `jclic.min.js` will maintain compability with older browsers for some time, since it is transpiled to ES5 thanks to [Babel](https://babeljs.io/) and [Webpack](https://webpack.js.org).
