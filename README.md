@@ -19,10 +19,8 @@ Many teachers from different countries have used JClic to create interactive mat
 
 ## Known issues
 
-* Support for special skins are not yet implemented. Only stock skins are available.
 * Playing of MIDI files not yet implemented
-* Loading of big (about 10MB) JClic project files from zipped files can crash on tablets and mobile devices with low memory resources. This is due to a [known issue](https://github.com/Stuk/jszip/issues/135) of JSZip.
-* The project is regulary checked with the latest versions of Chrome/Chromium, Firefox and Edge. Please update your web browsers!
+* The project is regulary checked with the latest versions of Firefox, Chrome, Chromium and Edge. Please update your web browsers!
 
 ## How to build JClic.js
 
