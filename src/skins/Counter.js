@@ -65,10 +65,8 @@ define([], function () {
      * (method to be overridden by subclasses)
      */
     refreshDisplay() {
-      if (this.$div) {
+      if (this.$div)
         this.$div.html(this.enabled ? (this.getDisplayValue() + 1000).toString().substr(1) : '000')
-        this.$div.css('opacity', this.enabled ? 1.0 : 0.3)
-      }
     }
 
     /**
@@ -76,8 +74,13 @@ define([], function () {
      * @param {boolean} enabled - State been assigned to this counter
      */
     setEnabled(enabled) {
-      if (this.enabled !== (this.enabled = enabled))
-        this.refreshDisplay()
+      if (this.enabled !== enabled) {
+        this.enabled = enabled
+        if (this.$div) {
+          this.refreshDisplay()
+          this.$div.css('opacity', this.enabled ? 1.0 : 0.3)
+        }
+      }
     }
 
     /**

@@ -532,8 +532,15 @@ define([
       canvas.width = rect.dim.width
       canvas.height = rect.dim.height
       const ctx = canvas.getContext('2d')
-      ctx.drawImage(img, rect.pos.x, rect.pos.y, rect.dim.width, rect.dim.height, 0, 0, rect.dim.width, rect.dim.height)
-      return canvas.toDataURL()
+      let result = ''
+      try {
+        ctx.drawImage(img, rect.pos.x, rect.pos.y, rect.dim.width, rect.dim.height, 0, 0, rect.dim.width, rect.dim.height)
+        result = canvas.toDataURL()
+      } catch (err) {
+        // catch 'tainted canvases may not be exported' and other errors
+        Utils.log('error', err)
+      }
+      return result
     },
     /**
      * Finds the nearest `head` or root node of a given HTMLElement, useful to place `<style/>` elements when

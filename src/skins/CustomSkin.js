@@ -33,10 +33,11 @@
 define([
   "jquery",
   "./Skin",
+  "./Counter",
   "../Utils",
   "../AWT",
   "../boxes/ActiveBox"
-], function ($, Skin, Utils, AWT, ActiveBox) {
+], function ($, Skin, Counter, Utils, AWT, ActiveBox) {
 
   /**
    * Custom {@link Skin} for JClic.js, built assembling specific cuts of a canvas (usually a PNG file) defined in a XML file
@@ -90,6 +91,19 @@ define([
           })
         this.$mainPanel.append(this.$msgBoxDiv)
       }
+
+      // Add counters
+      if (false !== this.ps.options.counters && options.counters && options.counters.counter) {
+        // Create counters
+        $.each(Skin.prototype.counters, (name, _val) => {
+          if (options.counters.counter[name]) {
+            const msg = ps.getMsg(name)
+            this.counters[name] = new Counter(name, $('<div/>', { class: `JClicCounter Counter-${name}`, title: msg, 'aria-label': msg })
+              .html('000')
+              .appendTo(this.$mainPanel))
+          }
+        })
+      }
     }
 
     /**
@@ -117,7 +131,8 @@ define([
         width: Math.round(2 * maxw / 3),
         height: Math.round(2 * maxh / 3)
       }
-      
+
+      // Panels:
       const
         ph0 = this.options.rectangle.frame.left,
         ph1 = ph0 + this.options.rectangle.player.left,
@@ -165,6 +180,7 @@ define([
 .ID .JClicGridPanel {grid-template-columns:${Math.round(2 * (ph2 - ph0) / 3)}px 1fr ${Math.round(2 * (ph5 - ph3) / 3)}px;grid-template-rows:${Math.round(2 * (pv2 - pv0) / 3)}px 1fr ${Math.round(2 * (pv5 - pv3) / 3)}px;}
 .ID .JClicPlayerCell {top:${Math.round(2 * (pv1 - pv0) / 3)}px;right:${Math.round(2 * (ph5 - ph4) / 3)}px;bottom:${Math.round(2 * (pv5 - pv4) / 3)}px;left:${Math.round(2 * (ph1 - ph0) / 3)}px;}`
 
+      // Buttons:
       if (this.options.buttons) {
         cssHalf += '.ID .JClicBtn {transform: scale(0.5);}'
         cssTwoThirds += '.ID .JClicBtn {transform: scale(0.666);}'
@@ -214,6 +230,58 @@ define([
         })
       }
 
+      // Counters:
+      if (this.options.counters && this.options.counters.settings) {
+        cssHalf += '.ID .JClicCounter {transform: scale(0.5);}'
+        cssTwoThirds += '.ID .JClicCounter {transform: scale(0.666);}'
+        const cnt = this.options.counters
+        let wBase = 35, hBase = 20
+        if (cnt.settings.dimension && cnt.settings.dimension.counter) {
+          wBase = (cnt.settings.dimension.counter.width || wBase)
+          hBase = cnt.settings.dimension.counter.height || hBase
+        }
+        let wLb = 37, hLb = 14
+        if (cnt.settings.dimension && cnt.settings.dimension.label) {
+          wLb = (cnt.settings.dimension.label.width || wLb)
+          hLb = cnt.settings.dimension.label.height || hLb
+        }
+        let bColor = 'black'
+        if (cnt.style && cnt.style.color && cnt.style.color.foreground)
+          bColor = Utils.checkColor(cnt.style.color.foreground.value || bColor)
+        let lbFntSize = hLb - 4;
+        let lbFntFamily = 'Roboto'
+        if (cnt.style && cnt.style.font && cnt.style.font.label) {
+          lbFntSize = Math.max(8, cnt.style.font.label.size || lbFntSize)
+          lbFntFamily = `${cnt.style.font.label.family || 'Roboto'},Roboto,sans-serif`
+        }
+
+        css += `.ID .JClicCounter {font-size:${hBase - 2}px;color:${bColor}}\n`
+        Object.keys(this.options.counters.counter).forEach(k => {
+          const
+            counter = cnt.counter[k]
+          let w = wBase, h = hBase
+          const
+            x = counter.point.counter.left,
+            xl = counter.point.label.left || (x - Math.round((wLb - wBase) / 2)),
+            xp = x < ph2 ? `left:${x}` : `right:${ph5 - x - w}`,
+            xpHalf = x < ph2 ? `left:${Math.round(x / 2 - w / 4)}` : `right:${Math.round((ph5 - x - w) / 2 - w / 4)}`,
+            xpTwoThirds = x < ph2 ? `left:${Math.round(2 * x / 3 - w / 6)}` : `right:${Math.round(2 * (ph5 - x - w) / 3 - w / 6)}`,
+            y = counter.point.counter.top,
+            yl = counter.point.label.top || (y - hLb),
+            yp = y < pv2 ? `top:${y}` : `bottom:${pv5 - y - h}`,
+            ypHalf = y < pv2 ? `top:${Math.round(y / 2 - h / 4)}` : `bottom:${Math.round((pv5 - y - h) / 2 - h / 4)}`,
+            ypTwoThirds = y < pv2 ? `top:${Math.round(2 * y / 3 - h / 6)}` : `bottom:${Math.round(2 * (pv5 - y - h) / 3 - h / 6)}`
+          // counter:
+          css += `.ID .Counter-${k} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;line-height:${h}px;}\n`
+          // label:
+          css += `.ID .Counter-${k}:before {content:"${this.ps.getMsg(k)}";font-size:${lbFntSize}px;font-family:${lbFntFamily};width:${wLb}px;height:${hLb}px;line-height:${hLb}px;position:absolute;top:${yl - y}px;left:${xl - x}px;}`
+          // reduced sizes:
+          cssHalf += `.ID .Counter-${k} {${xpHalf}px;${ypHalf}px;}\n`
+          cssTwoThirds += `.ID .Counter-${k} {${xpTwoThirds}px;${ypTwoThirds}px;}\n`
+        })
+      }
+
+      // Messages box:
       if (this.options.rectangle.messages) {
         const
           bx = this.options.rectangle.messages,
@@ -228,10 +296,9 @@ define([
         cssTwoThirds += `.ID .JClicMsgBox {left:${Math.round(2 * left / 3)}px;right:${Math.round(2 * right / 3)}px;height:${Math.round(2 * bx.height / 3)}px;${tbTwoThirds}px;}`
       }
 
-      // TODO: Implement counters
       // TODO: Implement animation
       // TODO: Implement status messages
-      
+
       return `${super._getStyleSheets(media)}${media === 'default' ? (this.mainCSS + css) : media === 'half' ? cssHalf : media === 'twoThirds' ? cssTwoThirds : ''}`
     }
 
@@ -263,7 +330,8 @@ define([
      * @type {string} */
     mainCSS: '\
 .ID .JClicPlayerCnt {margin:0;}\
-.ID .JClicBtn:focus {outline:0}',
+.ID .JClicBtn:focus {outline:0;}\
+.ID .JClicCounter {font-family:Roboto,sans-serif;text-align:center;}',
     /**
      * Key ids of currently supported buttons, associated with its helper literal
      * @name CustomSkin#msgKeys
