@@ -40,8 +40,7 @@ define([
 ], function ($, Skin, Counter, Utils, AWT, ActiveBox) {
 
   /**
-   * Custom {@link Skin} for JClic.js, built assembling specific cuts of a canvas (usually a PNG file) defined in a XML file
-   * WARNING: This class is still under constuction!
+   * Custom {@link Skin} for JClic.js, built assembling specific cuts of a canvas (usually a PNG file) defined in an XML file
    * @exports CustomSkin
    * @class
    * @extends Skin
@@ -116,12 +115,11 @@ define([
     }
 
     /**
-     * Returns the CSS styles used by this skin. This method should be called only from
-     * the `Skin` constructor, and overridded by subclasses if needed.
-     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
+     * Computes the CSS styles used by this skin in thre moodes: main, half ant twoThirds.
+     * The resulting strings will be stored in `cssVariants`
      * @returns {string}
      */
-    _getStyleSheets(media = 'default') {
+    _computeStyleSheets() {
       const
         maxw = this.options.dimension.preferredSize.width,
         maxh = this.options.dimension.preferredSize.height
@@ -299,7 +297,25 @@ define([
       // TODO: Implement animation
       // TODO: Implement status messages
 
-      return `${super._getStyleSheets(media)}${media === 'default' ? (this.mainCSS + css) : media === 'half' ? cssHalf : media === 'twoThirds' ? cssTwoThirds : ''}`
+      // Store results in `cssVariants`
+      this.cssVariants = {
+        default: this.mainCSS + css,
+        half: cssHalf,
+        twoThirds: cssTwoThirds
+      }
+    }
+
+    /**
+     * Returns the CSS styles used by this skin. This method should be called only from
+     * the `Skin` constructor, and overridded by subclasses if needed.
+     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
+     * @override
+     * @returns {string}
+     */
+    _getStyleSheets(media = 'default') {
+      if (!this.cssVariants)
+        this._computeStyleSheets()
+      return `${super._getStyleSheets(media)}${this.cssVariants[media] || ''}`
     }
 
     /**
@@ -332,6 +348,11 @@ define([
 .ID .JClicPlayerCnt {margin:0;}\
 .ID .JClicBtn:focus {outline:0;}\
 .ID .JClicCounter {font-family:Roboto,sans-serif;text-align:center;}',
+    /**
+     * Specifc styles (`main`, `half` and `twoThirds`) computed at run-time,
+     * based on the provided XML file
+     * @type {object} */
+    cssVariants: null,
     /**
      * Key ids of currently supported buttons, associated with its helper literal
      * @name CustomSkin#msgKeys
