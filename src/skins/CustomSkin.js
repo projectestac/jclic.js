@@ -132,6 +132,7 @@ define([
         pv4 = pv1 + this.options.rectangle.player.height,
         pv5 = pv0 + this.options.rectangle.frame.height,
         imgElement = this.ps.project.mediaBag.getElement(this.options.image, true),
+        imgUrl = imgElement.data && imgElement.data.src ? imgElement.data.src : '',
         box1 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv0, ph2 - ph0, pv2 - pv0)) : '',
         box2 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv0, ph3 - ph2, pv2 - pv0)) : '',
         box3 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv0, ph5 - ph3, pv2 - pv0)) : '',
@@ -201,7 +202,7 @@ define([
             ypTwoThirds = y < pv2 ? `top:${Math.round(2 * y / 3 - h / 6)}` : `bottom:${Math.round(2 * (pv5 - y - h) / 3 - h / 6)}`,
             xs = btn.point.source.left,
             ys = btn.point.source.top
-          css += `.ID .Btn-${k2} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${this.options.image}) !important;background-position:-${xs}px -${ys}px !important;}\n`
+          css += `.ID .Btn-${k2} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${imgUrl}) !important;background-position:-${xs}px -${ys}px !important;}\n`
           cssHalf += `.ID .Btn-${k2} {${xpHalf}px;${ypHalf}px;}\n`
           cssTwoThirds += `.ID .Btn-${k2} {${xpTwoThirds}px;${ypTwoThirds}px;}\n`
           if (offset.active)
