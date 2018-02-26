@@ -257,7 +257,8 @@ define([
         if (mbe && mbe.data)
           options = Object.assign({}, options, mbe.data)
 
-        if (options.class === 'edu.xtec.jclic.skins.BasicSkin'
+        if (!ps.zip
+          && options.class === 'edu.xtec.jclic.skins.BasicSkin'
           && options.image
           && ps.project.mediaBag.getElement(options.image, false)
           && ps.project.mediaBag.getElement(options.image, false).data)
