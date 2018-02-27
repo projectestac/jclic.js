@@ -73,7 +73,7 @@ define([
         Object.keys(options.buttons.button).forEach(k => {
           const k2 = k === 'about' ? 'reports' : k
           const msg = ps.getMsg(this.msgKeys[k2] || k2)
-          this.buttons[k2] = $('<button/>', { class: `JClicBtn Btn-${k2}`, title: msg, 'aria-label': msg, disabled: typeof this.msgKeys[k2] === 'undefined' })
+          this.buttons[k2] = $('<button/>', { class: `JClicBtn JClicTransform Btn-${k2}`, title: msg, 'aria-label': msg, disabled: typeof this.msgKeys[k2] === 'undefined' })
             .on('click', evt => { if (ps.actions[k2]) ps.actions[k2].processEvent(evt) })
           this.$mainPanel.append(this.buttons[k2])
         })
@@ -93,16 +93,22 @@ define([
 
       // Add counters
       if (false !== this.ps.options.counters && options.counters && options.counters.counter) {
-        // Create counters
         $.each(Skin.prototype.counters, (name, _val) => {
           if (options.counters.counter[name]) {
             const msg = ps.getMsg(name)
-            this.counters[name] = new Counter(name, $('<div/>', { class: `JClicCounter Counter-${name}`, title: msg, 'aria-label': msg })
+            this.counters[name] = new Counter(name, $('<div/>', { class: `JClicCounter JClicTransform Counter-${name}`, title: msg, 'aria-label': msg })
               .html('000')
               .appendTo(this.$mainPanel))
           }
         })
       }
+
+      // Add progress animation
+      if (options.progressAnimation) {
+        this.$progressAnimation = $('<div/>', { class: 'JClicProgressAnimation JClicTransform' })
+        this.$mainPanel.append(this.$progressAnimation)
+      }
+
     }
 
     /**
@@ -172,16 +178,16 @@ define([
 
       let cssHalf = `
 .ID .JClicGridPanel {grid-template-columns:${Math.round((ph2 - ph0) / 2)}px 1fr ${Math.round((ph5 - ph3) / 2)}px;grid-template-rows:${Math.round((pv2 - pv0) / 2)}px 1fr ${Math.round((pv5 - pv3) / 2)}px;}
-.ID .JClicPlayerCell {top:${Math.round((pv1 - pv0) / 2)}px;right:${Math.round((ph5 - ph4) / 2)}px;bottom:${Math.round((pv5 - pv4) / 2)}px;left:${Math.round((ph1 - ph0) / 2)}px;}`
+.ID .JClicPlayerCell {top:${Math.round((pv1 - pv0) / 2)}px;right:${Math.round((ph5 - ph4) / 2)}px;bottom:${Math.round((pv5 - pv4) / 2)}px;left:${Math.round((ph1 - ph0) / 2)}px;}
+.ID .JClicTransform {transform: scale(0.5);}`
 
       let cssTwoThirds = `
 .ID .JClicGridPanel {grid-template-columns:${Math.round(2 * (ph2 - ph0) / 3)}px 1fr ${Math.round(2 * (ph5 - ph3) / 3)}px;grid-template-rows:${Math.round(2 * (pv2 - pv0) / 3)}px 1fr ${Math.round(2 * (pv5 - pv3) / 3)}px;}
-.ID .JClicPlayerCell {top:${Math.round(2 * (pv1 - pv0) / 3)}px;right:${Math.round(2 * (ph5 - ph4) / 3)}px;bottom:${Math.round(2 * (pv5 - pv4) / 3)}px;left:${Math.round(2 * (ph1 - ph0) / 3)}px;}`
+.ID .JClicPlayerCell {top:${Math.round(2 * (pv1 - pv0) / 3)}px;right:${Math.round(2 * (ph5 - ph4) / 3)}px;bottom:${Math.round(2 * (pv5 - pv4) / 3)}px;left:${Math.round(2 * (ph1 - ph0) / 3)}px;}
+.ID .JClicTransform {transform: scale(0.666);}`
 
       // Buttons:
       if (this.options.buttons) {
-        cssHalf += '.ID .JClicBtn {transform: scale(0.5);}'
-        cssTwoThirds += '.ID .JClicBtn {transform: scale(0.666);}'
         const bt = this.options.buttons
         let wBase = 30, hBase = 30, offsetBase = {}
         if (bt.settings) {
@@ -230,8 +236,6 @@ define([
 
       // Counters:
       if (this.options.counters && this.options.counters.settings) {
-        cssHalf += '.ID .JClicCounter {transform: scale(0.5);}'
-        cssTwoThirds += '.ID .JClicCounter {transform: scale(0.666);}'
         const cnt = this.options.counters
         let wBase = 35, hBase = 20
         if (cnt.settings.dimension && cnt.settings.dimension.counter) {
@@ -279,6 +283,37 @@ define([
         })
       }
 
+      // Progress animation:
+      if (this.options.progressAnimation) {
+        const pa = this.options.progressAnimation
+        let w = 30, h = 30
+        if (pa.dimension) {
+          w = pa.dimension.width || w
+          h = pa.dimension.height || h
+        }
+        const
+          x = pa.point.pos.left,
+          xp = x < ph2 ? `left:${x}` : `right:${ph5 - x - w}`,
+          xpHalf = x < ph2 ? `left:${Math.round(x / 2 - w / 4)}` : `right:${Math.round((ph5 - x - w) / 2 - w / 4)}`,
+          xpTwoThirds = x < ph2 ? `left:${Math.round(2 * x / 3 - w / 6)}` : `right:${Math.round(2 * (ph5 - x - w) / 3 - w / 6)}`,
+          y = pa.point.pos.top,
+          yp = y < pv2 ? `top:${y}` : `bottom:${pv5 - y - h}`,
+          ypHalf = y < pv2 ? `top:${Math.round(y / 2 - h / 4)}` : `bottom:${Math.round((pv5 - y - h) / 2 - h / 4)}`,
+          ypTwoThirds = y < pv2 ? `top:${Math.round(2 * y / 3 - h / 6)}` : `bottom:${Math.round(2 * (pv5 - y - h) / 3 - h / 6)}`,
+          xs = pa.point.source.left,
+          ys = pa.point.source.top
+        css += `.ID .JClicProgressAnimation {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${imgUrl});background-position:-${xs}px -${ys}px;}\n`
+        cssHalf += `.ID .JClicProgressAnimation {${xpHalf}px;${ypHalf}px;}\n`
+        cssTwoThirds += `.ID .JClicProgressAnimation {${xpTwoThirds}px;${ypTwoThirds}px;}\n`
+
+        if (pa.frames && pa.direction) {
+          const
+            dx = (pa.step || w) * (pa.direction === 'right' ? 1 : pa.direction === 'left' ? -1 : 0),
+            dy = (pa.step || h) * (pa.direction === 'down' ? 1 : pa.direction === 'up' ? -1 : 0)
+          css += `\n@keyframes anim {100% {background-position:${(xs + dx * pa.frames) * -1}px ${(ys + dy * pa.frames) * -1}px;}}\n.ID .JClicProgressAnimation {animation: anim ${pa.frames * pa.delay}ms steps(${pa.frames}) infinite;}`
+        }
+      }
+
       // Messages box:
       if (this.options.rectangle.messages) {
         const
@@ -294,8 +329,7 @@ define([
         cssTwoThirds += `.ID .JClicMsgBox {left:${Math.round(2 * left / 3)}px;right:${Math.round(2 * right / 3)}px;height:${Math.round(2 * bx.height / 3)}px;${tbTwoThirds}px;}`
       }
 
-      // TODO: Implement animation
-      // TODO: Implement status messages
+      // TODO: Implement status messages?
 
       // Store results in `cssVariants`
       this.cssVariants = {
@@ -325,6 +359,19 @@ define([
     getMsgBox() {
       return this.msgBox
     }
+
+    /**
+     * Sets/unsets the 'wait' state
+     * @override
+     * @param {boolean} status - Whether to set or unset the wait status. When `undefined`, the
+     * `waitCursorCount` member is evaluated to decide if the wait state should be activated or deactivated.
+     */
+    setWaitCursor(status) {
+      super.setWaitCursor(status)
+      if (this.$progressAnimation)
+        this.$progressAnimation.css('animation-play-state', this.waitCursorCount > 0 ? 'running' : 'paused')
+    }
+
   }
 
   Object.assign(CustomSkin.prototype, {
@@ -367,6 +414,11 @@ define([
       audio: 'Audio on/off',
       reset: 'Reset activity',
     },
+    /**
+     * Graphic indicator of loading progress
+     * @name Skin#$progressAnimation
+     * @type {external:jQuery} */
+    $progressAnimation: null,
   })
 
   // Register this class in the list of available skins
