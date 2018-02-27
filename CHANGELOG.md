@@ -1,3 +1,7 @@
+### v1.1.4 (2018-02-27)
+#### Improvements
+- Full implementation of JClic "legacy custom skins" (see v1.1.3) including counters and progress animations. This feature makes use of CSS [animation](https://caniuse.com/#feat=css-animation) and [grid layout](https://caniuse.com/#feat=css-grid), so please update your web browser!
+
 ### v1.1.3 (2018-02-20)
 #### Improvements
 - Improved responsiveness: Now skin elements are reduced to 2/3 or 1/2 of its original size when running on mobile devices with small screens.
