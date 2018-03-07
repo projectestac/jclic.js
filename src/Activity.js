@@ -723,6 +723,11 @@ define([
        * @type {TextGridContent} */
       tgc: null,
       /**
+       * The main document used in text activities
+       * @name Activity#document
+       * @type {TextActivityDocument} */      
+      document: null,
+      /**
        * Relative position of the text grid (uses the same position codes as box grids)
        * @name Activity#boxGridPos
        * @type {string} */
