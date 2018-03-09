@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JClic.js 0.1.28\n"
 "POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
-"PO-Revision-Date: 2018-02-14 21:41+0000\n"
+"PO-Revision-Date: 2018-03-10 22:40+0000\n"
 "Last-Translator: Максим Якимчук <xpinovo@gmail.com>\n"
 "Language-Team: Ukrainian "
 "<https://hosted.weblate.org/projects/jclic/jclicjs/uk/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
 "4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.19-dev\n"
+"X-Generator: Weblate 2.20-dev\n"
 
 #: about_window_lb_version
 msgid "Version"
@@ -64,7 +64,7 @@ msgstr ""
 
 #: report_system
 msgid "Reports system:"
-msgstr ""
+msgstr "Система звітів:"
 
 #: report_user
 msgid "User:"
@@ -100,7 +100,7 @@ msgstr ""
 
 #: report_num_actions
 msgid "Actions done:"
-msgstr ""
+msgstr "Виконані дії:"
 
 #: report_no_activities
 msgid "No activities done!"
@@ -112,11 +112,11 @@ msgstr "Проект"
 
 #: report_lb_sequence
 msgid "sequence"
-msgstr ""
+msgstr "послідовність"
 
 #: about_window_lb_activity
 msgid "activity"
-msgstr ""
+msgstr "активність"
 
 # 'Activity solved' header column
 #: report_lb_solved
@@ -137,7 +137,7 @@ msgstr ""
 
 # Select group for reports in a list
 msgid "Select group:"
-msgstr ""
+msgstr "Вибрати групу:"
 
 # Select user for reports in a list
 msgid "Select user:"
@@ -145,7 +145,7 @@ msgstr ""
 
 # Cancel dialog
 msgid "Cancel"
-msgstr ""
+msgstr "Відмінити"
 
 # Close dialog
 msgid "Close"
@@ -161,7 +161,7 @@ msgstr ""
 
 # Notification shown when reports data has been copied
 msgid "The data has been copied to clipboard"
-msgstr ""
+msgstr "Дані скопійовано до буферу обміну"
 
 # Added to TCPReporter description when the connection to the remote server is unsuccessful
 msgid "not connected"
