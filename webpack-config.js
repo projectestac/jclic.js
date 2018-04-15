@@ -1,6 +1,7 @@
 /* global module:true, __dirname */
 
 const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
 const pkg = require('./package.json')
 const buildLocales = require('./build-locales')
@@ -39,6 +40,7 @@ ${pkg.homepage}
 
 // Full bundle with the original ES6 code
 const es6 = {
+  mode: 'production',
   entry: ['./src/JClic.js'],
   devtool: 'source-map',
   module: {
@@ -64,8 +66,22 @@ const es6 = {
 
 // Full bundle transpiled to ES5 with Babel
 const es5 = {
+  mode: 'production',
   entry: ['babel-polyfill', './src/JClic.js'],
   devtool: 'source-map',
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        //exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          //presets: ['es2015']
+        }
+      }
+    ]
+  },
+  /*
   module: {
     loaders: [
       {
@@ -77,6 +93,7 @@ const es5 = {
       }
     ],
   },
+  */
   output: {
     path: dist,
     filename: 'jclic.js'
@@ -86,7 +103,21 @@ const es5 = {
 
 // Minified ES5 bundle
 const es5mini = {
+  mode: 'production',
   entry: ['babel-polyfill', './src/JClic.js'],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        //exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          //presets: ['es2015']
+        }
+      }
+    ]
+  },
+  /*
   module: {
     loaders: [
       {
@@ -98,10 +129,22 @@ const es5mini = {
       }
     ],
   },
+  */
   output: {
     path: dist,
     filename: 'jclic.min.js'
   },
+  optimization: {
+    //minimize: true,
+    minimizer: [new UglifyJsPlugin({
+      sourceMap: true,
+      extractComments: {
+        filename: 'jclic.components.LICENSE',
+        banner: banner
+      }
+    })],
+  }
+  /*
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
@@ -111,7 +154,8 @@ const es5mini = {
       }
     })
   ]
+  */
 }
 
-module.exports = [es6, es5, es5mini]
+module.exports = [/*es6, es5,*/ es5mini]
 
