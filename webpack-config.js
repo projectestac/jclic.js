@@ -109,10 +109,9 @@ const es5mini = {
     rules: [
       {
         test: /\.js$/,
-        //exclude: /(node_modules)/,
+        exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
-          //presets: ['es2015']
         }
       }
     ]
@@ -135,10 +134,14 @@ const es5mini = {
     filename: 'jclic.min.js'
   },
   optimization: {
-    //minimize: true,
     minimizer: [new UglifyJsPlugin({
+      cache: true,
       sourceMap: true,
+      uglifyOptions: {
+        compress: true,
+      },
       extractComments: {
+        condition: /[Cc]opyright/,
         filename: 'jclic.components.LICENSE',
         banner: banner
       }
