@@ -1,12 +1,19 @@
 /* global module:true, __dirname */
 
-const webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
 const pkg = require('./package.json')
 const buildLocales = require('./build-locales')
 const date = new Date()
 const dist = path.resolve(__dirname, 'dist')
+
+const commonSettings = {
+  devtool: 'source-map',
+  performance: {
+    maxAssetSize: 1000000,
+    maxEntrypointSize: 1000000,
+  }
+}
 
 buildLocales()
 
@@ -39,70 +46,39 @@ ${pkg.homepage}
 `
 
 // Full bundle with the original ES6 code
-const es6 = {
-  mode: 'production',
-  entry: ['./src/JClic.js'],
-  devtool: 'source-map',
-  module: {
-    rules: [
-      {
-        enforce: "pre",
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader",
-        options: {
-          failOnError: true,
-          failOnWarning: true
-        }
-      },
-    ],
-  },
+const es6 = Object.assign(commonSettings, {
+  mode: 'development',
+  entry: './src/JClic.js',
   output: {
     path: dist,
-    filename: 'jclic-es6.js'
+    filename: 'jclic_es6.js',
   },
-  plugins: []
-}
+})
 
 // Full bundle transpiled to ES5 with Babel
-const es5 = {
-  mode: 'production',
+const es5 = Object.assign(commonSettings, {
+  mode: 'development',
   entry: ['babel-polyfill', './src/JClic.js'],
-  devtool: 'source-map',
   module: {
     rules: [
       {
         test: /\.js$/,
-        //exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-          //presets: ['es2015']
-        }
+        exclude: /(node_modules)/,
+        loader: 'babel-loader',
+        options: {          
+          presets: ['es2015'],
+        },
       }
     ]
   },
-  /*
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015']
-        }
-      }
-    ],
-  },
-  */
   output: {
     path: dist,
     filename: 'jclic.js'
   },
-  plugins: []
-}
+})
 
 // Minified ES5 bundle
-const es5mini = {
+const es5mini = Object.assign(commonSettings, {
   mode: 'production',
   entry: ['babel-polyfill', './src/JClic.js'],
   module: {
@@ -110,25 +86,13 @@ const es5mini = {
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-        }
+        loader: 'babel-loader',
+        options: {
+          presets: ['es2015'],
+        },
       }
     ]
   },
-  /*
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015']
-        }
-      }
-    ],
-  },
-  */
   output: {
     path: dist,
     filename: 'jclic.min.js'
@@ -137,28 +101,15 @@ const es5mini = {
     minimizer: [new UglifyJsPlugin({
       cache: true,
       sourceMap: true,
-      uglifyOptions: {
-        compress: true,
-      },
       extractComments: {
-        condition: /[Cc]opyright/,
+        condition: /\/\*\!/,
         filename: 'jclic.components.LICENSE',
         banner: banner
       }
     })],
-  }
-  /*
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      extractComments: {
-        filename: 'jclic.components.LICENSE',
-        banner: banner
-      }
-    })
-  ]
-  */
-}
+  },
+})
 
-module.exports = [/*es6, es5,*/ es5mini]
+//module.exports = [/*es6, es5 , es5mini*/ es6]
 
+module.exports = es6
