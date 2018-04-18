@@ -1,23 +1,16 @@
-/* global module:true, __dirname */
+/* global module:true */
 
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const path = require('path')
-const pkg = require('./package.json')
-const buildLocales = require('./build-locales')
-const date = new Date()
-const dist = path.resolve(__dirname, 'dist')
+const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const path = require('path');
+const pkg = require('./package.json');
+const buildLocales = require('./build-locales');
+const date = new Date();
+const dist = path.resolve('dist');
 
-const commonSettings = {
-  devtool: 'source-map',
-  performance: {
-    maxAssetSize: 1000000,
-    maxEntrypointSize: 1000000,
-  }
-}
+console.log('Building the production bundle compatible with ES2015...');
 
 buildLocales()
-
-console.log('Launching WebPack...')
 
 const banner = `
 JClic.js version ${pkg.version} (${date.toISOString().substr(0, 10)})
@@ -45,42 +38,15 @@ WARNING: This is a compressed, uglyfied version of JClic.js. Full source code is
 ${pkg.homepage}
 `
 
-// Full bundle with the original ES6 code
-const es6 = Object.assign(commonSettings, {
-  mode: 'development',
-  entry: './src/JClic.js',
-  output: {
-    path: dist,
-    filename: 'jclic_es6.js',
-  },
-})
-
-// Full bundle transpiled to ES5 with Babel
-const es5 = Object.assign(commonSettings, {
-  mode: 'development',
-  entry: ['babel-polyfill', './src/JClic.js'],
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /(node_modules)/,
-        loader: 'babel-loader',
-        options: {          
-          presets: ['es2015'],
-        },
-      }
-    ]
-  },
-  output: {
-    path: dist,
-    filename: 'jclic.js'
-  },
-})
-
 // Minified ES5 bundle
-const es5mini = Object.assign(commonSettings, {
+module.exports = {
   mode: 'production',
   entry: ['babel-polyfill', './src/JClic.js'],
+  devtool: 'source-map',
+  performance: {
+    maxAssetSize: 2000000,
+    maxEntrypointSize: 2000000,
+  },
   module: {
     rules: [
       {
@@ -93,10 +59,6 @@ const es5mini = Object.assign(commonSettings, {
       }
     ]
   },
-  output: {
-    path: dist,
-    filename: 'jclic.min.js'
-  },
   optimization: {
     minimizer: [new UglifyJsPlugin({
       cache: true,
@@ -104,12 +66,14 @@ const es5mini = Object.assign(commonSettings, {
       extractComments: {
         condition: /\/\*\!/,
         filename: 'jclic.components.LICENSE',
-        banner: banner
-      }
+        banner: banner,
+      },
+      uglifyOptions: {
+      },
     })],
   },
-})
-
-//module.exports = [/*es6, es5 , es5mini*/ es6]
-
-module.exports = es6
+  output: {
+    path: dist,
+    filename: 'jclic.min.js',
+  },
+};
