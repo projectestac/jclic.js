@@ -255,8 +255,9 @@ define([
         Utils.attrForEach(xml.attributes, (name, value) => result[name] = /^-?\d*$/.test(value) ? Number(value) : value)
       // Process children elements
       const keys = []
-      for (let n = 0; n < xml.children.length; n++) {
-        const child = xml.children[n]
+      const children = xml.children || xml.childNodes
+      for (let n = 0; n < children.length; n++) {
+        const child = children[n]
         // Recursive processing of children
         const ch = Utils.parseXmlNode(child)
         // Store the result into a temporary object named as the child node name,
@@ -289,9 +290,9 @@ define([
             result[k] = arr
           }
         }
-      })
+      })      
       // Save text content, if any:
-      if (xml.children.length === 0 && xml.textContent)
+      if (children.length === 0 && xml.textContent)
         result.textContent = xml.textContent
       return result
     },

@@ -102,7 +102,9 @@ define([
      */
     checkAnimatedGif() {
       const request = new XMLHttpRequest()
-      request.responseType = 'arraybuffer'
+      // Set `responseType` moved after calling `open`
+      // see: https://stackoverflow.com/questions/20760635/why-does-setting-xmlhttprequest-responsetype-before-calling-open-throw
+      // request.responseType = 'arraybuffer'
       request.addEventListener('load', () => {
         const
           arr = new Uint8Array(request.response),
@@ -144,6 +146,9 @@ define([
 
       this.getFullPathPromise().then(fullPath => {
         request.open('GET', fullPath, true)
+        // ------------------ Here we go:
+        request.responseType = 'arraybuffer'
+        // ---------------------------------
         request.send()
       })
     }
@@ -218,16 +223,14 @@ define([
               break
 
             case 'xml':
-              $.get(fullPath, null, null, 'xml').done(xmlData =>{
-                this.data = Utils.parseXmlNode(xmlData.children[0])
+              $.get(fullPath, null, null, 'xml').done(xmlData => {
+                const children = xmlData ? xmlData.children || xmlData.childNodes : null
+                this.data = children && children.length > 0 ? Utils.parseXmlNode(children[0]) : null
                 this._onReady()
               }).fail(err => {
                 Utils.log('error', `Error loading ${this.name}: ${err}`)
+                this._onReady()
               })
-              //this.data = ''
-              //this.ready = true
-              // Since we are not yet supporting complex skins, there
-              // is no need to read XML files
               break
 
             default:
