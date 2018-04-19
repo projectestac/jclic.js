@@ -1,6 +1,5 @@
 /* global module:true */
 
-const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const pkg = require('./package.json');
@@ -8,9 +7,9 @@ const buildLocales = require('./build-locales');
 const date = new Date();
 const dist = path.resolve('dist');
 
-console.log('Building the production bundle compatible with ES2015...');
+console.log('Building production bundle compatible with ES5...');
 
-buildLocales()
+buildLocales();
 
 const banner = `
 JClic.js version ${pkg.version} (${date.toISOString().substr(0, 10)})
@@ -34,9 +33,9 @@ under the Licence.
 
 For full license information of included components please see: jclic.components.LICENSE
 
-WARNING: This is a compressed, uglyfied version of JClic.js. Full source code is freely available at:
+WARNING: This is a compressed version of JClic.js. Full source code is freely available at:
 ${pkg.homepage}
-`
+`;
 
 // Minified ES5 bundle
 module.exports = {
@@ -52,25 +51,28 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader',
-        options: {
-          presets: ['es2015'],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env'],
+          },
         },
       }
     ]
   },
   optimization: {
-    minimizer: [new UglifyJsPlugin({
-      cache: true,
-      sourceMap: true,
-      extractComments: {
-        condition: /\/\*\!/,
-        filename: 'jclic.components.LICENSE',
-        banner: banner,
-      },
-      uglifyOptions: {
-      },
-    })],
+    minimizer: [
+      new UglifyJsPlugin({
+        sourceMap: true,
+        cache: true,
+        parallel: true,
+        extractComments: {
+          condition: /^\!/,
+          filename: 'jclic.components.LICENSE',
+          banner: banner,
+        },
+      })
+    ],
   },
   output: {
     path: dist,

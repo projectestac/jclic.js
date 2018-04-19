@@ -4,7 +4,7 @@ const path = require('path');
 const buildLocales = require('./build-locales');
 const dist = path.resolve('dist');
 
-console.log('Building the development bundle for ES2015...');
+console.log('Building development bundle for ES5...');
 
 buildLocales();
 
@@ -12,7 +12,7 @@ buildLocales();
 module.exports = {
   mode: 'development',
   entry: ['babel-polyfill', './src/JClic.js'],
-  devtool: 'source-map',
+  devtool: 'eval-sourcemap',
   module: {
     rules: [
       {
@@ -20,7 +20,7 @@ module.exports = {
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         options: {
-          presets: ['es2015'],
+          presets: ['env'],
         },
       }
     ]
