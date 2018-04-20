@@ -4,6 +4,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const pkg = require('./package.json');
 const buildLocales = require('./build-locales');
+const WebpackBar = require('webpackbar');
 const date = new Date();
 const dist = path.resolve('dist');
 
@@ -78,4 +79,7 @@ module.exports = {
     path: dist,
     filename: 'jclic.min.js',
   },
+  plugins: [
+    new WebpackBar()
+  ]
 };

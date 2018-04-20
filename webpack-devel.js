@@ -2,6 +2,7 @@
 
 const path = require('path');
 const buildLocales = require('./build-locales');
+const WebpackBar = require('webpackbar');
 const dist = path.resolve('dist');
 
 console.log('Building development bundle...');
@@ -23,4 +24,7 @@ module.exports = {
     path: dist,
     filename: 'jclic-es6.js',
   },
+  plugins: [
+    new WebpackBar()
+  ]
 };
