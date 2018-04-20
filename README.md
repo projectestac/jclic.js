@@ -29,7 +29,7 @@ JClic.js uses [Node.js](https://nodejs.org/) modules encapsulated in [npm](https
 To install the required packages, just go to the project's root directory and write:
 
 ```
-npm install
+npm ci
 ```
 
 This will install jQuery, Webpack and other needed components into `node_modules`
@@ -40,7 +40,7 @@ To build jclic.js, just invoke:
 npm run build
 ```
 
-This will generate the main file `dist/jclic.min.js`
+This will generate the main file `dist/jclic.min.js` (along with other files useful for development)
 
 To test this resulting bundle and see the demo on your browser, launch the test server:
 
