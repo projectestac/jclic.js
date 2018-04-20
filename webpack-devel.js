@@ -1,14 +1,14 @@
 /* global module:true */
 
+// ES6 development bundle without polyfills
+
 const path = require('path');
 const buildLocales = require('./build-locales');
 const WebpackBar = require('webpackbar');
 const dist = path.resolve('dist');
 
-console.log('Building development bundle...');
-
 buildLocales();
-// Full devlopment version without polyfills and not 'babelized'
+
 module.exports = {
   mode: 'development',
   entry: './src/JClic.js',

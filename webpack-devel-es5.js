@@ -1,11 +1,11 @@
 /* global module:true */
 
+// Development bundle for ES5
+
 const path = require('path');
 const buildLocales = require('./build-locales');
 const WebpackBar = require('webpackbar');
 const dist = path.resolve('dist');
-
-console.log('Building development bundle for ES5...');
 
 buildLocales();
 

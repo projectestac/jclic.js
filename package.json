@@ -68,7 +68,7 @@
     "build-dist": "webpack --config webpack-dist.js",
     "build-devel": "webpack --config webpack-devel.js",
     "build-devel-es5": "webpack --config webpack-devel-es5.js",
-    "build": "npm run build-devel && npm run build-devel-es5 && npm run build-dist",
+    "build": "webpack --config webpack-config.js",
     "build-locales": "node build-locales.js",
     "build-doc": "jsdoc -c jsdoc.config.js",
     "lint": "eslint -c .eslintrc.json \"src/**/*.js\"",

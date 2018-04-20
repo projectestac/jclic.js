@@ -1,5 +1,7 @@
 /* global module:true */
 
+// Production bundle compatible with ES5
+
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const pkg = require('./package.json');
@@ -7,8 +9,6 @@ const buildLocales = require('./build-locales');
 const WebpackBar = require('webpackbar');
 const date = new Date();
 const dist = path.resolve('dist');
-
-console.log('Building production bundle compatible with ES5...');
 
 buildLocales();
 
