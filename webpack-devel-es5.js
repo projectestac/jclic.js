@@ -12,7 +12,7 @@ buildLocales();
 module.exports = {
   mode: 'development',
   entry: ['babel-polyfill', './src/JClic.js'],
-  devtool: 'eval-sourcemap',
+  devtool: 'source-map',
   module: {
     rules: [
       {

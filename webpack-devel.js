@@ -11,7 +11,7 @@ buildLocales();
 module.exports = {
   mode: 'development',
   entry: './src/JClic.js',
-  devtool: 'eval-sourcemap',
+  devtool: 'source-map',
   performance: {
     maxAssetSize: 2000000,
     maxEntrypointSize: 2000000,
