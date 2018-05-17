@@ -19,7 +19,8 @@ const newerData = function (locales = _LOCALES, fileName = _GLOBALDATA) {
   if (!fs.existsSync(fileName))
     return true;
   const gTime = fs.statSync(fileName).ctimeMs;
-  return fs.readdirSync(locales).find(fn => fn.endsWith('.po') && fs.statSync(path.resolve(locales, fn)).ctimeMs > gTime) !== undefined;
+  return fs.statSync(path.resolve('./package.json')).ctimeMs > gTime
+    || fs.readdirSync(locales).find(fn => fn.endsWith('.po') && fs.statSync(path.resolve(locales, fn)).ctimeMs > gTime) !== undefined;
 }
 
 // Compiles all 'po' language files in ./locales, returning the resulting i18next options object
