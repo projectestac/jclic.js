@@ -88,9 +88,11 @@ define([
      * @param {string} eventName - The identifier of the event to be played
      */
     play(eventName) {
-      const sound = this.elements[eventName]
-      if (sound)
-        sound.play()
+      if (this.enabled) {
+        const sound = this.elements[eventName]
+        if (sound && sound.enabled)
+          sound.play()
+      }
     }
   }
 
@@ -321,7 +323,7 @@ define([
     /**
      * Whether this event sounds are enabled or not
      * @name EventSounds#enabled
-     * @type {boolean} */
+     * @type {number} */
     enabled: Utils.DEFAULT,
     /**
      * This attribute is intended to be used at prototype level, to indicate a globally disabled
