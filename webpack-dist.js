@@ -70,7 +70,7 @@ module.exports = {
         extractComments: {
           condition: /^\!/,
           filename: 'jclic.components.LICENSE',
-          banner: banner,
+          banner: () => banner,
         },
       })
     ],

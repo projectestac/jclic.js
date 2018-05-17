@@ -1,3 +1,12 @@
+### v1.1.5 (2018-05-17)
+#### Improvements
+- Use of [Webpack 4](https://webpack.js.org/) to polyfill, transpile and build the main distributable file `jclic.min.js`
+
+#### Bug fixes
+- Avoid playing disabled event sounds
+- Declare the `document` member in `Activity.prototype`
+- Use of `Element.getAttribute` instead of `style.attributes.*`
+
 ### v1.1.4 (2018-02-27)
 #### Improvements
 - Full implementation of JClic "legacy custom skins" (see v1.1.3) including counters and progress animations. This feature makes use of CSS [animation](https://caniuse.com/#feat=css-animation) and [grid layout](https://caniuse.com/#feat=css-grid), so please update your web browser!
