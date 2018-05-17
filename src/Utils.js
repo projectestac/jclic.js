@@ -207,9 +207,10 @@ define([
     /**
      * Gets a numeric value (0, 1 or 2) from a set of possible values: `false`, `true` and `default`.
      * @param {?string} val - The text to be parsed
+     * @param {?any} def - An optional default value
      * @returns {number}
      */
-    getTriState: val => val === 'true' ? Utils.TRUE : val === 'false' ? Utils.FALSE : Utils.DEFAULT,
+    getTriState: (val, def = Utils.DEFAULT) => val === 'true' ? Utils.TRUE : val === 'false' ? Utils.FALSE : def,
     /**
      * Returns a string with the given `tag` repeated n times
      * @param {string} tag - The tag to be repeated
@@ -290,7 +291,7 @@ define([
             result[k] = arr
           }
         }
-      })      
+      })
       // Save text content, if any:
       if (children.length === 0 && xml.textContent)
         result.textContent = xml.textContent

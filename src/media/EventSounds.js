@@ -56,8 +56,10 @@ define([
      * used to resolve which sound must be played for events when not defined here.
      */
     constructor(parent) {
-      if (parent)
+      if (parent) {
         this.elements = Object.assign({}, this.elements, parent.elements)
+        this.enabled = parent.enabled
+      }
     }
 
     /**
@@ -65,6 +67,7 @@ define([
      * @param {external:jQuery} $xml - The XML element to be parsed
      */
     setProperties($xml) {
+      this.enabled = Utils.getTriState($xml.attr('enabled'), this.enabled)
       $xml.children().each((_n, child) => {
         const id = child.getAttribute('id')
         this.elements[id] = new EventSoundsElement(id)
@@ -88,7 +91,7 @@ define([
      * @param {string} eventName - The identifier of the event to be played
      */
     play(eventName) {
-      if (this.enabled) {
+      if (this.globalEnabled && this.enabled) {
         const sound = this.elements[eventName]
         if (sound && sound.enabled)
           sound.play()
