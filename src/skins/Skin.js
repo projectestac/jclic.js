@@ -71,6 +71,9 @@ define([
         this.name = name
       this.options = options
 
+      if(this.options.skinId)
+        this.skinId = this.options.skinId;
+
       if (!Skin.registerStyleSheet(this.skinId, ps)) {
         let css = this._getStyleSheets('default')
         let twoThirds = this._getStyleSheets('twoThirds')
@@ -254,8 +257,10 @@ define([
       if (!cl) {
         // Process custom skin XML files
         const mbe = ps.project.mediaBag.getElement(skinName, false)
-        if (mbe && mbe.data)
+        if (mbe && mbe.data) {
           options = Object.assign({}, options, mbe.data)
+          options.skinId = `JClic-${skinName.replace('.xml', '')}`;
+        }
 
         if (!ps.zip
           && options.class === 'edu.xtec.jclic.skins.BasicSkin'
