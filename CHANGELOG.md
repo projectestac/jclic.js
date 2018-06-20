@@ -1,3 +1,7 @@
+### v1.1.6 (2018-06-20)
+#### Bug fixes
+- Allow projects to have multiple custom skins defined in XML files
+
 ### v1.1.5 (2018-05-17)
 #### Improvements
 - Use of [Webpack 4](https://webpack.js.org/) to polyfill, transpile and build the main distributable file `jclic.min.js`
