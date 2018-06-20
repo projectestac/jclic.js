@@ -1,4 +1,4 @@
-### v1.1.6 (2018-06-20)
+### v1.1.7 (2018-06-20)
 #### Bug fixes
 - Allow projects to have multiple custom skins defined in XML files
 
