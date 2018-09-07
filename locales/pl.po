@@ -6,189 +6,194 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JClic.js 0.1.28\n"
 "POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
-"PO-Revision-Date: 2016-06-20T10:14:00.362Z\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2018-09-08 19:22+0000\n"
+"Last-Translator: WaldiS <admin@sto.ugu.pl>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/jclic/jclicjs/pl/>"
+"\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.2-dev\n"
 
 #: about_window_lb_version
 msgid "Version"
-msgstr ""
+msgstr "Wersja"
 
 #: label_time
 msgid "time"
-msgstr ""
+msgstr "czas"
 
 #: label_actions
 msgid "actions"
-msgstr ""
+msgstr "działanie"
 
 #: label_score
 msgid "score"
-msgstr ""
+msgstr "wynik"
 
 #: action_next_tooltip
 msgid "Next activity"
-msgstr ""
+msgstr "Następna aktywność"
 
 #: action_prev_tooltip
 msgid "Previous activity"
-msgstr ""
+msgstr "Poprzednia aktywność"
 
 #: action_reset_tooltip
 msgid "Restart activity"
-msgstr ""
+msgstr "Zrestartuj aktywność"
 
 #: action_info_caption
 msgid "Information"
-msgstr ""
+msgstr "Informacje"
 
 #: report_system_standard
 msgid "Results are not currently being saved"
-msgstr ""
+msgstr "Wyniki nie są obecnie zapisywane"
 
 #: action_about_tooltip
 msgid "Current results"
-msgstr ""
+msgstr "Aktualne wyniki"
 
 #: report_started
 msgid "Session started:"
-msgstr ""
+msgstr "Sesja rozpoczęła się:"
 
 #: report_system
 msgid "Reports system:"
-msgstr ""
+msgstr "System raportów:"
 
 #: report_user
 msgid "User:"
-msgstr ""
+msgstr "Użytkownik:"
 
 #: report_num_projects
 msgid "Projects:"
-msgstr ""
+msgstr "Projektowanie:"
 
 #: report_num_sequences
 msgid "Sequences:"
-msgstr ""
+msgstr "Sekwencje:"
 
 #: report_num_activities
 msgid "Activities done:"
-msgstr ""
+msgstr "Działania wykonane:"
 
 #: report_num_activities_solved
 msgid "Activities solved:"
-msgstr ""
+msgstr "Działania rozwiązane:"
 
 #: report_global_score
 msgid "Global score:"
-msgstr ""
+msgstr "Globalny wynik:"
 
 # Explanation of 'global score'
 msgid "(out of all project activities)"
-msgstr ""
+msgstr "(poza wszystkimi działaniami projektu)"
 
 #: report_total_time
 msgid "Total time in activities:"
-msgstr ""
+msgstr "Całkowity czas aktywności:"
 
 #: report_num_actions
 msgid "Actions done:"
-msgstr ""
+msgstr "Wykonane czynności:"
 
 #: report_no_activities
 msgid "No activities done!"
-msgstr ""
+msgstr "Nie wykonano żadnych czynności!"
 
 #: report_project
 msgid "Project"
-msgstr ""
+msgstr "Projekt"
 
 #: report_lb_sequence
 msgid "sequence"
-msgstr ""
+msgstr "sekwencja"
 
 #: about_window_lb_activity
 msgid "activity"
-msgstr ""
+msgstr "aktywność"
 
 # 'Activity solved' header column
 #: report_lb_solved
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 # Value for 'OK' column
 msgid "YES"
-msgstr ""
+msgstr "Tak"
 
 # Value for 'OK' column
 msgid "NO"
-msgstr ""
+msgstr "Nie"
 
 #: report_lb_totals
 msgid "Total:"
-msgstr ""
+msgstr "Całkowity:"
 
 # Select group for reports in a list
 msgid "Select group:"
-msgstr ""
+msgstr "Wybierz grupę:"
 
 # Select user for reports in a list
 msgid "Select user:"
-msgstr ""
+msgstr "Wybierz użytkownika:"
 
 # Cancel dialog
 msgid "Cancel"
-msgstr ""
+msgstr "Anuluj"
 
 # Close dialog
 msgid "Close"
-msgstr ""
+msgstr "Zamknij"
 
 # Caption for 'copy' button in reports dialog
 msgid "Copy data to clipboard"
-msgstr ""
+msgstr "Skopiuj dane do schowka"
 
 # Text shown when reports data is pasted in plain-text editors
 msgid "The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor"
 msgstr ""
+"Dane zostały skopiowane w formacie HTML. Wklej je do arkusza kalkulacyjnego "
+"lub edytora tekstu"
 
 # Notification shown when reports data has been copied
 msgid "The data has been copied to clipboard"
-msgstr ""
+msgstr "Dane zostały skopiowane do schowka"
 
 # Added to TCPReporter description when the connection to the remote server is unsuccessful
 msgid "not connected"
-msgstr ""
+msgstr "nie połączony"
 
 # Message displayed when the user attempts to close the player with data pending to be reported
 msgid "Please wait until the results of your activities are sent to the reports system"
 msgstr ""
+"Poczekaj, aż wyniki Twoich działań zostaną przesłane do systemu raportów"
 
 # Caption for password input
 msgid "Password:"
-msgstr ""
+msgstr "Hasło:"
 
 # Error displayed when the provided password is incorrect
 msgid "Incorrect password"
-msgstr ""
+msgstr "Niepoprawne hasło"
 
 # Error displayed when the user ID does not exist
 msgid "Invalid user"
-msgstr ""
+msgstr "Nieprawidłowy użytkownik"
 
 # Average score of played activities
 msgid "Partial score:"
-msgstr ""
+msgstr "Wynik częściowy:"
 
 # Explanation of 'partial score'
 msgid "(out of played activities)"
-msgstr ""
+msgstr "(z granych zajęć)"
 
 # Number of project's activities played at least one time
 msgid "Activities played at least once:"
-msgstr ""
+msgstr "Działania grane co najmniej raz:"
