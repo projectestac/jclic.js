@@ -1,3 +1,8 @@
+### v1.1.8 (2018-09-12)
+#### Improvements
+- JClic.js is now also available also in Polish, thanks to Waldemar Stoczkowski!
+- Build scripts updated to work with [Babel 7](https://babeljs.io)
+
 ### v1.1.7 (2018-06-20)
 #### Bug fixes
 - Allow projects to have multiple custom skins defined in XML files
