@@ -710,9 +710,8 @@ define([
       /**
        * Plays the specified media.
        * @param {MediaContent} mediaContent - The media to be played
-       * @param {ActiveBox=} mediaPlacement - The cell where the graphic component of this media
-       * @param {function[]=} delayedActions - If set, store the the action in this array for future execution
-       * should be placed (used with video objects)
+       * @param {ActiveBox=} mediaPlacement - The cell where the graphic component of this media should be placed (used with video objects)
+       * @param {(function[])=} delayedActions - If set, store the the action in this array for future execution
        */
       playMedia(mediaContent, mediaPlacement = null, delayedActions = null) {
 

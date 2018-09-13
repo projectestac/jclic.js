@@ -499,9 +499,8 @@ define([
     /**
      * Classes derived from `Activity` should register themselves by adding a field to
      * `Activity.CLASSES` using its name as identifier and the class constructor as a value.
-     * @example
-     * // To be included at the end of MyActivity class:
-     * Activity.CLASSES['custom@myActivity'] = MyActivity
+     * @example <caption>To be included at the end of MyActivity class:
+     * </caption>Activity.CLASSES['custom@myActivity'] = MyActivity
      * @type {object}
      */
     Activity.CLASSES = {
@@ -1208,7 +1207,7 @@ define([
 
     /**
      * The panel class associated to each type of activity
-     * @type {class} */
+     * @type {ActivityPanel} */
     Activity.Panel = ActivityPanel
 
     return Activity
