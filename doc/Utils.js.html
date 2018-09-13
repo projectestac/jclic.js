@@ -293,9 +293,10 @@ define([
     /**
      * Gets a numeric value (0, 1 or 2) from a set of possible values: `false`, `true` and `default`.
      * @param {?string} val - The text to be parsed
+     * @param {?any} def - An optional default value
      * @returns {number}
      */
-    getTriState: val => val === 'true' ? Utils.TRUE : val === 'false' ? Utils.FALSE : Utils.DEFAULT,
+    getTriState: (val, def = Utils.DEFAULT) => val === 'true' ? Utils.TRUE : val === 'false' ? Utils.FALSE : def,
     /**
      * Returns a string with the given `tag` repeated n times
      * @param {string} tag - The tag to be repeated
@@ -341,8 +342,9 @@ define([
         Utils.attrForEach(xml.attributes, (name, value) => result[name] = /^-?\d*$/.test(value) ? Number(value) : value)
       // Process children elements
       const keys = []
-      for (let n = 0; n &lt; xml.children.length; n++) {
-        const child = xml.children[n]
+      const children = xml.children || xml.childNodes
+      for (let n = 0; n &lt; children.length; n++) {
+        const child = children[n]
         // Recursive processing of children
         const ch = Utils.parseXmlNode(child)
         // Store the result into a temporary object named as the child node name,
@@ -377,7 +379,7 @@ define([
         }
       })
       // Save text content, if any:
-      if (xml.children.length === 0 &amp;&amp; xml.textContent)
+      if (children.length === 0 &amp;&amp; xml.textContent)
         result.textContent = xml.textContent
       return result
     },
@@ -618,8 +620,15 @@ define([
       canvas.width = rect.dim.width
       canvas.height = rect.dim.height
       const ctx = canvas.getContext('2d')
-      ctx.drawImage(img, rect.pos.x, rect.pos.y, rect.dim.width, rect.dim.height, 0, 0, rect.dim.width, rect.dim.height)
-      return canvas.toDataURL()
+      let result = ''
+      try {
+        ctx.drawImage(img, rect.pos.x, rect.pos.y, rect.dim.width, rect.dim.height, 0, 0, rect.dim.width, rect.dim.height)
+        result = canvas.toDataURL()
+      } catch (err) {
+        // catch 'tainted canvases may not be exported' and other errors
+        Utils.log('error', err)
+      }
+      return result
     },
     /**
      * Finds the nearest `head` or root node of a given HTMLElement, useful to place `&lt;style/>` elements when

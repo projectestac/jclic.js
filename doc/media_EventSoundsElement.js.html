@@ -171,21 +171,25 @@ define([
      * Plays the audio associated to this event
      */
     play() {
-      if (this.audio) {
-        this.audio.currentTime = 0
-        this.audio.play()
-      } else if (this.player)
-        this.player.play()
+      if (this.enabled) {
+        if (this.audio) {
+          this.audio.currentTime = 0
+          this.audio.play()
+        } else if (this.player)
+          this.player.play()
+      }
     }
 
     /**
      * Stops playing the audio associated to this event
      */
     stop() {
-      if (this.audio)
-        this.audio.pause()
-      else if (this.player)
-        this.player.stop()
+      if (this.enabled) {
+        if (this.audio)
+          this.audio.pause()
+        else if (this.player)
+          this.player.stop()
+      }
     }
   }
 
@@ -198,7 +202,7 @@ define([
     /**
      * Whether the sound for this event is enabled or not
      * @name EventSoundsElement#enabled
-     * @type {boolean} */
+     * @type {number} */
     enabled: Utils.DEFAULT,
     /**
      * Media player used to play this sound

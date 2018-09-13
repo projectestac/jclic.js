@@ -155,8 +155,8 @@ define([
       // Read named styles
       // Sort styles according to its "base" dependencies
       const styles = $xml.children('style').toArray().sort((a, b) => {
-        var aName = a.attributes.name.value, aBase = a.attributes.base ? a.attributes.base.value : null
-        var bName = b.attributes.name.value, bBase = b.attributes.base ? b.attributes.base.value : null
+        var aName = a.getAttribute('name'), aBase = a.getAttribute('base') || null
+        var bName = b.getAttribute('name'), bBase = b.getAttribute('base') || null
         // Put 'default' always first, then each style below their base (if any)
         return aName === 'default' ? -1 : bName === 'default' ? 1
           : aBase === bName ? 1 : bBase === aName ? -1
