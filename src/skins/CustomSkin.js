@@ -396,8 +396,9 @@ define([
 .ID .JClicBtn:focus {outline:0;}\
 .ID .JClicCounter {font-family:Roboto,sans-serif;text-align:center;}',
     /**
-     * Specifc styles (`main`, `half` and `twoThirds`) computed at run-time,
+     * Specifc styles (`default`, `half` and `twoThirds`) computed at run-time,
      * based on the provided XML file
+     * @name CustomSkin#cssVariants
      * @type {object} */
     cssVariants: null,
     /**

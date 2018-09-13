@@ -171,15 +171,14 @@ define([
    *
    * @module JClic
    * @exports JClicObject
-   * @example
+   * @example <caption>
    * Creates a JClic div and loads "myproject.jclic" on it:
-   * `<div class ="JClic" data-project="myproject.jclic"></div>`
-   * @example
-   * Creates a JClic div that loads "myproject.jclic" with additional parameters, passed as a
-   * JSON string. Note that `data-options` should be delimited by apostrophes `'` because quotation
-   * marks `"` are used for JSON keys and values:
-   * `<div class ="JClic" data-project="myproject.jclic" data-options='{"fade":"400","lang":"es","reporter":"TCPReporter","user":"test01","path":"localhost:9090"}'></div>`
-   *
+   * </caption><div class ="JClic" data-project="myproject.jclic"></div>
+   * @example <caption>
+   * Creates a JClic div that loads "myproject.jclic" with additional parameters, passed as a JSON string.
+   * Note that `data-options` should be delimited by apostrophes `'` because quotation marks `"` are used
+   * for JSON keys and values:
+   * </caption><div class ="JClic" data-project="myproject.jclic" data-options='{"fade":"400","lang":"es","reporter":"TCPReporter","user":"test01","path":"localhost:9090"}'></div>
    */
   Object.assign(JClicObject, {
     JClicPlayer: JClicPlayer,
