@@ -16,7 +16,8 @@ requirejs.config({
     webfontloader: '../node_modules/webfontloader/webfontloader',
     'clipboard-js': '../node_modules/clipboard-js/clipboard',
     i18next: '../node_modules/i18next/i18next',
-    'es6-promise': '../node_modules/es6-promise/dist/es6-promise'
+    'es6-promise': '../node_modules/es6-promise/dist/es6-promise',
+    'midi-player-js': '../node_modules/midi-player-js/browser/midiplayer'
   }
 });
 

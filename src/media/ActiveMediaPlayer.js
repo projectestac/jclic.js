@@ -65,10 +65,8 @@ define([
           break
         case 'PLAY_AUDIO':
         case 'PLAY_VIDEO':
-          this.mbe = mb.getElement(mc.mediaFileName, true)
-          break
         case 'PLAY_MIDI':
-          // TODO: Implement MIDI playing
+          this.mbe = mb.getElement(mc.mediaFileName, true)
           break
         default:
           break

@@ -671,7 +671,9 @@ define([
         eot: ' application/vnd.ms-fontobject',
         woff: 'application/font-woff',
         woff2: 'application/font-woff2',
-        swf: 'application/x-shockwave-flash'
+        swf: 'application/x-shockwave-flash',
+        mid: 'audio/midi',
+        midi: 'audio/midi'
       },
       // Global settings susceptible to be modified
       COMPRESS_IMAGES: true,

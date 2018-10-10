@@ -32,9 +32,10 @@
 
 define([
   "jquery",
+  "midi-player-js",
   "../Utils",
   "../AWT"
-], function ($, Utils, AWT) {
+], function ($, MidiPlayer, Utils, AWT) {
 
   /**
    * This kind of objects are the components of {@link MediaBag}.
@@ -226,6 +227,19 @@ define([
               $.get(fullPath, null, null, 'xml').done(xmlData => {
                 const children = xmlData ? xmlData.children || xmlData.childNodes : null
                 this.data = children && children.length > 0 ? Utils.parseXmlNode(children[0]) : null
+                this._onReady()
+              }).fail(err => {
+                Utils.log('error', `Error loading ${this.name}: ${err}`)
+                this._onReady()
+              })
+              break
+
+            case 'midi':
+            // Using "midi-player-js" - https://github.com/grimmdude/MidiPlayerJS
+            // See also: http://www.midijs.net
+              $.get(fullPath, null, null, 'text').done(binaryData => {
+                this.data = new MidiPlayer.Player(ev => console.log(`MIDI event: ${ev}`))                
+                this.data.loadArrayBuffer(binaryData)
                 this._onReady()
               }).fail(err => {
                 Utils.log('error', `Error loading ${this.name}: ${err}`)
