@@ -32,10 +32,10 @@
 
 define([
   "jquery",
-  "midi-player-js",
+  "../media/MidiAudioPlayer",
   "../Utils",
   "../AWT"
-], function ($, MidiPlayer, Utils, AWT) {
+], function ($, MidiAudioPlayer, Utils, AWT) {
 
   /**
    * This kind of objects are the components of {@link MediaBag}.
@@ -235,20 +235,19 @@ define([
               break
 
             case 'midi':
-            // Using "midi-player-js" - https://github.com/grimmdude/MidiPlayerJS
-            // See also: http://www.midijs.net
-              $.get(fullPath, null, null, 'text').done(binaryData => {
-                this.data = new MidiPlayer.Player(ev => console.log(`MIDI event: ${ev}`))                
-                this.data.loadArrayBuffer(binaryData)
-                this._onReady()
-              }).fail(err => {
-                Utils.log('error', `Error loading ${this.name}: ${err}`)
-                this._onReady()
-              })
+              fetch(fullPath)
+                .then(res => res.arrayBuffer())
+                .then(result => {
+                  this.data = new MidiAudioPlayer(result)
+                  this._onReady()
+                })
+                .catch(err => {
+                  Utils.log('error', `Error loading ${this.name}: ${err}`)
+                  this._onReady()
+                })
               break
 
             default:
-              // TODO: Load the real resource
               Utils.log('trace', `Media currently not supported: ${this.name}`)
               this.ready = true
           }

@@ -1106,6 +1106,11 @@
         "acorn": "^5.0.3"
       }
     },
+    "adsr": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/adsr/-/adsr-1.0.1.tgz",
+      "integrity": "sha1-p7wI5e+KceY2SryW/OffHESIHMM="
+    },
     "ajv": {
       "version": "5.5.2",
       "resolved": "https://registry.npmjs.org/ajv/-/ajv-5.5.2.tgz",
@@ -1302,6 +1307,11 @@
       "resolved": "https://registry.npmjs.org/atob/-/atob-2.1.1.tgz",
       "integrity": "sha1-ri1acpR38onWDdf5amMUoi3Wwio=",
       "dev": true
+    },
+    "audio-loader": {
+      "version": "0.5.0",
+      "resolved": "https://registry.npmjs.org/audio-loader/-/audio-loader-0.5.0.tgz",
+      "integrity": "sha1-nBJdGyXDPNliYIQFTZ9rfzHdyQg="
     },
     "aws-sign2": {
       "version": "0.7.0",
@@ -5206,6 +5216,11 @@
       "resolved": "https://registry.npmjs.org/midi-player-js/-/midi-player-js-2.0.4.tgz",
       "integrity": "sha512-Qw355KkA3+BiuUjPKiKimnIuajGpg+tHzfshIJuzyL8Fs+AdYlwKj+rJ59GGpTzcozlC8ztiLPPMy63lfI0pdg=="
     },
+    "midimessage": {
+      "version": "1.0.5",
+      "resolved": "https://registry.npmjs.org/midimessage/-/midimessage-1.0.5.tgz",
+      "integrity": "sha1-rZnwTYY6BTolY9VTxb81BwtIgCw="
+    },
     "miller-rabin": {
       "version": "4.0.1",
       "resolved": "https://registry.npmjs.org/miller-rabin/-/miller-rabin-4.0.1.tgz",
@@ -5571,6 +5586,11 @@
       "requires": {
         "remove-trailing-separator": "^1.0.1"
       }
+    },
+    "note-parser": {
+      "version": "2.0.1",
+      "resolved": "https://registry.npmjs.org/note-parser/-/note-parser-2.0.1.tgz",
+      "integrity": "sha1-JDj9V6RolLQCs6IHF5hmASnI+8E="
     },
     "npm-run-path": {
       "version": "2.0.2",
@@ -6578,6 +6598,23 @@
       "integrity": "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==",
       "dev": true
     },
+    "sample-player": {
+      "version": "0.5.5",
+      "resolved": "https://registry.npmjs.org/sample-player/-/sample-player-0.5.5.tgz",
+      "integrity": "sha1-vDW+o0Scb6lyUo8CKpu8KHIZVjc=",
+      "requires": {
+        "adsr": "^1.0.0",
+        "midimessage": "^1.0.5",
+        "note-parser": "^1.1.0"
+      },
+      "dependencies": {
+        "note-parser": {
+          "version": "1.1.0",
+          "resolved": "https://registry.npmjs.org/note-parser/-/note-parser-1.1.0.tgz",
+          "integrity": "sha1-EunxflFFDsmU8TZKAZgsImZ7jms="
+        }
+      }
+    },
     "sanitize-html": {
       "version": "1.18.2",
       "resolved": "https://registry.npmjs.org/sanitize-html/-/sanitize-html-1.18.2.tgz",
@@ -6905,6 +6942,16 @@
       "dev": true,
       "requires": {
         "kind-of": "^3.2.0"
+      }
+    },
+    "soundfont-player": {
+      "version": "0.10.7",
+      "resolved": "https://registry.npmjs.org/soundfont-player/-/soundfont-player-0.10.7.tgz",
+      "integrity": "sha512-N9OoXer08KCO649kYQNKi0+gd5IVvVx5WoCx1gbm9APMU8Vk3kPKzbOllWi+BSEfxtmaLWACVTwHX0DFky49pQ==",
+      "requires": {
+        "audio-loader": "^0.5.0",
+        "note-parser": "^2.0.0",
+        "sample-player": "^0.5.5"
       }
     },
     "source-list-map": {

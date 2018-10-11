@@ -77,6 +77,12 @@
  */
 
 /**
+ * The AudioContext interface represents an audio-processing graph built from audio modules linked together.
+ * @external AudioContext
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/AudioContext}
+ */
+
+/**
  * The Intl.Collator object is a constructor for collators, objects that enable language sensitive
  * string comparison.
  * @external Collator

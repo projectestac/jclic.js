@@ -44,6 +44,7 @@
     "midi-player-js": "^2.0.4",
     "screenfull": "^3.3.2",
     "scriptjs": "^2.5.8",
+    "soundfont-player": "^0.10.7",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
