@@ -134,7 +134,6 @@ define([
      * @param {object} ev - The event data. See http://grimmdude.com/MidiPlayerJS/docs/index.html for details
      */
     playEvent(ev) {
-      console.log(ev)
       if (MidiAudioPlayer.instrument) {
         if (ev.name === 'Note on' && ev.velocity > 0)
           MidiAudioPlayer.instrument.play(ev.noteName, MidiAudioPlayer.audioContext.currentTime, { gain: ev.velocity / 100 })
