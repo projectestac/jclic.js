@@ -109,21 +109,25 @@ define([
       } else if (this.mbe) {
         this.mbe.build(() => {
           if (this.mbe.data) {
-            let armed = false
-            const $player = $(this.mbe.data)
-            // Clear previous event handlers
-            $player.off()
-            // If there is a time fragment specified, prepare to stop when the `to` position is reached
-            if (this.mc.to > 0) {
-              $player.on('timeupdate', () => {
-                if (armed && this.mbe.data.currentTime >= this.mc.to / 1000) {
-                  $player.off('timeupdate')
-                  this.mbe.data.pause()
-                }
-              })
+            if (this.mbe.type === 'midi') {
+              this.mbe.data.playTo = this.mc.to || 0
+            } else {
+              let armed = false
+              const $player = $(this.mbe.data)
+              // Clear previous event handlers
+              $player.off()
+              // If there is a time fragment specified, prepare to stop when the `to` position is reached
+              if (this.mc.to > 0) {
+                $player.on('timeupdate', () => {
+                  if (armed && this.mbe.data.currentTime >= this.mc.to / 1000) {
+                    $player.off('timeupdate')
+                    this.mbe.data.pause()
+                  }
+                })
+              }
+              // Launch the media despite of its readyState
+              armed = true
             }
-            // Launch the media despite of its readyState
-            armed = true
             if (!this.mbe.data.paused && !this.mbe.data.ended && this.mbe.data.currentTime)
               this.mbe.data.pause()
             // Seek the media position

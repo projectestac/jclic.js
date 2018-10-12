@@ -46,7 +46,7 @@ define([
   /**
    * A simple MIDI player based on MidiPlayerJS
    * https://github.com/grimmdude/MidiPlayerJS
-   * See also: http://www.midijs.net
+   * See also: http://www.midijs.net (https://github.com/babelsberg/babelsberg-js/tree/master/midijs)
    * @exports MidiAudioPlayer
    * @class
    */
@@ -135,8 +135,11 @@ define([
      */
     playEvent(ev) {
       if (MidiAudioPlayer.instrument) {
-        if (ev.name === 'Note on' && ev.velocity > 0)
-          MidiAudioPlayer.instrument.play(ev.noteName, MidiAudioPlayer.audioContext.currentTime, { gain: ev.velocity / 100 })
+        if (this.playTo > 0 && this.currentTime >= this.playTo)
+          this.pause()        
+        else
+          if (ev.name === 'Note on' && ev.velocity > 0)
+            MidiAudioPlayer.instrument.play(ev.noteName, MidiAudioPlayer.audioContext.currentTime, { gain: ev.velocity / 100 })
       }
     }
   }
@@ -152,6 +155,11 @@ define([
      * @name MidiAudioPlayer#player
      * @type {MidiPlayer.Player} */
     player: null,
+    /**
+     * When >0, time position at which the music must end
+     * @name MidiAudioPlayer#playTo
+     * @type {number} */
+    playTo: 0,
   })
 
   /**
@@ -178,8 +186,8 @@ define([
    * See: https://github.com/danigb/soundfont-player
    * @type {string}
    */
-  //MidiAudioPlayer.SOUNDFONT_BASE = 'https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/MusyngKite/acoustic_guitar_nylon-mp3.js'
-  MidiAudioPlayer.SOUNDFONT_BASE = 'acoustic_grand_piano'
+  MidiAudioPlayer.SOUNDFONT_BASE = 'https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM/acoustic_grand_piano-mp3.js'
+  //MidiAudioPlayer.SOUNDFONT_BASE = 'acoustic_grand_piano'
 
   return MidiAudioPlayer
 })

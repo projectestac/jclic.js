@@ -147,9 +147,7 @@ define([
 
       this.getFullPathPromise().then(fullPath => {
         request.open('GET', fullPath, true)
-        // ------------------ Here we go:
         request.responseType = 'arraybuffer'
-        // ---------------------------------
         request.send()
       })
     }
@@ -235,6 +233,21 @@ define([
               break
 
             case 'midi':
+              const request = new XMLHttpRequest()
+              request.onreadystatechange = () => {
+                if (request.readyState === 4) {
+                  if (request.status === 200)
+                    this.data = new MidiAudioPlayer(request.response)
+                  else
+                    Utils.log('error', `Error loading ${this.name}: ${request.statusText}`)
+                  this._onReady()
+                }
+              }
+              request.open('GET', fullPath, true)
+              request.responseType = 'arraybuffer'
+              request.send()
+
+              /* USING 'fetch':
               fetch(fullPath)
                 .then(res => res.arrayBuffer())
                 .then(result => {
@@ -245,6 +258,7 @@ define([
                   Utils.log('error', `Error loading ${this.name}: ${err}`)
                   this._onReady()
                 })
+              */
               break
 
             default:
