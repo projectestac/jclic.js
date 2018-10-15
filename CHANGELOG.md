@@ -1,3 +1,9 @@
+### v1.1.9 (2018-10-15)
+#### Improvements
+- Basic support for MIDI files: Only one musical instrument (acoustic grand piano) is dynamically loaded
+  and used for all tracks, in a single MIDI channel schema. No percussion sounds on channel 10. This feature must be
+  improved on the future, but currently covers the basic necessities of most musical activities.
+
 ### v1.1.8 (2018-09-12)
 #### Improvements
 - JClic.js is now also available also in Polish, thanks to Waldemar Stoczkowski!

@@ -135,11 +135,15 @@ define([
      */
     playEvent(ev) {
       if (MidiAudioPlayer.instrument) {
+        // Check for specific interval
         if (this.playTo > 0 && this.currentTime >= this.playTo)
-          this.pause()        
-        else
-          if (ev.name === 'Note on' && ev.velocity > 0)
-            MidiAudioPlayer.instrument.play(ev.noteName, MidiAudioPlayer.audioContext.currentTime, { gain: ev.velocity / 100 })
+          this.pause()
+        // Set main volume
+        else if (ev.name === 'Controller Change' && ev.number === 7)
+          this.mainVolume = ev.value / 127;
+        // Process 'Note on' messages. Max gain set to 2.0 for better results with the used soundfont
+        else if (ev.name === 'Note on' && ev.velocity > 0)
+          MidiAudioPlayer.instrument.play(ev.noteName, MidiAudioPlayer.audioContext.currentTime, { gain: 2 * (this.mainVolume * ev.velocity / 100) })
       }
     }
   }
@@ -160,6 +164,11 @@ define([
      * @name MidiAudioPlayer#playTo
      * @type {number} */
     playTo: 0,
+    /**
+     * Main volume of this track (set with a MIDI message of type `Controller Change` #7)
+     * @name MidiAudioPlayer#mainVolume
+     * @type {number} */
+    mainVolume: 1.0,
   })
 
   /**
@@ -186,8 +195,8 @@ define([
    * See: https://github.com/danigb/soundfont-player
    * @type {string}
    */
-  MidiAudioPlayer.SOUNDFONT_BASE = 'https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM/acoustic_grand_piano-mp3.js'
-  //MidiAudioPlayer.SOUNDFONT_BASE = 'acoustic_grand_piano'
+  //MidiAudioPlayer.SOUNDFONT_BASE = 'https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM/acoustic_grand_piano-mp3.js'
+  MidiAudioPlayer.SOUNDFONT_BASE = 'acoustic_grand_piano'
 
   return MidiAudioPlayer
 })

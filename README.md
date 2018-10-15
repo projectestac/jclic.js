@@ -17,10 +17,6 @@ JClic is a Java application that runs on Linux, Windows and Mac OS. Full [source
 
 Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge [library](https://clic.xtec.cat/repo) created with [jclic-repo](https://github.com/projectestac/jclic-repo), another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.
 
-## Known issues
-
-* Playing of MIDI files is not yet implemented
-
 ## How to build JClic.js
 
 JClic.js uses [Node.js](https://nodejs.org/) modules encapsulated in [npm](https://www.npmjs.com/) packages. First of all, you must have Node.js (which includes 'npm') [installed](https://nodejs.org/download/) on your system.
