@@ -88,12 +88,14 @@ define([
      */
     pause() {
       this.player.pause()
+      this.startedNotes = []
     }
 
     /**
      * Starts or resumes playing
      */
     play() {
+      this.startedNotes = []
       this.player.play()
     }
 
@@ -143,7 +145,12 @@ define([
           this.mainVolume = ev.value / 127;
         // Process 'Note on' messages. Max gain set to 2.0 for better results with the used soundfont
         else if (ev.name === 'Note on' && ev.velocity > 0)
-          MidiAudioPlayer.instrument.play(ev.noteName, MidiAudioPlayer.audioContext.currentTime, { gain: 2 * (this.mainVolume * ev.velocity / 100) })
+          this.startedNotes[ev.noteNumber] = MidiAudioPlayer.instrument.play(ev.noteName, MidiAudioPlayer.audioContext.currentTime, { gain: 2 * (this.mainVolume * ev.velocity / 100) })
+        // Process 'Note off' messages
+        else if (ev.name === 'Note off' && ev.noteNumber && this.startedNotes[ev.noteNumber]) {
+          this.startedNotes[ev.noteNumber].stop()
+          delete (this.startedNotes[ev.noteNumber])
+        }
       }
     }
   }
@@ -169,6 +176,12 @@ define([
      * @name MidiAudioPlayer#mainVolume
      * @type {number} */
     mainVolume: 1.0,
+    /**
+     * This array is used when processing 'Note off' events to stop notes that are currently playing.
+     * It contains a collection of 'instrument.play' instances, one for each active note
+     * @name MidiAudioPlayer#startedNotes
+     * @type {function[]} */
+    startedNotes: [],
   })
 
   /**
