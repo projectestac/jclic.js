@@ -31,16 +31,13 @@
 /* global define, AudioContext */
 
 define([
-  "midi-player-js",
-  "soundfont-player",
+  "@francesc/basic-midi-player-js",
   "../Utils"
-], function (MidiPlayer, Soundfont, Utils) {
+], function (MidiPlayer, Utils) {
 
-  // TODO: Read and use "Note off" messages
   // TODO: Use multiple instruments, at least one for each track
   // TODO: Use multiple midi channels (currently flattened to a single channel)
   // TODO: Use of channel 10 for percussion instruments
-  // TODO: Read tempo and control messages
   // TODO: ... build a real MIDI player!!
 
   /**
@@ -72,7 +69,8 @@ define([
       if (MidiAudioPlayer.loadingInstrument === false) {
         MidiAudioPlayer.loadingInstrument = true;
         MidiAudioPlayer.audioContext = new AudioContext()
-        window.Soundfont.instrument(MidiAudioPlayer.audioContext, MidiAudioPlayer.SOUNDFONT_BASE)
+        MidiPlayer.Soundfont.instrument(MidiAudioPlayer.audioContext, MidiAudioPlayer.SOUNDFONT_BASE)
+        //MidiPlayer.Soundfont.instrument(MidiAudioPlayer.audioContext, MidiPlayer.AcousticGrandPiano)
           .then(instrument => {
             Utils.log('info', 'MIDI soundfont instrument loaded')
             MidiAudioPlayer.instrument = instrument
@@ -164,7 +162,7 @@ define([
     /**
      * The grimmdude's MidiPlayer used by this player
      * @name MidiAudioPlayer#player
-     * @type {MidiPlayer.Player} */
+     * @type {MidiPlayerJS} */
     player: null,
     /**
      * When >0, time position at which the music must end

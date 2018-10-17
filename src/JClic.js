@@ -129,6 +129,12 @@
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap}
  */
 
+/**
+ * MidiPlayerJS is a JavaScript library which reads standard MIDI files and emits JSON events in real time.
+ * @external MidiPlayerJS
+ * @see {@link https://github.com/grimmdude/MidiPlayerJS}
+ */
+
 /* global define:true, JClicDataProject, JClicDataOptions */
 
 // Mock `define` when called from a JavaScript environment without native AMD support (like Node.js)

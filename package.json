@@ -35,16 +35,15 @@
   ],
   "license": "EUPL-1.1",
   "dependencies": {
+    "@francesc/basic-midi-player-js": "^3.0.1",
     "babel-polyfill": "^6.26.0",
     "clipboard-js": "^0.3.6",
     "i18next": "^11.9.1",
     "jquery": "^3.3.1",
     "jszip": "^3.1.5",
     "jszip-utils": "0.0.2",
-    "midi-player-js": "^2.0.4",
     "screenfull": "^3.3.3",
     "scriptjs": "^2.5.9",
-    "soundfont-player": "^0.10.7",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {

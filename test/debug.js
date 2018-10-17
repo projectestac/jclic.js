@@ -17,9 +17,7 @@ requirejs.config({
     'clipboard-js': '../node_modules/clipboard-js/clipboard',
     i18next: '../node_modules/i18next/i18next',
     'es6-promise': '../node_modules/es6-promise/dist/es6-promise',
-    'midi-player-js': '../node_modules/midi-player-js/browser/midiplayer',
-    'soundfont-player': '../node_modules/soundfont-player/dist/soundfont-player',
-
+    '@francesc/basic-midi-player-js': '../node_modules/@francesc/basic-midi-player-js/module/midiplayer',
   }
 });
 
