@@ -35,7 +35,7 @@
   ],
   "license": "EUPL-1.1",
   "dependencies": {
-    "@francesc/basic-midi-player-js": "^3.0.1",
+    "@francesc/basic-midi-player-js": "^3.0.2",
     "babel-polyfill": "^6.26.0",
     "clipboard-js": "^0.3.6",
     "i18next": "^11.9.1",
@@ -60,7 +60,7 @@
     "po2json": "^1.0.0-alpha",
     "requirejs": "^2.3.6",
     "uglifyjs-webpack-plugin": "^2.0.1",
-    "webpack": "^4.20.2",
+    "webpack": "^4.21.0",
     "webpack-cli": "^3.1.2",
     "webpackbar": "^2.6.3",
     "xmldom": "^0.1.27"
