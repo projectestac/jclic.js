@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>JClic.js Class: MediaBag</title>
+	<title>JClic.js Class: MidiAudioPlayer</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -79,16 +79,16 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: MediaBag</h1>
+	<h1 class="page-title">Class: MidiAudioPlayer</h1>
 <section>
 
 <header>
     
         <h2>
-        MediaBag
+        MidiAudioPlayer
         </h2>
         
-            <div class="class-description"><p>This class stores and manages all the media components (images, sounds, animations, video,<br>MIDI files, etc.) needed to run the activities of a <a href="JClicProject.html"><code>JClicProject</code></a>. The main member of<br>the class is <code>elements</code>. This is where <a href="MediaBagElement.html"><code>MediaBagElement</code></a> objects are stored.</p></div>
+            <div class="class-description"><p>A simple MIDI player based on MidiPlayerJS<br>https://github.com/grimmdude/MidiPlayerJS<br>See also: http://<a href="http://www.midijs.net">www.midijs.net</a> (https://github.com/babelsberg/babelsberg-js/tree/master/midijs)</p></div>
         
     
 </header>
@@ -100,7 +100,7 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="MediaBag"><span class="type-signature"></span>new MediaBag(project)</h4>
+    <h4 class="name" id="MidiAudioPlayer"><span class="type-signature"></span>new MidiAudioPlayer(data [, options])</h4>
     
     
 </dt>
@@ -108,7 +108,7 @@
 
     
     <div class="description">
-        <p>MediaBag constructor</p>
+        <p>MidiAudioPlayer constructor</p>
     </div>
     
 
@@ -131,6 +131,8 @@
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -143,13 +145,13 @@
 
         <tr>
             
-                <td class="name"><code>project</code></td>
+                <td class="name"><code>data</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="JClicProject.html">JClicProject</a></span>
+<span class="param-type">ArrayBuffer</span>
 
 
 
@@ -157,10 +159,58 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"><p>The JClic project to which this media bag belongs</p></td>
+            <td class="description last"><p>The MIDI file content, in ArrayBuffer format</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Optional params related to the type of soundfont used. Valid options inside this object are:<br></p>
+<ul>
+<li><code>MIDISoundFontObject</code>: An object containing the full soundfont data. When this param is provided, no other one will be used.</li>
+<li><code>MIDISoundFontBase</code>: The URL used as base for the current collection of MIDI soundfonts. Defaults to <code>https://clic.xtec.cat/dist/jclic.js/soundfonts/MusyngKite</code></li>
+<li><code>MIDISoundFontName</code>: The MIDI instrument name. Defaults to <code>acoustic_grand_piano</code>. See <a href="https://github.com/gleitz/midi-js-soundfonts">MIDI.js Soundfonts</a> for full lists of MIDI instrument names.</li>
+<li><code>MIDISoundFontExtension</code>: An extension to be added to <code>MIDISoundFontName</code> in order to build the full file name of the soundfont JS file. Defaults to <code>-mp3.js</code></li>
+</ul></td>
         </tr>
 
     
@@ -204,8 +254,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="bags_MediaBag.js.html">bags/MediaBag.js</a>,
-				 <a href="bags_MediaBag.js.html#sunlight-1-line-47">line 47</a>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-50">line 50</a>
 			</li>
 		</ul>
 	</dd>
@@ -253,15 +303,501 @@
         <dl>
             
 <hr>
-<dt class="name" id="elements">
-    <h4 id="elements"><span class="type-signature"></span>elements<span class="type-signature"> :object</span></h4>
+<dt class="name" id=".audioContext">
+    <h4 id=".audioContext"><span class="type-signature">&lt;static> </span>audioContext<span class="type-signature"> :AudioContext</span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>The collection of <a href="MediaBagElement.html"><code>MediaBagElement</code></a> objects</p>
+        <p>The <code>AudioContext</code> used by this MIDI player.</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">AudioContext</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-197">line 197</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".instrument">
+    <h4 id=".instrument"><span class="type-signature">&lt;static> </span>instrument<span class="type-signature"> :Instrument</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The &quot;Instrument&quot; object used by this MIDI player.<br>See: https://github.com/danigb/soundfont-player</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Instrument</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-204">line 204</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".loadingInstrument">
+    <h4 id=".loadingInstrument"><span class="type-signature">&lt;static> </span>loadingInstrument<span class="type-signature"> :boolean</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>A flag used to avoid re-entrant calls to <a href="MidiAudioPlayer.html#.prepareInstrument"><code>MidiAudioPlayer.prepareInstrument</code></a></p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">boolean</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-210">line 210</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".MIDISoundFontBase">
+    <h4 id=".MIDISoundFontBase"><span class="type-signature">&lt;static> </span>MIDISoundFontBase<span class="type-signature"> :string</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The URL used as base for the current collection of MIDI soundfonts.<br>This value can be overwritten by the global parameter <code>MIDISoundFontBase</code></p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">string</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-225">line 225</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".MIDISoundFontExtension">
+    <h4 id=".MIDISoundFontExtension"><span class="type-signature">&lt;static> </span>MIDISoundFontExtension<span class="type-signature"> :string</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>An extension to be added to <code>MIDISoundFontName</code> in order to build the full file name of the soundfont JS file.<br>Current valid options are <code>-mp3.js</code> and <code>-ogg.js</code><br>This value can be overwritten by the global parameter <code>MIDISoundFontExtension</code></p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">string</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-245">line 245</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".MIDISoundFontName">
+    <h4 id=".MIDISoundFontName"><span class="type-signature">&lt;static> </span>MIDISoundFontName<span class="type-signature"> :string</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The MIDI instrument name.<br>This value can be overwritten by the global parameter <code>MIDISoundFontName</code><br>See <a href="https://github.com/gleitz/midi-js-soundfonts">MIDI.js Soundfonts</a> for full lists of MIDI instrument names.</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">string</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-237">line 237</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".MIDISoundFontObject">
+    <h4 id=".MIDISoundFontObject"><span class="type-signature">&lt;static> </span>MIDISoundFontObject<span class="type-signature"> :object</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>An object containing the full soundfont data used by <a href="MidiAudioPlayer.html#.instrument"><code>MidiAudioPlayer.instrument</code></a><br>When this member is set, no other settings related to the sounfFont will be used.<br>This value can be overwritten by the global parameter <code>MIDISoundFontObject</code></p>
     </div>
     
 
@@ -313,8 +849,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="bags_MediaBag.js.html">bags/MediaBag.js</a>,
-				 <a href="bags_MediaBag.js.html#sunlight-1-line-184">line 184</a>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-218">line 218</a>
 			</li>
 		</ul>
 	</dd>
@@ -334,15 +870,155 @@
         
             
 <hr>
-<dt class="name" id="project">
-    <h4 id="project"><span class="type-signature"></span>project<span class="type-signature"> :<a href="JClicProject.html">JClicProject</a></span></h4>
+<dt class="name" id="currentTime">
+    <h4 id="currentTime"><span class="type-signature"></span>currentTime<span class="type-signature"></span></h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        <p>The JClic project to which this MediaBag belongs</p>
+        <p>Gets the current time</p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-128">line 128</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="currentTime">
+    <h4 id="currentTime"><span class="type-signature"></span>currentTime<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Sets the current time of this player (in milliseconds)</p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-136">line 136</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="data">
+    <h4 id="data"><span class="type-signature"></span>data<span class="type-signature"> :ArrayBuffer</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The MIDI file data used by this MIDI player</p>
     </div>
     
 
@@ -351,7 +1027,7 @@
         <ul>
             <li>
                 
-<span class="param-type"><a href="JClicProject.html">JClicProject</a></span>
+<span class="param-type">ArrayBuffer</span>
 
 
 
@@ -394,8 +1070,472 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="bags_MediaBag.js.html">bags/MediaBag.js</a>,
-				 <a href="bags_MediaBag.js.html#sunlight-1-line-189">line 189</a>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-165">line 165</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="ended">
+    <h4 id="ended"><span class="type-signature"></span>ended<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Checks if the current player has ended or is already playing</p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-120">line 120</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="mainVolume">
+    <h4 id="mainVolume"><span class="type-signature"></span>mainVolume<span class="type-signature"> :number</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Main volume of this track (set with a MIDI message of type <code>Controller Change</code> #7)</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">number</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-180">line 180</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="paused">
+    <h4 id="paused"><span class="type-signature"></span>paused<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Gets the ' paused'  state of the current player</p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-112">line 112</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="player">
+    <h4 id="player"><span class="type-signature"></span>player<span class="type-signature"> :MidiPlayerJS</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The grimmdude's MidiPlayer used by this player</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">MidiPlayerJS</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-170">line 170</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="playTo">
+    <h4 id="playTo"><span class="type-signature"></span>playTo<span class="type-signature"> :number</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>When &gt;0, time position at which the music must end</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">number</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-175">line 175</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="startedNotes">
+    <h4 id="startedNotes"><span class="type-signature"></span>startedNotes<span class="type-signature"> :Array.&lt;function()></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>This array is used when processing 'Note off' events to stop notes that are currently playing.<br>It contains a collection of 'instrument.play' instances, one for each active note</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Array.&lt;function()></span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-185">line 185</a>
 			</li>
 		</ul>
 	</dd>
@@ -422,7 +1562,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="buildAll"><span class="type-signature"></span>buildAll(type [, callback] [, ps])</h4>
+    <h4 class="name" id=".prepareInstrument"><span class="type-signature">&lt;static> </span>prepareInstrument(options)</h4>
     
     
 </dt>
@@ -430,8 +1570,7 @@
 
     
     <div class="description">
-        <p>Preloads all resources.</p>
-<p><strong>Use with care!</strong> Calling this method will start loading all the resources defined in the<br>MediaBag, whether used or not in the current activity.</p>
+        <p>Initializes the soundfont instrument, loading data from GitHub<br>NOTE: This will not work when off-line!<br>TODO: Provided a basic, simple, static soundfont</p>
     </div>
     
 
@@ -454,8 +1593,6 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
-        
 
         
 
@@ -468,13 +1605,13 @@
 
         <tr>
             
-                <td class="name"><code>type</code></td>
+                <td class="name"><code>options</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">object</span>
 
 
 
@@ -482,86 +1619,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"><p>The type of media to be build. When <code>null</code> or <code>undefined</code>, all<br>resources will be build.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>Function to be called when each element is ready.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>ps</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">PlayStation</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>An optional <code>PlayStation</code> (currently a <a href="JClicPlayer.html"><code>JClicPlayer</code></a>) used to dynamically load fonts</p></td>
+            <td class="description last"><p>Optional param with options related to the MIDI soundfont. See details in <code>constructor</code> description.</p></td>
         </tr>
 
     
@@ -605,8 +1666,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="bags_MediaBag.js.html">bags/MediaBag.js</a>,
-				 <a href="bags_MediaBag.js.html#sunlight-1-line-140">line 140</a>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-74">line 74</a>
 			</li>
 		</ul>
 	</dd>
@@ -631,32 +1692,6 @@
     
 
     
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <ul>
-<li>The total number of elements that will be build     *</li>
-</ul>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">number</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
 
     
 </dd>
@@ -665,7 +1700,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="countWaitingElements"><span class="type-signature"></span>countWaitingElements()</h4>
+    <h4 class="name" id="pause"><span class="type-signature"></span>pause()</h4>
     
     
 </dt>
@@ -673,7 +1708,7 @@
 
     
     <div class="description">
-        <p>Checks if there are media waiting to be loaded</p>
+        <p>Pauses the player</p>
     </div>
     
 
@@ -719,8 +1754,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="bags_MediaBag.js.html">bags/MediaBag.js</a>,
-				 <a href="bags_MediaBag.js.html#sunlight-1-line-155">line 155</a>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-95">line 95</a>
 			</li>
 		</ul>
 	</dd>
@@ -745,32 +1780,6 @@
     
 
     
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <ul>
-<li>The amount of media elements already loaded, or -1 if all elements are ready</li>
-</ul>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">number</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
 
     
 </dd>
@@ -779,7 +1788,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="getElement"><span class="type-signature"></span>getElement(name [, create])</h4>
+    <h4 class="name" id="play"><span class="type-signature"></span>play()</h4>
     
     
 </dt>
@@ -787,7 +1796,95 @@
 
     
     <div class="description">
-        <p>Finds a <a href="MediaBagElement.html"><code>MediaBagElement</code></a> by its name, creating a new one if not found and requested.</p>
+        <p>Starts or resumes playing</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-103">line 103</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="playEvent"><span class="type-signature"></span>playEvent(ev)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Plays a MIDI event</p>
     </div>
     
 
@@ -810,8 +1907,6 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
-        
 
         
 
@@ -824,13 +1919,13 @@
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>ev</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">object</span>
 
 
 
@@ -838,52 +1933,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"><p>The name of the element</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>create</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>When <code>true</code>, a new MediaBagElement will be created if not found,<br>using 'name' as its fileName..</p></td>
+            <td class="description last"><p>The event data. See http://grimmdude.com/MidiPlayerJS/docs/index.html for details</p></td>
         </tr>
 
     
@@ -927,708 +1980,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="bags_MediaBag.js.html">bags/MediaBag.js</a>,
-				 <a href="bags_MediaBag.js.html#sunlight-1-line-77">line 77</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="MediaBagElement.html">MediaBagElement</a></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="getElementByFileName"><span class="type-signature"></span>getElementByFileName(fileName [, create])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Gets a <a href="MediaBagElement.html"><code>MediaBagElement</code></a> by its file name.</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>fileName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>The requested file name</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>create</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>When <code>true</code>, a new <a href="MediaBagElement.html"><code>MediaBagElement</code></a> will be created if not<br>found.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="bags_MediaBag.js.html">bags/MediaBag.js</a>,
-				 <a href="bags_MediaBag.js.html#sunlight-1-line-92">line 92</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="MediaBagElement.html">MediaBagElement</a></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="getElementsOfType"><span class="type-signature"></span>getElementsOfType(type)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Get the names of the media elements that are of the given type.<br>When the search type is <code>font</code>, the <code>fontName</code> property is used instead of <code>name</code></p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>type</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The type of elements to search</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="bags_MediaBag.js.html">bags/MediaBag.js</a>,
-				 <a href="bags_MediaBag.js.html#sunlight-1-line-120">line 120</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array.&lt;String></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="getSkinElement"><span class="type-signature"></span>getSkinElement(name, ps)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Loads a <a href="Skin.html"><code>Skin</code></a> object</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The skin name to be loaded</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>ps</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The <code>PlayStation</code> linked to the skin</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="bags_MediaBag.js.html">bags/MediaBag.js</a>,
-				 <a href="bags_MediaBag.js.html#sunlight-1-line-178">line 178</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Skin.html">Skin</a></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="setProperties"><span class="type-signature"></span>setProperties($xml)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Loads this object settings from a specific JQuery XML element</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>$xml</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="external-jQuery.html">external:jQuery</a></span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The XML element to parse</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="bags_MediaBag.js.html">bags/MediaBag.js</a>,
-				 <a href="bags_MediaBag.js.html#sunlight-1-line-61">line 61</a>
+				<a href="media_MidiAudioPlayer.js.html">media/MidiAudioPlayer.js</a>,
+				 <a href="media_MidiAudioPlayer.js.html#sunlight-1-line-144">line 144</a>
 			</li>
 		</ul>
 	</dd>
