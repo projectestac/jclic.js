@@ -32,13 +32,16 @@ JClic.js makes use of:
 * [screenfull.js](https://github.com/sindresorhus/screenfull.js) to allow activities play at full screen
 * [script.js](https://github.com/ded/script.js) to read JClic projects from local file systems as JSONP
 * [webfontloader](https://github.com/typekit/webfontloader) to dynamically load web fonts as needed
+* [MidiPlayerJS](https://github.com/grimmdude/MidiPlayerJS), [soundfont-player](https://github.com/danigb/soundfont-player), [audio-loader](https://github.com/audiojs/audio-loader) and [sample-player](https://github.com/danigb/sample-player) to process and play MIDI files
 
 The build brocess of JClic.js is based on:
-* [npm](https://www.npmjs.com/) (the package manager of [Node.js](https://nodejs.org/)) to build, install,
-update and track package dependencies.
-* [webpack](https://webpack.js.org) to allow the use of npm modules in browsers and package all scripts and assets into a single, minified javascript file.
-* [JSDoc](http://usejsdoc.org/) to generate this documentation.
-* [ESLint](https://eslint.org/) to detect possible errors and check code quality.
+* [npm](https://www.npmjs.com/) (the package manager of [Node.js](https://nodejs.org/)) to build, install, update and track package dependencies
+* [ESLint](https://eslint.org/) to check for errors and lint the source code
+* [webpack](https://webpack.js.org/) to bundle all components together
+* [Babel](https://babeljs.io/) to make it also compatible with old versions of some browsers
+* [UglifyJS](https://github.com/mishoo/UglifyJS2) to minimize the size of the final deliverable script
+* [Live Server](https://github.com/tapio/live-server) to test and debug
+* [JSDoc](http://usejsdoc.org/) and [ink-bootstrap](https://github.com/docstrap/docstrap) to build the [API docs](http://projectestac.github.io/jclic.js/doc)
 
 ## How to set-up the development environtment
 

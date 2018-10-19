@@ -63,6 +63,27 @@ The latest version of the compiled and minified script `jclic.min.js` is current
 - https://cdn.jsdelivr.net/npm/jclic@latest/dist/jclic.min.js
 - https://cdnjs.com/libraries/jclic.js
 
+## Components
+
+JClic.js makes use of:
+* [jQuery](https://jquery.com/) to parse XML documents and manage DOM objects
+* [JSZip](https://stuk.github.io/jszip/) to extract contents from "jclic.zip" files
+* [clipboard.js](https://github.com/lgarron/clipboard.js) to copy reports data into the user's clipboard
+* [i18next](https://github.com/i18next/i18next) to deal with messages translated into different languages
+* [screenfull.js](https://github.com/sindresorhus/screenfull.js) to allow activities play at full screen
+* [script.js](https://github.com/ded/script.js) to read JClic projects from local file systems as JSONP
+* [webfontloader](https://github.com/typekit/webfontloader) to dynamically load web fonts as needed
+* [MidiPlayerJS](https://github.com/grimmdude/MidiPlayerJS), [soundfont-player](https://github.com/danigb/soundfont-player), [audio-loader](https://github.com/audiojs/audio-loader) and [sample-player](https://github.com/danigb/sample-player) to process and play MIDI files
+
+The build process of JClic.js makes use of:
+* [npm](https://www.npmjs.com/) (the package manager of [Node.js](https://nodejs.org/)) to build, install, update and track package dependencies
+* [ESLint](https://eslint.org/) to check for errors and lint the source code
+* [webpack](https://webpack.js.org/) to bundle all components together
+* [Babel](https://babeljs.io/) to make it also compatible with old versions of some browsers
+* [UglifyJS](https://github.com/mishoo/UglifyJS2) to minimize the size of the final deliverable script
+* [Live Server](https://github.com/tapio/live-server) to test and debug
+* [JSDoc](http://usejsdoc.org/) and [ink-bootstrap](https://github.com/docstrap/docstrap) to build the [API docs](http://projectestac.github.io/jclic.js/doc)
+
 ## Sponsors that make possible JClic.js
 
 [![XTEC](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-xtec.png?raw=true)](http://www.xtec.cat)<br>
