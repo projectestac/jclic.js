@@ -171,6 +171,7 @@ __Media:__
 * [ActiveMediaBag](ActiveMediaBag.html): a collection of [MediaContent](MediaContent.html)
 * [ActiveMediaPlayer](ActiveMediaPlayer.html): performs playing of _MediaContent_
 * [AudioBuffer](AudioBuffer.html): Provides sound recording (usually from the microphone) so, in language activities, students can compare their pronunciation with a pattern.
+* [MidiAudioPlayer](MidiAudioPlayer.html): performs playing of MIDI files
 
 __Automation:__
 * [AutoContentProvider](AutoContentProvider.html): builds dynamic content for activities

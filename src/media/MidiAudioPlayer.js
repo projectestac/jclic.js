@@ -51,10 +51,15 @@ define([
     /**
      * MidiAudioPlayer constructor
      * @param {ArrayBuffer} data - The MIDI file content, in ArrayBuffer format
+     * @param {object=} options - Optional params related to the type of soundfont used. Valid options inside this object are:<br>
+     * - `MIDISoundFontObject`: An object containing the full soundfont data. When this param is provided, no other one will be used.
+     * - `MIDISoundFontBase`: The URL used as base for the current collection of MIDI soundfonts. Defaults to `https://clic.xtec.cat/dist/jclic.js/soundfonts/MusyngKite`
+     * - `MIDISoundFontName`: The MIDI instrument name. Defaults to `acoustic_grand_piano`. See [MIDI.js Soundfonts](https://github.com/gleitz/midi-js-soundfonts) for full lists of MIDI instrument names.
+     * - `MIDISoundFontExtension`: An extension to be added to `MIDISoundFontName` in order to build the full file name of the soundfont JS file. Defaults to `-mp3.js`
      */
-    constructor(data) {
+    constructor(data, options = {}) {
       // Build instrument on first call to constructor
-      MidiAudioPlayer.prepareInstrument()
+      MidiAudioPlayer.prepareInstrument(options)
       this.data = data
       this.player = new MidiPlayer.Player(ev => this.playEvent(ev))
       this.player.loadArrayBuffer(data)
@@ -64,13 +69,16 @@ define([
      * Initializes the soundfont instrument, loading data from GitHub
      * NOTE: This will not work when off-line!
      * TODO: Provided a basic, simple, static soundfont
+     * @param {object} options - Optional param with options related to the MIDI soundfont. See details in `constructor` description.
      */
-    static prepareInstrument() {
+    static prepareInstrument(options = {}) {
       if (MidiAudioPlayer.loadingInstrument === false) {
         MidiAudioPlayer.loadingInstrument = true;
         MidiAudioPlayer.audioContext = new AudioContext()
-        MidiPlayer.Soundfont.instrument(MidiAudioPlayer.audioContext, MidiAudioPlayer.SOUNDFONT_BASE)
-        //MidiPlayer.Soundfont.instrument(MidiAudioPlayer.audioContext, MidiPlayer.AcousticGrandPiano)
+        MidiPlayer.Soundfont.instrument(
+          MidiAudioPlayer.audioContext,
+          options.MIDISoundFontObject || MidiAudioPlayer.MIDISoundFontObject ||
+          `${options.MIDISoundFontBase || MidiAudioPlayer.MIDISoundFontBase}/${options.MIDISoundFontName || MidiAudioPlayer.MIDISoundFontName}${options.MIDISoundFontExtension || MidiAudioPlayer.MIDISoundFontExtension}`)
           .then(instrument => {
             Utils.log('info', 'MIDI soundfont instrument loaded')
             MidiAudioPlayer.instrument = instrument
@@ -202,12 +210,39 @@ define([
   MidiAudioPlayer.loadingInstrument = false
 
   /**
-   * The type of soundfont used by this MIDI player
-   * See: https://github.com/danigb/soundfont-player
+   * An object containing the full soundfont data used by {@link MidiAudioPlayer.instrument}
+   * When this member is set, no other settings related to the sounfFont will be used.
+   * This value can be overwritten by the global parameter `MIDISoundFontObject`
+   * @type {object}
+   */
+  MidiAudioPlayer.MIDISoundFontObject = null
+
+  /**
+   * The URL used as base for the current collection of MIDI soundfonts.
+   * This value can be overwritten by the global parameter `MIDISoundFontBase`
    * @type {string}
    */
-  //MidiAudioPlayer.SOUNDFONT_BASE = 'https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM/acoustic_grand_piano-mp3.js'
-  MidiAudioPlayer.SOUNDFONT_BASE = 'acoustic_grand_piano'
+  MidiAudioPlayer.MIDISoundFontBase = 'https://clic.xtec.cat/dist/jclic.js/soundfonts/MusyngKite'
+  // Alternative sites are:
+  // 'https://clic.xtec.cat/dist/jclic.js/soundfonts/FluidR3_GM'
+  // 'https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM'
+  // 'https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/MusyngKite'
+
+  /**
+   * The MIDI instrument name.
+   * This value can be overwritten by the global parameter `MIDISoundFontName`
+   * See [MIDI.js Soundfonts](https://github.com/gleitz/midi-js-soundfonts) for full lists of MIDI instrument names.
+   * @type {string}
+   */
+  MidiAudioPlayer.MIDISoundFontName = 'acoustic_grand_piano'
+
+  /**
+   * An extension to be added to `MIDISoundFontName` in order to build the full file name of the soundfont JS file.
+   * Current valid options are `-mp3.js` and `-ogg.js`
+   * This value can be overwritten by the global parameter `MIDISoundFontExtension`
+   * @type {string}
+   */
+  MidiAudioPlayer.MIDISoundFontExtension = '-mp3.js'
 
   return MidiAudioPlayer
 })
