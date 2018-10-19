@@ -1,74 +1,138 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>JClic.js by projectestac</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">JClic.js</h1>
-      <h2 class="project-tagline">HTML5 player of JClic activities</h2>
-      <a href="http://clic.xtec.cat/repo" class="btn">Projects library</a>
-      <a href="https://github.com/projectestac/jclic.js" class="btn">View on GitHub</a>
-      <a href="doc/index.html" class="btn">Check the API docs</a>
-      <a href="http://clic.xtec.cat" class="btn">Visit the clicZone</a>
-    </section>
 
-    <section class="main-content">
+<head>
+  <meta charset="UTF-8">
+  <title>JClic.js by projectestac</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+</head>
 
-<h1 id="jclic.js">JClic.js</h1>
-<p><a href="https://badge.fury.io/bo/jclic"><img src="https://badge.fury.io/bo/jclic.svg" alt="Bower version" /></a> <a href="https://badge.fury.io/js/jclic"><img src="https://badge.fury.io/js/jclic.svg" alt="npm version" /></a> <a href="https://cdnjs.com/libraries/jclic.js"><img src="https://img.shields.io/cdnjs/v/jclic.js.svg" alt="CDNJS version" /></a> <a href="https://gitter.im/projectestac/jclic.js?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/projectestac/jclic.js.svg" alt="Join the chat at https://gitter.im/projectestac/jclic.js" /></a></p>
-<p><a href="https://github.com/projectestac/jclic.js">JClic.js</a> is an HTML5 player of <a href="https://github.com/projectestac/jclic">JClic</a> activities. See a <a href="https://clic.xtec.cat/projects/demo_eng/jclic.js/index.html">demo</a> on how it works.</p>
-<h2 id="jclic-and-jclic-repo">JClic and JClic-repo</h2>
-<p><a href="http://clic.xtec.cat">JClic</a> is a free software project from the <a href="http://www.xtec.cat">Catalan Educational Telematic Network</a> (XTEC) for creating various types of interactive activities such as associations, puzzles, text activities, crosswords or puzzles, from elements of text, graphics and multimedia.</p>
-<p>The program includes an authoring tool to create activities, a player and a reporting system that stores the results obtained by students. All these components, along with some guides and tutorials on how to create activities, are available in the <a href="http://clic.xtec.cat/en/jclic/download.htm">clicZone</a>.</p>
-<p>JClic is a Java application that runs on Linux, Windows and Mac OS. Full <a href="https://github.com/projectestac/jclic">source code</a> and <a href="http://projectestac.github.io/jclic/">documentation</a> are available on GitHub.</p>
-<p>Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge <a href="https://clic.xtec.cat/repo">library</a> created with <a href="https://github.com/projectestac/jclic-repo">jclic-repo</a>, another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.</p>
-<h2 id="how-to-build-jclic.js">How to build JClic.js</h2>
-<p>JClic.js uses <a href="https://nodejs.org/">Node.js</a> modules encapsulated in <a href="https://www.npmjs.com/">npm</a> packages. First of all, you must have Node.js (which includes 'npm') <a href="https://nodejs.org/download/">installed</a> on your system.</p>
-<p>To install the required packages, just go to the project's root directory and write:</p>
-<pre><code>npm ci</code></pre>
-<p>This will install jQuery, Webpack and other needed components into <code>node_modules</code></p>
-<p>To build jclic.js, just invoke:</p>
-<pre><code>npm run build</code></pre>
-<p>This will generate the main file <code>dist/jclic.min.js</code> (along with other files useful for development)</p>
-<p>To test this resulting bundle and see the demo on your browser, launch the test server:</p>
-<pre><code>npm start</code></pre>
-<p>You can also launch the program in &quot;unbundled&quot; mode, directly invoking the source scripts. This is useful for debugging:</p>
-<pre><code>npm run debug</code></pre>
-<p>Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc</p>
-<p>The project is also available as a <a href="https://www.npmjs.com/package/jclic">NPM</a> and <a href="https://libraries.io/bower/jclic">Bower</a> packages.</p>
-<h2 id="direct-download">Direct download</h2>
-<p>The latest version of the compiled and minified script <code>jclic.min.js</code> is currently available at the following locations:</p>
-<ul>
-<li>https://unpkg.com/jclic/dist/jclic.min.js</li>
-<li>https://clic.xtec.cat/dist/jclic.js/jclic.min.js</li>
-<li>https://cdn.jsdelivr.net/npm/jclic@latest/dist/jclic.min.js</li>
-<li>https://cdnjs.com/libraries/jclic.js</li>
-</ul>
-<h2 id="components">Components</h2>
-<p>JClic.js makes use of: * <a href="https://jquery.com/">jQuery</a> to parse XML documents and manage DOM objects * <a href="https://stuk.github.io/jszip/">JSZip</a> to extract contents from &quot;jclic.zip&quot; files * <a href="https://github.com/lgarron/clipboard.js">clipboard.js</a> to copy reports data into the user's clipboard * <a href="https://github.com/i18next/i18next">i18next</a> to deal with messages translated into different languages * <a href="https://github.com/sindresorhus/screenfull.js">screenfull.js</a> to allow activities play at full screen * <a href="https://github.com/ded/script.js">script.js</a> to read JClic projects from local file systems as JSONP * <a href="https://github.com/typekit/webfontloader">webfontloader</a> to dynamically load web fonts as needed * <a href="https://github.com/grimmdude/MidiPlayerJS">MidiPlayerJS</a>, <a href="https://github.com/danigb/soundfont-player">soundfont-player</a>, <a href="https://github.com/audiojs/audio-loader">audio-loader</a> and <a href="https://github.com/danigb/sample-player">sample-player</a> to process and play MIDI files</p>
-<p>The build process of JClic.js makes use of: * <a href="https://www.npmjs.com/">npm</a> (the package manager of <a href="https://nodejs.org/">Node.js</a>) to build, install, update and track package dependencies * <a href="https://eslint.org/">ESLint</a> to check for errors and lint the source code * <a href="https://webpack.js.org/">webpack</a> to bundle all components together * <a href="https://babeljs.io/">Babel</a> to make it also compatible with old versions of some browsers * <a href="https://github.com/mishoo/UglifyJS2">UglifyJS</a> to minimize the size of the final deliverable script * <a href="https://github.com/tapio/live-server">Live Server</a> to test and debug * <a href="http://usejsdoc.org/">JSDoc</a> and <a href="https://github.com/docstrap/docstrap">ink-bootstrap</a> to build the <a href="http://projectestac.github.io/jclic.js/doc">API docs</a></p>
-<h2 id="sponsors-that-make-possible-jclic.js">Sponsors that make possible JClic.js</h2>
-<p><a href="http://www.xtec.cat"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-xtec.png?raw=true" alt="XTEC" /></a><br> JClic.js is an open-source project sustained by <a href="http://www.xtec.cat">XTEC</a>, the Telematic Network of the Catalan Ministry of Education.</p>
-<p><a href="https://www.browserstack.com"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-browserstack.png?raw=true" alt="BrowserStack" /></a><br> Checking the operation of JClic.js on different browsers and platforms is possible thanks to virtual machines provided by <a href="https://www.browserstack.com">BrowserStack</a>.</p>
-<p><a href="http://www.jsdelivr.com/projects/jclic.js"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-jsdelivr.png?raw=true" alt="JSDelivr" /></a><br> The production releases of JClic.js are smoothly distributed to the final users thanks to the <a href="http://www.jsdelivr.com/projects/jclic.js">JSDelivr</a> network of servers.</p>
-<p><a href="https://cdnjs.com/libraries/jclic.js"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-cdnjs.png?raw=true" alt="cdnjs" /></a><br> All project files are also available through <a href="https://cdnjs.com/about">cdnjs</a>, a very powerful content delivery service powered by <a href="https://www.cloudflare.com">Cloudflare</a>.</p>
-<p><a href="https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-transifex.png?raw=true" alt="Transifex" /></a><br> We use <a href="https://www.transifex.com/francesc/jclicjs">Transifex</a> as a platform to translate JClic.js into many languages. Please read <a href="https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md">TRANSLATIONS.md</a> if you want to contribute to the project creating a new translation or improving the existing ones.</p>
+<body>
+  <section class="page-header">
+    <h1 class="project-name">JClic.js</h1>
+    <h2 class="project-tagline">HTML5 player of JClic activities</h2>
+    <a href="http://clic.xtec.cat/repo" class="btn">Projects library</a>
+    <a href="https://github.com/projectestac/jclic.js" class="btn">View on GitHub</a>
+    <a href="doc/index.html" class="btn">Check the API docs</a>
+    <a href="http://clic.xtec.cat" class="btn">Visit the clicZone</a>
+  </section>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/projectestac/jclic.js">JClic.js</a> is maintained by <a href="https://github.com/projectestac">projectestac</a>.</span>
+  <section class="main-content">
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+    <h1 id="jclic.js">JClic.js</h1>
+    <p><a href="https://badge.fury.io/bo/jclic"><img src="https://badge.fury.io/bo/jclic.svg" alt="Bower version" /></a>
+      <a href="https://badge.fury.io/js/jclic"><img src="https://badge.fury.io/js/jclic.svg" alt="npm version" /></a>
+      <a href="https://cdnjs.com/libraries/jclic.js"><img src="https://img.shields.io/cdnjs/v/jclic.js.svg" alt="CDNJS version" /></a>
+      <a href="https://gitter.im/projectestac/jclic.js?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img
+          src="https://badges.gitter.im/projectestac/jclic.js.svg" alt="Join the chat at https://gitter.im/projectestac/jclic.js" /></a></p>
+    <p><a href="https://github.com/projectestac/jclic.js">JClic.js</a> is an HTML5 player of <a href="https://github.com/projectestac/jclic">JClic</a>
+      activities. See a <a href="https://clic.xtec.cat/projects/demo_eng/jclic.js/index.html">demo</a> on how it works.</p>
+    <h2 id="jclic-and-jclic-repo">JClic and JClic-repo</h2>
+    <p><a href="http://clic.xtec.cat">JClic</a> is a free software project from the <a href="http://www.xtec.cat">Catalan
+        Educational Telematic Network</a> (XTEC) for creating various types of interactive activities such as
+      associations, puzzles, text activities, crosswords or puzzles, from elements of text, graphics and multimedia.</p>
+    <p>The program includes an authoring tool to create activities, a player and a reporting system that stores the
+      results obtained by students. All these components, along with some guides and tutorials on how to create
+      activities, are available in the <a href="http://clic.xtec.cat/en/jclic/download.htm">clicZone</a>.</p>
+    <p>JClic is a Java application that runs on Linux, Windows and Mac OS. Full <a href="https://github.com/projectestac/jclic">source
+        code</a> and <a href="http://projectestac.github.io/jclic/">documentation</a> are available on GitHub.</p>
+    <p>Many teachers from different countries have used JClic to create interactive materials for a wide variety of
+      levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge <a href="https://clic.xtec.cat/repo">library</a>
+      created with <a href="https://github.com/projectestac/jclic-repo">jclic-repo</a>, another open source project
+      that will facilitate the publication of collections of JClic projects in static web hosting services.</p>
+    <h2 id="how-to-build-jclic.js">How to build JClic.js</h2>
+    <p>JClic.js uses <a href="https://nodejs.org/">Node.js</a> modules encapsulated in <a href="https://www.npmjs.com/">npm</a>
+      packages. First of all, you must have Node.js (which includes 'npm') <a href="https://nodejs.org/download/">installed</a>
+      on your system.</p>
+    <p>To install the required packages, just go to the project's root directory and write:</p>
+    <pre><code>npm ci</code></pre>
+    <p>This will install jQuery, Webpack and other needed components into <code>node_modules</code></p>
+    <p>To build jclic.js, just invoke:</p>
+    <pre><code>npm run build</code></pre>
+    <p>This will generate the main file <code>dist/jclic.min.js</code> (along with other files useful for development)</p>
+    <p>To test this resulting bundle and see the demo on your browser, launch the test server:</p>
+    <pre><code>npm start</code></pre>
+    <p>You can also launch the program in &quot;unbundled&quot; mode, directly invoking the source scripts. This is
+      useful for debugging:</p>
+    <pre><code>npm run debug</code></pre>
+    <p>Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc</p>
+    <p>The project is also available as a <a href="https://www.npmjs.com/package/jclic">NPM</a> and <a href="https://libraries.io/bower/jclic">Bower</a>
+      packages.</p>
+    <h2 id="direct-download">Direct download</h2>
+    <p>The latest version of the compiled and minified script <code>jclic.min.js</code> is currently available at the
+      following locations:</p>
+    <ul>
+      <li>https://unpkg.com/jclic/dist/jclic.min.js</li>
+      <li>https://clic.xtec.cat/dist/jclic.js/jclic.min.js</li>
+      <li>https://cdn.jsdelivr.net/npm/jclic@latest/dist/jclic.min.js</li>
+      <li>https://cdnjs.com/libraries/jclic.js</li>
+    </ul>
+    <h2 id="components">Components</h2>
+    <p>JClic.js makes use of:</p>
+    <ul>
+      <li><a href="https://jquery.com/">jQuery</a> to parse XML documents and manage DOM objects</li>
+      <li><a href="https://stuk.github.io/jszip/">JSZip</a> to extract contents from &quot;jclic.zip&quot; files</li>
+      <li><a href="https://github.com/lgarron/clipboard.js">clipboard.js</a> to copy reports data into the user's
+        clipboard</li>
+      <li><a href="https://github.com/i18next/i18next">i18next</a> to deal with messages translated into different
+        languages</li>
+      <li><a href="https://github.com/sindresorhus/screenfull.js">screenfull.js</a> to allow activities play at full
+        screen</li>
+      <li><a href="https://github.com/ded/script.js">script.js</a> to read JClic projects from local file systems as
+        JSONP</li>
+      <li><a href="https://github.com/typekit/webfontloader">webfontloader</a> to dynamically load web fonts as needed</li>
+      <li><a href="https://github.com/grimmdude/MidiPlayerJS">MidiPlayerJS</a>, <a href="https://github.com/danigb/soundfont-player">soundfont-player</a>,
+        <a href="https://github.com/audiojs/audio-loader">audio-loader</a> and <a href="https://github.com/danigb/sample-player">sample-player</a>
+        to process and play MIDI files</li>
+    </ul>
+    <p>The build process of JClic.js makes use of:</p>
+    <ul>
+      <li><a href="https://www.npmjs.com/">npm</a> (the package manager of <a href="https://nodejs.org/">Node.js</a>)
+        to build, install, update and track package dependencies</li>
+      <li><a href="https://eslint.org/">ESLint</a> to check for errors and lint the source code</li>
+      <li><a href="https://webpack.js.org/">webpack</a> to bundle all components together</li>
+      <li><a href="https://babeljs.io/">Babel</a> to make it also compatible with old versions of some browsers</li>
+      <li><a href="https://github.com/mishoo/UglifyJS2">UglifyJS</a> to minimize the size of the final deliverable
+        script</li>
+      <li><a href="https://github.com/tapio/live-server">Live Server</a> to test and debug</li>
+      <li><a href="http://usejsdoc.org/">JSDoc</a> and <a href="https://github.com/docstrap/docstrap">ink-bootstrap</a>
+        to build the <a href="http://projectestac.github.io/jclic.js/doc">API docs</a></li>
+    </ul>
 
-    </section>
+    <h2 id="sponsors-that-make-possible-jclic.js">Sponsors that make possible JClic.js</h2>
+    <p><a href="http://www.xtec.cat"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-xtec.png?raw=true"
+          alt="XTEC" /></a><br> JClic.js is an open-source project sustained by <a href="http://www.xtec.cat">XTEC</a>,
+      the Telematic Network of the Catalan Ministry of Education.</p>
+    <p><a href="https://www.browserstack.com"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-browserstack.png?raw=true"
+          alt="BrowserStack" /></a><br> Checking the operation of JClic.js on different browsers and platforms is
+      possible thanks to virtual machines provided by <a href="https://www.browserstack.com">BrowserStack</a>.</p>
+    <p><a href="http://www.jsdelivr.com/projects/jclic.js"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-jsdelivr.png?raw=true"
+          alt="JSDelivr" /></a><br> The production releases of JClic.js are smoothly distributed to the final users
+      thanks to the <a href="http://www.jsdelivr.com/projects/jclic.js">JSDelivr</a> network of servers.</p>
+    <p><a href="https://cdnjs.com/libraries/jclic.js"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-cdnjs.png?raw=true"
+          alt="cdnjs" /></a><br> All project files are also available through <a href="https://cdnjs.com/about">cdnjs</a>,
+      a very powerful content delivery service powered by <a href="https://www.cloudflare.com">Cloudflare</a>.</p>
+    <p><a href="https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md"><img src="https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-transifex.png?raw=true"
+          alt="Transifex" /></a><br> We use <a href="https://www.transifex.com/francesc/jclicjs">Transifex</a> as a
+      platform to translate JClic.js into many languages. Please read <a href="https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md">TRANSLATIONS.md</a>
+      if you want to contribute to the project creating a new translation or improving the existing ones.</p>
 
-  
-  </body>
+    <footer class="site-footer">
+      <span class="site-footer-owner"><a href="https://github.com/projectestac/jclic.js">JClic.js</a> is maintained by
+        <a href="https://github.com/projectestac">projectestac</a>.</span>
+
+      <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>
+        using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason
+          Long</a>.</span>
+    </footer>
+
+  </section>
+
+
+</body>
+
 </html>
