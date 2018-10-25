@@ -38,7 +38,7 @@
     "@francesc/basic-midi-player-js": "^3.0.2",
     "babel-polyfill": "^6.26.0",
     "clipboard-js": "^0.3.6",
-    "i18next": "^11.9.1",
+    "i18next": "^12.0.0",
     "jquery": "^3.3.1",
     "jszip": "^3.1.5",
     "jszip-utils": "0.0.2",
@@ -60,7 +60,7 @@
     "po2json": "^1.0.0-alpha",
     "requirejs": "^2.3.6",
     "uglifyjs-webpack-plugin": "^2.0.1",
-    "webpack": "^4.21.0",
+    "webpack": "^4.23.1",
     "webpack-cli": "^3.1.2",
     "webpackbar": "^2.6.3",
     "xmldom": "^0.1.27"
