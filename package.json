@@ -38,11 +38,11 @@
     "@francesc/basic-midi-player-js": "^3.0.2",
     "babel-polyfill": "^6.26.0",
     "clipboard-js": "^0.3.6",
-    "i18next": "^12.0.0",
+    "i18next": "^13.1.5",
     "jquery": "^3.3.1",
     "jszip": "^3.1.5",
     "jszip-utils": "0.0.2",
-    "screenfull": "^3.3.3",
+    "screenfull": "^4.0.0",
     "scriptjs": "^2.5.9",
     "webfontloader": "^1.6.28"
   },
@@ -62,7 +62,7 @@
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.23.1",
     "webpack-cli": "^3.1.2",
-    "webpackbar": "^2.6.3",
+    "webpackbar": "^3.1.5",
     "xmldom": "^0.1.27"
   },
   "scripts": {
