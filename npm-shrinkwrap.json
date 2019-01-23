@@ -1,6 +1,6 @@
 {
   "name": "jclic",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -4671,7 +4671,6 @@
         "faye-websocket": "0.11.x",
         "http-auth": "3.1.x",
         "morgan": "^1.6.1",
-        "object-assign": "^4.1.1",
         "opn": "^5.4.0",
         "proxy-middleware": "^0.15.0",
         "send": "^0.16.2",
@@ -4679,10 +4678,8 @@
       },
       "dependencies": {
         "object-assign": {
-          "version": "4.1.1",
-          "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz",
-          "integrity": "sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=",
-          "dev": true
+          "version": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz",
+          "integrity": "sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM="
         }
       }
     },
