@@ -1,3 +1,8 @@
+### v1.1.10 (2019-01-23)
+#### Bug fixes
+- Explicit call to `HTMLAudioElement.load` in `bags/MediaBagElement.build` to avoid the lack of `canplay` events
+  when just setting the `src` attribute in Chrome on Android < 7. Now JClic always try to load audio content, also in Android!
+
 ### v1.1.9 (2018-10-15)
 #### Improvements
 - Basic support for MIDI files: Only one musical instrument (acoustic grand piano) is dynamically loaded

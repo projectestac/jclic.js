@@ -212,6 +212,10 @@ define([
               this.data = document.createElement(this.type)
               $(this.data).on('canplay', () => this._onReady.call(this))
               this.data.src = fullPath
+              // Forced call to "load" because the 'canplay' event is not fired in Android < 7 just setting 'src' (until 'play')
+              // See: https://stackoverflow.com/questions/44344242/canplay-event-does-not-occur-on-google-chrome-mobile-until-audio-play-is-calle
+              this.data.load()
+              // --------------------------------------------------
               this.data.pause()
               break
 
