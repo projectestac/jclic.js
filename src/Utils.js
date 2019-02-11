@@ -375,17 +375,22 @@ define([
      * concatenated in a string, separated by pipe chars (`|`). The comparing can be case sensitive.
      * @param {string} answer - The text to check against to
      * @param {string} check - String containing one or multiple options, separated by `|`
-     * @param {boolean} checkCase - When true, the comparing will be case-sensitive
+     * @param {boolean} [checkCase=false] - When true, the comparing will be case-sensitive
+     * @param {boolean} [numeric=false] - When true, we are comparing numeric expressions
      * @returns {boolean}
      */
-    compareMultipleOptions: (answer, check, checkCase) => {
+    compareMultipleOptions: (answer, check, checkCase = false, numeric = false) => {
       if (answer === null || answer.length === 0 || check === null || check.length === 0)
         return false
-      if (!checkCase)
+      if (!checkCase && !numeric)
         answer = answer.toUpperCase()
       answer = answer.trim()
       for (let token of check.split('|')) {
-        if (answer === (checkCase ? token : token.toUpperCase()).trim())
+        if (numeric) {
+          if (Number.parseFloat(answer.replace(/,/, '.')) === Number.parseFloat(token.replace(/,/, '.')))
+            return true
+        }
+        else if (answer === (checkCase ? token : token.toUpperCase()).trim())
           return true
       }
       return false

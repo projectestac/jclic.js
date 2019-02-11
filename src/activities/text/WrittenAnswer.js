@@ -388,7 +388,7 @@ define([
             id = bx.idAss,
             txCheck = id >= 0 ? this.act.abc['answers'].getActiveBoxContent(id).text : '',
             txAnswer = this.$textField.val().trim()
-          if (Utils.compareMultipleOptions(txAnswer, txCheck, false)) {
+          if (Utils.compareMultipleOptions(txAnswer, txCheck, false, this.act.numericContent)) {
             ok = true
             bx.idAss = -1
             // When in multiple-answer, fill-in textField with the first valid option:

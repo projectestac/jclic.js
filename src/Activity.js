@@ -243,6 +243,8 @@ define([
             case 'automation':
               // Read the automation settings ('Arith' or other automation engines)
               this.acp = AutoContentProvider.getProvider($node, this.project)
+              if (this.acp)
+                this.numericContent = this.acp.numericContent
               break
 
             // Settings specific to panel-type activities (puzzles, associations...)
@@ -724,7 +726,7 @@ define([
       /**
        * The main document used in text activities
        * @name Activity#document
-       * @type {TextActivityDocument} */      
+       * @type {TextActivityDocument} */
       document: null,
       /**
        * Relative position of the text grid (uses the same position codes as box grids)
@@ -756,6 +758,13 @@ define([
        * @name Activity#menuElements
        * @type {array} */
       menuElements: null,
+      /**
+       * This activity uses numeric expressions, so text literals should be
+       * converted to numbers for comparisions, taking in account the
+       * number format of the current locale (dot or comma as decimal separator)
+       * @name Activity#numericContent
+       * @type {boolean} */
+      numericContent: false,
     })
 
     /**

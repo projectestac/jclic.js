@@ -120,6 +120,13 @@ define([
      * @name AutoContentProvider#project
      * @type {JClicProject} */
     project: null,
+    /**
+     * This AutoContentProvider manages numeric expressions, so text literals should be
+     * converted to numbers for comparisions, taking in account the
+     * number format of the current locale (dot or comma as decimal separator)
+     * @name AutoContentProvider#numericContent
+     * @type {boolean} */
+    numericContent: false,
   })
 
   /**

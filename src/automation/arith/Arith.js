@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global define */
+/* global define, Intl */
 
 define([
   "jquery",
@@ -42,8 +42,9 @@ define([
     NMAXLOOPS = 60,
     OPSTR = ['+', '-', String.fromCharCode(215), ':'],
     RES = -12345,
-    // Special blank space
-    S = String.fromCharCode(160)
+    // Use comma as a decimal separator, based on current locale settings
+    // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
+    DOTASCOMMA = Intl && Intl.NumberFormat().format(1.1).indexOf(',') > 0
 
   /**
    * Arith provides randomly generated mental arithmetics operations, ready to be used in JClic activities.
@@ -62,6 +63,7 @@ define([
      */
     constructor(project) {
       super(project)
+      this.numericContent = true;
       this.opA = new Arith.Operator()
       this.opB = new Arith.Operator()
     }
@@ -262,7 +264,9 @@ define([
 
             o.numA.vf = parseInt(bufa.join('')) / q
             o.numB.vf = parseInt(bufb.join('')) / q
-            o.numR.vf = Math.floor(o.numA.vf + o.numB.vf + 0.5) / q
+            // Corrected 2019/02/11: Factors should be multiplied by 'q'!
+            // INCORRECT: o.numR.vf = Math.floor(o.numA.vf + o.numB.vf + 0.5) / q
+            o.numR.vf = Math.floor(o.numA.vf * q + o.numB.vf * q + 0.5) / q
           }
           break
 
@@ -306,7 +310,9 @@ define([
 
             o.numA.vf = parseInt(bufa.join('')) / q
             o.numB.vf = parseInt(bufb.join('')) / q
-            o.numR.vf = Math.floor(o.numA.vf - o.numB.vf + 0.5) / q
+            // Corrected 2019/02/11: Factors should be multiplied by 'q'!
+            // o.numR.vf = Math.floor(o.numA.vf - o.numB.vf + 0.5) / q
+            o.numR.vf = Math.floor(o.numA.vf * q - o.numB.vf * q + 0.5) / q
           }
           break
 
@@ -456,30 +462,32 @@ define([
         vc = Arith.DecFormat(op[i].numR.vf, op[0].numR.c)
         operator = OPSTR[op[i].op]
 
+        // Use the special blank space ASCII 160 (\xA0) instead of regular blank spaces
+
         if (tipInv)
-          strc[i] = vc + S + "=" + S + va + S + operator + S + vb
+          strc[i] = `${vc}\xA0=\xA0${va}\xA0${operator}\xA0${vb}`
         else
-          strc[i] = va + S + operator + S + vb + S + "=" + S + vc
+          strc[i] = `${va}\xA0${operator}\xA0${vb}\xA0=\xA0${vc}`
 
         switch (tipX) {
           case 'AXC':
             strb[i] = vb
-            stra[i] = tipInv ? `${vc}${S}=${S}${va}${S}${operator}${S}?` : `${va}${S}${operator}${S}?${S}=${S}${vc}`
+            stra[i] = tipInv ? `${vc}\xA0=\xA0${va}\xA0${operator}\xA0?` : `${va}\xA0${operator}\xA0?\xA0=\xA0${vc}`
             break
 
           case 'XBC':
             strb[i] = va
-            stra[i] = tipInv ? `${vc}${S}=${S}?${S}${operator}${S}${vb}` : `?${S}${operator}${S}${vb}${S}=${S}${vc}`
+            stra[i] = tipInv ? `${vc}\xA0=\xA0?\xA0${operator}\xA0${vb}` : `?\xA0${operator}\xA0${vb}\xA0=\xA0${vc}`
             break
 
           case 'AXBC':
             strb[i] = operator
-            stra[i] = tipInv ? `${vc}${S}=${S}${va}${S}?${S}${vb}` : `${va}${S}?${S}${vb}${S}=${S}${vc}`
+            stra[i] = tipInv ? `${vc}\xA0=\xA0${va}\xA0?\xA0${vb}` : `${va}\xA0?\xA0${vb}\xA0=\xA0${vc}`
             break
 
           default:
             strb[i] = vc
-            stra[i] = tipInv ? `?${S}=${S}${va}${S}${operator}${S}${vb}` : `${va}${S}${operator}${S}${vb}${S}=`
+            stra[i] = tipInv ? `?\xA0=\xA0${va}\xA0${operator}\xA0${vb}` : `${va}\xA0${operator}\xA0${vb}\xA0=`
             break
         }
       }
@@ -563,6 +571,15 @@ define([
               break
           }
         }
+      }
+
+      // Added 2019/02/11
+      // Use comma instead of dot for decimal separator, accordingly to current locale
+      if (DOTASCOMMA) {
+        function replaceDot(s) { return s.replace(/\./g, ',') }
+        stra = stra.map(replaceDot)
+        strb = strb.map(replaceDot)
+        strc = strc.map(replaceDot)
       }
 
       content[0].setTextContent(stra, nCols, nRows)
