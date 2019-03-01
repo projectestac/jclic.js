@@ -385,6 +385,10 @@ define([
       if (!checkCase && !numeric)
         answer = answer.toUpperCase()
       answer = answer.trim()
+      
+      // Check for numeric digits in answer!
+      numeric = numeric && /\d/.test(answer);
+      
       for (let token of check.split('|')) {
         if (numeric) {
           if (Number.parseFloat(answer.replace(/,/, '.')) === Number.parseFloat(token.replace(/,/, '.')))

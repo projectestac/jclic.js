@@ -1,3 +1,7 @@
+### v1.1.12 (Not yet released)
+#### Bug fixes
+- Check for numeric digits in _Arith_ activity answers before converting them to numbers.
+
 ### v1.1.11 (2019-02-11)
 #### Bug fixes
 - Corrected a bug in `automation/arith/Arith.js` that affected operations with decimals with _do not carry_ option.
