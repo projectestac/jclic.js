@@ -82,8 +82,10 @@ define([
       this.zip = zip
       this.name = $xml.attr('name')
       this.version = $xml.attr('version')
-      this.type = $xml.attr('type')
-      this.code = $xml.attr('code')
+      if ($xml.attr('type') !== undefined && $xml.attr('type') !== '')
+        this.type = $xml.attr('type')
+      if ($xml.attr('code') !== undefined && $xml.attr('code') !== '')
+        this.code = $xml.attr('code')
       this.settings.setProperties($xml.children('settings'))
       this.activitySequence.setProperties($xml.children('sequence'))
       this.mediaBag.setProperties($xml.children('mediaBag'))
@@ -102,6 +104,10 @@ define([
           this.reportableActs++
       })
       return this
+    }
+
+    getData() {
+      return Utils.getData(this, ['name', 'version', 'type', 'code', 'settings'])
     }
 
     /**

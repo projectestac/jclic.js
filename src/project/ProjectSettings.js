@@ -59,6 +59,8 @@ define([
      */
     constructor(project) {
       this.project = project
+      this.authors = []
+      this.revisions = []
       this.languages = []
       this.locales = []
     }
@@ -76,6 +78,12 @@ define([
           case 'description':
             this.description = child.textContent
             break
+          case 'author':
+            this.authors.push(Utils.parseXmlNode(child));
+            break;
+          case 'revision':
+            this.revisions.push(Utils.parseXmlNode(child));
+            break;
           case 'language':
             this.languages.push(child.textContent)
             break
@@ -109,6 +117,10 @@ define([
       }
       return this
     }
+
+    getData() {
+      return Utils.getData(this, ['title', 'description', 'authors', 'revisions', 'languages', 'skinFileName', 'eventSounds']);
+    }
   }
 
   Object.assign(ProjectSettings.prototype, {
@@ -122,6 +134,14 @@ define([
      * @name ProjectSettings#title
      * @type {string} */
     title: 'Untitled',
+    /**
+     * The authors of this project.
+     * Authors are represented by objects with the following attributes:
+     * `name` (mandatory), `mail`, `rol`, `organization` and `url` (all of them are optional)
+     * @name ProjectSettings#authors
+     * @type {object[]} */
+    authors: null,
+    revisions: null,
     /**
      * Project's description. Can have multiple paragraphs, separated by `<p>`
      * @name ProjectSettings#description

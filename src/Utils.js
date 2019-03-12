@@ -256,7 +256,7 @@ define([
         Utils.attrForEach(xml.attributes, (name, value) => result[name] = /^-?\d*$/.test(value) ? Number(value) : value)
       // Process children elements
       const keys = []
-      const children = xml.children || xml.childNodes
+      const children = xml.children || xml.childNodes || []
       for (let n = 0; n < children.length; n++) {
         const child = children[n]
         // Recursive processing of children
@@ -357,6 +357,16 @@ define([
         })
       return result
     },
+    getData: (obj, keys) => {
+      const result = {}
+      keys.forEach(k => {
+        if (obj.hasOwnProperty(k)) {
+          const value = obj[k]
+          result[k] = value.getData ? value.getData() : value
+        }
+      })
+      return result
+    },
     /**
      * Check if the given char is a separator
      * @param {string} ch - A string with a single character
@@ -385,10 +395,10 @@ define([
       if (!checkCase && !numeric)
         answer = answer.toUpperCase()
       answer = answer.trim()
-      
+
       // Check for numeric digits in answer!
       numeric = numeric && /\d/.test(answer);
-      
+
       for (let token of check.split('|')) {
         if (numeric) {
           if (Number.parseFloat(answer.replace(/,/, '.')) === Number.parseFloat(token.replace(/,/, '.')))

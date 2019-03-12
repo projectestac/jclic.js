@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 //
 // Lists the contents of a JClic project file
 //
@@ -69,6 +71,6 @@ for (var p = 0; p < nMedia; p++)
 
 console.log('\nTOTAL: %d activities, %d sequences, %d media files', nActivities, nSequences, nMedia);
 
-
+console.log(JSON.stringify(project.getData(), 1));
 
 
