@@ -260,10 +260,12 @@ define([
       const children = xml.children || xml.childNodes || []
       for (let n = 0; n < children.length; n++) {
         let child = children[n]
-        if (child.nodeName === '#text') {
-          if (xml.nodeName == 'p' || withText)
-            result.textContent = child.textContent
-          continue
+        const chchild = Array.from(child.children || child.childNodes || []);
+        const paragraphs = chchild.filter(child => child.nodeName === 'p');
+        if (paragraphs.length > 0) {
+          const text = paragraphs.map(ch => ch.textContent).join('\n');
+          result[child.nodeName] = text;
+          continue;
         }
         // Recursive processing of children
         const ch = Utils.parseXmlNode(child, withText)
