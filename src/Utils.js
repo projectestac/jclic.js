@@ -246,9 +246,10 @@ define([
     /**
      * Parses the provided XML element node, returning a complex object
      * @param {object} xml - The root XML element to parse
+     * @param {boolean} [withText=false] - When `true`, any text found inside the XML element is also included in the resulting object.
      * @returns {object}
      */
-    parseXmlNode: xml => {
+    parseXmlNode: (xml, withText = false) => {
       // Initialize the resulting object
       const result = {}
       // Direct copy of root element attributes as object properties
@@ -258,9 +259,14 @@ define([
       const keys = []
       const children = xml.children || xml.childNodes || []
       for (let n = 0; n < children.length; n++) {
-        const child = children[n]
+        let child = children[n]
+        if (child.nodeName === '#text') {
+          if (xml.nodeName == 'p' || withText)
+            result.textContent = child.textContent
+          continue
+        }
         // Recursive processing of children
-        const ch = Utils.parseXmlNode(child)
+        const ch = Utils.parseXmlNode(child, withText)
         // Store the result into a temporary object named as the child node name,
         if (!result[child.nodeName]) {
           // Create object and save key for later processing

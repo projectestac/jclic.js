@@ -75,11 +75,18 @@ define(["../Utils"], function (Utils) {
     setProperties($xml) {
       this.id = $xml.attr('id')
       this.action = $xml.attr('action') || 'JUMP'
-      this.sequence = Utils.nSlash($xml.attr('tag'))
-      this.projectPath = Utils.nSlash($xml.attr('project'))
+      if ($xml.attr('tag'))
+        this.sequence = Utils.nSlash($xml.attr('tag'))
+      if ($xml.attr('project'))
+        this.projectPath = Utils.nSlash($xml.attr('project'))
       return this
     }
+
+    getData() {
+      return Utils.getData(this, ['id', 'action', 'actNum', 'sequence', 'projectPath'])
+    }
   }
+
 
   Object.assign(JumpInfo.prototype, {
     /**
@@ -94,7 +101,7 @@ define(["../Utils"], function (Utils) {
      * Possible values are: `JUMP`, `STOP`, `RETURN` and `EXIT`.
      * @name JumpInfo#action
      * @type {string} */
-    action: undefined,
+    action: null,
     /**
      * Activity number in the sequence list
      * @name JumpInfo#actNum
@@ -104,12 +111,12 @@ define(["../Utils"], function (Utils) {
      * Current sequence tag
      * @name JumpInfo#sequence
      * @type {string} */
-    sequence: undefined,
+    sequence: null,
     /**
      * Path of another JClic project to jump to
      * @name JumpInfo#projectPath
      * @type {string} */
-    projectPath: undefined,
+    projectPath: null,
   })
 
   return JumpInfo

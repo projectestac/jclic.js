@@ -1,0 +1,423 @@
+{
+  "name": "demo",
+  "version": "0.1.3",
+  "settings": {
+    "title": "JClic demo activities",
+    "description": "\r\n   Compilation of samples of the different types of JClic activities.\r\n   This package is just for testing and demo purposes.\r\n  ",
+    "authors": [
+      {
+        "name": "Francesc Busquets",
+        "mail": "fbusquets@xtec.cat",
+        "url": "http://clic.xtec.cat",
+        "rol": "author"
+      }
+    ],
+    "organizations": [
+      {
+        "name": "XTEC",
+        "mail": "clic@xtec.cat",
+        "url": "http://clic.xtec.cat",
+        "city": "Barcelona",
+        "country": "Catalonia",
+        "comments": {
+          "p": [
+            {
+              "textContent": "Catalonia Department of Education"
+            },
+            {
+              "textContent": "Another paràgraph..."
+            }
+          ]
+        }
+      }
+    ],
+    "revisions": [
+      {
+        "description": "Adapted for JSClic",
+        "date": "4/4/15",
+        "author": {
+          "name": "Francesc Busquets",
+          "mail": "fbusquets@xtec.cat"
+        }
+      },
+      {
+        "description": "created",
+        "date": "2/1/02"
+      }
+    ],
+    "languages": [
+      "English (en)"
+    ]
+  },
+  "activitySequence": [
+    {
+      "tag": "demo.pac",
+      "activityName": "pres0.ass",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menu0.pac"
+      },
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "menu0.pac",
+      "activityName": "menu0.ass",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      },
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activityName": "menuact.ass",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      },
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "menunou.pac",
+      "activityName": "nou",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menu0.pac"
+      },
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "menupuz.pac",
+      "activityName": "menupuz.ass",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activityName": "puz01.puz"
+    },
+    {
+      "activityName": "puz02.puz"
+    },
+    {
+      "activityName": "puz03.puz"
+    },
+    {
+      "activityName": "gigpuzzle"
+    },
+    {
+      "activityName": "mapa"
+    },
+    {
+      "activityName": "puzanim.puz"
+    },
+    {
+      "activityName": "puzanim2.puz"
+    },
+    {
+      "activityName": "puz04.puz"
+    },
+    {
+      "activityName": "puz05.puz"
+    },
+    {
+      "activityName": "puz06.puz"
+    },
+    {
+      "activityName": "puz06b.puz",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menuact.pac"
+      }
+    },
+    {
+      "tag": "menuact.pac",
+      "activityName": "menuact.ass",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      },
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "menuass.pac",
+      "activityName": "menuass.ass",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activityName": "ass01.ass"
+    },
+    {
+      "activityName": "ass02.ass"
+    },
+    {
+      "activityName": "ass04.ass"
+    },
+    {
+      "activityName": "ass05.ass"
+    },
+    {
+      "activityName": "ass06.ass"
+    },
+    {
+      "activityName": "ass07.ass"
+    },
+    {
+      "activityName": "ass09.ass"
+    },
+    {
+      "activityName": "ass12.ass"
+    },
+    {
+      "activityName": "ass13.ass",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menuact.pac"
+      }
+    },
+    {
+      "tag": "menusop.pac",
+      "activityName": "menusop.ass",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activityName": "sop01.sop"
+    },
+    {
+      "activityName": "sop02.sop"
+    },
+    {
+      "activityName": "sop03.sop",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menuact.pac"
+      }
+    },
+    {
+      "tag": "menucrw.pac",
+      "activityName": "menucrw.ass",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activityName": "crw01.crw"
+    },
+    {
+      "activityName": "crw02.crw",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menuact.pac"
+      }
+    },
+    {
+      "tag": "menutxa.pac",
+      "activityName": "menutxa.ass",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activityName": "ass08.ass"
+    },
+    {
+      "activityName": "txa01.txa"
+    },
+    {
+      "activityName": "txa02.txa"
+    },
+    {
+      "activityName": "txa03.txa"
+    },
+    {
+      "activityName": "txa04.txa"
+    },
+    {
+      "activityName": "txa05.txa"
+    },
+    {
+      "activityName": "txa06.txa"
+    },
+    {
+      "activityName": "txa07.txa"
+    },
+    {
+      "activityName": "txa08.txa"
+    },
+    {
+      "activityName": "txa09.txa"
+    },
+    {
+      "activityName": "txa10.txa"
+    },
+    {
+      "activityName": "txa11.txa"
+    },
+    {
+      "activityName": "txa12.txa"
+    },
+    {
+      "activityName": "txa13.txa"
+    },
+    {
+      "activityName": "txa14.txa",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menuact.pac"
+      }
+    },
+    {
+      "tag": "skins",
+      "activityName": "skin01.txa",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activityName": "skin02.txa"
+    },
+    {
+      "activityName": "skin03.txa"
+    },
+    {
+      "activityName": "skin04.txa"
+    },
+    {
+      "activityName": "skin05.txa",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "anim",
+      "activityName": "anim.ass",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activityName": "anim1"
+    },
+    {
+      "activityName": "puzanim.puz"
+    },
+    {
+      "activityName": "puzanim2.puz"
+    },
+    {
+      "activityName": "anim2",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "sounds",
+      "activityName": "sounds",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      },
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "features",
+      "activityName": "novetats",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activityName": "maxTimeSample"
+    },
+    {
+      "activityName": "maxActionsSample"
+    },
+    {
+      "activityName": "useOrderSample"
+    },
+    {
+      "activityName": "puz06b.puz"
+    },
+    {
+      "activityName": "ass01b.ass"
+    },
+    {
+      "activityName": "ass01c.ass"
+    },
+    {
+      "activityName": "estils.txa"
+    },
+    {
+      "activityName": "caselles.txa"
+    },
+    {
+      "activityName": "fonts.txa",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "shapers",
+      "activityName": "shape1",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activityName": "shape3"
+    },
+    {
+      "activityName": "shape2"
+    },
+    {
+      "activityName": "shape4"
+    },
+    {
+      "activityName": "mapa",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      }
+    }
+  ]
+}

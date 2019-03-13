@@ -10,6 +10,7 @@
   <organization name="XTEC" mail="clic@xtec.cat" url="http://clic.xtec.cat" city="Barcelona" country="Catalonia">
    <comments>
     <p>Catalonia Department of Education</p>
+    <p>Another paràgraph...</p>
    </comments>
   </organization>
   <language>English (en)</language>

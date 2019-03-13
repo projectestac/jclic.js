@@ -107,7 +107,7 @@ define([
     }
 
     getData() {
-      return Utils.getData(this, ['name', 'version', 'type', 'code', 'settings'])
+      return Utils.getData(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence'])
     }
 
     /**

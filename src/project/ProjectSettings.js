@@ -60,6 +60,7 @@ define([
     constructor(project) {
       this.project = project
       this.authors = []
+      this.organizations=[]
       this.revisions = []
       this.languages = []
       this.locales = []
@@ -80,6 +81,9 @@ define([
             break
           case 'author':
             this.authors.push(Utils.parseXmlNode(child));
+            break;
+          case 'organization':
+            this.organizations.push(Utils.parseXmlNode(child));
             break;
           case 'revision':
             this.revisions.push(Utils.parseXmlNode(child));
@@ -119,7 +123,7 @@ define([
     }
 
     getData() {
-      return Utils.getData(this, ['title', 'description', 'authors', 'revisions', 'languages', 'skinFileName', 'eventSounds']);
+      return Utils.getData(this, ['title', 'description', 'authors', 'organizations', 'revisions', 'languages', 'skinFileName', 'eventSounds']);
     }
   }
 
@@ -136,11 +140,24 @@ define([
     title: 'Untitled',
     /**
      * The authors of this project.
-     * Authors are represented by objects with the following attributes:
-     * `name` (mandatory), `mail`, `rol`, `organization` and `url` (all of them are optional)
+     * Each author is represented by an object with the following attributes:
+     * `name` (mandatory), `mail`, `rol`, `organization` and `url`
      * @name ProjectSettings#authors
      * @type {object[]} */
     authors: null,
+    /**
+     * Schools, companies and other institutions involved on this project.
+     * Each organization is represented by an object with the following attributes:
+     * `name` (mandatory), `mail`, `url`, `address`, `pc`, `city`, `state`, `country`, `comments`
+     * @name ProjectSettings#organizations
+     * @type {object[]} */
+    organizations: null,
+    /**
+     * The history of revisions made to this project.
+     * Revisions are represented by objects with the following attributes:
+     * `date` (mandatory), `description`, `comments` and `author`
+     * @name ProjectSettings#revisions
+     * @type {object[]} */
     revisions: null,
     /**
      * Project's description. Can have multiple paragraphs, separated by `<p>`

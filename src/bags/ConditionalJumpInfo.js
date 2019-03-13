@@ -32,8 +32,9 @@
 
 define([
   "jquery",
-  "./JumpInfo"
-], function ($, JumpInfo) {
+  "./JumpInfo",
+  "../Utils"
+], function ($, JumpInfo, Utils) {
 
   /**
    * This special case of {@link JumpInfo} is used in {@link ActivitySequenceJump} objects to decide
@@ -76,6 +77,10 @@ define([
       if ($xml.attr('time') !== undefined)
         this.time = $xml.attr('time')
       return this
+    }
+
+    getData(){
+      return Object.assign(super.getData(), Utils.getData(this, ['threshold', 'time']))
     }
   }
 

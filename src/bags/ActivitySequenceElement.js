@@ -91,6 +91,10 @@ define([
       })
       return this
     }
+
+    getData() {
+      return Utils.getData(this, ['tag', 'description', 'activityName', 'fwdJump', 'backJump', 'navButtons', 'delay'])
+    }
   }
 
   Object.assign(ActivitySequenceElement.prototype, {

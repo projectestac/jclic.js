@@ -65,6 +65,10 @@ define([
       return this
     }
 
+    getData(){
+      return this.elements.map(el => el.getData())
+    }
+
     /**
      * Returns the index of the specified element in the sequence.
      * @param {ActivitySequenceElement} ase - The element to search.

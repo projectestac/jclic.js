@@ -33,8 +33,9 @@
 define([
   "jquery",
   "./JumpInfo",
-  "./ConditionalJumpInfo"
-], function ($, JumpInfo, ConditionalJumpInfo) {
+  "./ConditionalJumpInfo",
+  "../Utils"
+], function ($, JumpInfo, ConditionalJumpInfo, Utils) {
 
   /**
    * This is a special case of {@link JumpInfo}, used only in {@link ActivitySequenceElement} objects.
@@ -75,6 +76,10 @@ define([
           this.lowerJump = condJmp
       })
       return this
+    }
+
+    getData() {
+      return Object.assign(super.getData(), Utils.getData(this, ['upperJump', 'lowerJump']));
     }
 
     /**
