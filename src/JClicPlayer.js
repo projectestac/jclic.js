@@ -502,7 +502,7 @@ define([
             // Success! We have a real [ActivitySequenceElement](ActivitySequenceElement.html)
             if (this.reporter)
               this.reporter.newSequence(ase)
-            activity = ase.activityName
+            activity = ase.activity
           }
         }
 

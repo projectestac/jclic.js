@@ -7,6 +7,8 @@
 // node listProjectContents.js [filename]
 //
 
+/* global process */
+
 var fs = require('fs');
 
 // Use mock-browser as a browser simulator
@@ -70,7 +72,3 @@ for (var p = 0; p < nMedia; p++)
   console.log('- %s', media[p]);
 
 console.log('\nTOTAL: %d activities, %d sequences, %d media files', nActivities, nSequences, nMedia);
-
-console.log(JSON.stringify(project.getData(), 1));
-
-

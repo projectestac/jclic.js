@@ -76,6 +76,13 @@ define([
       return this
     }
 
+    getData() {
+      return {
+        enabled: this.enabled,
+        elements: Utils.getData(this.elements)
+      }
+    }
+
     /**
      * Instantiates the audio objects needed to play event sounds
      * @param {PlayStation} ps

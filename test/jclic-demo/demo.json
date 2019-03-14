@@ -20,14 +20,7 @@
         "city": "Barcelona",
         "country": "Catalonia",
         "comments": {
-          "p": [
-            {
-              "textContent": "Catalonia Department of Education"
-            },
-            {
-              "textContent": "Another paràgraph..."
-            }
-          ]
+          "text": "Catalonia Department of Education\nAnother paràgraph..."
         }
       }
     ],
@@ -52,7 +45,7 @@
   "activitySequence": [
     {
       "tag": "demo.pac",
-      "activityName": "pres0.ass",
+      "activity": "pres0.ass",
       "fwdJump": {
         "id": "forward",
         "action": "JUMP",
@@ -65,7 +58,7 @@
     },
     {
       "tag": "menu0.pac",
-      "activityName": "menu0.ass",
+      "activity": "menu0.ass",
       "fwdJump": {
         "id": "forward",
         "action": "RETURN"
@@ -76,7 +69,7 @@
       }
     },
     {
-      "activityName": "menuact.ass",
+      "activity": "menuact.ass",
       "fwdJump": {
         "id": "forward",
         "action": "RETURN"
@@ -88,7 +81,7 @@
     },
     {
       "tag": "menunou.pac",
-      "activityName": "nou",
+      "activity": "nou",
       "fwdJump": {
         "id": "forward",
         "action": "JUMP",
@@ -101,44 +94,44 @@
     },
     {
       "tag": "menupuz.pac",
-      "activityName": "menupuz.ass",
+      "activity": "menupuz.ass",
       "backJump": {
         "id": "back",
         "action": "RETURN"
       }
     },
     {
-      "activityName": "puz01.puz"
+      "activity": "puz01.puz"
     },
     {
-      "activityName": "puz02.puz"
+      "activity": "puz02.puz"
     },
     {
-      "activityName": "puz03.puz"
+      "activity": "puz03.puz"
     },
     {
-      "activityName": "gigpuzzle"
+      "activity": "gigpuzzle"
     },
     {
-      "activityName": "mapa"
+      "activity": "mapa"
     },
     {
-      "activityName": "puzanim.puz"
+      "activity": "puzanim.puz"
     },
     {
-      "activityName": "puzanim2.puz"
+      "activity": "puzanim2.puz"
     },
     {
-      "activityName": "puz04.puz"
+      "activity": "puz04.puz"
     },
     {
-      "activityName": "puz05.puz"
+      "activity": "puz05.puz"
     },
     {
-      "activityName": "puz06.puz"
+      "activity": "puz06.puz"
     },
     {
-      "activityName": "puz06b.puz",
+      "activity": "puz06b.puz",
       "fwdJump": {
         "id": "forward",
         "action": "JUMP",
@@ -147,7 +140,7 @@
     },
     {
       "tag": "menuact.pac",
-      "activityName": "menuact.ass",
+      "activity": "menuact.ass",
       "fwdJump": {
         "id": "forward",
         "action": "RETURN"
@@ -159,38 +152,38 @@
     },
     {
       "tag": "menuass.pac",
-      "activityName": "menuass.ass",
+      "activity": "menuass.ass",
       "backJump": {
         "id": "back",
         "action": "RETURN"
       }
     },
     {
-      "activityName": "ass01.ass"
+      "activity": "ass01.ass"
     },
     {
-      "activityName": "ass02.ass"
+      "activity": "ass02.ass"
     },
     {
-      "activityName": "ass04.ass"
+      "activity": "ass04.ass"
     },
     {
-      "activityName": "ass05.ass"
+      "activity": "ass05.ass"
     },
     {
-      "activityName": "ass06.ass"
+      "activity": "ass06.ass"
     },
     {
-      "activityName": "ass07.ass"
+      "activity": "ass07.ass"
     },
     {
-      "activityName": "ass09.ass"
+      "activity": "ass09.ass"
     },
     {
-      "activityName": "ass12.ass"
+      "activity": "ass12.ass"
     },
     {
-      "activityName": "ass13.ass",
+      "activity": "ass13.ass",
       "fwdJump": {
         "id": "forward",
         "action": "JUMP",
@@ -199,20 +192,20 @@
     },
     {
       "tag": "menusop.pac",
-      "activityName": "menusop.ass",
+      "activity": "menusop.ass",
       "backJump": {
         "id": "back",
         "action": "RETURN"
       }
     },
     {
-      "activityName": "sop01.sop"
+      "activity": "sop01.sop"
     },
     {
-      "activityName": "sop02.sop"
+      "activity": "sop02.sop"
     },
     {
-      "activityName": "sop03.sop",
+      "activity": "sop03.sop",
       "fwdJump": {
         "id": "forward",
         "action": "JUMP",
@@ -221,17 +214,17 @@
     },
     {
       "tag": "menucrw.pac",
-      "activityName": "menucrw.ass",
+      "activity": "menucrw.ass",
       "backJump": {
         "id": "back",
         "action": "RETURN"
       }
     },
     {
-      "activityName": "crw01.crw"
+      "activity": "crw01.crw"
     },
     {
-      "activityName": "crw02.crw",
+      "activity": "crw02.crw",
       "fwdJump": {
         "id": "forward",
         "action": "JUMP",
@@ -240,56 +233,56 @@
     },
     {
       "tag": "menutxa.pac",
-      "activityName": "menutxa.ass",
+      "activity": "menutxa.ass",
       "backJump": {
         "id": "back",
         "action": "RETURN"
       }
     },
     {
-      "activityName": "ass08.ass"
+      "activity": "ass08.ass"
     },
     {
-      "activityName": "txa01.txa"
+      "activity": "txa01.txa"
     },
     {
-      "activityName": "txa02.txa"
+      "activity": "txa02.txa"
     },
     {
-      "activityName": "txa03.txa"
+      "activity": "txa03.txa"
     },
     {
-      "activityName": "txa04.txa"
+      "activity": "txa04.txa"
     },
     {
-      "activityName": "txa05.txa"
+      "activity": "txa05.txa"
     },
     {
-      "activityName": "txa06.txa"
+      "activity": "txa06.txa"
     },
     {
-      "activityName": "txa07.txa"
+      "activity": "txa07.txa"
     },
     {
-      "activityName": "txa08.txa"
+      "activity": "txa08.txa"
     },
     {
-      "activityName": "txa09.txa"
+      "activity": "txa09.txa"
     },
     {
-      "activityName": "txa10.txa"
+      "activity": "txa10.txa"
     },
     {
-      "activityName": "txa11.txa"
+      "activity": "txa11.txa"
     },
     {
-      "activityName": "txa12.txa"
+      "activity": "txa12.txa"
     },
     {
-      "activityName": "txa13.txa"
+      "activity": "txa13.txa"
     },
     {
-      "activityName": "txa14.txa",
+      "activity": "txa14.txa",
       "fwdJump": {
         "id": "forward",
         "action": "JUMP",
@@ -298,23 +291,23 @@
     },
     {
       "tag": "skins",
-      "activityName": "skin01.txa",
+      "activity": "skin01.txa",
       "backJump": {
         "id": "back",
         "action": "RETURN"
       }
     },
     {
-      "activityName": "skin02.txa"
+      "activity": "skin02.txa"
     },
     {
-      "activityName": "skin03.txa"
+      "activity": "skin03.txa"
     },
     {
-      "activityName": "skin04.txa"
+      "activity": "skin04.txa"
     },
     {
-      "activityName": "skin05.txa",
+      "activity": "skin05.txa",
       "fwdJump": {
         "id": "forward",
         "action": "RETURN"
@@ -322,23 +315,23 @@
     },
     {
       "tag": "anim",
-      "activityName": "anim.ass",
+      "activity": "anim.ass",
       "backJump": {
         "id": "back",
         "action": "RETURN"
       }
     },
     {
-      "activityName": "anim1"
+      "activity": "anim1"
     },
     {
-      "activityName": "puzanim.puz"
+      "activity": "puzanim.puz"
     },
     {
-      "activityName": "puzanim2.puz"
+      "activity": "puzanim2.puz"
     },
     {
-      "activityName": "anim2",
+      "activity": "anim2",
       "fwdJump": {
         "id": "forward",
         "action": "RETURN"
@@ -346,7 +339,7 @@
     },
     {
       "tag": "sounds",
-      "activityName": "sounds",
+      "activity": "sounds",
       "fwdJump": {
         "id": "forward",
         "action": "RETURN"
@@ -358,38 +351,38 @@
     },
     {
       "tag": "features",
-      "activityName": "novetats",
+      "activity": "novetats",
       "backJump": {
         "id": "back",
         "action": "RETURN"
       }
     },
     {
-      "activityName": "maxTimeSample"
+      "activity": "maxTimeSample"
     },
     {
-      "activityName": "maxActionsSample"
+      "activity": "maxActionsSample"
     },
     {
-      "activityName": "useOrderSample"
+      "activity": "useOrderSample"
     },
     {
-      "activityName": "puz06b.puz"
+      "activity": "puz06b.puz"
     },
     {
-      "activityName": "ass01b.ass"
+      "activity": "ass01b.ass"
     },
     {
-      "activityName": "ass01c.ass"
+      "activity": "ass01c.ass"
     },
     {
-      "activityName": "estils.txa"
+      "activity": "estils.txa"
     },
     {
-      "activityName": "caselles.txa"
+      "activity": "caselles.txa"
     },
     {
-      "activityName": "fonts.txa",
+      "activity": "fonts.txa",
       "fwdJump": {
         "id": "forward",
         "action": "RETURN"
@@ -397,23 +390,23 @@
     },
     {
       "tag": "shapers",
-      "activityName": "shape1",
+      "activity": "shape1",
       "backJump": {
         "id": "back",
         "action": "RETURN"
       }
     },
     {
-      "activityName": "shape3"
+      "activity": "shape3"
     },
     {
-      "activityName": "shape2"
+      "activity": "shape2"
     },
     {
-      "activityName": "shape4"
+      "activity": "shape4"
     },
     {
-      "activityName": "mapa",
+      "activity": "mapa",
       "fwdJump": {
         "id": "forward",
         "action": "RETURN"

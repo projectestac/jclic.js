@@ -68,7 +68,7 @@ define([
             this['tag'] = Utils.nSlash(val)
             break
           case 'name':
-            this['activityName'] = val
+            this['activity'] = val
             break
           case 'description':
           // possible navButtons values are: `none`, `fwd`, `back` or `both`
@@ -93,7 +93,7 @@ define([
     }
 
     getData() {
-      return Utils.getData(this, ['tag', 'description', 'activityName', 'fwdJump', 'backJump', 'navButtons', 'delay'])
+      return Utils.getData(this, ['tag', 'description', 'activity', 'fwdJump', 'backJump', 'navButtons', 'delay'])
     }
   }
 
@@ -110,9 +110,9 @@ define([
     description: null,
     /**
      * Name of the {@link Activity} pointed by this element.
-     * @name ActivitySequenceElement#activityName
+     * @name ActivitySequenceElement#activity
      * @type {string} */
-    activityName: '',
+    activity: '',
     /**
      * Jump to be processed by the 'next' button action
      * @name ActivitySequenceElement#fwdJump

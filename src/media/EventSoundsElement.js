@@ -69,6 +69,10 @@ define([
       return this
     }
 
+    getData() {
+      return Utils.getData(this, ['enabled', 'fileName'])
+    }
+
     /**
      * Instantiates this audio object
      * @param {PlayStation} ps

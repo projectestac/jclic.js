@@ -255,18 +255,27 @@ define([
       // Direct copy of root element attributes as object properties
       if (xml.attributes)
         Utils.attrForEach(xml.attributes, (name, value) => result[name] = /^-?\d*$/.test(value) ? Number(value) : value)
-      // Process children elements
+
       const keys = []
-      const children = xml.children || xml.childNodes || []
-      for (let n = 0; n < children.length; n++) {
-        let child = children[n]
-        const chchild = Array.from(child.children || child.childNodes || []);
-        const paragraphs = chchild.filter(child => child.nodeName === 'p');
-        if (paragraphs.length > 0) {
-          const text = paragraphs.map(ch => ch.textContent).join('\n');
-          result[child.nodeName] = text;
-          continue;
+      const children = Array.from(xml.children || xml.childNodes || [])
+
+      // If all children is of type 'p', just compile it in a single string
+      const paragraphs = children.filter(child => child.nodeName === 'p')
+      if (paragraphs.length > 0 && paragraphs.length === children.filter(ch => ch.nodeName !== '#text').length) {
+        const text = paragraphs.map(ch => ch.textContent).join('\n')
+        if (xml.attributes) {
+          result.text = text;
+          return result;
         }
+        return text;
+      }
+
+      // Process children elements
+      children.forEach(child => {
+        // Avoid extra text content collected by [xmldom](https://www.npmjs.com/package/xmldom)
+        if (child.nodeName === '#text' && !withText)
+          return
+
         // Recursive processing of children
         const ch = Utils.parseXmlNode(child, withText)
         // Store the result into a temporary object named as the child node name,
@@ -282,7 +291,7 @@ define([
           const n = Object.keys(result[child.nodeName]).length
           result[child.nodeName][n] = ch
         }
-      }
+      })
       // Check temporary objects, converting it to an array, a single object or a complex object
       keys.forEach(k => {
         // Retrieve temporary object from `keys`
@@ -365,8 +374,17 @@ define([
         })
       return result
     },
-    getData: (obj, keys) => {
+    /**
+     * Returns an partial clone of an object, containing only the own attributes specified in an array of possible keys.
+     * When the value of an attribute is of type 'Object' and this object has a method named `getData`, the result of calling
+     * this method is returned instead of the crude object.
+     * @param {object} obj - The object to be processed
+     * @param {string[]=} keys - An optional array of keys to be included in the resulting object. When null or not set, all keys of `obj` are included.
+     * @returns {object}
+     */
+    getData: (obj, keys = null) => {
       const result = {}
+      keys = keys || Object.keys(obj)
       keys.forEach(k => {
         if (obj.hasOwnProperty(k)) {
           const value = obj[k]

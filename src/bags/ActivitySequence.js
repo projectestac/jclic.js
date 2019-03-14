@@ -245,15 +245,15 @@ define([
      * Gets the first {@link ActivitySequenceElement} in the `elements` list pointing to the
      * specified activity name.
      * The search is always case-insensitive.
-     * @param {string} activityName - The activity to search.
+     * @param {string} activity - The name of the activity to search for.
      * @returns {ActivitySequenceElement} The requested element or `null` if not found.
      */
-    getElementByActivityName(activityName) {
+    getElementByActivityName(activity) {
       let result = null
-      if (activityName !== null) {
+      if (activity !== null) {
         for (let i = 0; result === null && i < this.elements.length; i++) {
           const ase = this.getElement(i, false)
-          if (ase.activityName.toLowerCase() === activityName.toLowerCase())
+          if (ase.activity.toLowerCase() === activity.toLowerCase())
             result = ase
         }
       }
@@ -263,19 +263,19 @@ define([
     /**
      * Utility function to check if the current sequence element corresponds to the specified
      * activity. If negative, the `currentAct` will be accordingly set.
-     * @param {string} activityName - The activity to check
+     * @param {string} activity - The name of the activity to check
      */
-    checkCurrentActivity(activityName) {
+    checkCurrentActivity(activity) {
       let ase = this.getCurrentAct()
-      if (ase === null || ase.activityName.toUpperCase() !== activityName.toUpperCase()) {
+      if (ase === null || ase.activity.toUpperCase() !== activity.toUpperCase()) {
         for (let i = 0; i < this.elements.length; i++) {
-          if (this.getElement(i, false).activityName.toUpperCase() === activityName.toUpperCase()) {
+          if (this.getElement(i, false).activity.toUpperCase() === activity.toUpperCase()) {
             this.currentAct = i
             return false
           }
         }
         ase = new ActivitySequenceElement()
-        ase.activityName = activityName
+        ase.activity = activity
         ase.fwdJump = new ActivitySequenceJump('STOP')
         ase.backJump = new ActivitySequenceJump('STOP')
         this.elements.push(ase)

@@ -146,7 +146,7 @@ define([
               if (ase !== null) {
                 if (allowReturn)
                   this.push()
-                this.player.load(null, null, ase.activityName)
+                this.player.load(null, null, ase.activity)
                 result = true
               }
             } else {
