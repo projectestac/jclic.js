@@ -95,6 +95,10 @@ define([
       return this
     }
 
+    getData() {
+      return Utils.getData(this, ['name', 'fileName', 'animated'])
+    }
+
     /**
      * Checks if the image associated with this MediaBagElement is an animated GIF
      *

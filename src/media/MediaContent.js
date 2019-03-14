@@ -110,6 +110,15 @@ define([
       return this
     }
 
+    getData() {
+      return Utils.getData(this, [
+        'mediaType', 'mediaFileName',
+        'externalParam', 'absLocationFrom', 'recBuffer',
+        'level', 'from', 'to', 'length', 'absLocation',
+        'stretch', 'free', 'catchMouseEvents', 'loop', 'autostart'
+      ])
+    }
+
     /**
      * Compares this object with another MediaContent.
      * @param {MediaContent} mc - The Media Content to compare against to.

@@ -95,6 +95,31 @@ define([
         return act
       }
 
+      getData() {
+        return Utils.getData(this, [
+          'name', 'className', 'code', 'type', 'description', 'skinFileName',
+          'margin', 'bgColor', 'bgGradient', 'tiledBgImg', 'bgImageFile',
+          'border', 'absolutePositioned', 'absolutePosition',
+          'includeInReports', 'reportActions',
+          'helpWindow', 'showSolution', 'helpMsg',
+          'eventSounds', // EventSounds
+          'useOrder', 'dragCells', 'maxTime', 'countDownTime', 'maxActions', 'countDownActions',
+          'infoUrl', 'infoCmd',
+          'messages', // ActiveBoxContent[]
+          'windowSize', 'transparentBg', 'activityBgColor', 'activityBgGradient',
+          'bTimeCounter', 'bScoreCounter', 'bActionsCounter',
+          'acp', // AutoContentProvider
+          'abc', // ActiveBagContent[]
+          'tgc', // TextGridContent
+          'document', // TextActivityDocument
+          'boxGridPos', 'shuffles',
+          'scramble', // Activity~scrambleType
+          'invAss',
+          'menuElements', // Activity~menuElement
+          'numericContent',
+        ])
+      }
+
       /**
        * Loads this object settings from an XML element
        * @param {external:jQuery} $xml - The jQuery XML element to parse

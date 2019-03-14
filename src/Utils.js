@@ -379,20 +379,27 @@ define([
      * When the value of an attribute is of type 'Object' and this object has a method named `getData`, the result of calling
      * this method is returned instead of the crude object.
      * @param {object} obj - The object to be processed
-     * @param {string[]=} keys - An optional array of keys to be included in the resulting object. When null or not set, all keys of `obj` are included.
+     * @param {string[]=} keys - An optional array of keys to be included in the resulting object.
+     * When null or not set, all keys of `obj` are included. Keys can include a default value separed by '|'.
+     * Attributes with default value will be excluded from the resulting object.
      * @returns {object}
      */
     getData: (obj, keys = null) => {
       const result = {}
       keys = keys || Object.keys(obj)
-      keys.forEach(k => {
-        if (obj.hasOwnProperty(k)) {
-          const value = obj[k]
-          result[k] = value.getData ? value.getData() : value
-        }
+      keys.forEach(key => {
+        const [k, v] = key.split('|');
+        if (obj.hasOwnProperty(k) && obj[k] !== null && obj[k] !== v)
+          result[k] = Utils.getValue(obj[k])
       })
       return result
     },
+
+    getValue(value) {
+      return value.getData ? value.getData() : value instanceof Array ? value.map(e => Utils.getValue(e)) : value;
+    },
+
+
     /**
      * Check if the given char is a separator
      * @param {string} ch - A string with a single character

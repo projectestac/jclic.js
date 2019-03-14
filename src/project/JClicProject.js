@@ -107,7 +107,9 @@ define([
     }
 
     getData() {
-      return Utils.getData(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence'])
+      //this.activities = Object.keys(this._activities).map(k => Activity.getActivity(this._activities[k], this))
+      this.activities = [Activity.getActivity(this._activities[0], this)]
+      return Utils.getData(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'mediaBag', 'activities'])
     }
 
     /**

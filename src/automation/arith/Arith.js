@@ -138,6 +138,17 @@ define([
       return this
     }
 
+    getData() {
+      return Utils.getData(this, [
+        'className',
+        'opA', 'opB',
+        'use_add', 'use_subst', 'use_mult', 'use_div',
+        'exp_abx', 'exp_axc', 'exp_xbc', 'exp_axbc', 'exp_caxb',
+        'resultLimInf', 'resultLimSup', 'resultCarry', 'resultNoDup', 'resultOrder',
+        'opCond'
+      ])
+    }
+
     /**
      * Fills the `n` parameter (an {@link Arith.Num}) with a value in accordance with the
      * specifications of `op` (an {@link Arith.Operand}), between two limits.

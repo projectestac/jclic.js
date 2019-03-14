@@ -99,6 +99,16 @@ define([
       return this
     }
 
+    getData() {
+      return Utils.getData(this, [
+        'ncw', 'nch',
+        'w', 'h',
+        'text',
+        'bb', 'border',
+        'wild', 'randomChars'
+      ])
+    }
+
     /**
      * Counts the number of wildcard characters present in this TextGrid
      * @returns {number}

@@ -110,6 +110,19 @@ define([
       return this
     }
 
+    getData() {
+      return Utils.getData(this, [
+        'shadow', 'transparent', 'margin', 'borderStroke', 'markerStroke',
+        'font', 'bgGradient',
+        `textColor|${BoxBase.prototype.textColor}`,
+        `backColor|${BoxBase.prototype.backColor}`,
+        `shadowColor|${BoxBase.prototype.shadowColor}`,
+        `inactiveColor|${BoxBase.prototype.inactiveColor}`,
+        `alternativeColor|${BoxBase.prototype.alternativeColor}`,
+        `borderColor|${BoxBase.prototype.borderColor}`,
+      ])
+    }
+
     /**
      * Gets the value of the specified property, scanning down to parents and prototype if not defined.
      * @param {string} property - The property to retrieve

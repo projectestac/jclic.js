@@ -130,6 +130,16 @@ define([
       return this
     }
 
+    getData() {
+      return Utils.getData(this, [
+        'id', 'item', 'dimension', 'txtAlign', 'imgAlign',
+        'border', 'avoidOverlapping', 'imgName', 'text',
+        'bb', // BoxBase
+        'mediaContent', // MediaContent
+      ])
+
+    }
+
     /**
      * Decode expressions with combined values of horizontal and vertical alignments in the form:
      * "(left|middle|right),(top|middle|bottom)"

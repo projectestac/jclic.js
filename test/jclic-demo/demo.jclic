@@ -9,8 +9,8 @@
   <author name="Francesc Busquets" mail="fbusquets@xtec.cat" url="http://clic.xtec.cat" rol="author" />
   <organization name="XTEC" mail="clic@xtec.cat" url="http://clic.xtec.cat" city="Barcelona" country="Catalonia">
    <comments>
-    <p>Catalonia Department of Education</p>
-    <p>Another paràgraph...</p>
+    <p>Catalan Educational Telematic Network (XTEC)</p>
+    <p>Department of Education of Catalonia</p>
    </comments>
   </organization>
   <language>English (en)</language>

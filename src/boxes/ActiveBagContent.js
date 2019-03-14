@@ -57,7 +57,7 @@ define([
     constructor(id, ncw, nch) {
       if (id)
         this.id = id
-      this.activeBoxContentArray = []
+      this.cells = []
       this.ncw = Math.max(1, ncw)
       this.nch = Math.max(1, nch)
     }
@@ -121,17 +121,18 @@ define([
             break
           case 'ids':
             // Used in special cases where all cells have empty content with only 'ids'
-            child.textContent.split(' ').forEach((id, i) => { this.activeBoxContentArray[i] = new ActiveBoxContent(Number(id)) })
+            this.ids = child.textContent;
+            this.ids.split(' ').forEach((id, i) => { this.cells[i] = new ActiveBoxContent(Number(id)) })
             break
           case 'cell':
-            this.activeBoxContentArray.push(new ActiveBoxContent().setProperties($node, mediaBag))
+            this.cells.push(new ActiveBoxContent().setProperties($node, mediaBag))
             break
         }
       })
 
-      let n = this.activeBoxContentArray.length
+      let n = this.cells.length
 
-      // Create cells when `activeBoxContentArray` is empty
+      // Create cells when `cells` is empty
       if (n === 0 && this.shaper && this.shaper.nCells > 0) {
         n = this.shaper.nCells
         this.getActiveBoxContent(n - 1)
@@ -153,11 +154,23 @@ define([
         }
       }
 
-      // Link [BoxBase](BoxBase.html) objects of `activeBoxContentArray` elements to `bb`
+      // Link [BoxBase](BoxBase.html) objects of `cells` elements to `bb`
       if (this.bb)
-        this.activeBoxContentArray.forEach((abc) => { if (abc.bb) abc.bb.parent = this.bb })
+        this.cells.forEach((abc) => { if (abc.bb) abc.bb.parent = this.bb })
 
       return this
+    }
+
+    getData() {
+      return Utils.getData(this, [
+        'id', 'imgName',
+        'nch', 'ncw',
+        'w', 'h',
+        'border',
+        'bb',
+        'shaper',
+        this.ids ? 'ids' : 'cells'
+      ])
     }
 
     /**
@@ -165,7 +178,7 @@ define([
      * @param {PlayStation} playStation - The {@link JClicPlayer}
      */
     prepareMedia(playStation) {
-      this.activeBoxContentArray.forEach(abc => abc.prepareMedia(playStation))
+      this.cells.forEach(abc => abc.prepareMedia(playStation))
     }
 
     /**
@@ -189,7 +202,7 @@ define([
      * @returns {number}
      */
     getNumCells() {
-      return this.activeBoxContentArray.length
+      return this.cells.length
     }
 
     /**
@@ -197,7 +210,7 @@ define([
      * @returns {boolean}
      */
     isEmpty() {
-      return this.activeBoxContentArray.length === 0
+      return this.cells.length === 0
     }
 
     /**
@@ -225,23 +238,23 @@ define([
      * @param {ActiveBoxContent} ab - The ActiveBoxContent to add
      */
     addActiveBoxContent(ab) {
-      this.activeBoxContentArray.push(ab)
+      this.cells.push(ab)
       if (this.ncw === 0 || this.nch === 0) {
         this.ncw = this.nch = 1
       }
     }
 
     /**
-     * Gets the nth {@link ActiveBoxContent} in `activeBoxContentArray`
+     * Gets the nth {@link ActiveBoxContent} in `cells`
      * @param {number} i - The index of the content to be retrieved
      * @returns {ActiveBoxContent}
      */
     getActiveBoxContent(i) {
-      if (i >= this.activeBoxContentArray.length) {
-        for (let j = this.activeBoxContentArray.length; j <= i; j++)
-          this.activeBoxContentArray.push(new ActiveBoxContent())
+      if (i >= this.cells.length) {
+        for (let j = this.cells.length; j <= i; j++)
+          this.cells.push(new ActiveBoxContent())
       }
-      return this.activeBoxContentArray[i]
+      return this.cells[i]
     }
 
     /**
@@ -251,7 +264,7 @@ define([
      * @returns {ActiveBoxContent}
      */
     getActiveBoxContentWith(id, item) {
-      return this.activeBoxContentArray.find(bxc => bxc.id === id && bxc.item === item)
+      return this.cells.find(bxc => bxc.id === id && bxc.item === item)
     }
 
     /**
@@ -316,7 +329,7 @@ define([
      * @param {number[]} ids -Array of numeric identifiers
      */
     setIds(ids) {
-      for (let i = 0; i < ids.length && i < this.activeBoxContentArray.length; i++)
+      for (let i = 0; i < ids.length && i < this.cells.length; i++)
         this.getActiveBoxContent(i).id = ids[i]
     }
 
@@ -326,7 +339,7 @@ define([
      * @param {*} value - The supplied value. Can be of any type.
      */
     setCellsAttribute(key, value) {
-      this.activeBoxContentArray.forEach(abc => abc[key] = value)
+      this.cells.forEach(abc => abc[key] = value)
     }
 
     /**
@@ -336,9 +349,9 @@ define([
      * @param {number} maxId - The maximum value of identifiers
      */
     avoidAllIdsNull(maxId) {
-      if (this.activeBoxContentArray.every(abc => abc.id === -1)) {
+      if (this.cells.every(abc => abc.id === -1)) {
         maxId = Math.max(1, maxId)
-        this.activeBoxContentArray.forEach((abc, n) => { abc.id = n % maxId })
+        this.cells.forEach((abc, n) => { abc.id = n % maxId })
       }
     }
   }
@@ -406,14 +419,19 @@ define([
     backgroundContent: null,
     /**
      * The main Array of {@link ActiveBoxContent} objects
-     * @name ActiveBagContent#activeBoxContentArray
+     * @name ActiveBagContent#cells
      * @type {ActiveBoxContent[]} */
-    activeBoxContentArray: null,
+    cells: null,
     /**
      * The default value to be assigned at the 'id' field of children
      * @name ActiveBagContent#defaultIdValue
      * @type {number} */
     defaultIdValue: -1,
+    /**
+     * Used in special cases where all cells have empty content with only numeric identifiers
+     * @name ActiveBagContent#ids
+     * @type {string} */
+    ids: null,
   })
 
   return ActiveBagContent

@@ -268,6 +268,10 @@ define([
         this.italic === font.italic &&
         this.variant === font.variant
     }
+
+    getData() {
+      return Utils.getData(this, ['family', 'size', 'bold', 'italic', 'variant'])
+    }
   }
 
   /**
@@ -1339,6 +1343,11 @@ define([
       this.strokes.forEach(str => str.stroke(ctx))
       return ctx
     }
+
+    getData() {
+      return Utils.getData(this, ['pos', 'strokes'])
+    }
+
   }
 
   Object.assign(Path.prototype, {

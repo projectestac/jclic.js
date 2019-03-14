@@ -217,6 +217,15 @@ define([
       return attr
     }
 
+    getData() {
+      return Utils.getData(this, [
+        'tabSpc', 'targetType',
+        'boxesContent', 'popupsContent',
+        'style',
+        'p',
+      ])
+    }
+
     /**
      * Gets the full text of this document in raw format
      * @returns {String} - The text of the document.

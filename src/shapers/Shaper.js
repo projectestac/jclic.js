@@ -176,6 +176,17 @@ define([
       return !result && shd.length > 0 ? new AWT.Path(shd) : result
     }
 
+    getData() {
+      return Utils.getData(this, [
+        'className',
+        'nCols', 'nRows',
+        'baseWidthFactor', 'toothHeightFactor',
+        'scaleX', 'scaleY',
+        'randomLines', 'showEnclosure', 'hasRemainder',
+        'enclosing' // AWT.Shape      
+      ])
+    }
+
     /**
      * Builds the individual shapes that will form this Shaper
      */

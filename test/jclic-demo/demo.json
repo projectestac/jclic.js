@@ -412,5 +412,241 @@
         "action": "RETURN"
       }
     }
+  ],
+  "mediaBag": [
+    {
+      "name": "zebra.mp4",
+      "fileName": "zebra.mp4"
+    },
+    {
+      "name": "bici.gif",
+      "fileName": "bici.gif",
+      "animated": false
+    },
+    {
+      "name": "camio.gif",
+      "fileName": "camio.gif",
+      "animated": false
+    },
+    {
+      "name": "casa.gif",
+      "fileName": "casa.gif",
+      "animated": false
+    },
+    {
+      "name": "cireres.gif",
+      "fileName": "cireres.gif",
+      "animated": false
+    },
+    {
+      "name": "cotxe.gif",
+      "fileName": "cotxe.gif",
+      "animated": false
+    },
+    {
+      "name": "elmo.gif",
+      "fileName": "elmo.gif",
+      "animated": false
+    },
+    {
+      "name": "big.gif",
+      "fileName": "big.gif",
+      "animated": true
+    },
+    {
+      "name": "esqui.gif",
+      "fileName": "esqui.gif",
+      "animated": true
+    },
+    {
+      "name": "func2.gif",
+      "fileName": "func2.gif",
+      "animated": false
+    },
+    {
+      "name": "funcio.gif",
+      "fileName": "funcio.gif",
+      "animated": false
+    },
+    {
+      "name": "great.gif",
+      "fileName": "great.gif",
+      "animated": false
+    },
+    {
+      "name": "lletres.gif",
+      "fileName": "lletres.gif",
+      "animated": false
+    },
+    {
+      "name": "llimona.gif",
+      "fileName": "llimona.gif",
+      "animated": false
+    },
+    {
+      "name": "mapa.gif",
+      "fileName": "mapa.gif",
+      "animated": false
+    },
+    {
+      "name": "minialt.gif",
+      "fileName": "minialt.gif",
+      "animated": false
+    },
+    {
+      "name": "minialt2.gif",
+      "fileName": "minialt2.gif",
+      "animated": false
+    },
+    {
+      "name": "moto.gif",
+      "fileName": "moto.gif",
+      "animated": false
+    },
+    {
+      "name": "natacio.gif",
+      "fileName": "natacio.gif",
+      "animated": true
+    },
+    {
+      "name": "pera.gif",
+      "fileName": "pera.gif",
+      "animated": false
+    },
+    {
+      "name": "raim.gif",
+      "fileName": "raim.gif",
+      "animated": false
+    },
+    {
+      "name": "simpleanim.gif",
+      "fileName": "simpleanim.gif",
+      "animated": true
+    },
+    {
+      "name": "sindria.gif",
+      "fileName": "sindria.gif",
+      "animated": false
+    },
+    {
+      "name": "taronja.gif",
+      "fileName": "taronja.gif",
+      "animated": false
+    },
+    {
+      "name": "tennis.gif",
+      "fileName": "tennis.gif",
+      "animated": true
+    },
+    {
+      "name": "trampoli.gif",
+      "fileName": "trampoli.gif",
+      "animated": true
+    },
+    {
+      "name": "trex.gif",
+      "fileName": "trex.gif",
+      "animated": true
+    },
+    {
+      "name": "astro.jpg",
+      "fileName": "astro.jpg"
+    },
+    {
+      "name": "foto.jpg",
+      "fileName": "foto.jpg"
+    },
+    {
+      "name": "foto2.jpg",
+      "fileName": "foto2.jpg"
+    },
+    {
+      "name": "lion.jpg",
+      "fileName": "lion.jpg"
+    },
+    {
+      "name": "nuria.jpg",
+      "fileName": "nuria.jpg"
+    },
+    {
+      "name": "nuvols.jpg",
+      "fileName": "nuvols.jpg"
+    },
+    {
+      "name": "wolf.jpg",
+      "fileName": "wolf.jpg"
+    },
+    {
+      "name": "bach.mid",
+      "fileName": "bach.mid"
+    },
+    {
+      "name": "bressol.mid",
+      "fileName": "bressol.mid"
+    },
+    {
+      "name": "mozart.mid",
+      "fileName": "mozart.mid"
+    },
+    {
+      "name": "novena.mid",
+      "fileName": "novena.mid"
+    },
+    {
+      "name": "test1.swf",
+      "fileName": "test1.swf"
+    },
+    {
+      "name": "HandSign",
+      "fileName": "handsign.ttf"
+    },
+    {
+      "name": "bycicle.mp3",
+      "fileName": "bycicle.mp3"
+    },
+    {
+      "name": "car.mp3",
+      "fileName": "car.mp3"
+    },
+    {
+      "name": "lorry.mp3",
+      "fileName": "lorry.mp3"
+    },
+    {
+      "name": "motorcyc.mp3",
+      "fileName": "motorcyc.mp3"
+    },
+    {
+      "name": "muybien.mp3",
+      "fileName": "muybien.mp3"
+    },
+    {
+      "name": "nuria.mp3",
+      "fileName": "nuria.mp3"
+    },
+    {
+      "name": "ohhh.mp3",
+      "fileName": "ohhh.mp3"
+    },
+    {
+      "name": "pop.mp3",
+      "fileName": "pop.mp3"
+    },
+    {
+      "name": "whistledown.mp3",
+      "fileName": "whistledown.mp3"
+    },
+    {
+      "name": "whistleup.mp3",
+      "fileName": "whistleup.mp3"
+    },
+    {
+      "name": "scratch.xml",
+      "fileName": "scratch.xml"
+    },
+    {
+      "name": "scratch.png",
+      "fileName": "scratch.png"
+    }
   ]
 }

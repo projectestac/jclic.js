@@ -67,6 +67,10 @@ define([
       return this
     }
 
+    getData() {
+      return Object.keys(this.elements).map(k => this.elements[k].getData())
+    }
+
     /**
      * Finds a {@link MediaBagElement} by its name, creating a new one if not found and requested.
      * @param {string} name - The name of the element
