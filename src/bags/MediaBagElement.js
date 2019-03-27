@@ -40,7 +40,7 @@ define([
   /**
    * This kind of objects are the components of {@link MediaBag}.
    *
-   * Media elements have a name, a reference to a file (the `fileName` field) and, when initialized,
+   * Media elements have a name, a reference to a file (the `file` field) and, when initialized,
    * a `data` field pointing to a object containing the real media. They have also a flag indicating
    * if the data must be saved on the {@link JClicProject} zip file or just maintained as a reference
    * to an external file.
@@ -51,16 +51,16 @@ define([
     /**
      * MediaBagElement constructor
      * @param {string} basePath - Path to be used as a prefix of the file name
-     * @param {string} fileName - The media file name
+     * @param {string} file - The media file name
      * @param {external:JSZip=} zip - An optional JSZip object from which the file must be extracted.
      */
-    constructor(basePath, fileName, zip) {
+    constructor(basePath, file, zip) {
       if (basePath)
         this.basePath = basePath
-      if (fileName) {
-        this.fileName = Utils.nSlash(fileName)
-        this.name = Utils.nSlash(fileName)
-        this.ext = this.fileName.toLowerCase().split('.').pop()
+      if (file) {
+        this.file = Utils.nSlash(file)
+        this.name = Utils.nSlash(file)
+        this.ext = this.file.toLowerCase().split('.').pop()
         this.type = this.getFileType(this.ext)
         if (this.ext === 'gif')
           this.checkAnimatedGif()
@@ -76,8 +76,8 @@ define([
      */
     setProperties($xml) {
       this.name = Utils.nSlash($xml.attr('name'))
-      this.fileName = Utils.nSlash($xml.attr('file'))
-      this.ext = this.fileName.toLowerCase().split('.').pop()
+      this.file = Utils.nSlash($xml.attr('file'))
+      this.ext = this.file.toLowerCase().split('.').pop()
       this.type = this.getFileType(this.ext)
       // Check if it's an animated GIF
       if (this.ext === 'gif') {
@@ -88,7 +88,7 @@ define([
           this.animated = anim === 'true'
       }
       if (this.type === 'font') {
-        this.fontName = this.name === this.fileName && this.name.lastIndexOf('.') > 0 ?
+        this.fontName = this.name === this.file && this.name.lastIndexOf('.') > 0 ?
           this.name.substring(0, this.name.lastIndexOf('.')) :
           this.name
       }
@@ -96,7 +96,7 @@ define([
     }
 
     getData() {
-      return Utils.getData(this, ['name', 'fileName', 'animated'])
+      return Utils.getData(this, ['name', 'file', 'animated'])
     }
 
     /**
@@ -141,7 +141,7 @@ define([
               (arr[afterblock + 1] === 0x2C || arr[afterblock + 1] === 0x21)) {
               if (++frames > 1) {
                 this.animated = true
-                Utils.log('debug', `Animated GIF detected: ${this.fileName}`)
+                Utils.log('debug', `Animated GIF detected: ${this.file}`)
                 break
               }
             }
@@ -342,7 +342,7 @@ define([
      */
     getFullPathPromise() {
       return new Promise((resolve, reject) => {
-        Utils.getPathPromise(this.basePath, this.fileName, this.zip).then(fullPath => {
+        Utils.getPathPromise(this.basePath, this.file, this.zip).then(fullPath => {
           this._fullPath = fullPath
           resolve(fullPath)
         }).catch(reject)
@@ -352,15 +352,15 @@ define([
 
   Object.assign(MediaBagElement.prototype, {
     /**
-     * The name of this element. Usually is the same as `fileName`
+     * The name of this element. Usually is the same as `file`
      * @name MediaBagElement#name
      * @type {string} */
     name: '',
     /**
      * The name of the file where this element is stored
-     * @name MediaBagElement#fileName
+     * @name MediaBagElement#file
      * @type {string} */
-    fileName: '',
+    file: '',
     /**
      * The font family name, used only in elements of type 'font'
      * @name MediaBagElement#fontName
@@ -393,7 +393,7 @@ define([
      * @type {function[]} */
     _whenReady: null,
     /**
-     * Normalized extension of `fileName`, useful to determine the media type
+     * Normalized extension of `file`, useful to guess the media type
      * @name MediaBagElement#ext
      * @type {string} */
     ext: '',

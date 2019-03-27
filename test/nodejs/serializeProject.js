@@ -42,5 +42,5 @@ var doc = new DOMParser().parseFromString(contents);
 var project = new jclic.JClicProject();
 project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
 
-console.log(JSON.stringify(project.getData()));
+console.log(JSON.stringify(project.getData(), null, '  '));
 

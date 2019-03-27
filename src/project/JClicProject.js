@@ -108,7 +108,8 @@ define([
 
     getData() {
       //this.activities = Object.keys(this._activities).map(k => Activity.getActivity(this._activities[k], this))
-      this.activities = [Activity.getActivity(this._activities[0], this)]
+      const keys = Object.keys(this._activities);
+      this.activities = [0].map(n => Activity.getActivity(this._activities[keys[n]], this));
       return Utils.getData(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'mediaBag', 'activities'])
     }
 

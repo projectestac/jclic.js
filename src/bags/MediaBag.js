@@ -75,7 +75,7 @@ define([
      * Finds a {@link MediaBagElement} by its name, creating a new one if not found and requested.
      * @param {string} name - The name of the element
      * @param {boolean=} create - When `true`, a new MediaBagElement will be created if not found,
-     * using 'name' as its fileName..
+     * using 'name' as its file name.
      * @returns {MediaBagElement}
      */
     getElement(name, create) {
@@ -88,26 +88,26 @@ define([
 
     /**
      * Gets a {@link MediaBagElement} by its file name.
-     * @param {string} fileName - The requested file name
+     * @param {string} file - The requested file name
      * @param {boolean=} create - When `true`, a new {@link MediaBagElement} will be created if not
      * found.
      * @returns {MediaBagElement}
      */
-    getElementByFileName(fileName, create) {
+    getElementByFileName(file, create) {
       let result = null
-      if (fileName) {
-        fileName = Utils.nSlash(fileName)
+      if (file) {
+        file = Utils.nSlash(file)
         for (let name in this.elements) {
-          if (this.elements[name].fileName === fileName) {
+          if (this.elements[name].file === file) {
             result = this.elements[name]
             break
           }
         }
         if (!result && create) {
           result = new MediaBagElement(this.project.basePath, null, this.project.zip)
-          result.name = fileName
-          result.fileName = fileName
-          result.ext = fileName.toLowerCase().split('#')[0].split('.').pop()
+          result.name = file
+          result.file = file
+          result.ext = file.toLowerCase().split('#')[0].split('.').pop()
           result.type = result.getFileType(result.ext)
           this.elements[result.name] = result
         }

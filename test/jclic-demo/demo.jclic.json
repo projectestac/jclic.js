@@ -1,0 +1,1118 @@
+{
+  "name": "demo",
+  "version": "0.1.3",
+  "settings": {
+    "title": "JClic demo activities",
+    "description": {
+      "en": "Compilation of samples of the different types of JClic activities.\nThis package is just for testing and demo purposes."
+    },
+    "tags": {
+      "area": "Not applicable",
+      "level": "Not applicable",
+      "other": "demo activities testing"
+    },
+    "authors": [
+      {
+        "name": "Francesc Busquets",
+        "mail": "fbusquets@xtec.cat",
+        "url": "http://clic.xtec.cat",
+        "rol": "author"
+      }
+    ],
+    "organizations": [
+      {
+        "name": "XTEC",
+        "mail": "clic@xtec.cat",
+        "url": "http://clic.xtec.cat",
+        "city": "Barcelona",
+        "country": "Catalonia",
+        "comments": "Catalan Educational Telematic Network (XTEC)\nDepartment of Education of Catalonia"
+      }
+    ],
+    "revisions": [
+      {
+        "description": "Adapted for JSClic",
+        "date": "2015-04-03T22:00:00.000Z",
+        "author": {
+          "name": "Francesc Busquets",
+          "mail": "fbusquets@xtec.cat"
+        }
+      },
+      {
+        "description": "created",
+        "date": "2002-01-31T23:00:00.000Z"
+      }
+    ],
+    "languages": [
+      "en"
+    ]
+  },
+  "activitySequence": [
+    {
+      "tag": "demo.pac",
+      "activity": "pres0.ass",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menu0.pac"
+      },
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "menu0.pac",
+      "activity": "menu0.ass",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      },
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activity": "menuact.ass",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      },
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "menunou.pac",
+      "activity": "nou",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menu0.pac"
+      },
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "menupuz.pac",
+      "activity": "menupuz.ass",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activity": "puz01.puz"
+    },
+    {
+      "activity": "puz02.puz"
+    },
+    {
+      "activity": "puz03.puz"
+    },
+    {
+      "activity": "gigpuzzle"
+    },
+    {
+      "activity": "mapa"
+    },
+    {
+      "activity": "puzanim.puz"
+    },
+    {
+      "activity": "puzanim2.puz"
+    },
+    {
+      "activity": "puz04.puz"
+    },
+    {
+      "activity": "puz05.puz"
+    },
+    {
+      "activity": "puz06.puz"
+    },
+    {
+      "activity": "puz06b.puz",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menuact.pac"
+      }
+    },
+    {
+      "tag": "menuact.pac",
+      "activity": "menuact.ass",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      },
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "menuass.pac",
+      "activity": "menuass.ass",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activity": "ass01.ass"
+    },
+    {
+      "activity": "ass02.ass"
+    },
+    {
+      "activity": "ass04.ass"
+    },
+    {
+      "activity": "ass05.ass"
+    },
+    {
+      "activity": "ass06.ass"
+    },
+    {
+      "activity": "ass07.ass"
+    },
+    {
+      "activity": "ass09.ass"
+    },
+    {
+      "activity": "ass12.ass"
+    },
+    {
+      "activity": "ass13.ass",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menuact.pac"
+      }
+    },
+    {
+      "tag": "menusop.pac",
+      "activity": "menusop.ass",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activity": "sop01.sop"
+    },
+    {
+      "activity": "sop02.sop"
+    },
+    {
+      "activity": "sop03.sop",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menuact.pac"
+      }
+    },
+    {
+      "tag": "menucrw.pac",
+      "activity": "menucrw.ass",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activity": "crw01.crw"
+    },
+    {
+      "activity": "crw02.crw",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menuact.pac"
+      }
+    },
+    {
+      "tag": "menutxa.pac",
+      "activity": "menutxa.ass",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activity": "ass08.ass"
+    },
+    {
+      "activity": "txa01.txa"
+    },
+    {
+      "activity": "txa02.txa"
+    },
+    {
+      "activity": "txa03.txa"
+    },
+    {
+      "activity": "txa04.txa"
+    },
+    {
+      "activity": "txa05.txa"
+    },
+    {
+      "activity": "txa06.txa"
+    },
+    {
+      "activity": "txa07.txa"
+    },
+    {
+      "activity": "txa08.txa"
+    },
+    {
+      "activity": "txa09.txa"
+    },
+    {
+      "activity": "txa10.txa"
+    },
+    {
+      "activity": "txa11.txa"
+    },
+    {
+      "activity": "txa12.txa"
+    },
+    {
+      "activity": "txa13.txa"
+    },
+    {
+      "activity": "txa14.txa",
+      "fwdJump": {
+        "id": "forward",
+        "action": "JUMP",
+        "sequence": "menuact.pac"
+      }
+    },
+    {
+      "tag": "skins",
+      "activity": "skin01.txa",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activity": "skin02.txa"
+    },
+    {
+      "activity": "skin03.txa"
+    },
+    {
+      "activity": "skin04.txa"
+    },
+    {
+      "activity": "skin05.txa",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "anim",
+      "activity": "anim.ass",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activity": "anim1"
+    },
+    {
+      "activity": "puzanim.puz"
+    },
+    {
+      "activity": "puzanim2.puz"
+    },
+    {
+      "activity": "anim2",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "sounds",
+      "activity": "sounds",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      },
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "features",
+      "activity": "novetats",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activity": "maxTimeSample"
+    },
+    {
+      "activity": "maxActionsSample"
+    },
+    {
+      "activity": "useOrderSample"
+    },
+    {
+      "activity": "puz06b.puz"
+    },
+    {
+      "activity": "ass01b.ass"
+    },
+    {
+      "activity": "ass01c.ass"
+    },
+    {
+      "activity": "estils.txa"
+    },
+    {
+      "activity": "caselles.txa"
+    },
+    {
+      "activity": "fonts.txa",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      }
+    },
+    {
+      "tag": "shapers",
+      "activity": "shape1",
+      "backJump": {
+        "id": "back",
+        "action": "RETURN"
+      }
+    },
+    {
+      "activity": "shape3"
+    },
+    {
+      "activity": "shape2"
+    },
+    {
+      "activity": "shape4"
+    },
+    {
+      "activity": "mapa",
+      "fwdJump": {
+        "id": "forward",
+        "action": "RETURN"
+      }
+    }
+  ],
+  "mediaBag": [
+    {
+      "name": "zebra.mp4",
+      "file": "zebra.mp4"
+    },
+    {
+      "name": "bici.gif",
+      "file": "bici.gif",
+      "animated": false
+    },
+    {
+      "name": "camio.gif",
+      "file": "camio.gif",
+      "animated": false
+    },
+    {
+      "name": "casa.gif",
+      "file": "casa.gif",
+      "animated": false
+    },
+    {
+      "name": "cireres.gif",
+      "file": "cireres.gif",
+      "animated": false
+    },
+    {
+      "name": "cotxe.gif",
+      "file": "cotxe.gif",
+      "animated": false
+    },
+    {
+      "name": "elmo.gif",
+      "file": "elmo.gif",
+      "animated": false
+    },
+    {
+      "name": "big.gif",
+      "file": "big.gif",
+      "animated": true
+    },
+    {
+      "name": "esqui.gif",
+      "file": "esqui.gif",
+      "animated": true
+    },
+    {
+      "name": "func2.gif",
+      "file": "func2.gif",
+      "animated": false
+    },
+    {
+      "name": "funcio.gif",
+      "file": "funcio.gif",
+      "animated": false
+    },
+    {
+      "name": "great.gif",
+      "file": "great.gif",
+      "animated": false
+    },
+    {
+      "name": "lletres.gif",
+      "file": "lletres.gif",
+      "animated": false
+    },
+    {
+      "name": "llimona.gif",
+      "file": "llimona.gif",
+      "animated": false
+    },
+    {
+      "name": "mapa.gif",
+      "file": "mapa.gif",
+      "animated": false
+    },
+    {
+      "name": "minialt.gif",
+      "file": "minialt.gif",
+      "animated": false
+    },
+    {
+      "name": "minialt2.gif",
+      "file": "minialt2.gif",
+      "animated": false
+    },
+    {
+      "name": "moto.gif",
+      "file": "moto.gif",
+      "animated": false
+    },
+    {
+      "name": "natacio.gif",
+      "file": "natacio.gif",
+      "animated": true
+    },
+    {
+      "name": "pera.gif",
+      "file": "pera.gif",
+      "animated": false
+    },
+    {
+      "name": "raim.gif",
+      "file": "raim.gif",
+      "animated": false
+    },
+    {
+      "name": "simpleanim.gif",
+      "file": "simpleanim.gif",
+      "animated": true
+    },
+    {
+      "name": "sindria.gif",
+      "file": "sindria.gif",
+      "animated": false
+    },
+    {
+      "name": "taronja.gif",
+      "file": "taronja.gif",
+      "animated": false
+    },
+    {
+      "name": "tennis.gif",
+      "file": "tennis.gif",
+      "animated": true
+    },
+    {
+      "name": "trampoli.gif",
+      "file": "trampoli.gif",
+      "animated": true
+    },
+    {
+      "name": "trex.gif",
+      "file": "trex.gif",
+      "animated": true
+    },
+    {
+      "name": "astro.jpg",
+      "file": "astro.jpg"
+    },
+    {
+      "name": "foto.jpg",
+      "file": "foto.jpg"
+    },
+    {
+      "name": "foto2.jpg",
+      "file": "foto2.jpg"
+    },
+    {
+      "name": "lion.jpg",
+      "file": "lion.jpg"
+    },
+    {
+      "name": "nuria.jpg",
+      "file": "nuria.jpg"
+    },
+    {
+      "name": "nuvols.jpg",
+      "file": "nuvols.jpg"
+    },
+    {
+      "name": "wolf.jpg",
+      "file": "wolf.jpg"
+    },
+    {
+      "name": "bach.mid",
+      "file": "bach.mid"
+    },
+    {
+      "name": "bressol.mid",
+      "file": "bressol.mid"
+    },
+    {
+      "name": "mozart.mid",
+      "file": "mozart.mid"
+    },
+    {
+      "name": "novena.mid",
+      "file": "novena.mid"
+    },
+    {
+      "name": "test1.swf",
+      "file": "test1.swf"
+    },
+    {
+      "name": "HandSign",
+      "file": "handsign.ttf"
+    },
+    {
+      "name": "bycicle.mp3",
+      "file": "bycicle.mp3"
+    },
+    {
+      "name": "car.mp3",
+      "file": "car.mp3"
+    },
+    {
+      "name": "lorry.mp3",
+      "file": "lorry.mp3"
+    },
+    {
+      "name": "motorcyc.mp3",
+      "file": "motorcyc.mp3"
+    },
+    {
+      "name": "muybien.mp3",
+      "file": "muybien.mp3"
+    },
+    {
+      "name": "nuria.mp3",
+      "file": "nuria.mp3"
+    },
+    {
+      "name": "ohhh.mp3",
+      "file": "ohhh.mp3"
+    },
+    {
+      "name": "pop.mp3",
+      "file": "pop.mp3"
+    },
+    {
+      "name": "whistledown.mp3",
+      "file": "whistledown.mp3"
+    },
+    {
+      "name": "whistleup.mp3",
+      "file": "whistleup.mp3"
+    },
+    {
+      "name": "scratch.xml",
+      "file": "scratch.xml"
+    },
+    {
+      "name": "scratch.png",
+      "file": "scratch.png"
+    }
+  ],
+  "activities": [
+    {
+      "name": "anim.ass",
+      "className": "@panels.InformationScreen",
+      "margin": 8,
+      "bgColor": "#C0C0C0",
+      "border": true,
+      "includeInReports": false,
+      "reportActions": false,
+      "eventSounds": {
+        "enabled": 2,
+        "elements": {
+          "start": {},
+          "click": {},
+          "actionOk": {},
+          "actionError": {},
+          "finishedOk": {},
+          "finishedError": {}
+        }
+      },
+      "messages": {
+        "initial": {
+          "imgAlign": {
+            "h": "middle",
+            "v": "middle"
+          },
+          "txtAlign": {
+            "h": "middle",
+            "v": "middle"
+          },
+          "bb": {
+            "parent": null
+          },
+          "text": "Multimedia and animations",
+          "innerHtmlText": null,
+          "type": "initial"
+        },
+        "final": {
+          "imgAlign": {
+            "h": "middle",
+            "v": "middle"
+          },
+          "txtAlign": {
+            "h": "middle",
+            "v": "middle"
+          },
+          "bb": {
+            "parent": null
+          },
+          "innerHtmlText": null,
+          "type": "final"
+        }
+      },
+      "transparentBg": false,
+      "activityBgColor": "#C0C0C0",
+      "bTimeCounter": false,
+      "bScoreCounter": false,
+      "bActionsCounter": false,
+      "abc": {
+        "primary": {
+          "cells": [
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "text": "In JClic cells can have different media and animations. It's possible also to record a sound from the microphone and listen it:",
+              "mediaContent": {
+                "mediaType": "URL",
+                "level": 1,
+                "mediaFileName": "http://clic.xtec.cat"
+              },
+              "innerHtmlText": null
+            },
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "mediaContent": {
+                "mediaType": "PLAY_VIDEO",
+                "level": 1,
+                "mediaFileName": "test1.swf",
+                "stretch": true,
+                "free": false,
+                "catchMouseEvents": true
+              },
+              "img": {
+                "src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiMwMDAwMDAiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xOCA0bDIgNGgtM2wtMi00aC0ybDIgNGgtM2wtMi00SDhsMiA0SDdMNSA0SDRjLTEuMSAwLTEuOTkuOS0xLjk5IDJMMiAxOGMwIDEuMS45IDIgMiAyaDE2YzEuMSAwIDItLjkgMi0yVjRoLTR6Ij48L3BhdGg+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSI+PC9wYXRoPjwvc3ZnPgo="
+              },
+              "animatedGifFile": null,
+              "innerHtmlText": null
+            },
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "mediaContent": {
+                "mediaType": "PLAY_VIDEO",
+                "level": 1,
+                "mediaFileName": "zebra.mp4",
+                "stretch": true,
+                "free": false
+              },
+              "img": {
+                "src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiMwMDAwMDAiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xOCA0bDIgNGgtM2wtMi00aC0ybDIgNGgtM2wtMi00SDhsMiA0SDdMNSA0SDRjLTEuMSAwLTEuOTkuOS0xLjk5IDJMMiAxOGMwIDEuMS45IDIgMiAyaDE2YzEuMSAwIDItLjkgMi0yVjRoLTR6Ij48L3BhdGg+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSI+PC9wYXRoPjwvc3ZnPgo="
+              },
+              "animatedGifFile": null,
+              "innerHtmlText": null
+            },
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "imgName": "simpleanim.gif",
+              "mbe": {
+                "basePath": "test/jclic-demo/",
+                "timeout": 1553698581094,
+                "name": "simpleanim.gif",
+                "file": "simpleanim.gif",
+                "ext": "gif",
+                "type": "image",
+                "animated": true,
+                "_whenReady": [
+                  null
+                ]
+              },
+              "innerHtmlText": null
+            },
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "text": "Flash 2.0 movies",
+              "innerHtmlText": null
+            },
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "text": "AVI, MPEG and QT video",
+              "innerHtmlText": null
+            },
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "text": "Animated GIF",
+              "innerHtmlText": null
+            },
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "mediaContent": {
+                "mediaType": "RECORD_AUDIO",
+                "level": 1,
+                "recBuffer": 1,
+                "length": 10
+              },
+              "img": {
+                "src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiMwMDAwMDAiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMiAxNGMxLjY2IDAgMi45OS0xLjM0IDIuOTktM0wxNSA1YzAtMS42Ni0xLjM0LTMtMy0zUzkgMy4zNCA5IDV2NmMwIDEuNjYgMS4zNCAzIDMgM3ptNS4zLTNjMCAzLTIuNTQgNS4xLTUuMyA1LjFTNi43IDE0IDYuNyAxMUg1YzAgMy40MSAyLjcyIDYuMjMgNiA2LjcyVjIxaDJ2LTMuMjhjMy4yOC0uNDggNi0zLjMgNi02LjcyaC0xLjd6Ij48L3BhdGg+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSI+PC9wYXRoPjwvc3ZnPgo="
+              },
+              "animatedGifFile": null,
+              "innerHtmlText": null
+            },
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "mediaContent": {
+                "mediaType": "PLAY_RECORDED_AUDIO",
+                "level": 1,
+                "recBuffer": 1
+              },
+              "img": {
+                "src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiMwMDAwMDAiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0zIDl2Nmg0bDUgNVY0TDcgOUgzem0xMy41IDNjMC0xLjc3LTEuMDItMy4yOS0yLjUtNC4wM3Y4LjA1YzEuNDgtLjczIDIuNS0yLjI1IDIuNS00LjAyek0xNCAzLjIzdjIuMDZjMi44OS44NiA1IDMuNTQgNSA2Ljcxcy0yLjExIDUuODUtNSA2LjcxdjIuMDZjNC4wMS0uOTEgNy00LjQ5IDctOC43N3MtMi45OS03Ljg2LTctOC43N3oiPjwvcGF0aD48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIj48L3BhdGg+PC9zdmc+Cg=="
+              },
+              "animatedGifFile": null,
+              "innerHtmlText": null
+            },
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "mediaContent": {
+                "mediaType": "PLAY_AUDIO",
+                "level": 1,
+                "mediaFileName": "muybien.mp3"
+              },
+              "img": {
+                "src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiMwMDAwMDAiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0zIDl2Nmg0bDUgNVY0TDcgOUgzem0xMy41IDNjMC0xLjc3LTEuMDItMy4yOS0yLjUtNC4wM3Y4LjA1YzEuNDgtLjczIDIuNS0yLjI1IDIuNS00LjAyek0xNCAzLjIzdjIuMDZjMi44OS44NiA1IDMuNTQgNSA2Ljcxcy0yLjExIDUuODUtNSA2LjcxdjIuMDZjNC4wMS0uOTEgNy00LjQ5IDctOC43N3MtMi45OS03Ljg2LTctOC43N3oiPjwvcGF0aD48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIj48L3BhdGg+PC9zdmc+Cg=="
+              },
+              "animatedGifFile": null,
+              "innerHtmlText": null
+            },
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "text": "Record a sound",
+              "innerHtmlText": null
+            },
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "text": "Listen the recorded sound",
+              "innerHtmlText": null
+            },
+            {
+              "imgAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "txtAlign": {
+                "h": "middle",
+                "v": "middle"
+              },
+              "text": "WAV, AU and MP3 sounds",
+              "innerHtmlText": null
+            }
+          ],
+          "ncw": 3,
+          "nch": 5,
+          "w": 190,
+          "h": 80,
+          "border": true,
+          "bb": {
+            "parent": null,
+            "font": {
+              "_metrics": {
+                "ascent": -1,
+                "descent": -1,
+                "height": -1
+              },
+              "family": "Arial",
+              "size": 12
+            },
+            "textColor": "",
+            "backColor": "#FFFFFF",
+            "shadowColor": "",
+            "inactiveColor": "",
+            "alternativeColor": "",
+            "borderColor": ""
+          },
+          "shaper": {
+            "nCols": 3,
+            "nRows": 5,
+            "nCells": 13,
+            "initiated": false,
+            "shapeData": [
+              {
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "dim": {
+                  "width": 1,
+                  "height": 0.16666666666666666
+                }
+              },
+              {
+                "pos": {
+                  "x": 0,
+                  "y": 0.16666666666666666
+                },
+                "dim": {
+                  "width": 0.3333333333333333,
+                  "height": 0.3333333333333333
+                }
+              },
+              {
+                "pos": {
+                  "x": 0.3333333333333333,
+                  "y": 0.16666666666666666
+                },
+                "dim": {
+                  "width": 0.3333333333333333,
+                  "height": 0.3333333333333333
+                }
+              },
+              {
+                "pos": {
+                  "x": 0.6666666666666666,
+                  "y": 0.16666666666666666
+                },
+                "dim": {
+                  "width": 0.3333333333333333,
+                  "height": 0.3333333333333333
+                }
+              },
+              {
+                "pos": {
+                  "x": 0,
+                  "y": 0.5
+                },
+                "dim": {
+                  "width": 0.3333333333333333,
+                  "height": 0.08333333333333333
+                }
+              },
+              {
+                "pos": {
+                  "x": 0.3333333333333333,
+                  "y": 0.5
+                },
+                "dim": {
+                  "width": 0.3333333333333333,
+                  "height": 0.08333333333333333
+                }
+              },
+              {
+                "pos": {
+                  "x": 0.6666666666666666,
+                  "y": 0.5
+                },
+                "dim": {
+                  "width": 0.3333333333333333,
+                  "height": 0.08333333333333333
+                }
+              },
+              {
+                "pos": {
+                  "x": 0,
+                  "y": 0.5833333333333334
+                },
+                "dim": {
+                  "width": 0.3333333333333333,
+                  "height": 0.3333333333333333
+                }
+              },
+              {
+                "pos": {
+                  "x": 0.3333333333333333,
+                  "y": 0.5833333333333334
+                },
+                "dim": {
+                  "width": 0.3333333333333333,
+                  "height": 0.3333333333333333
+                }
+              },
+              {
+                "pos": {
+                  "x": 0.6666666666666666,
+                  "y": 0.5833333333333334
+                },
+                "dim": {
+                  "width": 0.3333333333333333,
+                  "height": 0.3333333333333333
+                }
+              },
+              {
+                "pos": {
+                  "x": 0,
+                  "y": 0.9166666666666666
+                },
+                "dim": {
+                  "width": 0.3333333333333333,
+                  "height": 0.08333333333333333
+                }
+              },
+              {
+                "pos": {
+                  "x": 0.3333333333333333,
+                  "y": 0.9166666666666666
+                },
+                "dim": {
+                  "width": 0.3333333333333333,
+                  "height": 0.08333333333333333
+                }
+              },
+              {
+                "pos": {
+                  "x": 0.6666666666666666,
+                  "y": 0.9166666666666666
+                },
+                "dim": {
+                  "width": 0.3333333333333333,
+                  "height": 0.08333333333333333
+                }
+              }
+            ],
+            "showEnclosure": true,
+            "className": "@Holes",
+            "scaleX": 3,
+            "scaleY": 12,
+            "enclosing": {
+              "pos": {
+                "x": 0,
+                "y": 0
+              },
+              "dim": {
+                "width": 1,
+                "height": 1
+              }
+            },
+            "hasRemainder": true
+          }
+        }
+      }
+    }
+  ]
+}

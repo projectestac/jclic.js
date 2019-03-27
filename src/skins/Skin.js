@@ -787,11 +787,6 @@ define([
      * @type {object} */
     options: {},
     /**
-     * Name of the XML file used to retrieve the skin settings.
-     * @name Skin#fileName
-     * @type {string} */
-    fileName: '',
-    /**
      * Waiting panel, displayed while loading resources.
      * @name Skin#$waitPanel
      * @type {external:jQuery} */

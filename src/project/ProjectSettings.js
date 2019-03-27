@@ -60,10 +60,12 @@ define([
     constructor(project) {
       this.project = project
       this.authors = []
-      this.organizations=[]
+      this.organizations = []
       this.revisions = []
       this.languages = []
       this.locales = []
+      this.description = {}
+      this.tags = {}
     }
 
     /**
@@ -71,25 +73,34 @@ define([
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties($xml) {
+      let single_description = null;
+      let multiple_descriptions = null;
+
       $xml.children().each((_n, child) => {
         switch (child.nodeName) {
           case 'title':
             this.title = child.textContent
             break
           case 'description':
-            this.description = child.textContent
+            single_description = Utils.getXmlNodeText(child)
             break
+          case 'descriptions':
+            multiple_descriptions = Utils.getXmlNodeText(child);
+            break;
           case 'author':
-            this.authors.push(Utils.parseXmlNode(child));
+            this.authors.push(Utils.reduceTextsToStrings(Utils.parseXmlNode(child)));
             break;
           case 'organization':
-            this.organizations.push(Utils.parseXmlNode(child));
+            this.organizations.push(Utils.reduceTextsToStrings(Utils.parseXmlNode(child)));
             break;
           case 'revision':
-            this.revisions.push(Utils.parseXmlNode(child));
+            const revision = Utils.reduceTextsToStrings(Utils.parseXmlNode(child));
+            if (revision.date)
+              revision.date = Utils.parseOldDate(revision.date);
+            this.revisions.push(revision);
             break;
           case 'language':
-            this.languages.push(child.textContent)
+            this.languages.push(Utils.cleanOldLanguageTag(child.textContent))
             break
           case 'eventSounds':
             this.eventSounds = new EventSounds()
@@ -98,6 +109,22 @@ define([
           case 'skin':
             this.skinFileName = $(child).attr('file')
             break
+          case 'descriptors':
+            this.tags = Utils.parseXmlNode(child, true);
+            if (this.tags['#text']) {
+              this.tags.other = this.tags['#text'].textContent;
+              delete this.tags['#text'];
+            }
+            break;
+          case 'license':
+            this.license = Utils.getXmlNodeText(child);
+            break;
+          case 'cover':
+          case 'thumb':
+            const img = Utils.getXmlNodeText(child);
+            if (img.file)
+              this[child.nodeName] = img.file;
+            break;
         }
       })
 
@@ -119,11 +146,22 @@ define([
           }
         })
       }
-      return this
+
+      if (multiple_descriptions && multiple_descriptions.description) {
+        multiple_descriptions.description.forEach(d => {
+          if (d.language && d.text)
+            this.description[d.language] = d.text;
+        })
+      }
+
+      if (single_description && this.languages.length > 0 && !this.description[this.languages[0]])
+        this.description[this.languages[0]] = single_description;
+
+      return this;
     }
 
     getData() {
-      return Utils.getData(this, ['title', 'description', 'authors', 'organizations', 'revisions', 'languages', 'skinFileName', 'eventSounds']);
+      return Utils.getData(this, ['title', 'description', 'tags', 'authors', 'organizations', 'revisions', 'languages', 'cover', 'thumb', 'license', 'skinFileName', 'eventSounds']);
     }
   }
 
@@ -160,15 +198,22 @@ define([
      * @type {object[]} */
     revisions: null,
     /**
-     * Project's description. Can have multiple paragraphs, separated by `<p>`
+     * Project's description, maybe in multiple languages.
      * @name ProjectSettings#description
-     * @type {string} */
-    description: '',
+     * @type {object} */
+    description: null,
     /**
      * JClic projects can use more than one language, so use a string array
      * @name ProjectSettings#languages
      * @type {string[]} */
     languages: null,
+    tags: null,
+    cover: null,
+    thumb: null,
+    license: {
+      type: 'by-nc-sa',
+      url: 'https://creativecommons.org/licenses/by-nc-sa/4.0',
+    },
     /**
      * Array of canonical locales, as defined in 
      * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation|Intl}

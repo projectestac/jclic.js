@@ -47,15 +47,15 @@ define([
     /**
      * EventSoundsElement constructor
      * @param {string} id - The identifier of this media sound
-     * @param {string=} fileName - An optional file name or URL containing the sound data
+     * @param {string=} file - An optional file name or URL containing the sound data
      */
-    constructor(id, fileName) {
+    constructor(id, file) {
       this.id = id
-      if (fileName) {
-        if (Utils.startsWith(fileName, 'data:'))
-          this.audio = new Audio(fileName)
+      if (file) {
+        if (Utils.startsWith(file, 'data:'))
+          this.audio = new Audio(file)
         else
-          this.fileName = fileName
+          this.file = file
       }
     }
 
@@ -64,13 +64,13 @@ define([
      * @param {external:jQuery} $xml - The XML element to be parsed
      */
     setProperties($xml) {
-      this.fileName = $xml.attr('file')
+      this.file = $xml.attr('file')
       this.enabled = Utils.getTriState($xml.attr('enabled'))
       return this
     }
 
     getData() {
-      return Utils.getData(this, ['enabled', 'fileName'])
+      return Utils.getData(this, ['enabled', 'file'])
     }
 
     /**
@@ -79,8 +79,8 @@ define([
      * @param {MediaBag} mediaBag
      */
     realize(ps, mediaBag) {
-      if (!this.audio && this.player === null && this.fileName !== null) {
-        this.player = new ActiveMediaPlayer(new MediaContent('PLAY_AUDIO', this.fileName), mediaBag, ps)
+      if (!this.audio && this.player === null && this.file !== null) {
+        this.player = new ActiveMediaPlayer(new MediaContent('PLAY_AUDIO', this.file), mediaBag, ps)
         this.player.realize()
       }
     }
@@ -113,10 +113,10 @@ define([
 
   Object.assign(EventSoundsElement.prototype, {
     /**
-     * The sound file used by this element
-     * @name EventSoundsElement#fileName
+     * The name of the sound file used by this element
+     * @name EventSoundsElement#file
      * @type {string} */
-    fileName: null,
+    file: null,
     /**
      * Whether the sound for this event is enabled or not
      * @name EventSoundsElement#enabled
