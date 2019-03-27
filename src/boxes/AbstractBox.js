@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -57,13 +57,13 @@ define([
      */
     constructor(parent, container, boxBase) {
       // AbstractBox extends AWT.Rectangle
-      super()
-      this.container = container
-      this.parent = parent
-      this.boxBase = boxBase
-      this.shape = this
-      this.specialShape = false
-      this.visible = true
+      super();
+      this.container = container;
+      this.parent = parent;
+      this.boxBase = boxBase;
+      this.shape = this;
+      this.specialShape = false;
+      this.visible = true;
     }
 
     /**
@@ -71,7 +71,7 @@ define([
      * @param {AbstractBox} parent - The new parent of this box
      */
     setParent(parent) {
-      this.parent = parent
+      this.parent = parent;
     }
 
     /**
@@ -79,7 +79,7 @@ define([
      * @returns {AbstractBox}
      */
     getParent() {
-      return this.parent
+      return this.parent;
     }
 
     /**
@@ -93,10 +93,10 @@ define([
      * @param {AWT.Container} newContainer - The new Container assigned to this box
      */
     setContainer(newContainer) {
-      this.container = newContainer
+      this.container = newContainer;
       if (this.$hostedComponent && this.container && this.container.$div) {
-        this.$hostedComponent.detach()
-        this.container.$div.append(this.$hostedComponent)
+        this.$hostedComponent.detach();
+        this.container.$div.append(this.$hostedComponent);
       }
     }
 
@@ -105,7 +105,7 @@ define([
      * @returns {?AWT.Container}
      */
     getContainerX() {
-      return this.container
+      return this.container;
     }
 
     /**
@@ -113,10 +113,10 @@ define([
      * @returns {?AWT.Container}
      */
     getContainerResolve() {
-      let ab = this
+      let ab = this;
       while (ab.container === null && ab.parent !== null)
-        ab = ab.parent
-      return ab.container
+        ab = ab.parent;
+      return ab.container;
     }
 
     /**
@@ -125,9 +125,9 @@ define([
      * container area.
      */
     invalidate(rect) {
-      const cnt = this.getContainerResolve()
+      const cnt = this.getContainerResolve();
       if (cnt)
-        cnt.invalidate(rect)
+        cnt.invalidate(rect);
     }
 
     /**
@@ -135,8 +135,8 @@ define([
      * @param {BoxBase} boxBase - The new BoxBase
      */
     setBoxBase(boxBase) {
-      this.boxBase = boxBase
-      this.invalidate()
+      this.boxBase = boxBase;
+      this.invalidate();
     }
 
     /**
@@ -144,10 +144,10 @@ define([
      * @returns {BoxBase}
      */
     getBoxBaseResolve() {
-      let ab = this
+      let ab = this;
       while (!ab.boxBase && ab.parent)
-        ab = ab.parent
-      return ab.boxBase || BoxBase.prototype.defaultBoxBase
+        ab = ab.parent;
+      return ab.boxBase || BoxBase.prototype.defaultBoxBase;
     }
 
     /**
@@ -155,11 +155,11 @@ define([
      * @param {AWT.Shape} sh - The shape to be set
      */
     setShape(sh) {
-      this.shape = sh
-      this.specialShape = true
-      this.invalidate()
-      super.setBounds(sh.getBounds())
-      this.invalidate()
+      this.shape = sh;
+      this.specialShape = true;
+      this.invalidate();
+      super.setBounds(sh.getBounds());
+      this.invalidate();
     }
 
     /**
@@ -167,7 +167,7 @@ define([
      * @returns {AWT.Shape}
      */
     getShape() {
-      return this.shape
+      return this.shape;
     }
 
     /**
@@ -177,7 +177,7 @@ define([
      * @returns {boolean}
      */
     contains(p) {
-      return this.shape === this ? super.contains(p) : this.shape.contains(p)
+      return this.shape === this ? super.contains(p) : this.shape.contains(p);
     }
 
     /**
@@ -192,28 +192,28 @@ define([
     setBounds(rect, y, w, h) {
       if (typeof rect === 'number')
         // arguments are co-ordinates and size
-        rect = new AWT.Rectangle(rect, y, w, h)
+        rect = new AWT.Rectangle(rect, y, w, h);
       // Rectangle comparision
       if (this.equals(rect))
-        return
+        return;
 
-      const sizeChanged = !this.dim.equals(rect.dim)
+      const sizeChanged = !this.dim.equals(rect.dim);
       if (this.specialShape) {
         if (sizeChanged) {
-          this.shape.scaleBy(new AWT.Dimension(rect.dim.width / this.dim.width, rect.dim.height / this.dim.height))
-          this.setShape(this.shape)
+          this.shape.scaleBy(new AWT.Dimension(rect.dim.width / this.dim.width, rect.dim.height / this.dim.height));
+          this.setShape(this.shape);
         }
         if (!this.pos.equals(rect.pos)) {
-          this.shape.moveTo(rect.pos)
+          this.shape.moveTo(rect.pos);
         }
-        this.setShape(this.shape)
+        this.setShape(this.shape);
       } else
-        super.setBounds(rect)
+        super.setBounds(rect);
 
       if (this.$hostedComponent)
-        this.setHostedComponentBounds(sizeChanged)
+        this.setHostedComponentBounds(sizeChanged);
 
-      return this
+      return this;
     }
 
     /**
@@ -223,8 +223,8 @@ define([
      */
     moveTo(newPos, y) {
       if (typeof newPos === 'number')
-        newPos = new AWT.Point(newPos, y)
-      this.setBounds((new AWT.Rectangle(this)).moveTo(newPos))
+        newPos = new AWT.Point(newPos, y);
+      this.setBounds((new AWT.Rectangle(this)).moveTo(newPos));
     }
 
     /**
@@ -233,7 +233,7 @@ define([
      * @param {number} dy - The displacement on the Y axis
      */
     moveBy(dx, dy) {
-      this.setBounds((new AWT.Rectangle(this)).moveBy(dx, dy))
+      this.setBounds((new AWT.Rectangle(this)).moveBy(dx, dy));
     }
 
     /**
@@ -242,7 +242,7 @@ define([
      * @param {number} height
      */
     setSize(width, height) {
-      this.setBounds(new AWT.Rectangle(this.pos, new AWT.Dimension(width, height)))
+      this.setBounds(new AWT.Rectangle(this.pos, new AWT.Dimension(width, height)));
     }
 
     /**
@@ -250,7 +250,7 @@ define([
      * @returns {boolean}
      */
     hasBorder() {
-      return this.border
+      return this.border;
     }
 
     /**
@@ -259,10 +259,10 @@ define([
      */
     setBorder(newVal) {
       if (!newVal)
-        this.invalidate()
-      this.border = newVal
+        this.invalidate();
+      this.border = newVal;
       if (newVal)
-        this.invalidate()
+        this.invalidate();
     }
 
     /**
@@ -270,7 +270,7 @@ define([
      * @returns {boolean}
      */
     isVisible() {
-      return this.visible
+      return this.visible;
     }
 
     /**
@@ -278,9 +278,9 @@ define([
      * @param {boolean} newVal - `true` for visible
      */
     setVisible(newVal) {
-      this.visible = newVal
-      this.setHostedComponentVisible()
-      this.invalidate()
+      this.visible = newVal;
+      this.setHostedComponentVisible();
+      this.invalidate();
     }
 
     /**
@@ -289,7 +289,7 @@ define([
      */
     setHostedComponentVisible() {
       if (this.$hostedComponent)
-        this.$hostedComponent.css('visibility', this.visible ? 'visible' : 'hidden')
+        this.$hostedComponent.css('visibility', this.visible ? 'visible' : 'hidden');
     }
 
     /**
@@ -297,7 +297,7 @@ define([
      * @returns {boolean}
      */
     isTemporaryHidden() {
-      return this.temporaryHidden
+      return this.temporaryHidden;
     }
 
     /**
@@ -305,7 +305,7 @@ define([
      * @param {boolean} newVal
      */
     setTemporaryHidden(newVal) {
-      this.temporaryHidden = newVal
+      this.temporaryHidden = newVal;
     }
 
     /**
@@ -313,7 +313,7 @@ define([
      * @returns {boolean}
      */
     isInactive() {
-      return this.inactive
+      return this.inactive;
     }
 
     /**
@@ -321,19 +321,19 @@ define([
      * @param {boolean} newVal
      */
     setInactive(newVal) {
-      this.inactive = newVal
+      this.inactive = newVal;
       if (this.$hostedComponent) {
-        this.setHostedComponentColors()
-        this.setHostedComponentVisible()
+        this.setHostedComponentColors();
+        this.setHostedComponentVisible();
       } else {
         if (this.$accessibleElement) {
-          const disabled = this.isInactive() && !this.accessibleAlwaysActive
+          const disabled = this.isInactive() && !this.accessibleAlwaysActive;
           this.$accessibleElement.prop({
             disabled: disabled,
             tabindex: disabled ? -1 : 0
-          })
+          });
         }
-        this.invalidate()
+        this.invalidate();
       }
     }
 
@@ -342,7 +342,7 @@ define([
      * @returns {boolean}
      */
     isInverted() {
-      return this.inverted
+      return this.inverted;
     }
 
 
@@ -351,11 +351,11 @@ define([
      * @param {boolean} newVal
      */
     setInverted(newVal) {
-      this.inverted = newVal
+      this.inverted = newVal;
       if (this.$hostedComponent)
-        this.setHostedComponentColors()
+        this.setHostedComponentColors();
       else
-        this.invalidate()
+        this.invalidate();
     }
 
     /**
@@ -363,7 +363,7 @@ define([
      * @returns {boolean}
      */
     isMarked() {
-      return this.marked
+      return this.marked;
     }
 
     /**
@@ -372,13 +372,13 @@ define([
      */
     setMarked(newVal) {
       if (!newVal)
-        this.invalidate()
-      this.marked = newVal
+        this.invalidate();
+      this.marked = newVal;
       if (this.$hostedComponent) {
-        this.setHostedComponentColors()
-        this.setHostedComponentBorder()
+        this.setHostedComponentColors();
+        this.setHostedComponentBorder();
       } else if (newVal)
-        this.invalidate()
+        this.invalidate();
     }
 
     /**
@@ -386,7 +386,7 @@ define([
      * @returns {boolean}
      */
     isFocused() {
-      return this.focused
+      return this.focused;
     }
 
     /**
@@ -396,13 +396,13 @@ define([
      */
     setFocused(newVal) {
       if (!newVal)
-        this.invalidate()
-      this.focused = newVal
+        this.invalidate();
+      this.focused = newVal;
       if (newVal)
-        this.invalidate()
+        this.invalidate();
       // Put hosted component on top
       if (this.$hostedComponent)
-        this.$hostedComponent.css('z-index', this.focused ? 20 : 2)
+        this.$hostedComponent.css('z-index', this.focused ? 20 : 2);
     }
 
     /**
@@ -410,7 +410,7 @@ define([
      * @returns {boolean}
      */
     isAlternative() {
-      return this.alternative
+      return this.alternative;
     }
 
     /**
@@ -418,8 +418,8 @@ define([
      * @param {boolean} newVal
      */
     setAlternative(newVal) {
-      this.alternative = newVal
-      this.invalidate()
+      this.alternative = newVal;
+      this.invalidate();
     }
 
     /**
@@ -432,10 +432,10 @@ define([
      */
     update(ctx, dirtyRegion) {
       if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
-        return false
+        return false;
 
       if (dirtyRegion && !this.shape.intersects(dirtyRegion))
-        return false
+        return false;
 
       /**
        * TODO: Implement clipping
@@ -445,29 +445,29 @@ define([
        g2.setClip(clip)
        */
 
-      const bb = this.getBoxBaseResolve()
+      const bb = this.getBoxBaseResolve();
       if (!bb.transparent && !bb.dontFill && !this.tmpTrans) {
         if (!bb.bgGradient || bb.bgGradient.hasTransparency()) {
           // Prepare the rendering context
           ctx.fillStyle = this.inactive ?
             bb.inactiveColor :
-            this.inverted ? bb.textColor : bb.backColor
+            this.inverted ? bb.textColor : bb.backColor;
           // Fill the shape
-          this.shape.fill(ctx, dirtyRegion)
+          this.shape.fill(ctx, dirtyRegion);
         }
         if (bb.bgGradient) {
-          ctx.fillStyle = bb.bgGradient.getGradient(ctx, this.shape.getBounds())
-          this.shape.fill(ctx, dirtyRegion)
+          ctx.fillStyle = bb.bgGradient.getGradient(ctx, this.shape.getBounds());
+          this.shape.fill(ctx, dirtyRegion);
         }
         // Reset the canvas context
-        ctx.fillStyle = 'black'
+        ctx.fillStyle = 'black';
       }
 
       if (!this.$hostedComponent)
-        this.updateContent(ctx, dirtyRegion)
+        this.updateContent(ctx, dirtyRegion);
 
-      this.drawBorder(ctx)
-      return true
+      this.drawBorder(ctx);
+      return true;
     }
 
     /**
@@ -489,22 +489,22 @@ define([
      */
     drawBorder(ctx) {
       if (this.border || this.marked) {
-        const bb = this.getBoxBaseResolve()
+        const bb = this.getBoxBaseResolve();
 
         // Prepare stroke settings
-        ctx.strokeStyle = bb.borderColor
-        bb[this.marked ? 'markerStroke' : 'borderStroke'].setStroke(ctx)
+        ctx.strokeStyle = bb.borderColor;
+        bb[this.marked ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
         if (this.marked)
-          ctx.globalCompositeOperation = 'xor'
+          ctx.globalCompositeOperation = 'xor';
 
         // Draw border
-        this.shape.stroke(ctx)
+        this.shape.stroke(ctx);
 
         // Reset ctx default values
         if (this.marked)
-          ctx.globalCompositeOperation = 'source-over'
-        ctx.strokeStyle = 'black'
-        AWT.Stroke.prototype.setStroke(ctx)
+          ctx.globalCompositeOperation = 'source-over';
+        ctx.strokeStyle = 'black';
+        AWT.Stroke.prototype.setStroke(ctx);
       }
     }
 
@@ -513,15 +513,15 @@ define([
      * @returns {AWT.Rectangle}
      */
     getBorderBounds() {
-      const result = new AWT.Rectangle(this.getBounds())
+      const result = new AWT.Rectangle(this.getBounds());
       if (this.border || this.marked) {
-        const bb = this.getBoxBaseResolve()
-        const w = bb[this.marked ? 'markerStroke' : 'borderStroke'].lineWidth
-        result.moveBy(-w / 2, -w / 2)
-        result.dim.width += w
-        result.dim.height += w
+        const bb = this.getBoxBaseResolve();
+        const w = bb[this.marked ? 'markerStroke' : 'borderStroke'].lineWidth;
+        result.moveBy(-w / 2, -w / 2);
+        result.dim.width += w;
+        result.dim.height += w;
       }
-      return result
+      return result;
     }
 
     /**
@@ -530,17 +530,17 @@ define([
      */
     setHostedComponent($hc) {
       if (this.$hostedComponent)
-        this.$hostedComponent.detach()
+        this.$hostedComponent.detach();
 
-      this.$hostedComponent = $hc
+      this.$hostedComponent = $hc;
 
       if (this.$hostedComponent) {
-        this.setContainer(this.container)
-        this.setHostedComponentColors()
-        this.setHostedComponentBorder()
-        this.setHostedComponentBounds(true)
-        this.setHostedComponentVisible()
-        this.setFocused(this.focused)
+        this.setContainer(this.container);
+        this.setHostedComponentColors();
+        this.setHostedComponentBorder();
+        this.setHostedComponentBounds(true);
+        this.setHostedComponentVisible();
+        this.setFocused(this.focused);
       }
     }
 
@@ -549,7 +549,7 @@ define([
      * @returns {external:jQuery}
      */
     getHostedComponent() {
-      return this.$hostedComponent
+      return this.$hostedComponent;
     }
 
     /**
@@ -558,12 +558,12 @@ define([
      */
     setHostedComponentColors() {
       if (this.$hostedComponent) {
-        const bb = this.getBoxBaseResolve()
-        const css = bb.getCSS(null, this.inactive, this.inverted, this.alternative)
+        const bb = this.getBoxBaseResolve();
+        const css = bb.getCSS(null, this.inactive, this.inverted, this.alternative);
         // Check if cell has background gradient and animated gif
         if (this.$hostedComponent.data('background-image') && css['background-image'])
-          css['background-image'] = `${this.$hostedComponent.data('background-image')},${css['background-image']}`
-        this.$hostedComponent.css(css)
+          css['background-image'] = `${this.$hostedComponent.data('background-image')},${css['background-image']}`;
+        this.$hostedComponent.css(css);
       }
     }
 
@@ -573,12 +573,12 @@ define([
      */
     setHostedComponentBorder() {
       if (this.$hostedComponent && (this.border || this.marked)) {
-        const bb = this.getBoxBaseResolve()
+        const bb = this.getBoxBaseResolve();
         this.$hostedComponent.css({
           'border-width': `${bb.get(this.marked ? 'markerStroke' : 'borderStroke').lineWidth}px`,
           'border-style': 'solid',
           'border-color': bb.get('borderColor')
-        })
+        });
       }
     }
 
@@ -591,14 +591,14 @@ define([
       if (this.$hostedComponent) {
         const
           r = this.getBounds(),
-          b = this.border || this.marked ? this.getBoxBaseResolve().get(this.marked ? 'markerStroke' : 'borderStroke').lineWidth : 0
+          b = this.border || this.marked ? this.getBoxBaseResolve().get(this.marked ? 'markerStroke' : 'borderStroke').lineWidth : 0;
         this.$hostedComponent.css({
           position: 'absolute',
           width: r.dim.width - 2 * b + 'px',
           height: r.dim.height - 2 * b + 'px',
           top: r.pos.y + 'px',
           left: r.pos.x + 'px'
-        })
+        });
       }
     }
   }
@@ -700,7 +700,7 @@ define([
      * @name AbstractBox#$hostedComponent
      * @type {external:jQuery} */
     $hostedComponent: null,
-  })
+  });
 
-  return AbstractBox
-})
+  return AbstractBox;
+});

@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -50,8 +50,8 @@ define([
      * @param {JClicProject} project - The JClic project to which this media bag belongs
      */
     constructor(project) {
-      this.project = project
-      this.elements = {}
+      this.project = project;
+      this.elements = {};
     }
 
     /**
@@ -60,15 +60,15 @@ define([
      */
     setProperties($xml) {
       $xml.children('media').each((_n, child) => {
-        const mbe = new MediaBagElement(this.project.basePath, null, this.project.zip)
-        mbe.setProperties($(child))
-        this.elements[mbe.name] = mbe
-      })
-      return this
+        const mbe = new MediaBagElement(this.project.basePath, null, this.project.zip);
+        mbe.setProperties($(child));
+        this.elements[mbe.name] = mbe;
+      });
+      return this;
     }
 
     getData() {
-      return Object.keys(this.elements).map(k => this.elements[k].getData())
+      return Object.keys(this.elements).map(k => this.elements[k].getData());
     }
 
     /**
@@ -79,11 +79,11 @@ define([
      * @returns {MediaBagElement}
      */
     getElement(name, create) {
-      name = Utils.nSlash(name)
-      let result = this.elements[name]
+      name = Utils.nSlash(name);
+      let result = this.elements[name];
       if (create && !result)
-        result = this.getElementByFileName(name, create)
-      return result
+        result = this.getElementByFileName(name, create);
+      return result;
     }
 
     /**
@@ -94,25 +94,25 @@ define([
      * @returns {MediaBagElement}
      */
     getElementByFileName(file, create) {
-      let result = null
+      let result = null;
       if (file) {
-        file = Utils.nSlash(file)
+        file = Utils.nSlash(file);
         for (let name in this.elements) {
           if (this.elements[name].file === file) {
-            result = this.elements[name]
-            break
+            result = this.elements[name];
+            break;
           }
         }
         if (!result && create) {
-          result = new MediaBagElement(this.project.basePath, null, this.project.zip)
-          result.name = file
-          result.file = file
-          result.ext = file.toLowerCase().split('#')[0].split('.').pop()
-          result.type = result.getFileType(result.ext)
-          this.elements[result.name] = result
+          result = new MediaBagElement(this.project.basePath, null, this.project.zip);
+          result.name = file;
+          result.file = file;
+          result.ext = file.toLowerCase().split('#')[0].split('.').pop();
+          result.type = result.getFileType(result.ext);
+          this.elements[result.name] = result;
         }
       }
-      return result
+      return result;
     }
 
     /**
@@ -122,12 +122,12 @@ define([
      * @returns {String[]}
      */
     getElementsOfType(type) {
-      const result = []
+      const result = [];
       $.each(this.elements, (name, element) => {
         if (element.type === type)
-          result.push(type === 'font' ? element.fontName : name)
-      })
-      return result
+          result.push(type === 'font' ? element.fontName : name);
+      });
+      return result;
     }
 
     /**
@@ -142,14 +142,14 @@ define([
      * @returns {number} - The total number of elements that will be build     * 
      */
     buildAll(type, callback, ps) {
-      let count = 0
+      let count = 0;
       $.each(this.elements, (name, element) => {
         if (!type || element.type === type) {
-          element.build(callback, ps)
-          count++
+          element.build(callback, ps);
+          count++;
         }
-      })
-      return count
+      });
+      return count;
     }
 
     /**
@@ -159,18 +159,18 @@ define([
     countWaitingElements() {
       let
         ready = 0,
-        allReady = true
+        allReady = true;
 
       // Only for debug purposes: return always 'false'
       // TODO: Check loading process!
       $.each(this.elements, (name, element) => {
         if (element.data && !element.ready && !element.checkReady() && !element.checkTimeout()) {
-          Utils.log('debug', '... waiting for: %s', name)
-          allReady = false
+          Utils.log('debug', '... waiting for: %s', name);
+          allReady = false;
         } else
-          ready++
-      })
-      return allReady ? -1 : ready
+          ready++;
+      });
+      return allReady ? -1 : ready;
     }
 
     /**
@@ -180,7 +180,7 @@ define([
      * @returns {Skin}
      */
     getSkinElement(name, ps) {
-      return Skin.getSkin(name, ps)
+      return Skin.getSkin(name, ps);
     }
   }
 
@@ -195,7 +195,7 @@ define([
      * @name MediaBag#project
      * @type {JClicProject} */
     project: null,
-  })
+  });
 
-  return MediaBag
-})
+  return MediaBag;
+});

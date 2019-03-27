@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -49,7 +49,7 @@ define([
      * @param {JClicProject} project - The project to which this activity belongs
      */
     constructor(project) {
-      super(project)
+      super(project);
     }
   }
 
@@ -68,7 +68,7 @@ define([
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
-      super(act, ps, $div)
+      super(act, ps, $div);
     }
 
     /**
@@ -80,14 +80,14 @@ define([
      * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
      */
     $createTargetElement(target, $span) {
-      super.$createTargetElement(target, $span)
-      const idLabel = `target${`000${this.targets.length - 1}`.slice(-3)}`
+      super.$createTargetElement(target, $span);
+      const idLabel = `target${`000${this.targets.length - 1}`.slice(-3)}`;
       $span.bind('click', event => {
-        event.textTarget = target
-        event.idLabel = idLabel
-        this.processEvent(event)
-      })
-      return $span
+        event.textTarget = target;
+        event.idLabel = idLabel;
+        this.processEvent(event);
+      });
+      return $span;
     }
 
     /**
@@ -95,9 +95,9 @@ define([
      * @override
      */
     initActivity() {
-      super.initActivity(this)
-      this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer')
-      this.playing = true
+      super.initActivity(this);
+      this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');
+      this.playing = true;
     }
 
     /**
@@ -105,7 +105,7 @@ define([
      * @returns {number}
      */
     countSolvedTargets() {
-      return this.targets.length.reduce((n, target) => target.targetStatus === 'SOLVED' ? ++n : n, 0)
+      return this.targets.length.reduce((n, target) => target.targetStatus === 'SOLVED' ? ++n : n, 0);
     }
 
     /**
@@ -114,20 +114,20 @@ define([
      * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
      */
     evaluatePanel() {
-      let targetsOk = 0
+      let targetsOk = 0;
       this.targets.forEach(target => {
-        const ok = target.targetStatus === 'SOLVED'
+        const ok = target.targetStatus === 'SOLVED';
         if (ok)
-          targetsOk++
-        target.checkColors()
-        this.ps.reportNewAction(this.act, 'SELECT', target.text, target.pos, ok, targetsOk)
-      })
+          targetsOk++;
+        target.checkColors();
+        this.ps.reportNewAction(this.act, 'SELECT', target.text, target.pos, ok, targetsOk);
+      });
       if (targetsOk === this.targets.length) {
-        this.finishActivity(true)
-        return true
+        this.finishActivity(true);
+        return true;
       } else
-        this.playEvent('finishedError')
-      return false
+        this.playEvent('finishedError');
+      return false;
     }
 
     /**
@@ -136,8 +136,8 @@ define([
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
     finishActivity(result) {
-      this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer')
-      return super.finishActivity(result)
+      this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');
+      return super.finishActivity(result);
     }
 
     /**
@@ -150,50 +150,50 @@ define([
     processEvent(event) {
       if (!super.processEvent(event) ||
         event.timeStamp === this.lastTimeStamp)
-        return false
+        return false;
 
       if (event.timeStamp)
-        this.lastTimeStamp = event.timeStamp
+        this.lastTimeStamp = event.timeStamp;
 
-      const target = event.textTarget
+      const target = event.textTarget;
       switch (event.type) {
         case 'click':
-          let text, pos, ok = false
+          let text, pos, ok = false;
           if (target) {
             if (target.targetStatus === 'SOLVED')
-              target.targetStatus = 'HIDDEN'
+              target.targetStatus = 'HIDDEN';
             else {
-              target.targetStatus = 'SOLVED'
-              ok = true
+              target.targetStatus = 'SOLVED';
+              ok = true;
             }
-            text = target.text
-            pos = target.pos
+            text = target.text;
+            pos = target.pos;
             // TODO: Just on/off target colors, don't mark it as error!
-            target.checkColors()
+            target.checkColors();
           } else {
             // TODO: Get current text at click position, perhaps using [window|document].getSelection
-            text = 'unknown'
-            pos = 0
+            text = 'unknown';
+            pos = 0;
           }
 
           if (!this.$checkButton) {
             // Check and notify action
-            const cellsAtPlace = this.countSolvedTargets()
-            this.ps.reportNewAction(this.act, 'SELECT', text, pos, ok, cellsAtPlace)
+            const cellsAtPlace = this.countSolvedTargets();
+            this.ps.reportNewAction(this.act, 'SELECT', text, pos, ok, cellsAtPlace);
 
             // End activity or play event sound
             if (ok && cellsAtPlace === this.targets.length)
-              this.finishActivity(true)
+              this.finishActivity(true);
             else
-              this.playEvent(ok ? 'actionOk' : 'actionError')
+              this.playEvent(ok ? 'actionOk' : 'actionError');
           }
-          event.preventDefault()
-          break
+          event.preventDefault();
+          break;
 
         default:
-          break
+          break;
       }
-      return true
+      return true;
     }
   }
 
@@ -210,15 +210,15 @@ define([
      * @type {number}
      */
     lastTimeStamp: 0,
-  })
+  });
 
   /**
    * Panel class associated to this type of activity: {@link IdentifyTextPanel}
    * @type {class} */
-  IdentifyText.Panel = IdentifyTextPanel
+  IdentifyText.Panel = IdentifyTextPanel;
 
   // Register class in Activity.prototype
-  Activity.CLASSES['@text.Identify'] = IdentifyText
+  Activity.CLASSES['@text.Identify'] = IdentifyText;
 
-  return IdentifyText
-})
+  return IdentifyText;
+});

@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -43,7 +43,7 @@ define([
 
   // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
-    screenfull = window.screenfull
+    screenfull = window.screenfull;
 
   /**
    * Returns the two-digits text expression representing the given number (lesser than 100) zero-padded at left
@@ -51,7 +51,7 @@ define([
    * @param {number} val - The number to be processed
    * @returns {string}
    */
-  const _zp = val => `0${val}`.slice(-2)
+  const _zp = val => `0${val}`.slice(-2);
 
   /**
    *
@@ -114,23 +114,23 @@ define([
      * @returns {object} The normalized `options` object
      */
     init: options => {
-      options = Utils.normalizeObject(options)
+      options = Utils.normalizeObject(options);
       if (typeof options.logLevel !== 'undefined')
-        Utils.setLogLevel(options.logLevel)
+        Utils.setLogLevel(options.logLevel);
       if (typeof options.chainLogTo === 'function')
-        Utils.LOG_OPTIONS.chainTo = options.chainLogTo
+        Utils.LOG_OPTIONS.chainTo = options.chainLogTo;
       if (typeof options.pipeLogTo === 'function')
-        Utils.LOG_OPTIONS.pipeTo = options.pipeLogTo
-      return options
+        Utils.LOG_OPTIONS.pipeTo = options.pipeLogTo;
+      return options;
     },
     /**
      * Establishes the current verbosity level of the logging system
      * @param {string} level - One of the valid strings in {@link Utils.LOG_LEVELS}
      */
     setLogLevel: level => {
-      const log = Utils.LOG_LEVELS.indexOf(level)
+      const log = Utils.LOG_LEVELS.indexOf(level);
       if (log >= 0)
-        Utils.LOG_LEVEL = log
+        Utils.LOG_LEVEL = log;
     },
     /**
      * Reports a new message to the logging system
@@ -139,19 +139,19 @@ define([
      * in `console.log` (see: {@link https://developer.mozilla.org/en-US/docs/Web/API/Console/log})
      */
     log: function (type, msg) {
-      const level = Utils.LOG_LEVELS.indexOf(type)
-      const args = Array.prototype.slice.call(arguments)
+      const level = Utils.LOG_LEVELS.indexOf(type);
+      const args = Array.prototype.slice.call(arguments);
 
       // Check if message should currently be logged
       if (level < 0 || level <= Utils.LOG_LEVEL) {
         if (Utils.LOG_OPTIONS.pipeTo)
-          Utils.LOG_OPTIONS.pipeTo.apply(null, args)
+          Utils.LOG_OPTIONS.pipeTo.apply(null, args);
         else {
-          const mainMsg = `${Utils.LOG_OPTIONS.prefix || ''} ${Utils.LOG_PRINT_LABELS[level]} ${Utils.LOG_OPTIONS.timestamp ? Utils.getDateTime() : ''} ${msg}`
-          console[level === 1 ? 'error' : level === 2 ? 'warn' : 'log'].apply(console, [mainMsg].concat(args.slice(2)))
+          const mainMsg = `${Utils.LOG_OPTIONS.prefix || ''} ${Utils.LOG_PRINT_LABELS[level]} ${Utils.LOG_OPTIONS.timestamp ? Utils.getDateTime() : ''} ${msg}`;
+          console[level === 1 ? 'error' : level === 2 ? 'warn' : 'log'].apply(console, [mainMsg].concat(args.slice(2)));
           // Call chained logger, if anny
           if (Utils.LOG_OPTIONS.chainTo)
-            Utils.LOG_OPTIONS.chainTo.apply(null, args)
+            Utils.LOG_OPTIONS.chainTo.apply(null, args);
         }
       }
     },
@@ -188,9 +188,9 @@ define([
      * @returns {string}
      */
     getHMStime: millis => {
-      const d = new Date(millis)
-      const h = d.getUTCHours(), m = d.getUTCMinutes(), s = d.getUTCSeconds()
-      return `${h ? h + 'h ' : ''}${h || m ? _zp(m) + '\'' : ''}${_zp(s)}"`
+      const d = new Date(millis);
+      const h = d.getUTCHours(), m = d.getUTCMinutes(), s = d.getUTCSeconds();
+      return `${h ? h + 'h ' : ''}${h || m ? _zp(m) + '\'' : ''}${_zp(s)}"`;
     },
     /**
      * Returns a formatted string with the provided date and time
@@ -286,9 +286,9 @@ define([
      * @returns {string}
      */
     getXmlText: xml => {
-      let text = ''
-      $(xml).children('p').each((_n, child) => { text += `<p>${child.textContent}</p>` })
-      return text
+      let text = '';
+      $(xml).children('p').each((_n, child) => { text += `<p>${child.textContent}</p>`; });
+      return text;
     },
     /**
      * Parse the provided XML element node, returning a complex object
@@ -298,18 +298,18 @@ define([
      */
     parseXmlNode: (xml, withText = false) => {
       // Initialize the resulting object
-      const result = {}
+      const result = {};
       // Direct copy of root element attributes as object properties
       if (xml.attributes)
-        Utils.attrForEach(xml.attributes, (name, value) => result[name] = /^-?\d*$/.test(value) ? Number(value) : value)
+        Utils.attrForEach(xml.attributes, (name, value) => result[name] = /^-?\d*$/.test(value) ? Number(value) : value);
 
-      const keys = []
-      const children = Array.from(xml.children || xml.childNodes || [])
+      const keys = [];
+      const children = Array.from(xml.children || xml.childNodes || []);
 
       // If all children is of type 'p', just compile it in a single string
-      const paragraphs = children.filter(child => child.nodeName === 'p')
+      const paragraphs = children.filter(child => child.nodeName === 'p');
       if (paragraphs.length > 0 && paragraphs.length === children.filter(ch => ch.nodeName !== '#text').length) {
-        const text = paragraphs.map(ch => ch.textContent).join('\n')
+        const text = paragraphs.map(ch => ch.textContent).join('\n');
         if (xml.attributes) {
           result.text = text;
           return result;
@@ -321,45 +321,45 @@ define([
       children.forEach(child => {
         // Avoid extra text content collected by [xmldom](https://www.npmjs.com/package/xmldom)
         if (child.nodeName === '#text' && !withText)
-          return
+          return;
 
         // Recursive processing of children
-        const ch = Utils.parseXmlNode(child, withText)
+        const ch = Utils.parseXmlNode(child, withText);
         // Store the result into a temporary object named as the child node name,
         if (!result[child.nodeName]) {
           // Create object and save key for later processing
-          result[child.nodeName] = {}
-          keys.push(child.nodeName)
+          result[child.nodeName] = {};
+          keys.push(child.nodeName);
         }
         // Use 'id' (or an incremental number if 'id' is not set) as a key
         if (ch.id)
-          result[child.nodeName][ch.id] = ch
+          result[child.nodeName][ch.id] = ch;
         else {
-          const n = Object.keys(result[child.nodeName]).length
-          result[child.nodeName][n] = ch
+          const n = Object.keys(result[child.nodeName]).length;
+          result[child.nodeName][n] = ch;
         }
-      })
+      });
       // Check temporary objects, converting it to an array, a single object or a complex object
       keys.forEach(k => {
         // Retrieve temporary object from `keys`
-        const kx = Object.keys(result[k])
+        const kx = Object.keys(result[k]);
         // If all keys are numbers, convert object into an array (or leave it as a single object)
         if (!kx.find(kk => isNaN(kk))) {
           if (kx.length === 1)
             // Array with a single element. Leave it as a simple object:
-            result[k] = result[k][0]
+            result[k] = result[k][0];
           else {
             // Object with numeric keys. Convert it to array:
-            const arr = []
-            kx.forEach(kk => arr.push(result[k][kk]))
-            result[k] = arr
+            const arr = [];
+            kx.forEach(kk => arr.push(result[k][kk]));
+            result[k] = arr;
           }
         }
-      })
+      });
       // Save text content, if any:
       if (children.length === 0 && xml.textContent)
-        result.textContent = xml.textContent
-      return result
+        result.textContent = xml.textContent;
+      return result;
     },
     /**
      * Parse the given XML node, known as containing only text elements,
@@ -416,14 +416,14 @@ define([
      */
     checkColor: (color, defaultColor = Utils.settings.BoxBase.BACK_COLOR) => {
       if (typeof color === 'undefined' || color === null)
-        color = defaultColor
-      color = color.replace('0x', '#')
+        color = defaultColor;
+      color = color.replace('0x', '#');
       // Check for Alpha value
       if (color.charAt(0) === '#' && color.length > 7) {
-        const alpha = parseInt(color.substring(1, 3), 16) / 255.0
-        color = `rgba(${parseInt(color.substring(3, 5), 16)},${parseInt(color.substring(5, 7), 16)},${parseInt(color.substring(7, 9), 16)},${alpha})`
+        const alpha = parseInt(color.substring(1, 3), 16) / 255.0;
+        color = `rgba(${parseInt(color.substring(3, 5), 16)},${parseInt(color.substring(5, 7), 16)},${parseInt(color.substring(7, 9), 16)},${alpha})`;
       }
-      return color
+      return color;
     },
     /**
      * Checks if the provided color has an alpha value less than 1
@@ -432,10 +432,10 @@ define([
      */
     colorHasTransparency: color => {
       if (Utils.startsWith(color, 'rgba(')) {
-        var alpha = parseInt(color.substr(color.lastIndexOf(',')))
-        return typeof alpha === 'number' && alpha < 1.0
+        var alpha = parseInt(color.substr(color.lastIndexOf(',')));
+        return typeof alpha === 'number' && alpha < 1.0;
       }
-      return false
+      return false;
     },
     /**
      * Clones the provided object
@@ -451,15 +451,15 @@ define([
      * @returns {Object} - A new object with normalized content
      */
     normalizeObject: obj => {
-      const result = {}
+      const result = {};
       if (obj)
         $.each(obj, (key, value) => {
-          let s
+          let s;
           if (typeof value === 'string' && (s = value.trim().toLowerCase()) !== '')
-            value = s === 'true' ? true : s === 'false' ? false : isNaN(s) ? value : Number(s)
-          result[key] = value
-        })
-      return result
+            value = s === 'true' ? true : s === 'false' ? false : isNaN(s) ? value : Number(s);
+          result[key] = value;
+        });
+      return result;
     },
     /**
      * Returns an partial clone of an object, containing only the own attributes specified in an array of possible keys.
@@ -472,14 +472,14 @@ define([
      * @returns {object}
      */
     getData: (obj, keys = null) => {
-      const result = {}
-      keys = keys || Object.keys(obj)
+      const result = {};
+      keys = keys || Object.keys(obj);
       keys.forEach(key => {
         const [k, v] = key.split('|');
         if (obj.hasOwnProperty(k) && obj[k] !== null && obj[k] !== v)
-          result[k] = Utils.getValue(obj[k])
-      })
-      return result
+          result[k] = Utils.getValue(obj[k]);
+      });
+      return result;
     },
 
     getValue(value) {
@@ -511,10 +511,10 @@ define([
      */
     compareMultipleOptions: (answer, check, checkCase = false, numeric = false) => {
       if (answer === null || answer.length === 0 || check === null || check.length === 0)
-        return false
+        return false;
       if (!checkCase && !numeric)
-        answer = answer.toUpperCase()
-      answer = answer.trim()
+        answer = answer.toUpperCase();
+      answer = answer.trim();
 
       // Check for numeric digits in answer!
       numeric = numeric && /\d/.test(answer);
@@ -522,12 +522,12 @@ define([
       for (let token of check.split('|')) {
         if (numeric) {
           if (Number.parseFloat(answer.replace(/,/, '.')) === Number.parseFloat(token.replace(/,/, '.')))
-            return true
+            return true;
         }
         else if (answer === (checkCase ? token : token.toUpperCase()).trim())
-          return true
+          return true;
       }
-      return false
+      return false;
     },
     /**
      * Checks if the given string ends with the specified expression
@@ -565,8 +565,8 @@ define([
      * @returns {string}
      */
     getBasePath: path => {
-      const p = path.lastIndexOf('/')
-      return p >= 0 ? path.substring(0, p + 1) : ''
+      const p = path.lastIndexOf('/');
+      return p >= 0 ? path.substring(0, p + 1) : '';
     },
     /**
      * Gets the full path of `file` relative to `basePath`
@@ -592,18 +592,18 @@ define([
      */
     getPathPromise: (basePath, path, zip) => {
       if (zip) {
-        const fName = Utils.getRelativePath(basePath + path, zip.zipBasePath)
+        const fName = Utils.getRelativePath(basePath + path, zip.zipBasePath);
         if (zip.files[fName]) {
           return new Promise((resolve, reject) => {
             zip.file(fName).async('base64').then(data => {
-              const ext = path.toLowerCase().split('.').pop()
-              const mime = Utils.settings.MIME_TYPES[ext] || 'application/octet-stream'
-              resolve(`data:${mime};base64,${data}`)
-            }).catch(reject)
-          })
+              const ext = path.toLowerCase().split('.').pop();
+              const mime = Utils.settings.MIME_TYPES[ext] || 'application/octet-stream';
+              resolve(`data:${mime};base64,${data}`);
+            }).catch(reject);
+          });
         }
       }
-      return Promise.resolve(Utils.getPath(basePath, path))
+      return Promise.resolve(Utils.getPath(basePath, path));
     },
     /**
      * Utility object that provides several methods to build simple and complex DOM objects
@@ -631,12 +631,12 @@ define([
      */
     getSvg: (svg, width, height, fill) => {
       if (width)
-        svg = svg.replace(/width=\"\d*\"/, `width="${width}"`)
+        svg = svg.replace(/width=\"\d*\"/, `width="${width}"`);
       if (height)
-        svg = svg.replace(/height=\"\d*\"/, `height="${height}"`)
+        svg = svg.replace(/height=\"\d*\"/, `height="${height}"`);
       if (fill)
-        svg = svg.replace(/fill=\"[#A-Za-z0-9]*\"/, `fill="${fill}"`)
-      return svg
+        svg = svg.replace(/fill=\"[#A-Za-z0-9]*\"/, `fill="${fill}"`);
+      return svg;
     },
     /**
      * Encodes a svg expression into a {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/data_URIs|data URI}
@@ -657,10 +657,10 @@ define([
      * @returns {string} - A valid CSS value, or `null` if it can't be found. Default units are `px`
      */
     toCssSize: (exp, css, key, def) => {
-      const result = typeof exp === 'undefined' || exp === null ? null : isNaN(exp) ? exp : `${exp}px`
+      const result = typeof exp === 'undefined' || exp === null ? null : isNaN(exp) ? exp : `${exp}px`;
       if (css && key && (result || def))
-        css[key] = result !== null ? result : def
-      return result
+        css[key] = result !== null ? result : def;
+      return result;
     },
     /**
      * Gets a clip of the give image data, in a URL base64 encoded format
@@ -669,19 +669,19 @@ define([
      * @returns {string} - The URL with the image clip, as a PNG file encoded in base64
      */
     getImgClipUrl: (img, rect) => {
-      const canvas = document.createElement('canvas')
-      canvas.width = rect.dim.width
-      canvas.height = rect.dim.height
-      const ctx = canvas.getContext('2d')
-      let result = ''
+      const canvas = document.createElement('canvas');
+      canvas.width = rect.dim.width;
+      canvas.height = rect.dim.height;
+      const ctx = canvas.getContext('2d');
+      let result = '';
       try {
-        ctx.drawImage(img, rect.pos.x, rect.pos.y, rect.dim.width, rect.dim.height, 0, 0, rect.dim.width, rect.dim.height)
-        result = canvas.toDataURL()
+        ctx.drawImage(img, rect.pos.x, rect.pos.y, rect.dim.width, rect.dim.height, 0, 0, rect.dim.width, rect.dim.height);
+        result = canvas.toDataURL();
       } catch (err) {
         // catch 'tainted canvases may not be exported' and other errors
-        Utils.log('error', err)
+        Utils.log('error', err);
       }
-      return result
+      return result;
     },
     /**
      * Finds the nearest `head` or root node of a given HTMLElement, useful to place `<style/>` elements when
@@ -695,14 +695,14 @@ define([
       if (el) {
         // Skip HTMLElements
         while (el.parentElement)
-          el = el.parentElement
+          el = el.parentElement;
         // Get the parent node of the last HTMLElement
         if (el instanceof HTMLElement)
-          el = el.parentNode || el
+          el = el.parentNode || el;
         // If the root node has a `head`, take it
-        el = el['head'] || el
+        el = el['head'] || el;
       }
-      return el || document.head
+      return el || document.head;
     },
     /**
      * Appends a stylesheet element to the `head` or root node nearest to the given `HTMLElement`.
@@ -711,11 +711,11 @@ define([
      * @returns {HTMLStyleElement} - The appended style element
      */
     appendStyleAtHead: (css, ps) => {
-      const root = Utils.getRootHead(ps && ps.$topDiv ? ps.$topDiv[0] : null)
-      const style = document.createElement('style')
-      style.type = 'text/css'
-      style.appendChild(document.createTextNode(css))
-      return root.appendChild(style)
+      const root = Utils.getRootHead(ps && ps.$topDiv ? ps.$topDiv[0] : null);
+      const style = document.createElement('style');
+      style.type = 'text/css';
+      style.appendChild(document.createTextNode(css));
+      return root.appendChild(style);
     },
     /**
      * Traverses all the attributes defined in an Element, calling a function with its name and value as a parameters
@@ -726,7 +726,7 @@ define([
      */
     attrForEach(attributes, callback) {
       for (let i = 0; i < attributes.length; i++)
-        callback(attributes[i].name, attributes[i].value)
+        callback(attributes[i].name, attributes[i].value);
     },
     /**
      * Global constants
@@ -846,27 +846,27 @@ define([
      * @returns {number}
      */
     getCaretCharacterOffsetWithin: element => {
-      let caretOffset = 0
-      const doc = element.ownerDocument || element.document
-      const win = doc.defaultView || doc.parentWindow
-      let sel
+      let caretOffset = 0;
+      const doc = element.ownerDocument || element.document;
+      const win = doc.defaultView || doc.parentWindow;
+      let sel;
       if (typeof win.getSelection !== "undefined") {
-        sel = win.getSelection()
+        sel = win.getSelection();
         if (sel.rangeCount > 0) {
-          const range = win.getSelection().getRangeAt(0)
-          const preCaretRange = range.cloneRange()
-          preCaretRange.selectNodeContents(element)
-          preCaretRange.setEnd(range.endContainer, range.endOffset)
-          caretOffset = preCaretRange.toString().length
+          const range = win.getSelection().getRangeAt(0);
+          const preCaretRange = range.cloneRange();
+          preCaretRange.selectNodeContents(element);
+          preCaretRange.setEnd(range.endContainer, range.endOffset);
+          caretOffset = preCaretRange.toString().length;
         }
       } else if ((sel = doc.selection) && sel.type !== "Control") {
-        const textRange = sel.createRange()
-        const preCaretTextRange = doc.body.createTextRange()
-        preCaretTextRange.moveToElementText(element)
-        preCaretTextRange.setEndPoint("EndToEnd", textRange)
-        caretOffset = preCaretTextRange.text.length
+        const textRange = sel.createRange();
+        const preCaretTextRange = doc.body.createTextRange();
+        preCaretTextRange.moveToElementText(element);
+        preCaretTextRange.setEndPoint("EndToEnd", textRange);
+        caretOffset = preCaretTextRange.text.length;
       }
-      return caretOffset
+      return caretOffset;
     },
     /**
      * Utility function called by {@link Utils~getCaretCharacterOffsetWithin}
@@ -874,16 +874,16 @@ define([
      * @returns {object[]}
      */
     getTextNodesIn: function (node) {
-      const textNodes = []
+      const textNodes = [];
       if (node.nodeType === 3) {
-        textNodes.push(node)
+        textNodes.push(node);
       } else {
-        const children = node.childNodes
+        const children = node.childNodes;
         for (let i = 0, len = children.length; i < len; ++i) {
-          textNodes.push.apply(textNodes, Utils.getTextNodesIn(children[i]))
+          textNodes.push.apply(textNodes, Utils.getTextNodesIn(children[i]));
         }
       }
-      return textNodes
+      return textNodes;
     },
     /**
      * Sets the selection range (or the cursor position, when `start` and `end` are the same) to a
@@ -895,42 +895,42 @@ define([
      */
     setSelectionRange: (el, start, end) => {
       if (Utils.isNullOrUndef(end))
-        end = start
+        end = start;
       if (document.createRange && window.getSelection) {
-        const range = document.createRange()
-        range.selectNodeContents(el)
-        const textNodes = Utils.getTextNodesIn(el)
-        let foundStart = false
-        let charCount = 0, endCharCount, textNode
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const textNodes = Utils.getTextNodesIn(el);
+        let foundStart = false;
+        let charCount = 0, endCharCount, textNode;
 
         for (let i = 0; i < textNodes.length; i++) {
-          textNode = textNodes[i]
-          endCharCount = charCount + textNode.length
+          textNode = textNodes[i];
+          endCharCount = charCount + textNode.length;
           if (!foundStart && start >= charCount &&
             (start < endCharCount ||
               start === endCharCount && i + 1 <= textNodes.length)) {
-            range.setStart(textNode, start - charCount)
-            foundStart = true
+            range.setStart(textNode, start - charCount);
+            foundStart = true;
           }
           if (foundStart && end <= endCharCount) {
-            range.setEnd(textNode, end - charCount)
-            break
+            range.setEnd(textNode, end - charCount);
+            break;
           }
-          charCount = endCharCount
+          charCount = endCharCount;
         }
-        const sel = window.getSelection()
-        sel.removeAllRanges()
-        sel.addRange(range)
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
       } else if (document.selection && document.body.createTextRange) {
-        const textRange = document.body.createTextRange()
-        textRange.moveToElementText(el)
-        textRange.collapse(true)
-        textRange.moveEnd('character', end)
-        textRange.moveStart('character', start)
-        textRange.select()
+        const textRange = document.body.createTextRange();
+        textRange.moveToElementText(el);
+        textRange.collapse(true);
+        textRange.moveEnd('character', end);
+        textRange.moveStart('character', start);
+        textRange.select();
       }
     }
-  }
+  };
 
-  return Utils
-})
+  return Utils;
+});

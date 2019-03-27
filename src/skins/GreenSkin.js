@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -54,7 +54,7 @@ define([
      */
     constructor(ps, name = null, options = {}) {
       // GreenSkin extends [DefaultSkin](DefaultSkin.html)
-      super(ps, name, options)
+      super(ps, name, options);
     }
 
     /**
@@ -64,7 +64,7 @@ define([
      * @returns {string}
      */
     _getStyleSheets(media = 'default') {
-      return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '')
+      return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '');
     }
   }
 
@@ -94,10 +94,10 @@ define([
      * @name GreenSkin#skinCSS
      * @type {string} */
     skinCSS: '.ID {background-color:#4AFF19;}'
-  })
+  });
 
   // Register this class in the list of available skins
-  Skin.CLASSES['green'] = GreenSkin
+  Skin.CLASSES['green'] = GreenSkin;
 
-  return GreenSkin
-})
+  return GreenSkin;
+});

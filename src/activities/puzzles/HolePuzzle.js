@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -57,7 +57,7 @@ define([
      * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
      */
     constructor(project) {
-      super(project)
+      super(project);
     }
 
     /**
@@ -66,7 +66,7 @@ define([
      * @returns {number}
      */
     getMinNumActions() {
-      return this.abc.primary.getNumCells()
+      return this.abc.primary.getNumCells();
     }
 
     /**
@@ -75,7 +75,7 @@ define([
      * @returns {boolean}
      */
     hasRandom() {
-      return true
+      return true;
     }
 
     /**
@@ -84,7 +84,7 @@ define([
      * @returns {boolean}
      */
     shuffleAlways() {
-      return true
+      return true;
     }
 
     /**
@@ -93,7 +93,7 @@ define([
      * @returns {boolean}
      */
     helpSolutionAllowed() {
-      return true
+      return true;
     }
   }
 
@@ -112,7 +112,7 @@ define([
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
-      super(act, ps, $div)
+      super(act, ps, $div);
     }
 
     /**
@@ -121,12 +121,12 @@ define([
      */
     clear() {
       if (this.bg) {
-        this.bg.end()
-        this.bg = null
+        this.bg.end();
+        this.bg = null;
       }
       if (this.parkBg) {
-        this.parkBg.end()
-        this.parkBg = null
+        this.parkBg.end();
+        this.parkBg = null;
       }
     }
 
@@ -136,29 +136,29 @@ define([
      */
     buildVisualComponents() {
       if (this.firstRun)
-        super.buildVisualComponents()
-      this.clear()
+        super.buildVisualComponents();
+      this.clear();
 
-      const abc = this.act.abc['primary']
+      const abc = this.act.abc['primary'];
       if (abc) {
         if (abc.imgName)
-          abc.setImgContent(this.act.project.mediaBag, null, false)
+          abc.setImgContent(this.act.project.mediaBag, null, false);
 
         if (this.act.acp !== null)
-          this.act.acp.generateContent(abc.nch, abc.ncw, [abc], false)
+          this.act.acp.generateContent(abc.nch, abc.ncw, [abc], false);
 
-        this.bg = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abc)
-        this.bg.setContent(abc)
-        this.bg.setVisible(true)
+        this.bg = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
+        this.bg.setContent(abc);
+        this.bg.setVisible(true);
 
-        this.hiddenBoxIndex = Math.floor(Math.random() * this.bg.getNumCells())
-        this.hiddenBox = this.bg.getActiveBox(this.hiddenBoxIndex)
-        this.hiddenBox.setVisible(false)
+        this.hiddenBoxIndex = Math.floor(Math.random() * this.bg.getNumCells());
+        this.hiddenBox = this.bg.getActiveBox(this.hiddenBoxIndex);
+        this.hiddenBox.setVisible(false);
         this.parkBg = new ActiveBoxGrid(null, this, abc.bb, this.act.margin, this.act.margin,
-          this.hiddenBox.dim.width, this.hiddenBox.dim.height, new Rectangular(1, 1))
-        this.parkBg.setContent(abc, null, this.hiddenBoxIndex, 0, 1)
-        this.parkBg.setBorder(this.bg.hasBorder())
-        this.parkBg.setVisible(true)
+          this.hiddenBox.dim.width, this.hiddenBox.dim.height, new Rectangular(1, 1));
+        this.parkBg.setContent(abc, null, this.hiddenBoxIndex, 0, 1);
+        this.parkBg.setBorder(this.bg.hasBorder());
+        this.parkBg.setVisible(true);
       }
     }
 
@@ -167,37 +167,37 @@ define([
      * @override
      */
     initActivity() {
-      super.initActivity()
+      super.initActivity();
       if (!this.firstRun)
-        this.buildVisualComponents()
+        this.buildVisualComponents();
       else
-        this.firstRun = false
+        this.firstRun = false;
 
       if (this.bg) {
         //
         // This activity has an special shuffle method. Cells can move only to places near the 'hole'
         if (this.act.shuffles % 2 !== 1)
-          this.act.shuffles++
+          this.act.shuffles++;
         for (var i = 0; i < this.act.shuffles; i++) {
-          const pth = this.bg.getCoord(this.hiddenBox)
-          const v = Math.floor(Math.random() * 2) === 0 ? 1 : -1
+          const pth = this.bg.getCoord(this.hiddenBox);
+          const v = Math.floor(Math.random() * 2) === 0 ? 1 : -1;
 
           if (Math.floor(Math.random() * 2) === 0) {
             pth.x += v;
             if (pth.x < 0 || pth.x >= this.bg.nCols)
-              pth.x -= 2 * v
+              pth.x -= 2 * v;
           } else {
-            pth.y += v
+            pth.y += v;
             if (pth.y < 0 || pth.y >= this.bg.nRows)
-              pth.y -= 2 * v
+              pth.y -= 2 * v;
           }
-          var dstBx = this.bg.getActiveBoxWithIdLoc(pth.y * this.bg.nCols + pth.x)
+          var dstBx = this.bg.getActiveBoxWithIdLoc(pth.y * this.bg.nCols + pth.x);
           if (dstBx !== null)
-            this.hiddenBox.exchangeLocation(dstBx)
+            this.hiddenBox.exchangeLocation(dstBx);
         }
-        this.setAndPlayMsg('initial', 'start')
-        this.invalidate().update()
-        this.playing = true
+        this.setAndPlayMsg('initial', 'start');
+        this.invalidate().update();
+        this.playing = true;
       }
     }
 
@@ -209,18 +209,18 @@ define([
      * it's the whole panel.
      */
     updateContent(dirtyRegion) {
-      super.updateContent(dirtyRegion)
+      super.updateContent(dirtyRegion);
       if (this.bg && this.parkBg && this.$canvas) {
         const
           canvas = this.$canvas.get(-1),
-          ctx = canvas.getContext('2d')
+          ctx = canvas.getContext('2d');
         if (!dirtyRegion)
-          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height)
-        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height)
-        this.bg.update(ctx, dirtyRegion)
-        this.parkBg.update(ctx, dirtyRegion)
+          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
+        this.bg.update(ctx, dirtyRegion);
+        this.parkBg.update(ctx, dirtyRegion);
       }
-      return this
+      return this;
     }
 
     /**
@@ -232,7 +232,7 @@ define([
     setDimension(preferredMaxSize) {
       return !this.bg || !this.parkBg || this.getBounds().equals(preferredMaxSize) ?
         preferredMaxSize :
-        BoxBag.layoutDouble(preferredMaxSize, this.bg, this.parkBg, this.act.boxGridPos, this.act.margin)
+        BoxBag.layoutDouble(preferredMaxSize, this.bg, this.parkBg, this.act.boxGridPos, this.act.margin);
     }
 
     /**
@@ -242,20 +242,20 @@ define([
      */
     setBounds(rect) {
       if (this.$canvas)
-        this.$canvas.remove()
+        this.$canvas.remove();
 
-      super.setBounds(rect)
+      super.setBounds(rect);
       if (this.bg && this.parkBg) {
         // Create the main canvas
         this.$canvas = $(`<canvas width="${rect.dim.width}" height="${rect.dim.height}"/>`).css({
           position: 'absolute',
           top: 0,
           left: 0
-        })
-        this.$div.append(this.$canvas)
+        });
+        this.$div.append(this.$canvas);
 
         // Repaint all
-        this.invalidate().update()
+        this.invalidate().update();
       }
     }
 
@@ -267,8 +267,8 @@ define([
      */
     buildAccessibleComponents() {
       if (this.$canvas && this.accessibleCanvas && this.bg) {
-        super.buildAccessibleComponents()
-        this.bg.buildAccessibleElements(this.$canvas, this.$div)
+        super.buildAccessibleComponents();
+        this.bg.buildAccessibleElements(this.$canvas, this.$div);
       }
     }
 
@@ -283,48 +283,48 @@ define([
       if (this.playing) {
         const p = new AWT.Point(
           event.pageX - this.$div.offset().left,
-          event.pageY - this.$div.offset().top)
+          event.pageY - this.$div.offset().top);
         // Array to be filled with actions to be executed at the end of event processing
-        const delayedActions = []
+        const delayedActions = [];
 
         switch (event.type) {
           case 'click':
-            this.ps.stopMedia(1)
+            this.ps.stopMedia(1);
             // Find the box behind the clicked point
-            const bx = this.bg.findActiveBox(p)
+            const bx = this.bg.findActiveBox(p);
             if (bx) {
               if (bx.isVisible()) {
                 // Check if it's a valid move
                 const pt = this.bg.getCoordDist(bx, this.hiddenBox);
                 if (Math.abs(pt.x) + Math.abs(pt.y) === 1) {
                   // Ok, the cell is adjacent to the hole. Complete the move.
-                  let m = bx.playMedia(this.ps, delayedActions)
+                  let m = bx.playMedia(this.ps, delayedActions);
                   const
                     src = `${bx.getDescription()} (${bx.idOrder})`,
-                    dest = `(${this.hiddenBox.idLoc})`
-                  bx.exchangeLocation(this.hiddenBox)
-                  const ok = bx.idOrder === bx.idLoc
+                    dest = `(${this.hiddenBox.idLoc})`;
+                  bx.exchangeLocation(this.hiddenBox);
+                  const ok = bx.idOrder === bx.idLoc;
                   // Check results and notify action
-                  const cellsAtPlace = this.bg.countCellsAtEquivalentPlace(true)
-                  this.ps.reportNewAction(this.act, 'SELECT', src, dest, ok, cellsAtPlace)
+                  const cellsAtPlace = this.bg.countCellsAtEquivalentPlace(true);
+                  this.ps.reportNewAction(this.act, 'SELECT', src, dest, ok, cellsAtPlace);
                   if (ok && cellsAtPlace === this.bg.getNumCells()) {
                     // Activity completed!
-                    this.hiddenBox.setVisible(true)
-                    this.parkBg.setVisible(false)
-                    this.finishActivity(true)
+                    this.hiddenBox.setVisible(true);
+                    this.parkBg.setVisible(false);
+                    this.finishActivity(true);
                   } else
                     if (!m)
-                      this.playEvent('click')
+                      this.playEvent('click');
                 }
-                this.update()
+                this.update();
               } else {
-                this.playEvent('actionError')
+                this.playEvent('actionError');
               }
             }
-            break
+            break;
         }
-        delayedActions.forEach(action => action())
-        event.preventDefault()
+        delayedActions.forEach(action => action());
+        event.preventDefault();
       }
     }
   }
@@ -357,15 +357,15 @@ define([
      * @name HolePuzzlePanel#events
      * @type {string[]} */
     events: ['click'],
-  })
+  });
 
   /**
    * Panel class associated to this type of activity: {@link HolePuzzlePanel}
    * @type {class} */
-  HolePuzzle.Panel = HolePuzzlePanel
+  HolePuzzle.Panel = HolePuzzlePanel;
 
   // Register class in Activity.prototype
-  Activity.CLASSES['@puzzles.HolePuzzle'] = HolePuzzle
+  Activity.CLASSES['@puzzles.HolePuzzle'] = HolePuzzle;
 
-  return HolePuzzle
-})
+  return HolePuzzle;
+});

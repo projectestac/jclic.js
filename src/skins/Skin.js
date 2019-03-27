@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -40,7 +40,7 @@ define([
 
   // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
-    screenfull = window.screenfull
+    screenfull = window.screenfull;
 
   /**
    * This abstract class manages the layout, position ans size of the visual components of JClic:
@@ -63,47 +63,47 @@ define([
     constructor(ps, name = null, options = {}) {
 
       // Skin extends [AWT.Container](AWT.html)
-      super()
+      super();
 
       // Save parameters for later use
-      this.ps = ps
+      this.ps = ps;
       if (name !== null)
-        this.name = name
-      this.options = options
+        this.name = name;
+      this.options = options;
 
       if(this.options.skinId)
         this.skinId = this.options.skinId;
 
       if (!Skin.registerStyleSheet(this.skinId, ps)) {
-        let css = this._getStyleSheets('default')
-        let twoThirds = this._getStyleSheets('twoThirds')
+        let css = this._getStyleSheets('default');
+        let twoThirds = this._getStyleSheets('twoThirds');
         if (twoThirds.length > 0)
-          css += ` @media (max-width:${this.twoThirdsMedia.width}px),(max-height:${this.twoThirdsMedia.height}px){${twoThirds}}`
-        let half = this._getStyleSheets('half')
+          css += ` @media (max-width:${this.twoThirdsMedia.width}px),(max-height:${this.twoThirdsMedia.height}px){${twoThirds}}`;
+        let half = this._getStyleSheets('half');
         if (half.length > 0)
-          css += ` @media (max-width:${this.halfMedia.width}px),(max-height:${this.halfMedia.height}px){${half}}`
-        Utils.appendStyleAtHead(css.replace(/\.ID/g, `.${this.skinId}`), ps)
+          css += ` @media (max-width:${this.halfMedia.width}px),(max-height:${this.halfMedia.height}px){${half}}`;
+        Utils.appendStyleAtHead(css.replace(/\.ID/g, `.${this.skinId}`), ps);
       }
 
-      let msg = ''
+      let msg = '';
 
-      this.$div = $('<div/>', { class: this.skinId })
-      this.$playerCnt = $('<div/>', { class: 'JClicPlayerCnt' })
+      this.$div = $('<div/>', { class: this.skinId });
+      this.$playerCnt = $('<div/>', { class: 'JClicPlayerCnt' });
 
       // Add waiting panel and progress bar
       this.$progress = $('<progress/>', { class: 'progressBar' })
-        .css({ display: 'none' })
+        .css({ display: 'none' });
       this.$waitPanel = $('<div/>')
         .css({ display: 'none', 'background-color': 'rgba(255, 255, 255, .60)', 'z-index': 99 })
         .append($('<div/>', { class: 'waitPanel' }).css({ display: 'flex', 'flex-direction': 'column' })
           .append($('<div/>', { class: 'animImgBox' })
             .append($(this.waitImgBig), $(this.waitImgSmall)))
-          .append(this.$progress))
-      this.$playerCnt.append(this.$waitPanel)
+          .append(this.$progress));
+      this.$playerCnt.append(this.$waitPanel);
 
-      this.buttons = Utils.cloneObject(Skin.prototype.buttons)
-      this.counters = Utils.cloneObject(Skin.prototype.counters)
-      this.msgArea = Utils.cloneObject(Skin.prototype.msgArea)
+      this.buttons = Utils.cloneObject(Skin.prototype.buttons);
+      this.counters = Utils.cloneObject(Skin.prototype.counters);
+      this.msgArea = Utils.cloneObject(Skin.prototype.msgArea);
 
       // Create dialog overlay and panel
       this.$dlgOverlay = $('<div/>', { class: 'dlgOverlay' }).css({
@@ -118,9 +118,9 @@ define([
       }).on('click', () => {
         if (!this._isModalDlg)
           // Non-modal dialogs are closed on click outside the main area
-          this._closeDlg(true)
-        return false
-      })
+          this._closeDlg(true);
+        return false;
+      });
 
       const $dlgDiv = $('<div/>', {
         class: 'dlgDiv',
@@ -135,11 +135,11 @@ define([
         transform: 'translate(-50%, -50%)'
       }).on('click', () => {
         // Clicks not passed to parent
-        return false
-      })
+        return false;
+      });
 
-      this.$dlgMainPanel = $('<div/>', { class: 'dlgMainPanel', id: ps.getUniqueId('ReportsCnt') })
-      this.$dlgBottomPanel = $('<div/>', { class: 'dlgBottomPanel', role: 'navigation' })
+      this.$dlgMainPanel = $('<div/>', { class: 'dlgMainPanel', id: ps.getUniqueId('ReportsCnt') });
+      this.$dlgBottomPanel = $('<div/>', { class: 'dlgBottomPanel', role: 'navigation' });
 
       // Basic dialog structure:
       this.$div.append(
@@ -147,58 +147,58 @@ define([
         this.$dlgOverlay.append(
           $dlgDiv.append(
             this.$dlgMainPanel,
-            this.$dlgBottomPanel)))
+            this.$dlgBottomPanel)));
 
-      msg = ps.getMsg('JClic logo')
+      msg = ps.getMsg('JClic logo');
       this.$infoHead = $('<div/>', { class: 'infoHead' })
         .append($('<div/>', { class: 'headTitle unselectableText' })
           .append($(this.appLogo, { 'aria-label': msg }).css({ width: '1.5em', height: '1.5em', 'vertical-align': 'bottom' })
             .dblclick(() => {
               // Double click on JClic logo is a hidden method to increase verbosity on Javascript console
-              Utils.setLogLevel('all')
-              Utils.log('trace', 'Log level set to "trace"')
+              Utils.setLogLevel('all');
+              Utils.log('trace', 'Log level set to "trace"');
             }))
           .append($('<span/>').html('JClic.js')))
         .append($('<p/>').css({ 'margin-top': 0, 'margin-left': '3.5em' })
           .append($('<a/>', { href: 'http://clic.xtec.cat/repo/index.html?page=info' }).html('http://clic.xtec.cat'))
           .append($('<br>'))
-          .append($('<span/>').html(ps.getMsg('Version') + ' ' + this.ps.JClicVersion)))
+          .append($('<span/>').html(ps.getMsg('Version') + ' ' + this.ps.JClicVersion)));
 
-      this.$reportsPanel = $('<div/>', { class: 'reportsPanel', role: 'document' })
+      this.$reportsPanel = $('<div/>', { class: 'reportsPanel', role: 'document' });
 
-      msg = ps.getMsg('Copy data to clipboard')
+      msg = ps.getMsg('Copy data to clipboard');
       this.$copyBtn = $('<button/>', { title: msg, 'aria-label': msg })
         .append($(this.copyIcon).css({ width: '26px', height: '26px' }))
         .on('click', () => {
           clipboard.copy({
             'text/plain': `===> ${ps.getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor')} <===`,
             'text/html': this.$reportsPanel.html()
-          })
+          });
           this.$copyBtn.parent().append(
             $('<div/>', { class: 'smallPopup' })
               .html(ps.getMsg('The data has been copied to clipboard'))
               .fadeIn()
               .delay(3000)
-              .fadeOut(function () { $(this).remove() }))
-        })
+              .fadeOut(function () { $(this).remove(); }));
+        });
 
-      msg = ps.getMsg('Close')
+      msg = ps.getMsg('Close');
       this.$closeDlgBtn = $('<button/>', { title: msg, 'aria-label': msg })
         .append($(this.closeDialogIcon).css({ width: '26px', height: '26px' }))
-        .on('click', () => this._closeDlg(true))
+        .on('click', () => this._closeDlg(true));
 
-      msg = ps.getMsg('OK')
+      msg = ps.getMsg('OK');
       this.$okDlgBtn = $('<button/>', { title: msg, 'aria-label': msg })
         .append($(this.okDialogIcon).css({ width: '26px', height: '26px' }))
-        .on('click', () => this._closeDlg(true))
+        .on('click', () => this._closeDlg(true));
 
-      msg = ps.getMsg('Cancel')
+      msg = ps.getMsg('Cancel');
       this.$cancelDlgBtn = $('<button/>', { title: msg, 'aria-label': msg })
         .append($(this.closeDialogIcon).css({ width: '26px', height: '26px' }))
-        .on('click', () => this._closeDlg(false))
+        .on('click', () => this._closeDlg(false));
 
       // Registers this Skin in the list of realized Skin objects
-      Skin.skinStack.push(this)
+      Skin.skinStack.push(this);
     }
 
     /**
@@ -208,24 +208,24 @@ define([
      * @returns {Boolean} - _true_ when the skin stylesheet is already defined in the current root node, _false_ otherwise
      */
     static registerStyleSheet(skinId, ps) {
-      let result = false
-      const root = Utils.getRootHead(ps)
+      let result = false;
+      const root = Utils.getRootHead(ps);
       if (!root['__JClicID'])
-        root.__JClicID = `SK${Skin.lastId++}`
+        root.__JClicID = `SK${Skin.lastId++}`;
 
-      let styles = Skin.rootStyles[root.__JClicID]
+      let styles = Skin.rootStyles[root.__JClicID];
       if (!styles) {
-        styles = []
-        Skin.rootStyles[root.__JClicID] = styles
+        styles = [];
+        Skin.rootStyles[root.__JClicID] = styles;
       }
 
       if (styles.indexOf(skinId) < 0) {
-        Utils.log('trace', `Stylesheet "${skinId}" has been registered for root node labeled as "${root.__JClicID}"`)
-        styles.push(skinId)
+        Utils.log('trace', `Stylesheet "${skinId}" has been registered for root node labeled as "${root.__JClicID}"`);
+        styles.push(skinId);
       } else
-        result = true
+        result = true;
 
-      return result
+      return result;
     }
 
     /**
@@ -237,28 +237,28 @@ define([
      * @returns {Skin}
      */
     static getSkin(skinName = 'default', ps, options = {}) {
-      skinName = skinName || 'default'
+      skinName = skinName || 'default';
 
       // Correct old skin names
       if (skinName.charAt(0, 1) === '@' && skinName.substr(-4) === '.xml')
-        skinName = skinName.substr(1, skinName.length - 5)
+        skinName = skinName.substr(1, skinName.length - 5);
 
       // look for the skin in the stack of realized skins
       if (skinName && ps) {
         // TODO: Check also `options`!
-        const sk = Skin.skinStack.find(s => s.name === skinName && s.ps === ps)
+        const sk = Skin.skinStack.find(s => s.name === skinName && s.ps === ps);
         if (sk)
-          return sk
+          return sk;
       }
 
       // Locates the class of the requested Skin (or [DefaultSkin](DefaultSkin.html)
       // if not specified). When not found, a new one is created and registered in `skinStack`
-      let cl = Skin.CLASSES[skinName]
+      let cl = Skin.CLASSES[skinName];
       if (!cl) {
         // Process custom skin XML files
-        const mbe = ps.project.mediaBag.getElement(skinName, false)
+        const mbe = ps.project.mediaBag.getElement(skinName, false);
         if (mbe && mbe.data) {
-          options = Object.assign({}, options, mbe.data)
+          options = Object.assign({}, options, mbe.data);
           options.skinId = `JClic-${skinName.replace('.xml', '')}`;
         }
 
@@ -267,15 +267,15 @@ define([
           && options.image
           && ps.project.mediaBag.getElement(options.image, false)
           && ps.project.mediaBag.getElement(options.image, false).data)
-          cl = Skin.CLASSES.custom
+          cl = Skin.CLASSES.custom;
         else {
-          Utils.log('warn', `Unknown skin class: ${skinName}`)
-          cl = Skin.CLASSES.default
+          Utils.log('warn', `Unknown skin class: ${skinName}`);
+          cl = Skin.CLASSES.default;
         }
       }
 
       // Build and return the requested skin
-      return new cl(ps, skinName, options)
+      return new cl(ps, skinName, options);
     }
 
     /**
@@ -285,7 +285,7 @@ define([
      * @returns {string}
      */
     _getStyleSheets(media = 'default') {
-      return media === 'default' ? (this.basicCSS + this.waitAnimCSS + this.reportsCSS) : ''
+      return media === 'default' ? (this.basicCSS + this.waitAnimCSS + this.reportsCSS) : '';
     }
 
     /**
@@ -293,13 +293,13 @@ define([
      * @param {JClicPlayer} player
      */
     attach(player) {
-      this.detach()
+      this.detach();
       if (player !== null && player.skin !== null)
-        player.skin.detach()
-      this.player = player
-      this.$playerCnt.prepend(player.$div)
-      this.setSkinSizes()
-      player.$mainContainer.append(this.$div)
+        player.skin.detach();
+      this.player = player;
+      this.$playerCnt.prepend(player.$div);
+      this.setSkinSizes();
+      player.$mainContainer.append(this.$div);
     }
 
     /**
@@ -310,19 +310,19 @@ define([
       const
         css = {},
         topHeight = this.player.$topDiv.height(),
-        nilValue = this.player.fullScreenChecked ? 'inherit' : null
+        nilValue = this.player.fullScreenChecked ? 'inherit' : null;
 
       // When `full` no set, detect the current status with screenfull
       if (typeof full === 'undefined')
-        full = screenfull && screenfull.enabled && screenfull.isFullscreen
+        full = screenfull && screenfull.enabled && screenfull.isFullscreen;
 
-      Utils.toCssSize(full ? '100vw' : this.ps.options.minWidth, css, 'min-width', nilValue)
-      Utils.toCssSize(full ? '100vh' : this.ps.options.minHeight, css, 'min-height', nilValue)
-      Utils.toCssSize(full ? '100vw' : this.ps.options.maxWidth, css, 'max-width', nilValue)
-      Utils.toCssSize(full ? '100vh' : this.ps.options.maxHeight, css, 'max-height', nilValue)
-      Utils.toCssSize(full ? '100vw' : this.ps.options.width, css, 'width', '100%')
-      Utils.toCssSize(full ? '100vh' : this.ps.options.height, css, 'height', topHeight > 0 ? '100%' : '100vh')
-      this.$div.css(css)
+      Utils.toCssSize(full ? '100vw' : this.ps.options.minWidth, css, 'min-width', nilValue);
+      Utils.toCssSize(full ? '100vh' : this.ps.options.minHeight, css, 'min-height', nilValue);
+      Utils.toCssSize(full ? '100vw' : this.ps.options.maxWidth, css, 'max-width', nilValue);
+      Utils.toCssSize(full ? '100vh' : this.ps.options.maxHeight, css, 'max-height', nilValue);
+      Utils.toCssSize(full ? '100vw' : this.ps.options.width, css, 'width', '100%');
+      Utils.toCssSize(full ? '100vh' : this.ps.options.height, css, 'height', topHeight > 0 ? '100%' : '100vh');
+      this.$div.css(css);
     }
 
     /**
@@ -330,9 +330,9 @@ define([
      */
     detach() {
       if (this.player !== null) {
-        this.player.$div.remove()
-        this.$div.detach()
-        this.player = null
+        this.player.$div.remove();
+        this.$div.detach();
+        this.player = null;
       }
     }
 
@@ -345,11 +345,11 @@ define([
      */
     updateContent(dirtyRegion) {
       if (this.$msgBoxDivCanvas) {
-        const ctx = this.$msgBoxDivCanvas.get(-1).getContext('2d')
-        ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight)
-        this.msgBox.update(ctx, dirtyRegion)
+        const ctx = this.$msgBoxDivCanvas.get(-1).getContext('2d');
+        ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
+        this.msgBox.update(ctx, dirtyRegion);
       }
-      return super.updateContent()
+      return super.updateContent();
     }
 
     /**
@@ -359,12 +359,12 @@ define([
     resetAllCounters(bEnabled) {
       $.each(this.counters, (_name, counter) => {
         if (counter !== null) {
-          counter.value = 0
-          counter.countDown = 0
-          counter.enabled = bEnabled
-          counter.refreshDisplay()
+          counter.value = 0;
+          counter.countDown = 0;
+          counter.enabled = bEnabled;
+          counter.refreshDisplay();
         }
-      })
+      });
     }
 
     /**
@@ -377,21 +377,21 @@ define([
         if (this.$waitPanel)
           this.$waitPanel.css({
             display: this.waitCursorCount > 0 ? 'initial' : 'none'
-          })
+          });
       } else {
         switch (status) {
           case true:
-            this.waitCursorCount++
-            break
+            this.waitCursorCount++;
+            break;
           case false:
             if (--this.waitCursorCount < 0)
-              this.waitCursorCount = 0
-            break
+              this.waitCursorCount = 0;
+            break;
           case 'reset':
-            this.waitCursorCount = 0
-            break
+            this.waitCursorCount = 0;
+            break;
         }
-        this.setWaitCursor()
+        this.setWaitCursor();
       }
     }
 
@@ -402,17 +402,17 @@ define([
      */
     setProgress(val, max) {
       if (this.$progress) {
-        this.currentProgress = val
+        this.currentProgress = val;
         if (val < 0)
-          this.$progress.css({ display: 'none' })
+          this.$progress.css({ display: 'none' });
         else {
           if (max) {
-            this.maxProgress = max
-            this.$progress.attr('max', max).css({ display: 'initial' })
+            this.maxProgress = max;
+            this.$progress.attr('max', max).css({ display: 'initial' });
           }
-          this.$progress.attr('value', val)
+          this.$progress.attr('value', val);
         }
-        Utils.log('trace', `Progress: ${this.currentProgress}/${this.maxProgress}`)
+        Utils.log('trace', `Progress: ${this.currentProgress}/${this.maxProgress}`);
       }
     }
 
@@ -422,7 +422,7 @@ define([
      */
     incProgress(val) {
       if (this.currentProgress >= 0)
-        this.setProgress(this.currentProgress + (val || 1))
+        this.setProgress(this.currentProgress + (val || 1));
     }
 
     /**
@@ -444,29 +444,29 @@ define([
      */
     showDlg(modal, options) {
       return new Promise((resolve, reject) => {
-        this._dlgOkValue = 'ok'
-        this._dlgCancelValue = 'cancelled'
-        this._isModalDlg = modal
+        this._dlgOkValue = 'ok';
+        this._dlgCancelValue = 'cancelled';
+        this._isModalDlg = modal;
 
-        this.$dlgMainPanel.children().detach()
-        this.$dlgBottomPanel.children().detach()
+        this.$dlgMainPanel.children().detach();
+        this.$dlgBottomPanel.children().detach();
         if (options.main)
-          this.$dlgMainPanel.append(options.main)
+          this.$dlgMainPanel.append(options.main);
         if (options.bottom)
-          this.$dlgBottomPanel.append(options.bottom)
+          this.$dlgBottomPanel.append(options.bottom);
 
         this._closeDlg = resolved => {
           if (resolved && resolve)
-            resolve(this._dlgOkValue)
+            resolve(this._dlgOkValue);
           else if (!resolved && reject)
-            reject(this._dlgCancelValue)
-          this.$dlgOverlay.css({ display: 'none' })
-          this.enableMainButtons(true)
-          this._closeDlg = Skin.prototype._closeDlg
-        }
-        this.enableMainButtons(false)
-        this.$dlgOverlay.css({ display: 'initial' })
-      })
+            reject(this._dlgCancelValue);
+          this.$dlgOverlay.css({ display: 'none' });
+          this.enableMainButtons(true);
+          this._closeDlg = Skin.prototype._closeDlg;
+        };
+        this.enableMainButtons(false);
+        this.$dlgOverlay.css({ display: 'initial' });
+      });
     }
 
     /**
@@ -475,7 +475,7 @@ define([
      * @param {boolean} status - `true` to make main controls navigable, `false` otherwise
      */
     enableMainButtons(status) {
-      this.$playerCnt.find('button').attr('tabindex', status ? '0' : '-1')
+      this.$playerCnt.find('button').attr('tabindex', status ? '0' : '-1');
     }
 
     /**
@@ -493,11 +493,11 @@ define([
      * @returns {Promise} - The Promise returned by {@link Skin.showDlg}.
      */
     showReports(reporter) {
-      this.$reportsPanel.html(this.$printReport(reporter))
+      this.$reportsPanel.html(this.$printReport(reporter));
       return this.showDlg(false, {
         main: [this.$infoHead, this.$reportsPanel],
         bottom: [this.$copyBtn, this.$closeDlgBtn]
-      })
+      });
     }
 
     /**
@@ -506,37 +506,37 @@ define([
      * @returns {external:jQuery[]} - An array of jQuery objects containing the full report
      */
     $printReport(reporter) {
-      let result = []
+      let result = [];
       if (reporter) {
         const
           $html = Utils.$HTML,
           report = reporter.getData(),
-          started = new Date(report.started)
+          started = new Date(report.started);
 
-        result.push($('<div/>', { class: 'subTitle', id: this.ps.getUniqueId('ReportsLb') }).html(this.ps.getMsg('Current results')))
+        result.push($('<div/>', { class: 'subTitle', id: this.ps.getUniqueId('ReportsLb') }).html(this.ps.getMsg('Current results')));
 
-        const $t = $('<table/>', { class: 'JCGlobalResults' })
+        const $t = $('<table/>', { class: 'JCGlobalResults' });
         $t.append(
           $html.doubleCell(
             this.ps.getMsg('Session started:'),
             `${started.toLocaleDateString()} ${started.toLocaleTimeString()}`),
           $html.doubleCell(
             this.ps.getMsg('Reports system:'),
-            `${this.ps.getMsg(report.descriptionKey)} ${report.descriptionDetail}`))
+            `${this.ps.getMsg(report.descriptionKey)} ${report.descriptionDetail}`));
         if (report.userId)
           $t.append($html.doubleCell(
             this.ps.getMsg('User:'),
-            report.userId))
+            report.userId));
         else if (report.user) // SCORM user
           $t.append($html.doubleCell(
             this.ps.getMsg('User:'),
-            report.user))
+            report.user));
 
         if (report.sequences > 0) {
           if (report.sessions.length > 1)
             $t.append($html.doubleCell(
               this.ps.getMsg('Projects:'),
-              report.sessions.length))
+              report.sessions.length));
           $t.append(
             $html.doubleCell(
               this.ps.getMsg('Sequences:'),
@@ -546,11 +546,11 @@ define([
               report.activitiesDone),
             $html.doubleCell(
               this.ps.getMsg('Activities played at least once:'),
-              `${report.playedOnce}/${report.reportable} (${Utils.getPercent(report.ratioPlayed / 100)})`))
+              `${report.playedOnce}/${report.reportable} (${Utils.getPercent(report.ratioPlayed / 100)})`));
           if (report.activitiesDone > 0) {
             $t.append($html.doubleCell(
               this.ps.getMsg('Activities solved:'),
-              `${report.activitiesSolved} (${Utils.getPercent(report.ratioSolved / 100)})`))
+              `${report.activitiesSolved} (${Utils.getPercent(report.ratioSolved / 100)})`));
             if (report.actScore > 0)
               $t.append(
                 $html.doubleCell(
@@ -558,47 +558,47 @@ define([
                   `${Utils.getPercent(report.partialScore / 100)} ${this.ps.getMsg('(out of played activities)')}`),
                 $html.doubleCell(
                   this.ps.getMsg('Global score:'),
-                  `${Utils.getPercent(report.globalScore / 100)} ${this.ps.getMsg('(out of all project activities)')}`))
+                  `${Utils.getPercent(report.globalScore / 100)} ${this.ps.getMsg('(out of all project activities)')}`));
             $t.append(
               $html.doubleCell(
                 this.ps.getMsg('Total time in activities:'),
                 Utils.getHMStime(report.time * 1000)),
               $html.doubleCell(
                 this.ps.getMsg('Actions done:'),
-                report.actions))
+                report.actions));
           }
-          result.push($t)
+          result.push($t);
 
           report.sessions.forEach(sr => {
             if (sr.sequences.length > 0) {
-              const $t = $('<table/>', { class: 'JCDetailed' })
-              result.push($('<p/>').html(report.sessions.length > 1 ? `${this.ps.getMsg('Project')} ${sr.projectName}` : ''))
+              const $t = $('<table/>', { class: 'JCDetailed' });
+              result.push($('<p/>').html(report.sessions.length > 1 ? `${this.ps.getMsg('Project')} ${sr.projectName}` : ''));
               $t.append($('<thead/>').append($('<tr/>').append(
                 $html.th(this.ps.getMsg('sequence')),
                 $html.th(this.ps.getMsg('activity')),
                 $html.th(this.ps.getMsg('OK')),
                 $html.th(this.ps.getMsg('actions')),
                 $html.th(this.ps.getMsg('score')),
-                $html.th(this.ps.getMsg('time')))))
+                $html.th(this.ps.getMsg('time')))));
 
               sr.sequences.forEach(seq => {
-                let $tr = $('<tr/>').append($('<td/>', { rowspan: seq.activities.length }).html(seq.sequence))
+                let $tr = $('<tr/>').append($('<td/>', { rowspan: seq.activities.length }).html(seq.sequence));
                 seq.activities.forEach(act => {
                   if (act.closed) {
-                    $tr.append($html.td(act.name))
-                    $tr.append(act.solved ? $html.td(this.ps.getMsg('YES'), 'ok') : $html.td(this.ps.getMsg('NO'), 'no'))
-                    $tr.append($html.td(act.actions))
-                    $tr.append($html.td(Utils.getPercent(act.precision / 100)))
-                    $tr.append($html.td(Utils.getHMStime(act.time * 1000)))
+                    $tr.append($html.td(act.name));
+                    $tr.append(act.solved ? $html.td(this.ps.getMsg('YES'), 'ok') : $html.td(this.ps.getMsg('NO'), 'no'));
+                    $tr.append($html.td(act.actions));
+                    $tr.append($html.td(Utils.getPercent(act.precision / 100)));
+                    $tr.append($html.td(Utils.getHMStime(act.time * 1000)));
                   } else {
-                    $tr.append($html.td(act.name, 'incomplete'))
+                    $tr.append($html.td(act.name, 'incomplete'));
                     for (let r = 0; r < 4; r++)
-                      $tr.append($html.td('-', 'incomplete'))
+                      $tr.append($html.td('-', 'incomplete'));
                   }
-                  $t.append($tr)
-                  $tr = $('<tr/>')
-                })
-              })
+                  $t.append($tr);
+                  $tr = $('<tr/>');
+                });
+              });
 
               $t.append($('<tr/>').append(
                 $html.td(this.ps.getMsg('Total:')),
@@ -606,15 +606,15 @@ define([
                 $html.td(`${sr.solved} (${Utils.getPercent(sr.ratioSolved / 100)})`),
                 $html.td(sr.actions),
                 $html.td(Utils.getPercent(sr.score / 100)),
-                $html.td(Utils.getHMStime(sr.time * 1000))))
+                $html.td(Utils.getHMStime(sr.time * 1000))));
 
-              result.push($t)
+              result.push($t);
             }
-          }, this)
+          }, this);
         } else
-          result.push($('<p/>').html(this.ps.getMsg('No activities done!')))
+          result.push($('<p/>').html(this.ps.getMsg('No activities done!')));
       }
-      return result
+      return result;
     }
 
     /**
@@ -624,7 +624,7 @@ define([
      */
     enableCounter(counter, bEnabled) {
       if (this.counters[counter])
-        this.counters[counter].setEnabled(bEnabled)
+        this.counters[counter].setEnabled(bEnabled);
     }
 
     /**
@@ -632,7 +632,7 @@ define([
      */
     doLayout() {
       // Resize player
-      this.player.doLayout()
+      this.player.doLayout();
 
       // Build ths canvas at the end of current thread, thus avoiding
       // invalid sizes due to incomplete layout of DOM objects
@@ -641,25 +641,25 @@ define([
 
           // Temporary remove canvas to let div get its natural size:
           if (this.$msgBoxDivCanvas)
-            this.$msgBoxDivCanvas.remove()
+            this.$msgBoxDivCanvas.remove();
 
           // Get current size of message box div without canvas
           const
             msgWidth = this.$msgBoxDiv.outerWidth(),
-            msgHeight = this.$msgBoxDiv.outerHeight()
+            msgHeight = this.$msgBoxDiv.outerHeight();
 
           // Replace existing canvas if size has changed
           if (this.$msgBoxDivCanvas === null ||
             this.msgBox.dim.widht !== msgWidth ||
             this.msgBox.dim.height !== msgHeight) {
-            this.$msgBoxDivCanvas = $(`<canvas width="${msgWidth}" height="${msgHeight}"/>`)
-            this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth + 1, msgHeight))
-            this.msgBox.buildAccessibleElement(this.$msgBoxDivCanvas, this.$msgBoxDiv)
+            this.$msgBoxDivCanvas = $(`<canvas width="${msgWidth}" height="${msgHeight}"/>`);
+            this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth + 1, msgHeight));
+            this.msgBox.buildAccessibleElement(this.$msgBoxDivCanvas, this.$msgBoxDiv);
           }
           // restore canvas
-          this.$msgBoxDiv.append(this.$msgBoxDivCanvas)
-          this.updateContent()
-        }, 0)
+          this.$msgBoxDiv.append(this.$msgBoxDivCanvas);
+          this.updateContent();
+        }, 0);
     }
 
     /**
@@ -667,8 +667,8 @@ define([
      * @returns {AWT.Dimension} the new dimension of the skin
      */
     fit() {
-      this.doLayout()
-      return new AWT.Dimension(this.$div.width(), this.$div.height())
+      this.doLayout();
+      return new AWT.Dimension(this.$div.width(), this.$div.height());
     }
 
     /**
@@ -684,11 +684,11 @@ define([
         status === false && !screenfull.isFullScreen ||
         status !== true && status !== false)) {
         // Save current value of fullScreen for later use
-        const full = screenfull.isFullscreen
-        screenfull.toggle(this.player.$mainContainer.get(-1))
-        this.player.fullScreenChecked = true
+        const full = screenfull.isFullscreen;
+        screenfull.toggle(this.player.$mainContainer.get(-1));
+        this.player.fullScreenChecked = true;
         // Firefox don't updates `document.fullscreenElement` in real time, so use the saved value instead
-        this.setSkinSizes(!full)
+        this.setSkinSizes(!full);
       }
     }
 
@@ -698,7 +698,7 @@ define([
      */
     actionStatusChanged(act) {
       if (act.name && this.buttons[act.name])
-        this.setEnabled(this.buttons[act.name], act.enabled)
+        this.setEnabled(this.buttons[act.name], act.enabled);
     }
 
     /**
@@ -709,9 +709,9 @@ define([
      */
     setEnabled($object, enabled) {
       if ($object && enabled)
-        $object.removeAttr('disabled')
+        $object.removeAttr('disabled');
       else if ($object)
-        $object.attr('disabled', true)
+        $object.attr('disabled', true);
     }
 
     /**
@@ -722,7 +722,7 @@ define([
     equals(skin) {
       return skin &&
         this.name === skin.name &&
-        this.ps === skin.ps
+        this.ps === skin.ps;
     }
 
     /**
@@ -731,7 +731,7 @@ define([
      */
     getMsgBox() {
       // Method to be implemented by subclasses
-      return null
+      return null;
     }
 
   }
@@ -740,25 +740,25 @@ define([
    * Collection of realized __Skin__ objects.
    * @type {Skin[]}
    */
-  Skin.skinStack = []
+  Skin.skinStack = [];
 
   /**
    * Collection of skin style sheets already registered on the current document
    * @type {Object}
    */
-  Skin.rootStyles = {}
+  Skin.rootStyles = {};
 
   /**
    * Counter used to label root nodes with unique IDs
    * @type {Number}
    */
-  Skin.lastId = 1
+  Skin.lastId = 1;
 
   /**
    * List of classes derived from Skin. It should be filled by real skin classes at declaration time.
    * @type {object}
    */
-  Skin.CLASSES = {}
+  Skin.CLASSES = {};
 
   Object.assign(Skin.prototype, {
     /**
@@ -1050,7 +1050,7 @@ define([
      * @name DefaultSkin#twoThirdsMedia
      * @type {object} */
     twoThirdsMedia: { width: 420, height: 315 },
-  })
+  });
 
-  return Skin
-})
+  return Skin;
+});

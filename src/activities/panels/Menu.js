@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -50,11 +50,11 @@ define([
      * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
      */
     constructor(project) {
-      super(project)
-      this.menuElements = []
+      super(project);
+      this.menuElements = [];
       // This kind of activities are not reported
-      this.includeInReports = false
-      this.reportActions = false
+      this.includeInReports = false;
+      this.reportActions = false;
     }
   }
 
@@ -73,9 +73,9 @@ define([
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
-      super(act, ps, $div)
+      super(act, ps, $div);
       // This kind of activity will always clean the "last project skin" setting
-      ps.lastProjectSkin = null
+      ps.lastProjectSkin = null;
     }
 
     /**
@@ -84,7 +84,7 @@ define([
      */
     buildVisualComponents() {
       if (this.firstRun)
-        super.buildVisualComponents()
+        super.buildVisualComponents();
       // This `div` will contain the action buttons
       const $btnDiv = $('<div/>').css({
         'width': '100%',
@@ -97,10 +97,10 @@ define([
         'overflow-y': 'auto',
         'place-content': 'center',
         'overflow-y': 'auto'
-      })
+      });
       this.act.menuElements.forEach((me) => {
         // Create a button for each menu element
-        const caption = me.description || me.caption || 'JClic'
+        const caption = me.description || me.caption || 'JClic';
         const $btn = $('<button/>', {
           class: 'StockBtn',
           title: caption,
@@ -115,7 +115,7 @@ define([
           'flex-direction': 'column',
           'justify-content': 'center',
           'align-items': 'center'
-        })
+        });
 
         // Set the button icon
         const
@@ -124,13 +124,13 @@ define([
             'max-width': '180px',
             'max-height': '100px',
             'margin': '4px'
-          })
+          });
         if (!iconSrc) {
           // It's not a stock image, so load `src` when available
-          const mbe = this.act.project.mediaBag.getElement(me.icon, true)
-          mbe.getFullPathPromise().then(imgFullPath => $img.attr('src', imgFullPath))
+          const mbe = this.act.project.mediaBag.getElement(me.icon, true);
+          mbe.getFullPathPromise().then(imgFullPath => $img.attr('src', imgFullPath));
         }
-        $btn.append($img)
+        $btn.append($img);
 
         // Set the button text
         $btn.append($('<span/>').css({
@@ -138,25 +138,25 @@ define([
           'overflow': 'hidden',
           'white-space': 'nowrap',
           'text-overflow': 'ellipsis'
-        }).html(me.caption))
+        }).html(me.caption));
 
         // Set a click listener method
         // $btn.on('click', function...) does not work!
         $btn[0].addEventListener('click', (ev) => {
-          const mc = new MediaContent(me.projectPath ? 'RUN_CLIC_PACKAGE' : 'RUN_CLIC_ACTIVITY', me.sequence)
+          const mc = new MediaContent(me.projectPath ? 'RUN_CLIC_PACKAGE' : 'RUN_CLIC_ACTIVITY', me.sequence);
           if (me.projectPath)
-            mc.externalParam = me.projectPath
-          Utils.log('info', `Launching ${me.projectPath || ''} ${me.sequence || ''}`)
-          this.ps.playMedia(mc)
-          ev.preventDefault()
-        })
+            mc.externalParam = me.projectPath;
+          Utils.log('info', `Launching ${me.projectPath || ''} ${me.sequence || ''}`);
+          this.ps.playMedia(mc);
+          ev.preventDefault();
+        });
 
         // Place the created button on the container
-        $btnDiv.append($btn)
-      })
+        $btnDiv.append($btn);
+      });
 
       // Add the buttons container on the main panel `div`
-      this.$div.empty().append($btnDiv)
+      this.$div.empty().append($btnDiv);
     }
 
     /**
@@ -166,7 +166,7 @@ define([
      * @returns {AWT.Dimension}
      */
     setDimension(preferredMaxSize) {
-      return preferredMaxSize
+      return preferredMaxSize;
     }
 
     /**
@@ -174,15 +174,15 @@ define([
      * @override
      */
     initActivity() {
-      super.initActivity()
+      super.initActivity();
 
       if (!this.firstRun)
-        this.buildVisualComponents()
+        this.buildVisualComponents();
       else
-        this.firstRun = false
+        this.firstRun = false;
 
-      this.setAndPlayMsg('initial', 'start')
-      this.playing = true
+      this.setAndPlayMsg('initial', 'start');
+      this.playing = true;
     }
   }
 
@@ -221,15 +221,15 @@ PMajODTmaw0Dr7/V1zRVQCNvAvNw6QbFb5iWwvRaWKE4Vh3H/6LxG+ueROfYdXXlb+zavg/++ADYLwfS
 iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAnUExURUxpcffvhP///2VlZczMZv//zPf39+/nc8zMzDMzmZmZZrW1tbWttcl3sA0A\
 AAABdFJOUwBA5thmAAAAgklEQVQ4y9WSQQ6AIAwEsVtFwf+/14JGbcHeTHSuO9kFQggfBE8BFwLR+mBwFGYSZvh53zjzZTdkLTXCkS/ViDHBCLe8Gla48qpkGEHl+8pdYJo0yOouPA2GhLLiCCyC28DI\
 cAXZ0IfsVKS3BTGUMDas0E9NfkO/ovmQBv2v0BJ+xAaYuQX2hCJNtwAAAABJRU5ErkJggg=='
-  }
+  };
 
   /**
    * Panel class associated to this type of activity: {@link MenuPanel}
    * @type {class} */
-  Menu.Panel = MenuPanel
+  Menu.Panel = MenuPanel;
 
   // Register class in Activity.prototype
-  Activity.CLASSES['@panels.Menu'] = Menu
+  Activity.CLASSES['@panels.Menu'] = Menu;
 
-  return Menu
-})
+  return Menu;
+});

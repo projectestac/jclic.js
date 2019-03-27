@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -53,10 +53,10 @@ define([
      * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
      */
     constructor(project) {
-      super(project)
+      super(project);
       // This kind of activities are not reported
-      this.includeInReports = false
-      this.reportActions = false
+      this.includeInReports = false;
+      this.reportActions = false;
     }
   }
 
@@ -75,7 +75,7 @@ define([
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
-      super(act, ps, $div)
+      super(act, ps, $div);
     }
 
     /**
@@ -84,8 +84,8 @@ define([
      */
     clear() {
       if (this.bg) {
-        this.bg.end()
-        this.bg = null
+        this.bg.end();
+        this.bg = null;
       }
     }
 
@@ -95,31 +95,31 @@ define([
      */
     buildVisualComponents() {
       if (this.firstRun)
-        super.buildVisualComponents()
-      this.clear()
-      const abc = this.act.abc['primary']
+        super.buildVisualComponents();
+      this.clear();
+      const abc = this.act.abc['primary'];
       if (abc) {
         if (abc.imgName) {
-          abc.setImgContent(this.act.project.mediaBag, null, false)
+          abc.setImgContent(this.act.project.mediaBag, null, false);
           if (abc.animatedGifFile && !abc.shaper.rectangularShapes)
             this.$animatedBg = $('<span/>').css({
               'background-image': `url(${abc.animatedGifFile})`,
               'background-position': 'center',
               'background-repeat': 'no-repeat',
               position: 'absolute'
-            }).appendTo(this.$div)
+            }).appendTo(this.$div);
         }
 
         if (this.act.acp !== null)
-          this.act.acp.generateContent(abc.nch, abc.ncw, [abc], false)
+          this.act.acp.generateContent(abc.nch, abc.ncw, [abc], false);
 
         this.bg = ActiveBoxGrid.createEmptyGrid(null, this,
           this.act.margin, this.act.margin,
-          abc)
-        this.bg.setContent(abc)
+          abc);
+        this.bg.setContent(abc);
         if (this.$animatedBg)
-          this.bg.setCellAttr('tmpTrans', true)
-        this.bg.setVisible(true)
+          this.bg.setCellAttr('tmpTrans', true);
+        this.bg.setVisible(true);
       }
     }
 
@@ -128,15 +128,15 @@ define([
      * @override
      */
     initActivity() {
-      super.initActivity()
+      super.initActivity();
       if (!this.firstRun)
-        this.buildVisualComponents()
+        this.buildVisualComponents();
       else
-        this.firstRun = false
+        this.firstRun = false;
 
-      this.invalidate().update()
-      this.setAndPlayMsg('initial', 'start')
-      this.playing = true
+      this.invalidate().update();
+      this.setAndPlayMsg('initial', 'start');
+      this.playing = true;
     }
 
     /**
@@ -147,17 +147,17 @@ define([
      * it's the whole panel.
      */
     updateContent(dirtyRegion) {
-      super.updateContent(dirtyRegion)
+      super.updateContent(dirtyRegion);
       if (this.bg && this.$canvas) {
         const
           canvas = this.$canvas.get(-1),
-          ctx = canvas.getContext('2d')
+          ctx = canvas.getContext('2d');
         if (!dirtyRegion)
-          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height)
-        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height)
-        this.bg.update(ctx, dirtyRegion)
+          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
+        this.bg.update(ctx, dirtyRegion);
       }
-      return this
+      return this;
     }
 
     /**
@@ -169,7 +169,7 @@ define([
     setDimension(preferredMaxSize) {
       return this.getBounds().equals(preferredMaxSize) ?
         preferredMaxSize :
-        BoxBag.layoutSingle(preferredMaxSize, this.bg, this.act.margin)
+        BoxBag.layoutSingle(preferredMaxSize, this.bg, this.act.margin);
     }
 
     /**
@@ -179,29 +179,29 @@ define([
      */
     setBounds(rect) {
       if (this.$canvas)
-        this.$canvas.remove()
+        this.$canvas.remove();
 
-      super.setBounds(rect)
+      super.setBounds(rect);
       if (this.bg) {
         this.$canvas = $('<canvas width="' + rect.dim.width + '" height="' + rect.dim.height + '"/>').css({
           position: 'absolute',
           top: 0,
           left: 0
-        })
+        });
         // Resize animated gif background
         if (this.$animatedBg) {
-          const bgRect = this.bg.getBounds()
+          const bgRect = this.bg.getBounds();
           this.$animatedBg.css({
             left: bgRect.pos.x,
             top: bgRect.pos.y,
             width: `${bgRect.dim.width}px`,
             height: `${bgRect.dim.height}px`,
             'background-size': `${bgRect.dim.width}px ${bgRect.dim.height}px`
-          })
+          });
         }
-        this.$div.append(this.$canvas)
-        this.invalidate().update()
-        setTimeout(() => this.bg ? this.bg.buildAccessibleElements(this.$canvas, this.$div) : null, 0)
+        this.$div.append(this.$canvas);
+        this.invalidate().update();
+        setTimeout(() => this.bg ? this.bg.buildAccessibleElements(this.$canvas, this.$div) : null, 0);
       }
     }
 
@@ -213,8 +213,8 @@ define([
      */
     buildAccessibleComponents() {
       if (this.$canvas && this.accessibleCanvas && this.bg) {
-        super.buildAccessibleComponents()
-        this.bg.buildAccessibleElements(this.$canvas, this.$div)
+        super.buildAccessibleComponents();
+        this.bg.buildAccessibleElements(this.$canvas, this.$div);
       }
     }
 
@@ -229,17 +229,17 @@ define([
       if (this.playing) {
         const p = new AWT.Point(
           event.pageX - this.$div.offset().left,
-          event.pageY - this.$div.offset().top)
+          event.pageY - this.$div.offset().top);
         // Array to be filled with actions to be executed at the end of event processing
-        const delayedActions = []
-        this.ps.stopMedia(1)
-        const bx = this.bg.findActiveBox(p)
+        const delayedActions = [];
+        this.ps.stopMedia(1);
+        const bx = this.bg.findActiveBox(p);
         if (bx) {
           if (!bx.playMedia(this.ps, delayedActions))
-            this.playEvent('click')
+            this.playEvent('click');
         }
-        delayedActions.forEach(action => action())
-        event.preventDefault()
+        delayedActions.forEach(action => action());
+        event.preventDefault();
       }
     }
   }
@@ -256,15 +256,15 @@ define([
      * @name InformationScreenPanel#events
      * @type {string[]} */
     events: ['click'],
-  })
+  });
 
   /**
    * Panel class associated to this type of activity: {@link InformationScreenPanel}
    * @type {class} */
-  InformationScreen.Panel = InformationScreenPanel
+  InformationScreen.Panel = InformationScreenPanel;
 
   // Register class in Activity.prototype
-  Activity.CLASSES['@panels.InformationScreen'] = InformationScreen
+  Activity.CLASSES['@panels.InformationScreen'] = InformationScreen;
 
-  return InformationScreen
-})
+  return InformationScreen;
+});

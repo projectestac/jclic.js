@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -46,7 +46,7 @@ define([
      * ActiveMediaBag constructor
      */
     constructor() {
-      this.players = []
+      this.players = [];
     }
 
     /**
@@ -59,25 +59,25 @@ define([
      * @returns {ActiveMediaPlayer}
      */
     createActiveMediaPlayer(mc, mb, ps) {
-      let amp = null
+      let amp = null;
       switch (mc.mediaType) {
         case 'RECORD_AUDIO':
           if (mc.length <= 0 || mc.length >= Utils.settings.MAX_RECORD_LENGTH)
-            break
+            break;
         /* falls through */
         case 'PLAY_RECORDED_AUDIO':
           if (mc.recBuffer < 0 || mc.recBuffer >= 10)
-            break
+            break;
         /* falls through */
         case 'PLAY_AUDIO':
         case 'PLAY_MIDI':
         case 'PLAY_VIDEO':
-          amp = new ActiveMediaPlayer(mc, mb, ps)
-          break
+          amp = new ActiveMediaPlayer(mc, mb, ps);
+          break;
       }
       if (amp !== null)
-        this.players.push(amp)
-      return amp
+        this.players.push(amp);
+      return amp;
     }
 
     /**
@@ -92,7 +92,7 @@ define([
      */
     getActiveMediaPlayer(mc, mb, ps) {
       return this.players.find(p => p.mc === mc || p.mc.isEquivalent(mc))
-        || this.createActiveMediaPlayer(mc, mb, ps)
+        || this.createActiveMediaPlayer(mc, mb, ps);
     }
 
     /**
@@ -100,11 +100,11 @@ define([
      * @param {MediaContent} mc - The media content to look for.
      */
     removeActiveMediaPlayer(mc) {
-      const i = this.players.findIndex(p => p.mc === mc)
+      const i = this.players.findIndex(p => p.mc === mc);
       if (i >= 0) {
-        this.players[i].clear()
+        this.players[i].clear();
         // removes the element pointed by 'i'
-        this.players.splice(i, 1)
+        this.players.splice(i, 1);
       }
     }
 
@@ -112,7 +112,7 @@ define([
      * Realizes all the media elements stored in this bag
      */
     realizeAll() {
-      this.players.forEach(p => p.realize())
+      this.players.forEach(p => p.realize());
     }
 
     /**
@@ -121,21 +121,21 @@ define([
      */
     stopAll(level) {
       if (typeof level === 'undefined')
-        level = -1
+        level = -1;
       this.players.forEach(amp => {
         if (level === -1 || amp.mc !== null && amp.mc.level <= level)
-          amp.stop()
-      })
+          amp.stop();
+      });
     }
 
     /**
      * Removes all players from this media bag
      */
     removeAll() {
-      this.players.forEach(p => p.clear())
+      this.players.forEach(p => p.clear());
       // Empty the `players` array
-      this.players.length = 0
-      ActiveMediaPlayer.prototype.clearAllAudioBuffers()
+      this.players.length = 0;
+      ActiveMediaPlayer.prototype.clearAllAudioBuffers();
     }
   }
 
@@ -145,7 +145,7 @@ define([
      * @name ActiveMediaBag#players
      * @type {ActiveMediaPlayer[]} */
     players: [],
-  })
+  });
 
-  return ActiveMediaBag
-})
+  return ActiveMediaBag;
+});

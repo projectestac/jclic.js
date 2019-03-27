@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -53,11 +53,11 @@ define([
      */
     constructor() {
       // Make a deep clone of the default style
-      this.style = { 'default': $.extend(true, {}, TextActivityDocument.DEFAULT_DOC_STYLE) }
-      this.p = []
+      this.style = { 'default': $.extend(true, {}, TextActivityDocument.DEFAULT_DOC_STYLE) };
+      this.p = [];
       //this.tmb=new TargetMarkerBag();
-      this.boxesContent = new ActiveBagContent()
-      this.popupsContent = new ActiveBagContent()
+      this.boxesContent = new ActiveBagContent();
+      this.popupsContent = new ActiveBagContent();
     }
 
     /**
@@ -69,75 +69,75 @@ define([
       // Read named styles
       // Sort styles according to its "base" dependencies
       const styles = $xml.children('style').toArray().sort((a, b) => {
-        var aName = a.getAttribute('name'), aBase = a.getAttribute('base') || null
-        var bName = b.getAttribute('name'), bBase = b.getAttribute('base') || null
+        var aName = a.getAttribute('name'), aBase = a.getAttribute('base') || null;
+        var bName = b.getAttribute('name'), bBase = b.getAttribute('base') || null;
         // Put 'default' always first, then each style below their base (if any)
         return aName === 'default' ? -1 : bName === 'default' ? 1
           : aBase === bName ? 1 : bBase === aName ? -1
-            : !aBase ? -1 : !bBase ? 1 : 0
-      })
+            : !aBase ? -1 : !bBase ? 1 : 0;
+      });
       // Process the ordered list of styles
       styles.forEach(style => {
-        const attr = this.readDocAttributes($(style))
+        const attr = this.readDocAttributes($(style));
         // Grant always that basic attributes are defined
-        this.style[attr.name] = attr.name === 'default' ? $.extend(true, this.style.default, attr) : attr
+        this.style[attr.name] = attr.name === 'default' ? $.extend(true, this.style.default, attr) : attr;
         //this.style[attr.name] = attr.name === 'default' ? Object.assign(this.style.default, attr) : attr
-      })
+      });
 
       // Read paragraphs
       $xml.find('section > p').each((_n, par) => {
 
-        const p = { elements: [] }
+        const p = { elements: [] };
 
         // Read paragraph attributes
         Utils.attrForEach(par.attributes, (name, value) => {
           switch (name) {
             case 'style':
-              p[name] = value
+              p[name] = value;
               break;
             case 'bidiLevel':
             case 'Alignment':
-              p[name] = Number(value)
-              break
+              p[name] = Number(value);
+              break;
           }
-        })
+        });
 
         // Read paragraph objects
         $(par).children().each((_n, child) => {
-          let obj
-          const $child = $(child)
+          let obj;
+          const $child = $(child);
           switch (child.nodeName) {
 
             case 'cell':
-              obj = new ActiveBoxContent().setProperties($child, mediaBag)
-              break
+              obj = new ActiveBoxContent().setProperties($child, mediaBag);
+              break;
 
             case 'text':
-              obj = { text: child.textContent.replace(/\t/g, '&#9;') }
-              const attr = this.readDocAttributes($child)
+              obj = { text: child.textContent.replace(/\t/g, '&#9;') };
+              const attr = this.readDocAttributes($child);
               if (!$.isEmptyObject(attr)) {
-                obj.attr = attr
+                obj.attr = attr;
               }
-              break
+              break;
 
             case 'target':
-              obj = new TextTarget(this, child.textContent.replace(/\t/g, '&#9;'))
-              obj.setProperties($child, mediaBag)
-              this.numTargets++
-              break
+              obj = new TextTarget(this, child.textContent.replace(/\t/g, '&#9;'));
+              obj.setProperties($child, mediaBag);
+              this.numTargets++;
+              break;
 
             default:
-              Utils.log('error', `Unknown object in activity document: "${child.nodeName}"`)
+              Utils.log('error', `Unknown object in activity document: "${child.nodeName}"`);
           }
           if (obj) {
-            obj.objectType = child.nodeName
-            p.elements.push(obj)
+            obj.objectType = child.nodeName;
+            p.elements.push(obj);
           }
-        })
+        });
 
-        this.p.push(p)
-      })
-      return this
+        this.p.push(p);
+      });
+      return this;
     }
 
     /**
@@ -148,73 +148,73 @@ define([
     readDocAttributes($xml) {
       let
         attr = {},
-        css = {}
+        css = {};
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
           case 'background':
-            val = Utils.checkColor(val, 'white')
-            attr[name] = val
-            css['background-color'] = val
-            break
+            val = Utils.checkColor(val, 'white');
+            attr[name] = val;
+            css['background-color'] = val;
+            break;
           case 'foreground':
-            val = Utils.checkColor(val, 'black')
-            attr[name] = val
-            css['color'] = val
-            break
+            val = Utils.checkColor(val, 'black');
+            attr[name] = val;
+            css['color'] = val;
+            break;
           case 'family':
-            css['font-family'] = val
+            css['font-family'] = val;
           /* falls through */
           case 'name':
           case 'style':
             // Attributes specific to named styles:
-            attr[name] = val
-            break
+            attr[name] = val;
+            break;
           case 'base':
-            attr[name] = val
+            attr[name] = val;
             // If base style exists, merge it with current settings
             if (this.style[val]) {
               //attr = Object.apply({}, this.style[val], attr)
-              attr = $.extend(true, {}, this.style[val], attr)
+              attr = $.extend(true, {}, this.style[val], attr);
               if (this.style[val].css)
                 //css = Object.apply({}, this.style[val].css, css)
-                css = $.extend({}, this.style[val].css, css)
+                css = $.extend({}, this.style[val].css, css);
             }
-            break
+            break;
           case 'bold':
-            val = Utils.getBoolean(val)
-            attr[name] = val
-            css['font-weight'] = val ? 'bold' : 'normal'
-            break
+            val = Utils.getBoolean(val);
+            attr[name] = val;
+            css['font-weight'] = val ? 'bold' : 'normal';
+            break;
           case 'italic':
-            val = Utils.getBoolean(val)
-            attr[name] = val
-            css['font-style'] = val ? 'italic' : 'normal'
-            break
+            val = Utils.getBoolean(val);
+            attr[name] = val;
+            css['font-style'] = val ? 'italic' : 'normal';
+            break;
           case 'target':
-            attr[name] = Utils.getBoolean(val)
-            break
+            attr[name] = Utils.getBoolean(val);
+            break;
           case 'size':
-            attr[name] = Number(val)
-            css['font-size'] = `${val}px`
-            break
+            attr[name] = Number(val);
+            css['font-size'] = `${val}px`;
+            break;
           case 'tabWidth':
             // `tab-size` CSS attribute is only set when the document has a specific `tabWidth`
             // setting. It must be accompanied of `white-space:pre` to successfully work.
-            this.tabSpc = val
-            css['tab-size'] = this.tabSpc
-            css['white-space'] = 'pre-wrap'
-            break
+            this.tabSpc = val;
+            css['tab-size'] = this.tabSpc;
+            css['white-space'] = 'pre-wrap';
+            break;
           default:
-            Utils.log('warn', `Unknown text attribute: "${name}" = "${val}"`)
-            attr[name] = val
-            break
+            Utils.log('warn', `Unknown text attribute: "${name}" = "${val}"`);
+            attr[name] = val;
+            break;
         }
-      })
+      });
 
       if (!$.isEmptyObject(css))
-        attr['css'] = css
+        attr['css'] = css;
 
-      return attr
+      return attr;
     }
 
     getData() {
@@ -223,7 +223,7 @@ define([
         'boxesContent', 'popupsContent',
         'style',
         'p',
-      ])
+      ]);
     }
 
     /**
@@ -231,35 +231,35 @@ define([
      * @returns {String} - The text of the document.
      */
     getRawText() {
-      const $html = $('<div/>')
+      const $html = $('<div/>');
       // Process paragraphs
       this.p.forEach(p => {
         // Creates a new DOM paragraph
-        const $p = $('<p/>')
-        let empty = true
+        const $p = $('<p/>');
+        let empty = true;
         // Process the paragraph elements
         p.elements.forEach(element => {
           switch (element.objectType) {
             case 'text':
             case 'target':
-              $p.append(element.text)
-              break
+              $p.append(element.text);
+              break;
             case 'cell':
               // cells are not considered raw text of the document
-              break
+              break;
             default:
-              break
+              break;
           }
-          empty = false
-        })
+          empty = false;
+        });
         if (empty) {
           // Don't leave paragraphs empty
-          $p.html('&nbsp;')
+          $p.html('&nbsp;');
         }
         // Adds the paragraph to the DOM element
-        $html.append($p)
-      })
-      return $html.text().trim()
+        $html.append($p);
+      });
+      return $html.text().trim();
     }
 
     /**
@@ -269,8 +269,8 @@ define([
      * @returns {Object} - The result of combining `default` with the requested style
      */
     getFullStyle(name) {
-      const st = $.extend(true, {}, this.style.default)
-      return $.extend(true, st, this.style[name] ? this.style[name] : {})
+      const st = $.extend(true, {}, this.style.default);
+      return $.extend(true, st, this.style[name] ? this.style[name] : {});
       //return Object.assign({}, this.style.default, this.style[name] ? this.style[name] : {})
     }
   }
@@ -322,7 +322,7 @@ define([
      * @name TextActivityDocument#p
      * @type {object} */
     p: null,
-  })
+  });
 
   /**
    * Default style for new documents
@@ -338,7 +338,7 @@ define([
       'background-color': 'white',
       color: 'black'
     }
-  }
+  };
 
   /**
    * This class contains the properties and methods of the document elements that are the real
@@ -352,11 +352,11 @@ define([
      * @param {string} text - Main text of this target.
      */
     constructor(doc, text) {
-      this.doc = doc
-      this.text = text
-      this.numIniChars = text.length
-      this.answers = [text]
-      this.maxLenResp = this.numIniChars
+      this.doc = doc;
+      this.text = text;
+      this.numIniChars = text.length;
+      this.answers = [text];
+      this.maxLenResp = this.numIniChars;
     }
 
     /**
@@ -364,8 +364,8 @@ define([
      * @param {string=} status - The `targetStatus` to be established. Default is `NOT_EDITED`
      */
     reset(status) {
-      this.targetStatus = status ? status : 'NOT_EDITED'
-      this.flagModified = false
+      this.targetStatus = status ? status : 'NOT_EDITED';
+      this.flagModified = false;
     }
 
     /**
@@ -374,64 +374,64 @@ define([
      * @param {MediaBag} mediaBag - The media bag used to load images and media content
      */
     setProperties($xml, mediaBag) {
-      let firstAnswer = true
+      let firstAnswer = true;
       // Read specific nodes
       $xml.children().each((_n, child) => {
-        const $node = $(child)
+        const $node = $(child);
         switch (child.nodeName) {
           case 'answer':
             if (firstAnswer) {
-              firstAnswer = false
-              this.answers = []
+              firstAnswer = false;
+              this.answers = [];
             }
             if (this.answers === null)
-              this.answers = []
-            this.answers.push(child.textContent)
-            break
+              this.answers = [];
+            this.answers.push(child.textContent);
+            break;
 
           case 'optionList':
             $node.children('option').each((_n, opChild) => {
-              this.isList = true
+              this.isList = true;
               if (this.options === null)
-                this.options = []
-              this.options.push(opChild.textContent)
-            })
-            break
+                this.options = [];
+              this.options.push(opChild.textContent);
+            });
+            break;
 
           case 'response':
-            this.iniChar = Utils.getVal($node.attr('fill'), this.iniChar).charAt(0)
-            this.numIniChars = Utils.getNumber($node.attr('length'), this.numIniChars)
-            this.maxLenResp = Utils.getNumber($node.attr('maxLength'), this.maxLenResp)
-            this.iniText = Utils.getVal($node.attr('show'), this.iniText)
-            break
+            this.iniChar = Utils.getVal($node.attr('fill'), this.iniChar).charAt(0);
+            this.numIniChars = Utils.getNumber($node.attr('length'), this.numIniChars);
+            this.maxLenResp = Utils.getNumber($node.attr('maxLength'), this.maxLenResp);
+            this.iniText = Utils.getVal($node.attr('show'), this.iniText);
+            break;
 
           case 'info':
-            this.infoMode = Utils.getVal($node.attr('mode'), 'always')
-            this.popupDelay = Utils.getNumber($node.attr('delay'), this.popupDelay)
-            this.popupMaxTime = Utils.getNumber($node.attr('maxTime'), this.popupMaxTime)
+            this.infoMode = Utils.getVal($node.attr('mode'), 'always');
+            this.popupDelay = Utils.getNumber($node.attr('delay'), this.popupDelay);
+            this.popupMaxTime = Utils.getNumber($node.attr('maxTime'), this.popupMaxTime);
             $node.children('media').each((_n, media) => {
-              this.onlyPlay = true
-              this.popupContent = new ActiveBoxContent()
-              this.popupContent.mediaContent = new MediaContent().setProperties($(media))
+              this.onlyPlay = true;
+              this.popupContent = new ActiveBoxContent();
+              this.popupContent.mediaContent = new MediaContent().setProperties($(media));
             });
             if (!this.popupContent) {
               $node.children('cell').each((_n, cell) => {
-                this.popupContent = new ActiveBoxContent().setProperties($(cell), mediaBag)
-              })
+                this.popupContent = new ActiveBoxContent().setProperties($(cell), mediaBag);
+              });
             }
-            break
+            break;
 
           case 'text':
-            this.text = child.textContent.replace(/\t/g, '&#9;')
-            const attr = this.doc.readDocAttributes($(child))
+            this.text = child.textContent.replace(/\t/g, '&#9;');
+            const attr = this.doc.readDocAttributes($(child));
             if (!$.isEmptyObject(attr))
-              this.attr = attr
-            break
+              this.attr = attr;
+            break;
 
           default:
-            break
+            break;
         }
-      })
+      });
     }
 
     /**
@@ -439,7 +439,7 @@ define([
      * @returns {string}
      */
     getAnswers() {
-      return this.answers ? this.answers.join('|') : ''
+      return this.answers ? this.answers.join('|') : '';
     }
 
     /**
@@ -447,13 +447,13 @@ define([
      * color usually means error.
      */
     checkColors() {
-      const $element = this.$comboList || this.$span
+      const $element = this.$comboList || this.$span;
       if ($element) {
         const style = this.doc.style[
           this.targetStatus === 'WITH_ERROR' ? 'targetError' :
-            this.targetStatus === 'HIDDEN' ? 'default' : 'target']
+            this.targetStatus === 'HIDDEN' ? 'default' : 'target'];
         if (style && style.css) {
-          $element.css(style.css)
+          $element.css(style.css);
         }
       }
     }
@@ -464,10 +464,10 @@ define([
      */
     readCurrentText() {
       if (this.$span)
-        this.currentText = this.$span.text()
+        this.currentText = this.$span.text();
       else if (this.$comboList)
-        this.currentText = this.$comboList.val()
-      return this.currentText
+        this.currentText = this.$comboList.val();
+      return this.currentText;
     }
   }
 
@@ -608,9 +608,9 @@ define([
      * @name TextTarget#parentPane
      * @type {TextActivityBasePanel} */
     parentPane: null,
-  })
+  });
 
-  TextActivityDocument.TextTarget = TextTarget
+  TextActivityDocument.TextTarget = TextTarget;
 
-  return TextActivityDocument
-})
+  return TextActivityDocument;
+});

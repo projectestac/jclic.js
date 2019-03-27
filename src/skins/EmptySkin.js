@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -53,7 +53,7 @@ define([
      */
     constructor(ps, name = null, options = {}) {
       // EmptySkin extends [Skin](Skin.html)
-      super(ps, name, options)
+      super(ps, name, options);
     }
     /**
      * Returns the CSS styles used by this skin. This method should be called only from
@@ -62,7 +62,7 @@ define([
      * @returns {string}
      */
     _getStyleSheets(media = 'default') {
-      return super._getStyleSheets(media) + (media === 'default' ? this.mainCSS : '')
+      return super._getStyleSheets(media) + (media === 'default' ? this.mainCSS : '');
     }
 
   }
@@ -80,10 +80,10 @@ define([
      * @override
      * @type {string} */
     mainCSS: '.ID .JClicPlayerCnt {margin:0;}'
-  })
+  });
 
   // Register this class in the list of available skins
-  Skin.CLASSES['empty'] = EmptySkin
+  Skin.CLASSES['empty'] = EmptySkin;
 
-  return EmptySkin
-})
+  return EmptySkin;
+});

@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -57,8 +57,8 @@ define([
      */
     constructor(parent) {
       if (parent) {
-        this.elements = Object.assign({}, this.elements, parent.elements)
-        this.enabled = parent.enabled
+        this.elements = Object.assign({}, this.elements, parent.elements);
+        this.enabled = parent.enabled;
       }
     }
 
@@ -67,20 +67,20 @@ define([
      * @param {external:jQuery} $xml - The XML element to be parsed
      */
     setProperties($xml) {
-      this.enabled = Utils.getTriState($xml.attr('enabled'), this.enabled)
+      this.enabled = Utils.getTriState($xml.attr('enabled'), this.enabled);
       $xml.children().each((_n, child) => {
-        const id = child.getAttribute('id')
-        this.elements[id] = new EventSoundsElement(id)
-        this.elements[id].setProperties($(child))
-      })
-      return this
+        const id = child.getAttribute('id');
+        this.elements[id] = new EventSoundsElement(id);
+        this.elements[id].setProperties($(child));
+      });
+      return this;
     }
 
     getData() {
       return {
         enabled: this.enabled,
         elements: Utils.getData(this.elements)
-      }
+      };
     }
 
     /**
@@ -90,7 +90,7 @@ define([
      */
     realize(ps, mediaBag) {
       // Values are {EventSoundElement} objects
-      $.each(this.elements, (key, value) => value.realize(ps, mediaBag))
+      $.each(this.elements, (key, value) => value.realize(ps, mediaBag));
     }
 
     /**
@@ -99,9 +99,9 @@ define([
      */
     play(eventName) {
       if (this.globalEnabled && this.enabled) {
-        const sound = this.elements[eventName]
+        const sound = this.elements[eventName];
         if (sound && sound.enabled)
-          sound.play()
+          sound.play();
       }
     }
   }
@@ -315,7 +315,7 @@ define([
       'Naqqqqqqqqqqqqqqqqqqqqqqqv/jIMRjEaCVZAp5hlCqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq' +
       'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq' +
       'qqqqqqqqqqqq'
-  }
+  };
 
   Object.assign(EventSounds.prototype, {
     /**
@@ -341,7 +341,7 @@ define([
      * @name EventSounds#globalEnabled
      * @type {boolean} */
     globalEnabled: true,
-  })
+  });
 
-  return EventSounds
-})
+  return EventSounds;
+});

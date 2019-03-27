@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -51,7 +51,7 @@ define([
      * @param {JClicProject} project - The project to which this activity belongs
      */
     constructor(project) {
-      super(project)
+      super(project);
     }
 
     /**
@@ -60,7 +60,7 @@ define([
      * @returns {number}
      */
     getMinNumActions() {
-      return this.document ? this.document.numTargets : 0
+      return this.document ? this.document.numTargets : 0;
     }
   }
 
@@ -96,7 +96,7 @@ define([
      * @name TextActivityBase#prevScreenMaxTime
      * @type {number} */
     prevScreenMaxTime: -1,
-  })
+  });
 
   /**
    * The {@link ActivityPanel} where text activities (based on {@link TextActivityBase}) are played.
@@ -113,8 +113,8 @@ define([
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
-      super(act, ps, $div)
-      this.targets = []
+      super(act, ps, $div);
+      this.targets = [];
     }
 
     /**
@@ -129,177 +129,177 @@ define([
       // style of the document.
       // It also sets the 'overflow' CSS attribute to 'auto', which will display a
       // vertical scroll bar when needed
-      $div.empty().css(doc.style['default'].css).css({ display: 'flex', 'flex-direction': 'column' })
+      $div.empty().css(doc.style['default'].css).css({ display: 'flex', 'flex-direction': 'column' });
 
-      const $scroller = $('<div/>').css({ 'flex-grow': 1, overflow: 'auto' })
-      const $doc = $('<div/>', { class: 'JClicTextDocument' }).css({ 'padding': 4 }).css(doc.style['default'].css)
+      const $scroller = $('<div/>').css({ 'flex-grow': 1, overflow: 'auto' });
+      const $doc = $('<div/>', { class: 'JClicTextDocument' }).css({ 'padding': 4 }).css(doc.style['default'].css);
 
-      let currentPStyle = null
-      const popupSpans = []
+      let currentPStyle = null;
+      const popupSpans = [];
 
       //
       // Process paragraphs
       doc.p.forEach(p => {
         // Creates a new DOM paragraph
-        const $p = $('<p/>').css({ margin: 0 })
-        let empty = true
+        const $p = $('<p/>').css({ margin: 0 });
+        let empty = true;
 
         // Check if the paragraph has its own style
         if (p.style) {
-          currentPStyle = doc.style[p.style].css
-          $p.css(currentPStyle)
+          currentPStyle = doc.style[p.style].css;
+          $p.css(currentPStyle);
         } else
-          currentPStyle = null
+          currentPStyle = null;
 
         // Check if the paragraph has a special alignment
         if (p.Alignment) {
-          const al = Number(p.Alignment)
-          $p.css({ 'text-align': al === 1 ? 'center' : al === 2 ? 'right' : 'left' })
+          const al = Number(p.Alignment);
+          $p.css({ 'text-align': al === 1 ? 'center' : al === 2 ? 'right' : 'left' });
         }
 
         // Process the paragraph elements
         p.elements.forEach(element => {
           // Elements will be inserted as 'span' DOM elements, or as simple text if they don't
           // have specific attributes.
-          let $span = $('<span/>')
+          let $span = $('<span/>');
           switch (element.objectType) {
             case 'text':
               if (element.attr) {
                 // Text uses a specific style and/or individual attributes
-                $span.html(element.text)
+                $span.html(element.text);
                 if (element.attr.style) {
-                  $span.css(doc.style[element.attr.style].css)
+                  $span.css(doc.style[element.attr.style].css);
                 }
                 if (element.attr.css) {
-                  $span.css(element.attr.css)
+                  $span.css(element.attr.css);
                 }
-                $p.append($span)
+                $p.append($span);
               } else {
-                $p.append(element.text)
+                $p.append(element.text);
               }
-              break
+              break;
 
             case 'cell':
               // Create a new ActiveBox based on this ActiveBoxContent
-              const box = ActiveBox.createCell($span.css({ position: 'relative' }), element)
-              $span.css({ 'display': 'inline-block', 'vertical-align': 'middle' })
+              const box = ActiveBox.createCell($span.css({ position: 'relative' }), element);
+              $span.css({ 'display': 'inline-block', 'vertical-align': 'middle' });
               if (element.mediaContent) {
                 $span.on('click', event => {
-                  event.preventDefault()
-                  this.ps.stopMedia(1)
-                  box.playMedia(this.ps)
-                  return false
-                })
+                  event.preventDefault();
+                  this.ps.stopMedia(1);
+                  box.playMedia(this.ps);
+                  return false;
+                });
               }
-              $p.append($span)
-              break
+              $p.append($span);
+              break;
 
             case 'target':
               if (this.showingPrevScreen) {
-                $span.text(element.text)
-                $p.append($span)
-                break
+                $span.text(element.text);
+                $p.append($span);
+                break;
               }
 
-              const target = element
-              let $popup = null
+              const target = element;
+              let $popup = null;
               // Process target popups
               if (target.infoMode !== 'no_info' && target.popupContent) {
-                $popup = $('<span/>').css({ position: 'absolute', 'padding-top': '2pt', display: 'none' })
+                $popup = $('<span/>').css({ position: 'absolute', 'padding-top': '2pt', display: 'none' });
                 // Create a new ActiveBox based on popupContent
-                const popupBox = ActiveBox.createCell($popup, target.popupContent)
+                const popupBox = ActiveBox.createCell($popup, target.popupContent);
                 if (target.popupContent.mediaContent) {
                   $popup.on('click', event => {
-                    event.preventDefault()
-                    this.ps.stopMedia(1)
+                    event.preventDefault();
+                    this.ps.stopMedia(1);
                     if (popupBox)
-                      popupBox.playMedia(this.ps)
+                      popupBox.playMedia(this.ps);
                     else if (target.popupContent.mediaContent)
-                      this.ps.playMedia(target.popupContent.mediaContent)
-                    return false
-                  })
+                      this.ps.playMedia(target.popupContent.mediaContent);
+                    return false;
+                  });
                 }
-                target.$popup = $popup
+                target.$popup = $popup;
                 // Save for later setting of top-margin
-                popupSpans.push({ p: $p, span: $popup, box: popupBox })
+                popupSpans.push({ p: $p, span: $popup, box: popupBox });
               }
 
-              $span = this.$createTargetElement(target, $span)
-              target.num = this.targets.length
-              target.pos = target.num
-              this.targets.push(target)
+              $span = this.$createTargetElement(target, $span);
+              target.num = this.targets.length;
+              target.pos = target.num;
+              this.targets.push(target);
               if ($span) {
-                $span.css(doc.style['default'].css)
+                $span.css(doc.style['default'].css);
                 if (currentPStyle)
-                  $span.css(currentPStyle)
+                  $span.css(currentPStyle);
                 if (this.targetsMarked) {
                   if (target.attr) {
                     // Default style name for targets is 'target'
                     if (!target.attr.style)
-                      target.attr.style = 'target'
-                    $span.css(doc.style[target.attr.style].css)
+                      target.attr.style = 'target';
+                    $span.css(doc.style[target.attr.style].css);
                     // Check if target has specific attributes
                     if (target.attr.css)
-                      $span.css(target.attr.css)
+                      $span.css(target.attr.css);
                   } else if (doc.style['target'])
-                    $span.css(doc.style['target'].css)
+                    $span.css(doc.style['target'].css);
                 } else {
-                  target.targetStatus = 'HIDDEN'
+                  target.targetStatus = 'HIDDEN';
                 }
 
                 // Catch on-demand popups with `F1`, cancel with `Escape`
                 if ($popup !== null && target.infoMode === 'onDemand') {
                   $span.keydown(ev => {
                     if (ev.key === target.popupKey) {
-                      ev.preventDefault()
-                      this.showPopup($popup, target.popupMaxTime, target.popupDelay)
+                      ev.preventDefault();
+                      this.showPopup($popup, target.popupMaxTime, target.popupDelay);
                     } else if (ev.key === 'Escape') {
-                      ev.preventDefault()
-                      this.showPopup(null)
+                      ev.preventDefault();
+                      this.showPopup(null);
                     }
-                  })
+                  });
                 }
               }
 
               if ($popup && $span) {
                 if (target.isList)
-                  $p.append($span).append($popup)
+                  $p.append($span).append($popup);
                 else
-                  $p.append($popup).append($span)
+                  $p.append($popup).append($span);
               } else if ($span)
-                $p.append($span)
+                $p.append($span);
 
-              target.$p = $p
-              break
+              target.$p = $p;
+              break;
           }
-          empty = false
-        })
+          empty = false;
+        });
         if (empty)
           // Don't leave paragraphs empty
-          $p.html('&nbsp;')
+          $p.html('&nbsp;');
 
         // Adds the paragraph to the DOM element
-        $doc.append($p)
-      })
+        $doc.append($p);
+      });
 
-      $div.append($scroller.append($doc))
+      $div.append($scroller.append($doc));
 
       if (this.act.checkButtonText && !this.showingPrevScreen) {
         this.$checkButton = $('<button/>', { class: 'StockBtn' })
           .html(this.act.checkButtonText)
           .css({ width: '100%', 'flex-shrink': 0 })
-          .on('click', () => this.evaluatePanel())
-        $div.append(this.$checkButton)
+          .on('click', () => this.evaluatePanel());
+        $div.append(this.$checkButton);
       }
 
       // Place popups below its target baseline
-      popupSpans.forEach(pspan => pspan.span.css({ 'margin-top': pspan.p.css('font-size') }))
+      popupSpans.forEach(pspan => pspan.span.css({ 'margin-top': pspan.p.css('font-size') }));
 
       // Init Evaluator
       if (this.act.ev)
-        this.act.ev.init(this.act.project.settings.locales)
+        this.act.ev.init(this.act.project.settings.locales);
 
-      return $div
+      return $div;
     }
 
     /**
@@ -311,9 +311,9 @@ define([
      * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
      */
     $createTargetElement(target, $span) {
-      $span.text(target.text)
-      target.$span = $span
-      return $span
+      $span.text(target.text);
+      target.$span = $span;
+      return $span;
     }
 
     /**
@@ -322,9 +322,9 @@ define([
      */
     initActivity() {
       if (this.act.prevScreen)
-        this.preInitActivity()
+        this.preInitActivity();
       else
-        this.startActivity()
+        this.startActivity();
     }
 
     /**
@@ -332,10 +332,10 @@ define([
      * @override
      */
     startActivity() {
-      super.initActivity()
-      this.setAndPlayMsg('initial', 'start')
-      this.setDocContent(this.$div, this.act.document)
-      this.playing = true
+      super.initActivity();
+      this.setAndPlayMsg('initial', 'start');
+      this.setDocContent(this.$div, this.act.document);
+      this.playing = true;
     }
 
     /**
@@ -344,47 +344,47 @@ define([
      */
     preInitActivity() {
       if (!this.act.prevScreen)
-        return
+        return;
 
       const prevScreenEnd = () => {
-        this.showingPrevScreen = false
-        this.$div.unbind('click')
+        this.showingPrevScreen = false;
+        this.$div.unbind('click');
         if (this.prevScreenTimer) {
-          clearTimeout(this.prevScreenTimer)
-          this.prevScreenTimer = null
+          clearTimeout(this.prevScreenTimer);
+          this.prevScreenTimer = null;
         }
-        this.startActivity()
-        return true
-      }
+        this.startActivity();
+        return true;
+      };
 
-      this.showingPrevScreen = true
-      this.$div.empty()
+      this.showingPrevScreen = true;
+      this.$div.empty();
 
       if (!this.act.prevScreenText) {
-        this.setDocContent(this.$div, this.act.document)
+        this.setDocContent(this.$div, this.act.document);
       } else {
         if (!this.act.prevScreenStyle)
-          this.act.prevScreenStyle = new BoxBase()
-        this.$div.css(this.act.prevScreenStyle.getCSS()).css('overflow', 'auto')
+          this.act.prevScreenStyle = new BoxBase();
+        this.$div.css(this.act.prevScreenStyle.getCSS()).css('overflow', 'auto');
         const $html = $('<div/>', { class: 'JClicTextDocument' })
           .css({ 'padding': 4 })
           .css(this.act.prevScreenStyle.getCSS())
-          .append(this.act.prevScreenText)
-        this.$div.append($html)
+          .append(this.act.prevScreenText);
+        this.$div.append($html);
       }
 
-      this.enableCounters(true, false, false)
-      this.ps.setCounterValue('time', 0)
+      this.enableCounters(true, false, false);
+      this.ps.setCounterValue('time', 0);
 
-      this.ps.setMsg(this.act.messages['previous'])
+      this.ps.setMsg(this.act.messages['previous']);
 
       if (this.act.prevScreenMaxTime > 0) {
-        this.ps.setCountDown('time', this.act.prevScreenMaxTime)
-        this.prevScreenTimer = setTimeout(prevScreenEnd, this.act.prevScreenMaxTime * 1000)
+        this.ps.setCountDown('time', this.act.prevScreenMaxTime);
+        this.prevScreenTimer = setTimeout(prevScreenEnd, this.act.prevScreenMaxTime * 1000);
       }
 
-      this.$div.on('click', prevScreenEnd)
-      this.ps.playMsg()
+      this.$div.on('click', prevScreenEnd);
+      this.ps.playMsg();
     }
 
     /**
@@ -392,8 +392,8 @@ define([
      * @returns {boolean} - `true` when the panel is OK, `false` otherwise.
      */
     evaluatePanel() {
-      this.finishActivity(true)
-      return true
+      this.finishActivity(true);
+      return true;
     }
 
     /**
@@ -403,13 +403,13 @@ define([
      */
     finishActivity(result) {
       if (this.$checkButton)
-        this.$checkButton.prop('disabled', true)
+        this.$checkButton.prop('disabled', true);
       this.targets.forEach(t => {
         if (t.$comboList)
-          t.$comboList.attr('disabled', true)
-      })
-      this.showPopup(null)
-      super.finishActivity(result)
+          t.$comboList.attr('disabled', true);
+      });
+      this.showPopup(null);
+      super.finishActivity(result);
     }
 
     /**
@@ -420,7 +420,7 @@ define([
      * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
      */
     processEvent(_event) {
-      return this.playing
+      return this.playing;
     }
 
     /**
@@ -431,41 +431,41 @@ define([
     showPopup($popup, maxTime, waitTime) {
       // Hide current popup
       if (this.$currentPopup) {
-        this.$currentPopup.css({ display: 'none' })
-        this.$currentPopup = null
+        this.$currentPopup.css({ display: 'none' });
+        this.$currentPopup = null;
         if (this.currentPopupTimer) {
-          window.clearTimeout(this.currentPopupTimer)
-          this.currentPopupTimer = 0
+          window.clearTimeout(this.currentPopupTimer);
+          this.currentPopupTimer = 0;
         }
       }
 
       // Clear popupWaitTimer
       if (this.popupWaitTimer) {
-        window.clearTimeout(this.popupWaitTimer)
-        this.popupWaitTimer = 0
+        window.clearTimeout(this.popupWaitTimer);
+        this.popupWaitTimer = 0;
       }
 
       // Prepare popup timer
       if (waitTime) {
         this.popupWaitTimer = window.setTimeout(() => {
-          this.showPopup($popup, maxTime)
-        }, waitTime * 1000)
-        return
+          this.showPopup($popup, maxTime);
+        }, waitTime * 1000);
+        return;
       }
 
       if ($popup) {
-        $popup.css({ display: '' })
-        $popup.click()
+        $popup.css({ display: '' });
+        $popup.click();
 
-        this.$currentPopup = $popup
+        this.$currentPopup = $popup;
         if (maxTime) {
           this.currentPopupTimer = window.setTimeout(() => {
-            $popup.css({ display: 'none' })
+            $popup.css({ display: 'none' });
             if (this.$currentPopup === $popup) {
-              this.$currentPopup = null
-              this.currentPopupTimer = 0
+              this.$currentPopup = null;
+              this.currentPopupTimer = 0;
             }
-          }, maxTime * 1000)
+          }, maxTime * 1000);
         }
       }
     }
@@ -508,12 +508,12 @@ define([
      * @name TextActivityBasePanel#popupWaitTimer
      * @type {number} */
     popupWaitTimer: 0,
-  })
+  });
 
   /**
    * Panel class associated to this type of activity: {@link TextActivityBasePanel}
    * @type {class} */
-  TextActivityBase.Panel = TextActivityBasePanel
+  TextActivityBase.Panel = TextActivityBasePanel;
 
-  return TextActivityBase
-})
+  return TextActivityBase;
+});

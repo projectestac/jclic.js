@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -56,9 +56,9 @@ define([], function () {
      */
     static Decrypt(txt) {
       if (txt === null || txt.length === 0)
-        return null
-      const s = Encryption.decodify(txt)
-      return s === Encryption.BLANK ? '' : s
+        return null;
+      const s = Encryption.decodify(txt);
+      return s === Encryption.BLANK ? '' : s;
     }
 
     /**
@@ -67,15 +67,15 @@ define([], function () {
      * @returns {string} (was char)
      */
     static hexCharArrayToChar(cA, fromIndex) {
-      let n = 0
+      let n = 0;
       for (let i = 0; i <= 3; i++) {
-        const j = Number.parseInt(cA[fromIndex + i], 16)
+        const j = Number.parseInt(cA[fromIndex + i], 16);
         if (isNaN(j))
-          throw 'Invalid expression!'
+          throw 'Invalid expression!';
         else
-          n = n * 16 + j
+          n = n * 16 + j;
       }
-      return String.fromCharCode(n)
+      return String.fromCharCode(n);
     }
 
     /**
@@ -84,15 +84,15 @@ define([], function () {
      * @returns {number}
      */
     static hexCharArrayToInt(cA, fromIndex) {
-      let n = 0
+      let n = 0;
       for (let i = 0; i <= 1; i++) {
-        const j = Number.parseInt(cA[fromIndex + i], 16)
+        const j = Number.parseInt(cA[fromIndex + i], 16);
         if (isNaN(j))
-          throw 'Invalid expression!'
+          throw 'Invalid expression!';
         else
-          n = n * 16 + j
+          n = n * 16 + j;
       }
-      return n
+      return n;
     }
 
     /**
@@ -104,23 +104,23 @@ define([], function () {
         sb = '',
         num = Number.parseInt(cA[0], 32),
         k = 0,
-        i = 0
+        i = 0;
 
       for (i = 0; num !== 0; i++) {
         while (num > 0) {
-          sb = sb + cA[i * 3 + 1] + cA[i * 3 + 2]
-          num--
-          k++
+          sb = sb + cA[i * 3 + 1] + cA[i * 3 + 2];
+          num--;
+          k++;
         }
         if (cA.length > i * 3 + 3)
-          num = Number.parseInt(cA[i * 3 + 3], 32)
+          num = Number.parseInt(cA[i * 3 + 3], 32);
         else
-          num = 0
+          num = 0;
       }
       for (let j = i * 3 + 1; j < cA.length; j++)
-        sb = sb + cA[j]
+        sb = sb + cA[j];
 
-      return Number.parseInt(k, 32) + sb
+      return Number.parseInt(k, 32) + sb;
     }
 
     /**
@@ -128,28 +128,28 @@ define([], function () {
      * @returns {string} (was StringBuilder)
      */
     static decompressZeros(cA) {
-      cA = Encryption.decodifyZerosField(cA)
+      cA = Encryption.decodifyZerosField(cA);
       let
         numBytesZeros = Number.parseInt(cA[0], 32),
         iniNoZeros = numBytesZeros * 2 + 1,
         bFi = false,
-        sb = ''
+        sb = '';
 
       for (let i = 0; i < numBytesZeros && !bFi; i++) {
-        const zeros = Encryption.hexCharArrayToInt(cA, 1 + i * 2)
-        let s = zeros.toString(2)
+        const zeros = Encryption.hexCharArrayToInt(cA, 1 + i * 2);
+        let s = zeros.toString(2);
         while (s.length < 8)
-          s = '0' + s
+          s = '0' + s;
         for (let j = 0; j <= 7 && !bFi; j++) {
           if (s[j] === '1')
-            sb = sb + '0'
+            sb = sb + '0';
           else if (iniNoZeros < cA.length)
-            sb = sb + cA[iniNoZeros++]
+            sb = sb + cA[iniNoZeros++];
           else
-            bFi = true
+            bFi = true;
         }
       }
-      return sb
+      return sb;
     }
 
     /**
@@ -157,13 +157,13 @@ define([], function () {
      * @returns {string}
      */
     static decodifyFromHex(sb1) {
-      let sb = '', j = 0
+      let sb = '', j = 0;
       for (let i = 0; j < sb1.length; i++) {
-        const c = Encryption.hexCharArrayToChar(sb1, j)
-        sb = sb + c
-        j += 4
+        const c = Encryption.hexCharArrayToChar(sb1, j);
+        sb = sb + c;
+        j += 4;
       }
-      return sb
+      return sb;
     }
 
     /**
@@ -171,16 +171,16 @@ define([], function () {
      * @returns {string} (was char[])
      */
     static unchangeOrder(s) {
-      let m = 0, n = s.length - 1
-      const cA = []
+      let m = 0, n = s.length - 1;
+      const cA = [];
       for (let p = 0; p < s.length; p++)
-        cA[p] = ''
+        cA[p] = '';
       for (let i = 0; i < s.length; i++)
         if (i % 2 === 0)
-          cA[i] = s[m++]
+          cA[i] = s[m++];
         else
-          cA[i] = s[n--]
-      return cA.join('')
+          cA[i] = s[n--];
+      return cA.join('');
     }
 
     /**
@@ -189,8 +189,8 @@ define([], function () {
      */
     static codify(word) {
       if (word.length > 24)
-        throw 'Password is too large!'
-      return Encryption.changeOrder(Encryption.compressZeros(Encryption.codifyToHexWord(word)))
+        throw 'Password is too large!';
+      return Encryption.changeOrder(Encryption.compressZeros(Encryption.codifyToHexWord(word)));
     }
 
     /**
@@ -199,9 +199,9 @@ define([], function () {
      */
     static decodify(word) {
       try {
-        return Encryption.decodifyFromHex(Encryption.decompressZeros(Encryption.unchangeOrder(word)))
+        return Encryption.decodifyFromHex(Encryption.decompressZeros(Encryption.unchangeOrder(word)));
       } catch (e) { //The supplied word was not codified using this system
-        return ''
+        return '';
       }
     }
   }
@@ -210,7 +210,7 @@ define([], function () {
   * Default bank password
   * @type {string}
   */
-  Encryption.BLANK = '___blank___##'
+  Encryption.BLANK = '___blank___##';
 
-  return Encryption
-})
+  return Encryption;
+});

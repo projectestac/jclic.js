@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -42,7 +42,7 @@ define([
   "../../Utils"
 ], function ($, Activity, BoxBase, BoxBag, TextGrid, AbstractBox, ActiveBox, AWT, Utils) {
 
-  const K = Utils.settings
+  const K = Utils.settings;
 
   /**
    * This class of {@link Activity} shows a {@link TextGrid} initially empty, with some cells
@@ -66,7 +66,7 @@ define([
      * @param {JClicProject} project - The JClic project to which this activity belongs
      */
     constructor(project) {
-      super(project)
+      super(project);
     }
 
     /**
@@ -75,7 +75,7 @@ define([
      * @returns {number}
      */
     getMinNumActions() {
-      return this.tgc.getNumChars() - this.tgc.countWildChars()
+      return this.tgc.getNumChars() - this.tgc.countWildChars();
     }
 
     /**
@@ -84,7 +84,7 @@ define([
      * @returns {boolean}
      */
     needsKeyboard() {
-      return true
+      return true;
     }
   }
 
@@ -104,7 +104,7 @@ define([
      * @name CrossWord#wildTransparent
      * @type {boolean} */
     wildTransparent: false,
-  })
+  });
 
   /**
    * The {@link ActivityPanel} where {@link CrossWord} activities are played.
@@ -121,7 +121,7 @@ define([
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
-      super(act, ps, $div)
+      super(act, ps, $div);
     }
 
     /**
@@ -130,12 +130,12 @@ define([
      */
     clear() {
       if (this.grid) {
-        this.grid.end()
-        this.grid = null
+        this.grid.end();
+        this.grid = null;
       }
       if (this.bb) {
-        this.bb.end()
-        this.bb = null
+        this.bb.end();
+        this.bb = null;
       }
     }
 
@@ -148,9 +148,9 @@ define([
     createBoxBag(type) {
       const
         bxb = new BoxBag(null, this, null),
-        sb = new AbstractBox(bxb, this, this.icoBB)
+        sb = new AbstractBox(bxb, this, this.icoBB);
 
-      sb.setBounds(0, 0, this.LABEL_WIDTH, this.act.abc[type].h)
+      sb.setBounds(0, 0, this.LABEL_WIDTH, this.act.abc[type].h);
       const $btn = $('<button/>', { class: 'StockBtn' }).css({
         'width': this.LABEL_WIDTH,
         'height': this.act.abc[type].h,
@@ -164,28 +164,28 @@ define([
           this.advance === 'ADVANCE_RIGHT' ?
             'NO_ADVANCE' : 'ADVANCE_RIGHT' :
           this.advance === 'ADVANCE_DOWN' ?
-            'NO_ADVANCE' : 'ADVANCE_DOWN'
-        this.setBtnStatus()
+            'NO_ADVANCE' : 'ADVANCE_DOWN';
+        this.setBtnStatus();
       }).on('keypress', event => {
         if (String.fromCharCode(event.charCode || event.keyCode) === ' ')
-          event.stopPropagation()
-      }).appendTo(this.$div)
+          event.stopPropagation();
+      }).appendTo(this.$div);
 
-      sb.setHostedComponent($btn)
-      bxb.addBox(sb)
+      sb.setHostedComponent($btn);
+      bxb.addBox(sb);
 
-      const ab = new ActiveBox(bxb, null, null, type, new AWT.Rectangle(this.LABEL_WIDTH + this.act.margin, 0, this.act.abc[type].w, this.act.abc[type].h))
-      bxb.addBox(ab)
-      bxb.setBoxBase(this.act.abc[type].bb)
+      const ab = new ActiveBox(bxb, null, null, type, new AWT.Rectangle(this.LABEL_WIDTH + this.act.margin, 0, this.act.abc[type].w, this.act.abc[type].h));
+      bxb.addBox(ab);
+      bxb.setBoxBase(this.act.abc[type].bb);
 
       if (type === 'acrossClues') { // Horizontal
-        this.hClue = ab
-        this.hClueBtn = sb
+        this.hClue = ab;
+        this.hClueBtn = sb;
       } else {
-        this.vClue = ab
-        this.vClueBtn = sb
+        this.vClue = ab;
+        this.vClueBtn = sb;
       }
-      return bxb
+      return bxb;
     }
 
     /**
@@ -194,37 +194,37 @@ define([
      */
     buildVisualComponents() {
       if (this.firstRun)
-        super.buildVisualComponents()
-      this.clear()
+        super.buildVisualComponents();
+      this.clear();
 
       const
         tgc = this.act.tgc,
         abcH = this.act.abc['acrossClues'],
-        abcV = this.act.abc['downClues']
+        abcV = this.act.abc['downClues'];
 
       if (abcH.imgName)
-        abcH.setImgContent(this.act.project.mediaBag, null, false)
+        abcH.setImgContent(this.act.project.mediaBag, null, false);
       if (abcV.imgName)
-        abcV.setImgContent(this.act.project.mediaBag, null, false)
+        abcV.setImgContent(this.act.project.mediaBag, null, false);
 
       if (this.act.acp !== null) {
-        this.act.acp.generateContent(0, 0, this.act.abc, false)
+        this.act.acp.generateContent(0, 0, this.act.abc, false);
       }
 
       if (tgc) {
-        this.grid = TextGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, tgc, this.act.wildTransparent)
-        this.bb = new BoxBag(null, this, null)
+        this.grid = TextGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, tgc, this.act.wildTransparent);
+        this.bb = new BoxBag(null, this, null);
         const
           bxbh = this.createBoxBag('acrossClues'),
-          bxbv = this.createBoxBag('downClues')
+          bxbv = this.createBoxBag('downClues');
         if (this.act.boxGridPos === 'AUB' || this.act.boxGridPos === 'BUA')
-          bxbv.moveTo(new AWT.Point(bxbh.dim.width + this.act.margin, 0))
+          bxbv.moveTo(new AWT.Point(bxbh.dim.width + this.act.margin, 0));
         else
-          bxbv.moveTo(new AWT.Point(0, bxbh.dim.height + this.act.margin))
-        this.bb.addBox(bxbh)
-        this.bb.addBox(bxbv)
-        this.grid.setVisible(true)
-        this.bb.setVisible(true)
+          bxbv.moveTo(new AWT.Point(0, bxbh.dim.height + this.act.margin));
+        this.bb.addBox(bxbh);
+        this.bb.addBox(bxbv);
+        this.grid.setVisible(true);
+        this.bb.setVisible(true);
       }
     }
 
@@ -233,25 +233,25 @@ define([
      * @override
      */
     initActivity() {
-      super.initActivity()
+      super.initActivity();
       if (!this.firstRun)
-        this.buildVisualComponents()
+        this.buildVisualComponents();
       else
-        this.firstRun = false
+        this.firstRun = false;
 
       if (this.grid) {
-        this.grid.setChars(this.act.tgc.text)
-        this.numLetters = this.act.getMinNumActions()
-        this.grid.setCellAttributes(true, true)
-        this.grid.setCursorEnabled(true)
-        this.setCursorAt(0, 0)
-        this.advance = 'ADVANCE_RIGHT'
-        this.setBtnStatus()
-        this.setAndPlayMsg('initial', 'start')
-        this.invalidate().update()
-        this.$div.attr("tabindex", 0)
-        this.$div.focus()
-        this.playing = true
+        this.grid.setChars(this.act.tgc.text);
+        this.numLetters = this.act.getMinNumActions();
+        this.grid.setCellAttributes(true, true);
+        this.grid.setCursorEnabled(true);
+        this.setCursorAt(0, 0);
+        this.advance = 'ADVANCE_RIGHT';
+        this.setBtnStatus();
+        this.setAndPlayMsg('initial', 'start');
+        this.invalidate().update();
+        this.$div.attr("tabindex", 0);
+        this.$div.focus();
+        this.playing = true;
       }
     }
 
@@ -260,7 +260,7 @@ define([
      * @returns {number}
      */
     getCurrentScore() {
-      return this.grid ? this.grid.countCoincidences(this.act.checkCase) : 0
+      return this.grid ? this.grid.countCoincidences(this.act.checkCase) : 0;
     }
 
     /**
@@ -271,18 +271,18 @@ define([
      * it's the whole panel.
      */
     updateContent(dirtyRegion) {
-      super.updateContent(dirtyRegion)
+      super.updateContent(dirtyRegion);
       if (this.grid && this.$canvas) {
         const
           canvas = this.$canvas.get(-1),
-          ctx = canvas.getContext('2d')
+          ctx = canvas.getContext('2d');
         if (!dirtyRegion)
-          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height)
-        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height)
-        this.grid.update(ctx, dirtyRegion)
-        this.bb.update(ctx, dirtyRegion)
+          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
+        this.grid.update(ctx, dirtyRegion);
+        this.bb.update(ctx, dirtyRegion);
       }
-      return this
+      return this;
     }
 
     /**
@@ -294,7 +294,7 @@ define([
     setDimension(preferredMaxSize) {
       return !this.grid || !this.bb || this.getBounds().equals(preferredMaxSize) ?
         preferredMaxSize :
-        BoxBag.layoutDouble(preferredMaxSize, this.grid, this.bb, this.act.boxGridPos, this.act.margin)
+        BoxBag.layoutDouble(preferredMaxSize, this.grid, this.bb, this.act.boxGridPos, this.act.margin);
     }
 
     /**
@@ -304,10 +304,10 @@ define([
      */
     setBounds(rect) {
       if (this.$canvas) {
-        this.$canvas.remove()
-        this.$canvas = null
+        this.$canvas.remove();
+        this.$canvas = null;
       }
-      super.setBounds(rect)
+      super.setBounds(rect);
 
       if (this.grid) {
         // Create the main canvas
@@ -315,10 +315,10 @@ define([
           position: 'absolute',
           top: 0,
           left: 0
-        })
-        this.$div.append(this.$canvas)
+        });
+        this.$div.append(this.$canvas);
         // Repaint all
-        this.invalidate().update()
+        this.invalidate().update();
       }
     }
 
@@ -341,61 +341,61 @@ define([
               y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY,
               p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top),
               // Array to be filled with actions to be executed at the end of event processing
-              delayedActions = []
+              delayedActions = [];
 
-            this.ps.stopMedia(1)
+            this.ps.stopMedia(1);
             if (this.grid.contains(p)) {
-              const pt = this.grid.getLogicalCoords(p)
+              const pt = this.grid.getLogicalCoords(p);
               if (pt !== null) {
-                this.setCursorAt(pt.x, pt.y)
+                this.setCursorAt(pt.x, pt.y);
                 if (K.TOUCH_DEVICE) {
                   // We are in a touch device, so prompt user to write text:
-                  const d = this.advance === 'ADVANCE_DOWN'
-                  const txt = window.prompt(`${d ? 'Vertical' : 'Horizontal'} word:`, '')
-                  this.writeChars(txt)
+                  const d = this.advance === 'ADVANCE_DOWN';
+                  const txt = window.prompt(`${d ? 'Vertical' : 'Horizontal'} word:`, '');
+                  this.writeChars(txt);
                 }
               }
             } else if (this.hClue.contains(p))
-              this.hClue.playMedia(this.ps, delayedActions)
+              this.hClue.playMedia(this.ps, delayedActions);
             else if (this.vClue.contains(p))
-              this.vClue.playMedia(this.ps, delayedActions)
+              this.vClue.playMedia(this.ps, delayedActions);
             else
-              break
+              break;
 
-            this.update()
-            delayedActions.forEach(action => action())
-            break
+            this.update();
+            delayedActions.forEach(action => action());
+            break;
 
           case 'keypress':
-            const code = event.charCode || event.keyCode
+            const code = event.charCode || event.keyCode;
             if (code && this.grid.getCursor()) {
-              event.preventDefault()
-              this.writeChars(String.fromCharCode(code))
+              event.preventDefault();
+              this.writeChars(String.fromCharCode(code));
             }
-            break
+            break;
 
           case 'keydown':
-            let dx = 0, dy = 0
+            let dx = 0, dy = 0;
             switch (event.keyCode) {
               case K.VK.RIGHT:
-                dx = 1
-                break
+                dx = 1;
+                break;
               case K.VK.LEFT:
-                dx = -1
-                break
+                dx = -1;
+                break;
               case K.VK.DOWN:
-                dy = 1
-                break
+                dy = 1;
+                break;
               case K.VK.UP:
-                dy = -1
-                break
+                dy = -1;
+                break;
             }
             if (dx || dy) {
-              event.preventDefault()
-              this.moveCursor(dx, dy)
-              this.update()
+              event.preventDefault();
+              this.moveCursor(dx, dy);
+              this.update();
             }
-            break
+            break;
         }
       }
     }
@@ -407,8 +407,8 @@ define([
      */
     moveCursor(dx, dy) {
       if (this.grid) {
-        this.grid.moveCursor(dx, dy, true)
-        this.cursorPosChanged()
+        this.grid.moveCursor(dx, dy, true);
+        this.cursorPosChanged();
       }
     }
 
@@ -418,20 +418,20 @@ define([
      * @param {number} y
      */
     setCursorAt(x, y) {
-      this.grid.setCursorAt(x, y, true)
-      this.cursorPosChanged()
+      this.grid.setCursorAt(x, y, true);
+      this.cursorPosChanged();
     }
 
     /**
      * Method called when the cursor moves to a different location
      */
     cursorPosChanged() {
-      const pt = this.grid.getCursor()
+      const pt = this.grid.getCursor();
       if (pt !== null && this.bb !== null) {
-        const items = this.grid.getItemFor(pt.x, pt.y)
+        const items = this.grid.getItemFor(pt.x, pt.y);
         if (items !== null) {
-          this.hClue.setContent(this.act.abc['acrossClues'].getActiveBoxContentWith(pt.y, items.x))
-          this.vClue.setContent(this.act.abc['downClues'].getActiveBoxContentWith(pt.x, items.y))
+          this.hClue.setContent(this.act.abc['acrossClues'].getActiveBoxContentWith(pt.y, items.x));
+          this.vClue.setContent(this.act.abc['downClues'].getActiveBoxContentWith(pt.x, items.y));
         }
       }
     }
@@ -444,30 +444,30 @@ define([
     writeChars(txt) {
       if (txt && txt.length > 0) {
         for (let i = 0; i < txt.length; i++) {
-          const cur = this.grid.getCursor()
-          let ch = txt.charAt(i)
+          const cur = this.grid.getCursor();
+          let ch = txt.charAt(i);
           if (this.act.upperCase)
-            ch = ch.toLocaleUpperCase()
-          this.grid.setCharAt(cur.x, cur.y, ch)
+            ch = ch.toLocaleUpperCase();
+          this.grid.setCharAt(cur.x, cur.y, ch);
           const
             ok = this.grid.isCellOk(cur.x, cur.y, this.act.checkCase),
-            r = this.getCurrentScore()
-          this.ps.reportNewAction(this.act, 'WRITE', ch, `X:${cur.x} Y:${cur.y}`, ok, r)
+            r = this.getCurrentScore();
+          this.ps.reportNewAction(this.act, 'WRITE', ch, `X:${cur.x} Y:${cur.y}`, ok, r);
           // End activity or play event sound
           if (r === this.numLetters) {
-            this.grid.setCursorEnabled(false)
-            this.grid.stopCursorBlink()
-            this.finishActivity(true)
+            this.grid.setCursorEnabled(false);
+            this.grid.stopCursorBlink();
+            this.finishActivity(true);
           } else {
-            this.playEvent('click')
+            this.playEvent('click');
             if (this.advance === 'ADVANCE_DOWN')
-              this.moveCursor(0, 1)
+              this.moveCursor(0, 1);
             else if (this.advance === 'ADVANCE_RIGHT')
-              this.moveCursor(1, 0)
+              this.moveCursor(1, 0);
           }
         }
       }
-      this.update()
+      this.update();
     }
 
     /**
@@ -475,9 +475,9 @@ define([
      */
     setBtnStatus() {
       if (this.hClueBtn)
-        this.hClueBtn.setInactive(this.advance !== 'ADVANCE_RIGHT')
+        this.hClueBtn.setInactive(this.advance !== 'ADVANCE_RIGHT');
       if (this.vClueBtn)
-        this.vClueBtn.setInactive(this.advance !== 'ADVANCE_DOWN')
+        this.vClueBtn.setInactive(this.advance !== 'ADVANCE_DOWN');
     }
   }
 
@@ -571,15 +571,15 @@ define([
      * @name CrossWordPanel#icoBB
      * @type {BoxBase} */
     icoBB: new BoxBase().set('backColor', '#4285F4').set('inactiveColor', '#70A2F6').set('dontFill', true)
-  })
+  });
 
   /**
    * Panel class associated to this type of activity: {@link CrossWordPanel}
    * @type {class} */
-  CrossWord.Panel = CrossWordPanel
+  CrossWord.Panel = CrossWordPanel;
 
   // Register class in Activity.prototype
-  Activity.CLASSES['@textGrid.CrossWord'] = CrossWord
+  Activity.CLASSES['@textGrid.CrossWord'] = CrossWord;
 
-  return CrossWord
-})
+  return CrossWord;
+});

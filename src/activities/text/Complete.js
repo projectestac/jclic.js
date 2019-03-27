@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -49,7 +49,7 @@ define([
      * @param {JClicProject} project - The project to which this activity belongs
      */
     constructor(project) {
-      super(project)
+      super(project);
     }
   }
 
@@ -68,7 +68,7 @@ define([
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
-      super(act, ps, $div)
+      super(act, ps, $div);
     }
 
     /**
@@ -81,7 +81,7 @@ define([
      */
     $createTargetElement(_target, _$span) {
       // Targets are always hidden in this type of activities
-      return null
+      return null;
     }
 
     /**
@@ -89,8 +89,8 @@ define([
      * @override
      */
     startActivity() {
-      super.startActivity()
-      this.$div.find('.JClicTextDocument').attr('contenteditable', 'true').attr('spellcheck', 'false')
+      super.startActivity();
+      this.$div.find('.JClicTextDocument').attr('contenteditable', 'true').attr('spellcheck', 'false');
     }
 
     /**
@@ -103,17 +103,17 @@ define([
       const
         currentText = this.$div.find('.JClicTextDocument').text().trim(),
         originalText = this.act.document.getRawText(),
-        ok = this.act.ev.checkText(currentText, originalText)
+        ok = this.act.ev.checkText(currentText, originalText);
 
-      this.ps.reportNewAction(this.act, 'WRITE', currentText, originalText, ok, this.targets.length)
+      this.ps.reportNewAction(this.act, 'WRITE', currentText, originalText, ok, this.targets.length);
 
       if (ok) {
-        this.finishActivity(true)
-        return true
+        this.finishActivity(true);
+        return true;
       } else {
-        this.playEvent('finishedError')
+        this.playEvent('finishedError');
       }
-      return false
+      return false;
     }
 
     /**
@@ -121,18 +121,18 @@ define([
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
     finishActivity(result) {
-      this.$div.find('.JClicTextDocument').attr('contenteditable', 'false')
-      return super.finishActivity(result)
+      this.$div.find('.JClicTextDocument').attr('contenteditable', 'false');
+      return super.finishActivity(result);
     }
   }
 
   /**
    * Panel class associated to this type of activity: {@link CompletePanel}
    * @type {class} */
-  Complete.Panel = CompletePanel
+  Complete.Panel = CompletePanel;
 
   // Register class in Activity.prototype
-  Activity.CLASSES['@text.Complete'] = Complete
+  Activity.CLASSES['@text.Complete'] = Complete;
 
-  return Complete
-})
+  return Complete;
+});

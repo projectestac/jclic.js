@@ -51,12 +51,12 @@ define([
      */
     constructor(project, code) {
       this.projectName = project.name;
-      this.code = code || project.code
-      this.sequences = []
-      this.actNames = []
-      this.started = new Date()
-      this.info = new SessionRegInfo(this)
-      this.reportableActs = project.reportableActs
+      this.code = code || project.code;
+      this.sequences = [];
+      this.actNames = [];
+      this.started = new Date();
+      this.info = new SessionRegInfo(this);
+      this.reportableActs = project.reportableActs;
     }
 
     /**
@@ -68,7 +68,7 @@ define([
      */
     getData(recalcInfo, includeEmpty) {
       if (recalcInfo)
-        this.info.recalc()
+        this.info.recalc();
 
       const result = {
         projectName: this.projectName,
@@ -80,14 +80,14 @@ define([
         score: this.info.tScore,
         time: Math.round(this.info.tTime / 10) / 100,
         sequences: []
-      }
+      };
 
       this.sequences.forEach(s => {
-        const seq = s.getData()
+        const seq = s.getData();
         if (includeEmpty || seq.activities.length > 0)
-          result.sequences.push(seq)
-      })
-      return result
+          result.sequences.push(seq);
+      });
+      return result;
     }
 
     /**
@@ -95,14 +95,14 @@ define([
      * @returns {SessionRegInfo}
      */
     getInfo() {
-      return this.info.recalc()
+      return this.info.recalc();
     }
 
     /**
      * Closes this session
      */
     end() {
-      this.endSequence()
+      this.endSequence();
     }
 
     /**
@@ -110,9 +110,9 @@ define([
      */
     endSequence() {
       if (this.currentSequence && this.currentSequence.totalTime === 0)
-        this.currentSequence.endSequence()
-      this.currentSequence = null
-      this.info.valid = false
+        this.currentSequence.endSequence();
+      this.currentSequence = null;
+      this.info.valid = false;
     }
 
     /**
@@ -120,10 +120,10 @@ define([
      * @param {ActivitySequenceElement} ase - The {@link ActivitySequenceElement} referenced by this sequence.
      */
     newSequence(ase) {
-      this.endSequence()
-      this.currentSequence = new SequenceReg(ase)
-      this.sequences.push(this.currentSequence)
-      this.info.valid = false
+      this.endSequence();
+      this.currentSequence = new SequenceReg(ase);
+      this.sequences.push(this.currentSequence);
+      this.info.valid = false;
     }
 
     /**
@@ -134,9 +134,9 @@ define([
       if (this.currentSequence) {
         // Save activity name if not yet registered
         if (this.actNames.indexOf(act.name) === -1)
-          this.actNames.push(act.name)
-        this.currentSequence.newActivity(act)
-        this.info.valid = false
+          this.actNames.push(act.name);
+        this.currentSequence.newActivity(act);
+        this.info.valid = false;
       }
     }
 
@@ -149,8 +149,8 @@ define([
      */
     endActivity(score, numActions, solved) {
       if (this.currentSequence) {
-        this.currentSequence.endActivity(score, numActions, solved)
-        this.info.valid = false
+        this.currentSequence.endActivity(score, numActions, solved);
+        this.info.valid = false;
       }
     }
 
@@ -163,8 +163,8 @@ define([
      */
     newAction(type, source, dest, ok) {
       if (this.currentSequence) {
-        this.currentSequence.newAction(type, source, dest, ok)
-        this.info.valid = false
+        this.currentSequence.newAction(type, source, dest, ok);
+        this.info.valid = false;
       }
     }
 
@@ -173,7 +173,7 @@ define([
      * @returns {string}
      */
     getCurrentSequenceTag() {
-      return this.currentSequence ? this.currentSequence.name : null
+      return this.currentSequence ? this.currentSequence.name : null;
     }
 
     /**
@@ -181,7 +181,7 @@ define([
      * @returns {SequenceReg.Info}
      */
     getCurrentSequenceInfo() {
-      return this.currentSequence ? this.currentSequence.getInfo() : null
+      return this.currentSequence ? this.currentSequence.getInfo() : null;
     }
   }
 
@@ -226,7 +226,7 @@ define([
      * @name SessionReg#code
      * @type {string} */
     code: null,
-  })
+  });
 
   /**
    * This object stores the global results of a {@link SessionReg}
@@ -238,16 +238,16 @@ define([
      * @param {SessionReg} sReg - The {@link SessionReg} associated tho this `Info` object.
      */
     constructor(sReg) {
-      this.sReg = sReg
+      this.sReg = sReg;
     }
 
     /**
      * Clears all data associated with this working session
      */
     clear() {
-      this.numSequences = this.nActivities = this.nActSolved = this.nActScore = 0
-      this.ratioSolved = this.ratioPlayed = this.nActions = this.tScore = this.tTime = 0
-      this.valid = false
+      this.numSequences = this.nActivities = this.nActSolved = this.nActScore = 0;
+      this.ratioSolved = this.ratioPlayed = this.nActions = this.tScore = this.tTime = 0;
+      this.valid = false;
     }
 
     /**
@@ -256,33 +256,33 @@ define([
      */
     recalc() {
       if (!this.valid) {
-        this.clear()
+        this.clear();
         this.sReg.sequences.forEach(sr => {
-          const sri = sr.getInfo()
+          const sri = sr.getInfo();
           if (sri.nActivities > 0) {
-            this.numSequences++
+            this.numSequences++;
             if (sri.nActClosed > 0) {
-              this.nActivities += sri.nActClosed
-              this.nActions += sri.nActions
+              this.nActivities += sri.nActClosed;
+              this.nActions += sri.nActions;
               if (sri.nActScore > 0) {
-                this.nActScore += sri.nActScore
-                this.tScore += sri.tScore * sri.nActScore
+                this.nActScore += sri.nActScore;
+                this.tScore += sri.tScore * sri.nActScore;
               }
-              this.tTime += sri.tTime
-              this.nActSolved += sri.nActSolved
+              this.tTime += sri.tTime;
+              this.nActSolved += sri.nActSolved;
             }
           }
-        })
+        });
         if (this.nActScore > 0)
-          this.tScore = Math.round(this.tScore / this.nActScore)
+          this.tScore = Math.round(this.tScore / this.nActScore);
         if (this.nActivities > 0) {
-          this.ratioSolved = this.nActSolved / this.nActivities
+          this.ratioSolved = this.nActSolved / this.nActivities;
           if (this.sReg.reportableActs > 0)
-            this.ratioPlayed = this.sReg.actNames.length / this.sReg.reportableActs
+            this.ratioPlayed = this.sReg.actNames.length / this.sReg.reportableActs;
         }
-        this.valid = true
+        this.valid = true;
       }
-      return this
+      return this;
     }
   }
 
@@ -342,9 +342,9 @@ define([
      * @name SessionRegInfo#tTime
      * @type {number} */
     tTime: 0,
-  })
+  });
 
-  SessionReg.Info = SessionRegInfo
+  SessionReg.Info = SessionRegInfo;
 
-  return SessionReg
-})
+  return SessionReg;
+});

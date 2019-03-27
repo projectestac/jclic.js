@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -52,8 +52,8 @@ define([
        * @param {PlayStation} ps - The {@link PlayStation} used to retrieve settings and localized messages
        */
       constructor(ps) {
-        super(ps)
-        this.key = `jclic_${(new Date()).toISOString()}#${Math.ceil(Math.random() * 1000)}`
+        super(ps);
+        this.key = `jclic_${(new Date()).toISOString()}#${Math.ceil(Math.random() * 1000)}`;
       }
 
       /**
@@ -65,12 +65,12 @@ define([
        */
       init(options) {
         if (typeof options === 'undefined' || options === null)
-          options = this.ps.options
+          options = this.ps.options;
         if (options.storage === 'local') {
-          this.storage = window.localStorage
-          this.descriptionKey = 'Reporting to local storage'
+          this.storage = window.localStorage;
+          this.descriptionKey = 'Reporting to local storage';
         }
-        return Reporter.prototype.init.call(this, options)
+        return Reporter.prototype.init.call(this, options);
       }
 
       /**
@@ -80,8 +80,8 @@ define([
       saveCurrentReport() {
         // Update results out of current thread
         window.setTimeout(() => {
-          this.storage.setItem(this.key, JSON.stringify(this.getData()))
-        }, 0)
+          this.storage.setItem(this.key, JSON.stringify(this.getData()));
+        }, 0);
       }
 
       /**
@@ -89,8 +89,8 @@ define([
        * @override
        */
       endSequence() {
-        super.endSequence()
-        this.saveCurrentReport()
+        super.endSequence();
+        this.saveCurrentReport();
       }
 
       /**
@@ -102,8 +102,8 @@ define([
        * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
        */
       endActivity(score, numActions, solved) {
-        super.endActivity(score, numActions, solved)
-        this.saveCurrentReport()
+        super.endActivity(score, numActions, solved);
+        this.saveCurrentReport();
       }
     }
 
@@ -130,10 +130,10 @@ define([
        * @name SessionStorageReporter#key 
        * @type {string} */
       key: null,
-    })
+    });
 
     // Register class in Reporter.CLASSES
-    Reporter.CLASSES['SessionStorageReporter'] = SessionStorageReporter
+    Reporter.CLASSES['SessionStorageReporter'] = SessionStorageReporter;
 
-    return SessionStorageReporter
-  })
+    return SessionStorageReporter;
+  });

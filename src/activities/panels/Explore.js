@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -53,7 +53,7 @@ define([
      * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
      */
     constructor(project) {
-      super(project)
+      super(project);
     }
 
     /**
@@ -62,7 +62,7 @@ define([
      * @returns {boolean}
      */
     mustPauseSequence() {
-      return true
+      return true;
     }
 
     /**
@@ -71,7 +71,7 @@ define([
      * @returns {number}
      */
     getMinNumActions() {
-      return 0
+      return 0;
     }
 
     /**
@@ -81,7 +81,7 @@ define([
      * @returns {boolean}
      */
     hasRandom() {
-      return true
+      return true;
     }
   }
 
@@ -100,7 +100,7 @@ define([
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
-      super(act, ps, $div)
+      super(act, ps, $div);
     }
 
     /**
@@ -109,12 +109,12 @@ define([
      */
     clear() {
       if (this.bgA) {
-        this.bgA.end()
-        this.bgA = null
+        this.bgA.end();
+        this.bgA = null;
       }
       if (this.bgB) {
-        this.bgB.end()
-        this.bgB = null
+        this.bgB.end();
+        this.bgB = null;
       }
     }
 
@@ -124,41 +124,41 @@ define([
      */
     buildVisualComponents() {
       if (this.firstRun)
-        super.buildVisualComponents()
-      this.clear()
+        super.buildVisualComponents();
+      this.clear();
       const
         abcA = this.act.abc['primary'],
-        abcB = this.act.abc['secondary']
+        abcB = this.act.abc['secondary'];
 
       if (abcA && abcB) {
         if (abcA.imgName) {
-          abcA.setImgContent(this.act.project.mediaBag, null, false)
+          abcA.setImgContent(this.act.project.mediaBag, null, false);
           if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramble['primary'])
             this.$animatedBg = $('<span/>').css({
               'background-image': `url(${abcA.animatedGifFile})`,
               'background-position': 'center',
               'background-repeat': 'no-repeat',
               position: 'absolute'
-            }).appendTo(this.$div)
+            }).appendTo(this.$div);
         }
 
         if (abcB.imgName)
-          abcB.setImgContent(this.act.project.mediaBag, null, false)
+          abcB.setImgContent(this.act.project.mediaBag, null, false);
 
         if (this.act.acp !== null)
-          this.act.acp.generateContent(abcA.nch, abcA.ncw, [abcA, abcB], false)
+          this.act.acp.generateContent(abcA.nch, abcA.ncw, [abcA, abcB], false);
 
-        this.bgA = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abcA)
-        const w = (this.act.boxGridPos === 'AUB' || this.act.boxGridPos === 'BUA') ? abcA.getTotalWidth() : abcB.w
-        this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1))
+        this.bgA = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abcA);
+        const w = (this.act.boxGridPos === 'AUB' || this.act.boxGridPos === 'BUA') ? abcA.getTotalWidth() : abcB.w;
+        this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1));
 
-        this.bgA.setContent(abcA)
-        this.bgA.setDefaultIdAss()
+        this.bgA.setContent(abcA);
+        this.bgA.setDefaultIdAss();
         if (this.$animatedBg)
-          this.bgA.setCellAttr('tmpTrans', true)
-        this.bgB.getActiveBox(0).setInactive(false)
-        this.bgA.setVisible(true)
-        this.bgB.setVisible(true)
+          this.bgA.setCellAttr('tmpTrans', true);
+        this.bgB.getActiveBox(0).setInactive(false);
+        this.bgA.setVisible(true);
+        this.bgB.setVisible(true);
       }
     }
 
@@ -167,23 +167,23 @@ define([
      * @override
      */
     initActivity() {
-      super.initActivity()
+      super.initActivity();
       if (!this.firstRun)
-        this.buildVisualComponents()
+        this.buildVisualComponents();
       else
-        this.firstRun = false
+        this.firstRun = false;
 
       if (this.bgA && this.bgB) {
         // Scramble cells
         if (this.act.scramble.primary)
-          this.shuffle([this.bgA], true, true)
+          this.shuffle([this.bgA], true, true);
 
         if (this.useOrder)
-          this.currentItem = this.bgA.getNextItem(-1)
+          this.currentItem = this.bgA.getNextItem(-1);
 
-        this.setAndPlayMsg('initial', 'start')
-        this.invalidate().update()
-        this.playing = true
+        this.setAndPlayMsg('initial', 'start');
+        this.invalidate().update();
+        this.playing = true;
       }
     }
 
@@ -195,18 +195,18 @@ define([
      * it's the whole panel.
      */
     updateContent(dirtyRegion) {
-      super.updateContent(dirtyRegion)
+      super.updateContent(dirtyRegion);
       if (this.bgA && this.bgB && this.$canvas) {
         const
           canvas = this.$canvas.get(-1),
-          ctx = canvas.getContext('2d')
+          ctx = canvas.getContext('2d');
         if (!dirtyRegion)
-          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height)
-        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height)
-        this.bgA.update(ctx, dirtyRegion)
-        this.bgB.update(ctx, dirtyRegion)
+          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
+        this.bgA.update(ctx, dirtyRegion);
+        this.bgB.update(ctx, dirtyRegion);
       }
-      return this
+      return this;
     }
 
     /**
@@ -218,7 +218,7 @@ define([
     setDimension(preferredMaxSize) {
       return !this.bgA || !this.bgB || this.getBounds().equals(preferredMaxSize) ?
         preferredMaxSize :
-        BoxBag.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin)
+        BoxBag.layoutDouble(preferredMaxSize, this.bgA, this.bgB, this.act.boxGridPos, this.act.margin);
     }
 
     /**
@@ -228,8 +228,8 @@ define([
      */
     setBounds(rect) {
       if (this.$canvas)
-        this.$canvas.remove()
-      super.setBounds(rect)
+        this.$canvas.remove();
+      super.setBounds(rect);
 
       if (this.bgA || this.bgB) {
         // Create the main canvas
@@ -237,21 +237,21 @@ define([
           position: 'absolute',
           top: 0,
           left: 0
-        })
+        });
         // Resize animated gif background
         if (this.$animatedBg) {
-          const bgRect = this.bgA.getBounds()
+          const bgRect = this.bgA.getBounds();
           this.$animatedBg.css({
             left: bgRect.pos.x,
             top: bgRect.pos.y,
             width: `${bgRect.dim.width}px`,
             height: `${bgRect.dim.height}px`,
             'background-size': `${bgRect.dim.width}px ${bgRect.dim.height}px`
-          })
+          });
         }
-        this.$div.append(this.$canvas)
+        this.$div.append(this.$canvas);
         // Repaint all
-        this.invalidate().update()
+        this.invalidate().update();
       }
     }
 
@@ -263,11 +263,11 @@ define([
      */
     buildAccessibleComponents() {
       if (this.$canvas && this.accessibleCanvas) {
-        super.buildAccessibleComponents()
+        super.buildAccessibleComponents();
         if (this.bgA)
-          this.bgA.buildAccessibleElements(this.$canvas, this.$div)
+          this.bgA.buildAccessibleElements(this.$canvas, this.$div);
         if (this.bgB)
-          this.bgB.buildAccessibleElements(this.$canvas, this.$div)
+          this.bgB.buildAccessibleElements(this.$canvas, this.$div);
       }
     }
 
@@ -284,33 +284,33 @@ define([
           event.pageX - this.$div.offset().left,
           event.pageY - this.$div.offset().top),
           // Array to be filled with actions to be executed at the end of event processing
-          delayedActions = []
+          delayedActions = [];
 
         switch (event.type) {
           case 'click':
-            this.ps.stopMedia(1)
-            const bx1 = this.bgA.findActiveBox(p)
+            this.ps.stopMedia(1);
+            const bx1 = this.bgA.findActiveBox(p);
             if (bx1) {
-              const bx2 = this.bgB.getActiveBox(0)
+              const bx2 = this.bgB.getActiveBox(0);
               if (bx1.idAss !== -1 && (!this.act.useOrder || bx1.idOrder === this.currentItem)) {
-                bx2.setContent(this.act.abc['secondary'], bx1.idAss)
+                bx2.setContent(this.act.abc['secondary'], bx1.idAss);
                 if (!bx2.playMedia(this.ps, delayedActions) && !bx1.playMedia(this.ps, delayedActions))
-                  this.playEvent('CLICK')
+                  this.playEvent('CLICK');
                 if (this.act.useOrder)
-                  this.currentItem = this.bgA.getNextItem(this.currentItem)
-                this.ps.reportNewAction(this.act, 'SELECT', bx1.getDescription(), bx2.getDescription(), true, 0)
+                  this.currentItem = this.bgA.getNextItem(this.currentItem);
+                this.ps.reportNewAction(this.act, 'SELECT', bx1.getDescription(), bx2.getDescription(), true, 0);
                 if (bx2.$accessibleElement)
-                  bx2.$accessibleElement.focus()
+                  bx2.$accessibleElement.focus();
               } else {
-                bx2.clear()
-                bx2.setInactive(false)
+                bx2.clear();
+                bx2.setInactive(false);
               }
-              this.update()
+              this.update();
             }
-            break
+            break;
         }
-        delayedActions.forEach(action => action())
-        event.preventDefault()
+        delayedActions.forEach(action => action());
+        event.preventDefault();
       }
     }
   }
@@ -333,15 +333,15 @@ define([
      * @name ExplorePanel#events
      * @type {string[]} */
     events: ['click'],
-  })
+  });
 
   /**
    * Panel class associated to this type of activity: {@link ExplorePanel}
    * @type {class} */
-  Explore.Panel = ExplorePanel
+  Explore.Panel = ExplorePanel;
 
   // Register class in Activity.prototype
-  Activity.CLASSES['@panels.Explore'] = Explore
+  Activity.CLASSES['@panels.Explore'] = Explore;
 
-  return Explore
-})
+  return Explore;
+});

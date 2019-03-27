@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -45,7 +45,7 @@ define([
     MIN_CELL_SIZE: 12,
     DEFAULT_CELL_SIZE: 20,
     MIN_INTERNAL_MARGIN: 2
-  }
+  };
 
   /**
    * Binary flags used to mark status
@@ -57,7 +57,7 @@ define([
     LOCKED: 4,
     MARKED: 8,
     TRANSPARENT: 16
-  }
+  };
 
   /**
    * This class is a special type of {@link AbstractBox} that displays a grid of single
@@ -84,23 +84,23 @@ define([
      */
     constructor(parent, container, boxBase, x, y, ncw, nch, cellW, cellH, border) {
       // *TextGrid* extends [AbstractBox](AbstractBox.html)
-      super(parent, container, boxBase)
-      this.pos.x = x
-      this.pos.y = y
-      this.nCols = Math.max(1, ncw)
-      this.nRows = Math.max(1, nch)
-      this.cellWidth = Math.max(cellW, defaults.MIN_CELL_SIZE)
-      this.cellHeight = Math.max(cellH, defaults.MIN_CELL_SIZE)
-      this.dim.width = cellW * this.nCols
-      this.dim.height = cellH * this.nRows
-      this.setChars(' ')
-      this.preferredBounds = new AWT.Rectangle(this.pos, this.dim)
-      this.setBorder(border)
-      this.cursorTimer = new AWT.Timer(() => this.blink(0), 500, false)
-      this.cursorEnabled = false
-      this.useCursor = false
-      this.wildTransparent = false
-      this.cursor = new AWT.Point()
+      super(parent, container, boxBase);
+      this.pos.x = x;
+      this.pos.y = y;
+      this.nCols = Math.max(1, ncw);
+      this.nRows = Math.max(1, nch);
+      this.cellWidth = Math.max(cellW, defaults.MIN_CELL_SIZE);
+      this.cellHeight = Math.max(cellH, defaults.MIN_CELL_SIZE);
+      this.dim.width = cellW * this.nCols;
+      this.dim.height = cellH * this.nRows;
+      this.setChars(' ');
+      this.preferredBounds = new AWT.Rectangle(this.pos, this.dim);
+      this.setBorder(border);
+      this.cursorTimer = new AWT.Timer(() => this.blink(0), 500, false);
+      this.cursorEnabled = false;
+      this.useCursor = false;
+      this.wildTransparent = false;
+      this.cursor = new AWT.Point();
     }
 
     /**
@@ -115,11 +115,11 @@ define([
      */
     static createEmptyGrid(parent, container, x, y, tgc, wildTransparent) {
       const result = new TextGrid(parent, container, tgc.bb,
-        x, y, tgc.ncw, tgc.nch, tgc.w, tgc.h, tgc.border)
-      result.wild = tgc.wild
-      result.randomChars = tgc.randomChars
-      result.wildTransparent = wildTransparent
-      return result
+        x, y, tgc.ncw, tgc.nch, tgc.w, tgc.h, tgc.border);
+      result.wild = tgc.wild;
+      result.randomChars = tgc.randomChars;
+      result.wildTransparent = wildTransparent;
+      return result;
     }
 
     /**
@@ -127,19 +127,19 @@ define([
      * @param {string} text
      */
     setChars(text) {
-      this.chars = []
-      this.answers = []
-      this.attributes = []
+      this.chars = [];
+      this.answers = [];
+      this.attributes = [];
       for (let py = 0; py < this.nRows; py++) {
-        const line = py < text.length ? text[py] : ''
-        this.chars[py] = line.split('')
-        this.answers[py] = []
-        this.attributes[py] = []
+        const line = py < text.length ? text[py] : '';
+        this.chars[py] = line.split('');
+        this.answers[py] = [];
+        this.attributes[py] = [];
         for (let px = 0; px < this.nCols; px++) {
           if (px >= line.length)
-            this.chars[py][px] = ' '
-          this.answers[py][px] = this.chars[py][px]
-          this.attributes[py][px] = flags.NORMAL
+            this.chars[py][px] = ' ';
+          this.answers[py][px] = this.chars[py][px];
+          this.attributes[py][px] = flags.NORMAL;
         }
       }
     }
@@ -153,7 +153,7 @@ define([
         for (let px = 0; px < this.nCols; px++)
           if (this.chars[py][px] === this.wild)
             this.chars[py][px] = this.randomChars.charAt(
-              Math.floor(Math.random() * this.randomChars.length))
+              Math.floor(Math.random() * this.randomChars.length));
     }
 
     /**
@@ -163,19 +163,19 @@ define([
      * @param {boolean} clearChars - When `true`, the current content of cells will be erased.
      */
     setCellAttributes(lockWild, clearChars) {
-      let atr = flags.LOCKED
+      let atr = flags.LOCKED;
       if (this.wildTransparent)
-        atr |= flags.TRANSPARENT
+        atr |= flags.TRANSPARENT;
       else
-        atr |= flags.INVERTED | flags.HIDDEN
+        atr |= flags.INVERTED | flags.HIDDEN;
       for (let py = 0; py < this.nRows; py++) {
         for (let px = 0; px < this.nCols; px++) {
           if (lockWild && this.chars[py][px] === this.wild)
-            this.attributes[py][px] = atr
+            this.attributes[py][px] = atr;
           else {
-            this.attributes[py][px] = flags.NORMAL
+            this.attributes[py][px] = flags.NORMAL;
             if (clearChars)
-              this.chars[py][px] = ' '
+              this.chars[py][px] = ' ';
           }
         }
       }
@@ -196,7 +196,7 @@ define([
             flags.TRANSPARENT :
             flags.INVERTED |
             flags.HIDDEN) :
-          flags.NORMAL
+          flags.NORMAL;
       }
     }
 
@@ -214,40 +214,40 @@ define([
      */
     getItemFor(rx, ry) {
       if (!this.isValidCell(rx, ry))
-        return null
+        return null;
 
-      const point = new AWT.Point()
+      const point = new AWT.Point();
       let
         inBlack = false,
-        startCount = false
+        startCount = false;
 
       for (let px = 0; px < rx; px++) {
         if ((this.attributes[ry][px] & flags.LOCKED) !== 0) {
           if (!inBlack) {
             if (startCount)
-              point.x++
-            inBlack = true
+              point.x++;
+            inBlack = true;
           }
         } else {
-          startCount = true
-          inBlack = false
+          startCount = true;
+          inBlack = false;
         }
       }
-      inBlack = false
-      startCount = false
+      inBlack = false;
+      startCount = false;
       for (let py = 0; py < ry; py++) {
         if ((this.attributes[py][rx] & flags.LOCKED) !== 0) {
           if (!inBlack) {
             if (startCount)
-              point.y++
-            inBlack = true
+              point.y++;
+            inBlack = true;
           }
         } else {
-          startCount = true
-          inBlack = false
+          startCount = true;
+          inBlack = false;
         }
       }
-      return point
+      return point;
     }
 
     /**
@@ -255,11 +255,11 @@ define([
      * @param {boolean} status
      */
     setCursorEnabled(status) {
-      this.cursorEnabled = status
+      this.cursorEnabled = status;
       if (status === true)
-        this.startCursorBlink()
+        this.startCursorBlink();
       else
-        this.stopCursorBlink()
+        this.stopCursorBlink();
     }
 
     /**
@@ -267,8 +267,8 @@ define([
      */
     startCursorBlink() {
       if (this.useCursor && this.cursorEnabled && this.cursorTimer && !this.cursorTimer.isRunning()) {
-        this.blink(1)
-        this.cursorTimer.start()
+        this.blink(1);
+        this.cursorTimer.start();
       }
     }
 
@@ -277,8 +277,8 @@ define([
      */
     stopCursorBlink() {
       if (this.cursorTimer && this.cursorTimer.isRunning()) {
-        this.cursorTimer.stop()
-        this.blink(-1)
+        this.cursorTimer.stop();
+        this.blink(-1);
       }
     }
 
@@ -292,10 +292,10 @@ define([
       if (this.useCursor) {
         const point = this.findNextCellWithAttr(this.cursor.x, this.cursor.y,
           skipLocked ? flags.LOCKED : flags.NORMAL,
-          dx, dy, false)
+          dx, dy, false);
 
         if (!this.cursor.equals(point))
-          this.setCursorAt(point.x, point.y, skipLocked)
+          this.setCursorAt(point.x, point.y, skipLocked);
       }
     }
 
@@ -308,19 +308,19 @@ define([
      * @returns {AWT.Point}
      */
     findFreeCell(from, dx, dy) {
-      let result = null
+      let result = null;
       if (from && (dx !== 0 || dy !== 0)) {
-        const scan = new AWT.Point(from)
+        const scan = new AWT.Point(from);
         while (result === null) {
-          scan.x += dx
-          scan.y += dy
+          scan.x += dx;
+          scan.y += dy;
           if (scan.x < 0 || scan.x >= this.nCols || scan.y < 0 || scan.y >= this.nRows)
-            break
+            break;
           if (!this.getCellAttribute(scan.x, scan.y, flags.LOCKED))
-            result = scan
+            result = scan;
         }
       }
-      return result
+      return result;
     }
 
     /**
@@ -335,41 +335,41 @@ define([
      * @returns {AWT.Point}
      */
     findNextCellWithAttr(startX, startY, attr, dx, dy, attrState) {
-      const point = new AWT.Point(startX + dx, startY + dy)
+      const point = new AWT.Point(startX + dx, startY + dy);
       while (true) {
         if (point.x < 0) {
-          point.x = this.nCols - 1
+          point.x = this.nCols - 1;
           if (point.y > 0)
-            point.y--
+            point.y--;
           else
-            point.y = this.nRows - 1
+            point.y = this.nRows - 1;
         } else if (point.x >= this.nCols) {
-          point.x = 0
+          point.x = 0;
           if (point.y < this.nRows - 1)
-            point.y++
+            point.y++;
           else
-            point.y = 0
+            point.y = 0;
         }
         if (point.y < 0) {
-          point.y = this.nRows - 1
+          point.y = this.nRows - 1;
           if (point.x > 0)
-            point.x--
+            point.x--;
           else
-            point.x = this.nCols - 1
+            point.x = this.nCols - 1;
         } else if (point.y >= this.nRows) {
-          point.y = 0
+          point.y = 0;
           if (point.x < this.nCols - 1)
-            point.x++
+            point.x++;
           else
-            point.x = 0
+            point.x = 0;
         }
         if (point.x === startX && point.y === startY ||
           this.getCellAttribute(point.x, point.y, attr) === attrState)
-          break
-        point.x += dx
-        point.y += dy
+          break;
+        point.x += dx;
+        point.y += dy;
       }
-      return point
+      return point;
     }
 
     /**
@@ -379,16 +379,16 @@ define([
      * @param {boolean} skipLocked - Skip locked (wildcard) cells
      */
     setCursorAt(px, py, skipLocked) {
-      this.stopCursorBlink()
+      this.stopCursorBlink();
       if (this.isValidCell(px, py)) {
-        this.cursor.x = px
-        this.cursor.y = py
-        this.useCursor = true
+        this.cursor.x = px;
+        this.cursor.y = py;
+        this.useCursor = true;
         if (skipLocked && this.getCellAttribute(px, py, flags.LOCKED)) {
-          this.moveCursor(1, 0, skipLocked)
+          this.moveCursor(1, 0, skipLocked);
         } else {
           if (this.cursorEnabled)
-            this.startCursorBlink()
+            this.startCursorBlink();
         }
       }
     }
@@ -398,7 +398,7 @@ define([
      * @param {boolean} value
      */
     setUseCursor(value) {
-      this.useCursor = value
+      this.useCursor = value;
     }
 
     /**
@@ -406,7 +406,7 @@ define([
      * @returns {AWT.Point}
      */
     getCursor() {
-      return this.cursor
+      return this.cursor;
     }
 
     /**
@@ -415,12 +415,12 @@ define([
      * @returns {number}
      */
     countCharsLike(ch) {
-      let result = 0
+      let result = 0;
       for (let py = 0; py < this.nRows; py++)
         for (let px = 0; px < this.nCols; px++)
           if (this.chars[py][px] === ch)
-            result++
-      return result
+            result++;
+      return result;
     }
 
     /**
@@ -428,7 +428,7 @@ define([
      * @returns {number}
      */
     getNumCells() {
-      return this.nRows * this.nCols
+      return this.nRows * this.nCols;
     }
 
     /**
@@ -437,13 +437,13 @@ define([
      * @returns {number}
      */
     countCoincidences(checkCase) {
-      let result = 0
+      let result = 0;
       if (this.answers)
         for (let py = 0; py < this.nRows; py++)
           for (let px = 0; px < this.nCols; px++)
             if (this.isCellOk(px, py, checkCase))
-              result++
-      return result
+              result++;
+      return result;
     }
 
     /**
@@ -454,17 +454,17 @@ define([
      * @returns {boolean}
      */
     isCellOk(px, py, checkCase) {
-      let result = false
+      let result = false;
       if (this.isValidCell(px, py)) {
-        const ch = this.chars[py][px]
+        const ch = this.chars[py][px];
         if (ch !== this.wild) {
-          const ch2 = this.answers[py][px]
+          const ch2 = this.answers[py][px];
           if (ch === ch2 ||
             !checkCase && ch.toUpperCase() === ch2.toUpperCase())
-            result = true
+            result = true;
         }
       }
-      return result
+      return result;
     }
 
     /**
@@ -474,12 +474,12 @@ define([
      */
     getLogicalCoords(devicePoint) {
       if (!this.contains(devicePoint))
-        return null
+        return null;
       const
         px = Math.floor((devicePoint.x - this.pos.x) / this.cellWidth),
-        py = Math.floor((devicePoint.y - this.pos.y) / this.cellHeight)
+        py = Math.floor((devicePoint.y - this.pos.y) / this.cellHeight);
 
-      return this.isValidCell(px, py) ? new AWT.Point(px, py) : null
+      return this.isValidCell(px, py) ? new AWT.Point(px, py) : null;
     }
 
     /**
@@ -489,7 +489,7 @@ define([
      * @returns {boolean}
      */
     isValidCell(px, py) {
-      return px < this.nCols && py < this.nRows && px >= 0 && py >= 0
+      return px < this.nCols && py < this.nRows && px >= 0 && py >= 0;
     }
 
     /**
@@ -500,8 +500,8 @@ define([
      */
     setCharAt(px, py, ch) {
       if (this.isValidCell(px, py)) {
-        this.chars[py][px] = ch
-        this.repaintCell(px, py)
+        this.chars[py][px] = ch;
+        this.repaintCell(px, py);
       }
     }
 
@@ -512,7 +512,7 @@ define([
      * @returns {string}
      */
     getCharAt(px, py) {
-      return this.isValidCell(px, py) ? this.chars[py][px] : ' '
+      return this.isValidCell(px, py) ? this.chars[py][px] : ' ';
     }
 
     /**
@@ -526,22 +526,22 @@ define([
      * @returns {string}
      */
     getStringBetween(x0, y0, x1, y1) {
-      let sb = ''
+      let sb = '';
       if (this.isValidCell(x0, y0) && this.isValidCell(x1, y1)) {
         let
           dx = x1 - x0,
-          dy = y1 - y0
+          dy = y1 - y0;
         if (dx === 0 || dy === 0 || Math.abs(dx) === Math.abs(dy)) {
-          const steps = Math.max(Math.abs(dx), Math.abs(dy))
+          const steps = Math.max(Math.abs(dx), Math.abs(dy));
           if (steps > 0) {
-            dx /= steps
-            dy /= steps
+            dx /= steps;
+            dy /= steps;
           }
           for (let i = 0; i <= steps; i++)
-            sb += this.getCharAt(x0 + dx * i, y0 + dy * i)
+            sb += this.getCharAt(x0 + dx * i, y0 + dy * i);
         }
       }
-      return sb
+      return sb;
     }
 
     /**
@@ -557,16 +557,16 @@ define([
       if (this.isValidCell(x0, y0) && this.isValidCell(x1, y1)) {
         let
           dx = x1 - x0,
-          dy = y1 - y0
+          dy = y1 - y0;
 
         if (dx === 0 || dy === 0 || Math.abs(dx) === Math.abs(dy)) {
-          const steps = Math.max(Math.abs(dx), Math.abs(dy))
+          const steps = Math.max(Math.abs(dx), Math.abs(dy));
           if (steps > 0) {
-            dx /= steps
-            dy /= steps
+            dx /= steps;
+            dy /= steps;
           }
           for (let i = 0; i <= steps; i++)
-            this.setAttribute(x0 + dx * i, y0 + dy * i, attribute, value)
+            this.setAttribute(x0 + dx * i, y0 + dy * i, attribute, value);
         }
       }
     }
@@ -581,11 +581,11 @@ define([
     setAttribute(px, py, attribute, state) {
       if (this.isValidCell(px, py)) {
         if (this.attribute === flags.MARKED && !state)
-          this.repaintCell(px, py)
-        this.attributes[py][px] &= ~attribute
-        this.attributes[py][px] |= state ? attribute : 0
+          this.repaintCell(px, py);
+        this.attributes[py][px] &= ~attribute;
+        this.attributes[py][px] |= state ? attribute : 0;
         if (attribute !== flags.MARKED || state)
-          this.repaintCell(px, py)
+          this.repaintCell(px, py);
       }
     }
 
@@ -597,7 +597,7 @@ define([
     setAllCellsAttribute(attribute, state) {
       for (let py = 0; py < this.nRows; py++)
         for (let px = 0; px < this.nCols; px++)
-          this.setAttribute(px, py, attribute, state)
+          this.setAttribute(px, py, attribute, state);
     }
 
     /**
@@ -608,7 +608,7 @@ define([
      * @returns {boolean} - `true` if the cell has this attribute, `false` otherwise.
      */
     getCellAttribute(px, py, attribute) {
-      return this.isValidCell(px, py) ? (this.attributes[py][px] & attribute) !== 0 : false
+      return this.isValidCell(px, py) ? (this.attributes[py][px] & attribute) !== 0 : false;
     }
 
     /**
@@ -618,7 +618,7 @@ define([
      * @returns {AWT.Rectangle}
      */
     getCellRect(px, py) {
-      return new AWT.Rectangle(this.pos.x + px * this.cellWidth, this.pos.y + py * this.cellHeight, this.cellWidth, this.cellHeight)
+      return new AWT.Rectangle(this.pos.x + px * this.cellWidth, this.pos.y + py * this.cellHeight, this.cellWidth, this.cellHeight);
     }
 
     /**
@@ -628,15 +628,15 @@ define([
      * @returns {AWT.Rectangle}
      */
     getCellBorderBounds(px, py) {
-      const isMarked = this.getCellAttribute(px, py, flags.MARKED)
+      const isMarked = this.getCellAttribute(px, py, flags.MARKED);
       if (!this.border && !isMarked)
-        return this.getCellRect(px, py)
+        return this.getCellRect(px, py);
 
       const
         bb = this.getBoxBaseResolve(),
-        strk = isMarked ? bb.markerStroke : bb.borderStroke
+        strk = isMarked ? bb.markerStroke : bb.borderStroke;
 
-      return this.getCellRect(px, py).grow(strk.lineWidth, strk.lineWidth)
+      return this.getCellRect(px, py).grow(strk.lineWidth, strk.lineWidth);
     }
 
     /**
@@ -646,7 +646,7 @@ define([
      */
     repaintCell(px, py) {
       if (this.container)
-        this.container.invalidate(this.getCellBorderBounds(px, py)).update()
+        this.container.invalidate(this.getCellBorderBounds(px, py)).update();
     }
 
     /**
@@ -654,7 +654,7 @@ define([
      * @returns {AWT.Dimension}
      */
     getPreferredSize() {
-      return this.preferredBounds.dim
+      return this.preferredBounds.dim;
     }
 
     /**
@@ -662,7 +662,7 @@ define([
      * @returns {AWT.Dimension}
      */
     getMinimumSize() {
-      return new AWT.Dimension(defaults.MIN_CELL_SIZE * this.nCols, defaults.MIN_CELL_SIZE * this.nRows)
+      return new AWT.Dimension(defaults.MIN_CELL_SIZE * this.nCols, defaults.MIN_CELL_SIZE * this.nRows);
     }
 
     /**
@@ -673,7 +673,7 @@ define([
     getScaledSize(scale) {
       return new AWT.Dimension(
         Utils.roundTo(scale * this.preferredBounds.dim.width, this.nCols),
-        Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows))
+        Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
     }
 
     /**
@@ -686,9 +686,9 @@ define([
      * @param {number=} h - Height of the new rectangle.
      */
     setBounds(rect, y, w, h) {
-      super.setBounds(rect, y, w, h)
-      this.cellWidth = this.dim.width / this.nCols
-      this.cellHeight = this.dim.height / this.nRows
+      super.setBounds(rect, y, w, h);
+      this.cellWidth = this.dim.width / this.nCols;
+      this.cellHeight = this.dim.height / this.nRows;
     }
 
     /**
@@ -699,75 +699,75 @@ define([
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
      */
     updateContent(ctx, dirtyRegion) {
-      const bb = this.getBoxBaseResolve()
+      const bb = this.getBoxBaseResolve();
 
       // test font size
-      ctx.font = bb.font.cssFont()
-      ctx.textBaseline = 'hanging'
+      ctx.font = bb.font.cssFont();
+      ctx.textBaseline = 'hanging';
       bb.prepareText(ctx, 'W',
         this.cellWidth - 2 * defaults.MIN_INTERNAL_MARGIN,
-        this.cellHeight - 2 * defaults.MIN_INTERNAL_MARGIN)
+        this.cellHeight - 2 * defaults.MIN_INTERNAL_MARGIN);
 
-      const ch = []
+      const ch = [];
       //
       // TODO: Check in different browsers and devices what is the real font height.
       // In Chrome on Linux (Gnome), subtracting `bb.font._metrics.descent / 4` produces
       // good results, but in iPad this correction places the character at the bottom of the cell.
-      const ry = (this.cellHeight - bb.font.getHeight()) / 2
+      const ry = (this.cellHeight - bb.font.getHeight()) / 2;
 
       for (let py = 0; py < this.nRows; py++) {
         for (let px = 0; px < this.nCols; px++) {
-          const bxr = this.getCellBorderBounds(px, py)
+          const bxr = this.getCellBorderBounds(px, py);
           if (bxr.intersects(dirtyRegion)) {
-            const attr = this.attributes[py][px]
+            const attr = this.attributes[py][px];
             if ((attr & flags.TRANSPARENT) === 0) {
-              const isInverted = (attr & flags.INVERTED) !== 0
-              const isMarked = (attr & flags.MARKED) !== 0
-              const isCursor = this.useCursor && this.cursor.x === px && this.cursor.y === py
-              const boxBounds = this.getCellRect(px, py)
+              const isInverted = (attr & flags.INVERTED) !== 0;
+              const isMarked = (attr & flags.MARKED) !== 0;
+              const isCursor = this.useCursor && this.cursor.x === px && this.cursor.y === py;
+              const boxBounds = this.getCellRect(px, py);
               ctx.fillStyle = isCursor && this.cursorBlink ?
                 bb.inactiveColor :
-                isInverted ? bb.textColor : bb.backColor
-              boxBounds.fill(ctx)
-              ctx.strokeStyle = 'black'
+                isInverted ? bb.textColor : bb.backColor;
+              boxBounds.fill(ctx);
+              ctx.strokeStyle = 'black';
               if ((attr & flags.HIDDEN) === 0) {
-                ch[0] = this.chars[py][px]
+                ch[0] = this.chars[py][px];
                 if (ch[0]) {
-                  const dx = boxBounds.pos.x + (this.cellWidth - ctx.measureText(ch[0]).width) / 2
-                  const dy = boxBounds.pos.y + ry
+                  const dx = boxBounds.pos.x + (this.cellWidth - ctx.measureText(ch[0]).width) / 2;
+                  const dy = boxBounds.pos.y + ry;
 
                   if (bb.shadow) {
                     // Render text shadow
-                    const d = Math.max(1, bb.font.size / 10)
-                    ctx.fillStyle = bb.shadowColor
-                    ctx.fillText(ch[0], dx + d, dy + d)
+                    const d = Math.max(1, bb.font.size / 10);
+                    ctx.fillStyle = bb.shadowColor;
+                    ctx.fillText(ch[0], dx + d, dy + d);
                   }
                   // Render text
                   ctx.fillStyle = isInverted ? bb.backColor
-                    : this.isAlternative() ? bb.alternativeColor : bb.textColor
-                  ctx.fillText(ch[0], dx, dy)
+                    : this.isAlternative() ? bb.alternativeColor : bb.textColor;
+                  ctx.fillText(ch[0], dx, dy);
                 }
               }
               if (this.border || isMarked) {
-                ctx.strokeStyle = bb.borderColor
-                bb[isMarked ? 'markerStroke' : 'borderStroke'].setStroke(ctx)
+                ctx.strokeStyle = bb.borderColor;
+                bb[isMarked ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
                 if (isMarked)
-                  ctx.globalCompositeOperation = 'xor'
+                  ctx.globalCompositeOperation = 'xor';
 
                 // Draw border
-                boxBounds.stroke(ctx)
+                boxBounds.stroke(ctx);
 
                 // Reset ctx default values
                 if (isMarked)
-                  ctx.globalCompositeOperation = 'source-over'
+                  ctx.globalCompositeOperation = 'source-over';
               }
-              ctx.strokeStyle = 'black'
-              AWT.Stroke.prototype.setStroke(ctx)
+              ctx.strokeStyle = 'black';
+              AWT.Stroke.prototype.setStroke(ctx);
             }
           }
         }
       }
-      return true
+      return true;
     }
 
     /**
@@ -778,8 +778,8 @@ define([
     blink(status) {
       // TODO: Move blink and timer to ActivityPanel
       if (this.useCursor) {
-        this.cursorBlink = status === 1 ? true : status === -1 ? false : !this.cursorBlink
-        this.repaintCell(this.cursor.x, this.cursor.y)
+        this.cursorBlink = status === 1 ? true : status === -1 ? false : !this.cursorBlink;
+        this.repaintCell(this.cursor.x, this.cursor.y);
       }
     }
 
@@ -788,8 +788,8 @@ define([
      */
     end() {
       if (this.cursorTimer) {
-        this.cursorTimer.stop()
-        this.cursorTimer = null
+        this.cursorTimer.stop();
+        this.cursorTimer = null;
       }
     }
   }
@@ -877,21 +877,21 @@ define([
      * @name TextGrid#wildTransparent
      * @type {boolean} */
     wildTransparent: false,
-  })
+  });
 
   /**
    * TextGrid default values
    * @name TextGrid.defaults
    * @constant
    * @type {object} */
-  TextGrid.defaults = defaults
+  TextGrid.defaults = defaults;
 
   /**
    * Binary flags used to mark status
    * @name TextGrid.flags
    * @constant
    * @type {object} */
-  TextGrid.flags = flags
+  TextGrid.flags = flags;
 
-  return TextGrid
-})
+  return TextGrid;
+});

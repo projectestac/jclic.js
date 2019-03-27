@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -61,12 +61,12 @@ define([
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties($xml) {
-      $xml.children('item').each((_i, data) => this.elements.push(new ActivitySequenceElement().setProperties($(data))))
-      return this
+      $xml.children('item').each((_i, data) => this.elements.push(new ActivitySequenceElement().setProperties($(data))));
+      return this;
     }
 
     getData(){
-      return this.elements.map(el => el.getData())
+      return this.elements.map(el => el.getData());
     }
 
     /**
@@ -75,7 +75,7 @@ define([
      * @returns {number} - The requested index, or `null` if not found.
      */
     getElementIndex(ase) {
-      return ase === null ? -1 : this.elements.indexOf(ase)
+      return ase === null ? -1 : this.elements.indexOf(ase);
     }
 
     /**
@@ -85,13 +85,13 @@ define([
      * @returns {ActivitySequenceElement} - The requested element, or `null` if out of range.
      */
     getElement(n, updateCurrentAct) {
-      let result = null
+      let result = null;
       if (n >= 0 && n < this.elements.length) {
-        result = this.elements[n]
+        result = this.elements[n];
         if (updateCurrentAct)
-          this.currentAct = n
+          this.currentAct = n;
       }
-      return result
+      return result;
     }
 
     /**
@@ -103,20 +103,20 @@ define([
     getElementByTag(tag, updateCurrentAct) {
       let
         result = null,
-        resultIndex = -1
+        resultIndex = -1;
       if (tag) {
-        tag = Utils.nSlash(tag)
+        tag = Utils.nSlash(tag);
         this.elements.some((el, index) => {
           if (el.tag === tag) {
-            result = el
-            resultIndex = index
+            result = el;
+            resultIndex = index;
           }
-          return resultIndex !== -1
-        })
+          return resultIndex !== -1;
+        });
         if (resultIndex !== -1 && updateCurrentAct)
-          this.currentAct = resultIndex
+          this.currentAct = resultIndex;
       }
-      return result
+      return result;
     }
 
     /**
@@ -124,7 +124,7 @@ define([
      * @returns {ActivitySequenceElement} - The current sequence element, or `null` if not set.
      */
     getCurrentAct() {
-      return this.getElement(this.currentAct, false)
+      return this.getElement(this.currentAct, false);
     }
 
     /**
@@ -134,23 +134,23 @@ define([
      * @returns {boolean} - `true` when the user is allowed to go ahead to a next activity,
      * `false` otherwise. */
     hasNextAct(hasReturn) {
-      let result = false
-      const ase = this.getCurrentAct()
+      let result = false;
+      const ase = this.getCurrentAct();
       if (ase) {
         if (ase.fwdJump === null)
-          result = true
+          result = true;
         else
           switch (ase.fwdJump.action) {
             case 'STOP':
-              break
+              break;
             case 'RETURN':
-              result = hasReturn
-              break
+              result = hasReturn;
+              break;
             default:
-              result = true
+              result = true;
           }
       }
-      return result
+      return result;
     }
 
     /**
@@ -160,23 +160,23 @@ define([
      * @returns {boolean} - `true` when the user is allowed to go back to a previous activity,
      * `false` otherwise. */
     hasPrevAct(hasReturn) {
-      let result = false
-      const ase = this.getCurrentAct()
+      let result = false;
+      const ase = this.getCurrentAct();
       if (ase) {
         if (ase.backJump === null)
-          result = true
+          result = true;
         else
           switch (ase.backJump.action) {
             case 'STOP':
-              break
+              break;
             case 'RETURN':
-              result = hasReturn
-              break
+              result = hasReturn;
+              break;
             default:
-              result = true
+              result = true;
           }
       }
-      return result
+      return result;
     }
 
     /**
@@ -185,11 +185,11 @@ define([
      * thus: `none`, `fwd`, `back` or `both`
      */
     getNavButtonsFlag() {
-      let flag = 'none'
-      const ase = this.getCurrentAct()
+      let flag = 'none';
+      const ase = this.getCurrentAct();
       if (ase)
-        flag = ase.navButtons
-      return flag
+        flag = ase.navButtons;
+      return flag;
     }
 
     /**
@@ -201,30 +201,30 @@ define([
      * @returns {JumpInfo} - The jump info if a valid jump is possible, `null` otherwise.
      */
     getJump(back, reporter) {
-      const ase = this.getCurrentAct()
-      let result = null
+      const ase = this.getCurrentAct();
+      let result = null;
       if (ase) {
-        const asj = back ? ase.backJump : ase.fwdJump
+        const asj = back ? ase.backJump : ase.fwdJump;
         if (asj === null) {
-          let i = this.currentAct + (back ? -1 : 1)
+          let i = this.currentAct + (back ? -1 : 1);
           if (i >= this.elements.length || i < 0)
-            i = 0
-          result = new JumpInfo('JUMP', i)
+            i = 0;
+          result = new JumpInfo('JUMP', i);
         } else {
           let
             rating = -1,
-            time = -1
+            time = -1;
           if (reporter !== null) {
-            const seqRegInfo = reporter.getCurrentSequenceInfo()
+            const seqRegInfo = reporter.getCurrentSequenceInfo();
             if (seqRegInfo !== null) {
-              rating = Math.round(seqRegInfo.tScore)
-              time = Math.round(seqRegInfo.tTime / 1000)
+              rating = Math.round(seqRegInfo.tScore);
+              time = Math.round(seqRegInfo.tTime / 1000);
             }
           }
-          result = asj.resolveJump(rating, time)
+          result = asj.resolveJump(rating, time);
         }
       }
-      return result
+      return result;
     }
 
     /**
@@ -233,12 +233,12 @@ define([
      * @returns {string} - The nearest 'tag', or `null` if not found.
      */
     getSequenceForElement(num) {
-      let tag = null
+      let tag = null;
       if (num >= 0 && num < this.elements.length)
         for (let i = num; tag === null && i >= 0; i--) {
-          tag = this.getElement(i, false).tag
+          tag = this.getElement(i, false).tag;
         }
-      return tag
+      return tag;
     }
 
     /**
@@ -249,15 +249,15 @@ define([
      * @returns {ActivitySequenceElement} The requested element or `null` if not found.
      */
     getElementByActivityName(activity) {
-      let result = null
+      let result = null;
       if (activity !== null) {
         for (let i = 0; result === null && i < this.elements.length; i++) {
-          const ase = this.getElement(i, false)
+          const ase = this.getElement(i, false);
           if (ase.activity.toLowerCase() === activity.toLowerCase())
-            result = ase
+            result = ase;
         }
       }
-      return result
+      return result;
     }
 
     /**
@@ -266,23 +266,23 @@ define([
      * @param {string} activity - The name of the activity to check
      */
     checkCurrentActivity(activity) {
-      let ase = this.getCurrentAct()
+      let ase = this.getCurrentAct();
       if (ase === null || ase.activity.toUpperCase() !== activity.toUpperCase()) {
         for (let i = 0; i < this.elements.length; i++) {
           if (this.getElement(i, false).activity.toUpperCase() === activity.toUpperCase()) {
-            this.currentAct = i
-            return false
+            this.currentAct = i;
+            return false;
           }
         }
-        ase = new ActivitySequenceElement()
-        ase.activity = activity
-        ase.fwdJump = new ActivitySequenceJump('STOP')
-        ase.backJump = new ActivitySequenceJump('STOP')
-        this.elements.push(ase)
-        this.currentAct = this.elements.length - 1
-        return false
+        ase = new ActivitySequenceElement();
+        ase.activity = activity;
+        ase.fwdJump = new ActivitySequenceJump('STOP');
+        ase.backJump = new ActivitySequenceJump('STOP');
+        this.elements.push(ase);
+        this.currentAct = this.elements.length - 1;
+        return false;
       }
-      return true
+      return true;
     }
   }
 
@@ -303,7 +303,7 @@ define([
      * @name ActivitySequence#currentAct
      * @type {number} */
     currentAct: -1,
-  })
+  });
 
-  return ActivitySequence
-})
+  return ActivitySequence;
+});

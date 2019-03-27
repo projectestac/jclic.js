@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -51,11 +51,11 @@ define([
      * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwise
      */
     constructor(type, source, dest, ok) {
-      this.type = type
-      this.source = source || null
-      this.dest = dest || null
-      this.ok = ok || false
-      this.time = (new Date()).valueOf()
+      this.type = type;
+      this.source = source || null;
+      this.dest = dest || null;
+      this.ok = ok || false;
+      this.time = (new Date()).valueOf();
     }
 
     /**
@@ -64,14 +64,14 @@ define([
      * @returns {external:jQuery}
      */
     $getXML() {
-      const attr = { ok: this.ok, time: this.time }
+      const attr = { ok: this.ok, time: this.time };
       if (this.type)
-        attr.type = this.type
+        attr.type = this.type;
       if (this.source)
-        attr.source = this.source
+        attr.source = this.source;
       if (this.dest)
-        attr.dest = this.dest
-      return $('<action/>', attr)
+        attr.dest = this.dest;
+      return $('<action/>', attr);
     }
 
     /**
@@ -84,16 +84,16 @@ define([
           case 'type':
           case 'source':
           case 'dest':
-            this[name] = value
-            break
+            this[name] = value;
+            break;
           case 'time':
-            this[name] = Number(value)
-            break
+            this[name] = Number(value);
+            break;
           case 'ok':
-            this[name] = Utils.getBoolean(value, false)
-            break
+            this[name] = Utils.getBoolean(value, false);
+            break;
         }
-      })
+      });
     }
   }
 
@@ -123,7 +123,7 @@ define([
      * @name ActionReg#isOk
      * @type {boolean} */
     isOk: false,
-  })
+  });
 
-  return ActionReg
-})
+  return ActionReg;
+});

@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -49,16 +49,16 @@ define([
      * @param {Reporter} reporter - The {@link Reporter} associated to this SCORM object
      */
     constructor(API, reporter) {
-      this.API = API
+      this.API = API;
       // Check if 'API' has a function named 'Initialized'
       if (typeof API.Initialize === 'function')
-        this.is2004 = true
+        this.is2004 = true;
       else {
         // SCORM 1.2
-        this.prefix = 'LMS'
-        this.core = 'cmi.core.'
+        this.prefix = 'LMS';
+        this.core = 'cmi.core.';
       }
-      this.reporter = reporter
+      this.reporter = reporter;
     }
 
     /**
@@ -69,13 +69,13 @@ define([
      */
     static scanForAPI(win, tries) {
       if (win.API_1484_11 && win.API_1184_11.Initialize && win.API_1184_11.SetValue && win.API_1184_11.Commit)
-        return win.API_1184_11
+        return win.API_1184_11;
       else if (win.API && win.API.LMSInitialize && win.API.LMSSetValue && win.API.LMSCommit)
-        return win.API
+        return win.API;
       else if (win.parent && win.parent !== win && tries++ < SCORM.DISCOVER_MAX_TRIES)
-        return SCORM.scanForAPI(win.parent, tries)
+        return SCORM.scanForAPI(win.parent, tries);
       else
-        return null
+        return null;
     }
 
     /**
@@ -84,22 +84,22 @@ define([
      * @param {Reporter} reporter - The {@link Reporter} linked to the requested SCORM object
      */
     static getSCORM(reporter) {
-      let result = null
+      let result = null;
       try {
-        let api = SCORM.scanForAPI(window, 0)
+        let api = SCORM.scanForAPI(window, 0);
         if (api === null && window.opener)
-          api = SCORM.scanForAPI(window.opener, 0)
+          api = SCORM.scanForAPI(window.opener, 0);
 
         if (api) {
-          result = new SCORM(api, reporter)
+          result = new SCORM(api, reporter);
           if (!result.initialize())
-            result = null
+            result = null;
         }
       } catch (ex) {
-        result = null
-        Utils.log('warn', 'Unable to use SCORM: %s', ex.toString())
+        result = null;
+        Utils.log('warn', 'Unable to use SCORM: %s', ex.toString());
       }
-      return result
+      return result;
     }
 
     /**
@@ -107,25 +107,25 @@ define([
      * @returns {Boolean}
      */
     initialize() {
-      let result = false
+      let result = false;
       try {
-        result = this.API[this.prefix + 'Initialize']('')
+        result = this.API[this.prefix + 'Initialize']('');
         if (result) {
-          this.studentId = this.getValue(this.core + (this.is2004 ? 'learner_id' : 'student_id'))
-          this.studentName = this.getValue(this.core + (this.is2004 ? 'learner_name' : 'student_name'))
-          this.setValue(this.core + 'score.min', 0)
-          this.setValue(this.core + 'score.max', 100)
+          this.studentId = this.getValue(this.core + (this.is2004 ? 'learner_id' : 'student_id'));
+          this.studentName = this.getValue(this.core + (this.is2004 ? 'learner_name' : 'student_name'));
+          this.setValue(this.core + 'score.min', 0);
+          this.setValue(this.core + 'score.max', 100);
           $(window).on('unload', () => {
-            this.commitInfo()
-            this.terminate()
-            this.API = null
-          })
+            this.commitInfo();
+            this.terminate();
+            this.API = null;
+          });
         }
-        Utils.log('debug', 'SCORM initialized')
+        Utils.log('debug', 'SCORM initialized');
       } catch (ex) {
-        Utils.log('error', `Error initializing SCORM API: ${ex.message}`)
+        Utils.log('error', `Error initializing SCORM API: ${ex.message}`);
       }
-      return result
+      return result;
     }
 
     /**
@@ -133,13 +133,13 @@ define([
      * @returns {Boolean}
      */
     terminate() {
-      let result = false
+      let result = false;
       try {
-        result = this.API[this.is2004 ? 'Terminate' : 'LMSFinish']('')
+        result = this.API[this.is2004 ? 'Terminate' : 'LMSFinish']('');
       } catch (ex) {
-        Utils.log('error', `Error terminating SCORM API: ${ex.message}`)
+        Utils.log('error', `Error terminating SCORM API: ${ex.message}`);
       }
-      return result
+      return result;
     }
 
     /**
@@ -149,12 +149,12 @@ define([
       const
         info = this.reporter.getInfo(),
         score = Math.round(info.globalScore * 100),
-        time = this.getTimeExpression(info.tTime)
+        time = this.getTimeExpression(info.tTime);
 
-      this.setValue(this.core + 'score.raw', score)
-      this.setValue(this.core + 'session_time', time)
-      this.commit()
-      Utils.log('debug', `SCORM results reported: ${score} (${time})`)
+      this.setValue(this.core + 'score.raw', score);
+      this.setValue(this.core + 'session_time', time);
+      this.commit();
+      Utils.log('debug', `SCORM results reported: ${score} (${time})`);
     }
 
     /**
@@ -162,13 +162,13 @@ define([
      * @returns {Boolean}
      */
     commit() {
-      let result = false
+      let result = false;
       try {
-        result = this.API[this.prefix + 'Commit']('')
+        result = this.API[this.prefix + 'Commit']('');
       } catch (ex) {
-        Utils.log('error', 'Error commiting data to the SCORM API: ${ex.message}')
+        Utils.log('error', 'Error commiting data to the SCORM API: ${ex.message}');
       }
-      return result
+      return result;
     }
 
     /**
@@ -178,13 +178,13 @@ define([
      * @returns {string}
      */
     setValue(key, value) {
-      let result = false
+      let result = false;
       try {
-        result = this.API[this.prefix + 'SetValue'](key, value)
+        result = this.API[this.prefix + 'SetValue'](key, value);
       } catch (ex) {
-        Utils.log('error', `Error setting value "${value}" to "${key}" in SCORM API: ${ex.message}`)
+        Utils.log('error', `Error setting value "${value}" to "${key}" in SCORM API: ${ex.message}`);
       }
-      return result
+      return result;
     }
 
     /**
@@ -193,13 +193,13 @@ define([
      * @returns {string} - The value associated with the provided key, or `null` if not found
      */
     getValue(key) {
-      let result = false
+      let result = false;
       try {
-        result = this.API[this.prefix + 'GetValue'](key)
+        result = this.API[this.prefix + 'GetValue'](key);
       } catch (ex) {
-        Utils.log('error', `Error retrieving "${key}" from SCORM API: ${ex.message}`)
+        Utils.log('error', `Error retrieving "${key}" from SCORM API: ${ex.message}`);
       }
-      return result
+      return result;
     }
 
     /**
@@ -213,11 +213,11 @@ define([
         d = new Date(millis),
         h = d.getUTCHours(),
         m = d.getUTCMinutes(),
-        s = d.getUTCSeconds()
+        s = d.getUTCSeconds();
 
       return this.is2004 ?
         `PT${h}H${m}M${s}S` :
-        `${('0000' + h).slice(-4)}:${('00' + m).slice(-2)}:${('00' + s).slice(-2)}`
+        `${('0000' + h).slice(-4)}:${('00' + m).slice(-2)}:${('00' + s).slice(-2)}`;
     }
 
     /**
@@ -225,7 +225,7 @@ define([
      * @returns {string}
      */
     getScormType() {
-      return `SCORM ${this.is2004 ? '2004' : '1.2'}`
+      return `SCORM ${this.is2004 ? '2004' : '1.2'}`;
     }
   }
 
@@ -265,12 +265,12 @@ define([
      * @name SCORM#studentName
      * @type {string} */
     studentName: '',
-  })
+  });
 
   /**
    * Maximum recursive attempts allowed to find the global SCORM API object
    * @type {number} */
-  SCORM.DISCOVER_MAX_TRIES = 50
+  SCORM.DISCOVER_MAX_TRIES = 50;
 
-  return SCORM
-})
+  return SCORM;
+});

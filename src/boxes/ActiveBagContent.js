@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -56,10 +56,10 @@ define([
      */
     constructor(id, ncw, nch) {
       if (id)
-        this.id = id
-      this.cells = []
-      this.ncw = Math.max(1, ncw)
-      this.nch = Math.max(1, nch)
+        this.id = id;
+      this.cells = [];
+      this.ncw = Math.max(1, ncw);
+      this.nch = Math.max(1, nch);
     }
 
     /**
@@ -68,97 +68,97 @@ define([
      * @param {MediaBag} mediaBag - The project's MediaBag
      */
     setProperties($xml, mediaBag) {
-      let bug = false
+      let bug = false;
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
           case 'id':
-            this.id = val
-            break
+            this.id = val;
+            break;
           case 'image':
-            this.imgName = Utils.nSlash(val)
-            break
+            this.imgName = Utils.nSlash(val);
+            break;
           // Bug in JClic beta 1: "columns" is number of rows, and "rows" is number of columns.
           // Was corrected in beta 2: If "cols" is specified, "rows" are rows and "cols" are columns.
           case 'rows':
-            this.nch = Number(val)
-            break
+            this.nch = Number(val);
+            break;
           case 'columns':
-            bug = true
+            bug = true;
           /* falls through */
           case 'cols':
-            this.ncw = Number(val)
-            break
+            this.ncw = Number(val);
+            break;
           case 'cellWidth':
-            this.w = Number(val)
-            break
+            this.w = Number(val);
+            break;
           case 'cellHeight':
-            this.h = Number(val)
-            break
+            this.h = Number(val);
+            break;
           case 'border':
-            this.border = Utils.getBoolean(val)
-            break
+            this.border = Utils.getBoolean(val);
+            break;
         }
-      })
+      });
 
       if (bug) {
-        let n = this.ncw
-        this.ncw = this.nch
-        this.nch = n
+        let n = this.ncw;
+        this.ncw = this.nch;
+        this.nch = n;
       }
 
       $xml.children().each((_n, child) => {
-        const $node = $(child)
+        const $node = $(child);
         switch (child.nodeName) {
           case 'style':
-            this.bb = new BoxBase(null).setProperties($node)
-            break
+            this.bb = new BoxBase(null).setProperties($node);
+            break;
           case 'shaper':
             const shaperClassName = $node.attr('class'),
               nCols = Math.max(1, $node.attr('cols')),
-              nRows = Math.max(1, $node.attr('rows'))
-            this.shaper = Shaper.getShaper(shaperClassName, nCols, nRows)
-            this.shaper.setProperties($node)
-            break
+              nRows = Math.max(1, $node.attr('rows'));
+            this.shaper = Shaper.getShaper(shaperClassName, nCols, nRows);
+            this.shaper.setProperties($node);
+            break;
           case 'ids':
             // Used in special cases where all cells have empty content with only 'ids'
             this.ids = child.textContent;
-            this.ids.split(' ').forEach((id, i) => { this.cells[i] = new ActiveBoxContent(Number(id)) })
-            break
+            this.ids.split(' ').forEach((id, i) => { this.cells[i] = new ActiveBoxContent(Number(id)); });
+            break;
           case 'cell':
-            this.cells.push(new ActiveBoxContent().setProperties($node, mediaBag))
-            break
+            this.cells.push(new ActiveBoxContent().setProperties($node, mediaBag));
+            break;
         }
-      })
+      });
 
-      let n = this.cells.length
+      let n = this.cells.length;
 
       // Create cells when `cells` is empty
       if (n === 0 && this.shaper && this.shaper.nCells > 0) {
-        n = this.shaper.nCells
-        this.getActiveBoxContent(n - 1)
+        n = this.shaper.nCells;
+        this.getActiveBoxContent(n - 1);
       }
 
       // Assign ids when cells have empty content (they are just shapes)
       if (n > 0) {
-        let empty = true
+        let empty = true;
         for (let i = 0; i < n; i++) {
-          const bxc = this.getActiveBoxContent(i)
+          const bxc = this.getActiveBoxContent(i);
           if (bxc.id !== -1 || bxc.item !== -1 || !bxc.isEmpty()) {
-            empty = false
-            break
+            empty = false;
+            break;
           }
         }
         if (empty) {
           for (let i = 0; i < n; i++)
-            this.getActiveBoxContent(i).id = i
+            this.getActiveBoxContent(i).id = i;
         }
       }
 
       // Link [BoxBase](BoxBase.html) objects of `cells` elements to `bb`
       if (this.bb)
-        this.cells.forEach((abc) => { if (abc.bb) abc.bb.parent = this.bb })
+        this.cells.forEach((abc) => { if (abc.bb) abc.bb.parent = this.bb; });
 
-      return this
+      return this;
     }
 
     getData() {
@@ -170,7 +170,7 @@ define([
         'bb',
         'shaper',
         this.ids ? 'ids' : 'cells'
-      ])
+      ]);
     }
 
     /**
@@ -178,7 +178,7 @@ define([
      * @param {PlayStation} playStation - The {@link JClicPlayer}
      */
     prepareMedia(playStation) {
-      this.cells.forEach(abc => abc.prepareMedia(playStation))
+      this.cells.forEach(abc => abc.prepareMedia(playStation));
     }
 
     /**
@@ -186,7 +186,7 @@ define([
      * @returns {number}
      */
     getTotalWidth() {
-      return this.w * this.ncw
+      return this.w * this.ncw;
     }
 
     /**
@@ -194,7 +194,7 @@ define([
      * @returns {number}
      */
     getTotalHeight() {
-      return this.h * this.nch
+      return this.h * this.nch;
     }
 
     /**
@@ -202,7 +202,7 @@ define([
      * @returns {number}
      */
     getNumCells() {
-      return this.cells.length
+      return this.cells.length;
     }
 
     /**
@@ -210,7 +210,7 @@ define([
      * @returns {boolean}
      */
     isEmpty() {
-      return this.cells.length === 0
+      return this.cells.length === 0;
     }
 
     /**
@@ -219,8 +219,8 @@ define([
      */
     getShaper() {
       if (this.shaper === null)
-        this.shaper = Shaper.getShaper('@Rectangular', this.ncw, this.nch)
-      return this.shaper
+        this.shaper = Shaper.getShaper('@Rectangular', this.ncw, this.nch);
+      return this.shaper;
     }
 
     /**
@@ -229,8 +229,8 @@ define([
      */
     getBoxBase() {
       if (this.bb === null)
-        this.bb = new BoxBase()
-      return this.bb
+        this.bb = new BoxBase();
+      return this.bb;
     }
 
     /**
@@ -238,9 +238,9 @@ define([
      * @param {ActiveBoxContent} ab - The ActiveBoxContent to add
      */
     addActiveBoxContent(ab) {
-      this.cells.push(ab)
+      this.cells.push(ab);
       if (this.ncw === 0 || this.nch === 0) {
-        this.ncw = this.nch = 1
+        this.ncw = this.nch = 1;
       }
     }
 
@@ -252,9 +252,9 @@ define([
     getActiveBoxContent(i) {
       if (i >= this.cells.length) {
         for (let j = this.cells.length; j <= i; j++)
-          this.cells.push(new ActiveBoxContent())
+          this.cells.push(new ActiveBoxContent());
       }
-      return this.cells[i]
+      return this.cells[i];
     }
 
     /**
@@ -264,7 +264,7 @@ define([
      * @returns {ActiveBoxContent}
      */
     getActiveBoxContentWith(id, item) {
-      return this.cells.find(bxc => bxc.id === id && bxc.item === item)
+      return this.cells.find(bxc => bxc.id === id && bxc.item === item);
     }
 
     /**
@@ -276,37 +276,37 @@ define([
      */
     setImgContent(mb, sh, roundSizes) {
       if (sh)
-        this.setShaper(sh)
+        this.setShaper(sh);
 
       if (this.shaper.className === '@Holes')
-        this.shaper.hasRemainder = true
+        this.shaper.hasRemainder = true;
 
-      this.ncw = this.shaper.nCols
-      this.nch = this.shaper.nRows
-      const mbe = mb.elements[this.imgName]
+      this.ncw = this.shaper.nCols;
+      this.nch = this.shaper.nRows;
+      const mbe = mb.elements[this.imgName];
       if (mb && this.imgName && mbe && mbe.ready) {
-        this.img = mbe.data
+        this.img = mbe.data;
         if (mbe.animated)
-          this.animatedGifFile = mbe.getFullPath()
-        this.w = this.img.width / this.ncw
-        this.h = this.img.height / this.nch
+          this.animatedGifFile = mbe.getFullPath();
+        this.w = this.img.width / this.ncw;
+        this.h = this.img.height / this.nch;
         if (roundSizes) {
-          this.w = Math.round(this.w)
-          this.h = Math.round(this.h)
+          this.w = Math.round(this.w);
+          this.h = Math.round(this.h);
         }
       } else {
-        this.img = null
-        this.w = Math.max(this.w, 10)
-        this.h = Math.max(this.h, 10)
+        this.img = null;
+        this.w = Math.max(this.w, 10);
+        this.h = Math.max(this.h, 10);
       }
 
-      const r = new AWT.Rectangle(0, 0, this.w * this.ncw, this.h * this.nch)
+      const r = new AWT.Rectangle(0, 0, this.w * this.ncw, this.h * this.nch);
       for (let i = 0; i < this.shaper.nCells; i++)
-        this.getActiveBoxContent(i).setImgContent(this.img, this.shaper.getShape(i, r), this.animatedGifFile)
+        this.getActiveBoxContent(i).setImgContent(this.img, this.shaper.getShape(i, r), this.animatedGifFile);
 
       if (this.shaper.hasRemainder) {
-        this.backgroundContent = new ActiveBoxContent()
-        this.backgroundContent.setImgContent(this.img, this.shaper.getRemainderShape(r))
+        this.backgroundContent = new ActiveBoxContent();
+        this.backgroundContent.setImgContent(this.img, this.shaper.getRemainderShape(r));
       }
     }
 
@@ -317,11 +317,11 @@ define([
      * @param {number} setNch - Number of rows
      */
     setTextContent(txt, setNcw, setNch) {
-      this.ncw = Math.max(1, setNcw)
-      this.nch = Math.max(1, setNch)
-      const n = this.ncw * this.nch
+      this.ncw = Math.max(1, setNcw);
+      this.nch = Math.max(1, setNch);
+      const n = this.ncw * this.nch;
       for (let i = 0; i < n; i++)
-        this.getActiveBoxContent(i).setTextContent(i >= txt.length || txt[i] === null ? '' : txt[i])
+        this.getActiveBoxContent(i).setTextContent(i >= txt.length || txt[i] === null ? '' : txt[i]);
     }
 
     /**
@@ -330,7 +330,7 @@ define([
      */
     setIds(ids) {
       for (let i = 0; i < ids.length && i < this.cells.length; i++)
-        this.getActiveBoxContent(i).id = ids[i]
+        this.getActiveBoxContent(i).id = ids[i];
     }
 
     /**
@@ -339,7 +339,7 @@ define([
      * @param {*} value - The supplied value. Can be of any type.
      */
     setCellsAttribute(key, value) {
-      this.cells.forEach(abc => abc[key] = value)
+      this.cells.forEach(abc => abc[key] = value);
     }
 
     /**
@@ -350,8 +350,8 @@ define([
      */
     avoidAllIdsNull(maxId) {
       if (this.cells.every(abc => abc.id === -1)) {
-        maxId = Math.max(1, maxId)
-        this.cells.forEach((abc, n) => { abc.id = n % maxId })
+        maxId = Math.max(1, maxId);
+        this.cells.forEach((abc, n) => { abc.id = n % maxId; });
       }
     }
   }
@@ -432,7 +432,7 @@ define([
      * @name ActiveBagContent#ids
      * @type {string} */
     ids: null,
-  })
+  });
 
-  return ActiveBagContent
-})
+  return ActiveBagContent;
+});

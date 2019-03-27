@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -50,12 +50,12 @@ define([
      * @param {string=} file - An optional file name or URL containing the sound data
      */
     constructor(id, file) {
-      this.id = id
+      this.id = id;
       if (file) {
         if (Utils.startsWith(file, 'data:'))
-          this.audio = new Audio(file)
+          this.audio = new Audio(file);
         else
-          this.file = file
+          this.file = file;
       }
     }
 
@@ -64,13 +64,13 @@ define([
      * @param {external:jQuery} $xml - The XML element to be parsed
      */
     setProperties($xml) {
-      this.file = $xml.attr('file')
-      this.enabled = Utils.getTriState($xml.attr('enabled'))
-      return this
+      this.file = $xml.attr('file');
+      this.enabled = Utils.getTriState($xml.attr('enabled'));
+      return this;
     }
 
     getData() {
-      return Utils.getData(this, ['enabled', 'file'])
+      return Utils.getData(this, ['enabled', 'file']);
     }
 
     /**
@@ -80,8 +80,8 @@ define([
      */
     realize(ps, mediaBag) {
       if (!this.audio && this.player === null && this.file !== null) {
-        this.player = new ActiveMediaPlayer(new MediaContent('PLAY_AUDIO', this.file), mediaBag, ps)
-        this.player.realize()
+        this.player = new ActiveMediaPlayer(new MediaContent('PLAY_AUDIO', this.file), mediaBag, ps);
+        this.player.realize();
       }
     }
 
@@ -91,10 +91,10 @@ define([
     play() {
       if (this.enabled) {
         if (this.audio) {
-          this.audio.currentTime = 0
-          this.audio.play()
+          this.audio.currentTime = 0;
+          this.audio.play();
         } else if (this.player)
-          this.player.play()
+          this.player.play();
       }
     }
 
@@ -104,9 +104,9 @@ define([
     stop() {
       if (this.enabled) {
         if (this.audio)
-          this.audio.pause()
+          this.audio.pause();
         else if (this.player)
-          this.player.stop()
+          this.player.stop();
       }
     }
   }
@@ -132,7 +132,7 @@ define([
      * @name EventSoundsElement#audio
      * @type {HTMLAudioElement} */
     audio: null,
-  })
+  });
 
-  return EventSoundsElement
-})
+  return EventSoundsElement;
+});

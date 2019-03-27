@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -48,10 +48,10 @@ define([
      * @param {string} className - The class name of this evaluator.
      */
     constructor(className) {
-      this.className = className
+      this.className = className;
       this.collator = (window.Intl && window.Intl.Collator) ?
         new window.Intl.Collator() :
-        { compare: (a, b) => this.checkCase ? a === b : a.toUpperCase() === b.toUpperCase() }
+        { compare: (a, b) => this.checkCase ? a === b : a.toUpperCase() === b.toUpperCase() };
     }
 
     /**
@@ -61,17 +61,17 @@ define([
      * @returns {Evaluator}
      */
     static getEvaluator($xml) {
-      let ev = null
+      let ev = null;
       if ($xml) {
-        const className = $xml.attr('class')
-        const cl = Evaluator.CLASSES[className]
+        const className = $xml.attr('class');
+        const cl = Evaluator.CLASSES[className];
         if (cl) {
-          ev = new cl(className)
-          ev.setProperties($xml)
+          ev = new cl(className);
+          ev.setProperties($xml);
         } else
-          Utils.log('error', `Unknown evaluator class: "${className}"`)
+          Utils.log('error', `Unknown evaluator class: "${className}"`);
       }
-      return ev
+      return ev;
     }
 
     /**
@@ -82,22 +82,22 @@ define([
       Utils.attrForEach($xml.get(0).attributes, (name, value) => {
         switch (name) {
           case 'class':
-            this.className = value
-            break
+            this.className = value;
+            break;
           case 'checkCase':
           case 'checkAccents':
           case 'checkPunctuation':
           case 'checkDoubleSpaces':
           case 'detail':
-            this[name] = Utils.getBoolean(value)
-            break
+            this[name] = Utils.getBoolean(value);
+            break;
           case 'checkSteps':
           case 'checkScope':
-            this[name] = Number(value)
-            break
+            this[name] = Number(value);
+            break;
         }
-      })
-      return this
+      });
+      return this;
     }
 
     /**
@@ -105,7 +105,7 @@ define([
      * @param {string[]} _locales - An array of valid locales, to be used by Intl.Collator
      */
     init(_locales) {
-      this.initiated = true
+      this.initiated = true;
     }
 
     /**
@@ -116,11 +116,11 @@ define([
      */
     checkText(text, match) {
       if (match instanceof Array)
-        return match.some(m => this._checkText(text, m))
+        return match.some(m => this._checkText(text, m));
       else if (match)
-        return this._checkText(text, match)
+        return this._checkText(text, match);
       else
-        return false
+        return false;
     }
 
     /**
@@ -131,7 +131,7 @@ define([
      * @returns {boolean} - `true` when the two expressions can be considered equivalent.
      */
     _checkText(_text, _match) {
-      return false
+      return false;
     }
 
     /**
@@ -144,8 +144,8 @@ define([
      */
     evalText(text, match) {
       if (!(match instanceof Array))
-        match = [match]
-      return this._evalText(text, match)
+        match = [match];
+      return this._evalText(text, match);
     }
 
     /**
@@ -158,7 +158,7 @@ define([
      * position is erroneous or OK.
      */
     _evalText(_text, _match) {
-      return []
+      return [];
     }
 
     /**
@@ -168,7 +168,7 @@ define([
      * @returns {boolean} - `true` when there is at least one flag and all flags are 0 (meaning no error).
      */
     isOk(flags) {
-      return flags && flags.length > 0 && !flags.some(f => f !== 0)
+      return flags && flags.length > 0 && !flags.some(f => f !== 0);
     }
   }
 
@@ -194,7 +194,7 @@ define([
      * @name Evaluator#checkcase
      * @type {boolean} */
     checkCase: false,
-  })
+  });
 
   /**
    * A basic evaluator that just compares texts, without looking for possible coincidences of text
@@ -208,7 +208,7 @@ define([
      * @param {string} className - The class name of this evaluator.
      */
     constructor(className) {
-      super(className)
+      super(className);
     }
 
     /**
@@ -218,14 +218,14 @@ define([
      */
     init(locales) {
       // Call `init` method on ancestor
-      super.init([locales])
+      super.init([locales]);
 
       // Get canonical locales
       if (window.Intl && window.Intl.Collator) {
         this.collator = new window.Intl.Collator(locales, {
           sensitivity: this.checkAccents ? this.checkCase ? 'case' : 'accent' : 'base',
           ignorePunctuation: !this.checkPunctuation
-        })
+        });
       }
     }
 
@@ -237,7 +237,7 @@ define([
      * @returns {boolean} - `true` when the two expressions can be considered equivalent.
      */
     _checkText(text, match) {
-      return this.collator.compare(this.getClearedText(text), this.getClearedText(match)) === 0
+      return this.collator.compare(this.getClearedText(text), this.getClearedText(match)) === 0;
     }
 
     /**
@@ -252,7 +252,7 @@ define([
      * position is erroneous or OK.
      */
     _evalText(text, match) {
-      return Array(text.length).fill(this._checkText(text, match[0]) ? 0 : 1)
+      return Array(text.length).fill(this._checkText(text, match[0]) ? 0 : 1);
     }
 
     /**
@@ -264,32 +264,32 @@ define([
      */
     getClearedText(src, skipped) {
       if (this.checkPunctuation && this.checkDoubleSpaces)
-        return src
+        return src;
 
       if (!skipped)
-        skipped = Array(src.length).fill(false)
+        skipped = Array(src.length).fill(false);
 
-      let sb = ''
+      let sb = '';
       for (let i = 0, wasSpace = false; i < src.length; i++) {
-        const ch = src.charAt(i)
+        const ch = src.charAt(i);
         if (this.PUNCTUATION.indexOf(ch) >= 0 && !this.checkPunctuation) {
           if (!wasSpace)
-            sb += ' '
+            sb += ' ';
           else
-            skipped[i] = true
-          wasSpace = true
+            skipped[i] = true;
+          wasSpace = true;
         } else if (ch === ' ') {
           if (this.checkDoubleSpaces || !wasSpace)
-            sb += ch
+            sb += ch;
           else
-            skipped[i] = true
-          wasSpace = true
+            skipped[i] = true;
+          wasSpace = true;
         } else {
-          wasSpace = false
-          sb += ch
+          wasSpace = false;
+          sb += ch;
         }
       }
-      return sb
+      return sb;
     }
   }
 
@@ -314,7 +314,7 @@ define([
      * @name BasicEvaluator#PUNCTUATION
      * @type {string} */
     PUNCTUATION: '.,;:',
-  })
+  });
 
   /**
    * ComplexEvaluator acts like {@link BasicEvaluator}, but providing feedback about
@@ -328,7 +328,7 @@ define([
      * @param {string} className - The class name of this evaluator.
      */
     constructor(className) {
-      super(className)
+      super(className);
     }
 
     /**
@@ -345,41 +345,41 @@ define([
     _evalText(text, match) {
 
       if (!this.detail)
-        return super._evalText(text, match)
+        return super._evalText(text, match);
 
       const
         skipped = Array(text.length).fill(false),
         sText = this.getClearedText(text, skipped),
         numChecks = Array(match.length),
         flags = Array(match.length),
-        returnFlags = Array(text.length)
+        returnFlags = Array(text.length);
       let
         maxCheck = -1,
-        maxCheckIndex = -1
+        maxCheckIndex = -1;
 
       for (let i = 0; i < match.length; i++) {
-        flags[i] = Array(text.length).fill(0)
-        const ok = this.compareSegment(sText, sText.length, match[i], match[i].length, flags[i], false)
-        numChecks[i] = this.countFlagsOk(flags[i])
+        flags[i] = Array(text.length).fill(0);
+        const ok = this.compareSegment(sText, sText.length, match[i], match[i].length, flags[i], false);
+        numChecks[i] = this.countFlagsOk(flags[i]);
         if (ok) {
-          maxCheckIndex = i
-          maxCheck = numChecks[i]
+          maxCheckIndex = i;
+          maxCheck = numChecks[i];
         }
       }
 
       if (maxCheckIndex === -1) {
         for (let i = 0; i < match.length; i++) {
           if (numChecks[i] > maxCheck) {
-            maxCheck = numChecks[i]
-            maxCheckIndex = i
+            maxCheck = numChecks[i];
+            maxCheckIndex = i;
           }
         }
       }
 
       for (let i = 0, k = 0; i < text.length; i++)
-        returnFlags[i] = skipped[i] ? 0 : flags[maxCheckIndex][k++]
+        returnFlags[i] = skipped[i] ? 0 : flags[maxCheckIndex][k++];
 
-      return returnFlags
+      return returnFlags;
     }
 
     /**
@@ -388,7 +388,7 @@ define([
      * @returns {number}
      */
     countFlagsOk(flags) {
-      return flags.reduce((n, v) => v == 0 ? ++n : n, 0)
+      return flags.reduce((n, v) => v == 0 ? ++n : n, 0);
     }
 
     /**
@@ -412,64 +412,64 @@ define([
         lastiok = true,
         result = true,
         chs = '',
-        chok = ''
+        chok = '';
 
       if (ls === 0 || lok === 0 || src === null || ok === null)
-        return false
+        return false;
 
       for (; is < ls; is++ , iok++) {
-        chs = src.charAt(is)
-        lastIs = is
+        chs = src.charAt(is);
+        lastIs = is;
         if (iok >= 0 && iok < lok)
-          chok = ok.charAt(iok)
+          chok = ok.charAt(iok);
         else
-          chok = 0
+          chok = 0;
         if (this.collator.compare(chs, chok) === 0) {
-          attr[is] = 0
-          lastiok = true
+          attr[is] = 0;
+          lastiok = true;
         } else {
-          result = false
-          attr[is] = 1
+          result = false;
+          attr[is] = 1;
           if (!iterate && lastiok && chok !== 0 && this.checkSteps > 0 && this.checkScope > 0) {
             const
               lbloc = 2 * this.checkSteps + 1,
-              itcoinc = []
-            let i = 0, j = 0
+              itcoinc = [];
+            let i = 0, j = 0;
             for (; j < lbloc; j++) {
-              itcoinc[j] = 0
-              i = iok + Math.floor((j + 1) / 2) * ((j & 1) !== 0 ? 1 : -1)
+              itcoinc[j] = 0;
+              i = iok + Math.floor((j + 1) / 2) * ((j & 1) !== 0 ? 1 : -1);
               if (i >= lok)
-                continue
-              const is2 = i < 0 ? is - i : is
+                continue;
+              const is2 = i < 0 ? is - i : is;
               if (is2 >= ls)
-                continue
+                continue;
               const
                 ls2 = Math.min(ls - is2, this.checkScope),
                 iok2 = i < 0 ? 0 : i,
                 lok2 = Math.min(lok - iok2, this.checkScope),
                 flags2 = Array(src.length - is2).fill(0),
-                result2 = this.compareSegment(src.substring(is2), ls2, ok.substring(iok2), lok2, flags2, true)
-              itcoinc[j] = this.countFlagsOk(flags2)
+                result2 = this.compareSegment(src.substring(is2), ls2, ok.substring(iok2), lok2, flags2, true);
+              itcoinc[j] = this.countFlagsOk(flags2);
               if (result2)
-                break
+                break;
             }
             if (j === lbloc) {
-              let jmax = this.checkSteps
+              let jmax = this.checkSteps;
               for (j = 0; j < lbloc; j++)
                 if (itcoinc[j] > itcoinc[jmax])
-                  jmax = j
-              i = iok + Math.floor((jmax + 1) / 2) * ((jmax & 1) !== 0 ? 1 : -1)
+                  jmax = j;
+              i = iok + Math.floor((jmax + 1) / 2) * ((jmax & 1) !== 0 ? 1 : -1);
             }
-            iok = i
-            lastiok = false
+            iok = i;
+            lastiok = false;
           }
         }
       }
       if (iok !== lok) {
-        result = false
-        attr[lastIs] = 1
+        result = false;
+        attr[lastIs] = 1;
       }
-      return result
+      return result;
     }
   }
 
@@ -498,13 +498,13 @@ define([
      * @name ComplexEvaluator#checkScope
      * @type {number} */
     checkScope: 6,
-  })
+  });
 
   // List of known Evaluator classes
   Evaluator.CLASSES = {
     '@BasicEvaluator': BasicEvaluator,
     '@ComplexEvaluator': ComplexEvaluator
-  }
+  };
 
-  return Evaluator
-})
+  return Evaluator;
+});

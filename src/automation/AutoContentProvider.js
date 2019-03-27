@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -48,7 +48,7 @@ define([
      * @param {JClicProject} project - The JClic project to which this content provider belongs.
      */
     constructor(project) {
-      this.project = project
+      this.project = project;
     }
 
     /**
@@ -60,18 +60,18 @@ define([
      * @returns {AutoContentProvider}
      */
     static getProvider($xml, project) {
-      let automation = null
+      let automation = null;
       if ($xml && project) {
         const
           className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.automation\./, '@'),
-          cl = AutoContentProvider.CLASSES[className]
+          cl = AutoContentProvider.CLASSES[className];
         if (cl) {
-          automation = new cl(project)
-          automation.setProperties($xml)
+          automation = new cl(project);
+          automation.setProperties($xml);
         } else
-          Utils.log('error', `Unknown AutoContentProvider class: ${className}`)
+          Utils.log('error', `Unknown AutoContentProvider class: ${className}`);
       }
-      return automation
+      return automation;
     }
 
     /**
@@ -79,8 +79,8 @@ define([
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties($xml) {
-      this.className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.automation\./, '@')
-      return this
+      this.className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.automation\./, '@');
+      return this;
     }
 
     /**
@@ -100,7 +100,7 @@ define([
      * @returns {boolean} - `true` if the process was OK. `false` otherwise.
      */
     generateContent(nRows, nCols, content, useIds) {
-      return this.process(new AutoContentProvider.ActiveBagContentKit(nRows, nCols, content, useIds))
+      return this.process(new AutoContentProvider.ActiveBagContentKit(nRows, nCols, content, useIds));
     }
 
     /**
@@ -110,7 +110,7 @@ define([
      */
     process(_kit) {
       // To be implemented in subclasses
-      return false
+      return false;
     }
   }
 
@@ -127,7 +127,7 @@ define([
      * @name AutoContentProvider#numericContent
      * @type {boolean} */
     numericContent: false,
-  })
+  });
 
   /**
    * Utility class used to encapsulate multiple sets of box contents
@@ -140,12 +140,12 @@ define([
    */
   AutoContentProvider.ActiveBagContentKit = class {
     constructor(nRows, nCols, content, useIds) {
-      this.nRows = nRows
-      this.nCols = nCols
-      this.content = content
-      this.useIds = useIds
+      this.nRows = nRows;
+      this.nCols = nCols;
+      this.content = content;
+      this.useIds = useIds;
     }
-  }
+  };
 
   /**
    * Contains the current list of classes derived from AutoContentProvider.
@@ -155,7 +155,7 @@ define([
   AutoContentProvider.CLASSES = {
     // TODO: Implement TagReplace
     '@tagreplace.TagReplace': AutoContentProvider
-  }
+  };
 
-  return AutoContentProvider
-})
+  return AutoContentProvider;
+});

@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -52,11 +52,11 @@ define([
      * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
      */
     constructor(ps) {
-      this.ps = ps
-      this.sessions = []
-      this.started = new Date()
-      this.initiated = false
-      this.info = new ReporterInfo(this)
+      this.ps = ps;
+      this.sessions = [];
+      this.started = new Date();
+      this.initiated = false;
+      this.info = new ReporterInfo(this);
     }
 
     /**
@@ -67,18 +67,18 @@ define([
      * @returns {Reporter}
      */
     static getReporter(className, ps) {
-      let result = null
+      let result = null;
       if (className === null) {
-        className = 'Reporter'
+        className = 'Reporter';
         if (ps.options.hasOwnProperty('reporter'))
-          className = ps.options.reporter
+          className = ps.options.reporter;
       }
       if (Reporter.CLASSES.hasOwnProperty(className))
-        result = new Reporter.CLASSES[className](ps)
+        result = new Reporter.CLASSES[className](ps);
       else
-        Utils.log('error', 'Unknown reporter class: %s', className)
+        Utils.log('error', 'Unknown reporter class: %s', className);
 
-      return result
+      return result;
     }
 
     /**
@@ -86,7 +86,7 @@ define([
      * @returns {ReporterInfo}
      */
     getInfo() {
-      return this.info.recalc()
+      return this.info.recalc();
     }
 
     /**
@@ -96,7 +96,7 @@ define([
      * @returns {string}
      */
     getProperty(key, defaultValue) {
-      return defaultValue
+      return defaultValue;
     }
 
     /**
@@ -106,8 +106,8 @@ define([
      * @returns {boolean}
      */
     getBooleanProperty(key, defaultValue) {
-      const s = this.getProperty(key, defaultValue === true ? 'true' : 'false')
-      return key === null ? defaultValue : s === 'true' ? true : false
+      const s = this.getProperty(key, defaultValue === true ? 'true' : 'false');
+      return key === null ? defaultValue : s === 'true' ? true : false;
     }
 
     /**
@@ -116,7 +116,7 @@ define([
      * @returns {Promise} - When fulfilled, an array of group data is returned as a result
      */
     getGroups() {
-      return Promise.reject('No groups defined!')
+      return Promise.reject('No groups defined!');
     }
 
     /**
@@ -127,7 +127,7 @@ define([
      * is returned
      */
     getUsers(groupId) {
-      return Promise.reject('No users defined in ' + groupId)
+      return Promise.reject('No users defined in ' + groupId);
     }
 
     /**
@@ -137,7 +137,7 @@ define([
      * @returns {Promise} - When fulfilled, an object with user data is returned.
      */
     getUserData(_userId) {
-      return Promise.reject('Unknown user!')
+      return Promise.reject('Unknown user!');
     }
 
     /**
@@ -147,7 +147,7 @@ define([
      * @returns {Promise} - When fulfilled, an object with group data is returned.
      */
     getGroupData(_groupId) {
-      return Promise.reject('Unknown group!')
+      return Promise.reject('Unknown group!');
     }
 
     /**
@@ -156,8 +156,8 @@ define([
      */
     userBased() {
       if (this.bUserBased === null)
-        this.bUserBased = this.getBooleanProperty('USER_TABLES', false)
-      return this.bUserBased
+        this.bUserBased = this.getBooleanProperty('USER_TABLES', false);
+      return this.bUserBased;
     }
 
     /**
@@ -166,7 +166,7 @@ define([
      */
     promptForNewGroup() {
       // TODO: Implement promptForNewGroup
-      return Promise.reject('Remote creation of groups not yet implemented!')
+      return Promise.reject('Remote creation of groups not yet implemented!');
     }
 
     /**
@@ -176,7 +176,7 @@ define([
      */
     promptForNewUser() {
       // TODO: Implement promptForNewUser
-      return Promise.reject('Remote creation of users not yet implemented!')
+      return Promise.reject('Remote creation of users not yet implemented!');
     }
 
     /**
@@ -186,17 +186,17 @@ define([
     promptGroupId() {
       return new Promise((resolve, reject) => {
         if (!this.userBased())
-          reject('This system does not manage users!')
+          reject('This system does not manage users!');
         else {
           this.getGroups().then((groupList) => {
             // Creation of new groups not yet implemented!
             if (!groupList || groupList.length < 1)
-              reject('No groups defined!')
+              reject('No groups defined!');
             else {
-              let sel = 0
-              const $groupSelect = $('<select/>').attr({ size: Math.max(3, Math.min(15, groupList.length)) })
-              groupList.forEach(g => $groupSelect.append($('<option/>').attr({ value: g.id }).text(g.name)))
-              $groupSelect.change(ev => { sel = ev.target.selectedIndex })
+              let sel = 0;
+              const $groupSelect = $('<select/>').attr({ size: Math.max(3, Math.min(15, groupList.length)) });
+              groupList.forEach(g => $groupSelect.append($('<option/>').attr({ value: g.id }).text(g.name)));
+              $groupSelect.change(ev => { sel = ev.target.selectedIndex; });
               this.ps.skin.showDlg(true, {
                 main: [
                   $('<h2/>', { class: 'subtitle' }).html(this.ps.getMsg('Select group:')),
@@ -205,12 +205,12 @@ define([
                   this.ps.skin.$okDlgBtn,
                   this.ps.skin.$cancelDlgBtn]
               }).then(() => {
-                resolve(groupList[sel].id)
-              }).catch(reject)
+                resolve(groupList[sel].id);
+              }).catch(reject);
             }
-          }).catch(reject)
+          }).catch(reject);
         }
-      })
+      });
     }
 
     /**
@@ -221,23 +221,23 @@ define([
     promptUserId(forcePrompt) {
       return new Promise((resolve, reject) => {
         if (this.userId !== null && !forcePrompt)
-          resolve(this.userId)
+          resolve(this.userId);
         else if (!this.userBased())
-          reject('This system does not manage users!')
+          reject('This system does not manage users!');
         else {
-          const $pwdInput = $('<input/>', { type: 'password', size: 8, maxlength: 64 })
+          const $pwdInput = $('<input/>', { type: 'password', size: 8, maxlength: 64 });
           if (this.getBooleanProperty('SHOW_USER_LIST', true)) {
             this.promptGroupId().then(groupId => {
               this.getUsers(groupId).then(userList => {
                 // Creation of new users not yet implemented
                 // let userCreationAllowed = this.getBooleanProperty('ALLOW_CREATE_USERS', false)
                 if (!userList || userList.length < 1)
-                  reject('Group ' + groupId + ' has no users!')
+                  reject('Group ' + groupId + ' has no users!');
                 else {
-                  let sel = -1
-                  const $userSelect = $('<select/>').attr({ size: Math.max(3, Math.min(15, userList.length)) })
-                  userList.forEach(u => $userSelect.append($('<option/>').attr({ value: u.id }).text(u.name)))
-                  $userSelect.change(ev => { sel = ev.target.selectedIndex })
+                  let sel = -1;
+                  const $userSelect = $('<select/>').attr({ size: Math.max(3, Math.min(15, userList.length)) });
+                  userList.forEach(u => $userSelect.append($('<option/>').attr({ value: u.id }).text(u.name)));
+                  $userSelect.change(ev => { sel = ev.target.selectedIndex; });
                   this.ps.skin.showDlg(true, {
                     main: [
                       $('<h2/>', { class: 'subtitle' }).html(this.ps.getMsg('Select user:')),
@@ -249,20 +249,20 @@ define([
                   }).then(() => {
                     if (sel >= 0) {
                       if (userList[sel].pwd && Encryption.Decrypt(userList[sel].pwd) !== $pwdInput.val()) {
-                        window.alert(this.ps.getMsg('Incorrect password'))
-                        reject('Incorrect password')
+                        window.alert(this.ps.getMsg('Incorrect password'));
+                        reject('Incorrect password');
                       } else {
-                        this.userId = userList[sel].id
-                        resolve(this.userId)
+                        this.userId = userList[sel].id;
+                        resolve(this.userId);
                       }
                     } else
-                      reject('No user has been selected')
-                  }).catch(reject)
+                      reject('No user has been selected');
+                  }).catch(reject);
                 }
-              }).catch(reject)
-            }).catch(reject)
+              }).catch(reject);
+            }).catch(reject);
           } else {
-            const $userInput = $('<input/>', { type: 'text', size: 8, maxlength: 64 })
+            const $userInput = $('<input/>', { type: 'text', size: 8, maxlength: 64 });
             this.ps.skin.showDlg(true, {
               main: [
                 $('<div/>').css({ 'text-align': 'right' })
@@ -276,17 +276,17 @@ define([
             }).then(() => {
               this.getUserData($userInput.val()).then(user => {
                 if (user.pwd && Encryption.Decrypt(user.pwd) !== $pwdInput.val()) {
-                  window.alert(this.ps.getMsg('Incorrect password'))
-                  reject('Incorrect password')
+                  window.alert(this.ps.getMsg('Incorrect password'));
+                  reject('Incorrect password');
                 } else {
-                  this.userId = user.id
-                  resolve(this.userId)
+                  this.userId = user.id;
+                  resolve(this.userId);
                 }
-              }).catch(reject)
-            }).catch(reject)
+              }).catch(reject);
+            }).catch(reject);
           }
         }
-      })
+      });
     }
 
     /**
@@ -296,7 +296,7 @@ define([
     getData() {
 
       // Force the re-calculation of all scores
-      this.info.recalc()
+      this.info.recalc();
 
       const result = {
         started: this.started.toISOString(),
@@ -316,19 +316,19 @@ define([
         time: Math.round(this.info.tTime / 10) / 100,
         actions: this.info.nActions,
         sessions: []
-      }
+      };
 
       if (this.userId)
-        result.userId = this.userId
+        result.userId = this.userId;
       else if (this.SCORM)
-        result.user = this.SCORM.studentName + (this.SCORM.studentId === '' ? '' : ` (${this.SCORM.studentId})`)
+        result.user = this.SCORM.studentName + (this.SCORM.studentId === '' ? '' : ` (${this.SCORM.studentId})`);
 
       this.sessions.forEach(sr => {
         if (sr.getInfo().numSequences > 0)
-          result.sessions.push(sr.getData(false, false))
-      })
+          result.sessions.push(sr.getData(false, false));
+      });
 
-      return result
+      return result;
     }
 
     /**
@@ -339,20 +339,20 @@ define([
      */
     init(options) {
       if (!options)
-        options = this.ps.options
-      this.userId = Utils.getVal(options.user)
-      this.sessionKey = Utils.getVal(options.key)
-      this.sessionContext = Utils.getVal(options.context)
-      this.groupCodeFilter = Utils.getVal(options.groupCodeFilter)
-      this.userCodeFilter = Utils.getVal(options.userCodeFilter)
+        options = this.ps.options;
+      this.userId = Utils.getVal(options.user);
+      this.sessionKey = Utils.getVal(options.key);
+      this.sessionContext = Utils.getVal(options.context);
+      this.groupCodeFilter = Utils.getVal(options.groupCodeFilter);
+      this.userCodeFilter = Utils.getVal(options.userCodeFilter);
       if (options.SCORM !== false) {
-        this.SCORM = Scorm.getSCORM(this)
+        this.SCORM = Scorm.getSCORM(this);
         if (this.SCORM !== null && this.descriptionKey === Reporter.prototype.descriptionKey)
-          this.descriptionKey = this.SCORM.getScormType()
+          this.descriptionKey = this.SCORM.getScormType();
       }
-      this.initiated = true
-      Utils.log('debug', 'Basic Reporter initialized')
-      return Promise.resolve(true)
+      this.initiated = true;
+      Utils.log('debug', 'Basic Reporter initialized');
+      return Promise.resolve(true);
     }
 
     /**
@@ -360,9 +360,9 @@ define([
      * @returns {Promise} - A Promise object to be fullfilled when all pending tasks are finished.
      */
     end() {
-      Utils.log('debug', 'Basic Reporter ending')
-      this.endSession()
-      return Promise.resolve(true)
+      Utils.log('debug', 'Basic Reporter ending');
+      this.endSession();
+      return Promise.resolve(true);
     }
 
     /**
@@ -370,8 +370,8 @@ define([
      */
     endSequence() {
       if (this.currentSession) {
-        this.currentSession.endSequence()
-        this.info.valid = false
+        this.currentSession.endSequence();
+        this.info.valid = false;
       }
     }
 
@@ -379,8 +379,8 @@ define([
      * Finalizes the current session
      */
     endSession() {
-      this.endSequence()
-      this.currentSession = null
+      this.endSequence();
+      this.currentSession = null;
     }
 
     /**
@@ -388,7 +388,7 @@ define([
      * @param {GroupData} _gd
      */
     newGroup(_gd) {
-      throw "No database!"
+      throw "No database!";
     }
 
     /**
@@ -396,7 +396,7 @@ define([
      * @param {UserData} _ud
      */
     newUser(_ud) {
-      throw "No database!"
+      throw "No database!";
     }
 
     /**
@@ -404,10 +404,10 @@ define([
      * @param {JClicProject} jcp - The {@link JClicProject} this session refers to.
      */
     newSession(jcp) {
-      this.endSession()
-      this.currentSession = new SessionReg(jcp)
-      this.sessions.push(this.currentSession)
-      this.info.valid = false
+      this.endSession();
+      this.currentSession = new SessionReg(jcp);
+      this.sessions.push(this.currentSession);
+      this.info.valid = false;
     }
 
     /**
@@ -416,10 +416,10 @@ define([
      */
     newSequence(ase) {
       if (this.currentSession) {
-        this.currentSession.newSequence(ase)
-        this.info.valid = false
+        this.currentSession.newSequence(ase);
+        this.info.valid = false;
         if (this.SCORM)
-          this.SCORM.commitInfo()
+          this.SCORM.commitInfo();
       }
     }
 
@@ -429,8 +429,8 @@ define([
      */
     newActivity(act) {
       if (this.currentSession) {
-        this.currentSession.newActivity(act)
-        this.info.valid = false
+        this.currentSession.newActivity(act);
+        this.info.valid = false;
       }
     }
 
@@ -443,8 +443,8 @@ define([
      */
     endActivity(score, numActions, solved) {
       if (this.currentSession) {
-        this.currentSession.endActivity(score, numActions, solved)
-        this.info.valid = false
+        this.currentSession.endActivity(score, numActions, solved);
+        this.info.valid = false;
       }
     }
 
@@ -457,8 +457,8 @@ define([
      */
     newAction(type, source, dest, ok) {
       if (this.currentSession) {
-        this.currentSession.newAction(type, source, dest, ok)
-        this.info.valid = false
+        this.currentSession.newAction(type, source, dest, ok);
+        this.info.valid = false;
       }
     }
 
@@ -467,7 +467,7 @@ define([
      * @returns {SequenceReg.Info}
      */
     getCurrentSequenceInfo() {
-      return this.currentSession === null ? null : this.currentSession.getCurrentSequenceInfo()
+      return this.currentSession === null ? null : this.currentSession.getCurrentSequenceInfo();
     }
 
     /**
@@ -475,7 +475,7 @@ define([
      * @returns {string}
      */
     getCurrentSequenceTag() {
-      return this.currentSession === null ? null : this.currentSession.getCurrentSequenceTag()
+      return this.currentSession === null ? null : this.currentSession.getCurrentSequenceTag();
     }
   }
 
@@ -560,7 +560,7 @@ define([
      * @name Reporter#MAX_USERID_PROMPT_ATTEMPTS
      * @type {number} */
     MAX_USERID_PROMPT_ATTEMPTS: 3,
-  })
+  });
 
   /**
    * This object stores the global results of a {@link Reporter}
@@ -572,7 +572,7 @@ define([
      * @param {Reporter} rep - The {@link Reporter} associated tho this `Info` object.
      */
     constructor(rep) {
-      this.rep = rep
+      this.rep = rep;
     }
 
     /**
@@ -581,8 +581,8 @@ define([
     clear() {
       this.numSessions = this.numSequences = this.nActivities = this.reportableActs = this.nActSolved =
         this.nActPlayed = this.nActScore = this.nActions = this.ratioSolved = this.ratioPlayed =
-        this.tScore = this.tTime = this.partialScore = this.globalScore = 0
-      this.valid = false
+        this.tScore = this.tTime = this.partialScore = this.globalScore = 0;
+      this.valid = false;
     }
 
     /**
@@ -591,36 +591,36 @@ define([
      */
     recalc() {
       if (!this.valid) {
-        this.clear()
+        this.clear();
         this.rep.sessions.forEach(ses => {
-          const inf = ses.getInfo()
-          this.reportableActs += inf.sReg.reportableActs
+          const inf = ses.getInfo();
+          this.reportableActs += inf.sReg.reportableActs;
           if (inf.numSequences > 0) {
-            this.numSessions++
-            this.numSequences += inf.numSequences
+            this.numSessions++;
+            this.numSequences += inf.numSequences;
             if (inf.nActivities > 0) {
-              this.nActivities += inf.nActivities
-              this.nActPlayed += inf.sReg.actNames.length
-              this.nActSolved += inf.nActSolved
-              this.nActions += inf.nActions
+              this.nActivities += inf.nActivities;
+              this.nActPlayed += inf.sReg.actNames.length;
+              this.nActSolved += inf.nActSolved;
+              this.nActions += inf.nActions;
               if (inf.nActScore > 0) {
-                this.tScore += inf.tScore * inf.nActScore
-                this.nActScore += inf.nActScore
+                this.tScore += inf.tScore * inf.nActScore;
+                this.nActScore += inf.nActScore;
               }
-              this.tTime += inf.tTime
+              this.tTime += inf.tTime;
             }
           }
-        })
+        });
         if (this.nActivities > 0) {
-          this.ratioSolved = this.nActSolved / this.nActivities
+          this.ratioSolved = this.nActSolved / this.nActivities;
           if (this.reportableActs > 0)
-            this.ratioPlayed = this.nActPlayed / this.reportableActs
-          this.partialScore = this.tScore / (this.nActScore * 100)
-          this.globalScore = this.partialScore * this.ratioPlayed
+            this.ratioPlayed = this.nActPlayed / this.reportableActs;
+          this.partialScore = this.tScore / (this.nActScore * 100);
+          this.globalScore = this.partialScore * this.ratioPlayed;
         }
-        this.valid = true
+        this.valid = true;
       }
-      return this
+      return this;
     }
   }
 
@@ -707,15 +707,15 @@ define([
      * @name ReporterInfo#globalScore
      * @type {number} */
     globalScore: 0,
-  })
+  });
 
-  Reporter.Info = ReporterInfo
+  Reporter.Info = ReporterInfo;
 
   /**
    * Static list of classes derived from Reporter. It should be filled by Reporter classes at declaration time.
    * @type {Object}
    */
-  Reporter.CLASSES = { 'Reporter': Reporter }
+  Reporter.CLASSES = { 'Reporter': Reporter };
 
-  return Reporter
-})
+  return Reporter;
+});

@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -45,20 +45,20 @@ define([
      */
     constructor(seconds) {
       if (seconds)
-        this.seconds = seconds
-      this.chunks = []
+        this.seconds = seconds;
+      this.chunks = [];
     }
 
     /**
      * Starts playing the currently recorded audio, if any.
      */
     play() {
-      this.stop()
+      this.stop();
       if (this.mediaPlayer) {
-        this.mediaPlayer.currentTime = 0
-        this.mediaPlayer.play()
+        this.mediaPlayer.currentTime = 0;
+        this.mediaPlayer.play();
       } else {
-        this.playWhenFinished = true
+        this.playWhenFinished = true;
       }
     }
 
@@ -67,9 +67,9 @@ define([
      */
     stop() {
       if (this.mediaRecorder && this.mediaRecorder.state === 'recording')
-        this.mediaRecorder.stop()
+        this.mediaRecorder.stop();
       else if (this.mediaPlayer && !this.mediaPlayer.paused)
-        this.mediaPlayer.pause()
+        this.mediaPlayer.pause();
     }
 
     /**
@@ -77,10 +77,10 @@ define([
      */
     record() {
       if (this.mediaRecorder && this.mediaRecorder.state === 'recording')
-        this.mediaRecorder.stop()
+        this.mediaRecorder.stop();
       else {
-        this.stop()
-        this.mediaPlayer = null
+        this.stop();
+        this.mediaPlayer = null;
 
         // TODO: update navigator.getUserMedia to navigator.mediaDevices.getUserMedia (with promises)
         // when supported in Chrome/Chromium
@@ -90,46 +90,46 @@ define([
         navigator.getUserMedia(
           { audio: true },
           stream => {
-            this.mediaRecorder = new MediaRecorder(stream)
-            this.mediaRecorder.ondataavailable = ev => this.chunks.push(ev.data)
+            this.mediaRecorder = new MediaRecorder(stream);
+            this.mediaRecorder.ondataavailable = ev => this.chunks.push(ev.data);
             this.mediaRecorder.onerror = err => {
-              Utils.log('error', `Error recording audio: ${err}`)
-              this.mediaRecorder = null
-            }
-            this.mediaRecorder.onstart = () => Utils.log('debug', 'Recording audio started')
+              Utils.log('error', `Error recording audio: ${err}`);
+              this.mediaRecorder = null;
+            };
+            this.mediaRecorder.onstart = () => Utils.log('debug', 'Recording audio started');
             this.mediaRecorder.onstop = () => {
-              Utils.log('debug', 'Recording audio finished')
+              Utils.log('debug', 'Recording audio finished');
 
               if (this.timeoutID) {
-                window.clearTimeout(this.timeoutID)
-                this.timeoutID = null
+                window.clearTimeout(this.timeoutID);
+                this.timeoutID = null;
               }
 
-              const options = {}
+              const options = {};
               if (this.chunks.length > 0 && this.chunks[0].type)
-                options.type = this.chunks[0].type
-              const blob = new Blob(this.chunks, options)
-              this.chunks = []
-              this.mediaPlayer = document.createElement('audio')
-              this.mediaPlayer.src = URL.createObjectURL(blob)
-              this.mediaPlayer.pause()
-              this.mediaRecorder = null
+                options.type = this.chunks[0].type;
+              const blob = new Blob(this.chunks, options);
+              this.chunks = [];
+              this.mediaPlayer = document.createElement('audio');
+              this.mediaPlayer.src = URL.createObjectURL(blob);
+              this.mediaPlayer.pause();
+              this.mediaRecorder = null;
               if (this.playWhenFinished) {
-                this.playWhenFinished = false
-                this.mediaPlayer.play()
+                this.playWhenFinished = false;
+                this.mediaPlayer.play();
               }
-            }
-            this.mediaRecorder.onwarning = ev => Utils.log('warn', `Warning recording audio: ${ev}`)
+            };
+            this.mediaRecorder.onwarning = ev => Utils.log('warn', `Warning recording audio: ${ev}`);
 
-            this.playWhenFinished = false
-            this.mediaRecorder.start()
+            this.playWhenFinished = false;
+            this.mediaRecorder.start();
             this.timeoutID = window.setTimeout(() => {
               if (this.mediaRecorder)
-                this.mediaRecorder.stop()
-            }, this.seconds * 1000)
+                this.mediaRecorder.stop();
+            }, this.seconds * 1000);
           },
           error => Utils.log('error', `Error recording audio: ${error}`)
-        )
+        );
       }
     }
 
@@ -137,8 +137,8 @@ define([
      * Clears all data associated to this AudioBuffer
      */
     clear() {
-      this.stop()
-      this.mediaPlayer = null
+      this.stop();
+      this.mediaPlayer = null;
     }
   }
 
@@ -146,7 +146,7 @@ define([
    * Maximum amount of time allowed for recordings (in seconds)
    * @type {number}
    */
-  AudioBuffer.MAX_RECORD_LENGTH = 180
+  AudioBuffer.MAX_RECORD_LENGTH = 180;
 
   Object.assign(AudioBuffer.prototype, {
     /**
@@ -187,7 +187,7 @@ define([
      * @type {boolean}
      */
     playWhenFinished: false,
-  })
+  });
 
-  return AudioBuffer
-})
+  return AudioBuffer;
+});

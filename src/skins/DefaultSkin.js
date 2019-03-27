@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -42,7 +42,7 @@ define([
 
   // In some cases, require.js does not return a valid value for screenfull. Check it:
   if (!screenfull)
-    screenfull = window.screenfull
+    screenfull = window.screenfull;
 
   /**
    * This is the default {@link Skin} used by JClic.js
@@ -61,126 +61,126 @@ define([
      */
     constructor(ps, name = null, options = {}) {
       // DefaultSkin extends [Skin](Skin.html)
-      super(ps, name, options)
-      let msg = ''
+      super(ps, name, options);
+      let msg = '';
 
-      AWT.Font.loadGoogleFonts(this.cssFonts)
+      AWT.Font.loadGoogleFonts(this.cssFonts);
 
       // Create the main container for buttons, counters and message box
-      this.$ctrlCnt = $('<div/>', { class: 'JClicCtrlCnt unselectableText', role: 'navigation' })
-      this.$div.append(this.$ctrlCnt)
+      this.$ctrlCnt = $('<div/>', { class: 'JClicCtrlCnt unselectableText', role: 'navigation' });
+      this.$div.append(this.$ctrlCnt);
 
       // Add `prev` button
-      msg = ps.getMsg('Previous activity')
+      msg = ps.getMsg('Previous activity');
       this.buttons.prev = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
         .append($(Utils.getSvg(this.prevIcon, this.iconWidth, this.iconHeight, this.iconFill)))
         .on('click', evt => {
           if (this.ps)
-            this.ps.actions.prev.processEvent(evt)
-        })
-      this.$ctrlCnt.append(this.buttons.prev)
+            this.ps.actions.prev.processEvent(evt);
+        });
+      this.$ctrlCnt.append(this.buttons.prev);
 
       // Add message box
-      this.msgBox = new ActiveBox()
-      this.msgBox.role = 'message'
+      this.msgBox = new ActiveBox();
+      this.msgBox.role = 'message';
       this.$msgBoxDiv = $('<div/>', { class: 'JClicMsgBox' })
         .click(() => {
-          this.msgBox.playMedia(ps)
-          return false
-        })
-      this.$ctrlCnt.append(this.$msgBoxDiv)
+          this.msgBox.playMedia(ps);
+          return false;
+        });
+      this.$ctrlCnt.append(this.$msgBoxDiv);
 
       // Add `next` button
-      msg = ps.getMsg('Next activity')
+      msg = ps.getMsg('Next activity');
       this.buttons.next = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
         .append($(Utils.getSvg(this.nextIcon, this.iconWidth, this.iconHeight, this.iconFill)))
         .on('click', evt => {
           if (this.ps)
-            this.ps.actions.next.processEvent(evt)
-        })
-      this.$ctrlCnt.append(this.buttons.next)
+            this.ps.actions.next.processEvent(evt);
+        });
+      this.$ctrlCnt.append(this.buttons.next);
 
       // Add counters
       if (false !== this.ps.options.counters && false !== options.counters) {
         // Create counters
-        msg = ps.getMsg('Reports')
+        msg = ps.getMsg('Reports');
         const $countCnt = $('<button/>', { class: 'JClicCountCnt', 'aria-label': msg })
           .on('click', evt => {
             if (this.ps)
-              this.ps.actions.reports.processEvent(evt)
-          })
+              this.ps.actions.reports.processEvent(evt);
+          });
         $.each(Skin.prototype.counters, (name, _val) => {
-          msg = ps.getMsg(name)
+          msg = ps.getMsg(name);
           this.counters[name] = new Counter(name, $('<div/>', { class: 'JClicCounter', title: msg, 'aria-label': msg })
             .css({
               'background-image': `url(${Utils.svgToURI(this[name + 'Icon'], this.counterIconWidth, this.counterIconHeight, this.counterIconFill)})`,
               color: this.counterIconFill
             })
             .html('000')
-            .appendTo($countCnt))
-        })
-        this.$ctrlCnt.append($countCnt)
+            .appendTo($countCnt));
+        });
+        this.$ctrlCnt.append($countCnt);
       }
 
       // Add info button
       if (true === this.ps.options.info || true === options.info) {
-        msg = ps.getMsg('Information')
+        msg = ps.getMsg('Information');
         this.buttons.info = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
           .append($(Utils.getSvg(this.infoIcon, this.iconWidth, this.iconHeight, this.iconFill)))
           .on('click', evt => {
             if (this.ps)
-              this.ps.actions.info.processEvent(evt)
-          })
-        this.$ctrlCnt.append(this.buttons.info)
+              this.ps.actions.info.processEvent(evt);
+          });
+        this.$ctrlCnt.append(this.buttons.info);
       }
 
       // Add reports button
       if (true === this.ps.options.reportsBtn || true === options.reportsBtn) {
-        msg = ps.getMsg('Reports')
+        msg = ps.getMsg('Reports');
         this.buttons.about = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
           .append($(Utils.getSvg(this.reportsIcon, this.iconWidth, this.iconHeight, this.iconFill)))
           .on('click', evt => {
             if (this.ps)
-              this.ps.actions.reports.processEvent(evt)
-          })
-        this.$ctrlCnt.append(this.buttons.about)
+              this.ps.actions.reports.processEvent(evt);
+          });
+        this.$ctrlCnt.append(this.buttons.about);
       }
 
       // Add `full screen` button
       if (screenfull && screenfull.enabled) {
-        msg = ps.getMsg('Toggle full screen')
+        msg = ps.getMsg('Toggle full screen');
         this.buttons.fullscreen = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
           .append($('<img/>', { src: Utils.svgToURI(this.fullScreenIcon, this.iconWidth, this.iconHeight, this.iconFill) }))
           .on('click', () => {
-            this.setScreenFull(null)
-          })
-        this.$ctrlCnt.append(this.buttons.fullscreen)
+            this.setScreenFull(null);
+          });
+        this.$ctrlCnt.append(this.buttons.fullscreen);
       }
 
       // Add `close` button
       if (typeof this.ps.options.closeFn === 'function') {
-        msg = ps.getMsg('Close')
-        const closeFn = this.ps.options.closeFn
+        msg = ps.getMsg('Close');
+        const closeFn = this.ps.options.closeFn;
         this.buttons.close = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
           .append($(Utils.getSvg(this.closeIcon, this.iconWidth, this.iconHeight, this.iconFill)))
           .on('click', () => {
-            Utils.log('info', 'Closing the player')
-            closeFn()
-          })
-        this.$ctrlCnt.append(this.buttons.close)
+            Utils.log('info', 'Closing the player');
+            closeFn();
+          });
+        this.$ctrlCnt.append(this.buttons.close);
       }
 
       // Workaround for a bug in Edge and Explorer: SVG objects not implementing `blur` and `focus` methods
       // See: [https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8479637/]
       // This affects Polymer `iron-overlay-behavior`. See: [https://github.com/PolymerElements/iron-overlay-behavior/pull/211]
-      let nilFunc = null
+      let nilFunc = null;
       $.each(this.buttons, (_key, value) => {
         if (value && (typeof value[0].focus !== 'function' || typeof value[0].blur !== 'function')) {
           if (nilFunc === null)
-            nilFunc = () => Utils.log('error', '"blur" and "focus" not defined for SVG objects in Explorer/Edge')
-          value[0].focus = value[0].blur = nilFunc
+            nilFunc = () => Utils.log('error', '"blur" and "focus" not defined for SVG objects in Explorer/Edge');
+          value[0].focus = value[0].blur = nilFunc;
         }
-      })
+      });
     }
 
     /**
@@ -190,7 +190,7 @@ define([
      * @returns {string}
      */
     _getStyleSheets(media = 'default') {
-      return `${super._getStyleSheets(media)}${media === 'default' ? this.mainCSS : media === 'half' ? this.mainCSSHalf : media === 'twoThirds' ? this.mainCSSTwoThirds : ''}`
+      return `${super._getStyleSheets(media)}${media === 'default' ? this.mainCSS : media === 'half' ? this.mainCSSHalf : media === 'twoThirds' ? this.mainCSSTwoThirds : ''}`;
     }
 
     /**
@@ -199,13 +199,13 @@ define([
      */
     doLayout() {
       // Call method on ancestor
-      super.doLayout()
+      super.doLayout();
 
       // Set the fullScreen icon
       if (this.buttons.fullscreen)
         this.buttons.fullscreen.find('img').get(-1).src = Utils.svgToURI(
           this[screenfull.isFullscreen ? 'fullScreenExitIcon' : 'fullScreenIcon'],
-          this.iconWidth, this.iconHeight, this.iconFill)
+          this.iconWidth, this.iconHeight, this.iconFill);
     }
 
     /**
@@ -213,7 +213,7 @@ define([
      * @returns {ActiveBox}
      */
     getMsgBox() {
-      return this.msgBox
+      return this.msgBox;
     }
 
     /**
@@ -222,7 +222,7 @@ define([
      * @param {boolean} status - `true` to make main controls navigable, `false` otherwise
      */
     enableMainButtons(status) {
-      this.$ctrlCnt.find('.JClicBtn,.JClicCountCnt').attr('tabindex', status ? '0' : '-1')
+      this.$ctrlCnt.find('.JClicBtn,.JClicCountCnt').attr('tabindex', status ? '0' : '-1');
     }
   }
 
@@ -408,10 +408,10 @@ define([
     actionsIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">\
 <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>\
 </svg>',
-  })
+  });
 
   // Register this class in the list of available skins
-  Skin.CLASSES['default'] = DefaultSkin
+  Skin.CLASSES['default'] = DefaultSkin;
 
-  return DefaultSkin
-})
+  return DefaultSkin;
+});

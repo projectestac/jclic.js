@@ -53,12 +53,12 @@ define([
      * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context where to draw
      */
     constructor(parent, ctx) {
-      this.parent = parent
-      this.ctx = ctx
-      this.dim = new AWT.Dimension(ctx.canvas.width, ctx.canvas.height)
-      this.origin = new AWT.Point()
-      this.dest = new AWT.Point()
-      this.relativePos = new AWT.Point()
+      this.parent = parent;
+      this.ctx = ctx;
+      this.dim = new AWT.Dimension(ctx.canvas.width, ctx.canvas.height);
+      this.origin = new AWT.Point();
+      this.dest = new AWT.Point();
+      this.relativePos = new AWT.Point();
     }
 
     /**
@@ -67,7 +67,7 @@ define([
      * @param {number} dy - Displacement on the Y axis
      */
     moveBy(dx, dy) {
-      this.moveTo(AWT.Point(this.dest.x + dx, this.dest.y + dy))
+      this.moveTo(AWT.Point(this.dest.x + dx, this.dest.y + dy));
     }
 
     /**
@@ -78,7 +78,7 @@ define([
      */
     moveTo(pt, forcePaint) {
       if (!this.active || !forcePaint && this.dest.equals(pt))
-        return
+        return;
 
       // Restore the background
       if (this.bgRect) {
@@ -87,33 +87,33 @@ define([
             this.bgImg,
             0, 0,
             this.bgRect.pos.x, this.bgRect.pos.y,
-            this.bgRect.dim.width, this.bgRect.dim.height)
+            this.bgRect.dim.width, this.bgRect.dim.height);
         } else if (this.parent)
-          this.parent.updateContent()
+          this.parent.updateContent();
       }
 
-      this.dest.moveTo(pt)
+      this.dest.moveTo(pt);
 
       // Calculate the bounds of the invalidated area after the move:
       // Start with the origin point or box area
-      const pt1 = new AWT.Point(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y)
-      this.bgRect = new AWT.Rectangle(pt1, this.bx ? this.bx.dim : new AWT.Dimension())
+      const pt1 = new AWT.Point(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y);
+      this.bgRect = new AWT.Rectangle(pt1, this.bx ? this.bx.dim : new AWT.Dimension());
       //  Add the destination point or box area
-      const pt2 = new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y)
-      this.bgRect.add(new AWT.Rectangle(pt2, this.bx ? this.bx.dim : new AWT.Dimension()))
+      const pt2 = new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y);
+      this.bgRect.add(new AWT.Rectangle(pt2, this.bx ? this.bx.dim : new AWT.Dimension()));
       // Add a generous border around the area
-      this.bgRect.grow(10, 10)
+      this.bgRect.grow(10, 10);
 
       if (this.bx !== null) {
         // Move the ActiveBox
-        this.bx.moveTo(new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y))
-        this.bx.setTemporaryHidden(false)
-        this.bx.update(this.ctx, null)
-        this.bx.setTemporaryHidden(true)
+        this.bx.moveTo(new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y));
+        this.bx.setTemporaryHidden(false);
+        this.bx.update(this.ctx, null);
+        this.bx.setTemporaryHidden(true);
       } else {
         // Draw the connecting line
-        this.drawLine()
-        this.linePainted = true
+        this.drawLine();
+        this.linePainted = true;
       }
     }
 
@@ -124,35 +124,35 @@ define([
      */
     begin(pt, box) {
       if (this.active)
-        this.end()
-      this.origin.moveTo(pt)
-      this.dest.moveTo(pt)
-      this.linePainted = false
-      this.active = true
+        this.end();
+      this.origin.moveTo(pt);
+      this.dest.moveTo(pt);
+      this.linePainted = false;
+      this.active = true;
 
       if (box) {
         // Remember what box will be moved, hide it from the panel and repaint all
-        this.bx = box
-        this.relativePos.moveTo(pt.x - box.pos.x, pt.y - box.pos.y)
-        this.bx.setFocused(true)
-        this.bx.setTemporaryHidden(true)
-        this.linePainted = false
-        this.parent.invalidate().update()
+        this.bx = box;
+        this.relativePos.moveTo(pt.x - box.pos.x, pt.y - box.pos.y);
+        this.bx.setFocused(true);
+        this.bx.setTemporaryHidden(true);
+        this.linePainted = false;
+        this.parent.invalidate().update();
       }
 
       // Save the full image currently displayed on the panel (with the box hidden)
       try {
-        this.bgImg = this.ctx.getImageData(0, 0, this.dim.width, this.dim.height)
+        this.bgImg = this.ctx.getImageData(0, 0, this.dim.width, this.dim.height);
       } catch (ex) {
         // Avoid "canvas tainted by cross-origin data" errors
         // Setting bgImg to null is less efficient, but works
-        this.bgImg = null
+        this.bgImg = null;
       }
-      this.bgRect = null
+      this.bgRect = null;
 
       // Make a first movement to make the box appear
       if (box)
-        this.moveTo(pt, true)
+        this.moveTo(pt, true);
     }
 
     /**
@@ -160,25 +160,25 @@ define([
      */
     end() {
       if (!this.active)
-        return
+        return;
 
-      this.active = false
-      this.linePainted = false
-      this.bgRect = null
-      this.bgImg = null
+      this.active = false;
+      this.linePainted = false;
+      this.bgRect = null;
+      this.bgImg = null;
 
       if (this.bx) {
         // Restore the original position and attributes of the box
-        this.bx.setFocused(false)
-        this.bx.moveTo(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y)
-        this.bx.setTemporaryHidden(false)
-        this.bx = null
-        this.relativePos.moveTo(0, 0)
+        this.bx.setFocused(false);
+        this.bx.moveTo(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y);
+        this.bx.setTemporaryHidden(false);
+        this.bx = null;
+        this.relativePos.moveTo(0, 0);
       }
 
       // Repaint all
-      this.ctx.clearRect(0, 0, this.dim.width, this.dim.height)
-      this.parent.invalidate().update()
+      this.ctx.clearRect(0, 0, this.dim.width, this.dim.height);
+      this.parent.invalidate().update();
     }
 
     /**
@@ -186,44 +186,44 @@ define([
      */
     drawLine() {
       if (this.compositeOp !== DEFAULT_COMPOSITE_OP) {
-        this.ctx.strokeStyle = this.xorColor
-        this.ctx.globalCompositeOperation = this.compositeOp
+        this.ctx.strokeStyle = this.xorColor;
+        this.ctx.globalCompositeOperation = this.compositeOp;
       } else
-        this.ctx.strokeStyle = this.lineColor
+        this.ctx.strokeStyle = this.lineColor;
 
-      this.ctx.lineWidth = this.lineWidth
+      this.ctx.lineWidth = this.lineWidth;
 
-      this.ctx.beginPath()
-      this.ctx.moveTo(this.origin.x, this.origin.y)
-      this.ctx.lineTo(this.dest.x, this.dest.y)
-      this.ctx.stroke()
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.origin.x, this.origin.y);
+      this.ctx.lineTo(this.dest.x, this.dest.y);
+      this.ctx.stroke();
 
       if (this.arrow) {
         // Draws the arrow head
         const
           beta = Math.atan2(this.origin.x - this.dest.x, this.dest.x - this.origin.x),
           arp = new AWT.Point(this.dest.x - this.arrowLength * Math.cos(beta + this.arrowAngle),
-            this.dest.y + this.arrowLength * Math.sin(beta + this.arrowAngle))
-        this.ctx.beginPath()
-        this.ctx.moveTo(this.dest.x, this.dest.y)
-        this.ctx.lineTo(arp.x, arp.y)
-        this.ctx.stroke()
+            this.dest.y + this.arrowLength * Math.sin(beta + this.arrowAngle));
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.dest.x, this.dest.y);
+        this.ctx.lineTo(arp.x, arp.y);
+        this.ctx.stroke();
 
         arp.moveTo(this.dest.x - this.arrowLength * Math.cos(beta - this.arrowAngle),
-          this.dest.y + this.arrowLength * Math.sin(beta - this.arrowAngle))
-        this.ctx.beginPath()
-        this.ctx.moveTo(this.dest.x, this.dest.y)
-        this.ctx.lineTo(arp.x, arp.y)
-        this.ctx.stroke()
+          this.dest.y + this.arrowLength * Math.sin(beta - this.arrowAngle));
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.dest.x, this.dest.y);
+        this.ctx.lineTo(arp.x, arp.y);
+        this.ctx.stroke();
       }
       if (this.compositeOp !== DEFAULT_COMPOSITE_OP) {
         // reset default settings
-        this.ctx.globalCompositeOperation = DEFAULT_COMPOSITE_OP
+        this.ctx.globalCompositeOperation = DEFAULT_COMPOSITE_OP;
       }
     }
   }
 
-  const DEFAULT_COMPOSITE_OP = 'source-over'
+  const DEFAULT_COMPOSITE_OP = 'source-over';
 
   Object.assign(BoxConnector.prototype, {
     /**
@@ -325,7 +325,7 @@ define([
      * @name BoxConnector#lineWidth
      * @type {number} */
     lineWidth: 1.5,
-  })
+  });
 
-  return BoxConnector
-})
+  return BoxConnector;
+});

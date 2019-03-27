@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -53,10 +53,10 @@ define([
      * @param {number} ny - Not used
      */
     constructor(nx, ny) {
-      super(1, 1)
-      this.nCols = nx
-      this.nRows = ny
-      this.showEnclosure = true
+      super(1, 1);
+      this.nCols = nx;
+      this.nRows = ny;
+      this.showEnclosure = true;
     }
 
     /**
@@ -65,7 +65,7 @@ define([
      */
     buildShapes() {
       if (this.nCells > 0)
-        this.initiated = true
+        this.initiated = true;
     }
 
     /**
@@ -74,12 +74,12 @@ define([
      * @returns {AWT.Rectangle}
      */
     getEnclosingShapeData() {
-      return this.showEnclosure ? (this.enclosing || super.getEnclosingShapeData()) : null
+      return this.showEnclosure ? (this.enclosing || super.getEnclosingShapeData()) : null;
     }
   }
 
   // Register this class in the list of known shapers
-  Shaper.CLASSES['@Holes'] = Holes
+  Shaper.CLASSES['@Holes'] = Holes;
 
-  return Holes
-})
+  return Holes;
+});

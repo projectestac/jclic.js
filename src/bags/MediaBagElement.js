@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -56,18 +56,18 @@ define([
      */
     constructor(basePath, file, zip) {
       if (basePath)
-        this.basePath = basePath
+        this.basePath = basePath;
       if (file) {
-        this.file = Utils.nSlash(file)
-        this.name = Utils.nSlash(file)
-        this.ext = this.file.toLowerCase().split('.').pop()
-        this.type = this.getFileType(this.ext)
+        this.file = Utils.nSlash(file);
+        this.name = Utils.nSlash(file);
+        this.ext = this.file.toLowerCase().split('.').pop();
+        this.type = this.getFileType(this.ext);
         if (this.ext === 'gif')
-          this.checkAnimatedGif()
+          this.checkAnimatedGif();
       }
       if (zip)
-        this.zip = zip
-      this.timeout = Date.now() + Utils.settings.LOAD_TIMEOUT
+        this.zip = zip;
+      this.timeout = Date.now() + Utils.settings.LOAD_TIMEOUT;
     }
 
     /**
@@ -75,28 +75,28 @@ define([
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties($xml) {
-      this.name = Utils.nSlash($xml.attr('name'))
-      this.file = Utils.nSlash($xml.attr('file'))
-      this.ext = this.file.toLowerCase().split('.').pop()
-      this.type = this.getFileType(this.ext)
+      this.name = Utils.nSlash($xml.attr('name'));
+      this.file = Utils.nSlash($xml.attr('file'));
+      this.ext = this.file.toLowerCase().split('.').pop();
+      this.type = this.getFileType(this.ext);
       // Check if it's an animated GIF
       if (this.ext === 'gif') {
-        const anim = $xml.attr('animated')
+        const anim = $xml.attr('animated');
         if (typeof anim === 'undefined')
-          this.checkAnimatedGif()
+          this.checkAnimatedGif();
         else
-          this.animated = anim === 'true'
+          this.animated = anim === 'true';
       }
       if (this.type === 'font') {
         this.fontName = this.name === this.file && this.name.lastIndexOf('.') > 0 ?
           this.name.substring(0, this.name.lastIndexOf('.')) :
-          this.name
+          this.name;
       }
-      return this
+      return this;
     }
 
     getData() {
-      return Utils.getData(this, ['name', 'file', 'animated'])
+      return Utils.getData(this, ['name', 'file', 'animated']);
     }
 
     /**
@@ -106,20 +106,20 @@ define([
      * Thanks to `@lakenen` and `@marckubischta`
      */
     checkAnimatedGif() {
-      const request = new XMLHttpRequest()
+      const request = new XMLHttpRequest();
       // Set `responseType` moved after calling `open`
       // see: https://stackoverflow.com/questions/20760635/why-does-setting-xmlhttprequest-responsetype-before-calling-open-throw
       // request.responseType = 'arraybuffer'
       request.addEventListener('load', () => {
         const
           arr = new Uint8Array(request.response),
-          length = arr.length
+          length = arr.length;
 
         // make sure it's a gif (GIF8)
         if (arr[0] !== 0x47 || arr[1] !== 0x49 ||
           arr[2] !== 0x46 || arr[3] !== 0x38) {
-          this.animated = false
-          return
+          this.animated = false;
+          return;
         }
 
         // Ported from PHP [http://www.php.net/manual/en/function.imagecreatefromgif.php#104473]
@@ -135,25 +135,25 @@ define([
           if (arr[i] === 0x00 && arr[i + 1] === 0x21 && arr[i + 2] === 0xF9) {
             const
               blocklength = arr[i + 3],
-              afterblock = i + 4 + blocklength
+              afterblock = i + 4 + blocklength;
             if (afterblock + 1 < length &&
               arr[afterblock] === 0x00 &&
               (arr[afterblock + 1] === 0x2C || arr[afterblock + 1] === 0x21)) {
               if (++frames > 1) {
-                this.animated = true
-                Utils.log('debug', `Animated GIF detected: ${this.file}`)
-                break
+                this.animated = true;
+                Utils.log('debug', `Animated GIF detected: ${this.file}`);
+                break;
               }
             }
           }
         }
-      })
+      });
 
       this.getFullPathPromise().then(fullPath => {
-        request.open('GET', fullPath, true)
-        request.responseType = 'arraybuffer'
-        request.send()
-      })
+        request.open('GET', fullPath, true);
+        request.responseType = 'arraybuffer';
+        request.send();
+      });
     }
 
     /**
@@ -161,7 +161,7 @@ define([
      * @returns {boolean}
      */
     isEmpty() {
-      return this.data === null
+      return this.data === null;
     }
 
     /**
@@ -170,14 +170,14 @@ define([
      * @returns {string}
      */
     getFileType(ext) {
-      let result = null
+      let result = null;
       for (let type in Utils.settings.FILE_TYPES) {
         if (Utils.settings.FILE_TYPES[type].indexOf(ext) >= 0) {
-          result = type
-          break
+          result = type;
+          break;
         }
       }
-      return result
+      return result;
     }
 
     /**
@@ -188,8 +188,8 @@ define([
     build(callback, ps) {
       if (callback) {
         if (!this._whenReady)
-          this._whenReady = []
-        this._whenReady.push(callback)
+          this._whenReady = [];
+        this._whenReady.push(callback);
       }
 
       if (!this.data)
@@ -198,62 +198,62 @@ define([
             case 'font':
               const
                 format = this.ext === 'ttf' ? 'truetype' : this.ext === 'otf' ? 'embedded-opentype' : this.ext,
-                css = `@font-face{font-family:"${this.fontName}";src:url(${fullPath}) format("${format}");}`
+                css = `@font-face{font-family:"${this.fontName}";src:url(${fullPath}) format("${format}");}`;
 
-              Utils.appendStyleAtHead(css, ps)
-              this.data = new AWT.Font(this.name)
-              this.ready = true
-              break
+              Utils.appendStyleAtHead(css, ps);
+              this.data = new AWT.Font(this.name);
+              this.ready = true;
+              break;
 
             case 'image':
-              this.data = new Image()
-              $(this.data).on('load', () => this._onReady.call(this))
-              this.data.src = fullPath
-              break
+              this.data = new Image();
+              $(this.data).on('load', () => this._onReady.call(this));
+              this.data.src = fullPath;
+              break;
 
             case 'audio':
             case 'video':
-              this.data = document.createElement(this.type)
-              $(this.data).on('canplay', () => this._onReady.call(this))
-              this.data.src = fullPath
+              this.data = document.createElement(this.type);
+              $(this.data).on('canplay', () => this._onReady.call(this));
+              this.data.src = fullPath;
               // Forced call to "load" because the 'canplay' event is not fired in Android < 7 just setting 'src' (until 'play')
               // See: https://stackoverflow.com/questions/44344242/canplay-event-does-not-occur-on-google-chrome-mobile-until-audio-play-is-calle
-              this.data.load()
+              this.data.load();
               // --------------------------------------------------
-              this.data.pause()
-              break
+              this.data.pause();
+              break;
 
             case 'anim':
-              this.data = $(`<object type"application/x-shockwave-flash" width="300" height="200" data="${fullPath}"/>`).get(-1)
+              this.data = $(`<object type"application/x-shockwave-flash" width="300" height="200" data="${fullPath}"/>`).get(-1);
               // Unable to check the loading progress in elements of type `object`. so we mark it always as `ready`:
-              this.ready = true
-              break
+              this.ready = true;
+              break;
 
             case 'xml':
               $.get(fullPath, null, null, 'xml').done(xmlData => {
-                const children = xmlData ? xmlData.children || xmlData.childNodes : null
-                this.data = children && children.length > 0 ? Utils.parseXmlNode(children[0]) : null
-                this._onReady()
+                const children = xmlData ? xmlData.children || xmlData.childNodes : null;
+                this.data = children && children.length > 0 ? Utils.parseXmlNode(children[0]) : null;
+                this._onReady();
               }).fail(err => {
-                Utils.log('error', `Error loading ${this.name}: ${err}`)
-                this._onReady()
-              })
-              break
+                Utils.log('error', `Error loading ${this.name}: ${err}`);
+                this._onReady();
+              });
+              break;
 
             case 'midi':
-              const request = new XMLHttpRequest()
+              const request = new XMLHttpRequest();
               request.onreadystatechange = () => {
                 if (request.readyState === 4) {
                   if (request.status === 200)
-                    this.data = new MidiAudioPlayer(request.response, ps.options)
+                    this.data = new MidiAudioPlayer(request.response, ps.options);
                   else
-                    Utils.log('error', `Error loading ${this.name}: ${request.statusText}`)
-                  this._onReady()
+                    Utils.log('error', `Error loading ${this.name}: ${request.statusText}`);
+                  this._onReady();
                 }
-              }
-              request.open('GET', fullPath, true)
-              request.responseType = 'arraybuffer'
-              request.send()
+              };
+              request.open('GET', fullPath, true);
+              request.responseType = 'arraybuffer';
+              request.send();
 
               /* USING 'fetch':
               fetch(fullPath)
@@ -267,20 +267,20 @@ define([
                   this._onReady()
                 })
               */
-              break
+              break;
 
             default:
-              Utils.log('trace', `Media currently not supported: ${this.name}`)
-              this.ready = true
+              Utils.log('trace', `Media currently not supported: ${this.name}`);
+              this.ready = true;
           }
 
           if (this.ready)
-            this._onReady()
-        })
+            this._onReady();
+        });
       else if (this.ready)
-        this._onReady()
+        this._onReady();
 
-      return this
+      return this;
     }
 
     /**
@@ -291,18 +291,18 @@ define([
       if (this.data && !this.ready) {
         switch (this.type) {
           case 'image':
-            this.ready = this.data.complete === true
-            break
+            this.ready = this.data.complete === true;
+            break;
           case 'audio':
           case 'video':
           case 'anim':
-            this.ready = this.data.readyState >= 1
-            break
+            this.ready = this.data.readyState >= 1;
+            break;
           default:
-            this.ready = true
+            this.ready = true;
         }
       }
-      return this.ready
+      return this.ready;
     }
 
     /**
@@ -310,20 +310,20 @@ define([
      * @returns {Boolean} - `true` if the resource has exhausted the allowed time to load, `false` otherwise
      */
     checkTimeout() {
-      const result = Date.now() > this.timeout
+      const result = Date.now() > this.timeout;
       if (result)
-        Utils.log('warn', `Timeout while loading: ${this.name}`)
-      return result
+        Utils.log('warn', `Timeout while loading: ${this.name}`);
+      return result;
     }
 
     /**
      * Notify listeners that the resource is ready
      */
     _onReady() {
-      this.ready = true
+      this.ready = true;
       if (this._whenReady) {
-        this._whenReady.forEach(fn => fn.call(this, this))
-        this._whenReady = null
+        this._whenReady.forEach(fn => fn.call(this, this));
+        this._whenReady = null;
       }
     }
 
@@ -333,7 +333,7 @@ define([
      * @returns {string}
      */
     getFullPath() {
-      return this._fullPath
+      return this._fullPath;
     }
 
     /**
@@ -343,10 +343,10 @@ define([
     getFullPathPromise() {
       return new Promise((resolve, reject) => {
         Utils.getPathPromise(this.basePath, this.file, this.zip).then(fullPath => {
-          this._fullPath = fullPath
-          resolve(fullPath)
-        }).catch(reject)
-      })
+          this._fullPath = fullPath;
+          resolve(fullPath);
+        }).catch(reject);
+      });
     }
   }
 
@@ -420,7 +420,7 @@ define([
      * @type {string}
      */
     _fullPath: null,
-  })
+  });
 
-  return MediaBagElement
-})
+  return MediaBagElement;
+});

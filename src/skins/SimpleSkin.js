@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -53,12 +53,12 @@ define([
      */
     constructor(ps, name = null, options = {}) {
       // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
-      super(ps, name, Object.assign({}, options, { counters: false, reportsBtn: true }))
+      super(ps, name, Object.assign({}, options, { counters: false, reportsBtn: true }));
 
-      this.$ctrlCnt.detach().prependTo(this.$div)
-      this.$msgBoxDiv.detach().appendTo(this.$div)
+      this.$ctrlCnt.detach().prependTo(this.$div);
+      this.$msgBoxDiv.detach().appendTo(this.$div);
       // Add a spacing div in substitution of msgBox
-      $('<div/>').css({ 'flex-grow': 1 }).insertAfter(this.$ctrlCnt.children(':nth-child(2)'))
+      $('<div/>').css({ 'flex-grow': 1 }).insertAfter(this.$ctrlCnt.children(':nth-child(2)'));
     }
 
     /**
@@ -68,7 +68,7 @@ define([
      * @returns {string}
      */
     _getStyleSheets(media = 'default') {
-      return `${super._getStyleSheets(media)}${media === 'default' ? this.skinCSS : media === 'half' ? this.skinCSSHalf : media === 'twoThirds' ? this.skinCSSTwoThirds : ''}`
+      return `${super._getStyleSheets(media)}${media === 'default' ? this.skinCSS : media === 'half' ? this.skinCSSHalf : media === 'twoThirds' ? this.skinCSSTwoThirds : ''}`;
     }
   }
 
@@ -96,11 +96,11 @@ define([
 .ID .JClicCtrlCnt {margin:6px;}\
 .ID .JClicPlayerCnt {margin:0px 12px 12px;}\
 .ID .JClicMsgBox {margin:0 12px 12px 12px;}',
-  })
+  });
 
   // Register this class in the list of available skins
-  Skin.CLASSES['simple'] = SimpleSkin
+  Skin.CLASSES['simple'] = SimpleSkin;
 
-  return SimpleSkin
+  return SimpleSkin;
 
-})
+});

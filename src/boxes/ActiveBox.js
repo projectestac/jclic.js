@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -66,15 +66,15 @@ define([
      */
     constructor(parent, container, boxBase, setIdLoc, rect) {
       // ActiveBox extends AbstractBox
-      super(parent, container, boxBase)
-      this.clear()
+      super(parent, container, boxBase);
+      this.clear();
       if (typeof setIdLoc === 'number') {
-        this.idLoc = setIdLoc
-        this.idAss = 0
-        this.idOrder = 0
+        this.idLoc = setIdLoc;
+        this.idAss = 0;
+        this.idOrder = 0;
       }
       if (rect)
-        this.setBounds(rect)
+        this.setBounds(rect);
     }
 
     /**
@@ -89,14 +89,14 @@ define([
         const
           box = new ActiveBox(),
           $canvas = $('<canvas width="' + abc.dimension.width + '" height="' + abc.dimension.height + '"/>'),
-          rect = new AWT.Rectangle(0, 0, abc.dimension.width, abc.dimension.height)
-        box.container = new AWT.Container()
-        box.container.$div = $dom
-        box.setContent(abc)
-        box.setBounds(rect)
-        $dom.append($canvas)
-        box.update($canvas.get(-1).getContext('2d'), rect)
-        return box
+          rect = new AWT.Rectangle(0, 0, abc.dimension.width, abc.dimension.height);
+        box.container = new AWT.Container();
+        box.container.$div = $dom;
+        box.setContent(abc);
+        box.setBounds(rect);
+        $dom.append($canvas);
+        box.update($canvas.get(-1).getContext('2d'), rect);
+        return box;
       }
     }
 
@@ -105,7 +105,7 @@ define([
      * @returns {ActiveBoxContent}
      */
     getCurrentContent() {
-      return this.isAlternative() ? this.altContent : this.content
+      return this.isAlternative() ? this.altContent : this.content;
     }
 
     /**
@@ -114,26 +114,26 @@ define([
      */
     getContent() {
       if (!this.content)
-        this.setContent(new ActiveBoxContent())
-      return this.content
+        this.setContent(new ActiveBoxContent());
+      return this.content;
     }
 
     /**
      * Clears the current content
      */
     clear() {
-      this.content = null
-      this.altContent = null
-      this.idOrder = -1
-      this.setInactive(true)
+      this.content = null;
+      this.altContent = null;
+      this.idOrder = -1;
+      this.setInactive(true);
       if (!this.hasHostedComponent)
-        this.setHostedComponent(null)
-      this.setHostedMediaPlayer(null)
+        this.setHostedComponent(null);
+      this.setHostedMediaPlayer(null);
       if (this.$accessibleElement)
-        this.$accessibleElement.html('')
+        this.$accessibleElement.html('');
       if (this.tmpTrans)
-        this.tmpTrans = false
-      this.invalidate()
+        this.tmpTrans = false;
+      this.invalidate();
     }
 
     /**
@@ -145,7 +145,7 @@ define([
     isEquivalent(bx, checkCase) {
       return bx !== null &&
         this.content !== null &&
-        this.content.isEquivalent(bx.content, checkCase)
+        this.content.isEquivalent(bx.content, checkCase);
     }
 
     /**
@@ -157,7 +157,7 @@ define([
     isCurrentContentEquivalent(bx, checkCase) {
       return bx !== null &&
         this.getCurrentContent() !== null &&
-        this.getCurrentContent().isEquivalent(bx.getCurrentContent(), checkCase)
+        this.getCurrentContent().isEquivalent(bx.getCurrentContent(), checkCase);
     }
 
     /**
@@ -167,11 +167,11 @@ define([
     exchangeLocation(bx) {
       const
         pt = new AWT.Point(this.pos),
-        idLoc0 = this.idLoc
-      this.moveTo(bx.pos)
-      bx.moveTo(pt)
-      this.idLoc = bx.idLoc
-      bx.idLoc = idLoc0
+        idLoc0 = this.idLoc;
+      this.moveTo(bx.pos);
+      bx.moveTo(pt);
+      this.idLoc = bx.idLoc;
+      bx.idLoc = idLoc0;
     }
 
     /**
@@ -179,26 +179,26 @@ define([
      * @param {ActiveBox} bx - The ActiveBox from which to take the content
      */
     copyContent(bx) {
-      this.idOrder = bx.idOrder
-      this.idAss = bx.idAss
-      this.content = bx.content
-      this.altContent = bx.altContent
+      this.idOrder = bx.idOrder;
+      this.idAss = bx.idAss;
+      this.content = bx.content;
+      this.altContent = bx.altContent;
       if (this.content) {
         if (this.content.bb)
-          this.setBoxBase(this.content.bb)
+          this.setBoxBase(this.content.bb);
         if (this.content.border !== null && bx.hasBorder() !== this.content.border)
-          this.setBorder(this.content.border)
+          this.setBorder(this.content.border);
       }
-      this.setInactive(bx.isInactive())
-      this.setInverted(bx.isInverted())
-      this.setAlternative(bx.isAlternative())
-      this.setHostedComponent(bx.getHostedComponent())
-      this.hasHostedComponent = bx.hasHostedComponent
-      this.setHostedMediaPlayer(bx.hostedMediaPlayer)
+      this.setInactive(bx.isInactive());
+      this.setInverted(bx.isInverted());
+      this.setAlternative(bx.isAlternative());
+      this.setHostedComponent(bx.getHostedComponent());
+      this.hasHostedComponent = bx.hasHostedComponent;
+      this.setHostedMediaPlayer(bx.hostedMediaPlayer);
       if (this.hostedMediaPlayer)
-        this.hostedMediaPlayer.setVisualComponentVisible(!this.isInactive() && this.isVisible())
+        this.hostedMediaPlayer.setVisualComponentVisible(!this.isInactive() && this.isVisible());
       if (this.$accessibleElement)
-        this.$accessibleElement.html(this.toString())
+        this.$accessibleElement.html(this.toString());
     }
 
     /**
@@ -207,10 +207,10 @@ define([
      * @param {ActiveBox} bx - The ActiveBox with which to exchange the content.
      */
     exchangeContent(bx) {
-      const bx0 = new ActiveBox(this.getParent(), this.getContainerX(), this.boxBase)
-      bx0.copyContent(this)
-      this.copyContent(bx)
-      bx.copyContent(bx0)
+      const bx0 = new ActiveBox(this.getParent(), this.getContainerX(), this.boxBase);
+      bx0.copyContent(this);
+      this.copyContent(bx);
+      bx.copyContent(bx0);
     }
 
     /**
@@ -221,27 +221,27 @@ define([
     setTextContent(tx) {
       // only plain text!
       if (!tx)
-        tx = ''
+        tx = '';
       if (!this.content)
-        this.content = new ActiveBoxContent()
-      this.content.text = tx
-      this.content.mediaContent = null
-      this.content.img = null
+        this.content = new ActiveBoxContent();
+      this.content.text = tx;
+      this.content.mediaContent = null;
+      this.content.img = null;
 
-      this.setHostedComponent(null)
-      this.setInactive(false)
-      this.checkHostedComponent()
-      this.setHostedMediaPlayer(null)
+      this.setHostedComponent(null);
+      this.setInactive(false);
+      this.checkHostedComponent();
+      this.setHostedMediaPlayer(null);
 
       if (this.$accessibleElement)
-        this.$accessibleElement.html(this.toString())
+        this.$accessibleElement.html(this.toString());
     }
 
     /**
      * Sets the default value to `idAss`
      */
     setDefaultIdAss() {
-      this.idAss = this.content === null ? -1 : this.content.id
+      this.idAss = this.content === null ? -1 : this.content.id;
     }
 
     /**
@@ -249,7 +249,7 @@ define([
      * @returns {boolean}
      */
     isAtPlace() {
-      return this.idOrder === this.idLoc
+      return this.idOrder === this.idLoc;
     }
 
     /**
@@ -261,28 +261,28 @@ define([
     setContent(abc, i) {
       if (abc instanceof ActiveBagContent) {
         if (i < 0)
-          i = this.idOrder
+          i = this.idOrder;
         if (i >= abc.getNumCells())
-          return
+          return;
         if (abc.bb !== this.boxBase)
-          this.setBoxBase(abc.bb)
+          this.setBoxBase(abc.bb);
 
         // `abc` is now an [ActiveBoxContent](ActiveBoxContent.html)
-        abc = abc.getActiveBoxContent(i)
+        abc = abc.getActiveBoxContent(i);
       }
-      this.setHostedComponent(null)
-      this.setHostedMediaPlayer(null)
-      this.content = abc
+      this.setHostedComponent(null);
+      this.setHostedMediaPlayer(null);
+      this.content = abc;
       if (abc) {
         if (abc.animatedGifFile && !this.specialShape) {
-          const url = `url(${abc.animatedGifFile})`
+          const url = `url(${abc.animatedGifFile})`;
           const $hc = $('<span/>').css({
             'background-image': url,
             'background-position': 'center',
             'background-repeat': 'no-repeat'
-          })
+          });
           // Save background image for later use
-          $hc.data('background-image', url)
+          $hc.data('background-image', url);
 
           if (abc.imgClip !== null) {
             $hc.css({
@@ -290,30 +290,30 @@ define([
               'background-position': `${-abc.imgClip.pos.x}px ${-abc.imgClip.pos.y}px`
               // TODO: Use background-size only when the original image must be compressed
               //,'background-size': abc.imgClip.dim.width + 'px ' + abc.imgClip.dim.height + 'px'
-            })
+            });
           }
-          this.setHostedComponent($hc)
+          this.setHostedComponent($hc);
         }
 
         if (abc.bb !== this.boxBase)
-          this.setBoxBase(abc.bb)
+          this.setBoxBase(abc.bb);
 
         if (abc.innerHtmlText)
-          this.setHostedComponent($('<div/>').html(abc.innerHtmlText))
+          this.setHostedComponent($('<div/>').html(abc.innerHtmlText));
 
         if (abc.hasOwnProperty('border') && this.hasBorder() !== abc.border)
-          this.setBorder(abc.border)
-        this.setInactive(false)
+          this.setBorder(abc.border);
+        this.setInactive(false);
         if (abc.amp)
-          this.setHostedMediaPlayer(abc.amp)
-        this.checkHostedComponent()
-        this.checkAutoStartMedia()
+          this.setHostedMediaPlayer(abc.amp);
+        this.checkHostedComponent();
+        this.checkAutoStartMedia();
       } else
-        this.clear()
+        this.clear();
 
-      this.invalidate()
+      this.invalidate();
       if (this.$accessibleElement)
-        this.$accessibleElement.html(this.toString())
+        this.$accessibleElement.html(this.toString());
     }
 
     /**
@@ -326,18 +326,18 @@ define([
     setAltContent(abc, i) {
       if (abc instanceof ActiveBagContent) {
         if (i < 0)
-          i = this.idOrder
+          i = this.idOrder;
         // `abc` is now an [ActiveBoxContent](ActiveBoxContent.html)
-        abc = abc.getActiveBoxContent(i)
+        abc = abc.getActiveBoxContent(i);
       }
-      this.altContent = abc
-      this.checkHostedComponent()
+      this.altContent = abc;
+      this.checkHostedComponent();
       if (this.isAlternative() && this.hostedMediaPlayer)
-        this.setHostedMediaPlayer(null)
+        this.setHostedMediaPlayer(null);
 
       if (this.$accessibleElement) {
-        this.$accessibleElement.html(this.toString())
-        this.$accessibleElement.prop('disabled', true)
+        this.$accessibleElement.html(this.toString());
+        this.$accessibleElement.prop('disabled', true);
       }
     }
 
@@ -347,10 +347,10 @@ define([
      */
     setCurrentContent(abc) {
       if (this.isAlternative())
-        this.setAltContent(abc)
+        this.setAltContent(abc);
       else
-        this.setContent(abc)
-      this.invalidate()
+        this.setContent(abc);
+      this.invalidate();
     }
 
     /**
@@ -358,18 +358,18 @@ define([
      */
     switchToAlt() {
       if (this.isAlternative() || !this.altContent || this.altContent.isEmpty())
-        return false
-      this.setHostedComponent(null)
-      this.setHostedMediaPlayer(null)
-      this.setAlternative(true)
-      this.tmpTrans = false
-      this.checkHostedComponent()
-      this.checkAutoStartMedia()
+        return false;
+      this.setHostedComponent(null);
+      this.setHostedMediaPlayer(null);
+      this.setAlternative(true);
+      this.tmpTrans = false;
+      this.checkHostedComponent();
+      this.checkAutoStartMedia();
 
       if (this.$accessibleElement)
-        this.$accessibleElement.html(this.toString())
+        this.$accessibleElement.html(this.toString());
 
-      return true
+      return true;
     }
 
     /**
@@ -378,21 +378,21 @@ define([
      */
     checkHostedComponent() {
       if (this.hasHostedComponent)
-        return
+        return;
       const
         abc = this.getCurrentContent(),
-        bb = this.getBoxBaseResolve()
+        bb = this.getBoxBaseResolve();
       if (!this.isInactive() && abc && abc.innerHtmlText)
-        bb.getCSS()['text-align'] = abc.txtAlign.h.replace('middle', 'center')
+        bb.getCSS()['text-align'] = abc.txtAlign.h.replace('middle', 'center');
     }
 
     /**
      * Checks if the call has a {@link MediaContent} set to `autostart`, and launches it when found.
      */
     checkAutoStartMedia() {
-      const cnt = this.getContent()
+      const cnt = this.getContent();
       if (cnt && cnt.mediaContent && cnt.mediaContent.autoStart && cnt.amp) {
-        cnt.amp.playNow(this)
+        cnt.amp.playNow(this);
       }
     }
 
@@ -407,71 +407,71 @@ define([
 
       const
         abc = this.getCurrentContent(),
-        bb = this.getBoxBaseResolve()
+        bb = this.getBoxBaseResolve();
 
       if (this.isInactive() || !abc || this.dim.width < 2 || this.dim.height < 2)
-        return true
+        return true;
 
       if (dirtyRegion && !this.intersects(dirtyRegion))
-        return false
+        return false;
 
-      let imgRect = null
+      let imgRect = null;
 
       if (abc.img && !this.tmpTrans) {
         try {
           if (abc.imgClip) {
-            const r = abc.imgClip.getBounds()
-            let img = abc.img
+            const r = abc.imgClip.getBounds();
+            let img = abc.img;
             if (!abc.imgClip.isRect()) {
               // Prepare a temporary `canvas` object that will contain the clipped image
-              const tmpCanvas = document.createElement('canvas')
-              tmpCanvas.width = r.pos.x + r.dim.width
-              tmpCanvas.height = r.pos.y + r.dim.height
-              const tmpCtx = tmpCanvas.getContext('2d')
+              const tmpCanvas = document.createElement('canvas');
+              tmpCanvas.width = r.pos.x + r.dim.width;
+              tmpCanvas.height = r.pos.y + r.dim.height;
+              const tmpCtx = tmpCanvas.getContext('2d');
               // Set the clipping region
-              abc.imgClip.clip(tmpCtx)
+              abc.imgClip.clip(tmpCtx);
               // Draw the original image
-              tmpCtx.drawImage(abc.img, 0, 0)
+              tmpCtx.drawImage(abc.img, 0, 0);
               // Use the temporary canvas as a source image
               // (as seen on: [http://stackoverflow.com/questions/7242006/html5-copy-a-canvas-to-image-and-back])
-              img = tmpCanvas
+              img = tmpCanvas;
             }
             ctx.drawImage(img,
               Math.max(0, r.pos.x), Math.max(0, r.pos.y), Math.min(img.width, r.dim.width), Math.min(img.height, r.dim.height),
-              this.pos.x, this.pos.y, this.dim.width, this.dim.height)
+              this.pos.x, this.pos.y, this.dim.width, this.dim.height);
           } else {
             let
               imgw = abc.img.naturalWidth || this.dim.width,
               imgh = abc.img.naturalHeight || this.dim.height,
               compress = false,
-              scale = 1.0
+              scale = 1.0;
             if (Utils.settings.COMPRESS_IMAGES &&
               (this.dim.width > 0 && this.dim.height > 0) &&
               (imgw > this.dim.width || imgh > this.dim.height)) {
 
-              scale = Math.min(this.dim.width / imgw, this.dim.height / imgh)
-              imgw *= scale
-              imgh *= scale
-              compress = true
+              scale = Math.min(this.dim.width / imgw, this.dim.height / imgh);
+              imgw *= scale;
+              imgh *= scale;
+              compress = true;
             }
             const xs = abc.imgAlign.h === 'left' ? 0
               : abc.imgAlign.h === 'right' ? this.dim.width - imgw
-                : (this.dim.width - imgw) / 2
+                : (this.dim.width - imgw) / 2;
             const ys = abc.imgAlign.v === 'top' ? 0
               : abc.imgAlign.v === 'bottom' ? this.dim.height - imgh
-                : (this.dim.height - imgh) / 2
+                : (this.dim.height - imgh) / 2;
             if (compress) {
-              ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys, imgw, imgh)
+              ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys, imgw, imgh);
             } else
-              ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys)
+              ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys);
 
             if (abc.avoidOverlapping && abc.text)
               imgRect = new AWT.Rectangle(
                 Math.max(0, xs), Math.max(0, ys),
-                Math.min(this.dim.width, imgw), Math.min(this.dim.height, imgh))
+                Math.min(this.dim.width, imgw), Math.min(this.dim.height, imgh));
           }
         } catch (ex) {
-          Utils.log('warn', `Unable to draw image "${abc.imgName}": ${ex.message}`)
+          Utils.log('warn', `Unable to draw image "${abc.imgName}": ${ex.message}`);
         }
       }
       if (abc.text && abc.text.length > 0) {
@@ -479,7 +479,7 @@ define([
           px = this.pos.x,
           py = this.pos.y,
           pWidth = this.dim.width,
-          pHeight = this.dim.height
+          pHeight = this.dim.height;
 
         if (imgRect) {
           // There is an image in the ActiveBox
@@ -497,63 +497,63 @@ define([
               new AWT.Rectangle(prx[0], pry[0], prx[1], pry[3]),
               // Right rectangle:
               new AWT.Rectangle(prx[2], pry[0], prx[3] - prx[2], pry[3])
-            ]
+            ];
           //
           // Find the rectangle with highest surface, and in accordance
           // with the `txtAlign` values of the current
           // [ActiveBoxContent](ActiveBoxContent)
-          let rmax = rr[0]
-          let maxSurface = rmax.dim.width * rmax.dim.height
+          let rmax = rr[0];
+          let maxSurface = rmax.dim.width * rmax.dim.height;
           for (let i = 1; i < rr.length; i++) {
-            let s = rr[i].dim.width * rr[i].dim.height
+            let s = rr[i].dim.width * rr[i].dim.height;
             if (s > maxSurface - 1) {
               if (Math.abs(s - maxSurface) <= 1) {
-                let b = false
+                let b = false;
                 switch (i) {
                   case 1:
-                    b = abc.txtAlign.v === 'bottom'
-                    break
+                    b = abc.txtAlign.v === 'bottom';
+                    break;
                   case 2:
-                    b = abc.txtAlign.h === 'left'
-                    break
+                    b = abc.txtAlign.h === 'left';
+                    break;
                   case 3:
-                    b = abc.txtAlign.h === 'right'
-                    break
+                    b = abc.txtAlign.h === 'right';
+                    break;
                 }
                 if (!b)
-                  continue
+                  continue;
               }
-              maxSurface = s
-              rmax = rr[i]
+              maxSurface = s;
+              rmax = rr[i];
             }
           }
           // Finally, this is the surface available to draw text:
-          px += rmax.pos.x
-          py += rmax.pos.y
-          pWidth = rmax.dim.width
-          pHeight = rmax.dim.height
+          px += rmax.pos.x;
+          py += rmax.pos.y;
+          pWidth = rmax.dim.width;
+          pHeight = rmax.dim.height;
         }
 
         // Calc available width and height, discounting margins
         const
           availWidth = Math.max(5, pWidth - 2 * bb.textMargin),
-          availHeight = Math.max(5, pHeight - 2 * bb.textMargin)
+          availHeight = Math.max(5, pHeight - 2 * bb.textMargin);
 
         // Calc the size of each line
-        const lines = bb.prepareText(ctx, abc.text, availWidth, availHeight)
+        const lines = bb.prepareText(ctx, abc.text, availWidth, availHeight);
 
-        ctx.font = bb.font.cssFont()
-        ctx.textBaseline = 'hanging'
+        ctx.font = bb.font.cssFont();
+        ctx.textBaseline = 'hanging';
         const
           lineHeight = bb.font.getHeight(),
-          totalHeight = lineHeight * lines.length
+          totalHeight = lineHeight * lines.length;
 
         // Calc the vertical co-ordinate of the first line
         // Default is 'middle'
 
         let y = py + bb.textMargin + (abc.txtAlign.v === 'top' ? 0
           : abc.txtAlign.v === 'bottom' ?
-            availHeight - totalHeight : (availHeight - totalHeight) / 2)
+            availHeight - totalHeight : (availHeight - totalHeight) / 2);
 
         for (let l = 0; l < lines.length; l++ , y += lineHeight) {
           // Calc the horizontal position of each line
@@ -561,21 +561,21 @@ define([
           const x = px + bb.textMargin + (abc.txtAlign.h === 'left' ? 0
             : abc.txtAlign.h === 'right' ?
               availWidth - lines[l].size.width
-              : (availWidth - lines[l].size.width) / 2)
+              : (availWidth - lines[l].size.width) / 2);
 
           if (bb.shadow) {
             // Render text shadow
-            const d = Math.max(1, bb.font.size / 10)
-            ctx.fillStyle = bb.shadowColor
-            ctx.fillText(lines[l].text, x + d, y + d)
+            const d = Math.max(1, bb.font.size / 10);
+            ctx.fillStyle = bb.shadowColor;
+            ctx.fillText(lines[l].text, x + d, y + d);
           }
           // Render text
           ctx.fillStyle = this.isInverted() ? bb.backColor
-            : this.isAlternative() ? bb.alternativeColor : bb.textColor
-          ctx.fillText(lines[l].text, x, y)
+            : this.isAlternative() ? bb.alternativeColor : bb.textColor;
+          ctx.fillText(lines[l].text, x, y);
         }
       }
-      return true
+      return true;
     }
 
     /**
@@ -583,7 +583,7 @@ define([
      * @returns {string}
      */
     getDescription() {
-      return this.content ? this.content.getDescription() : ''
+      return this.content ? this.content.getDescription() : '';
     }
 
     /**
@@ -591,7 +591,7 @@ define([
      * @returns {String}
      */
     toString() {
-      return (this.role !== 'cell' ? Utils.getMsg(this.role) : '') + (this.getCurrentContent() || '-').toString()
+      return (this.role !== 'cell' ? Utils.getMsg(this.role) : '') + (this.getCurrentContent() || '-').toString();
     }
 
     /**
@@ -600,13 +600,13 @@ define([
      * @param {function[]} delayedActions - If set, store the the action in this array for future execution
      */
     playMedia(ps, delayedActions = null) {
-      const abc = this.getCurrentContent()
+      const abc = this.getCurrentContent();
       if (abc && abc.mediaContent) {
-        Utils.log('debug', `Playing: ${abc.mediaContent.toString()}`)
-        ps.playMedia(abc.mediaContent, this, delayedActions)
-        return true
+        Utils.log('debug', `Playing: ${abc.mediaContent.toString()}`);
+        ps.playMedia(abc.mediaContent, this, delayedActions);
+        return true;
       }
-      return false
+      return false;
     }
 
     /**
@@ -614,12 +614,12 @@ define([
      * @param {ActiveMediaPlayer} amp - The media player.
      */
     setHostedMediaPlayer(amp) {
-      const old = this.hostedMediaPlayer
-      this.hostedMediaPlayer = amp
+      const old = this.hostedMediaPlayer;
+      this.hostedMediaPlayer = amp;
       if (old && old !== amp)
-        old.linkTo(null)
+        old.linkTo(null);
       if (amp)
-        amp.linkTo(this)
+        amp.linkTo(this);
     }
 
     /**
@@ -634,13 +634,13 @@ define([
     setBounds(rect, y, w, h) {
       if (typeof rect === 'number')
         // arguments are co-ordinates and size
-        rect = new AWT.Rectangle(rect, y, w, h)
+        rect = new AWT.Rectangle(rect, y, w, h);
       // Rectangle comparision
       if (this.equals(rect))
-        return
-      super.setBounds(rect)
+        return;
+      super.setBounds(rect);
       if (this.hostedMediaPlayer)
-        this.hostedMediaPlayer.checkVisualComponentBounds(this)
+        this.hostedMediaPlayer.checkVisualComponentBounds(this);
     }
 
     /**
@@ -651,32 +651,32 @@ define([
      */
     setHostedComponentBounds(sizeChanged) {
       if (this.$hostedComponent) {
-        super.setHostedComponentBounds(sizeChanged)
-        const abc = this.getCurrentContent()
+        super.setHostedComponentBounds(sizeChanged);
+        const abc = this.getCurrentContent();
         if (sizeChanged && abc && abc.animatedGifFile && abc.img) {
           const
             img = abc.img,
             w = Math.max(img.naturalWidth, this.dim.width),
-            h = Math.max(img.naturalHeight, this.dim.height)
-          let scale = 1, bgSize = ''
+            h = Math.max(img.naturalHeight, this.dim.height);
+          let scale = 1, bgSize = '';
           if (abc.imgClip) {
-            const r = abc.imgClip.getBounds()
+            const r = abc.imgClip.getBounds();
             if (this.dim.width < r.dim.width || this.dim.height < r.dim.height) {
-              scale = Math.min(this.dim.width / r.dim.width, this.dim.height / r.dim.height)
-              bgSize = `${w * scale}px ${h * scale}px`
+              scale = Math.min(this.dim.width / r.dim.width, this.dim.height / r.dim.height);
+              bgSize = `${w * scale}px ${h * scale}px`;
             }
             this.$hostedComponent.css({
               'background-position': `${-abc.imgClip.pos.x * scale}px ${-abc.imgClip.pos.y * scale}px`,
               'background-size': bgSize
-            })
+            });
           } else {
             if (this.dim.width < w || this.dim.height < h) {
-              scale = Math.min(this.dim.width / w, this.dim.height / h)
-              bgSize = `${w * scale}px ${h * scale}px`
+              scale = Math.min(this.dim.width / w, this.dim.height / h);
+              bgSize = `${w * scale}px ${h * scale}px`;
             }
             this.$hostedComponent.css({
               'background-size': bgSize
-            })
+            });
           }
         }
       }
@@ -697,13 +697,13 @@ define([
     buildAccessibleElement($canvas, $clickReceiver, $canvasGroup, eventType) {
       if (Utils.settings.CANVAS_HITREGIONS) {
         if (this.$accessibleElement)
-          this.$accessibleElement.remove()
+          this.$accessibleElement.remove();
 
-        const canvas = $canvas.get(-1)
+        const canvas = $canvas.get(-1);
         if (canvas.width > 0 && canvas.height > 0) {
           const
             id = Math.round(Math.random() * 100000),
-            disabled = this.isInactive() && !this.accessibleAlwaysActive
+            disabled = this.isInactive() && !this.accessibleAlwaysActive;
           this.$accessibleElement = $('<button/>', {
             tabindex: disabled ? -1 : 0,
             id: `AE${id}`,
@@ -714,33 +714,33 @@ define([
               // Check if event was produced by a mouse click
               if (ev.originalEvent && (ev.originalEvent.pageX !== 0 || ev.originalEvent.pageY !== 0)) {
                 // Mouse clicks should be processed odirectly by the canvas, so ignore this accessible event
-                return true
+                return true;
               }
-              Utils.log('debug', `Click on accessible element: ${this.toString()}`)
+              Utils.log('debug', `Click on accessible element: ${this.toString()}`);
               const
                 $event = $.Event(eventType || 'click'),
                 bounds = this.getBounds(),
-                offset = $canvas.offset()
-              $event.pageX = offset.left + bounds.pos.x + bounds.dim.width / 2
-              $event.pageY = offset.top + bounds.pos.y + bounds.dim.height / 2
-              $clickReceiver.trigger($event)
-              return false
-            })
-          const $dest = $canvasGroup || $canvas
-          $dest.append(this.$accessibleElement)
-          const elem = this.$accessibleElement.get(-1)
+                offset = $canvas.offset();
+              $event.pageX = offset.left + bounds.pos.x + bounds.dim.width / 2;
+              $event.pageY = offset.top + bounds.pos.y + bounds.dim.height / 2;
+              $clickReceiver.trigger($event);
+              return false;
+            });
+          const $dest = $canvasGroup || $canvas;
+          $dest.append(this.$accessibleElement);
+          const elem = this.$accessibleElement.get(-1);
           try {
-            const ctx = canvas.getContext('2d')
-            this.shape.preparePath(ctx)
-            ctx.addHitRegion({ id: `REG${id}`, control: elem })
+            const ctx = canvas.getContext('2d');
+            this.shape.preparePath(ctx);
+            ctx.addHitRegion({ id: `REG${id}`, control: elem });
             if (Utils.settings.CANVAS_HITREGIONS_FOCUS)
-              ctx.drawFocusIfNeeded(elem)
+              ctx.drawFocusIfNeeded(elem);
           } catch (ex) {
-            Utils.log('error', `Unable to build accessible element for canvas in: ${this.toString()} (${ex})`)
+            Utils.log('error', `Unable to build accessible element for canvas in: ${this.toString()} (${ex})`);
           }
         }
       }
-      return this.$accessibleElement
+      return this.$accessibleElement;
     }
   }
 
@@ -790,7 +790,7 @@ define([
      * @name ActiveBox#isBackground
      * @type {boolean} */
     isBackground: false,
-  })
+  });
 
-  return ActiveBox
-})
+  return ActiveBox;
+});

@@ -51,7 +51,7 @@ define([
      * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
      */
     constructor(project) {
-      super(project)
+      super(project);
     }
 
     /**
@@ -60,7 +60,7 @@ define([
      * @returns {boolean}
      */
     needsKeyboard() {
-      return true
+      return true;
     }
   }
 
@@ -76,7 +76,7 @@ define([
      * @name FillInBlanks#forceOkToAdvance
      * @type {boolean} */
     forceOkToAdvance: false,
-  })
+  });
 
   /**
    * The {@link TextActivityBasePanel} where {@link FillInBlanks} activities are played.
@@ -93,7 +93,7 @@ define([
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
-      super(act, ps, $div)
+      super(act, ps, $div);
     }
 
     /**
@@ -107,24 +107,24 @@ define([
      */
     $createTargetElement(target, $span) {
 
-      $span.addClass('JClicTextTarget')
+      $span.addClass('JClicTextTarget');
 
-      const idLabel = `target${`000${this.targets.length - 1}`.slice(-3)}`
+      const idLabel = `target${`000${this.targets.length - 1}`.slice(-3)}`;
       if (target.isList && target.options && target.options.length > 0) {
         // Use a `select` element
-        $span = $('<select/>', { id: idLabel, name: idLabel })
+        $span = $('<select/>', { id: idLabel, name: idLabel });
         if (target.options[0].trim() !== '')
-          $('<option selected/>', { value: '', text: '' }).appendTo($span)
-        target.options.forEach(op => $('<option/>', { value: op, text: op }).appendTo($span))
+          $('<option selected/>', { value: '', text: '' }).appendTo($span);
+        target.options.forEach(op => $('<option/>', { value: op, text: op }).appendTo($span));
         target.$comboList = $span.bind('focus change', event => {
-          event.textTarget = target
-          this.processEvent(event)
-        })
+          event.textTarget = target;
+          this.processEvent(event);
+        });
       } else {
         // Use a `span` element with the `contentEditable` attribute set `on`
         target.currentText = target.iniText ?
           target.iniText
-          : Utils.fillString(target.iniChar, target.numIniChars)
+          : Utils.fillString(target.iniChar, target.numIniChars);
 
         target.$span = $span.text(target.currentText).attr({
           contenteditable: 'true',
@@ -132,22 +132,22 @@ define([
           autocomplete: 'off',
           spellcheck: 'false'
         }).bind('focus input blur', event => {
-          event.textTarget = target
-          this.processEvent(event)
+          event.textTarget = target;
+          this.processEvent(event);
         }).bind('keydown keyup', event => {
           // Catch `enter` key in Firefox
           if (event.keyCode === 13) {
-            event.preventDefault()
+            event.preventDefault();
             if (event.type === 'keydown') {
               // Simulate a `blur` event
-              event.textTarget = target
-              event.type = 'blur'
-              this.processEvent(event)
+              event.textTarget = target;
+              event.type = 'blur';
+              this.processEvent(event);
             }
           }
-        })
+        });
       }
-      return $span
+      return $span;
     }
 
     /**
@@ -156,24 +156,24 @@ define([
      * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
      */
     evaluatePanel() {
-      let targetsOk = 0
-      const numTargets = this.targets.length
+      let targetsOk = 0;
+      const numTargets = this.targets.length;
       this.targets.forEach(target => {
         const
           result = this.act.ev.evalText(target.readCurrentText(), target.answers),
-          ok = this.act.ev.isOk(result)
-        target.targetStatus = ok ? 'SOLVED' : 'WITH_ERROR'
+          ok = this.act.ev.isOk(result);
+        target.targetStatus = ok ? 'SOLVED' : 'WITH_ERROR';
         if (ok)
-          targetsOk++
-        this.markTarget(target, result)
-        this.ps.reportNewAction(this.act, 'WRITE', target.currentText, target.getAnswers(), ok, targetsOk)
-      })
+          targetsOk++;
+        this.markTarget(target, result);
+        this.ps.reportNewAction(this.act, 'WRITE', target.currentText, target.getAnswers(), ok, targetsOk);
+      });
       if (targetsOk === numTargets) {
-        this.finishActivity(true)
-        return true
+        this.finishActivity(true);
+        return true;
       } else
-        this.playEvent('finishedError')
-      return false
+        this.playEvent('finishedError');
+      return false;
     }
 
     /**
@@ -186,37 +186,37 @@ define([
     checkTarget(target, onlyCheck, jumpDirection) {
       const
         result = this.act.ev.evalText(target.currentText, target.answers),
-        ok = this.act.ev.isOk(result)
+        ok = this.act.ev.isOk(result);
 
-      target.targetStatus = ok ? 'SOLVED' : 'WITH_ERROR'
+      target.targetStatus = ok ? 'SOLVED' : 'WITH_ERROR';
       if (onlyCheck)
-        return ok
+        return ok;
 
-      this.markTarget(target, result)
-      const targetsOk = this.countSolvedTargets(false, false)
+      this.markTarget(target, result);
+      const targetsOk = this.countSolvedTargets(false, false);
       if (target.currentText.length > 0)
-        this.ps.reportNewAction(this.act, 'WRITE', target.currentText, target.getAnswers(), ok, targetsOk)
+        this.ps.reportNewAction(this.act, 'WRITE', target.currentText, target.getAnswers(), ok, targetsOk);
       if (ok && targetsOk === this.targets.length) {
-        this.finishActivity(true)
-        return ok
+        this.finishActivity(true);
+        return ok;
       } else if (target.currentText.length > 0)
-        this.playEvent(ok ? 'actionOk' : 'actionError')
+        this.playEvent(ok ? 'actionOk' : 'actionError');
 
       if (jumpDirection && jumpDirection !== 0) {
-        let p = target.num + jumpDirection
+        let p = target.num + jumpDirection;
         if (p >= this.targets.length)
-          p = 0
+          p = 0;
         else if (p < 0)
-          p = this.targets.length - 1
+          p = this.targets.length - 1;
 
-        const destTarget = this.targets[p]
+        const destTarget = this.targets[p];
         if (destTarget.$span) {
-          destTarget.$span.focus()
-          Utils.setSelectionRange(destTarget.$span.get(-1), 0, 0)
+          destTarget.$span.focus();
+          Utils.setSelectionRange(destTarget.$span.get(-1), 0, 0);
         } else if (destTarget.$comboList)
-          destTarget.$comboList.focus()
+          destTarget.$comboList.focus();
       }
-      return ok
+      return ok;
     }
 
     /**
@@ -229,11 +229,11 @@ define([
     countSolvedTargets(checkNow, mark) {
       return this.targets.reduce((n, target) => {
         if (checkNow) {
-          target.readCurrentText()
-          this.checkTarget(target, !mark)
+          target.readCurrentText();
+          this.checkTarget(target, !mark);
         }
-        return target.targetStatus === 'SOLVED' ? ++n : n
-      }, 0)
+        return target.targetStatus === 'SOLVED' ? ++n : n;
+      }, 0);
     }
 
     /**
@@ -244,38 +244,38 @@ define([
      */
     markTarget(target, attributes) {
       if (target.$comboList || this.act.ev.isOk(attributes))
-        target.checkColors()
+        target.checkColors();
       else if (target.$span) {
         // Identify text fragments
         const
           txt = target.currentText,
-          fragments = []
+          fragments = [];
         let
           currentStatus = -1,
           currentFragment = -1,
-          i = 0
+          i = 0;
         for (; i < attributes.length && i < txt.length; i++) {
           if (attributes[i] !== currentStatus) {
-            fragments[++currentFragment] = ''
-            currentStatus = attributes[i]
+            fragments[++currentFragment] = '';
+            currentStatus = attributes[i];
           }
-          fragments[currentFragment] += txt.charAt(i)
+          fragments[currentFragment] += txt.charAt(i);
         }
         if (i < txt.length)
-          fragments[currentFragment] += txt.substr(i)
+          fragments[currentFragment] += txt.substr(i);
         // Empty and re-fill $span
-        target.$span.empty()
-        currentStatus = attributes[0]
+        target.$span.empty();
+        currentStatus = attributes[0];
         fragments.forEach(fragment => {
           $('<span/>')
             .text(fragment)
             .css(target.doc.style[currentStatus === 0 ? 'target' : 'targetError'].css)
-            .appendTo(target.$span)
-          currentStatus ^= 1
-        })
+            .appendTo(target.$span);
+          currentStatus ^= 1;
+        });
       }
       // Target has been marked, so clear the 'modified' flag
-      target.flagModified = false
+      target.flagModified = false;
     }
 
     /**
@@ -284,13 +284,13 @@ define([
      * @override
      */
     activityReady() {
-      super.activityReady()
+      super.activityReady();
 
       // Prevent strange behavior with GoogleChrome when `white-space` CSS attribute is set to
       // `pre-wrap` (needed for tabulated texts)
-      $('.JClicTextTarget').css('white-space', 'normal')
+      $('.JClicTextTarget').css('white-space', 'normal');
       if (this.targets.length > 0 && this.targets[0].$span)
-        this.targets[0].$span.focus()
+        this.targets[0].$span.focus();
     }
 
     /**
@@ -301,11 +301,11 @@ define([
     finishActivity(result) {
       this.targets.forEach(target => {
         if (target.$span)
-          target.$span.removeAttr('contenteditable').blur()
+          target.$span.removeAttr('contenteditable').blur();
         else if (target.$comboList)
-          target.$comboList.attr('disabled', 'true').blur()
-      })
-      return super.finishActivity(result)
+          target.$comboList.attr('disabled', 'true').blur();
+      });
+      return super.finishActivity(result);
     }
 
     /**
@@ -317,102 +317,102 @@ define([
      */
     processEvent(event) {
       if (!super.processEvent(event))
-        return false
+        return false;
 
-      const target = event.textTarget
-      let $span = null, pos = 0
+      const target = event.textTarget;
+      let $span = null, pos = 0;
       switch (event.type) {
         case 'focus':
           if (target) {
             if (target.$span && target.$span.children().length > 0) {
               // Clear inner spans used to mark errors
-              $span = target.$span
+              $span = target.$span;
               pos = Math.min(
                 target.currentText.length,
-                Utils.getCaretCharacterOffsetWithin($span.get(-1)))
-              $span.empty()
-              $span.text(target.currentText)
-              Utils.setSelectionRange($span.get(-1), pos, pos)
-              target.flagModified = true
+                Utils.getCaretCharacterOffsetWithin($span.get(-1)));
+              $span.empty();
+              $span.text(target.currentText);
+              Utils.setSelectionRange($span.get(-1), pos, pos);
+              target.flagModified = true;
             } else if (target.$comboList)
-              target.$comboList.css(target.doc.style['target'].css)
+              target.$comboList.css(target.doc.style['target'].css);
 
             if (target.$popup && (target.infoMode === 'always' || target.infoMode === 'onError' && target.targetStatus === 'WITH_ERROR'))
-              this.showPopup(target.$popup, target.popupMaxTime, target.popupDelay)
+              this.showPopup(target.$popup, target.popupMaxTime, target.popupDelay);
             else
-              this.showPopup(null)
+              this.showPopup(null);
           }
-          break
+          break;
 
         case 'blur':
           if (target.flagModified && !this.$checkButton)
-            this.checkTarget(target, false, 1)
-          break
+            this.checkTarget(target, false, 1);
+          break;
 
         case 'input':
           if (target && target.$span) {
-            $span = target.$span
-            let txt = $span.html()
+            $span = target.$span;
+            let txt = $span.html();
             // Check for `enter` key
             if (/(<br>|\n|\r)/.test(txt)) {
-              txt = txt.replace(/(<br>|\n|\r)/g, '')
-              $span.html(txt)
-              target.currentText = $span.text()
-              return this.$checkButton ? false : this.checkTarget(target, false, 1)
+              txt = txt.replace(/(<br>|\n|\r)/g, '');
+              $span.html(txt);
+              target.currentText = $span.text();
+              return this.$checkButton ? false : this.checkTarget(target, false, 1);
             }
             // Check if text has changed
             // From here, use 'text' instead of 'html' to avoid HTML entities
-            txt = $span.text()
+            txt = $span.text();
             if (txt !== target.currentText) {
               // Span text has changed!
-              target.flagModified = true
-              const added = txt.length - target.currentText.length
+              target.flagModified = true;
+              const added = txt.length - target.currentText.length;
               if (added > 0) {
                 if (txt.indexOf(target.iniChar) >= 0) {
                   // Remove filling chars
-                  pos = Utils.getCaretCharacterOffsetWithin($span.get(-1))
+                  pos = Utils.getCaretCharacterOffsetWithin($span.get(-1));
                   for (let i = 0; i < added; i++) {
-                    const p = txt.indexOf(target.iniChar)
+                    const p = txt.indexOf(target.iniChar);
                     if (p < 0)
-                      break
-                    txt = txt.substr(0, p) + txt.substr(p + 1)
+                      break;
+                    txt = txt.substr(0, p) + txt.substr(p + 1);
                     if (p < pos)
-                      pos--
+                      pos--;
                   }
-                  $span.text(txt)
-                  Utils.setSelectionRange($span.get(-1), pos, pos)
+                  $span.text(txt);
+                  Utils.setSelectionRange($span.get(-1), pos, pos);
                 }
 
                 // Check if current text exceeds max length
                 if (txt.length > target.maxLenResp) {
-                  pos = Utils.getCaretCharacterOffsetWithin($span.get(-1))
-                  txt = txt.substr(0, target.maxLenResp)
-                  pos = Math.min(pos, txt.length)
-                  $span.text(txt)
-                  Utils.setSelectionRange($span.get(-1), pos, pos)
+                  pos = Utils.getCaretCharacterOffsetWithin($span.get(-1));
+                  txt = txt.substr(0, target.maxLenResp);
+                  pos = Math.min(pos, txt.length);
+                  $span.text(txt);
+                  Utils.setSelectionRange($span.get(-1), pos, pos);
                 }
               } else if (txt === '') {
-                txt = target.iniChar
-                $span.text(txt)
-                Utils.setSelectionRange($span.get(-1), 0, 0)
+                txt = target.iniChar;
+                $span.text(txt);
+                Utils.setSelectionRange($span.get(-1), 0, 0);
               }
-              target.currentText = txt
+              target.currentText = txt;
             }
           }
-          break
+          break;
 
         case 'change':
           if (target && target.$comboList) {
-            target.currentText = target.$comboList.val()
-            target.flagModified = true
-            return this.$checkButton ? false : this.checkTarget(target, false, 1)
+            target.currentText = target.$comboList.val();
+            target.flagModified = true;
+            return this.$checkButton ? false : this.checkTarget(target, false, 1);
           }
-          break
+          break;
 
         default:
-          break
+          break;
       }
-      return true
+      return true;
     }
   }
 
@@ -422,15 +422,15 @@ define([
      * @name FillInBlanksPanel#locked
      * @type {boolean} */
     locked: true,
-  })
+  });
 
   /**
    * Panel class associated to this type of activity: {@link FillInBlanksPanel}
    * @type {class} */
-  FillInBlanks.Panel = FillInBlanksPanel
+  FillInBlanks.Panel = FillInBlanksPanel;
 
   // Register class in Activity.prototype
-  Activity.CLASSES['@text.FillInBlanks'] = FillInBlanks
+  Activity.CLASSES['@text.FillInBlanks'] = FillInBlanks;
 
-  return FillInBlanks
-})
+  return FillInBlanks;
+});

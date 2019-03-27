@@ -50,7 +50,7 @@ define([
      * @param {number} ny - Number of rows
      */
     constructor(nx, ny) {
-      super(nx, ny)
+      super(nx, ny);
     }
 
     /**
@@ -60,13 +60,13 @@ define([
     buildShapes() {
       const
         w = 1 / this.nCols,
-        h = 1 / this.nRows
+        h = 1 / this.nRows;
       for (let y = 0; y < this.nRows; y++) {
         for (let x = 0; x < this.nCols; x++) {
-          this.shapeData[y * this.nCols + x] = new AWT.Rectangle(new AWT.Point(x * w, y * h), new AWT.Dimension(w, h))
+          this.shapeData[y * this.nCols + x] = new AWT.Rectangle(new AWT.Point(x * w, y * h), new AWT.Dimension(w, h));
         }
       }
-      this.initiated = true
+      this.initiated = true;
     }
   }
 
@@ -77,10 +77,10 @@ define([
      * @override
      * @type {boolean} */
     rectangularShapes: true,
-  })
+  });
 
   // Register this class in the list of known shapers
-  Shaper.CLASSES['@Rectangular'] = Rectangular
+  Shaper.CLASSES['@Rectangular'] = Rectangular;
 
-  return Rectangular
-})
+  return Rectangular;
+});

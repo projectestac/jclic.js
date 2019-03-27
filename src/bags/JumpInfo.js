@@ -57,14 +57,14 @@ define(["../Utils"], function (Utils) {
      * cardinal number in the list.
      */
     constructor(action, sq) {
-      this.action = action
+      this.action = action;
       switch (typeof sq) {
         case 'string':
-          this.sequence = sq
-          break
+          this.sequence = sq;
+          break;
         case 'number':
-          this.actNum = sq
-          break
+          this.actNum = sq;
+          break;
       }
     }
 
@@ -73,20 +73,19 @@ define(["../Utils"], function (Utils) {
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties($xml) {
-      this.id = $xml.attr('id')
-      this.action = $xml.attr('action') || 'JUMP'
+      this.id = $xml.attr('id');
+      this.action = $xml.attr('action') || 'JUMP';
       if ($xml.attr('tag'))
-        this.sequence = Utils.nSlash($xml.attr('tag'))
+        this.sequence = Utils.nSlash($xml.attr('tag'));
       if ($xml.attr('project'))
-        this.projectPath = Utils.nSlash($xml.attr('project'))
-      return this
+        this.projectPath = Utils.nSlash($xml.attr('project'));
+      return this;
     }
 
     getData() {
-      return Utils.getData(this, ['id', 'action', 'actNum', 'sequence', 'projectPath'])
+      return Utils.getData(this, ['id', 'action', 'actNum', 'sequence', 'projectPath']);
     }
   }
-
 
   Object.assign(JumpInfo.prototype, {
     /**
@@ -117,7 +116,7 @@ define(["../Utils"], function (Utils) {
      * @name JumpInfo#projectPath
      * @type {string} */
     projectPath: null,
-  })
+  });
 
-  return JumpInfo
-})
+  return JumpInfo;
+});

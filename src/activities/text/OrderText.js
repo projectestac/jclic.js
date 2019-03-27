@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -51,7 +51,7 @@ define([
      * @param {JClicProject} project - The project to which this activity belongs
      */
     constructor(project) {
-      super(project)
+      super(project);
     }
 
     /**
@@ -60,7 +60,7 @@ define([
      * @returns {boolean}
      */
     hasRandom() {
-      return true
+      return true;
     }
 
     /**
@@ -69,7 +69,7 @@ define([
      * @returns {boolean}
      */
     shuffleAlways() {
-      return true
+      return true;
     }
 
     /**
@@ -78,7 +78,7 @@ define([
      * @returns {boolean}
      */
     helpSolutionAllowed() {
-      return true
+      return true;
     }
   }
 
@@ -93,7 +93,7 @@ define([
      * @name OrderText#bc
      * @type {BoxConnector} */
     bc: null,
-  })
+  });
 
   /**
    * The {@link TextActivityBasePanel} where {@link OrderText} activities are played.
@@ -110,7 +110,7 @@ define([
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
-      super(act, ps, $div)
+      super(act, ps, $div);
     }
 
     /**
@@ -118,8 +118,8 @@ define([
      * @override
      */
     buildVisualComponents() {
-      this.act.document.style['target'].css.cursor = 'pointer'
-      super.buildVisualComponents()
+      this.act.document.style['target'].css.cursor = 'pointer';
+      super.buildVisualComponents();
     }
 
     /**
@@ -129,9 +129,9 @@ define([
      */
     setBounds(rect) {
       if (this.$canvas)
-        this.$canvas.remove()
+        this.$canvas.remove();
 
-      super.setBounds(rect)
+      super.setBounds(rect);
       if (!this.act.dragCells) {
         // Create the main canvas
         this.$canvas = $(`<canvas width="${rect.dim.width}" height="${rect.dim.height}"/>`).css({
@@ -139,15 +139,15 @@ define([
           top: 0,
           left: 0,
           'pointer-events': 'none'
-        })
-        this.$div.append(this.$canvas)
+        });
+        this.$div.append(this.$canvas);
 
         // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context
-        this.bc = new BoxConnector(this, this.$canvas.get(-1).getContext('2d'))
-        this.bc.compositeOp = this.bc.DEFAULT_COMPOSITE_OP
+        this.bc = new BoxConnector(this, this.$canvas.get(-1).getContext('2d'));
+        this.bc.compositeOp = this.bc.DEFAULT_COMPOSITE_OP;
 
         // Repaint all
-        this.invalidate().update()
+        this.invalidate().update();
       }
     }
 
@@ -160,14 +160,14 @@ define([
      * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
      */
     $createTargetElement(target, $span) {
-      super.$createTargetElement(target, $span)
-      const idLabel = `target${`000${this.targets.length - 1}`.slice(-3)}`
+      super.$createTargetElement(target, $span);
+      const idLabel = `target${`000${this.targets.length - 1}`.slice(-3)}`;
       $span.addClass('JClicTextTarget').bind('click', event => {
-        event.textTarget = target
-        event.idLabel = idLabel
-        this.processEvent(event)
-      })
-      return $span
+        event.textTarget = target;
+        event.idLabel = idLabel;
+        this.processEvent(event);
+      });
+      return $span;
     }
 
     /**
@@ -179,21 +179,21 @@ define([
       const
         $span1 = t1.$span,
         $span2 = t2.$span,
-        $marker = $('<span/>')
-      $marker.insertAfter($span2)
-      $span2.detach()
-      $span2.insertAfter($span1)
-      $span1.detach()
-      $span1.insertAfter($marker)
-      $marker.remove()
+        $marker = $('<span/>');
+      $marker.insertAfter($span2);
+      $span2.detach();
+      $span2.insertAfter($span1);
+      $span1.detach();
+      $span1.insertAfter($marker);
+      $marker.remove();
 
       const
         pos = t1.pos,
-        $p = t1.$p
-      t1.pos = t2.pos
-      t1.$p = t2.$p
-      t2.pos = pos
-      t2.$p = $p
+        $p = t1.$p;
+      t1.pos = t2.pos;
+      t1.$p = t2.$p;
+      t2.pos = pos;
+      t2.$p = $p;
     }
 
     /**
@@ -201,11 +201,11 @@ define([
      * @override
      */
     initActivity() {
-      super.initActivity()
+      super.initActivity();
       if (!this.firstRun)
-        this.buildVisualComponents()
+        this.buildVisualComponents();
       else
-        this.firstRun = false
+        this.firstRun = false;
     }
 
     /**
@@ -213,33 +213,33 @@ define([
      * @override
      */
     startActivity() {
-      super.startActivity()
+      super.startActivity();
       if (!this.showingPrevScreen) {
         if (this.act.type === 'orderWords' && !this.act.amongParagraphs) {
           // Group targets by paragraph
-          const groups = []
+          const groups = [];
           let
             lastTarget = null,
-            currentGroup = []
+            currentGroup = [];
           this.targets.forEach(t => {
             if (lastTarget !== null && lastTarget.$p !== t.$p) {
-              groups.push(currentGroup)
-              currentGroup = []
+              groups.push(currentGroup);
+              currentGroup = [];
             }
-            currentGroup.push(t)
-            lastTarget = t
-          })
+            currentGroup.push(t);
+            lastTarget = t;
+          });
           if (currentGroup.length > 0)
-            groups.push(currentGroup)
+            groups.push(currentGroup);
 
           // Scramble group by group
-          groups.forEach(group => this.shuffleTargets(group, this.act.shuffles))
+          groups.forEach(group => this.shuffleTargets(group, this.act.shuffles));
         } else
-          this.shuffleTargets(this.targets, this.act.shuffles)
+          this.shuffleTargets(this.targets, this.act.shuffles);
 
-        this.playing = true
+        this.playing = true;
       }
-      this.setBounds(this)
+      this.setBounds(this);
     }
 
     /**
@@ -250,18 +250,18 @@ define([
      * @param {number} steps - The number of times to shuffle the elements
      */
     shuffleTargets(targets, steps) {
-      const nt = targets.length
+      const nt = targets.length;
       if (nt > 1) {
-        let repeatCount = 100
+        let repeatCount = 100;
         for (let i = 0; i < steps; i++) {
           const
             r1 = Math.floor(Math.random() * nt),
-            r2 = Math.floor(Math.random() * nt)
+            r2 = Math.floor(Math.random() * nt);
           if (r1 !== r2) {
-            this.swapTargets(targets[r1], targets[r2])
+            this.swapTargets(targets[r1], targets[r2]);
           } else {
             if (--repeatCount)
-              i++
+              i++;
           }
         }
       }
@@ -272,16 +272,16 @@ define([
      * @param {TextActivityDocument.TextTarget} target - The currently selected target. Can be `null`.
      */
     setCurrentTarget(target) {
-      const targetCss = this.act.document.getFullStyle('target').css
+      const targetCss = this.act.document.getFullStyle('target').css;
       if (this.currentTarget && this.currentTarget.$span)
-        this.currentTarget.$span.css(targetCss)
+        this.currentTarget.$span.css(targetCss);
       if (target && target.$span) {
         target.$span.css({
           color: targetCss['background-color'],
           'background-color': targetCss.color
-        })
+        });
       }
-      this.currentTarget = target
+      this.currentTarget = target;
     }
 
     /**
@@ -289,7 +289,7 @@ define([
      * @returns {number}
      */
     countSolvedTargets() {
-      return this.targets.reduce((n, target) => target.num === target.pos ? ++n : n, 0)
+      return this.targets.reduce((n, target) => target.num === target.pos ? ++n : n, 0);
     }
 
     /**
@@ -299,25 +299,25 @@ define([
      */
     evaluatePanel() {
       if (this.bc && this.bc.active)
-        this.bc.end()
-      this.setCurrentTarget(null)
+        this.bc.end();
+      this.setCurrentTarget(null);
 
-      let targetsOk = 0
+      let targetsOk = 0;
       this.targets.forEach(target => {
-        const ok = target.num === target.pos
-        target.targetStatus = ok ? 'SOLVED' : 'WITH_ERROR'
+        const ok = target.num === target.pos;
+        target.targetStatus = ok ? 'SOLVED' : 'WITH_ERROR';
         if (ok)
-          targetsOk++
-        target.checkColors()
-        this.ps.reportNewAction(this.act, 'PLACE', target.text, target.pos, ok, targetsOk)
-      })
+          targetsOk++;
+        target.checkColors();
+        this.ps.reportNewAction(this.act, 'PLACE', target.text, target.pos, ok, targetsOk);
+      });
       if (targetsOk === this.targets.length) {
-        this.finishActivity(true)
-        return true
+        this.finishActivity(true);
+        return true;
       } else {
-        this.playEvent('finishedError')
+        this.playEvent('finishedError');
       }
-      return false
+      return false;
     }
 
     /**
@@ -326,8 +326,8 @@ define([
      * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
      */
     finishActivity(result) {
-      $('.JClicTextTarget').css('cursor', 'pointer')
-      return super.finishActivity(result)
+      $('.JClicTextTarget').css('cursor', 'pointer');
+      return super.finishActivity(result);
     }
 
     /**
@@ -339,21 +339,21 @@ define([
      */
     processEvent(event) {
       if (!super.processEvent(event))
-        return false
+        return false;
 
-      const target = event.textTarget
-      let p = null
+      const target = event.textTarget;
+      let p = null;
       if (this.bc && this.playing && !this.showingPrevScreen) {
         //
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend')
-          p = this.bc.active ? this.bc.dest.clone() : new AWT.Point()
+          p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
         else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           const
             x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
-            y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY
-          p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top)
+            y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+          p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 
         switch (event.type) {
@@ -361,40 +361,40 @@ define([
             if (target && target !== this.currentTarget) {
               if (this.currentTarget) {
                 if (this.bc && this.bc.active)
-                  this.bc.end()
-                this.swapTargets(target, this.currentTarget)
-                this.setCurrentTarget(null)
+                  this.bc.end();
+                this.swapTargets(target, this.currentTarget);
+                this.setCurrentTarget(null);
 
                 if (!this.$checkButton) {
                   // Check and notify action
                   const
                     cellsAtPlace = this.countSolvedTargets(),
-                    ok = target.pos === target.num
-                  this.ps.reportNewAction(this.act, 'PLACE', target.text, target.pos, ok, cellsAtPlace)
+                    ok = target.pos === target.num;
+                  this.ps.reportNewAction(this.act, 'PLACE', target.text, target.pos, ok, cellsAtPlace);
 
                   // End activity or play event sound
                   if (ok && cellsAtPlace === this.targets.length)
-                    this.finishActivity(true)
+                    this.finishActivity(true);
                   else
-                    this.playEvent(ok ? 'actionOk' : 'actionError')
+                    this.playEvent(ok ? 'actionOk' : 'actionError');
                 }
               } else {
-                this.setCurrentTarget(target)
-                this.bc.begin(p)
-                this.playEvent('click')
+                this.setCurrentTarget(target);
+                this.bc.begin(p);
+                this.playEvent('click');
               }
             }
-            break
+            break;
 
           case 'mousemove':
-            this.bc.moveTo(p)
-            break
+            this.bc.moveTo(p);
+            break;
 
           default:
-            break
+            break;
         }
-        event.preventDefault()
-        return true
+        event.preventDefault();
+        return true;
       }
     }
   }
@@ -417,15 +417,15 @@ define([
      * @name OrderTextPanel#events
      * @type {string[]} */
     events: ['click', 'mousemove'],
-  })
+  });
 
   /**
    * Panel class associated to this type of activity: {@link OrderTextPanel}
    * @type {class} */
-  OrderText.Panel = OrderTextPanel
+  OrderText.Panel = OrderTextPanel;
 
   // Register class in Activity.prototype
-  Activity.CLASSES['@text.Order'] = OrderText
+  Activity.CLASSES['@text.Order'] = OrderText;
 
-  return OrderText
-})
+  return OrderText;
+});

@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -45,40 +45,40 @@ define([
    * @returns {string} - The most suitable language for this request
    */
   const checkPreferredLanguage = (availableLanguages, defaultLanguage, setLang) => {
-    let result = -1
+    let result = -1;
     // Create an array to store possible values
-    let tries = []
+    let tries = [];
     // If "setLang" is specified, check it
     if (setLang)
-      tries.push(setLang)
+      tries.push(setLang);
 
     // Add user's preferred languages, if any
     if (window.navigator.languages)
-      tries = tries.concat(window.navigator.languages)
+      tries = tries.concat(window.navigator.languages);
 
     // Add the navigator main language, if defined
     if (window.navigator.language)
-      tries.push(window.navigator.language)
+      tries.push(window.navigator.language);
 
     // Add English as final option
-    tries.push(defaultLanguage || 'en')
+    tries.push(defaultLanguage || 'en');
 
     for (let i = 0; i < tries.length; i++) {
-      let match = -1
+      let match = -1;
       for (let n in availableLanguages) {
         if (tries[i].indexOf(availableLanguages[n]) === 0) {
-          match = n
+          match = n;
           if (tries[i] === availableLanguages[n]) {
-            result = n
-            break
+            result = n;
+            break;
           }
         }
       }
       if (result >= 0 || (result = match) >= 0)
-        break
+        break;
     }
-    return availableLanguages[result >= 0 ? result : 0]
-  }
+    return availableLanguages[result >= 0 ? result : 0];
+  };
 
   /**
    * Initializes i18next, assigning the translation function to ps
@@ -98,11 +98,11 @@ define([
       }
     }, (err, t) => {
       if (err)
-        Utils.log('error', `Error initializing "i18next": ${err.message}`)
+        Utils.log('error', `Error initializing "i18next": ${err.message}`);
       else {
-        Utils.getMsg = ps.getMsg = t
-        ps.JClicVersion = GlobalData.version
+        Utils.getMsg = ps.getMsg = t;
+        ps.JClicVersion = GlobalData.version;
       }
-    })
-  }
-})
+    });
+  };
+});

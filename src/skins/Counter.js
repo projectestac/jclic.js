@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -44,9 +44,9 @@ define([], function () {
      */
     constructor(id, $div) {
       if (id)
-        this.id = id
+        this.id = id;
       if ($div)
-        this.$div = $div
+        this.$div = $div;
     }
 
     /**
@@ -54,10 +54,10 @@ define([], function () {
      * @returns {number}
      */
     getDisplayValue() {
-      let result = this.countDown > 0 ? this.countDown - this.value : this.value
+      let result = this.countDown > 0 ? this.countDown - this.value : this.value;
       if (this.displayDiffFrom)
-        result = result - this.displayDiffFrom.value
-      return Math.max(0, Math.min(this.MAX_DISPLAY_VALUE, result))
+        result = result - this.displayDiffFrom.value;
+      return Math.max(0, Math.min(this.MAX_DISPLAY_VALUE, result));
     }
 
     /**
@@ -66,7 +66,7 @@ define([], function () {
      */
     refreshDisplay() {
       if (this.$div)
-        this.$div.html(this.enabled ? (this.getDisplayValue() + 1000).toString().substr(1) : '000')
+        this.$div.html(this.enabled ? (this.getDisplayValue() + 1000).toString().substr(1) : '000');
     }
 
     /**
@@ -75,10 +75,10 @@ define([], function () {
      */
     setEnabled(enabled) {
       if (this.enabled !== enabled) {
-        this.enabled = enabled
+        this.enabled = enabled;
         if (this.$div) {
-          this.refreshDisplay()
-          this.$div.css('opacity', this.enabled ? 1.0 : 0.3)
+          this.refreshDisplay();
+          this.$div.css('opacity', this.enabled ? 1.0 : 0.3);
         }
       }
     }
@@ -89,16 +89,16 @@ define([], function () {
      */
     setCountDown(maxValue) {
       if (this.countDown !== (this.countDown = maxValue))
-        this.refreshDisplay()
+        this.refreshDisplay();
     }
 
     /**
      * Increments by one the value of this counter
      */
     incValue() {
-      this.value++
+      this.value++;
       if (this.enabled)
-        this.refreshDisplay()
+        this.refreshDisplay();
     }
 
     /**
@@ -107,7 +107,7 @@ define([], function () {
      */
     setValue(value) {
       if (this.enabled && this.value !== (this.value = value))
-        this.refreshDisplay()
+        this.refreshDisplay();
     }
   }
 
@@ -150,8 +150,7 @@ define([], function () {
      * @type {Counter}
      */
     displayDiffFrom: null,
-  })
+  });
 
-  return Counter
-
-})
+  return Counter;
+});

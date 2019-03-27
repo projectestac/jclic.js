@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -57,10 +57,10 @@ define([
      * JClicProject constructor
      */
     constructor() {
-      this.settings = new ProjectSettings(this)
-      this.activitySequence = new ActivitySequence(this)
-      this._activities = {}
-      this.mediaBag = new MediaBag(this)
+      this.settings = new ProjectSettings(this);
+      this.activitySequence = new ActivitySequence(this);
+      this._activities = {};
+      this.mediaBag = new MediaBag(this);
     }
 
     /**
@@ -73,44 +73,44 @@ define([
      */
     setProperties($xml, path, zip, options) {
       if (path) {
-        this.path = path
+        this.path = path;
         if (path.file)
-          this.basePath = path
+          this.basePath = path;
         else
-          this.basePath = Utils.getBasePath(path)
+          this.basePath = Utils.getBasePath(path);
       }
-      this.zip = zip
-      this.name = $xml.attr('name')
-      this.version = $xml.attr('version')
+      this.zip = zip;
+      this.name = $xml.attr('name');
+      this.version = $xml.attr('version');
       if ($xml.attr('type') !== undefined && $xml.attr('type') !== '')
-        this.type = $xml.attr('type')
+        this.type = $xml.attr('type');
       if ($xml.attr('code') !== undefined && $xml.attr('code') !== '')
-        this.code = $xml.attr('code')
-      this.settings.setProperties($xml.children('settings'))
-      this.activitySequence.setProperties($xml.children('sequence'))
-      this.mediaBag.setProperties($xml.children('mediaBag'))
-      this.reportableActs = 0
-      this._activities = {}
-      const $node = $xml.children('activities')
-      const $acts = $node.children('activity')
-      const ownFonts = this.mediaBag.getElementsOfType('font')
+        this.code = $xml.attr('code');
+      this.settings.setProperties($xml.children('settings'));
+      this.activitySequence.setProperties($xml.children('sequence'));
+      this.mediaBag.setProperties($xml.children('mediaBag'));
+      this.reportableActs = 0;
+      this._activities = {};
+      const $node = $xml.children('activities');
+      const $acts = $node.children('activity');
+      const ownFonts = this.mediaBag.getElementsOfType('font');
       if (ownFonts.length > 0)
-        options.ownFonts = (options.ownFonts || []).concat(ownFonts)
-      AWT.Font.checkTree($acts, options)
+        options.ownFonts = (options.ownFonts || []).concat(ownFonts);
+      AWT.Font.checkTree($acts, options);
       $acts.each((_n, act) => {
-        const $act = $(act)
-        this._activities[Utils.nSlash($act.attr('name'))] = $act
+        const $act = $(act);
+        this._activities[Utils.nSlash($act.attr('name'))] = $act;
         if ($act.children('settings').attr('report') === 'true')
-          this.reportableActs++
-      })
-      return this
+          this.reportableActs++;
+      });
+      return this;
     }
 
     getData() {
       //this.activities = Object.keys(this._activities).map(k => Activity.getActivity(this._activities[k], this))
       const keys = Object.keys(this._activities);
       this.activities = [0].map(n => Activity.getActivity(this._activities[keys[n]], this));
-      return Utils.getData(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'mediaBag', 'activities'])
+      return Utils.getData(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'mediaBag', 'activities']);
     }
 
     /**
@@ -119,7 +119,7 @@ define([
      * @returns {Activity}
      */
     getActivity(name) {
-      return Activity.getActivity(this._activities[Utils.nSlash(name)], this)
+      return Activity.getActivity(this._activities[Utils.nSlash(name)], this);
     }
 
     /**
@@ -130,12 +130,12 @@ define([
     realize(ps) {
       // Build skin
       if (this.skin === null && this.settings.skinFileName !== null && this.settings.skinFileName.length > 0)
-        this.skin = this.mediaBag.getSkinElement(this.settings.skinFileName, ps)
+        this.skin = this.mediaBag.getSkinElement(this.settings.skinFileName, ps);
 
-      this.settings.eventSounds.realize(ps, this.mediaBag)
+      this.settings.eventSounds.realize(ps, this.mediaBag);
 
       // Build all elements of type `font`
-      this.mediaBag.buildAll('font', null, ps)
+      this.mediaBag.buildAll('font', null, ps);
     }
 
     /**
@@ -216,7 +216,7 @@ define([
      * @name JClicProject#zip
      * @type {external:JSZip} */
     zip: null,
-  })
+  });
 
-  return JClicProject
-})
+  return JClicProject;
+});

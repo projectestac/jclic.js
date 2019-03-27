@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -46,8 +46,8 @@ define([
      * @param {JClicPlayer} player - The JClicPlayer associated to this history
      */
     constructor(player) {
-      this.player = player
-      this.sequenceStack = []
+      this.player = player;
+      this.sequenceStack = [];
     }
 
     /**
@@ -57,7 +57,7 @@ define([
      * @returns {number}
      */
     storedElementsCount() {
-      return this.sequenceStack.length
+      return this.sequenceStack.length;
     }
 
     /**
@@ -65,7 +65,7 @@ define([
      * Removes all elements from {@link PlayerHistory#sequenceStack sequenceStack}
      */
     clearHistory() {
-      this.sequenceStack = [0]
+      this.sequenceStack = [0];
     }
 
     /**
@@ -75,19 +75,19 @@ define([
       if (this.player.project !== null && this.player.project.path !== null) {
         const
           ase = this.player.project.activitySequence,
-          act = ase.currentAct
+          act = ase.currentAct;
         if (act >= 0) {
           if (this.sequenceStack.length > 0) {
-            const last = this.sequenceStack[this.sequenceStack.length - 1]
+            const last = this.sequenceStack[this.sequenceStack.length - 1];
             if (last.projectPath === this.player.project.path && last.activity === act)
-              return
+              return;
           }
           this.sequenceStack.push(
             new this.HistoryElement(
               this.player.project.path,
               ase.getSequenceForElement(act),
               act,
-              this.player.zip ? this.player.zip.fullZipPath : null))
+              this.player.zip ? this.player.zip.fullZipPath : null));
         }
       }
     }
@@ -101,17 +101,17 @@ define([
     pop() {
       // todo: check return value
       if (this.sequenceStack.length > 0) {
-        const e = this.sequenceStack.pop()
+        const e = this.sequenceStack.pop();
         if (e.projectPath === this.player.project.path &&
           Utils.isEquivalent(e.fullZipPath, this.player.zip ? this.player.zip.fullZipPath : null))
-          this.player.load(null, e.activity, null)
+          this.player.load(null, e.activity, null);
         else
           if (this.testMode && e.projectPath !== null && e.projectPath.length > 0)
-            Utils.log('info', `At this point, a jump to "${e.projectPath}" should be performed.`)
+            Utils.log('info', `At this point, a jump to "${e.projectPath}" should be performed.`);
           else
-            this.player.load(e.fullZipPath || e.projectPath, e.activity, null)
+            this.player.load(e.fullZipPath || e.projectPath, e.activity, null);
       }
-      return true
+      return true;
     }
 
     /**
@@ -124,44 +124,44 @@ define([
      * @returns {boolean} - `true` if the jump can be processed without errors, `false` otherwise.
      */
     processJump(ji, allowReturn) {
-      let result = false
+      let result = false;
       if (ji !== null && this.player.project !== null) {
         switch (ji.action) {
           case 'STOP':
-            break
+            break;
           case 'RETURN':
             if (this.sequenceStack.length > 0 || !this.player.options.returnAsExit) {
-              result = this.pop()
-              break
+              result = this.pop();
+              break;
             }
           case 'EXIT':
             if (this.testMode)
-              Utils.log('info', 'At this point, the program should exit.')
+              Utils.log('info', 'At this point, the program should exit.');
             else
-              this.player.exit(ji.sequence)
-            break
+              this.player.exit(ji.sequence);
+            break;
           case 'JUMP':
             if (!ji.sequence && !ji.projectPath) {
-              const ase = this.player.project.activitySequence.getElement(ji.actNum, true)
+              const ase = this.player.project.activitySequence.getElement(ji.actNum, true);
               if (ase !== null) {
                 if (allowReturn)
-                  this.push()
-                this.player.load(null, null, ase.activity)
-                result = true
+                  this.push();
+                this.player.load(null, null, ase.activity);
+                result = true;
               }
             } else {
               if (this.testMode && ji.projectPath !== null && ji.projectPath.length > 0) {
-                Utils.log('info', `At this point, a jump to "${ji.projectPath}" should be performed.`)
+                Utils.log('info', `At this point, a jump to "${ji.projectPath}" should be performed.`);
               } else {
                 result = this.jumpToSequence(ji.sequence,
                   ji.projectPath ? Utils.getPath(this.player.project.basePath, ji.projectPath) : null,
-                  allowReturn)
+                  allowReturn);
               }
             }
-            break
+            break;
         }
       }
-      return result
+      return result;
     }
 
     /**
@@ -175,28 +175,28 @@ define([
      */
     jumpToSequence(sequence, path, allowReturn) {
       if (Utils.isNullOrUndef(sequence) && Utils.isNullOrUndef(path))
-        return false
+        return false;
       if (Utils.isNullOrUndef(path))
-        path = this.player.project.path
+        path = this.player.project.path;
       if (this.sequenceStack.length > 0) {
-        const e = this.sequenceStack[this.sequenceStack.length - 1]
+        const e = this.sequenceStack[this.sequenceStack.length - 1];
         if (!Utils.isNullOrUndef(sequence) && path === e.projectPath) {
-          let same = sequence === e.sequence
+          let same = sequence === e.sequence;
           if (path === this.player.project.path) {
-            const ase = this.player.project.activitySequence.getElement(e.activity, false)
-            same = ase !== null && sequence === ase.tag
+            const ase = this.player.project.activitySequence.getElement(e.activity, false);
+            same = ase !== null && sequence === ase.tag;
           }
           if (same)
-            return this.pop()
+            return this.pop();
         }
       }
       if (allowReturn)
-        this.push()
+        this.push();
       if (path === this.player.project.path)
-        this.player.load(null, sequence, null)
+        this.player.load(null, sequence, null);
       else
-        this.player.load(path, sequence, null)
-      return true
+        this.player.load(path, sequence, null);
+      return true;
     }
   }
 
@@ -232,13 +232,13 @@ define([
        * the full path of the zip file.
        */
       constructor(projectPath, sequence, activity, fullZipPath) {
-        this.projectPath = projectPath
-        this.sequence = sequence
-        this.activity = activity
-        this.fullZipPath = fullZipPath
+        this.projectPath = projectPath;
+        this.sequence = sequence;
+        this.activity = activity;
+        this.fullZipPath = fullZipPath;
       }
     }
-  })
+  });
 
-  return PlayerHistory
-})
+  return PlayerHistory;
+});

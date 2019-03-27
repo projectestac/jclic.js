@@ -61,27 +61,27 @@ define([
      */
     constructor(parent, container, boxBase, px, py, setWidth, setHeight, sh) {
       // ActiveBoxGrid derives from ActiveBoxBag
-      super(parent, container, boxBase)
+      super(parent, container, boxBase);
 
-      this.nCols = sh.nCols
-      this.nRows = sh.nRows
+      this.nCols = sh.nCols;
+      this.nRows = sh.nRows;
 
       // This will be the enclosing rectangle of this ActiveBox bag
       const r = new AWT.Rectangle(
         new AWT.Point(px, py),
         new AWT.Dimension(
           Math.round(setWidth / this.nCols) * this.nCols,
-          Math.round(setHeight / this.nRows) * this.nRows))
+          Math.round(setHeight / this.nRows) * this.nRows));
 
       // Create all the [ActiveBox](ActiveBox.html) objects based on the
       // shapes provided by the [Shaper](Shaper.html)
       for (let i = 0; i < sh.nCells; i++) {
         const
           tmpSh = sh.getShape(i, r),
-          bx = new ActiveBox(this, container, boxBase, i, tmpSh.getBounds())
+          bx = new ActiveBox(this, container, boxBase, i, tmpSh.getBounds());
         if (!sh.rectangularShapes)
-          bx.setShape(tmpSh)
-        this.addActiveBox(bx)
+          bx.setShape(tmpSh);
+        this.addActiveBox(bx);
       }
 
       // If the Shaper has `remainder` (extra space), set the background box of this
@@ -89,9 +89,9 @@ define([
       if (sh.hasRemainder) {
         const
           tmpSh = sh.getRemainderShape(r),
-          bx = new ActiveBox(this, container, boxBase, 0, tmpSh.getBounds())
-        bx.setShape(tmpSh)
-        this.setBackgroundBox(bx)
+          bx = new ActiveBox(this, container, boxBase, 0, tmpSh.getBounds());
+        bx.setShape(tmpSh);
+        this.setBackgroundBox(bx);
       }
     }
 
@@ -113,12 +113,12 @@ define([
         boxBase || abc.bb,
         px, py,
         abc.getTotalWidth(), abc.getTotalHeight(),
-        sh || abc.getShaper()) : null
+        sh || abc.getShaper()) : null;
 
       if (result)
-        result.setBorder(abc.border)
+        result.setBorder(abc.border);
 
-      return result
+      return result;
     }
 
     /**
@@ -128,7 +128,7 @@ define([
     getMinimumSize() {
       return new AWT.Dimension(
         Utils.settings.MIN_CELL_SIZE * this.nCols,
-        Utils.settings.MIN_CELL_SIZE * this.nRows)
+        Utils.settings.MIN_CELL_SIZE * this.nRows);
     }
 
     /**
@@ -139,7 +139,7 @@ define([
     getScaledSize(scale) {
       return new AWT.Dimension(
         Utils.roundTo(scale * this.preferredBounds.dim.width, this.nCols),
-        Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows))
+        Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
     }
 
     /**
@@ -150,7 +150,7 @@ define([
      * @returns {AWT.Point}
      */
     getCoord(bx) {
-      return new AWT.Point(bx.idLoc % this.nCols, Math.floor(bx.idLoc / this.nCols))
+      return new AWT.Point(bx.idLoc % this.nCols, Math.floor(bx.idLoc / this.nCols));
     }
 
     /**
@@ -164,8 +164,8 @@ define([
     getCoordDist(src, dest) {
       const
         ptSrc = this.getCoord(src),
-        ptDest = this.getCoord(dest)
-      return new AWT.Point(ptDest.x - ptSrc.x, ptDest.y - ptSrc.y)
+        ptDest = this.getCoord(dest);
+      return new AWT.Point(ptDest.x - ptSrc.x, ptDest.y - ptSrc.y);
     }
   }
 
@@ -180,7 +180,7 @@ define([
      * @name ActiveBoxGrid#nRows
      * @type {number} */
     nRows: 1,
-  })
+  });
 
-  return ActiveBoxGrid
-})
+  return ActiveBoxGrid;
+});

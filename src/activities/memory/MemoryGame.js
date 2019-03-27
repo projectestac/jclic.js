@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -58,7 +58,7 @@ define([
      * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
      */
     constructor(project) {
-      super(project)
+      super(project);
     }
 
     /**
@@ -67,7 +67,7 @@ define([
      * @returns {number}
      */
     getMinNumActions() {
-      return this.abc.primary.getNumCells()
+      return this.abc.primary.getNumCells();
     }
 
     /**
@@ -76,7 +76,7 @@ define([
      * @returns {boolean}
      */
     hasRandom() {
-      return true
+      return true;
     }
 
     /**
@@ -85,7 +85,7 @@ define([
      * @returns {boolean}
      */
     shuffleAlways() {
-      return true
+      return true;
     }
   }
 
@@ -104,7 +104,7 @@ define([
      * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
      */
     constructor(act, ps, $div) {
-      super(act, ps, $div)
+      super(act, ps, $div);
     }
 
     /**
@@ -113,8 +113,8 @@ define([
      */
     clear() {
       if (this.bg) {
-        this.bg.end()
-        this.bg = null
+        this.bg.end();
+        this.bg = null;
       }
     }
 
@@ -124,47 +124,47 @@ define([
      */
     buildVisualComponents() {
       if (this.firstRun)
-        super.buildVisualComponents()
-      this.clear()
+        super.buildVisualComponents();
+      this.clear();
 
       const
         abcA = this.act.abc['primary'],
-        abcB = this.act.abc['secondary']
+        abcB = this.act.abc['secondary'];
 
       if (abcA) {
         if (abcA.imgName)
-          abcA.setImgContent(this.act.project.mediaBag, null, false)
+          abcA.setImgContent(this.act.project.mediaBag, null, false);
         if (abcB && abcB.imgName)
-          abcB.setImgContent(this.act.project.mediaBag, null, false)
+          abcB.setImgContent(this.act.project.mediaBag, null, false);
         if (this.act.acp !== null) {
-          const contentKit = [abcA]
+          const contentKit = [abcA];
           if (abcB)
-            contentKit.push(abcB)
-          this.act.acp.generateContent(abcA.nch, abcA.ncw, contentKit, false)
+            contentKit.push(abcB);
+          this.act.acp.generateContent(abcA.nch, abcA.ncw, contentKit, false);
         }
 
-        let ncw = abcA.ncw, nch = abcA.nch
+        let ncw = abcA.ncw, nch = abcA.nch;
         if (this.act.boxGridPos === 'AB' || this.act.boxGridPos === 'BA')
-          ncw *= 2
+          ncw *= 2;
         else
-          nch *= 2
+          nch *= 2;
 
         this.bg = new ActiveBoxGrid(null, this, abcA.bb,
           this.act.margin, this.act.margin,
-          abcA.w * ncw, abcA.h * nch, new Rectangular(ncw, nch))
+          abcA.w * ncw, abcA.h * nch, new Rectangular(ncw, nch));
 
-        const nc = abcA.getNumCells()
-        this.bg.setBorder(abcA.border)
-        this.bg.setContent(abcA, null, 0, 0, nc)
-        this.bg.setContent(abcB ? abcB : abcA, null, 0, nc, nc)
+        const nc = abcA.getNumCells();
+        this.bg.setBorder(abcA.border);
+        this.bg.setContent(abcA, null, 0, 0, nc);
+        this.bg.setContent(abcB ? abcB : abcA, null, 0, nc, nc);
         for (let i = 0; i < 2; i++) {
           for (let j = 0; j < nc; j++) {
-            const bx = this.bg.getActiveBox(i * nc + j)
-            bx.idAss = j
-            bx.setInactive(true)
+            const bx = this.bg.getActiveBox(i * nc + j);
+            bx.idAss = j;
+            bx.setInactive(true);
           }
         }
-        this.bg.setVisible(true)
+        this.bg.setVisible(true);
       }
     }
 
@@ -173,18 +173,18 @@ define([
      * @override
      */
     initActivity() {
-      super.initActivity()
+      super.initActivity();
 
       if (!this.firstRun)
-        this.buildVisualComponents()
+        this.buildVisualComponents();
       else
-        this.firstRun = false
+        this.firstRun = false;
 
       if (this.bg) {
-        this.shuffle([this.bg], true, true)
-        this.invalidate().update()
-        this.setAndPlayMsg('initial', 'start')
-        this.playing = true
+        this.shuffle([this.bg], true, true);
+        this.invalidate().update();
+        this.setAndPlayMsg('initial', 'start');
+        this.playing = true;
       }
     }
 
@@ -196,17 +196,17 @@ define([
      * it's the whole panel.
      */
     updateContent(dirtyRegion) {
-      super.updateContent(dirtyRegion)
+      super.updateContent(dirtyRegion);
       if (this.bg && this.$canvas) {
         const
           canvas = this.$canvas.get(-1),
-          ctx = canvas.getContext('2d')
+          ctx = canvas.getContext('2d');
         if (!dirtyRegion)
-          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height)
-        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height)
-        this.bg.update(ctx, dirtyRegion)
+          dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
+        this.bg.update(ctx, dirtyRegion);
       }
-      return this
+      return this;
     }
 
     /**
@@ -217,8 +217,8 @@ define([
      */
     setDimension(preferredMaxSize) {
       if (!this.bg || this.getBounds().equals(preferredMaxSize))
-        return preferredMaxSize
-      return BoxBag.layoutSingle(preferredMaxSize, this.bg, this.act.margin)
+        return preferredMaxSize;
+      return BoxBag.layoutSingle(preferredMaxSize, this.bg, this.act.margin);
     }
 
     /**
@@ -228,23 +228,23 @@ define([
      */
     setBounds(rect) {
       if (this.$canvas)
-        this.$canvas.remove()
+        this.$canvas.remove();
 
-      super.setBounds(rect)
+      super.setBounds(rect);
       if (this.bg) {
         // Create the main canvas
         this.$canvas = $(`<canvas width="${rect.dim.width}" height="${rect.dim.height}"/>`).css({
           position: 'absolute',
           top: 0,
           left: 0
-        })
-        this.$div.append(this.$canvas)
+        });
+        this.$div.append(this.$canvas);
 
         // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context
-        this.bc = new BoxConnector(this, this.$canvas.get(-1).getContext('2d'))
+        this.bc = new BoxConnector(this, this.$canvas.get(-1).getContext('2d'));
 
         // Repaint all
-        this.invalidate().update()
+        this.invalidate().update();
       }
     }
 
@@ -256,9 +256,9 @@ define([
      */
     buildAccessibleComponents() {
       if (this.$canvas && this.accessibleCanvas && this.bg) {
-        super.buildAccessibleComponents()
-        this.bg.setCellAttr('accessibleAlwaysActive', true)
-        this.bg.buildAccessibleElements(this.$canvas, this.$div, 'mousedown')
+        super.buildAccessibleComponents();
+        this.bg.setCellAttr('accessibleAlwaysActive', true);
+        this.bg.buildAccessibleElements(this.$canvas, this.$div, 'mousedown');
       }
     }
 
@@ -273,41 +273,41 @@ define([
       if (this.bc && this.playing) {
         //
         // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
-        let p = null
+        let p = null;
         //
         // Two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
         // `origin` and `dest` points.
         let bx1, bx2,
           // Array to be filled with actions to be executed at the end of event processing
-          delayedActions = []
+          delayedActions = [];
         //
         // _touchend_ event don't provide pageX nor pageY information
         if (event.type === 'touchend')
-          p = this.bc.active ? this.bc.dest.clone() : new AWT.Point()
+          p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
         else {
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
           const
             x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
-            y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY
-          p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top)
+            y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+          p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
         }
 
         // Flag for tracking `mouseup` events
-        let up = false
+        let up = false;
         switch (event.type) {
           case 'touchcancel':
             // Canvel movement
             if (this.bc.active)
-              this.bc.end()
-            break
+              this.bc.end();
+            break;
 
           case 'mouseup':
           case 'touchend':
             // Don't consider drag moves below 3 pixels. Can be a "trembling click"
             if (this.bc.active && p.distanceTo(this.bc.origin) <= 3)
-              break
+              break;
 
-            up = true
+            up = true;
           /* falls through */
           case 'touchstart':
           case 'mousedown':
@@ -316,88 +316,88 @@ define([
               //
               // Pairings can never start with a `mouseup` event
               if (up)
-                break
+                break;
 
-              this.ps.stopMedia(1)
+              this.ps.stopMedia(1);
               //
               // Find the ActiveBox behind the clicked point
-              bx1 = this.bg ? this.bg.findActiveBox(p) : null
+              bx1 = this.bg ? this.bg.findActiveBox(p) : null;
               if (bx1 && bx1.idAss !== -1) {
                 // Play cell media or event sound
                 if (!bx1.playMedia(this.ps, delayedActions))
-                  this.playEvent('click')
-                bx1.setInactive(false)
+                  this.playEvent('click');
+                bx1.setInactive(false);
                 // Start the [BoxConnector](BoxConnector.html)
-                this.update()
+                this.update();
                 if (this.act.dragCells)
-                  this.bc.begin(p, bx1)
+                  this.bc.begin(p, bx1);
                 else
-                  this.bc.begin(p)
+                  this.bc.begin(p);
               }
             } else {
-              this.ps.stopMedia(1)
+              this.ps.stopMedia(1);
               // Pairing completed
               //
               // Find the active boxes behind `bc.origin` and `p`
               if (this.act.dragCells)
-                bx1 = this.bc.bx
+                bx1 = this.bc.bx;
               else
-                bx1 = this.bg ? this.bg.findActiveBox(this.bc.origin) : null
-              this.bc.end()
-              bx2 = this.bg ? this.bg.findActiveBox(p) : null
+                bx1 = this.bg ? this.bg.findActiveBox(this.bc.origin) : null;
+              this.bc.end();
+              bx2 = this.bg ? this.bg.findActiveBox(p) : null;
               //
               // Check if the pairing was OK
               if (bx1 && bx1.idAss !== -1 && bx2 && bx2.idAss !== -1) {
                 if (bx1 !== bx2) {
-                  let ok = false
+                  let ok = false;
                   if (bx1.idAss === bx2.idAss ||
                     bx1.getContent().isEquivalent(bx2.getContent(), true)) {
-                    ok = true
-                    bx1.idAss = -1
-                    bx1.setInactive(false)
-                    bx2.idAss = -1
-                    bx2.setInactive(false)
+                    ok = true;
+                    bx1.idAss = -1;
+                    bx1.setInactive(false);
+                    bx2.idAss = -1;
+                    bx2.setInactive(false);
                   } else {
-                    bx1.setInactive(true)
+                    bx1.setInactive(true);
                     if (this.act.dragCells)
-                      bx2.setInactive(true)
+                      bx2.setInactive(true);
                     else {
-                      bx2.setInactive(false)
+                      bx2.setInactive(false);
                       // Start the [BoxConnector](BoxConnector.html)
-                      this.update()
+                      this.update();
                       if (this.act.dragCells)
-                        this.bc.begin(p, bx1)
+                        this.bc.begin(p, bx1);
                       else
-                        this.bc.begin(p)
+                        this.bc.begin(p);
                     }
                   }
-                  let m = bx2.playMedia(this.ps, delayedActions)
+                  let m = bx2.playMedia(this.ps, delayedActions);
                   if (this.bg) {
-                    const cellsAtPlace = this.bg.countCellsWithIdAss(-1)
-                    this.ps.reportNewAction(this.act, 'MATCH', bx1.getDescription(), bx2.getDescription(), ok, cellsAtPlace / 2)
+                    const cellsAtPlace = this.bg.countCellsWithIdAss(-1);
+                    this.ps.reportNewAction(this.act, 'MATCH', bx1.getDescription(), bx2.getDescription(), ok, cellsAtPlace / 2);
                     if (ok && cellsAtPlace === this.bg.getNumCells())
-                      this.finishActivity(true)
+                      this.finishActivity(true);
                     else if (!m)
-                      this.playEvent(ok ? 'actionOk' : 'actionError')
+                      this.playEvent(ok ? 'actionOk' : 'actionError');
                   }
                 } else {
-                  this.playEvent('CLICK')
-                  bx1.setInactive(true)
+                  this.playEvent('CLICK');
+                  bx1.setInactive(true);
                 }
               } else if (bx1 !== null)
-                bx1.setInactive(true)
+                bx1.setInactive(true);
 
-              this.invalidate().update()
+              this.invalidate().update();
             }
-            break
+            break;
 
           case 'mousemove':
           case 'touchmove':
-            this.bc.moveTo(p)
-            break
+            this.bc.moveTo(p);
+            break;
         }
-        delayedActions.forEach(action => action())
-        event.preventDefault()
+        delayedActions.forEach(action => action());
+        event.preventDefault();
       }
     }
   }
@@ -419,15 +419,15 @@ define([
      * @name MemoryGamePanel#events
      * @type {string[]} */
     events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
-  })
+  });
 
   /**
    * Panel class associated to this type of activity: {@link MemoryGamePanel}
    * @type {class} */
-  MemoryGame.Panel = MemoryGamePanel
+  MemoryGame.Panel = MemoryGamePanel;
 
   // Register class in Activity.prototype
-  Activity.CLASSES['@memory.MemoryGame'] = MemoryGame
+  Activity.CLASSES['@memory.MemoryGame'] = MemoryGame;
 
-  return MemoryGame
-})
+  return MemoryGame;
+});

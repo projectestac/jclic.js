@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -50,8 +50,8 @@ define([
      * TextGridContent constructor
      */
     constructor() {
-      this.bb = new BoxBase(null)
-      this.text = []
+      this.bb = new BoxBase(null);
+      this.text = [];
     }
 
     /**
@@ -65,38 +65,38 @@ define([
           case 'rows':
             // WARNING: Due to a bug in JClic, the meaning of "rows" and "columns" must be
             // interchanged:
-            this.ncw = Number(val)
-            break
+            this.ncw = Number(val);
+            break;
           case 'columns':
-            this.nch = Number(val)
-            break
+            this.nch = Number(val);
+            break;
           case 'cellWidth':
-            this.w = Number(val)
-            break
+            this.w = Number(val);
+            break;
           case 'cellHeight':
-            this.h = Number(val)
-            break
+            this.h = Number(val);
+            break;
           case 'border':
-            this.border = Utils.getBoolean(val)
-            break
+            this.border = Utils.getBoolean(val);
+            break;
           case 'wild':
           case 'randomChars':
-            this[name] = val
-            break
+            this[name] = val;
+            break;
         }
-      })
+      });
 
       // Read inner elements
       $xml.children('style:first').each((_n, child) => {
-        this.bb = new BoxBase().setProperties($(child))
-      })
+        this.bb = new BoxBase().setProperties($(child));
+      });
 
-      $xml.find('text:first > row').each((_n, el) => this.text.push(el.textContent))
+      $xml.find('text:first > row').each((_n, el) => this.text.push(el.textContent));
 
       for (let i = this.text.length; i < this.nch; i++)
-        this.text[i] = ''
+        this.text[i] = '';
 
-      return this
+      return this;
     }
 
     getData() {
@@ -106,7 +106,7 @@ define([
         'text',
         'bb', 'border',
         'wild', 'randomChars'
-      ])
+      ]);
     }
 
     /**
@@ -114,13 +114,13 @@ define([
      * @returns {number}
      */
     countWildChars() {
-      let result = 0
+      let result = 0;
       if (this.text)
         for (let y = 0; y < this.nch; y++)
           for (let x = 0; x < this.ncw; x++)
             if (this.text[y].charAt(x) === this.wild)
-              result++
-      return result
+              result++;
+      return result;
     }
 
     /**
@@ -128,7 +128,7 @@ define([
      * @returns {Number}
      */
     getNumChars() {
-      return this.ncw * this.nch
+      return this.ncw * this.nch;
     }
 
     /**
@@ -139,7 +139,7 @@ define([
      */
     setCharAt(x, y, ch) {
       if (x >= 0 && x < this.ncw && y >= 0 && y < this.nch)
-        this.text[y] = this.text[y].substring(0, x) + ch + this.text[y].substring(x + 1)
+        this.text[y] = this.text[y].substring(0, x) + ch + this.text[y].substring(x + 1);
     }
   }
 
@@ -190,7 +190,7 @@ define([
      * @name TextGridContent#randomChars
      * @type {string} */
     randomChars: Utils.settings.RANDOM_CHARS,
-  })
+  });
 
-  return TextGridContent
-})
+  return TextGridContent;
+});

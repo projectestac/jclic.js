@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -51,25 +51,25 @@ define([
      * usually a {@link JClicPlayer}.
      */
     constructor(mc, mb, ps) {
-      this.mc = mc
-      this.ps = ps
+      this.mc = mc;
+      this.ps = ps;
       switch (mc.mediaType) {
         case 'RECORD_AUDIO':
           if (ActiveMediaPlayer.AUDIO_BUFFERS) {
-            this.clearAudioBuffer(mc.recBuffer)
-            ActiveMediaPlayer.AUDIO_BUFFERS[mc.recBuffer] = new AudioBuffer(mc.length)
+            this.clearAudioBuffer(mc.recBuffer);
+            ActiveMediaPlayer.AUDIO_BUFFERS[mc.recBuffer] = new AudioBuffer(mc.length);
           }
         /* falls through */
         case 'PLAY_RECORDED_AUDIO':
-          this.useAudioBuffer = true
-          break
+          this.useAudioBuffer = true;
+          break;
         case 'PLAY_AUDIO':
         case 'PLAY_VIDEO':
         case 'PLAY_MIDI':
-          this.mbe = mb.getElement(mc.mediaFileName, true)
-          break
+          this.mbe = mb.getElement(mc.mediaFileName, true);
+          break;
         default:
-          break
+          break;
       }
     }
 
@@ -80,12 +80,12 @@ define([
       if (this.mbe) {
         this.mbe.build(mbe => {
           if (mbe.data && mbe.data.pause && !mbe.data.paused && !mbe.data.ended && mbe.data.currentTime)
-            mbe.data.pause()
+            mbe.data.pause();
           if ((mbe.type === 'video' || mbe.type === 'anim') && mbe.data) {
-            this.$visualComponent = $(mbe.data)
-            this.$visualComponent.css('z-index', 20)
+            this.$visualComponent = $(mbe.data);
+            this.$visualComponent.css('z-index', 20);
           }
-        })
+        });
       }
     }
 
@@ -97,12 +97,12 @@ define([
       // TODO: Remove unused param "_setBx"
       if (this.useAudioBuffer) {
         if (ActiveMediaPlayer.AUDIO_BUFFERS) {
-          const buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer]
+          const buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer];
           if (buffer) {
             if (this.mc.mediaType === 'RECORD_AUDIO') {
-              buffer.record()
+              buffer.record();
             } else {
-              buffer.play()
+              buffer.play();
             }
           }
         }
@@ -110,31 +110,31 @@ define([
         this.mbe.build(() => {
           if (this.mbe.data) {
             if (this.mbe.type === 'midi') {
-              this.mbe.data.playTo = this.mc.to || 0
+              this.mbe.data.playTo = this.mc.to || 0;
             } else {
-              let armed = false
-              const $player = $(this.mbe.data)
+              let armed = false;
+              const $player = $(this.mbe.data);
               // Clear previous event handlers
-              $player.off()
+              $player.off();
               // If there is a time fragment specified, prepare to stop when the `to` position is reached
               if (this.mc.to > 0) {
                 $player.on('timeupdate', () => {
                   if (armed && this.mbe.data.currentTime >= this.mc.to / 1000) {
-                    $player.off('timeupdate')
-                    this.mbe.data.pause()
+                    $player.off('timeupdate');
+                    this.mbe.data.pause();
                   }
-                })
+                });
               }
               // Launch the media despite of its readyState
-              armed = true
+              armed = true;
             }
             if (!this.mbe.data.paused && !this.mbe.data.ended && this.mbe.data.currentTime)
-              this.mbe.data.pause()
+              this.mbe.data.pause();
             // Seek the media position
-            this.mbe.data.currentTime = this.mc.from > 0 ? this.mc.from / 1000 : 0
-            this.mbe.data.play()
+            this.mbe.data.currentTime = this.mc.from > 0 ? this.mc.from / 1000 : 0;
+            this.mbe.data.play();
           }
-        })
+        });
       }
     }
 
@@ -143,8 +143,8 @@ define([
      * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
      */
     play(setBx) {
-      this.stopAllAudioBuffers()
-      this.playNow(setBx)
+      this.stopAllAudioBuffers();
+      this.playNow(setBx);
     }
 
     /**
@@ -152,18 +152,18 @@ define([
      */
     stop() {
       if (this.useAudioBuffer)
-        this.stopAudioBuffer(this.mc.recBuffer)
+        this.stopAudioBuffer(this.mc.recBuffer);
       else if (this.mbe && this.mbe.data && this.mbe.data.pause && !this.mbe.data.paused && !this.mbe.data.ended && this.mbe.data.currentTime)
-        this.mbe.data.pause()
+        this.mbe.data.pause();
     }
 
     /**
      * Frees all resources used by this player
      */
     clear() {
-      this.stop()
+      this.stop();
       if (this.useAudioBuffer)
-        this.clearAudioBuffer(this.mc.recBuffer)
+        this.clearAudioBuffer(this.mc.recBuffer);
     }
 
     /**
@@ -174,8 +174,8 @@ define([
       if (ActiveMediaPlayer.AUDIO_BUFFERS &&
         buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length &&
         ActiveMediaPlayer.AUDIO_BUFFERS[buffer]) {
-        ActiveMediaPlayer.AUDIO_BUFFERS[buffer].clear()
-        ActiveMediaPlayer.AUDIO_BUFFERS[buffer] = null
+        ActiveMediaPlayer.AUDIO_BUFFERS[buffer].clear();
+        ActiveMediaPlayer.AUDIO_BUFFERS[buffer] = null;
       }
     }
 
@@ -184,7 +184,7 @@ define([
      */
     clearAllAudioBuffers() {
       if (ActiveMediaPlayer.AUDIO_BUFFERS)
-        ActiveMediaPlayer.AUDIO_BUFFERS.forEach((_buffer, n) => this.clearAudioBuffer(n))
+        ActiveMediaPlayer.AUDIO_BUFFERS.forEach((_buffer, n) => this.clearAudioBuffer(n));
     }
 
     /**
@@ -192,7 +192,7 @@ define([
      * @returns {number}
      */
     countActiveBuffers() {
-      return ActiveMediaPlayer.AUDIO_BUFFERS ? ActiveMediaPlayer.AUDIO_BUFFERS.reduce((c, ab) => c + ab ? 1 : 0, 0) : 0
+      return ActiveMediaPlayer.AUDIO_BUFFERS ? ActiveMediaPlayer.AUDIO_BUFFERS.reduce((c, ab) => c + ab ? 1 : 0, 0) : 0;
     }
 
     /**
@@ -200,7 +200,7 @@ define([
      */
     stopAllAudioBuffers() {
       if (ActiveMediaPlayer.AUDIO_BUFFERS)
-        ActiveMediaPlayer.AUDIO_BUFFERS.forEach(ab => ab ? ab.stop() : null)
+        ActiveMediaPlayer.AUDIO_BUFFERS.forEach(ab => ab ? ab.stop() : null);
     }
 
     /**
@@ -211,7 +211,7 @@ define([
       if (ActiveMediaPlayer.AUDIO_BUFFERS &&
         buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length &&
         ActiveMediaPlayer.AUDIO_BUFFERS[buffer])
-        ActiveMediaPlayer.AUDIO_BUFFERS[buffer].stop()
+        ActiveMediaPlayer.AUDIO_BUFFERS[buffer].stop();
     }
 
     /**
@@ -235,9 +235,9 @@ define([
      * @param {?ActiveBox} setBx - The new container of this media. Can be `null`.
      */
     linkTo(setBx) {
-      this.bx = setBx
+      this.bx = setBx;
       if (this.bx && this.$visualComponent)
-        this.bx.setHostedComponent(this.$visualComponent)
+        this.bx.setHostedComponent(this.$visualComponent);
     }
   }
 
@@ -247,13 +247,13 @@ define([
    * See: {@link https://addpipe.com/blog/mediarecorder-api}
    * @type Boolean
    */
-  ActiveMediaPlayer.REC_ENABLED = typeof MediaRecorder !== 'undefined' && typeof navigator !== 'undefined'
+  ActiveMediaPlayer.REC_ENABLED = typeof MediaRecorder !== 'undefined' && typeof navigator !== 'undefined';
 
   if (ActiveMediaPlayer.REC_ENABLED) {
     navigator.getUserMedia = navigator.getUserMedia ||
       navigator.webkitGetUserMedia ||
       navigator.mozGetUserMedia ||
-      navigator.msGetUserMedia
+      navigator.msGetUserMedia;
   }
 
   /**
@@ -261,7 +261,7 @@ define([
    * they are common to all instances of {@link ActiveMediaPlayer}
    * Only initialized when {@link REC_ENABLED} is `true`.
    * @type {AudioBuffer[]} */
-  ActiveMediaPlayer.AUDIO_BUFFERS = ActiveMediaPlayer.REC_ENABLED ? [] : null
+  ActiveMediaPlayer.AUDIO_BUFFERS = ActiveMediaPlayer.REC_ENABLED ? [] : null;
 
   Object.assign(ActiveMediaPlayer.prototype, {
     /**
@@ -294,7 +294,7 @@ define([
      * @name ActiveMediaPlayer#mbe
      * @type {MediaBagElement} */
     mbe: null,
-  })
+  });
 
-  return ActiveMediaPlayer
-})
+  return ActiveMediaPlayer;
+});

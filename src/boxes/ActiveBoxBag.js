@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -56,7 +56,7 @@ define([
      */
     constructor(parent, container, boxBase) {
       // ActiveBoxBag extends BoxBag
-      super(parent, container, boxBase)
+      super(parent, container, boxBase);
     }
 
     /**
@@ -64,9 +64,9 @@ define([
      * @param {ActiveBox} bx - The ActiveBox to be added to this bag
      */
     addActiveBox(bx) {
-      bx.idLoc = this.cells.length
-      bx.idOrder = bx.idLoc
-      return this.addBox(bx)
+      bx.idLoc = this.cells.length;
+      bx.idOrder = bx.idLoc;
+      return this.addBox(bx);
     }
 
     /**
@@ -75,7 +75,7 @@ define([
      * @returns {ActiveBox}
      */
     getActiveBox(idLoc) {
-      return this.getBox(idLoc)
+      return this.getBox(idLoc);
     }
 
     /**
@@ -83,7 +83,7 @@ define([
      * @returns {ActiveBox}
      */
     getBackgroundActiveBox() {
-      return this.getBackgroundBox()
+      return this.getBackgroundBox();
     }
 
     /**
@@ -97,25 +97,25 @@ define([
      */
     setContent(abc, altAbc, fromIndex, toCell, numCells) {
       if (!fromIndex)
-        fromIndex = 0
+        fromIndex = 0;
       if (!toCell)
-        toCell = 0
+        toCell = 0;
       if (!numCells)
-        numCells = this.cells.length
+        numCells = this.cells.length;
 
       for (let i = 0; i < numCells; i++) {
-        const bx = this.getActiveBox(toCell + i)
-        bx.setContent(abc, fromIndex + i)
-        bx.setAlternative(false)
+        const bx = this.getActiveBox(toCell + i);
+        bx.setContent(abc, fromIndex + i);
+        bx.setAlternative(false);
         if (altAbc)
-          bx.setAltContent(altAbc, fromIndex + i)
+          bx.setAltContent(altAbc, fromIndex + i);
       }
 
       if (abc.backgroundContent !== null && this.getBackgroundActiveBox() !== null) {
-        const bx = this.getBackgroundActiveBox()
-        bx.setContent(abc.backgroundContent)
+        const bx = this.getBackgroundActiveBox();
+        bx.setContent(abc.backgroundContent);
         if (abc.bb !== bx.boxBase)
-          bx.setBoxBase(abc.bb)
+          bx.setBoxBase(abc.bb);
       }
     }
 
@@ -125,23 +125,23 @@ define([
      * @returns {ActiveBox}
      */
     findActiveBox(point) {
-      return this.findBox(point)
+      return this.findBox(point);
     }
 
     /**
      * Clears the content of all boxes
      */
     clearAllBoxes() {
-      this.cells.forEach(bx => bx.clear())
+      this.cells.forEach(bx => bx.clear());
     }
 
     /**
      * Clears the content of all boxes and background box
      */
     clearAll() {
-      this.clearAllBoxes()
+      this.clearAllBoxes();
       if (this.backgroundBox !== null)
-        this.getBackgroundActiveBox().clear()
+        this.getBackgroundActiveBox().clear();
     }
 
     /**
@@ -149,7 +149,7 @@ define([
      * @returns {number}
      */
     countCellsAtPlace() {
-      return this.cells.reduce((n, bx) => bx.isAtPlace() ? ++n : n, 0)
+      return this.cells.reduce((n, bx) => bx.isAtPlace() ? ++n : n, 0);
     }
 
     /**
@@ -158,7 +158,7 @@ define([
      * @returns {ActiveBox}
      */
     getActiveBoxWithIdLoc(idLoc) {
-      return this.cells.find(bx => bx.idLoc === idLoc) || null
+      return this.cells.find(bx => bx.idLoc === idLoc) || null;
     }
 
     /**
@@ -169,7 +169,7 @@ define([
      */
     cellIsAtEquivalentPlace(bx, checkCase) {
       return bx.isAtPlace() ||
-        bx.isEquivalent(this.getActiveBoxWithIdLoc(bx.idOrder), checkCase)
+        bx.isEquivalent(this.getActiveBoxWithIdLoc(bx.idOrder), checkCase);
     }
 
     /**
@@ -178,7 +178,7 @@ define([
      * @returns {number}
      */
     countCellsAtEquivalentPlace(checkCase) {
-      return this.cells.reduce((n, bx) => this.cellIsAtEquivalentPlace(bx, checkCase) ? ++n : n, 0)
+      return this.cells.reduce((n, bx) => this.cellIsAtEquivalentPlace(bx, checkCase) ? ++n : n, 0);
     }
 
     /**
@@ -187,14 +187,14 @@ define([
      * @returns {number}
      */
     countCellsWithIdAss(idAss) {
-      return this.cells.reduce((n, bx) => bx.idAss === idAss ? ++n : n, 0)
+      return this.cells.reduce((n, bx) => bx.idAss === idAss ? ++n : n, 0);
     }
 
     /**
      * Resets the default `idAss` attribute on all cells
      */
     setDefaultIdAss() {
-      this.cells.map(bx => bx.setDefaultIdAss())
+      this.cells.map(bx => bx.setDefaultIdAss());
     }
 
     /**
@@ -203,31 +203,31 @@ define([
      * @param {boolean} fitInArea - Ensure that all cells are inside the bag rectangle
      */
     scrambleCells(times, fitInArea) {
-      let nc = this.cells.length
+      let nc = this.cells.length;
       if (nc >= 2) {
         // Array of AWT.Point objects
         const
           pos = [],
           idLoc = [],
-          p = new AWT.Point()
+          p = new AWT.Point();
 
         for (let i = 0; i < nc; i++) {
-          const bx = this.getActiveBox(i)
-          pos[i] = new AWT.Point(bx.pos)
-          idLoc[i] = bx.idLoc
+          const bx = this.getActiveBox(i);
+          pos[i] = new AWT.Point(bx.pos);
+          idLoc[i] = bx.idLoc;
         }
 
         for (let i = 0; i < times; i++) {
           const
             r1 = Math.floor(Math.random() * nc),
-            r2 = Math.floor(Math.random() * nc)
+            r2 = Math.floor(Math.random() * nc);
           if (r1 !== r2) {
-            p.moveTo(pos[r1])
-            pos[r1].moveTo(pos[r2])
-            pos[r2].moveTo(p)
-            const j = idLoc[r1]
-            idLoc[r1] = idLoc[r2]
-            idLoc[r2] = j
+            p.moveTo(pos[r1]);
+            pos[r1].moveTo(pos[r2]);
+            pos[r2].moveTo(p);
+            const j = idLoc[r1];
+            idLoc[r1] = idLoc[r2];
+            idLoc[r2] = j;
           }
         }
 
@@ -235,11 +235,11 @@ define([
           const
             bx = this.getActiveBox(i),
             px = pos[i].x,
-            py = pos[i].y
-          bx.moveTo(new AWT.Point(px, py))
+            py = pos[i].y;
+          bx.moveTo(new AWT.Point(px, py));
           if (fitInArea)
-            this.fitCellsInArea([bx])
-          bx.idLoc = idLoc[i]
+            this.fitCellsInArea([bx]);
+          bx.idLoc = idLoc[i];
         }
       }
     }
@@ -251,19 +251,19 @@ define([
     fitCellsInArea(boxes) {
       const
         maxX = this.pos.x + this.dim.width,
-        maxY = this.pos.y + this.dim.height
+        maxY = this.pos.y + this.dim.height;
 
       boxes.forEach(bx => {
         // Save original position
         if (!bx.pos0)
-          bx.pos0 = new AWT.Point(bx.pos)
+          bx.pos0 = new AWT.Point(bx.pos);
 
         const
           px = Math.min(Math.max(bx.pos.x, this.pos.x), maxX - bx.dim.width),
-          py = Math.min(Math.max(bx.pos.y, this.pos.y), maxY - bx.dim.height)
+          py = Math.min(Math.max(bx.pos.y, this.pos.y), maxY - bx.dim.height);
         if (px !== bx.pos.x || py !== bx.pos.y)
-          bx.moveTo(new AWT.Point(px, py))
-      })
+          bx.moveTo(new AWT.Point(px, py));
+      });
     }
 
     /**
@@ -277,18 +277,18 @@ define([
       const
         posB = new AWT.Point(bxb.pos),
         posB0 = bxb.pos0,
-        idLocB = bxb.idLoc
+        idLocB = bxb.idLoc;
 
-      bxb.moveTo(bxa.pos0 || bxa.pos)
-      bxb.pos0 = bxa.pos0
-      bxb.idLoc = bxa.idLoc
+      bxb.moveTo(bxa.pos0 || bxa.pos);
+      bxb.pos0 = bxa.pos0;
+      bxb.idLoc = bxa.idLoc;
 
-      bxa.moveTo(posB0 || posB)
-      bxa.pos0 = posB0
-      bxa.idLoc = idLocB
+      bxa.moveTo(posB0 || posB);
+      bxa.pos0 = posB0;
+      bxa.idLoc = idLocB;
 
       if (fitInArea)
-        this.fitCellsInArea([bxa, bxb])
+        this.fitCellsInArea([bxa, bxb]);
     }
 
     /**
@@ -297,11 +297,11 @@ define([
     resetIds() {
       this.cells.forEach((bx, i) => {
         if (bx) {
-          bx.idOrder = i
-          bx.idAss = i
-          bx.idLoc = i
+          bx.idOrder = i;
+          bx.idAss = i;
+          bx.idLoc = i;
         }
-      })
+      });
     }
 
     /**
@@ -313,21 +313,21 @@ define([
      * @returns {number}
      */
     getNextItem(currentItem, idAssValid) {
-      const IDASSNOTUSED = -12345
+      const IDASSNOTUSED = -12345;
       if (!idAssValid)
-        idAssValid = IDASSNOTUSED
-      let i = currentItem + 1
+        idAssValid = IDASSNOTUSED;
+      let i = currentItem + 1;
       for (; i < this.cells.length; i++) {
-        const bx = this.cells[i]
+        const bx = this.cells[i];
         if (!bx)
-          break
+          break;
         if (idAssValid !== IDASSNOTUSED) {
           if (idAssValid === bx.idAss)
-            break
+            break;
         } else if (bx.idAss >= 0)
-          break
+          break;
       }
-      return i
+      return i;
     }
 
     /**
@@ -343,11 +343,11 @@ define([
      */
     buildAccessibleElements($canvas, $clickReceiver, eventType) {
       if (Utils.settings.CANVAS_HITREGIONS) {
-        this.$accessibleDiv = this.accessibleText !== '' ? $('<div/>', { 'aria-label': this.accessibleText, tabindex: 0 }) : null
-        $canvas.append(this.$accessibleDiv)
-        this.cells.forEach(bx => bx.buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType))
+        this.$accessibleDiv = this.accessibleText !== '' ? $('<div/>', { 'aria-label': this.accessibleText, tabindex: 0 }) : null;
+        $canvas.append(this.$accessibleDiv);
+        this.cells.forEach(bx => bx.buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType));
       }
-      return this.$accessibleDiv
+      return this.$accessibleDiv;
     }
   }
 
@@ -357,7 +357,7 @@ define([
      * @name ActiveBoxBag#$accessibleDiv
      * @type {external:jQuery} */
     $accessibleDiv: null,
-  })
+  });
 
-  return ActiveBoxBag
-})
+  return ActiveBoxBag;
+});

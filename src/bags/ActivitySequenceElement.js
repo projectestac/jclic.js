@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -65,35 +65,35 @@ define([
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
           case 'id':
-            this['tag'] = Utils.nSlash(val)
-            break
+            this['tag'] = Utils.nSlash(val);
+            break;
           case 'name':
-            this['activity'] = val
-            break
+            this['activity'] = val;
+            break;
           case 'description':
           // possible navButtons values are: `none`, `fwd`, `back` or `both`
           case 'navButtons':
-            this[name] = val
-            break
+            this[name] = val;
+            break;
           case 'delay':
-            this[name] = Number(val)
-            break
+            this[name] = Number(val);
+            break;
         }
-      })
+      });
 
       // Iterate on 'jump' elements to load fwdJump and/or backJump
       $xml.children('jump').each((_n, data) => {
-        const jmp = new ActivitySequenceJump().setProperties($(data))
+        const jmp = new ActivitySequenceJump().setProperties($(data));
         if (jmp.id === 'forward')
-          this.fwdJump = jmp
+          this.fwdJump = jmp;
         else if (jmp.id === 'back')
-          this.backJump = jmp
-      })
-      return this
+          this.backJump = jmp;
+      });
+      return this;
     }
 
     getData() {
-      return Utils.getData(this, ['tag', 'description', 'activity', 'fwdJump', 'backJump', 'navButtons', 'delay'])
+      return Utils.getData(this, ['tag', 'description', 'activity', 'fwdJump', 'backJump', 'navButtons', 'delay']);
     }
   }
 
@@ -137,7 +137,7 @@ define([
      * @name ActivitySequenceElement#delay
      * @type {number} */
     delay: 0,
-  })
+  });
 
-  return ActivitySequenceElement
-})
+  return ActivitySequenceElement;
+});

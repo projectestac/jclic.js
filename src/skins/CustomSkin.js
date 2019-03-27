@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -57,56 +57,56 @@ define([
      */
     constructor(ps, name = null, options = null) {
       // CustomSkin extends [Skin](Skin.html)
-      super(ps, name, options)
+      super(ps, name, options);
       //console.log(this.options)
 
-      this.$mainPanel = $('<div/>', { class: 'JClicCustomMainPanel' })
-      this.$gridPanel = $('<div/>', { class: 'JClicGridPanel' })
+      this.$mainPanel = $('<div/>', { class: 'JClicCustomMainPanel' });
+      this.$gridPanel = $('<div/>', { class: 'JClicGridPanel' });
       for (let i = 0; i < 9; i++)
-        this.$gridPanel.append($('<div/>', { class: `JClicCell JClicCell${i + 1}` }))
-      this.$mainPanel.append(this.$gridPanel)
-      this.$playerCnt.detach().addClass('JClicPlayerCell').appendTo(this.$mainPanel)
-      this.$div.prepend(this.$mainPanel)
+        this.$gridPanel.append($('<div/>', { class: `JClicCell JClicCell${i + 1}` }));
+      this.$mainPanel.append(this.$gridPanel);
+      this.$playerCnt.detach().addClass('JClicPlayerCell').appendTo(this.$mainPanel);
+      this.$div.prepend(this.$mainPanel);
 
       // Add buttons
       if (options.buttons) {
         Object.keys(options.buttons.button).forEach(k => {
-          const k2 = k === 'about' ? 'reports' : k
-          const msg = ps.getMsg(this.msgKeys[k2] || k2)
+          const k2 = k === 'about' ? 'reports' : k;
+          const msg = ps.getMsg(this.msgKeys[k2] || k2);
           this.buttons[k2] = $('<button/>', { class: `JClicBtn JClicTransform Btn-${k2}`, title: msg, 'aria-label': msg, disabled: typeof this.msgKeys[k2] === 'undefined' })
-            .on('click', evt => { if (ps.actions[k2]) ps.actions[k2].processEvent(evt) })
-          this.$mainPanel.append(this.buttons[k2])
-        })
+            .on('click', evt => { if (ps.actions[k2]) ps.actions[k2].processEvent(evt); });
+          this.$mainPanel.append(this.buttons[k2]);
+        });
       }
 
       // Add message box
       if (options.rectangle.messages) {
-        this.msgBox = new ActiveBox()
-        this.msgBox.role = 'message'
+        this.msgBox = new ActiveBox();
+        this.msgBox.role = 'message';
         this.$msgBoxDiv = $('<div/>', { class: 'JClicMsgBox' })
           .click(() => {
-            this.msgBox.playMedia(ps)
-            return false
-          })
-        this.$mainPanel.append(this.$msgBoxDiv)
+            this.msgBox.playMedia(ps);
+            return false;
+          });
+        this.$mainPanel.append(this.$msgBoxDiv);
       }
 
       // Add counters
       if (false !== this.ps.options.counters && options.counters && options.counters.counter) {
         $.each(Skin.prototype.counters, (name, _val) => {
           if (options.counters.counter[name]) {
-            const msg = ps.getMsg(name)
+            const msg = ps.getMsg(name);
             this.counters[name] = new Counter(name, $('<div/>', { class: `JClicCounter JClicTransform Counter-${name}`, title: msg, 'aria-label': msg })
               .html('000')
-              .appendTo(this.$mainPanel))
+              .appendTo(this.$mainPanel));
           }
-        })
+        });
       }
 
       // Add progress animation
       if (options.progressAnimation) {
-        this.$progressAnimation = $('<div/>', { class: 'JClicProgressAnimation JClicTransform' })
-        this.$mainPanel.append(this.$progressAnimation)
+        this.$progressAnimation = $('<div/>', { class: 'JClicProgressAnimation JClicTransform' });
+        this.$mainPanel.append(this.$progressAnimation);
       }
 
     }
@@ -117,7 +117,7 @@ define([
      * @param {boolean} status - `true` to make main controls navigable, `false` otherwise
      */
     enableMainButtons(status) {
-      this.$mainPanel.find('.JClicBtn').attr('tabindex', status ? '0' : '-1')
+      this.$mainPanel.find('.JClicBtn').attr('tabindex', status ? '0' : '-1');
     }
 
     /**
@@ -128,13 +128,13 @@ define([
     _computeStyleSheets() {
       const
         maxw = this.options.dimension.preferredSize.width,
-        maxh = this.options.dimension.preferredSize.height
+        maxh = this.options.dimension.preferredSize.height;
 
-      this.twoThirdsMedia = { width: maxw, height: maxh }
+      this.twoThirdsMedia = { width: maxw, height: maxh };
       this.halfMedia = {
         width: Math.round(2 * maxw / 3),
         height: Math.round(2 * maxh / 3)
-      }
+      };
 
       // Panels:
       const
@@ -159,7 +159,7 @@ define([
         box6 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3 - ph0, pv2 - pv0, ph5 - ph3, pv3 - pv2)) : '',
         box7 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv3 - pv0, ph2 - ph0, pv5 - pv3)) : '',
         box8 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : '',
-        box9 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv3 - pv0, ph5 - ph3, pv5 - pv3)) : ''
+        box9 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv3 - pv0, ph5 - ph3, pv5 - pv3)) : '';
 
       let css = `
 .ID .JClicCustomMainPanel {flex-grow:1;position:relative;background-color: ${Utils.checkColor(this.options.color.fill.value)};}
@@ -174,42 +174,42 @@ define([
 .ID .JClicCell6 {background-image:url(${box6});background-repeat:repeat-y;}
 .ID .JClicCell7 {background-image:url(${box7});}
 .ID .JClicCell8 {background-image:url(${box8});background-repeat:repeat-x;}
-.ID .JClicCell9 {background-image:url(${box9});}`
+.ID .JClicCell9 {background-image:url(${box9});}`;
 
       let cssHalf = `
 .ID .JClicGridPanel {grid-template-columns:${Math.round((ph2 - ph0) / 2)}px 1fr ${Math.round((ph5 - ph3) / 2)}px;grid-template-rows:${Math.round((pv2 - pv0) / 2)}px 1fr ${Math.round((pv5 - pv3) / 2)}px;}
 .ID .JClicPlayerCell {top:${Math.round((pv1 - pv0) / 2)}px;right:${Math.round((ph5 - ph4) / 2)}px;bottom:${Math.round((pv5 - pv4) / 2)}px;left:${Math.round((ph1 - ph0) / 2)}px;}
-.ID .JClicTransform {transform: scale(0.5);}`
+.ID .JClicTransform {transform: scale(0.5);}`;
 
       let cssTwoThirds = `
 .ID .JClicGridPanel {grid-template-columns:${Math.round(2 * (ph2 - ph0) / 3)}px 1fr ${Math.round(2 * (ph5 - ph3) / 3)}px;grid-template-rows:${Math.round(2 * (pv2 - pv0) / 3)}px 1fr ${Math.round(2 * (pv5 - pv3) / 3)}px;}
 .ID .JClicPlayerCell {top:${Math.round(2 * (pv1 - pv0) / 3)}px;right:${Math.round(2 * (ph5 - ph4) / 3)}px;bottom:${Math.round(2 * (pv5 - pv4) / 3)}px;left:${Math.round(2 * (ph1 - ph0) / 3)}px;}
-.ID .JClicTransform {transform: scale(0.666);}`
+.ID .JClicTransform {transform: scale(0.666);}`;
 
       // Buttons:
       if (this.options.buttons) {
-        const bt = this.options.buttons
-        let wBase = 30, hBase = 30, offsetBase = {}
+        const bt = this.options.buttons;
+        let wBase = 30, hBase = 30, offsetBase = {};
         if (bt.settings) {
           if (bt.settings.dimension) {
-            wBase = bt.settings.dimension.width || wBase
-            hBase = bt.settings.dimension.height || hBase
+            wBase = bt.settings.dimension.width || wBase;
+            hBase = bt.settings.dimension.height || hBase;
           }
           if (bt.settings.offset)
-            Object.assign(offsetBase, bt.settings.offset)
+            Object.assign(offsetBase, bt.settings.offset);
         }
         Object.keys(this.options.buttons.button).forEach(k => {
           const
             btn = bt.button[k],
-            k2 = k === 'about' ? 'reports' : k
-          let w = wBase, h = hBase, offset = offsetBase
+            k2 = k === 'about' ? 'reports' : k;
+          let w = wBase, h = hBase, offset = offsetBase;
           if (btn.settings) {
             if (btn.settings.dimension) {
-              w = btn.settings.dimension.width || w
-              h = btn.settings.dimension.height || h
+              w = btn.settings.dimension.width || w;
+              h = btn.settings.dimension.height || h;
             }
             if (btn.settings.offset)
-              offset = Object.assign({}, offsetBase, btn.settings.offset)
+              offset = Object.assign({}, offsetBase, btn.settings.offset);
           }
           const
             x = btn.point.pos.left,
@@ -221,47 +221,47 @@ define([
             ypHalf = y < pv2 ? `top:${Math.round(y / 2 - h / 4)}` : `bottom:${Math.round((pv5 - y - h) / 2 - h / 4)}`,
             ypTwoThirds = y < pv2 ? `top:${Math.round(2 * y / 3 - h / 6)}` : `bottom:${Math.round(2 * (pv5 - y - h) / 3 - h / 6)}`,
             xs = btn.point.source.left,
-            ys = btn.point.source.top
-          css += `.ID .Btn-${k2} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${imgUrl}) !important;background-position:-${xs}px -${ys}px !important;}\n`
-          cssHalf += `.ID .Btn-${k2} {${xpHalf}px;${ypHalf}px;}\n`
-          cssTwoThirds += `.ID .Btn-${k2} {${xpTwoThirds}px;${ypTwoThirds}px;}\n`
+            ys = btn.point.source.top;
+          css += `.ID .Btn-${k2} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${imgUrl}) !important;background-position:-${xs}px -${ys}px !important;}\n`;
+          cssHalf += `.ID .Btn-${k2} {${xpHalf}px;${ypHalf}px;}\n`;
+          cssTwoThirds += `.ID .Btn-${k2} {${xpTwoThirds}px;${ypTwoThirds}px;}\n`;
           if (offset.active)
-            css += `.ID .Btn-${k2}:active {background-position:-${xs + offset.active.right}px -${ys + offset.active.down}px !important;}\n`
+            css += `.ID .Btn-${k2}:active {background-position:-${xs + offset.active.right}px -${ys + offset.active.down}px !important;}\n`;
           if (offset.over)
-            css += `.ID .Btn-${k2}:hover {background-position:-${xs + offset.over.right}px -${ys + offset.over.down}px !important;}\n`
+            css += `.ID .Btn-${k2}:hover {background-position:-${xs + offset.over.right}px -${ys + offset.over.down}px !important;}\n`;
           if (offset.disabled)
-            css += `.ID .Btn-${k2}:disabled {background-position:-${xs + offset.disabled.right}px -${ys + offset.disabled.down}px !important;}\n`
-        })
+            css += `.ID .Btn-${k2}:disabled {background-position:-${xs + offset.disabled.right}px -${ys + offset.disabled.down}px !important;}\n`;
+        });
       }
 
       // Counters:
       if (this.options.counters && this.options.counters.settings) {
-        const cnt = this.options.counters
-        let wBase = 35, hBase = 20
+        const cnt = this.options.counters;
+        let wBase = 35, hBase = 20;
         if (cnt.settings.dimension && cnt.settings.dimension.counter) {
-          wBase = (cnt.settings.dimension.counter.width || wBase)
-          hBase = cnt.settings.dimension.counter.height || hBase
+          wBase = (cnt.settings.dimension.counter.width || wBase);
+          hBase = cnt.settings.dimension.counter.height || hBase;
         }
-        let wLb = 37, hLb = 14
+        let wLb = 37, hLb = 14;
         if (cnt.settings.dimension && cnt.settings.dimension.label) {
-          wLb = (cnt.settings.dimension.label.width || wLb)
-          hLb = cnt.settings.dimension.label.height || hLb
+          wLb = (cnt.settings.dimension.label.width || wLb);
+          hLb = cnt.settings.dimension.label.height || hLb;
         }
-        let bColor = 'black'
+        let bColor = 'black';
         if (cnt.style && cnt.style.color && cnt.style.color.foreground)
-          bColor = Utils.checkColor(cnt.style.color.foreground.value || bColor)
+          bColor = Utils.checkColor(cnt.style.color.foreground.value || bColor);
         let lbFntSize = hLb - 4;
-        let lbFntFamily = 'Roboto'
+        let lbFntFamily = 'Roboto';
         if (cnt.style && cnt.style.font && cnt.style.font.label) {
-          lbFntSize = Math.max(8, cnt.style.font.label.size || lbFntSize)
-          lbFntFamily = `${cnt.style.font.label.family || 'Roboto'},Roboto,sans-serif`
+          lbFntSize = Math.max(8, cnt.style.font.label.size || lbFntSize);
+          lbFntFamily = `${cnt.style.font.label.family || 'Roboto'},Roboto,sans-serif`;
         }
 
-        css += `.ID .JClicCounter {font-size:${hBase - 2}px;color:${bColor}}\n`
+        css += `.ID .JClicCounter {font-size:${hBase - 2}px;color:${bColor}}\n`;
         Object.keys(this.options.counters.counter).forEach(k => {
           const
-            counter = cnt.counter[k]
-          let w = wBase, h = hBase
+            counter = cnt.counter[k];
+          let w = wBase, h = hBase;
           const
             x = counter.point.counter.left,
             xl = counter.point.label.left || (x - Math.round((wLb - wBase) / 2)),
@@ -272,24 +272,24 @@ define([
             yl = counter.point.label.top || (y - hLb),
             yp = y < pv2 ? `top:${y}` : `bottom:${pv5 - y - h}`,
             ypHalf = y < pv2 ? `top:${Math.round(y / 2 - h / 4)}` : `bottom:${Math.round((pv5 - y - h) / 2 - h / 4)}`,
-            ypTwoThirds = y < pv2 ? `top:${Math.round(2 * y / 3 - h / 6)}` : `bottom:${Math.round(2 * (pv5 - y - h) / 3 - h / 6)}`
+            ypTwoThirds = y < pv2 ? `top:${Math.round(2 * y / 3 - h / 6)}` : `bottom:${Math.round(2 * (pv5 - y - h) / 3 - h / 6)}`;
           // counter:
-          css += `.ID .Counter-${k} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;line-height:${h}px;}\n`
+          css += `.ID .Counter-${k} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;line-height:${h}px;}\n`;
           // label:
-          css += `.ID .Counter-${k}:before {content:"${this.ps.getMsg(k)}";font-size:${lbFntSize}px;font-family:${lbFntFamily};width:${wLb}px;height:${hLb}px;line-height:${hLb}px;position:absolute;top:${yl - y}px;left:${xl - x}px;}`
+          css += `.ID .Counter-${k}:before {content:"${this.ps.getMsg(k)}";font-size:${lbFntSize}px;font-family:${lbFntFamily};width:${wLb}px;height:${hLb}px;line-height:${hLb}px;position:absolute;top:${yl - y}px;left:${xl - x}px;}`;
           // reduced sizes:
-          cssHalf += `.ID .Counter-${k} {${xpHalf}px;${ypHalf}px;}\n`
-          cssTwoThirds += `.ID .Counter-${k} {${xpTwoThirds}px;${ypTwoThirds}px;}\n`
-        })
+          cssHalf += `.ID .Counter-${k} {${xpHalf}px;${ypHalf}px;}\n`;
+          cssTwoThirds += `.ID .Counter-${k} {${xpTwoThirds}px;${ypTwoThirds}px;}\n`;
+        });
       }
 
       // Progress animation:
       if (this.options.progressAnimation) {
-        const pa = this.options.progressAnimation
-        let w = 30, h = 30
+        const pa = this.options.progressAnimation;
+        let w = 30, h = 30;
         if (pa.dimension) {
-          w = pa.dimension.width || w
-          h = pa.dimension.height || h
+          w = pa.dimension.width || w;
+          h = pa.dimension.height || h;
         }
         const
           x = pa.point.pos.left,
@@ -301,16 +301,16 @@ define([
           ypHalf = y < pv2 ? `top:${Math.round(y / 2 - h / 4)}` : `bottom:${Math.round((pv5 - y - h) / 2 - h / 4)}`,
           ypTwoThirds = y < pv2 ? `top:${Math.round(2 * y / 3 - h / 6)}` : `bottom:${Math.round(2 * (pv5 - y - h) / 3 - h / 6)}`,
           xs = pa.point.source.left,
-          ys = pa.point.source.top
-        css += `.ID .JClicProgressAnimation {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${imgUrl});background-position:-${xs}px -${ys}px;}\n`
-        cssHalf += `.ID .JClicProgressAnimation {${xpHalf}px;${ypHalf}px;}\n`
-        cssTwoThirds += `.ID .JClicProgressAnimation {${xpTwoThirds}px;${ypTwoThirds}px;}\n`
+          ys = pa.point.source.top;
+        css += `.ID .JClicProgressAnimation {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;background:url(${imgUrl});background-position:-${xs}px -${ys}px;}\n`;
+        cssHalf += `.ID .JClicProgressAnimation {${xpHalf}px;${ypHalf}px;}\n`;
+        cssTwoThirds += `.ID .JClicProgressAnimation {${xpTwoThirds}px;${ypTwoThirds}px;}\n`;
 
         if (pa.frames && pa.direction) {
           const
             dx = (pa.step || w) * (pa.direction === 'right' ? 1 : pa.direction === 'left' ? -1 : 0),
-            dy = (pa.step || h) * (pa.direction === 'down' ? 1 : pa.direction === 'up' ? -1 : 0)
-          css += `\n@keyframes anim {100% {background-position:${(xs + dx * pa.frames) * -1}px ${(ys + dy * pa.frames) * -1}px;}}\n.ID .JClicProgressAnimation {animation: anim ${pa.frames * pa.delay}ms steps(${pa.frames}) infinite;}`
+            dy = (pa.step || h) * (pa.direction === 'down' ? 1 : pa.direction === 'up' ? -1 : 0);
+          css += `\n@keyframes anim {100% {background-position:${(xs + dx * pa.frames) * -1}px ${(ys + dy * pa.frames) * -1}px;}}\n.ID .JClicProgressAnimation {animation: anim ${pa.frames * pa.delay}ms steps(${pa.frames}) infinite;}`;
         }
       }
 
@@ -322,11 +322,11 @@ define([
           right = ph5 - bx.width - bx.left - ph0,
           tb = bx.top < pv2 ? `top:${bx.top}` : `bottom:${pv5 - bx.height - bx.top}`,
           tbHalf = bx.top < pv2 ? `top:${Math.round(bx.top / 2)}` : `bottom:${Math.round((pv5 - bx.height - bx.top) / 2)}`,
-          tbTwoThirds = bx.top < pv2 ? `top:${Math.round(2 * bx.top / 3)}` : `bottom:${Math.round(2 * (pv5 - bx.height - bx.top) / 3)}`
+          tbTwoThirds = bx.top < pv2 ? `top:${Math.round(2 * bx.top / 3)}` : `bottom:${Math.round(2 * (pv5 - bx.height - bx.top) / 3)}`;
 
-        css += `.ID .JClicMsgBox {position:absolute;left:${left}px;right:${right}px;height:${bx.height}px;${tb}px;}`
-        cssHalf += `.ID .JClicMsgBox {left:${Math.round(left / 2)}px;right:${Math.round(right / 2)}px;height:${Math.round(bx.height / 2)}px;${tbHalf}px;}`
-        cssTwoThirds += `.ID .JClicMsgBox {left:${Math.round(2 * left / 3)}px;right:${Math.round(2 * right / 3)}px;height:${Math.round(2 * bx.height / 3)}px;${tbTwoThirds}px;}`
+        css += `.ID .JClicMsgBox {position:absolute;left:${left}px;right:${right}px;height:${bx.height}px;${tb}px;}`;
+        cssHalf += `.ID .JClicMsgBox {left:${Math.round(left / 2)}px;right:${Math.round(right / 2)}px;height:${Math.round(bx.height / 2)}px;${tbHalf}px;}`;
+        cssTwoThirds += `.ID .JClicMsgBox {left:${Math.round(2 * left / 3)}px;right:${Math.round(2 * right / 3)}px;height:${Math.round(2 * bx.height / 3)}px;${tbTwoThirds}px;}`;
       }
 
       // TODO: Implement status messages?
@@ -336,7 +336,7 @@ define([
         default: this.mainCSS + css,
         half: cssHalf,
         twoThirds: cssTwoThirds
-      }
+      };
     }
 
     /**
@@ -348,8 +348,8 @@ define([
      */
     _getStyleSheets(media = 'default') {
       if (!this.cssVariants)
-        this._computeStyleSheets()
-      return `${super._getStyleSheets(media)}${this.cssVariants[media] || ''}`
+        this._computeStyleSheets();
+      return `${super._getStyleSheets(media)}${this.cssVariants[media] || ''}`;
     }
 
     /**
@@ -357,7 +357,7 @@ define([
      * @returns {ActiveBox}
      */
     getMsgBox() {
-      return this.msgBox
+      return this.msgBox;
     }
 
     /**
@@ -367,9 +367,9 @@ define([
      * `waitCursorCount` member is evaluated to decide if the wait state should be activated or deactivated.
      */
     setWaitCursor(status) {
-      super.setWaitCursor(status)
+      super.setWaitCursor(status);
       if (this.$progressAnimation)
-        this.$progressAnimation.css('animation-play-state', this.waitCursorCount > 0 ? 'running' : 'paused')
+        this.$progressAnimation.css('animation-play-state', this.waitCursorCount > 0 ? 'running' : 'paused');
     }
 
   }
@@ -420,10 +420,10 @@ define([
      * @name Skin#$progressAnimation
      * @type {external:jQuery} */
     $progressAnimation: null,
-  })
+  });
 
   // Register this class in the list of available skins
-  Skin.CLASSES['custom'] = CustomSkin
+  Skin.CLASSES['custom'] = CustomSkin;
 
-  return CustomSkin
-})
+  return CustomSkin;
+});

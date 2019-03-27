@@ -57,7 +57,7 @@ define([
      * cardinal number in the list.
      */
     constructor(action, sq) {
-      super(action, sq)
+      super(action, sq);
     }
 
     /**
@@ -65,17 +65,17 @@ define([
      * @param {external:jQuery} $xml - The XML element to parse
      */
     setProperties($xml) {
-      super.setProperties($xml)
+      super.setProperties($xml);
 
       // Read conditional jumps
       $xml.children('jump').each((_n, child) => {
-        const condJmp = new ConditionalJumpInfo().setProperties($(child))
+        const condJmp = new ConditionalJumpInfo().setProperties($(child));
         if (condJmp.id === 'upper')
-          this.upperJump = condJmp
+          this.upperJump = condJmp;
         else if (condJmp.id === 'lower')
-          this.lowerJump = condJmp
-      })
-      return this
+          this.lowerJump = condJmp;
+      });
+      return this;
     }
 
     getData() {
@@ -91,19 +91,19 @@ define([
      * @returns {JumpInfo}
      */
     resolveJump(rating, time) {
-      let result = this
+      let result = this;
       if (rating >= 0 && time >= 0) {
         if (this.upperJump !== null &&
           rating > this.upperJump.threshold &&
           (this.upperJump.time <= 0 || time < this.upperJump.time)) {
-          result = this.upperJump
+          result = this.upperJump;
         } else if (this.lowerJump !== null &&
           (rating < this.lowerJump.threshold ||
             this.lowerJump.time > 0 && time > this.lowerJump.time)) {
-          result = this.lowerJump
+          result = this.lowerJump;
         }
       }
-      return result
+      return result;
     }
   }
 
@@ -118,7 +118,7 @@ define([
      * @name ActivitySequenceJump#lowerJump
      * @type {ConditionalJumpInfo} */
     lowerJump: null,
-  })
+  });
 
-  return ActivitySequenceJump
-})
+  return ActivitySequenceJump;
+});

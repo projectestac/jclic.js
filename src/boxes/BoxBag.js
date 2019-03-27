@@ -54,9 +54,9 @@ define([
      */
     constructor(parent, container, boxBase) {
       // BoxBag extends AbstractBox
-      super(parent, container, boxBase)
-      this.preferredBounds = new AWT.Rectangle()
-      this.cells = []
+      super(parent, container, boxBase);
+      this.preferredBounds = new AWT.Rectangle();
+      this.cells = [];
     }
 
     /**
@@ -73,35 +73,35 @@ define([
 
       // Avoid exceptions when rs is null
       if (!rs)
-        return preferredMaxSize
+        return preferredMaxSize;
 
       // optimal, maximal and minimal dimensions
       let
         d = rs.getPreferredSize(),
         minSize = rs.getMinimumSize(),
-        maxSize = preferredMaxSize
+        maxSize = preferredMaxSize;
 
       // remove margins
-      maxSize.width -= 2 * margin
-      maxSize.height -= 2 * margin
+      maxSize.width -= 2 * margin;
+      maxSize.height -= 2 * margin;
       // correct maxSize if less than minSize
       if (minSize.width > maxSize.width || minSize.height > maxSize.height) {
-        maxSize = minSize
+        maxSize = minSize;
       }
       // compute scale factor
-      let scale = d.width > maxSize.width ? maxSize.width / d.width : 1
+      let scale = d.width > maxSize.width ? maxSize.width / d.width : 1;
       if (scale * d.height > maxSize.height)
-        scale = maxSize.height / d.height
+        scale = maxSize.height / d.height;
 
       // resize the `Resizable` object
-      d = rs.getScaledSize(scale)
-      rs.setBounds(margin, margin, d.width, d.height)
+      d = rs.getScaledSize(scale);
+      rs.setBounds(margin, margin, d.width, d.height);
 
       // restore margins
-      d.width += 2 * margin
-      d.height += 2 * margin
+      d.width += 2 * margin;
+      d.height += 2 * margin;
 
-      return d
+      return d;
     }
 
     /**
@@ -125,34 +125,34 @@ define([
       let
         isHLayout = false,
         nbh = 1,
-        nbv = 1
+        nbv = 1;
       switch (boxGridPos) {
         case 'AB':
         case 'BA':
-          nbh = 2
-          nbv = 1
-          isHLayout = true
-          break
+          nbh = 2;
+          nbv = 1;
+          isHLayout = true;
+          break;
         case 'AUB':
         case 'BUA':
-          nbh = 1
-          nbv = 2
-          isHLayout = false
-          break
+          nbh = 1;
+          nbv = 2;
+          isHLayout = false;
+          break;
       }
       const
         ra = rsA.getBounds(),
-        rb = rsB.getBounds()
+        rb = rsB.getBounds();
 
       // optimal dimensions
       let
         da = rsA.getPreferredSize(),
-        db = rsB.getPreferredSize()
+        db = rsB.getPreferredSize();
 
       const d = new AWT.Dimension(
         isHLayout ? da.width + db.width : Math.max(da.width, db.width),
         isHLayout ? Math.max(da.height, db.height) : da.height + db.height
-      )
+      );
 
       // minimal dimensions
       const
@@ -162,71 +162,71 @@ define([
           isHLayout ? minSizeA.width + minSizeB.width : Math.max(minSizeA.width, minSizeB.width),
           isHLayout ? Math.max(minSizeA.height, minSizeB.height) : minSizeA.height + minSizeB.height
         ),
-        maxSize = desiredMaxSize
+        maxSize = desiredMaxSize;
 
       // remove margins
-      maxSize.width -= (1 + nbh) * margin
-      maxSize.height -= (1 + nbv) * margin
+      maxSize.width -= (1 + nbh) * margin;
+      maxSize.height -= (1 + nbv) * margin;
 
       // correct maxSize if less than minSize
       if (minSize.width > maxSize.width || minSize.height > maxSize.height)
-        maxSize.setDimension(minSize)
+        maxSize.setDimension(minSize);
 
       // compute scale factor
-      let scale = d.width > maxSize.width ? maxSize.width / d.width : 1
+      let scale = d.width > maxSize.width ? maxSize.width / d.width : 1;
       if (scale * d.height > maxSize.height)
-        scale = maxSize.height / d.height
+        scale = maxSize.height / d.height;
 
       //
       // correct possible minimal infractions
       // ...
       // resize
-      da = rsA.getScaledSize(scale)
-      db = rsB.getScaledSize(scale)
+      da = rsA.getScaledSize(scale);
+      db = rsB.getScaledSize(scale);
 
       // set margins to center one box relative to the other
       let
         dah = db.width > da.width ? (db.width - da.width) / 2 : 0,
         dbh = da.width > db.width ? (da.width - db.width) / 2 : 0,
         dav = db.height > da.height ? (db.height - da.height) / 2 : 0,
-        dbv = da.height > db.height ? (da.height - db.height) / 2 : 0
+        dbv = da.height > db.height ? (da.height - db.height) / 2 : 0;
 
       switch (boxGridPos) {
         case 'AB':
-          rsA.setBounds(margin, margin + dav, da.width, da.height)
-          rsB.setBounds(2 * margin + da.width, margin + dbv, db.width, db.height)
-          break
+          rsA.setBounds(margin, margin + dav, da.width, da.height);
+          rsB.setBounds(2 * margin + da.width, margin + dbv, db.width, db.height);
+          break;
         case 'BA':
-          rsB.setBounds(margin, margin + dbv, db.width, db.height)
-          rsA.setBounds(2 * margin + db.width, margin + dav, da.width, da.height)
-          break
+          rsB.setBounds(margin, margin + dbv, db.width, db.height);
+          rsA.setBounds(2 * margin + db.width, margin + dav, da.width, da.height);
+          break;
         case 'AUB':
-          rsA.setBounds(margin + dah, margin, da.width, da.height)
-          rsB.setBounds(margin + dbh, 2 * margin + da.height, db.width, db.height)
-          break
+          rsA.setBounds(margin + dah, margin, da.width, da.height);
+          rsB.setBounds(margin + dbh, 2 * margin + da.height, db.width, db.height);
+          break;
         case 'BUA':
-          rsB.setBounds(margin + dbh, margin, db.width, db.height)
-          rsA.setBounds(margin + dah, 2 * margin + db.height, da.width, da.height)
-          break
+          rsB.setBounds(margin + dbh, margin, db.width, db.height);
+          rsA.setBounds(margin + dah, 2 * margin + db.height, da.width, da.height);
+          break;
         default:
           rsA.setBounds(
             Math.round(margin + scale * ra.pos.x),
             Math.round(margin + scale * ra.pos.y),
-            da.width, da.height)
+            da.width, da.height);
           rsB.setBounds(
             Math.round(margin + scale * rb.pos.x),
             Math.round(margin + scale * rb.pos.y),
-            da.width, da.height)
-          break
+            da.width, da.height);
+          break;
       }
 
       // recompute 'd' adding margins
-      const r = new AWT.Rectangle(rsA.getBounds())
-      r.add(rsB.getBounds())
-      d.width = r.dim.width + 2 * margin
-      d.height = r.dim.height + 2 * margin
+      const r = new AWT.Rectangle(rsA.getBounds());
+      r.add(rsB.getBounds());
+      d.width = r.dim.width + 2 * margin;
+      d.height = r.dim.height + 2 * margin;
 
-      return d
+      return d;
     }
 
     /**
@@ -234,7 +234,7 @@ define([
      * @returns {AWT.Dimension}
      */
     getPreferredSize() {
-      return this.preferredBounds.dim
+      return this.preferredBounds.dim;
     }
 
     /**
@@ -242,10 +242,10 @@ define([
      * @returns {AWT.Dimension}
      */
     getMinimumSize() {
-      const d = this.getPreferredSize()
+      const d = this.getPreferredSize();
       return new AWT.Dimension(
         Math.max(Utils.settings.MIN_CELL_SIZE, d.width),
-        Math.max(Utils.settings.MIN_CELL_SIZE, d.height))
+        Math.max(Utils.settings.MIN_CELL_SIZE, d.height));
     }
 
     /**
@@ -254,8 +254,8 @@ define([
      * @returns {AWT.Dimension}
      */
     getScaledSize(scale) {
-      const d = this.getPreferredSize()
-      return new AWT.Dimension(Math.round(scale * d.width), Math.round(scale * d.height))
+      const d = this.getPreferredSize();
+      return new AWT.Dimension(Math.round(scale * d.width), Math.round(scale * d.height));
     }
 
     /**
@@ -263,15 +263,15 @@ define([
      * @param {AbstractBox} bx - The box to add
      */
     addBox(bx) {
-      this.cells.push(bx)
-      bx.setParent(this)
+      this.cells.push(bx);
+      bx.setParent(this);
 
       if (this.cells.length === 1)
-        AWT.Rectangle.prototype.setBounds.call(this, bx)
+        AWT.Rectangle.prototype.setBounds.call(this, bx);
       else
-        this.add(bx)
+        this.add(bx);
 
-      this.preferredBounds.setBounds(this.getBounds())
+      this.preferredBounds.setBounds(this.getBounds());
     }
 
     /**
@@ -280,7 +280,7 @@ define([
      * @returns {number}
      */
     boxIndex(bx) {
-      return bx === null ? -1 : this.cells.indexOf(bx)
+      return bx === null ? -1 : this.cells.indexOf(bx);
     }
 
     /**
@@ -289,7 +289,7 @@ define([
      * @returns {AbstractBox}
      */
     getBox(n) {
-      return n < 0 || n >= this.cells.length ? null : this.cells[n]
+      return n < 0 || n >= this.cells.length ? null : this.cells[n];
     }
 
     /**
@@ -297,7 +297,7 @@ define([
      * @returns {AbstractBox}
      */
     getBackgroundBox() {
-      return this.backgroundBox
+      return this.backgroundBox;
     }
 
     /**
@@ -305,14 +305,14 @@ define([
      * @param {AbstractBox} bx
      */
     setBackgroundBox(bx) {
-      this.backgroundBox = bx
+      this.backgroundBox = bx;
       if (bx !== null) {
-        bx.setParent(this)
-        bx.isBackground = true
+        bx.setParent(this);
+        bx.isBackground = true;
       }
       // Add the `backgroundbox` rectangle to the global BoxBag rectangle
-      AWT.Rectangle.prototype.add.call(this, bx)
-      this.preferredBounds.setBounds(this.getBounds())
+      AWT.Rectangle.prototype.add.call(this, bx);
+      this.preferredBounds.setBounds(this.getBounds());
     }
 
     /**
@@ -321,20 +321,20 @@ define([
      * Updates `preferredBounds` and the current position and size of the box bag.
      */
     recalcSize() {
-      let r = this.backgroundBox ? new AWT.Rectangle(this.backgroundBox.pos, this.backgroundBox.dim) : null
+      let r = this.backgroundBox ? new AWT.Rectangle(this.backgroundBox.pos, this.backgroundBox.dim) : null;
       this.cells.forEach(cell => {
         if (!r)
-          r = new AWT.Rectangle(cell.pos, cell.dim)
+          r = new AWT.Rectangle(cell.pos, cell.dim);
         else
-          r.add(cell)
-      })
+          r.add(cell);
+      });
       if (!r)
-        r = new AWT.Rectangle(this.pos.x, this.pos.y, 0, 0)
-      this.preferredBounds.setRect(r)
-      this.x = r.pos.x
-      this.y = r.pos.y
-      this.dim.width = r.dim.width
-      this.dim.height = r.dim.height
+        r = new AWT.Rectangle(this.pos.x, this.pos.y, 0, 0);
+      this.preferredBounds.setRect(r);
+      this.x = r.pos.x;
+      this.y = r.pos.y;
+      this.dim.width = r.dim.width;
+      this.dim.height = r.dim.height;
     }
 
     /**
@@ -342,7 +342,7 @@ define([
      * @returns {number}
      */
     getNumCells() {
-      return this.cells.length
+      return this.cells.length;
     }
 
     /**
@@ -351,9 +351,9 @@ define([
      * @param {} value - The value, of any type
      */
     setCellAttr(key, value) {
-      this.cells.forEach(bx => bx[key] = value)
+      this.cells.forEach(bx => bx[key] = value);
       if (this.backgroundBox)
-        this.backgroundBox[key] = value
+        this.backgroundBox[key] = value;
     }
 
     /**
@@ -362,7 +362,7 @@ define([
      * @param {boolean} newVal - Whether to set or unset the border
      */
     setBorder(newVal) {
-      this.cells.forEach(bx => bx.setBorder(newVal))
+      this.cells.forEach(bx => bx.setBorder(newVal));
     }
 
     /**
@@ -371,7 +371,7 @@ define([
      * @param {boolean} newVal - Whether to set the cells visible or not
      */
     setVisible(newVal) {
-      this.cells.forEach(bx => bx.setVisible(newVal))
+      this.cells.forEach(bx => bx.setVisible(newVal));
     }
 
     /**
@@ -380,8 +380,8 @@ define([
      * @param {boolean} newVal - Whether to set or unset the cells in "alternative" mode
      */
     setAlternative(newVal) {
-      super.setAlternative(newVal)
-      this.cells.forEach(bx => bx.setAlternative(newVal))
+      super.setAlternative(newVal);
+      this.cells.forEach(bx => bx.setAlternative(newVal));
     }
 
     /**
@@ -396,34 +396,34 @@ define([
     setBounds(rect, ry, rw, rh) {
       if (typeof rect === 'number') {
         // Arguments are co-ordinates and size
-        rect = new AWT.Rectangle(rect, ry, rw, rh)
+        rect = new AWT.Rectangle(rect, ry, rw, rh);
       }
       if (rect.getSurface() > 0 && !rect.equals(this)) {
         const
           scaleW = rect.dim.width / this.dim.width,
           scaleH = rect.dim.height / this.dim.height,
           dx = rect.pos.x - this.pos.x,
-          dy = rect.pos.y - this.pos.y
+          dy = rect.pos.y - this.pos.y;
         this.cells.forEach(bx => {
-          const p = new AWT.Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y)
+          const p = new AWT.Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y);
           bx.setBounds(
             dx + this.pos.x + scaleW * p.x,
             dy + this.pos.y + scaleH * p.y,
             scaleW * bx.dim.width,
-            scaleH * bx.dim.height)
-        })
+            scaleH * bx.dim.height);
+        });
         if (this.backgroundBox !== null) {
           const
             bx = this.backgroundBox,
-            p = new AWT.Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y)
+            p = new AWT.Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y);
           bx.setBounds(
             dx + this.pos.x + scaleW * p.x,
             dy + this.pos.y + scaleH * p.y,
             scaleW * bx.dim.width,
-            scaleH * bx.dim.height)
+            scaleH * bx.dim.height);
         }
       }
-      super.setBounds(rect)
+      super.setBounds(rect);
     }
 
     /**
@@ -436,25 +436,25 @@ define([
      */
     update(ctx, dirtyRegion) {
       if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
-        return false
+        return false;
 
       if (dirtyRegion && !this.intersects(dirtyRegion))
-        return false
+        return false;
 
       if (this.backgroundBox !== null)
-        this.backgroundBox.update(ctx, dirtyRegion)
+        this.backgroundBox.update(ctx, dirtyRegion);
 
       this.cells.forEach(bx => {
         if (!bx.isMarked())
-          bx.update(ctx, dirtyRegion)
-      })
+          bx.update(ctx, dirtyRegion);
+      });
 
       // Make a second loop to repaint marked cells
       this.cells.forEach(bx => {
         if (bx.isMarked())
-          bx.update(ctx, dirtyRegion)
-      })
-      return true
+          bx.update(ctx, dirtyRegion);
+      });
+      return true;
     }
 
     /**
@@ -463,15 +463,15 @@ define([
      * @returns {AbstractBox}
      */
     findBox(p) {
-      let result = null
+      let result = null;
       for (let i = this.cells.length - 1; i >= 0; i--) {
-        const bx = this.getBox(i)
+        const bx = this.getBox(i);
         if (bx.isVisible() && bx.contains(p)) {
-          result = bx
-          break
+          result = bx;
+          break;
         }
       }
-      return result
+      return result;
     }
 
     /**
@@ -479,7 +479,7 @@ define([
      * @returns {number}
      */
     countInactiveCells() {
-      return this.cells.reduce((n, bx) => bx.isInactive() ? ++n : n, 0)
+      return this.cells.reduce((n, bx) => bx.isInactive() ? ++n : n, 0);
     }
   }
 
@@ -499,7 +499,7 @@ define([
      * @name BoxBag#backgroundBox
      * @type {AbstractBox} */
     backgroundBox: null,
-  })
+  });
 
-  return BoxBag
-})
+  return BoxBag;
+});

@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -59,10 +59,10 @@ define([
      */
     constructor(data, options = {}) {
       // Build instrument on first call to constructor
-      MidiAudioPlayer.prepareInstrument(options)
-      this.data = data
-      this.player = new MidiPlayer.Player(ev => this.playEvent(ev))
-      this.player.loadArrayBuffer(data)
+      MidiAudioPlayer.prepareInstrument(options);
+      this.data = data;
+      this.player = new MidiPlayer.Player(ev => this.playEvent(ev));
+      this.player.loadArrayBuffer(data);
     }
 
     /**
@@ -74,18 +74,18 @@ define([
     static prepareInstrument(options = {}) {
       if (MidiAudioPlayer.loadingInstrument === false) {
         MidiAudioPlayer.loadingInstrument = true;
-        MidiAudioPlayer.audioContext = new AudioContext()
+        MidiAudioPlayer.audioContext = new AudioContext();
         MidiPlayer.Soundfont.instrument(
           MidiAudioPlayer.audioContext,
           options.MIDISoundFontObject || MidiAudioPlayer.MIDISoundFontObject ||
           `${options.MIDISoundFontBase || MidiAudioPlayer.MIDISoundFontBase}/${options.MIDISoundFontName || MidiAudioPlayer.MIDISoundFontName}${options.MIDISoundFontExtension || MidiAudioPlayer.MIDISoundFontExtension}`)
           .then(instrument => {
-            Utils.log('info', 'MIDI soundfont instrument loaded')
-            MidiAudioPlayer.instrument = instrument
+            Utils.log('info', 'MIDI soundfont instrument loaded');
+            MidiAudioPlayer.instrument = instrument;
           })
           .catch(err => {
-            Utils.log('error', `Error loading soundfont base instrument: ${err}`)
-          })
+            Utils.log('error', `Error loading soundfont base instrument: ${err}`);
+          });
       }
     }
 
@@ -93,16 +93,16 @@ define([
      * Pauses the player
      */
     pause() {
-      this.player.pause()
-      this.startedNotes = []
+      this.player.pause();
+      this.startedNotes = [];
     }
 
     /**
      * Starts or resumes playing
      */
     play() {
-      this.startedNotes = []
-      this.player.play()
+      this.startedNotes = [];
+      this.player.play();
     }
 
     /**
@@ -110,7 +110,7 @@ define([
      * @returns boolean
      */
     get paused() {
-      return !this.player.isPlaying()
+      return !this.player.isPlaying();
     }
 
     /**
@@ -118,7 +118,7 @@ define([
      * @returns boolean
      */
     get ended() {
-      return this.player.getSongTimeRemaining() <= 0
+      return this.player.getSongTimeRemaining() <= 0;
     }
 
     /**
@@ -126,7 +126,7 @@ define([
      * @returns number
      */
     get currentTime() {
-      return this.player.getSongTime() * 1000
+      return this.player.getSongTime() * 1000;
     }
 
     /**
@@ -134,7 +134,7 @@ define([
      * @param {number} time - The time position where the player pointer must be placed
      */
     set currentTime(time) {
-      this.player.skipToSeconds(time / 1000)
+      this.player.skipToSeconds(time / 1000);
     }
 
     /**
@@ -145,17 +145,17 @@ define([
       if (MidiAudioPlayer.instrument) {
         // Check for specific interval
         if (this.playTo > 0 && this.currentTime >= this.playTo)
-          this.pause()
+          this.pause();
         // Set main volume
         else if (ev.name === 'Controller Change' && ev.number === 7)
           this.mainVolume = ev.value / 127;
         // Process 'Note on' messages. Max gain set to 2.0 for better results with the used soundfont
         else if (ev.name === 'Note on' && ev.velocity > 0)
-          this.startedNotes[ev.noteNumber] = MidiAudioPlayer.instrument.play(ev.noteName, MidiAudioPlayer.audioContext.currentTime, { gain: 2 * (this.mainVolume * ev.velocity / 100) })
+          this.startedNotes[ev.noteNumber] = MidiAudioPlayer.instrument.play(ev.noteName, MidiAudioPlayer.audioContext.currentTime, { gain: 2 * (this.mainVolume * ev.velocity / 100) });
         // Process 'Note off' messages
         else if (ev.name === 'Note off' && ev.noteNumber && this.startedNotes[ev.noteNumber]) {
-          this.startedNotes[ev.noteNumber].stop()
-          delete (this.startedNotes[ev.noteNumber])
+          this.startedNotes[ev.noteNumber].stop();
+          delete (this.startedNotes[ev.noteNumber]);
         }
       }
     }
@@ -188,7 +188,7 @@ define([
      * @name MidiAudioPlayer#startedNotes
      * @type {function[]} */
     startedNotes: [],
-  })
+  });
 
   /**
    * The {@link AudioContext} used by this MIDI player.
@@ -201,13 +201,13 @@ define([
    * See: https://github.com/danigb/soundfont-player
    * @type {Instrument}
    */
-  MidiAudioPlayer.instrument = null
+  MidiAudioPlayer.instrument = null;
 
   /**
    * A flag used to avoid re-entrant calls to {@link MidiAudioPlayer.prepareInstrument}
    * @type {boolean}
    */
-  MidiAudioPlayer.loadingInstrument = false
+  MidiAudioPlayer.loadingInstrument = false;
 
   /**
    * An object containing the full soundfont data used by {@link MidiAudioPlayer.instrument}
@@ -215,14 +215,14 @@ define([
    * This value can be overwritten by the global parameter `MIDISoundFontObject`
    * @type {object}
    */
-  MidiAudioPlayer.MIDISoundFontObject = null
+  MidiAudioPlayer.MIDISoundFontObject = null;
 
   /**
    * The URL used as base for the current collection of MIDI soundfonts.
    * This value can be overwritten by the global parameter `MIDISoundFontBase`
    * @type {string}
    */
-  MidiAudioPlayer.MIDISoundFontBase = 'https://clic.xtec.cat/dist/jclic.js/soundfonts/MusyngKite'
+  MidiAudioPlayer.MIDISoundFontBase = 'https://clic.xtec.cat/dist/jclic.js/soundfonts/MusyngKite';
   // Alternative sites are:
   // 'https://clic.xtec.cat/dist/jclic.js/soundfonts/FluidR3_GM'
   // 'https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM'
@@ -234,7 +234,7 @@ define([
    * See [MIDI.js Soundfonts](https://github.com/gleitz/midi-js-soundfonts) for full lists of MIDI instrument names.
    * @type {string}
    */
-  MidiAudioPlayer.MIDISoundFontName = 'acoustic_grand_piano'
+  MidiAudioPlayer.MIDISoundFontName = 'acoustic_grand_piano';
 
   /**
    * An extension to be added to `MIDISoundFontName` in order to build the full file name of the soundfont JS file.
@@ -242,7 +242,7 @@ define([
    * This value can be overwritten by the global parameter `MIDISoundFontExtension`
    * @type {string}
    */
-  MidiAudioPlayer.MIDISoundFontExtension = '-mp3.js'
+  MidiAudioPlayer.MIDISoundFontExtension = '-mp3.js';
 
-  return MidiAudioPlayer
-})
+  return MidiAudioPlayer;
+});

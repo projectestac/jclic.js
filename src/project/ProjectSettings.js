@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.1
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -58,14 +58,14 @@ define([
      * @param {JClicProject} project - The project to which this settings belongs
      */
     constructor(project) {
-      this.project = project
-      this.authors = []
-      this.organizations = []
-      this.revisions = []
-      this.languages = []
-      this.locales = []
-      this.description = {}
-      this.tags = {}
+      this.project = project;
+      this.authors = [];
+      this.organizations = [];
+      this.revisions = [];
+      this.languages = [];
+      this.locales = [];
+      this.description = {};
+      this.tags = {};
     }
 
     /**
@@ -79,11 +79,11 @@ define([
       $xml.children().each((_n, child) => {
         switch (child.nodeName) {
           case 'title':
-            this.title = child.textContent
-            break
+            this.title = child.textContent;
+            break;
           case 'description':
-            single_description = Utils.getXmlNodeText(child)
-            break
+            single_description = Utils.getXmlNodeText(child);
+            break;
           case 'descriptions':
             multiple_descriptions = Utils.getXmlNodeText(child);
             break;
@@ -100,15 +100,15 @@ define([
             this.revisions.push(revision);
             break;
           case 'language':
-            this.languages.push(Utils.cleanOldLanguageTag(child.textContent))
-            break
+            this.languages.push(Utils.cleanOldLanguageTag(child.textContent));
+            break;
           case 'eventSounds':
-            this.eventSounds = new EventSounds()
-            this.eventSounds.setProperties($(child))
-            break
+            this.eventSounds = new EventSounds();
+            this.eventSounds.setProperties($(child));
+            break;
           case 'skin':
-            this.skinFileName = $(child).attr('file')
-            break
+            this.skinFileName = $(child).attr('file');
+            break;
           case 'descriptors':
             this.tags = Utils.parseXmlNode(child, true);
             if (this.tags['#text']) {
@@ -126,32 +126,32 @@ define([
               this[child.nodeName] = img.file;
             break;
         }
-      })
+      });
 
       // Try to find an array of valid locales
       // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
       if (this.languages.length > 0 && window.Intl && window.Intl.getCanonicalLocales) {
-        this.locales = []
+        this.locales = [];
         this.languages.forEach(lang => {
           // Languages usually are stored in the form: "English (en)"
-          const matches = /\(([a-z,A-Z,-]+)\)/.exec(lang)
+          const matches = /\(([a-z,A-Z,-]+)\)/.exec(lang);
           if (matches && matches.length > 1) {
             try {
-              const canonicals = window.Intl.getCanonicalLocales(matches[1])
+              const canonicals = window.Intl.getCanonicalLocales(matches[1]);
               if (canonicals)
-                this.locales = this.locales.concat(canonicals)
+                this.locales = this.locales.concat(canonicals);
             } catch (err) {
-              Utils.log('error', `Invalid language: ${lang}`)
+              Utils.log('error', `Invalid language: ${lang}`);
             }
           }
-        })
+        });
       }
 
       if (multiple_descriptions && multiple_descriptions.description) {
         multiple_descriptions.description.forEach(d => {
           if (d.language && d.text)
             this.description[d.language] = d.text;
-        })
+        });
       }
 
       if (single_description && this.languages.length > 0 && !this.description[this.languages[0]])
@@ -230,7 +230,7 @@ define([
      * @name ProjectSettings#eventSounds
      * @type {EventSounds} */
     eventSounds: new EventSounds(),
-  })
+  });
 
-  return ProjectSettings
-})
+  return ProjectSettings;
+});
