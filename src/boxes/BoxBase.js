@@ -112,8 +112,10 @@ define([
 
     getData() {
       return Utils.getData(this, [
-        'shadow', 'transparent', 'margin', 'borderStroke', 'markerStroke',
-        'font', 'bgGradient',
+        'shadow', 'transparent', 'margin',
+        'borderStroke', 'markerStroke', // AWR.Stroke
+        'font', // AWT.Font
+        'bgGradient', // AWT.Gradient
         `textColor|${BoxBase.prototype.textColor}`,
         `backColor|${BoxBase.prototype.backColor}`,
         `shadowColor|${BoxBase.prototype.shadowColor}`,

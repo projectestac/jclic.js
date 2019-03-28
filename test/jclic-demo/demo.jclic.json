@@ -32,15 +32,13 @@
     "revisions": [
       {
         "description": "Adapted for JSClic",
-        "date": "2015-04-03T22:00:00.000Z",
         "author": {
           "name": "Francesc Busquets",
           "mail": "fbusquets@xtec.cat"
         }
       },
       {
-        "description": "created",
-        "date": "2002-01-31T23:00:00.000Z"
+        "description": "created"
       }
     ],
     "languages": [
@@ -425,133 +423,107 @@
     },
     {
       "name": "bici.gif",
-      "file": "bici.gif",
-      "animated": false
+      "file": "bici.gif"
     },
     {
       "name": "camio.gif",
-      "file": "camio.gif",
-      "animated": false
+      "file": "camio.gif"
     },
     {
       "name": "casa.gif",
-      "file": "casa.gif",
-      "animated": false
+      "file": "casa.gif"
     },
     {
       "name": "cireres.gif",
-      "file": "cireres.gif",
-      "animated": false
+      "file": "cireres.gif"
     },
     {
       "name": "cotxe.gif",
-      "file": "cotxe.gif",
-      "animated": false
+      "file": "cotxe.gif"
     },
     {
       "name": "elmo.gif",
-      "file": "elmo.gif",
-      "animated": false
+      "file": "elmo.gif"
     },
     {
       "name": "big.gif",
-      "file": "big.gif",
-      "animated": true
+      "file": "big.gif"
     },
     {
       "name": "esqui.gif",
-      "file": "esqui.gif",
-      "animated": true
+      "file": "esqui.gif"
     },
     {
       "name": "func2.gif",
-      "file": "func2.gif",
-      "animated": false
+      "file": "func2.gif"
     },
     {
       "name": "funcio.gif",
-      "file": "funcio.gif",
-      "animated": false
+      "file": "funcio.gif"
     },
     {
       "name": "great.gif",
-      "file": "great.gif",
-      "animated": false
+      "file": "great.gif"
     },
     {
       "name": "lletres.gif",
-      "file": "lletres.gif",
-      "animated": false
+      "file": "lletres.gif"
     },
     {
       "name": "llimona.gif",
-      "file": "llimona.gif",
-      "animated": false
+      "file": "llimona.gif"
     },
     {
       "name": "mapa.gif",
-      "file": "mapa.gif",
-      "animated": false
+      "file": "mapa.gif"
     },
     {
       "name": "minialt.gif",
-      "file": "minialt.gif",
-      "animated": false
+      "file": "minialt.gif"
     },
     {
       "name": "minialt2.gif",
-      "file": "minialt2.gif",
-      "animated": false
+      "file": "minialt2.gif"
     },
     {
       "name": "moto.gif",
-      "file": "moto.gif",
-      "animated": false
+      "file": "moto.gif"
     },
     {
       "name": "natacio.gif",
-      "file": "natacio.gif",
-      "animated": true
+      "file": "natacio.gif"
     },
     {
       "name": "pera.gif",
-      "file": "pera.gif",
-      "animated": false
+      "file": "pera.gif"
     },
     {
       "name": "raim.gif",
-      "file": "raim.gif",
-      "animated": false
+      "file": "raim.gif"
     },
     {
       "name": "simpleanim.gif",
-      "file": "simpleanim.gif",
-      "animated": true
+      "file": "simpleanim.gif"
     },
     {
       "name": "sindria.gif",
-      "file": "sindria.gif",
-      "animated": false
+      "file": "sindria.gif"
     },
     {
       "name": "taronja.gif",
-      "file": "taronja.gif",
-      "animated": false
+      "file": "taronja.gif"
     },
     {
       "name": "tennis.gif",
-      "file": "tennis.gif",
-      "animated": true
+      "file": "tennis.gif"
     },
     {
       "name": "trampoli.gif",
-      "file": "trampoli.gif",
-      "animated": true
+      "file": "trampoli.gif"
     },
     {
       "name": "trex.gif",
-      "file": "trex.gif",
-      "animated": true
+      "file": "trex.gif"
     },
     {
       "name": "astro.jpg",
@@ -658,459 +630,79 @@
     {
       "name": "anim.ass",
       "className": "@panels.InformationScreen",
-      "margin": 8,
       "bgColor": "#C0C0C0",
-      "border": true,
-      "includeInReports": false,
-      "reportActions": false,
-      "eventSounds": {
-        "enabled": 2,
-        "elements": {
-          "start": {},
-          "click": {},
-          "actionOk": {},
-          "actionError": {},
-          "finishedOk": {},
-          "finishedError": {}
-        }
-      },
       "messages": {
         "initial": {
-          "imgAlign": {
-            "h": "middle",
-            "v": "middle"
-          },
-          "txtAlign": {
-            "h": "middle",
-            "v": "middle"
-          },
-          "bb": {
-            "parent": null
-          },
-          "text": "Multimedia and animations",
-          "innerHtmlText": null,
-          "type": "initial"
-        },
-        "final": {
-          "imgAlign": {
-            "h": "middle",
-            "v": "middle"
-          },
-          "txtAlign": {
-            "h": "middle",
-            "v": "middle"
-          },
-          "bb": {
-            "parent": null
-          },
-          "innerHtmlText": null,
-          "type": "final"
+          "text": "Multimedia and animations"
         }
       },
-      "transparentBg": false,
       "activityBgColor": "#C0C0C0",
-      "bTimeCounter": false,
-      "bScoreCounter": false,
-      "bActionsCounter": false,
       "abc": {
         "primary": {
-          "cells": [
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "text": "In JClic cells can have different media and animations. It's possible also to record a sound from the microphone and listen it:",
-              "mediaContent": {
-                "mediaType": "URL",
-                "level": 1,
-                "mediaFileName": "http://clic.xtec.cat"
-              },
-              "innerHtmlText": null
-            },
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "mediaContent": {
-                "mediaType": "PLAY_VIDEO",
-                "level": 1,
-                "mediaFileName": "test1.swf",
-                "stretch": true,
-                "free": false,
-                "catchMouseEvents": true
-              },
-              "img": {
-                "src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiMwMDAwMDAiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xOCA0bDIgNGgtM2wtMi00aC0ybDIgNGgtM2wtMi00SDhsMiA0SDdMNSA0SDRjLTEuMSAwLTEuOTkuOS0xLjk5IDJMMiAxOGMwIDEuMS45IDIgMiAyaDE2YzEuMSAwIDItLjkgMi0yVjRoLTR6Ij48L3BhdGg+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSI+PC9wYXRoPjwvc3ZnPgo="
-              },
-              "animatedGifFile": null,
-              "innerHtmlText": null
-            },
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "mediaContent": {
-                "mediaType": "PLAY_VIDEO",
-                "level": 1,
-                "mediaFileName": "zebra.mp4",
-                "stretch": true,
-                "free": false
-              },
-              "img": {
-                "src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiMwMDAwMDAiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xOCA0bDIgNGgtM2wtMi00aC0ybDIgNGgtM2wtMi00SDhsMiA0SDdMNSA0SDRjLTEuMSAwLTEuOTkuOS0xLjk5IDJMMiAxOGMwIDEuMS45IDIgMiAyaDE2YzEuMSAwIDItLjkgMi0yVjRoLTR6Ij48L3BhdGg+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSI+PC9wYXRoPjwvc3ZnPgo="
-              },
-              "animatedGifFile": null,
-              "innerHtmlText": null
-            },
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "imgName": "simpleanim.gif",
-              "mbe": {
-                "basePath": "test/jclic-demo/",
-                "timeout": 1553698581094,
-                "name": "simpleanim.gif",
-                "file": "simpleanim.gif",
-                "ext": "gif",
-                "type": "image",
-                "animated": true,
-                "_whenReady": [
-                  null
-                ]
-              },
-              "innerHtmlText": null
-            },
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "text": "Flash 2.0 movies",
-              "innerHtmlText": null
-            },
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "text": "AVI, MPEG and QT video",
-              "innerHtmlText": null
-            },
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "text": "Animated GIF",
-              "innerHtmlText": null
-            },
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "mediaContent": {
-                "mediaType": "RECORD_AUDIO",
-                "level": 1,
-                "recBuffer": 1,
-                "length": 10
-              },
-              "img": {
-                "src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiMwMDAwMDAiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMiAxNGMxLjY2IDAgMi45OS0xLjM0IDIuOTktM0wxNSA1YzAtMS42Ni0xLjM0LTMtMy0zUzkgMy4zNCA5IDV2NmMwIDEuNjYgMS4zNCAzIDMgM3ptNS4zLTNjMCAzLTIuNTQgNS4xLTUuMyA1LjFTNi43IDE0IDYuNyAxMUg1YzAgMy40MSAyLjcyIDYuMjMgNiA2LjcyVjIxaDJ2LTMuMjhjMy4yOC0uNDggNi0zLjMgNi02LjcyaC0xLjd6Ij48L3BhdGg+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSI+PC9wYXRoPjwvc3ZnPgo="
-              },
-              "animatedGifFile": null,
-              "innerHtmlText": null
-            },
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "mediaContent": {
-                "mediaType": "PLAY_RECORDED_AUDIO",
-                "level": 1,
-                "recBuffer": 1
-              },
-              "img": {
-                "src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiMwMDAwMDAiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0zIDl2Nmg0bDUgNVY0TDcgOUgzem0xMy41IDNjMC0xLjc3LTEuMDItMy4yOS0yLjUtNC4wM3Y4LjA1YzEuNDgtLjczIDIuNS0yLjI1IDIuNS00LjAyek0xNCAzLjIzdjIuMDZjMi44OS44NiA1IDMuNTQgNSA2Ljcxcy0yLjExIDUuODUtNSA2LjcxdjIuMDZjNC4wMS0uOTEgNy00LjQ5IDctOC43N3MtMi45OS03Ljg2LTctOC43N3oiPjwvcGF0aD48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIj48L3BhdGg+PC9zdmc+Cg=="
-              },
-              "animatedGifFile": null,
-              "innerHtmlText": null
-            },
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "mediaContent": {
-                "mediaType": "PLAY_AUDIO",
-                "level": 1,
-                "mediaFileName": "muybien.mp3"
-              },
-              "img": {
-                "src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiMwMDAwMDAiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0zIDl2Nmg0bDUgNVY0TDcgOUgzem0xMy41IDNjMC0xLjc3LTEuMDItMy4yOS0yLjUtNC4wM3Y4LjA1YzEuNDgtLjczIDIuNS0yLjI1IDIuNS00LjAyek0xNCAzLjIzdjIuMDZjMi44OS44NiA1IDMuNTQgNSA2Ljcxcy0yLjExIDUuODUtNSA2LjcxdjIuMDZjNC4wMS0uOTEgNy00LjQ5IDctOC43N3MtMi45OS03Ljg2LTctOC43N3oiPjwvcGF0aD48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIj48L3BhdGg+PC9zdmc+Cg=="
-              },
-              "animatedGifFile": null,
-              "innerHtmlText": null
-            },
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "text": "Record a sound",
-              "innerHtmlText": null
-            },
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "text": "Listen the recorded sound",
-              "innerHtmlText": null
-            },
-            {
-              "imgAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "txtAlign": {
-                "h": "middle",
-                "v": "middle"
-              },
-              "text": "WAV, AU and MP3 sounds",
-              "innerHtmlText": null
-            }
-          ],
-          "ncw": 3,
-          "nch": 5,
-          "w": 190,
-          "h": 80,
-          "border": true,
           "bb": {
-            "parent": null,
-            "font": {
-              "_metrics": {
-                "ascent": -1,
-                "descent": -1,
-                "height": -1
-              },
-              "family": "Arial",
-              "size": 12
-            },
-            "textColor": "",
-            "backColor": "#FFFFFF",
-            "shadowColor": "",
-            "inactiveColor": "",
-            "alternativeColor": "",
-            "borderColor": ""
+            "backColor": "#FFFFFF"
           },
           "shaper": {
-            "nCols": 3,
-            "nRows": 5,
-            "nCells": 13,
-            "initiated": false,
-            "shapeData": [
-              {
-                "pos": {
-                  "x": 0,
-                  "y": 0
-                },
-                "dim": {
-                  "width": 1,
-                  "height": 0.16666666666666666
-                }
-              },
-              {
-                "pos": {
-                  "x": 0,
-                  "y": 0.16666666666666666
-                },
-                "dim": {
-                  "width": 0.3333333333333333,
-                  "height": 0.3333333333333333
-                }
-              },
-              {
-                "pos": {
-                  "x": 0.3333333333333333,
-                  "y": 0.16666666666666666
-                },
-                "dim": {
-                  "width": 0.3333333333333333,
-                  "height": 0.3333333333333333
-                }
-              },
-              {
-                "pos": {
-                  "x": 0.6666666666666666,
-                  "y": 0.16666666666666666
-                },
-                "dim": {
-                  "width": 0.3333333333333333,
-                  "height": 0.3333333333333333
-                }
-              },
-              {
-                "pos": {
-                  "x": 0,
-                  "y": 0.5
-                },
-                "dim": {
-                  "width": 0.3333333333333333,
-                  "height": 0.08333333333333333
-                }
-              },
-              {
-                "pos": {
-                  "x": 0.3333333333333333,
-                  "y": 0.5
-                },
-                "dim": {
-                  "width": 0.3333333333333333,
-                  "height": 0.08333333333333333
-                }
-              },
-              {
-                "pos": {
-                  "x": 0.6666666666666666,
-                  "y": 0.5
-                },
-                "dim": {
-                  "width": 0.3333333333333333,
-                  "height": 0.08333333333333333
-                }
-              },
-              {
-                "pos": {
-                  "x": 0,
-                  "y": 0.5833333333333334
-                },
-                "dim": {
-                  "width": 0.3333333333333333,
-                  "height": 0.3333333333333333
-                }
-              },
-              {
-                "pos": {
-                  "x": 0.3333333333333333,
-                  "y": 0.5833333333333334
-                },
-                "dim": {
-                  "width": 0.3333333333333333,
-                  "height": 0.3333333333333333
-                }
-              },
-              {
-                "pos": {
-                  "x": 0.6666666666666666,
-                  "y": 0.5833333333333334
-                },
-                "dim": {
-                  "width": 0.3333333333333333,
-                  "height": 0.3333333333333333
-                }
-              },
-              {
-                "pos": {
-                  "x": 0,
-                  "y": 0.9166666666666666
-                },
-                "dim": {
-                  "width": 0.3333333333333333,
-                  "height": 0.08333333333333333
-                }
-              },
-              {
-                "pos": {
-                  "x": 0.3333333333333333,
-                  "y": 0.9166666666666666
-                },
-                "dim": {
-                  "width": 0.3333333333333333,
-                  "height": 0.08333333333333333
-                }
-              },
-              {
-                "pos": {
-                  "x": 0.6666666666666666,
-                  "y": 0.9166666666666666
-                },
-                "dim": {
-                  "width": 0.3333333333333333,
-                  "height": 0.08333333333333333
-                }
-              }
-            ],
-            "showEnclosure": true,
-            "className": "@Holes",
-            "scaleX": 3,
-            "scaleY": 12,
-            "enclosing": {
-              "pos": {
-                "x": 0,
-                "y": 0
-              },
-              "dim": {
-                "width": 1,
-                "height": 1
+            "className": "@Holes"
+          },
+          "cells": [
+            {
+              "text": "In JClic cells can have different media and animations. It's possible also to record a sound from the microphone and listen it:",
+              "mediaContent": {
+                "type": "URL",
+                "file": "http://clic.xtec.cat"
               }
             },
-            "hasRemainder": true
-          }
+            {
+              "mediaContent": {
+                "type": "PLAY_VIDEO",
+                "file": "test1.swf"
+              }
+            },
+            {
+              "mediaContent": {
+                "type": "PLAY_VIDEO",
+                "file": "zebra.mp4"
+              }
+            },
+            {
+              "imgName": "simpleanim.gif"
+            },
+            {
+              "text": "Flash 2.0 movies"
+            },
+            {
+              "text": "AVI, MPEG and QT video"
+            },
+            {
+              "text": "Animated GIF"
+            },
+            {
+              "mediaContent": {
+                "type": "RECORD_AUDIO"
+              }
+            },
+            {
+              "mediaContent": {
+                "type": "PLAY_RECORDED_AUDIO"
+              }
+            },
+            {
+              "mediaContent": {
+                "type": "PLAY_AUDIO",
+                "file": "muybien.mp3"
+              }
+            },
+            {
+              "text": "Record a sound"
+            },
+            {
+              "text": "Listen the recorded sound"
+            },
+            {
+              "text": "WAV, AU and MP3 sounds"
+            }
+          ]
         }
       }
     }

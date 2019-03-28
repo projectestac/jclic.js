@@ -77,10 +77,7 @@ define([
     }
 
     getData() {
-      return {
-        enabled: this.enabled,
-        elements: Utils.getData(this.elements)
-      };
+      return Utils.getData(this, [`enabled|${Utils.DEFAULT}`, 'elements']);
     }
 
     /**

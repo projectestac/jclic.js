@@ -100,10 +100,11 @@ define([
         'border', 'absolutePositioned', 'absolutePosition',
         'includeInReports', 'reportActions',
         'helpWindow', 'showSolution', 'helpMsg',
-        'eventSounds', // EventSounds
+        'eventSounds', // EventSounds -> EventSoundsElement
         'useOrder', 'dragCells', 'maxTime', 'countDownTime', 'maxActions', 'countDownActions',
         'infoUrl', 'infoCmd',
-        'messages', // ActiveBoxContent[]
+        'messages', // ActiveBoxContent[] -> (BoxBase -> AWT.Font, AWT.Gradient, AWT.Stroke), (MediaContent -> AWT.Point)
+        
         'windowSize', 'transparentBg', 'activityBgColor', 'activityBgGradient',
         'bTimeCounter', 'bScoreCounter', 'bActionsCounter',
         'acp', // AutoContentProvider

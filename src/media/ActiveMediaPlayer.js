@@ -53,7 +53,7 @@ define([
     constructor(mc, mb, ps) {
       this.mc = mc;
       this.ps = ps;
-      switch (mc.mediaType) {
+      switch (mc.type) {
         case 'RECORD_AUDIO':
           if (ActiveMediaPlayer.AUDIO_BUFFERS) {
             this.clearAudioBuffer(mc.recBuffer);
@@ -66,7 +66,7 @@ define([
         case 'PLAY_AUDIO':
         case 'PLAY_VIDEO':
         case 'PLAY_MIDI':
-          this.mbe = mb.getElement(mc.mediaFileName, true);
+          this.mbe = mb.getElement(mc.file, true);
           break;
         default:
           break;
@@ -99,7 +99,7 @@ define([
         if (ActiveMediaPlayer.AUDIO_BUFFERS) {
           const buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer];
           if (buffer) {
-            if (this.mc.mediaType === 'RECORD_AUDIO') {
+            if (this.mc.type === 'RECORD_AUDIO') {
               buffer.record();
             } else {
               buffer.play();

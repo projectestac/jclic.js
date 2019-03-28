@@ -49,12 +49,12 @@ define([
      * @param {string} type - The type of media. Valid values are: `UNKNOWN`, `PLAY_AUDIO`, `PLAY_VIDEO`,
      * `PLAY_MIDI`, `PLAY_CDAUDIO`, `RECORD_AUDIO`, `PLAY_RECORDED_AUDIO`, `RUN_CLIC_ACTIVITY`,
      * `RUN_CLIC_PACKAGE`, `RUN_EXTERNAL`, `URL`, `EXIT` and `RETURN`
-     * @param {string=} mediaFileName - Optional parameter indicating the media file name
+     * @param {string=} file - Optional parameter indicating the media file name
      */
-    constructor(type, mediaFileName) {
-      this.mediaType = type;
-      if (mediaFileName)
-        this.mediaFileName = mediaFileName;
+    constructor(type, file) {
+      this.type = type;
+      if (file)
+        this.file = file;
     }
 
     /**
@@ -65,21 +65,21 @@ define([
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
           case 'type':
-            this['mediaType'] = val;
+            this.type = val;
             break;
           case 'file':
-            this['mediaFileName'] = Utils.nSlash(val);
+            this.file = Utils.nSlash(val);
             break;
           case 'params':
-            this['externalParam'] = Utils.nSlash(val);
+            this.externalParam = Utils.nSlash(val);
             break;
 
           case 'pFrom':
-            this['absLocationFrom'] = val;
+            this.absLocationFrom = val;
             break;
 
           case 'buffer':
-            this['recBuffer'] = Number(val);
+            this.recBuffer = Number(val);
             break;
           case 'level':
           case 'from':
@@ -112,8 +112,9 @@ define([
 
     getData() {
       return Utils.getData(this, [
-        'mediaType', 'mediaFileName',
-        'externalParam', 'absLocationFrom', 'recBuffer',
+        'type', 'file', 'externalParam',
+        'absLocation', // -> AWT.Point
+        'absLocationFrom', 'recBuffer',
         'level', 'from', 'to', 'length', 'absLocation',
         'stretch', 'free', 'catchMouseEvents', 'loop', 'autostart'
       ]);
@@ -125,10 +126,10 @@ define([
      * @returns {boolean} - `true` when both objects are equivalent.
      */
     isEquivalent(mc) {
-      return this.mediaType === mc.mediaType &&
-        (this.mediaFileName === mc.mediaFileName ||
-          this.mediaFileName !== null && mc.mediaFileName !== null &&
-          this.mediaFileName.toLocaleLowerCase() === mc.mediaFileName.toLocaleLowerCase()) &&
+      return this.type === mc.type &&
+        (this.file === mc.file ||
+          this.file !== null && mc.file !== null &&
+          this.file.toLocaleLowerCase() === mc.file.toLocaleLowerCase()) &&
         this.from === mc.from &&
         this.to === mc.to &&
         this.recBuffer === mc.recBuffer;
@@ -140,9 +141,9 @@ define([
      * @returns {string}
      */
     getDescription() {
-      let result = `${this.mediaType}`;
-      if (this.mediaFileName)
-        result = `${result} ${this.mediaFileName}${this.from >= 0 ? ` from:${this.from}` : ''}${this.to >= 0 ? ` to:${this.to}` : ''}`;
+      let result = `${this.type}`;
+      if (this.file)
+        result = `${result} ${this.file}${this.from >= 0 ? ` from:${this.from}` : ''}${this.to >= 0 ? ` to:${this.to}` : ''}`;
       else if (this.externalParam)
         result = `${result} ${this.externalParam}`;
       return result;
@@ -153,7 +154,7 @@ define([
      * @returns {string} 
      */
     toString() {
-      return `${this.mediaType}${this.mediaFileName ? ` ${this.mediaFileName}` : ''}`;
+      return `${this.type}${this.file||''}`;
     }
 
     /**
@@ -162,7 +163,7 @@ define([
      */
     getIcon() {
       let icon = null;
-      switch (this.mediaType) {
+      switch (this.type) {
         case 'PLAY_AUDIO':
         case 'PLAY_RECORDED_AUDIO':
           icon = 'audio';
@@ -192,9 +193,9 @@ define([
      * The type of media. Valid values are: `UNKNOWN`, `PLAY_AUDIO`, `PLAY_VIDEO`,
      * `PLAY_MIDI`, `PLAY_CDAUDIO`, `RECORD_AUDIO`, `PLAY_RECORDED_AUDIO`, `RUN_CLIC_ACTIVITY`,
      * `RUN_CLIC_PACKAGE`, `RUN_EXTERNAL`, `URL`, `EXIT` and `RETURN`
-     * @name MediaContent#mediaType
+     * @name MediaContent#type
      * @type {string} */
-    mediaType: 'UNKNOWN',
+    type: 'UNKNOWN',
     /**
      * The priority level is important when different medias want to play together. Objects with
      * highest priority level can mute lower ones.
@@ -203,9 +204,9 @@ define([
     level: 1,
     /**
      * Media file name
-     * @name MediaContent#mediaFileName
+     * @name MediaContent#file
      * @type {String} */
-    mediaFileName: null,
+    file: null,
     /**
      * Optional parameters passed to external calls
      * @name MediaContent#externalParams
@@ -224,13 +225,13 @@ define([
      * @type {number} */
     to: -1,
     /**
-     * When `mediaType` is `RECORD_AUDIO`, this member stores the maximum length of the recorded
+     * When `type` is `RECORD_AUDIO`, this member stores the maximum length of the recorded
      * sound, in seconds.
      * @name MediaContent#length
      * @type {number} */
     length: 3,
     /**
-     * When `mediaType` is `RECORD_AUDIO`, this member stores the buffer ID where the recording
+     * When `type` is `RECORD_AUDIO`, this member stores the buffer ID where the recording
      * will be stored.
      * @name MediaContent#recBuffer
      * @type {number} */

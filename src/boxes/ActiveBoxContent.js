@@ -39,6 +39,32 @@ define([
 ], function ($, AWT, Utils, BoxBase, MediaContent) {
 
   /**
+   * This class is used as a container for horizontal and vertical alignments of content inside a cell.
+   */
+  class AlignType {
+    /**
+     * AlignType constructor
+     * @param {string*} h - Horizontal alignment. Possible values are `left`, `center` and `right`
+     * @param {strong*} v - Vertical alignment. Possible values are `top`, `center` and `bottom`
+     */
+    constructor(h, v) {
+      if (h)
+        this.h = h;
+      if (v)
+        this.v = v;
+    }
+
+    getData() {
+      return Utils.getData(this, ['h|center', 'v|center']);
+    }
+  }
+
+  Object.assign(AlignType.prototype, {
+    h: 'center',
+    v: 'center',
+  });
+
+  /**
    * This class defines a content that can be displayed by {@link ActiveBox} objects. This content
    * can be a text, an image, a fragment of an image or a combination of text and images. The style
    * (colors, font and size, borders, shadows, margins, etc.) are specified in the `bb` attribute,
@@ -54,8 +80,8 @@ define([
     constructor(id) {
       if (typeof id !== 'undefined')
         this.id = id;
-      this.imgAlign = { h: 'middle', v: 'middle' };
-      this.txtAlign = { h: 'middle', v: 'middle' };
+      this.imgAlign = new AlignType();
+      this.txtAlign = new AlignType();
     }
 
     /**
@@ -132,7 +158,8 @@ define([
 
     getData() {
       return Utils.getData(this, [
-        'id', 'item', 'dimension', 'txtAlign', 'imgAlign',
+        'id', 'item', 'dimension',
+        'txtAlign', 'imgAlign', // AlignType
         'border', 'avoidOverlapping', 'imgName', 'text',
         'bb', // BoxBase
         'mediaContent', // MediaContent
@@ -147,7 +174,7 @@ define([
      * @returns {ActiveBoxContent~alignType}
      */
     readAlign(str) {
-      const align = { h: 'center', v: 'center' };
+      const align = new AlignType();
       if (str) {
         const v = str.split(',');
         align.h = v[0].replace('middle', 'center');
@@ -243,7 +270,7 @@ define([
      * @param {PlayStation} playStation - Usually a {@link JClicPlayer}
      */
     prepareMedia(playStation) {
-      if (!this.amp && this.mediaContent && this.mediaContent.mediaType === 'PLAY_VIDEO') {
+      if (!this.amp && this.mediaContent && this.mediaContent.type === 'PLAY_VIDEO') {
         this.amp = playStation.getActiveMediaPlayer(this.mediaContent);
         this.amp.realize();
       }
@@ -353,13 +380,13 @@ define([
     /**
      * The horizontal and vertical alignment of the image inside the cell.
      * @name ActiveBoxContent#imgAlign
-     * @type {ActiveBoxContent~alignType} */
+     * @type {AlignType} */
     imgAlign: null,
     /**
      * The horizontal and vertical alignment of the text inside the cell.
      * Valid values are: `left`, `middle`, `right`, `top` and `bottom`.
      * @name ActiveBoxContent#txtAlign
-     * @type {ActiveBoxContent~alignType} */
+     * @type {AlignType} */
     txtAlign: null,
     /**
      * Whether to avoid overlapping of image and text inside the cell when both are present.

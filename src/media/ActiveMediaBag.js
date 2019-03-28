@@ -60,7 +60,7 @@ define([
      */
     createActiveMediaPlayer(mc, mb, ps) {
       let amp = null;
-      switch (mc.mediaType) {
+      switch (mc.type) {
         case 'RECORD_AUDIO':
           if (mc.length <= 0 || mc.length >= Utils.settings.MAX_RECORD_LENGTH)
             break;

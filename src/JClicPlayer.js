@@ -715,10 +715,10 @@ define([
     playMedia(mediaContent, mediaPlacement = null, delayedActions = null) {
 
       let ji = null;
-      const fn = mediaContent.mediaFileName;
+      const fn = mediaContent.file;
       let action = null;
 
-      switch (mediaContent.mediaType) {
+      switch (mediaContent.type) {
         case 'PLAY_AUDIO':
         case 'PLAY_VIDEO':
         case 'PLAY_MIDI':
@@ -766,7 +766,7 @@ define([
           break;
 
         default:
-          Utils.log('error', `Unknown media type: ${mediaContent.mediaType}`);
+          Utils.log('error', `Unknown media type: ${mediaContent.type}`);
           break;
       }
 

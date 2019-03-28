@@ -152,6 +152,10 @@ define([
       return this;
     }
 
+    getData() {
+      return Utils.getData(this, ['family|Arial', 'size|17', 'bold|0', 'italic|0', 'variant']);
+    }
+
     /**
      * Allows to change the `size` member, recalculating the vertical metrics.
      * @param {number} size - The new size to set
@@ -268,10 +272,6 @@ define([
         this.italic === font.italic &&
         this.variant === font.variant;
     }
-
-    getData() {
-      return Utils.getData(this, ['family', 'size', 'bold', 'italic', 'variant']);
-    }
   }
 
   /**
@@ -378,6 +378,12 @@ define([
       return this;
     }
 
+    getData() {
+      return Utils.getData(this, [
+        'c1|black', 'c2|white', 'angle|0', 'cycles|1'
+      ]);
+    }
+
     /**
      * Creates a {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasGradient|CanvasGradient}
      * based on the provided context and rectangle.
@@ -464,6 +470,12 @@ define([
         this.miterLimit = miterLimit;
     }
 
+    getData() {
+      return Utils.getData(this, [
+        'lineWidth|1', 'lineCap|butt', 'lineJoin|miter', 'miterLimit|10',
+      ]);
+    }
+
     /**
      * Sets the properties of this stroke to a CanvasRenderingContext2D
      * @param {external:CanvasRenderingContext2D} ctx - The canvas 2D rendering context
@@ -531,6 +543,10 @@ define([
       this.x = Number($xml.attr('x'));
       this.y = Number($xml.attr('y'));
       return this;
+    }
+
+    getData() {
+      return Utils.getData(this, ['x', 'y']);
     }
 
     /**

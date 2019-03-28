@@ -38,7 +38,7 @@ define([
   "jszip",
   "jszip-utils",
   "scriptjs",
-  "webfontloader"
+  "webfontloader",
 ], function ($, screenfull, clipboard, i18next, JSZip, JSZipUtils, ScriptJS, WebFont) {
 
   // In some cases, require.js does not return a valid value for screenfull. Check it:
@@ -475,15 +475,18 @@ define([
       const result = {};
       keys = keys || Object.keys(obj);
       keys.forEach(key => {
-        const [k, v] = key.split('|');
-        if (obj.hasOwnProperty(k) && obj[k] !== null && obj[k] !== v)
-          result[k] = Utils.getValue(obj[k]);
+        const [k, d] = key.split('|');
+        if (obj.hasOwnProperty(k) && obj[k] !== null && obj[k].toString() !== d) {
+          const v = Utils.getValue(obj[k]);
+          if (v !== null && !$.isEmptyObject(v))
+            result[k] = v;
+        }
       });
       return result;
     },
 
     getValue(value) {
-      return value.getData ? value.getData() : value instanceof Array ? value.map(e => Utils.getValue(e)) : value;
+      return value.getData ? value.getData() : value instanceof Array ? value.map(e => Utils.getValue(e)) : value instanceof Object ? Utils.getData(value) : value;
     },
 
 
