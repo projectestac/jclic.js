@@ -177,13 +177,20 @@ define([
     }
 
     getData() {
-      return Utils.getData(this, [
-        'className', 'nCols', 'nRows', 'nCells',
+      const fields = [
+        'className', 'nCols', 'nRows',
         'baseWidthFactor', 'toothHeightFactor',
         'scaleX', 'scaleY',
-        'randomLines', 'showEnclosure', 'hasRemainder',
-        'enclosing', 'shapeData', // Array of AWT.Rectangle, AWT.Ellipse or (AWT.Path -> AWT.PathStroke)
-      ]);
+        'randomLines',
+      ];
+
+      if (this.customShapes) {
+        ['showEnclosure', 'hasRemainder',
+          'enclosing', 'shapeData', // Array of AWT.Rectangle, AWT.Ellipse or (AWT.Path -> AWT.PathStroke)
+        ].forEach(f => fields.push(f));
+      }
+
+      return Utils.getData(this, fields);
     }
 
     /**
@@ -335,6 +342,11 @@ define([
      * @name Shaper#hasRemainder
      * @type {boolean} */
     hasRemainder: false,
+    /**
+     * Only the `Holes` shaper has this flag activated
+     * @name Shaper#customShapes
+     * @type {boolean} */
+    customShapes: false,
   });
 
   return Shaper;

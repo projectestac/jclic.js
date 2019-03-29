@@ -16,8 +16,8 @@ var MockBrowser = require('mock-browser').mocks.MockBrowser;
 var mock = new MockBrowser();
 global.window = mock.getWindow();
 global.document = mock.getDocument();
-global.Image = function () {};
-global.Audio = function () {};
+global.Image = function () { };
+global.Audio = function () { };
 
 // Use `xmldom` as DOM parser
 global.DOMParser = require('xmldom').DOMParser;
@@ -42,5 +42,9 @@ var doc = new DOMParser().parseFromString(contents);
 var project = new jclic.JClicProject();
 project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
 
-console.log(JSON.stringify(project.getData(), null, '  '));
+console.log(JSON.stringify(
+  project.getData(),
+  (_key, val) => val.toFixed ? Number(val.toFixed(4)) : val,
+  '  '
+));
 

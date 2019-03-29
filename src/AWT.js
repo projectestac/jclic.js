@@ -1382,7 +1382,11 @@ define([
     }
 
     getData() {
-      return Utils.getData(this, ['type', 'strokes']);
+      //return Utils.getData(this, ['type', 'strokes']);
+      return {
+        type: this.type,
+        strokes: this.strokes.map(s => `${s.type}:${s.points ? s.points.map(p => `${Utils.fx(p.x)},${Utils.fx(p.y)}`).join(',') : ''}`).join('|')
+      };
     }
 
   }

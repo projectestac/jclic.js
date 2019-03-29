@@ -134,6 +134,7 @@ define([
 
       // Create cells when `cells` is empty
       if (n === 0 && this.shaper && this.shaper.nCells > 0) {
+        this.initiallyEmptyCells = true;
         n = this.shaper.nCells;
         this.getActiveBoxContent(n - 1);
       }
@@ -162,14 +163,16 @@ define([
     }
 
     getData() {
-      return Utils.getData(this, [
+      const fields = [
         'id', 'image',
         'ncw', 'nch',
         'w', 'h', 'border',
         'style', // BoxBase
         'shaper', // Shaper
-        this.ids ? 'ids' : 'cells' // ActiveBoxContent
-      ]);
+      ];
+      if (!this.initiallyEmptyCells)
+        fields.push(this.ids ? 'ids' : 'cells'); // ActiveBoxContent
+      return Utils.getData(this, fields);
     }
 
     /**

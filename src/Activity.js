@@ -361,15 +361,15 @@ define([
         'invAss', 'numericContent',
         'autoJump', 'forceOkToAdvance', 'amongParagraphs',
         'infoUrl', 'infoCmd',
-        'margin', 'maxTime', 'maxActions',
-        'includeInReports', 'reportActions',
+        `margin|${K.DEFAULT_MARGIN}`, 'maxTime', 'maxActions',
+        'includeInReports|true', 'reportActions|false',
         'countDownTime', 'countDownActions',
         'useOrder', 'dragCells',
         'skinFileName',
-        'showSolution', 'helpMsg',
-        'bgColor', 'bgImageFile', 'tiledBgImg', 'bgGradient',
-        'bTimeCounter', 'bActionsCounter', 'bScoreCounter',
-        'activityBgColor', 'transparentBg', 'border',
+        'showSolution|false', 'helpMsg',
+        `bgColor|${K.DEFAULT_BG_COLOR}`, 'bgImageFile', 'tiledBgImg', 'bgGradient',
+        'bTimeCounter|true', 'bActionsCounter|true', 'bScoreCounter|true',
+        `activityBgColor|${K.DEFAULT_BG_COLOR}`, 'transparentBg|false', 'border|true',
         'activityBgGradient', // AWT.Gradient
         'absolutePosition', // AWT.Point
         'windowSize', // AWT.Dimension

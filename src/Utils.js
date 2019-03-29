@@ -420,7 +420,7 @@ define([
       color = color.replace('0x', '#');
       // Check for Alpha value
       if (color.charAt(0) === '#' && color.length > 7) {
-        const alpha = parseInt(color.substring(1, 3), 16) / 255.0;
+        const alpha = Utils.fx(parseInt(color.substring(1, 3), 16) / 255.0, 2);
         color = `rgba(${parseInt(color.substring(3, 5), 16)},${parseInt(color.substring(5, 7), 16)},${parseInt(color.substring(7, 9), 16)},${alpha})`;
       }
       return color;
@@ -478,17 +478,38 @@ define([
         const [k, d] = key.split('|');
         if (obj.hasOwnProperty(k) && obj[k] !== null && obj[k].toString() !== d) {
           const v = Utils.getValue(obj[k]);
-          if (v !== null && (typeof v !== 'object' || !$.isEmptyObject(v)))
+          if (!Utils.isEmpty(v))
             result[k] = v;
         }
       });
       return result;
     },
 
-    getValue(value) {
-      return value.getData ? value.getData() : value instanceof Array ? value.map(e => Utils.getValue(e)) : value instanceof Object ? Utils.getData(value) : value;
+    getValue: (value) => {
+      return value.getData ?
+        value.getData() :
+        value instanceof Array ?
+          value.map(e => Utils.getValue(e)) :
+          value instanceof Object ?
+            Utils.getData(value) :
+            value;
     },
 
+    isEmpty: (v) => {
+      let result = (v === null);
+      if (!result) {
+        switch (typeof v) {
+          case 'object':
+            result = Object.keys(v).length === 0;
+            break;
+
+          case 'string':
+            result = v.length === 0;
+            break;
+        }
+      }
+      return result;
+    },
 
     /**
      * Check if the given char is a separator
@@ -503,6 +524,13 @@ define([
      * @returns {number}
      */
     roundTo: (v, n) => Math.round(v / n) * n,
+    /**
+     * Set the maximum number of decimals for a number
+     * @param {*} v - The value to be converted to a fixed number of decimals. Can be anything.
+     * @param {number} n=4 - the maximum number of decimals
+     * @returns {*} - When `v` is a number, a number with fixed decimals is returned. Otherwise, returns `v`
+     */
+    fx: (v, n = 4) => v.toFixed ? Number(v.toFixed(n)) : v,
     /**
      * Compares the provided answer against multiple valid options. These valid options are
      * concatenated in a string, separated by pipe chars (`|`). The comparing can be case sensitive.

@@ -54,6 +54,7 @@ define([
      */
     constructor(nx, ny) {
       super(1, 1);
+      this.customShapes = true;
       this.nCols = nx;
       this.nRows = ny;
       this.showEnclosure = true;
