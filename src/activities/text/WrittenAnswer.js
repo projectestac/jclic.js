@@ -175,7 +175,7 @@ define([
         if (this.act.invAss)
           this.invAssCheck = Array(abcB.getNumCells()).fill(false);
 
-        if (abcA.imgName) {
+        if (abcA.image) {
           abcA.setImgContent(this.act.project.mediaBag, null, false);
           if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramble['primary'])
             this.$animatedBg = $('<span/>').css({
@@ -186,7 +186,7 @@ define([
             }).appendTo(this.$div);
         }
 
-        if (solved && solved.imgName)
+        if (solved && solved.image)
           solved.setImgContent(this.act.project.mediaBag, null, false);
 
         if (this.act.acp !== null) {
@@ -203,7 +203,7 @@ define([
           w = abcA.getTotalWidth();
         //
         // bgB will be used only as a placeholder for `$textField`
-        this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1));
+        this.bgB = new ActiveBoxGrid(null, this, abcB.style, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1));
         this.$form = $('<form/>', { id: 'form1', action: '#' });
         this.$form.submit(event => {
           event.preventDefault();
@@ -212,7 +212,7 @@ define([
           }
         });
 
-        this.$textField = $('<input/>', { type: 'text', size: 200 }).css(abcB.bb.getCSS()).css({
+        this.$textField = $('<input/>', { type: 'text', size: 200 }).css(abcB.style.getCSS()).css({
           position: 'absolute', top: 0, left: 0,
           border: 0, padding: 0, margin: 0,
           'text-align': 'center'

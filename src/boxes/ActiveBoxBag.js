@@ -114,8 +114,8 @@ define([
       if (abc.backgroundContent !== null && this.getBackgroundActiveBox() !== null) {
         const bx = this.getBackgroundActiveBox();
         bx.setContent(abc.backgroundContent);
-        if (abc.bb !== bx.boxBase)
-          bx.setBoxBase(abc.bb);
+        if (abc.style !== bx.boxBase)
+          bx.setBoxBase(abc.style);
       }
     }
 

@@ -42,7 +42,7 @@ define([
   /**
    * This class packs a collection of {@link ActiveBoxContent} objects and provides methods to access
    * and manage it. The two main members of `ActiveBagContent` are the {@link Shaper}, responsible for
-   * determining the position and shape of each {@link ActiveBox}, and the {@link BoxBase} (field `bb`),
+   * determining the position and shape of each {@link ActiveBox}, and the {@link BoxBase} (field `style`),
    * provider of a common visual style.
    * @exports ActiveBagContent
    * @class
@@ -75,7 +75,7 @@ define([
             this.id = val;
             break;
           case 'image':
-            this.imgName = Utils.nSlash(val);
+            this.image = Utils.nSlash(val);
             break;
           // Bug in JClic beta 1: "columns" is number of rows, and "rows" is number of columns.
           // Was corrected in beta 2: If "cols" is specified, "rows" are rows and "cols" are columns.
@@ -110,7 +110,7 @@ define([
         const $node = $(child);
         switch (child.nodeName) {
           case 'style':
-            this.bb = new BoxBase(null).setProperties($node);
+            this.style = new BoxBase(null).setProperties($node);
             break;
           case 'shaper':
             const shaperClassName = $node.attr('class'),
@@ -154,22 +154,21 @@ define([
         }
       }
 
-      // Link [BoxBase](BoxBase.html) objects of `cells` elements to `bb`
-      if (this.bb)
-        this.cells.forEach((abc) => { if (abc.bb) abc.bb.parent = this.bb; });
+      // Link [BoxBase](BoxBase.html) objects of `cells` elements to `style`
+      if (this.style)
+        this.cells.forEach((abc) => { if (abc.style) abc.style.parent = this.style; });
 
       return this;
     }
 
     getData() {
       return Utils.getData(this, [
-        'id', 'imgName',
-        'nch', 'ncw',
-        'w', 'h',
-        'border',
-        'bb',
-        'shaper',
-        this.ids ? 'ids' : 'cells'
+        'id', 'image',
+        'ncw', 'nch',
+        'w', 'h', 'border',
+        'style', // BoxBase
+        'shaper', // Shaper
+        this.ids ? 'ids' : 'cells' // ActiveBoxContent
       ]);
     }
 
@@ -228,9 +227,9 @@ define([
      * @returns {BoxBase}
      */
     getBoxBase() {
-      if (this.bb === null)
-        this.bb = new BoxBase();
-      return this.bb;
+      if (this.style === null)
+        this.style = new BoxBase();
+      return this.style;
     }
 
     /**
@@ -283,8 +282,8 @@ define([
 
       this.ncw = this.shaper.nCols;
       this.nch = this.shaper.nRows;
-      const mbe = mb.elements[this.imgName];
-      if (mb && this.imgName && mbe && mbe.ready) {
+      const mbe = mb.elements[this.image];
+      if (mb && this.image && mbe && mbe.ready) {
         this.img = mbe.data;
         if (mbe.animated)
           this.animatedGifFile = mbe.getFullPath();
@@ -364,9 +363,9 @@ define([
     id: 'primary',
     /**
      * The name of the image file used as a common image of this bag
-     * @name ActiveBagContent#imgName
+     * @name ActiveBagContent#image
      * @type {string} */
-    imgName: null,
+    image: null,
     /**
      * The built image object
      * @name ActiveBagContent#img
@@ -404,9 +403,9 @@ define([
     border: true,
     /**
      * The BoxBase used for this bag of cell contents
-     * @name ActiveBagContent#bb
+     * @name ActiveBagContent#style
      * @type {BoxBase} */
-    bb: null,
+    style: null,
     /**
      * The Shaper used to define the specific shape of each cell
      * @name ActiveBagContent#shaper

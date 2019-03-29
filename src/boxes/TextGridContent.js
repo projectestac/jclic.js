@@ -50,7 +50,7 @@ define([
      * TextGridContent constructor
      */
     constructor() {
-      this.bb = new BoxBase(null);
+      this.style = new BoxBase(null);
       this.text = [];
     }
 
@@ -88,7 +88,7 @@ define([
 
       // Read inner elements
       $xml.children('style:first').each((_n, child) => {
-        this.bb = new BoxBase().setProperties($(child));
+        this.style = new BoxBase().setProperties($(child));
       });
 
       $xml.find('text:first > row').each((_n, el) => this.text.push(el.textContent));
@@ -104,7 +104,7 @@ define([
         'ncw', 'nch',
         'w', 'h',
         'text',
-        'bb', 'border',
+        'style', 'border',
         'wild', 'randomChars'
       ]);
     }
@@ -171,17 +171,17 @@ define([
     border: false,
     /**
      * The {@link BoxBase} object with visual settings of the text grid
-     * @name TextGridContent#bb
+     * @name TextGridContent#style
      * @type {BoxBase} */
-    bb: null,
+    style: null,
     /**
-     * An array of String objects containing the chars of cells. One string per row, one character of
+     * An array of String objects textning the chars of cells. One string per row, one character of
      * this string per cell.
      * @name TextGridContent#text
      * @type {string[]} */
     text: null,
     /**
-     * The letter used as wildcard
+     * The letter used as wildcardtext
      * @name TextGridContent#wild
      * @type {string} */
     wild: '*',

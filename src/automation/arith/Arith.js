@@ -141,7 +141,7 @@ define([
     getData() {
       return Utils.getData(this, [
         'className',
-        'opA', 'opB',
+        'opA', 'opB', // Arith.Operator
         'use_add', 'use_subst', 'use_mult', 'use_div',
         'exp_abx', 'exp_axc', 'exp_xbc', 'exp_axbc', 'exp_caxb',
         'resultLimInf', 'resultLimSup', 'resultCarry', 'resultNoDup', 'resultOrder',
@@ -751,6 +751,13 @@ define([
         });
       });
       return this;
+    }
+
+    getData() {
+      return Utils.getData(this, [
+        'numDec', 'lst', 'fromList', 'from', 'to',
+        'wZero', 'wOne', 'wMinusOne',
+      ]);
     }
   };
 

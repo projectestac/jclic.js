@@ -219,9 +219,8 @@ define([
 
     getData() {
       return Utils.getData(this, [
-        'tabSpc', 'targetType',
-        'boxesContent', 'popupsContent',
         'style',
+        'tabSpc', 'targetType',
         'p',
       ]);
     }
@@ -432,6 +431,14 @@ define([
             break;
         }
       });
+    }
+
+    getData() {
+      return Utils.getData(this, [
+        'text', 'attr',
+        'answers', 'options', 'iniChar', 'numIniChars', 'maxLenResp', 'iniText',
+        'infoMode', 'popupDelay', 'popupMaxTime', 'onlyPlay', 'popupContent',
+      ]);
     }
 
     /**

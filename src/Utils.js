@@ -478,7 +478,7 @@ define([
         const [k, d] = key.split('|');
         if (obj.hasOwnProperty(k) && obj[k] !== null && obj[k].toString() !== d) {
           const v = Utils.getValue(obj[k]);
-          if (v !== null && !$.isEmptyObject(v))
+          if (v !== null && (typeof v !== 'object' || !$.isEmptyObject(v)))
             result[k] = v;
         }
       });

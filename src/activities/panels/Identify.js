@@ -128,7 +128,7 @@ define([
         abc = this.act.abc['primary'],
         solved = this.act.abc['solvedPrimary'];
       if (abc) {
-        if (abc.imgName) {
+        if (abc.image) {
           abc.setImgContent(this.act.project.mediaBag, null, false);
           if (abc.animatedGifFile && !abc.shaper.rectangularShapes && !this.act.scramble['primary'])
             this.$animatedBg = $('<span/>').css({
@@ -139,7 +139,7 @@ define([
             }).appendTo(this.$div);
         }
 
-        if (solved && solved.imgName)
+        if (solved && solved.image)
           solved.setImgContent(this.act.project.mediaBag, null, false);
 
         if (this.act.acp !== null) {

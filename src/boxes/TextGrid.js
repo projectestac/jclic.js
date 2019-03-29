@@ -114,7 +114,7 @@ define([
      * @returns {TextGrid}
      */
     static createEmptyGrid(parent, container, x, y, tgc, wildTransparent) {
-      const result = new TextGrid(parent, container, tgc.bb,
+      const result = new TextGrid(parent, container, tgc.style,
         x, y, tgc.ncw, tgc.nch, tgc.w, tgc.h, tgc.border);
       result.wild = tgc.wild;
       result.randomChars = tgc.randomChars;
@@ -633,8 +633,8 @@ define([
         return this.getCellRect(px, py);
 
       const
-        bb = this.getBoxBaseResolve(),
-        strk = isMarked ? bb.markerStroke : bb.borderStroke;
+        style = this.getBoxBaseResolve(),
+        strk = isMarked ? style.markerStroke : style.borderStroke;
 
       return this.getCellRect(px, py).grow(strk.lineWidth, strk.lineWidth);
     }
@@ -699,21 +699,21 @@ define([
      * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
      */
     updateContent(ctx, dirtyRegion) {
-      const bb = this.getBoxBaseResolve();
+      const style = this.getBoxBaseResolve();
 
       // test font size
-      ctx.font = bb.font.cssFont();
+      ctx.font = style.font.cssFont();
       ctx.textBaseline = 'hanging';
-      bb.prepareText(ctx, 'W',
+      style.prepareText(ctx, 'W',
         this.cellWidth - 2 * defaults.MIN_INTERNAL_MARGIN,
         this.cellHeight - 2 * defaults.MIN_INTERNAL_MARGIN);
 
       const ch = [];
       //
       // TODO: Check in different browsers and devices what is the real font height.
-      // In Chrome on Linux (Gnome), subtracting `bb.font._metrics.descent / 4` produces
+      // In Chrome on Linux (Gnome), subtracting `style.font._metrics.descent / 4` produces
       // good results, but in iPad this correction places the character at the bottom of the cell.
-      const ry = (this.cellHeight - bb.font.getHeight()) / 2;
+      const ry = (this.cellHeight - style.font.getHeight()) / 2;
 
       for (let py = 0; py < this.nRows; py++) {
         for (let px = 0; px < this.nCols; px++) {
@@ -726,8 +726,8 @@ define([
               const isCursor = this.useCursor && this.cursor.x === px && this.cursor.y === py;
               const boxBounds = this.getCellRect(px, py);
               ctx.fillStyle = isCursor && this.cursorBlink ?
-                bb.inactiveColor :
-                isInverted ? bb.textColor : bb.backColor;
+                style.inactiveColor :
+                isInverted ? style.textColor : style.backColor;
               boxBounds.fill(ctx);
               ctx.strokeStyle = 'black';
               if ((attr & flags.HIDDEN) === 0) {
@@ -736,21 +736,21 @@ define([
                   const dx = boxBounds.pos.x + (this.cellWidth - ctx.measureText(ch[0]).width) / 2;
                   const dy = boxBounds.pos.y + ry;
 
-                  if (bb.shadow) {
+                  if (style.shadow) {
                     // Render text shadow
-                    const d = Math.max(1, bb.font.size / 10);
-                    ctx.fillStyle = bb.shadowColor;
+                    const d = Math.max(1, style.font.size / 10);
+                    ctx.fillStyle = style.shadowColor;
                     ctx.fillText(ch[0], dx + d, dy + d);
                   }
                   // Render text
-                  ctx.fillStyle = isInverted ? bb.backColor
-                    : this.isAlternative() ? bb.alternativeColor : bb.textColor;
+                  ctx.fillStyle = isInverted ? style.backColor
+                    : this.isAlternative() ? style.alternativeColor : style.textColor;
                   ctx.fillText(ch[0], dx, dy);
                 }
               }
               if (this.border || isMarked) {
-                ctx.strokeStyle = bb.borderColor;
-                bb[isMarked ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
+                ctx.strokeStyle = style.borderColor;
+                style[isMarked ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
                 if (isMarked)
                   ctx.globalCompositeOperation = 'xor';
 

@@ -83,6 +83,11 @@ define([
       return this;
     }
 
+    // To be overrided!
+    getData() {
+      return Utils.getData(this, ['className']);
+    }
+
     /**
      * Initializes the content provider
      */

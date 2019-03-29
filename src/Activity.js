@@ -93,32 +93,6 @@ define([
       return act;
     }
 
-    getData() {
-      return Utils.getData(this, [
-        'name', 'className', 'code', 'type', 'description', 'skinFileName',
-        'margin', 'bgColor', 'bgGradient', 'tiledBgImg', 'bgImageFile',
-        'border', 'absolutePositioned', 'absolutePosition',
-        'includeInReports', 'reportActions',
-        'helpWindow', 'showSolution', 'helpMsg',
-        'eventSounds', // EventSounds -> EventSoundsElement
-        'useOrder', 'dragCells', 'maxTime', 'countDownTime', 'maxActions', 'countDownActions',
-        'infoUrl', 'infoCmd',
-        'messages', // ActiveBoxContent[] -> (BoxBase -> AWT.Font, AWT.Gradient, AWT.Stroke), (MediaContent -> AWT.Point)
-        
-        'windowSize', 'transparentBg', 'activityBgColor', 'activityBgGradient',
-        'bTimeCounter', 'bScoreCounter', 'bActionsCounter',
-        'acp', // AutoContentProvider
-        'abc', // ActiveBagContent[]
-        'tgc', // TextGridContent
-        'document', // TextActivityDocument
-        'boxGridPos', 'shuffles',
-        'scramble', // Activity~scrambleType
-        'invAss',
-        'menuElements', // Activity~menuElement
-        'numericContent',
-      ]);
-    }
-
     /**
      * Loads this object settings from an XML element
      * @param {external:jQuery} $xml - The jQuery XML element to parse
@@ -376,9 +350,44 @@ define([
       //
       // Allowed types are: `initial`, `final`, `previous`, `finalError`
       msg.type = $xml.attr('type');
-      if (Utils.isNullOrUndef(msg.bb))
-        msg.bb = new BoxBase(null);
+      if (Utils.isNullOrUndef(msg.style))
+        msg.style = new BoxBase(null);
       return msg;
+    }
+
+    getData() {
+      return Utils.getData(this, [
+        'name', 'className', 'code', 'type', 'description',
+        'invAss', 'numericContent',
+        'autoJump', 'forceOkToAdvance', 'amongParagraphs',
+        'infoUrl', 'infoCmd',
+        'margin', 'maxTime', 'maxActions',
+        'includeInReports', 'reportActions',
+        'countDownTime', 'countDownActions',
+        'useOrder', 'dragCells',
+        'skinFileName',
+        'showSolution', 'helpMsg',
+        'bgColor', 'bgImageFile', 'tiledBgImg', 'bgGradient',
+        'bTimeCounter', 'bActionsCounter', 'bScoreCounter',
+        'activityBgColor', 'transparentBg', 'border',
+        'activityBgGradient', // AWT.Gradient
+        'absolutePosition', // AWT.Point
+        'windowSize', // AWT.Dimension
+        'eventSounds', // EventSounds -> EventSoundsElement
+        'messages', // ActiveBoxContent{} -> (BoxBase -> AWT.Font, AWT.Gradient, AWT.Stroke), (MediaContent -> AWT.Point)        
+        'acp', // AutoContentProvider
+        'abc', // ActiveBagContent{}
+        'shuffles',
+        'scramble', // Activity~scrambleType
+        'boxGridPos', 'wildTransparent', 'upperCase', 'checkCase',
+        'menuElements', // Activity~menuElement
+        'tgc', // TextGridContent
+        'clues', 'clueItems',
+        'checkButtonText',
+        'prevScreen', 'prevScreenMaxTime', 'prevScreenStyle', 'prevScreenText',
+        'ev', // Evaluator
+        'document', // TextActivityDocument
+      ]);
     }
 
     /**

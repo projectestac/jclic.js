@@ -445,18 +445,18 @@ define([
        g2.setClip(clip)
        */
 
-      const bb = this.getBoxBaseResolve();
-      if (!bb.transparent && !bb.dontFill && !this.tmpTrans) {
-        if (!bb.bgGradient || bb.bgGradient.hasTransparency()) {
+      const style = this.getBoxBaseResolve();
+      if (!style.transparent && !style.dontFill && !this.tmpTrans) {
+        if (!style.bgGradient || style.bgGradient.hasTransparency()) {
           // Prepare the rendering context
           ctx.fillStyle = this.inactive ?
-            bb.inactiveColor :
-            this.inverted ? bb.textColor : bb.backColor;
+            style.inactiveColor :
+            this.inverted ? style.textColor : style.backColor;
           // Fill the shape
           this.shape.fill(ctx, dirtyRegion);
         }
-        if (bb.bgGradient) {
-          ctx.fillStyle = bb.bgGradient.getGradient(ctx, this.shape.getBounds());
+        if (style.bgGradient) {
+          ctx.fillStyle = style.bgGradient.getGradient(ctx, this.shape.getBounds());
           this.shape.fill(ctx, dirtyRegion);
         }
         // Reset the canvas context
@@ -489,11 +489,11 @@ define([
      */
     drawBorder(ctx) {
       if (this.border || this.marked) {
-        const bb = this.getBoxBaseResolve();
+        const style = this.getBoxBaseResolve();
 
         // Prepare stroke settings
-        ctx.strokeStyle = bb.borderColor;
-        bb[this.marked ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
+        ctx.strokeStyle = style.borderColor;
+        style[this.marked ? 'markerStroke' : 'borderStroke'].setStroke(ctx);
         if (this.marked)
           ctx.globalCompositeOperation = 'xor';
 
@@ -515,8 +515,8 @@ define([
     getBorderBounds() {
       const result = new AWT.Rectangle(this.getBounds());
       if (this.border || this.marked) {
-        const bb = this.getBoxBaseResolve();
-        const w = bb[this.marked ? 'markerStroke' : 'borderStroke'].lineWidth;
+        const style = this.getBoxBaseResolve();
+        const w = style[this.marked ? 'markerStroke' : 'borderStroke'].lineWidth;
         result.moveBy(-w / 2, -w / 2);
         result.dim.width += w;
         result.dim.height += w;
@@ -558,8 +558,8 @@ define([
      */
     setHostedComponentColors() {
       if (this.$hostedComponent) {
-        const bb = this.getBoxBaseResolve();
-        const css = bb.getCSS(null, this.inactive, this.inverted, this.alternative);
+        const style = this.getBoxBaseResolve();
+        const css = style.getCSS(null, this.inactive, this.inverted, this.alternative);
         // Check if cell has background gradient and animated gif
         if (this.$hostedComponent.data('background-image') && css['background-image'])
           css['background-image'] = `${this.$hostedComponent.data('background-image')},${css['background-image']}`;
@@ -573,11 +573,11 @@ define([
      */
     setHostedComponentBorder() {
       if (this.$hostedComponent && (this.border || this.marked)) {
-        const bb = this.getBoxBaseResolve();
+        const style = this.getBoxBaseResolve();
         this.$hostedComponent.css({
-          'border-width': `${bb.get(this.marked ? 'markerStroke' : 'borderStroke').lineWidth}px`,
+          'border-width': `${style.get(this.marked ? 'markerStroke' : 'borderStroke').lineWidth}px`,
           'border-style': 'solid',
-          'border-color': bb.get('borderColor')
+          'border-color': style.get('borderColor')
         });
       }
     }

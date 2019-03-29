@@ -659,6 +659,10 @@ define([
       return this;
     }
 
+    getData() {
+      return Utils.getData(this, ['width', 'height']);
+    }
+
     /**
      * Check if two dimensions are equivalent
      * @param {Dimension} d
@@ -887,6 +891,11 @@ define([
      * @name Shape#pos
      * @type {Point} */
     pos: new Point(),
+    /**
+     * The type of shape (Rectangle, ellipse, path...)
+     * @name Shape#type
+     * @type {string} */
+    type: 'shape',
   });
 
   /**
@@ -941,6 +950,8 @@ define([
         this.dim = new Dimension(d.x - this.pos.x, d.y - this.pos.y);
       else
         this.dim = new Dimension();
+
+      this.type = 'rect';
     }
 
     /**
@@ -1091,6 +1102,10 @@ define([
     getCoords() {
       return `[${Math.round(this.pos.x)},${Math.round(this.pos.y)},${Math.round(this.pos.x + this.dim.width)},${Math.round(this.pos.y + this.dim.height)}]`;
     }
+
+    getData() {
+      return Utils.getData(this, ['type', 'pos', 'dim']);
+    }
   }
 
   Object.assign(Rectangle.prototype, {
@@ -1116,6 +1131,7 @@ define([
      */
     constructor(pos, dim, w, h) {
       super(pos, dim, w, h);
+      this.type = 'ellipse';
     }
 
     //
@@ -1194,6 +1210,10 @@ define([
     toString() {
       return `Ellipse enclosed in ${this.getCoords()}`;
     }
+
+    getData() {
+      return Utils.getData(this, ['type', 'pos', 'dim']);
+    }
   }
 
   /**
@@ -1220,6 +1240,7 @@ define([
       this.enclosingPoints = [];
       this.calcEnclosingRect();
       this.pos = this.enclosing.pos;
+      this.type = 'path';
     }
 
     //
@@ -1361,7 +1382,7 @@ define([
     }
 
     getData() {
-      return Utils.getData(this, ['pos', 'strokes']);
+      return Utils.getData(this, ['type', 'strokes']);
     }
 
   }
@@ -1552,6 +1573,11 @@ define([
       }
       return result;
     }
+
+    getData() {
+      return Utils.getData(this, ['type', 'points']);
+    }
+
   }
 
   Object.assign(PathStroke.prototype, {

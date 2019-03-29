@@ -153,7 +153,7 @@ define([
         solved = this.act.abc['solvedPrimary'];
 
       if (abcA && abcB) {
-        if (abcA.imgName) {
+        if (abcA.image) {
           abcA.setImgContent(this.act.project.mediaBag, null, false);
           if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramble['primary'])
             this.$animatedBg = $('<span/>').css({
@@ -164,7 +164,7 @@ define([
             }).appendTo(this.$div);
         }
 
-        if (abcB.imgName) {
+        if (abcB.image) {
           abcB.setImgContent(this.act.project.mediaBag, null, false);
           if (abcB.animatedGifFile && !abcB.shaper.rectangularShapes && !this.act.scramble['secondary'])
             this.$animatedBgB = $('<span/>').css({
@@ -175,7 +175,7 @@ define([
             }).appendTo(this.$div);
         }
 
-        if (solved && solved.imgName)
+        if (solved && solved.image)
           solved.setImgContent(this.act.project.mediaBag, null, false);
 
         if (this.act.acp !== null) {

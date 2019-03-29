@@ -383,9 +383,9 @@ define([
     skinId: 'JClicCustomSkin',
     /**
      * The name of the image file to be used as a base of this skin.
-     * @name CustomSkin#imgName
+     * @name CustomSkin#image
      * @type {string} */
-    imgName: null,
+    image: null,
     /**
      * Styles used in this skin
      * @name CustomSkin#skinCSS

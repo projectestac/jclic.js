@@ -157,7 +157,7 @@ define([
         tgc = this.act.tgc,
         abcAlt = this.act.abc['secondary'];
       if (abcAlt) {
-        if (abcAlt.imgName) {
+        if (abcAlt.image) {
           abcAlt.setImgContent(this.act.project.mediaBag, null, false);
           if (abcAlt.animatedGifFile && !abcAlt.shaper.rectangularShapes && !this.act.scramble['secondary'])
             this.$animatedBg = $('<span/>').css({

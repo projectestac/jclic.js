@@ -109,8 +109,10 @@ define([
     getData() {
       //this.activities = Object.keys(this._activities).map(k => Activity.getActivity(this._activities[k], this))
       const keys = Object.keys(this._activities);
-      this.activities = [0].map(n => Activity.getActivity(this._activities[keys[n]], this));
-      return Utils.getData(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'mediaBag', 'activities']);
+      //this.activities = [0].map(n => Activity.getActivity(this._activities[keys[n]], this));
+      this.activities = {};
+      keys.forEach(k => this.activities[k] = Activity.getActivity(this._activities[k], this));
+      return Utils.getData(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'activities', 'mediaBag']);
     }
 
     /**

@@ -133,9 +133,9 @@ define([
         this.grid.end();
         this.grid = null;
       }
-      if (this.bb) {
-        this.bb.end();
-        this.bb = null;
+      if (this.style) {
+        this.style.end();
+        this.style = null;
       }
     }
 
@@ -176,7 +176,7 @@ define([
 
       const ab = new ActiveBox(bxb, null, null, type, new AWT.Rectangle(this.LABEL_WIDTH + this.act.margin, 0, this.act.abc[type].w, this.act.abc[type].h));
       bxb.addBox(ab);
-      bxb.setBoxBase(this.act.abc[type].bb);
+      bxb.setBoxBase(this.act.abc[type].style);
 
       if (type === 'acrossClues') { // Horizontal
         this.hClue = ab;
@@ -202,9 +202,9 @@ define([
         abcH = this.act.abc['acrossClues'],
         abcV = this.act.abc['downClues'];
 
-      if (abcH.imgName)
+      if (abcH.image)
         abcH.setImgContent(this.act.project.mediaBag, null, false);
-      if (abcV.imgName)
+      if (abcV.image)
         abcV.setImgContent(this.act.project.mediaBag, null, false);
 
       if (this.act.acp !== null) {
@@ -213,7 +213,7 @@ define([
 
       if (tgc) {
         this.grid = TextGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, tgc, this.act.wildTransparent);
-        this.bb = new BoxBag(null, this, null);
+        this.style = new BoxBag(null, this, null);
         const
           bxbh = this.createBoxBag('acrossClues'),
           bxbv = this.createBoxBag('downClues');
@@ -221,10 +221,10 @@ define([
           bxbv.moveTo(new AWT.Point(bxbh.dim.width + this.act.margin, 0));
         else
           bxbv.moveTo(new AWT.Point(0, bxbh.dim.height + this.act.margin));
-        this.bb.addBox(bxbh);
-        this.bb.addBox(bxbv);
+        this.style.addBox(bxbh);
+        this.style.addBox(bxbv);
         this.grid.setVisible(true);
-        this.bb.setVisible(true);
+        this.style.setVisible(true);
       }
     }
 
@@ -280,7 +280,7 @@ define([
           dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
         ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
         this.grid.update(ctx, dirtyRegion);
-        this.bb.update(ctx, dirtyRegion);
+        this.style.update(ctx, dirtyRegion);
       }
       return this;
     }
@@ -292,9 +292,9 @@ define([
      * @returns {AWT.Dimension}
      */
     setDimension(preferredMaxSize) {
-      return !this.grid || !this.bb || this.getBounds().equals(preferredMaxSize) ?
+      return !this.grid || !this.style || this.getBounds().equals(preferredMaxSize) ?
         preferredMaxSize :
-        BoxBag.layoutDouble(preferredMaxSize, this.grid, this.bb, this.act.boxGridPos, this.act.margin);
+        BoxBag.layoutDouble(preferredMaxSize, this.grid, this.style, this.act.boxGridPos, this.act.margin);
     }
 
     /**
@@ -427,7 +427,7 @@ define([
      */
     cursorPosChanged() {
       const pt = this.grid.getCursor();
-      if (pt !== null && this.bb !== null) {
+      if (pt !== null && this.style !== null) {
         const items = this.grid.getItemFor(pt.x, pt.y);
         if (items !== null) {
           this.hClue.setContent(this.act.abc['acrossClues'].getActiveBoxContentWith(pt.y, items.x));
@@ -494,9 +494,9 @@ define([
     grid: null,
     /**
      * A BoxBag used to place the across and down clues, and the `toggle direction` button.
-     * @name CrossWordPanel#bb
+     * @name CrossWordPanel#style
      * @type {BoxBag} */
-    bb: null,
+    style: null,
     /**
      * The total number of letters of this cross word
      * @name CrossWordPanel#numLetters

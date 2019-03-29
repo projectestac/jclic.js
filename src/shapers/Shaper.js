@@ -178,12 +178,11 @@ define([
 
     getData() {
       return Utils.getData(this, [
-        'className',
-        'nCols', 'nRows',
+        'className', 'nCols', 'nRows', 'nCells',
         'baseWidthFactor', 'toothHeightFactor',
         'scaleX', 'scaleY',
         'randomLines', 'showEnclosure', 'hasRemainder',
-        'enclosing' // AWT.Shape      
+        'enclosing', 'shapeData', // Array of AWT.Rectangle, AWT.Ellipse or (AWT.Path -> AWT.PathStroke)
       ]);
     }
 

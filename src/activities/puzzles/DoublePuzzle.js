@@ -139,7 +139,7 @@ define([
 
       const abc = this.act.abc['primary'];
       if (abc) {
-        if (abc.imgName)
+        if (abc.image)
           abc.setImgContent(this.act.project.mediaBag, null, false);
 
         if (this.act.acp !== null)

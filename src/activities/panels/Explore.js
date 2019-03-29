@@ -131,7 +131,7 @@ define([
         abcB = this.act.abc['secondary'];
 
       if (abcA && abcB) {
-        if (abcA.imgName) {
+        if (abcA.image) {
           abcA.setImgContent(this.act.project.mediaBag, null, false);
           if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramble['primary'])
             this.$animatedBg = $('<span/>').css({
@@ -142,7 +142,7 @@ define([
             }).appendTo(this.$div);
         }
 
-        if (abcB.imgName)
+        if (abcB.image)
           abcB.setImgContent(this.act.project.mediaBag, null, false);
 
         if (this.act.acp !== null)
@@ -150,7 +150,7 @@ define([
 
         this.bgA = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abcA);
         const w = (this.act.boxGridPos === 'AUB' || this.act.boxGridPos === 'BUA') ? abcA.getTotalWidth() : abcB.w;
-        this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1));
+        this.bgB = new ActiveBoxGrid(null, this, abcB.style, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1));
 
         this.bgA.setContent(abcA);
         this.bgA.setDefaultIdAss();

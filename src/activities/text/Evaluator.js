@@ -100,6 +100,14 @@ define([
       return this;
     }
 
+    getData() {
+      return Utils.getData(this, [
+        'className',
+        'checkCase', 'checkAccents', 'checkPunctuation', 'checkDoubleSpaces', 'detail',
+        'checkSteps', 'checkScope',
+      ]);
+    }
+
     /**
      * Initializes this evaluator
      * @param {string[]} _locales - An array of valid locales, to be used by Intl.Collator

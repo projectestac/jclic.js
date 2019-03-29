@@ -184,8 +184,8 @@ define([
       this.content = bx.content;
       this.altContent = bx.altContent;
       if (this.content) {
-        if (this.content.bb)
-          this.setBoxBase(this.content.bb);
+        if (this.content.style)
+          this.setBoxBase(this.content.style);
         if (this.content.border !== null && bx.hasBorder() !== this.content.border)
           this.setBorder(this.content.border);
       }
@@ -264,8 +264,8 @@ define([
           i = this.idOrder;
         if (i >= abc.getNumCells())
           return;
-        if (abc.bb !== this.boxBase)
-          this.setBoxBase(abc.bb);
+        if (abc.style !== this.boxBase)
+          this.setBoxBase(abc.style);
 
         // `abc` is now an [ActiveBoxContent](ActiveBoxContent.html)
         abc = abc.getActiveBoxContent(i);
@@ -295,8 +295,8 @@ define([
           this.setHostedComponent($hc);
         }
 
-        if (abc.bb !== this.boxBase)
-          this.setBoxBase(abc.bb);
+        if (abc.style !== this.boxBase)
+          this.setBoxBase(abc.style);
 
         if (abc.innerHtmlText)
           this.setHostedComponent($('<div/>').html(abc.innerHtmlText));
@@ -381,9 +381,9 @@ define([
         return;
       const
         abc = this.getCurrentContent(),
-        bb = this.getBoxBaseResolve();
+        style = this.getBoxBaseResolve();
       if (!this.isInactive() && abc && abc.innerHtmlText)
-        bb.getCSS()['text-align'] = abc.txtAlign.h.replace('middle', 'center');
+        style.getCSS()['text-align'] = abc.txtAlign.h.replace('middle', 'center');
     }
 
     /**
@@ -407,7 +407,7 @@ define([
 
       const
         abc = this.getCurrentContent(),
-        bb = this.getBoxBaseResolve();
+        style = this.getBoxBaseResolve();
 
       if (this.isInactive() || !abc || this.dim.width < 2 || this.dim.height < 2)
         return true;
@@ -471,7 +471,7 @@ define([
                 Math.min(this.dim.width, imgw), Math.min(this.dim.height, imgh));
           }
         } catch (ex) {
-          Utils.log('warn', `Unable to draw image "${abc.imgName}": ${ex.message}`);
+          Utils.log('warn', `Unable to draw image "${abc.image}": ${ex.message}`);
         }
       }
       if (abc.text && abc.text.length > 0) {
@@ -536,42 +536,42 @@ define([
 
         // Calc available width and height, discounting margins
         const
-          availWidth = Math.max(5, pWidth - 2 * bb.textMargin),
-          availHeight = Math.max(5, pHeight - 2 * bb.textMargin);
+          availWidth = Math.max(5, pWidth - 2 * style.textMargin),
+          availHeight = Math.max(5, pHeight - 2 * style.textMargin);
 
         // Calc the size of each line
-        const lines = bb.prepareText(ctx, abc.text, availWidth, availHeight);
+        const lines = style.prepareText(ctx, abc.text, availWidth, availHeight);
 
-        ctx.font = bb.font.cssFont();
+        ctx.font = style.font.cssFont();
         ctx.textBaseline = 'hanging';
         const
-          lineHeight = bb.font.getHeight(),
+          lineHeight = style.font.getHeight(),
           totalHeight = lineHeight * lines.length;
 
         // Calc the vertical co-ordinate of the first line
         // Default is 'middle'
 
-        let y = py + bb.textMargin + (abc.txtAlign.v === 'top' ? 0
+        let y = py + style.textMargin + (abc.txtAlign.v === 'top' ? 0
           : abc.txtAlign.v === 'bottom' ?
             availHeight - totalHeight : (availHeight - totalHeight) / 2);
 
         for (let l = 0; l < lines.length; l++ , y += lineHeight) {
           // Calc the horizontal position of each line
           // Default is 'middle'
-          const x = px + bb.textMargin + (abc.txtAlign.h === 'left' ? 0
+          const x = px + style.textMargin + (abc.txtAlign.h === 'left' ? 0
             : abc.txtAlign.h === 'right' ?
               availWidth - lines[l].size.width
               : (availWidth - lines[l].size.width) / 2);
 
-          if (bb.shadow) {
+          if (style.shadow) {
             // Render text shadow
-            const d = Math.max(1, bb.font.size / 10);
-            ctx.fillStyle = bb.shadowColor;
+            const d = Math.max(1, style.font.size / 10);
+            ctx.fillStyle = style.shadowColor;
             ctx.fillText(lines[l].text, x + d, y + d);
           }
           // Render text
-          ctx.fillStyle = this.isInverted() ? bb.backColor
-            : this.isAlternative() ? bb.alternativeColor : bb.textColor;
+          ctx.fillStyle = this.isInverted() ? style.backColor
+            : this.isAlternative() ? style.alternativeColor : style.textColor;
           ctx.fillText(lines[l].text, x, y);
         }
       }

@@ -115,7 +115,7 @@ define([
         'type', 'file', 'externalParam',
         'absLocation', // -> AWT.Point
         'absLocationFrom', 'recBuffer',
-        'level', 'from', 'to', 'length', 'absLocation',
+        'level', 'from', 'to', 'length',
         'stretch', 'free', 'catchMouseEvents', 'loop', 'autostart'
       ]);
     }

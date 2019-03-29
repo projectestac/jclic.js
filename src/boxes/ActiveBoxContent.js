@@ -67,7 +67,7 @@ define([
   /**
    * This class defines a content that can be displayed by {@link ActiveBox} objects. This content
    * can be a text, an image, a fragment of an image or a combination of text and images. The style
-   * (colors, font and size, borders, shadows, margins, etc.) are specified in the `bb` attribute,
+   * (colors, font and size, borders, shadows, margins, etc.) are specified in the `style` attribute,
    * always pointing to a {@link BoxBase} object.
    * @exports ActiveBoxContent
    * @class
@@ -124,7 +124,7 @@ define([
             break;
 
           case 'image':
-            this.imgName = Utils.nSlash(val);
+            this.image = Utils.nSlash(val);
             break;
         }
       });
@@ -135,7 +135,7 @@ define([
         const $node = $(child);
         switch (child.nodeName) {
           case 'style':
-            this.bb = new BoxBase(null).setProperties($node);
+            this.style = new BoxBase(null).setProperties($node);
             break;
           case 'media':
             this.mediaContent = new MediaContent().setProperties($node);
@@ -160,8 +160,8 @@ define([
       return Utils.getData(this, [
         'id', 'item', 'dimension',
         'txtAlign', 'imgAlign', // AlignType
-        'border', 'avoidOverlapping', 'imgName', 'text',
-        'bb', // BoxBase
+        'border', 'avoidOverlapping', 'image', 'text',
+        'style', // BoxBase
         'mediaContent', // MediaContent
       ]);
 
@@ -251,7 +251,7 @@ define([
 
     /**
      * Sets a fragment of a main image as a graphic content of this cell.
-     * Cells cannot have two graphic contents, so `imgName` (the specific image of this cell) should
+     * Cells cannot have two graphic contents, so `image` (the specific image of this cell) should
      * be cleared with this setting.
      * @param {external:HTMLImageElement} img - The image data
      * @param {AWT.Shape} imgClip - A shape that clips the portion of image assigned to this content.
@@ -259,7 +259,7 @@ define([
      */
     setImgContent(img, imgClip, animatedGifFile) {
       this.img = img;
-      this.imgName = null;
+      this.image = null;
       this.imgClip = imgClip;
       if (animatedGifFile)
         this.animatedGifFile = animatedGifFile;
@@ -281,8 +281,8 @@ define([
      * @param {MediaBag} mediaBag - The media bag of the current project.
      */
     realizeContent(mediaBag) {
-      if (this.imgName !== null && this.imgName.length > 0) {
-        this.mbe = mediaBag.getElement(this.imgName, true);
+      if (this.image !== null && this.image.length > 0) {
+        this.mbe = mediaBag.getElement(this.image, true);
         if (this.mbe) {
           this.mbe.build(() => {
             this.img = this.mbe.data;
@@ -291,7 +291,7 @@ define([
         }
       }
       if (this.mediaContent !== null) {
-        if (this.imgName === null && (this.text === null || this.text.length === 0)) {
+        if (this.image === null && (this.text === null || this.text.length === 0)) {
           this.img = this.mediaContent.getIcon();
           this.animatedGifFile = null;
         }
@@ -306,8 +306,8 @@ define([
      */
     getDescription() {
       let result = this.text && this.text.length > 0 ? this.text : '';
-      if (this.imgName)
-        result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image')} ${this.imgName}`;
+      if (this.image)
+        result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image')} ${this.image}`;
       if (this.imgClip)
         result = `${result}${result.length > 0 ? ' ' : ''}${this.imgClip.toString()}`;
 
@@ -324,8 +324,8 @@ define([
      */
     toString() {
       let result = this.text && this.text.length > 0 ? this.text : '';
-      if (this.imgName)
-        result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image')} ${this.imgName}`;
+      if (this.image)
+        result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image')} ${this.image}`;
       if (this.imgClip)
         result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image fragment')}`;
 
@@ -338,9 +338,9 @@ define([
      * The {@link BoxBase} attribute of this content. Can be `null`, meaning {@link ActiveBox} will
      * try to find a suitable style scanning down through its own BoxBase, their parent's and, finally,
      * the default values defined in `BoxBase.prototype`.
-     * @name ActiveBoxContent#bb
+     * @name ActiveBoxContent#style
      * @type {BoxBase} */
-    bb: null,
+    style: null,
     /**
      * Optimal dimension of any {@link ActiveBox} taking this content.
      * @name ActiveBoxContent#dimension
@@ -359,9 +359,9 @@ define([
     text: null,
     /**
      * The name of the image file to display on the {@link ActiveBox}.
-     * @name ActiveBoxContent#imgName
+     * @name ActiveBoxContent#image
      * @type {string} */
-    imgName: null,
+    image: null,
     /**
      * An optional shape used to clip the image.
      * @name ActiveBoxContent#imgClip

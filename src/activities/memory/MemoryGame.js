@@ -132,9 +132,9 @@ define([
         abcB = this.act.abc['secondary'];
 
       if (abcA) {
-        if (abcA.imgName)
+        if (abcA.image)
           abcA.setImgContent(this.act.project.mediaBag, null, false);
-        if (abcB && abcB.imgName)
+        if (abcB && abcB.image)
           abcB.setImgContent(this.act.project.mediaBag, null, false);
         if (this.act.acp !== null) {
           const contentKit = [abcA];
@@ -149,7 +149,7 @@ define([
         else
           nch *= 2;
 
-        this.bg = new ActiveBoxGrid(null, this, abcA.bb,
+        this.bg = new ActiveBoxGrid(null, this, abcA.style,
           this.act.margin, this.act.margin,
           abcA.w * ncw, abcA.h * nch, new Rectangular(ncw, nch));
 

@@ -110,7 +110,7 @@ define([
      */
     static createEmptyGrid(parent, container, px, py, abc, sh, boxBase) {
       const result = abc ? new ActiveBoxGrid(parent, container,
-        boxBase || abc.bb,
+        boxBase || abc.style,
         px, py,
         abc.getTotalWidth(), abc.getTotalHeight(),
         sh || abc.getShaper()) : null;

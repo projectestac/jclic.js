@@ -141,7 +141,7 @@ define([
 
       const abc = this.act.abc['primary'];
       if (abc) {
-        if (abc.imgName)
+        if (abc.image)
           abc.setImgContent(this.act.project.mediaBag, null, false);
 
         if (this.act.acp !== null)
@@ -154,7 +154,7 @@ define([
         this.hiddenBoxIndex = Math.floor(Math.random() * this.bg.getNumCells());
         this.hiddenBox = this.bg.getActiveBox(this.hiddenBoxIndex);
         this.hiddenBox.setVisible(false);
-        this.parkBg = new ActiveBoxGrid(null, this, abc.bb, this.act.margin, this.act.margin,
+        this.parkBg = new ActiveBoxGrid(null, this, abc.style, this.act.margin, this.act.margin,
           this.hiddenBox.dim.width, this.hiddenBox.dim.height, new Rectangular(1, 1));
         this.parkBg.setContent(abc, null, this.hiddenBoxIndex, 0, 1);
         this.parkBg.setBorder(this.bg.hasBorder());
