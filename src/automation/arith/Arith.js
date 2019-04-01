@@ -93,7 +93,7 @@ define([
      * @override
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       $xml.children().each((_n, child) => {
         const $node = $(child);
         let xNum = '';
@@ -101,10 +101,10 @@ define([
           case 'operand':
             switch ($node.attr('id')) {
               case 'A':
-                this.opA.setProperties($node);
+                this.opA.$setProperties($node);
                 break;
               case 'B':
-                this.opB.setProperties($node);
+                this.opB.$setProperties($node);
                 break;
             }
             break;
@@ -715,7 +715,7 @@ define([
      * Loads Arith.Operator settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       // Read attributes
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {

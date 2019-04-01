@@ -72,7 +72,7 @@ define([
      * Reads the ProjectSettings values from a JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       let single_description = null;
       let multiple_descriptions = null;
 
@@ -104,7 +104,7 @@ define([
             break;
           case 'eventSounds':
             this.eventSounds = new EventSounds();
-            this.eventSounds.setProperties($(child));
+            this.eventSounds.$setProperties($(child));
             break;
           case 'skin':
             this.skinFileName = $(child).attr('file');
@@ -163,6 +163,21 @@ define([
     getData() {
       return Utils.getData(this, ['title', 'description', 'tags', 'authors', 'organizations', 'revisions', 'languages', 'cover', 'thumb', 'license', 'skinFileName', 'eventSounds']);
     }
+
+    /**
+     * Reads the ProjectSettings values from a data object
+     * @param {object} data - The data object to parse
+     */
+    setProperties(data) {
+      Object.assign(this, JSON.parse(JSON.stringify(data)));
+      if (this.revisions)
+        this.revisions.forEach(rv => {
+          if (rv.date)
+            rv.date = new Date(rv.date);
+        });
+      return this;
+    }
+
   }
 
   Object.assign(ProjectSettings.prototype, {

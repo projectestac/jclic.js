@@ -67,7 +67,7 @@ define([
           cl = AutoContentProvider.CLASSES[className];
         if (cl) {
           automation = new cl(project);
-          automation.setProperties($xml);
+          automation.$setProperties($xml);
         } else
           Utils.log('error', `Unknown AutoContentProvider class: ${className}`);
       }
@@ -78,7 +78,7 @@ define([
      * Loads the object settings from a specific jQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       this.className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.automation\./, '@');
       return this;
     }

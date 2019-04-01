@@ -61,7 +61,7 @@ define([
      * Loads the MediaContent settings from a specific JQuery XML element
      * @param {external:jQuery} $xml
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
           case 'type':

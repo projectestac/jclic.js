@@ -472,31 +472,47 @@ define([
      * @returns {object}
      */
     getData: (obj, keys = null) => {
-      const result = {};
+      let result = {};
       keys = keys || Object.keys(obj);
       keys.forEach(key => {
         const [k, d] = key.split('|');
-        if (obj.hasOwnProperty(k) && obj[k] !== null && obj[k].toString() !== d) {
+        if (obj.hasOwnProperty(k) && typeof obj[k] !== 'undefined' && obj[k] !== null && obj[k].toString() !== d) {
           const v = Utils.getValue(obj[k]);
           if (!Utils.isEmpty(v))
             result[k] = v;
         }
       });
+
+      // Convert to string objects with only a "text" attribute
+      keys = Object.keys(result);
+      if (keys.length === 1 && keys[0] === 'text')
+        result = result.text;
+
       return result;
     },
-
+    /**
+     * Gets the minimal representation of the given value (object, array, string, number...)
+     * @param {*} value - The value to be processed
+     * @returns {*}
+     */
     getValue: (value) => {
       return value.getData ?
         value.getData() :
         value instanceof Array ?
           value.map(e => Utils.getValue(e)) :
-          value instanceof Object ?
-            Utils.getData(value) :
-            value;
+          value instanceof Date ?
+            value.toISOString() :
+            value instanceof Object ?
+              Utils.getData(value) :
+              value;
     },
-
+    /**
+     * Checks if the given value is an empty object, null or a zero-length string
+     * @param {*} v - The value to be checked
+     * @returns {boolean} - `true` if `v` is `{}`, `null` or `""`
+     */
     isEmpty: (v) => {
-      let result = (v === null);
+      let result = (typeof v === 'undefined' || v === null);
       if (!result) {
         switch (typeof v) {
           case 'object':
@@ -510,7 +526,20 @@ define([
       }
       return result;
     },
-
+    /**
+     * Fills an object with specific attributes from another data object
+     * @param {object} obj - The target object
+     * @param {object} data - The data object
+     * @param {string[]} attr - The list of attributes to be copied from `data` to `obj`
+     * @returns {object} - Always returns `obj`
+     */
+    setAttr: (obj, data, attr) => {
+      attr.forEach(a => {
+        if (!Utils.isEmpty(data[a]))
+          obj[a] = data[a];
+      });
+      return obj;
+    },
     /**
      * Check if the given char is a separator
      * @param {string} ch - A string with a single character

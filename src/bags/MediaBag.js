@@ -58,10 +58,10 @@ define([
      * Loads this object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       $xml.children('media').each((_n, child) => {
         const mbe = new MediaBagElement(this.project.basePath, null, this.project.zip);
-        mbe.setProperties($(child));
+        mbe.$setProperties($(child));
         this.elements[mbe.name] = mbe;
       });
       return this;
@@ -69,6 +69,19 @@ define([
 
     getData() {
       return Object.keys(this.elements).map(k => this.elements[k].getData());
+    }
+
+    /**
+     * Loads the MediaBag content from a data object
+     * @param {object} data - The data object to parse
+     */
+    setProperties(data) {
+      data.forEach(el => {
+        const mbe = new MediaBagElement(this.project.basePath, null, this.project.zip);
+        mbe.setProperties(el);
+        this.elements[mbe.name] = mbe;
+      });
+      return this;
     }
 
     /**

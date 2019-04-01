@@ -90,7 +90,7 @@ define([
      * @param {external:jQuery} $xml - The XML element to be parsed
      * @param {MediaBag} mediaBag - The media bag used to retrieve images and other media
      */
-    setProperties($xml, mediaBag) {
+    $setProperties($xml, mediaBag) {
       //
       // Read attributes
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
@@ -135,10 +135,10 @@ define([
         const $node = $(child);
         switch (child.nodeName) {
           case 'style':
-            this.style = new BoxBase(null).setProperties($node);
+            this.style = new BoxBase(null).$setProperties($node);
             break;
           case 'media':
-            this.mediaContent = new MediaContent().setProperties($node);
+            this.mediaContent = new MediaContent().$setProperties($node);
             break;
           case 'p':
             if (this.text === null)

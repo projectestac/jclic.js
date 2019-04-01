@@ -67,7 +67,7 @@ define([
         const cl = Evaluator.CLASSES[className];
         if (cl) {
           ev = new cl(className);
-          ev.setProperties($xml);
+          ev.$setProperties($xml);
         } else
           Utils.log('error', `Unknown evaluator class: "${className}"`);
       }
@@ -78,7 +78,7 @@ define([
      * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The jQuery XML element to parse
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       Utils.attrForEach($xml.get(0).attributes, (name, value) => {
         switch (name) {
           case 'class':

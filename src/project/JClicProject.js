@@ -71,7 +71,7 @@ define([
      * @param {?object} options - An object with miscellaneous options
      * @returns {JClicProject}
      */
-    setProperties($xml, path, zip, options) {
+    $setProperties($xml, path, zip, options) {
       if (path) {
         this.path = path;
         if (path.file)
@@ -86,9 +86,9 @@ define([
         this.type = $xml.attr('type');
       if ($xml.attr('code') !== undefined && $xml.attr('code') !== '')
         this.code = $xml.attr('code');
-      this.settings.setProperties($xml.children('settings'));
-      this.activitySequence.setProperties($xml.children('sequence'));
-      this.mediaBag.setProperties($xml.children('mediaBag'));
+      this.settings.$setProperties($xml.children('settings'));
+      this.activitySequence.$setProperties($xml.children('sequence'));
+      this.mediaBag.$setProperties($xml.children('mediaBag'));
       this.reportableActs = 0;
       this._activities = {};
       const $node = $xml.children('activities');
@@ -106,13 +106,55 @@ define([
       return this;
     }
 
-    getData() {
-      //this.activities = Object.keys(this._activities).map(k => Activity.getActivity(this._activities[k], this))
-      const keys = Object.keys(this._activities);
-      //this.activities = [0].map(n => Activity.getActivity(this._activities[keys[n]], this));
-      this.activities = {};
-      keys.forEach(k => this.activities[k] = Activity.getActivity(this._activities[k], this));
+    getData() {      
+      //const keys = Object.keys(this._activities);            
+      //this.activities = {};
+      //keys.forEach(k => this.activities[k] = Activity.getActivity(this._activities[k], this));
+
+      this.activities = this._activities;
+
       return Utils.getData(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'activities', 'mediaBag']);
+    }
+
+
+    /**
+     * Loads the project settings from a data object
+     * @param {object} data - The data object
+     * @param {string} path - The full path of this project
+     * @param {?external:JSZip} zip - An optional JSZip object where this project is encapsulated
+     * @param {?object} options - An object with miscellaneous options
+     * @returns {JClicProject}
+     */
+    setProperties(data, path, zip, options) {
+      if (path) {
+        this.path = path;
+        if (path.file)
+          this.basePath = path;
+        else
+          this.basePath = Utils.getBasePath(path);
+      }
+      this.zip = zip;
+      this.name = data.name;
+      this.version = data.version;
+      if (data.type)
+        this.type = data.type;
+      if (data.code)
+        this.code = data.code;
+      this.settings.setProperties(data.settings);
+      this.activitySequence.setProperties(data.activitySequence);
+      this.mediaBag.setProperties(data.mediaBag);
+      this.reportableActs = 0;
+      this._activities = data.activities;
+
+      const ownFonts = this.mediaBag.getElementsOfType('font');
+      if (ownFonts.length > 0)
+        options.ownFonts = (options.ownFonts || []).concat(ownFonts);
+      // TODO: Check fonts
+      AWT.Font.checkTree(this._activities, options);
+      this.reportableActs = Object.keys(this._activities)
+        .filter(k => this._activities[k].includeInReports)
+        .length;
+      return this;
     }
 
     /**

@@ -59,7 +59,7 @@ define([
      * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml
      */
-    setProperties($xml) {
+    $setProperties($xml) {
 
       // Iterate on all provided attributes
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
@@ -83,7 +83,7 @@ define([
 
       // Iterate on 'jump' elements to load fwdJump and/or backJump
       $xml.children('jump').each((_n, data) => {
-        const jmp = new ActivitySequenceJump().setProperties($(data));
+        const jmp = new ActivitySequenceJump().$setProperties($(data));
         if (jmp.id === 'forward')
           this.fwdJump = jmp;
         else if (jmp.id === 'back')
@@ -95,6 +95,25 @@ define([
     getData() {
       return Utils.getData(this, ['tag', 'description', 'activity', 'fwdJump', 'backJump', 'navButtons', 'delay']);
     }
+
+    /**
+     * Loads sequence element settings from a data object
+     * @param {object} data
+     */
+    setProperties(data) {
+      ['tag', 'description', 'activity', 'navButtons', 'delay'].forEach(t => {
+        if (!Utils.isEmpty(data[t]))
+          this[t] = data[t];
+      });
+
+      ['fwdJump', 'backJump'].forEach(jmp => {
+        if (data[jmp]) {
+          this[jmp] = new ActivitySequenceJump().setProperties(data[jmp]);
+        }
+      });
+      return this;
+    }
+
   }
 
   Object.assign(ActivitySequenceElement.prototype, {

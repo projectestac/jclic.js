@@ -31,16 +31,28 @@ require('amdefine/intercept');
 // `var jclic = require('jclic');`
 var jclic = require('../../src/JClic.js');
 
-// Get the file name from the command line arguments, using 'demo.jclic' if none provided.
-var file = process.argv.length > 2 ? process.argv[2] : '../jclic-demo/demo.jclic';
+// Get the file name from the command line arguments
+var file = process.argv[2];
 
-// Read file and parse it into a DOM object
-var contents = fs.readFileSync(file, 'utf8');
-var doc = new DOMParser().parseFromString(contents);
+if (!file)
+  throw 'Please indicate a file name!';
 
-// Create a JClicProject and initialize it with the file contents
-var project = new jclic.JClicProject();
-project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
+const isXML = file.endsWith('.jclic');
+
+const project = new jclic.JClicProject();
+const contents = fs.readFileSync(file, 'utf8');
+
+if (isXML) {
+  // Read file and parse it into a DOM object
+  var doc = new DOMParser().parseFromString(contents);
+
+  // Create a JClicProject and initialize it with the file contents
+  project.$setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
+} 
+else {
+  var doc = JSON.parse(contents);
+  project.setProperties(doc, file, null, {});
+}
 
 console.log(JSON.stringify(
   project.getData(),

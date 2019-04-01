@@ -64,12 +64,12 @@ define([
      * Loads the object settings from a specific JQuery XML element.
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties($xml) {
-      super.setProperties($xml);
+    $setProperties($xml) {
+      super.$setProperties($xml);
 
       // Read conditional jumps
       $xml.children('jump').each((_n, child) => {
-        const condJmp = new ConditionalJumpInfo().setProperties($(child));
+        const condJmp = new ConditionalJumpInfo().$setProperties($(child));
         if (condJmp.id === 'upper')
           this.upperJump = condJmp;
         else if (condJmp.id === 'lower')
@@ -81,6 +81,22 @@ define([
     getData() {
       return Object.assign(super.getData(), Utils.getData(this, ['upperJump', 'lowerJump']));
     }
+
+    /**
+      * Loads the jump settings from a data object
+      * @param {object} data - The data object to parse
+      */
+    setProperties(data) {
+      super.setProperties(data);
+
+      ['upperJump', 'lowerJump'].forEach(cj => {
+        if (data[cj])
+          this[cj] = new ConditionalJumpInfo().setProperties(data[cj]);
+      });
+
+      return this;
+    }
+
 
     /**
      * Resolves what {@link JumpInfo} must be taken, based on a done time and average rating obtained

@@ -108,7 +108,7 @@ define([
      * Fills this ActivityReg with data provided in XML format
      * @param {external:jQuery} $xml -The XML element to be processed, already wrapped as jQuery object
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       Utils.attrForEach($xml.get(0).attributes, (name, value) => {
         switch (name) {
           case 'name':
@@ -131,7 +131,7 @@ define([
       });
       $xml.children('action').each((_n, child) => {
         const action = new ActionReg();
-        action.setProperties($(child));
+        action.$setProperties($(child));
         this.actions.push(action);
       });
     }

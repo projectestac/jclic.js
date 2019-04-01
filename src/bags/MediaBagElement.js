@@ -74,7 +74,7 @@ define([
      * Loads this object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       this.name = Utils.nSlash($xml.attr('name'));
       this.file = Utils.nSlash($xml.attr('file'));
       this.ext = this.file.toLowerCase().split('.').pop();
@@ -97,6 +97,31 @@ define([
 
     getData() {
       return Utils.getData(this, ['name', 'file', 'animated']);
+    }
+
+    /**
+     * Loads the element properties from a data object
+     * @param {object} data - The data object to parse
+     */
+    setProperties(data) {
+      ['name', 'file', 'animated'].forEach(attr => {
+        if (!Utils.isEmpty(data[attr]))
+          this[attr] = data[attr];
+      });
+
+      this.ext = this.file.toLowerCase().split('.').pop();
+      this.type = this.getFileType(this.ext);
+      
+      // Check if it's an animated GIF
+      if (this.ext === 'gif' && this.animated === 'undefined')
+        this.checkAnimatedGif();
+
+      if (this.type === 'font') {
+        this.fontName = this.name === this.file && this.name.lastIndexOf('.') > 0 ?
+          this.name.substring(0, this.name.lastIndexOf('.')) :
+          this.name;
+      }
+      return this;
     }
 
     /**

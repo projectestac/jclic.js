@@ -63,7 +63,7 @@ define([
      * Reads the properties of this object from an XML element
      * @param {external:jQuery} $xml - The XML element to be parsed
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       this.file = $xml.attr('file');
       this.enabled = Utils.getTriState($xml.attr('enabled'));
       return this;

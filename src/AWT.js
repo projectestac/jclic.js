@@ -99,17 +99,21 @@ define([
         //substitutions = Object.assign({}, substitutions, options.fontSubstitutions)
         substitutions = $.extend(Object.create(substitutions), options.fontSubstitutions);
 
-      $tree.find('style[family],font[family]').each((_n, style) => {
-        const $style = $(style),
-          name = $style.attr('family').trim().toLowerCase();
-        if (name in substitutions) {
-          const newName = substitutions[name];
-          if (newName !== '') {
-            Font.loadGoogleFont(newName);
-            $style.attr('family', newName);
+      if ($tree.jquery) {
+        $tree.find('style[family],font[family]').each((_n, style) => {
+          const $style = $(style),
+            name = $style.attr('family').trim().toLowerCase();
+          if (name in substitutions) {
+            const newName = substitutions[name];
+            if (newName !== '') {
+              Font.loadGoogleFont(newName);
+              $style.attr('family', newName);
+            }
           }
-        }
-      });
+        });
+      } else {
+        // TODO: Implement recursive tree with objects and arrays
+      }
     }
 
     /**
@@ -138,7 +142,7 @@ define([
      * @param {external:jQuery} $xml - The xml element to be parsed
      * @returns {Font}
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       if ($xml.attr('family'))
         this.family = $xml.attr('family');
       if ($xml.attr('size'))
@@ -154,6 +158,15 @@ define([
 
     getData() {
       return Utils.getData(this, ['family|Arial', 'size|17', 'bold|0', 'italic|0', 'variant']);
+    }
+
+    /**
+     * Reads the properties of this Font from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {Font}
+     */
+    setProperties(data) {
+      return Utils.setAttr(this, data, ['family', 'size', 'bold', 'italic', 'variant']);
     }
 
     /**
@@ -370,7 +383,7 @@ define([
      * @param {external:jQuery} $xml - The xml element to be parsed
      * @returns {Gradient}
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       this.c1 = Utils.checkColor($xml.attr('source'), 'black');
       this.c2 = Utils.checkColor($xml.attr('dest'), 'white');
       this.angle = Number($xml.attr('angle') || 0) % 360;
@@ -382,6 +395,15 @@ define([
       return Utils.getData(this, [
         'c1|black', 'c2|white', 'angle|0', 'cycles|1'
       ]);
+    }
+
+    /**
+     * Reads the properties of this Gradient from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {Gradient}
+     */
+    setProperties(data) {
+      return Utils.setAttr(this, data, ['c1', 'c2', 'angle', 'cycles']);
     }
 
     /**
@@ -477,6 +499,15 @@ define([
     }
 
     /**
+     * Reads the properties of this Stroke from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {Stroke}
+     */
+    setProperties(data) {
+      return Utils.setAttr(this, data, ['lineWidth', 'lineCap', 'lineJoin', 'miterLimit']);
+    }
+
+    /**
      * Sets the properties of this stroke to a CanvasRenderingContext2D
      * @param {external:CanvasRenderingContext2D} ctx - The canvas 2D rendering context
      * @returns {external:CanvasRenderingContext2D}
@@ -539,7 +570,7 @@ define([
      * @param {external:jQuery} $xml - The xml element to be parsed
      * @returns {Point}
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       this.x = Number($xml.attr('x'));
       this.y = Number($xml.attr('y'));
       return this;
@@ -547,6 +578,16 @@ define([
 
     getData() {
       return Utils.getData(this, ['x', 'y']);
+    }
+
+    /**
+     * Reads the properties of this Point from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {Point}
+     */
+    setProperties(data) {
+      this.x = data.x;
+      this.y = data.y;
     }
 
     /**
@@ -653,7 +694,7 @@ define([
      * @param {external:jQuery} $xml - The xml element to be parsed
      * @returns {Dimension}
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       this.width = Number($xml.attr('width'));
       this.height = Number($xml.attr('height'));
       return this;
@@ -662,6 +703,17 @@ define([
     getData() {
       return Utils.getData(this, ['width', 'height']);
     }
+
+    /**
+     * Reads the properties of this Dimension from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {Dimension}
+     */
+    setProperties(data) {
+      this.width = data.width;
+      this.height = data.height;
+    }
+
 
     /**
      * Check if two dimensions are equivalent
@@ -1106,6 +1158,19 @@ define([
     getData() {
       return Utils.getData(this, ['type', 'pos', 'dim']);
     }
+
+    /**
+     * Reads the properties of this Rectangle from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {Rectangle}
+     */
+    setProperties(data) {
+      if (data.type)
+        this.type = data.type;
+      this.pos = new Point(data.pos.x, data.pos.y);
+      this.dim = new Dimension(data.dim.width, data.dim.height);
+    }
+
   }
 
   Object.assign(Rectangle.prototype, {
@@ -1209,10 +1274,6 @@ define([
     // Inherits the documentation of `toString` in Shape
     toString() {
       return `Ellipse enclosed in ${this.getCoords()}`;
-    }
-
-    getData() {
-      return Utils.getData(this, ['type', 'pos', 'dim']);
     }
   }
 
@@ -1382,13 +1443,20 @@ define([
     }
 
     getData() {
-      //return Utils.getData(this, ['type', 'strokes']);
       return {
         type: this.type,
-        strokes: this.strokes.map(s => `${s.type}:${s.points ? s.points.map(p => `${Utils.fx(p.x)},${Utils.fx(p.y)}`).join(',') : ''}`).join('|')
+        strokes: this.strokes.map(s => s.getData()).join('|'),
       };
     }
 
+    static getPath(data) {
+      const strData = data.strokes.split('|');
+      const strokes = strData.map(s => {
+        const [type, points] = s.split(':');
+        return new PathStroke(type, points ? points.split(',') : []);
+      });
+      return new Path(strokes);
+    }
   }
 
   Object.assign(Path.prototype, {
@@ -1579,7 +1647,7 @@ define([
     }
 
     getData() {
-      return Utils.getData(this, ['type', 'points']);
+      return `${this.type}:${this.points ? this.points.map(p => `${Utils.fx(p.x)},${Utils.fx(p.y)}`).join(',') : ''}`;
     }
 
   }

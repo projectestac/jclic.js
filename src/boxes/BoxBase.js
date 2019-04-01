@@ -64,7 +64,7 @@ define([
      * Loads the BoxBase settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       //
       // Read attributes
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
@@ -90,11 +90,11 @@ define([
         const $node = $(child);
         switch (child.nodeName) {
           case 'font':
-            this.font = (new AWT.Font()).setProperties($node);
+            this.font = (new AWT.Font()).$setProperties($node);
             break;
 
           case 'gradient':
-            this.bgGradient = new AWT.Gradient().setProperties($node);
+            this.bgGradient = new AWT.Gradient().$setProperties($node);
             break;
 
           case 'color':

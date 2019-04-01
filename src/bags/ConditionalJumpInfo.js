@@ -70,8 +70,8 @@ define([
      * Loads this object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties($xml) {
-      super.setProperties($xml);
+    $setProperties($xml) {
+      super.$setProperties($xml);
       if ($xml.attr('threshold') !== undefined)
         this.threshold = $xml.attr('threshold');
       if ($xml.attr('time') !== undefined)
@@ -79,9 +79,23 @@ define([
       return this;
     }
 
-    getData(){
+    getData() {
       return Object.assign(super.getData(), Utils.getData(this, ['threshold', 'time']));
     }
+
+    /**
+     * Loads this conditional jump settings from a data object
+     * @param {object} data - The data object to parse
+     */
+    setProperties(data) {
+      super.setProperties(data);
+      ['threshold', 'time'].forEach(t => {
+        if (!Utils.isEmpty(data[t]))
+          this[t] = data[t];
+      });
+      return this;
+    }
+
   }
 
   Object.assign(ConditionalJumpInfo.prototype, {

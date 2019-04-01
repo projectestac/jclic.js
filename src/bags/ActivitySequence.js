@@ -60,13 +60,22 @@ define([
      * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties($xml) {
-      $xml.children('item').each((_i, data) => this.elements.push(new ActivitySequenceElement().setProperties($(data))));
+    $setProperties($xml) {
+      $xml.children('item').each((_i, data) => this.elements.push(new ActivitySequenceElement().$setProperties($(data))));
       return this;
     }
 
-    getData(){
+    getData() {
       return this.elements.map(el => el.getData());
+    }
+
+    /**
+     * Loads the object settings from a data object
+     * @param {object} data - The data object to parse
+     */
+    setProperties(data) {
+      data.forEach(el => this.elements.push(new ActivitySequenceElement().setProperties(el)));
+      return this;
     }
 
     /**

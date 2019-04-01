@@ -58,7 +58,7 @@ define([
      * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       // Read attributes
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
@@ -88,7 +88,7 @@ define([
 
       // Read inner elements
       $xml.children('style:first').each((_n, child) => {
-        this.style = new BoxBase().setProperties($(child));
+        this.style = new BoxBase().$setProperties($(child));
       });
 
       $xml.find('text:first > row').each((_n, el) => this.text.push(el.textContent));

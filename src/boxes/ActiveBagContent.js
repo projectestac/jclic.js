@@ -67,7 +67,7 @@ define([
      * @param {external:jQuery} $xml - The XML element to parse
      * @param {MediaBag} mediaBag - The project's MediaBag
      */
-    setProperties($xml, mediaBag) {
+    $setProperties($xml, mediaBag) {
       let bug = false;
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
@@ -110,14 +110,14 @@ define([
         const $node = $(child);
         switch (child.nodeName) {
           case 'style':
-            this.style = new BoxBase(null).setProperties($node);
+            this.style = new BoxBase(null).$setProperties($node);
             break;
           case 'shaper':
             const shaperClassName = $node.attr('class'),
               nCols = Math.max(1, $node.attr('cols')),
               nRows = Math.max(1, $node.attr('rows'));
             this.shaper = Shaper.getShaper(shaperClassName, nCols, nRows);
-            this.shaper.setProperties($node);
+            this.shaper.$setProperties($node);
             break;
           case 'ids':
             // Used in special cases where all cells have empty content with only 'ids'
@@ -125,7 +125,7 @@ define([
             this.ids.split(' ').forEach((id, i) => { this.cells[i] = new ActiveBoxContent(Number(id)); });
             break;
           case 'cell':
-            this.cells.push(new ActiveBoxContent().setProperties($node, mediaBag));
+            this.cells.push(new ActiveBoxContent().$setProperties($node, mediaBag));
             break;
         }
       });

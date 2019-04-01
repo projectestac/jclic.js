@@ -72,7 +72,7 @@ define(["../Utils"], function (Utils) {
      * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    setProperties($xml) {
+    $setProperties($xml) {
       this.id = $xml.attr('id');
       this.action = $xml.attr('action') || 'JUMP';
       if ($xml.attr('tag'))
@@ -84,6 +84,18 @@ define(["../Utils"], function (Utils) {
 
     getData() {
       return Utils.getData(this, ['id', 'action', 'actNum', 'sequence', 'projectPath']);
+    }
+
+    /**
+     * Loads the object settings from a data object
+     * @param {object} data - The data object to parse
+     */
+    setProperties(data) {
+      ['id', 'action', 'actNum', 'sequence', 'projectPath'].forEach(t => {
+        if (!Utils.isEmpty(data[t]))
+          this[t] = data[t];
+      });
+      return this;
     }
   }
 
