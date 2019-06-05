@@ -58,7 +58,7 @@ define([
      * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml
      */
-    $setProperties($xml) {
+    setProperties($xml) {
       // Read attributes
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
         switch (name) {
@@ -88,7 +88,7 @@ define([
 
       // Read inner elements
       $xml.children('style:first').each((_n, child) => {
-        this.style = new BoxBase().$setProperties($(child));
+        this.style = new BoxBase().setProperties($(child));
       });
 
       $xml.find('text:first > row').each((_n, el) => this.text.push(el.textContent));
@@ -99,8 +99,14 @@ define([
       return this;
     }
 
-    getData() {
-      return Utils.getData(this, [
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, [
         'ncw', 'nch',
         'w', 'h',
         'text',

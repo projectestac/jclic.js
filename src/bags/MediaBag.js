@@ -58,27 +58,33 @@ define([
      * Loads this object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    $setProperties($xml) {
+    setProperties($xml) {
       $xml.children('media').each((_n, child) => {
         const mbe = new MediaBagElement(this.project.basePath, null, this.project.zip);
-        mbe.$setProperties($(child));
+        mbe.setProperties($(child));
         this.elements[mbe.name] = mbe;
       });
       return this;
     }
 
-    getData() {
-      return Object.keys(this.elements).map(k => this.elements[k].getData());
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Object.keys(this.elements).map(k => this.elements[k].getAttributes());
     }
 
     /**
      * Loads the MediaBag content from a data object
      * @param {object} data - The data object to parse
      */
-    setProperties(data) {
+    setAttributes(data) {
       data.forEach(el => {
         const mbe = new MediaBagElement(this.project.basePath, null, this.project.zip);
-        mbe.setProperties(el);
+        mbe.setAttributes(el);
         this.elements[mbe.name] = mbe;
       });
       return this;

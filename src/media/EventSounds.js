@@ -66,18 +66,24 @@ define([
      * Reads the object properties from an XML element
      * @param {external:jQuery} $xml - The XML element to be parsed
      */
-    $setProperties($xml) {
+    setProperties($xml) {
       this.enabled = Utils.getTriState($xml.attr('enabled'), this.enabled);
       $xml.children().each((_n, child) => {
         const id = child.getAttribute('id');
         this.elements[id] = new EventSoundsElement(id);
-        this.elements[id].$setProperties($(child));
+        this.elements[id].setProperties($(child));
       });
       return this;
     }
 
-    getData() {
-      return Utils.getData(this, [`enabled|${Utils.DEFAULT}`, 'elements']);
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, [`enabled|${Utils.DEFAULT}`, 'elements']);
     }
 
     /**

@@ -70,8 +70,8 @@ define([
      * Loads this object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    $setProperties($xml) {
-      super.$setProperties($xml);
+    setProperties($xml) {
+      super.setProperties($xml);
       if ($xml.attr('threshold') !== undefined)
         this.threshold = $xml.attr('threshold');
       if ($xml.attr('time') !== undefined)
@@ -79,16 +79,22 @@ define([
       return this;
     }
 
-    getData() {
-      return Object.assign(super.getData(), Utils.getData(this, ['threshold', 'time']));
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Object.assign(super.getAttributes(), Utils.getAttributes(this, ['threshold', 'time']));
     }
 
     /**
      * Loads this conditional jump settings from a data object
      * @param {object} data - The data object to parse
      */
-    setProperties(data) {
-      super.setProperties(data);
+    setAttributes(data) {
+      super.setAttributes(data);
       ['threshold', 'time'].forEach(t => {
         if (!Utils.isEmpty(data[t]))
           this[t] = data[t];

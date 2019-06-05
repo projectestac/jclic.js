@@ -402,7 +402,7 @@ define([
                 return;
               }
               const prj = new JClicProject();
-              prj.$setProperties($(data).find('JClicProject'), fullPath, this.zip, this.options);
+              prj.setProperties($(data).find('JClicProject'), fullPath, this.zip, this.options);
               Utils.log('info', `Project file loaded and parsed: ${project}`);
               const elements = prj.mediaBag.buildAll(null, element => {
                 Utils.log('trace', `"${element.name}" ready.`);

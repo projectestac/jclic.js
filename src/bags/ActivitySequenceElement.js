@@ -59,7 +59,7 @@ define([
      * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml
      */
-    $setProperties($xml) {
+    setProperties($xml) {
 
       // Iterate on all provided attributes
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
@@ -83,7 +83,7 @@ define([
 
       // Iterate on 'jump' elements to load fwdJump and/or backJump
       $xml.children('jump').each((_n, data) => {
-        const jmp = new ActivitySequenceJump().$setProperties($(data));
+        const jmp = new ActivitySequenceJump().setProperties($(data));
         if (jmp.id === 'forward')
           this.fwdJump = jmp;
         else if (jmp.id === 'back')
@@ -92,15 +92,21 @@ define([
       return this;
     }
 
-    getData() {
-      return Utils.getData(this, ['tag', 'description', 'activity', 'fwdJump', 'backJump', 'navButtons', 'delay']);
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, ['tag', 'description', 'activity', 'fwdJump', 'backJump', 'navButtons', 'delay']);
     }
 
     /**
      * Loads sequence element settings from a data object
      * @param {object} data
      */
-    setProperties(data) {
+    setAttributes(data) {
       ['tag', 'description', 'activity', 'navButtons', 'delay'].forEach(t => {
         if (!Utils.isEmpty(data[t]))
           this[t] = data[t];
@@ -108,7 +114,7 @@ define([
 
       ['fwdJump', 'backJump'].forEach(jmp => {
         if (data[jmp]) {
-          this[jmp] = new ActivitySequenceJump().setProperties(data[jmp]);
+          this[jmp] = new ActivitySequenceJump().setAttributes(data[jmp]);
         }
       });
       return this;

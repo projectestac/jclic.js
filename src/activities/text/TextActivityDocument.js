@@ -65,7 +65,7 @@ define([
      * @param {external:jQuery} $xml - The XML element to parse
      * @param {MediaBag} mediaBag - The media bag used to load images and media content
      */
-    $setProperties($xml, mediaBag) {
+    setProperties($xml, mediaBag) {
       // Read named styles
       // Sort styles according to its "base" dependencies
       const styles = $xml.children('style').toArray().sort((a, b) => {
@@ -109,7 +109,7 @@ define([
           switch (child.nodeName) {
 
             case 'cell':
-              obj = new ActiveBoxContent().$setProperties($child, mediaBag);
+              obj = new ActiveBoxContent().setProperties($child, mediaBag);
               break;
 
             case 'text':
@@ -122,7 +122,7 @@ define([
 
             case 'target':
               obj = new TextTarget(this, child.textContent.replace(/\t/g, '&#9;'));
-              obj.$setProperties($child, mediaBag);
+              obj.setProperties($child, mediaBag);
               this.numTargets++;
               break;
 
@@ -217,8 +217,14 @@ define([
       return attr;
     }
 
-    getData() {
-      return Utils.getData(this, [
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, [
         'style',
         'tabSpc', 'targetType',
         'p',
@@ -372,7 +378,7 @@ define([
      * @param {external:jQuery} $xml - The XML element to parse
      * @param {MediaBag} mediaBag - The media bag used to load images and media content
      */
-    $setProperties($xml, mediaBag) {
+    setProperties($xml, mediaBag) {
       let firstAnswer = true;
       // Read specific nodes
       $xml.children().each((_n, child) => {
@@ -411,11 +417,11 @@ define([
             $node.children('media').each((_n, media) => {
               this.onlyPlay = true;
               this.popupContent = new ActiveBoxContent();
-              this.popupContent.mediaContent = new MediaContent().$setProperties($(media));
+              this.popupContent.mediaContent = new MediaContent().setProperties($(media));
             });
             if (!this.popupContent) {
               $node.children('cell').each((_n, cell) => {
-                this.popupContent = new ActiveBoxContent().$setProperties($(cell), mediaBag);
+                this.popupContent = new ActiveBoxContent().setProperties($(cell), mediaBag);
               });
             }
             break;
@@ -433,8 +439,14 @@ define([
       });
     }
 
-    getData() {
-      return Utils.getData(this, [
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, [
         'text', 'attr',
         'answers', 'options', 'iniChar', 'numIniChars', 'maxLenResp', 'iniText',
         'infoMode', 'popupDelay', 'popupMaxTime', 'onlyPlay', 'popupContent',

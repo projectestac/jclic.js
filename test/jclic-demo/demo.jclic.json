@@ -668,6 +668,8 @@
       "name": "anim1",
       "className": "@associations.ComplexAssociation",
       "showSolution": true,
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": "Sample of association with animated GIF",
         "final": "Very good!"
@@ -729,15 +731,14 @@
             "diving"
           ]
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "anim2": {
       "name": "anim2",
       "className": "@puzzles.ExchangePuzzle",
       "dragCells": true,
       "showSolution": true,
+      "shuffles": 31,
       "messages": {
         "initial": "Another puzzle with animated GIF",
         "final": "Good!"
@@ -757,14 +758,15 @@
             "nRows": 3
           }
         }
-      },
-      "shuffles": 31
+      }
     },
     "ass01.ass": {
       "name": "ass01.ass",
       "className": "@associations.SimpleAssociation",
       "infoCmd": "winhelp.exe demo.hlp",
       "activityBgColor": "#0000FF",
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": {
           "text": "This is a direct association between text and graphics divided into rectangular sections.",
@@ -843,9 +845,7 @@
             "nRows": 4
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "ass01b.ass": {
       "name": "ass01b.ass",
@@ -856,6 +856,8 @@
       "bActionsCounter": false,
       "bScoreCounter": false,
       "activityBgColor": "#0000FF",
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": {
           "text": "In this association you must drag the words. The cells have transparent background.",
@@ -933,25 +935,25 @@
             "nRows": 4
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "ass01c.ass": {
       "name": "ass01c.ass",
       "className": "@associations.SimpleAssociation",
       "infoCmd": "winhelp.exe demo.hlp",
       "dragCells": true,
-      "bgGradient": {
-        "c1": "white",
-        "c2": "blue",
-        "angle": 90
-      },
       "bTimeCounter": false,
       "bActionsCounter": false,
       "bScoreCounter": false,
       "activityBgColor": "white",
       "border": false,
+      "shuffles": 31,
+      "boxGridPos": "AB",
+      "bgGradient": {
+        "c1": "white",
+        "c2": "blue",
+        "angle": 90
+      },
       "messages": {
         "initial": {
           "text": "Activity with transparencies and colour gradients",
@@ -1183,14 +1185,14 @@
             "nRows": 4
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "ass02.ass": {
       "name": "ass02.ass",
       "className": "@associations.ComplexAssociation",
       "showSolution": true,
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": {
           "text": "This is an association between two texts, but with a different number of elements in each window.",
@@ -1334,13 +1336,12 @@
             "the flowers are ours"
           ]
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "ass04.ass": {
       "name": "ass04.ass",
       "className": "@panels.Identify",
+      "shuffles": 31,
       "messages": {
         "initial": {
           "text": "Identification activity: which verbs are in the past?",
@@ -1459,12 +1460,12 @@
             "today you see"
           ]
         }
-      },
-      "shuffles": 31
+      }
     },
     "ass05.ass": {
       "name": "ass05.ass",
       "className": "@panels.Identify",
+      "shuffles": 31,
       "messages": {
         "initial": "Another identification panel: Where is Australia?",
         "final": {
@@ -1518,12 +1519,13 @@
             "Yes! It's here!"
           ]
         }
-      },
-      "shuffles": 31
+      }
     },
     "ass06.ass": {
       "name": "ass06.ass",
       "className": "@associations.ComplexAssociation",
+      "shuffles": 31,
+      "boxGridPos": "BA",
       "messages": {
         "initial": {
           "text": "In this case it's about associating  text and areas of a graph.",
@@ -1817,9 +1819,7 @@
             ]
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "BA"
+      }
     },
     "ass07.ass": {
       "name": "ass07.ass",
@@ -1827,6 +1827,8 @@
       "numericContent": true,
       "infoCmd": "winhelp.exe arith2.hlp",
       "showSolution": true,
+      "shuffles": 31,
+      "boxGridPos": "AUB",
       "messages": {
         "initial": {
           "text": "This is an activity in which the operations are generated randomly, using the module \"arith2\"",
@@ -1924,14 +1926,14 @@
             "nRows": 2
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AUB"
+      }
     },
     "ass08.ass": {
       "name": "ass08.ass",
       "className": "@text.WrittenAnswer",
       "showSolution": true,
+      "shuffles": 31,
+      "boxGridPos": "AUB",
       "messages": {
         "initial": {
           "text": "Written response activity: what are these vehicles called?",
@@ -2016,9 +2018,7 @@
             "Motorbike|Motorcycle"
           ]
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AUB"
+      }
     },
     "ass09.ass": {
       "name": "ass09.ass",
@@ -2028,6 +2028,8 @@
       "bTimeCounter": false,
       "bActionsCounter": false,
       "bScoreCounter": false,
+      "shuffles": 31,
+      "boxGridPos": "AUB",
       "messages": {
         "initial": {
           "text": "This is an exploration activity. Click on the map to see the information associated with each zone.",
@@ -2309,13 +2311,13 @@
             "Australia"
           ]
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AUB"
+      }
     },
     "ass12.ass": {
       "name": "ass12.ass",
       "className": "@associations.SimpleAssociation",
+      "shuffles": 31,
+      "boxGridPos": "AUB",
       "messages": {
         "initial": {
           "text": "How's your English coming on? In this association there are texts, graphics and sounds.",
@@ -2419,13 +2421,13 @@
             "motorcycle"
           ]
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AUB"
+      }
     },
     "ass13.ass": {
       "name": "ass13.ass",
       "className": "@associations.SimpleAssociation",
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": {
           "text": "And in this one we use MIDI files.",
@@ -2527,9 +2529,7 @@
             "Brahms"
           ]
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "caselles.txa": {
       "name": "caselles.txa",
@@ -2776,6 +2776,7 @@
       "name": "crw01.crw",
       "className": "@textGrid.CrossWord",
       "transparentBg": true,
+      "boxGridPos": "AB",
       "messages": {
         "initial": {
           "text": "In this crossword, some of the clues are graphics. ",
@@ -2985,7 +2986,6 @@
           ]
         }
       },
-      "boxGridPos": "AB",
       "tgc": {
         "ncw": 10,
         "nch": 5,
@@ -3010,6 +3010,7 @@
     "crw02.crw": {
       "name": "crw02.crw",
       "className": "@textGrid.CrossWord",
+      "boxGridPos": "AB",
       "messages": {
         "initial": {
           "text": "... and in this one there are spoken definitions in English which must be written down.",
@@ -3168,7 +3169,6 @@
           ]
         }
       },
-      "boxGridPos": "AB",
       "tgc": {
         "ncw": 7,
         "nch": 5,
@@ -3551,6 +3551,8 @@
       "className": "@puzzles.DoublePuzzle",
       "dragCells": true,
       "showSolution": true,
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": "In JClic the cells can be rectangles or have other shapes.",
         "final": "¡¡Groarr!!"
@@ -3577,9 +3579,7 @@
             "nRows": 3
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "mapa": {
       "name": "mapa",
@@ -3589,6 +3589,8 @@
       "bgColor": "white",
       "transparentBg": true,
       "border": false,
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": {
           "text": "This activity uses the \"Holes\" shaper",
@@ -3772,15 +3774,15 @@
             }
           ]
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "maxActionsSample": {
       "name": "maxActionsSample",
       "className": "@associations.ComplexAssociation",
       "maxActions": 10,
       "countDownActions": true,
+      "shuffles": 31,
+      "boxGridPos": "BA",
       "messages": {
         "initial": {
           "text": "This activity must be solved using less than 10 attempts",
@@ -4083,9 +4085,7 @@
             ]
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "BA"
+      }
     },
     "maxTimeSample": {
       "name": "maxTimeSample",
@@ -4094,6 +4094,7 @@
       "countDownTime": true,
       "dragCells": true,
       "showSolution": true,
+      "shuffles": 31,
       "messages": {
         "initial": "This puzzle must be solved in less than 15 seconds",
         "final": "You are speedy!",
@@ -4116,8 +4117,7 @@
             "nRows": 4
           }
         }
-      },
-      "shuffles": 31
+      }
     },
     "menu0.ass": {
       "name": "menu0.ass",
@@ -4924,18 +4924,18 @@
       "className": "@panels.InformationScreen",
       "includeInReports": false,
       "bgColor": "#0066CC",
-      "bgGradient": {
-        "c1": "navy",
-        "c2": "blue",
-        "angle": 90,
-        "cycles": 30
-      },
       "bTimeCounter": false,
       "bActionsCounter": false,
       "bScoreCounter": false,
       "activityBgColor": "#FFFF80",
       "transparentBg": true,
       "border": false,
+      "bgGradient": {
+        "c1": "navy",
+        "c2": "blue",
+        "angle": 90,
+        "cycles": 30
+      },
       "messages": {
         "initial": {
           "style": {
@@ -4988,6 +4988,8 @@
       "className": "@puzzles.DoublePuzzle",
       "dragCells": true,
       "showSolution": true,
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": "This is a graphic puzzle of the \"double\" type ",
         "final": "Groarr!!"
@@ -5009,15 +5011,15 @@
             "nRows": 4
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "puz01b.puz": {
       "name": "puz01b.puz",
       "className": "@puzzles.DoublePuzzle",
       "dragCells": true,
       "showSolution": true,
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": "JClic can use cells with arbitrary shapes",
         "final": "Groarr!!"
@@ -5040,15 +5042,14 @@
             "nRows": 4
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "puz02.puz": {
       "name": "puz02.puz",
       "className": "@puzzles.ExchangePuzzle",
       "dragCells": true,
       "showSolution": true,
+      "shuffles": 31,
       "messages": {
         "initial": "... this is \"exchange\"...",
         "final": "Perfect! Let's continue?"
@@ -5070,13 +5071,14 @@
             "nRows": 4
           }
         }
-      },
-      "shuffles": 31
+      }
     },
     "puz03.puz": {
       "name": "puz03.puz",
       "className": "@puzzles.HolePuzzle",
       "showSolution": true,
+      "shuffles": 10,
+      "boxGridPos": "AB",
       "messages": {
         "initial": "... and this is the \"hole\" type.They're the most difficult! ",
         "final": "You did it!"
@@ -5098,15 +5100,14 @@
             "nRows": 3
           }
         }
-      },
-      "shuffles": 10,
-      "boxGridPos": "AB"
+      }
     },
     "puz04.puz": {
       "name": "puz04.puz",
       "className": "@puzzles.ExchangePuzzle",
       "dragCells": true,
       "showSolution": true,
+      "shuffles": 31,
       "messages": {
         "initial": "You can also make puzzles with text,like this one.",
         "final": "Good!"
@@ -5148,8 +5149,7 @@
             "together again."
           ]
         }
-      },
-      "shuffles": 31
+      }
     },
     "puz05.puz": {
       "name": "puz05.puz",
@@ -5157,6 +5157,8 @@
       "numericContent": true,
       "infoCmd": "winhelp.exe arith2.hlp",
       "dragCells": true,
+      "shuffles": 31,
+      "boxGridPos": "AUB",
       "messages": {
         "initial": {
           "text": "... or with arithmetical operations. These have to be put in ascending order.",
@@ -5213,13 +5215,13 @@
             "nRows": 1
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AUB"
+      }
     },
     "puz06.puz": {
       "name": "puz06.puz",
       "className": "@memory.MemoryGame",
+      "shuffles": 31,
+      "boxGridPos": "AUB",
       "messages": {
         "initial": {
           "text": "This is a memory puzzle: the aim is to find each pieces partner.",
@@ -5260,13 +5262,13 @@
             "nRows": 3
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AUB"
+      }
     },
     "puz06b.puz": {
       "name": "puz06b.puz",
       "className": "@memory.MemoryGame",
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": {
           "text": "In this memory game you must discover couples of similar cells",
@@ -5349,15 +5351,14 @@
             "motorcycle"
           ]
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "puzanim.puz": {
       "name": "puzanim.puz",
       "className": "@puzzles.DoublePuzzle",
       "dragCells": true,
       "showSolution": true,
+      "shuffles": 31,
       "messages": {
         "initial": "Example of a puzzle with animated GIF",
         "final": "Very good!"
@@ -5379,14 +5380,14 @@
             "nRows": 3
           }
         }
-      },
-      "shuffles": 31
+      }
     },
     "puzanim2.puz": {
       "name": "puzanim2.puz",
       "className": "@puzzles.DoublePuzzle",
       "dragCells": true,
       "showSolution": true,
+      "shuffles": 31,
       "activityBgGradient": {
         "c1": "lightblue",
         "c2": "green",
@@ -5411,8 +5412,7 @@
             "nRows": 3
           }
         }
-      },
-      "shuffles": 31
+      }
     },
     "shape1": {
       "name": "shape1",
@@ -5422,6 +5422,8 @@
       "bgColor": "#FFFFFF",
       "transparentBg": true,
       "border": false,
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": {
           "text": "This puzzle uses the \"TriangularJigSaw\" shaper",
@@ -5451,9 +5453,7 @@
             "nRows": 3
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "shape2": {
       "name": "shape2",
@@ -5463,6 +5463,8 @@
       "bgColor": "#FFFFFF",
       "transparentBg": true,
       "border": false,
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": {
           "text": "This is the \"ClassicJigSaw\" shaper",
@@ -5492,9 +5494,7 @@
             "nRows": 3
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "shape3": {
       "name": "shape3",
@@ -5504,6 +5504,8 @@
       "bgColor": "#FFFFFF",
       "transparentBg": true,
       "border": false,
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "messages": {
         "initial": {
           "text": "This activity uses the \"JigSaw\" shaper, with random distribution of tooths.",
@@ -5534,9 +5536,7 @@
             "randomLines": true
           }
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "shape4": {
       "name": "shape4",
@@ -5546,6 +5546,7 @@
       "bgColor": "#FFFFFF",
       "transparentBg": true,
       "border": false,
+      "shuffles": 31,
       "messages": {
         "initial": {
           "text": "The shaper \"Holes\" allows to define any kind of polygon, as well as circles, ellipses and Bézier curves.",
@@ -5637,8 +5638,7 @@
             ]
           }
         }
-      },
-      "shuffles": 31
+      }
     },
     "skin01.txa": {
       "name": "skin01.txa",
@@ -6262,6 +6262,7 @@
       "name": "sop02.sop",
       "className": "@textGrid.WordSearch",
       "showSolution": true,
+      "boxGridPos": "AB",
       "messages": {
         "initial": {
           "text": "In this search there are the names of the countries of South-America. As you discover them a map will be revealed.",
@@ -6453,7 +6454,6 @@
           ]
         }
       },
-      "boxGridPos": "AB",
       "tgc": {
         "ncw": 16,
         "nch": 10,
@@ -6514,6 +6514,7 @@
       "name": "sop03.sop",
       "className": "@textGrid.WordSearch",
       "showSolution": true,
+      "boxGridPos": "AB",
       "messages": {
         "initial": "The same as before, but this time with a little music!",
         "final": "Very good!"
@@ -6556,7 +6557,6 @@
           ]
         }
       },
-      "boxGridPos": "AB",
       "tgc": {
         "ncw": 10,
         "nch": 6,
@@ -6590,6 +6590,8 @@
       "name": "sounds",
       "className": "@associations.ComplexAssociation",
       "showSolution": true,
+      "shuffles": 31,
+      "boxGridPos": "AB",
       "eventSounds": {
         "elements": {
           "click": {
@@ -6924,9 +6926,7 @@
             "the flowers are ours"
           ]
         }
-      },
-      "shuffles": 31,
-      "boxGridPos": "AB"
+      }
     },
     "txa01.txa": {
       "name": "txa01.txa",
@@ -8154,6 +8154,7 @@
       "className": "@text.FillInBlanks",
       "showSolution": true,
       "bTimeCounter": false,
+      "checkButtonText": "Check",
       "windowSize": {
         "width": 520,
         "height": 346
@@ -8162,7 +8163,6 @@
         "initial": "Activity with a final evaluation.",
         "final": "Perfecto!"
       },
-      "checkButtonText": "Check",
       "ev": {
         "className": "@ComplexEvaluator",
         "checkCase": true,
@@ -8578,6 +8578,9 @@
       "activityBgColor": "#FFFFFF",
       "transparentBg": true,
       "border": false,
+      "prevScreen": true,
+      "prevScreenMaxTime": -1,
+      "prevScreenText": "<p>Here's an example of how to include a dictation in a text activity.</p><p></p><p>Click here to begin the activity. You will first hear the whole text and then you have to write the dictation bit by bit.</p>",
       "absolutePosition": {
         "x": 300,
         "y": 56
@@ -8613,8 +8616,6 @@
           }
         }
       },
-      "prevScreen": true,
-      "prevScreenMaxTime": -1,
       "prevScreenStyle": {
         "font": {
           "bold": true
@@ -8624,7 +8625,6 @@
         "inactiveColor": "#000000",
         "alternativeColor": "#000000"
       },
-      "prevScreenText": "<p>Here's an example of how to include a dictation in a text activity.</p><p></p><p>Click here to begin the activity. You will first hear the whole text and then you have to write the dictation bit by bit.</p>",
       "ev": {
         "className": "@ComplexEvaluator",
         "checkPunctuation": false,
@@ -9303,6 +9303,7 @@
       "activityBgColor": "#008080",
       "transparentBg": true,
       "border": false,
+      "checkButtonText": "Check",
       "windowSize": {
         "width": 525,
         "height": 320
@@ -9323,7 +9324,6 @@
           }
         }
       },
-      "checkButtonText": "Check",
       "document": {
         "style": {
           "default": {
@@ -9596,6 +9596,7 @@
       "showSolution": true,
       "bgImageFile": "nuvols.jpg",
       "tiledBgImg": true,
+      "checkButtonText": "Check",
       "windowSize": {
         "width": 464,
         "height": 280
@@ -9604,7 +9605,6 @@
         "initial": "Identifying letters",
         "final": "Perfect!"
       },
-      "checkButtonText": "Check",
       "document": {
         "style": {
           "default": {
@@ -9817,6 +9817,7 @@
       "className": "@text.Identify",
       "type": "identifyWords",
       "showSolution": true,
+      "checkButtonText": "Check",
       "windowSize": {
         "width": 500,
         "height": 310
@@ -9825,7 +9826,6 @@
         "initial": "Identifying words",
         "final": "Very good!"
       },
-      "checkButtonText": "Check",
       "document": {
         "style": {
           "default": {
@@ -10050,6 +10050,9 @@
       "className": "@text.Order",
       "type": "orderParagraphs",
       "showSolution": true,
+      "checkButtonText": "Check",
+      "prevScreen": true,
+      "prevScreenMaxTime": -1,
       "windowSize": {
         "width": 550,
         "height": 350
@@ -10059,9 +10062,6 @@
         "initial": "Arranging paragraphs: put this Nasreddin Hodja story in order.",
         "final": "Very good!"
       },
-      "checkButtonText": "Check",
-      "prevScreen": true,
-      "prevScreenMaxTime": -1,
       "ev": {
         "className": "@BasicEvaluator"
       },
@@ -10261,6 +10261,7 @@
       "className": "@text.Order",
       "type": "orderWords",
       "showSolution": true,
+      "checkButtonText": "Check",
       "windowSize": {
         "width": 500,
         "height": 346
@@ -10269,7 +10270,6 @@
         "initial": "Putting words into order",
         "final": "Good!"
       },
-      "checkButtonText": "Check",
       "ev": {
         "className": "@BasicEvaluator"
       },
@@ -10505,6 +10505,7 @@
       "name": "txa13.txa",
       "className": "@text.Complete",
       "showSolution": true,
+      "checkButtonText": "Check",
       "windowSize": {
         "width": 520,
         "height": 346
@@ -10535,7 +10536,6 @@
           }
         }
       },
-      "checkButtonText": "Check",
       "ev": {
         "className": "@ComplexEvaluator",
         "checkSteps": 4
@@ -10906,6 +10906,9 @@
       "autoJump": true,
       "showSolution": true,
       "border": false,
+      "prevScreen": true,
+      "prevScreenMaxTime": -1,
+      "prevScreenText": "<p></p><p>In this activity you have to fill in the principal parts of the verbs.</p><p></p><p>Whenever you want, click to start.</p>",
       "windowSize": {
         "width": 540,
         "height": 300
@@ -10936,12 +10939,9 @@
           }
         }
       },
-      "prevScreen": true,
-      "prevScreenMaxTime": -1,
       "prevScreenStyle": {
         "backColor": "#FFFFFF"
       },
-      "prevScreenText": "<p></p><p>In this activity you have to fill in the principal parts of the verbs.</p><p></p><p>Whenever you want, click to start.</p>",
       "ev": {
         "className": "@ComplexEvaluator"
       },
@@ -11300,6 +11300,7 @@
       "name": "useOrderSample",
       "className": "@panels.Identify",
       "useOrder": true,
+      "shuffles": 31,
       "messages": {
         "initial": {
           "text": "In this activity you must click on the numbers by order",
@@ -11391,8 +11392,7 @@
             }
           ]
         }
-      },
-      "shuffles": 31
+      }
     }
   },
   "mediaBag": [

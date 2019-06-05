@@ -59,8 +59,8 @@ define([
      * @override
      * @param {external:jQuery} $xml - The jQuery XML element to parse
      */
-    $setProperties($xml) {
-      super.$setProperties($xml);
+    setProperties($xml) {
+      super.setProperties($xml);
       this.abc['primary'].avoidAllIdsNull(this.abc['secondary'].getNumCells());
     }
 

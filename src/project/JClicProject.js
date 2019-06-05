@@ -71,7 +71,7 @@ define([
      * @param {?object} options - An object with miscellaneous options
      * @returns {JClicProject}
      */
-    $setProperties($xml, path, zip, options) {
+    setProperties($xml, path, zip, options) {
       if (path) {
         this.path = path;
         if (path.file)
@@ -86,9 +86,9 @@ define([
         this.type = $xml.attr('type');
       if ($xml.attr('code') !== undefined && $xml.attr('code') !== '')
         this.code = $xml.attr('code');
-      this.settings.$setProperties($xml.children('settings'));
-      this.activitySequence.$setProperties($xml.children('sequence'));
-      this.mediaBag.$setProperties($xml.children('mediaBag'));
+      this.settings.setProperties($xml.children('settings'));
+      this.activitySequence.setProperties($xml.children('sequence'));
+      this.mediaBag.setProperties($xml.children('mediaBag'));
       this.reportableActs = 0;
       this._activities = {};
       const $node = $xml.children('activities');
@@ -106,16 +106,22 @@ define([
       return this;
     }
 
-    getData() {      
-      //const keys = Object.keys(this._activities);            
-      //this.activities = {};
-      //keys.forEach(k => this.activities[k] = Activity.getActivity(this._activities[k], this));
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
 
-      this.activities = this._activities;
+      const keys = Object.keys(this._activities);
+      this.activities = {};
+      keys.forEach(k => this.activities[k] = Activity.getActivity(this._activities[k], this));
 
-      return Utils.getData(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'activities', 'mediaBag']);
+      //this.activities = this._activities;
+
+      return Utils.getAttributes(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'activities', 'mediaBag']);
     }
-
 
     /**
      * Loads the project settings from a data object
@@ -125,7 +131,7 @@ define([
      * @param {?object} options - An object with miscellaneous options
      * @returns {JClicProject}
      */
-    setProperties(data, path, zip, options) {
+    setAttributes(data, path, zip, options) {
       if (path) {
         this.path = path;
         if (path.file)
@@ -140,9 +146,9 @@ define([
         this.type = data.type;
       if (data.code)
         this.code = data.code;
-      this.settings.setProperties(data.settings);
-      this.activitySequence.setProperties(data.activitySequence);
-      this.mediaBag.setProperties(data.mediaBag);
+      this.settings.setAttributes(data.settings);
+      this.activitySequence.setAttributes(data.activitySequence);
+      this.mediaBag.setAttributes(data.mediaBag);
       this.reportableActs = 0;
       this._activities = data.activities;
 

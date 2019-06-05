@@ -463,7 +463,7 @@ define([
     },
     /**
      * Returns an partial clone of an object, containing only the own attributes specified in an array of possible keys.
-     * When the value of an attribute is of type 'Object' and this object has a method named `getData`, the result of calling
+     * When the value of an attribute is of type 'Object' and this object has a method named `getAttributes`, the result of calling
      * this method is returned instead of the crude object.
      * @param {object} obj - The object to be processed
      * @param {string[]=} keys - An optional array of keys to be included in the resulting object.
@@ -471,7 +471,7 @@ define([
      * Attributes with default value will be excluded from the resulting object.
      * @returns {object}
      */
-    getData: (obj, keys = null) => {
+    getAttributes: (obj, keys = null) => {
       let result = {};
       keys = keys || Object.keys(obj);
       keys.forEach(key => {
@@ -496,14 +496,14 @@ define([
      * @returns {*}
      */
     getValue: (value) => {
-      return value.getData ?
-        value.getData() :
+      return value.getAttributes ?
+        value.getAttributes() :
         value instanceof Array ?
           value.map(e => Utils.getValue(e)) :
           value instanceof Date ?
             value.toISOString() :
             value instanceof Object ?
-              Utils.getData(value) :
+              Utils.getAttributes(value) :
               value;
     },
     /**

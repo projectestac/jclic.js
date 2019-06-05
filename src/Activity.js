@@ -86,7 +86,7 @@ define([
         const cl = Activity.CLASSES[className];
         if (cl) {
           act = new cl(project);
-          act.$setProperties($xml);
+          act.setProperties($xml);
         } else
           Utils.log('error', `Unknown activity class: ${className}`);
       }
@@ -97,7 +97,7 @@ define([
      * Loads this object settings from an XML element
      * @param {external:jQuery} $xml - The jQuery XML element to parse
      */
-    $setProperties($xml) {
+    setProperties($xml) {
 
       // Read attributes
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
@@ -192,7 +192,7 @@ define([
                         this.bScoreCounter = Utils.getBoolean($child.attr('score'), true);
                         break;
                       case 'gradient':
-                        this.bgGradient = new AWT.Gradient().$setProperties($child);
+                        this.bgGradient = new AWT.Gradient().setProperties($child);
                         break;
                     }
                   });
@@ -208,14 +208,14 @@ define([
                     const $child = $(child);
                     switch (child.nodeName) {
                       case 'gradient':
-                        this.activityBgGradient = new AWT.Gradient().$setProperties($child);
+                        this.activityBgGradient = new AWT.Gradient().setProperties($child);
                         break;
                       case 'position':
-                        this.absolutePosition = new AWT.Point().$setProperties($child);
+                        this.absolutePosition = new AWT.Point().setProperties($child);
                         this.absolutePositioned = true;
                         break;
                       case 'size':
-                        this.windowSize = new AWT.Dimension().$setProperties($child);
+                        this.windowSize = new AWT.Dimension().setProperties($child);
                         break;
                     }
                   });
@@ -224,7 +224,7 @@ define([
                 case 'eventSounds':
                   // eventSounds is already created in constructor,
                   // just read properties
-                  this.eventSounds.$setProperties($node);
+                  this.eventSounds.setProperties($node);
                   break;
               }
             });
@@ -248,7 +248,7 @@ define([
           // Settings specific to panel-type activities (puzzles, associations...)
           case 'cells':
             // Read the [ActiveBagContent](ActiveBagContent.html) objects
-            const cellSet = new ActiveBagContent().$setProperties($node, this.project.mediaBag);
+            const cellSet = new ActiveBagContent().setProperties($node, this.project.mediaBag);
             // Valid ids:
             // - Panel activities: 'primary', 'secondary', solvedPrimary'
             // - Textpanel activities: 'acrossClues', 'downClues', 'answers'
@@ -291,7 +291,7 @@ define([
           // {@link WordSearch} activities:
           case 'textGrid':
             // Read the 'textGrid' element into a {@link TextGridContent}
-            this.tgc = new TextGridContent().$setProperties($node);
+            this.tgc = new TextGridContent().setProperties($node);
             break;
 
           // Read the clues of {@link WordSearch} activities
@@ -316,7 +316,7 @@ define([
             $node.children().each((_n, child) => {
               switch (child.nodeName) {
                 case 'style':
-                  this.prevScreenStyle = new BoxBase().$setProperties($(child));
+                  this.prevScreenStyle = new BoxBase().setProperties($(child));
                   break;
                 case 'p':
                   if (this.prevScreenText === null)
@@ -333,7 +333,7 @@ define([
 
           case 'document':
             // Read main document of text activities
-            this.document = new TextActivityDocument().$setProperties($node, this.project.mediaBag);
+            this.document = new TextActivityDocument().setProperties($node, this.project.mediaBag);
             break;
         }
       });
@@ -346,7 +346,7 @@ define([
      * @returns {ActiveBoxContent}
      */
     readMessage($xml) {
-      const msg = new ActiveBoxContent().$setProperties($xml, this.project.mediaBag);
+      const msg = new ActiveBoxContent().setProperties($xml, this.project.mediaBag);
       //
       // Allowed types are: `initial`, `final`, `previous`, `finalError`
       msg.type = $xml.attr('type');
@@ -355,8 +355,14 @@ define([
       return msg;
     }
 
-    getData() {
-      return Utils.getData(this, [
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, [
         'name', 'className', 'code', 'type', 'description',
         'invAss', 'numericContent',
         'autoJump', 'forceOkToAdvance', 'amongParagraphs',
@@ -397,7 +403,7 @@ define([
      * Load the activity settings from a data object
      * @param {object} data - The data object to parse
      */
-    setProperties(data) {
+    setAttributes(data) {
       ['name', 'className', 'code', 'type', 'description', 'invAss', 'numericContent',
         'autoJump', 'forceOkToAdvance', 'amongParagraphs', 'infoUrl', 'infoCmd',
         'margin', 'maxTime', 'maxActions', 'includeInReports', 'reportActions',
@@ -413,7 +419,7 @@ define([
 
       ['bgGradient', 'activityBgGradient'].forEach(attr => {
         if (data[attr])
-          this[attr] = new AWT.Gradient().setProperties(data[attr]);
+          this[attr] = new AWT.Gradient().setAttributes(data[attr]);
       });
 
 

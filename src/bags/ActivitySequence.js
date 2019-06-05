@@ -60,21 +60,27 @@ define([
      * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    $setProperties($xml) {
-      $xml.children('item').each((_i, data) => this.elements.push(new ActivitySequenceElement().$setProperties($(data))));
+    setProperties($xml) {
+      $xml.children('item').each((_i, data) => this.elements.push(new ActivitySequenceElement().setProperties($(data))));
       return this;
     }
 
-    getData() {
-      return this.elements.map(el => el.getData());
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return this.elements.map(el => el.getAttributes());
     }
 
     /**
      * Loads the object settings from a data object
      * @param {object} data - The data object to parse
      */
-    setProperties(data) {
-      data.forEach(el => this.elements.push(new ActivitySequenceElement().setProperties(el)));
+    setAttributes(data) {
+      data.forEach(el => this.elements.push(new ActivitySequenceElement().setAttributes(el)));
       return this;
     }
 

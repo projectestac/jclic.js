@@ -54,8 +54,14 @@ define([
         this.v = v;
     }
 
-    getData() {
-      return Utils.getData(this, ['h|center', 'v|center']);
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, ['h|center', 'v|center']);
     }
   }
 
@@ -90,7 +96,7 @@ define([
      * @param {external:jQuery} $xml - The XML element to be parsed
      * @param {MediaBag} mediaBag - The media bag used to retrieve images and other media
      */
-    $setProperties($xml, mediaBag) {
+    setProperties($xml, mediaBag) {
       //
       // Read attributes
       Utils.attrForEach($xml.get(0).attributes, (name, val) => {
@@ -135,10 +141,10 @@ define([
         const $node = $(child);
         switch (child.nodeName) {
           case 'style':
-            this.style = new BoxBase(null).$setProperties($node);
+            this.style = new BoxBase(null).setProperties($node);
             break;
           case 'media':
-            this.mediaContent = new MediaContent().$setProperties($node);
+            this.mediaContent = new MediaContent().setProperties($node);
             break;
           case 'p':
             if (this.text === null)
@@ -156,8 +162,14 @@ define([
       return this;
     }
 
-    getData() {
-      return Utils.getData(this, [
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, [
         'id', 'item', 'dimension',
         'txtAlign', 'imgAlign', // AlignType
         'border', 'avoidOverlapping', 'image', 'text',

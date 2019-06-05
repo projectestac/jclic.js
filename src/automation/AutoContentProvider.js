@@ -67,7 +67,7 @@ define([
           cl = AutoContentProvider.CLASSES[className];
         if (cl) {
           automation = new cl(project);
-          automation.$setProperties($xml);
+          automation.setProperties($xml);
         } else
           Utils.log('error', `Unknown AutoContentProvider class: ${className}`);
       }
@@ -78,14 +78,20 @@ define([
      * Loads the object settings from a specific jQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    $setProperties($xml) {
+    setProperties($xml) {
       this.className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.automation\./, '@');
       return this;
     }
 
-    // To be overrided!
-    getData() {
-      return Utils.getData(this, ['className']);
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      // To be overrided!
+      return Utils.getAttributes(this, ['className']);
     }
 
     /**

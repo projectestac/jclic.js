@@ -72,7 +72,7 @@ define([
      * Reads the ProjectSettings values from a JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    $setProperties($xml) {
+    setProperties($xml) {
       let single_description = null;
       let multiple_descriptions = null;
 
@@ -104,7 +104,7 @@ define([
             break;
           case 'eventSounds':
             this.eventSounds = new EventSounds();
-            this.eventSounds.$setProperties($(child));
+            this.eventSounds.setProperties($(child));
             break;
           case 'skin':
             this.skinFileName = $(child).attr('file');
@@ -160,15 +160,22 @@ define([
       return this;
     }
 
-    getData() {
-      return Utils.getData(this, ['title', 'description', 'tags', 'authors', 'organizations', 'revisions', 'languages', 'cover', 'thumb', 'license', 'skinFileName', 'eventSounds']);
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, ['title', 'description', 'tags', 'authors', 'organizations',
+        'revisions', 'languages', 'cover', 'thumb', 'license', 'skinFileName', 'eventSounds']);
     }
 
     /**
      * Reads the ProjectSettings values from a data object
      * @param {object} data - The data object to parse
      */
-    setProperties(data) {
+    setAttributes(data) {
       Object.assign(this, JSON.parse(JSON.stringify(data)));
       if (this.revisions)
         this.revisions.forEach(rv => {

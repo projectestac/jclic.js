@@ -72,7 +72,7 @@ define(["../Utils"], function (Utils) {
      * Loads the object settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element to parse
      */
-    $setProperties($xml) {
+    setProperties($xml) {
       this.id = $xml.attr('id');
       this.action = $xml.attr('action') || 'JUMP';
       if ($xml.attr('tag'))
@@ -82,15 +82,21 @@ define(["../Utils"], function (Utils) {
       return this;
     }
 
-    getData() {
-      return Utils.getData(this, ['id', 'action', 'actNum', 'sequence', 'projectPath']);
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, ['id', 'action', 'actNum', 'sequence', 'projectPath']);
     }
 
     /**
      * Loads the object settings from a data object
      * @param {object} data - The data object to parse
      */
-    setProperties(data) {
+    setAttributes(data) {
       ['id', 'action', 'actNum', 'sequence', 'projectPath'].forEach(t => {
         if (!Utils.isEmpty(data[t]))
           this[t] = data[t];

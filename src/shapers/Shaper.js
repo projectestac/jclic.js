@@ -86,7 +86,7 @@ define([
      * Loads this shaper settings from a specific JQuery XML element
      * @param {external:jQuery} $xml - The XML element with the shaper data
      */
-    $setProperties($xml) {
+    setProperties($xml) {
       Utils.attrForEach($xml.get(0).attributes, (name, value) => {
         switch (name) {
           case 'class':
@@ -176,7 +176,13 @@ define([
       return !result && shd.length > 0 ? new AWT.Path(shd) : result;
     }
 
-    getData() {
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
       const fields = [
         'className', 'nCols', 'nRows',
         'baseWidthFactor', 'toothHeightFactor',
@@ -190,7 +196,7 @@ define([
         ].forEach(f => fields.push(f));
       }
 
-      return Utils.getData(this, fields);
+      return Utils.getAttributes(this, fields);
     }
 
     /**

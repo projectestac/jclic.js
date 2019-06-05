@@ -142,7 +142,7 @@ define([
      * @param {external:jQuery} $xml - The xml element to be parsed
      * @returns {Font}
      */
-    $setProperties($xml) {
+    setProperties($xml) {
       if ($xml.attr('family'))
         this.family = $xml.attr('family');
       if ($xml.attr('size'))
@@ -156,8 +156,14 @@ define([
       return this;
     }
 
-    getData() {
-      return Utils.getData(this, ['family|Arial', 'size|17', 'bold|0', 'italic|0', 'variant']);
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, ['family|Arial', 'size|17', 'bold|0', 'italic|0', 'variant']);
     }
 
     /**
@@ -165,7 +171,7 @@ define([
      * @param {object} data - The data object to be parsed
      * @returns {Font}
      */
-    setProperties(data) {
+    setAttributes(data) {
       return Utils.setAttr(this, data, ['family', 'size', 'bold', 'italic', 'variant']);
     }
 
@@ -383,7 +389,7 @@ define([
      * @param {external:jQuery} $xml - The xml element to be parsed
      * @returns {Gradient}
      */
-    $setProperties($xml) {
+    setProperties($xml) {
       this.c1 = Utils.checkColor($xml.attr('source'), 'black');
       this.c2 = Utils.checkColor($xml.attr('dest'), 'white');
       this.angle = Number($xml.attr('angle') || 0) % 360;
@@ -391,8 +397,14 @@ define([
       return this;
     }
 
-    getData() {
-      return Utils.getData(this, [
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, [
         'c1|black', 'c2|white', 'angle|0', 'cycles|1'
       ]);
     }
@@ -402,7 +414,7 @@ define([
      * @param {object} data - The data object to be parsed
      * @returns {Gradient}
      */
-    setProperties(data) {
+    setAttributes(data) {
       return Utils.setAttr(this, data, ['c1', 'c2', 'angle', 'cycles']);
     }
 
@@ -492,8 +504,14 @@ define([
         this.miterLimit = miterLimit;
     }
 
-    getData() {
-      return Utils.getData(this, [
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, [
         'lineWidth|1', 'lineCap|butt', 'lineJoin|miter', 'miterLimit|10',
       ]);
     }
@@ -503,7 +521,7 @@ define([
      * @param {object} data - The data object to be parsed
      * @returns {Stroke}
      */
-    setProperties(data) {
+    setAttributes(data) {
       return Utils.setAttr(this, data, ['lineWidth', 'lineCap', 'lineJoin', 'miterLimit']);
     }
 
@@ -570,14 +588,20 @@ define([
      * @param {external:jQuery} $xml - The xml element to be parsed
      * @returns {Point}
      */
-    $setProperties($xml) {
+    setProperties($xml) {
       this.x = Number($xml.attr('x'));
       this.y = Number($xml.attr('y'));
       return this;
     }
 
-    getData() {
-      return Utils.getData(this, ['x', 'y']);
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, ['x', 'y']);
     }
 
     /**
@@ -585,7 +609,7 @@ define([
      * @param {object} data - The data object to be parsed
      * @returns {Point}
      */
-    setProperties(data) {
+    setAttributes(data) {
       this.x = data.x;
       this.y = data.y;
     }
@@ -694,14 +718,20 @@ define([
      * @param {external:jQuery} $xml - The xml element to be parsed
      * @returns {Dimension}
      */
-    $setProperties($xml) {
+    setProperties($xml) {
       this.width = Number($xml.attr('width'));
       this.height = Number($xml.attr('height'));
       return this;
     }
 
-    getData() {
-      return Utils.getData(this, ['width', 'height']);
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, ['width', 'height']);
     }
 
     /**
@@ -709,7 +739,7 @@ define([
      * @param {object} data - The data object to be parsed
      * @returns {Dimension}
      */
-    setProperties(data) {
+    setAttributes(data) {
       this.width = data.width;
       this.height = data.height;
     }
@@ -1155,8 +1185,14 @@ define([
       return `[${Math.round(this.pos.x)},${Math.round(this.pos.y)},${Math.round(this.pos.x + this.dim.width)},${Math.round(this.pos.y + this.dim.height)}]`;
     }
 
-    getData() {
-      return Utils.getData(this, ['type', 'pos', 'dim']);
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
+      return Utils.getAttributes(this, ['type', 'pos', 'dim']);
     }
 
     /**
@@ -1164,7 +1200,7 @@ define([
      * @param {object} data - The data object to be parsed
      * @returns {Rectangle}
      */
-    setProperties(data) {
+    setAttributes(data) {
       if (data.type)
         this.type = data.type;
       this.pos = new Point(data.pos.x, data.pos.y);
@@ -1442,13 +1478,24 @@ define([
       return ctx;
     }
 
-    getData() {
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
       return {
         type: this.type,
-        strokes: this.strokes.map(s => s.getData()).join('|'),
+        strokes: this.strokes.map(s => s.getAttributes()).join('|'),
       };
     }
 
+    /**
+     * Builds a Path based on the information provided by a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {Path}
+     */
     static getPath(data) {
       const strData = data.strokes.split('|');
       const strokes = strData.map(s => {
@@ -1646,10 +1693,15 @@ define([
       return result;
     }
 
-    getData() {
+    /**
+     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+     * parent references, constants and also attributes retaining the default value.
+     * The resulting object is commonly usued to serialize elements in JSON format.
+     * @returns {object} - The resulting object, with minimal attrributes
+     */
+    getAttributes() {
       return `${this.type}:${this.points ? this.points.map(p => `${Utils.fx(p.x)},${Utils.fx(p.y)}`).join(',') : ''}`;
     }
-
   }
 
   Object.assign(PathStroke.prototype, {
