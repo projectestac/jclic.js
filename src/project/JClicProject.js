@@ -116,9 +116,10 @@ define([
 
       const keys = Object.keys(this._activities);
       this.activities = {};
-      keys.forEach(k => this.activities[k] = Activity.getActivity(this._activities[k], this));
-
-      //this.activities = this._activities;
+      keys.forEach(k => {
+        const act = this._activities[k];
+        this.activities[k] = act.jquery ? Activity.getActivity(act, this) : act;
+      });
 
       return Utils.getAttributes(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'activities', 'mediaBag']);
     }

@@ -63,6 +63,16 @@ define([
     getAttributes() {
       return Utils.getAttributes(this, ['h|center', 'v|center']);
     }
+
+    /**
+     * Reads the properties of this AlignType from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {AlignType}
+     */
+    setAttributes(data) {
+      return Utils.setAttr(this, data, ['h', 'v']);
+    }
+
   }
 
   Object.assign(AlignType.prototype, {
@@ -176,7 +186,22 @@ define([
         'style', // BoxBase
         'mediaContent', // MediaContent
       ]);
+    }
 
+    /**
+     * Reads the properties of this ActiveBoxContent from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {ActiveBoxContent}
+     */
+    setAttributes(data) {
+      return Utils.setAttr(this, data, [
+        'id', 'item', 'border', 'avoidOverlapping', 'image', 'text',
+        { key: 'dimension', constructor: AWT.Dimension },
+        { key: 'txAlign', constructor: AlignType },
+        { key: 'imgAlign', constructor: AlignType },
+        { key: 'style', constructor: BoxBase },
+        //{ key: 'mediaContent', constructor: MediaContent },      
+      ]);
     }
 
     /**

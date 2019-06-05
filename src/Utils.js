@@ -531,11 +531,19 @@ define([
      * @param {object} obj - The target object
      * @param {object} data - The data object
      * @param {string[]} attr - The list of attributes to be copied from `data` to `obj`
+     *                          Elements of this list can be just strings or objects with two members:
+     *                          - `key` (the attribute name)
+     *                          - `constructor` (the function to be invoked to build the object)
      * @returns {object} - Always returns `obj`
      */
     setAttr: (obj, data, attr) => {
       attr.forEach(a => {
-        if (!Utils.isEmpty(data[a]))
+        if(a.key && a.constructor) {
+          // An object should be built
+          if (!Utils.isEmpty(data[a.key])) {
+            obj[a.key] = (new a.constructor()).setAttributes(data[a.key]);
+          }  
+        } else if (!Utils.isEmpty(data[a]))
           obj[a] = data[a];
       });
       return obj;

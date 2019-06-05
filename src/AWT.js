@@ -610,8 +610,9 @@ define([
      * @returns {Point}
      */
     setAttributes(data) {
-      this.x = data.x;
-      this.y = data.y;
+      this.x = data.x || 0;
+      this.y = data.y || 0;
+      return this;
     }
 
     /**
@@ -740,8 +741,9 @@ define([
      * @returns {Dimension}
      */
     setAttributes(data) {
-      this.width = data.width;
-      this.height = data.height;
+      this.width = data.width || 0;
+      this.height = data.height || 0;
+      return this;
     }
 
 
@@ -1205,6 +1207,7 @@ define([
         this.type = data.type;
       this.pos = new Point(data.pos.x, data.pos.y);
       this.dim = new Dimension(data.dim.width, data.dim.height);
+      return this;
     }
 
   }

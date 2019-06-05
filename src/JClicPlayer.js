@@ -291,10 +291,11 @@ define([
      * Loads the specified project and starts playing at the specified activity or sequence tag.
      * @param {?(string|JClicProject)} project - The project to load (if it's a string) or to use (if it's an object of type {@link JClicProject}).
      * When it's a `string`, it can be the absolute or relative path to:
-     * - A '.jclic' project file
-     * - A '.jclic.zip' compressed project file (containing one '.jclic' file)
-     * - A '.scorm.zip' file, as exported by JClic Author.
-     * - A 'project.json' file, as exported by JClic Author
+     * - A `.jclic` project file, in XML format
+     * - A `.jclic.json` project file in JSON format
+     * - A `.jclic.zip` compressed project file (containing one file of type '.jclic' or '.jclic.json')
+     * - A `.scorm.zip` file, as exported by JClic Author.
+     * - A `project.json` file, as exported by JClic Author
      * When `null` or `undefined`, refers to the current project.
      * @param {(string|number)=} sequence - Sequence tag or numeric order in the {@link ActivitySequence}
      * to be loaded. If _sequence_ and _activity_ are both `null`, the first {@link ActivitySequenceElement}
@@ -319,11 +320,11 @@ define([
           // Previous step: Check if `project` points to a "project.json" file
           if (fullPath.endsWith('project.json')) {
             Utils.log('info', `Loading JSON info from: ${fullPath}`);
-            $.getJSON(fullPath).done(json => {
+            $.getJSON(fullPath).done(({ mainFile }) => {
               // Read the `mainFile` field of `project.json`
-              if (Utils.endsWith(json['mainFile'], '.jclic')) {
+              if (mainFile && Utils.endsWith(mainFile, '.jclic') || Utils.endsWith(mainFile, '.jclic.json')) {
                 // Load project's main file
-                this.load(Utils.getPath(Utils.getBasePath(fullPath), json['mainFile']), sequence, activity);
+                this.load(Utils.getPath(Utils.getBasePath(fullPath), mainFile), sequence, activity);
               } else {
                 Utils.log('error', `Invalid or null "mainFile" specified in ${fullPath} - "project.json".`);
               }
@@ -396,13 +397,21 @@ define([
 
           // Step one: load the project file
           const processProjectFile = fp => {
-            $.get(fp, null, null, 'xml').done(data => {
+            const isXml = fp.indexOf('data:text/xml;') === 0 || fp.endsWith('.jclic');
+
+            const loader = isXml ? $.get(fp, null, null, 'xml') : $.getJSON(fp);
+
+            loader.done(data => {
               if (data === null || typeof data !== 'object') {
                 Utils.log('error', `Bad data. Project not loaded: ${project}`);
                 return;
               }
               const prj = new JClicProject();
-              prj.setProperties($(data).find('JClicProject'), fullPath, this.zip, this.options);
+              if (isXml)
+                prj.setProperties($(data).find('JClicProject'), fullPath, this.zip, this.options);
+              else
+                prj.setAttributes(data, fullPath, this.zip, this.options);
+
               Utils.log('info', `Project file loaded and parsed: ${project}`);
               const elements = prj.mediaBag.buildAll(null, element => {
                 Utils.log('trace', `"${element.name}" ready.`);
@@ -438,6 +447,7 @@ define([
             }).always(() => this.setWaitCursor(false));
           };
 
+
           Utils.log('info', `Loading project: ${project}`);
           let fp = fullPath;
 
@@ -446,7 +456,7 @@ define([
             const fName = Utils.getRelativePath(fp, this.zip.zipBasePath);
             if (this.zip.files[fName]) {
               this.zip.file(fName).async('string').then(text => {
-                processProjectFile(`data:text/xml;charset=UTF-8,${text}`);
+                processProjectFile(`data:${fName.endsWith('.jclic') ? 'text/xml' : 'application/json'};charset=UTF-8,${text}`);
               }).catch(reason => {
                 Utils.log('error', `Unable to extract "${fName}" from ZIP file because of: ${reason ? reason.toString() : 'unknown reason'}`);
                 this.setWaitCursor(false);
@@ -458,7 +468,7 @@ define([
           else if (this.localFS) {
             // Check if file is already loaded in the global variable `JClicObject`
             if (window.JClicObject && window.JClicObject.projectFiles[fullPath]) {
-              fp = `data:text/xml;charset=UTF-8,${window.JClicObject.projectFiles[fullPath]}`;
+              fp = `data:${fullPath.endsWith('.jclic') ? 'text/xml' : 'application/json'};charset=UTF-8,${window.JClicObject.projectFiles[fullPath]}`;
             } else {
               Utils.log('error', `Unable to load: ${fullPath}.js`);
               this.setWaitCursor(false);

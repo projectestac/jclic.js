@@ -1,0 +1,2 @@
+- S'hand e definir les funcions "setAttributes" a molts objectes!
+- Continuar a Activity.js -> messages -> ActiveBoxContent.js

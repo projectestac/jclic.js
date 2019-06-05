@@ -9,15 +9,15 @@
 
 /* global process */
 
-var fs = require('fs');
+const fs = require('fs');
 
 // Use mock-browser as a browser simulator
-var MockBrowser = require('mock-browser').mocks.MockBrowser;
-var mock = new MockBrowser();
+const MockBrowser = require('mock-browser').mocks.MockBrowser;
+const mock = new MockBrowser();
 global.window = mock.getWindow();
 global.document = mock.getDocument();
-global.Image = function () {};
-global.Audio = function () {};
+global.Image = function () { };
+global.Audio = function () { };
 
 // Use `xmldom` as DOM parser
 global.DOMParser = require('xmldom').DOMParser;
@@ -29,18 +29,27 @@ require('amdefine/intercept');
 // Here this is done with a relative path. In other contexts just install
 // the 'jclic' NPM package and require it, like in:
 // `var jclic = require('jclic');`
-var jclic = require('../../src/JClic.js');
+const jclic = require('../../src/JClic.js');
 
 // Get the file name from the command line arguments, using 'demo.jclic' if none provided.
-var file = process.argv.length > 2 ? process.argv[2] : '../jclic-demo/demo.jclic';
+const file = process.argv.length > 2 ? process.argv[2] : '../jclic-demo/demo.jclic.json';
 
-// Read file and parse it into a DOM object
-var contents = fs.readFileSync(file, 'utf8');
-var doc = new DOMParser().parseFromString(contents);
+// Create an empty JClicProject
+const project = new jclic.JClicProject();
 
-// Create a JClicProject and initialize it with the file contents
-var project = new jclic.JClicProject();
-project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
+if (file.endsWith('.jclic')) {
+  // Read file and parse it into a DOM object
+  const contents = fs.readFileSync(file, 'utf8');
+  const doc = new DOMParser().parseFromString(contents);
+  // Initialize project with the file contents
+  project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
+}
+else {
+  // Is a JSON file
+  const data = require(file);
+  // Initialize project with the file contents
+  project.setAttributes(data, file, null, {});
+}
 
 // Log project properties to stdout
 console.log('Project "%s" loaded', file);

@@ -119,7 +119,7 @@ define([
     getAttributes() {
       return Utils.getAttributes(this, [
         'shadow', 'transparent', 'margin',
-        'borderStroke', 'markerStroke', // AWR.Stroke
+        'borderStroke', 'markerStroke', // AWT.Stroke
         'font', // AWT.Font
         'bgGradient', // AWT.Gradient
         `textColor|${BoxBase.prototype.textColor}`,
@@ -130,6 +130,28 @@ define([
         `borderColor|${BoxBase.prototype.borderColor}`,
       ]);
     }
+
+    /**
+     * Reads the properties of this BoxBase from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {BoxBase}
+     */
+    setAttributes(data) {
+      return Utils.setAttr(this, data, [
+        'shadow', 'transparent', 'margin',
+        { key: 'borderStroke', constructor: AWT.Stroke },
+        { key: 'markerStroke', constructor: AWT.Stroke },
+        { key: 'font', constructor: AWT.Font },
+        { key: 'bgGradient', constructor: AWT.Gradient },
+        'textColor',
+        'backColor',
+        'shadowColor',
+        'inactiveColor',
+        'alternativeColor',
+        'borderColor',
+      ]);
+    }
+
 
     /**
      * Gets the value of the specified property, scanning down to parents and prototype if not defined.

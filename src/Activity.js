@@ -74,19 +74,23 @@ define([
 
     /**
      * Factory constructor that returns a specific type of Activity based on the `class` attribute
-     * declared in the $xml parameter.
-     * @param {external:jQuery} $xml - The XML element to be parsed
+     * declared in `data`.
+     * @param {object|external:jQuery} data - Can be a jQuery XML element, or an object obtained with a call to `getAttributes`
      * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
      * @returns {Activity}
      */
-    static getActivity($xml, project) {
+    static getActivity(data, project) {
       let act = null;
-      if ($xml && project) {
-        const className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.activities\./, '@');
+      const isXml = data.jquery && true;
+      if (data && project) {
+        const className = isXml ? (data.attr('class') || '').replace(/^edu\.xtec\.jclic\.activities\./, '@') : data.className;
         const cl = Activity.CLASSES[className];
         if (cl) {
           act = new cl(project);
-          act.setProperties($xml);
+          if (isXml)
+            act.setProperties(data);
+          else
+            act.setAttributes(data);
         } else
           Utils.log('error', `Unknown activity class: ${className}`);
       }
@@ -404,7 +408,8 @@ define([
      * @param {object} data - The data object to parse
      */
     setAttributes(data) {
-      ['name', 'className', 'code', 'type', 'description', 'invAss', 'numericContent',
+      Utils.setAttr(this, data, [
+        'name', 'className', 'code', 'type', 'description', 'invAss', 'numericContent',
         'autoJump', 'forceOkToAdvance', 'amongParagraphs', 'infoUrl', 'infoCmd',
         'margin', 'maxTime', 'maxActions', 'includeInReports', 'reportActions',
         'countDownTime', 'countDownActions', 'useOrder', 'dragCells', 'skinFileName',
@@ -412,16 +417,36 @@ define([
         'bTimeCounter', 'bActionsCounter', 'bScoreCounter',
         'activityBgColor', 'transparentBg', 'border', 'shuffles',
         'boxGridPos', 'wildTransparent', 'upperCase', 'checkCase', 'checkButtonText',
-        'prevScreen', 'prevScreenMaxTime', 'prevScreenText'].forEach(attr => {
-          if (!Utils.isEmpty(data[attr]))
-            this[attr] = data[attr];
+        'prevScreen', 'prevScreenMaxTime', 'prevScreenText',
+        { key: 'bgGradient', constructor: AWT.Gradient },
+        { key: 'activityBgGradient', constructor: AWT.Gradient },
+        { key: 'absolutePosition', constructor: AWT.Point },
+        { key: 'windowSize', constructor: AWT.Dimension },
+
+      ]);
+
+      
+      if (data['messages']){
+        Object.keys(data['messages']).forEach(k=>{
+          this.messages[k]=(new ActiveBoxContent(k)).setAttributes(data.messages[k]);
         });
+      }
+              
 
-      ['bgGradient', 'activityBgGradient'].forEach(attr => {
-        if (data[attr])
-          this[attr] = new AWT.Gradient().setAttributes(data[attr]);
-      });
-
+      /*
+              'eventSounds', // EventSounds -> EventSoundsElement
+              'messages', // ActiveBoxContent{} -> (BoxBase -> AWT.Font, AWT.Gradient, AWT.Stroke), (MediaContent -> AWT.Point)        
+              'acp', // AutoContentProvider
+              'abc', // ActiveBagContent{}
+              'scramble', // Activity~scrambleType
+              'menuElements', // Activity~menuElement
+              'tgc', // TextGridContent
+              'clues', // string[]
+              'clueItems', // number[]
+              'prevScreenStyle', // BoxBase
+              'ev', // Evaluator
+              'document', // TextActivityDocument
+      */
 
       return this;
     }
