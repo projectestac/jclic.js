@@ -85,7 +85,7 @@ define([
    * @param {type} ps
    */
   return (ps) => {
-    i18next.init({
+    i18next.default.init({
       nsSeparator: false,
       keySeparator: false,
       fallbackLng: 'en',
