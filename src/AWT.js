@@ -610,9 +610,7 @@ define([
      * @returns {Point}
      */
     setAttributes(data) {
-      this.x = data.x || 0;
-      this.y = data.y || 0;
-      return this;
+      return Utils.setAttr(this, data, ['x', 'y']);
     }
 
     /**
@@ -741,11 +739,8 @@ define([
      * @returns {Dimension}
      */
     setAttributes(data) {
-      this.width = data.width || 0;
-      this.height = data.height || 0;
-      return this;
+      return Utils.setAttr(this, data, ['width', 'height']);
     }
-
 
     /**
      * Check if two dimensions are equivalent
@@ -967,9 +962,52 @@ define([
     toString() {
       return `Shape enclosed in ${this.getBounds().getCoords()}`;
     }
+
+    /**
+     * Reads the properties of this Shape from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {Shape}
+     */
+    setAttributes(data) {
+      return Shape.buildShape(data);
+      /*
+      return Utils.setAttr(this, data, [
+        'type',
+        { key: 'pos', fn: Point },
+      ]);
+      */
+    }
+
+    /**
+     * Builds a shape based on the provided `data` object.
+     * Data should contain a 'type' member, specifying the type of shape requested ('rect', 'ellipse', 'rectangle' or 'path')
+     * @param {object} data - Specific data for this shape
+     * @returns {Shape}
+     */
+    static buildShape(data) {
+      let shapeType = Shape;
+      switch (data.type) {
+        case 'rect':
+          shapeType = Rectangle;
+          break;
+        case 'ellipse':
+          shapeType = Ellipse;
+          break;
+        case 'path':
+          shapeType = Path;
+        default:
+          break;
+      }
+      return (new shapeType()).setAttributes(data);
+    }
   }
 
   Object.assign(Shape.prototype, {
+    /**
+     * Shape type id
+     * @name Shape#type
+     * @type {string} */
+    type: 'shape',
     /**
      * The current position of the shape
      * @name Shape#pos
@@ -1203,16 +1241,21 @@ define([
      * @returns {Rectangle}
      */
     setAttributes(data) {
-      if (data.type)
-        this.type = data.type;
-      this.pos = new Point(data.pos.x, data.pos.y);
-      this.dim = new Dimension(data.dim.width, data.dim.height);
-      return this;
+      return Utils.setAttr(this, data, [
+        'type',
+        { key: 'pos', fn: Point },
+        { key: 'dim', fn: Dimension },
+      ]);
     }
 
   }
 
   Object.assign(Rectangle.prototype, {
+    /**
+     * Shape type id
+     * @name Rectangle#type
+     * @type {string} */
+    type: 'rect',
     /**
      * The {@link Dimension} of the Rectangle
      * @name Rectangle#dim
@@ -1235,7 +1278,6 @@ define([
      */
     constructor(pos, dim, w, h) {
       super(pos, dim, w, h);
-      this.type = 'ellipse';
     }
 
     //
@@ -1316,6 +1358,14 @@ define([
     }
   }
 
+  Object.assign(Ellipse.prototype, {
+    /**
+     * Shape type id
+     * @name Ellipse#type
+     * @type {string} */
+    type: 'ellipse',
+  });
+
   /**
    * A `Path` is a {@link Shape} formed by a serie of strokes, represented by
    * {@link PathStroke} objects
@@ -1330,17 +1380,20 @@ define([
     constructor(strokes) {
       super();
       // Deep copy of the array of strokes
-      if (strokes) {
-        this.strokes = [];
-        // In [Shaper](Shaper.html) objects, strokes have `action` instead of `type` and `data` instead of `points`
-        strokes.forEach(str => this.strokes.push(new PathStroke(str.type || str.action, str.points || str.data)));
-      }
+      if (strokes)
+        this.setStrokes(strokes);
+    }
+
+    setStrokes(strokes) {
+      this.strokes = [];
+      // In [Shaper](Shaper.html) objects, strokes have `action` instead of `type` and `data` instead of `points`
+      strokes.forEach(str => this.strokes.push(new PathStroke(str.type || str.action, str.points || str.data)));
       // Calculate the enclosing rectangle
       this.enclosing = new Rectangle();
       this.enclosingPoints = [];
       this.calcEnclosingRect();
       this.pos = this.enclosing.pos;
-      this.type = 'path';
+      return this;
     }
 
     //
@@ -1495,21 +1548,27 @@ define([
     }
 
     /**
-     * Builds a Path based on the information provided by a data object
+     * Reads the properties of this Path from a data object
      * @param {object} data - The data object to be parsed
      * @returns {Path}
      */
-    static getPath(data) {
+    setAttributes(data) {
       const strData = data.strokes.split('|');
       const strokes = strData.map(s => {
         const [type, points] = s.split(':');
         return new PathStroke(type, points ? points.split(',') : []);
       });
-      return new Path(strokes);
+      return this.setStrokes(strokes);
     }
+
   }
 
   Object.assign(Path.prototype, {
+    /**
+     * Shape type id
+     * @name Path#type
+     * @type {string} */
+    type: 'path',
     /**
      * The strokes forming this Path.
      * @name Path#strokes

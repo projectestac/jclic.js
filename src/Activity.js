@@ -384,7 +384,6 @@ define([
         'boxGridPos', 'wildTransparent', 'upperCase', 'checkCase',
         'checkButtonText',
         'prevScreen', 'prevScreenMaxTime', 'prevScreenText',
-
         'bgGradient', 'activityBgGradient', // AWT.Gradient
         'absolutePosition', // AWT.Point
         'windowSize', // AWT.Dimension
@@ -418,26 +417,22 @@ define([
         'activityBgColor', 'transparentBg', 'border', 'shuffles',
         'boxGridPos', 'wildTransparent', 'upperCase', 'checkCase', 'checkButtonText',
         'prevScreen', 'prevScreenMaxTime', 'prevScreenText',
-        { key: 'bgGradient', constructor: AWT.Gradient },
-        { key: 'activityBgGradient', constructor: AWT.Gradient },
-        { key: 'absolutePosition', constructor: AWT.Point },
-        { key: 'windowSize', constructor: AWT.Dimension },
+        { key: 'bgGradient', fn: AWT.Gradient },
+        { key: 'activityBgGradient', fn: AWT.Gradient },
+        { key: 'absolutePosition', fn: AWT.Point },
+        { key: 'windowSize', fn: AWT.Dimension },
+        { key: 'messages', fn: ActiveBoxContent, group: true, init: 'key' },
+        { key: 'abc', fn: ActiveBagContent, group: true, init: 'key' },
 
       ]);
 
-      
-      if (data['messages']){
-        Object.keys(data['messages']).forEach(k=>{
-          this.messages[k]=(new ActiveBoxContent(k)).setAttributes(data.messages[k]);
-        });
-      }
-              
+      // Reused objects
+      if (data.eventSounds)
+        this.eventSounds.setAttributes(data.eventSounds);
+
 
       /*
-              'eventSounds', // EventSounds -> EventSoundsElement
-              'messages', // ActiveBoxContent{} -> (BoxBase -> AWT.Font, AWT.Gradient, AWT.Stroke), (MediaContent -> AWT.Point)        
               'acp', // AutoContentProvider
-              'abc', // ActiveBagContent{}
               'scramble', // Activity~scrambleType
               'menuElements', // Activity~menuElement
               'tgc', // TextGridContent

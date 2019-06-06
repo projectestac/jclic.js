@@ -1,2 +1,3 @@
-- S'hand e definir les funcions "setAttributes" a molts objectes!
-- Continuar a Activity.js -> messages -> ActiveBoxContent.js
+- S'han de definir les funcions "setAttributes" a molts objectes!
+- Revisar shaper amb múltiple shapes (sembla que només carrega un element)
+- Continuar a Activity.js 

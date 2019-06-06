@@ -83,7 +83,22 @@ define([
      * @returns {object} - The resulting object, with minimal attrributes
      */
     getAttributes() {
-      return Utils.getAttributes(this, [`enabled|${Utils.DEFAULT}`, 'elements']);
+      return Utils.getAttributes(this, [
+        `enabled|${Utils.DEFAULT}`,
+        'elements',
+      ]);
+    }
+
+    /**
+     * Reads the properties of this EventSounds from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {EventSounds}
+     */
+    setAttributes(data) {
+      return Utils.setAttr(this, data, [
+        'enabled',
+        { key: 'elements', fn: EventSoundsElement, group: true },
+      ]);
     }
 
     /**

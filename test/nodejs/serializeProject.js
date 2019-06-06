@@ -47,15 +47,15 @@ if (isXML) {
   var doc = new DOMParser().parseFromString(contents);
 
   // Create a JClicProject and initialize it with the file contents
-  project.$setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
+  project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
 } 
 else {
   var doc = JSON.parse(contents);
-  project.setProperties(doc, file, null, {});
+  project.setAttributes(doc, file, null, {});
 }
 
 console.log(JSON.stringify(
-  project.getData(),
+  project.getAttributes(),
   (_key, val) => val.toFixed ? Number(val.toFixed(4)) : val,
   '  '
 ));

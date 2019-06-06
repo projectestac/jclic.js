@@ -139,10 +139,10 @@ define([
     setAttributes(data) {
       return Utils.setAttr(this, data, [
         'shadow', 'transparent', 'margin',
-        { key: 'borderStroke', constructor: AWT.Stroke },
-        { key: 'markerStroke', constructor: AWT.Stroke },
-        { key: 'font', constructor: AWT.Font },
-        { key: 'bgGradient', constructor: AWT.Gradient },
+        { key: 'borderStroke', fn: AWT.Stroke },
+        { key: 'markerStroke', fn: AWT.Stroke },
+        { key: 'font', fn: AWT.Font },
+        { key: 'bgGradient', fn: AWT.Gradient },
         'textColor',
         'backColor',
         'shadowColor',
@@ -151,7 +151,6 @@ define([
         'borderColor',
       ]);
     }
-
 
     /**
      * Gets the value of the specified property, scanning down to parents and prototype if not defined.

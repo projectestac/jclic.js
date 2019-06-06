@@ -200,6 +200,24 @@ define([
     }
 
     /**
+     * Builds a new shaper, based on the properties specified in a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {Shaper}
+     */
+    setAttributes(data) {
+      const result = Shaper.getShaper(data.className, data.nCols, data.nRows);
+      return Utils.setAttr(result, data, [
+        'className', 'nCols', 'nRows',
+        'baseWidthFactor', 'toothHeightFactor',
+        'scaleX', 'scaleY',
+        'randomLines',
+        'showEnclosure', 'hasRemainder',
+        { key: 'enclosing', fn: AWT.Shape },
+        { key: 'shapeData', fn: AWT.Shape, array: true },
+      ]);
+    }
+
+    /**
      * Builds the individual shapes that will form this Shaper
      */
     buildShapes() {

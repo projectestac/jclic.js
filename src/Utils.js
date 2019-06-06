@@ -531,18 +531,34 @@ define([
      * @param {object} obj - The target object
      * @param {object} data - The data object
      * @param {string[]} attr - The list of attributes to be copied from `data` to `obj`
-     *                          Elements of this list can be just strings or objects with two members:
-     *                          - `key` (the attribute name)
-     *                          - `constructor` (the function to be invoked to build the object)
+     *                          Elements of this list can be:
+     *                          a) Just a string. In this case, the native object will be used as a value
+     *                          b) An object with the following members:
+     *                          - `key`{string} - The attribute name
+     *                          - `fn` {function} - The function to be invoked to build the object
+     *                          - `group` {boolean} - Data is an object, and multiple results should be aggruped in a resulting object, with the same keys as data.
+     *                          - `array` {boolean} - Data is an array, and the result should be also an array of objects
+     *                          - `init` {string+} - Optional parameter indicating if `fn` should be passed with an additional param. This param can be:
+     *                            - `key` - The member's key
+     * 
      * @returns {object} - Always returns `obj`
      */
     setAttr: (obj, data, attr) => {
       attr.forEach(a => {
-        if(a.key && a.constructor) {
+        if (a.key && a.fn) {
           // An object should be built
           if (!Utils.isEmpty(data[a.key])) {
-            obj[a.key] = (new a.constructor()).setAttributes(data[a.key]);
-          }  
+            const dataset = data[a.key];
+            if (a.group)
+              obj[a.key] = Object.keys(dataset).reduce((o, k) => {
+                o[k] = (new a.fn(a.init === 'key' ? k : undefined)).setAttributes(dataset[k]);
+                return o;
+              }, {});
+            else if (a.array)
+              obj[a.key] = dataset.map((element, n) => (new a.fn(a.init === 'key' ? n : undefined)).setAttributes(element));
+            else
+              obj[a.key] = (new a.fn()).setAttributes(dataset);
+          }
         } else if (!Utils.isEmpty(data[a]))
           obj[a] = data[a];
       });

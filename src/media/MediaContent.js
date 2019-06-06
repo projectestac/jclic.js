@@ -127,6 +127,21 @@ define([
     }
 
     /**
+     * Reads the properties of this MediaContent from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {MediaContent}
+     */
+    setAttributes(data) {
+      return Utils.setAttr(this, data, [
+        'type', 'file', 'externalParam',
+        { key: 'absLocation', fn: AWT.Point },
+        'absLocationFrom', 'recBuffer',
+        'level', 'from', 'to', 'length',
+        'stretch', 'free', 'catchMouseEvents', 'loop', 'autostart',
+      ]);
+    }
+
+    /**
      * Compares this object with another MediaContent.
      * @param {MediaContent} mc - The Media Content to compare against to.
      * @returns {boolean} - `true` when both objects are equivalent.

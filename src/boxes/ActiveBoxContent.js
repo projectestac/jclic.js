@@ -196,11 +196,11 @@ define([
     setAttributes(data) {
       return Utils.setAttr(this, data, [
         'id', 'item', 'border', 'avoidOverlapping', 'image', 'text',
-        { key: 'dimension', constructor: AWT.Dimension },
-        { key: 'txAlign', constructor: AlignType },
-        { key: 'imgAlign', constructor: AlignType },
-        { key: 'style', constructor: BoxBase },
-        //{ key: 'mediaContent', constructor: MediaContent },      
+        { key: 'dimension', fn: AWT.Dimension },
+        { key: 'txAlign', fn: AlignType },
+        { key: 'imgAlign', fn: AlignType },
+        { key: 'style', fn: BoxBase },
+        { key: 'mediaContent', fn: MediaContent },
       ]);
     }
 

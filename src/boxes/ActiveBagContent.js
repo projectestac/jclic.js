@@ -182,6 +182,23 @@ define([
     }
 
     /**
+     * Reads the properties of this ActiveBagContent from a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {ActiveBagContent}
+     */
+    setAttributes(data) {
+      return Utils.setAttr(this, data, [
+        'id', 'image',
+        'ncw', 'nch',
+        'w', 'h', 'border',
+        { key: 'style', fn: BoxBase },
+        { key: 'shaper', fn: Shaper },
+        'ids',
+        { key: 'cells', fn: ActiveBoxContent, array: true },
+      ]);
+    }
+
+    /**
      * Prepares the media content of all elements
      * @param {PlayStation} playStation - The {@link JClicPlayer}
      */
