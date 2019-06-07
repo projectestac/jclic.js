@@ -59,10 +59,10 @@ define([
   class Arith extends AutoContentProvider {
     /**
      * Arith constructor
-     * @param {JClicProject} project - The JClic project to which this provider is related
      */
-    constructor(project) {
-      super(project);
+    constructor() {
+      super();
+      this.className = '@arith.Arith';
       this.numericContent = true;
       this.opA = new Arith.Operator();
       this.opB = new Arith.Operator();
@@ -155,6 +155,22 @@ define([
       ]);
     }
 
+    /**
+     * Reads the properties of this Arith object from a dataset
+     * @param {object} data - The data object to be parsed
+     * @returns {EventSounds}
+     */
+    setAttributes(data) {
+      return Utils.setAttr(this, data, [
+        'className',
+        { key: 'opA', fn: Arith.Operator },
+        { key: 'opB', fn: Arith.Operator },
+        'use_add', 'use_subst', 'use_mult', 'use_div',
+        'exp_abx', 'exp_axc', 'exp_xbc', 'exp_axbc', 'exp_caxb',
+        'resultLimInf', 'resultLimSup', 'resultCarry', 'resultNoDup', 'resultOrder',
+        'opCond',
+      ]);
+    }
     /**
      * Fills the `n` parameter (an {@link Arith.Num}) with a value in accordance with the
      * specifications of `op` (an {@link Arith.Operand}), between two limits.
@@ -771,7 +787,21 @@ define([
         'wZero', 'wOne', 'wMinusOne',
       ]);
     }
+
+    /**
+     * Reads the properties of this operator from a dataset
+     * @param {object} data - The data object to be parsed
+     * @returns {Arith}
+     */
+    setAttributes(data) {
+      return Utils.setAttr(this, data, [
+        'numDec', 'lst', 'fromList', 'from', 'to',
+        'wZero', 'wOne', 'wMinusOne',
+      ]);
+    }
   };
+
+
 
   Object.assign(Arith.Operator.prototype, {
     /**

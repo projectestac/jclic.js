@@ -45,10 +45,8 @@ define([
   class AutoContentProvider {
     /**
      * AutoContentProvider constructor
-     * @param {JClicProject} project - The JClic project to which this content provider belongs.
      */
-    constructor(project) {
-      this.project = project;
+    constructor() {
     }
 
     /**
@@ -56,17 +54,16 @@ define([
      * attribute declared on an $xml element.
      * It should be called only from {@link Activity#setproperties}
      * @param {external.jQuery} $xml - The XML element to parse
-     * @param {JClicProject} project - The JClic project to which this object will be related
      * @returns {AutoContentProvider}
      */
-    static getProvider($xml, project) {
+    static getProvider($xml) {
       let automation = null;
-      if ($xml && project) {
+      if ($xml) {
         const
           className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.automation\./, '@'),
           cl = AutoContentProvider.CLASSES[className];
         if (cl) {
-          automation = new cl(project);
+          automation = new cl();
           automation.setProperties($xml);
         } else
           Utils.log('error', `Unknown AutoContentProvider class: ${className}`);
@@ -92,6 +89,16 @@ define([
     getAttributes() {
       // To be overrided!
       return Utils.getAttributes(this, ['className']);
+    }
+
+    /**
+     * Builds a new AutoContentProvider, based on the properties specified in a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {Shaper}
+     */
+    static factory(data) {
+      const cl = AutoContentProvider.CLASSES[data.className];
+      return (new cl()).setAttributes(data);
     }
 
     /**
@@ -126,11 +133,6 @@ define([
   }
 
   Object.assign(AutoContentProvider.prototype, {
-    /**
-     * The JClic project to which AutoContentProvider belongs
-     * @name AutoContentProvider#project
-     * @type {JClicProject} */
-    project: null,
     /**
      * This AutoContentProvider manages numeric expressions, so text literals should be
      * converted to numbers for comparisions, taking in account the

@@ -1850,6 +1850,7 @@
         }
       },
       "acp": {
+        "className": "@arith.Arith",
         "use_add": true,
         "use_subst": true,
         "use_mult": true,
@@ -5180,6 +5181,7 @@
         }
       },
       "acp": {
+        "className": "@arith.Arith",
         "use_add": true,
         "use_subst": true,
         "use_mult": true,
@@ -5591,7 +5593,7 @@
             },
             "shapeData": [
               {
-                "type": "ellipse",
+                "type": "rect",
                 "pos": {
                   "x": 0.125,
                   "y": 0.0556
@@ -5617,7 +5619,7 @@
                 }
               },
               {
-                "type": "ellipse",
+                "type": "rect",
                 "pos": {
                   "x": 0.4167,
                   "y": 0.7037
@@ -6595,19 +6597,15 @@
       "eventSounds": {
         "elements": {
           "click": {
-            "enabled": 2,
             "file": "pop.mp3"
           },
           "actionOk": {
-            "enabled": 2,
             "file": "whistleup.mp3"
           },
           "actionError": {
-            "enabled": 2,
             "file": "whistledown.mp3"
           },
           "finishedOk": {
-            "enabled": 2,
             "file": "ohhh.mp3"
           }
         }

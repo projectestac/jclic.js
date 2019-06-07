@@ -985,19 +985,11 @@ define([
      * @returns {Shape}
      */
     static buildShape(data) {
-      let shapeType = Shape;
-      switch (data.type) {
-        case 'rect':
-          shapeType = Rectangle;
-          break;
-        case 'ellipse':
-          shapeType = Ellipse;
-          break;
-        case 'path':
-          shapeType = Path;
-        default:
-          break;
-      }
+      const shapeType = (data.type === 'rect' && Rectangle) || (data.type === 'ellipse' && Ellipse) || (data.type === 'path' && Path) || null;
+      if (!shapeType) {
+        console.log("unknown shape!")
+        console.log(data)
+      } else
       return (new shapeType()).setAttributes(data);
     }
   }

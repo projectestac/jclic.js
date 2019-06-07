@@ -423,6 +423,7 @@ define([
         { key: 'windowSize', fn: AWT.Dimension },
         { key: 'messages', fn: ActiveBoxContent, group: 'object', init: 'key' },
         { key: 'abc', fn: ActiveBagContent, group: 'object', init: 'key' },
+        { key: 'acp', fn: AutoContentProvider },
 
       ]);
 
@@ -432,7 +433,6 @@ define([
 
 
       /*
-              'acp', // AutoContentProvider
               'scramble', // Activity~scrambleType
               'menuElements', // Activity~menuElement
               'tgc', // TextGridContent

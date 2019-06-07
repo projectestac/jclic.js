@@ -213,7 +213,7 @@ define([
         'randomLines',
         'showEnclosure', 'hasRemainder',
         { key: 'enclosing', fn: AWT.Shape },
-        { key: 'shapeData', fn: AWT.Shape, array: true },
+        { key: 'shapeData', fn: AWT.Shape, group: 'array' },
       ]);
 
       if (result.shapeData.length > 0)
