@@ -552,13 +552,13 @@ define([
             if (a.group === 'object')
               obj[a.key] = Object.keys(dataset).reduce((o, k) => {
                 const init = a.init === 'key' ? k : a.init;
-                o[k] = Utils.buildObj(a.fn, dataset[k], init);
+                o[k] = Utils.buildObj(a.fn, dataset[k], init, a.post);
                 return o;
               }, {});
             else if (a.group === 'array')
-              obj[a.key] = dataset.map((element, n) => Utils.buildObj(a.fn, element, a.init === 'key' ? n : a.init));
+              obj[a.key] = dataset.map((element, n) => Utils.buildObj(a.fn, element, a.init === 'key' ? n : a.init, a.post));
             else
-              obj[a.key] = Utils.buildObj(a.fn, dataset, a.init);
+              obj[a.key] = Utils.buildObj(a.fn, dataset, a.init, a.post);
           }
         } else if (!Utils.isEmpty(data[a]))
           obj[a] = data[a];
@@ -573,8 +573,11 @@ define([
      * @param {any+} init - An optional value to be passed to the function when invoked with `new`
      * @returns {object} - The resulting object
      */
-    buildObj: (objType, data, init) => {
-      return objType.factory ? objType.factory(data, init) : new objType(init).setAttributes(data);
+    buildObj: (objType, data, init, post) => {
+      const result = objType.factory ? objType.factory(data, init) : new objType(init).setAttributes(data);
+      if (result.postProcessing)
+        result.postProcessing(post);
+      return result;
     },
     /**
      * Check if the given char is a separator

@@ -216,8 +216,7 @@ define([
         { key: 'shapeData', fn: AWT.Shape, group: 'array' },
       ]);
 
-      if (result.shapeData.length > 0)
-        result.nCells = result.shapeData.length;
+      result.nCells = result.shapeData.length || result.nCols * result.nRows;
 
       return result;
     }

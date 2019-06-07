@@ -1,3 +1,6 @@
 - S'han de definir les funcions "setAttributes" a molts objectes!
 - Revisar shaper amb múltiple shapes (sembla que només carrega un element)
 - Continuar a Activity.js 
+
+- Veure què passa amb animatedGifFile i image a ActiveBagContent i ActiveBoxContent
+

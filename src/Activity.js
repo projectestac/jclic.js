@@ -421,9 +421,9 @@ define([
         { key: 'activityBgGradient', fn: AWT.Gradient },
         { key: 'absolutePosition', fn: AWT.Point },
         { key: 'windowSize', fn: AWT.Dimension },
-        { key: 'messages', fn: ActiveBoxContent, group: 'object', init: 'key' },
-        { key: 'abc', fn: ActiveBagContent, group: 'object', init: 'key' },
-        { key: 'acp', fn: AutoContentProvider },
+        { key: 'messages', fn: ActiveBoxContent, group: 'object', init: 'key', post: this.project.mediaBag },
+        { key: 'abc', fn: ActiveBagContent, group: 'object', init: 'key', post: this.project.mediaBag },
+        { key: 'acp', fn: AutoContentProvider, post: this.project.mediaBag },
 
       ]);
 

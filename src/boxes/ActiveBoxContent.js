@@ -190,18 +190,28 @@ define([
 
     /**
      * Reads the properties of this ActiveBoxContent from a data object
-     * @param {object} data - The data object to be parsed
+     * @param {object|string} data - The data object to be parsed, or just the text content
      * @returns {ActiveBoxContent}
      */
     setAttributes(data) {
-      return Utils.setAttr(this, data, [
-        'id', 'item', 'border', 'avoidOverlapping', 'image', 'text',
-        { key: 'dimension', fn: AWT.Dimension },
-        { key: 'txAlign', fn: AlignType },
-        { key: 'imgAlign', fn: AlignType },
-        { key: 'style', fn: BoxBase },
-        { key: 'mediaContent', fn: MediaContent },
-      ]);
+      if (typeof data === 'string')
+        this.text = data;
+      else
+        Utils.setAttr(this, data, [
+          'id', 'item', 'border', 'avoidOverlapping', 'image', 'text',
+          { key: 'dimension', fn: AWT.Dimension },
+          { key: 'txAlign', fn: AlignType },
+          { key: 'imgAlign', fn: AlignType },
+          { key: 'style', fn: BoxBase },
+          { key: 'mediaContent', fn: MediaContent },
+        ]);
+
+      return this;
+    }
+
+    postProcessing(mediaBag) {
+      if (mediaBag)
+        this.realizeContent(mediaBag);
     }
 
     /**

@@ -187,7 +187,7 @@ define([
      * @returns {ActiveBagContent}
      */
     setAttributes(data) {
-      return Utils.setAttr(this, data, [
+      Utils.setAttr(this, data, [
         'id', 'image',
         'ncw', 'nch',
         'w', 'h', 'border',
@@ -196,6 +196,44 @@ define([
         'ids',
         { key: 'cells', fn: ActiveBoxContent, group: 'array' },
       ]);
+
+      let n = this.cells.length;
+
+      // Create cells when `cells` is empty
+      if (n === 0 && this.shaper && this.shaper.nCells > 0) {
+        this.initiallyEmptyCells = true;
+        n = this.shaper.nCells;
+        this.getActiveBoxContent(n - 1);
+        if (this.ids)
+          this.ids.split(' ').forEach((id, i) => { this.getActiveBoxContent(i).id = Number(id); });
+      }
+
+      // Assign ids when cells have empty content (they are just shapes)
+      if (n > 0) {
+        let empty = true;
+        for (let i = 0; i < n; i++) {
+          const bxc = this.getActiveBoxContent(i);
+          if (bxc.id !== -1 || bxc.item !== -1 || !bxc.isEmpty()) {
+            empty = false;
+            break;
+          }
+        }
+        if (empty) {
+          for (let i = 0; i < n; i++)
+            this.getActiveBoxContent(i).id = i;
+        }
+      }
+
+      // Link [BoxBase](BoxBase.html) objects of `cells` elements to `style`
+      if (this.style)
+        this.cells.forEach((abc) => { if (abc.style) abc.style.parent = this.style; });
+
+      return this;
+    }
+
+    postProcessing(mediaBag) {
+      if (mediaBag)
+        this.cells.forEach(cell => cell.realizeContent(mediaBag));
     }
 
     /**
