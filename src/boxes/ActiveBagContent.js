@@ -194,7 +194,7 @@ define([
         { key: 'style', fn: BoxBase },
         { key: 'shaper', fn: Shaper },
         'ids',
-        { key: 'cells', fn: ActiveBoxContent, array: true },
+        { key: 'cells', fn: ActiveBoxContent, group: 'array' },
       ]);
     }
 

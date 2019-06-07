@@ -421,8 +421,8 @@ define([
         { key: 'activityBgGradient', fn: AWT.Gradient },
         { key: 'absolutePosition', fn: AWT.Point },
         { key: 'windowSize', fn: AWT.Dimension },
-        { key: 'messages', fn: ActiveBoxContent, group: true, init: 'key' },
-        { key: 'abc', fn: ActiveBagContent, group: true, init: 'key' },
+        { key: 'messages', fn: ActiveBoxContent, group: 'object', init: 'key' },
+        { key: 'abc', fn: ActiveBagContent, group: 'object', init: 'key' },
 
       ]);
 

@@ -204,9 +204,9 @@ define([
      * @param {object} data - The data object to be parsed
      * @returns {Shaper}
      */
-    setAttributes(data) {
+    static factory(data) {
       const result = Shaper.getShaper(data.className, data.nCols, data.nRows);
-      return Utils.setAttr(result, data, [
+      Utils.setAttr(result, data, [
         'className', 'nCols', 'nRows',
         'baseWidthFactor', 'toothHeightFactor',
         'scaleX', 'scaleY',
@@ -215,6 +215,11 @@ define([
         { key: 'enclosing', fn: AWT.Shape },
         { key: 'shapeData', fn: AWT.Shape, array: true },
       ]);
+
+      if (result.shapeData.length > 0)
+        result.nCells = result.shapeData.length;
+
+      return result;
     }
 
     /**

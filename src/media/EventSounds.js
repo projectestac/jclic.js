@@ -97,7 +97,7 @@ define([
     setAttributes(data) {
       return Utils.setAttr(this, data, [
         'enabled',
-        { key: 'elements', fn: EventSoundsElement, group: true },
+        { key: 'elements', fn: EventSoundsElement, group: 'object' },
       ]);
     }
 
