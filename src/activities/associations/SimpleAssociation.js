@@ -155,7 +155,7 @@ define([
       if (abcA && abcB) {
         if (abcA.image) {
           abcA.setImgContent(this.act.project.mediaBag, null, false);
-          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramble['primary'])
+          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramblePrimary)
             this.$animatedBg = $('<span/>').css({
               'background-image': `url(${abcA.animatedGifFile})`,
               'background-position': 'center',
@@ -166,7 +166,7 @@ define([
 
         if (abcB.image) {
           abcB.setImgContent(this.act.project.mediaBag, null, false);
-          if (abcB.animatedGifFile && !abcB.shaper.rectangularShapes && !this.act.scramble['secondary'])
+          if (abcB.animatedGifFile && !abcB.shaper.rectangularShapes && !this.act.scrambleSecondary)
             this.$animatedBgB = $('<span/>').css({
               'background-image': `url(${abcB.animatedGifFile})`,
               'background-position': 'center',
@@ -218,9 +218,9 @@ define([
       if (this.bgA && this.bgB) {
         // Scramble cells
         const scrambleArray = [];
-        if (this.act.scramble.primary)
+        if (this.act.scramblePrimary)
           scrambleArray.push(this.bgA);
-        if (this.act.scramble.secondary)
+        if (this.act.scrambleSecondary)
           scrambleArray.push(this.bgB);
         if (scrambleArray.length > 0) {
           this.shuffle(scrambleArray, true, true);

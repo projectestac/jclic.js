@@ -262,8 +262,8 @@ define([
           case 'scramble':
             // Read the 'scramble' mode
             this.shuffles = Number($node.attr('times'));
-            this.scramble.primary = Utils.getBoolean($node.attr('primary'));
-            this.scramble.secondary = Utils.getBoolean($node.attr('secondary'));
+            this.scramblePrimary = Utils.getBoolean($node.attr('primary'));
+            this.scrambleSecondary = Utils.getBoolean($node.attr('secondary'));
             break;
 
           case 'layout':
@@ -380,7 +380,7 @@ define([
         `bgColor|${K.DEFAULT_BG_COLOR}`, 'bgImageFile', 'tiledBgImg',
         'bTimeCounter|true', 'bActionsCounter|true', 'bScoreCounter|true',
         `activityBgColor|${K.DEFAULT_BG_COLOR}`, 'transparentBg|false', 'border|true',
-        'shuffles',
+        'scramblePrimary', 'scrambleSecondary', 'shuffles',
         'boxGridPos', 'wildTransparent', 'upperCase', 'checkCase',
         'checkButtonText',
         'prevScreen', 'prevScreenMaxTime', 'prevScreenText',
@@ -391,7 +391,6 @@ define([
         'messages', // ActiveBoxContent{} -> (BoxBase -> AWT.Font, AWT.Gradient, AWT.Stroke), (MediaContent -> AWT.Point)        
         'acp', // AutoContentProvider
         'abc', // ActiveBagContent{}
-        'scramble', // Activity~scrambleType
         'menuElements', // Activity~menuElement
         'tgc', // TextGridContent
         'clues', // string[]
@@ -414,7 +413,8 @@ define([
         'countDownTime', 'countDownActions', 'useOrder', 'dragCells', 'skinFileName',
         'showSolution', 'helpMsg', 'bgColor', 'bgImageFile', 'tiledBgImg',
         'bTimeCounter', 'bActionsCounter', 'bScoreCounter',
-        'activityBgColor', 'transparentBg', 'border', 'shuffles',
+        'activityBgColor', 'transparentBg', 'border',
+        'scramblePrimary', 'scrambleSecondary', 'shuffles',
         'boxGridPos', 'wildTransparent', 'upperCase', 'checkCase', 'checkButtonText',
         'prevScreen', 'prevScreenMaxTime', 'prevScreenText',
         { key: 'bgGradient', fn: AWT.Gradient },
@@ -433,7 +433,6 @@ define([
 
 
       /*
-              'scramble', // Activity~scrambleType
               'menuElements', // Activity~menuElement
               'tgc', // TextGridContent
               'clues', // string[]
@@ -830,15 +829,15 @@ define([
      * @type {number} */
     shuffles: K.DEFAULT_SHUFFLES,
     /**
-     * @typedef Activity~scrambleType
-     * @type {object}
-     * @property {boolean} primary
-     * @property {boolean} secondary */
+     * Box grid A must be scrambled.
+     * @name Activity#scramblePrimary
+     * @type {boolean} */
+    scramblePrimary: true,
     /**
-     * Object that indicates if box grids A and B must be scrambled.
-     * @name Activity#scramble
-     * @type {Activity~scrambleType} */
-    scramble: { primary: true, secondary: true },
+     * Box grid B must be scrambled.
+     * @name Activity#scrambleSecondary
+     * @type {boolean} */
+    scrambleSecondary: true,
     /**
      * Flag to indicate "inverse resolution" in complex associations
      * @name Activity#invAss

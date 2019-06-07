@@ -177,7 +177,7 @@ define([
 
         if (abcA.image) {
           abcA.setImgContent(this.act.project.mediaBag, null, false);
-          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramble['primary'])
+          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramblePrimary)
             this.$animatedBg = $('<span/>').css({
               'background-image': 'url(' + abcA.animatedGifFile + ')',
               'background-position': 'center',
@@ -250,7 +250,7 @@ define([
 
       if (this.bgA && this.bgB) {
         // Scramble cells
-        if (this.act.scramble.primary)
+        if (this.act.scramblePrimary)
           this.shuffle([this.bgA], true, true);
 
         if (this.useOrder)

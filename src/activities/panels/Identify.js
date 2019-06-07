@@ -130,7 +130,7 @@ define([
       if (abc) {
         if (abc.image) {
           abc.setImgContent(this.act.project.mediaBag, null, false);
-          if (abc.animatedGifFile && !abc.shaper.rectangularShapes && !this.act.scramble['primary'])
+          if (abc.animatedGifFile && !abc.shaper.rectangularShapes && !this.act.scramblePrimary)
             this.$animatedBg = $('<span/>').css({
               'background-image': `url(${abc.animatedGifFile})`,
               'background-position': 'center',
@@ -188,7 +188,7 @@ define([
         this.firstRun = false;
 
       if (this.bg) {
-        if (this.act.scramble['primary'])
+        if (this.act.scramblePrimary)
           this.shuffle([this.bg], true, true);
 
         if (this.useOrder)
