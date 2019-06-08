@@ -387,8 +387,8 @@ define([
         'bgGradient', 'activityBgGradient', // AWT.Gradient
         'absolutePosition', // AWT.Point
         'windowSize', // AWT.Dimension
-        'eventSounds', // EventSounds -> EventSoundsElement
-        'messages', // ActiveBoxContent{} -> (BoxBase -> AWT.Font, AWT.Gradient, AWT.Stroke), (MediaContent -> AWT.Point)        
+        'eventSounds', // EventSounds
+        'messages', // ActiveBoxContent{}
         'acp', // AutoContentProvider
         'abc', // ActiveBagContent{}
         'menuElements', // Activity~menuElement
@@ -405,7 +405,7 @@ define([
      * Load the activity settings from a data object
      * @param {object} data - The data object to parse
      */
-    setAttributes(data) {
+    setAttributes(data, mediaBag = this.project.mediaBag) {
       Utils.setAttr(this, data, [
         'name', 'className', 'code', 'type', 'description', 'invAss', 'numericContent',
         'autoJump', 'forceOkToAdvance', 'amongParagraphs', 'infoUrl', 'infoCmd',
@@ -421,9 +421,14 @@ define([
         { key: 'activityBgGradient', fn: AWT.Gradient },
         { key: 'absolutePosition', fn: AWT.Point },
         { key: 'windowSize', fn: AWT.Dimension },
-        { key: 'messages', fn: ActiveBoxContent, group: 'object', init: 'key', post: this.project.mediaBag },
-        { key: 'abc', fn: ActiveBagContent, group: 'object', init: 'key', post: this.project.mediaBag },
-        { key: 'acp', fn: AutoContentProvider, post: this.project.mediaBag },
+        { key: 'messages', fn: ActiveBoxContent, group: 'object', init: 'key', params: [mediaBag] },
+        { key: 'abc', fn: ActiveBagContent, group: 'object', init: 'key', params: [mediaBag] },
+        { key: 'acp', fn: AutoContentProvider, params: [mediaBag] },
+        'menuElements',
+        { key: 'tgc', fn: TextGridContent },
+        'clues',
+        'clueItems',
+        { key: 'prevScreenStyle', fn: BoxBase },
 
       ]);
 
@@ -433,11 +438,6 @@ define([
 
 
       /*
-              'menuElements', // Activity~menuElement
-              'tgc', // TextGridContent
-              'clues', // string[]
-              'clueItems', // number[]
-              'prevScreenStyle', // BoxBase
               'ev', // Evaluator
               'document', // TextActivityDocument
       */

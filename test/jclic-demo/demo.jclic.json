@@ -1871,21 +1871,22 @@
       },
       "acp": {
         "className": "@arith.Arith",
+        "opA": {
+          "limInf": 1,
+          "limSup": 99
+        },
+        "opB": {
+          "limInf": 1,
+          "limSup": 10
+        },
         "use_add": true,
         "use_subst": true,
         "use_mult": true,
         "use_div": true,
-        "exp_abx": true,
         "exp_axc": true,
         "exp_xbc": true,
         "exp_axbc": true,
-        "exp_caxb": false,
-        "resultLimInf": 1,
-        "resultLimSup": 9999,
-        "resultCarry": false,
-        "resultNoDup": false,
-        "resultOrder": "NOSORT",
-        "opCond": "INDIF"
+        "resultLimInf": 1
       },
       "abc": {
         "primary": {
@@ -5230,21 +5231,20 @@
       },
       "acp": {
         "className": "@arith.Arith",
+        "opA": {
+          "limInf": 1,
+          "limSup": 10
+        },
+        "opB": {
+          "limInf": 1,
+          "limSup": 10
+        },
         "use_add": true,
         "use_subst": true,
         "use_mult": true,
         "use_div": false,
-        "exp_abx": true,
-        "exp_axc": false,
-        "exp_xbc": false,
-        "exp_axbc": false,
-        "exp_caxb": false,
-        "resultLimInf": 0,
-        "resultLimSup": 9999,
-        "resultCarry": false,
         "resultNoDup": true,
-        "resultOrder": "SORTASC",
-        "opCond": "INDIF"
+        "resultOrder": "SORTASC"
       },
       "abc": {
         "primary": {
@@ -11494,7 +11494,7 @@
     {
       "name": "elmo.gif",
       "file": "elmo.gif",
-      "animated": false
+      "animated": true
     },
     {
       "name": "big.gif",

@@ -110,8 +110,27 @@ define([
         'ncw', 'nch',
         'w', 'h',
         'text',
-        'style', 'border',
-        'wild', 'randomChars'
+        'style', // BoxBase
+        'border',
+        'wild|*',
+        `randomChars|${Utils.settings.RANDOM_CHARS}`,
+      ]);
+    }
+
+    /**
+     * Reads the properties of this TextGridContent from a data object
+     * @param {object|string} data - The data object to be parsed, or just the text content
+     * @returns {TextGridContent}
+     */
+    setAttributes(data) {
+      return Utils.setAttr(this, data, [
+        'ncw', 'nch',
+        'w', 'h',
+        'text',
+        { key: 'style', fn: BoxBase },
+        'border',
+        'wild',
+        `randomChars`,
       ]);
     }
 

@@ -536,6 +536,7 @@ define([
      *                          b) An object with the following members:
      *                          - `key`{string} - The attribute name
      *                          - `fn` {function} - The function to be invoked to build the object
+     *                          - `params` {string[]+} - Optional params to be passed to the `setAttributes` method of the created object
      *                          - `group` {string} - Used when `data` is an object or an array (possible values are `object` and `array`), and multiple results
      *                                               should be aggregated in a resulting object or array with the same keys (or ordering) as data.
      *                          - `init` {string+} - Optional parameter indicating if `fn` should be passed with an additional param. This param can be:
@@ -545,20 +546,20 @@ define([
      */
     setAttr: (obj, data, attr) => {
       attr.forEach(a => {
-        if (a.key && a.fn) {
+        if (a.key) {
+          const { key, fn, group, init, params } = a;
           // A new object should be built
-          if (!Utils.isEmpty(data[a.key])) {
-            const dataset = data[a.key];
-            if (a.group === 'object')
-              obj[a.key] = Object.keys(dataset).reduce((o, k) => {
-                const init = a.init === 'key' ? k : a.init;
-                o[k] = Utils.buildObj(a.fn, dataset[k], init, a.post);
+          if (!Utils.isEmpty(data[key])) {
+            const dataset = data[key];
+            if (group === 'object')
+              obj[key] = Object.keys(dataset).reduce((o, k) => {
+                o[k] = Utils.buildObj(fn, dataset[k], init === 'key' ? k : init, params);
                 return o;
               }, {});
-            else if (a.group === 'array')
-              obj[a.key] = dataset.map((element, n) => Utils.buildObj(a.fn, element, a.init === 'key' ? n : a.init, a.post));
+            else if (group === 'array')
+              obj[key] = dataset.map((element, n) => Utils.buildObj(fn, element, init === 'key' ? n : init, params));
             else
-              obj[a.key] = Utils.buildObj(a.fn, dataset, a.init, a.post);
+              obj[key] = Utils.buildObj(fn, dataset, init, params);
           }
         } else if (!Utils.isEmpty(data[a]))
           obj[a] = data[a];
@@ -571,13 +572,11 @@ define([
      * @param {function} objType - A class or function to be invoked to build the object.
      * @param {object+} data - An optional object filled with the attributes to be assigned to the newly created object.
      * @param {any+} init - An optional value to be passed to the function when invoked with `new`
+     * @param {object[]+} - Optional array of params to be passed when calling `setAttributes` on the final object
      * @returns {object} - The resulting object
      */
-    buildObj: (objType, data, init, post) => {
-      const result = objType.factory ? objType.factory(data, init) : new objType(init).setAttributes(data);
-      if (result.postProcessing)
-        result.postProcessing(post);
-      return result;
+    buildObj: (objType, data, init, params = []) => {
+      return objType.factory ? objType.factory(data, init, params) : new objType(init).setAttributes(data, ...params);
     },
     /**
      * Check if the given char is a separator

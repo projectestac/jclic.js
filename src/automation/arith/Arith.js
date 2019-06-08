@@ -149,9 +149,9 @@ define([
         'className',
         'opA', 'opB', // Arith.Operator
         'use_add', 'use_subst', 'use_mult', 'use_div',
-        'exp_abx', 'exp_axc', 'exp_xbc', 'exp_axbc', 'exp_caxb',
-        'resultLimInf', 'resultLimSup', 'resultCarry', 'resultNoDup', 'resultOrder',
-        'opCond'
+        'exp_abx|true', 'exp_axc|false', 'exp_xbc|false', 'exp_axbc|false', 'exp_caxb|false',
+        'resultLimInf|0', 'resultLimSup|9999', 'resultCarry|false', 'resultNoDup|false', 'resultOrder|NOSORT',
+        'opCond|INDIF'
       ]);
     }
 
@@ -728,9 +728,6 @@ define([
    */
   Arith.Operator = class {
     constructor() {
-      this.limInf = 13;
-      this.limSup = 17;
-      this.lst = [];
     }
 
     /**
@@ -746,9 +743,7 @@ define([
             break;
 
           case 'values':
-            const values = val.split(' ');
-            for (let i = 0; i < values.length; i++)
-              this.lst[i] = Number(values[i]);
+            this.lst = val.split(' ').map(v => Number(v));
             this.fromList = this.lst.length;
             break;
 
@@ -783,8 +778,10 @@ define([
      */
     getAttributes() {
       return Utils.getAttributes(this, [
-        'numDec', 'lst', 'fromList', 'from', 'to',
-        'wZero', 'wOne', 'wMinusOne',
+        'limInf', 'limSup',
+        'numDec|0',
+        'wZero|false', 'wOne|false', 'wMinusOne|false',
+        'fromList|0', 'lst',
       ]);
     }
 
@@ -795,12 +792,13 @@ define([
      */
     setAttributes(data) {
       return Utils.setAttr(this, data, [
-        'numDec', 'lst', 'fromList', 'from', 'to',
+        'limInf', 'limSup',
+        'numDec',
         'wZero', 'wOne', 'wMinusOne',
+        'fromList', 'lst',
       ]);
     }
   };
-
 
 
   Object.assign(Arith.Operator.prototype, {

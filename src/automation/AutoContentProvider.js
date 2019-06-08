@@ -94,11 +94,12 @@ define([
     /**
      * Builds a new AutoContentProvider, based on the properties specified in a data object
      * @param {object} data - The data object to be parsed
+     * @param {array} params - Optional parameters to be passed to `setAttributes`
      * @returns {Shaper}
      */
-    static factory(data) {
+    static factory(data, params=[]) {
       const cl = AutoContentProvider.CLASSES[data.className];
-      return (new cl()).setAttributes(data);
+      return (new cl()).setAttributes(data, ...params);
     }
 
     /**

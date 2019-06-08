@@ -5238,7 +5238,7 @@
   <media name="casa.gif" file="casa.gif" animated="false" />
   <media name="cireres.gif" file="cireres.gif" animated="false" />
   <media name="cotxe.gif" file="cotxe.gif" animated="false" />
-  <media name="elmo.gif" file="elmo.gif" />
+  <media name="elmo.gif" file="elmo.gif"  animated="true" />
   <media name="big.gif" file="big.gif" animated="true" />
   <media name="esqui.gif" file="esqui.gif" animated="true" />
   <media name="func2.gif" file="func2.gif" animated="false" />

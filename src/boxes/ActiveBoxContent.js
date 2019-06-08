@@ -191,9 +191,11 @@ define([
     /**
      * Reads the properties of this ActiveBoxContent from a data object
      * @param {object|string} data - The data object to be parsed, or just the text content
+     * @param {MediaBag} mediaBag - The media bag used to retrieve images and other media
      * @returns {ActiveBoxContent}
      */
-    setAttributes(data) {
+    setAttributes(data, mediaBag) {
+
       if (typeof data === 'string')
         this.text = data;
       else
@@ -206,12 +208,10 @@ define([
           { key: 'mediaContent', fn: MediaContent },
         ]);
 
-      return this;
-    }
-
-    postProcessing(mediaBag) {
       if (mediaBag)
         this.realizeContent(mediaBag);
+
+      return this;
     }
 
     /**

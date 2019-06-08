@@ -184,9 +184,10 @@ define([
     /**
      * Reads the properties of this ActiveBagContent from a data object
      * @param {object} data - The data object to be parsed
+     * @param {MediaBag} mediaBag - The project's MediaBag
      * @returns {ActiveBagContent}
      */
-    setAttributes(data) {
+    setAttributes(data, mediaBag) {
       Utils.setAttr(this, data, [
         'id', 'image',
         'ncw', 'nch',
@@ -194,7 +195,7 @@ define([
         { key: 'style', fn: BoxBase },
         { key: 'shaper', fn: Shaper },
         'ids',
-        { key: 'cells', fn: ActiveBoxContent, group: 'array' },
+        { key: 'cells', fn: ActiveBoxContent, group: 'array', params: [mediaBag] },
       ]);
 
       let n = this.cells.length;
@@ -226,15 +227,14 @@ define([
 
       // Link [BoxBase](BoxBase.html) objects of `cells` elements to `style`
       if (this.style)
-        this.cells.forEach((abc) => { if (abc.style) abc.style.parent = this.style; });
+        this.cells.forEach(abc => { if (abc.style) abc.style.parent = this.style; });
+
+      if (mediaBag)
+        this.cells.forEach(abc => abc.realizeContent(mediaBag));
 
       return this;
     }
 
-    postProcessing(mediaBag) {
-      if (mediaBag)
-        this.cells.forEach(cell => cell.realizeContent(mediaBag));
-    }
 
     /**
      * Prepares the media content of all elements
