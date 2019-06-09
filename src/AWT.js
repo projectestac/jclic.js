@@ -99,7 +99,7 @@ define([
         //substitutions = Object.assign({}, substitutions, options.fontSubstitutions)
         substitutions = $.extend(Object.create(substitutions), options.fontSubstitutions);
 
-      if ($tree.jquery) {
+      if ($tree.jquery)
         $tree.find('style[family],font[family]').each((_n, style) => {
           const $style = $(style),
             name = $style.attr('family').trim().toLowerCase();
@@ -111,8 +111,21 @@ define([
             }
           }
         });
-      } else {
-        // TODO: Implement recursive tree with objects and arrays
+      else {
+        Utils.findParentsWithChild($tree, 'family').forEach(parent => {
+          if (typeof parent.family === 'string') {
+            const name = parent.family;
+            if (Font.GOOGLEFONTS.includes(name))
+              Font.loadGoogleFont(name);
+            else {
+              const newName = substitutions[name.trim().toLowerCase()];
+              if (newName) {
+                Font.loadGoogleFont(newName);
+                parent.family = newName;
+              }
+            }
+          }
+        });
       }
     }
 
@@ -322,6 +335,12 @@ define([
     'palmemim': 'Vibur',
     'zurichcalligraphic': 'Felipa'
   };
+  /**
+   * Google Fonts currently used in substitutions
+   */
+  Font.GOOGLEFONTS = [
+    'Kalam', 'Permanent Marker', 'Patrick Hand', 'Oswald', 'Vibur', 'Felipa',
+  ];
 
   Object.assign(Font.prototype, {
     /**
@@ -990,7 +1009,7 @@ define([
         console.log("unknown shape!")
         console.log(data)
       } else
-      return (new shapeType()).setAttributes(data);
+        return (new shapeType()).setAttributes(data);
     }
   }
 

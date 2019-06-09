@@ -827,6 +827,23 @@ define([
         callback(attributes[i].name, attributes[i].value);
     },
     /**
+     * Recursive traversal of all nodes of the given object looking for children having the `childName` attribute
+     * WARNING: Don't call this method on objects with circular dependencies!
+     * @param {object} obj       - The object to be analized
+     * @param {string} childName - Name of the attribute to search for
+     * @returns {object[]}       - Array of children having the searched attribute
+     */
+    findParentsWithChild(obj, childName, _result = []) {
+      if (obj[childName])
+        _result.push(obj);
+      else
+        Object.values(obj).forEach(val => {
+          if (typeof val === 'object')
+            Utils.findParentsWithChild(val, childName, _result);
+        });
+      return _result;
+    },
+    /**
      * Global constants
      * @const
      */
