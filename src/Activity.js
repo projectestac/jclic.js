@@ -380,8 +380,8 @@ define([
         `bgColor|${K.DEFAULT_BG_COLOR}`, 'bgImageFile', 'tiledBgImg',
         'bTimeCounter|true', 'bActionsCounter|true', 'bScoreCounter|true',
         `activityBgColor|${K.DEFAULT_BG_COLOR}`, 'transparentBg|false', 'border|true',
-        'scramblePrimary', 'scrambleSecondary', 'shuffles',
-        'boxGridPos', 'wildTransparent', 'upperCase', 'checkCase',
+        'scramblePrimary', 'scrambleSecondary', 'shuffles', 'boxGridPos',
+        'wildTransparent', 'upperCase', 'checkCase',
         'checkButtonText',
         'prevScreen', 'prevScreenMaxTime', 'prevScreenText',
         'bgGradient', 'activityBgGradient', // AWT.Gradient
@@ -414,8 +414,8 @@ define([
         'showSolution', 'helpMsg', 'bgColor', 'bgImageFile', 'tiledBgImg',
         'bTimeCounter', 'bActionsCounter', 'bScoreCounter',
         'activityBgColor', 'transparentBg', 'border',
-        'scramblePrimary', 'scrambleSecondary', 'shuffles',
-        'boxGridPos', 'wildTransparent', 'upperCase', 'checkCase', 'checkButtonText',
+        'scramblePrimary', 'scrambleSecondary', 'shuffles', 'boxGridPos',
+        'wildTransparent', 'upperCase', 'checkCase', 'checkButtonText',
         'prevScreen', 'prevScreenMaxTime', 'prevScreenText',
         { key: 'bgGradient', fn: AWT.Gradient },
         { key: 'activityBgGradient', fn: AWT.Gradient },
@@ -429,18 +429,17 @@ define([
         'clues',
         'clueItems',
         { key: 'prevScreenStyle', fn: BoxBase },
-
+        { key: 'ev', fn: Evaluator },
+        { key: 'document', fn: TextActivityDocument, params: [mediaBag] },
       ]);
 
       // Reused objects
       if (data.eventSounds)
         this.eventSounds.setAttributes(data.eventSounds);
 
-
-      /*
-              'ev', // Evaluator
-              'document', // TextActivityDocument
-      */
+      // Manual settings
+      if (this.absolutePosition)
+        this.absolutePositioned = true;
 
       return this;
     }

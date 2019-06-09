@@ -180,9 +180,9 @@ define([
      */
     getAttributes() {
       return Utils.getAttributes(this, [
-        'id', 'item', 'dimension',
-        'txtAlign', 'imgAlign', // AlignType
-        'border', 'avoidOverlapping', 'image', 'text',
+        'id', 'item', 'dimension', 'border', 'avoidOverlapping', 'image', 'text',
+        'objectType', // Used in TextActivityDocument
+        'txtAlign', 'imgAlign', // AlignType        
         'style', // BoxBase
         'mediaContent', // MediaContent
       ]);
@@ -201,6 +201,7 @@ define([
       else
         Utils.setAttr(this, data, [
           'id', 'item', 'border', 'avoidOverlapping', 'image', 'text',
+          'objectType',
           { key: 'dimension', fn: AWT.Dimension },
           { key: 'txAlign', fn: AlignType },
           { key: 'imgAlign', fn: AlignType },

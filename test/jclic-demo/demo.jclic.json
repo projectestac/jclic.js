@@ -11,6 +11,9 @@
       "level": "Not applicable",
       "other": "demo activities testing"
     },
+    "languages": [
+      "en"
+    ],
     "authors": [
       {
         "name": "Francesc Busquets",
@@ -42,9 +45,6 @@
         "description": "created",
         "date": "2002-01-31T23:00:00.000Z"
       }
-    ],
-    "languages": [
-      "en"
     ]
   },
   "activitySequence": [
@@ -973,7 +973,8 @@
               "bold": true
             },
             "bgGradient": {
-              "c1": "blue"
+              "c1": "blue",
+              "c2": "white"
             }
           }
         },
@@ -2676,6 +2677,7 @@
                 "border": true,
                 "image": "mapa.gif",
                 "text": "Cells can have text over a graphic",
+                "objectType": "cell",
                 "style": {
                   "shadow": true,
                   "font": {
@@ -2698,6 +2700,7 @@
                 },
                 "border": true,
                 "text": "and each cell...",
+                "objectType": "cell",
                 "style": {
                   "font": {
                     "size": 12,
@@ -2716,14 +2719,15 @@
                   "width": 100,
                   "height": 80
                 },
+                "border": true,
+                "text": "...can have...",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "left"
                 },
                 "imgAlign": {
                   "h": "left"
                 },
-                "border": true,
-                "text": "...can have...",
                 "style": {
                   "font": {
                     "size": 13,
@@ -2747,14 +2751,15 @@
                   "width": 100,
                   "height": 80
                 },
+                "border": true,
+                "text": "...a different style.",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "right"
                 },
                 "imgAlign": {
                   "h": "right"
                 },
-                "border": true,
-                "text": "...a different style.",
                 "style": {
                   "font": {
                     "size": 13,
@@ -2785,6 +2790,7 @@
                 },
                 "border": false,
                 "text": "<html><center><font size=-1>Cells can also have html content. For instance, this one has a table:<table border=1 width=200 bgcolor=\"white\"><tr><td rowspan=\"2\"><img src=\"trex.gif\"></td><td align=\"center\"><font color=\"red\"><b>Hi!</b></font></td></tr><tr><td align=\"center\">where the Jurassic Park is?</td></table></font></center></html>",
+                "objectType": "cell",
                 "style": {
                   "font": {
                     "size": 13
@@ -3563,6 +3569,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "abcdefghijk",
                 "answers": [
                   "abcdefghijk"
@@ -4712,65 +4719,65 @@
           },
           "cells": [
             {
+              "text": "• Use of JPG, PNG, animated GIF and Flash movies",
               "txtAlign": {
                 "h": "left"
               },
               "imgAlign": {
                 "h": "left"
               },
-              "text": "• Use of JPG, PNG, animated GIF and Flash movies",
               "mediaContent": {
                 "type": "RUN_CLIC_PACKAGE",
                 "file": "anim"
               }
             },
             {
+              "text": "• Shapers",
               "txtAlign": {
                 "h": "left"
               },
               "imgAlign": {
                 "h": "left"
               },
-              "text": "• Shapers",
               "mediaContent": {
                 "type": "RUN_CLIC_PACKAGE",
                 "file": "shapers"
               }
             },
             {
+              "text": "• Skins",
               "txtAlign": {
                 "h": "left"
               },
               "imgAlign": {
                 "h": "left"
               },
-              "text": "• Skins",
               "mediaContent": {
                 "type": "RUN_CLIC_PACKAGE",
                 "file": "skins"
               }
             },
             {
+              "text": "• Event sounds",
               "txtAlign": {
                 "h": "left"
               },
               "imgAlign": {
                 "h": "left"
               },
-              "text": "• Event sounds",
               "mediaContent": {
                 "type": "RUN_CLIC_PACKAGE",
                 "file": "sounds"
               }
             },
             {
+              "text": "• Other new features of activities",
               "txtAlign": {
                 "h": "left"
               },
               "imgAlign": {
                 "h": "left"
               },
-              "text": "• Other new features of activities",
               "mediaContent": {
                 "type": "RUN_CLIC_PACKAGE",
                 "file": "features"
@@ -7095,6 +7102,7 @@
                 },
                 "border": false,
                 "image": "taronja.gif",
+                "objectType": "cell",
                 "style": {
                   "shadow": true,
                   "font": {
@@ -7120,6 +7128,7 @@
                 },
                 "border": false,
                 "image": "cireres.gif",
+                "objectType": "cell",
                 "style": {
                   "shadow": true,
                   "font": {
@@ -7145,6 +7154,7 @@
                 },
                 "border": false,
                 "image": "pera.gif",
+                "objectType": "cell",
                 "style": {
                   "shadow": true,
                   "font": {
@@ -7168,6 +7178,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "orange",
                 "answers": [
                   "orange"
@@ -7181,6 +7192,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "cherry",
                 "answers": [
                   "cherry",
@@ -7195,6 +7207,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "pear",
                 "answers": [
                   "pear"
@@ -7214,6 +7227,7 @@
                 },
                 "border": false,
                 "image": "llimona.gif",
+                "objectType": "cell",
                 "style": {
                   "shadow": true,
                   "font": {
@@ -7239,6 +7253,7 @@
                 },
                 "border": false,
                 "image": "sindria.gif",
+                "objectType": "cell",
                 "style": {
                   "shadow": true,
                   "font": {
@@ -7264,6 +7279,7 @@
                 },
                 "border": false,
                 "image": "raim.gif",
+                "objectType": "cell",
                 "style": {
                   "shadow": true,
                   "font": {
@@ -7287,6 +7303,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "lemon",
                 "answers": [
                   "lemon"
@@ -7300,6 +7317,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "watermelon",
                 "answers": [
                   "watermelon"
@@ -7313,6 +7331,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "grapes",
                 "answers": [
                   "grapes"
@@ -7454,14 +7473,15 @@
                   "width": 380,
                   "height": 60
                 },
+                "border": false,
+                "text": "Indicate the group names for these animals",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "left"
                 },
                 "imgAlign": {
                   "h": "left"
                 },
-                "border": false,
-                "text": "Indicate the group names for these animals",
                 "style": {
                   "font": {
                     "size": 20,
@@ -7483,7 +7503,9 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "pack",
+                "isList": true,
                 "answers": [
                   "pack"
                 ],
@@ -7512,6 +7534,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "herd",
                 "answers": [
                   "herd"
@@ -7534,6 +7557,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "shoal",
                 "answers": [
                   "shoal"
@@ -7556,6 +7580,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "flock",
                 "answers": [
                   "flock"
@@ -7588,7 +7613,9 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "pride",
+                "isList": true,
                 "answers": [
                   "pride"
                 ],
@@ -7617,6 +7644,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "swarm",
                 "answers": [
                   "swarm"
@@ -7741,14 +7769,15 @@
                   "width": 500,
                   "height": 100
                 },
+                "border": false,
+                "text": "Fill in the blanks in these sentences with words derived from those in the box.",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "left"
                 },
                 "imgAlign": {
                   "h": "left"
                 },
-                "border": false,
-                "text": "Fill in the blanks in these sentences with words derived from those in the box.",
                 "style": {
                   "font": {
                     "size": 18,
@@ -7768,6 +7797,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "inhabitants",
                 "answers": [
                   "inhabitants"
@@ -7812,6 +7842,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "violence",
                 "answers": [
                   "violence"
@@ -7856,6 +7887,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "careless",
                 "answers": [
                   "careless"
@@ -7900,6 +7932,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "sunny",
                 "answers": [
                   "sunny"
@@ -8030,14 +8063,15 @@
                   "width": 500,
                   "height": 60
                 },
+                "border": true,
+                "text": "Correct the errors in these sentences",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "left"
                 },
                 "imgAlign": {
                   "h": "left"
                 },
-                "border": true,
-                "text": "Correct the errors in these sentences",
                 "style": {
                   "textColor": "#FFFFFF",
                   "backColor": "#008080",
@@ -8055,6 +8089,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "excess",
                 "answers": [
                   "excess"
@@ -8078,6 +8113,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "ensure",
                 "answers": [
                   "ensure"
@@ -8101,6 +8137,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "choose",
                 "answers": [
                   "choose"
@@ -8117,13 +8154,13 @@
                     "width": 140,
                     "height": 50
                   },
+                  "text": "It's my choice",
                   "txtAlign": {
                     "h": "left"
                   },
                   "imgAlign": {
                     "h": "left"
                   },
-                  "text": "It's my choice",
                   "style": {
                     "font": {
                       "bold": true
@@ -8149,6 +8186,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "exceptions",
                 "answers": [
                   "exceptions"
@@ -8172,6 +8210,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "affect",
                 "answers": [
                   "affect"
@@ -8195,6 +8234,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "hoping",
                 "answers": [
                   "hoping"
@@ -8306,14 +8346,15 @@
                   "width": 490,
                   "height": 50
                 },
+                "border": true,
+                "text": "Fill in the gaps with \"to\", \"in\", \"at\",\n\"for\", \"of\", \"off\" or \"on\"",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "left"
                 },
                 "imgAlign": {
                   "h": "left"
                 },
-                "border": true,
-                "text": "Fill in the gaps with \"to\", \"in\", \"at\",\n\"for\", \"of\", \"off\" or \"on\"",
                 "style": {
                   "textColor": "#FFFFFF",
                   "backColor": "#008080",
@@ -8331,6 +8372,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "in",
                 "answers": [
                   "in"
@@ -8344,6 +8386,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "in",
                 "answers": [
                   "in"
@@ -8357,6 +8400,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "at",
                 "answers": [
                   "at"
@@ -8370,6 +8414,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "in",
                 "answers": [
                   "in"
@@ -8383,6 +8428,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "to",
                 "answers": [
                   "to"
@@ -8396,6 +8442,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "to",
                 "answers": [
                   "to"
@@ -8409,6 +8456,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "to",
                 "answers": [
                   "to"
@@ -8422,6 +8470,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "to",
                 "answers": [
                   "to"
@@ -8435,6 +8484,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "for",
                 "answers": [
                   "for"
@@ -8448,6 +8498,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "to",
                 "answers": [
                   "to"
@@ -8461,6 +8512,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "on",
                 "answers": [
                   "on"
@@ -8474,6 +8526,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "to",
                 "answers": [
                   "to"
@@ -8487,6 +8540,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "to",
                 "answers": [
                   "to"
@@ -8500,6 +8554,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "for",
                 "answers": [
                   "for"
@@ -8513,6 +8568,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "At",
                 "answers": [
                   "At"
@@ -8526,6 +8582,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "of",
                 "answers": [
                   "of"
@@ -8539,6 +8596,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "of",
                 "answers": [
                   "of"
@@ -8552,6 +8610,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "off",
                 "answers": [
                   "off"
@@ -8565,6 +8624,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "to",
                 "answers": [
                   "to"
@@ -8769,6 +8829,7 @@
                 },
                 "border": false,
                 "image": "minialt2.gif",
+                "objectType": "cell",
                 "style": {
                   "textColor": "#000080",
                   "backColor": "#FFFFFF",
@@ -8788,6 +8849,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "The valley of Núria is on the southern side of the Eastern Pyrenees ",
                 "answers": [
                   "The valley of Núria is on the southern side of the Eastern Pyrenees"
@@ -8807,6 +8869,7 @@
                 },
                 "border": false,
                 "image": "minialt.gif",
+                "objectType": "cell",
                 "style": {
                   "textColor": "#000080",
                   "backColor": "#FFFFFF",
@@ -8826,6 +8889,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "in the North of Catalonia",
                 "answers": [
                   "in the North of Catalonia",
@@ -8850,6 +8914,7 @@
                 },
                 "border": false,
                 "image": "minialt2.gif",
+                "objectType": "cell",
                 "style": {
                   "textColor": "#000080",
                   "backColor": "#FFFFFF",
@@ -8869,6 +8934,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "There isn't a road to get there",
                 "answers": [
                   "There isn't a road to get there"
@@ -8888,6 +8954,7 @@
                 },
                 "border": false,
                 "image": "minialt.gif",
+                "objectType": "cell",
                 "style": {
                   "textColor": "#000080",
                   "backColor": "#FFFFFF",
@@ -8907,6 +8974,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "the only means of transport is a funicular",
                 "answers": [
                   "the only means of transport is a funicular"
@@ -8926,6 +8994,7 @@
                 },
                 "border": false,
                 "image": "minialt.gif",
+                "objectType": "cell",
                 "style": {
                   "textColor": "#000080",
                   "backColor": "#FFFFFF",
@@ -8945,6 +9014,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "which climbs the steep slopes",
                 "answers": [
                   "which climbs the steep slopes"
@@ -8968,6 +9038,7 @@
                 },
                 "border": false,
                 "image": "minialt2.gif",
+                "objectType": "cell",
                 "style": {
                   "textColor": "#000080",
                   "backColor": "#FFFFFF",
@@ -8987,6 +9058,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "The journey in the funicular takes us through an extremely beautiful and spectacular landscape",
                 "answers": [
                   "The journey in the funicular takes us through an extremely beautiful and spectacular landscape"
@@ -9006,6 +9078,7 @@
                 },
                 "border": false,
                 "image": "minialt.gif",
+                "objectType": "cell",
                 "style": {
                   "textColor": "#000080",
                   "backColor": "#FFFFFF",
@@ -9025,6 +9098,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "The passengers enjoy the view of the majestic mountains",
                 "answers": [
                   "The passengers enjoy the view of the majestic mountains"
@@ -9044,6 +9118,7 @@
                 },
                 "border": false,
                 "image": "minialt.gif",
+                "objectType": "cell",
                 "style": {
                   "textColor": "#000080",
                   "backColor": "#FFFFFF",
@@ -9063,6 +9138,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "refreshing waterfalls",
                 "answers": [
                   "refreshing waterfalls"
@@ -9082,6 +9158,7 @@
                 },
                 "border": false,
                 "image": "minialt.gif",
+                "objectType": "cell",
                 "style": {
                   "textColor": "#000080",
                   "backColor": "#FFFFFF",
@@ -9100,6 +9177,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "and occasionally feel the thrill of crossing deep precipices",
                 "answers": [
                   "and occasionally feel the thrill of crossing deep precipices"
@@ -9225,6 +9303,7 @@
                 },
                 "border": true,
                 "text": "Periodic table of the elements",
+                "objectType": "cell",
                 "style": {
                   "textColor": "#FFFFFF",
                   "backColor": "#000080",
@@ -9250,6 +9329,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "O",
                 "answers": [
                   "O"
@@ -9267,6 +9347,7 @@
           {
             "elements": [
               {
+                "objectType": "target",
                 "text": "Na",
                 "answers": [
                   "Na"
@@ -9288,6 +9369,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "Fe",
                 "answers": [
                   "Fe"
@@ -9342,6 +9424,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "U",
                 "answers": [
                   "U"
@@ -9463,6 +9546,7 @@
                 },
                 "border": true,
                 "text": "Periodic table of the elements",
+                "objectType": "cell",
                 "style": {
                   "textColor": "#FFFFFF",
                   "backColor": "#000080",
@@ -9476,6 +9560,7 @@
           {
             "elements": [
               {
+                "objectType": "target",
                 "text": "H",
                 "answers": [
                   "H"
@@ -9488,6 +9573,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "He",
                 "answers": [
                   "He"
@@ -9504,6 +9590,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "N",
                 "answers": [
                   "N"
@@ -9516,6 +9603,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "O",
                 "answers": [
                   "O"
@@ -9528,6 +9616,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "F",
                 "answers": [
                   "F"
@@ -9540,6 +9629,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "Ne",
                 "answers": [
                   "Ne"
@@ -9556,6 +9646,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "Cl",
                 "answers": [
                   "Cl"
@@ -9568,6 +9659,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "Ar",
                 "answers": [
                   "Ar"
@@ -9584,6 +9676,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "Kr",
                 "answers": [
                   "Kr"
@@ -9600,6 +9693,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "Xe",
                 "answers": [
                   "Xe"
@@ -9616,6 +9710,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "Rn",
                 "answers": [
                   "Rn"
@@ -9762,14 +9857,15 @@
                   "width": 450,
                   "height": 60
                 },
+                "border": true,
+                "text": "Click on the stressed vowels in the words that have more than one vowel sound",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "left"
                 },
                 "imgAlign": {
                   "h": "left"
                 },
-                "border": true,
-                "text": "Click on the stressed vowels in the words that have more than one vowel sound",
                 "style": {
                   "textColor": "#FFFFFF",
                   "backColor": "#008080",
@@ -9787,6 +9883,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "u",
                 "answers": [
                   "u"
@@ -9799,6 +9896,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "a",
                 "answers": [
                   "a"
@@ -9811,6 +9909,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "o",
                 "answers": [
                   "o"
@@ -9823,6 +9922,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "ai",
                 "answers": [
                   "ai"
@@ -9835,6 +9935,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "a",
                 "answers": [
                   "a"
@@ -9847,6 +9948,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "e",
                 "answers": [
                   "e"
@@ -9859,6 +9961,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "i",
                 "answers": [
                   "i"
@@ -9983,14 +10086,15 @@
                   "width": 450,
                   "height": 60
                 },
+                "border": true,
+                "text": "Mark the nouns in this text.",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "left"
                 },
                 "imgAlign": {
                   "h": "left"
                 },
-                "border": true,
-                "text": "Mark the nouns in this text.",
                 "style": {
                   "textColor": "#FFFFFF",
                   "backColor": "#008080",
@@ -10008,6 +10112,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "meeting",
                 "answers": [
                   "meeting"
@@ -10020,6 +10125,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "Robertson",
                 "answers": [
                   "Robertson"
@@ -10032,6 +10138,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "bank",
                 "answers": [
                   "bank"
@@ -10044,6 +10151,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "deal",
                 "answers": [
                   "deal"
@@ -10056,6 +10164,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "circumstances",
                 "answers": [
                   "circumstances"
@@ -10068,6 +10177,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "venture",
                 "answers": [
                   "venture"
@@ -10080,6 +10190,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "compensation",
                 "answers": [
                   "compensation"
@@ -10092,6 +10203,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "Robertson",
                 "answers": [
                   "Robertson"
@@ -10202,14 +10314,15 @@
                   "width": 520,
                   "height": 34
                 },
+                "border": true,
+                "text": "Where's the meat?",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "left"
                 },
                 "imgAlign": {
                   "h": "left"
                 },
-                "border": true,
-                "text": "Where's the meat?",
                 "style": {
                   "shadow": true,
                   "font": {
@@ -10229,6 +10342,7 @@
           {
             "elements": [
               {
+                "objectType": "target",
                 "text": "Nasreddin Hodja sometimes brought meat home, but never had the chance to eat it.",
                 "answers": [
                   "Nasreddin Hodja sometimes brought meat home, but never had the chance to eat it."
@@ -10242,6 +10356,7 @@
           {
             "elements": [
               {
+                "objectType": "target",
                 "text": "His wife either ate it herself or shared it with her friends, always offering the same excuse;",
                 "answers": [
                   "His wife either ate it herself or shared it with her friends, always offering the same excuse;"
@@ -10255,6 +10370,7 @@
           {
             "elements": [
               {
+                "objectType": "target",
                 "text": "\"The cat got it, I couldn't stop her.\"",
                 "answers": [
                   "\"The cat got it, I couldn't stop her.\""
@@ -10268,6 +10384,7 @@
           {
             "elements": [
               {
+                "objectType": "target",
                 "text": "One day Nasreddin Hodja brought two kilos of meat home and gave it to his wife to cook.",
                 "answers": [
                   "One day Nasreddin Hodja brought two kilos of meat home and gave it to his wife to cook."
@@ -10281,6 +10398,7 @@
           {
             "elements": [
               {
+                "objectType": "target",
                 "text": "At dinnertime when his wife gave him the same excuse, he took the cat and put it on the scales.",
                 "answers": [
                   "At dinnertime when his wife gave him the same excuse, he took the cat and put it on the scales."
@@ -10294,6 +10412,7 @@
           {
             "elements": [
               {
+                "objectType": "target",
                 "text": "The cat weighed exactly two kilos.",
                 "answers": [
                   "The cat weighed exactly two kilos."
@@ -10307,6 +10426,7 @@
           {
             "elements": [
               {
+                "objectType": "target",
                 "text": "\"Woman\"- he said-\" if this is the cat, where's the meat? And if this is the meat, where's the cat?",
                 "answers": [
                   "\"Woman\"- he said-\" if this is the cat, where's the meat? And if this is the meat, where's the cat?"
@@ -10430,14 +10550,15 @@
                   "width": 470,
                   "height": 70
                 },
+                "border": true,
+                "text": "Put the mixed up words into the correct order.",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "left"
                 },
                 "imgAlign": {
                   "h": "left"
                 },
-                "border": true,
-                "text": "Put the mixed up words into the correct order.",
                 "style": {
                   "textColor": "#FFFFFF",
                   "backColor": "#008080",
@@ -10455,6 +10576,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "them",
                 "answers": [
                   "them"
@@ -10467,6 +10589,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "energy",
                 "answers": [
                   "energy"
@@ -10479,6 +10602,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "elect",
                 "answers": [
                   "elect"
@@ -10491,6 +10615,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "know",
                 "answers": [
                   "know"
@@ -10512,6 +10637,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "however",
                 "answers": [
                   "however"
@@ -10524,6 +10650,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "single",
                 "answers": [
                   "single"
@@ -10536,6 +10663,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "held",
                 "answers": [
                   "held"
@@ -10548,6 +10676,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "rules",
                 "answers": [
                   "rules"
@@ -10697,14 +10826,15 @@
                   "width": 500,
                   "height": 30
                 },
+                "border": true,
+                "text": "ANC landslide",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "left"
                 },
                 "imgAlign": {
                   "h": "left"
                 },
-                "border": true,
-                "text": "ANC landslide",
                 "style": {
                   "textColor": "#FFFFFF",
                   "backColor": "#008080",
@@ -10722,6 +10852,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "an",
                 "answers": [
                   "an"
@@ -10734,6 +10865,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "on",
                 "answers": [
                   "on"
@@ -10746,6 +10878,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "on",
                 "answers": [
                   "on"
@@ -10758,6 +10891,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "on",
                 "answers": [
                   "on"
@@ -10770,6 +10904,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "in",
                 "answers": [
                   "in"
@@ -10782,6 +10917,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "on",
                 "answers": [
                   "on"
@@ -10794,6 +10930,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "on",
                 "answers": [
                   "on"
@@ -10806,6 +10943,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "on",
                 "answers": [
                   "on"
@@ -10818,6 +10956,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "on",
                 "answers": [
                   "on"
@@ -10830,6 +10969,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "or",
                 "answers": [
                   "or"
@@ -10842,6 +10982,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "or",
                 "answers": [
                   "or"
@@ -10854,6 +10995,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "in",
                 "answers": [
                   "in"
@@ -10866,6 +11008,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "or",
                 "answers": [
                   "or"
@@ -10878,6 +11021,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "on",
                 "answers": [
                   "on"
@@ -10890,6 +11034,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "in",
                 "answers": [
                   "in"
@@ -10902,6 +11047,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "or",
                 "answers": [
                   "or"
@@ -10914,6 +11060,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "or",
                 "answers": [
                   "or"
@@ -10926,6 +11073,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "an",
                 "answers": [
                   "an"
@@ -10938,6 +11086,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "on",
                 "answers": [
                   "on"
@@ -11082,14 +11231,15 @@
                   "width": 140,
                   "height": 30
                 },
+                "border": false,
+                "text": "Infinitive",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "left"
                 },
                 "imgAlign": {
                   "h": "left"
                 },
-                "border": false,
-                "text": "Infinitive",
                 "style": {
                   "shadow": true,
                   "font": {
@@ -11111,15 +11261,16 @@
                 "dimension": {
                   "width": 140,
                   "height": 30
-                },
-                "txtAlign": {
-                  "h": "left"
-                },
-                "imgAlign": {
-                  "h": "left"
                 },
                 "border": false,
                 "text": "Past",
+                "objectType": "cell",
+                "txtAlign": {
+                  "h": "left"
+                },
+                "imgAlign": {
+                  "h": "left"
+                },
                 "style": {
                   "shadow": true,
                   "font": {
@@ -11142,14 +11293,15 @@
                   "width": 140,
                   "height": 30
                 },
+                "border": false,
+                "text": "Past participle",
+                "objectType": "cell",
                 "txtAlign": {
                   "h": "left"
                 },
                 "imgAlign": {
                   "h": "left"
                 },
-                "border": false,
-                "text": "Past participle",
                 "style": {
                   "shadow": true,
                   "font": {
@@ -11172,6 +11324,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "run",
                 "answers": [
                   "run"
@@ -11189,6 +11342,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "became",
                 "answers": [
                   "became"
@@ -11210,6 +11364,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "brought",
                 "answers": [
                   "brought"
@@ -11231,6 +11386,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "danced",
                 "answers": [
                   "danced"
@@ -11248,6 +11404,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "given",
                 "answers": [
                   "given"
@@ -11265,6 +11422,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "put",
                 "answers": [
                   "put"
@@ -11286,6 +11444,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "ate",
                 "answers": [
                   "ate"
@@ -11299,6 +11458,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "eaten",
                 "answers": [
                   "eaten"
@@ -11316,6 +11476,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "understood",
                 "answers": [
                   "understood"
@@ -11329,6 +11490,7 @@
           {
             "elements": [
               {
+                "objectType": "target",
                 "text": "see",
                 "answers": [
                   "see"
@@ -11342,6 +11504,7 @@
                 "objectType": "text"
               },
               {
+                "objectType": "target",
                 "text": "saw",
                 "answers": [
                   "saw"

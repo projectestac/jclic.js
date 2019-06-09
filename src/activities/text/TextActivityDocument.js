@@ -55,9 +55,6 @@ define([
       // Make a deep clone of the default style
       this.style = { 'default': $.extend(true, {}, TextActivityDocument.DEFAULT_DOC_STYLE) };
       this.p = [];
-      //this.tmb=new TargetMarkerBag();
-      this.boxesContent = new ActiveBagContent();
-      this.popupsContent = new ActiveBagContent();
     }
 
     /**
@@ -76,12 +73,12 @@ define([
           : aBase === bName ? 1 : bBase === aName ? -1
             : !aBase ? -1 : !bBase ? 1 : 0;
       });
+
       // Process the ordered list of styles
       styles.forEach(style => {
         const attr = this.readDocAttributes($(style));
         // Grant always that basic attributes are defined
         this.style[attr.name] = attr.name === 'default' ? $.extend(true, this.style.default, attr) : attr;
-        //this.style[attr.name] = attr.name === 'default' ? Object.assign(this.style.default, attr) : attr
       });
 
       // Read paragraphs
@@ -224,11 +221,34 @@ define([
      * @returns {object} - The resulting object, with minimal attrributes
      */
     getAttributes() {
-      return Utils.getAttributes(this, [
-        'style',
-        'tabSpc', 'targetType',
-        'p',
-      ]);
+      // TODO: simplify the serialization of styles (now too verbose!)
+      return Utils.getAttributes(this, ['style', 'tabSpc', 'targetType', 'p']);
+    }
+
+    /**
+     * Reads the properties of this TextActivityDocument from a data object
+     * @param {object} data - The data object to be parsed, or just the text content
+     * @returns {TextActivityDocument}
+     */
+    setAttributes(data, mediaBag) {
+
+      Utils.setAttr(this, data, ['style', 'tabSpc', 'targetType', 'p']);
+
+      // Build paragraphs:
+      this.p.forEach(p => {
+        if (p.elements)
+          p.elements = p.elements.map(el => {
+            if (el.objectType === 'cell')
+              return (new ActiveBoxContent()).setAttributes(el, mediaBag);
+            else if (el.objectType === 'target')
+              return (new TextTarget(this)).setAttributes(el, mediaBag);
+            else
+              return el;
+          });
+        else
+          p.elements = [];
+      });
+      return this;
     }
 
     /**
@@ -308,16 +328,6 @@ define([
      * @type {string} */
     targetType: 'TT_FREE',
     /**
-     * Bag with the content of the boxes embedded in the document.
-     * @name TextActivityDocument#boxesContent
-     * @type {ActiveBagContent} */
-    boxesContent: null,
-    /**
-     * Bag with the content of the pop-ups used by this activity.
-     * @name TextActivityDocument#popupsContent
-     * @type {ActiveBagContent} */
-    popupsContent: null,
-    /**
      * Collection of named styles of the document
      * @name TextActivityDocument#style
      * @type {object} */
@@ -356,7 +366,7 @@ define([
      * @param {TextActivityDocument} doc - The document to which this target belongs.
      * @param {string} text - Main text of this target.
      */
-    constructor(doc, text) {
+    constructor(doc, text = '') {
       this.doc = doc;
       this.text = text;
       this.numIniChars = text.length;
@@ -447,9 +457,24 @@ define([
      */
     getAttributes() {
       return Utils.getAttributes(this, [
-        'text', 'attr',
+        'objectType', 'text', 'attr', 'isList',
         'answers', 'options', 'iniChar', 'numIniChars', 'maxLenResp', 'iniText',
-        'infoMode', 'popupDelay', 'popupMaxTime', 'onlyPlay', 'popupContent',
+        'infoMode', 'popupDelay', 'popupKey', 'popupMaxTime', 'onlyPlay',
+        'popupContent',
+      ]);
+    }
+
+    /**
+     * Reads the properties of this TextTarget from a data object
+     * @param {object} data - The data object to be parsed, or just the text content
+     * @returns {TextTarget}
+     */
+    setAttributes(data, mediaBag) {
+      return Utils.setAttr(this, data, [
+        'objectType', 'text', 'attr', 'isList',
+        'answers', 'options', 'iniChar', 'numIniChars', 'maxLenResp', 'iniText',
+        'infoMode', 'popupDelay', 'popupKey', 'popupMaxTime', 'onlyPlay',
+        { key: 'popupContent', fn: ActiveBoxContent, params: [mediaBag] },
       ]);
     }
 

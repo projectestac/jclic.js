@@ -405,7 +405,7 @@ define([
      */
     getAttributes() {
       return Utils.getAttributes(this, [
-        'c1|black', 'c2|white', 'angle|0', 'cycles|1'
+        'c1', 'c2', 'angle|0', 'cycles|1'
       ]);
     }
 

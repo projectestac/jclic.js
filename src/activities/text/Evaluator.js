@@ -101,6 +101,24 @@ define([
     }
 
     /**
+     * Builds a new Evaluator, based on the properties specified in a data object
+     * @param {object} data - The data object to be parsed
+     * @returns {Evaluator}
+     */
+    static factory(data) {
+      const cl = Evaluator.CLASSES[data.className];
+      if (cl) {
+        const result = new cl(data.className);
+        return Utils.setAttr(result, data, [
+          'className',
+          'checkCase', 'checkAccents', 'checkPunctuation', 'checkDoubleSpaces', 'detail',
+          'checkSteps', 'checkScope',
+        ]);
+      }
+      return null;
+    }
+
+    /**
      * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
      * parent references, constants and also attributes retaining the default value.
      * The resulting object is commonly usued to serialize elements in JSON format.

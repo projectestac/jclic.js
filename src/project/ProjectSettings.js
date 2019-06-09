@@ -128,6 +128,22 @@ define([
         }
       });
 
+      this.buildLocales();
+
+      if (multiple_descriptions && multiple_descriptions.description) {
+        multiple_descriptions.description.forEach(d => {
+          if (d.language && d.text)
+            this.description[d.language] = d.text;
+        });
+      }
+
+      if (single_description && this.languages.length > 0 && !this.description[this.languages[0]])
+        this.description[this.languages[0]] = single_description;
+
+      return this;
+    }
+
+    buildLocales() {
       // Try to find an array of valid locales
       // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
       if (this.languages.length > 0 && window.Intl && window.Intl.getCanonicalLocales) {
@@ -146,17 +162,6 @@ define([
           }
         });
       }
-
-      if (multiple_descriptions && multiple_descriptions.description) {
-        multiple_descriptions.description.forEach(d => {
-          if (d.language && d.text)
-            this.description[d.language] = d.text;
-        });
-      }
-
-      if (single_description && this.languages.length > 0 && !this.description[this.languages[0]])
-        this.description[this.languages[0]] = single_description;
-
       return this;
     }
 
@@ -167,22 +172,39 @@ define([
      * @returns {object} - The resulting object, with minimal attrributes
      */
     getAttributes() {
-      return Utils.getAttributes(this, ['title', 'description', 'tags', 'authors', 'organizations',
-        'revisions', 'languages', 'cover', 'thumb', 'license', 'skinFileName', 'eventSounds']);
+      return Utils.getAttributes(this, [
+        'title', 'description',
+        'tags', 'languages', 'license',
+        'authors', 'organizations',
+        'revisions',
+        'cover', 'thumb',
+        'skinFileName', 'eventSounds'
+      ]);
     }
 
     /**
-     * Reads the ProjectSettings values from a data object
-     * @param {object} data - The data object to parse
+     * Reads the properties of this ProjectSettings from a data object
+     * @param {object} data - The data object to be parsed, or just the text content
+     * @returns {ProjectSettings}
      */
     setAttributes(data) {
-      Object.assign(this, JSON.parse(JSON.stringify(data)));
+      Utils.setAttr(this, data, [
+        'title', 'description',
+        'tags', 'languages', 'license',
+        'authors', 'organizations',
+        'revisions',
+        'cover', 'thumb',
+        'skinFileName', 'eventSounds'
+      ]);
+
+      // Build Date objects in revisions
       if (this.revisions)
         this.revisions.forEach(rv => {
           if (rv.date)
             rv.date = new Date(rv.date);
         });
-      return this;
+
+      return this.buildLocales();
     }
 
   }
