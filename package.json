@@ -76,5 +76,11 @@
     "lint": "eslint -c .eslintrc.json \"src/**/*.js\"",
     "debug": "live-server --open=test/jclic-demo/index.html -V --watch=src,test",
     "start": "live-server --open=test/jclic-demo/index-min.html"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
