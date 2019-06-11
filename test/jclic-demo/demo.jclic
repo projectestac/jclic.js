@@ -985,7 +985,7 @@
      <shape>rectangle:0,8,1,1</shape>
     </shaper>
    </cells>
-   <scramble times="31" primary="false" secondary="false" />
+   <scramble times="31" primary="false" secondary="true" />
    <layout position="BA" />
   </activity>
   <activity class="@associations.SimpleAssociation" name="ass07.ass">

@@ -41,7 +41,7 @@ define([
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT, Rectangular) {
 
   /**
-   * This class of {@link Activity} shows only one panel with scrambled {@link ActiveBox} cells.
+   * This class of {@link Activity} shows only one panel with shuffled {@link ActiveBox} cells.
    *
    * One of the cells is out of the main panel, thus allowing its neighbors occupy their space.
    * Only immediate neighbors of the "hole" can move into it.
@@ -70,7 +70,7 @@ define([
     }
 
     /**
-     * Whether or not the activity uses random to scramble internal components
+     * Whether or not the activity uses random to shuffle internal components
      * @override
      * @returns {boolean}
      */
@@ -79,7 +79,7 @@ define([
     }
 
     /**
-     * When `true`, the activity must always be scrambled
+     * When `true`, the activity must always be shuffled
      * @override
      * @returns {boolean}
      */

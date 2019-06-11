@@ -668,8 +668,8 @@
       "name": "anim1",
       "className": "@associations.ComplexAssociation",
       "showSolution": true,
-      "scramblePrimary": true,
-      "scrambleSecondary": true,
+      "shuffleA": true,
+      "shuffleB": true,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -740,8 +740,8 @@
       "className": "@puzzles.ExchangePuzzle",
       "dragCells": true,
       "showSolution": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "messages": {
         "initial": "Another puzzle with animated GIF",
@@ -769,8 +769,8 @@
       "className": "@associations.SimpleAssociation",
       "infoCmd": "winhelp.exe demo.hlp",
       "activityBgColor": "#0000FF",
-      "scramblePrimary": true,
-      "scrambleSecondary": false,
+      "shuffleA": true,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -862,8 +862,8 @@
       "bActionsCounter": false,
       "bScoreCounter": false,
       "activityBgColor": "#0000FF",
-      "scramblePrimary": true,
-      "scrambleSecondary": false,
+      "shuffleA": true,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -955,8 +955,8 @@
       "bScoreCounter": false,
       "activityBgColor": "white",
       "border": false,
-      "scramblePrimary": true,
-      "scrambleSecondary": false,
+      "shuffleA": true,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AB",
       "bgGradient": {
@@ -1202,8 +1202,8 @@
       "name": "ass02.ass",
       "className": "@associations.ComplexAssociation",
       "showSolution": true,
-      "scramblePrimary": true,
-      "scrambleSecondary": false,
+      "shuffleA": true,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -1354,8 +1354,8 @@
     "ass04.ass": {
       "name": "ass04.ass",
       "className": "@panels.Identify",
-      "scramblePrimary": true,
-      "scrambleSecondary": false,
+      "shuffleA": true,
+      "shuffleB": false,
       "shuffles": 31,
       "messages": {
         "initial": {
@@ -1480,8 +1480,8 @@
     "ass05.ass": {
       "name": "ass05.ass",
       "className": "@panels.Identify",
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "messages": {
         "initial": "Another identification panel: Where is Australia?",
@@ -1541,8 +1541,8 @@
     "ass06.ass": {
       "name": "ass06.ass",
       "className": "@associations.ComplexAssociation",
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": true,
       "shuffles": 31,
       "boxGridPos": "BA",
       "messages": {
@@ -1846,8 +1846,8 @@
       "numericContent": true,
       "infoCmd": "winhelp.exe arith2.hlp",
       "showSolution": true,
-      "scramblePrimary": true,
-      "scrambleSecondary": true,
+      "shuffleA": true,
+      "shuffleB": true,
       "shuffles": 31,
       "boxGridPos": "AUB",
       "messages": {
@@ -1955,8 +1955,8 @@
       "name": "ass08.ass",
       "className": "@text.WrittenAnswer",
       "showSolution": true,
-      "scramblePrimary": true,
-      "scrambleSecondary": false,
+      "shuffleA": true,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AUB",
       "messages": {
@@ -2053,8 +2053,8 @@
       "bTimeCounter": false,
       "bActionsCounter": false,
       "bScoreCounter": false,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AUB",
       "messages": {
@@ -2343,8 +2343,8 @@
     "ass12.ass": {
       "name": "ass12.ass",
       "className": "@associations.SimpleAssociation",
-      "scramblePrimary": true,
-      "scrambleSecondary": true,
+      "shuffleA": true,
+      "shuffleB": true,
       "shuffles": 31,
       "boxGridPos": "AUB",
       "messages": {
@@ -2455,8 +2455,8 @@
     "ass13.ass": {
       "name": "ass13.ass",
       "className": "@associations.SimpleAssociation",
-      "scramblePrimary": true,
-      "scrambleSecondary": true,
+      "shuffleA": true,
+      "shuffleB": true,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -3588,8 +3588,8 @@
       "className": "@puzzles.DoublePuzzle",
       "dragCells": true,
       "showSolution": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -3628,8 +3628,8 @@
       "bgColor": "white",
       "transparentBg": true,
       "border": false,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -3822,8 +3822,8 @@
       "className": "@associations.ComplexAssociation",
       "maxActions": 10,
       "countDownActions": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "BA",
       "messages": {
@@ -4137,8 +4137,8 @@
       "countDownTime": true,
       "dragCells": true,
       "showSolution": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "messages": {
         "initial": "This puzzle must be solved in less than 15 seconds",
@@ -5033,8 +5033,8 @@
       "className": "@puzzles.DoublePuzzle",
       "dragCells": true,
       "showSolution": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -5065,8 +5065,8 @@
       "className": "@puzzles.DoublePuzzle",
       "dragCells": true,
       "showSolution": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -5098,8 +5098,8 @@
       "className": "@puzzles.ExchangePuzzle",
       "dragCells": true,
       "showSolution": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "messages": {
         "initial": "... this is \"exchange\"...",
@@ -5128,8 +5128,8 @@
       "name": "puz03.puz",
       "className": "@puzzles.HolePuzzle",
       "showSolution": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 10,
       "boxGridPos": "AB",
       "messages": {
@@ -5160,8 +5160,8 @@
       "className": "@puzzles.ExchangePuzzle",
       "dragCells": true,
       "showSolution": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "messages": {
         "initial": "You can also make puzzles with text,like this one.",
@@ -5212,8 +5212,8 @@
       "numericContent": true,
       "infoCmd": "winhelp.exe arith2.hlp",
       "dragCells": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AUB",
       "messages": {
@@ -5277,8 +5277,8 @@
     "puz06.puz": {
       "name": "puz06.puz",
       "className": "@memory.MemoryGame",
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AUB",
       "messages": {
@@ -5326,8 +5326,8 @@
     "puz06b.puz": {
       "name": "puz06b.puz",
       "className": "@memory.MemoryGame",
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -5419,8 +5419,8 @@
       "className": "@puzzles.DoublePuzzle",
       "dragCells": true,
       "showSolution": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "messages": {
         "initial": "Example of a puzzle with animated GIF",
@@ -5450,8 +5450,8 @@
       "className": "@puzzles.DoublePuzzle",
       "dragCells": true,
       "showSolution": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "activityBgGradient": {
         "c1": "lightblue",
@@ -5487,8 +5487,8 @@
       "bgColor": "#FFFFFF",
       "transparentBg": true,
       "border": false,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -5530,8 +5530,8 @@
       "bgColor": "#FFFFFF",
       "transparentBg": true,
       "border": false,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -5573,8 +5573,8 @@
       "bgColor": "#FFFFFF",
       "transparentBg": true,
       "border": false,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "AB",
       "messages": {
@@ -5617,8 +5617,8 @@
       "bgColor": "#FFFFFF",
       "transparentBg": true,
       "border": false,
-      "scramblePrimary": false,
-      "scrambleSecondary": false,
+      "shuffleA": false,
+      "shuffleB": false,
       "shuffles": 31,
       "messages": {
         "initial": {
@@ -6663,8 +6663,8 @@
       "name": "sounds",
       "className": "@associations.ComplexAssociation",
       "showSolution": true,
-      "scramblePrimary": false,
-      "scrambleSecondary": true,
+      "shuffleA": false,
+      "shuffleB": true,
       "shuffles": 31,
       "boxGridPos": "AB",
       "eventSounds": {
@@ -11527,8 +11527,8 @@
       "name": "useOrderSample",
       "className": "@panels.Identify",
       "useOrder": true,
-      "scramblePrimary": true,
-      "scrambleSecondary": false,
+      "shuffleA": true,
+      "shuffleB": false,
       "shuffles": 31,
       "messages": {
         "initial": {

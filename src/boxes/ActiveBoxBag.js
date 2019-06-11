@@ -202,7 +202,7 @@ define([
      * @param {number} times - Number of times to shuffle
      * @param {boolean} fitInArea - Ensure that all cells are inside the bag rectangle
      */
-    scrambleCells(times, fitInArea) {
+    shuffleCells(times, fitInArea) {
       let nc = this.cells.length;
       if (nc >= 2) {
         // Array of AWT.Point objects

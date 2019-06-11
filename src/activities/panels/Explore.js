@@ -75,7 +75,7 @@ define([
     }
 
     /**
-     * Usually this activity don't use random to scramble internal components, but in some cases
+     * Usually this activity don't use random to shuffle internal components, but in some cases
      * can make use of it.
      * @override
      * @returns {boolean}
@@ -133,7 +133,7 @@ define([
       if (abcA && abcB) {
         if (abcA.image) {
           abcA.setImgContent(this.act.project.mediaBag, null, false);
-          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramblePrimary)
+          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.shuffleA)
             this.$animatedBg = $('<span/>').css({
               'background-image': `url(${abcA.animatedGifFile})`,
               'background-position': 'center',
@@ -175,7 +175,7 @@ define([
 
       if (this.bgA && this.bgB) {
         // Scramble cells
-        if (this.act.scramblePrimary)
+        if (this.act.shuffleA)
           this.shuffle([this.bgA], true, true);
 
         if (this.useOrder)

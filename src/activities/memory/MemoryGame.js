@@ -42,7 +42,7 @@ define([
 
   /**
    * This class of {@link Activity} shows a panel with duplicate {@link ActiveBox} objects initially
-   * hidden and scrambled. To complete the activity, all object pairs must be found. Only two objects
+   * hidden and shuffled. To complete the activity, all object pairs must be found. Only two objects
    * are revealed in every move, so the user must remember the content of each cell.
    *
    * The cell pairs can have identical content, defined in the `primary` {@link ActiveBagContent} of
@@ -71,7 +71,7 @@ define([
     }
 
     /**
-     * Whether or not the activity uses random to scramble internal components
+     * Whether or not the activity uses random to shuffle internal components
      * @override
      * @returns {boolean}
      */
@@ -80,7 +80,7 @@ define([
     }
 
     /**
-     * When `true`, the activity must always be scrambled
+     * When `true`, the activity must always be shuffled
      * @override
      * @returns {boolean}
      */

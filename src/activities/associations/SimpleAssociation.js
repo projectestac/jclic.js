@@ -69,7 +69,7 @@ define([
     }
 
     /**
-     * Whether or not the activity uses random to scramble internal components
+     * Whether or not the activity uses random to shuffle internal components
      * @override
      * @returns {boolean}
      */
@@ -78,7 +78,7 @@ define([
     }
 
     /**
-     * When `true`, the activity must always be scrambled
+     * When `true`, the activity must always be shuffled
      * @override
      * @returns {boolean}
      */
@@ -155,7 +155,7 @@ define([
       if (abcA && abcB) {
         if (abcA.image) {
           abcA.setImgContent(this.act.project.mediaBag, null, false);
-          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramblePrimary)
+          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.shuffleA)
             this.$animatedBg = $('<span/>').css({
               'background-image': `url(${abcA.animatedGifFile})`,
               'background-position': 'center',
@@ -166,7 +166,7 @@ define([
 
         if (abcB.image) {
           abcB.setImgContent(this.act.project.mediaBag, null, false);
-          if (abcB.animatedGifFile && !abcB.shaper.rectangularShapes && !this.act.scrambleSecondary)
+          if (abcB.animatedGifFile && !abcB.shaper.rectangularShapes && !this.act.shuffleB)
             this.$animatedBgB = $('<span/>').css({
               'background-image': `url(${abcB.animatedGifFile})`,
               'background-position': 'center',
@@ -217,13 +217,13 @@ define([
 
       if (this.bgA && this.bgB) {
         // Scramble cells
-        const scrambleArray = [];
-        if (this.act.scramblePrimary)
-          scrambleArray.push(this.bgA);
-        if (this.act.scrambleSecondary)
-          scrambleArray.push(this.bgB);
-        if (scrambleArray.length > 0) {
-          this.shuffle(scrambleArray, true, true);
+        const shuffleArray = [];
+        if (this.act.shuffleA)
+          shuffleArray.push(this.bgA);
+        if (this.act.shuffleB)
+          shuffleArray.push(this.bgB);
+        if (shuffleArray.length > 0) {
+          this.shuffle(shuffleArray, true, true);
         }
 
         if (this.useOrder)

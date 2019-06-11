@@ -83,7 +83,7 @@ define([
     }
 
     /**
-     * This activity uses random values to scramble its internal components
+     * This activity uses random values to shuffle its internal components
      * @override
      * @returns {boolean}
      */
@@ -177,7 +177,7 @@ define([
 
         if (abcA.image) {
           abcA.setImgContent(this.act.project.mediaBag, null, false);
-          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.scramblePrimary)
+          if (abcA.animatedGifFile && !abcA.shaper.rectangularShapes && !this.act.shuffleA)
             this.$animatedBg = $('<span/>').css({
               'background-image': 'url(' + abcA.animatedGifFile + ')',
               'background-position': 'center',
@@ -250,7 +250,7 @@ define([
 
       if (this.bgA && this.bgB) {
         // Scramble cells
-        if (this.act.scramblePrimary)
+        if (this.act.shuffleA)
           this.shuffle([this.bgA], true, true);
 
         if (this.useOrder)

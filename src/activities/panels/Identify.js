@@ -64,7 +64,7 @@ define([
     }
 
     /**
-     * Whether or not the activity uses random to scramble internal components
+     * Whether or not the activity uses random to shuffle internal components
      * @override
      * @returns {boolean}
      */
@@ -130,7 +130,7 @@ define([
       if (abc) {
         if (abc.image) {
           abc.setImgContent(this.act.project.mediaBag, null, false);
-          if (abc.animatedGifFile && !abc.shaper.rectangularShapes && !this.act.scramblePrimary)
+          if (abc.animatedGifFile && !abc.shaper.rectangularShapes && !this.act.shuffleA)
             this.$animatedBg = $('<span/>').css({
               'background-image': `url(${abc.animatedGifFile})`,
               'background-position': 'center',
@@ -188,7 +188,7 @@ define([
         this.firstRun = false;
 
       if (this.bg) {
-        if (this.act.scramblePrimary)
+        if (this.act.shuffleA)
           this.shuffle([this.bg], true, true);
 
         if (this.useOrder)

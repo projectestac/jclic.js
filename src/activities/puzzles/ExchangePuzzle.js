@@ -40,7 +40,7 @@ define([
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT) {
 
   /**
-   * This class of {@link Activity} shows only one panel with scrambled {@link ActiveBox} objects.
+   * This class of {@link Activity} shows only one panel with shuffled {@link ActiveBox} objects.
    * To solve the activity, each cell must exchange its location with another one. When all cells are
    * on place, the activity is done.
    * @exports ExchangePuzzle
@@ -66,7 +66,7 @@ define([
     }
 
     /**
-     * Whether or not the activity uses random to scramble internal components
+     * Whether or not the activity uses random to shuffle internal components
      * @override
      * @returns {boolean}
      */
@@ -75,7 +75,7 @@ define([
     }
 
     /**
-     * When `true`, the activity must always be scrambled
+     * When `true`, the activity must always be shuffled
      * @override
      * @returns {boolean}
      */

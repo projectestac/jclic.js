@@ -40,10 +40,10 @@ define([
 ], function ($, Activity, ActiveBoxGrid, BoxBag, BoxConnector, AWT) {
 
   /**
-   * The aim of this class of {@link Activity} is to put in order the scrambled elements of an
+   * The aim of this class of {@link Activity} is to put in order the shuffled elements of an
    * {@link ActiveBagContent} that contains an image, sounds, text... or any other media content.
    *
-   * The activity uses two panels: one with the scrambled cells, and other initially empty where
+   * The activity uses two panels: one with the shuffled cells, and other initially empty where
    * this cells must be placed in order.
    * @exports DoublePuzzle
    * @class
@@ -68,7 +68,7 @@ define([
     }
 
     /**
-     * Whether or not the activity uses random to scramble internal components
+     * Whether or not the activity uses random to shuffle internal components
      * @override
      * @returns {boolean}
      */
@@ -77,7 +77,7 @@ define([
     }
 
     /**
-     * When `true`, the activity must always be scrambled
+     * When `true`, the activity must always be shuffled
      * @override
      * @returns {boolean}
      */

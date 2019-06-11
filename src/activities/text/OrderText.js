@@ -40,7 +40,7 @@ define([
 
   /**
    * In this type of text activity users must put in order some words or paragraphs that have been
-   * initially scrambled.
+   * initially shuffled.
    * @exports OrderText
    * @class
    * @extends TextActivityBase
@@ -55,7 +55,7 @@ define([
     }
 
     /**
-     * Whether or not the activity uses random to scramble internal components
+     * Whether or not the activity uses random to shuffle internal components
      * @override
      * @returns {boolean}
      */
@@ -64,7 +64,7 @@ define([
     }
 
     /**
-     * When `true`, the activity must always be scrambled
+     * When `true`, the activity must always be shuffled
      * @override
      * @returns {boolean}
      */
@@ -84,7 +84,7 @@ define([
 
   Object.assign(OrderText.prototype, {
     /**
-     * Whether to allow or not to scramble words among different paragraphs.
+     * Whether to allow or not to shuffle words among different paragraphs.
      * @name OrderText#amongParagraphs
      * @type {boolean} */
     amongParagraphs: false,

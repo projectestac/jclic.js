@@ -103,17 +103,17 @@ define([
      * @type {number[]} */
     clueItems: null,
     /**
-     * Objects that indicate if box grids A and B must be scrambled.
+     * Objects that indicate if box grids A and B must be shuffled.
      * (defaults to _false_ in WordSearch activities)
-     * @name WordSearch#scramblePrimary
+     * @name WordSearch#shuffleA
      * @type {boolean} */
-    scramblePrimary: false,
+    shuffleA: false,
     /**
-     * Objects that indicate if box grids A and B must be scrambled.
+     * Objects that indicate if box grids A and B must be shuffled.
      * (defaults to _false_ in WordSearch activities)
-     * @name WordSearch#scrambleSecondary
+     * @name WordSearch#shuffleB
      * @type {boolean} */
-    scrambleSecondary: false,
+    shuffleB: false,
   });
 
   /**
@@ -165,7 +165,7 @@ define([
       if (abcAlt) {
         if (abcAlt.image) {
           abcAlt.setImgContent(this.act.project.mediaBag, null, false);
-          if (abcAlt.animatedGifFile && !abcAlt.shaper.rectangularShapes && !this.act.scrambleSecondary)
+          if (abcAlt.animatedGifFile && !abcAlt.shaper.rectangularShapes && !this.act.shuffleB)
             this.$animatedBg = $('<span/>').css({
               'background-image': `url(${abcAlt.animatedGifFile})`,
               'background-position': 'center',
@@ -211,7 +211,7 @@ define([
           this.bgAlt.setContent(this.act.abc['secondary']);
           if (this.$animatedBg)
             this.bgAlt.clearAllBoxes();
-          if (this.act.scrambleSecondary)
+          if (this.act.shuffleB)
             this.shuffle([this.bgAlt], true, true);
           this.bgAlt.setVisible(this.$animatedBg !== null);
         }

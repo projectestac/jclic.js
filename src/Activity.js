@@ -260,10 +260,10 @@ define([
             break;
 
           case 'scramble':
-            // Read the 'scramble' mode
+            // Read the 'shuffle' mode
             this.shuffles = Number($node.attr('times'));
-            this.scramblePrimary = Utils.getBoolean($node.attr('primary'));
-            this.scrambleSecondary = Utils.getBoolean($node.attr('secondary'));
+            this.shuffleA = Utils.getBoolean($node.attr('primary'));
+            this.shuffleB = Utils.getBoolean($node.attr('secondary'));
             break;
 
           case 'layout':
@@ -380,7 +380,7 @@ define([
         `bgColor|${K.DEFAULT_BG_COLOR}`, 'bgImageFile', 'tiledBgImg',
         'bTimeCounter|true', 'bActionsCounter|true', 'bScoreCounter|true',
         `activityBgColor|${K.DEFAULT_BG_COLOR}`, 'transparentBg|false', 'border|true',
-        'scramblePrimary', 'scrambleSecondary', 'shuffles', 'boxGridPos',
+        'shuffleA', 'shuffleB', 'shuffles', 'boxGridPos',
         'wildTransparent', 'upperCase', 'checkCase',
         'checkButtonText',
         'prevScreen', 'prevScreenMaxTime', 'prevScreenText',
@@ -414,7 +414,7 @@ define([
         'showSolution', 'helpMsg', 'bgColor', 'bgImageFile', 'tiledBgImg',
         'bTimeCounter', 'bActionsCounter', 'bScoreCounter',
         'activityBgColor', 'transparentBg', 'border',
-        'scramblePrimary', 'scrambleSecondary', 'shuffles', 'boxGridPos',
+        'shuffleA', 'shuffleB', 'shuffles', 'boxGridPos',
         'wildTransparent', 'upperCase', 'checkCase', 'checkButtonText',
         'prevScreen', 'prevScreenMaxTime', 'prevScreenText',
         { key: 'bgGradient', fn: AWT.Gradient },
@@ -522,7 +522,7 @@ define([
     }
 
     /**
-     * Whether or not the activity uses random to scramble internal components
+     * Whether or not the activity uses random to shuffle internal components
      * @returns {boolean}
      */
     hasRandom() {
@@ -530,7 +530,7 @@ define([
     }
 
     /**
-     * When `true`, the activity must always be scrambled
+     * When `true`, the activity must always be shuffled
      * @returns {boolean}
      */
     shuffleAlways() {
@@ -808,7 +808,7 @@ define([
      * @type {ActiveBagContent[]} */
     abc: null,
     /**
-     * Content of the grid of letters used in crosswords and scrambled letters
+     * Content of the grid of letters used in crosswords and shuffled letters
      * @name Activity#tgc
      * @type {TextGridContent} */
     tgc: null,
@@ -828,15 +828,15 @@ define([
      * @type {number} */
     shuffles: K.DEFAULT_SHUFFLES,
     /**
-     * Box grid A must be scrambled.
-     * @name Activity#scramblePrimary
+     * Box grid A must be shuffled.
+     * @name Activity#shuffleA
      * @type {boolean} */
-    scramblePrimary: true,
+    shuffleA: true,
     /**
-     * Box grid B must be scrambled.
-     * @name Activity#scrambleSecondary
+     * Box grid B must be shuffled.
+     * @name Activity#shuffleB
      * @type {boolean} */
-    scrambleSecondary: true,
+    shuffleB: true,
     /**
      * Flag to indicate "inverse resolution" in complex associations
      * @name Activity#invAss
@@ -1201,7 +1201,7 @@ define([
       let i = steps;
       while (i > 0) {
         const k = i > steps ? steps : i;
-        bg.forEach(abb => { if (abb) abb.scrambleCells(k, fitInArea); });
+        bg.forEach(abb => { if (abb) abb.shuffleCells(k, fitInArea); });
         i -= steps;
       }
     }
