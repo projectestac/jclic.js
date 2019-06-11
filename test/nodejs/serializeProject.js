@@ -54,9 +54,7 @@ else {
   project.setAttributes(doc, file, null, {});
 }
 
-console.log(JSON.stringify(
-  project.getAttributes(),
-  (_key, val) => val.toFixed ? Number(val.toFixed(4)) : val,
-  '  '
-));
+console.log(project.getJSON(2));
+
+
 

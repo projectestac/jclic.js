@@ -125,6 +125,20 @@ define([
     }
 
     /**
+     * Gets a JSON string representing the content of this project. This string can be transformed later into a data
+     * object suitable for `setAttributes`.
+     * @param {number+} space - The number of white spaces to place between items. Defaults to zero (meaning all the JSON rendered in one single line)
+     * @returns {string} - The JSON text
+     */
+    getJSON(space=0) {
+      return JSON.stringify(
+        this.getAttributes(),
+        (_key, val) => val.toFixed ? Number(val.toFixed(4)) : val,
+        space
+      );
+    }
+
+    /**
      * Loads the project settings from a data object
      * @param {object} data - The data object
      * @param {string} path - The full path of this project
