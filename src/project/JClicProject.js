@@ -113,7 +113,6 @@ define([
      * @returns {object} - The resulting object, with minimal attrributes
      */
     getAttributes() {
-
       const keys = Object.keys(this._activities);
       this.activities = {};
       keys.forEach(k => {
@@ -130,7 +129,7 @@ define([
      * @param {number+} space - The number of white spaces to place between items. Defaults to zero (meaning all the JSON rendered in one single line)
      * @returns {string} - The JSON text
      */
-    getJSON(space=0) {
+    getJSON(space = 0) {
       return JSON.stringify(
         this.getAttributes(),
         (_key, val) => val.toFixed ? Number(val.toFixed(4)) : val,
