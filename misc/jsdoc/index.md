@@ -5,7 +5,7 @@ JClic.js
 
 A JavaScript player of __JClic__ activities.<br>
 
-[![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic) [![Bower version](https://badge.fury.io/bo/jclic.svg)](https://badge.fury.io/bo/jclic) 
+[![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic) 
 
 
 ## JClic and JClic-repo
@@ -200,6 +200,6 @@ Checking the operation of JClic.js on different browsers and platforms is possib
 
 The production releases of JClic.js are smoothly distributed to the final users thanks to [XTEC](http://www.xtec.cat), [JSDelivr](http://www.jsdelivr.com/projects/jclic.js), [unpkg.com](https://unpkg.com/jclic/dist/jclic.min.js) and [CDNJS](https://cdnjs.com/libraries/jclic.js).
 
-__jclic.js__ is also available as a [NPM](https://www.npmjs.com/package/jclic) and [Bower](https://libraries.io/bower/jclic) packages.
+__jclic.js__ is also available as an [NPM](https://www.npmjs.com/package/jclic) package.
 
 [![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)

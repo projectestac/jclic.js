@@ -1,6 +1,5 @@
 # JClic.js
 
-[![Bower version](https://badge.fury.io/bo/jclic.svg)](https://badge.fury.io/bo/jclic)
 [![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic)
 [![CDNJS version](https://img.shields.io/cdnjs/v/jclic.js.svg)](https://cdnjs.com/libraries/jclic.js)
 [![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -52,7 +51,7 @@ npm run debug
 
 Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc
 
-The project is also available as a [NPM](https://www.npmjs.com/package/jclic) and [Bower](https://libraries.io/bower/jclic) packages.
+The project is also available as an [NPM](https://www.npmjs.com/package/jclic) package.
 
 ## Direct download
 

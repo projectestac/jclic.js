@@ -3,6 +3,7 @@
 - JClic projects can be now encapsulated in JSON format (files with extension `.jclic.json`). Current files in XML format (`.jclic`) will be still supported, but JSON will be the default format from now. Both formats can be also packaged in ZIP files (files of type `.jclic.zip` and `.scorm.zip`). This will simplify the development of the upcoming new project _JClic Author HTML5_.
 - Static factory methods in classes with multiple descendants.
 - New methods `getAttributes` and `setAttributes` in core classes, used to serialize and de-serialize projects data.
+- Drop Bower support
 
 #### Bug fixes
 - Check for numeric digits in _Arith_ activity answers before converting them to numbers.
