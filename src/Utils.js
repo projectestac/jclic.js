@@ -34,7 +34,7 @@ define([
   "jquery",
   "screenfull",
   "clipboard-js",
-  "i18next",
+  "i18next/dist/cjs/i18next",
   "jszip",
   "jszip-utils",
   "scriptjs",

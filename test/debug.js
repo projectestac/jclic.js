@@ -15,7 +15,7 @@ requirejs.config({
     scriptjs: '../node_modules/scriptjs/dist/script',
     webfontloader: '../node_modules/webfontloader/webfontloader',
     'clipboard-js': '../node_modules/clipboard-js/clipboard',
-    i18next: '../node_modules/i18next/i18next',
+    'i18next/dist/cjs/i18next': '../node_modules/i18next/i18next',
     'es6-promise': '../node_modules/es6-promise/dist/es6-promise',
     '@francesc/basic-midi-player-js': '../node_modules/@francesc/basic-midi-player-js/module/midiplayer',
   }
