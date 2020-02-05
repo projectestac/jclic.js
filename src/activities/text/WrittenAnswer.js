@@ -204,12 +204,13 @@ define([
         //
         // bgB will be used only as a placeholder for `$textField`
         this.bgB = new ActiveBoxGrid(null, this, abcB.bb, this.act.margin, this.act.margin, w, abcB.h, new Rectangular(1, 1))
-        this.$form = $('<form/>', { id: 'form1', action: '#' })
-        this.$form.submit(event => {
+        this.$form = $('<form/>', { id: 'form1' /*, action: '#'*/ })
+        // Modified 05/Feb/2020: jQuery not catching submit event when on first activity
+        this.$form[0].addEventListener('submit', event => {
           event.preventDefault()
-          if (this.playing) {
+          if (this.playing)
             this.setCurrentCell(this.currentCell)
-          }
+          return false
         })
 
         this.$textField = $('<input/>', { type: 'text', size: 200 }).css(abcB.bb.getCSS()).css({

@@ -1,6 +1,7 @@
-### v1.1.12 (Not yet released)
+### v1.1.12 (2020-02-05)
 #### Bug fixes
 - Check for numeric digits in _Arith_ activity answers before converting them to numbers.
+- Page reloads when entering text to the first question on _Written Answer_ activities (jQuery related)
 
 ### v1.1.11 (2019-02-11)
 #### Bug fixes
