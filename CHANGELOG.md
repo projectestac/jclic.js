@@ -7,6 +7,7 @@
 
 #### Bug fixes
 - Check for numeric digits in _Arith_ activity answers before converting them to numbers.
+- Page reloads on written answer activities
 
 #### Improvements
 - Updated core components to their latest versions.
