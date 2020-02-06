@@ -13,6 +13,7 @@
 - Updated core components to their latest versions.
 - use of `package-lock` instead of `npm-shinkwrap` to lock version dependencies.
 - Restored semicolons in all source files
+- Deliverable files are now minimized with [Terser](https://github.com/terser/terser) intead of [Uglifyjs](https://github.com/mishoo/UglifyJS2)
 
 ### v1.1.11 (2019-02-11)
 #### Bug fixes

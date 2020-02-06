@@ -2,7 +2,7 @@
 
 // Production bundle compatible with ES5
 
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 const pkg = require('./package.json');
 const buildLocales = require('./build-locales');
@@ -62,11 +62,12 @@ module.exports = {
     ]
   },
   optimization: {
+    minimize: true,
     minimizer: [
-      new UglifyJsPlugin({
-        sourceMap: true,
+      new TerserPlugin({
         cache: true,
         parallel: true,
+        sourceMap: true,        
         extractComments: {
           condition: /^\!/,
           filename: 'jclic.components.LICENSE',
