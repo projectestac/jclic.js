@@ -31,7 +31,7 @@
 /* global define */
 
 define([
-  'i18next',
+  'i18next/dist/cjs/i18next',
   './GlobalData',
   './Utils'
 ], function (i18next, GlobalData, Utils) {
