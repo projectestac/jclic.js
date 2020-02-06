@@ -1,0 +1,75 @@
+/*!
+   * Sizzle CSS Selector Engine v2.3.4
+   * https://sizzlejs.com/
+   *
+   * Copyright JS Foundation and other contributors
+   * Released under the MIT license
+   * https://js.foundation/
+   *
+   * Date: 2019-04-08
+   */
+
+/*!
+  * $script.js JS loader & dependency manager
+  * https://github.com/ded/script.js
+  * (c) Dustin Diaz 2014 | License MIT
+  */
+
+/*!
+ *  File    : JClic.js
+ *  Created : 01/04/2015
+ *  By      : Francesc Busquets <francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.1
+ *  @licstart
+ *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the "Licence");
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an "AS IS" basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ */
+
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <http://feross.org>
+ * @license  MIT
+ */
+
+/*!
+ * jQuery JavaScript Library v3.4.1
+ * https://jquery.com/
+ *
+ * Includes Sizzle.js
+ * https://sizzlejs.com/
+ *
+ * Copyright JS Foundation and other contributors
+ * Released under the MIT license
+ * https://jquery.org/license
+ *
+ * Date: 2019-05-01T21:04Z
+ */
+
+/*!
+* screenfull
+* v5.0.1 - 2020-01-19
+* (c) Sindre Sorhus; MIT License
+*/
+
+/*! promise-polyfill 2.0.1 */
