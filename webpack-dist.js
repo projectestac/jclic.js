@@ -2,7 +2,7 @@
 
 // Production bundle compatible with ES5
 
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 const pkg = require('./package.json');
 const buildLocales = require('./build-locales');
@@ -63,7 +63,7 @@ module.exports = {
   },
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         sourceMap: true,
         cache: true,
         parallel: true,

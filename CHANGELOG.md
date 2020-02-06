@@ -3,6 +3,9 @@
 - Check for numeric digits in _Arith_ activity answers before converting them to numbers.
 - Page reloads when entering text to the first question on _Written Answer_ activities (jQuery related)
 
+#### Improvements
+- Deliverable files are now minimized with [Terser](https://github.com/terser/terser) intead of [Uglifyjs](https://github.com/mishoo/UglifyJS2)
+
 ### v1.1.11 (2019-02-11)
 #### Bug fixes
 - Corrected a bug in `automation/arith/Arith.js` that affected operations with decimals with _do not carry_ option.
