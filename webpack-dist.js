@@ -41,7 +41,7 @@ ${pkg.homepage}
 // Minified ES5 bundle
 module.exports = {
   mode: 'production',
-  entry: ['babel-polyfill', './src/JClic.js'],
+  entry: ['idempotent-babel-polyfill', './src/JClic.js'],
   devtool: 'source-map',
   performance: {
     maxAssetSize: 2000000,

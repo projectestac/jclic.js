@@ -12,7 +12,7 @@ buildLocales();
 // Full bundle transpiled to ES5 with Babel
 module.exports = {
   mode: 'development',
-  entry: ['babel-polyfill', './src/JClic.js'],
+  entry: ['idempotent-babel-polyfill', './src/JClic.js'],
   devtool: 'source-map',
   module: {
     rules: [
