@@ -267,7 +267,7 @@ define([
 .ID .JClicMsgBox {height:60px; -webkit-flex-grow:1; flex-grow:1; background-color:lightblue;}\
 .ID .JClicBtn {cursor:pointer; line-height:0;}\
 .ID .JClicBtn:disabled {cursor:inherit; opacity:0.3;}\
-.ID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left}',
+.ID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left; box-sizing:content-box;}',
     /**
      * Styles used in this skin, sized to half its regular size
      * @name DefaultSkin#mainCSSHalf

@@ -70,7 +70,6 @@ JClic.js makes use of:
 * [JSZip](https://stuk.github.io/jszip/) to extract contents from "jclic.zip" files
 * [clipboard.js](https://github.com/lgarron/clipboard.js) to copy reports data into the user's clipboard
 * [i18next](https://github.com/i18next/i18next) to deal with messages translated into different languages
-* [screenfull.js](https://github.com/sindresorhus/screenfull.js) to allow activities play at full screen
 * [script.js](https://github.com/ded/script.js) to read JClic projects from local file systems as JSONP
 * [webfontloader](https://github.com/typekit/webfontloader) to dynamically load web fonts as needed
 * [MidiPlayerJS](https://github.com/grimmdude/MidiPlayerJS), [soundfont-player](https://github.com/danigb/soundfont-player), [audio-loader](https://github.com/audiojs/audio-loader) and [sample-player](https://github.com/danigb/sample-player) to process and play MIDI files
