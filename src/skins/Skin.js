@@ -28,19 +28,14 @@
  *  @licend
  */
 
-/* global define */
+/* global define, document */
 
 define([
   "jquery",
-  "screenfull",
   "clipboard-js",
   "../Utils",
   "../AWT"
-], function ($, screenfull, clipboard, Utils, AWT) {
-
-  // In some cases, require.js does not return a valid value for screenfull. Check it:
-  if (!screenfull)
-    screenfull = window.screenfull
+], function ($, clipboard, Utils, AWT) {
 
   /**
    * This abstract class manages the layout, position ans size of the visual components of JClic:
@@ -71,7 +66,7 @@ define([
         this.name = name
       this.options = options
 
-      if(this.options.skinId)
+      if (this.options.skinId)
         this.skinId = this.options.skinId;
 
       if (!Skin.registerStyleSheet(this.skinId, ps)) {
@@ -312,9 +307,9 @@ define([
         topHeight = this.player.$topDiv.height(),
         nilValue = this.player.fullScreenChecked ? 'inherit' : null
 
-      // When `full` no set, detect the current status with screenfull
+      // When `full` no set, detect the current status
       if (typeof full === 'undefined')
-        full = screenfull && screenfull.enabled && screenfull.isFullscreen
+        full = document && document.fullscreenElement ? true : false;
 
       Utils.toCssSize(full ? '100vw' : this.ps.options.minWidth, css, 'min-width', nilValue)
       Utils.toCssSize(full ? '100vh' : this.ps.options.minHeight, css, 'min-height', nilValue)
@@ -672,20 +667,27 @@ define([
     }
 
     /**
-     * Sets or unsets the player in fullscreen mode, when allowed, using the
-     * {@link https://github.com/sindresorhus/screenfull.js|screenfull.js} library.
+     * Sets or unsets the player in fullscreen mode, when allowed.
      * @param {boolean} status - Whether to set or unset the player in fullscreen mode. When `null`
      * or `undefined`, the status toggles between fullscreen and windowed modes.
      * @returns {boolean} `true` if the request was successful, `false` otherwise.
      */
     setScreenFull(status) {
-      if (screenfull && screenfull.enabled && (
-        status === true && !screenfull.isFullscreen ||
-        status === false && !screenfull.isFullScreen ||
+      if (document && document.fullscreenEnabled && (
+        status === true && !document.fullscreenElement ||
+        status === false && !document.fullscreenElement ||
         status !== true && status !== false)) {
         // Save current value of fullScreen for later use
-        const full = screenfull.isFullscreen
-        screenfull.toggle(this.player.$mainContainer.get(-1))
+        const full = document.fullscreenElement ? true : false;
+        if (!document.fullscreenElement) {
+          const element = this.player.$mainContainer.get(-1);
+          if (element && element.requestFullscreen)
+            element.requestFullscreen();
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          }
+        }
         this.player.fullScreenChecked = true
         // Firefox don't updates `document.fullscreenElement` in real time, so use the saved value instead
         this.setSkinSizes(!full)

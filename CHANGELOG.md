@@ -1,8 +1,9 @@
-### v1.1.13 (2020-04-19)
+### v1.1.13 (2020-04-20)
 #### Bug fixes
 - Use `idempotent-babel-polyfill` instead of `babel-polyfill` as a workaround to [this issue](https://github.com/babel/babel-loader/issues/401).
 
 #### Improvements
+- Full screen mode now using direct calls to the [Full Screen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) instead of [screenfull](https://www.npmjs.com/package/screenfull).
 - Use [Terser](https://github.com/terser/terser) instead of [UglifyJS](https://github.com/mishoo/UglifyJS2) for code minification.
 
 ### v1.1.12 (2020-02-05)
