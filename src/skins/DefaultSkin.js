@@ -28,21 +28,16 @@
  *  @licend
  */
 
-/* global define */
+/* global define, document */
 
 define([
   "jquery",
-  "screenfull",
   "../AWT",
   "./Skin",
   "../boxes/ActiveBox",
   "./Counter",
   "../Utils"
-], function ($, screenfull, AWT, Skin, ActiveBox, Counter, Utils) {
-
-  // In some cases, require.js does not return a valid value for screenfull. Check it:
-  if (!screenfull)
-    screenfull = window.screenfull;
+], function ($, AWT, Skin, ActiveBox, Counter, Utils) {
 
   /**
    * This is the default {@link Skin} used by JClic.js
@@ -147,7 +142,7 @@ define([
       }
 
       // Add `full screen` button
-      if (screenfull && screenfull.enabled) {
+      if (document && document.fullscreenEnabled) {
         msg = ps.getMsg('Toggle full screen');
         this.buttons.fullscreen = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
           .append($('<img/>', { src: Utils.svgToURI(this.fullScreenIcon, this.iconWidth, this.iconHeight, this.iconFill) }))
@@ -204,7 +199,7 @@ define([
       // Set the fullScreen icon
       if (this.buttons.fullscreen)
         this.buttons.fullscreen.find('img').get(-1).src = Utils.svgToURI(
-          this[screenfull.isFullscreen ? 'fullScreenExitIcon' : 'fullScreenIcon'],
+          this[(document && document.fullscreenElement) ? 'fullScreenExitIcon' : 'fullScreenIcon'],
           this.iconWidth, this.iconHeight, this.iconFill);
     }
 

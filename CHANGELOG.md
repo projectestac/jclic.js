@@ -15,6 +15,7 @@
 - use of `package-lock` instead of `npm-shinkwrap` to lock version dependencies.
 - Restored semicolons in all source files
 - Deliverable files are now minimized with [Terser](https://github.com/terser/terser) intead of [Uglifyjs](https://github.com/mishoo/UglifyJS2)
+- Full screen mode now using direct calls to the [Full Screen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) instead of [screenfull](https://www.npmjs.com/package/screenfull)
 
 ### v1.1.11 (2019-02-11)
 #### Bug fixes

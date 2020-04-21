@@ -32,18 +32,13 @@
 
 define([
   "jquery",
-  "screenfull",
   "clipboard-js",
   "i18next/dist/cjs/i18next",
   "jszip",
   "jszip-utils",
   "scriptjs",
   "webfontloader",
-], function ($, screenfull, clipboard, i18next, JSZip, JSZipUtils, ScriptJS, WebFont) {
-
-  // In some cases, require.js does not return a valid value for screenfull. Check it:
-  if (!screenfull)
-    screenfull = window.screenfull;
+], function ($, clipboard, i18next, JSZip, JSZipUtils, ScriptJS, WebFont) {
 
   /**
    * Returns the two-digits text expression representing the given number (lesser than 100) zero-padded at left
@@ -713,11 +708,6 @@ define([
       td: (txt, className) => $('<td/>', className ? { class: className } : null).html(txt),
       th: (txt, className) => $('<th/>', className ? { class: className } : null).html(txt),
     },
-    /**
-     * Checks if the current browser allows to put HTML elements in full screen mode
-     * @returns {boolean}
-     */
-    screenFullAllowed: () => screenfull && screenfull.enabled,
     /**
      * Replaces `width`, `height` and `fill` attributes of a simple SVG image
      * with the provided values

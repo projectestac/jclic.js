@@ -42,7 +42,6 @@
     "jquery": "^3.5.0",
     "jszip": "^3.3.0",
     "jszip-utils": "0.1.0",
-    "screenfull": "^5.0.2",
     "scriptjs": "^2.5.9",
     "webfontloader": "^1.6.28"
   },
