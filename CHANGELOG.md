@@ -9,6 +9,7 @@
 - Check for numeric digits in _Arith_ activity answers before converting them to numbers.
 - Page reloads on written answer activities
 - Use 'idempotent-babel-polyfill' instead of 'babel-polyfill' as a workaround to [this issue](https://github.com/babel/babel-loader/issues/401), causing problems in JClic module for Moodle.
+- Use the `box-sizing` CSS attribute to compute the real with of the counters area in `DefaultSkin`.
 
 #### Improvements
 - Updated core components to their latest versions.
