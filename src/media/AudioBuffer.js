@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global define, MediaRecorder */
+/* global define, navigator */
 
 define([
   "../Utils"
@@ -44,6 +44,8 @@ define([
      * @param {number=} seconds - The maximum amount of time allowed to be recorded by this AudioBuffer
      */
     constructor(seconds) {
+      if (navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+        this.enabled = true;
       if (seconds)
         this.seconds = seconds
       this.chunks = []
@@ -78,19 +80,13 @@ define([
     record() {
       if (this.mediaRecorder && this.mediaRecorder.state === 'recording')
         this.mediaRecorder.stop()
-      else {
+      else if (this.enabled) {
         this.stop()
         this.mediaPlayer = null
 
-        // TODO: update navigator.getUserMedia to navigator.mediaDevices.getUserMedia (with promises)
-        // when supported in Chrome/Chromium
-        // (in v. 49 this is supported only when "experimental web extensions" flag is enabled)
-        // See: https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia
-
-        navigator.getUserMedia(
-          { audio: true },
-          stream => {
-            this.mediaRecorder = new MediaRecorder(stream)
+        navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+          .then(mediaStream => {
+            this.mediaRecorder = new MediaRecorder(mediaStream)
             this.mediaRecorder.ondataavailable = ev => this.chunks.push(ev.data)
             this.mediaRecorder.onerror = err => {
               Utils.log('error', `Error recording audio: ${err}`)
@@ -127,9 +123,10 @@ define([
               if (this.mediaRecorder)
                 this.mediaRecorder.stop()
             }, this.seconds * 1000)
-          },
-          error => Utils.log('error', `Error recording audio: ${error}`)
-        )
+          })
+          .catch(err => {
+            Utils.log('error', err.toString());
+          });
       }
     }
 
@@ -149,6 +146,12 @@ define([
   AudioBuffer.MAX_RECORD_LENGTH = 180
 
   Object.assign(AudioBuffer.prototype, {
+    /**
+     * AudioBuffer is enabled only in browsers with `navigator.MediaDevices.getuserMedia`
+     * @name AudioBuffer#enabled
+     * @type {boolean}
+     */
+    enabled: false,
     /**
      * Maximum length of recordings allowed to this AudioBuffer (in seconds)
      * @name AudioBuffer#seconds
