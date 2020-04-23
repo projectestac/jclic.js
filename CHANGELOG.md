@@ -1,9 +1,12 @@
 ### v1.1.14 (2020-04-23)
 #### Bug fixes
 - Audio recorder features now enabled for all modern browsers using [MediaDevices.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) instead of the deprecated method [navigator.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia).
+- Find [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) with vendor prefix in MIDI audio player (needed for Safari)
 
 #### Improvements
 - Upgraded components
+- Max audio recording time increased to 180"
+- Provide visual feedback while recording audio
 
 ### v1.1.13 (2020-04-20)
 #### Bug fixes
