@@ -860,7 +860,7 @@ define([
       MSG_TYPE: ['previous', 'initial', 'final', 'finalError'],
       RANDOM_CHARS: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
       NUM_COUNTERS: 3,
-      MAX_RECORD_LENGTH: 20,
+      MAX_RECORD_LENGTH: 180,
       // BoxBase defaults
       BoxBase: {
         REDUCE_FONT_STEP: 1.0,
