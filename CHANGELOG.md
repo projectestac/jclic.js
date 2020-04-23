@@ -1,4 +1,4 @@
-### v1.1.14 (2020-04-22)
+### v1.1.14 (2020-04-23)
 #### Bug fixes
 - Audio recorder features now enabled for all modern browsers using [MediaDevices.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) instead of the deprecated method [navigator.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia).
 
