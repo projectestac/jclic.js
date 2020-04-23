@@ -97,10 +97,11 @@ define([
       // TODO: Remove unused param "_setBx"
       if (this.useAudioBuffer) {
         if (ActiveMediaPlayer.AUDIO_BUFFERS) {
+          const $div = this.ps && this.ps.$div;
           const buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer]
           if (buffer) {
             if (this.mc.mediaType === 'RECORD_AUDIO') {
-              buffer.record()
+              buffer.record($div)
             } else {
               buffer.play()
             }
