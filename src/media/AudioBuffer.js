@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global define, MediaRecorder */
+/* global define, navigator */
 
 define([
   "../Utils"
@@ -44,6 +44,8 @@ define([
      * @param {number=} seconds - The maximum amount of time allowed to be recorded by this AudioBuffer
      */
     constructor(seconds) {
+      if (navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+        this.enabled = true;
       if (seconds)
         this.seconds = seconds;
       this.chunks = [];
@@ -74,31 +76,30 @@ define([
 
     /**
      * Starts recording audio, or stops the recording if already started.
+     * @param {jQuery=} $div - Optional `div` element where the recording is performed, as a jQuery ref.
      */
-    record() {
+    record($div) {
       if (this.mediaRecorder && this.mediaRecorder.state === 'recording')
         this.mediaRecorder.stop();
-      else {
+      else if (this.enabled) {
         this.stop();
         this.mediaPlayer = null;
 
-        // TODO: update navigator.getUserMedia to navigator.mediaDevices.getUserMedia (with promises)
-        // when supported in Chrome/Chromium
-        // (in v. 49 this is supported only when "experimental web extensions" flag is enabled)
-        // See: https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia
-
-        navigator.getUserMedia(
-          { audio: true },
-          stream => {
-            this.mediaRecorder = new MediaRecorder(stream);
+        navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+          .then(mediaStream => {
+            this.mediaRecorder = new MediaRecorder(mediaStream);
             this.mediaRecorder.ondataavailable = ev => this.chunks.push(ev.data);
             this.mediaRecorder.onerror = err => {
               Utils.log('error', `Error recording audio: ${err}`);
               this.mediaRecorder = null;
-            };
-            this.mediaRecorder.onstart = () => Utils.log('debug', 'Recording audio started');
+            }
+            this.mediaRecorder.onstart = () => {
+              Utils.log('debug', 'Recording audio started');
+              this.visualFeedbak(true, $div);
+            }
             this.mediaRecorder.onstop = () => {
               Utils.log('debug', 'Recording audio finished');
+              this.visualFeedbak(false, $div);
 
               if (this.timeoutID) {
                 window.clearTimeout(this.timeoutID);
@@ -118,19 +119,33 @@ define([
                 this.playWhenFinished = false;
                 this.mediaPlayer.play();
               }
-            };
+            }
             this.mediaRecorder.onwarning = ev => Utils.log('warn', `Warning recording audio: ${ev}`);
 
             this.playWhenFinished = false;
             this.mediaRecorder.start();
             this.timeoutID = window.setTimeout(() => {
-              if (this.mediaRecorder)
+              if (this.mediaRecorder);
                 this.mediaRecorder.stop();
             }, this.seconds * 1000);
-          },
-          error => Utils.log('error', `Error recording audio: ${error}`)
-        );
+          })
+          .catch(err => {
+            Utils.log('error', err.toString());
+            this.visualFeedbak(false, $div);
+          });
       }
+    }
+
+    /**
+     * Set visual feedback to the user while the system is recording audio
+     * Currently changes the cursor pointer associated to the HTML element
+     * containing the recorder.
+     * @param {boolean} enabled - Flag indicating if the visual feedback should be active or inactive
+     * @param {jQuery=} $div - Optional `div` element where the recording is performed, as a jQuery ref.
+     */
+    visualFeedbak(enabled, $div) {
+      if ($div)
+        $div.css('cursor', enabled ? 'progress' : 'inherit');
     }
 
     /**
@@ -149,6 +164,12 @@ define([
   AudioBuffer.MAX_RECORD_LENGTH = 180;
 
   Object.assign(AudioBuffer.prototype, {
+    /**
+     * AudioBuffer is enabled only in browsers with `navigator.MediaDevices.getuserMedia`
+     * @name AudioBuffer#enabled
+     * @type {boolean}
+     */
+    enabled: false,
     /**
      * Maximum length of recordings allowed to this AudioBuffer (in seconds)
      * @name AudioBuffer#seconds

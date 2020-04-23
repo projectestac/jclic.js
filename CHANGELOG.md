@@ -7,16 +7,20 @@
 
 #### Bug fixes
 - Check for numeric digits in _Arith_ activity answers before converting them to numbers.
-- Page reloads on written answer activities
-- Use 'idempotent-babel-polyfill' instead of 'babel-polyfill' as a workaround to [this issue](https://github.com/babel/babel-loader/issues/401), causing problems in JClic module for Moodle.
+- Page reloads when entering text to the first question on _Written Answer_ activities (jQuery related)- Use 'idempotent-babel-polyfill' instead of 'babel-polyfill' as a workaround to [this issue](https://github.com/babel/babel-loader/issues/401), causing problems in JClic module for Moodle.
 - Use the `box-sizing` CSS attribute to compute the real with of the counters area in `DefaultSkin`.
+- Audio recorder features now enabled for all modern browsers using [MediaDevices.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) instead of the deprecated method [navigator.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia).
+- Find [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) with vendor prefix in MIDI audio player (needed for Safari)
 
 #### Improvements
 - Updated core components to their latest versions.
-- use of `package-lock` instead of `npm-shinkwrap` to lock version dependencies.
+- Use of `package-lock` instead of `npm-shinkwrap` to lock version dependencies.
 - Restored semicolons in all source files
 - Deliverable files are now minimized with [Terser](https://github.com/terser/terser) intead of [Uglifyjs](https://github.com/mishoo/UglifyJS2)
 - Full screen mode now using direct calls to the [Full Screen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) instead of [screenfull](https://www.npmjs.com/package/screenfull)
+- Upgraded components
+- Max audio recording time increased to 180"
+- Provide visual feedback while recording audio
 
 ### v1.1.11 (2019-02-11)
 #### Bug fixes
