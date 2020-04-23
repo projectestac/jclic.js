@@ -276,7 +276,7 @@ define([
               request.onreadystatechange = () => {
                 if (request.readyState === 4) {
                   if (request.status === 200)
-                    this.data = new MidiAudioPlayer(request.response, ps.options);
+                    this.data = new MidiAudioPlayer(request.response, ps && ps.options);
                   else
                     Utils.log('error', `Error loading ${this.name}: ${request.statusText}`);
                   this._onReady();

@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global define, AudioContext */
+/* global define, window */
 
 define([
   "@francesc/basic-midi-player-js",
@@ -58,11 +58,15 @@ define([
      * - `MIDISoundFontExtension`: An extension to be added to `MIDISoundFontName` in order to build the full file name of the soundfont JS file. Defaults to `-mp3.js`
      */
     constructor(data, options = {}) {
-      // Build instrument on first call to constructor
-      MidiAudioPlayer.prepareInstrument(options);
-      this.data = data;
-      this.player = new MidiPlayer.Player(ev => this.playEvent(ev));
-      this.player.loadArrayBuffer(data);
+      const AudioContext = window && (window.AudioContext || window.webkitAudioContext);
+      if (AudioContext) {
+        // Build instrument on first call to constructor
+        MidiAudioPlayer.prepareInstrument(options, new AudioContext());
+        this.data = data;
+        this.player = new MidiPlayer.Player(ev => this.playEvent(ev));
+        if (this.player)
+          this.player.loadArrayBuffer(data);
+      }
     }
 
     /**
@@ -70,11 +74,12 @@ define([
      * NOTE: This will not work when off-line!
      * TODO: Provided a basic, simple, static soundfont
      * @param {object} options - Optional param with options related to the MIDI soundfont. See details in `constructor` description.
+     * @param {AudioContext} audioContext - The AudioContext object (see: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext)
      */
-    static prepareInstrument(options = {}) {
+    static prepareInstrument(options = {}, audioContext) {
       if (MidiAudioPlayer.loadingInstrument === false) {
         MidiAudioPlayer.loadingInstrument = true;
-        MidiAudioPlayer.audioContext = new AudioContext();
+        MidiAudioPlayer.audioContext = audioContext;
         MidiPlayer.Soundfont.instrument(
           MidiAudioPlayer.audioContext,
           options.MIDISoundFontObject || MidiAudioPlayer.MIDISoundFontObject ||
@@ -93,16 +98,20 @@ define([
      * Pauses the player
      */
     pause() {
-      this.player.pause();
-      this.startedNotes = [];
+      if (this.player) {
+        this.player.pause();
+        this.startedNotes = [];
+      }
     }
 
     /**
      * Starts or resumes playing
      */
     play() {
-      this.startedNotes = [];
-      this.player.play();
+      if (this.player) {
+        this.startedNotes = [];
+        this.player.play();
+      }
     }
 
     /**
@@ -110,7 +119,7 @@ define([
      * @returns boolean
      */
     get paused() {
-      return !this.player.isPlaying();
+      return this.player && !this.player.isPlaying();
     }
 
     /**
@@ -118,7 +127,7 @@ define([
      * @returns boolean
      */
     get ended() {
-      return this.player.getSongTimeRemaining() <= 0;
+      return this.player && this.player.getSongTimeRemaining() <= 0;
     }
 
     /**
@@ -126,7 +135,7 @@ define([
      * @returns number
      */
     get currentTime() {
-      return this.player.getSongTime() * 1000;
+      return this.player && (this.player.getSongTime() * 1000) || 0;
     }
 
     /**
@@ -134,7 +143,8 @@ define([
      * @param {number} time - The time position where the player pointer must be placed
      */
     set currentTime(time) {
-      this.player.skipToSeconds(time / 1000);
+      if (this.player)
+        this.player.skipToSeconds(time / 1000);
     }
 
     /**
@@ -142,7 +152,7 @@ define([
      * @param {object} ev - The event data. See http://grimmdude.com/MidiPlayerJS/docs/index.html for details
      */
     playEvent(ev) {
-      if (MidiAudioPlayer.instrument) {
+      if (this.player && MidiAudioPlayer.instrument) {
         // Check for specific interval
         if (this.playTo > 0 && this.currentTime >= this.playTo)
           this.pause();
