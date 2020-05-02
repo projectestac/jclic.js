@@ -175,7 +175,7 @@ define([
      * @returns {string} 
      */
     toString() {
-      return `${this.type}${this.file || ''}`;
+      return `${this.type}${this.file ? ` ${this.file}` : ''}`;
     }
 
     /**

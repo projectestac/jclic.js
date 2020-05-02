@@ -324,12 +324,12 @@ define([
    * `<div class ="JClic" data-project="demo.jclic" data-options='{"fontSubstitutions":{"arial":"Arimo"}}'/>`
    */
   Font.SUBSTITUTIONS = {
-    // JDK Logical Fonts (see: https://docs.oracle.com/javase/tutorial/2d/text/fonts.html)
-    'Dialog': 'sans-serif',
-    'DialogInput': 'sans-serif',
-    'Monospaced': 'monospace',
-    'Serif': 'serif',
-    'SansSerif': 'sans-serif',
+    // Lowercase versions of JDK Logical Fonts (see: https://docs.oracle.com/javase/tutorial/2d/text/fonts.html)
+    'dialog': 'sans-serif',
+    'dialoginput': 'sans-serif',
+    'monospaced': 'monospace',
+    //'serif': 'serif',
+    'sansserif': 'sans-serif',
     // Other fonts commonly used in JClic activities, mapped to similar Google Fonts
     'abc': 'Kalam',
     'a.c.m.e. secret agent': 'Permanent Marker',

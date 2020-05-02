@@ -29,7 +29,7 @@
         "url": "http://clic.xtec.cat",
         "city": "Barcelona",
         "country": "Catalonia",
-        "comments": "Catalan Educational Telematic Network (XTEC)\nDepartment of Education of Catalonia"
+        "comments": "Catalonia Department of Education"
       }
     ],
     "revisions": [
@@ -778,6 +778,7 @@
           "text": "This is a direct association between text and graphics divided into rectangular sections.",
           "style": {
             "font": {
+              "family": "Dialog",
               "size": 14,
               "bold": true
             }
@@ -1387,6 +1388,7 @@
           "border": true,
           "style": {
             "font": {
+              "family": "DialogInput",
               "size": 18
             },
             "textColor": "#0000FF",
@@ -1542,7 +1544,7 @@
       "name": "ass06.ass",
       "className": "@associations.ComplexAssociation",
       "shuffleA": false,
-      "shuffleB": true,
+      "shuffleB": false,
       "shuffles": 31,
       "boxGridPos": "BA",
       "messages": {
@@ -11657,7 +11659,7 @@
     {
       "name": "elmo.gif",
       "file": "elmo.gif",
-      "animated": true
+      "animated": false
     },
     {
       "name": "big.gif",

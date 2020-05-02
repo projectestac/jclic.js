@@ -9,8 +9,7 @@
   <author name="Francesc Busquets" mail="fbusquets@xtec.cat" url="http://clic.xtec.cat" rol="author" />
   <organization name="XTEC" mail="clic@xtec.cat" url="http://clic.xtec.cat" city="Barcelona" country="Catalonia">
    <comments>
-    <p>Catalan Educational Telematic Network (XTEC)</p>
-    <p>Department of Education of Catalonia</p>
+    <p>Catalonia Department of Education</p>
    </comments>
   </organization>
   <language>English (en)</language>
@@ -327,7 +326,7 @@
    <messages>
     <cell type="initial">
      <style>
-      <font family="Arial" size="14" bold="true" />
+      <font family="Dialog" size="14" bold="true" />
      </style>
      <p>This is a direct association between text and graphics divided into rectangular sections.</p>
     </cell>
@@ -749,7 +748,7 @@
    </settings>
    <cells rows="3" cols="4" cellWidth="100.0" cellHeight="90.0" border="true" id="primary">
     <style>
-     <font family="Arial" size="18" />
+     <font family="DialogInput" size="18" />
      <color foreground="0x0000FF" background="0xFFFFFF" />
     </style>
     <shaper class="@Rectangular" cols="4" rows="3" />
@@ -985,7 +984,7 @@
      <shape>rectangle:0,8,1,1</shape>
     </shaper>
    </cells>
-   <scramble times="31" primary="false" secondary="true" />
+   <scramble times="31" primary="false" secondary="false" />
    <layout position="BA" />
   </activity>
   <activity class="@associations.SimpleAssociation" name="ass07.ass">
@@ -5238,7 +5237,7 @@
   <media name="casa.gif" file="casa.gif" animated="false" />
   <media name="cireres.gif" file="cireres.gif" animated="false" />
   <media name="cotxe.gif" file="cotxe.gif" animated="false" />
-  <media name="elmo.gif" file="elmo.gif"  animated="true" />
+  <media name="elmo.gif" file="elmo.gif" />
   <media name="big.gif" file="big.gif" animated="true" />
   <media name="esqui.gif" file="esqui.gif" animated="true" />
   <media name="func2.gif" file="func2.gif" animated="false" />
