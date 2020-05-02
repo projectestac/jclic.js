@@ -21,6 +21,7 @@
 - Upgraded components
 - Max audio recording time increased to 180"
 - Provide visual feedback while recording audio
+- Map JDK logical fonts ("Dialog", "Serif", etc.) to [HTML5 generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
 
 ### v1.1.11 (2019-02-11)
 #### Bug fixes

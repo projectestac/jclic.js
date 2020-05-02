@@ -311,8 +311,9 @@ define([
   Font.ALREADY_CALCULATED_FONTS = [];
 
   /**
-   * Array of font names already loaded from Google Fonts */
-  Font.ALREADY_LOADED_FONTS = [];
+   * Array of font names already loaded from Google Fonts, or generic names provided by browsers by default 
+   * See: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family */
+  Font.ALREADY_LOADED_FONTS = ['serif', 'sans-serif', 'monospace', 'cursive', 'fantasy'];
 
   /**
    * Google Fonts equivalent for special fonts used in some JClic projects.
@@ -323,6 +324,13 @@ define([
    * `<div class ="JClic" data-project="demo.jclic" data-options='{"fontSubstitutions":{"arial":"Arimo"}}'/>`
    */
   Font.SUBSTITUTIONS = {
+    // JDK Logical Fonts (see: https://docs.oracle.com/javase/tutorial/2d/text/fonts.html)
+    'Dialog': 'sans-serif',
+    'DialogInput': 'sans-serif',
+    'Monospaced': 'monospace',
+    'Serif': 'serif',
+    'SansSerif': 'sans-serif',
+    // Other fonts commonly used in JClic activities, mapped to similar Google Fonts
     'abc': 'Kalam',
     'a.c.m.e. secret agent': 'Permanent Marker',
     'comic sans ms': 'Patrick Hand',
