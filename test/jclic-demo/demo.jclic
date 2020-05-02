@@ -326,7 +326,7 @@
    <messages>
     <cell type="initial">
      <style>
-      <font family="Arial" size="14" bold="true" />
+      <font family="Dialog" size="14" bold="true" />
      </style>
      <p>This is a direct association between text and graphics divided into rectangular sections.</p>
     </cell>
@@ -748,7 +748,7 @@
    </settings>
    <cells rows="3" cols="4" cellWidth="100.0" cellHeight="90.0" border="true" id="primary">
     <style>
-     <font family="Arial" size="18" />
+     <font family="DialogInput" size="18" />
      <color foreground="0x0000FF" background="0xFFFFFF" />
     </style>
     <shaper class="@Rectangular" cols="4" rows="3" />
