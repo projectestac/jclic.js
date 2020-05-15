@@ -11,6 +11,7 @@
 - Use the `box-sizing` CSS attribute to compute the real with of the counters area in `DefaultSkin`.
 - Audio recorder features now enabled for all modern browsers using [MediaDevices.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) instead of the deprecated method [navigator.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia).
 - Find [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) with vendor prefix in MIDI audio player (needed for Safari)
+- Unset `box-shadow` attribute in custom buttons
 
 #### Improvements
 - Updated core components to their latest versions.
