@@ -1,6 +1,6 @@
 ### v1.1.15 (Not yet released)
 #### Bug fixes
-- Unset `box-shadow` attribute in custom buttons
+- Unset `box-shadow` and `text-shadow` attributes in custom buttons
 
 #### Improvements
 - Map JDK logical fonts ("Dialog", "Serif", etc.) to [HTML5 generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
