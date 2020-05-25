@@ -344,7 +344,10 @@ define([
     buildAccessibleElements($canvas, $clickReceiver, eventType) {
       this.$accessibleDiv = this.accessibleText !== '' ? $('<div/>', { 'aria-label': this.accessibleText, tabindex: 0 }) : null
       $canvas.append(this.$accessibleDiv)
-      this.cells.forEach(bx => bx.buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType))
+      this.cells
+        .map(a => a)
+        .sort((a, b) => a.idLoc > b.idLoc ? 1 : -1)
+        .forEach(bx => bx.buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType))
       return this.$accessibleDiv
     }
   }

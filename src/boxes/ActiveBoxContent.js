@@ -286,13 +286,14 @@ define([
      * @returns {String}
      */
     toString() {
-      let result = this.text && this.text.length > 0 ? this.text : ''
+      const result = [];
+      if (this.text && this.text.length)
+        result.push(this.text);
       if (this.imgName)
-        result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image')} ${this.imgName}`
+        result.push(`${Utils.getMsg('image')} ${this.imgName}`);
       if (this.imgClip)
-        result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image fragment')}`
-
-      return result
+        result.push(`${Utils.getMsg('image fragment')} ${(this.id >= 0 ? this.id : this.item) + 1}`);
+      return result.join(' ') || Utils.getMsg('cell');
     }
   }
 
