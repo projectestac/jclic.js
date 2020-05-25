@@ -342,11 +342,9 @@ define([
      * @returns {external:jQuery} - The $accessibleDiv member, containing the accessible elements associated to this ActiveBoxBag.
      */
     buildAccessibleElements($canvas, $clickReceiver, eventType) {
-      if (Utils.settings.CANVAS_HITREGIONS) {
-        this.$accessibleDiv = this.accessibleText !== '' ? $('<div/>', { 'aria-label': this.accessibleText, tabindex: 0 }) : null
-        $canvas.append(this.$accessibleDiv)
-        this.cells.forEach(bx => bx.buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType))
-      }
+      this.$accessibleDiv = this.accessibleText !== '' ? $('<div/>', { 'aria-label': this.accessibleText, tabindex: 0 }) : null
+      $canvas.append(this.$accessibleDiv)
+      this.cells.forEach(bx => bx.buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType))
       return this.$accessibleDiv
     }
   }

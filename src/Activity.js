@@ -797,7 +797,6 @@ define([
           this.$div = $div
         else
           this.$div = $('<div/>', { class: 'JClicActivity', 'aria-label': ps.getMsg('Activity panel') })
-        this.accessibleCanvas = Utils.settings.CANVAS_HITREGIONS
         this.act.initAutoContentProvider()
       }
 
@@ -1011,7 +1010,8 @@ define([
       buildAccessibleComponents() {
         // Clear existing elements
         if (this.accessibleCanvas && this.$canvas && this.$canvas.children().length > 0) {
-          this.$canvas.get(-1).getContext('2d').clearHitRegions()
+          // UPDATED May 2020: clearHitRegions has been deprecated!
+          // this.$canvas.get(-1).getContext('2d').clearHitRegions()
           this.$canvas.empty()
         }
         // Create accessible elements in subclasses
@@ -1135,12 +1135,12 @@ define([
        * @type {external:jQuery} */
       $canvas: null,
       /**
-       * True when the navigator implements canvas hit regions
+       * Always true, since canvas hit regions have been deprecated!
        * See: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility
        * @name ActivityPanel#accessibleCanvas
        * @type {boolean}
        */
-      accessibleCanvas: false,
+      accessibleCanvas: true,
       /**
        * The realized current {@link Skin}
        * @name ActivityPanel#skin

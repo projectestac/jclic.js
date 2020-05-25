@@ -555,7 +555,7 @@ define([
           : abc.txtAlign.v === 'bottom' ?
             availHeight - totalHeight : (availHeight - totalHeight) / 2)
 
-        for (let l = 0; l < lines.length; l++ , y += lineHeight) {
+        for (let l = 0; l < lines.length; l++, y += lineHeight) {
           // Calc the horizontal position of each line
           // Default is 'middle'
           const x = px + bb.textMargin + (abc.txtAlign.h === 'left' ? 0
@@ -575,6 +575,13 @@ define([
           ctx.fillText(lines[l].text, x, y)
         }
       }
+
+      if (Utils.settings.CANVAS_DRAW_FOCUS && this.$accessibleElement) {
+        const elem = this.$accessibleElement.get(-1);
+        this.shape.preparePath(ctx);
+        ctx.drawFocusIfNeeded(elem);
+      }
+
       return true
     }
 
@@ -695,49 +702,45 @@ define([
      * @returns {external:jQuery} - The accessible element associated to this ActiveBox.
      */
     buildAccessibleElement($canvas, $clickReceiver, $canvasGroup, eventType) {
-      if (Utils.settings.CANVAS_HITREGIONS) {
-        if (this.$accessibleElement)
-          this.$accessibleElement.remove()
+      if (this.$accessibleElement)
+        this.$accessibleElement.remove()
 
-        const canvas = $canvas.get(-1)
-        if (canvas.width > 0 && canvas.height > 0) {
-          const
-            id = Math.round(Math.random() * 100000),
-            disabled = this.isInactive() && !this.accessibleAlwaysActive
-          this.$accessibleElement = $('<button/>', {
-            tabindex: disabled ? -1 : 0,
-            id: `AE${id}`,
-            disabled: disabled
+      const canvas = $canvas.get(-1)
+      if (canvas.width > 0 && canvas.height > 0) {
+        const
+          id = Math.round(Math.random() * 100000),
+          disabled = this.isInactive() && !this.accessibleAlwaysActive
+        this.$accessibleElement = $('<button/>', {
+          tabindex: disabled ? -1 : 0,
+          id: `AE${id}`,
+          disabled: disabled
+        })
+          .html(this.toString())
+          .click(ev => {
+            // Check if event was produced by a mouse click
+            if (ev.originalEvent && (ev.originalEvent.pageX !== 0 || ev.originalEvent.pageY !== 0)) {
+              // Mouse clicks should be processed directly by the canvas, so ignore this accessible event
+              return true
+            }
+            Utils.log('debug', `Click on accessible element: ${this.toString()}`)
+            const
+              $event = $.Event(eventType || 'click'),
+              bounds = this.getBounds(),
+              offset = $canvas.offset()
+            $event.pageX = offset.left + bounds.pos.x + bounds.dim.width / 2
+            $event.pageY = offset.top + bounds.pos.y + bounds.dim.height / 2
+            $clickReceiver.trigger($event)
+            return false
           })
-            .html(this.toString())
-            .click(ev => {
-              // Check if event was produced by a mouse click
-              if (ev.originalEvent && (ev.originalEvent.pageX !== 0 || ev.originalEvent.pageY !== 0)) {
-                // Mouse clicks should be processed odirectly by the canvas, so ignore this accessible event
-                return true
-              }
-              Utils.log('debug', `Click on accessible element: ${this.toString()}`)
-              const
-                $event = $.Event(eventType || 'click'),
-                bounds = this.getBounds(),
-                offset = $canvas.offset()
-              $event.pageX = offset.left + bounds.pos.x + bounds.dim.width / 2
-              $event.pageY = offset.top + bounds.pos.y + bounds.dim.height / 2
-              $clickReceiver.trigger($event)
-              return false
-            })
-          const $dest = $canvasGroup || $canvas
-          $dest.append(this.$accessibleElement)
-          const elem = this.$accessibleElement.get(-1)
-          try {
-            const ctx = canvas.getContext('2d')
-            this.shape.preparePath(ctx)
-            ctx.addHitRegion({ id: `REG${id}`, control: elem })
-            if (Utils.settings.CANVAS_HITREGIONS_FOCUS)
-              ctx.drawFocusIfNeeded(elem)
-          } catch (ex) {
-            Utils.log('error', `Unable to build accessible element for canvas in: ${this.toString()} (${ex})`)
-          }
+        const $dest = $canvasGroup || $canvas
+        $dest.append(this.$accessibleElement)
+        if (Utils.settings.CANVAS_DRAW_FOCUS) {
+          this.$accessibleElement.on('focus blur', () => {
+            Utils.log('debug', `Focus change on accessible element: ${this.toString()}`)
+            if (this.container)
+              this.container.update();
+            // TODO: Update also orphan ActiveBox elements
+          })
         }
       }
       return this.$accessibleElement
