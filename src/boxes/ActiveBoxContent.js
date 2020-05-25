@@ -353,16 +353,16 @@ define([
      * @returns {string}
      */
     getDescription() {
-      let result = this.text && this.text.length > 0 ? this.text : '';
+      const result = [];
+      if (this.text && this.text.length)
+        result.push(this.text);
       if (this.image)
-        result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image')} ${this.image}`;
+        result.push(`${Utils.getMsg('image')} ${this.image}`);
       if (this.imgClip)
-        result = `${result}${result.length > 0 ? ' ' : ''}${this.imgClip.toString()}`;
-
+        result.push(this.imgClip.toString());
       if (this.mediaContent)
-        result = `${result}${result.length > 0 ? ' ' : ''}${this.mediaContent.getDescription()}`;
-
-      return result;
+        result.push(this.mediaContent.getDescription());
+      return result.join(' ');
     }
 
     /**
@@ -371,13 +371,14 @@ define([
      * @returns {String}
      */
     toString() {
-      let result = this.text && this.text.length > 0 ? this.text : '';
+      const result = [];
+      if (this.text && this.text.length)
+        result.push(this.text);
       if (this.image)
-        result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image')} ${this.image}`;
+        result.push(`${Utils.getMsg('image')} ${this.image}`);
       if (this.imgClip)
-        result = `${result}${result.length > 0 ? ' ' : ''}${Utils.getMsg('image fragment')}`;
-
-      return result;
+        result.push(`${Utils.getMsg('image fragment')} ${(this.id >= 0 ? this.id : this.item) + 1}`);
+      return result.join(' ') || Utils.getMsg('cell');
     }
   }
 

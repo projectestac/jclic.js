@@ -12,6 +12,7 @@
 - Audio recorder features now enabled for all modern browsers using [MediaDevices.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) instead of the deprecated method [navigator.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia).
 - Find [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) with vendor prefix in MIDI audio player (needed for Safari)
 - Unset `box-shadow` and `text-shadow` attributes in custom buttons
+- Fallback accessible components for `canvas` regions should always be created since `[HitRegions](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/addHitRegion)` have been deprecated. Also, `[CanvasRenderingContext2D.drawFocusIfNeeded](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawFocusIfNeeded)` should be called on each call to `ActiveBox.updateContent`, not just at creation time.
 
 #### Improvements
 - Updated core components to their latest versions.
@@ -23,6 +24,7 @@
 - Max audio recording time increased to 180"
 - Provide visual feedback while recording audio
 - Map JDK logical fonts ("Dialog", "Serif", etc.) to [HTML5 generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
+- Improved experience with screen readers like [ChromeVox](https://www.chromevox.com/) and [Chromevox Classic](https://chrome.google.com/webstore/detail/chromevox-classic-extensi/kgejglhpjiefppelpmljglcjbhoiplfn) 
 
 ### v1.1.11 (2019-02-11)
 #### Bug fixes

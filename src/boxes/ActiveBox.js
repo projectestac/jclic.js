@@ -735,11 +735,12 @@ define([
         const $dest = $canvasGroup || $canvas;
         $dest.append(this.$accessibleElement);
         if (Utils.settings.CANVAS_DRAW_FOCUS) {
-          this.$accessibleElement.on('focus blur', () => {
-            Utils.log('debug', `Focus change on accessible element: ${this.toString()}`);
+          this.$accessibleElement.on('focus blur', ev => {
+            Utils.log('debug', `${ev.type} event on accessible element: ${this.toString()}`)
             if (this.container)
               this.container.update();
-            // TODO: Update also orphan ActiveBox elements
+            else
+              this.updateContent(canvas.getContext('2d'), null);
           });
         }
       }
