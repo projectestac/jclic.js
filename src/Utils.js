@@ -936,8 +936,13 @@ define([
       BEZIER_POINTS: 4,
       // Check if canvas accessibility features are enabled
       // See: http://codepen.io/francesc/pen/amwvRp
-      CANVAS_HITREGIONS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.addHitRegion === 'function',
-      CANVAS_HITREGIONS_FOCUS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function'
+      // UPDATED May 2020: Detection removed since Canvas HitRegions have been deprecated
+      // See: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility
+      //
+      // CANVAS_HITREGIONS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.addHitRegion === 'function',
+      // CANVAS_HITREGIONS_FOCUS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function',
+      //
+      CANVAS_DRAW_FOCUS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function',
     },
     //
     // Functions useful to deal with caret position in `contentEditable` DOM elements
