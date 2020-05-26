@@ -299,8 +299,9 @@ define([
                 if (this.act.useOrder)
                   this.currentItem = this.bgA.getNextItem(this.currentItem)
                 this.ps.reportNewAction(this.act, 'SELECT', bx1.getDescription(), bx2.getDescription(), true, 0)
-                if (bx2.$accessibleElement)
-                  bx2.$accessibleElement.focus()
+                // Modified May 2020: Focusing `accessibleElement` will always draw a border on bx2
+                // if (bx2.$accessibleElement)
+                //   bx2.$accessibleElement.focus()
               } else {
                 bx2.clear()
                 bx2.setInactive(false)

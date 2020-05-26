@@ -359,6 +359,21 @@ define([
     }
 
     /**
+     * Builds the accessible components needed for this ActivityPanel
+     * This method is called when all main elements are placed and visible, when the activity is ready
+     * to start or when resized.
+     * @override
+     */
+    buildAccessibleComponents() {
+      if (this.$canvas && this.accessibleCanvas) {
+        super.buildAccessibleComponents()
+        if (this.bgA)
+          this.bgA.buildAccessibleElements(this.$canvas, this.$div, 'click')
+        // bgB has a regular input element, so it's already accessible
+      }
+    }
+
+    /**
      * Checks if all inverse associations are done
      * @returns {boolean}
      */

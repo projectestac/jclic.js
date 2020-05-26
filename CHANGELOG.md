@@ -1,7 +1,7 @@
-### v1.1.15 (Not yet released)
+### v1.1.15 (2020-05-26)
 #### Bug fixes
 - Unset `box-shadow` and `text-shadow` attributes in custom buttons
-- Fallback accessible components for `canvas` regions should always be created since `[HitRegions](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/addHitRegion)` have been deprecated. Also, `[CanvasRenderingContext2D.drawFocusIfNeeded](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawFocusIfNeeded)` should be called on each call to `ActiveBox.updateContent`, not just at creation time.
+- Accessible components for `canvas` regions should always be created since [`HitRegions`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/addHitRegion) have been deprecated. Also, [`CanvasRenderingContext2D.drawFocusIfNeeded`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawFocusIfNeeded) should be called on each call to `updateContent` on ActiveBox objects, not just at creation time.
 
 #### Improvements
 - Map JDK logical fonts ("Dialog", "Serif", etc.) to [HTML5 generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)

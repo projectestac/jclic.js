@@ -211,7 +211,6 @@ define([
      */
     loadProject: function (div, projectName, options) {
 
-      //options = Utils.init(Object.assign({}, JClicObject.options, options))
       options = Utils.init($.extend(Object.create(JClicObject.options), options || {}))
       let player = null
 
