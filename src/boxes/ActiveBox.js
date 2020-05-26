@@ -95,6 +95,10 @@ define([
         box.setContent(abc);
         box.setBounds(rect);
         $dom.append($canvas);
+        // Create accessible, focusable elements only for cells with media content
+        // TODO: remove focus mark on blur in cells placed on fillInBlanks activities
+        if (abc.mediaContent)
+          box.buildAccessibleElement($canvas, $dom);
         box.update($canvas.get(-1).getContext('2d'), rect);
         return box;
       }
@@ -409,8 +413,10 @@ define([
         abc = this.getCurrentContent(),
         style = this.getBoxBaseResolve();
 
-      if (this.isInactive() || !abc || this.dim.width < 2 || this.dim.height < 2)
+      if (this.isInactive() || !abc || this.dim.width < 2 || this.dim.height < 2){
+        this._focusAccessibleElement(ctx);
         return true;
+      }
 
       if (dirtyRegion && !this.intersects(dirtyRegion))
         return false;
@@ -575,15 +581,24 @@ define([
           ctx.fillText(lines[l].text, x, y);
         }
 
-        if (Utils.settings.CANVAS_DRAW_FOCUS && this.$accessibleElement) {
-          const elem = this.$accessibleElement.get(-1);
-          this.shape.preparePath(ctx);
-          ctx.drawFocusIfNeeded(elem);
-        }
+        this._focusAccessibleElement(ctx);
 
       }
       return true;
     }
+
+    /**
+     * Draw focus on accessible element if needed
+     * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
+     * box content.
+     */
+    _focusAccessibleElement(ctx) {
+      if (Utils.settings.CANVAS_DRAW_FOCUS && this.$accessibleElement) {
+        this.shape.preparePath(ctx);
+        ctx.drawFocusIfNeeded(this.$accessibleElement.get(-1));
+      }
+    }
+
 
     /**
      * Gets the `description` field of the current {@link ActiveBoxContent}
@@ -736,11 +751,10 @@ define([
         $dest.append(this.$accessibleElement);
         if (Utils.settings.CANVAS_DRAW_FOCUS) {
           this.$accessibleElement.on('focus blur', ev => {
-            Utils.log('debug', `${ev.type} event on accessible element: ${this.toString()}`)
+            Utils.log('debug', `${ev.type} accessible element: ${this.toString()}`);
             if (this.container)
               this.container.update();
-            else
-              this.updateContent(canvas.getContext('2d'), null);
+            this.updateContent(canvas.getContext('2d'), null);
           });
         }
       }
