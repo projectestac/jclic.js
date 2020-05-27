@@ -135,7 +135,7 @@
  * @see {@link https://github.com/grimmdude/MidiPlayerJS}
  */
 
-/* global JClicDataProject, JClicDataOptions */
+/* global JClicDataProject, JClicDataOptions, window, document */
 
 import { $ } from 'jquery';
 import JClicPlayer from './JClicPlayer';
@@ -294,4 +294,3 @@ $(function () {
 });
 
 export default JClicObject;
-

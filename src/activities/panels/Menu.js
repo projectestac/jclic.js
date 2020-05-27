@@ -28,169 +28,171 @@
  *  @licend
  */
 
-/* global define */
+import { $ } from 'jquery';
+import Activity from '../../Activity';
+import MediaContent from '../../media/MediaContent';
+import Utils from '../../Utils';
 
-define([
-  "jquery",
-  "../../Activity",
-  "../../media/MediaContent",
-  "../../Utils"
-], function ($, Activity, MediaContent, Utils) {
+/**
+ * This class of {@link Activity} is only used in legacy JClic project libraries. It contains
+ * one or more buttons pointing to specific JClic projects or to other `Menu` activity panels.
+ * @exports Menu
+ * @class
+ * @extends Activity
+ */
+export class Menu extends Activity {
+  /**
+   * Menu constructor
+   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   */
+  constructor(project) {
+    super(project);
+    this.menuElements = [];
+    // This kind of activities are not reported
+    this.includeInReports = false;
+    this.reportActions = false;
+  }
+
+  // Class fields
 
   /**
-   * This class of {@link Activity} is only used in legacy JClic project libraries. It contains
-   * one or more buttons pointing to specific JClic projects or to other `Menu` activity panels.
-   * @exports Menu
-   * @class
-   * @extends Activity
+ * Panel class associated to this type of activity: {@link MenuPanel}
+ * @type {class} */
+  static Panel = MenuPanel;
+}
+
+/**
+ * The {@link ActivityPanel} where Menu will show its content.
+ * @class
+ * @extends ActivityPanel
+ * @param {Activity} act - The {@link Activity} to which this Panel belongs
+ * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+ * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+ * Java interface.
+ */
+class MenuPanel extends Activity.Panel {
+  /**
+   * MenuPanel constructor
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
    */
-  class Menu extends Activity {
-    /**
-     * Menu constructor
-     * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
-     */
-    constructor(project) {
-      super(project);
-      this.menuElements = [];
-      // This kind of activities are not reported
-      this.includeInReports = false;
-      this.reportActions = false;
-    }
+  constructor(act, ps, $div) {
+    super(act, ps, $div);
+    // This kind of activity will always clean the "last project skin" setting
+    ps.lastProjectSkin = null;
   }
 
   /**
-   * The {@link ActivityPanel} where Menu will show its content.
-   * @class
-   * @extends ActivityPanel
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-   * Java interface.
+   * Prepares the visual components of the activity
+   * @override
    */
-  class MenuPanel extends Activity.Panel {
-    /**
-     * MenuPanel constructor
-     * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
-     */
-    constructor(act, ps, $div) {
-      super(act, ps, $div);
-      // This kind of activity will always clean the "last project skin" setting
-      ps.lastProjectSkin = null;
-    }
-
-    /**
-     * Prepares the visual components of the activity
-     * @override
-     */
-    buildVisualComponents() {
-      if (this.firstRun)
-        super.buildVisualComponents();
-      // This `div` will contain the action buttons
-      const $btnDiv = $('<div/>').css({
-        'width': '100%',
-        'max-height': '100%',
-        'position': 'absolute',
-        'top': '50%',
-        'transform': 'translateY(-50%)',
+  buildVisualComponents() {
+    if (this.firstRun)
+      super.buildVisualComponents();
+    // This `div` will contain the action buttons
+    const $btnDiv = $('<div/>').css({
+      'width': '100%',
+      'max-height': '100%',
+      'position': 'absolute',
+      'top': '50%',
+      'transform': 'translateY(-50%)',
+      'display': 'flex',
+      'flex-wrap': 'wrap',
+      'overflow-y': 'auto',
+      'place-content': 'center',
+      'overflow-y': 'auto'
+    });
+    this.act.menuElements.forEach((me) => {
+      // Create a button for each menu element
+      const caption = me.description || me.caption || 'JClic';
+      const $btn = $('<button/>', {
+        class: 'StockBtn',
+        title: caption,
+        'aria-label': caption
+      }).css({
+        'min-width': '80px',
+        'max-width': '200px',
+        'min-height': '80px',
+        'margin': '4px',
+        'padding': '4px',
         'display': 'flex',
-        'flex-wrap': 'wrap',
-        'overflow-y': 'auto',
-        'place-content': 'center',
-        'overflow-y': 'auto'
+        'flex-direction': 'column',
+        'justify-content': 'center',
+        'align-items': 'center'
       });
-      this.act.menuElements.forEach((me) => {
-        // Create a button for each menu element
-        const caption = me.description || me.caption || 'JClic';
-        const $btn = $('<button/>', {
-          class: 'StockBtn',
-          title: caption,
-          'aria-label': caption
-        }).css({
-          'min-width': '80px',
-          'max-width': '200px',
-          'min-height': '80px',
-          'margin': '4px',
-          'padding': '4px',
-          'display': 'flex',
-          'flex-direction': 'column',
-          'justify-content': 'center',
-          'align-items': 'center'
-        });
 
-        // Set the button icon
-        const
-          iconSrc = MenuPanel.icons[me.icon || '@ico00.png'],
-          $img = $('<img/>', { src: iconSrc || '' }).css({
-            'max-width': '180px',
-            'max-height': '100px',
-            'margin': '4px'
-          });
-        if (!iconSrc) {
-          // It's not a stock image, so load `src` when available
-          const mbe = this.act.project.mediaBag.getElement(me.icon, true);
-          mbe.getFullPathPromise().then(imgFullPath => $img.attr('src', imgFullPath));
-        }
-        $btn.append($img);
-
-        // Set the button text
-        $btn.append($('<span/>').css({
+      // Set the button icon
+      const
+        iconSrc = MenuPanel.icons[me.icon || '@ico00.png'],
+        $img = $('<img/>', { src: iconSrc || '' }).css({
           'max-width': '180px',
-          'overflow': 'hidden',
-          'white-space': 'nowrap',
-          'text-overflow': 'ellipsis'
-        }).html(me.caption));
-
-        // Set a click listener method
-        // $btn.on('click', function...) does not work!
-        $btn[0].addEventListener('click', (ev) => {
-          const mc = new MediaContent(me.projectPath ? 'RUN_CLIC_PACKAGE' : 'RUN_CLIC_ACTIVITY', me.sequence);
-          if (me.projectPath)
-            mc.externalParam = me.projectPath;
-          Utils.log('info', `Launching ${me.projectPath || ''} ${me.sequence || ''}`);
-          this.ps.playMedia(mc);
-          ev.preventDefault();
+          'max-height': '100px',
+          'margin': '4px'
         });
+      if (!iconSrc) {
+        // It's not a stock image, so load `src` when available
+        const mbe = this.act.project.mediaBag.getElement(me.icon, true);
+        mbe.getFullPathPromise().then(imgFullPath => $img.attr('src', imgFullPath));
+      }
+      $btn.append($img);
 
-        // Place the created button on the container
-        $btnDiv.append($btn);
+      // Set the button text
+      $btn.append($('<span/>').css({
+        'max-width': '180px',
+        'overflow': 'hidden',
+        'white-space': 'nowrap',
+        'text-overflow': 'ellipsis'
+      }).html(me.caption));
+
+      // Set a click listener method
+      // $btn.on('click', function...) does not work!
+      $btn[0].addEventListener('click', (ev) => {
+        const mc = new MediaContent(me.projectPath ? 'RUN_CLIC_PACKAGE' : 'RUN_CLIC_ACTIVITY', me.sequence);
+        if (me.projectPath)
+          mc.externalParam = me.projectPath;
+        Utils.log('info', `Launching ${me.projectPath || ''} ${me.sequence || ''}`);
+        this.ps.playMedia(mc);
+        ev.preventDefault();
       });
 
-      // Add the buttons container on the main panel `div`
-      this.$div.empty().append($btnDiv);
-    }
+      // Place the created button on the container
+      $btnDiv.append($btn);
+    });
 
-    /**
-     * Sets the real dimension of this panel.
-     * @override
-     * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
-     * @returns {AWT.Dimension}
-     */
-    setDimension(preferredMaxSize) {
-      return preferredMaxSize;
-    }
+    // Add the buttons container on the main panel `div`
+    this.$div.empty().append($btnDiv);
+  }
 
-    /**
-     * Basic initialization procedure
-     * @override
-     */
-    initActivity() {
-      super.initActivity();
+  /**
+   * Sets the real dimension of this panel.
+   * @override
+   * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+   * @returns {AWT.Dimension}
+   */
+  setDimension(preferredMaxSize) {
+    return preferredMaxSize;
+  }
 
-      if (!this.firstRun)
-        this.buildVisualComponents();
-      else
-        this.firstRun = false;
+  /**
+   * Basic initialization procedure
+   * @override
+   */
+  initActivity() {
+    super.initActivity();
 
-      this.setAndPlayMsg('initial', 'start');
-      this.playing = true;
-    }
+    if (!this.firstRun)
+      this.buildVisualComponents();
+    else
+      this.firstRun = false;
+
+    this.setAndPlayMsg('initial', 'start');
+    this.playing = true;
   }
 
   /**
    * Default icons used in buttons, inherited from JClic
    * @type {object}
    */
-  MenuPanel.icons = {
+  static icons = {
     '@ico00.png': 'data:image/png;base64,\
 iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAB1UExURUxpcZVZAGyAAGyAAJVZAJVZAJVZAIhmAJVZAJVZAJVZAIhmAGyAAGyAAGyA\
 AGyAAGyAAJVZAJVZAGyAAJVZANj+AP+ZAMFzAPWSALVsANyEAM57AJ66AOiLALXVAM3xAK1nAI6oAIabAJWwAMTnAKFgAGyAAIlz9xYAAAAVdFJOUwB9oCIiZpkRRKq7M4BVu9VmVd1EzJvdA7gAAAE0\
@@ -222,14 +224,10 @@ iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7O
 AAABdFJOUwBA5thmAAAAgklEQVQ4y9WSQQ6AIAwEsVtFwf+/14JGbcHeTHSuO9kFQggfBE8BFwLR+mBwFGYSZvh53zjzZTdkLTXCkS/ViDHBCLe8Gla48qpkGEHl+8pdYJo0yOouPA2GhLLiCCyC28DI\
 cAXZ0IfsVKS3BTGUMDas0E9NfkO/ovmQBv2v0BJ+xAaYuQX2hCJNtwAAAABJRU5ErkJggg=='
   };
+}
 
-  /**
-   * Panel class associated to this type of activity: {@link MenuPanel}
-   * @type {class} */
-  Menu.Panel = MenuPanel;
+// Register class in Activity.prototype
+Activity.CLASSES['@panels.Menu'] = Menu;
 
-  // Register class in Activity.prototype
-  Activity.CLASSES['@panels.Menu'] = Menu;
+export default Menu;
 
-  return Menu;
-});
