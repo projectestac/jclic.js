@@ -7,10 +7,21 @@
   "jsdelivr": "dist/jclic.min.js",
   "homepage": "http://projectestac.github.io/jclic.js",
   "readmeFilename": "README.md",
-  "author": "Francesc Busquets <francesc@gmail.com>",
+  "author": {
+    "name": "Catalan Educational Telematic Network (XTEC)",
+    "email": "info@xtec.cat",
+    "url": "http://xtec.gencat.cat"
+  },
+  "contributors": [
+    {
+      "name": "Francesc Busquets",
+      "email": "francesc@gmail.com",
+      "url": "https://github.com/frncesc"
+    }
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/projectestac/jclic.js.git"
+    "url": "https://github.com/projectestac/jclic.js.git"
   },
   "keywords": [
     "jclic",
@@ -62,24 +73,20 @@
     "terser-webpack-plugin": "^3.0.1",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpackbar": "^4.0.0",
+    "webpack-dev-server": "^3.11.0",
     "xmldom": "^0.3.0"
   },
   "scripts": {
-    "build-dist": "webpack --config webpack-dist.js",
-    "build-devel": "webpack --config webpack-devel.js",
-    "build-devel-es5": "webpack --config webpack-devel-es5.js",
-    "build": "webpack --config webpack-config.js",
+    "bak-build-dist": "webpack --config webpack-dist.js",
+    "bak-build-devel": "webpack --config webpack-devel.js",
+    "bak-build-devel-es5": "webpack --config webpack-devel-es5.js",
+    "bak-build": "webpack --config webpack-config.js",
     "build-locales": "node build-locales.js",
     "build-doc": "jsdoc -c jsdoc.config.js",
     "lint": "eslint -c .eslintrc.json \"src/**/*.js\"",
-    "debug": "live-server --open=test/jclic-demo/index.html -V --watch=src,test",
-    "start": "live-server --open=test/jclic-demo/index-min.html"
+    "bak-debug": "live-server --open=test/jclic-demo/index.html -V --watch=src,test",
+    "bak-start": "live-server --open=test/jclic-demo/index-min.html",
+    "start": "webpack-dev-server --open --mode development --host 0.0.0.0 --useLocalIp"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": "> 0.25%, not dead"
 }

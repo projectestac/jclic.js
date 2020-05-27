@@ -135,176 +135,163 @@
  * @see {@link https://github.com/grimmdude/MidiPlayerJS}
  */
 
-/* global define:true, JClicDataProject, JClicDataOptions */
+/* global JClicDataProject, JClicDataOptions */
 
-// Mock `define` when called from a JavaScript environment without native AMD support (like Node.js)
-// For an example of how to call JClic.js in node.js, see:
-// `/test/nodejs/listProjectContents.js`
-if (typeof define === 'undefined')
-  define = function (deps, callback) { return callback.apply(null, deps.map(dep => require(dep))); };
+import { $ } from 'jquery';
+import JClicPlayer from './JClicPlayer';
+import JClicProject from './project/JClicProject';
+import AWT from './AWT';
+import Utils from './Utils';
+import Deps from './Deps';
 
-// Initial empty definition of `JClicObject`, to be filled with real data in `define`
-const JClicObject = {};
+/**
+ * This is the main method of JClic
+ *
+ * Executes on `document.ready()`.
+ *
+ * The method iterates over all `div` objects with `JClic` class and creates a {@link JClicPlayer}
+ * within them. Each player loads the JClic project file specified in the `data-project` attribute of
+ * the `div` tag.
+ *
+ * The `div` elements must preferabily be empty. Inner content may become overlapped by objects
+ * created by the JClic player.
+ *
+ * This method exports the global variable `window.JClicObject`, useful when other scripts
+ * need to make direct calls to the main components of JClic.
+ *
+ * The main members of the global variable `JClicObject` are:
+ * - `JClicObject.JClicPlayer` (the {@link JClicPlayer} object)
+ * - `JClicObject.JClicProject` (the {@link JClicProject} object)
+ * - `JClicObject.AWT` (the {@link AWT} object)
+ * - `JClicObject.Utils` (the {@link Utils} object)
+ * - `JClicObject.$` (the JQuery object)
+ * - `JClicObject.options` (the main options loaded at startup, usually the content of the global variable `JClicDataOptions`)
+ * - `JClicObject.projectFiles` (used by JSONP to store the content of some files when inaccessible to the browser because CORS or other restrictions)
+ * - `JClicObject.currentPlayers` (array with references to the players currently running)
+ * - `JClicObject.loadProject` (a function that starts a JClicPlayer on a specific `div`)
+ *
+ * @module JClic
+ * @exports JClicObject
+ * @example <caption>
+ * Creates a JClic div and loads "myproject.jclic" on it:
+ * </caption><div class ="JClic" data-project="myproject.jclic"></div>
+ * @example <caption>
+ * Creates a JClic div that loads "myproject.jclic" with additional parameters, passed as a JSON string.
+ * Note that `data-options` should be delimited by apostrophes `'` because quotation marks `"` are used
+ * for JSON keys and values:
+ * </caption><div class ="JClic" data-project="myproject.jclic" data-options='{"fade":"400","lang":"es","reporter":"TCPReporter","user":"test01","path":"localhost:9090"}'></div>
+ */
+export const JClicObject = {
+  Deps,
+  JClicPlayer,
+  JClicProject,
+  AWT,
+  Utils,
+  $,
+  options: JClicDataOptions || {},
+  projectFiles: {},
+  currentPlayers: [],
+  loadProject,
+};
 
-define([
-  "jquery",
-  "./JClicPlayer",
-  "./project/JClicProject",
-  "./AWT",
-  "./Utils",
-  "./Deps"
-], function ($, JClicPlayer, JClicProject, AWT, Utils /*, deps*/) {
+/**
+ *
+ * Creates a new JClicPlayer hosted on the specified `div`, and loads an specific project on it.
+ * @param {HTMLElement} div - The HTML element (usually a `<div/>`) that will be used as a main container of the player.
+ * @param {string} projectName - The file name or URL of the JClic project to be loaded
+ * @param {object=} options - An optional set of preferences
+ * @returns {JClicPlayer}
+ */
+export function loadProject(div, projectName, options) {
 
-  /**
-   * This is the main method of JClic
-   *
-   * Executes on `document.ready()`.
-   *
-   * The method iterates over all `div` objects with `JClic` class and creates a {@link JClicPlayer}
-   * within them. Each player loads the JClic project file specified in the `data-project` attribute of
-   * the `div` tag.
-   *
-   * The `div` elements must preferabily be empty. Inner content may become overlapped by objects
-   * created by the JClic player.
-   *
-   * This method exports the global variable `window.JClicObject`, useful when other scripts
-   * need to make direct calls to the main components of JClic.
-   *
-   * The main members of the global variable `JClicObject` are:
-   * - `JClicObject.JClicPlayer` (the {@link JClicPlayer} object)
-   * - `JClicObject.JClicProject` (the {@link JClicProject} object)
-   * - `JClicObject.AWT` (the {@link AWT} object)
-   * - `JClicObject.Utils` (the {@link Utils} object)
-   * - `JClicObject.$` (the JQuery object)
-   * - `JClicObject.options` (the main options loaded at startup, usually the content of the global variable `JClicDataOptions`)
-   * - `JClicObject.projectFiles` (used by JSONP to store the content of some files when inaccessible to the browser because CORS or other restrictions)
-   * - `JClicObject.currentPlayers` (array with references to the players currently running)
-   * - `JClicObject.loadProject` (a function that starts a JClicPlayer on a specific `div`)
-   *
-   * @module JClic
-   * @exports JClicObject
-   * @example <caption>
-   * Creates a JClic div and loads "myproject.jclic" on it:
-   * </caption><div class ="JClic" data-project="myproject.jclic"></div>
-   * @example <caption>
-   * Creates a JClic div that loads "myproject.jclic" with additional parameters, passed as a JSON string.
-   * Note that `data-options` should be delimited by apostrophes `'` because quotation marks `"` are used
-   * for JSON keys and values:
-   * </caption><div class ="JClic" data-project="myproject.jclic" data-options='{"fade":"400","lang":"es","reporter":"TCPReporter","user":"test01","path":"localhost:9090"}'></div>
-   */
-  Object.assign(JClicObject, {
-    JClicPlayer: JClicPlayer,
-    JClicProject: JClicProject,
-    AWT: AWT,
-    Utils: Utils,
-    $: $,
-    options: typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions,
-    projectFiles: {},
-    currentPlayers: [],
-    /**
-     *
-     * Creates a new JClicPlayer hosted on the specified `div`, and loads an specific project on it.
-     * @param {HTMLElement} div - The HTML element (usually a `<div/>`) that will be used as a main container of the player.
-     * @param {string} projectName - The file name or URL of the JClic project to be loaded
-     * @param {object=} options - An optional set of preferences
-     * @returns {JClicPlayer}
-     */
-    loadProject: function (div, projectName, options) {
+  //options = Utils.init(Object.assign({}, JClicObject.options, options))
+  options = Utils.init($.extend(Object.create(JClicObject.options), options || {}));
+  let player = null;
 
-      //options = Utils.init(Object.assign({}, JClicObject.options, options))
-      options = Utils.init($.extend(Object.create(JClicObject.options), options || {}));
-      let player = null;
-
-      // Find if there is another player already running on 'div'
-      for (const pl of JClicObject.currentPlayers) {
-        if (pl && pl.$topDiv && pl.$topDiv.get(-1) === div) {
-          // Player found! Check if it has the same options
-          Utils.log('debug', 'Existing JClicPlayer found in div. I will try to reuse it.');
-          player = pl;
-          for (const prop of Object.getOwnPropertyNames(options)) {
-            if (!player.options.hasOwnProperty(prop) || player.options[prop] !== options[prop]) {
-              Utils.log('debug', 'Existing JClicPlayer has diferent options! Creating a new one from scratch.');
-              player = null;
-              break;
-            }
-          }
+  // Find if there is another player already running on 'div'
+  for (const pl of JClicObject.currentPlayers) {
+    if (pl && pl.$topDiv && pl.$topDiv.get(-1) === div) {
+      // Player found! Check if it has the same options
+      Utils.log('debug', 'Existing JClicPlayer found in div. I will try to reuse it.');
+      player = pl;
+      for (const prop of Object.getOwnPropertyNames(options)) {
+        if (!player.options.hasOwnProperty(prop) || player.options[prop] !== options[prop]) {
+          Utils.log('debug', 'Existing JClicPlayer has diferent options! Creating a new one from scratch.');
+          player = null;
           break;
         }
       }
-
-      if (player)
-        player.reset();
-      else {
-        Utils.log('debug', 'Creating a new instance of JClicPlayer');
-        player = new JClicPlayer($(div).empty(), options);
-      }
-
-      if (projectName)
-        player.initReporter()
-          .then(() => player.load(projectName))
-          .catch(err => {
-            Utils.log('error', `Unable to start reporting: ${err.toString()}.\n JClicPlayer will be removed.'`);
-            $(div).empty().removeAttr('style').append($('<h2/>').html(player.getMsg('ERROR'))).append($('<p/>').html(err));
-            const i = JClicObject.currentPlayers.indexOf(player);
-            if (i >= 0)
-              JClicObject.currentPlayers.splice(i, 1);
-            player = null;
-          });
-
-      if (player && options.savePlayersRef !== false && JClicObject.currentPlayers.indexOf(player) === -1)
-        JClicObject.currentPlayers.push(player);
-
-      return player;
+      break;
     }
-  });
-
-  // Make JClicObject global and attach resize handler
-  if (typeof window !== 'undefined') {
-    window.JClicObject = JClicObject;
-    const fnFit = () => JClicObject.currentPlayers.forEach(player => {
-      if (player && player.skin)
-        player.skin.fit();
-    });
-    $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', fnFit);
-    $(window).resize(fnFit);
   }
 
-  // Execute on document ready
-  $(function () {
-    // If defined, load the global variable `JClicDataOptions`
-    let options = typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions;
-    JClicObject.options = options;
+  if (player)
+    player.reset();
+  else {
+    Utils.log('debug', 'Creating a new instance of JClicPlayer');
+    player = new JClicPlayer($(div).empty(), options);
+  }
 
-    if (!options.noInit) {
-      // If defined, load the global variable `JClicDataProject` or `JClicObject.projectFile`
-      let projectName =
-        typeof JClicDataProject === 'string' ?
-          JClicDataProject :
-          typeof JClicObject.projectFile === 'string' ?
-            JClicObject.projectFile :
-            null;
-
-      // Search DOM elements with class "JClic" (usually of type 'div') and iterate over them
-      // initializing players
-      $('.JClic').each((_n, element) => {
-        const $div = $(element);
-        const prj = $div.data('project');
-        if (prj)
-          projectName = prj;
-
-        const opt = $div.data('options');
-        if (opt)
-          options = $.extend(Object.create(options), opt);
-
-        JClicObject.loadProject(element, projectName, options);
+  if (projectName)
+    player.initReporter()
+      .then(() => player.load(projectName))
+      .catch(err => {
+        Utils.log('error', `Unable to start reporting: ${err.toString()}.\n JClicPlayer will be removed.'`);
+        $(div).empty().removeAttr('style').append($('<h2/>').html(player.getMsg('ERROR'))).append($('<p/>').html(err));
+        const i = JClicObject.currentPlayers.indexOf(player);
+        if (i >= 0)
+          JClicObject.currentPlayers.splice(i, 1);
+        player = null;
       });
-    }
-  });
 
-  return JClicObject;
+  if (player && options.savePlayersRef !== false && JClicObject.currentPlayers.indexOf(player) === -1)
+    JClicObject.currentPlayers.push(player);
+
+  return player;
+}
+
+// Make JClicObject global and attach resize handler
+if (typeof window !== 'undefined') {
+  window.JClicObject = JClicObject;
+  const fnFit = () => JClicObject.currentPlayers.forEach(player => {
+    if (player && player.skin)
+      player.skin.fit();
+  });
+  $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', fnFit);
+  $(window).resize(fnFit);
+}
+
+// Execute on document ready
+$(function () {
+  // If defined, load the global variable `JClicDataOptions`
+  let options = JClicDataOptions || {};
+  JClicObject.options = options;
+
+  if (!options.noInit) {
+    // If defined, load the global variable `JClicDataProject` or `JClicObject.projectFile`
+    let projectName =
+      typeof JClicDataProject === 'string' ?
+        JClicDataProject :
+        typeof JClicObject.projectFile === 'string' ?
+          JClicObject.projectFile :
+          null;
+
+    // Search DOM elements with class "JClic" (usually of type 'div') and iterate over them
+    // initializing players
+    $('.JClic').each((_n, element) => {
+      const $div = $(element);
+      const prj = $div.data('project');
+      if (prj)
+        projectName = prj;
+
+      const opt = $div.data('options');
+      if (opt)
+        options = $.extend(Object.create(options), opt);
+
+      JClicObject.loadProject(element, projectName, options);
+    });
+  }
 });
 
-// Export JClicObject as a result
-if (typeof module !== 'undefined') {
-  exports = module.exports = JClicObject;
-}
+export default JClicObject;
+
