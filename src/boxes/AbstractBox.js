@@ -143,7 +143,7 @@ export class AbstractBox extends AWT.Rectangle {
     let ab = this;
     while (!ab.boxBase && ab.parent)
       ab = ab.parent;
-    return ab.boxBase || BoxBase.prototype.defaultBoxBase;
+    return ab.boxBase || BoxBase.defaultBoxBase;
   }
 
   /**
