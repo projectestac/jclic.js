@@ -28,274 +28,283 @@
  *  @licend
  */
 
-/* global define */
+/* global navigator */
 
-define([
-  "jquery",
-  "./AudioBuffer"
-], function ($, AudioBuffer) {
+import { $ } from 'jquery';
+import AudioBuffer from './AudioBuffer';
 
+/**
+ * This kind of object encapsulates a realized {@link MediaContent} and provides methods to start,
+ * stop, pause and record different types of media (audio, video, MIDI, voice recording...)
+ * @exports ActiveMediaPlayer
+ * @class
+ */
+export class ActiveMediaPlayer {
   /**
-   * This kind of object encapsulates a realized {@link MediaContent} and provides methods to start,
-   * stop, pause and record different types of media (audio, video, MIDI, voice recording...)
-   * @exports ActiveMediaPlayer
-   * @class
+   * ActiveMediaPlayer constructor
+   * @param {MediaContent} mc - - The content used by this player
+   * @param {MediaBag} mb - The project's MediaBag
+   * @param {PlayStation} ps - An object implementing the
+   * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation} interface,
+   * usually a {@link JClicPlayer}.
    */
-  class ActiveMediaPlayer {
-    /**
-     * ActiveMediaPlayer constructor
-     * @param {MediaContent} mc - - The content used by this player
-     * @param {MediaBag} mb - The project's MediaBag
-     * @param {PlayStation} ps - An object implementing the
-     * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation} interface,
-     * usually a {@link JClicPlayer}.
-     */
-    constructor(mc, mb, ps) {
-      this.mc = mc;
-      this.ps = ps;
-      switch (mc.type) {
-        case 'RECORD_AUDIO':
-          if (ActiveMediaPlayer.AUDIO_BUFFERS) {
-            this.clearAudioBuffer(mc.recBuffer);
-            ActiveMediaPlayer.AUDIO_BUFFERS[mc.recBuffer] = new AudioBuffer(mc.length);
-          }
-        /* falls through */
-        case 'PLAY_RECORDED_AUDIO':
-          this.useAudioBuffer = true;
-          break;
-        case 'PLAY_AUDIO':
-        case 'PLAY_VIDEO':
-        case 'PLAY_MIDI':
-          this.mbe = mb.getElement(mc.file, true);
-          break;
-        default:
-          break;
-      }
-    }
-
-    /**
-     * Generates the objects that will play media
-     */
-    realize() {
-      if (this.mbe) {
-        this.mbe.build(mbe => {
-          if (mbe.data && mbe.data.pause && !mbe.data.paused && !mbe.data.ended && mbe.data.currentTime)
-            mbe.data.pause();
-          if ((mbe.type === 'video' || mbe.type === 'anim') && mbe.data) {
-            this.$visualComponent = $(mbe.data);
-            this.$visualComponent.css('z-index', 20);
-          }
-        });
-      }
-    }
-
-    /**
-     * Plays the media, realizing it if needed.
-     * @param {ActiveBox=} _setBx - The active box where this media will be placed (when video)
-     */
-    playNow(_setBx) {
-      // TODO: Remove unused param "_setBx"
-      if (this.useAudioBuffer) {
+  constructor(mc, mb, ps) {
+    this.mc = mc;
+    this.ps = ps;
+    switch (mc.type) {
+      case 'RECORD_AUDIO':
         if (ActiveMediaPlayer.AUDIO_BUFFERS) {
-          const $div = this.ps && this.ps.$div;
-          const buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer];
-          if (buffer) {
-            if (this.mc.type === 'RECORD_AUDIO') {
-              buffer.record($div);
-            } else {
-              buffer.play();
-            }
-          }
+          this.clearAudioBuffer(mc.recBuffer);
+          ActiveMediaPlayer.AUDIO_BUFFERS[mc.recBuffer] = new AudioBuffer(mc.length);
         }
-      } else if (this.mbe) {
-        this.mbe.build(() => {
-          if (this.mbe.data) {
-            if (this.mbe.type === 'midi') {
-              this.mbe.data.playTo = this.mc.to || 0;
-            } else {
-              let armed = false;
-              const $player = $(this.mbe.data);
-              // Clear previous event handlers
-              $player.off();
-              // If there is a time fragment specified, prepare to stop when the `to` position is reached
-              if (this.mc.to > 0) {
-                $player.on('timeupdate', () => {
-                  if (armed && this.mbe.data.currentTime >= this.mc.to / 1000) {
-                    $player.off('timeupdate');
-                    this.mbe.data.pause();
-                  }
-                });
-              }
-              // Launch the media despite of its readyState
-              armed = true;
-            }
-            if (!this.mbe.data.paused && !this.mbe.data.ended && this.mbe.data.currentTime)
-              this.mbe.data.pause();
-            // Seek the media position
-            this.mbe.data.currentTime = this.mc.from > 0 ? this.mc.from / 1000 : 0;
-            this.mbe.data.play();
-          }
-        });
-      }
-    }
-
-    /**
-     * Plays the media when available, without blocking the current thread.
-     * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
-     */
-    play(setBx) {
-      this.stopAllAudioBuffers();
-      this.playNow(setBx);
-    }
-
-    /**
-     * Stops the media playing
-     */
-    stop() {
-      if (this.useAudioBuffer)
-        this.stopAudioBuffer(this.mc.recBuffer);
-      else if (this.mbe && this.mbe.data && this.mbe.data.pause && !this.mbe.data.paused && !this.mbe.data.ended && this.mbe.data.currentTime)
-        this.mbe.data.pause();
-    }
-
-    /**
-     * Frees all resources used by this player
-     */
-    clear() {
-      this.stop();
-      if (this.useAudioBuffer)
-        this.clearAudioBuffer(this.mc.recBuffer);
-    }
-
-    /**
-     * Clears the specified audio buffer
-     * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
-     */
-    clearAudioBuffer(buffer) {
-      if (ActiveMediaPlayer.AUDIO_BUFFERS &&
-        buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length &&
-        ActiveMediaPlayer.AUDIO_BUFFERS[buffer]) {
-        ActiveMediaPlayer.AUDIO_BUFFERS[buffer].clear();
-        ActiveMediaPlayer.AUDIO_BUFFERS[buffer] = null;
-      }
-    }
-
-    /**
-     * Clears all audio buffers
-     */
-    clearAllAudioBuffers() {
-      if (ActiveMediaPlayer.AUDIO_BUFFERS)
-        ActiveMediaPlayer.AUDIO_BUFFERS.forEach((_buffer, n) => this.clearAudioBuffer(n));
-    }
-
-    /**
-     * Counts the number of active audio buffers
-     * @returns {number}
-     */
-    countActiveBuffers() {
-      return ActiveMediaPlayer.AUDIO_BUFFERS ? ActiveMediaPlayer.AUDIO_BUFFERS.reduce((c, ab) => c + ab ? 1 : 0, 0) : 0;
-    }
-
-    /**
-     * Stops the playing or recording actions of all audio buffers
-     */
-    stopAllAudioBuffers() {
-      if (ActiveMediaPlayer.AUDIO_BUFFERS)
-        ActiveMediaPlayer.AUDIO_BUFFERS.forEach(ab => ab ? ab.stop() : null);
-    }
-
-    /**
-     * Stops a specific audio buffer
-     * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
-     */
-    stopAudioBuffer(buffer) {
-      if (ActiveMediaPlayer.AUDIO_BUFFERS &&
-        buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length &&
-        ActiveMediaPlayer.AUDIO_BUFFERS[buffer])
-        ActiveMediaPlayer.AUDIO_BUFFERS[buffer].stop();
-    }
-
-    /**
-     * Checks the position of visual components after a displacement or resizing of its container
-     * @param {ActiveBox} _bxi - The container where this player is hosted
-     */
-    checkVisualComponentBounds(_bxi) {
-      // does nothing
-    }
-
-    /**
-     * Sets the visual component of this player visible or invisible
-     * @param {boolean} _state - `true` for visible
-     */
-    setVisualComponentVisible(_state) {
-      // TODO: Implement setVisualComponentVisible
-    }
-
-    /**
-     * Sets the ActiveBox associated to this media player
-     * @param {?ActiveBox} setBx - The new container of this media. Can be `null`.
-     */
-    linkTo(setBx) {
-      this.bx = setBx;
-      if (this.bx && this.$visualComponent)
-        this.bx.setHostedComponent(this.$visualComponent);
+      /* falls through */
+      case 'PLAY_RECORDED_AUDIO':
+        this.useAudioBuffer = true;
+        break;
+      case 'PLAY_AUDIO':
+      case 'PLAY_VIDEO':
+      case 'PLAY_MIDI':
+        this.mbe = mb.getElement(mc.file, true);
+        break;
+      default:
+        break;
     }
   }
+
+  /**
+   * Generates the objects that will play media
+   */
+  realize() {
+    if (this.mbe) {
+      this.mbe.build(mbe => {
+        if (mbe.data && mbe.data.pause && !mbe.data.paused && !mbe.data.ended && mbe.data.currentTime)
+          mbe.data.pause();
+        if ((mbe.type === 'video' || mbe.type === 'anim') && mbe.data) {
+          this.$visualComponent = $(mbe.data);
+          this.$visualComponent.css('z-index', 20);
+        }
+      });
+    }
+  }
+
+  /**
+   * Plays the media, realizing it if needed.
+   * @param {ActiveBox=} _setBx - The active box where this media will be placed (when video)
+   */
+  playNow(_setBx) {
+    // TODO: Remove unused param "_setBx"
+    if (this.useAudioBuffer) {
+      if (ActiveMediaPlayer.AUDIO_BUFFERS) {
+        const $div = this.ps && this.ps.$div;
+        const buffer = ActiveMediaPlayer.AUDIO_BUFFERS[this.mc.recBuffer];
+        if (buffer) {
+          if (this.mc.type === 'RECORD_AUDIO') {
+            buffer.record($div);
+          } else {
+            buffer.play();
+          }
+        }
+      }
+    } else if (this.mbe) {
+      this.mbe.build(() => {
+        if (this.mbe.data) {
+          if (this.mbe.type === 'midi') {
+            this.mbe.data.playTo = this.mc.to || 0;
+          } else {
+            let armed = false;
+            const $player = $(this.mbe.data);
+            // Clear previous event handlers
+            $player.off();
+            // If there is a time fragment specified, prepare to stop when the `to` position is reached
+            if (this.mc.to > 0) {
+              $player.on('timeupdate', () => {
+                if (armed && this.mbe.data.currentTime >= this.mc.to / 1000) {
+                  $player.off('timeupdate');
+                  this.mbe.data.pause();
+                }
+              });
+            }
+            // Launch the media despite of its readyState
+            armed = true;
+          }
+          if (!this.mbe.data.paused && !this.mbe.data.ended && this.mbe.data.currentTime)
+            this.mbe.data.pause();
+          // Seek the media position
+          this.mbe.data.currentTime = this.mc.from > 0 ? this.mc.from / 1000 : 0;
+          this.mbe.data.play();
+        }
+      });
+    }
+  }
+
+  /**
+   * Plays the media when available, without blocking the current thread.
+   * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
+   */
+  play(setBx) {
+    this.stopAllAudioBuffers();
+    this.playNow(setBx);
+  }
+
+  /**
+   * Stops the media playing
+   */
+  stop() {
+    if (this.useAudioBuffer)
+      this.stopAudioBuffer(this.mc.recBuffer);
+    else if (this.mbe && this.mbe.data && this.mbe.data.pause && !this.mbe.data.paused && !this.mbe.data.ended && this.mbe.data.currentTime)
+      this.mbe.data.pause();
+  }
+
+  /**
+   * Frees all resources used by this player
+   */
+  clear() {
+    this.stop();
+    if (this.useAudioBuffer)
+      this.clearAudioBuffer(this.mc.recBuffer);
+  }
+
+  /**
+   * Clears the specified audio buffer
+   * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
+   */
+  clearAudioBuffer(buffer) {
+    if (ActiveMediaPlayer.AUDIO_BUFFERS &&
+      buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length &&
+      ActiveMediaPlayer.AUDIO_BUFFERS[buffer]) {
+      ActiveMediaPlayer.AUDIO_BUFFERS[buffer].clear();
+      ActiveMediaPlayer.AUDIO_BUFFERS[buffer] = null;
+    }
+  }
+
+  /**
+   * Clears all audio buffers
+   */
+  clearAllAudioBuffers() {
+    if (ActiveMediaPlayer.AUDIO_BUFFERS)
+      ActiveMediaPlayer.AUDIO_BUFFERS.forEach((_buffer, n) => this.clearAudioBuffer(n));
+  }
+
+  /**
+   * Counts the number of active audio buffers
+   * @returns {number}
+   */
+  countActiveBuffers() {
+    return ActiveMediaPlayer.AUDIO_BUFFERS ? ActiveMediaPlayer.AUDIO_BUFFERS.reduce((c, ab) => c + ab ? 1 : 0, 0) : 0;
+  }
+
+  /**
+   * Stops the playing or recording actions of all audio buffers
+   */
+  stopAllAudioBuffers() {
+    if (ActiveMediaPlayer.AUDIO_BUFFERS)
+      ActiveMediaPlayer.AUDIO_BUFFERS.forEach(ab => ab ? ab.stop() : null);
+  }
+
+  /**
+   * Stops a specific audio buffer
+   * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
+   */
+  stopAudioBuffer(buffer) {
+    if (ActiveMediaPlayer.AUDIO_BUFFERS &&
+      buffer >= 0 && buffer < ActiveMediaPlayer.AUDIO_BUFFERS.length &&
+      ActiveMediaPlayer.AUDIO_BUFFERS[buffer])
+      ActiveMediaPlayer.AUDIO_BUFFERS[buffer].stop();
+  }
+
+  /**
+   * Checks the position of visual components after a displacement or resizing of its container
+   * @param {ActiveBox} _bxi - The container where this player is hosted
+   */
+  checkVisualComponentBounds(_bxi) {
+    // does nothing
+  }
+
+  /**
+   * Sets the visual component of this player visible or invisible
+   * @param {boolean} _state - `true` for visible
+   */
+  setVisualComponentVisible(_state) {
+    // TODO: Implement setVisualComponentVisible
+  }
+
+  /**
+   * Sets the ActiveBox associated to this media player
+   * @param {?ActiveBox} setBx - The new container of this media. Can be `null`.
+   */
+  linkTo(setBx) {
+    this.bx = setBx;
+    if (this.bx && this.$visualComponent)
+      this.bx.setHostedComponent(this.$visualComponent);
+  }
+
+  // Class fields
 
   /**
    * Recording of audio is enabled only when `navigator.getUserMedia` and `MediaRecorder` are defined
-   * In 02-Mar-2016 this is implemented only in Firefox 41 and Chrome 49 or later.
+   * In 02-Mar-2016 this was implemented only in Firefox 41 and Chrome 49 or later.
    * See: {@link https://addpipe.com/blog/mediarecorder-api}
    * @type Boolean
    */
-  ActiveMediaPlayer.REC_ENABLED = typeof MediaRecorder !== 'undefined' && typeof navigator !== 'undefined';
-
-  if (ActiveMediaPlayer.REC_ENABLED) {
-    navigator.getUserMedia = navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia ||
-      navigator.msGetUserMedia;
-  }
+  static REC_ENABLED = typeof MediaRecorder !== 'undefined' && typeof navigator !== 'undefined';
 
   /**
    * Audio buffers used for recording and playing voice are stored in a static array because
    * they are common to all instances of {@link ActiveMediaPlayer}
    * Only initialized when {@link REC_ENABLED} is `true`.
-   * @type {AudioBuffer[]} */
-  ActiveMediaPlayer.AUDIO_BUFFERS = ActiveMediaPlayer.REC_ENABLED ? [] : null;
+   * @type {AudioBuffer[]}
+   */
+  static AUDIO_BUFFERS = ActiveMediaPlayer.REC_ENABLED ? [] : null;
 
-  Object.assign(ActiveMediaPlayer.prototype, {
-    /**
-     * The MediaContent associated to this player.
-     * @name ActiveMediaPlayer#mc
-     * @type {MediaContent} */
-    mc: null,
-    /**
-     * The player to which this player belongs.
-     * @name ActiveMediaPlayer#ps
-     * @type {JClicPlayer} */
-    ps: null,
-    /**
-     * MediaPlayers should be linked to {@link ActiveBox} objects.
-     * @name ActiveMediaPlayer#bx
-     * @type {ActiveBox} */
-    bx: null,
-    /**
-     * The visual component for videos, usually a `video` HTML element
-     * @name ActiveMediaPlayer#$visualComponent
-     * @type {external:jQuery} */
-    $visualComponent: null,
-    /**
-     * When `true`, this player makes use of a recording audio buffer
-     * @name ActiveMediaPlayer#useAudioBuffer
-     * @type {boolean} */
-    useAudioBuffer: false,
-    /**
-     * The {@link MediaBagElement} containing the reference to the media to be played
-     * @name ActiveMediaPlayer#mbe
-     * @type {MediaBagElement} */
-    mbe: null,
-  });
+  /**
+   * The MediaContent associated to this player.
+   * @name ActiveMediaPlayer#mc
+   * @type {MediaContent}
+   */
+  mc = null;
 
-  return ActiveMediaPlayer;
-});
+  /**
+   * The player to which this player belongs.
+   * @name ActiveMediaPlayer#ps
+   * @type {JClicPlayer}
+   */
+  ps = null;
+
+  /**
+   * MediaPlayers should be linked to {@link ActiveBox} objects.
+   * @name ActiveMediaPlayer#bx
+   * @type {ActiveBox}
+   */
+  bx = null;
+
+  /**
+   * The visual component for videos, usually a `video` HTML element
+   * @name ActiveMediaPlayer#$visualComponent
+   * @type {external:jQuery}
+   */
+  $visualComponent = null;
+
+  /**
+   * When `true`, this player makes use of a recording audio buffer
+   * @name ActiveMediaPlayer#useAudioBuffer
+   * @type {boolean}
+   */
+  useAudioBuffer = false;
+
+  /**
+   * The {@link MediaBagElement} containing the reference to the media to be played
+   * @name ActiveMediaPlayer#mbe
+   * @type {MediaBagElement}
+   */
+  mbe = null;
+}
+
+if (ActiveMediaPlayer.REC_ENABLED) {
+  navigator.getUserMedia = navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia;
+}
+
+export default ActiveMediaPlayer;

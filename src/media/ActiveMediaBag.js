@@ -28,124 +28,120 @@
  *  @licend
  */
 
-/* global define */
+import ActiveMediaPlayer from './ActiveMediaPlayer';
+import Utils from '../Utils';
 
-define([
-  "./ActiveMediaPlayer",
-  "../Utils"
-], function (ActiveMediaPlayer, Utils) {
+/**
+ * This class stores a collection of realized {@link ActiveMediaPlayer} objects, related to a
+ * {@link JClicProject} or {@link Activity}.
+ * @exports ActiveMediaBag
+ * @class
+ */
+export class ActiveMediaBag {
+  /**
+   * ActiveMediaBag constructor
+   */
+  constructor() {
+    this.players = [];
+  }
 
   /**
-   * This class stores a collection of realized {@link ActiveMediaPlayer} objects, related to a
-   * {@link JClicProject} or {@link Activity}.
-   * @exports ActiveMediaBag
-   * @class
+   * Creates a new {@link ActiveMediaPlayer} linked to this media bag
+   * @param {MediaContent} mc - The content used by the new player
+   * @param {MediaBag} mb - The project's MediaBag
+   * @param {PlayStation} ps - An object implementing the
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) interface,
+   * usually a {@link JClicPlayer}.
+   * @returns {ActiveMediaPlayer}
    */
-  class ActiveMediaBag {
-    /**
-     * ActiveMediaBag constructor
-     */
-    constructor() {
-      this.players = [];
-    }
-
-    /**
-     * Creates a new {@link ActiveMediaPlayer} linked to this media bag
-     * @param {MediaContent} mc - The content used by the new player
-     * @param {MediaBag} mb - The project's MediaBag
-     * @param {PlayStation} ps - An object implementing the
-     * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) interface,
-     * usually a {@link JClicPlayer}.
-     * @returns {ActiveMediaPlayer}
-     */
-    createActiveMediaPlayer(mc, mb, ps) {
-      let amp = null;
-      switch (mc.type) {
-        case 'RECORD_AUDIO':
-          if (mc.length <= 0 || mc.length >= Utils.settings.MAX_RECORD_LENGTH)
-            break;
-        /* falls through */
-        case 'PLAY_RECORDED_AUDIO':
-          if (mc.recBuffer < 0 || mc.recBuffer >= 10)
-            break;
-        /* falls through */
-        case 'PLAY_AUDIO':
-        case 'PLAY_MIDI':
-        case 'PLAY_VIDEO':
-          amp = new ActiveMediaPlayer(mc, mb, ps);
+  createActiveMediaPlayer(mc, mb, ps) {
+    let amp = null;
+    switch (mc.type) {
+      case 'RECORD_AUDIO':
+        if (mc.length <= 0 || mc.length >= Utils.settings.MAX_RECORD_LENGTH)
           break;
-      }
-      if (amp !== null)
-        this.players.push(amp);
-      return amp;
+      /* falls through */
+      case 'PLAY_RECORDED_AUDIO':
+        if (mc.recBuffer < 0 || mc.recBuffer >= 10)
+          break;
+      /* falls through */
+      case 'PLAY_AUDIO':
+      case 'PLAY_MIDI':
+      case 'PLAY_VIDEO':
+        amp = new ActiveMediaPlayer(mc, mb, ps);
+        break;
     }
+    if (amp !== null)
+      this.players.push(amp);
+    return amp;
+  }
 
-    /**
-     * Looks for an already existing {@link ActiveMediaPlayer} equivalent to the requested.
-     * When not found, a new one is created and and returned.
-     * @param {MediaContent} mc - The content used by the new player
-     * @param {MediaBag} mb - The project's MediaBag
-     * @param {PlayStation} ps - An object implementing the
-     * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation} interface,
-     * usually a {@link JClicPlayer}.
-     * @returns {ActiveMediaPlayer}
-     */
-    getActiveMediaPlayer(mc, mb, ps) {
-      return this.players.find(p => p.mc === mc || p.mc.isEquivalent(mc))
-        || this.createActiveMediaPlayer(mc, mb, ps);
-    }
+  /**
+   * Looks for an already existing {@link ActiveMediaPlayer} equivalent to the requested.
+   * When not found, a new one is created and and returned.
+   * @param {MediaContent} mc - The content used by the new player
+   * @param {MediaBag} mb - The project's MediaBag
+   * @param {PlayStation} ps - An object implementing the
+   * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation} interface,
+   * usually a {@link JClicPlayer}.
+   * @returns {ActiveMediaPlayer}
+   */
+  getActiveMediaPlayer(mc, mb, ps) {
+    return this.players.find(p => p.mc === mc || p.mc.isEquivalent(mc))
+      || this.createActiveMediaPlayer(mc, mb, ps);
+  }
 
-    /**
-     * Removes from the list of players the {@link ActiveMediaPlayer} related to the specified {@link MediaContent}.
-     * @param {MediaContent} mc - The media content to look for.
-     */
-    removeActiveMediaPlayer(mc) {
-      const i = this.players.findIndex(p => p.mc === mc);
-      if (i >= 0) {
-        this.players[i].clear();
-        // removes the element pointed by 'i'
-        this.players.splice(i, 1);
-      }
-    }
-
-    /**
-     * Realizes all the media elements stored in this bag
-     */
-    realizeAll() {
-      this.players.forEach(p => p.realize());
-    }
-
-    /**
-     * Stops playing all media elements stored in this bag
-     * @param {number} level - Level at and below what all media players will be muted.
-     */
-    stopAll(level) {
-      if (typeof level === 'undefined')
-        level = -1;
-      this.players.forEach(amp => {
-        if (level === -1 || amp.mc !== null && amp.mc.level <= level)
-          amp.stop();
-      });
-    }
-
-    /**
-     * Removes all players from this media bag
-     */
-    removeAll() {
-      this.players.forEach(p => p.clear());
-      // Empty the `players` array
-      this.players.length = 0;
-      ActiveMediaPlayer.prototype.clearAllAudioBuffers();
+  /**
+   * Removes from the list of players the {@link ActiveMediaPlayer} related to the specified {@link MediaContent}.
+   * @param {MediaContent} mc - The media content to look for.
+   */
+  removeActiveMediaPlayer(mc) {
+    const i = this.players.findIndex(p => p.mc === mc);
+    if (i >= 0) {
+      this.players[i].clear();
+      // removes the element pointed by 'i'
+      this.players.splice(i, 1);
     }
   }
 
-  Object.assign(ActiveMediaBag.prototype, {
-    /**
-     * The collection of {@link ActiveMediaPlayer} objects stored in this media bag.
-     * @name ActiveMediaBag#players
-     * @type {ActiveMediaPlayer[]} */
-    players: [],
-  });
+  /**
+   * Realizes all the media elements stored in this bag
+   */
+  realizeAll() {
+    this.players.forEach(p => p.realize());
+  }
 
-  return ActiveMediaBag;
-});
+  /**
+   * Stops playing all media elements stored in this bag
+   * @param {number} level - Level at and below what all media players will be muted.
+   */
+  stopAll(level) {
+    if (typeof level === 'undefined')
+      level = -1;
+    this.players.forEach(amp => {
+      if (level === -1 || amp.mc !== null && amp.mc.level <= level)
+        amp.stop();
+    });
+  }
+
+  /**
+   * Removes all players from this media bag
+   */
+  removeAll() {
+    this.players.forEach(p => p.clear());
+    // Empty the `players` array
+    this.players.length = 0;
+    ActiveMediaPlayer.prototype.clearAllAudioBuffers();
+  }
+
+  // Class fields
+  /**
+   * The collection of {@link ActiveMediaPlayer} objects stored in this media bag.
+   * @name ActiveMediaBag#players
+   * @type {ActiveMediaPlayer[]}
+   */
+  players = [];
+
+}
+
+export default ActiveMediaBag;

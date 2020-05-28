@@ -28,107 +28,134 @@
  *  @licend
  */
 
-/* global define */
+import { $ } from 'jquery';
+import EventSoundsElement from './EventSoundsElement';
+import Utils from '../Utils';
 
-define([
-  "jquery",
-  "./EventSoundsElement",
-  "../Utils"
-], function ($, EventSoundsElement, Utils) {
-
+/**
+ * The EventSounds objects contains specific sounds to be played when JClic events are fired:
+ * - start
+ * - click
+ * - actionError
+ * - actionOk
+ * - finishedError
+ * - finishedOk
+ *
+ * The sounds are stored in an array of {@link EventSoundsElement} objects.
+ * @exports EventSounds
+ * @class
+ */
+export class EventSounds {
   /**
-   * The EventSounds objects contains specific sounds to be played when JClic events are fired:
-   * - start
-   * - click
-   * - actionError
-   * - actionOk
-   * - finishedError
-   * - finishedOk
-   *
-   * The sounds are stored in an array of {@link EventSoundsElement} objects.
-   * @exports EventSounds
-   * @class
+   * EventSounds constructor
+   * @param {EventSounds=} parent - Another EventSounds object that will act as a parent of this one,
+   * used to resolve which sound must be played for events when not defined here.
    */
-  class EventSounds {
-    /**
-     * EventSounds constructor
-     * @param {EventSounds=} parent - Another EventSounds object that will act as a parent of this one,
-     * used to resolve which sound must be played for events when not defined here.
-     */
-    constructor(parent) {
-      if (parent) {
-        this.elements = Object.assign({}, this.elements, parent.elements);
-        this.enabled = parent.enabled;
-      }
-    }
-
-    /**
-     * Reads the object properties from an XML element
-     * @param {external:jQuery} $xml - The XML element to be parsed
-     */
-    setProperties($xml) {
-      this.enabled = Utils.getTriState($xml.attr('enabled'), this.enabled);
-      $xml.children().each((_n, child) => {
-        const id = child.getAttribute('id');
-        this.elements[id] = new EventSoundsElement(id);
-        this.elements[id].setProperties($(child));
-      });
-      return this;
-    }
-
-    /**
-     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
-     * parent references, constants and also attributes retaining the default value.
-     * The resulting object is commonly usued to serialize elements in JSON format.
-     * @returns {object} - The resulting object, with minimal attrributes
-     */
-    getAttributes() {
-      return Utils.getAttributes(this, [
-        `enabled|${Utils.DEFAULT}`,
-        'elements',
-      ]);
-    }
-
-    /**
-     * Reads the properties of this EventSounds from a data object
-     * @param {object} data - The data object to be parsed
-     * @returns {EventSounds}
-     */
-    setAttributes(data) {
-      return Utils.setAttr(this, data, [
-        'enabled',
-        { key: 'elements', fn: EventSoundsElement, group: 'object' },
-      ]);
-    }
-
-    /**
-     * Instantiates the audio objects needed to play event sounds
-     * @param {PlayStation} ps
-     * @param {MediaBag} mediaBag
-     */
-    realize(ps, mediaBag) {
-      // Values are {EventSoundElement} objects
-      $.each(this.elements, (key, value) => value.realize(ps, mediaBag));
-    }
-
-    /**
-     * Plays a specific event sound
-     * @param {string} eventName - The identifier of the event to be played
-     */
-    play(eventName) {
-      if (this.globalEnabled && this.enabled) {
-        const sound = this.elements[eventName];
-        if (sound && sound.enabled)
-          sound.play();
-      }
+  constructor(parent) {
+    if (parent) {
+      this.elements = Object.assign({}, this.elements, parent.elements);
+      this.enabled = parent.enabled;
     }
   }
 
   /**
+   * Reads the object properties from an XML element
+   * @param {external:jQuery} $xml - The XML element to be parsed
+   */
+  setProperties($xml) {
+    this.enabled = Utils.getTriState($xml.attr('enabled'), this.enabled);
+    $xml.children().each((_n, child) => {
+      const id = child.getAttribute('id');
+      this.elements[id] = new EventSoundsElement(id);
+      this.elements[id].setProperties($(child));
+    });
+    return this;
+  }
+
+  /**
+   * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+   * parent references, constants and also attributes retaining the default value.
+   * The resulting object is commonly usued to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attrributes
+   */
+  getAttributes() {
+    return Utils.getAttributes(this, [
+      `enabled|${Utils.DEFAULT}`,
+      'elements',
+    ]);
+  }
+
+  /**
+   * Reads the properties of this EventSounds from a data object
+   * @param {object} data - The data object to be parsed
+   * @returns {EventSounds}
+   */
+  setAttributes(data) {
+    return Utils.setAttr(this, data, [
+      'enabled',
+      { key: 'elements', fn: EventSoundsElement, group: 'object' },
+    ]);
+  }
+
+  /**
+   * Instantiates the audio objects needed to play event sounds
+   * @param {PlayStation} ps
+   * @param {MediaBag} mediaBag
+   */
+  realize(ps, mediaBag) {
+    // Values are {EventSoundElement} objects
+    $.each(this.elements, (key, value) => value.realize(ps, mediaBag));
+  }
+
+  /**
+   * Plays a specific event sound
+   * @param {string} eventName - The identifier of the event to be played
+   */
+  play(eventName) {
+    if (this.globalEnabled && this.enabled) {
+      const sound = this.elements[eventName];
+      if (sound && sound.enabled)
+        sound.play();
+    }
+  }
+
+  // Class fields
+
+  /**
+ * Collection of {@link EventSoundsElement} objects
+ * @name EventSounds#elements
+ * @type {object}
+ */
+  elements = {
+    start: new EventSoundsElement('start', EventSounds.MEDIA.start),
+    click: new EventSoundsElement('click', EventSounds.MEDIA.click),
+    actionOk: new EventSoundsElement('actionOk', EventSounds.MEDIA.actionOk),
+    actionError: new EventSoundsElement('actionError', EventSounds.MEDIA.actionError),
+    finishedOk: new EventSoundsElement('finishedOk', EventSounds.MEDIA.finishedOk),
+    finishedError: new EventSoundsElement('finishedError', EventSounds.MEDIA.finishedError)
+  };
+
+  /**
+   * Whether this event sounds are enabled or not
+   * @name EventSounds#enabled
+   * @type {number}
+   */
+  enabled = Utils.DEFAULT;
+
+  /**
+   * This attribute is intended to be used at prototype level, to indicate a globally disabled
+   * or enabled state.
+   * @name EventSounds#globalEnabled
+   * @type {boolean}
+   */
+  globalEnabled = true;
+
+  /**
    * Audio data for default event sounds
    * @name EventSounds.MEDIA
-   * @type {object} */
-  EventSounds.MEDIA = {
+   * @type {object} 
+   */
+  static MEDIA = {
     start: 'data:audio/mp3;base64,' +
       '//NAxAARGk5RdUEQANIEZEBAPGPyIAAYAKMY/6EaQn8hP+c/yEb//kITU7oc9Cf6nPnPoT/8nQhC' +
       'KEEEnDizkAwM8ThYH1Bj/EAYEhyUGghyivv7fn0vtsLdYI0CiTQE+aaqfH3BW37/80LEFhl6nvZf' +
@@ -332,34 +359,8 @@ define([
       'WjRpT2WWWUGKhkz4qKC1QsK/ioqLN9ISFhURmfWKi3//////////QDIVFBIHgZFaTEFNRTMuOTku' +
       'Naqqqqqqqqqqqqqqqqqqqqqqqv/jIMRjEaCVZAp5hlCqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq' +
       'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq' +
-      'qqqqqqqqqqqq'
-  };
+      'qqqqqqqqqqqq',
+  }
+}
 
-  Object.assign(EventSounds.prototype, {
-    /**
-     * Collection of {@link EventSoundsElement} objects
-     * @name EventSounds#elements
-     * @type {object} */
-    elements: {
-      start: new EventSoundsElement('start', EventSounds.MEDIA.start),
-      click: new EventSoundsElement('click', EventSounds.MEDIA.click),
-      actionOk: new EventSoundsElement('actionOk', EventSounds.MEDIA.actionOk),
-      actionError: new EventSoundsElement('actionError', EventSounds.MEDIA.actionError),
-      finishedOk: new EventSoundsElement('finishedOk', EventSounds.MEDIA.finishedOk),
-      finishedError: new EventSoundsElement('finishedError', EventSounds.MEDIA.finishedError)
-    },
-    /**
-     * Whether this event sounds are enabled or not
-     * @name EventSounds#enabled
-     * @type {number} */
-    enabled: Utils.DEFAULT,
-    /**
-     * This attribute is intended to be used at prototype level, to indicate a globally disabled
-     * or enabled state.
-     * @name EventSounds#globalEnabled
-     * @type {boolean} */
-    globalEnabled: true,
-  });
-
-  return EventSounds;
-});
+export default EventSounds;

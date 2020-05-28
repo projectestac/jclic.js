@@ -201,7 +201,7 @@ export class TextGridContent {
   border = false;
 
   /**
-   * The {@link BoxBase} object with visual settings of the text grid
+   * The {@link BoxBase} object with the visual settings of this text grid
    * @name TextGridContent#style
    * @type {BoxBase}
    */
@@ -216,14 +216,14 @@ export class TextGridContent {
   text = null;
 
   /**
-   * The letter used as wildcardtext
+   * The character used as a wildcard text
    * @name TextGridContent#wild
    * @type {string}
    */
   wild = '*';
 
   /**
-   * A String with the chars to take as source when randomly filling empty cells
+   * A String with the chars to take as a source when randomly filling empty cells
    * @name TextGridContent#randomChars
    * @type {string}
    */
