@@ -28,94 +28,91 @@
  *  @licend
  */
 
-/* global define */
+import { $ } from 'jquery';
+import JumpInfo from './JumpInfo';
+import Utils from '../Utils';
 
-define([
-  "jquery",
-  "./JumpInfo",
-  "../Utils"
-], function ($, JumpInfo, Utils) {
-
+/**
+ * This special case of {@link JumpInfo} is used in {@link ActivitySequenceJump} objects to decide
+ * the type of jump or action to be performed, based on the results obtained by the user when
+ * playing previous JClic activities.
+ *
+ * In addition to the standard {@link JumpInfo} fields and methods, this class has two public
+ * members where score and time thresholds are stored.
+ *
+ * The exact meaning of this members will depend on the type of `ConditionalJumpInfo` in the
+ * {@link ActivitySequenceJump} (it can be `upperJump` or `lowerJump`).
+ * @exports ConditionalJumpInfo
+ * @class
+ * @extends JumpInfo
+ */
+export class ConditionalJumpInfo extends JumpInfo {
   /**
-   * This special case of {@link JumpInfo} is used in {@link ActivitySequenceJump} objects to decide
-   * the type of jump or action to be performed, based on the results obtained by the user when
-   * playing previous JClic activities.
-   *
-   * In addition to the standard {@link JumpInfo} fields and methods, this class has two public
-   * members where score and time thresholds are stored.
-   *
-   * The exact meaning of this members will depend on the type of `ConditionalJumpInfo` in the
-   * {@link ActivitySequenceJump} (it can be `upperJump` or `lowerJump`).
-   * @exports ConditionalJumpInfo
-   * @class
-   * @extends JumpInfo
+   * ConditionalJumpInfo constructor
+   * @param {string} action - Must be one of the described actions.
+   * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
+   * cardinal number in the list.
+   * @param {number=} threshold - Threshold above or below which the action will be triggered,
+   * depending on the type of JumpInfo.
+   * @param {number=} time - Delay to be applied in automatic jumps.
    */
-  class ConditionalJumpInfo extends JumpInfo {
-    /**
-     * ConditionalJumpInfo constructor
-     * @param {string} action - Must be one of the described actions.
-     * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
-     * cardinal number in the list.
-     * @param {number=} threshold - Threshold above or below which the action will be triggered,
-     * depending on the type of JumpInfo.
-     * @param {number=} time - Delay to be applied in automatic jumps.
-     */
-    constructor(action, sq, threshold, time) {
-      super(action, sq);
-      this.threshold = typeof threshold === 'number' ? threshold : -1;
-      this.time = typeof threshold === 'number' ? time : -1;
-    }
-
-    /**
-     * Loads this object settings from a specific JQuery XML element
-     * @param {external:jQuery} $xml - The XML element to parse
-     */
-    setProperties($xml) {
-      super.setProperties($xml);
-      if ($xml.attr('threshold') !== undefined)
-        this.threshold = $xml.attr('threshold');
-      if ($xml.attr('time') !== undefined)
-        this.time = $xml.attr('time');
-      return this;
-    }
-
-    /**
-     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
-     * parent references, constants and also attributes retaining the default value.
-     * The resulting object is commonly usued to serialize elements in JSON format.
-     * @returns {object} - The resulting object, with minimal attrributes
-     */
-    getAttributes() {
-      return Object.assign(super.getAttributes(), Utils.getAttributes(this, ['threshold', 'time']));
-    }
-
-    /**
-     * Loads this conditional jump settings from a data object
-     * @param {object} data - The data object to parse
-     */
-    setAttributes(data) {
-      super.setAttributes(data);
-      ['threshold', 'time'].forEach(t => {
-        if (!Utils.isEmpty(data[t]))
-          this[t] = data[t];
-      });
-      return this;
-    }
-
+  constructor(action, sq, threshold, time) {
+    super(action, sq);
+    this.threshold = typeof threshold === 'number' ? threshold : -1;
+    this.time = typeof threshold === 'number' ? time : -1;
   }
 
-  Object.assign(ConditionalJumpInfo.prototype, {
-    /**
-     * Threshold above or below which the action will be triggered, depending on the type of JumpInfo.
-     * @name ConditionalJumpInfo#threshold
-     * @type {number} */
-    threshold: -1,
-    /**
-     * Delay to be applied in automatic jumps.
-     * @name ConditionalJumpInfo#time
-     * @type {number} */
-    time: -1,
-  });
+  /**
+   * Loads this object settings from a specific JQuery XML element
+   * @param {external:jQuery} $xml - The XML element to parse
+   */
+  setProperties($xml) {
+    super.setProperties($xml);
+    if ($xml.attr('threshold') !== undefined)
+      this.threshold = $xml.attr('threshold');
+    if ($xml.attr('time') !== undefined)
+      this.time = $xml.attr('time');
+    return this;
+  }
 
-  return ConditionalJumpInfo;
-});
+  /**
+   * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+   * parent references, constants and also attributes retaining the default value.
+   * The resulting object is commonly usued to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attrributes
+   */
+  getAttributes() {
+    return Object.assign(super.getAttributes(), Utils.getAttributes(this, ['threshold', 'time']));
+  }
+
+  /**
+   * Loads this conditional jump settings from a data object
+   * @param {object} data - The data object to parse
+   */
+  setAttributes(data) {
+    super.setAttributes(data);
+    ['threshold', 'time'].forEach(t => {
+      if (!Utils.isEmpty(data[t]))
+        this[t] = data[t];
+    });
+    return this;
+  }
+
+  // Class fields
+
+  /**
+   * Threshold above or below which the action will be triggered, depending on the type of JumpInfo.
+   * @name ConditionalJumpInfo#threshold
+   * @type {number}
+   */
+  threshold = -1;
+
+  /**
+   * Delay to be applied in automatic jumps.
+   * @name ConditionalJumpInfo#time
+   * @type {number}
+   */
+  time = -1;
+}
+
+export default ConditionalJumpInfo;

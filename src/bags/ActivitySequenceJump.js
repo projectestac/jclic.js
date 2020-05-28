@@ -28,119 +28,117 @@
  *  @licend
  */
 
-/* global define */
+import { $ } from 'jquery';
+import JumpIn from './JumpInfo';
+import ConditionalJumpIn from './ConditionalJumpInfo';
+import Utils from '../Utils';
 
-define([
-  "jquery",
-  "./JumpInfo",
-  "./ConditionalJumpInfo",
-  "../Utils"
-], function ($, JumpInfo, ConditionalJumpInfo, Utils) {
-
+/**
+ * This is a special case of {@link JumpInfo}, used only in {@link ActivitySequenceElement} objects.
+ * Sequence elements can contain up to two ActivitySequenceJump objects: one to be processed
+ * when the user clicks on the "next" button (or when the activity finishes, if in automatic mode),
+ * and the other used with the "prev" button. ActivitySequenceJump objects define a default jump
+ * or action to be performed, but can also have up to two {@link ConditionalJumpInfo} objects. These
+ * define alternative jumps that are performed only when score or time are below or over a specific
+ * threshold.
+ * @exports ActivitySequenceJump
+ * @class
+ * @extends JumpInfo
+ */
+export class ActivitySequenceJump extends JumpInfo {
   /**
-   * This is a special case of {@link JumpInfo}, used only in {@link ActivitySequenceElement} objects.
-   * Sequence elements can contain up to two ActivitySequenceJump objects: one to be processed
-   * when the user clicks on the "next" button (or when the activity finishes, if in automatic mode),
-   * and the other used with the "prev" button. ActivitySequenceJump objects define a default jump
-   * or action to be performed, but can also have up to two {@link ConditionalJumpInfo} objects. These
-   * define alternative jumps that are performed only when score or time are below or over a specific
-   * threshold.
-   * @exports ActivitySequenceJump
-   * @class
-   * @extends JumpInfo
+   * ActivitySequenceJump constructor
+   * @param {string} action - Must be one of the described actions.
+   * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
+   * cardinal number in the list.
    */
-  class ActivitySequenceJump extends JumpInfo {
-    /**
-     * ActivitySequenceJump constructor
-     * @param {string} action - Must be one of the described actions.
-     * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
-     * cardinal number in the list.
-     */
-    constructor(action, sq) {
-      super(action, sq);
-    }
-
-    /**
-     * Loads the object settings from a specific JQuery XML element.
-     * @param {external:jQuery} $xml - The XML element to parse
-     */
-    setProperties($xml) {
-      super.setProperties($xml);
-
-      // Read conditional jumps
-      $xml.children('jump').each((_n, child) => {
-        const condJmp = new ConditionalJumpInfo().setProperties($(child));
-        if (condJmp.id === 'upper')
-          this.upperJump = condJmp;
-        else if (condJmp.id === 'lower')
-          this.lowerJump = condJmp;
-      });
-      return this;
-    }
-
-    /**
-     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
-     * parent references, constants and also attributes retaining the default value.
-     * The resulting object is commonly usued to serialize elements in JSON format.
-     * @returns {object} - The resulting object, with minimal attrributes
-     */
-    getAttributes() {
-      return Object.assign(super.getAttributes(), Utils.getAttributes(this, ['upperJump', 'lowerJump']));
-    }
-
-    /**
-      * Loads the jump settings from a data object
-      * @param {object} data - The data object to parse
-      */
-    setAttributes(data) {
-      super.setAttributes(data);
-
-      ['upperJump', 'lowerJump'].forEach(cj => {
-        if (data[cj])
-          this[cj] = new ConditionalJumpInfo().setAttributes(data[cj]);
-      });
-
-      return this;
-    }
-
-
-    /**
-     * Resolves what {@link JumpInfo} must be taken, based on a done time and average rating obtained
-     * in activities.
-     * @param {number} rating - Average rating obtained by the user in the activities done during the
-     * last sequence stretch.
-     * @param {number} time - Total time spend doing the activities.
-     * @returns {JumpInfo}
-     */
-    resolveJump(rating, time) {
-      let result = this;
-      if (rating >= 0 && time >= 0) {
-        if (this.upperJump !== null &&
-          rating > this.upperJump.threshold &&
-          (this.upperJump.time <= 0 || time < this.upperJump.time)) {
-          result = this.upperJump;
-        } else if (this.lowerJump !== null &&
-          (rating < this.lowerJump.threshold ||
-            this.lowerJump.time > 0 && time > this.lowerJump.time)) {
-          result = this.lowerJump;
-        }
-      }
-      return result;
-    }
+  constructor(action, sq) {
+    super(action, sq);
   }
 
-  Object.assign(ActivitySequenceJump.prototype, {
-    /**
-     * Optional jump to be performed when the results (score and time) are above a specific threshold.
-     * @name ActivitySequenceJump#upperJump
-     * @type {ConditionalJumpInfo} */
-    upperJump: null,
-    /**
-     * Optional jump to be performed when the results (score or time) are below a specific threshold.
-     * @name ActivitySequenceJump#lowerJump
-     * @type {ConditionalJumpInfo} */
-    lowerJump: null,
-  });
+  /**
+   * Loads the object settings from a specific JQuery XML element.
+   * @param {external:jQuery} $xml - The XML element to parse
+   */
+  setProperties($xml) {
+    super.setProperties($xml);
 
-  return ActivitySequenceJump;
-});
+    // Read conditional jumps
+    $xml.children('jump').each((_n, child) => {
+      const condJmp = new ConditionalJumpInfo().setProperties($(child));
+      if (condJmp.id === 'upper')
+        this.upperJump = condJmp;
+      else if (condJmp.id === 'lower')
+        this.lowerJump = condJmp;
+    });
+    return this;
+  }
+
+  /**
+   * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+   * parent references, constants and also attributes retaining the default value.
+   * The resulting object is commonly usued to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attrributes
+   */
+  getAttributes() {
+    return Object.assign(super.getAttributes(), Utils.getAttributes(this, ['upperJump', 'lowerJump']));
+  }
+
+  /**
+    * Loads the jump settings from a data object
+    * @param {object} data - The data object to parse
+    */
+  setAttributes(data) {
+    super.setAttributes(data);
+
+    ['upperJump', 'lowerJump'].forEach(cj => {
+      if (data[cj])
+        this[cj] = new ConditionalJumpInfo().setAttributes(data[cj]);
+    });
+
+    return this;
+  }
+
+
+  /**
+   * Resolves what {@link JumpInfo} must be taken, based on a done time and average rating obtained
+   * in activities.
+   * @param {number} rating - Average rating obtained by the user in the activities done during the
+   * last sequence stretch.
+   * @param {number} time - Total time spend doing the activities.
+   * @returns {JumpInfo}
+   */
+  resolveJump(rating, time) {
+    let result = this;
+    if (rating >= 0 && time >= 0) {
+      if (this.upperJump !== null &&
+        rating > this.upperJump.threshold &&
+        (this.upperJump.time <= 0 || time < this.upperJump.time)) {
+        result = this.upperJump;
+      } else if (this.lowerJump !== null &&
+        (rating < this.lowerJump.threshold ||
+          this.lowerJump.time > 0 && time > this.lowerJump.time)) {
+        result = this.lowerJump;
+      }
+    }
+    return result;
+  }
+
+  // Class fields
+
+  /**
+   * Optional jump to be performed when the results (score and time) are above a specific threshold.
+   * @name ActivitySequenceJump#upperJump
+   * @type {ConditionalJumpInfo}
+   */
+  upperJump = null;
+
+  /**
+   * Optional jump to be performed when the results (score or time) are below a specific threshold.
+   * @name ActivitySequenceJump#lowerJump
+   * @type {ConditionalJumpInfo}
+   */
+  lowerJump = null;
+}
+
+export default ActivitySequenceJump;
