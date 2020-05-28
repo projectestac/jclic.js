@@ -28,7 +28,6 @@
  *  @licend
  */
 
-
 import { $ } from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
@@ -376,8 +375,5 @@ class ExchangePuzzlePanel extends Activity.Panel {
   events = ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'];
 }
 
-// Register class in Activity.prototype
-Activity.CLASSES['@puzzles.ExchangePuzzle'] = ExchangePuzzle;
-
-export default ExchangePuzzle;
-
+// Register activity class
+export default Activity.registerClass('@puzzles.ExchangePuzzle', ExchangePuzzle);

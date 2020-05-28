@@ -70,6 +70,17 @@ export class Activity {
   }
 
   /**
+   * Registers a new type of activity
+   * @param {string} activityClassName - The class name used to identify the activity
+   * @param {function} activityClass - The activity class, usually extending Activity
+   * @returns {Activity} - The activity class
+   */
+  static registerClass(activityClassName, activityClass) {
+    Activity.CLASSES[activityClassName] = activityClass;
+    return activityClass;
+  }
+
+  /**
    * Factory constructor that returns a specific type of Activity based on the `class` attribute
    * declared in `data`.
    * @param {object|external:jQuery} data - Can be a jQuery XML element, or an object obtained with a call to `getAttributes`
@@ -840,10 +851,8 @@ export class Activity {
   numericContent = false;
 
   /**
-   * Classes derived from `Activity` should register themselves by adding a field to
-   * `Activity.CLASSES` using its name as identifier and the class constructor as a value.
-   * @example <caption>To be included at the end of MyActivity class:
-   * </caption>Activity.CLASSES['custom@myActivity'] = MyActivity
+   * Classes derived from `Activity` should register themselves by calling
+   * `Activity.registerClass` with its name and the class object.
    * @type {object}
    */
   static CLASSES = {

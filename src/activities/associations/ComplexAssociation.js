@@ -320,7 +320,5 @@ export class ComplexAssociationPanel extends SimpleAssociation.Panel {
   invAssCheck = null;
 }
 
-// Register class in Activity.prototype
-Activity.CLASSES['@associations.ComplexAssociation'] = ComplexAssociation;
-
-export default ComplexAssociation;
+// Register activity class
+export default Activity.registerClass('@associations.ComplexAssociation', ComplexAssociation);

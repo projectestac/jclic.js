@@ -519,8 +519,5 @@ export class SimpleAssociationPanel extends Activity.Panel {
   events = ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'];
 }
 
-//
-// Register class in Activity.prototype
-Activity.CLASSES['@associations.SimpleAssociation'] = SimpleAssociation;
-
-export default SimpleAssociation;
+// Register activity class
+export default Activity.registerClass('@associations.SimpleAssociation', SimpleAssociation);

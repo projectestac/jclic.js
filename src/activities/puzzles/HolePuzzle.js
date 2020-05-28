@@ -366,7 +366,5 @@ export class HolePuzzlePanel extends Activity.Panel {
   events = ['click'];
 }
 
-// Register class in Activity.prototype
-Activity.CLASSES['@puzzles.HolePuzzle'] = HolePuzzle;
-
-export default HolePuzzle;
+// Register activity class
+export default Activity.registerClass('@puzzles.HolePuzzle', HolePuzzle);

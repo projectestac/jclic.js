@@ -28,111 +28,106 @@
  *  @licend
  */
 
-/* global define */
+import { $ } from 'jquery';
+import Activity from '../../Activity';
+import TextActivityBase from './TextActivityBase';
 
-define([
-  "jquery",
-  "../../Activity",
-  "./TextActivityBase"
-], function ($, Activity, TextActivityBase) {
+/**
+ * This type of text activity suggests users to complete a given text, without any help on where to
+ * write the missing words or phrases.
+ * @exports Complete
+ * @class
+ * @extends TextActivityBase
+ */
+export class Complete extends TextActivityBase {
+  /**
+   * Complete constructor
+   * @param {JClicProject} project - The project to which this activity belongs
+   */
+  constructor(project) {
+    super(project);
+  }
+
+  // Class fields
 
   /**
-   * This type of text activity suggests users to complete a given text, without any help on where to
-   * write the missing words or phrases.
-   * @exports Complete
-   * @class
-   * @extends TextActivityBase
+ * Panel class associated to this type of activity: {@link CompletePanel}
+ * @type {class} */
+  static Panel = CompletePanel;
+}
+
+/**
+ * The {@link TextActivityBasePanel} where {@link Complete} activities are played.
+ * @class
+ * @extends TextActivityBasePanel
+ */
+export class CompletePanel extends TextActivityBase.Panel {
+  /**
+   * CompletePanel constructor
+   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
    */
-  class Complete extends TextActivityBase {
-    /**
-     * Complete constructor
-     * @param {JClicProject} project - The project to which this activity belongs
-     */
-    constructor(project) {
-      super(project);
-    }
+  constructor(act, ps, $div) {
+    super(act, ps, $div);
   }
 
   /**
-   * The {@link TextActivityBasePanel} where {@link Complete} activities are played.
-   * @class
-   * @extends TextActivityBasePanel
+   * Creates a target DOM element for the provided target.
+   * @override
+   * @param {TextActivityDocument.TextTarget} _target - The target related to the DOM object to be created
+   * @param {external:jQuery} _$span -  - An initial DOM object (usually a `span`) that can be used
+   * to store the target, or replaced by another type of object.
+   * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
    */
-  class CompletePanel extends TextActivityBase.Panel {
-    /**
-     * CompletePanel constructor
-     * @param {Activity} act - The {@link Activity} to which this Panel belongs
-     * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-     * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-     * Java interface.
-     * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
-     */
-    constructor(act, ps, $div) {
-      super(act, ps, $div);
-    }
-
-    /**
-     * Creates a target DOM element for the provided target.
-     * @override
-     * @param {TextActivityDocument.TextTarget} _target - The target related to the DOM object to be created
-     * @param {external:jQuery} _$span -  - An initial DOM object (usually a `span`) that can be used
-     * to store the target, or replaced by another type of object.
-     * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
-     */
-    $createTargetElement(_target, _$span) {
-      // Targets are always hidden in this type of activities
-      return null;
-    }
-
-    /**
-     * Called when the activity starts playing
-     * @override
-     */
-    startActivity() {
-      super.startActivity();
-      this.$div.find('.JClicTextDocument').attr('contenteditable', 'true').attr('spellcheck', 'false');
-    }
-
-    /**
-     * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
-     * @override
-     * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
-     */
-    evaluatePanel() {
-      // TODO: Mark errors!
-      const
-        currentText = this.$div.find('.JClicTextDocument').text().trim(),
-        originalText = this.act.document.getRawText(),
-        ok = this.act.ev.checkText(currentText, originalText);
-
-      this.ps.reportNewAction(this.act, 'WRITE', currentText, originalText, ok, this.targets.length);
-
-      if (ok) {
-        this.finishActivity(true);
-        return true;
-      } else {
-        this.playEvent('finishedError');
-      }
-      return false;
-    }
-
-    /**
-     * Ordinary ending of the activity, usually called form `processEvent`
-     * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
-     */
-    finishActivity(result) {
-      this.$div.find('.JClicTextDocument').attr('contenteditable', 'false');
-      return super.finishActivity(result);
-    }
+  $createTargetElement(_target, _$span) {
+    // Targets are always hidden in this type of activities
+    return null;
   }
 
   /**
-   * Panel class associated to this type of activity: {@link CompletePanel}
-   * @type {class} */
-  Complete.Panel = CompletePanel;
+   * Called when the activity starts playing
+   * @override
+   */
+  startActivity() {
+    super.startActivity();
+    this.$div.find('.JClicTextDocument').attr('contenteditable', 'true').attr('spellcheck', 'false');
+  }
 
-  // Register class in Activity.prototype
-  Activity.CLASSES['@text.Complete'] = Complete;
+  /**
+   * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
+   * @override
+   * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
+   */
+  evaluatePanel() {
+    // TODO: Mark errors!
+    const
+      currentText = this.$div.find('.JClicTextDocument').text().trim(),
+      originalText = this.act.document.getRawText(),
+      ok = this.act.ev.checkText(currentText, originalText);
 
-  return Complete;
-});
+    this.ps.reportNewAction(this.act, 'WRITE', currentText, originalText, ok, this.targets.length);
+
+    if (ok) {
+      this.finishActivity(true);
+      return true;
+    } else {
+      this.playEvent('finishedError');
+    }
+    return false;
+  }
+
+  /**
+   * Ordinary ending of the activity, usually called form `processEvent`
+   * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
+   */
+  finishActivity(result) {
+    this.$div.find('.JClicTextDocument').attr('contenteditable', 'false');
+    return super.finishActivity(result);
+  }
+}
+
+// Register activity class
+export default Activity.registerClass('@text.Complete', Complete);

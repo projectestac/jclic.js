@@ -422,7 +422,6 @@ class DoublePuzzlePanel extends Activity.Panel {
   events = ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'];
 }
 
-// Register class in Activity.prototype
-Activity.CLASSES['@puzzles.DoublePuzzle'] = DoublePuzzle;
+// Register activity class
+export default Activity.registerClass('@puzzles.DoublePuzzle', DoublePuzzle);
 
-export default DoublePuzzle;

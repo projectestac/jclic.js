@@ -341,7 +341,5 @@ export class ExplorePanel extends Activity.Panel {
   events = ['click'];
 }
 
-// Register class in Activity.prototype
-Activity.CLASSES['@panels.Explore'] = Explore;
-
-export default Explore;
+// Register activity class
+export default Activity.registerClass('@panels.Explore', Explore);

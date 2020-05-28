@@ -263,7 +263,5 @@ export class InformationScreenPanel extends Activity.Panel {
 
 }
 
-// Register class in Activity.prototype
-Activity.CLASSES['@panels.InformationScreen'] = InformationScreen;
-
-export default InformationScreen;
+// Register activity class
+export default Activity.registerClass('@panels.InformationScreen', InformationScreen);

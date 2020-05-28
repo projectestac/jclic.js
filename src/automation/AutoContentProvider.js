@@ -28,120 +28,126 @@
  *  @licend
  */
 
-/* global define */
+import Utils from '../Utils';
 
-define([
-  "../Utils"
-], function (Utils) {
-
+/**
+ * This abstract class is the base for classes that create on-time automatic content for JClic
+ * activities, usually using random parameters to assure different content in each session.
+ *
+ * Activities with `AutoContentProvider` objects rely on them to build new content on every start.
+ * @exports AutoContentProvider
+ * @class
+ */
+export class AutoContentProvider {
   /**
-   * This abstract class is the base for classes that create on-time automatic content for JClic
-   * activities, usually using random parameters to assure different content in each session.
-   *
-   * Activities with `AutoContentProvider` objects rely on them to build new content on every start.
-   * @exports AutoContentProvider
-   * @class
+   * AutoContentProvider constructor
    */
-  class AutoContentProvider {
-    /**
-     * AutoContentProvider constructor
-     */
-    constructor() {
-    }
-
-    /**
-     * Dynamic constructor that returns a specific type of AutoContentProvider based on the `class`
-     * attribute declared on an $xml element.
-     * It should be called only from {@link Activity#setproperties}
-     * @param {external.jQuery} $xml - The XML element to parse
-     * @returns {AutoContentProvider}
-     */
-    static getProvider($xml) {
-      let automation = null;
-      if ($xml) {
-        const
-          className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.automation\./, '@'),
-          cl = AutoContentProvider.CLASSES[className];
-        if (cl) {
-          automation = new cl();
-          automation.setProperties($xml);
-        } else
-          Utils.log('error', `Unknown AutoContentProvider class: ${className}`);
-      }
-      return automation;
-    }
-
-    /**
-     * Loads the object settings from a specific jQuery XML element
-     * @param {external:jQuery} $xml - The XML element to parse
-     */
-    setProperties($xml) {
-      this.className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.automation\./, '@');
-      return this;
-    }
-
-    /**
-     * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
-     * parent references, constants and also attributes retaining the default value.
-     * The resulting object is commonly usued to serialize elements in JSON format.
-     * @returns {object} - The resulting object, with minimal attrributes
-     */
-    getAttributes() {
-      // To be overrided!
-      return Utils.getAttributes(this, ['className']);
-    }
-
-    /**
-     * Builds a new AutoContentProvider, based on the properties specified in a data object
-     * @param {object} data - The data object to be parsed
-     * @param {array} params - Optional parameters to be passed to `setAttributes`
-     * @returns {Shaper}
-     */
-    static factory(data, params=[]) {
-      const cl = AutoContentProvider.CLASSES[data.className];
-      return (new cl()).setAttributes(data, ...params);
-    }
-
-    /**
-     * Initializes the content provider
-     */
-    init() {
-      // To be implemented in real content providers
-    }
-
-    /**
-     * Builds an {@link AutoContentProvider.ActiveBagContentKit} and generates the automatized content.
-     * @param {number} nRows - Number of rows to be processed
-     * @param {number} nCols - Number of columns to be processed
-     * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
-     * objects to be filled with new content.
-     * @param {bolean} useIds - When `true`, the `id` field of {@link ActiveBoxContent} objects is significant
-     * @returns {boolean} - `true` if the process was OK. `false` otherwise.
-     */
-    generateContent(nRows, nCols, content, useIds) {
-      return this.process(new AutoContentProvider.ActiveBagContentKit(nRows, nCols, content, useIds));
-    }
-
-    /**
-     * Generates the automatized content
-     * @param {AutoContentProvider.ActiveBagContentKit} _kit - The objects to be filled with content
-     * @returns {boolean} - `true` if the process was OK. `false` otherwise.
-     */
-    process(_kit) {
-      // To be implemented in subclasses
-      return false;
-    }
+  constructor() {
   }
 
-  Object.assign(AutoContentProvider.prototype, {
-    /**
-     * This AutoContentProvider manages numeric expressions, so text literals should be
-     * converted to numbers for comparisions, taking in account the
-     * number format of the current locale (dot or comma as decimal separator)
-     * @name AutoContentProvider#numericContent
-     * @type {boolean} */
-    numericContent: false,
-  });
+  /**
+   * Dynamic constructor that returns a specific type of AutoContentProvider based on the `class`
+   * attribute declared on an $xml element.
+   * It should be called only from {@link Activity#setproperties}
+   * @param {external.jQuery} $xml - The XML element to parse
+   * @returns {AutoContentProvider}
+   */
+  static getProvider($xml) {
+    let automation = null;
+    if ($xml) {
+      const
+        className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.automation\./, '@'),
+        cl = AutoContentProvider.CLASSES[className];
+      if (cl) {
+        automation = new cl();
+        automation.setProperties($xml);
+      } else
+        Utils.log('error', `Unknown AutoContentProvider class: ${className}`);
+    }
+    return automation;
+  }
+
+  /**
+   * Loads the object settings from a specific jQuery XML element
+   * @param {external:jQuery} $xml - The XML element to parse
+   */
+  setProperties($xml) {
+    this.className = ($xml.attr('class') || '').replace(/^edu\.xtec\.jclic\.automation\./, '@');
+    return this;
+  }
+
+  /**
+   * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
+   * parent references, constants and also attributes retaining the default value.
+   * The resulting object is commonly usued to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attrributes
+   */
+  getAttributes() {
+    // To be overrided!
+    return Utils.getAttributes(this, ['className']);
+  }
+
+  /**
+   * Builds a new AutoContentProvider, based on the properties specified in a data object
+   * @param {object} data - The data object to be parsed
+   * @param {array} params - Optional parameters to be passed to `setAttributes`
+   * @returns {Shaper}
+   */
+  static factory(data, params = []) {
+    const cl = AutoContentProvider.CLASSES[data.className];
+    return (new cl()).setAttributes(data, ...params);
+  }
+
+  /**
+   * Initializes the content provider
+   */
+  init() {
+    // To be implemented in real content providers
+  }
+
+  /**
+   * Builds an {@link AutoContentProvider.ActiveBagContentKit} and generates the automatized content.
+   * @param {number} nRows - Number of rows to be processed
+   * @param {number} nCols - Number of columns to be processed
+   * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
+   * objects to be filled with new content.
+   * @param {bolean} useIds - When `true`, the `id` field of {@link ActiveBoxContent} objects is significant
+   * @returns {boolean} - `true` if the process was OK. `false` otherwise.
+   */
+  generateContent(nRows, nCols, content, useIds) {
+    return this.process(new AutoContentProvider.ActiveBagContentKit(nRows, nCols, content, useIds));
+  }
+
+  /**
+   * Generates the automatized content
+   * @param {AutoContentProvider.ActiveBagContentKit} _kit - The objects to be filled with content
+   * @returns {boolean} - `true` if the process was OK. `false` otherwise.
+   */
+  process(_kit) {
+    // To be implemented in subclasses
+    return false;
+  }
+
+  /**
+   * Registers a new type of AutoContentProvider
+   * @param {string} providerClassName - The class name used to identify this AutoContentProvider
+   * @param {function} providerClass - The activity class, usually extending AutoContentProvider
+   * @returns {AutoContentProvider} - The provider class
+   */
+  static registerClass(providerClassName, providerClass) {
+    AutoContentProvider.CLASSES[providerClassName] = providerClass;
+    return providerClass;
+  }
+
+  // Class fields
+
+  /**
+   * This AutoContentProvider manages numeric expressions, so text literals should be
+   * converted to numbers for comparisions, taking in account the
+   * number format of the current locale (dot or comma as decimal separator)
+   * @name AutoContentProvider#numericContent
+   * @type {boolean} */
+  numericContent = false;
 
   /**
    * Utility class used to encapsulate multiple sets of box contents
@@ -152,7 +158,7 @@ define([
    * objects to be filled with new content.
    * @param {bolean} useIds - `true` when the `id` field of {@link ActiveBoxContent} objects is significant.
    */
-  AutoContentProvider.ActiveBagContentKit = class {
+  static ActiveBagContentKit = class {
     constructor(nRows, nCols, content, useIds) {
       this.nRows = nRows;
       this.nCols = nCols;
@@ -165,11 +171,12 @@ define([
    * Contains the current list of classes derived from AutoContentProvider.
    * This object should be updated by real automation classes at declaration time.
    * Currently, only two types of "AutoContentProvider" are defined: {@link Arith} and TagReplace.
-   * @type {object} */
-  AutoContentProvider.CLASSES = {
-    // TODO: Implement TagReplace
-    '@tagreplace.TagReplace': AutoContentProvider
-  };
+   * @type {object}
+   */
+  static CLASSES = {};
+}
 
-  return AutoContentProvider;
-});
+// TODO: Implement TagReplace
+AutoContentProvider.registerClass('@tagreplace.TagReplace', AutoContentProvider);
+
+export default AutoContentProvider;

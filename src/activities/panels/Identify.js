@@ -355,7 +355,5 @@ export class IdentifyPanel extends Activity.Panel {
   events = ['click'];
 }
 
-// Register class in Activity.prototype
-Activity.CLASSES['@panels.Identify'] = Identify;
-
-export default Identify;
+// Register activity class
+export default Activity.registerClass('@panels.Identify', Identify);

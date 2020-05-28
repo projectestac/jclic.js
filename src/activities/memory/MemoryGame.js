@@ -426,7 +426,5 @@ export class MemoryGamePanel extends Activity.Panel {
   events = ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'];
 }
 
-// Register class in Activity.prototype
-Activity.CLASSES['@memory.MemoryGame'] = MemoryGame;
-
-export default MemoryGame;
+// Register activity class
+export default Activity.registerClass('@memory.MemoryGame', MemoryGame);

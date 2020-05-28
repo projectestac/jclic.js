@@ -226,8 +226,7 @@ cAXZ0IfsVKS3BTGUMDas0E9NfkO/ovmQBv2v0BJ+xAaYuQX2hCJNtwAAAABJRU5ErkJggg=='
   };
 }
 
-// Register class in Activity.prototype
-Activity.CLASSES['@panels.Menu'] = Menu;
+// Register activity class
+export default Activity.registerClass('@panels.Menu', Menu);
 
-export default Menu;
 

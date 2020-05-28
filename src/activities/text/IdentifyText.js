@@ -28,197 +28,193 @@
  *  @licend
  */
 
-/* global define */
+import { $ } from 'jquery';
+import Activity from '../../Activity';
+import TextActivityBase from './TextActivityBase';
 
-define([
-  "jquery",
-  "../../Activity",
-  "./TextActivityBase"
-], function ($, Activity, TextActivityBase) {
-
+/**
+ * This type of text activity suggests users to click on specific words or single letters of a
+ * given text, without any help on where these elements are placed.
+ * @exports IdentifyText
+ * @class
+ * @extends TextActivityBase
+ */
+export class IdentifyText extends TextActivityBase {
   /**
-   * This type of text activity suggests users to click on specific words or single letters of a
-   * given text, without any help on where these elements are placed.
-   * @exports IdentifyText
-   * @class
-   * @extends TextActivityBase
+   * IdentifyText constructor
+   * @param {JClicProject} project - The project to which this activity belongs
    */
-  class IdentifyText extends TextActivityBase {
-    /**
-     * IdentifyText constructor
-     * @param {JClicProject} project - The project to which this activity belongs
-     */
-    constructor(project) {
-      super(project);
-    }
+  constructor(project) {
+    super(project);
   }
 
-  /**
-   * The {@link TextActivityBasePanel} where {@link IdentifyText} activities are played.
-   * @class
-   * @extends TextActivityBasePanel
-   */
-  class IdentifyTextPanel extends TextActivityBase.Panel {
-    /**
-     * IdentifyTextPanel constructor
-     * @param {Activity} act - The {@link Activity} to which this Panel belongs
-     * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-     * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-     * Java interface.
-     * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
-     */
-    constructor(act, ps, $div) {
-      super(act, ps, $div);
-    }
-
-    /**
-     * Creates a target DOM element for the provided target.
-     * @override
-     * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
-     * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
-     * to store the target, or replaced by another type of object.
-     * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
-     */
-    $createTargetElement(target, $span) {
-      super.$createTargetElement(target, $span);
-      const idLabel = `target${`000${this.targets.length - 1}`.slice(-3)}`;
-      $span.bind('click', event => {
-        event.textTarget = target;
-        event.idLabel = idLabel;
-        this.processEvent(event);
-      });
-      return $span;
-    }
-
-    /**
-     * Basic initialization procedure
-     * @override
-     */
-    initActivity() {
-      super.initActivity(this);
-      this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');
-      this.playing = true;
-    }
-
-    /**
-     * Counts the number of targets that are solved
-     * @returns {number}
-     */
-    countSolvedTargets() {
-      return this.targets.length.reduce((n, target) => target.targetStatus === 'SOLVED' ? ++n : n, 0);
-    }
-
-    /**
-     * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
-     * @override
-     * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
-     */
-    evaluatePanel() {
-      let targetsOk = 0;
-      this.targets.forEach(target => {
-        const ok = target.targetStatus === 'SOLVED';
-        if (ok)
-          targetsOk++;
-        target.checkColors();
-        this.ps.reportNewAction(this.act, 'SELECT', target.text, target.pos, ok, targetsOk);
-      });
-      if (targetsOk === this.targets.length) {
-        this.finishActivity(true);
-        return true;
-      } else
-        this.playEvent('finishedError');
-      return false;
-    }
-
-    /**
-     * Ordinary ending of the activity, usually called form `processEvent`
-     * @override
-     * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
-     */
-    finishActivity(result) {
-      this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');
-      return super.finishActivity(result);
-    }
-
-    /**
-     * Main handler used to process mouse, touch, keyboard and edit events.
-     * @override
-     * @param {HTMLEvent} event - The HTML event to be processed
-     * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
-     * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
-     */
-    processEvent(event) {
-      if (!super.processEvent(event) ||
-        event.timeStamp === this.lastTimeStamp)
-        return false;
-
-      if (event.timeStamp)
-        this.lastTimeStamp = event.timeStamp;
-
-      const target = event.textTarget;
-      switch (event.type) {
-        case 'click':
-          let text, pos, ok = false;
-          if (target) {
-            if (target.targetStatus === 'SOLVED')
-              target.targetStatus = 'HIDDEN';
-            else {
-              target.targetStatus = 'SOLVED';
-              ok = true;
-            }
-            text = target.text;
-            pos = target.pos;
-            // TODO: Just on/off target colors, don't mark it as error!
-            target.checkColors();
-          } else {
-            // TODO: Get current text at click position, perhaps using [window|document].getSelection
-            text = 'unknown';
-            pos = 0;
-          }
-
-          if (!this.$checkButton) {
-            // Check and notify action
-            const cellsAtPlace = this.countSolvedTargets();
-            this.ps.reportNewAction(this.act, 'SELECT', text, pos, ok, cellsAtPlace);
-
-            // End activity or play event sound
-            if (ok && cellsAtPlace === this.targets.length)
-              this.finishActivity(true);
-            else
-              this.playEvent(ok ? 'actionOk' : 'actionError');
-          }
-          event.preventDefault();
-          break;
-
-        default:
-          break;
-      }
-      return true;
-    }
-  }
-
-  Object.assign(IdentifyTextPanel.prototype, {
-    /**
-     * Flag indicating if targets must be visually marked when the activity begins. In this type of
-     * activity should be always `false` to avoid revealing the words o letters that must be found.
-     * @name IdentifyTextPanel#targetsMarked
-     * @type {boolean} */
-    targetsMarked: false,
-    /**
-     * Used to avoid duplicate event processing
-     * @name IdentifyTextPanel#lastTimeStamp
-     * @type {number}
-     */
-    lastTimeStamp: 0,
-  });
+  // Class fields
 
   /**
    * Panel class associated to this type of activity: {@link IdentifyTextPanel}
    * @type {class} */
-  IdentifyText.Panel = IdentifyTextPanel;
+  static Panel = IdentifyTextPanel;
+}
 
-  // Register class in Activity.prototype
-  Activity.CLASSES['@text.Identify'] = IdentifyText;
+/**
+ * The {@link TextActivityBasePanel} where {@link IdentifyText} activities are played.
+ * @class
+ * @extends TextActivityBasePanel
+ */
+class IdentifyTextPanel extends TextActivityBase.Panel {
+  /**
+   * IdentifyTextPanel constructor
+   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
+   * Java interface.
+   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   */
+  constructor(act, ps, $div) {
+    super(act, ps, $div);
+  }
 
-  return IdentifyText;
-});
+  /**
+   * Creates a target DOM element for the provided target.
+   * @override
+   * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
+   * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
+   * to store the target, or replaced by another type of object.
+   * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
+   */
+  $createTargetElement(target, $span) {
+    super.$createTargetElement(target, $span);
+    const idLabel = `target${`000${this.targets.length - 1}`.slice(-3)}`;
+    $span.bind('click', event => {
+      event.textTarget = target;
+      event.idLabel = idLabel;
+      this.processEvent(event);
+    });
+    return $span;
+  }
+
+  /**
+   * Basic initialization procedure
+   * @override
+   */
+  initActivity() {
+    super.initActivity(this);
+    this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');
+    this.playing = true;
+  }
+
+  /**
+   * Counts the number of targets that are solved
+   * @returns {number}
+   */
+  countSolvedTargets() {
+    return this.targets.length.reduce((n, target) => target.targetStatus === 'SOLVED' ? ++n : n, 0);
+  }
+
+  /**
+   * Evaluates all the targets in this panel. This method is usually called from the `Check` button.
+   * @override
+   * @returns {boolean} - `true` when all targets are OK, `false` otherwise.
+   */
+  evaluatePanel() {
+    let targetsOk = 0;
+    this.targets.forEach(target => {
+      const ok = target.targetStatus === 'SOLVED';
+      if (ok)
+        targetsOk++;
+      target.checkColors();
+      this.ps.reportNewAction(this.act, 'SELECT', target.text, target.pos, ok, targetsOk);
+    });
+    if (targetsOk === this.targets.length) {
+      this.finishActivity(true);
+      return true;
+    } else
+      this.playEvent('finishedError');
+    return false;
+  }
+
+  /**
+   * Ordinary ending of the activity, usually called form `processEvent`
+   * @override
+   * @param {boolean} result - `true` if the activity was successfully completed, `false` otherwise
+   */
+  finishActivity(result) {
+    this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');
+    return super.finishActivity(result);
+  }
+
+  /**
+   * Main handler used to process mouse, touch, keyboard and edit events.
+   * @override
+   * @param {HTMLEvent} event - The HTML event to be processed
+   * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+   * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
+   */
+  processEvent(event) {
+    if (!super.processEvent(event) ||
+      event.timeStamp === this.lastTimeStamp)
+      return false;
+
+    if (event.timeStamp)
+      this.lastTimeStamp = event.timeStamp;
+
+    const target = event.textTarget;
+    switch (event.type) {
+      case 'click':
+        let text, pos, ok = false;
+        if (target) {
+          if (target.targetStatus === 'SOLVED')
+            target.targetStatus = 'HIDDEN';
+          else {
+            target.targetStatus = 'SOLVED';
+            ok = true;
+          }
+          text = target.text;
+          pos = target.pos;
+          // TODO: Just on/off target colors, don't mark it as error!
+          target.checkColors();
+        } else {
+          // TODO: Get current text at click position, perhaps using [window|document].getSelection
+          text = 'unknown';
+          pos = 0;
+        }
+
+        if (!this.$checkButton) {
+          // Check and notify action
+          const cellsAtPlace = this.countSolvedTargets();
+          this.ps.reportNewAction(this.act, 'SELECT', text, pos, ok, cellsAtPlace);
+
+          // End activity or play event sound
+          if (ok && cellsAtPlace === this.targets.length)
+            this.finishActivity(true);
+          else
+            this.playEvent(ok ? 'actionOk' : 'actionError');
+        }
+        event.preventDefault();
+        break;
+
+      default:
+        break;
+    }
+    return true;
+  }
+
+  // Class fields
+
+  /**
+   * Flag indicating if targets must be visually marked when the activity begins. In this type of
+   * activity should be always `false` to avoid revealing the words o letters that must be found.
+   * @name IdentifyTextPanel#targetsMarked
+   * @type {boolean} */
+  targetsMarked = false;
+
+  /**
+   * Used to avoid duplicate event processing
+   * @name IdentifyTextPanel#lastTimeStamp
+   * @type {number}
+   */
+  lastTimeStamp = 0;
+}
+
+// Register activity class
+export default Activity.registerClass('@text.Identify', IdentifyText);
