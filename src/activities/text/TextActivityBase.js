@@ -31,7 +31,7 @@
 /* global window */
 
 import { $ } from 'jquery';
-import Activity from '../../Activity';
+import {Activity, ActivityPanel} from '../../Activity';
 import ActiveBox from '../../boxes/ActiveBox';
 import BoxBase from '../../boxes/BoxBase';
 
@@ -110,7 +110,8 @@ export class TextActivityBase extends Activity {
  * @class
  * @extends ActivityPanel
  */
-export class TextActivityBasePanel extends Activity.Panel {
+//export class TextActivityBasePanel extends Activity.Panel {
+export class TextActivityBasePanel extends ActivityPanel {
   /**
    * TextActivityBasePanel constructor
    * @param {Activity} act - The {@link Activity} to which this Panel belongs

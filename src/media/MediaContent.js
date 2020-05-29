@@ -384,9 +384,9 @@ const ICONS = {
 };
 
 // Load the icons
-$.each(ICONS, (key, value) => {
+Object.keys(ICONS).forEach(key => {
   const img = new Image();
-  img.src = value;
+  img.src = ICONS[key];
   MediaContent.ICONS[key] = img;
 });
 

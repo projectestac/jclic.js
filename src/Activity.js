@@ -42,7 +42,6 @@ import TextGridContent from './boxes/TextGridContent';
 import Evaluator from './activities/text/Evaluator';
 import TextActivityDocument from './activities/text/TextActivityDocument';
 
-
 // Direct access to global setings
 const K = Utils.settings;
 
