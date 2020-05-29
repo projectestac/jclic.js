@@ -28,59 +28,53 @@
  *  @licend
  */
 
-/* global define */
+import Shaper from './Shaper';
+import AWT from '../AWT';
 
-define([
-  "jquery",
-  "./Shaper",
-  "../AWT"
-], function ($, Shaper, AWT) {
+/**
+ *
+ * This is the simplest {@link Shaper}. It divides the graphic object in a set of rectangular
+ * shapes distributed in the specified number of rows and columns.
+ * @exports Rectangular
+ * @class
+ * @extends Shaper
+ */
+export class Rectangular extends Shaper {
   /**
-   *
-   * This is the simplest {@link Shaper}. It divides the graphic object in a set of rectangular
-   * shapes distributed in the specified number of rows and columns.
-   * @exports Rectangular
-   * @class
-   * @extends Shaper
+   * Rectangular constructor
+   * @param {number} nx - Number of columns
+   * @param {number} ny - Number of rows
    */
-  class Rectangular extends Shaper {
-    /**
-     * Rectangular constructor
-     * @param {number} nx - Number of columns
-     * @param {number} ny - Number of rows
-     */
-    constructor(nx, ny) {
-      super(nx, ny);
-    }
-
-    /**
-     * Builds the rectangular shapes based on the number of rows and columns
-     * @override
-     */
-    buildShapes() {
-      const
-        w = 1 / this.nCols,
-        h = 1 / this.nRows;
-      for (let y = 0; y < this.nRows; y++) {
-        for (let x = 0; x < this.nCols; x++) {
-          this.shapeData[y * this.nCols + x] = new AWT.Rectangle(new AWT.Point(x * w, y * h), new AWT.Dimension(w, h));
-        }
-      }
-      this.initiated = true;
-    }
+  constructor(nx, ny) {
+    super(nx, ny);
   }
 
-  Object.assign(Rectangular.prototype, {
-    /**
-     * Overrides same flag in {@link Shaper#rectangularShapes}
-     * @name Rectangular#rectangularShapes
-     * @override
-     * @type {boolean} */
-    rectangularShapes: true,
-  });
+  /**
+   * Builds the rectangular shapes based on the number of rows and columns
+   * @override
+   */
+  buildShapes() {
+    const
+      w = 1 / this.nCols,
+      h = 1 / this.nRows;
+    for (let y = 0; y < this.nRows; y++) {
+      for (let x = 0; x < this.nCols; x++) {
+        this.shapeData[y * this.nCols + x] = new AWT.Rectangle(new AWT.Point(x * w, y * h), new AWT.Dimension(w, h));
+      }
+    }
+    this.initiated = true;
+  }
 
-  // Register this class in the list of known shapers
-  Shaper.CLASSES['@Rectangular'] = Rectangular;
+  // Class fields
 
-  return Rectangular;
-});
+  /**
+   * Overrides same flag in {@link Shaper#rectangularShapes}
+   * @name Rectangular#rectangularShapes
+   * @override
+   * @type {boolean}
+   */
+  rectangularShapes = true;
+}
+
+// Register this class in the list of known shapers
+export default Shaper.registerClass('@Rectangular', Rectangular);

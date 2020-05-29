@@ -28,79 +28,76 @@
  *  @licend
  */
 
-/* global define */
+import { $ } from 'jquery';
+import Skin from './Skin';
+import DefaultSkin from './DefaultSkin';
 
-define([
-  "jquery",
-  "./Skin",
-  "./DefaultSkin"
-], function ($, Skin, DefaultSkin) {
-
+/**
+ * This is a variant of the default {@link Skin} used by JClic.js
+ * It has the buttons at top, and don't has counters.
+ * @exports SimpleSkin
+ * @class
+ * @extends DefaultSkin
+ */
+export class SimpleSkin extends DefaultSkin {
   /**
-   * This is a variant of the default {@link Skin} used by JClic.js
-   * It has the buttons at top, and don't has counters.
-   * @exports SimpleSkin
-   * @class
-   * @extends DefaultSkin
+   * SimpleSkin constructor
+   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+   * realize the media objects meeded tot build the Skin.
+   * @param {string=} name - The skin class name
+   * @param {object=} options - Optional parameter with additional options
    */
-  class SimpleSkin extends DefaultSkin {
-    /**
-     * SimpleSkin constructor
-     * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-     * realize the media objects meeded tot build the Skin.
-     * @param {string=} name - The skin class name
-     * @param {object=} options - Optional parameter with additional options
-     */
-    constructor(ps, name = null, options = {}) {
-      // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
-      super(ps, name, Object.assign({}, options, { counters: false, reportsBtn: true }));
+  constructor(ps, name = null, options = {}) {
+    // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
+    super(ps, name, Object.assign({}, options, { counters: false, reportsBtn: true }));
 
-      this.$ctrlCnt.detach().prependTo(this.$div);
-      this.$msgBoxDiv.detach().appendTo(this.$div);
-      // Add a spacing div in substitution of msgBox
-      $('<div/>').css({ 'flex-grow': 1 }).insertAfter(this.$ctrlCnt.children(':nth-child(2)'));
-    }
-
-    /**
-     * Returns the CSS styles used by this skin. This method should be called only from
-     * the `Skin` constructor, and overridded by subclasses if needed.
-     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
-     * @returns {string}
-     */
-    _getStyleSheets(media = 'default') {
-      return `${super._getStyleSheets(media)}${media === 'default' ? this.skinCSS : media === 'half' ? this.skinCSSHalf : media === 'twoThirds' ? this.skinCSSTwoThirds : ''}`;
-    }
+    this.$ctrlCnt.detach().prependTo(this.$div);
+    this.$msgBoxDiv.detach().appendTo(this.$div);
+    // Add a spacing div in substitution of msgBox
+    $('<div/>').css({ 'flex-grow': 1 }).insertAfter(this.$ctrlCnt.children(':nth-child(2)'));
   }
 
-  Object.assign(SimpleSkin.prototype, {
-    /**
-     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @name SimpleSkin#skinId
-     * @override
-     * @type {string} */
-    skinId: 'JClicSimpleSkin',
-    /**
-     * Styles used in this skin
-     * @name SimpleSkin#skinCSS
-     * @type {string} */
-    skinCSS: '\
+  /**
+   * Returns the CSS styles used by this skin. This method should be called only from
+   * the `Skin` constructor, and overridded by subclasses if needed.
+   * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
+   * @returns {string}
+   */
+  _getStyleSheets(media = 'default') {
+    return `${super._getStyleSheets(media)}${media === 'default' ? this.skinCSS : media === 'half' ? this.skinCSSHalf : media === 'twoThirds' ? this.skinCSSTwoThirds : ''}`;
+  }
+
+  // Class fields
+
+  /**
+   * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+   * @name SimpleSkin#skinId
+   * @override
+   * @type {string}
+   */
+  skinId = 'JClicSimpleSkin';
+
+  /**
+   * Styles used in this skin
+   * @name SimpleSkin#skinCSS
+   * @type {string}
+   */
+  skinCSS = '\
 .ID {background-color:#888888;}\
 .ID .JClicCtrlCnt {margin:9px;}\
 .ID .JClicPlayerCnt {margin:0px 18px 18px;}\
-.ID .JClicMsgBox {flex-grow:0; margin:0 18px 18px 18px;}',
-    skinCSSHalf: '\
+.ID .JClicMsgBox {flex-grow:0; margin:0 18px 18px 18px;}';
+
+  skinCSSHalf = '\
 .ID .JClicCtrlCnt {margin:4px;}\
 .ID .JClicPlayerCnt {margin:0px 9px 9px;}\
-.ID .JClicMsgBox {margin:0 9px 9px 9px;}',
-    skinCSSTwoThirds: '\
+.ID .JClicMsgBox {margin:0 9px 9px 9px;}';
+
+  skinCSSTwoThirds = '\
 .ID .JClicCtrlCnt {margin:6px;}\
 .ID .JClicPlayerCnt {margin:0px 12px 12px;}\
-.ID .JClicMsgBox {margin:0 12px 12px 12px;}',
-  });
+.ID .JClicMsgBox {margin:0 12px 12px 12px;}';
+}
 
-  // Register this class in the list of available skins
-  Skin.CLASSES['simple'] = SimpleSkin;
-
-  return SimpleSkin;
-
-});
+// Register this class in the list of available skins
+export default Skin.registerClass('simple', SimpleSkin);

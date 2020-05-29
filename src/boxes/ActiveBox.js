@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global document */
+
 import { $ } from 'jquery';
 import AbstractBox from './AbstractBox';
 import ActiveBoxContent from './ActiveBoxContent';

@@ -28,11 +28,10 @@
  *  @licend
  */
 
-/* global setTimeout, clearTimeout */
+/* global window */
 
 import { $ } from 'jquery';
 import Activity from '../../Activity';
-import AWT from '../../AWT';
 import ActiveBox from '../../boxes/ActiveBox';
 import BoxBase from '../../boxes/BoxBase';
 
@@ -358,7 +357,7 @@ export class TextActivityBasePanel extends Activity.Panel {
       this.showingPrevScreen = false;
       this.$div.unbind('click');
       if (this.prevScreenTimer) {
-        clearTimeout(this.prevScreenTimer);
+        window.clearTimeout(this.prevScreenTimer);
         this.prevScreenTimer = null;
       }
       this.startActivity();
@@ -388,7 +387,7 @@ export class TextActivityBasePanel extends Activity.Panel {
 
     if (this.act.prevScreenMaxTime > 0) {
       this.ps.setCountDown('time', this.act.prevScreenMaxTime);
-      this.prevScreenTimer = setTimeout(prevScreenEnd, this.act.prevScreenMaxTime * 1000);
+      this.prevScreenTimer = window.setTimeout(prevScreenEnd, this.act.prevScreenMaxTime * 1000);
     }
 
     this.$div.on('click', prevScreenEnd);

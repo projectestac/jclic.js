@@ -28,120 +28,115 @@
  *  @licend
  */
 
-/* global define */
+import Shaper from './Shaper';
+import JigSaw from './JigSaw';
+import AWT from '../AWT';
 
-define([
-  "jquery",
-  "./Shaper",
-  "./JigSaw",
-  "../AWT"
-], function ($, Shaper, JigSaw, AWT) {
+/**
+ * This is the classic {@link JigSaw} {@link Shaper} used in puzzle toys, where teeth and slots
+ * are shaped by Bézier curves.
+ * @exports ClassicJigSaw
+ * @class
+ * @extends JigSaw
+ */
+export class ClassicJigSaw extends JigSaw {
   /**
-   * This is the classic {@link JigSaw} {@link Shaper} used in puzzle toys, where teeth and slots
-   * are shaped by Bézier curves.
-   * @exports ClassicJigSaw
-   * @class
-   * @extends JigSaw
+   * ClassicJigSaw constructor
+   * @param {number} nx - Number of columns
+   * @param {number} ny - Number of rows
    */
-  class ClassicJigSaw extends JigSaw {
-    /**
-     * ClassicJigSaw constructor
-     * @param {number} nx - Number of columns
-     * @param {number} ny - Number of rows
-     */
-    constructor(nx, ny) {
-      super(nx, ny);
-    }
+  constructor(nx, ny) {
+    super(nx, ny);
+  }
 
-    /**
-     * Overrides {@link JigSaw#hLine}
-     * @override
-     * @param {AWT.Path} sd - The Path to which the line will be added
-     * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, and 2 means tooth down
-     * @param {number} x - X coordinate of the starting point
-     * @param {number} y - Y coordinate of the starting point
-     * @param {number} w - Width of the piece
-     * @param {number} h - Height of the piece
-     * @param {boolean} inv - The line must be drawn right to left
-     */
-    hLine(sd, type, x, y, w, h, inv) {
+  /**
+   * Overrides {@link JigSaw#hLine}
+   * @override
+   * @param {AWT.Path} sd - The Path to which the line will be added
+   * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, and 2 means tooth down
+   * @param {number} x - X coordinate of the starting point
+   * @param {number} y - Y coordinate of the starting point
+   * @param {number} w - Width of the piece
+   * @param {number} h - Height of the piece
+   * @param {boolean} inv - The line must be drawn right to left
+   */
+  hLine(sd, type, x, y, w, h, inv) {
+    const
+      kx = inv ? -1 : 1,
+      ky = type === 1 ? 1 : -1;
+
+    if (type === 0)
+      // Flat line
+      sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
+    else {
       const
-        kx = inv ? -1 : 1,
-        ky = type === 1 ? 1 : -1;
+        x0 = x + (w - w * this.baseWidthFactor) / 2 * kx,
+        wb = w * (this.baseWidthFactor / 12) * kx;
 
-      if (type === 0)
-        // Flat line
-        sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
-      else {
-        const
-          x0 = x + (w - w * this.baseWidthFactor) / 2 * kx,
-          wb = w * (this.baseWidthFactor / 12) * kx;
-
-        // Approximation to the tooth:
-        sd.addStroke(new AWT.PathStroke('L', [x0, y]));
-        // This is the tooth:
-        const hb = h * this.toothHeightFactor * ky / 8;
-        sd.addStroke(new AWT.PathStroke('B', [x0 + 4 * wb, y, x0 + 6 * wb, y - hb, x0 + 4 * wb, y - 3 * hb]));
-        sd.addStroke(new AWT.PathStroke('B', [x0 + 2 * wb, y - 5 * hb, x0 + 10 * wb, y - 5 * hb, x0 + 8 * wb, y - 3 * hb]));
-        sd.addStroke(new AWT.PathStroke('B', [x0 + 6 * wb, y - 1 * hb, x0 + 8 * wb, y, x0 + 12 * wb, y]));
-        // Draw the remaining line
-        sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
-      }
-    }
-
-    /**
-     * Overrides {@link JigSaw#vLine}
-     * @override
-     * @param {AWT.Path} sd - The Path to which the line will be added
-     * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, and 2 means tooth left
-     * @param {number} x - X coordinate of the starting point
-     * @param {number} y - Y coordinate of the starting point
-     * @param {number} w - Width of the piece
-     * @param {number} h - Height of the piece
-     * @param {boolean} inv - The line must be drawn bottom to top
-     */
-    vLine(sd, type, x, y, w, h, inv) {
-      const
-        ky = inv ? -1 : 1,
-        kx = type === 1 ? 1 : -1;
-
-      if (type === 0)
-        // Flat line
-        sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
-      else {
-        const
-          y0 = y + (h - h * this.baseWidthFactor) / 2 * ky,
-          hb = h * this.baseWidthFactor / 12 * ky;
-
-        // Approximation to the tooth:
-        sd.addStroke(new AWT.PathStroke('L', [x, y0]));
-        // This is the tooth:
-        const wb = w * this.toothHeightFactor * kx / 8;
-        sd.addStroke(new AWT.PathStroke('B', [x, y0 + 4 * hb, x - wb, y0 + 6 * hb, x - 3 * wb, y0 + 4 * hb]));
-        sd.addStroke(new AWT.PathStroke('B', [x - 5 * wb, y0 + 2 * hb, x - 5 * wb, y0 + 10 * hb, x - 3 * wb, y0 + 8 * hb]));
-        sd.addStroke(new AWT.PathStroke('B', [x - 1 * wb, y0 + 6 * hb, x, y0 + 8 * hb, x, y0 + 12 * hb]));
-        // Draw the remaining line
-        sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
-      }
+      // Approximation to the tooth:
+      sd.addStroke(new AWT.PathStroke('L', [x0, y]));
+      // This is the tooth:
+      const hb = h * this.toothHeightFactor * ky / 8;
+      sd.addStroke(new AWT.PathStroke('B', [x0 + 4 * wb, y, x0 + 6 * wb, y - hb, x0 + 4 * wb, y - 3 * hb]));
+      sd.addStroke(new AWT.PathStroke('B', [x0 + 2 * wb, y - 5 * hb, x0 + 10 * wb, y - 5 * hb, x0 + 8 * wb, y - 3 * hb]));
+      sd.addStroke(new AWT.PathStroke('B', [x0 + 6 * wb, y - 1 * hb, x0 + 8 * wb, y, x0 + 12 * wb, y]));
+      // Draw the remaining line
+      sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
     }
   }
 
-  Object.assign(ClassicJigSaw.prototype, {
-    /**
-     * ClassicJigSaw needs a biggest base width
-     * @name ClassicJigSaw#baseWidthFactor
-     * @type {number} */
-    baseWidthFactor: 3.0 / 4,
-    /**
-     * ClassicJigSaw needs a biggest base height factor
-     * @name ClassicJigSaw#toothHeightFactor
-     * @type {number} */
-    toothHeightFactor: 3.0 / 5,
-  });
+  /**
+   * Overrides {@link JigSaw#vLine}
+   * @override
+   * @param {AWT.Path} sd - The Path to which the line will be added
+   * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, and 2 means tooth left
+   * @param {number} x - X coordinate of the starting point
+   * @param {number} y - Y coordinate of the starting point
+   * @param {number} w - Width of the piece
+   * @param {number} h - Height of the piece
+   * @param {boolean} inv - The line must be drawn bottom to top
+   */
+  vLine(sd, type, x, y, w, h, inv) {
+    const
+      ky = inv ? -1 : 1,
+      kx = type === 1 ? 1 : -1;
 
-  // Register this class in the list of known shapers
-  Shaper.CLASSES['@ClassicJigSaw'] = ClassicJigSaw;
+    if (type === 0)
+      // Flat line
+      sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
+    else {
+      const
+        y0 = y + (h - h * this.baseWidthFactor) / 2 * ky,
+        hb = h * this.baseWidthFactor / 12 * ky;
 
-  return ClassicJigSaw;
+      // Approximation to the tooth:
+      sd.addStroke(new AWT.PathStroke('L', [x, y0]));
+      // This is the tooth:
+      const wb = w * this.toothHeightFactor * kx / 8;
+      sd.addStroke(new AWT.PathStroke('B', [x, y0 + 4 * hb, x - wb, y0 + 6 * hb, x - 3 * wb, y0 + 4 * hb]));
+      sd.addStroke(new AWT.PathStroke('B', [x - 5 * wb, y0 + 2 * hb, x - 5 * wb, y0 + 10 * hb, x - 3 * wb, y0 + 8 * hb]));
+      sd.addStroke(new AWT.PathStroke('B', [x - 1 * wb, y0 + 6 * hb, x, y0 + 8 * hb, x, y0 + 12 * hb]));
+      // Draw the remaining line
+      sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
+    }
+  }
 
-});
+  // Class fields
+
+  /**
+   * ClassicJigSaw needs a biggest base width
+   * @name ClassicJigSaw#baseWidthFactor
+   * @type {number}
+   */
+  baseWidthFactor = 3.0 / 4;
+
+  /**
+   * ClassicJigSaw needs a biggest base height factor
+   * @name ClassicJigSaw#toothHeightFactor
+   * @type {number}
+   */
+  toothHeightFactor = 3.0 / 5;
+}
+
+// Register this class in the list of known shapers
+export default Shaper.registerClass('@ClassicJigSaw', ClassicJigSaw);

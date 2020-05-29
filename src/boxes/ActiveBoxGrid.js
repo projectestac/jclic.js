@@ -28,7 +28,6 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
 import ActiveBoxBag from './ActiveBoxBag';
 import ActiveBox from './ActiveBox';
 import AWT from '../AWT';

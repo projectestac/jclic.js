@@ -28,102 +28,106 @@
  *  @licend
  */
 
-/* global define */
+import { $ } from 'jquery';
+import Utils from '../Utils';
 
-define([
-  "jquery",
-  "../Utils"
-], function ($, Utils) {
-
+/**
+ * This class stores information about one specific action done by the current user while playing
+ * an activity.
+ *
+ * @exports ActionReg
+ * @class
+ */
+export class ActionReg {
   /**
-   * This class stores information about one specific action done by the current user while playing
-   * an activity.
-   *
-   * @exports ActionReg
-   * @class
+   * ActionReg constructor
+   * @param {string} type - Type of action (`click`, `write`, `move`, `select`...)
+   * @param {string}+ source - Description of the object on which the action is done.
+   * @param {string}+ dest - Description of the object that acts as a target of the action (used in pairings)
+   * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwise
    */
-  class ActionReg {
-    /**
-     * ActionReg constructor
-     * @param {string} type - Type of action (`click`, `write`, `move`, `select`...)
-     * @param {string}+ source - Description of the object on which the action is done.
-     * @param {string}+ dest - Description of the object that acts as a target of the action (used in pairings)
-     * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwise
-     */
-    constructor(type, source, dest, ok) {
-      this.type = type;
-      this.source = source || null;
-      this.dest = dest || null;
-      this.ok = ok || false;
-      this.time = (new Date()).valueOf();
-    }
-
-    /**
-     * Provides the data associated with this action in XML format suitable for a
-     * {@link http://clic.xtec.cat/en/jclic/reports/|JClic Reports Server}.
-     * @returns {external:jQuery}
-     */
-    $getXML() {
-      const attr = { ok: this.ok, time: this.time };
-      if (this.type)
-        attr.type = this.type;
-      if (this.source)
-        attr.source = this.source;
-      if (this.dest)
-        attr.dest = this.dest;
-      return $('<action/>', attr);
-    }
-
-    /**
-     * Fills this ActionReg with data provided in XML format
-     * @param {external:jQuery} $xml - The XML element to be processed, already wrapped as jQuery object
-     */
-    setProperties($xml) {
-      Utils.attrForEach($xml.get(0).attributes, (name, value) => {
-        switch (name) {
-          case 'type':
-          case 'source':
-          case 'dest':
-            this[name] = value;
-            break;
-          case 'time':
-            this[name] = Number(value);
-            break;
-          case 'ok':
-            this[name] = Utils.getBoolean(value, false);
-            break;
-        }
-      });
-    }
+  constructor(type, source, dest, ok) {
+    this.type = type;
+    this.source = source || null;
+    this.dest = dest || null;
+    this.ok = ok || false;
+    this.time = (new Date()).valueOf();
   }
 
-  Object.assign(ActionReg.prototype, {
-    /**
-     * The type of action (`click`, `write`, `move`, `select`...)
-     * @name ActionReg#type
-     * @type {string} */
-    type: 'unknown',
-    /**
-     * Description of the object on which the action was done
-     * @name ActionReg#source
-     * @type {string} */
-    source: null,
-    /**
-     * Description of the object that has acted as a target of the action (used in pairings)
-     * @name ActionReg#dest
-     * @type {string} */
-    dest: null,
-    /**
-     * Time stamp taken when the action was done
-     * @name ActionReg#time
-     * @type {number} */
-    time: 0,
-    /**
-     * `true` if the action was OK
-     * @name ActionReg#isOk
-     * @type {boolean} */
-    isOk: false,
-  });
+  /**
+   * Provides the data associated with this action in XML format suitable for a
+   * {@link http://clic.xtec.cat/en/jclic/reports/|JClic Reports Server}.
+   * @returns {external:jQuery}
+   */
+  $getXML() {
+    const attr = { ok: this.ok, time: this.time };
+    if (this.type)
+      attr.type = this.type;
+    if (this.source)
+      attr.source = this.source;
+    if (this.dest)
+      attr.dest = this.dest;
+    return $('<action/>', attr);
+  }
 
-  return ActionReg;
-});
+  /**
+   * Fills this ActionReg with data provided in XML format
+   * @param {external:jQuery} $xml - The XML element to be processed, already wrapped as jQuery object
+   */
+  setProperties($xml) {
+    Utils.attrForEach($xml.get(0).attributes, (name, value) => {
+      switch (name) {
+        case 'type':
+        case 'source':
+        case 'dest':
+          this[name] = value;
+          break;
+        case 'time':
+          this[name] = Number(value);
+          break;
+        case 'ok':
+          this[name] = Utils.getBoolean(value, false);
+          break;
+      }
+    });
+  }
+
+  // Class fields
+
+  /**
+   * The type of action (`click`, `write`, `move`, `select`...)
+   * @name ActionReg#type
+   * @type {string}
+   */
+  type = 'unknown';
+
+  /**
+   * Description of the object on which the action was done
+   * @name ActionReg#source
+   * @type {string}
+   */
+  source = null;
+
+  /**
+   * Description of the object that has acted as a target of the action (used in pairings)
+   * @name ActionReg#dest
+   * @type {string}
+   */
+  dest = null;
+
+  /**
+   * Time stamp taken when the action was done
+   * @name ActionReg#time
+   * @type {number}
+   */
+  time = 0;
+
+  /**
+   * `true` if the action was OK
+   * @name ActionReg#isOk
+   * @type {boolean}
+   */
+  isOk = false;
+}
+
+export default ActionReg;

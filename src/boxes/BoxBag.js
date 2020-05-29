@@ -28,7 +28,6 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
 import AbstractBox from './AbstractBox';
 import AWT from '../AWT';
 import Utils from '../Utils';

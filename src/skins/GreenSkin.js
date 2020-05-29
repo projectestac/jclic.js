@@ -28,76 +28,75 @@
  *  @licend
  */
 
-/* global define */
+import Skin from './Skin';
+import DefaultSkin from './DefaultSkin';
 
-define([
-  "jquery",
-  "./Skin",
-  "./DefaultSkin"
-], function ($, Skin, DefaultSkin) {
-
+/**
+ * This is a variant of the default {@link Skin} used by JClic.js
+ * It differs from {@link DefaultSkin} only in some colors
+ * @exports GreenSkin
+ * @class
+ * @extends DefaultSkin
+ */
+export class GreenSkin extends DefaultSkin {
   /**
-   * This is a variant of the default {@link Skin} used by JClic.js
-   * It differs from {@link DefaultSkin} only in some colors
-   * @exports GreenSkin
-   * @class
-   * @extends DefaultSkin
+   * GreenSkin constructor
+   * 
+   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+   * realize the media objects needed to build this Skin.
+   * @param {string=} name - The skin class name
+   * @param {object=} options - Optional parameter with additional options
    */
-  class GreenSkin extends DefaultSkin {
-    /**
-     * GreenSkin constructor
-     * 
-     * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-     * realize the media objects needed to build this Skin.
-     * @param {string=} name - The skin class name
-     * @param {object=} options - Optional parameter with additional options
-     */
-    constructor(ps, name = null, options = {}) {
-      // GreenSkin extends [DefaultSkin](DefaultSkin.html)
-      super(ps, name, options);
-    }
-
-    /**
-     * Returns the CSS styles used by this skin. This method should be called only from
-     * the `Skin` constructor, and overridded by subclasses if needed.
-     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
-     * @returns {string}
-     */
-    _getStyleSheets(media = 'default') {
-      return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '');
-    }
+  constructor(ps, name = null, options = {}) {
+    // GreenSkin extends [DefaultSkin](DefaultSkin.html)
+    super(ps, name, options);
   }
 
-  Object.assign(GreenSkin.prototype, {
-    /**
-     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @name GreenSkin#skinId
-     * @override
-     * @type {string} */
-    skinId: 'JClicGreenSkin',
-    //
-    // Buttons and other graphical resources used by this skin:
-    /**
-     * Fill color for icons
-     * @name GreenSkin#iconFill
-     * @override
-     * @type {string} */
-    iconFill: '#20640E',
-    /**
-     * Fill-in color for counters
-     * @name GreenSkin#counterIconFill
-     * @override
-     * @type {string} */
-    counterIconFill: '#20640E',
-    /**
-     * Styles used in this skin
-     * @name GreenSkin#skinCSS
-     * @type {string} */
-    skinCSS: '.ID {background-color:#4AFF19;}'
-  });
+  /**
+   * Returns the CSS styles used by this skin. This method should be called only from
+   * the `Skin` constructor, and overridded by subclasses if needed.
+   * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
+   * @returns {string}
+   */
+  _getStyleSheets(media = 'default') {
+    return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '');
+  }
 
-  // Register this class in the list of available skins
-  Skin.CLASSES['green'] = GreenSkin;
+  // Class fields
 
-  return GreenSkin;
-});
+  /**
+   * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+   * @name GreenSkin#skinId
+   * @override
+   * @type {string}
+   */
+  skinId = 'JClicGreenSkin';
+
+  //
+  // Buttons and other graphical resources used by this skin:
+  /**
+   * Fill color for icons
+   * @name GreenSkin#iconFill
+   * @override
+   * @type {string}
+   */
+  iconFill = '#20640E';
+
+  /**
+   * Fill-in color for counters
+   * @name GreenSkin#counterIconFill
+   * @override
+   * @type {string}
+   */
+  counterIconFill = '#20640E';
+
+  /**
+   * Styles used in this skin
+   * @name GreenSkin#skinCSS
+   * @type {string}
+   */
+  skinCSS = '.ID {background-color:#4AFF19;}';
+}
+
+// Register this class in the list of available skins
+export default Skin.registerClass('green', GreenSkin);

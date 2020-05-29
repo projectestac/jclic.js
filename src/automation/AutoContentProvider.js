@@ -130,12 +130,12 @@ export class AutoContentProvider {
 
   /**
    * Registers a new type of AutoContentProvider
-   * @param {string} providerClassName - The class name used to identify this AutoContentProvider
+   * @param {string} providerName - The name used to identify this AutoContentProvider
    * @param {function} providerClass - The activity class, usually extending AutoContentProvider
    * @returns {AutoContentProvider} - The provider class
    */
-  static registerClass(providerClassName, providerClass) {
-    AutoContentProvider.CLASSES[providerClassName] = providerClass;
+  static registerClass(providerName, providerClass) {
+    AutoContentProvider.CLASSES[providerName] = providerClass;
     return providerClass;
   }
 

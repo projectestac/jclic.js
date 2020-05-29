@@ -28,7 +28,6 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
 import AWT from '../AWT';
 import BoxBase from './BoxBase';
 

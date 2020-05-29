@@ -31,7 +31,6 @@
 import { $ } from 'jquery';
 import BoxBag from './BoxBag';
 import AWT from '../AWT';
-import Utils from '../Utils';
 
 /**
  * This class is a special case of {@link BoxBag} containing only objects of type {@link ActiveBox}.

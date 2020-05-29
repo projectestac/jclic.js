@@ -28,189 +28,186 @@
  *  @licend
  */
 
-/* global define */
-
-define([], function () {
+/**
+ *
+ * Utilities to encrypt and decrypt strings using simple methods, just to avoid write
+ * passwords in plain text in data and configuration files. Do not use it as a
+ * secure cryptographic system!
+ *
+ * Based on {@link https://github.com/projectestac/jclic/blob/master/src/utilities/edu/xtec/util/Encryption.java Encryption}
+ * utilities, created by Albert Llastarri for {@link https://github.com/projectestac/jclic JClic}.
+ *
+ * IMPORTANT: This is a shortened version of Encryption with only the methods needed to decrypt
+ * stored passwords. Full version is on file `src/misc/encryption/Encryption.js`
+ *
+ * @exports Encryption
+ * @class
+ * @abstract
+ */
+export class Encryption {
+  /**
+   * Decrypts the given code
+   * @param {string} txt - Code to be decrypted
+   * @returns {string}
+   */
+  static Decrypt(txt) {
+    if (txt === null || txt.length === 0)
+      return null;
+    const s = Encryption.decodify(txt);
+    return s === Encryption.BLANK ? '' : s;
+  }
 
   /**
-   *
-   * Utilities to encrypt and decrypt strings using simple methods, just to avoid write
-   * passwords in plain text in data and configuration files. Do not use it as a
-   * secure cryptographic system!
-   *
-   * Based on {@link https://github.com/projectestac/jclic/blob/master/src/utilities/edu/xtec/util/Encryption.java Encryption}
-   * utilities, created by Albert Llastarri for {@link https://github.com/projectestac/jclic JClic}.
-   *
-   * IMPORTANT: This is a shortened version of Encryption with only the methods needed to decrypt
-   * stored passwords. Full version is on file `src/misc/encryption/Encryption.js`
-   *
-   * @exports Encryption
-   * @class
-   * @abstract
+   * @param {string} cA (was char[])
+   * @param {integer} fromIndex
+   * @returns {string} (was char)
    */
-  class Encryption {
-    /**
-     * Decrypts the given code
-     * @param {string} txt - Code to be decrypted
-     * @returns {string}
-     */
-    static Decrypt(txt) {
-      if (txt === null || txt.length === 0)
-        return null;
-      const s = Encryption.decodify(txt);
-      return s === Encryption.BLANK ? '' : s;
+  static hexCharArrayToChar(cA, fromIndex) {
+    let n = 0;
+    for (let i = 0; i <= 3; i++) {
+      const j = Number.parseInt(cA[fromIndex + i], 16);
+      if (isNaN(j))
+        throw 'Invalid expression!';
+      else
+        n = n * 16 + j;
     }
+    return String.fromCharCode(n);
+  }
 
-    /**
-     * @param {string} cA (was char[])
-     * @param {integer} fromIndex
-     * @returns {string} (was char)
-     */
-    static hexCharArrayToChar(cA, fromIndex) {
-      let n = 0;
-      for (let i = 0; i <= 3; i++) {
-        const j = Number.parseInt(cA[fromIndex + i], 16);
-        if (isNaN(j))
-          throw 'Invalid expression!';
+  /**
+   * @param {string} cA - (was char[])
+   * @param {number} fromIndex
+   * @returns {number}
+   */
+  static hexCharArrayToInt(cA, fromIndex) {
+    let n = 0;
+    for (let i = 0; i <= 1; i++) {
+      const j = Number.parseInt(cA[fromIndex + i], 16);
+      if (isNaN(j))
+        throw 'Invalid expression!';
+      else
+        n = n * 16 + j;
+    }
+    return n;
+  }
+
+  /**
+   * @param {string} cA - (was char[])
+   * @returns {string}
+   */
+  static decodifyZerosField(cA) {
+    let
+      sb = '',
+      num = Number.parseInt(cA[0], 32),
+      k = 0,
+      i = 0;
+
+    for (i = 0; num !== 0; i++) {
+      while (num > 0) {
+        sb = sb + cA[i * 3 + 1] + cA[i * 3 + 2];
+        num--;
+        k++;
+      }
+      if (cA.length > i * 3 + 3)
+        num = Number.parseInt(cA[i * 3 + 3], 32);
+      else
+        num = 0;
+    }
+    for (let j = i * 3 + 1; j < cA.length; j++)
+      sb = sb + cA[j];
+
+    return Number.parseInt(k, 32) + sb;
+  }
+
+  /**
+   * @param {string} cA - (was char[])
+   * @returns {string} (was StringBuilder)
+   */
+  static decompressZeros(cA) {
+    cA = Encryption.decodifyZerosField(cA);
+    let
+      numBytesZeros = Number.parseInt(cA[0], 32),
+      iniNoZeros = numBytesZeros * 2 + 1,
+      bFi = false,
+      sb = '';
+
+    for (let i = 0; i < numBytesZeros && !bFi; i++) {
+      const zeros = Encryption.hexCharArrayToInt(cA, 1 + i * 2);
+      let s = zeros.toString(2);
+      while (s.length < 8)
+        s = '0' + s;
+      for (let j = 0; j <= 7 && !bFi; j++) {
+        if (s[j] === '1')
+          sb = sb + '0';
+        else if (iniNoZeros < cA.length)
+          sb = sb + cA[iniNoZeros++];
         else
-          n = n * 16 + j;
+          bFi = true;
       }
-      return String.fromCharCode(n);
     }
+    return sb;
+  }
 
-    /**
-     * @param {string} cA - (was char[])
-     * @param {number} fromIndex
-     * @returns {number}
-     */
-    static hexCharArrayToInt(cA, fromIndex) {
-      let n = 0;
-      for (let i = 0; i <= 1; i++) {
-        const j = Number.parseInt(cA[fromIndex + i], 16);
-        if (isNaN(j))
-          throw 'Invalid expression!';
-        else
-          n = n * 16 + j;
-      }
-      return n;
+  /**
+   * @param {string} sb1 - (was StringBuilder)
+   * @returns {string}
+   */
+  static decodifyFromHex(sb1) {
+    let sb = '', j = 0;
+    for (let i = 0; j < sb1.length; i++) {
+      const c = Encryption.hexCharArrayToChar(sb1, j);
+      sb = sb + c;
+      j += 4;
     }
+    return sb;
+  }
 
-    /**
-     * @param {string} cA - (was char[])
-     * @returns {string}
-     */
-    static decodifyZerosField(cA) {
-      let
-        sb = '',
-        num = Number.parseInt(cA[0], 32),
-        k = 0,
-        i = 0;
+  /**
+   * @param {string} s
+   * @returns {string} (was char[])
+   */
+  static unchangeOrder(s) {
+    let m = 0, n = s.length - 1;
+    const cA = [];
+    for (let p = 0; p < s.length; p++)
+      cA[p] = '';
+    for (let i = 0; i < s.length; i++)
+      if (i % 2 === 0)
+        cA[i] = s[m++];
+      else
+        cA[i] = s[n--];
+    return cA.join('');
+  }
 
-      for (i = 0; num !== 0; i++) {
-        while (num > 0) {
-          sb = sb + cA[i * 3 + 1] + cA[i * 3 + 2];
-          num--;
-          k++;
-        }
-        if (cA.length > i * 3 + 3)
-          num = Number.parseInt(cA[i * 3 + 3], 32);
-        else
-          num = 0;
-      }
-      for (let j = i * 3 + 1; j < cA.length; j++)
-        sb = sb + cA[j];
+  /**
+   * @param {string} word
+   * @returns {string}
+   */
+  static codify(word) {
+    if (word.length > 24)
+      throw 'Password is too large!';
+    return Encryption.changeOrder(Encryption.compressZeros(Encryption.codifyToHexWord(word)));
+  }
 
-      return Number.parseInt(k, 32) + sb;
-    }
-
-    /**
-     * @param {string} cA - (was char[])
-     * @returns {string} (was StringBuilder)
-     */
-    static decompressZeros(cA) {
-      cA = Encryption.decodifyZerosField(cA);
-      let
-        numBytesZeros = Number.parseInt(cA[0], 32),
-        iniNoZeros = numBytesZeros * 2 + 1,
-        bFi = false,
-        sb = '';
-
-      for (let i = 0; i < numBytesZeros && !bFi; i++) {
-        const zeros = Encryption.hexCharArrayToInt(cA, 1 + i * 2);
-        let s = zeros.toString(2);
-        while (s.length < 8)
-          s = '0' + s;
-        for (let j = 0; j <= 7 && !bFi; j++) {
-          if (s[j] === '1')
-            sb = sb + '0';
-          else if (iniNoZeros < cA.length)
-            sb = sb + cA[iniNoZeros++];
-          else
-            bFi = true;
-        }
-      }
-      return sb;
-    }
-
-    /**
-     * @param {string} sb1 - (was StringBuilder)
-     * @returns {string}
-     */
-    static decodifyFromHex(sb1) {
-      let sb = '', j = 0;
-      for (let i = 0; j < sb1.length; i++) {
-        const c = Encryption.hexCharArrayToChar(sb1, j);
-        sb = sb + c;
-        j += 4;
-      }
-      return sb;
-    }
-
-    /**
-     * @param {string} s
-     * @returns {string} (was char[])
-     */
-    static unchangeOrder(s) {
-      let m = 0, n = s.length - 1;
-      const cA = [];
-      for (let p = 0; p < s.length; p++)
-        cA[p] = '';
-      for (let i = 0; i < s.length; i++)
-        if (i % 2 === 0)
-          cA[i] = s[m++];
-        else
-          cA[i] = s[n--];
-      return cA.join('');
-    }
-
-    /**
-     * @param {string} word
-     * @returns {string}
-     */
-    static codify(word) {
-      if (word.length > 24)
-        throw 'Password is too large!';
-      return Encryption.changeOrder(Encryption.compressZeros(Encryption.codifyToHexWord(word)));
-    }
-
-    /**
-     * @param {string} word
-     * @returns {string}
-     */
-    static decodify(word) {
-      try {
-        return Encryption.decodifyFromHex(Encryption.decompressZeros(Encryption.unchangeOrder(word)));
-      } catch (e) { //The supplied word was not codified using this system
-        return '';
-      }
+  /**
+   * @param {string} word
+   * @returns {string}
+   */
+  static decodify(word) {
+    try {
+      return Encryption.decodifyFromHex(Encryption.decompressZeros(Encryption.unchangeOrder(word)));
+    } catch (e) { //The supplied word was not codified using this system
+      return '';
     }
   }
+
+  // Class fields
 
   /**
   * Default bank password
   * @type {string}
   */
-  Encryption.BLANK = '___blank___##';
+  static BLANK = '___blank___##';
+}
 
-  return Encryption;
-});
+export default Encryption;

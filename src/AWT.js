@@ -28,10 +28,11 @@
  *  @licend
  */
 
+/* global console, window */
+
 import { $ } from 'jquery';
 import Utils from './Utils';
 import WebFont from 'webfontloader';
-
 
 /**
  * This object contains utility clases for painting graphics and images,
@@ -1025,8 +1026,7 @@ export class Shape {
   static buildShape(data) {
     const shapeType = (data.type === 'rect' && Rectangle) || (data.type === 'ellipse' && Ellipse) || (data.type === 'path' && Path) || null;
     if (!shapeType) {
-      console.log("unknown shape!")
-      console.log(data)
+      console.log('unknown shape:', data);
     } else
       return (new shapeType()).setAttributes(data);
   }

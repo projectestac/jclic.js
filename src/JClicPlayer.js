@@ -28,9 +28,9 @@
  *  @licend
  */
 
-/* global JSON, location, window */
+/* global JSON, Promise, location, window */
 
-import {$} from 'jquery';
+import { $ } from 'jquery';
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import ScriptJS from 'scriptjs';
@@ -329,7 +329,7 @@ export class JClicPlayer extends AWT.Container {
           }).fail((jqhxr, textStatus, error) => {
             const errMsg = `${textStatus} (${error}) while loading ${project}`;
             Utils.log(errMsg);
-            alert(`Error!\n${errMsg}`);
+            window.alert(`Error!\n${errMsg}`);
           }).always(
             () => this.setWaitCursor(false)
           );
@@ -441,7 +441,7 @@ export class JClicPlayer extends AWT.Container {
           }).fail((jqXHR, textStatus, errorThrown) => {
             const errMsg = `${textStatus} (${errorThrown}) while loading ${project}`;
             Utils.log(errMsg);
-            alert(`Error!\n${errMsg}`);
+            window.alert(`Error!\n${errMsg}`);
           }).always(() => this.setWaitCursor(false));
         };
 

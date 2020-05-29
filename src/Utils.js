@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global window, document */
+/* global Promise, window, document, console, btoa, HTMLElement, CanvasRenderingContext2D */
 
 import { $ } from 'jquery';
 import clipboard from 'clipboard-js';

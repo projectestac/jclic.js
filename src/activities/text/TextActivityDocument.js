@@ -30,10 +30,8 @@
 
 import { $ } from 'jquery';
 import Utils from '../../Utils';
-import AWT from '../../AWT';
 import ActiveBoxContent from '../../boxes/ActiveBoxContent';
 import MediaContent from '../../media/MediaContent';
-import ActiveBagContent from '../../boxes/ActiveBagContent';
 
 /**
  * This is the HTML DOM element used in text activities like {@link FillInBlanks},

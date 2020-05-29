@@ -28,7 +28,7 @@
  *  @licend
  */
 
-/* global Uint8Array */
+/* global Uint8Array, XMLHttpRequest, Image, document, Promise */
 
 import { $ } from 'jquery';
 import MidiAudioPlayer from '../media/MidiAudioPlayer';

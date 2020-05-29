@@ -29,8 +29,8 @@
  */
 
 import { $ } from 'jquery';
-import JumpIn from './JumpInfo';
-import ConditionalJumpIn from './ConditionalJumpInfo';
+import JumpInfo from './JumpInfo';
+import ConditionalJumpInfo from './ConditionalJumpInfo';
 import Utils from '../Utils';
 
 /**

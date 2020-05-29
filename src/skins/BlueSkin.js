@@ -28,61 +28,57 @@
  *  @licend
  */
 
-/* global define */
+import Skin from './Skin';
+import DefaultSkin from './DefaultSkin';
 
-define([
-  "jquery",
-  "./Skin",
-  "./DefaultSkin"
-], function ($, Skin, DefaultSkin) {
 
+/**
+ * This is a variant of the default {@link Skin} used by JClic.js
+ * It differs from {@link DefaultSkin} only in some colors
+ * @exports BlueSkin
+ * @class
+ * @extends DefaultSkin
+ */
+export class BlueSkin extends DefaultSkin {
   /**
-   * This is a variant of the default {@link Skin} used by JClic.js
-   * It differs from {@link DefaultSkin} only in some colors
-   * @exports BlueSkin
-   * @class
-   * @extends DefaultSkin
+   * BlueSkin constructor
+   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+   * realize the media objects needed to build the Skin.
+   * @param {string=} name - The skin class name
+   * @param {object=} options - Optional parameter with additional options
    */
-  class BlueSkin extends DefaultSkin {
-    /**
-     * BlueSkin constructor
-     * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-     * realize the media objects needed to build the Skin.
-     * @param {string=} name - The skin class name
-     * @param {object=} options - Optional parameter with additional options
-     */
-    constructor(ps, name = null, options = {}) {
-      // BlueSkin extends [DefaultSkin](DefaultSkin.html)
-      super(ps, name, options);
-    }
-
-    /**
-     * Returns the CSS styles used by this skin. This method should be called only from
-     * the `Skin` constructor, and overridded by subclasses if needed.
-     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
-     * @returns {string}
-     */
-    _getStyleSheets(media = 'default') {
-      return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '');
-    }
+  constructor(ps, name = null, options = {}) {
+    // BlueSkin extends [DefaultSkin](DefaultSkin.html)
+    super(ps, name, options);
   }
 
-  Object.assign(BlueSkin.prototype, {
-    /**
-     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @name BlueSkin#skinId
-     * @override
-     * @type {string} */
-    skinId: 'JClicBlueSkin',
-    /**
-     * Styles used in this skin
-     * @name BlueSkin#skinCSS
-     * @type {string} */
-    skinCSS: '.ID {background-color:#1990FF;}',
-  });
+  /**
+   * Returns the CSS styles used by this skin. This method should be called only from
+   * the `Skin` constructor, and overridded by subclasses if needed.
+   * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
+   * @returns {string}
+   */
+  _getStyleSheets(media = 'default') {
+    return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '');
+  }
 
-  // Register this class in the list of available skins
-  Skin.CLASSES['blue'] = BlueSkin;
+  // Class fields
 
-  return BlueSkin;
-});
+  /**
+   * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+   * @name BlueSkin#skinId
+   * @override
+   * @type {string}
+   */
+  skinId = 'JClicBlueSkin';
+
+  /**
+   * Styles used in this skin
+   * @name BlueSkin#skinCSS
+   * @type {string}
+   */
+  skinCSS = '.ID {background-color:#1990FF;}';
+}
+
+// Register this class in the list of available skins
+export default Skin.registerClass('blue', BlueSkin);

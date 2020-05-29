@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global window */
+
 import { $ } from 'jquery';
 import Utils from './Utils';
 import AWT from './AWT';
@@ -71,12 +73,12 @@ export class Activity {
 
   /**
    * Registers a new type of activity
-   * @param {string} activityClassName - The class name used to identify the activity
+   * @param {string} activityName - The name used to identify this activity
    * @param {function} activityClass - The activity class, usually extending Activity
-   * @returns {Activity} - The activity class
+   * @returns {Activity} - The provided activity class
    */
-  static registerClass(activityClassName, activityClass) {
-    Activity.CLASSES[activityClassName] = activityClass;
+  static registerClass(activityName, activityClass) {
+    Activity.CLASSES[activityName] = activityClass;
     return activityClass;
   }
 

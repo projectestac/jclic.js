@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global window */
+
 import { $ } from 'jquery';
 import Activity from '../../Activity';
 import BoxBase from '../../boxes/BoxBase';

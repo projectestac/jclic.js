@@ -28,6 +28,8 @@
  *  @licend
  */
 
+/* global window */
+
 import { $ } from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
@@ -204,7 +206,7 @@ export class InformationScreenPanel extends Activity.Panel {
       }
       this.$div.append(this.$canvas);
       this.invalidate().update();
-      setTimeout(() => this.bg ? this.bg.buildAccessibleElements(this.$canvas, this.$div) : null, 0);
+      window.setTimeout(() => this.bg ? this.bg.buildAccessibleElements(this.$canvas, this.$div) : null, 0);
     }
   }
 

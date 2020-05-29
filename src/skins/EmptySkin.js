@@ -28,62 +28,56 @@
  *  @licend
  */
 
-/* global define */
+import Skin from './Skin';
 
-define([
-  "jquery",
-  "./Skin"
-], function ($, Skin) {
+/**
+ * A minimalist {@link Skin} for JClic.js with just the player, without messages, counters nor any button.
+ * @exports EmptySkin
+ * @class
+ * @extends Skin
+ */
+export class EmptySkin extends Skin {
 
   /**
-   * A minimalist {@link Skin} for JClic.js with just the player, without messages, counters nor any button.
-   * @exports EmptySkin
-   * @class
-   * @extends Skin
+   * EmptySkin constructor
+   * 
+   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+   * realize the media objects needed tot build the Skin.
+   * @param {string=} name - The skin class name
+   * @param {object=} options - Optional parameter with additional options
    */
-  class EmptySkin extends Skin {
-
-    /**
-     * EmptySkin constructor
-     * 
-     * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-     * realize the media objects needed tot build the Skin.
-     * @param {string=} name - The skin class name
-     * @param {object=} options - Optional parameter with additional options
-     */
-    constructor(ps, name = null, options = {}) {
-      // EmptySkin extends [Skin](Skin.html)
-      super(ps, name, options);
-    }
-    /**
-     * Returns the CSS styles used by this skin. This method should be called only from
-     * the `Skin` constructor, and overridded by subclasses if needed.
-     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
-     * @returns {string}
-     */
-    _getStyleSheets(media = 'default') {
-      return super._getStyleSheets(media) + (media === 'default' ? this.mainCSS : '');
-    }
-
+  constructor(ps, name = null, options = {}) {
+    // EmptySkin extends [Skin](Skin.html)
+    super(ps, name, options);
+  }
+  /**
+   * Returns the CSS styles used by this skin. This method should be called only from
+   * the `Skin` constructor, and overridded by subclasses if needed.
+   * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
+   * @returns {string}
+   */
+  _getStyleSheets(media = 'default') {
+    return super._getStyleSheets(media) + (media === 'default' ? this.mainCSS : '');
   }
 
-  Object.assign(EmptySkin.prototype, {
-    /**
-     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @name EmptySkin#skinId
-     * @override
-     * @type {string} */
-    skinId: 'JClicEmptySkin',
-    /**
-     * Styles used in this skin
-     * @name EmptySkin#skinCSS
-     * @override
-     * @type {string} */
-    mainCSS: '.ID .JClicPlayerCnt {margin:0;}'
-  });
+  // Class fields
 
-  // Register this class in the list of available skins
-  Skin.CLASSES['empty'] = EmptySkin;
+  /**
+   * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+   * @name EmptySkin#skinId
+   * @override
+   * @type {string}
+   */
+  skinId = 'JClicEmptySkin';
 
-  return EmptySkin;
-});
+  /**
+   * Styles used in this skin
+   * @name EmptySkin#skinCSS
+   * @override
+   * @type {string}
+   */
+  mainCSS = '.ID .JClicPlayerCnt {margin:0;}';
+}
+
+// Register this class in the list of available skins
+export default Skin.registerClass('empty', EmptySkin);

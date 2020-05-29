@@ -28,59 +28,51 @@
  *  @licend
  */
 
-/* global define */
+import Shaper from './Shaper';
 
-define([
-  "jquery",
-  "./Shaper"
-], function ($, Shaper) {
-
+/**
+ * This {@link Shaper} consists of a set of arbitrary shapes placed over a main rectangle that
+ * acts as a enclosure.
+ * The components can be of type {@link AWT.Rectangle}, {@link AWT.Ellipse} or {@link AWT.Path}.
+ * This components have internal dimension values relative to the horizontal and vertical
+ * sizes of the enclosure. Its values (always between 0 and 1) must be scaled to real sizes
+ * of graphic objects.
+ * @exports Holes
+ * @class
+ * @extends Shaper
+ */
+export class Holes extends Shaper {
   /**
-   * This {@link Shaper} consists of a set of arbitrary shapes placed over a main rectangle that
-   * acts as a enclosure.
-   * The components can be of type {@link AWT.Rectangle}, {@link AWT.Ellipse} or {@link AWT.Path}.
-   * This components have internal dimension values relative to the horizontal and vertical
-   * sizes of the enclosure. Its values (always between 0 and 1) must be scaled to real sizes
-   * of graphic objects.
-   * @exports Holes
-   * @class
-   * @extends Shaper
+   * Holes constructor
+   * @param {number} nx - Not used
+   * @param {number} ny - Not used
    */
-  class Holes extends Shaper {
-    /**
-     * Holes constructor
-     * @param {number} nx - Not used
-     * @param {number} ny - Not used
-     */
-    constructor(nx, ny) {
-      super(1, 1);
-      this.customShapes = true;
-      this.nCols = nx;
-      this.nRows = ny;
-      this.showEnclosure = true;
-    }
-
-    /**
-     * Shapes are already loaded by {@link Shaper}, so this function just sets `initiated` to `true`
-     * @override
-     */
-    buildShapes() {
-      if (this.nCells > 0)
-        this.initiated = true;
-    }
-
-    /**
-     * Gets the rectangle that contains all shapes
-     * @override
-     * @returns {AWT.Rectangle}
-     */
-    getEnclosingShapeData() {
-      return this.showEnclosure ? (this.enclosing || super.getEnclosingShapeData()) : null;
-    }
+  constructor(nx, ny) {
+    super(1, 1);
+    this.customShapes = true;
+    this.nCols = nx;
+    this.nRows = ny;
+    this.showEnclosure = true;
   }
 
-  // Register this class in the list of known shapers
-  Shaper.CLASSES['@Holes'] = Holes;
+  /**
+   * Shapes are already loaded by {@link Shaper}, so this function just sets `initiated` to `true`
+   * @override
+   */
+  buildShapes() {
+    if (this.nCells > 0)
+      this.initiated = true;
+  }
 
-  return Holes;
-});
+  /**
+   * Gets the rectangle that contains all shapes
+   * @override
+   * @returns {AWT.Rectangle}
+   */
+  getEnclosingShapeData() {
+    return this.showEnclosure ? (this.enclosing || super.getEnclosingShapeData()) : null;
+  }
+}
+
+// Register this class in the list of known shapers
+export default Shaper.registerClass('@Holes', Holes);

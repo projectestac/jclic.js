@@ -30,7 +30,7 @@
 
 /* global Intl */
 
-import jquery from 'jquery';
+import { $ } from 'jquery';
 import AutoContentProvider from '../AutoContentProvider';
 import Utils from '../../Utils';
 

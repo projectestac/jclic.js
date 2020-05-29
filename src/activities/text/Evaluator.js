@@ -28,7 +28,8 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+/* global window */
+
 import Utils from '../../Utils';
 
 /**

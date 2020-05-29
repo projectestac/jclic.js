@@ -104,4 +104,4 @@
     CrossWord,
     TCPReporter,
     SessionStorageReporter,
-  }
+  };

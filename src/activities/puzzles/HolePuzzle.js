@@ -32,7 +32,6 @@ import { $ } from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
-import BoxConnector from '../../boxes/BoxConnector';
 import AWT from '../../AWT';
 import Rectangular from '../../shapers/Rectangular';
 

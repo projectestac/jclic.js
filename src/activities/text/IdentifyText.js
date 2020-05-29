@@ -28,7 +28,6 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
 import Activity from '../../Activity';
 import TextActivityBase from './TextActivityBase';
 

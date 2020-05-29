@@ -28,7 +28,6 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
 import JumpInfo from './JumpInfo';
 import Utils from '../Utils';
 
