@@ -11659,7 +11659,7 @@
     {
       "name": "elmo.gif",
       "file": "elmo.gif",
-      "animated": false
+      "animated": true
     },
     {
       "name": "big.gif",
