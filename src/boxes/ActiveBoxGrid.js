@@ -162,20 +162,19 @@ export class ActiveBoxGrid extends ActiveBoxBag {
       ptDest = this.getCoord(dest);
     return new AWT.Point(ptDest.x - ptSrc.x, ptDest.y - ptSrc.y);
   }
+}
 
-  // Class fields
-
+Object.assign(ActiveBoxGrid.prototype, {
   /**
    * Number of columns of this box grid
    * @name ActiveBoxGrid#nCols
    * @type {number} */
-  nCols = 1;
-
+  nCols: 1,
   /**
    * Number of rows of this box grid
    * @name ActiveBoxGrid#nRows
    * @type {number} */
-  nRows = 1;
-}
+  nRows: 1,
+});
 
 export default ActiveBoxGrid;

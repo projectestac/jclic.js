@@ -137,7 +137,7 @@
 
 /* global JClicDataProject, JClicDataOptions, window, document */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import JClicPlayer from './JClicPlayer';
 import JClicProject from './project/JClicProject';
 import AWT from './AWT';
@@ -188,7 +188,7 @@ export const JClicObject = {
   AWT,
   Utils,
   $,
-  options: JClicDataOptions || {},
+  options: typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions,
   projectFiles: {},
   currentPlayers: [],
   loadProject,
@@ -264,7 +264,7 @@ if (typeof window !== 'undefined') {
 // Execute on document ready
 $(function () {
   // If defined, load the global variable `JClicDataOptions`
-  let options = JClicDataOptions || {};
+  let options = typeof JClicDataOptions === 'undefined' ? {} : JClicDataOptions;
   JClicObject.options = options;
 
   if (!options.noInit) {

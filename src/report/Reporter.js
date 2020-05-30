@@ -28,9 +28,9 @@
  *  @licend
  */
 
- /* global Promise, window */
+/* global Promise, window */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import SessionReg from './SessionReg';
 import Encryption from './EncryptMin';
 import Scorm from './SCORM';
@@ -486,129 +486,90 @@ export class Reporter {
   getCurrentSequenceTag() {
     return this.currentSession === null ? null : this.currentSession.getCurrentSequenceTag();
   }
+}
 
-  // Class fields
-
+Object.assign(Reporter.prototype, {
   /**
    * The {@link ReporterInfo} used to calculate and store global results.
    * @name Reporter#info
-   * @type {ReporterInfo}
-   */
-  info = null;
-
+   * @type {ReporterInfo} */
+  info: null,
   /**
    * The {@link PlayStation} used to retrieve messages
    * @name Reporter#ps
-   * @type {PlayStation}
-   */
-  ps = null;
-
+   * @type {PlayStation} */
+  ps: null,
   /**
    * A valid SCORM bridge, or `null` if no SCORM API detected.
-   * @name Reporter#SCORM
-   */
-  SCORM = null;
-
+   * @name Reporter#SCORM */
+  SCORM: null,
   /**
    * User ID currently associated with this reporting system
    * @name Reporter#userId
-   * @type {string}
-   */
-  userId = null;
-
+   * @type {string} */
+  userId: null,
   /**
    * Optional key to be added as a field in session records
    * @name Reporter#sessionKey
-   * @type {string}
-   */
-  sessionKey = null;
-
+   * @type {string} */
+  sessionKey: null,
   /**
    * A second optional key to be reported as a field in session records
    * @name Reporter#sessionContext
-   * @type {string}
-   */
-  sessionContext = null;
-
+   * @type {string} */
+  sessionContext: null,
   /**
    * Optional filter key to be used in the group selection dialog
    * @name Reporter#groupCodeFilter
-   * @type {string}
-   */
-  groupCodeFilter = null;
-
+   * @type {string} */
+  groupCodeFilter: null,
   /**
    * Another optional filter key to be used in the user selection dialog
    * @name Reporter#userCodeFilter
-   * @type {string}
-   */
-  userCodeFilter = null;
-
+   * @type {string} */
+  userCodeFilter: null,
   /**
    * Description of this reporting system
    * @name Reporter#descriptionKey
-   * @type {string}
-   */
-  descriptionKey = 'Results are not currently being saved';
-
+   * @type {string} */
+  descriptionKey: 'Results are not currently being saved',
   /**
    * Additional info to display after the reporter's `description`
    * @name Reporter#descriptionDetail
-   * @type {string}
-   */
-  descriptionDetail = '';
-
+   * @type {string} */
+  descriptionDetail: '',
   /**
    * Starting date and time of this report
    * @name Reporter#started
-   * @type {Date}
-   */
-  started = null;
-
+   * @type {Date} */
+  started: null,
   /**
    * Array of sessions included in this report
    * @name Reporter#sessions
-   * @type {SessionReg[]}
-   */
-  sessions = [];
-
+   * @type {SessionReg[]} */
+  sessions: [],
   /**
    * Currently active session
    * @name Reporter#currentSession
-   * @type {SessionReg}
-   */
-  currentSession = null;
-
+   * @type {SessionReg} */
+  currentSession: null,
   /**
    * `true` if the system was successfully initiated, `false` otherwise
    * @name Reporter#initiated
-   * @type {boolean}
-   */
-  initiated = false;
-
+   * @type {boolean} */
+  initiated: false,
   /**
    * `true` if the system is connected to a database with user's data.
    * When `false`, a generic ID will be used.
    * @name Reporter#bUserBased
-   * @type {boolean}
-   */
-  bUserBased = null;
-
+   * @type {boolean} */
+  bUserBased: null,
   /**
    * Maximum number of incorrect UserID attempts
    * @name Reporter#MAX_USERID_PROMPT_ATTEMPTS
-   * @type {number}
-   */
-  MAX_USERID_PROMPT_ATTEMPTS = 3;
-
-  static Info = ReporterInfo;
-
-  /**
-   * Static list of classes derived from Reporter. Reporters should use Reporter.registerClass to be added into this list.
-   * @type {Object}
-   */
-  static CLASSES = { 'Reporter': Reporter };
-}
+   * @type {number} */
+  MAX_USERID_PROMPT_ATTEMPTS: 3,
+});
 
 /**
  * This object stores the global results of a {@link Reporter}
@@ -670,121 +631,99 @@ export class ReporterInfo {
     }
     return this;
   }
+}
 
-  // Class fields
-
+Object.assign(ReporterInfo.prototype, {
   /**
    * The Reporter linked to this Info object
    * @name ReporterInfo#rep
    * @type {Reporter}
    */
-  rep = null;
-
+  rep: null,
   /**
    * When `false`, data must be recalculated
    * @name ReporterInfo#valid
-   * @type {boolean}
-   */
-  valid = false;
-
+   * @type {boolean} */
+  valid: false,
   /**
    * Number of sessions registered
    * @name ReporterInfo#numSessions
-   * @type {number}
-   */
-  numSessions = 0;
-
+   * @type {number} */
+  numSessions: 0,
   /**
    * Number of sequences played
    * @name ReporterInfo#numSequences
-   * @type {number}
-   */
-  numSequences = 0;
-
+   * @type {number} */
+  numSequences: 0,
   /**
    * Number of activities played
    * @name ReporterInfo#nActivities
-   * @type {number}
-   */
-  nActivities = 0;
-
+   * @type {number} */
+  nActivities: 0,
   /**
    * Number of activities in existing in the played projects suitable to be reported
    * @name ReporterInfo#reportableActs
-   * @type {number}
-   */
-  reportableActs = 0;
-
+   * @type {number} */
+  reportableActs: 0,
   /**
    * Number of activities solved
    * @name ReporterInfo#nActSolved
-   * @type {number}
-   */
-  nActSolved = 0;
-
+   * @type {number} */
+  nActSolved: 0,
   /**
    * Number of different activities played
    * @name ReporterInfo#nActPlayed
-   * @type {number}
-   */
-  nActPlayed = 0;
-
+   * @type {number} */
+  nActPlayed: 0,
   /**
    * Global score obtained in all sessions registered by this reporter
    * @name ReporterInfo#nActScore
-   * @type {number}
-   */
-  nActScore = 0;
-
+   * @type {number} */
+  nActScore: 0,
   /**
    * Number of actions done by the user while in this working session
    * @name ReporterInfo#nActions
-   * @type {number}
-   */
-  nActions = 0;
-
+   * @type {number} */
+  nActions: 0,
   /**
    * Percentage of solved activities
    * @name ReporterInfo#ratioSolved
-   * @type {number}
-   */
-  ratioSolved = 0;
-
+   * @type {number} */
+  ratioSolved: 0,
   /**
    * Percentage of reportable activities played
    * @name ReporterInfo#ratioPlayed
-   * @type {number}
-   */
-  ratioPlayed = 0;
-
+   * @type {number} */
+  ratioPlayed: 0,
   /**
    * Sum of the scores of all the activities played
    * @name ReporterInfo#tScore
-   * @type {number}
-   */
-  tScore = 0;
-
+   * @type {number} */
+  tScore: 0,
   /**
    * Global score obtained
    * @name ReporterInfo#partialScore
-   * @type {number}
-   */
-  partialScore = 0;
-
+   * @type {number} */
+  partialScore: 0,
   /**
    * Sum of the playing time reported by each activity (not always equals to the sum of all session's time)
    * @name ReporterInfo#tTime
-   * @type {number}
-   */
-  tTime = 0;
-
+   * @type {number} */
+  tTime: 0,
   /**
    * Final score based on the percent of reportable activities played. If the user plays all the
    * activities, this result equals to `partialScore`.
    * @name ReporterInfo#globalScore
-   * @type {number}
-   */
-  globalScore = 0;
-}
+   * @type {number} */
+  globalScore: 0,
+});
+
+Reporter.Info = ReporterInfo;
+
+/**
+ * Static list of classes derived from Reporter. It should be filled by Reporter classes at declaration time.
+ * @type {Object}
+ */
+Reporter.CLASSES = { 'Reporter': Reporter };
 
 export default Reporter;

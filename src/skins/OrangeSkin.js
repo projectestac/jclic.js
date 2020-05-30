@@ -60,23 +60,20 @@ export class OrangeSkin extends DefaultSkin {
   _getStyleSheets(media = 'default') {
     return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '');
   }
+}
 
-  // Class fields
-
+Object.assign(OrangeSkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
    * @name OrangeSkin#skinId
    * @override
-   * @type {string}
-   */
-  skinId = 'JClicOrangeSkin';
-
+   * @type {string} */
+  skinId: 'JClicOrangeSkin',
   /**
    * Styles used in this skin
    * @name OrangeSkin#skinCSS
-   * @type {string}
-   */
-  skinCSS = '.ID {background-color:#FF8B19;}';
-}
+   * @type {string} */
+  skinCSS: '.ID {background-color:#FF8B19;}'
+});
 
 export default Skin.registerClass('orange', OrangeSkin);

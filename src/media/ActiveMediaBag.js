@@ -133,15 +133,14 @@ export class ActiveMediaBag {
     this.players.length = 0;
     ActiveMediaPlayer.prototype.clearAllAudioBuffers();
   }
+}
 
-  // Class fields
+Object.assign(ActiveMediaBag.prototype, {
   /**
    * The collection of {@link ActiveMediaPlayer} objects stored in this media bag.
    * @name ActiveMediaBag#players
-   * @type {ActiveMediaPlayer[]}
-   */
-  players = [];
-
-}
+   * @type {ActiveMediaPlayer[]} */
+  players: [],
+});
 
 export default ActiveMediaBag;

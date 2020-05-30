@@ -123,65 +123,45 @@ export class SequenceReg {
       this.info.valid = false;
     }
   }
+}
 
-  // Class fields
-
+Object.assign(SequenceReg.prototype, {
   /**
    * The `tag` member of the associated {@link ActivitySequenceElement}
    * @name SequenceReg#name
-   * @type {string}
-   */
-  name = '';
-
+   * @type {string} */
+  name: '',
   /**
    * Optional description given to the {@link ActivitySequenceElement}
    * @name SequenceReg#description
-   * @type {string}
-   */
-  description = '';
-
+   * @type {string} */
+  description: '',
   /**
    * Collection of all the {@link ActivityReg} elements done during this sequence.
    * @name SequenceReg#activities
-   * @type {ActivityReg[]}
-   */
-  activities = [];
-
+   * @type {ActivityReg[]} */
+  activities: [],
   /**
    * Registry linked to the {@link Activity} that is currently running
    * @name SequenceReg#currentActivity
-   * @type {ActivityReg}
-   */
-  currentActivity = null;
-
+   * @type {ActivityReg} */
+  currentActivity: null,
   /**
    * Total time spent on the activities of this sequence
    * @name SequenceReg#totalTime
-   * @type {number}
-   */
-  totalTime = 0;
-
+   * @type {number} */
+  totalTime: 0,
   /**
    * Flag indicating if the sequence is closed or already available for more activities
    * @name SequenceReg#closed
-   * @type {boolean}
-   */
-  closed = false;
-
+   * @type {boolean} */
+  closed: false,
   /**
    * Object with global information associated to this sequence
    * @name SequenceReg#info
-   * @type {SequenceRegInfo}
-   */
-  info = null;
-
-  /**
-   * The sequence reg info class
-   * @name SequenceReg#Info
-   * @type {SequenceRegInfo}
-   */
-  static Info = SequenceRegInfo;
-}
+   * @type {SequenceRegInfo} */
+  info: null,
+});
 
 /**
  * This object stores the global results of a {@link SequenceReg}
@@ -237,78 +217,61 @@ export class SequenceRegInfo {
     }
     return this;
   }
+}
 
-  // Class fields
-
+Object.assign(SequenceRegInfo.prototype, {
   /**
    * The {@link SequenceReg} associated to this "info" object
    * @name SequenceRegInfo#sqReg
-   * @type {SequenceReg}
-   */
-  sqReg = null;
-
+   * @type {SequenceReg} */
+  sqReg: null,
   /**
    * When `false`, data must be recalculated
    * @name SequenceRegInfo#valid
-   * @type {boolean}
-   */
-  valid = false;
-
+   * @type {boolean} */
+  valid: false,
   /**
    * Number of activities played in this sequence
    * @name SequenceRegInfo#nActivities
-   * @type {number}
-   */
-  nActivities = 0;
-
+   * @type {number} */
+  nActivities: 0,
   /**
    * Number of activities already closed
    * @name SequenceRegInfo#nActClosed
-   * @type {number}
-   */
-  nActClosed = 0;
-
+   * @type {number} */
+  nActClosed: 0,
   /**
    * Number of activities solved
    * @name SequenceRegInfo#nActSolved
-   * @type {number}
-   */
-  nActSolved = 0;
-
+   * @type {number} */
+  nActSolved: 0,
   /**
    * Number of activities with score > 0
    * @name SequenceRegInfo#nActScore
-   * @type {number}
-   */
-  nActScore = 0;
-
+   * @type {number} */
+  nActScore: 0,
   /**
    * Percentage of solved activities
    * @name SequenceRegInfo#ratioSolved
-   * @type {number}
-   */
-  ratioSolved = 0;
-
+   * @type {number} */
+  ratioSolved: 0,
   /**
    * Number of actions done by the user while in this sequence
    * @name SequenceRegInfo#nActions
-   * @type {number}
-   */
-  nActions = 0;
-
+   * @type {number} */
+  nActions: 0,
   /**
    * Sum of the scores of all the activities played
    * @name SequenceRegInfo#tScore
-   * @type {number}
-   */
-  tScore = 0;
-
+   * @type {number} */
+  tScore: 0,
   /**
    * Sum of the playing time reported by each activity (not always equals to the sequence's total time)
    * @name SequenceRegInfo#tTime
-   * @type {number}
-   */
-  tTime = 0;
-}
+   * @type {number} */
+  tTime: 0,
+});
+
+SequenceReg.Info = SequenceRegInfo;
 
 export default SequenceReg;

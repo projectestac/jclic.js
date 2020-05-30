@@ -30,7 +30,7 @@
 
 /* global window */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Utils from '../Utils';
 
 /**
@@ -225,65 +225,49 @@ export class SCORM {
   getScormType() {
     return `SCORM ${this.is2004 ? '2004' : '1.2'}`;
   }
+}
 
-  // Class fields
-
+Object.assign(SCORM.prototype, {
   /**
    * True when the API is of type SCORM 2004, false for SCORM 1.2
    * @name SCORM#is2004
-   * @type {boolean}
-   */
-  is2004 = false;
-
+   * @type {boolean} */
+  is2004: false,
   /**
    * The Reporter associated to this SCORM object
    * @name SCORM#reporter
-   * @type {Reporter}
-   */
-  reporter = null;
-
+   * @type {Reporter} */
+  reporter: null,
   /**
    * Prefix to be used in SCORM function names. Should be 'LMS' for SCORM 1.2
    * @name SCORM#prefix
-   * @type {string}
-   */
-  prefix = '';
-
+   * @type {string} */
+  prefix: '',
   /**
    * Prefix used in core SCORM keys. Should be 'cmi.core.' for 1.2 and 'cmi.' for 2004
    * @name SCORM#core
-   * @type {string}
-   */
-  core = 'cmi.';
-
+   * @type {string} */
+  core: 'cmi.',
   /**
    * SCORM API object used to communicate with the LMS
    * @name SCORM#API
-   * @type {object}
-   */
-  API = null;
-
+   * @type {object} */
+  API: null,
   /**
    * The student ID retrieved from the SCORM API
    * @name SCORM#studentId
-   * @type {string}
-   */
-  studentId = '';
-
+   * @type {string} */
+  studentId: '',
   /**
    * The student name retrieved from the SCORM API
    * @name SCORM#studentName
-   * @type {string}
-   */
-  studentName = '';
+   * @type {string} */
+  studentName: '',
+});
 
-  /**
-   * Maximum recursive attempts allowed to find the global SCORM API object
-   * @name SCORM#DISCOVER_MAX_TRIES
-   * @type {number}
-   */
-  static DISCOVER_MAX_TRIES = 50;
-
-}
+/**
+ * Maximum recursive attempts allowed to find the global SCORM API object
+ * @type {number} */
+SCORM.DISCOVER_MAX_TRIES = 50;
 
 export default SCORM;

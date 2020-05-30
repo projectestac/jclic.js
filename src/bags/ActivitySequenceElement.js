@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import ActivitySequenceJump from './ActivitySequenceJump';
 import Utils from '../Utils';
 
@@ -115,44 +115,34 @@ export class ActivitySequenceElement {
     });
     return this;
   }
+}
 
-  // Class fields
-
+Object.assign(ActivitySequenceElement.prototype, {
   /**
    * Optional unique identifier of this element in the {@link ActivitySequence}.
    * @name ActivitySequenceElement#tag
-   * @type {string}
-   */
-  tag = null;
-
+   * @type {string} */
+  tag: null,
   /**
    * Optional description of this sequence element.
    * @name ActivitySequenceElement#description
-   * @type {string}
-   */
-  description = null;
-
+   * @type {string} */
+  description: null,
   /**
    * Name of the {@link Activity} pointed by this element.
    * @name ActivitySequenceElement#activity
-   * @type {string}
-   */
-  activity = '';
-
+   * @type {string} */
+  activity: '',
   /**
    * Jump to be processed by the 'next' button action
    * @name ActivitySequenceElement#fwdJump
-   * @type {ActivitySequenceJump}
-   */
-  fwdJump = null;
-
+   * @type {ActivitySequenceJump} */
+  fwdJump: null,
   /**
    * Jump to be processed by the 'prev' button action.
    * @name ActivitySequenceElement#backJump
-   * @type {ActivitySequenceJump}
-   */
-  backJump = null;
-
+   * @type {ActivitySequenceJump} */
+  backJump: null,
   /**
    * What buttons should be active at this point of the sequence. Valid values are:
    * - 'none'
@@ -160,16 +150,13 @@ export class ActivitySequenceElement {
    * - 'back'
    * - 'both'
    * @name ActivitySequenceElement#navButtons
-   * @type {string}
-   */
-  navButtons = 'both';
-
+   * @type {string} */
+  navButtons: 'both',
   /**
    * Time delay (in seconds) before passing to the next/prev activity
    * @name ActivitySequenceElement#delay
-   * @type {number}
-   */
-  delay = 0;
-}
+   * @type {number} */
+  delay: 0,
+});
 
 export default ActivitySequenceElement;

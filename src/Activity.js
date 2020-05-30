@@ -30,7 +30,7 @@
 
 /* global window */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Utils from './Utils';
 import AWT from './AWT';
 import EventSounds from './media/EventSounds';
@@ -592,208 +592,217 @@ export class Activity {
   getActivityPanel(ps) {
     return new this.constructor.Panel(this, ps);
   }
+}
 
-  // Activity class fields:
+/**
+ * Classes derived from `Activity` should register themselves by adding a field to
+ * `Activity.CLASSES` using `Activity.registerClass`
+ * @type {object}
+ */
+Activity.CLASSES = {
+  '@panels.Menu': Activity
+};
 
+Object.assign(Activity.prototype, {
   /**
    * The {@link JClicProject} to which this activity belongs
    * @name Activity#project
    * @type {JClicProject} */
-  project = null;
+  project: null,
   /**
    * The Activity name
    * @name Activity#name
    * @type {string} */
-  name = K.DEFAULT_NAME;
+  name: K.DEFAULT_NAME,
   /**
    * The class name of this Activity
    * @name Activity#className
    * @type {string} */
-  className = null;
+  className: null,
   /**
    * Code used in reports to filter queries. Default is `null`.
    * @name Activity#code
    * @type {string} */
-  code = null;
+  code: null,
   /**
    * Type of activity, used in text activities to distinguish between different variants of the
    * same activity. Possible values are: `orderWords`, `orderParagraphs`, `identifyWords` and
    * `identifyChars`.
    * @name Activity#type
    * @type {string} */
-  type = null;
+  type: null,
   /**
    * A short description of the activity
    * @name Activity#description
    * @type {string} */
-  description = null;
+  description: null,
   /**
    * The space between the activity components measured in pixels.
    * @name Activity#margin
    * @type {number} */
-  margin = K.DEFAULT_MARGIN;
+  margin: K.DEFAULT_MARGIN,
   /**
    * The background color of the activity panel
    * @name Activity#bgColor
    * @type {string} */
-  bgColor = K.DEFAULT_BG_COLOR;
+  bgColor: K.DEFAULT_BG_COLOR,
   /**
    * When set, gradient used to draw the activity window background
    * @name Activity#bgGradient
    * @type {AWT.Gradient} */
-  bgGradient = null;
+  bgGradient: null,
   /**
    * Whether the bgImage (if any) has to be tiled across the panel background
    * @name Activity#tiledBgImg
    * @type {boolean} */
-  tiledBgImg = false;
+  tiledBgImg: false,
   /**
    * Filename of the image used as a panel background.
    * @name Activity#bgImageFile
    * @type {string} */
-  bgImageFile = null;
+  bgImageFile: null,
   /**
    * Whether to draw a border around the activity panel
    * @name Activity#border
    * @type {boolean} */
-  border = true;
+  border: true,
   /**
    * Whether to place the activity panel at the point specified by `absolutePosition` or leave
    * it centered on the main player's window.
    * @name Activity#absolutePositioned
    * @type {boolean} */
-  absolutePositioned = false;
+  absolutePositioned: false,
   /**
    * The position of the activity panel on the player.
    * @name Activity#absolutePosition
    * @type {AWT.Point} */
-  absolutePosition = null;
+  absolutePosition: null,
   /**
    * Whether to generate usage reports
    * @name Activity#includeInReports
    * @type {boolean} */
-  includeInReports = true;
+  includeInReports: true,
   /**
    * Whether to send action events to the {@link Reporter}
    * @name Activity#reportActions
    * @type {boolean} */
-  reportActions = false;
+  reportActions: false,
   /**
    * Whether to allow help about the activity or not.
    * @name Activity#helpWindow
    * @type {boolean} */
-  helpWindow = false;
+  helpWindow: false,
   /**
    * Whether to show the solution on the help window.
    * @name Activity#showSolution
    * @type {boolean} */
-  showSolution = false;
+  showSolution: false,
   /**
    * Message to be shown in the help window when `showSolution` is `false`.
    * @name Activity#helpMsg
    * @type {string} */
-  helpMsg = '';
+  helpMsg: '',
   /**
    * Specific set of {@link EventSounds} used in the activity. The default is `null`, meaning
    * to use the default event sounds.
    * @name Activity#eventSounds
    * @type {EventSounds} */
-  eventSounds = null;
+  eventSounds: null,
   /**
    * Wheter the activity must be solved in a specific order or not.
    * @name Activity#useOrder
    * @type {boolean} */
-  useOrder = false;
+  useOrder: false,
   /**
    * Wheter the cells of the activity will be dragged across the screen.
    * When `false`, a line will be painted to link elements.
    * @name Activity#dragCells
    * @type {boolean} */
-  dragCells = false;
+  dragCells: false,
   /**
    * File name of the Skin used by the activity. The default value is `null`, meaning that the
    * activity will use the skin specified for the project.
    * @name Activity#skinFileName
    * @type {string} */
-  skinFileName = null;
+  skinFileName: null,
   /**
    * Maximum amount of time (seconds) to solve the activity. The default value is 0, meaning
    * unlimited time.
    * @name Activity#maxTime
    * @type {number}*/
-  maxTime = 0;
+  maxTime: 0,
   /**
    * Whether the time counter should display a countdown when `maxTime > 0`
    * @name Activity#countDownTime
    * @type {boolean} */
-  countDownTime = false;
+  countDownTime: false,
   /**
    * Maximum number of actions allowed to solve the activity. The default value is 0, meaning
    * unlimited actions.
    * @name Activity#maxActions
    * @type {number}*/
-  maxActions = 0;
+  maxActions: 0,
   /**
    * Whether the actions counter should display a countdown when `maxActions > 0`
    * @name Activity#countDownActions
    * @type {boolean} */
-  countDownActions = false;
+  countDownActions: false,
   /**
    * URL to be launched when the user clicks on the 'info' button. Default is `null`.
    * @name Activity#infoUrl
    * @type {string} */
-  infoUrl = null;
+  infoUrl: null,
   /**
    * System command to be launched when the user clicks on the 'info' button. Default is `null`.
    * Important: this parameter is currently not being used
    * @name Activity#infoCmd
    * @type {string} */
-  infoCmd = null;
+  infoCmd: null,
   /**
    * The content of the initial, final, previous and error messages shown by the activity.
    * @name Activity#messages
    * @type {ActiveBoxContent[]} */
-  messages = null;
+  messages: null,
   /**
    * Preferred dimension of the activity window
    * @name Activity#windowSize
    * @type {AWT.Dimension} */
-  windowSize = new AWT.Dimension(K.DEFAULT_WIDTH, K.DEFAULT_HEIGHT);
+  windowSize: new AWT.Dimension(K.DEFAULT_WIDTH, K.DEFAULT_HEIGHT),
   /**
    * Whether the activity window has transparent background.
    * @name Activity#transparentBg
    * @type {boolean} */
-  transparentBg = false;
+  transparentBg: false,
   /**
    * The background color of the activity
    * @name Activity#activityBgColor
    * @type {string} */
-  activityBgColor = K.DEFAULT_BG_COLOR;
+  activityBgColor: K.DEFAULT_BG_COLOR,
   /**
    * Gradient used to draw backgrounds inside the activity.
    * @name Activity#activityBgGradient
    * @type {AWT.Gradient} */
-  activityBgGradient = null;
+  activityBgGradient: null,
   /**
    * Whether to display or not the 'time' counter
    * @name Activity#bTimeCounter
    * @type {boolean} */
-  bTimeCounter = true;
+  bTimeCounter: true,
   /**
    * Whether to display or not the 'score' counter
    * @name Activity#bScoreCounter
    * @type {boolean} */
-  bScoreCounter = true;
+  bScoreCounter: true,
   /**
    * Whether to display or not the 'actions' counter
    * @name Activity#bActionsCounter
    * @type {boolean} */
-  bActionsCounter = true;
+  bActionsCounter: true,
   /**
    * Special object used to generate random content at the start of the activity
    * @name Activity#acp
    * @type {AutoContentProvider} */
-  acp = null;
+  acp: null,
   //
   // Fields used only in certain activity types
   // ------------------------------------------
@@ -802,69 +811,55 @@ export class Activity {
    * Array of bags with the description of the content to be displayed on panels and cells.
    * @name Activity#abc
    * @type {ActiveBagContent[]} */
-  abc = null;
+  abc: null,
   /**
    * Content of the grid of letters used in crosswords and shuffled letters
    * @name Activity#tgc
    * @type {TextGridContent} */
-  tgc = null;
+  tgc: null,
   /**
    * The main document used in text activities
    * @name Activity#document
    * @type {TextActivityDocument} */
-  document = null;
+  document: null,
   /**
    * Relative position of the text grid (uses the same position codes as box grids)
    * @name Activity#boxGridPos
    * @type {string} */
-  boxGridPos = 'AB';
+  boxGridPos: 'AB',
   /**
    * Number of times to shuffle the cells at the beginning of the activity
    * @name Activity#shuffles
    * @type {number} */
-  shuffles = K.DEFAULT_SHUFFLES;
+  shuffles: K.DEFAULT_SHUFFLES,
   /**
    * Box grid A must be shuffled.
    * @name Activity#shuffleA
    * @type {boolean} */
-  shuffleA = true;
+  shuffleA: true,
   /**
    * Box grid B must be shuffled.
    * @name Activity#shuffleB
    * @type {boolean} */
-  shuffleB = true;
+  shuffleB: true,
   /**
    * Flag to indicate "inverse resolution" in complex associations
    * @name Activity#invAss
    * @type {boolean} */
-  invAss = false;
+  invAss: false,
   /**
    * Array of menu elements, used in activities of type {@link Menu}
    * @name Activity#menuElements
    * @type {array} */
-  menuElements = null;
+  menuElements: null,
   /**
    * This activity uses numeric expressions, so text literals should be
    * converted to numbers for comparisions, taking in account the
    * number format of the current locale (dot or comma as decimal separator)
    * @name Activity#numericContent
    * @type {boolean} */
-  numericContent = false;
-
-  /**
-   * Classes derived from `Activity` should register themselves by calling
-   * `Activity.registerClass` with its name and the class object.
-   * @type {object}
-   */
-  static CLASSES = {
-    '@panels.Menu': Activity
-  };
-
-  /**
-   * The panel class associated to each type of activity
-   * @type {ActivityPanel} */
-  static Panel = ActivityPanel;
-}
+  numericContent: false,
+});
 
 /**
  * This object is responsible for rendering the contents of the activity on the screen and
@@ -1215,100 +1210,107 @@ export class ActivityPanel extends AWT.Container {
       i -= steps;
     }
   }
+}
 
+Object.assign(ActivityPanel.prototype, {
   /**
    * The Activity this panel is related to
    * @name ActivityPanel#act
    * @type {Activity} */
-  act = null;
+  act: null,
   /**
    * The jQuery div element used by this panel
    * @name ActivityPanel#$div
    * @type {external:jQuery} */
-  $div = null;
+  $div: null,
   /**
    * The jQuery main canvas element used by this panel
    * @name ActivityPanel#$canvas
    * @type {external:jQuery} */
-  $canvas = null;
+  $canvas: null,
   /**
    * Always true, since canvas hit regions have been deprecated!
    * See: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility
    * @name ActivityPanel#accessibleCanvas
    * @type {boolean}
    */
-  accessibleCanvas = true;
+  accessibleCanvas: true,
   /**
    * The realized current {@link Skin}
    * @name ActivityPanel#skin
    * @type {Skin} */
-  skin = null;
+  skin: null,
   /**
    * Background element (currently a `span`) used to place animated GIFs when needed
    * @name ActivityPanel#$animatedBg
    * @type {external:jQuery} */
-  $animatedBg = null;
+  $animatedBg: null,
   /**
    * Additional background element for animated GIFs, used in associations
    * @name ActivityPanel#$animatedBgB
    * @type {external:jQuery} */
-  $animatedBgB = null;
+  $animatedBgB: null,
   /**
    * `true` when the activity is solved, `false` otherwise
    * @name ActivityPanel#solved
    * @type {boolean} */
-  solved = false;
+  solved: false,
   /**
    * The realized image used as a background
    * @name ActivityPanel#bgImage
    * @type {external:HTMLImageElement} */
-  bgImage = null;
+  bgImage: null,
   /**
    * `true` while the activity is playing
    * @name ActivityPanel#playing
    * @type {boolean} */
-  playing = false;
+  playing: false,
   /**
    * `true` if the activity is running for first time (not due to a click on the `replay` button)
    * @name ActivityPanel#firstRun
    * @type {boolean} */
-  firstRun = true;
+  firstRun: true,
   /**
    * Currently selected item. Used in some types of activities.
    * @name ActivityPanel#currentItem
    * @type {number} */
-  currentItem = 0;
+  currentItem: 0,
   /**
    * The object used to connect cells and other elements in some types of activity
    * @name ActivityPanel#bc
    * @type {BoxConnector} */
-  bc = null;
+  bc: null,
   /**
    * The PlayStation used to realize media objects and communicate with the player services
    * (usually a {@link JClicPlayer}
    * @name ActivityPanel#ps
    * @type {PlayStation} */
-  ps = null;
+  ps: null,
   /**
    * The minimum size of this kind of ActivityPanel
    * @name ActivityPanel#minimumSize
    * @type {AWT.Dimension} */
-  minimumSize = null;
+  minimumSize: null,
   /**
    * The preferred size of this kind of ActivityPanel
    * @name ActivityPanel#preferredSize
    * @type {AWT.Dimension} */
-  preferredSize = null;
+  preferredSize: null,
   /**
    * List of events intercepted by this ActivityPanel. Current events are: 'keydown', 'keyup',
    * 'keypress', 'mousedown', 'mouseup', 'click', 'dblclick', 'mousemove', 'mouseenter',
    * 'mouseleave', 'mouseover', 'mouseout', 'touchstart', 'touchend', 'touchmove' and 'touchcancel'.
    * @name ActivityPanel#events
    * @type {string[]} */
-  events = ['click'];
-  backgroundColor = null;
-  backgroundTransparent = false;
-  border = null;
-}
+  events: ['click'],
+  backgroundColor: null,
+  backgroundTransparent: false,
+  border: null,
+});
+
+/**
+ * The panel class associated to each type of activity
+ * @type {ActivityPanel} */
+Activity.Panel = ActivityPanel;
 
 export default Activity;

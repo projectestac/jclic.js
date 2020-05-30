@@ -30,7 +30,7 @@
 
 /* global window */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Activity from '../../Activity';
 import BoxBase from '../../boxes/BoxBase';
 import BoxBag from '../../boxes/BoxBag';
@@ -84,32 +84,25 @@ export class CrossWord extends Activity {
   needsKeyboard() {
     return true;
   }
+}
 
-  // Class fields
-
+Object.assign(CrossWord.prototype, {
   /**
    * Whether all letters of the {@link TextGrid} should be displayed in upper case
    * @name CrossWord#upperCase
    * @type {boolean} */
-  upperCase = true;
-
+  upperCase: true,
   /**
    * Whether the case is significant to evaluate answers
    * @name CrossWord#checkCase
    * @type {boolean} */
-  checkCase = true;
-
+  checkCase: true,
   /**
    * When `true`, the wildcard character of the {@link TextGrid} will be transparent.
    * @name CrossWord#wildTransparent
    * @type {boolean} */
-  wildTransparent = false;
-
-  /**
- * Panel class associated to this type of activity: {@link CrossWordPanel}
- * @type {class} */
-  static Panel = CrossWordPanel;
-}
+  wildTransparent: false,
+});
 
 /**
  * The {@link ActivityPanel} where {@link CrossWord} activities are played.
@@ -484,112 +477,104 @@ export class CrossWordPanel extends Activity.Panel {
     if (this.vClueBtn)
       this.vClueBtn.setInactive(this.advance !== 'ADVANCE_DOWN');
   }
+}
 
-  // Class fields
-
+Object.assign(CrossWordPanel.prototype, {
   /**
    * The default width of the 'Horizontal' and 'Vertical' buttons (currently 40 pixels)
    * @name CrossWordPanel#LABEL_WIDTH
    * @type {number} */
-  LABEL_WIDTH = 40;
-
+  LABEL_WIDTH: 40,
   /**
    * The text grid of this ActivityPanel
    * @name CrossWordPanel#grid
    * @type {textGrid} */
-  grid = null;
-
+  grid: null,
   /**
    * A BoxBag used to place the across and down clues, and the `toggle direction` button.
    * @name CrossWordPanel#style
    * @type {BoxBag} */
-  style = null;
-
+  style: null,
   /**
    * The total number of letters of this cross word
    * @name CrossWordPanel#numLetters
    * @type {number} */
-  numLetters = 0;
-
+  numLetters: 0,
   /**
    * Flag indicating the type of automatic advance of the cursor.
    * Possible values are: `NO_ADVANCE` (default), 'ADVANCE_RIGHT' and 'ADVANCE_DOWN'.
    * TODO: Implement 'ADVANCE_LEFT' for LTR languages
    * @name CrossWordPanel#advance
    * @type {string} */
-  advance = 'NO_ADVANCE';
-
+  advance: 'NO_ADVANCE',
   /**
    * The ActiveBox object used to display the 'across' clues
    * @name CrossWordPanel#hClue
    * @type {ActiveBox} */
-  hClue = null;
-
+  hClue: null,
   /**
    * The ActiveBox object used to display the 'down' clues
    * @name CrossWordPanel#vClue
    * @type {ActiveBox} */
-  vClue = null;
-
+  vClue: null,
   /**
    * Button used to set the advance mode to 'ADVANCE_RIGHT'
    * @name CrossWordPanel#hClueBtn
    * @type {ActiveBox} */
-  hClueBtn = null;
-
+  hClueBtn: null,
   /**
    * Button used to set the advance mode to 'ADVANCE_BOTTOM'
    * @name CrossWordPanel#vClueBtn
    * @type {ActiveBox} */
-  vClueBtn = null;
-
+  vClueBtn: null,
   /**
    * Mouse and touch events intercepted by this panel
    * @override
    * @name CrossWordPanel#events
    * @type {string[]} */
-  events = ['click', 'keydown', 'keypress'];
-
+  events: ['click', 'keydown', 'keypress'],
   /**
    * Graphic icon for the horizontal direction button, represented as a string containing
    * an SVG file codified in base64.
    * @name CrossWordPanel#hIcon
    * @type {string} */
-  hIcon = 'data:image/svg+xml;base64,' +
+  hIcon: 'data:image/svg+xml;base64,' +
     'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
     'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
     'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
     'PjwvcGF0aD48cGF0aCBkPSJNNiAxMGMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTIt' +
     'LjktMi0yLTJ6bTEyIDBjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyIDItLjkgMi0yLS45LTItMi0y' +
     'em0tNiAwYy0xLjEgMC0yIC45LTIgMnMuOSAyIDIgMiAyLS45IDItMi0uOS0yLTItMnoiPjwvcGF0' +
-    'aD48L3N2Zz4K';
-
+    'aD48L3N2Zz4K',
   /**
    * Graphic icon for the vertical direction button, represented as a string containing
    * an SVG file codified in base64.
    * @name CrossWordPanel#vIcon
    * @type {string} */
-  vIcon = 'data:image/svg+xml;base64,' +
+  vIcon: 'data:image/svg+xml;base64,' +
     'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
     'IGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2IiB4bWxucz0iaHR0cDov' +
     'L3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUi' +
     'PjwvcGF0aD48cGF0aCBkPSJNMTIgOGMxLjEgMCAyLS45IDItMnMtLjktMi0yLTItMiAuOS0yIDIg' +
     'LjkgMiAyIDJ6bTAgMmMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6' +
     'bTAgNmMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6Ij48L3BhdGg+' +
-    'PC9zdmc+Cg==';
-
+    'PC9zdmc+Cg==',
   /**
    * Sizes of the icons (currently 36 x 36 pixel)
    * @name CrossWordPanel#icoSize
    * @type {Object} */
-  icoSize = { w: 36, h: 36 };
-
+  icoSize: { w: 36, h: 36 },
   /**
    * BoxBase with the style to be used by the direction buttons.
    * @name CrossWordPanel#icoBB
    * @type {BoxBase} */
-  icoBB = new BoxBase().set('backColor', '#4285F4').set('inactiveColor', '#70A2F6').set('dontFill', true);
-}
+  icoBB: new BoxBase().set('backColor', '#4285F4').set('inactiveColor', '#70A2F6').set('dontFill', true)
+});
+
+/**
+ * Panel class associated to this type of activity: {@link CrossWordPanel}
+ * @type {class} */
+CrossWord.Panel = CrossWordPanel;
 
 // Register activity class
 export default Activity.registerClass('@textGrid.CrossWord', CrossWord);

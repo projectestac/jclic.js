@@ -30,7 +30,7 @@
 
 /* global navigator */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import AudioBuffer from './AudioBuffer';
 
 /**
@@ -238,67 +238,48 @@ export class ActiveMediaPlayer {
     if (this.bx && this.$visualComponent)
       this.bx.setHostedComponent(this.$visualComponent);
   }
+}
 
-  // Class fields
-
-  /**
-   * Recording of audio is enabled only when `navigator.getUserMedia` and `MediaRecorder` are defined
-   * In 02-Mar-2016 this was implemented only in Firefox 41 and Chrome 49 or later.
-   * See: {@link https://addpipe.com/blog/mediarecorder-api}
-   * @type Boolean
-   */
-  static REC_ENABLED = typeof MediaRecorder !== 'undefined' && typeof navigator !== 'undefined';
-
-  /**
-   * Audio buffers used for recording and playing voice are stored in a static array because
-   * they are common to all instances of {@link ActiveMediaPlayer}
-   * Only initialized when {@link REC_ENABLED} is `true`.
-   * @type {AudioBuffer[]}
-   */
-  static AUDIO_BUFFERS = ActiveMediaPlayer.REC_ENABLED ? [] : null;
-
+Object.assign(ActiveMediaPlayer.prototype, {
   /**
    * The MediaContent associated to this player.
    * @name ActiveMediaPlayer#mc
-   * @type {MediaContent}
-   */
-  mc = null;
-
+   * @type {MediaContent} */
+  mc: null,
   /**
    * The player to which this player belongs.
    * @name ActiveMediaPlayer#ps
-   * @type {JClicPlayer}
-   */
-  ps = null;
-
+   * @type {JClicPlayer} */
+  ps: null,
   /**
    * MediaPlayers should be linked to {@link ActiveBox} objects.
    * @name ActiveMediaPlayer#bx
-   * @type {ActiveBox}
-   */
-  bx = null;
-
+   * @type {ActiveBox} */
+  bx: null,
   /**
    * The visual component for videos, usually a `video` HTML element
    * @name ActiveMediaPlayer#$visualComponent
-   * @type {external:jQuery}
-   */
-  $visualComponent = null;
-
+   * @type {external:jQuery} */
+  $visualComponent: null,
   /**
    * When `true`, this player makes use of a recording audio buffer
    * @name ActiveMediaPlayer#useAudioBuffer
-   * @type {boolean}
-   */
-  useAudioBuffer = false;
-
+   * @type {boolean} */
+  useAudioBuffer: false,
   /**
    * The {@link MediaBagElement} containing the reference to the media to be played
    * @name ActiveMediaPlayer#mbe
-   * @type {MediaBagElement}
-   */
-  mbe = null;
-}
+   * @type {MediaBagElement} */
+  mbe: null,
+});
+
+/**
+ * Recording of audio is enabled only when `navigator.getUserMedia` and `MediaRecorder` are defined
+ * In 02-Mar-2016 this is implemented only in Firefox 41 and Chrome 49 or later.
+ * See: {@link https://addpipe.com/blog/mediarecorder-api}
+ * @type Boolean
+ */
+ActiveMediaPlayer.REC_ENABLED = typeof MediaRecorder !== 'undefined' && typeof navigator !== 'undefined';
 
 if (ActiveMediaPlayer.REC_ENABLED) {
   navigator.getUserMedia = navigator.getUserMedia ||
@@ -306,5 +287,12 @@ if (ActiveMediaPlayer.REC_ENABLED) {
     navigator.mozGetUserMedia ||
     navigator.msGetUserMedia;
 }
+
+/**
+ * Audio buffers used for recording and playing voice are stored in a static array because
+ * they are common to all instances of {@link ActiveMediaPlayer}
+ * Only initialized when {@link REC_ENABLED} is `true`.
+ * @type {AudioBuffer[]} */
+ActiveMediaPlayer.AUDIO_BUFFERS = ActiveMediaPlayer.REC_ENABLED ? [] : null;
 
 export default ActiveMediaPlayer;

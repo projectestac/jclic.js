@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Skin from './Skin';
 import Counter from './Counter';
 import Utils from '../Utils';
@@ -367,49 +367,40 @@ export class CustomSkin extends Skin {
     if (this.$progressAnimation)
       this.$progressAnimation.css('animation-play-state', this.waitCursorCount > 0 ? 'running' : 'paused');
   }
+}
 
-  // Class fields
-
+Object.assign(CustomSkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
    * @name CustomSkin#skinId
    * @override
-   * @type {string}
-   */
-  skinId = 'JClicCustomSkin';
-
+   * @type {string} */
+  skinId: 'JClicCustomSkin',
   /**
    * The name of the image file to be used as a base of this skin.
    * @name CustomSkin#image
-   * @type {string}
-   */
-  image = null;
-
+   * @type {string} */
+  image: null,
   /**
    * Styles used in this skin
    * @name CustomSkin#skinCSS
    * @override
-   * @type {string}
-   */
-  mainCSS = '\
+   * @type {string} */
+  mainCSS: '\
 .ID .JClicPlayerCnt {margin:0;}\
 .ID .JClicBtn:focus {outline:0;}\
-.ID .JClicCounter {font-family:Roboto,sans-serif;text-align:center;}';
-
+.ID .JClicCounter {font-family:Roboto,sans-serif;text-align:center;}',
   /**
    * Specifc styles (`default`, `half` and `twoThirds`) computed at run-time,
    * based on the provided XML file
    * @name CustomSkin#cssVariants
-   * @type {object}
-   */
-  cssVariants = null;
-
+   * @type {object} */
+  cssVariants: null,
   /**
    * Key ids of currently supported buttons, associated with its helper literal
    * @name CustomSkin#msgKeys
-   * @type {object}
-   */
-  msgKeys = {
+   * @type {object} */
+  msgKeys: {
     next: 'Next activity',
     prev: 'Previous activity',
     info: 'Information',
@@ -418,15 +409,13 @@ export class CustomSkin extends Skin {
     // TODO: Implement audio on/off!
     audio: 'Audio on/off',
     reset: 'Reset activity',
-  };
-
+  },
   /**
    * Graphic indicator of loading progress
    * @name Skin#$progressAnimation
-   * @type {external:jQuery}
-   */
-  $progressAnimation = null;
-}
+   * @type {external:jQuery} */
+  $progressAnimation: null,
+});
 
 // Register this class in the list of available skins
 export default Skin.registerClass('custom', CustomSkin);

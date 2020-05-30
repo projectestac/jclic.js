@@ -46,13 +46,6 @@ export class Complete extends TextActivityBase {
   constructor(project) {
     super(project);
   }
-
-  // Class fields
-
-  /**
- * Panel class associated to this type of activity: {@link CompletePanel}
- * @type {class} */
-  static Panel = CompletePanel;
 }
 
 /**
@@ -127,6 +120,11 @@ export class CompletePanel extends TextActivityBase.Panel {
     return super.finishActivity(result);
   }
 }
+
+/**
+ * Panel class associated to this type of activity: {@link CompletePanel}
+ * @type {class} */
+Complete.Panel = CompletePanel;
 
 // Register activity class
 export default Activity.registerClass('@text.Complete', Complete);

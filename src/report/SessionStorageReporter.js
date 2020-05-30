@@ -101,37 +101,32 @@ export class SessionStorageReporter extends Reporter {
     super.endActivity(score, numActions, solved);
     this.saveCurrentReport();
   }
+}
 
+Object.assign(SessionStorageReporter.prototype, {
   /**
    * Type of storage to be used. Defaults to `window.sessionStorage`
    * @name SessionStorageReporter#storage
-   * @type {external:Storage}
-   */
-  storage = window.sessionStorage;
-
+   * @type {external:Storage} */
+  storage: window.sessionStorage,
   /**
    * Description of this reporting system
    * @name SessionStorageReporter#descriptionKey
    * @override
-   * @type {string}
-   */
-  descriptionKey = 'Reporting to session storage';
-
+   * @type {string} */
+  descriptionKey: 'Reporting to session storage',
   /**
    * Additional info to display after the reporter's `description`
    * @name SessionStorageReporter#descriptionDetail
    * @override
-   * @type {string}
-   */
-  descriptionDetail = '(browser session)';
-
+   * @type {string} */
+  descriptionDetail: '(browser session)',
   /**
    * Key used to save the report into sessionStorage
    * @name SessionStorageReporter#key 
-   * @type {string}
-   */
-  key = null;
-}
+   * @type {string} */
+  key: null,
+});
 
 // Register class in Reporter.CLASSES
 export default Reporter.registerClass('SessionStorageReporter', SessionStorageReporter);

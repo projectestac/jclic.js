@@ -30,7 +30,7 @@
 
 /* global Image */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import AWT from '../AWT';
 import Utils from '../Utils';
 
@@ -205,136 +205,98 @@ export class MediaContent {
     }
     return icon ? MediaContent.ICONS[icon] : null;
   }
+}
 
-  // Class fields
-
+Object.assign(MediaContent.prototype, {
   /**
    * The type of media. Valid values are: `UNKNOWN`, `PLAY_AUDIO`, `PLAY_VIDEO`,
    * `PLAY_MIDI`, `PLAY_CDAUDIO`, `RECORD_AUDIO`, `PLAY_RECORDED_AUDIO`, `RUN_CLIC_ACTIVITY`,
    * `RUN_CLIC_PACKAGE`, `RUN_EXTERNAL`, `URL`, `EXIT` and `RETURN`
    * @name MediaContent#type
-   * @type {string}
-   */
-  type = 'UNKNOWN';
-
+   * @type {string} */
+  type: 'UNKNOWN',
   /**
    * The priority level is important when different medias want to play together. Objects with
    * highest priority level can mute lower ones.
    * @name MediaContent#level
-   * @type {number}
-   */
-  level = 1;
-
+   * @type {number} */
+  level: 1,
   /**
    * Media file name
    * @name MediaContent#file
-   * @type {String}
-   */
-  file = null;
-
+   * @type {String} */
+  file: null,
   /**
    * Optional parameters passed to external calls
    * @name MediaContent#externalParams
-   * @type {string}
-   */
-  externalParam = null;
-
+   * @type {string} */
+  externalParam: null,
   /**
    * Special setting used to play only a fragment of media. `-1` means not used (plays full
    * length, from the beginning)
    * @name MediaContent#from
-   * @type {number}
-   */
-  from = -1;
-
+   * @type {number} */
+  from: -1,
   /**
    * Special setting used to play only a fragment of media. `-1` means not used (plays to the end
    * of the media)
    * @name MediaContent#to
-   * @type {number}
-   */
-  to = -1;
-
+   * @type {number} */
+  to: -1,
   /**
    * When `type` is `RECORD_AUDIO`, this member stores the maximum length of the recorded
    * sound, in seconds.
    * @name MediaContent#length
-   * @type {number}
-   */
-  length = 3;
-
+   * @type {number} */
+  length: 3,
   /**
    * When `type` is `RECORD_AUDIO`, this member stores the buffer ID where the recording
    * will be stored.
    * @name MediaContent#recBuffer
-   * @type {number}
-   */
-  recBuffer = 0;
-
+   * @type {number} */
+  recBuffer: 0,
   /**
    * Whether to stretch or not the video size to fit the cell space.
    * @name MediaContent#stretch
-   * @type {boolean}
-   */
-  stretch = false;
-
+   * @type {boolean} */
+  stretch: false,
   /**
    * When `true`, the video plays out of the cell, centered on the activity window.
    * @name MediaContent#free
-   * @type {boolean}
-   */
-  free = false;
-
+   * @type {boolean} */
+  free: false,
   /**
    * Places the video window at a specific location.
    * @name MediaContent#absLocation
-   * @type {AWT.Point}
-   */
-  absLocation = null;
-
+   * @type {AWT.Point} */
+  absLocation: null,
   /**
    * When {@link MediaContent#absLocation} is not `null`, this field indicates from where to
    * measure its coordinates. Valid values are: `BOX`, `WINDOW` or `FRAME`.
    * @name MediaContent#absLocationFrom
-   * @type {string}
-   */
-  absLocationFrom = null;
-
+   * @type {string} */
+  absLocationFrom: null,
   /**
    * `true` when the video window must catch mouse clicks.
    * @name MediaContent#catchMouseEvents
-   * @type {boolean}
-   */
-  catchMouseEvents = false;
-
+   * @type {boolean} */
+  catchMouseEvents: false,
   /**
    * Whether to repeat the media in loop, or just one time.
    * @name MediaContent#loop
-   * @type {boolean}
-   */
-  loop = false;
-
+   * @type {boolean} */
+  loop: false,
   /**
    * When `true`, the media will automatically start playing when the associated {@link ActiveBox}
    * become active.
    * @name MediaContent#autoStart
-   * @type {boolean}
-   */
-  autoStart = false;
-
-  /**
-   * Collection of icon {@link external:HTMLImageElement} objects
-   * @name MediaContent.ICONS
-   * @type {object}
-   */
-  static ICONS = {};
-
-}
+   * @type {boolean} */
+  autoStart: false,
+});
 
 /**
  * Default icons for media types.
- * @type {object}
- */
+ * @type {object} */
 const ICONS = {
   default: 'data:image/svg+xml;base64,' +
     'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGhlaWdodD0iNDgiIHZp' +
@@ -380,13 +342,19 @@ const ICONS = {
     'OTMgMC0uNjIuMDgtMS4yMS4yMS0xLjc5TDkgMTV2MWMwIDEuMS45IDIgMiAydjEuOTN6bTYuOS0y' +
     'LjU0Yy0uMjYtLjgxLTEtMS4zOS0xLjktMS4zOWgtMXYtM2MwLS41NS0uNDUtMS0xLTFIOHYtMmgy' +
     'Yy41NSAwIDEtLjQ1IDEtMVY3aDJjMS4xIDAgMi0uOSAyLTJ2LS40MWMyLjkzIDEuMTkgNSA0LjA2' +
-    'IDUgNy40MSAwIDIuMDgtLjggMy45Ny0yLjEgNS4zOXoiPjwvcGF0aD48L3N2Zz4K',
+    'IDUgNy40MSAwIDIuMDgtLjggMy45Ny0yLjEgNS4zOXoiPjwvcGF0aD48L3N2Zz4K'
 };
 
+/**
+ * Collection of icon {@link external:HTMLImageElement} objects
+ * @name MediaContent.ICONS
+ * @type {object} */
+MediaContent.ICONS = {};
+
 // Load the icons
-Object.keys(ICONS).forEach(key => {
+$.each(ICONS, (key, value) => {
   const img = new Image();
-  img.src = ICONS[key];
+  img.src = value;
   MediaContent.ICONS[key] = img;
 });
 

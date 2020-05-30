@@ -195,34 +195,31 @@ export class PlayerHistory {
       this.player.load(path, sequence, null);
     return true;
   }
+}
 
-  // Class fields
-
+Object.assign(PlayerHistory.prototype, {
   /**
    * The {@link JClicPlayer} object to which this `PlayerHistory` belongs
    * @name PlayerHistory#player
    * @type {JClicPlayer} */
-  player = null;
-
+  player: null,
   /**
    * This is the main member of the class. PlayerHistory puts and retrieves
    * on it information about the proects and activities done by the current user.
    * @name PlayerHistory#sequenceStack
    * @type {PlayerHistory#HistoryElement[]} */
-  sequenceStack = [];
-
+  sequenceStack: [],
   /**
    * When in test mode, jumps are only simulated.
    * @name PlayerHistory#testMode
    * @type {boolean} */
-  testMode = false;
-
+  testMode: false,
   /**
    * Inner class used to store history elements.
    * @name PlayerHistory#HistoryElement
    * @class
    */
-  static HistoryElement = class {
+  HistoryElement: class {
     /**
      * HistoryElement constructor
      * @param {string} projectPath - The full path of the project file
@@ -237,13 +234,7 @@ export class PlayerHistory {
       this.activity = activity;
       this.fullZipPath = fullZipPath;
     }
-
-    // Class fields
-    projectPath = null;
-    sequence = null;
-    activity = null;
-    fullZipPath = null;
-  };
-}
+  }
+});
 
 export default PlayerHistory;

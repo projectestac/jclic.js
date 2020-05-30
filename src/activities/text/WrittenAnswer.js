@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
@@ -104,26 +104,20 @@ export class WrittenAnswer extends Activity {
   helpSolutionAllowed() {
     return true;
   }
+}
 
-  // Class fields
-
+Object.assign(WrittenAnswer.prototype, {
   /**
    * Number of unassigned cells
    * @name WrittenAnswer#nonAssignedCells
    * @type {number} */
-  nonAssignedCells = 0;
-
+  nonAssignedCells: 0,
   /**
    * Whether to use or not the cell's `idAss` field to check if pairings match
    * @name WrittenAnswer#useIdAss
    * @type {boolean} */
-  useIdAss = true;
-
-  /**
-   * Panel class associated to this type of activity: {@link WrittenAnswerPanel}
-   * @type {class} */
-  static Panel = WrittenAnswerPanel;
-}
+  useIdAss: true,
+});
 
 /**
  * The {@link ActivityPanel} where {@link WrittenAnswer} activities are played.
@@ -513,47 +507,46 @@ export class WrittenAnswerPanel extends Activity.Panel {
       return false;
     }
   }
+}
 
-  // Class fields
-
+Object.assign(WrittenAnswerPanel.prototype, {
   /**
    * The input text field where users write the answers
    * @name WrittenAnswerPanel#$textField
    * @type {external:jQuery} */
-  $textField = null;
-
+  $textField: null,
   /**
    * Array for storing checked associations
    * @name WrittenAnswerPanel#invAssCheck
    * @type {boolean[]} */
-  invAssCheck = null;
-
+  invAssCheck: null,
   /**
    * The {@link ActiveBoxBag} object containing the questions
    * @name WrittenAnswerPanel#bgA
    * @type {ActiveBoxBag} */
-  bgA = null;
-
+  bgA: null,
   /**
    * An optional {@link ActiveBoxBag} with content displayed as cells are solved.
    * @name WrittenAnswerPanel#bgB
    * @type {ActiveBoxBag} */
-  bgB = null;
-
+  bgB: null,
   /**
    * The currently selected cell
    * @name WrittenAnswerPanel#currentCell
    * @type {number} */
-  currentCell = -1;
-
+  currentCell: -1,
   /**
    * Mouse events intercepted by this panel
    * @override
    * @name WrittenAnswerPanel#events
    * @type {string[]} */
-  events = ['click', 'change'];
+  events: ['click', 'change'],
+});
 
-}
+/**
+ * Panel class associated to this type of activity: {@link WrittenAnswerPanel}
+ * @type {class} */
+WrittenAnswer.Panel = WrittenAnswerPanel;
 
 // Register activity class
 export default Activity.registerClass('@text.WrittenAnswer', WrittenAnswer);

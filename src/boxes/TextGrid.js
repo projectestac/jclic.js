@@ -789,138 +789,105 @@ export class TextGrid extends AbstractBox {
       this.cursorTimer = null;
     }
   }
+}
 
-  // Class fields
-
+Object.assign(TextGrid.prototype, {
   /**
    * Number of rows
    * @name TextGrid#nRows
-   * @type {number}
-   */
-  nRows = 1;
-
+   * @type {number} */
+  nRows: 1,
   /**
    * Number of columns
    * @name TextGrid#nCols
-   * @type {number}
-   */
-  nCols = 1;
-
+   * @type {number} */
+  nCols: 1,
   /**
    * Two-dimension array of characters
    * @name TextGrid#chars
-   * @type {string[][]}
-   */
-  chars = null;
-
+   * @type {string[][]} */
+  chars: null,
   /**
    * Two-dimension array with the expected characters, used to check user's answers.
    * @name TextGrid#answers
-   * @type {string[][]}
-   */
-  answers = null;
-
+   * @type {string[][]} */
+  answers: null,
   /**
    * Two-dimension array of bytes used as containers of boolean attributes
    * @name TextGrid#attributes
    * @see TextGrid.flags
-   * @type {number[][]}
-   */
-  attributes = null;
-
+   * @type {number[][]} */
+  attributes: null,
   /**
    * The cell width, in pixels
    * @name TextGrid#cellWidth
-   * @type {number}
-   */
-  cellWidth = 20;
-
+   * @type {number} */
+  cellWidth: 20,
   /**
    * The cell height, in pixels
    * @name TextGrid#cellHeight
-   * @type {number}
-   */
-  cellHeight = 20;
-
+   * @type {number} */
+  cellHeight: 20,
   /**
    * The preferred bounds of this grid
    * @name TextGrid#preferredBounds
-   * @type {AWT.Rectangle}
-   */
-  preferredBounds = null;
-
+   * @type {AWT.Rectangle} */
+  preferredBounds: null,
   /**
    * The character to be used as wildcard
    * @name TextGrid#wild
-   * @type {string}
-   */
-  wild = TextGridContent.prototype.wild;
-
+   * @type {string} */
+  wild: TextGridContent.prototype.wild,
   /**
    * Characters that can be used when randomizing the content of this grid
    * @name TextGrid#randomChars
    * @see TextGridContent#randomChars
-   * @type {string}
-   */
-  randomChars = TextGridContent.prototype.randomChars;
-
+   * @type {string} */
+  randomChars: TextGridContent.prototype.randomChars,
   /**
    * Whether the blinking cursor is enabled or disabled
    * @name TextGrid#cursorEnabled
-   * @type {boolean}
-   */
-  cursorEnabled = false;
-
+   * @type {boolean} */
+  cursorEnabled: false,
   /**
    * Whether this grid uses a blinking cursor or not
    * @name TextGrid#useCursor
-   * @type {boolean}
-   */
-  useCursor = false;
-
+   * @type {boolean} */
+  useCursor: false,
   /**
    * The current position of the cursor
    * @name TextGrid#cursor
-   * @type {AWT.Point}
-   */
-  cursor = null;
-
+   * @type {AWT.Point} */
+  cursor: null,
   /**
    * `true` when the cursor is "blinking" (cell drawn with {@link BoxBase} `inverse` attributes)
    * @name TextGrid#cursorBlink
-   * @type {boolean}
-   */
-  cursorBlink = false;
-
+   * @type {boolean} */
+  cursorBlink: false,
   /**
    * Controls the blinking of the cursor
    * @name TextGrid#cursorTimer
-   * @type {AWT.Timer}
-   */
-  cursorTimer = null;
-
+   * @type {AWT.Timer} */
+  cursorTimer: null,
   /**
    * Whether the wildcard character is transparent or opaque
    * @name TextGrid#wildTransparent
-   * @type {boolean}
-   */
-  wildTransparent = false;
+   * @type {boolean} */
+  wildTransparent: false,
+});
 
-  /**
-   * TextGrid default values
-   * @name TextGrid.defaults
-   * @constant
-   * @type {object}
-   */
-  static defaults = defaults;
+/**
+ * TextGrid default values
+ * @name TextGrid.defaults
+ * @constant
+ * @type {object} */
+TextGrid.defaults = defaults;
 
-  /**
-   * Binary flags used to mark status
-   * @name TextGrid.flags
-   * @constant
-   * @type {object}
-   */
-  static flags = flags;
-}
+/**
+ * Binary flags used to mark status
+ * @name TextGrid.flags
+ * @constant
+ * @type {object} */
+TextGrid.flags = flags;
 
 export default TextGrid;

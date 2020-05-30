@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
@@ -87,13 +87,6 @@ export class ExchangePuzzle extends Activity {
   helpSolutionAllowed() {
     return true;
   }
-
-  // Class fields
-
-  /**
-   * Panel class associated to this type of activity: {@link ExchangePuzzlePanel}
-   * @type {class} */
-  static Panel = ExchangePuzzlePanel;
 }
 
 /**
@@ -354,26 +347,31 @@ class ExchangePuzzlePanel extends Activity.Panel {
       event.preventDefault();
     }
   }
+}
 
-  // Class fields
-
+Object.assign(ExchangePuzzlePanel.prototype, {
   /**
    * The {@link ActiveBoxBag} object containing the information to be displayed in the panel.
    * @name ExchangePuzzlePanel#bg
    * @type {ActiveBoxBag} */
-  bg = null;
+  bg: null,
   /**
    * The box connector
    * @name ExchangePuzzlePanel#bc
    * @type {BoxConnector} */
-  bc = null;
+  bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
    * @name ExchangePuzzlePanel#events
    * @type {string[]} */
-  events = ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'];
-}
+  events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
+});
+
+/**
+ * Panel class associated to this type of activity: {@link ExchangePuzzlePanel}
+ * @type {class} */
+ExchangePuzzle.Panel = ExchangePuzzlePanel;
 
 // Register activity class
 export default Activity.registerClass('@puzzles.ExchangePuzzle', ExchangePuzzle);

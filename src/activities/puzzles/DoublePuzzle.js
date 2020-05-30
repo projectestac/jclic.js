@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
@@ -89,13 +89,6 @@ export class DoublePuzzle extends Activity {
   helpSolutionAllowed() {
     return true;
   }
-
-  // Class fields
-
-  /**
-   * Panel class associated to this type of activity: {@link DoublePuzzlePanel}
-   * @type {class} */
-  static Panel = DoublePuzzlePanel;
 }
 
 /**
@@ -103,7 +96,7 @@ export class DoublePuzzle extends Activity {
  * @class
  * @extends ActivityPanel
  */
-class DoublePuzzlePanel extends Activity.Panel {
+export class DoublePuzzlePanel extends Activity.Panel {
   /**
    * DoublePuzzlePanel constructor
    * @param {Activity} act - The {@link Activity} to which this Panel belongs
@@ -396,31 +389,36 @@ class DoublePuzzlePanel extends Activity.Panel {
       event.preventDefault();
     }
   }
+}
 
-  // Class fields
-
+Object.assign(DoublePuzzlePanel.prototype, {
   /**
    * The {@link ActiveBoxBag} object containing the information to be displayed in the `primary` panel
    * @name DoublePuzzlePanel#bgA
    * @type {ActiveBoxBag} */
-  bgA = null;
+  bgA: null,
   /**
    * The secondary {@link ActiveBoxBag}, initially empty.
    * @name DoublePuzzlePanel#bgB
    * @type {ActiveBoxBag} */
-  bgB = null;
+  bgB: null,
   /**
    * The box connector
    * @name DoublePuzzlePanel#bc
    * @type {BoxConnector} */
-  bc = null;
+  bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
    * @name DoublePuzzlePanel#events
    * @type {string[]} */
-  events = ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'];
-}
+  events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
+});
+
+/**
+ * Panel class associated to this type of activity: {@link DoublePuzzlePanel}
+ * @type {class} */
+DoublePuzzle.Panel = DoublePuzzlePanel;
 
 // Register activity class
 export default Activity.registerClass('@puzzles.DoublePuzzle', DoublePuzzle);

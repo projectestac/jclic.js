@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import JumpInfo from './JumpInfo';
 import ConditionalJumpInfo from './ConditionalJumpInfo';
 import Utils from '../Utils';
@@ -123,22 +123,19 @@ export class ActivitySequenceJump extends JumpInfo {
     }
     return result;
   }
+}
 
-  // Class fields
-
+Object.assign(ActivitySequenceJump.prototype, {
   /**
    * Optional jump to be performed when the results (score and time) are above a specific threshold.
    * @name ActivitySequenceJump#upperJump
-   * @type {ConditionalJumpInfo}
-   */
-  upperJump = null;
-
+   * @type {ConditionalJumpInfo} */
+  upperJump: null,
   /**
    * Optional jump to be performed when the results (score or time) are below a specific threshold.
    * @name ActivitySequenceJump#lowerJump
-   * @type {ConditionalJumpInfo}
-   */
-  lowerJump = null;
-}
+   * @type {ConditionalJumpInfo} */
+  lowerJump: null,
+});
 
 export default ActivitySequenceJump;

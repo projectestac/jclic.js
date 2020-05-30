@@ -61,24 +61,21 @@ export class BlueSkin extends DefaultSkin {
   _getStyleSheets(media = 'default') {
     return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '');
   }
+}
 
-  // Class fields
-
+Object.assign(BlueSkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
    * @name BlueSkin#skinId
    * @override
-   * @type {string}
-   */
-  skinId = 'JClicBlueSkin';
-
+   * @type {string} */
+  skinId: 'JClicBlueSkin',
   /**
    * Styles used in this skin
    * @name BlueSkin#skinCSS
-   * @type {string}
-   */
-  skinCSS = '.ID {background-color:#1990FF;}';
-}
+   * @type {string} */
+  skinCSS: '.ID {background-color:#1990FF;}',
+});
 
 // Register this class in the list of available skins
 export default Skin.registerClass('blue', BlueSkin);

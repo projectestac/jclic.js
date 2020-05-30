@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
@@ -90,13 +90,6 @@ export class HolePuzzle extends Activity {
   helpSolutionAllowed() {
     return true;
   }
-
-  // Class fields
-
-  /**
-   * Panel class associated to this type of activity: {@link HolePuzzlePanel}
-   * @type {class} */
-  static Panel = HolePuzzlePanel;
 }
 
 /**
@@ -329,41 +322,42 @@ export class HolePuzzlePanel extends Activity.Panel {
       event.preventDefault();
     }
   }
+}
 
-  // Class fields
-
+Object.assign(HolePuzzlePanel.prototype, {
   /**
    * The {@link ActiveBoxBag} object containing the information to be displayed in the panel.
    * @name HolePuzzlePanel#bg
    * @type {ActiveBoxBag} */
-  bg = null;
-
+  bg: null,
   /**
    * An auxiliary box bag with only one box, used to store the "missing piece" of
    * the puzzle.
    * @name HolePuzzlePanel#parkBg
    * @type {ActiveBoxGrid} */
-  parkBg = null;
-
+  parkBg: null,
   /**
    * The hidden cell
    * @name HolePuzzlePanel#hiddenBox
    * @type {ActiveBox} */
-  hiddenBox = null;
-
+  hiddenBox: null,
   /**
    * Index of the hidden cell on the ActiveBagContent
    * @name HolePuzzlePanel#hiddenBoxIndex
    * @type {number} */
-  hiddenBoxIndex = -1;
-
+  hiddenBoxIndex: -1,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
    * @name HolePuzzlePanel#events
    * @type {string[]} */
-  events = ['click'];
-}
+  events: ['click'],
+});
+
+/**
+ * Panel class associated to this type of activity: {@link HolePuzzlePanel}
+ * @type {class} */
+HolePuzzle.Panel = HolePuzzlePanel;
 
 // Register activity class
 export default Activity.registerClass('@puzzles.HolePuzzle', HolePuzzle);

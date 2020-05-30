@@ -200,14 +200,12 @@ export class Encryption {
       return '';
     }
   }
-
-  // Class fields
-
-  /**
-  * Default bank password
-  * @type {string}
-  */
-  static BLANK = '___blank___##';
 }
+
+/**
+* Default bank password
+* @type {string}
+*/
+Encryption.BLANK = '___blank___##';
 
 export default Encryption;

@@ -71,26 +71,20 @@ export class ComplexAssociation extends SimpleAssociation {
     else
       return this.abc['primary'].getNumCells() - this.nonAssignedCells;
   }
+}
 
-  // Class fields
-
+Object.assign(ComplexAssociation.prototype, {
   /**
    * Number of unassigned cells
    * @name ComplexAssociation#nonAssignedCells
    * @type {number} */
-  nonAssignedCells = 0;
-
+  nonAssignedCells: 0,
   /**
    * Uses cell's `idAss` field to check if pairings match
    * @name ComplexAssociation#useIdAss
    * @type {boolean} */
-  useIdAss = false;
-
-  /**
-   * Panel class associated to this type of activity: {@link ComplexAssociationPanel}
-   * @type {class} */
-  static Panel = ComplexAssociationPanel;
-}
+  useIdAss: false,
+});
 
 /**
  * The {@link ActivityPanel} where {@link ComplexAssociation} activities are played.
@@ -311,14 +305,20 @@ export class ComplexAssociationPanel extends SimpleAssociation.Panel {
       event.preventDefault();
     }
   }
-
-  // Class fields
-  /**
-* Array for storing checked associations
-* @name ComplexAssociation#Panel#invAssCheck
-* @type {boolean[]} */
-  invAssCheck = null;
 }
+
+Object.assign(ComplexAssociationPanel.prototype, {
+  /**
+   * Array for storing checked associations
+   * @name ComplexAssociation#Panel#invAssCheck
+   * @type {boolean[]} */
+  invAssCheck: null,
+});
+
+/**
+ * Panel class associated to this type of activity: {@link ComplexAssociationPanel}
+ * @type {class} */
+ComplexAssociation.Panel = ComplexAssociationPanel;
 
 // Register activity class
 export default Activity.registerClass('@associations.ComplexAssociation', ComplexAssociation);

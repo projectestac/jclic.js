@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Utils from '../Utils';
 import BoxBase from './BoxBase';
 
@@ -162,72 +162,55 @@ export class TextGridContent {
     if (x >= 0 && x < this.ncw && y >= 0 && y < this.nch)
       this.text[y] = this.text[y].substring(0, x) + ch + this.text[y].substring(x + 1);
   }
+}
 
-  // Class fields
-
+Object.assign(TextGridContent.prototype, {
   /**
    * Grid columns
    * @name TextGridContent#ncw
-   * @type {number}
-   */
-  ncw = 1;
-
+   * @type {number} */
+  ncw: 1,
   /**
    * Grid rows
    * @name TextGridContent#nch
-   * @type {number}
-   */
-  nch = 1;
-
+   * @type {number} */
+  nch: 1,
   /**
    * Width of cells
    * @name TextGridContent#w
-   * @type {number}
-   */
-  w = 20;
-
+   * @type {number} */
+  w: 20,
   /**
    * Height of cells
    * @name TextGridContent#h
-   * @type {number}
-   */
-  h = 20;
-
+   * @type {number} */
+  h: 20,
   /**
    * Whether the cells must be surrounded by a border or not
    * @name TextGridContent#border
-   * @type {boolean}
-   */
-  border = false;
-
+   * @type {boolean} */
+  border: false,
   /**
-   * The {@link BoxBase} object with the visual settings of this text grid
+   * The {@link BoxBase} object with visual settings of the text grid
    * @name TextGridContent#style
-   * @type {BoxBase}
-   */
-  style = null;
-
+   * @type {BoxBase} */
+  style: null,
   /**
    * An array of String objects textning the chars of cells. One string per row, one character of
    * this string per cell.
    * @name TextGridContent#text
-   * @type {string[]}
-   */
-  text = null;
-
+   * @type {string[]} */
+  text: null,
   /**
-   * The character used as a wildcard text
+   * The letter used as wildcardtext
    * @name TextGridContent#wild
-   * @type {string}
-   */
-  wild = '*';
-
+   * @type {string} */
+  wild: '*',
   /**
-   * A String with the chars to take as a source when randomly filling empty cells
+   * A String with the chars to take as source when randomly filling empty cells
    * @name TextGridContent#randomChars
-   * @type {string}
-   */
-  randomChars = Utils.settings.RANDOM_CHARS;
-}
+   * @type {string} */
+  randomChars: Utils.settings.RANDOM_CHARS,
+});
 
 export default TextGridContent;

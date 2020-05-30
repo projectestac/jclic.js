@@ -105,58 +105,47 @@ export class Counter {
     if (this.enabled && this.value !== (this.value = value))
       this.refreshDisplay();
   }
+}
 
-  // Class fields
-
+Object.assign(Counter.prototype, {
   /**
    * Type of counter (usually: `score`, `actions` or `time`)
    * @name Counter#id
-   * @type {string}
-   */
-  id = '';
-
+   * @type {string} */
+  id: '',
   /**
    * The HTML element where this counter shows its value
    * @name Counter#$div
    * @type {external:jQuery}
    */
-  $div = null;
-
+  $div: null,
   /**
    * Current value of this counter
    * @name Counter#value
-   * @type {number}
-   */
-  value = 0;
-
+   * @type {number} */
+  value: 0,
   /**
    * When set, the counter displays a countdown from this value to zero
    * @name Counter#countDown
-   * @type {number}
-   */
-  countDown = 0;
-
+   * @type {number} */
+  countDown: 0,
   /**
    * Flag indicating if this counter is currently enabled
    * @name Counter#enabled
-   * @type {boolean}
-   */
-  enabled = true;
-
+   * @type {boolean} */
+  enabled: true,
   /**
    * Maximum value to be displayed by this counter
    * @name Counter#MAX_DISPLAY_VALUE
-   * @type {Number}
-   */
-  MAX_DISPLAY_VALUE = 999;
-
+   * @type {Number} */
+  MAX_DISPLAY_VALUE: 999,
   /**
    * An optional Counter used as a subtractor to display the current value.
    * Useful to display `errors` subtracting `score` from `actions`.
    * @name Counter#displayDiffFrom
    * @type {Counter}
    */
-  displayDiffFrom = null;
-}
+  displayDiffFrom: null,
+});
 
 export default Counter;

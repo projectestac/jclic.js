@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Activity from '../../Activity';
 import TextActivityBase from './TextActivityBase';
 import BoxConnector from '../../boxes/BoxConnector';
@@ -76,26 +76,20 @@ export class OrderText extends TextActivityBase {
   helpSolutionAllowed() {
     return true;
   }
+}
 
-  // Class fields
-
+Object.assign(OrderText.prototype, {
   /**
    * Whether to allow or not to shuffle words among different paragraphs.
    * @name OrderText#amongParagraphs
    * @type {boolean} */
-  amongParagraphs = false;
-
+  amongParagraphs: false,
   /**
    * The box connector
    * @name OrderText#bc
    * @type {BoxConnector} */
-  bc = null;
-
-  /**
-   * Panel class associated to this type of activity: {@link OrderTextPanel}
-   * @type {class} */
-  static Panel = OrderTextPanel;
-}
+  bc: null,
+});
 
 /**
  * The {@link TextActivityBasePanel} where {@link OrderText} activities are played.
@@ -420,6 +414,11 @@ Object.assign(OrderTextPanel.prototype, {
    * @type {string[]} */
   events: ['click', 'mousemove'],
 });
+
+/**
+ * Panel class associated to this type of activity: {@link OrderTextPanel}
+ * @type {class} */
+OrderText.Panel = OrderTextPanel;
 
 // Register activity class
 export default Activity.registerClass('@text.Order', OrderText);

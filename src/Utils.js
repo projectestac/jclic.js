@@ -30,7 +30,7 @@
 
 /* global Promise, window, document, console, btoa, HTMLElement, CanvasRenderingContext2D */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import clipboard from 'clipboard-js';
 import i18next from 'i18next';
 import JSZip from 'jszip';

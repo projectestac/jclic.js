@@ -30,7 +30,7 @@
 
 /* global console, window */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Utils from './Utils';
 import WebFont from 'webfontloader';
 
@@ -302,41 +302,81 @@ export class Font {
       this.italic === font.italic &&
       this.variant === font.variant;
   }
+}
 
-  // Class fields
 
+/**
+ * Array of font objects with already calculated heights */
+Font.ALREADY_CALCULATED_FONTS = [];
+
+/**
+ * Array of font names already loaded from Google Fonts, or generic names provided by browsers by default 
+ * See: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family */
+Font.ALREADY_LOADED_FONTS = ['serif', 'sans-serif', 'monospace', 'cursive', 'fantasy'];
+
+/**
+ * Google Fonts equivalent for special fonts used in some JClic projects.
+ * More substitutions can be added to the list for specific projects indicating a
+ * `fontSubstitutions` object in the `data-options` attribute of the HTML `div` element
+ * containing the player.
+ * For example:
+ * `<div class ="JClic" data-project="demo.jclic" data-options='{"fontSubstitutions":{"arial":"Arimo"}}'/>`
+ */
+Font.SUBSTITUTIONS = {
+  // Lowercase versions of JDK Logical Fonts (see: https://docs.oracle.com/javase/tutorial/2d/text/fonts.html)
+  'dialog': 'sans-serif',
+  'dialoginput': 'sans-serif',
+  'monospaced': 'monospace',
+  //'serif': 'serif',
+  'sansserif': 'sans-serif',
+  // Other fonts commonly used in JClic activities, mapped to similar Google Fonts
+  'abc': 'Kalam',
+  'a.c.m.e. secret agent': 'Permanent Marker',
+  'comic sans ms': 'Patrick Hand',
+  'impact': 'Oswald',
+  'massallera': 'Vibur',
+  'memima': 'Vibur',
+  'memima_n1': 'Vibur',
+  'memima_n2': 'Vibur',
+  'memimas-regularalternate': 'Vibur',
+  'palmemim': 'Vibur',
+  'zurichcalligraphic': 'Felipa'
+};
+/**
+ * Google Fonts currently used in substitutions
+ */
+Font.GOOGLEFONTS = [
+  'Kalam', 'Permanent Marker', 'Patrick Hand', 'Oswald', 'Vibur', 'Felipa',
+];
+
+Object.assign(Font.prototype, {
   /**
    * The `font-family` property
    * @name Font#family
    * @type {string} */
-  family = 'Arial';
-
+  family: 'Arial',
   /**
    * The font size
    * __Warning__: Do not change `size` directly. Use the {@link Font#setSize|setSize()}
    * method instead.
    * @name Font#size
    * @type {number} */
-  size = 17;
-
+  size: 17,
   /**
    * The font _bold_ value
    * @name Font#bold
    * @type {number} */
-  bold = 0;
-
+  bold: 0,
   /**
    * The font _italic_ value
    * @name Font#italic
    * @type {number} */
-  italic = 0;
-
+  italic: 0,
   /**
    * The font _variant_ value
    * @name Font#variant
    * @type {string}*/
-  variant = '';
-
+  variant: '',
   /**
    * The font *_metrics* property contains the values for `ascent`, `descent` and `height`
    * attributes. Vertical font metrics are calculated in
@@ -344,54 +384,8 @@ export class Font {
    * @name Font#_metrics
    * @private
    * @type {{ascent: number, descent: number, height: number}} */
-  _metrics = { ascent: -1, descent: -1, height: -1 };
-
-  /**
-   * Array of font objects with already calculated heights */
-  static ALREADY_CALCULATED_FONTS = [];
-
-  /**
-   * Array of font names already loaded from Google Fonts, or generic names provided by browsers by default 
-   * See: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family */
-  static ALREADY_LOADED_FONTS = ['serif', 'sans-serif', 'monospace', 'cursive', 'fantasy'];
-
-  /**
-   * Google Fonts equivalent for special fonts used in some JClic projects.
-   * More substitutions can be added to the list for specific projects indicating a
-   * `fontSubstitutions` object in the `data-options` attribute of the HTML `div` element
-   * containing the player.
-   * For example:
-   * `<div class ="JClic" data-project="demo.jclic" data-options='{"fontSubstitutions":{"arial":"Arimo"}}'/>`
-   */
-  static SUBSTITUTIONS = {
-    // Lowercase versions of JDK Logical Fonts (see: https://docs.oracle.com/javase/tutorial/2d/text/fonts.html)
-    'dialog': 'sans-serif',
-    'dialoginput': 'sans-serif',
-    'monospaced': 'monospace',
-    //'serif': 'serif',
-    'sansserif': 'sans-serif',
-    // Other fonts commonly used in JClic activities, mapped to similar Google Fonts
-    'abc': 'Kalam',
-    'a.c.m.e. secret agent': 'Permanent Marker',
-    'comic sans ms': 'Patrick Hand',
-    'impact': 'Oswald',
-    'massallera': 'Vibur',
-    'memima': 'Vibur',
-    'memima_n1': 'Vibur',
-    'memima_n2': 'Vibur',
-    'memimas-regularalternate': 'Vibur',
-    'palmemim': 'Vibur',
-    'zurichcalligraphic': 'Felipa'
-  };
-
-  /**
-   * Google Fonts currently used in substitutions
-   */
-  static GOOGLEFONTS = [
-    'Kalam', 'Permanent Marker', 'Patrick Hand', 'Oswald', 'Vibur', 'Felipa',
-  ];
-}
-
+  _metrics: { ascent: -1, descent: -1, height: -1 },
+});
 
 /**
  * Contains parameters and methods to draw complex color gradients
@@ -485,32 +479,30 @@ export class Gradient {
   hasTransparency() {
     return Utils.colorHasTransparency(this.c1) || Utils.colorHasTransparency(this.c2);
   }
+}
 
-  // Class fields
+Object.assign(Gradient.prototype, {
   /**
- * Initial color
- * @name Gradient#c1
- * @type {string} */
-  c1 = 'white';
-
+   * Initial color
+   * @name Gradient#c1
+   * @type {string} */
+  c1: 'white',
   /**
    * Final color
    * @name Gradient#c2
    * @type {string} */
-  c2 = 'black';
-
+  c2: 'black',
   /**
    * Tilt angle
    * @name Gradient#angle
    * @type {number} */
-  angle = 0;
-
+  angle: 0,
   /**
    * Number of repetitions of the gradient
    * @name Gradient#cycles
    * @type {number} */
-  cycles = 1;
-}
+  cycles: 1,
+});
 
 /**
  * Contains properties used to draw lines in HTML `canvas` elements.
@@ -571,33 +563,30 @@ export class Stroke {
     ctx.miterLimit = this.miterLimit;
     return ctx;
   }
+}
 
-  // Class fields
-
+Object.assign(Stroke.prototype, {
   /**
- * The line width
- * @name Stroke#lineWidth
- * @type {number} */
-  lineWidth = 1.0;
-
+   * The line width
+   * @name Stroke#lineWidth
+   * @type {number} */
+  lineWidth: 1.0,
   /**
    * The line ending type (`butt`, `round` or `square`)
    * @name Stroke#lineCap
    * @type {string} */
-  lineCap = 'butt';
-
+  lineCap: 'butt',
   /**
    * The drawing used when two lines join (`round`, `bevel` or `miter`)
    * @name Stroke#lineJoin
    * @type {string} */
-  lineJoin = 'miter';
-
+  lineJoin: 'miter',
   /**
    * Ratio between the miter length and half `lineWidth`
    * @name Stroke#miterLimit
    * @type {number} */
-  miterLimit = 10.0;
-}
+  miterLimit: 10.0,
+});
 
 /**
  * Contains the `x` andy `y` coordinates of a point, and provides some useful methods.
@@ -714,20 +703,18 @@ export class Point {
   clone() {
     return new Point(this);
   }
+}
 
-  // Class fields
-
+Object.assign(Point.prototype, {
   /**
    * @name Point#x
    * @type {number} */
-  x = 0;
-
+  x: 0,
   /**
    * @name Point#y
    * @type {number} */
-  y = 0;
-
-}
+  y: 0,
+});
 
 /**
  * This class encapsulates `width` and `height` properties.
@@ -825,18 +812,18 @@ class Dimension {
   getSurface() {
     return this.width * this.height;
   }
+}
 
-  // Class fields
+Object.assign(Dimension.prototype, {
   /**
    * @name Dimension#width
    * @type {number} */
-  width = 0;
-
+  width: 0,
   /**
    * @name Dimension#height
    * @type {number} */
-  height = 0;
-}
+  height: 0,
+});
 
 /**
  * Shape is a generic abstract class for rectangles, ellipses and stroke-free shapes.
@@ -1030,27 +1017,25 @@ export class Shape {
     } else
       return (new shapeType()).setAttributes(data);
   }
+}
 
-  // Class fields
-
+Object.assign(Shape.prototype, {
   /**
    * Shape type id
    * @name Shape#type
    * @type {string} */
-  type = 'shape';
-
+  type: 'shape',
   /**
    * The current position of the shape
    * @name Shape#pos
    * @type {Point} */
-  pos = new Point();
-
+  pos: new Point(),
   /**
    * The type of shape (Rectangle, ellipse, path...)
    * @name Shape#type
    * @type {string} */
-  type = 'shape';
-}
+  type: 'shape',
+});
 
 /**
  * The rectangular {@link Shape} accepts five different sets of parameters:
@@ -1279,20 +1264,20 @@ export class Rectangle extends Shape {
       { key: 'dim', fn: Dimension },
     ]);
   }
+}
 
-  // Class fields
+Object.assign(Rectangle.prototype, {
   /**
- * Shape type id
- * @name Rectangle#type
- * @type {string} */
-  type = 'rect';
-
+   * Shape type id
+   * @name Rectangle#type
+   * @type {string} */
+  type: 'rect',
   /**
    * The {@link Dimension} of the Rectangle
    * @name Rectangle#dim
    * @type {Dimension} */
-  dim = new Dimension();
-}
+  dim: new Dimension(),
+});
 
 /**
  * The Ellipse shape has the same constructor options as {@link Rectangle}
@@ -1387,15 +1372,15 @@ export class Ellipse extends Rectangle {
   toString() {
     return `Ellipse enclosed in ${this.getCoords()}`;
   }
+}
 
-  // Class fields
-
+Object.assign(Ellipse.prototype, {
   /**
    * Shape type id
    * @name Ellipse#type
    * @type {string} */
-  type = 'ellipse';
-}
+  type: 'ellipse',
+});
 
 /**
  * A `Path` is a {@link Shape} formed by a serie of strokes, represented by
@@ -1591,33 +1576,30 @@ export class Path extends Shape {
     });
     return this.setStrokes(strokes);
   }
+}
 
-  // Class fields
-
+Object.assign(Path.prototype, {
   /**
    * Shape type id
    * @name Path#type
    * @type {string} */
-  type = 'path';
-
+  type: 'path',
   /**
    * The strokes forming this Path.
    * @name Path#strokes
    * @type {PathStroke[]} */
-  strokes = [];
-
+  strokes: [],
   /**
    * The {@link Rectangle} enclosing this Path (when drawing, this Rectangle don't include border width!)
    * @name Path#enclosing
    * @type {Rectangle} */
-  enclosing = new Rectangle();
-
+  enclosing: new Rectangle(),
   /**
    * Set of vertexs of a polygon close to the real path of this shape
    * @name Path#enclosingPoints
    * @type {Point[]} */
-  enclosingPoints = [];
-}
+  enclosingPoints: [],
+});
 
 /**
  * PathStroke is the basic component of {@link Path} objects
@@ -1797,23 +1779,21 @@ export class PathStroke {
   getAttributes() {
     return `${this.type}:${this.points ? this.points.map(p => `${Utils.fx(p.x)},${Utils.fx(p.y)}`).join(',') : ''}`;
   }
+}
 
-  // Class fields
-
+Object.assign(PathStroke.prototype, {
   /**
    * The Stroke type. Possible values are: `M` (move to), `L` (line to), `Q` (quadratic to),
    * `B` (bezier to) and `X` (close path).
    * @name PathStroke#type
    * @type {string} */
-  type = 'X';
-
+  type: 'X',
   /**
    * The array of points used by this stroke. Can be `null`.
    * @name PathStroke#points
    * @type {Point[]} */
-  points = null;
-
-}
+  points: null,
+});
 
 /**
  * This class encapsulates actions that can be linked to buttons, menus and other active objects
@@ -1879,31 +1859,31 @@ export class Action {
     this._statusListeners.forEach(listener => listener.call(this, this));
     return this;
   }
+}
 
-  // Class fields
-
+Object.assign(Action.prototype, {
   /**
    * The action's name
    * @name Action#name
    * @type {string} */
-  name = null;
+  name: null,
   /**
    * An optional description
    * @name Action#description
    * @type {string} */
-  description = null;
+  description: null,
   /**
    * Action status. `true` means enabled, `false` disabled
    * @name Action#enabled
    * @type {boolean} */
-  enabled = false;
+  enabled: false,
   /**
    * Array of callback functions to be triggered when the `enabled` flag changes
    * @name Action#_statusListeners
    * @private
    * @type {function[]} */
-  _statusListeners = null;
-}
+  _statusListeners: null,
+});
 
 /**
  * This class provides a timer that will launch a function at specific intervals
@@ -1988,33 +1968,30 @@ export class Timer {
   stop(retainCounter) {
     return this.setEnabled(false, retainCounter);
   }
+}
 
-  // Class fields
-
+Object.assign(Timer.prototype, {
   /**
    * The timer interval, in milliseconds
    * @name Timer#interval
    * @type {number} */
-  interval = 0;
-
+  interval: 0,
   /**
    * The ticks counter
    * @name Timer#ticks
    * @type {number} */
-  ticks = 0;
-
+  ticks: 0,
   /**
    * The object returned by `window.setInterval`
    * @name Timer#timer
    * @type {object} */
-  timer = null;
-
+  timer: null,
   /**
    * When `true`, the timer should repeat until `stop` is called
    * @name Timer#repeats
    * @type {boolean} */
-  repeats = true;
-}
+  repeats: true,
+});
 
 /**
  * Logic object that takes care of an "invalidated" rectangle that will be repainted
@@ -2069,15 +2046,15 @@ export class Container extends Rectangle {
     // To be overrided by subclasses. Here does nothing.
     return this;
   }
+}
 
-  // Class fields
-
+Object.assign(Container.prototype, {
   /**
    * The currently "invalidated" area
    * @name Container#invalidatedRect
    * @type {Rectangle} */
-  invalidatedRect = null;
-}
+  invalidatedRect: null,
+});
 
 // Exports a composite object with all classes
 export default {

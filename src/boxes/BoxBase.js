@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Utils from '../Utils';
 import AWT from '../AWT';
 
@@ -295,140 +295,105 @@ export class BoxBase {
     }
     return result;
   }
+}
 
-  // Class fields
-
+Object.assign(BoxBase.prototype, {
   /**
    * The parent BoxBase object
    * @name BoxBase#parent
-   * @type {BoxBase}
-   */
-  parent = null;
-
+   * @type {BoxBase} */
+  parent: null,
   /**
    * Default values
    * @name BoxBase#defaultValues
-   * @type {object}
-   */
-  default = defaultValues;
-
+   * @type {object} */
+  default: defaultValues,
   /**
    * Font size can be dynamically reduced to fit the available space if any element using this
    * `BoxBase` requests it. When this happen, this field contains the real font currently used
    * to draw text.
    * @name BoxBase#font
-   * @type {AWT.Font}
-   */
-  font = new AWT.Font();
-
+   * @type {AWT.Font} */
+  font: new AWT.Font(),
   /**
    * The current font size of this BoxBase. Can be dynamically adjusted when drawing.
    * @name BoxBase#dynFontSize
-   * @type {number}
-   */
-  dynFontSize = 0;
-
+   * @type {number} */
+  dynFontSize: 0,
   /**
    * Counts the number of times the `dynFontSize` has been reset. This is useful to avoid excessive
    * recursive loops searching the optimal font size.
    * @name BoxBase#resetFontCounter
-   * @type {number}
-   */
-  resetFontCounter = 0;
-
+   * @type {number} */
+  resetFontCounter: 0,
   /**
    * The background color
    * @name BoxBase#backColor
-   * @type {string}
-   */
-  backColor = defaultValues.BACK_COLOR;
-
+   * @type {string} */
+  backColor: defaultValues.BACK_COLOR,
   /**
    * The background gradient. Default is `null`.
    * @name BoxBase#bgGradient
-   * @type {AWT.Gradient}
-   */
-  bgGradient = null;
-
+   * @type {AWT.Gradient} */
+  bgGradient: null,
   /**
    * The color used to write text.
    * @name BoxBase#textColor
-   * @type {string}
-   */
-  textColor = defaultValues.TEXT_COLOR;
-
+   * @type {string} */
+  textColor: defaultValues.TEXT_COLOR,
   /**
    * The color used to draw a shadow below regular text.
    * @name BoxBase#shadowColor
-   * @type {string}
-   */
-  shadowColor = defaultValues.SHADOW_COLOR;
-
+   * @type {string} */
+  shadowColor: defaultValues.SHADOW_COLOR,
   /**
    * The color of the border.
    * @name BoxBase#borderColor
-   * @type {string}
-   */
-  borderColor = defaultValues.BORDER_COLOR;
-
+   * @type {string} */
+  borderColor: defaultValues.BORDER_COLOR,
   /**
    * The color used to draw text when a cell is in `inactive` state.
    * @name BoxBase#inactiveColor
-   * @type {string}
-   */
-  inactiveColor = defaultValues.INACTIVE_COLOR;
-
+   * @type {string} */
+  inactiveColor: defaultValues.INACTIVE_COLOR,
   /**
    * The color used to draw text when a cell is in `alternative` state.
    * @name BoxBase#alternativeColor
-   * @type {string}
-   */
-  alternativeColor = defaultValues.ALTERNATIVE_COLOR;
-
+   * @type {string} */
+  alternativeColor: defaultValues.ALTERNATIVE_COLOR,
   /**
    * Whether the text should have a shadow or not
    * @name BoxBase#shadow
-   * @type {boolean}
-   */
-  shadow = false;
-
+   * @type {boolean} */
+  shadow: false,
   /**
    * Whether the cell's background (and its hosted component, if any) should be transparent
    * @name BoxBase#transparent
-   * @type {boolean}
-   */
-  transparent = false;
-
+   * @type {boolean} */
+  transparent: false,
   /**
    * Wheter the cell's background should be painted or not. This property has no effect on
    * hosted components.
    * @name BoxBase#dontFill
-   * @type {boolean}
-   */
-  dontFill = false;
-
+   * @type {boolean} */
+  dontFill: false,
   /**
    * The margin to respect between text elements and the limits of the cell or other elements.
    * @name BoxBase#textMargin
-   * @type {number}
-   */
-  textMargin = defaultValues.AC_MARGIN;
-
+   * @type {number} */
+  textMargin: defaultValues.AC_MARGIN,
   /**
    * The stroke used to draw the border.
    * @name BoxBase#borderStroke
-   * @type {AWT.Stroke}
-   */
-  borderStroke = new AWT.Stroke(defaultValues.BORDER_STROKE_WIDTH);
-
+   * @type {AWT.Stroke} */
+  borderStroke: new AWT.Stroke(defaultValues.BORDER_STROKE_WIDTH),
   /**
    * The stroke used to draw a border around marked cells.
    * @name BoxBase#markerStroke
-   * @type {AWT.Stroke}
-   */
-  markerStroke = new AWT.Stroke(defaultValues.MARKER_STROKE_WIDTH);
+   * @type {AWT.Stroke} */
+  markerStroke: new AWT.Stroke(defaultValues.MARKER_STROKE_WIDTH),
+});
 
-  static defaultBoxBase = new BoxBase();
-}
+BoxBase.prototype.defaultBoxBase = new BoxBase();
 
 export default BoxBase;

@@ -30,7 +30,7 @@
 
 /* global window */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
@@ -56,13 +56,6 @@ export class InformationScreen extends Activity {
     this.includeInReports = false;
     this.reportActions = false;
   }
-
-  // Class fields
-
-  /**
-  * Panel class associated to this type of activity: {@link InformationScreenPanel}
-  * @type {class} */
-  static Panel = InformationScreenPanel;
 }
 
 /**
@@ -247,23 +240,26 @@ export class InformationScreenPanel extends Activity.Panel {
       event.preventDefault();
     }
   }
+}
 
-  // Class fields
-
+Object.assign(InformationScreenPanel.prototype, {
   /**
    * The {@link ActiveBoxBag} containing the information to be displayed.
    * @name InformationScreenPanel#bg
    * @type {ActiveBoxBag} */
-  bg = null;
-
+  bg: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
    * @name InformationScreenPanel#events
    * @type {string[]} */
-  events = ['click'];
+  events: ['click'],
+});
 
-}
+/**
+ * Panel class associated to this type of activity: {@link InformationScreenPanel}
+ * @type {class} */
+InformationScreen.Panel = InformationScreenPanel;
 
 // Register activity class
 export default Activity.registerClass('@panels.InformationScreen', InformationScreen);

@@ -61,42 +61,35 @@ export class GreenSkin extends DefaultSkin {
   _getStyleSheets(media = 'default') {
     return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '');
   }
+}
 
-  // Class fields
-
+Object.assign(GreenSkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
    * @name GreenSkin#skinId
    * @override
-   * @type {string}
-   */
-  skinId = 'JClicGreenSkin';
-
+   * @type {string} */
+  skinId: 'JClicGreenSkin',
   //
   // Buttons and other graphical resources used by this skin:
   /**
    * Fill color for icons
    * @name GreenSkin#iconFill
    * @override
-   * @type {string}
-   */
-  iconFill = '#20640E';
-
+   * @type {string} */
+  iconFill: '#20640E',
   /**
    * Fill-in color for counters
    * @name GreenSkin#counterIconFill
    * @override
-   * @type {string}
-   */
-  counterIconFill = '#20640E';
-
+   * @type {string} */
+  counterIconFill: '#20640E',
   /**
    * Styles used in this skin
    * @name GreenSkin#skinCSS
-   * @type {string}
-   */
-  skinCSS = '.ID {background-color:#4AFF19;}';
-}
+   * @type {string} */
+  skinCSS: '.ID {background-color:#4AFF19;}'
+});
 
 // Register this class in the list of available skins
 export default Skin.registerClass('green', GreenSkin);

@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import MediaBagElement from './MediaBagElement';
 import Skin from '../skins/Skin';
 import Utils from '../Utils';
@@ -197,22 +197,19 @@ export class MediaBag {
   getSkinElement(name, ps) {
     return Skin.getSkin(name, ps);
   }
+}
 
-  // Class fields
-
+Object.assign(MediaBag.prototype, {
   /**
    * The collection of {@link MediaBagElement} objects
    * @name MediaBag#elements
-   * @type {object}
-   */
-  elements = null;
-
+   * @type {object} */
+  elements: null,
   /**
    * The JClic project to which this MediaBag belongs
    * @name MediaBag#project
-   * @type {JClicProject}
-   */
-  project = null;
-}
+   * @type {JClicProject} */
+  project: null,
+});
 
 export default MediaBag;

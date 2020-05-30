@@ -596,142 +596,105 @@ export class AbstractBox extends AWT.Rectangle {
       });
     }
   }
+}
 
-  // Class fields
-
+Object.assign(AbstractBox.prototype, {
   /**
    * The parent AbstractBox (can be `null`)
    * @name AbstractBox#parent
-   * @type {AbstractBox}
-   */
-  parent = null;
-
+   * @type {AbstractBox} */
+  parent: null,
   /**
    * The Container to which this AbstractBox belongs
    * @name AbstractBox#container
-   * @type {AWT.Container}
-   */
-  container = null;
-
+   * @type {AWT.Container} */
+  container: null,
   /**
    * The {@link BoxBase} related to this AbstractBox. When `null`, the parent can provide an
    * alternative one.
    * @name AbstractBox#boxBase
-   * @type {BoxBase}
-   */
-  boxBase = null;
-
+   * @type {BoxBase} */
+  boxBase: null,
   /**
    * Whether this box has a border or not
    * @name AbstractBox#border
-   * @type {boolean}
-   */
-  border = false;
-
+   * @type {boolean} */
+  border: false,
   /**
    * The shape of this box (the box Rectangle or a special Shape, if set)
    * @name AbstractBox#shape
-   * @type {AWT.Shape}
-   */
-  shape = null;
-
+   * @type {AWT.Shape} */
+  shape: null,
   /**
    * Whether this box has a shape that is not a rectangle
    * @name AbstractBox#specialShape
-   * @type {boolean}
-   */
-  specialShape = false;
-
+   * @type {boolean} */
+  specialShape: false,
   /**
    * Whether this box is visible or not
    * @name AbstractBox#visible
-   * @type {boolean}
-   */
-  visible = true;
-
+   * @type {boolean} */
+  visible: true,
   /**
    * Used to temporary hide a box while other drawing operations are done
    * @name AbstractBox#temporaryHidden
-   * @type {boolean}
-   */
-  temporaryHidden = false;
-
+   * @type {boolean} */
+  temporaryHidden: false,
   /**
    * Cells with this attribute will be transparent but with painted border
    * @name AbstractBox#tmpTrans
-   * @type {boolean}
-   */
-  tmpTrans = false;
-
+   * @type {boolean}*/
+  tmpTrans: false,
   /**
    * Whether this box is active or inactive
    * @name AbstractBox#inactive
-   * @type {boolean}
-   */
-  inactive = false;
-
+   * @type {boolean} */
+  inactive: false,
   /**
    * Whether this box must be displayed with inverted or regular colors
    * @name AbstractBox#inverted
-   * @type {boolean}
-   */
-  inverted = false;
-
+   * @type {boolean} */
+  inverted: false,
   /**
    * Whether this box must be displayed with alternative or regular color and font settings
    * @name AbstractBox#alternative
-   * @type {boolean}
-   */
-  alternative = false;
-
+   * @type {boolean} */
+  alternative: false,
   /**
    * Whether this box is marked (selected) or not
    * @name AbstractBox#marked
-   * @type {boolean}
-   */
-  marked = false;
-
+   * @type {boolean} */
+  marked: false,
   /**
    * Whether this box holds the input focus
    * @name AbstractBox#focused
-   * @type {boolean}
-   */
-  focused = false;
-
+   * @type {boolean} */
+  focused: false,
   /**
    * Text to be used in accessible contexts
    * @name AbstractBox#accessibleText
-   * @type {string}
-   */
-  accessibleText = '';
-
+   * @type {string} */
+  accessibleText: '',
   /**
    * Describes the main role of this box on the activity. Useful in wai-aria descriptions.
    * @name AbstractBox#role
-   * @type {string}
-   */
-  role = 'cell';
-
+   * @type {string} */
+  role: 'cell',
   /**
    * DOM element used to display this cell content in wai-aria contexts
    * @name AbstractBox#$accessibleElement
-   * @type {external:jQuery}
-   */
-  $accessibleElement = null;
-
+   * @type {external:jQuery} */
+  $accessibleElement: null,
   /**
    * Flag indicating that $accessibleElement should be always active
    * @name AbstractBox#accessibleAlwaysActive
-   * @type {boolean}
-   */
-  accessibleAlwaysActive = false;
-
+   * @type {boolean} */
+  accessibleAlwaysActive: false,
   /**
    * An external JQuery DOM element hosted by this box
    * @name AbstractBox#$hostedComponent
-   * @type {external:jQuery}
-   */
-  $hostedComponent = null;
-}
+   * @type {external:jQuery} */
+  $hostedComponent: null,
+});
 
 export default AbstractBox;

@@ -199,39 +199,30 @@ export class Evaluator {
   isOk(flags) {
     return flags && flags.length > 0 && !flags.some(f => f !== 0);
   }
+}
 
-  // Class fields
-
+Object.assign(Evaluator.prototype, {
   /**
    * The type of evaluator.
    * @name Evaluator#className
    * @type {string} */
-  className = null;
-
+  className: null,
   /**
    * Whether this evaluator has been initialized or not.
    * @name Evaluator#initiated
    * @type {boolean} */
-  initiated = false;
-
+  initiated: false,
   /**
    * The Intl.Collator object used to compare strings, when available.
    * @name Evaluator#collator
    * @type {external:Collator} */
-  collator = null;
-
+  collator: null,
   /**
    * Whether uppercase and lowercase expressions must be considered equivalent or not.
    * @name Evaluator#checkcase
    * @type {boolean} */
-  checkCase = false;
-
-  // List of known Evaluator classes
-  static CLASSES = {
-    '@BasicEvaluator': BasicEvaluator,
-    '@ComplexEvaluator': ComplexEvaluator
-  };
-}
+  checkCase: false,
+});
 
 /**
  * A basic evaluator that just compares texts, without looking for possible coincidences of text
@@ -328,33 +319,30 @@ export class BasicEvaluator extends Evaluator {
     }
     return sb;
   }
+}
 
-  // Class fields
-
+Object.assign(BasicEvaluator.prototype, {
   /**
    * Whether accented letters must be considered equivalent or not.
    * @name BasicEvaluator#checkAccents
    * @type {boolean} */
-  checkAccents = true;
-
+  checkAccents: true,
   /**
    * Whether to check or not dots, commas and other punctuation marks when comparing texts.
    * @name BasicEvaluator#checkPunctuation
    * @type {boolean} */
-  checkPunctuation = true;
-
+  checkPunctuation: true,
   /**
    * Whether to check or not the extra spaces added between words.
    * @name BasicEvaluator#checkDoubleSpaces
    * @type {boolean} */
-  checkDoubleSpaces = false;
-
+  checkDoubleSpaces: false,
   /**
    * String containing all the characters considered as punctuation marks (currently ".,;:")
    * @name BasicEvaluator#PUNCTUATION
    * @type {string} */
-  PUNCTUATION = '.,;:';
-}
+  PUNCTUATION: '.,;:',
+});
 
 /**
  * ComplexEvaluator acts like {@link BasicEvaluator}, but providing feedback about
@@ -511,22 +499,20 @@ export class ComplexEvaluator extends BasicEvaluator {
     }
     return result;
   }
+}
 
-  // Class fields
-
+Object.assign(ComplexEvaluator.prototype, {
   /**
    * Whether to detail or not the location of errors found on the analyzed text.
    * @name ComplexEvaluator#detail
    * @type {boolean} */
-  detail = true;
-
+  detail: true,
   /**
    * Number of times to repeat the evaluation process if an error is found, eliminating in each
    * cycle the extra characters that caused the error.
    * @name ComplexEvaluator#checkSteps
    * @type {number} */
-  checkSteps = 3;
-
+  checkSteps: 3,
   /**
    * When an eror is detected in the analyzed expression, this variable indicates the number of
    * characters the checking pointer will be moved forward and back looking for a coincident
@@ -539,7 +525,13 @@ export class ComplexEvaluator extends BasicEvaluator {
    * evaluating all the remaining sentence as erroneous.
    * @name ComplexEvaluator#checkScope
    * @type {number} */
-  checkScope = 6;
-}
+  checkScope: 6,
+});
+
+// List of known Evaluator classes
+Evaluator.CLASSES = {
+  '@BasicEvaluator': BasicEvaluator,
+  '@ComplexEvaluator': ComplexEvaluator
+};
 
 export default Evaluator;

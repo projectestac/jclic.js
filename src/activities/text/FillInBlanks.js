@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Utils from '../../Utils';
 import Activity from '../../Activity';
 import TextActivityBase from './TextActivityBase';
@@ -58,27 +58,21 @@ export class FillInBlanks extends TextActivityBase {
   needsKeyboard() {
     return true;
   }
+}
 
-  // Class fields
-
+Object.assign(FillInBlanks.prototype, {
   /**
    * Whether to jump or not to the next target when the current one is solved.
    * @name FillInBlanks#autoJump
    * @type {boolean} */
-  autoJump = false;
-
+  autoJump: false,
   /**
    * Whether to block or not the jump to other targets until the current one
    * is resolved.
    * @name FillInBlanks#forceOkToAdvance
    * @type {boolean} */
-  forceOkToAdvance = false;
-
-  /**
-   * Panel class associated to this type of activity: {@link FillInBlanksPanel}
-   * @type {class} */
-  static Panel = FillInBlanksPanel;
-}
+  forceOkToAdvance: false,
+});
 
 /**
  * The {@link TextActivityBasePanel} where {@link FillInBlanks} activities are played.
@@ -416,15 +410,20 @@ export class FillInBlanksPanel extends TextActivityBase.Panel {
     }
     return true;
   }
+}
 
-  // Class fields
-
+Object.assign(FillInBlanksPanel.prototype, {
   /**
    * Flag indicating if the activity is open or locked
    * @name FillInBlanksPanel#locked
    * @type {boolean} */
-  locked = true;
-}
+  locked: true,
+});
+
+/**
+ * Panel class associated to this type of activity: {@link FillInBlanksPanel}
+ * @type {class} */
+FillInBlanks.Panel = FillInBlanksPanel;
 
 // Register activity class
 export default Activity.registerClass('@text.FillInBlanks', FillInBlanks);

@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
@@ -90,19 +90,15 @@ export class SimpleAssociation extends Activity {
   helpSolutionAllowed() {
     return true;
   }
+}
 
-  // Class fields
+Object.assign(SimpleAssociation.prototype, {
   /**
    * When `true`, the cell's `idAss` field will be used to check pairing matches.
    * @name SimpleAssociation#useIdAss
    * @type {boolean} */
-  useIdAss = false;
-
-  /**
-   * Panel class associated to this type of activity: {@link SimpleAssociationPanel}
-   * @type {class} */
-  static Panel = SimpleAssociationPanel;
-}
+  useIdAss: false,
+});
 
 /**
  * The {@link ActivityPanel} where {@link SimpleAssociation} activities are played.
@@ -490,34 +486,36 @@ export class SimpleAssociationPanel extends Activity.Panel {
       event.preventDefault();
     }
   }
+}
 
-  // Class fields
-
+Object.assign(SimpleAssociationPanel.prototype, {
   /**
    * The {@link ActiveBoxBag} object containing the information to be displayed in the `primary` panel
    * @name SimpleAssociationPanel#bgA
    * @type {ActiveBoxBag} */
-  bgA = null;
-
+  bgA: null,
   /**
    * The {@link ActiveBoxBag} object containing the information to be displayed in the `secondary` panel
    * @name SimpleAssociationPanel#bgB
    * @type {ActiveBoxBag} */
-  bgB = null;
-
+  bgB: null,
   /**
    * The box connector
    * @name SimpleAssociationPanel#bc
    * @type {BoxConnector} */
-  bc = null;
-
+  bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
    * @name SimpleAssociationPanel#events
    * @type {string[]} */
-  events = ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'];
-}
+  events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
+});
+
+/**
+ * Panel class associated to this type of activity: {@link SimpleAssociationPanel}
+ * @type {class} */
+SimpleAssociation.Panel = SimpleAssociationPanel;
 
 // Register activity class
 export default Activity.registerClass('@associations.SimpleAssociation', SimpleAssociation);

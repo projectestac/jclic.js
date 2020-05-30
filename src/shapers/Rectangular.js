@@ -64,17 +64,16 @@ export class Rectangular extends Shaper {
     }
     this.initiated = true;
   }
+}
 
-  // Class fields
-
+Object.assign(Rectangular.prototype, {
   /**
    * Overrides same flag in {@link Shaper#rectangularShapes}
    * @name Rectangular#rectangularShapes
    * @override
-   * @type {boolean}
-   */
-  rectangularShapes = true;
-}
+   * @type {boolean} */
+  rectangularShapes: true,
+});
 
 // Register this class in the list of known shapers
 export default Shaper.registerClass('@Rectangular', Rectangular);

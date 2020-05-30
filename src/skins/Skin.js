@@ -30,7 +30,7 @@
 
 /* global Promise, window, document */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import clipboard from 'clipboard-js';
 import Utils from '../Utils';
 import AWT from '../AWT';
@@ -745,183 +745,158 @@ export class Skin extends AWT.Container {
     // Method to be implemented by subclasses
     return null;
   }
+}
 
-  // Class fields
+/**
+ * Collection of realized __Skin__ objects.
+ * @type {Skin[]}
+ */
+Skin.skinStack = [];
 
+/**
+ * Collection of skin style sheets already registered on the current document
+ * @type {Object}
+ */
+Skin.rootStyles = {};
+
+/**
+ * Counter used to label root nodes with unique IDs
+ * @type {Number}
+ */
+Skin.lastId = 1;
+
+/**
+ * List of classes derived from Skin. It should be filled by real skin classes at declaration time.
+ * @type {object}
+ */
+Skin.CLASSES = {};
+
+Object.assign(Skin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
    * @name Skin#skinId
-   * @type {string}
-   */
-  skinId = 'JClicBasicSkin';
-
+   * @type {string} */
+  skinId: 'JClicBasicSkin',
   /**
    * The HTML div object used by this Skin
    * @name Skin#$div
-   * @type {external:jQuery}
-   */
-  $div = null;
-
+   * @type {external:jQuery} */
+  $div: null,
   /**
    * The HTML div where JClic Player will be placed
    * @name Skin#$playerCnt
-   * @type {external:jQuery}
-   */
-  $playerCnt = null;
-
+   * @type {external:jQuery} */
+  $playerCnt: null,
   /**
    * Current name of the skin.
    * @name Skin#name
-   * @type {string}
-   */
-  name = 'default';
-
+   * @type {string} */
+  name: 'default',
   /**
    * Specific options of this skin
    * @name Skin#options
-   * @type {object}
-   */
-  options = {};
-
+   * @type {object} */
+  options: {},
   /**
    * Waiting panel, displayed while loading resources.
    * @name Skin#$waitPanel
-   * @type {external:jQuery}
-   */
-  $waitPanel = null;
-
+   * @type {external:jQuery} */
+  $waitPanel: null,
   /**
    * Graphic indicator of loading progress
    * @name Skin#$progress
-   * @type {external:jQuery}
-   */
-  $progress = null;
-
+   * @type {external:jQuery} */
+  $progress: null,
   /**
    * Current value of the progress bar
    * @name Skin#currentProgress
-   * @type {number}
-   */
-  currentProgress = -1;
-
+   * @type {number} */
+  currentProgress: -1,
   /**
    * Max value of the progress bar
    * @name Skin#maxProgress
-   * @type {number}
-   */
-  maxProgress = 0;
-
+   * @type {number} */
+  maxProgress: 0,
   /**
    * The box used to display the main messages of JClic activities
    * @name DefaultSkin#msgBox
-   * @type {ActiveBox}
-   */
-  msgBox = null;
-
+   * @type {ActiveBox} */
+  msgBox: null,
   /**
    * The `div` DOM object where `msgBox` is located
    * @name DefaultSkin#$msgBoxDiv
-   * @type {external:jQuery}
-   */
-  $msgBoxDiv = null;
-
+   * @type {external:jQuery} */
+  $msgBoxDiv: null,
   /*
    * An HTML `canvas` object created in `$msgBoxDiv`
    * @name DefaultSkin#$msgBoxDivCanvas
-   * @type {external:jQuery}
-   */
-  $msgBoxDivCanvas = null;
-
+   * @type {external:jQuery} */
+  $msgBoxDivCanvas: null,
   /**
    * Main panel used to display modal and non-modal dialogs
    * @name Skin#$dlgOverlay
-   * @type {external:jQuery}
-   */
-  $dlgOverlay = null;
-
+   * @type {external:jQuery} */
+  $dlgOverlay: null,
   /**
    * Main panel of dialogs, where relevant information must be placed
    * @name Skin#$dlgMainPanel
-   * @type {external:jQuery}
-   */
-  $dlgMainPanel = null;
-
+   * @type {external:jQuery} */
+  $dlgMainPanel: null,
   /**
    * Bottom panel of dialogs, used for action buttons
    * @name Skin#$dlgBottomPanel
-   * @type {external:jQuery}
-   */
-  $dlgBottomPanel = null;
-
+   * @type {external:jQuery} */
+  $dlgBottomPanel: null,
   /**
    * Element usually used as header in dialogs, with JClic logo, name and version
    * @name Skin#infoHead
-   * @type {external:jQuery}
-   */
-  $infoHead = null;
-
+   * @type {external:jQuery} */
+  $infoHead: null,
   /**
    * Iconic button used to copy content to clipboard
    * @name Skin#$copyBtn
-   * @type {external:jQuery}
-   */
-  $copyBtn = null;
-
+   * @type {external:jQuery} */
+  $copyBtn: null,
   /**
    * Iconic button used to close the dialog
    * @name Skin#$closeDlgBtn
-   * @type {external:jQuery}
-   */
-  $closeDlgBtn = null;
-
+   * @type {external:jQuery} */
+  $closeDlgBtn: null,
   /**
    * OK dialog button
    * @name Skin#$okDlgBtn
-   * @type {external:jQuery}
-   */
-  $okDlgBtn = null;
-
+   * @type {external:jQuery} */
+  $okDlgBtn: null,
   /**
    * Cancel dialog button
    * @name Skin#$cancelDlgBtn
-   * @type {external:jQuery}
-   */
-  $cancelDlgBtn = null;
-
+   * @type {external:jQuery} */
+  $cancelDlgBtn: null,
   /**
    * Value to be returned by the dialog promise when the presented task is fulfilled
    * @name Skin#_dlgOkValue
-   * @type {Object}
-   */
-  _dlgOkValue = null;
-
+   * @type {Object} */
+  _dlgOkValue: null,
   /**
    * Value to be returned in user-canceled dialogs
    * @name Skin#_dlgCancelValue
-   * @type {Object}
-   */
-  _dlgCancelValue = null;
-
+   * @type {Object} */
+  _dlgCancelValue: null,
   /**
    * Flag indicating if the current dialog is modal or not
    * @name Skin#_isModalDlg
-   * @type {boolean}
-   */
-  _isModalDlg = false;
-
+   * @type {boolean} */
+  _isModalDlg: false,
   /**
    * Div inside {@link $dlgOverlay} where JClicPlayer will place the information to be shown
    * @name Skin#$reportsPanel
-   * @type {external:jQuery}
-   */
-  $reportsPanel = null;
-
+   * @type {external:jQuery} */
+  $reportsPanel: null,
   /**
    * The basic collection of buttons that most skins implement
    * @name Skin#buttons
-   * @type {object}
-   */
-  buttons = {
+   * @type {object} */
+  buttons: {
     'prev': null,
     'next': null,
     'return': null,
@@ -932,109 +907,89 @@ export class Skin extends AWT.Container {
     'about': null,
     'fullscreen': null,
     'close': null
-  };
-
+  },
   /**
    * The collection of counters
    * @name Skin#counters
-   * @type {object}
-   */
-  counters = {
+   * @type {object} */
+  counters: {
     'actions': null,
     'score': null,
     'time': null
-  };
-
+  },
   /**
    * The collection of message areas
    * @name Skin#msgArea
-   * @type {object}
-   */
-  msgArea = {
+   * @type {object} */
+  msgArea: {
     'main': null,
     'aux': null,
     'mem': null
-  };
-
+  },
   /**
    * The {@link JClicPlayer} object associated to this skin
    * @name Skin#player
-   * @type {JClicPlayer}
-   */
-  player = null;
-
+   * @type {JClicPlayer} */
+  player: null,
   /**
    * The {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation}
    * used by this Skin. Usually, the same as `player`
    * @name Skin#ps
-   * @type {PlayStation}
-   */
-  ps = null;
-
+   * @type {PlayStation} */
+  ps: null,
   /**
    * Counter to be incremented or decremented as `waitCursor` is requested or released.
    * @name Skin#waitCursorCount
-   * @type {number}
-   */
-  waitCursorCount = 0;
-
+   * @type {number} */
+  waitCursorCount: 0,
   //
   // Buttons and other graphical resources used by this skin.
   //
   /**
    * Main styles
    * @name Skin#basicCSS
-   * @type {string}
-   */
-  basicCSS = '\
+   * @type {string} */
+  basicCSS: '\
 .ID {width:100%; background-color:#3F51B5; display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column;}\
 .ID .JClicPlayerCnt {background-color:lightblue; margin:18px; -webkit-flex-grow:1; flex-grow:1; position:relative;}\
 .ID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
 .ID button:not(.StockBtn) {background:transparent; padding:0; border:none; box-shadow:none; text-shadow:none;}\
 .ID .unselectableText {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}\
-.ID .progressBar {width: 250px}';
-
+.ID .progressBar {width: 250px}',
   /**
    * Waiting screen styles
    * @name Skin#waitAnimCSS
-   * @type {string}
-   */
-  waitAnimCSS = '\
+   * @type {string} */
+  waitAnimCSS: '\
 .ID .waitPanel {display:-webkit-flex; display:flex; width:100%; height:100%; -webkit-justify-content:center; justify-content:center; -webkit-align-items:center; align-items:center;}\
 .ID .animImgBox {position:relative; width:300px; height:300px; max-width:80%; max-height:80%;}\
 .ID .animImgBox svg {position:absolute; width:100%; height:100%; animation-iteration-count:infinite; animation-timing-function:linear;}\
 .ID #waitImgBig {animation-duration:0.8s; animation-name:rotate-right;}\
 @keyframes rotate-right {from {transform:rotate(0);} to {transform:rotate(1turn);}}\
 .ID #waitImgSmall {animation-duration:0.6s; animation-name:rotate-left;}\
-@keyframes rotate-left {from {transform:rotate(0);} to {transform:rotate(-1turn);}}';
-
+@keyframes rotate-left {from {transform:rotate(0);} to {transform:rotate(-1turn);}}',
   /**
    * Animated image displayed while loading resources
    * Based on Ryan Allen's [svg-spinner](http://articles.dappergentlemen.com/2015/01/13/svg-spinner/)
    * @name Skin#waitImgBig
-   * @type {string}
-   */
-  waitImgBig = '<svg id="waitImgBig" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
+   * @type {string} */
+  waitImgBig: '<svg id="waitImgBig" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
 <path fill="#3F51B5" d="m 65.99,40.19 c -0.42,5.33 7.80,4.94 8.11,0.20 C 74.50,34.37 66.35,8.59 42.92,\
 7.98 15.90,7.29 9.96,29.50 9.94,39.41 15.33,-1.66 68.61,7.048 65.99,40.19 Z" />\
-</svg>';
-
+</svg>',
   /**
    * Animated image displayed while loading resources (small)
    * @name Skin#waitImgSmall
-   * @type {string}
-   */
-  waitImgSmall = '<svg id="waitImgSmall" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
+   * @type {string} */
+  waitImgSmall: '<svg id="waitImgSmall" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
 <path fill="#3F51B5"d="m 57.00,39.43 c -0.28,-3.53 5.16,-3.27 5.37,-0.13 0.26,3.99 -5.13,21.04 -20.63,\
 21.44 C 23.85,61.19 19.93,46.50 19.92,39.94 23.48,67.11 58.73,61.35 57.00,39.43 Z"/>\
-</svg>';
-
+</svg>',
   /**
    * Reports screen styles
    * @name Skin#reportsCSS
-   * @type {string}
-   */
-  reportsCSS = '\
+   * @type {string} */
+  reportsCSS: '\
 .ID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
 .ID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
 .ID .dlgMainPanel {padding:1em 2em; max-height:calc(100vh - 8em); max-width:calc(100vw - 2em); min-width:20em; overflow:auto;}\
@@ -1061,87 +1016,51 @@ export class Skin extends AWT.Container {
 .ID .dlgBottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
 .ID .dlgBottomPanel button {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
 .ID .dlgBottomPanel button:hover {background-color:#eee; border-radius:80px;}\
-.ID .dlgBottomPanel button:active {background-color:#b3e5fc;}';
-
+.ID .dlgBottomPanel button:active {background-color:#b3e5fc;}',
   //
   // Icons used in buttons:
   //
   /**
    * Icon for 'close dialog' button
    * @name Skin#closeDialogIcon
-   * @type {string}
-   */
-  closeDialogIcon = '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+   * @type {string} */
+  closeDialogIcon: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
-</svg>';
-
+</svg>',
   /**
    * Icon for 'ok' button
    * @name Skin#okDialogIcon
-   * @type {string}
-   */
-  okDialogIcon = '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+   * @type {string} */
+  okDialogIcon: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>\
-</svg>';
-
+</svg>',
   /**
    * Icon for 'copy' button
    * @name Skin#copyIcon
-   * @type {string}
-   */
-  copyIcon = '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
+   * @type {string} */
+  copyIcon: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>\
-</svg>';
-
+</svg>',
   /**
    * JClic logo
    * @name Skin#appLogo
-   * @type {string}
-   */
-  appLogo = '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(.02081 0 0-.02081 5 62.33)">\
+   * @type {string} */
+  appLogo: '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(.02081 0 0-.02081 5 62.33)">\
 <path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1999 519 3 11 999-266 999-266z" fill="none" stroke="#9d6329" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\
 <path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1998 519 3 11 999-266 999-266" fill="#f89c0e"/>\
 <path d="m357 2850l1000-268-267-992-1000 266 267 994z" fill="none" stroke="#86882b" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\n\
 <path d="m357 2850l1000-268-267-992-1000 266 267 994" fill="#d9e70c"/>\n\
-</g></svg>';
-
+</g></svg>',
   /**
    * Screen sizes (width and height) below which will half sized elements will be used
    * @name DefaultSkin#halfMedia
-   * @type {object}
-   */
-  halfMedia = { width: 376, height: 282 };
-
+   * @type {object} */
+  halfMedia: { width: 376, height: 282 },
   /**
    * Screen sizes (width and height) below which will two-thirds sized elements will be used
    * @name DefaultSkin#twoThirdsMedia
-   * @type {object}
-   */
-  twoThirdsMedia = { width: 420, height: 315 };
-
-  /**
-   * Collection of realized __Skin__ objects.
-   * @type {Skin[]}
-   */
-  static skinStack = [];
-
-  /**
-   * Collection of skin style sheets already registered on the current document
-   * @type {Object}
-   */
-  static rootStyles = {};
-
-  /**
-   * Counter used to label root nodes with unique IDs
-   * @type {Number}
-   */
-  static lastId = 1;
-
-  /**
-   * List of classes derived from Skin. It should be filled by real skin classes at declaration time.
-   * @type {object}
-   */
-  static CLASSES = {};
-}
+   * @type {object} */
+  twoThirdsMedia: { width: 420, height: 315 },
+});
 
 export default Skin;

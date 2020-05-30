@@ -28,7 +28,7 @@
  *  @licend
  */
 
- /* global Audio */
+/* global Audio */
 
 import Utils from '../Utils';
 import ActiveMediaPlayer from './ActiveMediaPlayer';
@@ -128,36 +128,29 @@ export class EventSoundsElement {
         this.player.stop();
     }
   }
+}
 
-  // Class fields
-
+Object.assign(EventSoundsElement.prototype, {
   /**
    * The name of the sound file used by this element
    * @name EventSoundsElement#file
-   * @type {string}
-   */
-  file = null;
-
+   * @type {string} */
+  file: null,
   /**
    * Whether the sound for this event is enabled or not
    * @name EventSoundsElement#enabled
-   * @type {number}
-   */
-  enabled = Utils.DEFAULT;
-
+   * @type {number} */
+  enabled: Utils.DEFAULT,
   /**
    * Media player used to play this sound
    * @name EventSoundsElement#player
-   * @type {ActiveMediaPlayer}
-   */
-  player = null;
-
+   * @type {ActiveMediaPlayer} */
+  player: null,
   /**
    * HTMLAudioElement used to play this sound
    * @name EventSoundsElement#audio
-   * @type {HTMLAudioElement}
-   */
-  audio = null;
-}
+   * @type {HTMLAudioElement} */
+  audio: null,
+});
 
 export default EventSoundsElement;

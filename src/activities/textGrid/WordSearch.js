@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
@@ -83,42 +83,34 @@ export class WordSearch extends Activity {
   hasRandom() {
     return true;
   }
+}
 
-  // Class fields
-
+Object.assign(WordSearch.prototype, {
   /**
    * String array containing all the valid clues.
    * @name WordSearch#clues
    * @type {string[]} */
-  clues = null;
-
+  clues: null,
   /**
    * Array of integers containing __for each clue__ the index
    * of an associated {@link ActiveBoxContent} located on the secondary {@link ActiveBoxBag}.
    * This associated element is optional.
    * @name WordSearch#clueItems
    * @type {number[]} */
-  clueItems = null;
-
+  clueItems: null,
   /**
    * Objects that indicate if box grids A and B must be shuffled.
    * (defaults to _false_ in WordSearch activities)
    * @name WordSearch#shuffleA
    * @type {boolean} */
-  shuffleA = false;
-
+  shuffleA: false,
   /**
    * Objects that indicate if box grids A and B must be shuffled.
    * (defaults to _false_ in WordSearch activities)
    * @name WordSearch#shuffleB
    * @type {boolean} */
-  shuffleB = false;
-
-  /**
-   * Panel class associated to this type of activity: {@link WordSearchPanel}
-   * @type {class} */
-  static Panel = WordSearchPanel;
-}
+  shuffleB: false,
+});
 
 /**
  * The {@link ActivityPanel} where {@link WordSearch} activities are played.
@@ -429,40 +421,41 @@ export class WordSearchPanel extends Activity.Panel {
       event.preventDefault();
     }
   }
+}
 
-  // Class fields
-
+Object.assign(WordSearchPanel.prototype, {
   /**
    * The {@link TextGrid} object of this ActivityPanel
    * @name WordSearchPanel#grid
    * @type {TextGrid} */
-  grid = null;
-
+  grid: null,
   /**
    * An optional {@link ActiveBoxBag} used to display information associated with the hidden words.
    * @name WordSearchPanel#bgAlt
    * @type {ActiveBoxBag} */
-  bgAlt = null;
-
+  bgAlt: null,
   /**
    * An array of boolean values indicating which clues have been found
    * @name WordSearchPanel#resolvedClues
    * @type {boolean[]} */
-  resolvedClues = null;
-
+  resolvedClues: null,
   /**
    * The box connector object
    * @name WordSearchPanel#bc
    * @type {BoxConnector} */
-  bc = null;
-
+  bc: null,
   /**
    * Mouse and touch events intercepted by this panel
    * @override
    * @name WordSearchPanel#events
    * @type {string[]} */
-  events = ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'];
-}
+  events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
+});
+
+/**
+ * Panel class associated to this type of activity: {@link WordSearchPanel}
+ * @type {class} */
+WordSearch.Panel = WordSearchPanel;
 
 // Register activity class
 export default Activity.registerClass('@textGrid.WordSearch', WordSearch);

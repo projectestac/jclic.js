@@ -120,23 +120,20 @@ export class ClassicJigSaw extends JigSaw {
       sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
     }
   }
+}
 
-  // Class fields
-
+Object.assign(ClassicJigSaw.prototype, {
   /**
    * ClassicJigSaw needs a biggest base width
    * @name ClassicJigSaw#baseWidthFactor
-   * @type {number}
-   */
-  baseWidthFactor = 3.0 / 4;
-
+   * @type {number} */
+  baseWidthFactor: 3.0 / 4,
   /**
    * ClassicJigSaw needs a biggest base height factor
    * @name ClassicJigSaw#toothHeightFactor
-   * @type {number}
-   */
-  toothHeightFactor = 3.0 / 5;
-}
+   * @type {number} */
+  toothHeightFactor: 3.0 / 5,
+});
 
 // Register this class in the list of known shapers
 export default Shaper.registerClass('@ClassicJigSaw', ClassicJigSaw);

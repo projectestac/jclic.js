@@ -138,43 +138,45 @@ export class AutoContentProvider {
     AutoContentProvider.CLASSES[providerName] = providerClass;
     return providerClass;
   }
+}
 
-  // Class fields
-
+Object.assign(AutoContentProvider.prototype, {
   /**
    * This AutoContentProvider manages numeric expressions, so text literals should be
    * converted to numbers for comparisions, taking in account the
    * number format of the current locale (dot or comma as decimal separator)
    * @name AutoContentProvider#numericContent
    * @type {boolean} */
-  numericContent = false;
+  numericContent: false,
+});
 
-  /**
-   * Utility class used to encapsulate multiple sets of box contents
-   * @class
-   * @param {number} nRows - Number of rows to be processed
-   * @param {number} nCols - Number of columns to be processed
-   * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
-   * objects to be filled with new content.
-   * @param {bolean} useIds - `true` when the `id` field of {@link ActiveBoxContent} objects is significant.
-   */
-  static ActiveBagContentKit = class {
-    constructor(nRows, nCols, content, useIds) {
-      this.nRows = nRows;
-      this.nCols = nCols;
-      this.content = content;
-      this.useIds = useIds;
-    }
-  };
+/**
+ * Utility class used to encapsulate multiple sets of box contents
+ * @class
+ * @param {number} nRows - Number of rows to be processed
+ * @param {number} nCols - Number of columns to be processed
+ * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
+ * objects to be filled with new content.
+ * @param {bolean} useIds - `true` when the `id` field of {@link ActiveBoxContent} objects is significant.
+ */
+AutoContentProvider.ActiveBagContentKit = class {
+  constructor(nRows, nCols, content, useIds) {
+    this.nRows = nRows;
+    this.nCols = nCols;
+    this.content = content;
+    this.useIds = useIds;
+  }
+};
 
-  /**
-   * Contains the current list of classes derived from AutoContentProvider.
-   * This object should be updated by real automation classes at declaration time.
-   * Currently, only two types of "AutoContentProvider" are defined: {@link Arith} and TagReplace.
-   * @type {object}
-   */
-  static CLASSES = {};
-}
+/**
+ * Contains the current list of classes derived from AutoContentProvider.
+ * This object should be updated by real automation classes at declaration time.
+ * Currently, only two types of "AutoContentProvider" are defined: {@link Arith} and TagReplace.
+ * @type {object} */
+AutoContentProvider.CLASSES = {
+  // TODO: Implement TagReplace
+  '@tagreplace.TagReplace': AutoContentProvider
+};
 
 // TODO: Implement TagReplace
 AutoContentProvider.registerClass('@tagreplace.TagReplace', AutoContentProvider);

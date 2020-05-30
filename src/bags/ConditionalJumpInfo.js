@@ -96,22 +96,19 @@ export class ConditionalJumpInfo extends JumpInfo {
     });
     return this;
   }
+}
 
-  // Class fields
-
+Object.assign(ConditionalJumpInfo.prototype, {
   /**
    * Threshold above or below which the action will be triggered, depending on the type of JumpInfo.
    * @name ConditionalJumpInfo#threshold
-   * @type {number}
-   */
-  threshold = -1;
-
+   * @type {number} */
+  threshold: -1,
   /**
    * Delay to be applied in automatic jumps.
    * @name ConditionalJumpInfo#time
-   * @type {number}
-   */
-  time = -1;
-}
+   * @type {number} */
+  time: -1,
+});
 
 export default ConditionalJumpInfo;

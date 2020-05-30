@@ -167,98 +167,89 @@ export class MidiAudioPlayer {
       }
     }
   }
+}
 
-  // Class fields
-
+Object.assign(MidiAudioPlayer.prototype, {
   /**
    * The MIDI file data used by this MIDI player
    * @name MidiAudioPlayer#data
-   * @type {ArrayBuffer}
-   */
-  data = null;
-
+   * @type {ArrayBuffer} */
+  data: null,
   /**
    * The grimmdude's MidiPlayer used by this player
    * @name MidiAudioPlayer#player
-   * @type {MidiPlayerJS}
-   */
-  player = null;
-
+   * @type {MidiPlayerJS} */
+  player: null,
   /**
    * When >0, time position at which the music must end
    * @name MidiAudioPlayer#playTo
-   * @type {number}
-   */
-  playTo = 0;
-
+   * @type {number} */
+  playTo: 0,
   /**
    * Main volume of this track (set with a MIDI message of type `Controller Change` #7)
    * @name MidiAudioPlayer#mainVolume
-   * @type {number}
-   */
-  mainVolume = 1.0;
-
+   * @type {number} */
+  mainVolume: 1.0,
   /**
    * This array is used when processing 'Note off' events to stop notes that are currently playing.
    * It contains a collection of 'instrument.play' instances, one for each active note
    * @name MidiAudioPlayer#startedNotes
-   * @type {function[]}
-   */
-  startedNotes = [];
+   * @type {function[]} */
+  startedNotes: [],
+});
 
-  /**
-   * The {@link AudioContext} used by this MIDI player.
-   * @type {AudioContext}
-   */
-  static audioContext = null;
+/**
+ * The {@link AudioContext} used by this MIDI player.
+ * @type {AudioContext}
+ */
+MidiAudioPlayer.audioContext = null;
 
-  /**
-   * The "Instrument" object used by this MIDI player.
-   * See: https://github.com/danigb/soundfont-player
-   * @type {Instrument}
-   */
-  static instrument = null;
+/**
+ * The "Instrument" object used by this MIDI player.
+ * See: https://github.com/danigb/soundfont-player
+ * @type {Instrument}
+ */
+MidiAudioPlayer.instrument = null;
 
-  /**
-   * A flag used to avoid re-entrant calls to {@link MidiAudioPlayer.prepareInstrument}
-   * @type {boolean}
-   */
-  static loadingInstrument = false;
+/**
+ * A flag used to avoid re-entrant calls to {@link MidiAudioPlayer.prepareInstrument}
+ * @type {boolean}
+ */
+MidiAudioPlayer.loadingInstrument = false;
 
-  /**
-   * An object containing the full soundfont data used by {@link MidiAudioPlayer.instrument}
-   * When this member is set, no other settings related to the sounfFont will be used.
-   * This value can be overwritten by the global parameter `MIDISoundFontObject`
-   * @type {object}
-   */
-  static MIDISoundFontObject = null;
+/**
+ * An object containing the full soundfont data used by {@link MidiAudioPlayer.instrument}
+ * When this member is set, no other settings related to the sounfFont will be used.
+ * This value can be overwritten by the global parameter `MIDISoundFontObject`
+ * @type {object}
+ */
+MidiAudioPlayer.MIDISoundFontObject = null;
 
-  /**
-   * The URL used as base for the current collection of MIDI soundfonts.
-   * This value can be overwritten by the global parameter `MIDISoundFontBase`
-   * @type {string}
-   */
-  static MIDISoundFontBase = 'https://clic.xtec.cat/dist/jclic.js/soundfonts/MusyngKite';
-  // Alternative sites are:
-  // 'https://clic.xtec.cat/dist/jclic.js/soundfonts/FluidR3_GM'
-  // 'https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM'
-  // 'https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/MusyngKite'
+/**
+ * The URL used as base for the current collection of MIDI soundfonts.
+ * This value can be overwritten by the global parameter `MIDISoundFontBase`
+ * @type {string}
+ */
+MidiAudioPlayer.MIDISoundFontBase = 'https://clic.xtec.cat/dist/jclic.js/soundfonts/MusyngKite';
+// Alternative sites are:
+// 'https://clic.xtec.cat/dist/jclic.js/soundfonts/FluidR3_GM'
+// 'https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM'
+// 'https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/MusyngKite'
 
-  /**
-   * The MIDI instrument name.
-   * This value can be overwritten by the global parameter `MIDISoundFontName`
-   * See [MIDI.js Soundfonts](https://github.com/gleitz/midi-js-soundfonts) for full lists of MIDI instrument names.
-   * @type {string}
-   */
-  static MIDISoundFontName = 'acoustic_grand_piano';
+/**
+ * The MIDI instrument name.
+ * This value can be overwritten by the global parameter `MIDISoundFontName`
+ * See [MIDI.js Soundfonts](https://github.com/gleitz/midi-js-soundfonts) for full lists of MIDI instrument names.
+ * @type {string}
+ */
+MidiAudioPlayer.MIDISoundFontName = 'acoustic_grand_piano';
 
-  /**
-   * An extension to be added to `MIDISoundFontName` in order to build the full file name of the soundfont JS file.
-   * Current valid options are `-mp3.js` and `-ogg.js`
-   * This value can be overwritten by the global parameter `MIDISoundFontExtension`
-   * @type {string}
-   */
-  static MIDISoundFontExtension = '-mp3.js';
-}
+/**
+ * An extension to be added to `MIDISoundFontName` in order to build the full file name of the soundfont JS file.
+ * Current valid options are `-mp3.js` and `-ogg.js`
+ * This value can be overwritten by the global parameter `MIDISoundFontExtension`
+ * @type {string}
+ */
+MidiAudioPlayer.MIDISoundFontExtension = '-mp3.js';
 
 export default MidiAudioPlayer;

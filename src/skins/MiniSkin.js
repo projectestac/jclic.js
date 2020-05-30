@@ -61,88 +61,72 @@ export class MiniSkin extends DefaultSkin {
   _getStyleSheets(media = 'default') {
     return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '');
   }
+}
 
-  // Class fields
-
+Object.assign(MiniSkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
    * @name MiniSkin#skinId
    * @override
    * @type {string}
    */
-  skinId = 'JClicMiniSkin';
-
+  skinId: 'JClicMiniSkin',
   // Buttons and other graphical resources used by this skin.
   //
   /**
    * Icon width
    * @name MiniSkin#iconWidth
    * @override
-   * @type {number}
-   */
-  iconWidth = 18;
-
+   * @type {number} */
+  iconWidth: 18,
   /**
    * Icon height
    * @name MiniSkin#iconHeight
    * @override
-   * @type {number}
-   */
-  iconHeight = 18;
-
+   * @type {number} */
+  iconHeight: 18,
   /**
    * Fill color for icons
    * @name MiniSkin#iconFill
    * @override
-   * @type {string}
-   */
-  iconFill = '#080808';
-
+   * @type {string} */
+  iconFill: '#080808',
   /**
    * Fill-in color for counters
    * @name MiniSkin#counterIconFill
    * @override
-   * @type {string}
-   */
-  counterIconFill = '#080808';
-
+   * @type {string} */
+  counterIconFill: '#080808',
   /**
    * Default margin between elements
    * @name MiniSkin#margin
    * @override
-   * @type {number}
-   */
-  margin = 8;
-
+   * @type {number} */
+  margin: 8,
   /**
    * Styles used in this skin
    * @name MiniSkin#skinCSS
-   * @type {string}
-   */
-  skinCSS = '\
+   * @type {string} */
+  skinCSS: '\
 .ID {background-color:#F4F4F4;}\
 .ID .JClicPlayerCnt {margin:4px;}\
 .ID .JClicCtrlCnt {margin:0 2px 4px 2px;}\
-.ID .JClicMsgBox {height:25px;}';
-
+.ID .JClicMsgBox {height:25px;}',
   /**
    * Styles used in this skin, sized to half its regular size.
    * (_null_ here because MiniSkin it's already very small)
    * @name MiniSkin#mainCSSHalf
    * @override
-   * @type {string}
-   */
-  mainCSSHalf = '';
-
+   * @type {string} */
+  mainCSSHalf: '',
   /**
    * Styles used in this skin, sized to two thirds of its regular size
    * (_null_ here because MiniSkin it's already very small)
    * @name MiniSkin#mainCSSTwoThirds
    * @override
-   * @type {string}
-   */
-  mainCSSTwoThirds = '';
-}
+   * @type {string} */
+  mainCSSTwoThirds: '',
+});
 
 // Register this class in the list of available skins
 export default Skin.registerClass('mini', MiniSkin);

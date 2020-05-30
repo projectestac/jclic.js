@@ -30,7 +30,7 @@
 
 /* global Intl */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import AutoContentProvider from '../AutoContentProvider';
 import Utils from '../../Utils';
 
@@ -457,7 +457,7 @@ export class Arith extends AutoContentProvider {
       return false;
 
     for (i = 0; i < nCells; i++) {
-      o = new Operation();
+      o = new Arith.Operation();
       for (j = 0; j < NMAXLOOPS; j++) {
         this.genOp(o);
         if (this.resultNoDup) {
@@ -626,126 +626,106 @@ export class Arith extends AutoContentProvider {
 
     return true;
   }
+}
 
-  // Class fields
-
+Object.assign(Arith.prototype, {
   //
   // Operations use two operators:
   /**
    * First operator
    * @name Arith#opA
    * @type {Arith.Operator} */
-  opA = null;
-
+  opA: null,
   /**
    * Second operator
    * @name Arith#opB
    * @type {Arith.Operator} */
-  opB = null;
-
+  opB: null,
   /**
    * Allow additions
    * @name Arith#use_add
    * @type {boolean} */
-  use_add = true;
-
+  use_add: true,
   /**
    * Allow subtractions
    * @name Arith#use_subst
    * @type {boolean} */
-  use_subst = false;
-
+  use_subst: false,
   /**
    * Allow multiplications
    * @name Arith#use_mult
    * @type {boolean} */
-  use_mult = false;
-
+  use_mult: false,
   /**
    * Allow divides
    * @name Arith#use_div
    * @type {boolean} */
-  use_div = false;
-
+  use_div: false,
   /**
    * Allow expressions of type `A op B = X`
    * @name Arith#exp_abx
    * @type {boolean} */
-  exp_abx = true;
-
+  exp_abx: true,
   /**
    * Allow expressions of type `A op X = C`
    * @name Arith#exp_axc
    * @type {boolean} */
-  exp_axc = false;
-
+  exp_axc: false,
   /**
    * Allow expressions of type `X op B = C`
    * @name Arith#exp_xbc
    * @type {boolean} */
-  exp_xbc = false;
-
+  exp_xbc: false,
   /**
    * Allow expressions of type `A x B = C`
    * @name Arith#exp_axbc
    * @type {boolean} */
-  exp_axbc = false;
-
+  exp_axbc: false,
   /**
    * Allow inverse expressions, like `C = A op B`
    * @name Arith#exp_caxb
    * @type {boolean} */
-  exp_caxb = false;
-
+  exp_caxb: false,
   /**
    * Lower limit of the result
    * @name Arith#resultLimInf
    * @type {number} */
-  resultLimInf = 0;
-
+  resultLimInf: 0,
   /**
    * Upper limit of the result
    * @name Arith#resultLimSup
    * @type {number} */
-  resultLimSup = 9999;
-
+  resultLimSup: 9999,
   /**
    * Allow carry operations
    * @see {@link https://en.wikipedia.org/wiki/Carry_(arithmetic)}
    * @name Arith#resultCarry
    * @type {boolean} */
-  resultCarry = false;
-
+  resultCarry: false,
   /**
    * Avoid operations with the same result
    * @name Arith#resultNoDup
    * @type {boolean} */
-  resultNoDup = false;
-
+  resultNoDup: false,
   /**
    * Type of sorting of results. Possible values are: 'NOSORT', 'SORTASC' and 'SORTDESC'
    * @name Arith#resultOrder
    * @type {string} */
-  resultOrder = 'NOSORT';
-
+  resultOrder: 'NOSORT',
   /**
    * Sorting of the operands in commutative operations. Possible values are: 'AGB' (_A greater than B_),
    * 'BGA' (_B greater tan A_) and 'INDIF' (default)
    * @name Arith#opCond
    * @type {string} */
-  opCond = 'INDIF';
-
-  static Operator = Operator;
-  static Num = Num;
-  static Operation = Operation;
-}
+  opCond: 'INDIF',
+});
 
 /**
  * Operator is an Utility class used by Arith to encapsulate the properties and methods related
  * to the members of the operations.
  * @class
  */
-export class Operator {
+Arith.Operator = class {
   constructor() {
   }
 
@@ -817,60 +797,52 @@ export class Operator {
       'fromList', 'lst',
     ]);
   }
+};
 
-  // Class fields
-
+Object.assign(Arith.Operator.prototype, {
   /**
    * Lower limit
    * @name Arith.Operator#limInf
    * @type {number} */
-  limInf = 0;
-
+  limInf: 0,
   /**
    * Upper limit
    * @name Arith.Operator#limSup
    * @type {number} */
-  limSup = 10;
-
+  limSup: 10,
   /**
    * Number of decimal places
    * @name Arith.Operator#numDec
    * @type {number} */
-  numDec = 0;
-
+  numDec: 0,
   /**
    * Including 0
    * @name Arith.Operator#wZero
    * @type {boolean} */
-  wZero = false;
-
+  wZero: false,
   /**
    * Including 1
    * @name Arith.Operator#wOne
    * @type {boolean} */
-  wOne = false;
-
+  wOne: false,
   /**
    * Including -1
    * @name Arith.Operator#wMinusOne
    * @type {boolean} */
-  wMinusOne = false;
-
+  wMinusOne: false,
   /**
    * Take values from list. This member stores the list length.
    * @name Arith.Operator#fromList
    * @type {number} */
-  fromList = 0;
-
+  fromList: 0,
   /**
    * The list of possible values
    * @name Arith.Operator#lst
    * @type {number[]} */
-  lst = [];
+  lst: [],
+});
 
-};
-
-export class Num {
+Arith.Num = class {
   constructor() {
     this.vf = 0.0; // The number value
     this.c = 0; // Number of decimals to be used when representing the number
@@ -881,11 +853,11 @@ export class Num {
   }
 };
 
-export class Operation {
+Arith.Operation = class {
   constructor() {
-    this.numA = new Num();
-    this.numB = new Num();
-    this.numR = new Num();
+    this.numA = new Arith.Num();
+    this.numB = new Arith.Num();
+    this.numR = new Arith.Num();
     this.op = 0;
   }
 };

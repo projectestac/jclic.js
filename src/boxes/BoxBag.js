@@ -476,29 +476,24 @@ export class BoxBag extends AbstractBox {
   countInactiveCells() {
     return this.cells.reduce((n, bx) => bx.isInactive() ? ++n : n, 0);
   }
+}
 
-  // Class fields
-
+Object.assign(BoxBag.prototype, {
   /**
    * The array of cells
    * @name BoxBag#cells
-   * @type {AbstractBox[]}
-   */
-  cells = [];
-
+   * @type {AbstractBox[]} */
+  cells: [],
   /**
    * Rectangle containing the preferred bounds of the BoxBag
    * @name BoxBag#preferredBounds
-   * @type {AWT.Rectangle}
-   */
-  preferredBounds = new AWT.Rectangle();
-
+   * @type {AWT.Rectangle} */
+  preferredBounds: new AWT.Rectangle(),
   /**
    * An optional box used as a background by this BoxBag
    * @name BoxBag#backgroundBox
-   * @type {AbstractBox}
-   */
-  backgroundBox = null;
-}
+   * @type {AbstractBox} */
+  backgroundBox: null,
+});
 
 export default BoxBag;

@@ -28,9 +28,9 @@
  *  @licend
  */
 
- /* global window */
+/* global window */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
@@ -69,27 +69,21 @@ export class Identify extends Activity {
   hasRandom() {
     return true;
   }
+}
 
-  // Class fields
-
+Object.assign(Identify.prototype, {
   /**
    * Number of not assigned cells (calculated in {@link IdentifyPanel#buildVisualComponents})
    * @name Identify#nonAssignedCells
    * @type {number} */
-  nonAssignedCells = 0;
-
+  nonAssignedCells: 0,
   /**
    * Number of cells the user must identify to complete the activity (calculated in
    * {@link IdentifyPanel#buildVisualComponents})
    * @name Identify#cellsToMatch
    * @type {number} */
-  cellsToMatch = 1;
-
-  /**
-   * Panel class associated to this type of activity: {@link IdentifyPanel}
-   * @type {class} */
-  static Panel = IdentifyPanel;
-}
+  cellsToMatch: 1,
+});
 
 /**
  * The {@link ActivityPanel} where {@link Identify} activities are played.
@@ -340,22 +334,26 @@ export class IdentifyPanel extends Activity.Panel {
       event.preventDefault();
     }
   }
+}
 
-  // Class fields
-
+Object.assign(IdentifyPanel.prototype, {
   /**
    * The {@link ActiveBoxBag} containing the information to be displayed on the panel.
    * @name IdentifyPanel#bg
    * @type {ActiveBoxBag} */
-  bg = null;
-
+  bg: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
    * @name IdentifyPanel#events
    * @type {string[]} */
-  events = ['click'];
-}
+  events: ['click'],
+});
+
+/**
+ * Panel class associated to this type of activity: {@link IdentifyPanel}
+ * @type {class} */
+Identify.Panel = IdentifyPanel;
 
 // Register activity class
 export default Activity.registerClass('@panels.Identify', Identify);

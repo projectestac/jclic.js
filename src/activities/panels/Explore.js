@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
@@ -79,13 +79,6 @@ export class Explore extends Activity {
   hasRandom() {
     return true;
   }
-
-  // Class fields
-
-  /**
-   * Panel class associated to this type of activity: {@link ExplorePanel}
-   * @type {class} */
-  static Panel = ExplorePanel;
 }
 
 /**
@@ -317,29 +310,32 @@ export class ExplorePanel extends Activity.Panel {
       event.preventDefault();
     }
   }
+}
 
-  // Class fields
-
+Object.assign(ExplorePanel.prototype, {
   /**
    * The {@link ActiveBoxBag} object containing the information to be displayed in the `primary` panel
    * @name ExplorePanel#bgA
    * @type {ActiveBoxBag} */
-  bgA = null;
-
+  bgA: null,
   /**
    * The {@link ActiveBoxBag} object containing the information associated to `primary` elements.
    * Only one of this elements will be showed for each click done in the `primary` panel.
    * @name ExplorePanel#bgB
    * @type {ActiveBoxBag} */
-  bgB = null;
-
+  bgB: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
    * @name ExplorePanel#events
    * @type {string[]} */
-  events = ['click'];
-}
+  events: ['click'],
+});
+
+/**
+ * Panel class associated to this type of activity: {@link ExplorePanel}
+ * @type {class} */
+Explore.Panel = ExplorePanel;
 
 // Register activity class
 export default Activity.registerClass('@panels.Explore', Explore);

@@ -46,13 +46,6 @@ export class IdentifyText extends TextActivityBase {
   constructor(project) {
     super(project);
   }
-
-  // Class fields
-
-  /**
-   * Panel class associated to this type of activity: {@link IdentifyTextPanel}
-   * @type {class} */
-  static Panel = IdentifyTextPanel;
 }
 
 /**
@@ -197,23 +190,27 @@ class IdentifyTextPanel extends TextActivityBase.Panel {
     }
     return true;
   }
+}
 
-  // Class fields
-
+Object.assign(IdentifyTextPanel.prototype, {
   /**
    * Flag indicating if targets must be visually marked when the activity begins. In this type of
    * activity should be always `false` to avoid revealing the words o letters that must be found.
    * @name IdentifyTextPanel#targetsMarked
    * @type {boolean} */
-  targetsMarked = false;
-
+  targetsMarked: false,
   /**
    * Used to avoid duplicate event processing
    * @name IdentifyTextPanel#lastTimeStamp
    * @type {number}
    */
-  lastTimeStamp = 0;
-}
+  lastTimeStamp: 0,
+});
+
+/**
+ * Panel class associated to this type of activity: {@link IdentifyTextPanel}
+ * @type {class} */
+IdentifyText.Panel = IdentifyTextPanel;
 
 // Register activity class
 export default Activity.registerClass('@text.Identify', IdentifyText);

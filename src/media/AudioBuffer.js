@@ -86,11 +86,11 @@ export class AudioBuffer {
 
       navigator.mediaDevices.getUserMedia({ audio: true, video: false })
         .then(mediaStream => {
-          
+
           this.mediaRecorder = new MediaRecorder(mediaStream);
-          
+
           this.mediaRecorder.ondataavailable = ev => this.chunks.push(ev.data);
-          
+
           this.mediaRecorder.onerror = err => {
             Utils.log('error', `Error recording audio: ${err}`);
             this.mediaRecorder = null;
@@ -128,9 +128,9 @@ export class AudioBuffer {
           this.mediaRecorder.onwarning = ev => Utils.log('warn', `Warning recording audio: ${ev}`);
 
           this.playWhenFinished = false;
-          
+
           this.mediaRecorder.start();
-          
+
           this.timeoutID = window.setTimeout(() => {
             if (this.mediaRecorder);
             this.mediaRecorder.stop();
@@ -162,65 +162,59 @@ export class AudioBuffer {
     this.stop();
     this.mediaPlayer = null;
   }
+}
 
-  // Class fields
-
-  /**
-   * Maximum amount of time allowed for recordings (in seconds)
-   * @type {number}
-   */
-  static MAX_RECORD_LENGTH = 180;
-
+Object.assign(AudioBuffer.prototype, {
   /**
    * AudioBuffer is enabled only in browsers with `navigator.MediaDevices.getuserMedia`
    * @name AudioBuffer#enabled
    * @type {boolean}
    */
-  enabled = false;
-
+  enabled: false,
   /**
    * Maximum length of recordings allowed to this AudioBuffer (in seconds)
    * @name AudioBuffer#seconds
    * @type {number}
    */
-  seconds = 20;
-
+  seconds: 20,
   /**
    * The object used to record audio data and convert it to a valid stream for the {@link mediaPlayer}
    * @name AudioBuffer#mediaRecorder
    * @type {external:MediaRecorder}
    */
-  mediaRecorder = null;
-
+  mediaRecorder: null,
   /**
    * Array of data chunks collected during the recording
    * @name AudioBuffer#chunks
    * @type {Blob[]}
    */
-  chunks = null;
-
+  chunks: null,
   /**
    * The HTML audio element used to play the recorded sound
    * @name AudioBuffer#mediaPlayer
    * @type {external:HTMLAudioElement}
    */
-  mediaPlayer = null;
-
+  mediaPlayer: null,
   /**
    * The identifier of the timer launched to stop the recording when the maximum time is exceeded.
    * This member is `null` when no timeout function is associated to this AudioBuffer
    * @name AudioBuffer#timeoutID
    * @type {number}
    */
-  timeoutID = null;
-
+  timeoutID: null,
   /**
    * Instructs this AudioBuffer recorder to start playing the collected audio at the end of the
    * current `mediaRecorder` task.
    * @name AudioBuffer#playWhenFinished
    * @type {boolean}
    */
-  playWhenFinished = false;
-}
+  playWhenFinished: false,
+});
+
+/**
+ * Maximum amount of time allowed for recordings (in seconds)
+ * @type {number}
+ */
+AudioBuffer.MAX_RECORD_LENGTH = 180;
 
 export default AudioBuffer;

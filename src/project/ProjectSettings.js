@@ -30,7 +30,7 @@
 
 /* global window */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import EventSounds from '../media/EventSounds';
 import Utils from '../Utils';
 
@@ -204,116 +204,73 @@ export class ProjectSettings {
 
     return this.buildLocales();
   }
+}
 
-  // Class fields
-
+Object.assign(ProjectSettings.prototype, {
   /**
    * The JClicProject to which this ProjectSettings belongs
    * @name ProjectSettings#project
-   * @type {JClicProject}
-   */
-  project = null;
-
+   * @type {JClicProject} */
+  project: null,
   /**
    * The project title
    * @name ProjectSettings#title
-   * @type {string}
-   */
-  title = 'Untitled';
-
+   * @type {string} */
+  title: 'Untitled',
   /**
    * The authors of this project.
    * Each author is represented by an object with the following attributes:
    * `name` (mandatory), `mail`, `rol`, `organization` and `url`
    * @name ProjectSettings#authors
-   * @type {object[]}
-   */
-  authors = null;
-
+   * @type {object[]} */
+  authors: null,
   /**
    * Schools, companies and other institutions involved on this project.
    * Each organization is represented by an object with the following attributes:
    * `name` (mandatory), `mail`, `url`, `address`, `pc`, `city`, `state`, `country`, `comments`
    * @name ProjectSettings#organizations
-   * @type {object[]}
-   */
-  organizations = null;
-
+   * @type {object[]} */
+  organizations: null,
   /**
    * The history of revisions made to this project.
    * Revisions are represented by objects with the following attributes:
    * `date` (mandatory), `description`, `comments` and `author`
    * @name ProjectSettings#revisions
-   * @type {object[]}
-   */
-  revisions = null;
-
+   * @type {object[]} */
+  revisions: null,
   /**
    * Project's description, maybe in multiple languages.
    * @name ProjectSettings#description
-   * @type {object}
-   */
-  description = null;
-
+   * @type {object} */
+  description: null,
   /**
    * JClic projects can use more than one language, so use a string array
    * @name ProjectSettings#languages
-   * @type {string[]}
-   */
-  languages = null;
-
-  /**
-   * Descriptive tags applied to this project
-   * @name ProjectSettings#tags
-   * @type {string[]}
-   */
-  tags = null;
-
-  /**
-   * File name of the cover image
-   * @name ProjectSettings#cover
-   * @type {string}
-   */
-  cover = null;
-
-  /**
-   * File name of a small image used as thumbnail
-   * @name ProjectSettings#thumbnail
-   * @type {string}
-   */
-  thumb = null;
-
-  /**
-   * License applied to this project (defaults to CC by-nc-sa)
-   * @name ProjectSettings#license
-   * @type {object}
-   */
-  license = {
+   * @type {string[]} */
+  languages: null,
+  tags: null,
+  cover: null,
+  thumb: null,
+  license: {
     type: 'by-nc-sa',
     url: 'https://creativecommons.org/licenses/by-nc-sa/4.0',
-  };
-
+  },
   /**
    * Array of canonical locales, as defined in 
    * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation|Intl}
    * @name ProjectSettings#locales
-   * @type {string[]}
-   */
-  locales = null;
-
+   * @type {string[]} */
+  locales: null,
   /**
    * The name of an optional 'skin' (visual aspect) can be set for the whole project, or for each {@link Activity}
    * @name ProjectSettings#skinFileName
-   * @type {string}
-   */
-  skinFileName = null;
-
+   * @type {string} */
+  skinFileName: null,
   /**
    * The main {@link EventSounds} object of the project
    * @name ProjectSettings#eventSounds
-   * @type {EventSounds}
-   */
-  eventSounds = new EventSounds();
-}
+   * @type {EventSounds} */
+  eventSounds: new EventSounds(),
+});
 
 export default ProjectSettings;

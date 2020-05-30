@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import JumpInfo from './JumpInfo';
 import ActivitySequenceElement from './ActivitySequenceElement';
 import ActivitySequenceJump from './ActivitySequenceJump';
@@ -295,30 +295,25 @@ export class ActivitySequence {
     }
     return true;
   }
+}
 
-  // Class fields
-
+Object.assign(ActivitySequence.prototype, {
   /**
    * The ordered list of {@link ActivitySequenceElement} objects
    * @name ActivitySequence#elements
-   * @type {ActivitySequenceElement[]}
-   */
-  elements = null;
-
+   * @type {ActivitySequenceElement[]} */
+  elements: null,
   /**
    * The JClic project to which this ActivitySequence belongs.
    * @name ActivitySequence#project
-   * @type {JClicProject}
-   */
-  project = null;
-
+   * @type {JClicProject} */
+  project: null,
   /**
    * Pointer to the {@link ActivitySequenceElement} currently running (points inside
    * the `elements` array).
    * @name ActivitySequence#currentAct
-   * @type {number}
-   */
-  currentAct = -1;
-}
+   * @type {number} */
+  currentAct: -1,
+});
 
 export default ActivitySequence;

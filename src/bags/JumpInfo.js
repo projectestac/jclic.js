@@ -101,47 +101,37 @@ export class JumpInfo {
     });
     return this;
   }
+}
 
-  // Class fields
-
+Object.assign(JumpInfo.prototype, {
   /**
    * The JumpInfo identifier
    * - For regular jumps: 'forward', 'back'
    * - For conditional jumps: 'upper', 'lower'
    * @name JumpInfo#id
-   * @type {string}
-   */
-  id = null;
-
+   * @type {string} */
+  id: null,
   /**
    * The current action.
    * Possible values are: `JUMP`, `STOP`, `RETURN` and `EXIT`.
    * @name JumpInfo#action
-   * @type {string}
-   */
-  action = null;
-
+   * @type {string} */
+  action: null,
   /**
    * Activity number in the sequence list
    * @name JumpInfo#actNum
-   * @type {number}
-   */
-  actNum = -1;
-
+   * @type {number} */
+  actNum: -1,
   /**
    * Current sequence tag
    * @name JumpInfo#sequence
-   * @type {string}
-   */
-  sequence = null;
-
+   * @type {string} */
+  sequence: null,
   /**
    * Path of another JClic project to jump to
    * @name JumpInfo#projectPath
-   * @type {string}
-   */
-  projectPath = null;
-}
+   * @type {string} */
+  projectPath: null,
+});
 
 export default JumpInfo;
-

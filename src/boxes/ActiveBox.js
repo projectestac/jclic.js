@@ -30,7 +30,7 @@
 
 /* global document */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import AbstractBox from './AbstractBox';
 import ActiveBoxContent from './ActiveBoxContent';
 import ActiveBagContent from './ActiveBagContent';
@@ -758,72 +758,55 @@ export class ActiveBox extends AbstractBox {
     }
     return this.$accessibleElement;
   }
+}
 
-  // Class fields
-
+Object.assign(ActiveBox.prototype, {
   /**
    * Identifier used to set the relative position of this box in a set.
    * @name ActiveBox#idOrder
-   * @type {number}
-   */
-  idOrder = -1;
-
+   * @type {number} */
+  idOrder: -1,
   /**
    * Identifier used to set a relative position in the space.
    * @name ActiveBox#idLoc
-   * @type {number}
-   */
-  idLoc = -1;
-
+   * @type {number} */
+  idLoc: -1,
   /**
    * Identifier used to establish relationships between cells of different sets (in associations)
    * @name ActiveBox#idAss
-   * @type {number}
-   */
-  idAss = -1;
-
+   * @type {number} */
+  idAss: -1,
   /**
    * Backup of the original position of the cell, useful when the real position must be restored after a temporary change.
    * @name ActiveBox#pos0
-   * @type {AWT.Point}
-   */
-  pos0 = null;
-
+   * @type {AWT.Point} */
+  pos0: null,
   /**
    * Main content of this box
    * @name ActiveBox#content
-   * @type {ActiveBoxContent}
-   */
-  content = null;
-
+   * @type {ActiveBoxContent} */
+  content: null,
   /**
    * Alternative content of this box
    * @name ActiveBox#altContent
-   * @type {ActiveBoxContent}
-   */
-  altContent = null;
-
+   * @type {ActiveBoxContent} */
+  altContent: null,
   /**
    * Flag to check if this box has a 'hosted component'
    * @name ActiveBox#hostedComponent
-   * @type {boolean}
-   */
-  hasHostedComponent = false;
-
+   * @type {boolean} */
+  hasHostedComponent: false,
   /**
    * The media player associated to this box
    * @name ActiveBox#hostedMediaPlayer
-   * @type {ActiveMediaPlayer}
-   */
-  hostedMediaPlayer = null;
-
+   * @type {ActiveMediaPlayer} */
+  hostedMediaPlayer: null,
   /**
    * Indicates that this box is used as a background. When drawing, the clipping region must be respected.
    * @name ActiveBox#isBackground
-   * @type {boolean}
-   */
-  isBackground = false;
-}
+   * @type {boolean} */
+  isBackground: false,
+});
 
 export default ActiveBox;
 

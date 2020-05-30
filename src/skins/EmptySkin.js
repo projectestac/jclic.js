@@ -59,25 +59,22 @@ export class EmptySkin extends Skin {
   _getStyleSheets(media = 'default') {
     return super._getStyleSheets(media) + (media === 'default' ? this.mainCSS : '');
   }
+}
 
-  // Class fields
-
+Object.assign(EmptySkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
    * @name EmptySkin#skinId
    * @override
-   * @type {string}
-   */
-  skinId = 'JClicEmptySkin';
-
+   * @type {string} */
+  skinId: 'JClicEmptySkin',
   /**
    * Styles used in this skin
    * @name EmptySkin#skinCSS
    * @override
-   * @type {string}
-   */
-  mainCSS = '.ID .JClicPlayerCnt {margin:0;}';
-}
+   * @type {string} */
+  mainCSS: '.ID .JClicPlayerCnt {margin:0;}'
+});
 
 // Register this class in the list of available skins
 export default Skin.registerClass('empty', EmptySkin);

@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import BoxBag from './BoxBag';
 import AWT from '../AWT';
 
@@ -345,15 +345,14 @@ export class ActiveBoxBag extends BoxBag {
       .forEach(bx => bx.buildAccessibleElement($canvas, $clickReceiver, this.$accessibleDiv, eventType));
     return this.$accessibleDiv;
   }
+}
 
-  // Class fields
-
+Object.assign(ActiveBoxBag.prototype, {
   /**
    * `div` containing the accessible elements associated to this ActiveBoxBag
    * @name ActiveBoxBag#$accessibleDiv
-   * @type {external:jQuery}
-   */
-  $accessibleDiv = null;
-}
+   * @type {external:jQuery} */
+  $accessibleDiv: null,
+});
 
 export default ActiveBoxBag;

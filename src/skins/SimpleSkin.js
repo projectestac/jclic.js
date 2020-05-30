@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Skin from './Skin';
 import DefaultSkin from './DefaultSkin';
 
@@ -66,38 +66,33 @@ export class SimpleSkin extends DefaultSkin {
   _getStyleSheets(media = 'default') {
     return `${super._getStyleSheets(media)}${media === 'default' ? this.skinCSS : media === 'half' ? this.skinCSSHalf : media === 'twoThirds' ? this.skinCSSTwoThirds : ''}`;
   }
+}
 
-  // Class fields
-
+Object.assign(SimpleSkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
    * @name SimpleSkin#skinId
    * @override
-   * @type {string}
-   */
-  skinId = 'JClicSimpleSkin';
-
+   * @type {string} */
+  skinId: 'JClicSimpleSkin',
   /**
    * Styles used in this skin
    * @name SimpleSkin#skinCSS
-   * @type {string}
-   */
-  skinCSS = '\
+   * @type {string} */
+  skinCSS: '\
 .ID {background-color:#888888;}\
 .ID .JClicCtrlCnt {margin:9px;}\
 .ID .JClicPlayerCnt {margin:0px 18px 18px;}\
-.ID .JClicMsgBox {flex-grow:0; margin:0 18px 18px 18px;}';
-
-  skinCSSHalf = '\
+.ID .JClicMsgBox {flex-grow:0; margin:0 18px 18px 18px;}',
+  skinCSSHalf: '\
 .ID .JClicCtrlCnt {margin:4px;}\
 .ID .JClicPlayerCnt {margin:0px 9px 9px;}\
-.ID .JClicMsgBox {margin:0 9px 9px 9px;}';
-
-  skinCSSTwoThirds = '\
+.ID .JClicMsgBox {margin:0 9px 9px 9px;}',
+  skinCSSTwoThirds: '\
 .ID .JClicCtrlCnt {margin:6px;}\
 .ID .JClicPlayerCnt {margin:0px 12px 12px;}\
-.ID .JClicMsgBox {margin:0 12px 12px 12px;}';
-}
+.ID .JClicMsgBox {margin:0 12px 12px 12px;}',
+});
 
 // Register this class in the list of available skins
 export default Skin.registerClass('simple', SimpleSkin);

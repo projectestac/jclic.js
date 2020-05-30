@@ -28,7 +28,7 @@
  *  @licend
  */
 
-import { $ } from 'jquery';
+import $ from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
@@ -83,13 +83,6 @@ export class MemoryGame extends Activity {
   shuffleAlways() {
     return true;
   }
-
-  // Class fields
-
-  /**
-   * Panel class associated to this type of activity: {@link MemoryGamePanel}
-   * @type {class} */
-  static Panel = MemoryGamePanel;
 }
 
 /**
@@ -403,28 +396,31 @@ export class MemoryGamePanel extends Activity.Panel {
       event.preventDefault();
     }
   }
+}
 
-  // Class fields
-
+Object.assign(MemoryGamePanel.prototype, {
   /**
    * The {@link ActiveBoxBag} containing the information to be displayed.
    * @name MemoryGamePanel#bg
    * @type {ActiveBoxBag} */
-  bg = null;
-
+  bg: null,
   /**
    * The {@link BoxConnector} used to reveal pairs of cells
    * @name MemoryGamePanel#bc
    * @type {BoxConnector} */
-  bc = null;
-
+  bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
    * @name MemoryGamePanel#events
    * @type {string[]} */
-  events = ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'];
-}
+  events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
+});
+
+/**
+ * Panel class associated to this type of activity: {@link MemoryGamePanel}
+ * @type {class} */
+MemoryGame.Panel = MemoryGamePanel;
 
 // Register activity class
 export default Activity.registerClass('@memory.MemoryGame', MemoryGame);
