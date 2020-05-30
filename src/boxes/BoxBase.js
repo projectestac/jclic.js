@@ -394,6 +394,6 @@ Object.assign(BoxBase.prototype, {
   markerStroke: new AWT.Stroke(defaultValues.MARKER_STROKE_WIDTH),
 });
 
-BoxBase.prototype.defaultBoxBase = new BoxBase();
+BoxBase.DEFAULT_BOX_BASE = new BoxBase();
 
 export default BoxBase;

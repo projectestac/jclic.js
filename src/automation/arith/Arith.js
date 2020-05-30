@@ -62,8 +62,8 @@ export class Arith extends AutoContentProvider {
     super();
     this.className = '@arith.Arith';
     this.numericContent = true;
-    this.opA = new Operator();
-    this.opB = new Operator();
+    this.opA = new Arith.Operator();
+    this.opB = new Arith.Operator();
   }
 
   /**
@@ -161,8 +161,8 @@ export class Arith extends AutoContentProvider {
   setAttributes(data) {
     return Utils.setAttr(this, data, [
       'className',
-      { key: 'opA', fn: Operator },
-      { key: 'opB', fn: Operator },
+      { key: 'opA', fn: Arith.Operator },
+      { key: 'opB', fn: Arith.Operator },
       'use_add', 'use_subst', 'use_mult', 'use_div',
       'exp_abx', 'exp_axc', 'exp_xbc', 'exp_axbc', 'exp_caxb',
       'resultLimInf', 'resultLimSup', 'resultCarry', 'resultNoDup', 'resultOrder',
