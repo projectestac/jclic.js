@@ -72,7 +72,7 @@ export class ProjectSettings {
    */
   setProperties($xml) {
     let single_description = null;
-    let multiple_descriptions = null;
+    const multiple_descriptions = [];
 
     $xml.children().each((_n, child) => {
       switch (child.nodeName) {
@@ -83,7 +83,7 @@ export class ProjectSettings {
           single_description = Utils.getXmlNodeText(child);
           break;
         case 'descriptions':
-          multiple_descriptions = Utils.getXmlNodeText(child);
+          $(child).children().each((_n, desc) => multiple_descriptions.push(Utils.parseXmlNode(desc)));
           break;
         case 'author':
           this.authors.push(Utils.reduceTextsToStrings(Utils.parseXmlNode(child)));
@@ -128,12 +128,10 @@ export class ProjectSettings {
 
     this.buildLocales();
 
-    if (multiple_descriptions && multiple_descriptions.description) {
-      multiple_descriptions.description.forEach(d => {
-        if (d.language && d.text)
-          this.description[d.language] = d.text;
-      });
-    }
+    multiple_descriptions.forEach(d => {
+      if (d.language && d.text)
+        this.description[d.language] = d.text;
+    });
 
     if (single_description && this.languages.length > 0 && !this.description[this.languages[0]])
       this.description[this.languages[0]] = single_description;
