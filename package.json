@@ -57,8 +57,8 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
     "amdefine": "^1.0.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
@@ -71,22 +71,18 @@
     "mock-browser": "^0.92.14",
     "po2json": "^1.0.0-alpha",
     "requirejs": "^2.3.6",
-    "terser-webpack-plugin": "^3.0.1",
+    "terser-webpack-plugin": "^3.0.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0",
     "xmldom": "^0.3.0"
   },
   "scripts": {
-    "bak-build-dist": "webpack --config webpack-dist.js",
-    "bak-build-devel": "webpack --config webpack-devel.js",
-    "bak-build-devel-es5": "webpack --config webpack-devel-es5.js",
-    "bak-build": "webpack --config webpack-config.js",
+    "build": "webpack --mode production",
     "build-locales": "node build-locales.js",
     "build-doc": "jsdoc -c jsdoc.config.js",
     "lint": "eslint -c .eslintrc.json \"src/**/*.js\"",
-    "bak-debug": "live-server --open=test/jclic-demo/index.html -V --watch=src,test",
-    "bak-start": "live-server --open=test/jclic-demo/index-min.html",
+    "debug-dist": "live-server --open=test/index.html -V --watch=src,test",
     "start": "webpack-dev-server --open --mode development --host 0.0.0.0 --useLocalIp"
   },
   "browserslist": "> 0.25%, not dead"

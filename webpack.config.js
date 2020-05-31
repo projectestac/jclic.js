@@ -1,4 +1,4 @@
-/* global module:true __dirname */
+/* global module:true __dirname require */
 
 const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
