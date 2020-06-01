@@ -199,7 +199,7 @@ export const JClicObject = {
  * Creates a new JClicPlayer hosted on the specified `div`, and loads an specific project on it.
  * @param {HTMLElement} div - The HTML element (usually a `<div/>`) that will be used as a main container of the player.
  * @param {string} projectName - The file name or URL of the JClic project to be loaded
- * @param {object=} options - An optional set of preferences
+ * @param {object} [options] - An optional set of preferences
  * @returns {JClicPlayer}
  */
 export function loadProject(div, projectName, options) {

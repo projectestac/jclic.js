@@ -62,7 +62,7 @@ export class JClicPlayer extends AWT.Container {
   /**
    * JClicPlayer constructor
    * @param {external:jQuery} $topDiv - The HTML `div` element where this JClicPlayer will deploy.
-   * @param {object=} options - A set of optional customized options.
+   * @param {object} [options] - A set of optional customized options.
    */
   constructor($topDiv, options) {
 
@@ -295,10 +295,10 @@ export class JClicPlayer extends AWT.Container {
    * - A `.scorm.zip` file, as exported by JClic Author.
    * - A `project.json` file, as exported by JClic Author
    * When `null` or `undefined`, refers to the current project.
-   * @param {(string|number)=} sequence - Sequence tag or numeric order in the {@link ActivitySequence}
+   * @param {(string|number)} [sequence] - Sequence tag or numeric order in the {@link ActivitySequence}
    * to be loaded. If _sequence_ and _activity_ are both `null`, the first {@link ActivitySequenceElement}
    * will be loaded.
-   * @param {string=} activity - Name of the activity to be loaded (usually `null`)
+   * @param {string} [activity] - Name of the activity to be loaded (usually `null`)
    */
   load(project, sequence, activity) {
 
@@ -717,8 +717,8 @@ export class JClicPlayer extends AWT.Container {
   /**
    * Plays the specified media.
    * @param {MediaContent} mediaContent - The media to be played
-   * @param {ActiveBox=} mediaPlacement - The cell where the graphic component of this media should be placed (used with video objects)
-   * @param {(function[])=} delayedActions - If set, store the the action in this array for future execution
+   * @param {ActiveBox} [mediaPlacement] - The cell where the graphic component of this media should be placed (used with video objects)
+   * @param {function[]} [delayedActions] - If set, store the the action in this array for future execution
    */
   playMedia(mediaContent, mediaPlacement = null, delayedActions = null) {
 
@@ -787,7 +787,7 @@ export class JClicPlayer extends AWT.Container {
 
   /**
    * Stops currently playing media
-   * @param {number=} [level=-1] - Sets the threshold above which all media objects with equal
+   * @param {number} [level=-1] - Sets the threshold above which all media objects with equal
    * or greater `level` will also also be muted.
    */
   stopMedia(level) {
@@ -937,7 +937,7 @@ export class JClicPlayer extends AWT.Container {
   /**
    * Sets the current value of the progress bar
    * @param {number} val - The current value. Should be less or equal than `max`. When -1, the progress bar will be hidden.
-   * @param {number=} max - Optional parameter representing the maximum value. When passed, the progress bar will be displayed.
+   * @param {number} [max] - Optional parameter representing the maximum value. When passed, the progress bar will be displayed.
    */
   setProgress(val, max) {
     if (this.skin)
@@ -946,9 +946,9 @@ export class JClicPlayer extends AWT.Container {
 
   /**
    * Increments the progress bar value by the specified amount, only when the progress bar is running.
-   * @param {number=} val - The amount to increment. When not defined, it's 1.
+   * @param {number} [val=1] - The amount to increment. When not defined, it's 1.
    */
-  incProgress(val) {
+  incProgress(val = 1) {
     if (this.skin)
       this.skin.incProgress(val);
   }

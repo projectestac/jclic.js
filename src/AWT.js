@@ -51,11 +51,11 @@ import WebFont from 'webfontloader';
 export class Font {
   /**
    * Font constructor
-   * @param {string=} [family='Arial']
-   * @param {number=} [size=17]
-   * @param {number=} [bold=0]
-   * @param {number=} [italic=0]
-   * @param {string=} [variant='']
+   * @param {string} [family='Arial']
+   * @param {number} [size=17]
+   * @param {number} [bold=0]
+   * @param {number} [italic=0]
+   * @param {string} [variant='']
    */
   constructor(family, size, bold, italic, variant) {
     if (family)
@@ -75,7 +75,7 @@ export class Font {
    * Finds the XML elements with typeface specifications, checks its value against the font
    * substitution list, replacing the `family` attribute and loading the alternative font when needed.
    * @param {external:jQuery} $tree - The xml element to be processed
-   * @param {Object=} options - Optional param that can contain a `fontSubstitutions` attribute with
+   * @param {Object} [options] - Optional param that can contain a `fontSubstitutions` attribute with
    * a substition table to be added to {@link Font.SUBSTITUTIONS}
    */
   static checkTree($tree, options) {
@@ -396,8 +396,8 @@ export class Gradient {
    * Gradient constructor
    * @param {string} c1 - The initial color, in any CSS-valid form.
    * @param {string} c2 - The final color, in any CSS-valid form.
-   * @param {number=} [angle=0] - The inclination of the gradient relative to the horizontal line.
-   * @param {number=} [cycles=1] - The number of times the gradient will be repeated.
+   * @param {number} [angle=0] - The inclination of the gradient relative to the horizontal line.
+   * @param {number} [cycles=1] - The number of times the gradient will be repeated.
    */
   constructor(c1, c2, angle, cycles) {
     if (c1)
@@ -512,12 +512,12 @@ Object.assign(Gradient.prototype, {
 export class Stroke {
   /**
    * Stroke constructor
-   * @param {number=} [lineWidth=1] - The line width of the stroke
-   * @param {string=} [lineCap='butt'] - The line ending type. Possible values are: `butt`, `round`
+   * @param {number} [lineWidth=1] - The line width of the stroke
+   * @param {string} [lineCap='butt'] - The line ending type. Possible values are: `butt`, `round`
    * and `square`.
-   * @param {string=} [lineJoin='miter'] - The type of drawing used when two lines join. Possible
+   * @param {string} [lineJoin='miter'] - The type of drawing used when two lines join. Possible
    * values are: `round`, `bevel` and `miter`.
-   * @param {number=} [miterLimit=10] - The ratio between the miter length and half `lineWidth`.
+   * @param {number} [miterLimit=10] - The ratio between the miter length and half `lineWidth`.
    */
   constructor(lineWidth, lineCap, lineJoin, miterLimit) {
     if (typeof lineWidth === 'number')
@@ -596,7 +596,7 @@ export class Point {
   /**
    * Point constructor
    * @param {number|Point} x - When `x` is an `Point` object, a clone of it will be created.
-   * @param {number=} y - Not used when `x` is an `Point`
+   * @param {number} [y] - Not used when `x` is an `Point`
    */
   constructor(x, y) {
     if (x instanceof Point) {
@@ -653,7 +653,7 @@ export class Point {
   /**
    * Moves this Point to a new position
    * @param {number|Point} newPos - The new position, or a x coordinate
-   * @param {number=} y - `null` or `undefined` when `newPos` is a Point
+   * @param {number} [y] - `null` or `undefined` when `newPos` is a Point
    * @returns {Point}
    */
   moveTo(newPos, y) {
@@ -792,7 +792,7 @@ class Dimension {
    * Sets new values for width and height.
    * `width` can be a number or another `Dimension` object
    * @param {number|Dimension} width - The new width, or a full Dimension to copy it from.
-   * @param {number=} height - Not used when `width` is a Dimension
+   * @param {number} [height] - Not used when `width` is a Dimension
    * @returns {Dimension}
    */
   setDimension(width, height) {
@@ -920,7 +920,7 @@ export class Shape {
   /**
    * Fills the Shape with the current style in the provided HTML canvas context
    * @param {external:CanvasRenderingContext2D} ctx - The canvas 2D rendering context where to fill this shape.
-   * @param {Rectangle=} dirtyRegion - The context region to be updated. Used as clipping
+   * @param {Rectangle} [dirtyRegion] - The context region to be updated. Used as clipping
    * region when drawing.
    * @returns {external:CanvasRenderingContext2D} - The provided rendering context
    */
@@ -964,7 +964,7 @@ export class Shape {
   /**
    * Creates a clipping region on the specified HTML canvas 2D rendering context
    * @param {external:CanvasRenderingContext2D} ctx - The rendering context
-   * @param {string=} [fillRule='nonzero'] - Can be 'nonzero' (default when not set) or 'evenodd'
+   * @param {string} [fillRule='nonzero'] - Can be 'nonzero' (default when not set) or 'evenodd'
    * @returns {external:CanvasRenderingContext2D} - The provided rendering context
    */
   clip(ctx, fillRule) {
@@ -1058,9 +1058,9 @@ export class Rectangle extends Shape {
   /**
    * Rectangle constructor
    * @param {Point|Rectangle|number|number[]} pos
-   * @param {Dimension|number=} dim
-   * @param {number=} w
-   * @param {number=} h
+   * @param {Dimension|number} [dim]
+   * @param {number} [w]
+   * @param {number} [h]
    */
   constructor(pos, dim, w, h) {
     let p = pos, d = dim;
@@ -1288,9 +1288,9 @@ export class Ellipse extends Rectangle {
   /**
    * Ellipse constructor
    * @param {Point|Rectangle|number|number[]} pos
-   * @param {Dimension|number=} dim
-   * @param {number=} w
-   * @param {number=} h
+   * @param {Dimension|number} [dim]
+   * @param {number} [w]
+   * @param {number} [h]
    */
   constructor(pos, dim, w, h) {
     super(pos, dim, w, h);
@@ -1638,7 +1638,7 @@ export class PathStroke {
    * @param {Point} p0 - Starting point of the quadratic Bézier curve
    * @param {Point} p1 - Control point
    * @param {Point} p2 - Ending point
-   * @param {number=} numPoints - The number of intermediate points to calculate. When not defined,
+   * @param {number} [numPoints] - The number of intermediate points to calculate. When not defined,
    * the value will be obtained from {@link Utils.settings.BEZIER_POINTS}.
    * @returns {Point[]} - Array with some intermediate points from the resulting Bézier curve
    */
@@ -1667,7 +1667,7 @@ export class PathStroke {
    * @param {Point} p1 - First control point
    * @param {Point} p2 - Second control point
    * @param {Point} p3 - Ending point
-   * @param {number=} numPoints - The number of intermediate points to calculate. When not defined,
+   * @param {number} [numPoints] - The number of intermediate points to calculate. When not defined,
    * the value will be obtained from {@link Utils.settings.BEZIER_POINTS}.
    * @returns {Point[]} - Array with some intermediate points from the resulting Bézier curve
    */
@@ -1894,7 +1894,7 @@ export class Timer {
    * Timer constructor
    * @param {function} actionPerformed - The function to be triggered when the timer is enabled.
    * @param {number} interval - The interval between action calls, specified in milliseconds.
-   * @param {boolean=} [enabled=false] - Flag to indicate if the timer will be initially enabled.
+   * @param {boolean} [enabled=false] - Flag to indicate if the timer will be initially enabled.
    */
   constructor(actionPerformed, interval, enabled) {
     this.actionPerformed = actionPerformed;
@@ -1924,7 +1924,7 @@ export class Timer {
   /**
    * Enables or disables this timer
    * @param {boolean} enabled - Indicates if the timer should be enabled or disabled
-   * @param {boolean=} [retainCounter=false] - When `true`, the ticks counter will not be cleared
+   * @param {boolean} [retainCounter=false] - When `true`, the ticks counter will not be cleared
    */
   setEnabled(enabled, retainCounter) {
     if (!retainCounter)
@@ -1955,7 +1955,7 @@ export class Timer {
 
   /**
    * Starts this timer
-   * @param {boolean=} [retainCounter=false] - When `true`, the ticks counter will not be cleared
+   * @param {boolean} [retainCounter=false] - When `true`, the ticks counter will not be cleared
    */
   start(retainCounter) {
     return this.setEnabled(true, retainCounter);
@@ -1963,7 +1963,7 @@ export class Timer {
 
   /**
    * Stops this timer
-   * @param {boolean=} [retainCounter=false] - When `true`, the ticks counter will not be cleared
+   * @param {boolean} [retainCounter=false] - When `true`, the ticks counter will not be cleared
    */
   stop(retainCounter) {
     return this.setEnabled(false, retainCounter);
@@ -2004,9 +2004,9 @@ export class Container extends Rectangle {
   /**
    * Container constructor
    * @param {Point|Rectangle|number|number[]} pos
-   * @param {Dimension|number=} dim
-   * @param {number=} w
-   * @param {number=} h
+   * @param {Dimension|number} [dim]
+   * @param {number} [w]
+   * @param {number} [h]
    */
   constructor(pos, dim, w, h) {
     super(pos, dim, w, h);

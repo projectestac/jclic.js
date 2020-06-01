@@ -49,7 +49,6 @@
     "@francesc/basic-midi-player-js": "^3.0.2",
     "clipboard-js": "^0.3.6",
     "i18next": "^19.4.5",
-    "idempotent-babel-polyfill": "^7.4.4",
     "jquery": "^3.5.1",
     "jszip": "^3.4.0",
     "jszip-utils": "0.1.0",

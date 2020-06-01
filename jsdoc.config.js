@@ -1,8 +1,10 @@
 
-const fs = require('fs-extra')
+/* global require, module */
+
+const fs = require('fs-extra');
 
 // Empty "doc" and copy "ico.png"
-fs.emptyDirSync('doc')
+fs.emptyDirSync('doc');
 
 module.exports = {
   source: {
@@ -66,4 +68,4 @@ module.exports = {
     hardwrap: true,
     tags: ['examples']
   }
-}
+};

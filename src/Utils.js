@@ -151,7 +151,7 @@ export const Utils = {
   /**
    * Gets a boolean value from a textual expression
    * @param {string} val - The value to be parsed (`true` for true, null or otherwise for `false`)
-   * @param {boolean=} [defaultValue=false] - The default value to return when `val` is false
+   * @param {boolean} [defaultValue=false] - The default value to return when `val` is false
    * @returns {number}
    */
   getBoolean: (val, defaultValue = false) => val === 'true' ? true : val === 'false' ? false : defaultValue,
@@ -403,8 +403,8 @@ export const Utils = {
   cssToString: cssObj => Object.keys(cssObj).reduce((s, key) => `${s}${key}:${cssObj[key]};`, ''),
   /**
    * Converts java-like color codes (like '0xRRGGBB') to valid CSS values like '#RRGGBB' or 'rgba(r,g,b,a)'
-   * @param {string=} color - A color, as codified in Java
-   * @param {string=} defaultColor - The default color to be used
+   * @param {string} [color] - A color, as codified in Java
+   * @param {string} [defaultColor] - The default color to be used
    * @returns {string}
    */
   checkColor: (color, defaultColor = Utils.settings.BoxBase.BACK_COLOR) => {
@@ -459,7 +459,7 @@ export const Utils = {
    * When the value of an attribute is of type 'Object' and this object has a method named `getAttributes`, the result of calling
    * this method is returned instead of the crude object.
    * @param {object} obj - The object to be processed
-   * @param {string[]=} keys - An optional array of keys to be included in the resulting object.
+   * @param {string[]} [keys] - An optional array of keys to be included in the resulting object.
    * When null or not set, all keys of `obj` are included. Keys can include a default value separed by '|'.
    * Attributes with default value will be excluded from the resulting object.
    * @returns {object}
@@ -563,9 +563,9 @@ export const Utils = {
    * Builds a new object based on the provided constructor, data and initialization value
    * Objects used with this function should implement `setAttributes`, or an static method named `factory`
    * @param {function} objType - A class or function to be invoked to build the object.
-   * @param {object+} data - An optional object filled with the attributes to be assigned to the newly created object.
-   * @param {any+} init - An optional value to be passed to the function when invoked with `new`
-   * @param {object[]+} - Optional array of params to be passed when calling `setAttributes` on the final object
+   * @param {object} [data] - An optional object filled with the attributes to be assigned to the newly created object.
+   * @param {any} [init] - An optional value to be passed to the function when invoked with `new`
+   * @param {object[]} [params=[]] - Optional array of params to be passed when calling `setAttributes` on the final object
    * @returns {object} - The resulting object
    */
   buildObj: (objType, data, init, params = []) => {
@@ -624,7 +624,7 @@ export const Utils = {
    * Checks if the given string ends with the specified expression
    * @param {string} text - The string where to find the expression
    * @param {string} expr - The expression to search for.
-   * @param {boolean=} trim - When `true`, the `text` string will be trimmed before check
+   * @param {boolean} [trim] - When `true`, the `text` string will be trimmed before check
    * @returns {boolean}
    */
   endsWith: (text = '', expr, trim) => typeof text === 'string' && (trim ? text.trim() : text).endsWith(expr),
@@ -632,7 +632,7 @@ export const Utils = {
    * Checks if the given string starts with the specified expression
    * @param {string} text - The string where to find the expression
    * @param {string} expr - The expression to search for.
-   * @param {boolean=} trim - When `true`, the `text` string will be trimmed before check
+   * @param {boolean} [trim] - When `true`, the `text` string will be trimmed before check
    * @returns {boolean}
    */
   startsWith: (text = '', expr, trim) => typeof text === 'string' && (trim ? text.trim() : text).indexOf(expr) === 0,
@@ -662,7 +662,7 @@ export const Utils = {
   /**
    * Gets the full path of `file` relative to `basePath`
    * @param {string} file - The file name
-   * @param {string=} path - The base path
+   * @param {string} [path] - The base path
    * @returns {string}
    */
   getRelativePath: (file, path) => (!path || path === '' || file.indexOf(path) !== 0) ? file : file.substr(path.length),
@@ -710,9 +710,9 @@ export const Utils = {
    * Replaces `width`, `height` and `fill` attributes of a simple SVG image
    * with the provided values
    * @param {string} svg - The SVG image as XML string
-   * @param {string=} width - Optional setting for "width" property
-   * @param {string=} height - Optional setting for "height" property
-   * @param {string=} fill - Optional setting for "fill" property
+   * @param {string} [width] - Optional setting for "width" property
+   * @param {string} [height] - Optional setting for "height" property
+   * @param {string} [fill] - Optional setting for "fill" property
    * @returns {string} - The resulting svg code
    */
   getSvg: (svg, width, height, fill) => {
@@ -728,9 +728,9 @@ export const Utils = {
    * Encodes a svg expression into a {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/data_URIs|data URI}
    * suitable for the `src` property of `img` elements, optionally changing its original size and fill values.
    * @param {string} svg - The SVG image as XML string
-   * @param {string=} width - Optional setting for "width" property
-   * @param {string=} height - Optional setting for "height" property
-   * @param {string=} fill - Optional setting for "fill" property
+   * @param {string} [width] - Optional setting for "width" property
+   * @param {string} [height] - Optional setting for "height" property
+   * @param {string} [fill] - Optional setting for "fill" property
    * @returns {string} - The resulting Data URI
    */
   svgToURI: (svg, width, height, fill) => 'data:image/svg+xml;base64,' + btoa(Utils.getSvg(svg, width, height, fill)),
@@ -774,7 +774,7 @@ export const Utils = {
    * the main component of JClic is behind a shadow-root.
    * This method will be replaced by a call to [Node.getRootNode()](https://developer.mozilla.org/en-US/docs/Web/API/Node/getRootNode)
    * when fully supported by all major browsers.
-   * @param {Node=} el - The element from which to start the search
+   * @param {Node} [el] - The element from which to start the search
    * @returns {Node}
    */
   getRootHead: el => {
@@ -793,7 +793,7 @@ export const Utils = {
   /**
    * Appends a stylesheet element to the `head` or root node nearest to the given `HTMLElement`.
    * @param {String} css - The content of the stylesheet
-   * @param {PlayStation=} ps - An optional `PlayStation` (currently a {@link JClicPlayer}) used as a base to find the root node
+   * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link JClicPlayer}) used as a base to find the root node
    * @returns {HTMLStyleElement} - The appended style element
    */
   appendStyleAtHead: (css, ps) => {

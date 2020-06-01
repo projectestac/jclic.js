@@ -38,11 +38,11 @@ import Utils from './Utils';
  * Checks if the language preferred by the user (based on browser and/or specific settings)
  * is in a list of available languages.
  * @param {string[]} availableLanguages - Array of available languages. It should contain at least one item.
- * @param {string=} defaultLanguage -Language to be used by default when not found the selected one
- * @param {string} setLang - Request this specific language
+ * @param {string} [defaultLanguage=en] -Language to be used by default when not found the selected one
+ * @param {string} [setLang] - Request this specific language
  * @returns {string} - The most suitable language for this request
  */
-export function checkPreferredLanguage(availableLanguages, defaultLanguage, setLang) {
+export function checkPreferredLanguage(availableLanguages, defaultLanguage = 'en', setLang) {
   let result = -1;
   // Create an array to store possible values
   let tries = [];
@@ -59,7 +59,7 @@ export function checkPreferredLanguage(availableLanguages, defaultLanguage, setL
     tries.push(window.navigator.language);
 
   // Add English as final option
-  tries.push(defaultLanguage || 'en');
+  tries.push(defaultLanguage);
 
   for (let i = 0; i < tries.length; i++) {
     let match = -1;

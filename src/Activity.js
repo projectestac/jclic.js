@@ -1141,7 +1141,7 @@ export class ActivityPanel extends AWT.Container {
   /**
    * Sets the message to be displayed in the skin message box and optionally plays a sound event.
    * @param {string} msgCode - Type of message (initial, final, finalError...)
-   * @param {string=} eventSoundsCode - Optional name of the event sound to be played.
+   * @param {string} [eventSoundsCode] - Optional name of the event sound to be played.
    */
   setAndPlayMsg(msgCode, eventSoundsCode) {
     const msg = this.act.messages[msgCode] || null;

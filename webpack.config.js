@@ -41,7 +41,6 @@ ${pkg.homepage}
  * Bundle used in HTML browsers
  */
 const mainConfig = {
-  // entry: ['idempotent-babel-polyfill', './src/JClic.js'],
   entry: './src/JClic.js',
   devtool: 'source-map',
   output: {
