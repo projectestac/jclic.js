@@ -89,7 +89,7 @@ export class ActiveMediaPlayer {
 
   /**
    * Plays the media, realizing it if needed.
-   * @param {ActiveBox=} _setBx - The active box where this media will be placed (when video)
+   * @param {ActiveBox} [_setBx] - The active box where this media will be placed (when video)
    */
   playNow(_setBx) {
     // TODO: Remove unused param "_setBx"
@@ -139,7 +139,7 @@ export class ActiveMediaPlayer {
 
   /**
    * Plays the media when available, without blocking the current thread.
-   * @param {ActiveBox=} setBx - The active box where this media will be placed (when video)
+   * @param {ActiveBox} [setBx] - The active box where this media will be placed (when video)
    */
   play(setBx) {
     this.stopAllAudioBuffers();

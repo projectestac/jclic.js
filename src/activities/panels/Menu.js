@@ -66,7 +66,7 @@ export class Menu extends Activity {
 export class MenuPanel extends Activity.Panel {
   /**
    * MenuPanel constructor
-   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {
     super(act, ps, $div);

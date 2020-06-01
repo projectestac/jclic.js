@@ -48,7 +48,7 @@ import Utils from '../Utils';
 export class EventSounds {
   /**
    * EventSounds constructor
-   * @param {EventSounds=} parent - Another EventSounds object that will act as a parent of this one,
+   * @param {EventSounds} [parent] - Another EventSounds object that will act as a parent of this one,
    * used to resolve which sound must be played for events when not defined here.
    */
   constructor(parent) {

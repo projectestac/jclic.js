@@ -49,7 +49,7 @@ const defaultValues = Utils.settings.BoxBase;
 export class BoxBase {
   /**
    * BoxBase constructor
-   * @param {BoxBase=} parent - Another BoxBase object used to determine the value of properties not
+   * @param {BoxBase} [parent] - Another BoxBase object used to determine the value of properties not
    * locally set.
    */
   constructor(parent) {
@@ -192,13 +192,13 @@ export class BoxBase {
 
   /**
    * Gets the properties defined in this BoxBase as a collection of CSS attributes
-   * @param {object=} css - An optional set of initial CSS properties
-   * @param {boolean} inactive - When `true`, get CSS attributes for an inactive cell
-   * @param {boolean} inverse - When `true`, get CSS attributes for an inverse cell
-   * @param {boolean} alternative - When `true`, get CSS attributes for an alternative cell
+   * @param {object} [css] - An optional set of initial CSS properties
+   * @param {boolean} [inactive=false] - When `true`, get CSS attributes for an inactive cell
+   * @param {boolean} [inverse=false] - When `true`, get CSS attributes for an inverse cell
+   * @param {boolean} [alternative=false] - When `true`, get CSS attributes for an alternative cell
    * @returns {object}
    */
-  getCSS(css, inactive, inverse, alternative) {
+  getCSS(css, inactive = false, inverse = false, alternative = false) {
     // (css will be created by [AWT.Font.toCss](AWT.html) if null or undefined)
     const font = this.get('font');
     css = font.toCss(css);

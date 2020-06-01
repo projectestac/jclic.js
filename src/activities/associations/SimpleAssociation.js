@@ -112,7 +112,7 @@ export class SimpleAssociationPanel extends Activity.Panel {
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
-   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {
     super(act, ps, $div);
@@ -334,7 +334,7 @@ export class SimpleAssociationPanel extends Activity.Panel {
    * Main handler used to process mouse, touch, keyboard and edit events
    * @override
    * @param {HTMLEvent} event - The HTML event to be processed
-   * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+   * @returns {boolean} - When this event handler returns `false`, jQuery will stop its
    * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
    */
   processEvent(event) {

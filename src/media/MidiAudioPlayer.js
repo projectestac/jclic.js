@@ -49,7 +49,7 @@ export class MidiAudioPlayer {
   /**
    * MidiAudioPlayer constructor
    * @param {ArrayBuffer} data - The MIDI file content, in ArrayBuffer format
-   * @param {object=} options - Optional params related to the type of soundfont used. Valid options inside this object are:<br>
+   * @param {object} [options={}] - Optional params related to the type of soundfont used. Valid options inside this object are:<br>
    * - `MIDISoundFontObject`: An object containing the full soundfont data. When this param is provided, no other one will be used.
    * - `MIDISoundFontBase`: The URL used as base for the current collection of MIDI soundfonts. Defaults to `https://clic.xtec.cat/dist/jclic.js/soundfonts/MusyngKite`
    * - `MIDISoundFontName`: The MIDI instrument name. Defaults to `acoustic_grand_piano`. See [MIDI.js Soundfonts](https://github.com/gleitz/midi-js-soundfonts) for full lists of MIDI instrument names.

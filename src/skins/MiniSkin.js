@@ -44,8 +44,8 @@ export class MiniSkin extends DefaultSkin {
    * 
    * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
    * realize the media objects meeded tot build the Skin.
-   * @param {string=} name - The skin class name
-   * @param {object=} options - Optional parameter with additional options
+   * @param {string} [name] - The skin class name
+   * @param {object} [options] - Optional parameter with additional options
    */
   constructor(ps, name = null, options = {}) {
     // MiniSkin extends [DefaultSkin](DefaultSkin.html)

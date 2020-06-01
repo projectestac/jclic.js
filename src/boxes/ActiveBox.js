@@ -59,8 +59,8 @@ export class ActiveBox extends AbstractBox {
    * @param {?AWT.Container} container - The container where this box is placed.
    * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * of this box are defined.
-   * @param {number=} setIdLoc - A numeric identifier, used to locate this box in a set of sibling objects.
-   * @param {AWT.Rectangle=} rect - The initial bounds of the box.
+   * @param {number} [setIdLoc] - A numeric identifier, used to locate this box in a set of sibling objects.
+   * @param {AWT.Rectangle} [rect] - The initial bounds of the box.
    */
   constructor(parent, container, boxBase, setIdLoc, rect) {
     // ActiveBox extends AbstractBox
@@ -141,7 +141,7 @@ export class ActiveBox extends AbstractBox {
   /**
    * Checks if two ActiveBox objects have equivalent content
    * @param {ActiveBox} bx - The ActiveBox to check against this.
-   * @param {boolean=} checkCase - When `true`, the comparing will be case-sensitive.
+   * @param {boolean} [checkCase] - When `true`, the comparing will be case-sensitive.
    * @returns {boolean} - `true` if both cells are equivalent.
    */
   isEquivalent(bx, checkCase) {
@@ -153,7 +153,7 @@ export class ActiveBox extends AbstractBox {
   /**
    * Same functionality as {@link ActiveBox#isEquivalent isEquivalent}, but comparing the current content.
    * @param {ActiveBox} bx - The ActiveBox to check against this.
-   * @param {boolean=} checkCase - When `true`, the comparing will be case-sensitive.
+   * @param {boolean} [checkCase] - When `true`, the comparing will be case-sensitive.
    * @returns {boolean}
    */
   isCurrentContentEquivalent(bx, checkCase) {
@@ -403,7 +403,7 @@ export class ActiveBox extends AbstractBox {
    * @override
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
    * box content.
-   * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+   * @param {AWT.Rectangle} [dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
    */
   updateContent(ctx, dirtyRegion) {
 
@@ -647,9 +647,9 @@ export class ActiveBox extends AbstractBox {
    * @override
    * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
    * upper-left corner of a new rectangle.
-   * @param {number=} y - `y` coordinate of the upper-left corner of the new rectangle.
-   * @param {number=} w - Width of the new rectangle.
-   * @param {number=} h - Height of the new rectangle.
+   * @param {number} [y] - `y` coordinate of the upper-left corner of the new rectangle.
+   * @param {number} [w] - Width of the new rectangle.
+   * @param {number} [h] - Height of the new rectangle.
    */
   setBounds(rect, y, w, h) {
     if (typeof rect === 'number')
@@ -710,8 +710,8 @@ export class ActiveBox extends AbstractBox {
    * for more information and supported browsers.
    * @param {external:jQuery} $canvas - The `canvas` where this `ActiveBox` will deploy, wrapped up in a jQuery object
    * @param {external:jQuery} $clickReceiver - The DOM element that will be notified  when `$accessibleElement` is activated.
-   * @param {external:jQuery=} $canvasGroup - Optional DOM element containing the accessible element. Useful to group cells in associations. When `null`, the element belongs to $canvas.
-   * @param {string=} eventType - Type of event sent to $clickReceiver. Default is `click`.
+   * @param {external:jQuery} [$canvasGroup] - Optional DOM element containing the accessible element. Useful to group cells in associations. When `null`, the element belongs to $canvas.
+   * @param {string} [eventType] - Type of event sent to $clickReceiver. Default is `click`.
    * @returns {external:jQuery} - The accessible element associated to this ActiveBox.
    */
   buildAccessibleElement($canvas, $clickReceiver, $canvasGroup, eventType) {

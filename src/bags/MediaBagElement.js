@@ -50,7 +50,7 @@ export class MediaBagElement {
    * MediaBagElement constructor
    * @param {string} basePath - Path to be used as a prefix of the file name
    * @param {string} file - The media file name
-   * @param {external:JSZip=} zip - An optional JSZip object from which the file must be extracted.
+   * @param {external:JSZip} [zip] - An optional JSZip object from which the file must be extracted.
    */
   constructor(basePath, file, zip) {
     if (basePath)
@@ -212,7 +212,7 @@ export class MediaBagElement {
   /**
    * Instantiates the media content
    * @param {function} callback - Callback method called when the referred resource is ready
-   * @param {PlayStation=} ps - An optional `PlayStation` (currently a {@link JClicPlayer}) used to dynamically load fonts
+   * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link JClicPlayer}) used to dynamically load fonts
    */
   build(callback, ps) {
     if (callback) {

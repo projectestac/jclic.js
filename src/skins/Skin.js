@@ -50,8 +50,8 @@ export class Skin extends AWT.Container {
    * Skin constructor
    * @param {PlayStation} ps - The `PlayStation` (currently a {@link JClicPlayer}) used to load and
    * realize the media objects needed tot build the Skin.
-   * @param {string=} name - The skin name
-   * @param {object=} options - Optional parameter with additional options
+   * @param {string} [name] - The skin name
+   * @param {object} [options] - Optional parameter with additional options
    */
   constructor(ps, name = null, options = {}) {
 
@@ -208,7 +208,7 @@ export class Skin extends AWT.Container {
   /**
    * Checks if the provided stylesheet ID is already registered in the root node where the current player is placed
    * @param {String} skinId - The unique identifier of the skin to check
-   * @param {PlayStation=} ps - An optional `PlayStation` (currently a {@link JClicPlayer}) used as a base to find the root node
+   * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link JClicPlayer}) used as a base to find the root node
    * @returns {Boolean} - _true_ when the skin stylesheet is already defined in the current root node, _false_ otherwise
    */
   static registerStyleSheet(skinId, ps) {
@@ -237,7 +237,7 @@ export class Skin extends AWT.Container {
    * This function should be used only through `Skin.getSkin`
    * @param {string} skinName - The name of the searched skin
    * @param {PlayStation} ps - The PlayStation (usually a {@link JClicPlayer}) used to build the new skin.
-   * @param {object=} options - Optional parameter with additional options
+   * @param {object} [options] - Optional parameter with additional options
    * @returns {Skin}
    */
   static getSkin(skinName = 'default', ps, options = {}) {
@@ -402,7 +402,7 @@ export class Skin extends AWT.Container {
   /**
    * Sets the current value of the progress bar
    * @param {number} val - The current value. Should be less or equal than `max`. When -1, the progress bar will be hidden.
-   * @param {number=} max - Optional parameter representing the maximum value. When passed, the progress bar will be displayed.
+   * @param {number} [max] - Optional parameter representing the maximum value. When passed, the progress bar will be displayed.
    */
   setProgress(val, max) {
     if (this.$progress) {
@@ -422,7 +422,7 @@ export class Skin extends AWT.Container {
 
   /**
    * Increments the progress bar value by the specified amount, only when the progress bar is running.
-   * @param {number=} val - The amount to increment. When not defined, it's 1.
+   * @param {number} [val] - The amount to increment. When not defined, it's 1.
    */
   incProgress(val) {
     if (this.currentProgress >= 0)

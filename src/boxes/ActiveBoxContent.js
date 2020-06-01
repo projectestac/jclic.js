@@ -40,8 +40,8 @@ import MediaContent from '../media/MediaContent';
 export class AlignType {
   /**
    * AlignType constructor
-   * @param {string*} h - Horizontal alignment. Possible values are `left`, `center` and `right`
-   * @param {strong*} v - Vertical alignment. Possible values are `top`, `center` and `bottom`
+   * @param {string} [h] - Horizontal alignment. Possible values are `left`, `center` and `right`
+   * @param {string} [v] - Vertical alignment. Possible values are `top`, `center` and `bottom`
    */
   constructor(h, v) {
     if (h)
@@ -86,7 +86,7 @@ Object.assign(AlignType.prototype, {
 export class ActiveBoxContent {
   /**
    * ActiveBoxContent constructor
-   * @param {string=} id - An optional identifier.
+   * @param {string} [id] - An optional identifier.
    */
   constructor(id) {
     if (typeof id !== 'undefined')
@@ -298,7 +298,7 @@ export class ActiveBoxContent {
    * be cleared with this setting.
    * @param {external:HTMLImageElement} img - The image data
    * @param {AWT.Shape} imgClip - A shape that clips the portion of image assigned to this content.
-   * @param {string=} animatedGifFile - When `img` is an animated GIF, its file name
+   * @param {string} [animatedGifFile] - When `img` is an animated GIF, its file name
    */
   setImgContent(img, imgClip, animatedGifFile) {
     this.img = img;

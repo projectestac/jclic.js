@@ -47,7 +47,7 @@ export class MediaContent {
    * @param {string} type - The type of media. Valid values are: `UNKNOWN`, `PLAY_AUDIO`, `PLAY_VIDEO`,
    * `PLAY_MIDI`, `PLAY_CDAUDIO`, `RECORD_AUDIO`, `PLAY_RECORDED_AUDIO`, `RUN_CLIC_ACTIVITY`,
    * `RUN_CLIC_PACKAGE`, `RUN_EXTERNAL`, `URL`, `EXIT` and `RETURN`
-   * @param {string=} file - Optional parameter indicating the media file name
+   * @param {string} [file] - Optional parameter indicating the media file name
    */
   constructor(type, file) {
     this.type = type;

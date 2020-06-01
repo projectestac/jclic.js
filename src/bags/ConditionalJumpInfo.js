@@ -49,11 +49,11 @@ export class ConditionalJumpInfo extends JumpInfo {
   /**
    * ConditionalJumpInfo constructor
    * @param {string} action - Must be one of the described actions.
-   * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
+   * @param {number|string} [sq] - Can be the tag of the sequence element to jump to, or its
    * cardinal number in the list.
-   * @param {number=} threshold - Threshold above or below which the action will be triggered,
+   * @param {number} [threshold] - Threshold above or below which the action will be triggered,
    * depending on the type of JumpInfo.
-   * @param {number=} time - Delay to be applied in automatic jumps.
+   * @param {number} [time] - Delay to be applied in automatic jumps.
    */
   constructor(action, sq, threshold, time) {
     super(action, sq);

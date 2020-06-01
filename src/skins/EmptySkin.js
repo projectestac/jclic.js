@@ -43,8 +43,8 @@ export class EmptySkin extends Skin {
    * 
    * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
    * realize the media objects needed tot build the Skin.
-   * @param {string=} name - The skin class name
-   * @param {object=} options - Optional parameter with additional options
+   * @param {string} [name] - The skin class name
+   * @param {object} [options] - Optional parameter with additional options
    */
   constructor(ps, name = null, options = {}) {
     // EmptySkin extends [Skin](Skin.html)

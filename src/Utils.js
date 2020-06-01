@@ -529,10 +529,10 @@ export const Utils = {
    *                          b) An object with the following members:
    *                          - `key`{string} - The attribute name
    *                          - `fn` {function} - The function to be invoked to build the object
-   *                          - `params` {string[]+} - Optional params to be passed to the `setAttributes` method of the created object
+   *                          - `params` {string[]} - Optional params to be passed to the `setAttributes` method of the created object
    *                          - `group` {string} - Used when `data` is an object or an array (possible values are `object` and `array`), and multiple results
    *                                               should be aggregated in a resulting object or array with the same keys (or ordering) as data.
-   *                          - `init` {string+} - Optional parameter indicating if `fn` should be passed with an additional param. This param can be:
+   *                          - `init` {string} - Optional parameter indicating if `fn` should be passed with an additional param. This param can be:
    *                            - `key` - The member's key
    * 
    * @returns {object} - Always returns `obj`

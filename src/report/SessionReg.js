@@ -40,7 +40,7 @@ export class SessionReg {
   /**
    * SessionReg constructor
    * @param {JClicProject} project - The JClicProject referenced by this session.
-   * @param {string=} code - Optional code to be used by this SessionReg
+   * @param {string} [code] - Optional code to be used by this SessionReg
    */
   constructor(project, code) {
     this.projectName = project.name;

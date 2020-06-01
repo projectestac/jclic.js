@@ -384,9 +384,9 @@ export class BoxBag extends AbstractBox {
    * @override
    * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
    * upper-left corner of a new rectangle.
-   * @param {number=} ry - `y` coordinate of the upper-left corner of the new rectangle.
-   * @param {number=} rw - Width of the new rectangle.
-   * @param {number=} rh - Height of the new rectangle.
+   * @param {number} [ry] - `y` coordinate of the upper-left corner of the new rectangle.
+   * @param {number} [rw] - Width of the new rectangle.
+   * @param {number} [rh] - Height of the new rectangle.
    */
   setBounds(rect, ry, rw, rh) {
     if (typeof rect === 'number') {
@@ -427,7 +427,7 @@ export class BoxBag extends AbstractBox {
    * @override
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
    * box contents.
-   * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+   * @param {AWT.Rectangle} [dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
    */
   update(ctx, dirtyRegion) {
     if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())

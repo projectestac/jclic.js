@@ -354,7 +354,7 @@ export class TextTarget {
 
   /**
    * Resets the TextTarget status
-   * @param {string=} status - The `targetStatus` to be established. Default is `NOT_EDITED`
+   * @param {string} [status] - The `targetStatus` to be established. Default is `NOT_EDITED`
    */
   reset(status) {
     this.targetStatus = status ? status : 'NOT_EDITED';

@@ -36,7 +36,7 @@ export class Counter {
   /**
    * Counter constructor
    * @param {string} id - The type of information stored on this counter
-   * @param {external:jQuery=} $div - The HTML element where this counter will show values (can be _null_)
+   * @param {external:jQuery} [$div] - The HTML element where this counter will show values (can be _null_)
    */
   constructor(id, $div) {
     if (id)

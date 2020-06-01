@@ -45,7 +45,7 @@ export class EventSoundsElement {
   /**
    * EventSoundsElement constructor
    * @param {string} id - The identifier of this media sound
-   * @param {string=} file - An optional file name or URL containing the sound data
+   * @param {string} [file] - An optional file name or URL containing the sound data
    */
   constructor(id, file) {
     this.id = id;

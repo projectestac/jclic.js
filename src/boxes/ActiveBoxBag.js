@@ -85,10 +85,10 @@ export class ActiveBoxBag extends BoxBag {
    * Sets the content of members of this ActiveBoxBag, based on one or more {@link ActiveBagContent}
    * objects.
    * @param {ActiveBagContent} abc - The main bag of content
-   * @param {?ActiveBagContent=} altAbc - The alternative bag of content
-   * @param {number=} fromIndex - Starts taking the cell content located at this position on the bag
-   * @param {number=} toCell - Starts filling the box located at this position on the ActiveBoxBag
-   * @param {type=} numCells - Acts only with a limited number of elements.
+   * @param {ActiveBagContent} [altAbc] - The alternative bag of content
+   * @param {number} [fromIndex] - Starts taking the cell content located at this position on the bag
+   * @param {number} [toCell] - Starts filling the box located at this position on the ActiveBoxBag
+   * @param {type} [numCells] - Acts only with a limited number of elements.
    */
   setContent(abc, altAbc, fromIndex, toCell, numCells) {
     if (!fromIndex)
@@ -304,7 +304,7 @@ export class ActiveBoxBag extends BoxBag {
    * provided `idAssValid` value as `idAss` attribute.
    * When `idAssValid` is `null` or `undefined`, search for the next cell with `idAss>0`
    * @param {type} currentItem - The index after to which start scanning
-   * @param {type=} idAssValid - The `idAss` attribute value to search
+   * @param {type} [idAssValid] - The `idAss` attribute value to search
    * @returns {number}
    */
   getNextItem(currentItem, idAssValid) {
@@ -333,7 +333,7 @@ export class ActiveBoxBag extends BoxBag {
    * for more information and supported browsers.
    * @param {external:jQuery} $canvas - The `canvas` where this `ActiveBoxBag` will deploy, wrapped up in a jQuery object
    * @param {external:jQuery} $clickReceiver - The DOM element that will be notified  when a button is clicked.
-   * @param {string=} eventType - Type of event sent to $clickReceiver. Default is `click`.
+   * @param {string} [eventType] - Type of event sent to $clickReceiver. Default is `click`.
    * @returns {external:jQuery} - The $accessibleDiv member, containing the accessible elements associated to this ActiveBoxBag.
    */
   buildAccessibleElements($canvas, $clickReceiver, eventType) {

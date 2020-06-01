@@ -678,9 +678,9 @@ export class TextGrid extends AbstractBox {
    * @override
    * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
    * upper-left corner of a new rectangle.
-   * @param {number=} y - `y` coordinate of the upper-left corner of the new rectangle.
-   * @param {number=} w - Width of the new rectangle.
-   * @param {number=} h - Height of the new rectangle.
+   * @param {number} [y] - `y` coordinate of the upper-left corner of the new rectangle.
+   * @param {number} [w] - Width of the new rectangle.
+   * @param {number} [h] - Height of the new rectangle.
    */
   setBounds(rect, y, w, h) {
     super.setBounds(rect, y, w, h);
@@ -693,7 +693,7 @@ export class TextGrid extends AbstractBox {
    * @override
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
    * grid.
-   * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+   * @param {AWT.Rectangle} [dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
    */
   updateContent(ctx, dirtyRegion) {
     const style = this.getBoxBaseResolve();

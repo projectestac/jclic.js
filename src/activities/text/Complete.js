@@ -60,7 +60,7 @@ export class CompletePanel extends TextActivityBase.Panel {
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
-   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {
     super(act, ps, $div);

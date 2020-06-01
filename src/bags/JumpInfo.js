@@ -51,7 +51,7 @@ export class JumpInfo {
   /**
    * JumpInfo constructor
    * @param {string} action - Must be one of the described actions.
-   * @param {(number|string)=} sq - Can be the tag of the sequence element to jump to, or its
+   * @param {number|string} [sq] - Can be the tag of the sequence element to jump to, or its
    * cardinal number in the list.
    */
   constructor(action, sq) {

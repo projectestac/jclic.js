@@ -118,7 +118,7 @@ export class BoxConnector {
   /**
    * Starts the box connector operation
    * @param {AWT.Point} pt - Starting point
-   * @param {ActiveBox=} box -  Passed only when the BoxConnector runs in drag&drop mode
+   * @param {ActiveBox} [box] -  Passed only when the BoxConnector runs in drag&drop mode
    */
   begin(pt, box) {
     if (this.active)

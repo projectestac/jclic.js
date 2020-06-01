@@ -180,9 +180,9 @@ export class AbstractBox extends AWT.Rectangle {
    * @override
    * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
    * upper-left corner of a new rectangle.
-   * @param {number=} y - `y` coordinate of the upper-left corner of the new rectangle.
-   * @param {number=} w - Width of the new rectangle.
-   * @param {number=} h - Height of the new rectangle.
+   * @param {number} [y] - `y` coordinate of the upper-left corner of the new rectangle.
+   * @param {number} [w] - Width of the new rectangle.
+   * @param {number} [h] - Height of the new rectangle.
    */
   setBounds(rect, y, w, h) {
     if (typeof rect === 'number')
@@ -214,7 +214,7 @@ export class AbstractBox extends AWT.Rectangle {
   /**
    * Sets a new location for this box. In JClic this method was named `setLocation`
    * @param {(AWT.Point|number)} newPos - A point or the `x` coordinate of a new point.
-   * @param {number=} y - The `y` coordinate of a new point.
+   * @param {number} [y] - The `y` coordinate of a new point.
    */
   moveTo(newPos, y) {
     if (typeof newPos === 'number')
@@ -423,9 +423,9 @@ export class AbstractBox extends AWT.Rectangle {
    * {@link AbstractBox#updateContent}.
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
    * box content.
-   * @param {AWT.Rectangle=} dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+   * @param {AWT.Rectangle} [dirtyRegion=null] - The area that must be repainted. `null` refers to the whole box.
    */
-  update(ctx, dirtyRegion) {
+  update(ctx, dirtyRegion = null) {
     if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
       return false;
 
@@ -470,7 +470,7 @@ export class AbstractBox extends AWT.Rectangle {
    * content. Background and border are already painted in {@link AbstractBox#update}.
    * @param {external:CanvasRenderingContext2D} _ctx - The canvas rendering context used to draw the
    * box content.
-   * @param {AWT.Rectangle=} _dirtyRegion - The area that must be repainted. `null` refers to the whole box.
+   * @param {AWT.Rectangle} [_dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
    */
   //
   // Abstract method, to be implemented in subclasses

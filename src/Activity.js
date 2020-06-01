@@ -878,7 +878,7 @@ export class ActivityPanel extends AWT.Container {
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation}
    * Java interface.
-   * @param {external:jQuery=} $div - The jQuery DOM element where this Panel will deploy
+   * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {
     // ActivityPanel extends AWT.Container
@@ -1056,7 +1056,7 @@ export class ActivityPanel extends AWT.Container {
   /**
    * Main handler used to process mouse, touch, keyboard and edit events.
    * @param {HTMLEvent} event - The HTML event to be processed
-   * @returns {boolean=} - When this event handler returns `false`, jQuery will stop its
+   * @returns {boolean} - When this event handler returns `false`, jQuery will stop its
    * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
    */
   processEvent(_event) {

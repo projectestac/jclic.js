@@ -89,7 +89,7 @@ export class MediaBag {
   /**
    * Finds a {@link MediaBagElement} by its name, creating a new one if not found and requested.
    * @param {string} name - The name of the element
-   * @param {boolean=} create - When `true`, a new MediaBagElement will be created if not found,
+   * @param {boolean} [create] - When `true`, a new MediaBagElement will be created if not found,
    * using 'name' as its file name.
    * @returns {MediaBagElement}
    */
@@ -104,7 +104,7 @@ export class MediaBag {
   /**
    * Gets a {@link MediaBagElement} by its file name.
    * @param {string} file - The requested file name
-   * @param {boolean=} create - When `true`, a new {@link MediaBagElement} will be created if not
+   * @param {boolean} [create] - When `true`, a new {@link MediaBagElement} will be created if not
    * found.
    * @returns {MediaBagElement}
    */
@@ -152,8 +152,8 @@ export class MediaBag {
    * MediaBag, whether used or not in the current activity.
    * @param {string} type - The type of media to be build. When `null` or `undefined`, all
    * resources will be build.
-   * @param {function=} callback - Function to be called when each element is ready.
-   * @param {PlayStation=} ps - An optional `PlayStation` (currently a {@link JClicPlayer}) used to dynamically load fonts
+   * @param {function} [callback] - Function to be called when each element is ready.
+   * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link JClicPlayer}) used to dynamically load fonts
    * @returns {number} - The total number of elements that will be build     * 
    */
   buildAll(type, callback, ps) {

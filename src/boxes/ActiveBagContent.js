@@ -46,7 +46,7 @@ import Utils from '../Utils';
 export class ActiveBagContent {
   /**
    * ActiveBagContent constructor
-   * @param {string=} id - An optional text tag identifying this ActiveBagContent
+   * @param {string} [id] - An optional text tag identifying this ActiveBagContent
    * @param {number} ncw - In grid-based distributions, number of columns.
    * @param {number} nch - In grid-based distributions, number of rows.
    */
