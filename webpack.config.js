@@ -1,6 +1,7 @@
 /* global module:true __dirname require */
 
 const TerserPlugin = require('terser-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 const pkg = require('./package.json');
 const buildLocales = require('./build-locales');
@@ -36,7 +37,10 @@ WARNING: This is a compressed version of ${pkg.title}. Full source code is freel
 ${pkg.homepage}
 `;
 
-module.exports = {
+/**
+ * Bundle used in HTML browsers
+ */
+const mainConfig = {
   // entry: ['idempotent-babel-polyfill', './src/JClic.js'],
   entry: './src/JClic.js',
   devtool: 'source-map',
@@ -69,7 +73,13 @@ module.exports = {
     ]
   },
   devServer: {
+    host: '0.0.0.0',
     contentBase: path.join(__dirname, 'test'),
+    watchContentBase: true,
+    compress: true,
+    port: 9001,
+    overlay: true,
+    public: 'localhost:9001',
   },
   performance: {
     maxAssetSize: 2000000,
@@ -94,3 +104,22 @@ module.exports = {
   },
   plugins: [],
 };
+
+/**
+ * Bundle used by Node.js apps
+ */
+const nodeConfig = {
+  target: 'node',
+  entry: './src/JClic.js',
+  devtool: 'source-map',
+  output: {
+    path: dist,
+    filename: 'jclic-node.js',
+    library: 'jclic',
+    libraryTarget: 'commonjs2',
+    libraryExport: 'default',
+  },
+  externals: [nodeExternals()],
+};
+
+module.exports = [mainConfig, nodeConfig];
