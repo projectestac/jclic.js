@@ -22,9 +22,6 @@ global.Audio = function () { };
 // Use `xmldom` as DOM parser
 global.DOMParser = require('xmldom').DOMParser;
 
-// amdefine allows to load AMD modules into node.js modules
-require('amdefine/intercept');
-
 // Load the global [JClicObject](http://projectestac.github.io/jclic.js/doc/module-JClic.html).
 // Here this is done with a relative path. In other contexts just install
 // the 'jclic' NPM package and require it, like in:
