@@ -29,7 +29,7 @@
  *  @module
  */
 
-import AWT from '../AWT';
+import { Rectangle, Point, Dimension, Stroke } from '../AWT';
 import BoxBase from './BoxBase';
 
 /**
@@ -43,7 +43,7 @@ import BoxBase from './BoxBase';
  * @class
  * @extends AWT.Rectangle
  */
-export class AbstractBox extends AWT.Rectangle {
+export class AbstractBox extends Rectangle {
   /**
    * AbstractBox constructor
    * @param {?AbstractBox} parent - The AbstractBox to which this one belongs
@@ -188,7 +188,7 @@ export class AbstractBox extends AWT.Rectangle {
   setBounds(rect, y, w, h) {
     if (typeof rect === 'number')
       // arguments are co-ordinates and size
-      rect = new AWT.Rectangle(rect, y, w, h);
+      rect = new Rectangle(rect, y, w, h);
     // Rectangle comparision
     if (this.equals(rect))
       return;
@@ -196,7 +196,7 @@ export class AbstractBox extends AWT.Rectangle {
     const sizeChanged = !this.dim.equals(rect.dim);
     if (this.specialShape) {
       if (sizeChanged) {
-        this.shape.scaleBy(new AWT.Dimension(rect.dim.width / this.dim.width, rect.dim.height / this.dim.height));
+        this.shape.scaleBy(new Dimension(rect.dim.width / this.dim.width, rect.dim.height / this.dim.height));
         this.setShape(this.shape);
       }
       if (!this.pos.equals(rect.pos)) {
@@ -219,8 +219,8 @@ export class AbstractBox extends AWT.Rectangle {
    */
   moveTo(newPos, y) {
     if (typeof newPos === 'number')
-      newPos = new AWT.Point(newPos, y);
-    this.setBounds((new AWT.Rectangle(this)).moveTo(newPos));
+      newPos = new Point(newPos, y);
+    this.setBounds((new Rectangle(this)).moveTo(newPos));
   }
 
   /**
@@ -229,7 +229,7 @@ export class AbstractBox extends AWT.Rectangle {
    * @param {number} dy - The displacement on the Y axis
    */
   moveBy(dx, dy) {
-    this.setBounds((new AWT.Rectangle(this)).moveBy(dx, dy));
+    this.setBounds((new Rectangle(this)).moveBy(dx, dy));
   }
 
   /**
@@ -238,7 +238,7 @@ export class AbstractBox extends AWT.Rectangle {
    * @param {number} height
    */
   setSize(width, height) {
-    this.setBounds(new AWT.Rectangle(this.pos, new AWT.Dimension(width, height)));
+    this.setBounds(new Rectangle(this.pos, new Dimension(width, height)));
   }
 
   /**
@@ -500,7 +500,7 @@ export class AbstractBox extends AWT.Rectangle {
       if (this.marked)
         ctx.globalCompositeOperation = 'source-over';
       ctx.strokeStyle = 'black';
-      AWT.Stroke.prototype.setStroke(ctx);
+      Stroke.prototype.setStroke(ctx);
     }
   }
 
@@ -509,7 +509,7 @@ export class AbstractBox extends AWT.Rectangle {
    * @returns {AWT.Rectangle}
    */
   getBorderBounds() {
-    const result = new AWT.Rectangle(this.getBounds());
+    const result = new Rectangle(this.getBounds());
     if (this.border || this.marked) {
       const style = this.getBoxBaseResolve();
       const w = style[this.marked ? 'markerStroke' : 'borderStroke'].lineWidth;

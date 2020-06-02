@@ -31,7 +31,7 @@
 
 
 import Activity from '../../Activity';
-import AWT from '../../AWT';
+import { Point } from '../../AWT';
 import SimpleAssociation from './SimpleAssociation';
 
 /**
@@ -158,13 +158,13 @@ export class ComplexAssociationPanel extends SimpleAssociation.Panel {
       //
       // _touchend_ event don't provide pageX nor pageY information
       if (event.type === 'touchend') {
-        p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
+        p = this.bc.active ? this.bc.dest.clone() : new Point();
       } else {
         // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
         let
           x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
           y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
-        p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
+        p = new Point(x - this.$div.offset().left, y - this.$div.offset().top);
       }
 
       let

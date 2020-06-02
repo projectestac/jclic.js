@@ -30,7 +30,7 @@
  */
 
 import Shaper from './Shaper';
-import AWT from '../AWT';
+import { Rectangle, Point, Dimension } from '../AWT';
 
 /**
  *
@@ -60,7 +60,7 @@ export class Rectangular extends Shaper {
       h = 1 / this.nRows;
     for (let y = 0; y < this.nRows; y++) {
       for (let x = 0; x < this.nCols; x++) {
-        this.shapeData[y * this.nCols + x] = new AWT.Rectangle(new AWT.Point(x * w, y * h), new AWT.Dimension(w, h));
+        this.shapeData[y * this.nCols + x] = new Rectangle(new Point(x * w, y * h), new Dimension(w, h));
       }
     }
     this.initiated = true;

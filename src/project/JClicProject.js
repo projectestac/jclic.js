@@ -35,7 +35,7 @@ import ActivitySequence from '../bags/ActivitySequence';
 import MediaBag from '../bags/MediaBag';
 import Activity from '../Activity';
 import { getBasePath, nSlash, getAttr } from '../Utils';
-import AWT from '../AWT';
+import { Font } from '../AWT';
 
 /**
  *  JClicProject contains all the components of a JClic project: activities, sequences, media
@@ -93,7 +93,7 @@ export class JClicProject {
     const ownFonts = this.mediaBag.getElementsOfType('font');
     if (ownFonts.length > 0)
       options.ownFonts = (options.ownFonts || []).concat(ownFonts);
-    AWT.Font.checkTree($acts, options);
+    Font.checkTree($acts, options);
     $acts.each((_n, act) => {
       const $act = $(act);
       this._activities[nSlash($act.attr('name'))] = $act;
@@ -167,7 +167,7 @@ export class JClicProject {
     if (ownFonts.length > 0)
       options.ownFonts = (options.ownFonts || []).concat(ownFonts);
     // TODO: Check fonts
-    AWT.Font.checkTree(this._activities, options);
+    Font.checkTree(this._activities, options);
     this.reportableActs = Object.keys(this._activities)
       .filter(k => this._activities[k].includeInReports)
       .length;

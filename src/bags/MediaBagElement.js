@@ -34,7 +34,7 @@
 import $ from 'jquery';
 import MidiAudioPlayer from '../media/MidiAudioPlayer';
 import { log, settings, nSlash, getAttr, isEmpty, getPathPromise, parseXmlNode, appendStyleAtHead } from '../Utils';
-import AWT from '../AWT';
+import { Font } from '../AWT';
 
 /**
  * This kind of objects are the components of {@link MediaBag}.
@@ -231,7 +231,7 @@ export class MediaBagElement {
               css = `@font-face{font-family:"${this.fontName}";src:url(${fullPath}) format("${format}");}`;
 
             appendStyleAtHead(css, ps);
-            this.data = new AWT.Font(this.name);
+            this.data = new Font(this.name);
             this.ready = true;
             break;
 

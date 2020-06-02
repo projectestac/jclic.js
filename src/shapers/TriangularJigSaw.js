@@ -31,7 +31,7 @@
 
 import Shaper from './Shaper';
 import JigSaw from './JigSaw';
-import AWT from '../AWT';
+import { PathStroke } from '../AWT';
 
 /**
  * This {@link Shaper} returns a set of rectangular shapes with triangular teeth and slots that
@@ -68,18 +68,18 @@ export class TriangularJigSaw extends JigSaw {
 
     if (type === 0)
       // Flat line
-      sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
+      sd.addStroke(new PathStroke('L', [x + w * kx, y]));
     else {
       const x0 = x + (w - w * this.baseWidthFactor) / 2 * kx;
       const wb = w * this.baseWidthFactor * kx;
       // Approximation to the tooth:
-      sd.addStroke(new AWT.PathStroke('L', [x0, y]));
+      sd.addStroke(new PathStroke('L', [x0, y]));
       // This is the tooth:
       const hb = h * this.toothHeightFactor * ky;
-      sd.addStroke(new AWT.PathStroke('L', [x0 + wb / 2, y + hb]));
-      sd.addStroke(new AWT.PathStroke('L', [x0 + wb, y]));
+      sd.addStroke(new PathStroke('L', [x0 + wb / 2, y + hb]));
+      sd.addStroke(new PathStroke('L', [x0 + wb, y]));
       // Draw the remaining line
-      sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
+      sd.addStroke(new PathStroke('L', [x + w * kx, y]));
     }
   }
 
@@ -101,20 +101,20 @@ export class TriangularJigSaw extends JigSaw {
 
     if (type === 0)
       // Flat line
-      sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
+      sd.addStroke(new PathStroke('L', [x, y + h * ky]));
     else {
       const
         y0 = y + (h - h * this.baseWidthFactor) / 2 * ky,
         hb = h * this.baseWidthFactor * ky;
 
       // Approximation to the tooth:
-      sd.addStroke(new AWT.PathStroke('L', [x, y0]));
+      sd.addStroke(new PathStroke('L', [x, y0]));
       // This is the tooth:
       const wb = w * this.toothHeightFactor * kx;
-      sd.addStroke(new AWT.PathStroke('L', [x + wb, y0 + hb / 2]));
-      sd.addStroke(new AWT.PathStroke('L', [x, y0 + hb]));
+      sd.addStroke(new PathStroke('L', [x + wb, y0 + hb / 2]));
+      sd.addStroke(new PathStroke('L', [x, y0 + hb]));
       // Draw the remaining line
-      sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
+      sd.addStroke(new PathStroke('L', [x, y + h * ky]));
     }
   }
 }

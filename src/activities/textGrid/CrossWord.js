@@ -38,7 +38,7 @@ import BoxBag from '../../boxes/BoxBag';
 import TextGrid from '../../boxes/TextGrid';
 import AbstractBox from '../../boxes/AbstractBox';
 import ActiveBox from '../../boxes/ActiveBox';
-import AWT from '../../AWT';
+import { Rectangle, Point } from '../../AWT';
 import { settings } from '../../Utils';
 
 /**
@@ -171,7 +171,7 @@ export class CrossWordPanel extends Activity.Panel {
     sb.setHostedComponent($btn);
     bxb.addBox(sb);
 
-    const ab = new ActiveBox(bxb, null, null, type, new AWT.Rectangle(this.LABEL_WIDTH + this.act.margin, 0, this.act.abc[type].w, this.act.abc[type].h));
+    const ab = new ActiveBox(bxb, null, null, type, new Rectangle(this.LABEL_WIDTH + this.act.margin, 0, this.act.abc[type].w, this.act.abc[type].h));
     bxb.addBox(ab);
     bxb.setBoxBase(this.act.abc[type].style);
 
@@ -215,9 +215,9 @@ export class CrossWordPanel extends Activity.Panel {
         bxbh = this.createBoxBag('acrossClues'),
         bxbv = this.createBoxBag('downClues');
       if (this.act.boxGridPos === 'AUB' || this.act.boxGridPos === 'BUA')
-        bxbv.moveTo(new AWT.Point(bxbh.dim.width + this.act.margin, 0));
+        bxbv.moveTo(new Point(bxbh.dim.width + this.act.margin, 0));
       else
-        bxbv.moveTo(new AWT.Point(0, bxbh.dim.height + this.act.margin));
+        bxbv.moveTo(new Point(0, bxbh.dim.height + this.act.margin));
       this.style.addBox(bxbh);
       this.style.addBox(bxbv);
       this.grid.setVisible(true);
@@ -274,7 +274,7 @@ export class CrossWordPanel extends Activity.Panel {
         canvas = this.$canvas.get(-1),
         ctx = canvas.getContext('2d');
       if (!dirtyRegion)
-        dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
+        dirtyRegion = new Rectangle(0, 0, canvas.width, canvas.height);
       ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
       this.grid.update(ctx, dirtyRegion);
       this.style.update(ctx, dirtyRegion);
@@ -336,7 +336,7 @@ export class CrossWordPanel extends Activity.Panel {
           const
             x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
             y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY,
-            p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top),
+            p = new Point(x - this.$div.offset().left, y - this.$div.offset().top),
             // Array to be filled with actions to be executed at the end of event processing
             delayedActions = [];
 

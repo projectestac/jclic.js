@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import AWT from '../AWT';
+import { Dimension } from '../AWT';
 import { getAttr, setAttr, attrForEach, getBoolean, nSlash, startsWith, getMsg } from '../Utils';
 import BoxBase from './BoxBase';
 import MediaContent from '../media/MediaContent';
@@ -115,7 +115,7 @@ export class ActiveBoxContent {
         case 'width':
         case 'height':
           if (this.dimension === null)
-            this.dimension = new AWT.Dimension(0, 0);
+            this.dimension = new Dimension(0, 0);
           this.dimension[name] = Number(val);
           break;
 
@@ -198,7 +198,7 @@ export class ActiveBoxContent {
       setAttr(this, data, [
         'id', 'item', 'border', 'avoidOverlapping', 'image', 'text',
         'objectType',
-        { key: 'dimension', fn: AWT.Dimension },
+        { key: 'dimension', fn: Dimension },
         { key: 'txAlign', fn: AlignType },
         { key: 'imgAlign', fn: AlignType },
         { key: 'style', fn: BoxBase },

@@ -32,7 +32,7 @@
 /* global document */
 
 import $ from 'jquery';
-import AWT from '../AWT';
+import { Font } from '../AWT';
 import Skin from './Skin';
 import ActiveBox from '../boxes/ActiveBox';
 import Counter from './Counter';
@@ -58,7 +58,7 @@ export class DefaultSkin extends Skin {
     super(ps, name, options);
     let msg = '';
 
-    AWT.Font.loadGoogleFonts(this.cssFonts);
+    Font.loadGoogleFonts(this.cssFonts);
 
     // Create the main container for buttons, counters and message box
     this.$ctrlCnt = $('<div/>', { class: 'JClicCtrlCnt unselectableText', role: 'navigation' });

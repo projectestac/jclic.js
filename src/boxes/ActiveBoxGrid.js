@@ -31,7 +31,7 @@
 
 import ActiveBoxBag from './ActiveBoxBag';
 import ActiveBox from './ActiveBox';
-import AWT from '../AWT';
+import { Rectangle, Dimension, Point } from '../AWT';
 import { settings, roundTo } from '../Utils';
 
 /**
@@ -63,9 +63,9 @@ export class ActiveBoxGrid extends ActiveBoxBag {
     this.nRows = sh.nRows;
 
     // This will be the enclosing rectangle of this ActiveBox bag
-    const r = new AWT.Rectangle(
-      new AWT.Point(px, py),
-      new AWT.Dimension(
+    const r = new Rectangle(
+      new Point(px, py),
+      new Dimension(
         Math.round(setWidth / this.nCols) * this.nCols,
         Math.round(setHeight / this.nRows) * this.nRows));
 
@@ -122,7 +122,7 @@ export class ActiveBoxGrid extends ActiveBoxBag {
    * @returns {AWT.Dimension}
    */
   getMinimumSize() {
-    return new AWT.Dimension(
+    return new Dimension(
       settings.MIN_CELL_SIZE * this.nCols,
       settings.MIN_CELL_SIZE * this.nRows);
   }
@@ -133,7 +133,7 @@ export class ActiveBoxGrid extends ActiveBoxBag {
    * @returns {AWT.Dimension}
    */
   getScaledSize(scale) {
-    return new AWT.Dimension(
+    return new Dimension(
       roundTo(scale * this.preferredBounds.dim.width, this.nCols),
       roundTo(scale * this.preferredBounds.dim.height, this.nRows));
   }
@@ -146,7 +146,7 @@ export class ActiveBoxGrid extends ActiveBoxBag {
    * @returns {AWT.Point}
    */
   getCoord(bx) {
-    return new AWT.Point(bx.idLoc % this.nCols, Math.floor(bx.idLoc / this.nCols));
+    return new Point(bx.idLoc % this.nCols, Math.floor(bx.idLoc / this.nCols));
   }
 
   /**
@@ -161,7 +161,7 @@ export class ActiveBoxGrid extends ActiveBoxBag {
     const
       ptSrc = this.getCoord(src),
       ptDest = this.getCoord(dest);
-    return new AWT.Point(ptDest.x - ptSrc.x, ptDest.y - ptSrc.y);
+    return new Point(ptDest.x - ptSrc.x, ptDest.y - ptSrc.y);
   }
 }
 

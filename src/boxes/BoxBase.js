@@ -31,7 +31,7 @@
 
 import $ from 'jquery';
 import { settings, attrForEach, getBoolean, checkColor, getAttr, setAttr, cloneObject, isSeparator } from '../Utils';
-import AWT from '../AWT';
+import { Stroke, Gradient, Font, Dimension } from '../AWT';
 
 const defaultValues = settings.BoxBase;
 
@@ -74,10 +74,10 @@ export class BoxBase {
           this[name] = Number(val);
           break;
         case 'borderStroke':
-          this.borderStroke = new AWT.Stroke(Number(val));
+          this.borderStroke = new Stroke(Number(val));
           break;
         case 'markerStroke':
-          this.markerStroke = new AWT.Stroke(Number(val));
+          this.markerStroke = new Stroke(Number(val));
           break;
       }
     });
@@ -87,11 +87,11 @@ export class BoxBase {
       const $node = $(child);
       switch (child.nodeName) {
         case 'font':
-          this.font = (new AWT.Font()).setProperties($node);
+          this.font = (new Font()).setProperties($node);
           break;
 
         case 'gradient':
-          this.bgGradient = new AWT.Gradient().setProperties($node);
+          this.bgGradient = new Gradient().setProperties($node);
           break;
 
         case 'color':
@@ -136,10 +136,10 @@ export class BoxBase {
   setAttributes(data) {
     return setAttr(this, data, [
       'shadow', 'transparent', 'margin',
-      { key: 'borderStroke', fn: AWT.Stroke },
-      { key: 'markerStroke', fn: AWT.Stroke },
-      { key: 'font', fn: AWT.Font },
-      { key: 'bgGradient', fn: AWT.Gradient },
+      { key: 'borderStroke', fn: Stroke },
+      { key: 'markerStroke', fn: Stroke },
+      { key: 'font', fn: Font },
+      { key: 'bgGradient', fn: Gradient },
       'textColor',
       'backColor',
       'shadowColor',
@@ -283,7 +283,7 @@ export class BoxBase {
       // Add the line and the calculated dimension to `result`
       result.push({
         text: line,
-        size: new AWT.Dimension(width, height)
+        size: new Dimension(width, height)
       });
 
       totalHeight += height;
@@ -315,7 +315,7 @@ Object.assign(BoxBase.prototype, {
    * to draw text.
    * @name BoxBase#font
    * @type {AWT.Font} */
-  font: new AWT.Font(),
+  font: new Font(),
   /**
    * The current font size of this BoxBase. Can be dynamically adjusted when drawing.
    * @name BoxBase#dynFontSize
@@ -387,12 +387,12 @@ Object.assign(BoxBase.prototype, {
    * The stroke used to draw the border.
    * @name BoxBase#borderStroke
    * @type {AWT.Stroke} */
-  borderStroke: new AWT.Stroke(defaultValues.BORDER_STROKE_WIDTH),
+  borderStroke: new Stroke(defaultValues.BORDER_STROKE_WIDTH),
   /**
    * The stroke used to draw a border around marked cells.
    * @name BoxBase#markerStroke
    * @type {AWT.Stroke} */
-  markerStroke: new AWT.Stroke(defaultValues.MARKER_STROKE_WIDTH),
+  markerStroke: new Stroke(defaultValues.MARKER_STROKE_WIDTH),
 });
 
 BoxBase.DEFAULT_BOX_BASE = new BoxBase();

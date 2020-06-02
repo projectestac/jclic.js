@@ -32,7 +32,7 @@
 /* global Image */
 
 import $ from 'jquery';
-import AWT from '../AWT';
+import { Point } from '../AWT';
 import { nSlash, attrForEach, getBoolean, getAttr, setAttr } from '../Utils';
 
 /**
@@ -90,7 +90,7 @@ export class MediaContent {
         case 'px':
         case 'py':
           if (this.absLocation === null)
-            this.absLocation = new AWT.Point(0, 0);
+            this.absLocation = new Point(0, 0);
           if (name === 'px')
             this.absLocation.x = Number(val);
           else
@@ -133,7 +133,7 @@ export class MediaContent {
   setAttributes(data) {
     return setAttr(this, data, [
       'type', 'file', 'externalParam',
-      { key: 'absLocation', fn: AWT.Point },
+      { key: 'absLocation', fn: Point },
       'absLocationFrom', 'recBuffer',
       'level', 'from', 'to', 'length',
       'stretch', 'free', 'catchMouseEvents', 'loop', 'autostart',

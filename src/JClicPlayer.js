@@ -37,7 +37,7 @@ import JSZipUtils from 'jszip-utils';
 import ScriptJS from 'scriptjs';
 import i18n from './i18n';
 import { log, init, settings, getPath, endsWith, getBasePath, getRelativePath, isNullOrUndef } from './Utils';
-import AWT from './AWT';
+import { Container, Point, Action, Timer, Rectangle } from './AWT';
 import PlayerHistory from './PlayerHistory';
 import ActiveMediaBag from './media/ActiveMediaBag';
 import Skin from './skins/Skin';
@@ -58,7 +58,7 @@ import Reporter from './report/Reporter';
  * @class
  * @extends AWT.Container
  */
-export class JClicPlayer extends AWT.Container {
+export class JClicPlayer extends Container {
 
   /**
    * JClicPlayer constructor
@@ -67,7 +67,7 @@ export class JClicPlayer extends AWT.Container {
    */
   constructor($topDiv, options) {
 
-    // JClicPlayer extends AWT.Container
+    // JClicPlayer extends Container
     super();
     // Build cascading options
     //this.options = Object.assign({}, this.options, init(options))
@@ -103,7 +103,7 @@ export class JClicPlayer extends AWT.Container {
     this.project = new JClicProject();
     this.activeMediaBag = new ActiveMediaBag();
     this.counterVal = { score: 0, actions: 0, time: 0 };
-    this.bgImageOrigin = new AWT.Point();
+    this.bgImageOrigin = new Point();
     this.buildActions();
     this.history = new PlayerHistory(this);
     this.audioEnabled = this.options.audioEnabled;
@@ -128,12 +128,12 @@ export class JClicPlayer extends AWT.Container {
    */
   buildActions() {
     this.actions = {
-      'next': new AWT.Action('next', () => this.history.processJump(this.project.activitySequence.getJump(false, this.reporter), false)),
-      'prev': new AWT.Action('prev', () => this.history.processJump(this.project.activitySequence.getJump(true, this.reporter), false)),
-      'return': new AWT.Action('return', () => this.history.pop()),
-      'reset': new AWT.Action('reset', () => { if (this.actPanel && this.actPanel.act.canReinit()) this.initActivity(); }),
-      'help': new AWT.Action('help', () => { if (this.actPanel) this.actPanel.showHelp(); }),
-      'info': new AWT.Action('info', () => {
+      'next': new Action('next', () => this.history.processJump(this.project.activitySequence.getJump(false, this.reporter), false)),
+      'prev': new Action('prev', () => this.history.processJump(this.project.activitySequence.getJump(true, this.reporter), false)),
+      'return': new Action('return', () => this.history.pop()),
+      'reset': new Action('reset', () => { if (this.actPanel && this.actPanel.act.canReinit()) this.initActivity(); }),
+      'help': new Action('help', () => { if (this.actPanel) this.actPanel.showHelp(); }),
+      'info': new Action('info', () => {
         if (this.actPanel && this.actPanel.act.hasInfo()) {
           if (this.actPanel.act.infoUrl)
             this.displayURL(this.act.infoUrl, true);
@@ -141,8 +141,8 @@ export class JClicPlayer extends AWT.Container {
             this.runCmd(this.actPanel.act.infoCmd);
         }
       }),
-      'reports': new AWT.Action('reports', () => this.showReports()),
-      'audio': new AWT.Action('audio', () => {
+      'reports': new Action('reports', () => this.showReports()),
+      'audio': new Action('audio', () => {
         this.audioEnabled = !this.audioEnabled;
         if (!this.audioEnabled)
           this.stopMedia();
@@ -227,7 +227,7 @@ export class JClicPlayer extends AWT.Container {
     // Main timer
     if (this.timer)
       this.timer.stop();
-    this.timer = new AWT.Timer(() => {
+    this.timer = new Timer(() => {
       this.incCounterValue('time');
       if (this.actPanel && this.actPanel.act.maxTime > 0
         && this.actPanel.playing
@@ -238,7 +238,7 @@ export class JClicPlayer extends AWT.Container {
     // One-time timer, for delayed actions
     if (this.delayedTimer)
       this.delayedTimer.stop();
-    this.delayedTimer = new AWT.Timer(() => {
+    this.delayedTimer = new Timer(() => {
       if (this.delayedAction)
         this.delayedAction.processEvent(this.delayedAction, null);
     }, 1000, false);
@@ -691,7 +691,7 @@ export class JClicPlayer extends AWT.Container {
       // Calc the maximum rectangle available for the activity panel
       const
         m = settings.BoxBase.AC_MARGIN,
-        proposedRect = new AWT.Rectangle(m, m, width - 2 * m, height - 2 * m);
+        proposedRect = new Rectangle(m, m, width - 2 * m, height - 2 * m);
 
       if (this.actPanel.bgImage && !act.tiledBgImg && act.absolutePositioned) {
         // Special case: when the activity has a background image not tiled, and an absolute

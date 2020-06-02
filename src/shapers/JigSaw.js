@@ -30,7 +30,7 @@
  */
 
 import Shaper from './Shaper';
-import AWT from '../AWT';
+import { Path, PathStroke } from '../AWT';
 
 /**
  *
@@ -77,12 +77,12 @@ export class JigSaw extends Shaper {
       for (let c = 0; c < this.nCols; c++) {
         const x = w * c;
         const y = h * r;
-        const sd = new AWT.Path([new AWT.PathStroke('M', [x, y])]);
+        const sd = new Path([new PathStroke('M', [x, y])]);
         this.hLine(sd, hLineType[r][c], x + 0, y + 0, w, h, false);
         this.vLine(sd, vLineType[r][c + 1], x + w, y + 0, w, h, false);
         this.hLine(sd, hLineType[r + 1][c], x + w, y + h, w, h, true);
         this.vLine(sd, vLineType[r][c], x + 0, y + h, w, h, true);
-        sd.addStroke(new AWT.PathStroke('X'));
+        sd.addStroke(new PathStroke('X'));
         sd.calcEnclosingRect();
         // Save the Path in `shapeData`
         this.shapeData[r * this.nCols + c] = sd;
@@ -108,19 +108,19 @@ export class JigSaw extends Shaper {
 
     if (type === 0)
       // Flat line
-      sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
+      sd.addStroke(new PathStroke('L', [x + w * kx, y]));
     else {
       const x0 = x + (w - w * this.baseWidthFactor) / 2 * kx;
       const wb = w * this.baseWidthFactor * kx;
       // Approximation to the tooth:
-      sd.addStroke(new AWT.PathStroke('L', [x0, y]));
+      sd.addStroke(new PathStroke('L', [x0, y]));
       // The tooth:
       const hb = h * this.toothHeightFactor * ky;
-      sd.addStroke(new AWT.PathStroke('L', [x0, y + hb]));
-      sd.addStroke(new AWT.PathStroke('L', [x0 + wb, y + hb]));
-      sd.addStroke(new AWT.PathStroke('L', [x0 + wb, y]));
+      sd.addStroke(new PathStroke('L', [x0, y + hb]));
+      sd.addStroke(new PathStroke('L', [x0 + wb, y + hb]));
+      sd.addStroke(new PathStroke('L', [x0 + wb, y]));
       // Draw the remaining of the line
-      sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
+      sd.addStroke(new PathStroke('L', [x + w * kx, y]));
     }
   }
 
@@ -142,19 +142,19 @@ export class JigSaw extends Shaper {
 
     if (type === 0) {
       // Flat line
-      sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
+      sd.addStroke(new PathStroke('L', [x, y + h * ky]));
     } else {
       const y0 = y + (h - h * this.baseWidthFactor) / 2 * ky;
       const hb = h * this.baseWidthFactor * ky;
       // Approximation to the tooth:
-      sd.addStroke(new AWT.PathStroke('L', [x, y0]));
+      sd.addStroke(new PathStroke('L', [x, y0]));
       // The tooth:
       const wb = w * this.toothHeightFactor * kx;
-      sd.addStroke(new AWT.PathStroke('L', [x + wb, y0]));
-      sd.addStroke(new AWT.PathStroke('L', [x + wb, y0 + hb]));
-      sd.addStroke(new AWT.PathStroke('L', [x, y0 + hb]));
+      sd.addStroke(new PathStroke('L', [x + wb, y0]));
+      sd.addStroke(new PathStroke('L', [x + wb, y0 + hb]));
+      sd.addStroke(new PathStroke('L', [x, y0 + hb]));
       // Draw the remaining line
-      sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
+      sd.addStroke(new PathStroke('L', [x, y + h * ky]));
     }
   }
 }

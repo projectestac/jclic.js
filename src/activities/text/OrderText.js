@@ -33,7 +33,7 @@ import $ from 'jquery';
 import Activity from '../../Activity';
 import TextActivityBase from './TextActivityBase';
 import BoxConnector from '../../boxes/BoxConnector';
-import AWT from '../../AWT';
+import { Point } from '../../AWT';
 
 /**
  * In this type of text activity users must put in order some words or paragraphs that have been
@@ -344,13 +344,13 @@ export class OrderTextPanel extends TextActivityBase.Panel {
       //
       // _touchend_ event don't provide pageX nor pageY information
       if (event.type === 'touchend')
-        p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
+        p = this.bc.active ? this.bc.dest.clone() : new Point();
       else {
         // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
         const
           x = event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
           y = event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
-        p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
+        p = new Point(x - this.$div.offset().left, y - this.$div.offset().top);
       }
 
       switch (event.type) {

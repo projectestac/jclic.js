@@ -29,7 +29,7 @@
  *  @module
  */
 
-import AWT from '../AWT';
+import { Rectangle, Timer, Point, Dimension, Stroke } from '../AWT';
 import { roundTo } from '../Utils';
 import AbstractBox from './AbstractBox';
 import TextGridContent from './TextGridContent';
@@ -69,9 +69,9 @@ export const flags = {
 export class TextGrid extends AbstractBox {
   /**
    * TextGrid constructor
-   * @param {?AbstractBox} parent - The AbstractBox to which this text grid belongs
-   * @param {?AWT.Container} container - The container where this text grid is placed.
-   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   * @param {AbstractBox} parent - The AbstractBox to which this text grid belongs
+   * @param {AWT.Container} container - The container where this text grid is placed.
+   * @param {BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * @param {number} x - `X` coordinate of the upper left corner of this grid
    * @param {number} y - `Y` coordinate of the upper left corner of this grid
    * @param {number} ncw - Number of columns of the grid
@@ -92,19 +92,19 @@ export class TextGrid extends AbstractBox {
     this.dim.width = cellW * this.nCols;
     this.dim.height = cellH * this.nRows;
     this.setChars(' ');
-    this.preferredBounds = new AWT.Rectangle(this.pos, this.dim);
+    this.preferredBounds = new Rectangle(this.pos, this.dim);
     this.setBorder(border);
-    this.cursorTimer = new AWT.Timer(() => this.blink(0), 500, false);
+    this.cursorTimer = new Timer(() => this.blink(0), 500, false);
     this.cursorEnabled = false;
     this.useCursor = false;
     this.wildTransparent = false;
-    this.cursor = new AWT.Point();
+    this.cursor = new Point();
   }
 
   /**
    * Factory constructor that creates an empty grid based on a {@link TextGridContent}
-   * @param {?AbstractBox} parent - The AbstractBox to which the text grid belongs
-   * @param {?AWT.Container} container - The container where the text grid will be placed.
+   * @param {AbstractBox} parent - The AbstractBox to which the text grid belongs
+   * @param {AWT.Container} container - The container where the text grid will be placed.
    * @param {number} x - `X` coordinate of the upper left corner of the grid
    * @param {number} y - `Y` coordinate of the upper left corner of the grid
    * @param {TextGridContent} tgc - Object with the content and other settings of the grid
@@ -214,7 +214,7 @@ export class TextGrid extends AbstractBox {
     if (!this.isValidCell(rx, ry))
       return null;
 
-    const point = new AWT.Point();
+    const point = new Point();
     let
       inBlack = false,
       startCount = false;
@@ -308,7 +308,7 @@ export class TextGrid extends AbstractBox {
   findFreeCell(from, dx, dy) {
     let result = null;
     if (from && (dx !== 0 || dy !== 0)) {
-      const scan = new AWT.Point(from);
+      const scan = new Point(from);
       while (result === null) {
         scan.x += dx;
         scan.y += dy;
@@ -333,7 +333,7 @@ export class TextGrid extends AbstractBox {
    * @returns {AWT.Point}
    */
   findNextCellWithAttr(startX, startY, attr, dx, dy, attrState) {
-    const point = new AWT.Point(startX + dx, startY + dy);
+    const point = new Point(startX + dx, startY + dy);
     while (true) {
       if (point.x < 0) {
         point.x = this.nCols - 1;
@@ -477,7 +477,7 @@ export class TextGrid extends AbstractBox {
       px = Math.floor((devicePoint.x - this.pos.x) / this.cellWidth),
       py = Math.floor((devicePoint.y - this.pos.y) / this.cellHeight);
 
-    return this.isValidCell(px, py) ? new AWT.Point(px, py) : null;
+    return this.isValidCell(px, py) ? new Point(px, py) : null;
   }
 
   /**
@@ -616,7 +616,7 @@ export class TextGrid extends AbstractBox {
    * @returns {AWT.Rectangle}
    */
   getCellRect(px, py) {
-    return new AWT.Rectangle(this.pos.x + px * this.cellWidth, this.pos.y + py * this.cellHeight, this.cellWidth, this.cellHeight);
+    return new Rectangle(this.pos.x + px * this.cellWidth, this.pos.y + py * this.cellHeight, this.cellWidth, this.cellHeight);
   }
 
   /**
@@ -660,7 +660,7 @@ export class TextGrid extends AbstractBox {
    * @returns {AWT.Dimension}
    */
   getMinimumSize() {
-    return new AWT.Dimension(defaults.MIN_CELL_SIZE * this.nCols, defaults.MIN_CELL_SIZE * this.nRows);
+    return new Dimension(defaults.MIN_CELL_SIZE * this.nCols, defaults.MIN_CELL_SIZE * this.nRows);
   }
 
   /**
@@ -669,7 +669,7 @@ export class TextGrid extends AbstractBox {
    * @returns {AWT.Dimension}
    */
   getScaledSize(scale) {
-    return new AWT.Dimension(
+    return new Dimension(
       roundTo(scale * this.preferredBounds.dim.width, this.nCols),
       roundTo(scale * this.preferredBounds.dim.height, this.nRows));
   }
@@ -760,7 +760,7 @@ export class TextGrid extends AbstractBox {
                 ctx.globalCompositeOperation = 'source-over';
             }
             ctx.strokeStyle = 'black';
-            AWT.Stroke.prototype.setStroke(ctx);
+            Stroke.prototype.setStroke(ctx);
           }
         }
       }

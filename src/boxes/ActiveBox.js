@@ -35,7 +35,7 @@ import $ from 'jquery';
 import AbstractBox from './AbstractBox';
 import ActiveBoxContent from './ActiveBoxContent';
 import ActiveBagContent from './ActiveBagContent';
-import AWT from '../AWT';
+import { Rectangle, Point, Container } from '../AWT';
 import { settings, log, getMsg } from '../Utils';
 
 /**
@@ -88,8 +88,8 @@ export class ActiveBox extends AbstractBox {
       const
         box = new ActiveBox(),
         $canvas = $('<canvas width="' + abc.dimension.width + '" height="' + abc.dimension.height + '"/>'),
-        rect = new AWT.Rectangle(0, 0, abc.dimension.width, abc.dimension.height);
-      box.container = new AWT.Container();
+        rect = new Rectangle(0, 0, abc.dimension.width, abc.dimension.height);
+      box.container = new Container();
       box.container.$div = $dom;
       box.setContent(abc);
       box.setBounds(rect);
@@ -169,7 +169,7 @@ export class ActiveBox extends AbstractBox {
    */
   exchangeLocation(bx) {
     const
-      pt = new AWT.Point(this.pos),
+      pt = new Point(this.pos),
       idLoc0 = this.idLoc;
     this.moveTo(bx.pos);
     bx.moveTo(pt);
@@ -471,7 +471,7 @@ export class ActiveBox extends AbstractBox {
             ctx.drawImage(abc.img, this.pos.x + xs, this.pos.y + ys);
 
           if (abc.avoidOverlapping && abc.text)
-            imgRect = new AWT.Rectangle(
+            imgRect = new Rectangle(
               Math.max(0, xs), Math.max(0, ys),
               Math.min(this.dim.width, imgw), Math.min(this.dim.height, imgh));
         }
@@ -495,13 +495,13 @@ export class ActiveBox extends AbstractBox {
           rr = [
             // Calc four rectangles inside BoxBag, sourronding imgRect
             // Top rectangle:
-            new AWT.Rectangle(prx[0], pry[0], prx[3], pry[1]),
+            new Rectangle(prx[0], pry[0], prx[3], pry[1]),
             // Bottom rectangle:
-            new AWT.Rectangle(prx[0], pry[2], prx[3], pry[3] - pry[2]),
+            new Rectangle(prx[0], pry[2], prx[3], pry[3] - pry[2]),
             // Left rectangle:
-            new AWT.Rectangle(prx[0], pry[0], prx[1], pry[3]),
+            new Rectangle(prx[0], pry[0], prx[1], pry[3]),
             // Right rectangle:
-            new AWT.Rectangle(prx[2], pry[0], prx[3] - prx[2], pry[3])
+            new Rectangle(prx[2], pry[0], prx[3] - prx[2], pry[3])
           ];
         //
         // Find the rectangle with highest surface, and in accordance
@@ -655,7 +655,7 @@ export class ActiveBox extends AbstractBox {
   setBounds(rect, y, w, h) {
     if (typeof rect === 'number')
       // arguments are co-ordinates and size
-      rect = new AWT.Rectangle(rect, y, w, h);
+      rect = new Rectangle(rect, y, w, h);
     // Rectangle comparision
     if (this.equals(rect))
       return;

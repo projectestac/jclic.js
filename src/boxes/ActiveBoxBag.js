@@ -31,7 +31,7 @@
 
 import $ from 'jquery';
 import BoxBag from './BoxBag';
-import AWT from '../AWT';
+import { Point } from '../AWT';
 
 /**
  * This class is a special case of {@link BoxBag} containing only objects of type {@link ActiveBox}.
@@ -205,11 +205,11 @@ export class ActiveBoxBag extends BoxBag {
       const
         pos = [],
         idLoc = [],
-        p = new AWT.Point();
+        p = new Point();
 
       for (let i = 0; i < nc; i++) {
         const bx = this.getActiveBox(i);
-        pos[i] = new AWT.Point(bx.pos);
+        pos[i] = new Point(bx.pos);
         idLoc[i] = bx.idLoc;
       }
 
@@ -232,7 +232,7 @@ export class ActiveBoxBag extends BoxBag {
           bx = this.getActiveBox(i),
           px = pos[i].x,
           py = pos[i].y;
-        bx.moveTo(new AWT.Point(px, py));
+        bx.moveTo(new Point(px, py));
         if (fitInArea)
           this.fitCellsInArea([bx]);
         bx.idLoc = idLoc[i];
@@ -252,13 +252,13 @@ export class ActiveBoxBag extends BoxBag {
     boxes.forEach(bx => {
       // Save original position
       if (!bx.pos0)
-        bx.pos0 = new AWT.Point(bx.pos);
+        bx.pos0 = new Point(bx.pos);
 
       const
         px = Math.min(Math.max(bx.pos.x, this.pos.x), maxX - bx.dim.width),
         py = Math.min(Math.max(bx.pos.y, this.pos.y), maxY - bx.dim.height);
       if (px !== bx.pos.x || py !== bx.pos.y)
-        bx.moveTo(new AWT.Point(px, py));
+        bx.moveTo(new Point(px, py));
     });
   }
 
@@ -271,7 +271,7 @@ export class ActiveBoxBag extends BoxBag {
   swapCellPositions(bxa, bxb, fitInArea) {
     // Save backup of bxb significant properties
     const
-      posB = new AWT.Point(bxb.pos),
+      posB = new Point(bxb.pos),
       posB0 = bxb.pos0,
       idLocB = bxb.idLoc;
 

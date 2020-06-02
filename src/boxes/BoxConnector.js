@@ -29,7 +29,7 @@
  *  @module
  */
 
-import AWT from '../AWT';
+import { Point, Dimension, Rectangle } from '../AWT';
 
 const DEFAULT_COMPOSITE_OP = 'source-over';
 
@@ -54,10 +54,10 @@ export class BoxConnector {
   constructor(parent, ctx) {
     this.parent = parent;
     this.ctx = ctx;
-    this.dim = new AWT.Dimension(ctx.canvas.width, ctx.canvas.height);
-    this.origin = new AWT.Point();
-    this.dest = new AWT.Point();
-    this.relativePos = new AWT.Point();
+    this.dim = new Dimension(ctx.canvas.width, ctx.canvas.height);
+    this.origin = new Point();
+    this.dest = new Point();
+    this.relativePos = new Point();
   }
 
   /**
@@ -66,7 +66,7 @@ export class BoxConnector {
    * @param {number} dy - Displacement on the Y axis
    */
   moveBy(dx, dy) {
-    this.moveTo(AWT.Point(this.dest.x + dx, this.dest.y + dy));
+    this.moveTo(Point(this.dest.x + dx, this.dest.y + dy));
   }
 
   /**
@@ -95,17 +95,17 @@ export class BoxConnector {
 
     // Calculate the bounds of the invalidated area after the move:
     // Start with the origin point or box area
-    const pt1 = new AWT.Point(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y);
-    this.bgRect = new AWT.Rectangle(pt1, this.bx ? this.bx.dim : new AWT.Dimension());
+    const pt1 = new Point(this.origin.x - this.relativePos.x, this.origin.y - this.relativePos.y);
+    this.bgRect = new Rectangle(pt1, this.bx ? this.bx.dim : new Dimension());
     //  Add the destination point or box area
-    const pt2 = new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y);
-    this.bgRect.add(new AWT.Rectangle(pt2, this.bx ? this.bx.dim : new AWT.Dimension()));
+    const pt2 = new Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y);
+    this.bgRect.add(new Rectangle(pt2, this.bx ? this.bx.dim : new Dimension()));
     // Add a generous border around the area
     this.bgRect.grow(10, 10);
 
     if (this.bx !== null) {
       // Move the ActiveBox
-      this.bx.moveTo(new AWT.Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y));
+      this.bx.moveTo(new Point(pt.x - this.relativePos.x, pt.y - this.relativePos.y));
       this.bx.setTemporaryHidden(false);
       this.bx.update(this.ctx, null);
       this.bx.setTemporaryHidden(true);
@@ -201,7 +201,7 @@ export class BoxConnector {
       // Draws the arrow head
       const
         beta = Math.atan2(this.origin.x - this.dest.x, this.dest.x - this.origin.x),
-        arp = new AWT.Point(this.dest.x - this.arrowLength * Math.cos(beta + this.arrowAngle),
+        arp = new Point(this.dest.x - this.arrowLength * Math.cos(beta + this.arrowAngle),
           this.dest.y + this.arrowLength * Math.sin(beta + this.arrowAngle));
       this.ctx.beginPath();
       this.ctx.moveTo(this.dest.x, this.dest.y);

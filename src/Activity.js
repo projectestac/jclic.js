@@ -33,7 +33,7 @@
 
 import $ from 'jquery';
 import { settings, log, getMsg, attrForEach, nSlash, getBoolean, getXmlText, checkColor, isNullOrUndef, getAttr, setAttr } from './Utils';
-import AWT from './AWT';
+import { Rectangle, Gradient, Point, Dimension, Container } from './AWT';
 import EventSounds from './media/EventSounds';
 import ActiveBoxContent from './boxes/ActiveBoxContent';
 import ActiveBagContent from './boxes/ActiveBagContent';
@@ -203,7 +203,7 @@ export class Activity {
                       this.bScoreCounter = getBoolean($child.attr('score'), true);
                       break;
                     case 'gradient':
-                      this.bgGradient = new AWT.Gradient().setProperties($child);
+                      this.bgGradient = new Gradient().setProperties($child);
                       break;
                   }
                 });
@@ -219,14 +219,14 @@ export class Activity {
                   const $child = $(child);
                   switch (child.nodeName) {
                     case 'gradient':
-                      this.activityBgGradient = new AWT.Gradient().setProperties($child);
+                      this.activityBgGradient = new Gradient().setProperties($child);
                       break;
                     case 'position':
-                      this.absolutePosition = new AWT.Point().setProperties($child);
+                      this.absolutePosition = new Point().setProperties($child);
                       this.absolutePositioned = true;
                       break;
                     case 'size':
-                      this.windowSize = new AWT.Dimension().setProperties($child);
+                      this.windowSize = new Dimension().setProperties($child);
                       break;
                   }
                 });
@@ -391,9 +391,9 @@ export class Activity {
       'wildTransparent', 'upperCase', 'checkCase',
       'checkButtonText',
       'prevScreen', 'prevScreenMaxTime', 'prevScreenText',
-      'bgGradient', 'activityBgGradient', // AWT.Gradient
-      'absolutePosition', // AWT.Point
-      'windowSize', // AWT.Dimension
+      'bgGradient', 'activityBgGradient', // Gradient
+      'absolutePosition', // Point
+      'windowSize', // Dimension
       'eventSounds', // EventSounds
       'messages', // ActiveBoxContent{}
       'acp', // AutoContentProvider
@@ -424,10 +424,10 @@ export class Activity {
       'shuffleA', 'shuffleB', 'shuffles', 'boxGridPos',
       'wildTransparent', 'upperCase', 'checkCase', 'checkButtonText',
       'prevScreen', 'prevScreenMaxTime', 'prevScreenText',
-      { key: 'bgGradient', fn: AWT.Gradient },
-      { key: 'activityBgGradient', fn: AWT.Gradient },
-      { key: 'absolutePosition', fn: AWT.Point },
-      { key: 'windowSize', fn: AWT.Dimension },
+      { key: 'bgGradient', fn: Gradient },
+      { key: 'activityBgGradient', fn: Gradient },
+      { key: 'absolutePosition', fn: Point },
+      { key: 'windowSize', fn: Dimension },
       { key: 'messages', fn: ActiveBoxContent, group: 'object', init: 'key', params: [mediaBag] },
       { key: 'abc', fn: ActiveBagContent, group: 'object', init: 'key', params: [mediaBag] },
       { key: 'acp', fn: AutoContentProvider, params: [mediaBag] },
@@ -570,7 +570,7 @@ export class Activity {
    * @returns {AWT.Dimension}
    */
   getWindowSize() {
-    return new AWT.Dimension(this.windowSize);
+    return new Dimension(this.windowSize);
   }
 
   /**
@@ -578,7 +578,7 @@ export class Activity {
    * @param {AWT.Dimension} windowSize
    */
   setWindowSize(windowSize) {
-    this.windowSize = new AWT.Dimension(windowSize);
+    this.windowSize = new Dimension(windowSize);
   }
 
   /**
@@ -765,7 +765,7 @@ Object.assign(Activity.prototype, {
    * Preferred dimension of the activity window
    * @name Activity#windowSize
    * @type {AWT.Dimension} */
-  windowSize: new AWT.Dimension(settings.DEFAULT_WIDTH, settings.DEFAULT_HEIGHT),
+  windowSize: new Dimension(settings.DEFAULT_WIDTH, settings.DEFAULT_HEIGHT),
   /**
    * Whether the activity window has transparent background.
    * @name Activity#transparentBg
@@ -869,7 +869,7 @@ Object.assign(Activity.prototype, {
  * @class
  * @extends AWT.Container
  */
-export class ActivityPanel extends AWT.Container {
+export class ActivityPanel extends Container {
   /**
    * ActivityPanel constructor
    * @param {Activity} act - The {@link Activity} to which this Panel belongs
@@ -879,12 +879,12 @@ export class ActivityPanel extends AWT.Container {
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {
-    // ActivityPanel extends AWT.Container
+    // ActivityPanel extends Container
     super();
     this.act = act;
     this.ps = ps;
-    this.minimumSize = new AWT.Dimension(100, 100);
-    this.preferredSize = new AWT.Dimension(500, 400);
+    this.minimumSize = new Dimension(100, 100);
+    this.preferredSize = new Dimension(500, 400);
     if ($div)
       this.$div = $div;
     else
@@ -1016,7 +1016,7 @@ export class ActivityPanel extends AWT.Container {
    * @returns {AWT.Dimension}
    */
   setDimension(maxSize) {
-    return new AWT.Dimension(
+    return new Dimension(
       Math.min(maxSize.width, this.act.windowSize.width),
       Math.min(maxSize.height, this.act.windowSize.height));
   }
@@ -1068,14 +1068,14 @@ export class ActivityPanel extends AWT.Container {
    * @param {AWT.Rectangle} bounds - The maximum allowed bounds
    */
   fitTo(proposed, bounds) {
-    const origin = new AWT.Point();
+    const origin = new Point();
     if (this.act.absolutePositioned && this.act.absolutePosition !== null) {
       origin.x = Math.max(0, this.act.absolutePosition.x + proposed.pos.x);
       origin.y = Math.max(0, this.act.absolutePosition.y + proposed.pos.y);
       proposed.dim.width -= this.act.absolutePosition.x;
       proposed.dim.height -= this.act.absolutePosition.y;
     }
-    const d = this.setDimension(new AWT.Dimension(
+    const d = this.setDimension(new Dimension(
       Math.max(2 * this.act.margin + settings.MINIMUM_WIDTH, proposed.dim.width),
       Math.max(2 * this.act.margin + settings.MINIMUM_HEIGHT, proposed.dim.height)));
     if (!this.act.absolutePositioned) {
@@ -1087,7 +1087,7 @@ export class ActivityPanel extends AWT.Container {
       origin.x = Math.max(0, bounds.dim.width - d.width);
     if (origin.y + d.height > bounds.dim.height)
       origin.y = Math.max(0, bounds.dim.height - d.height);
-    this.setBounds(new AWT.Rectangle(origin.x, origin.y, d.width, d.height));
+    this.setBounds(new Rectangle(origin.x, origin.y, d.width, d.height));
 
     // Build accessible components at the end of current tree
     window.setTimeout(() => this.buildAccessibleComponents(), 0);

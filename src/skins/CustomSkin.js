@@ -33,7 +33,7 @@ import $ from 'jquery';
 import Skin from './Skin';
 import Counter from './Counter';
 import { getMsg, checkColor, getImgClipUrl } from '../Utils';
-import AWT from '../AWT';
+import { Rectangle } from '../AWT';
 import ActiveBox from '../boxes/ActiveBox';
 
 /**
@@ -149,14 +149,14 @@ export class CustomSkin extends Skin {
       pv5 = pv0 + this.options.rectangle.frame.height,
       imgElement = this.ps.project.mediaBag.getElement(this.options.image, true),
       imgUrl = imgElement.data && imgElement.data.src ? imgElement.data.src : '',
-      box1 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv0, ph2 - ph0, pv2 - pv0)) : '',
-      box2 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv0, ph3 - ph2, pv2 - pv0)) : '',
-      box3 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv0, ph5 - ph3, pv2 - pv0)) : '',
-      box4 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv2 - pv0, ph2 - ph0, pv3 - pv2)) : '',
-      box6 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3 - ph0, pv2 - pv0, ph5 - ph3, pv3 - pv2)) : '',
-      box7 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv3 - pv0, ph2 - ph0, pv5 - pv3)) : '',
-      box8 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : '',
-      box9 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv3 - pv0, ph5 - ph3, pv5 - pv3)) : '';
+      box1 = imgElement.data ? getImgClipUrl(imgElement.data, new Rectangle(ph0, pv0, ph2 - ph0, pv2 - pv0)) : '',
+      box2 = imgElement.data ? getImgClipUrl(imgElement.data, new Rectangle(ph2 - ph0, pv0, ph3 - ph2, pv2 - pv0)) : '',
+      box3 = imgElement.data ? getImgClipUrl(imgElement.data, new Rectangle(ph3, pv0, ph5 - ph3, pv2 - pv0)) : '',
+      box4 = imgElement.data ? getImgClipUrl(imgElement.data, new Rectangle(ph0, pv2 - pv0, ph2 - ph0, pv3 - pv2)) : '',
+      box6 = imgElement.data ? getImgClipUrl(imgElement.data, new Rectangle(ph3 - ph0, pv2 - pv0, ph5 - ph3, pv3 - pv2)) : '',
+      box7 = imgElement.data ? getImgClipUrl(imgElement.data, new Rectangle(ph0, pv3 - pv0, ph2 - ph0, pv5 - pv3)) : '',
+      box8 = imgElement.data ? getImgClipUrl(imgElement.data, new Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : '',
+      box9 = imgElement.data ? getImgClipUrl(imgElement.data, new Rectangle(ph3, pv3 - pv0, ph5 - ph3, pv5 - pv3)) : '';
 
     let css = `
 .ID .JClicCustomMainPanel {flex-grow:1;position:relative;background-color: ${checkColor(this.options.color.fill.value)};}

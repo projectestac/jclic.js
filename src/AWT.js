@@ -721,7 +721,7 @@ Object.assign(Point.prototype, {
  * This class encapsulates `width` and `height` properties.
  * @class
  */
-class Dimension {
+export class Dimension {
   /**
    * Dimension constructor
    * @param {number|Point} w - The width of this Dimension, or the upper-left vertex of a

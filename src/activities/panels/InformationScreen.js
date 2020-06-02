@@ -35,7 +35,7 @@ import $ from 'jquery';
 import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
-import AWT from '../../AWT';
+import { Rectangle, Point } from '../../AWT';
 
 /**
  * This class of {@link Activity} just shows a panel with {@link ActiveBox} objects.
@@ -152,7 +152,7 @@ export class InformationScreenPanel extends Activity.Panel {
         canvas = this.$canvas.get(-1),
         ctx = canvas.getContext('2d');
       if (!dirtyRegion)
-        dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
+        dirtyRegion = new Rectangle(0, 0, canvas.width, canvas.height);
       ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
       this.bg.update(ctx, dirtyRegion);
     }
@@ -226,7 +226,7 @@ export class InformationScreenPanel extends Activity.Panel {
    */
   processEvent(event) {
     if (this.playing) {
-      const p = new AWT.Point(
+      const p = new Point(
         event.pageX - this.$div.offset().left,
         event.pageY - this.$div.offset().top);
       // Array to be filled with actions to be executed at the end of event processing

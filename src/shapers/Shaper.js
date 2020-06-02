@@ -31,7 +31,7 @@
 
 import $ from 'jquery';
 import { log, attrForEach, getBoolean, getAttr, setAttr } from '../Utils';
-import AWT from '../AWT';
+import { Shape, Rectangle, Ellipse, PathStroke, Path } from '../AWT';
 
 /**
  * The function of this class and its subclasses is to draw a set of "shapes" that will be used to
@@ -87,7 +87,7 @@ export class Shaper {
     this.initiated = false;
     this.shapeData = [];
     for (let i = 0; i < this.nCells; i++)
-      this.shapeData[i] = new AWT.Shape();
+      this.shapeData[i] = new Shape();
   }
 
   /**
@@ -169,19 +169,19 @@ export class Shaper {
 
       switch (sd[0]) {
         case 'rectangle':
-          result = new AWT.Rectangle(data[0], data[1], data[2], data[3]);
+          result = new Rectangle(data[0], data[1], data[2], data[3]);
           break;
         case 'ellipse':
-          result = new AWT.Ellipse(data[0], data[1], data[2], data[3]);
+          result = new Ellipse(data[0], data[1], data[2], data[3]);
           break;
         default:
           // It's an `AWT.PathStroke`
-          shd.push(new AWT.PathStroke(sd[0], data));
+          shd.push(new PathStroke(sd[0], data));
           break;
       }
     });
 
-    return !result && shd.length > 0 ? new AWT.Path(shd) : result;
+    return !result && shd.length > 0 ? new Path(shd) : result;
   }
 
   /**
@@ -220,8 +220,8 @@ export class Shaper {
       'scaleX', 'scaleY',
       'randomLines',
       'showEnclosure', 'hasRemainder',
-      { key: 'enclosing', fn: AWT.Shape },
-      { key: 'shapeData', fn: AWT.Shape, group: 'array' },
+      { key: 'enclosing', fn: Shape },
+      { key: 'shapeData', fn: Shape, group: 'array' },
     ]);
 
     result.nCells = result.shapeData.length || result.nCols * result.nRows;
@@ -263,7 +263,7 @@ export class Shaper {
    * @returns {AWT.Rectangle}
    */
   getEnclosingShapeData() {
-    return new AWT.Rectangle(0, 0, 1, 1);
+    return new Rectangle(0, 0, 1, 1);
   }
 
   /**
@@ -280,7 +280,7 @@ export class Shaper {
       this.buildShapes();
 
     const sh = this.getEnclosingShapeData();
-    const r = sh ? sh.getShape(rect) : new AWT.Rectangle();
+    const r = sh ? sh.getShape(rect) : new Rectangle();
     for (let i = 0; i < this.nCells; i++) {
       if (this.shapeData[i])
         r.add(this.shapeData[i].getShape(rect), false);

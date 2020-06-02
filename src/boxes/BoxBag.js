@@ -30,7 +30,7 @@
  */
 
 import AbstractBox from './AbstractBox';
-import AWT from '../AWT';
+import { Rectangle, Dimension, Point } from '../AWT';
 import { settings } from '../Utils';
 
 /**
@@ -44,14 +44,14 @@ import { settings } from '../Utils';
 export class BoxBag extends AbstractBox {
   /**
    * BoxBag constructor
-   * @param {?AbstractBox} parent - The AbstractBox to which this box bag belongs
-   * @param {?AWT.Container} container - The container where this box bag is placed.
-   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   * @param {AbstractBox} [parent] - The AbstractBox to which this box bag belongs
+   * @param {AWT.Container} [container] - The container where this box bag is placed.
+   * @param {BoxBase} [boxBase] - The object where colors, fonts, border and other graphic properties
    */
   constructor(parent, container, boxBase) {
     // BoxBag extends AbstractBox
     super(parent, container, boxBase);
-    this.preferredBounds = new AWT.Rectangle();
+    this.preferredBounds = new Rectangle();
     this.cells = [];
   }
 
@@ -145,7 +145,7 @@ export class BoxBag extends AbstractBox {
       da = rsA.getPreferredSize(),
       db = rsB.getPreferredSize();
 
-    const d = new AWT.Dimension(
+    const d = new Dimension(
       isHLayout ? da.width + db.width : Math.max(da.width, db.width),
       isHLayout ? Math.max(da.height, db.height) : da.height + db.height
     );
@@ -154,7 +154,7 @@ export class BoxBag extends AbstractBox {
     const
       minSizeA = rsA.getMinimumSize(),
       minSizeB = rsB.getMinimumSize(),
-      minSize = new AWT.Dimension(
+      minSize = new Dimension(
         isHLayout ? minSizeA.width + minSizeB.width : Math.max(minSizeA.width, minSizeB.width),
         isHLayout ? Math.max(minSizeA.height, minSizeB.height) : minSizeA.height + minSizeB.height
       ),
@@ -217,7 +217,7 @@ export class BoxBag extends AbstractBox {
     }
 
     // recompute 'd' adding margins
-    const r = new AWT.Rectangle(rsA.getBounds());
+    const r = new Rectangle(rsA.getBounds());
     r.add(rsB.getBounds());
     d.width = r.dim.width + 2 * margin;
     d.height = r.dim.height + 2 * margin;
@@ -239,7 +239,7 @@ export class BoxBag extends AbstractBox {
    */
   getMinimumSize() {
     const d = this.getPreferredSize();
-    return new AWT.Dimension(
+    return new Dimension(
       Math.max(settings.MIN_CELL_SIZE, d.width),
       Math.max(settings.MIN_CELL_SIZE, d.height));
   }
@@ -251,7 +251,7 @@ export class BoxBag extends AbstractBox {
    */
   getScaledSize(scale) {
     const d = this.getPreferredSize();
-    return new AWT.Dimension(Math.round(scale * d.width), Math.round(scale * d.height));
+    return new Dimension(Math.round(scale * d.width), Math.round(scale * d.height));
   }
 
   /**
@@ -263,7 +263,7 @@ export class BoxBag extends AbstractBox {
     bx.setParent(this);
 
     if (this.cells.length === 1)
-      AWT.Rectangle.prototype.setBounds.call(this, bx);
+      Rectangle.prototype.setBounds.call(this, bx);
     else
       this.add(bx);
 
@@ -307,7 +307,7 @@ export class BoxBag extends AbstractBox {
       bx.isBackground = true;
     }
     // Add the `backgroundbox` rectangle to the global BoxBag rectangle
-    AWT.Rectangle.prototype.add.call(this, bx);
+    Rectangle.prototype.add.call(this, bx);
     this.preferredBounds.setBounds(this.getBounds());
   }
 
@@ -317,15 +317,15 @@ export class BoxBag extends AbstractBox {
    * Updates `preferredBounds` and the current position and size of the box bag.
    */
   recalcSize() {
-    let r = this.backgroundBox ? new AWT.Rectangle(this.backgroundBox.pos, this.backgroundBox.dim) : null;
+    let r = this.backgroundBox ? new Rectangle(this.backgroundBox.pos, this.backgroundBox.dim) : null;
     this.cells.forEach(cell => {
       if (!r)
-        r = new AWT.Rectangle(cell.pos, cell.dim);
+        r = new Rectangle(cell.pos, cell.dim);
       else
         r.add(cell);
     });
     if (!r)
-      r = new AWT.Rectangle(this.pos.x, this.pos.y, 0, 0);
+      r = new Rectangle(this.pos.x, this.pos.y, 0, 0);
     this.preferredBounds.setRect(r);
     this.x = r.pos.x;
     this.y = r.pos.y;
@@ -392,7 +392,7 @@ export class BoxBag extends AbstractBox {
   setBounds(rect, ry, rw, rh) {
     if (typeof rect === 'number') {
       // Arguments are co-ordinates and size
-      rect = new AWT.Rectangle(rect, ry, rw, rh);
+      rect = new Rectangle(rect, ry, rw, rh);
     }
     if (rect.getSurface() > 0 && !rect.equals(this)) {
       const
@@ -401,7 +401,7 @@ export class BoxBag extends AbstractBox {
         dx = rect.pos.x - this.pos.x,
         dy = rect.pos.y - this.pos.y;
       this.cells.forEach(bx => {
-        const p = new AWT.Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y);
+        const p = new Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y);
         bx.setBounds(
           dx + this.pos.x + scaleW * p.x,
           dy + this.pos.y + scaleH * p.y,
@@ -411,7 +411,7 @@ export class BoxBag extends AbstractBox {
       if (this.backgroundBox !== null) {
         const
           bx = this.backgroundBox,
-          p = new AWT.Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y);
+          p = new Point(bx.pos.x - this.pos.x, bx.pos.y - this.pos.y);
         bx.setBounds(
           dx + this.pos.x + scaleW * p.x,
           dy + this.pos.y + scaleH * p.y,
@@ -489,7 +489,7 @@ Object.assign(BoxBag.prototype, {
    * Rectangle containing the preferred bounds of the BoxBag
    * @name BoxBag#preferredBounds
    * @type {AWT.Rectangle} */
-  preferredBounds: new AWT.Rectangle(),
+  preferredBounds: new Rectangle(),
   /**
    * An optional box used as a background by this BoxBag
    * @name BoxBag#backgroundBox

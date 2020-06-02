@@ -31,7 +31,7 @@
 
 import Shaper from './Shaper';
 import JigSaw from './JigSaw';
-import AWT from '../AWT';
+import { PathStroke } from '../AWT';
 
 /**
  * This is the classic {@link JigSaw} {@link Shaper} used in puzzle toys, where teeth and slots
@@ -68,21 +68,21 @@ export class ClassicJigSaw extends JigSaw {
 
     if (type === 0)
       // Flat line
-      sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
+      sd.addStroke(new PathStroke('L', [x + w * kx, y]));
     else {
       const
         x0 = x + (w - w * this.baseWidthFactor) / 2 * kx,
         wb = w * (this.baseWidthFactor / 12) * kx;
 
       // Approximation to the tooth:
-      sd.addStroke(new AWT.PathStroke('L', [x0, y]));
+      sd.addStroke(new PathStroke('L', [x0, y]));
       // This is the tooth:
       const hb = h * this.toothHeightFactor * ky / 8;
-      sd.addStroke(new AWT.PathStroke('B', [x0 + 4 * wb, y, x0 + 6 * wb, y - hb, x0 + 4 * wb, y - 3 * hb]));
-      sd.addStroke(new AWT.PathStroke('B', [x0 + 2 * wb, y - 5 * hb, x0 + 10 * wb, y - 5 * hb, x0 + 8 * wb, y - 3 * hb]));
-      sd.addStroke(new AWT.PathStroke('B', [x0 + 6 * wb, y - 1 * hb, x0 + 8 * wb, y, x0 + 12 * wb, y]));
+      sd.addStroke(new PathStroke('B', [x0 + 4 * wb, y, x0 + 6 * wb, y - hb, x0 + 4 * wb, y - 3 * hb]));
+      sd.addStroke(new PathStroke('B', [x0 + 2 * wb, y - 5 * hb, x0 + 10 * wb, y - 5 * hb, x0 + 8 * wb, y - 3 * hb]));
+      sd.addStroke(new PathStroke('B', [x0 + 6 * wb, y - 1 * hb, x0 + 8 * wb, y, x0 + 12 * wb, y]));
       // Draw the remaining line
-      sd.addStroke(new AWT.PathStroke('L', [x + w * kx, y]));
+      sd.addStroke(new PathStroke('L', [x + w * kx, y]));
     }
   }
 
@@ -104,21 +104,21 @@ export class ClassicJigSaw extends JigSaw {
 
     if (type === 0)
       // Flat line
-      sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
+      sd.addStroke(new PathStroke('L', [x, y + h * ky]));
     else {
       const
         y0 = y + (h - h * this.baseWidthFactor) / 2 * ky,
         hb = h * this.baseWidthFactor / 12 * ky;
 
       // Approximation to the tooth:
-      sd.addStroke(new AWT.PathStroke('L', [x, y0]));
+      sd.addStroke(new PathStroke('L', [x, y0]));
       // This is the tooth:
       const wb = w * this.toothHeightFactor * kx / 8;
-      sd.addStroke(new AWT.PathStroke('B', [x, y0 + 4 * hb, x - wb, y0 + 6 * hb, x - 3 * wb, y0 + 4 * hb]));
-      sd.addStroke(new AWT.PathStroke('B', [x - 5 * wb, y0 + 2 * hb, x - 5 * wb, y0 + 10 * hb, x - 3 * wb, y0 + 8 * hb]));
-      sd.addStroke(new AWT.PathStroke('B', [x - 1 * wb, y0 + 6 * hb, x, y0 + 8 * hb, x, y0 + 12 * hb]));
+      sd.addStroke(new PathStroke('B', [x, y0 + 4 * hb, x - wb, y0 + 6 * hb, x - 3 * wb, y0 + 4 * hb]));
+      sd.addStroke(new PathStroke('B', [x - 5 * wb, y0 + 2 * hb, x - 5 * wb, y0 + 10 * hb, x - 3 * wb, y0 + 8 * hb]));
+      sd.addStroke(new PathStroke('B', [x - 1 * wb, y0 + 6 * hb, x, y0 + 8 * hb, x, y0 + 12 * hb]));
       // Draw the remaining line
-      sd.addStroke(new AWT.PathStroke('L', [x, y + h * ky]));
+      sd.addStroke(new PathStroke('L', [x, y + h * ky]));
     }
   }
 }

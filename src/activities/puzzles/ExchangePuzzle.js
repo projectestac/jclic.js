@@ -34,7 +34,7 @@ import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
 import BoxConnector from '../../boxes/BoxConnector';
-import AWT from '../../AWT';
+import { Rectangle, Point } from '../../AWT';
 
 /**
  * This class of {@link Activity} shows only one panel with shuffled {@link ActiveBox} objects.
@@ -177,7 +177,7 @@ class ExchangePuzzlePanel extends Activity.Panel {
         canvas = this.$canvas.get(-1),
         ctx = canvas.getContext('2d');
       if (!dirtyRegion)
-        dirtyRegion = new AWT.Rectangle(0, 0, canvas.width, canvas.height);
+        dirtyRegion = new Rectangle(0, 0, canvas.width, canvas.height);
       ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
       this.bg.update(ctx, dirtyRegion);
     }
@@ -258,13 +258,13 @@ class ExchangePuzzlePanel extends Activity.Panel {
       //
       // _touchend_ event don't provide pageX nor pageY information
       if (event.type === 'touchend')
-        p = this.bc.active ? this.bc.dest.clone() : new AWT.Point();
+        p = this.bc.active ? this.bc.dest.clone() : new Point();
       else {
         // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
         const
           x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
           y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
-        p = new AWT.Point(x - this.$div.offset().left, y - this.$div.offset().top);
+        p = new Point(x - this.$div.offset().left, y - this.$div.offset().top);
       }
 
       // Flag for tracking `mouseup` events

@@ -33,7 +33,7 @@ import $ from 'jquery';
 import BoxBase from './BoxBase';
 import ActiveBoxContent from './ActiveBoxContent';
 import Shaper from '../shapers/Shaper';
-import AWT from '../AWT';
+import { Rectangle } from '../AWT';
 import { settings, attrForEach, nSlash, getBoolean, getAttr, setAttr } from '../Utils';
 
 /**
@@ -359,7 +359,7 @@ export class ActiveBagContent {
       this.h = Math.max(this.h, 10);
     }
 
-    const r = new AWT.Rectangle(0, 0, this.w * this.ncw, this.h * this.nch);
+    const r = new Rectangle(0, 0, this.w * this.ncw, this.h * this.nch);
     for (let i = 0; i < this.shaper.nCells; i++)
       this.getActiveBoxContent(i).setImgContent(this.img, this.shaper.getShape(i, r), this.animatedGifFile);
 

@@ -34,7 +34,7 @@
 import $ from 'jquery';
 import clipboard from 'clipboard-js';
 import { appendStyleAtHead, cloneObject, getMsg, setLogLevel, log, getRootHead, toCssSize, $HTML, getPercent, getHMStime } from '../Utils';
-import AWT from '../AWT';
+import { Container, Dimension, Rectangle } from '../AWT';
 
 /**
  * This abstract class manages the layout, position ans size of the visual components of JClic:
@@ -46,7 +46,7 @@ import AWT from '../AWT';
  * @abstract
  * @extends AWT.Container
  */
-export class Skin extends AWT.Container {
+export class Skin extends Container {
   /**
    * Skin constructor
    * @param {PlayStation} ps - The `PlayStation` (currently a {@link JClicPlayer}) used to load and
@@ -657,7 +657,7 @@ export class Skin extends AWT.Container {
           this.msgBox.dim.widht !== msgWidth ||
           this.msgBox.dim.height !== msgHeight) {
           this.$msgBoxDivCanvas = $(`<canvas width="${msgWidth}" height="${msgHeight}"/>`);
-          this.msgBox.setBounds(new AWT.Rectangle(0, 0, msgWidth + 1, msgHeight));
+          this.msgBox.setBounds(new Rectangle(0, 0, msgWidth + 1, msgHeight));
           this.msgBox.buildAccessibleElement(this.$msgBoxDivCanvas, this.$msgBoxDiv);
         }
         // restore canvas
@@ -672,7 +672,7 @@ export class Skin extends AWT.Container {
    */
   fit() {
     this.doLayout();
-    return new AWT.Dimension(this.$div.width(), this.$div.height());
+    return new Dimension(this.$div.width(), this.$div.height());
   }
 
   /**
