@@ -32,7 +32,7 @@
 /* global window */
 
 import $ from 'jquery';
-import Utils from './Utils';
+import { settings, log, getMsg, attrForEach, nSlash, getBoolean, getXmlText, checkColor, isNullOrUndef, getAttr, setAttr } from './Utils';
 import AWT from './AWT';
 import EventSounds from './media/EventSounds';
 import ActiveBoxContent from './boxes/ActiveBoxContent';
@@ -42,9 +42,6 @@ import AutoContentProvider from './automation/AutoContentProvider';
 import TextGridContent from './boxes/TextGridContent';
 import Evaluator from './activities/text/Evaluator';
 import TextActivityDocument from './activities/text/TextActivityDocument';
-
-// Direct access to global setings
-const K = Utils.settings;
 
 // Event used for detecting touch devices
 const TOUCH_TEST_EVENT = 'touchstart';
@@ -102,7 +99,7 @@ export class Activity {
         else
           act.setAttributes(data);
       } else
-        Utils.log('error', `Unknown activity class: ${className}`);
+        log('error', `Unknown activity class: ${className}`);
     }
     return act;
   }
@@ -114,11 +111,11 @@ export class Activity {
   setProperties($xml) {
 
     // Read attributes
-    Utils.attrForEach($xml.get(0).attributes, (name, val) => {
+    attrForEach($xml.get(0).attributes, (name, val) => {
       switch (name) {
         // Generic attributes:
         case 'name':
-          val = Utils.nSlash(val);
+          val = nSlash(val);
         /* falls through */
         case 'code':
         case 'type':
@@ -131,13 +128,13 @@ export class Activity {
           break;
 
         case 'inverse':
-          this.invAss = Utils.getBoolean(val, false);
+          this.invAss = getBoolean(val, false);
           break;
 
         case 'autoJump':
         case 'forceOkToAdvance':
         case 'amongParagraphs':
-          this[name] = Utils.getBoolean(val, false);
+          this[name] = getBoolean(val, false);
           break;
       }
     });
@@ -148,7 +145,7 @@ export class Activity {
       switch (child.nodeName) {
         case 'settings':
           // Read more attributes
-          Utils.attrForEach($node.get(0).attributes, (name, val) => {
+          attrForEach($node.get(0).attributes, (name, val) => {
             switch (name) {
               case 'infoUrl':
               case 'infoCmd':
@@ -162,14 +159,14 @@ export class Activity {
                 break;
 
               case 'report':
-                this.includeInReports = Utils.getBoolean(val, false);
+                this.includeInReports = getBoolean(val, false);
                 break;
               case 'countDownTime':
               case 'countDownActions':
               case 'reportActions':
               case 'useOrder':
               case 'dragCells':
-                this[name] = Utils.getBoolean(val, false);
+                this[name] = getBoolean(val, false);
                 break;
             }
           });
@@ -183,27 +180,27 @@ export class Activity {
                 break;
 
               case 'helpWindow':
-                this.helpMsg = Utils.getXmlText(this);
-                this.showSolution = Utils.getBoolean($node.attr('showSolution'), false);
+                this.helpMsg = getXmlText(this);
+                this.showSolution = getBoolean($node.attr('showSolution'), false);
                 this.helpWindow = this.helpMsg !== null || this.showSolution;
                 break;
 
               case 'container':
                 // Read settings related to the 'container'
                 // (the main panel containing the activity and other elements)
-                this.bgColor = Utils.checkColor($node.attr('bgColor'), Utils.settings.BoxBase.BACK_COLOR);
+                this.bgColor = checkColor($node.attr('bgColor'), settings.BoxBase.BACK_COLOR);
 
                 $node.children().each((_n, child) => {
                   const $child = $(child);
                   switch (child.nodeName) {
                     case 'image':
                       this.bgImageFile = $child.attr('name');
-                      this.tiledBgImg = Utils.getBoolean($child.attr('tiled'), false);
+                      this.tiledBgImg = getBoolean($child.attr('tiled'), false);
                       break;
                     case 'counters':
-                      this.bTimeCounter = Utils.getBoolean($child.attr('time'), true);
-                      this.bActionsCounter = Utils.getBoolean($child.attr('actions'), true);
-                      this.bScoreCounter = Utils.getBoolean($child.attr('score'), true);
+                      this.bTimeCounter = getBoolean($child.attr('time'), true);
+                      this.bActionsCounter = getBoolean($child.attr('actions'), true);
+                      this.bScoreCounter = getBoolean($child.attr('score'), true);
                       break;
                     case 'gradient':
                       this.bgGradient = new AWT.Gradient().setProperties($child);
@@ -215,9 +212,9 @@ export class Activity {
               case 'window':
                 // Read settings related to the 'window'
                 // (the panel where the activity deploys its content)
-                this.activityBgColor = Utils.checkColor($node.attr('bgColor'), K.DEFAULT_BG_COLOR);
-                this.transparentBg = Utils.getBoolean($node.attr('transparent'), false);
-                this.border = Utils.getBoolean($node.attr('border'), false);
+                this.activityBgColor = checkColor($node.attr('bgColor'), settings.DEFAULT_BG_COLOR);
+                this.transparentBg = getBoolean($node.attr('transparent'), false);
+                this.border = getBoolean($node.attr('border'), false);
                 $node.children().each((_n, child) => {
                   const $child = $(child);
                   switch (child.nodeName) {
@@ -272,12 +269,12 @@ export class Activity {
         case 'scramble':
           // Read the 'shuffle' mode
           this.shuffles = Number($node.attr('times'));
-          this.shuffleA = Utils.getBoolean($node.attr('primary'));
-          this.shuffleB = Utils.getBoolean($node.attr('secondary'));
+          this.shuffleA = getBoolean($node.attr('primary'));
+          this.shuffleB = getBoolean($node.attr('secondary'));
           break;
 
         case 'layout':
-          Utils.attrForEach($node.get(0).attributes, (name, value) => {
+          attrForEach($node.get(0).attributes, (name, value) => {
             switch (name) {
               case 'position':
                 this.boxGridPos = value;
@@ -285,7 +282,7 @@ export class Activity {
               case 'wildTransparent':
               case 'upperCase':
               case 'checkCase':
-                this[name] = Utils.getBoolean(value);
+                this[name] = getBoolean(value);
             }
           });
           break;
@@ -364,7 +361,7 @@ export class Activity {
     //
     // Allowed types are: `initial`, `final`, `previous`, `finalError`
     msg.type = $xml.attr('type');
-    if (Utils.isNullOrUndef(msg.style))
+    if (isNullOrUndef(msg.style))
       msg.style = new BoxBase(null);
     return msg;
   }
@@ -376,20 +373,20 @@ export class Activity {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return getAttr(this, [
       'name', 'className', 'code', 'type', 'description',
       'invAss', 'numericContent',
       'autoJump', 'forceOkToAdvance', 'amongParagraphs',
       'infoUrl', 'infoCmd',
-      `margin|${K.DEFAULT_MARGIN}`, 'maxTime', 'maxActions',
+      `margin|${settings.DEFAULT_MARGIN}`, 'maxTime', 'maxActions',
       'includeInReports|true', 'reportActions|false',
       'countDownTime', 'countDownActions',
       'useOrder', 'dragCells',
       'skinFileName',
       'showSolution|false', 'helpMsg',
-      `bgColor|${K.DEFAULT_BG_COLOR}`, 'bgImageFile', 'tiledBgImg',
+      `bgColor|${settings.DEFAULT_BG_COLOR}`, 'bgImageFile', 'tiledBgImg',
       'bTimeCounter|true', 'bActionsCounter|true', 'bScoreCounter|true',
-      `activityBgColor|${K.DEFAULT_BG_COLOR}`, 'transparentBg|false', 'border|true',
+      `activityBgColor|${settings.DEFAULT_BG_COLOR}`, 'transparentBg|false', 'border|true',
       'shuffleA', 'shuffleB', 'shuffles', 'boxGridPos',
       'wildTransparent', 'upperCase', 'checkCase',
       'checkButtonText',
@@ -416,7 +413,7 @@ export class Activity {
    * @param {object} data - The data object to parse
    */
   setAttributes(data, mediaBag = this.project.mediaBag) {
-    Utils.setAttr(this, data, [
+    setAttr(this, data, [
       'name', 'className', 'code', 'type', 'description', 'invAss', 'numericContent',
       'autoJump', 'forceOkToAdvance', 'amongParagraphs', 'infoUrl', 'infoCmd',
       'margin', 'maxTime', 'maxActions', 'includeInReports', 'reportActions',
@@ -614,7 +611,7 @@ Object.assign(Activity.prototype, {
    * The Activity name
    * @name Activity#name
    * @type {string} */
-  name: K.DEFAULT_NAME,
+  name: settings.DEFAULT_NAME,
   /**
    * The class name of this Activity
    * @name Activity#className
@@ -641,12 +638,12 @@ Object.assign(Activity.prototype, {
    * The space between the activity components measured in pixels.
    * @name Activity#margin
    * @type {number} */
-  margin: K.DEFAULT_MARGIN,
+  margin: settings.DEFAULT_MARGIN,
   /**
    * The background color of the activity panel
    * @name Activity#bgColor
    * @type {string} */
-  bgColor: K.DEFAULT_BG_COLOR,
+  bgColor: settings.DEFAULT_BG_COLOR,
   /**
    * When set, gradient used to draw the activity window background
    * @name Activity#bgGradient
@@ -768,7 +765,7 @@ Object.assign(Activity.prototype, {
    * Preferred dimension of the activity window
    * @name Activity#windowSize
    * @type {AWT.Dimension} */
-  windowSize: new AWT.Dimension(K.DEFAULT_WIDTH, K.DEFAULT_HEIGHT),
+  windowSize: new AWT.Dimension(settings.DEFAULT_WIDTH, settings.DEFAULT_HEIGHT),
   /**
    * Whether the activity window has transparent background.
    * @name Activity#transparentBg
@@ -778,7 +775,7 @@ Object.assign(Activity.prototype, {
    * The background color of the activity
    * @name Activity#activityBgColor
    * @type {string} */
-  activityBgColor: K.DEFAULT_BG_COLOR,
+  activityBgColor: settings.DEFAULT_BG_COLOR,
   /**
    * Gradient used to draw backgrounds inside the activity.
    * @name Activity#activityBgGradient
@@ -832,7 +829,7 @@ Object.assign(Activity.prototype, {
    * Number of times to shuffle the cells at the beginning of the activity
    * @name Activity#shuffles
    * @type {number} */
-  shuffles: K.DEFAULT_SHUFFLES,
+  shuffles: settings.DEFAULT_SHUFFLES,
   /**
    * Box grid A must be shuffled.
    * @name Activity#shuffleA
@@ -891,7 +888,7 @@ export class ActivityPanel extends AWT.Container {
     if ($div)
       this.$div = $div;
     else
-      this.$div = $('<div/>', { class: 'JClicActivity', 'aria-label': ps.getMsg('Activity panel') });
+      this.$div = $('<div/>', { class: 'JClicActivity', 'aria-label': getMsg('Activity panel') });
     this.act.initAutoContentProvider();
   }
 
@@ -1030,7 +1027,7 @@ export class ActivityPanel extends AWT.Container {
   attachEvents() {
     this.events.forEach(ev => this.attachEvent(this.$div, ev));
     // Prepare handler to check if we are in a touch device
-    if (!K.TOUCH_DEVICE && $.inArray(TOUCH_TEST_EVENT, this.events) === -1)
+    if (!settings.TOUCH_DEVICE && $.inArray(TOUCH_TEST_EVENT, this.events) === -1)
       this.attachEvent(this.$div, TOUCH_TEST_EVENT);
   }
 
@@ -1042,8 +1039,8 @@ export class ActivityPanel extends AWT.Container {
   attachEvent($obj, evt) {
     $obj.on(evt, this, event => {
       if (event.type === TOUCH_TEST_EVENT) {
-        if (!K.TOUCH_DEVICE)
-          K.TOUCH_DEVICE = true;
+        if (!settings.TOUCH_DEVICE)
+          settings.TOUCH_DEVICE = true;
         if ($.inArray(TOUCH_TEST_EVENT, this.events) === -1) {
           // Disconnect handler
           $obj.off(TOUCH_TEST_EVENT);
@@ -1079,8 +1076,8 @@ export class ActivityPanel extends AWT.Container {
       proposed.dim.height -= this.act.absolutePosition.y;
     }
     const d = this.setDimension(new AWT.Dimension(
-      Math.max(2 * this.act.margin + Utils.settings.MINIMUM_WIDTH, proposed.dim.width),
-      Math.max(2 * this.act.margin + Utils.settings.MINIMUM_HEIGHT, proposed.dim.height)));
+      Math.max(2 * this.act.margin + settings.MINIMUM_WIDTH, proposed.dim.width),
+      Math.max(2 * this.act.margin + settings.MINIMUM_HEIGHT, proposed.dim.height)));
     if (!this.act.absolutePositioned) {
       origin.moveTo(
         Math.max(0, proposed.pos.x + (proposed.dim.width - d.width) / 2),

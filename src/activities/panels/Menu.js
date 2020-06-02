@@ -32,7 +32,7 @@
 import $ from 'jquery';
 import Activity from '../../Activity';
 import MediaContent from '../../media/MediaContent';
-import Utils from '../../Utils';
+import { log } from '../../Utils';
 
 /**
  * This class of {@link Activity} is only used in legacy JClic project libraries. It contains
@@ -143,7 +143,7 @@ export class MenuPanel extends Activity.Panel {
         const mc = new MediaContent(me.projectPath ? 'RUN_CLIC_PACKAGE' : 'RUN_CLIC_ACTIVITY', me.sequence);
         if (me.projectPath)
           mc.externalParam = me.projectPath;
-        Utils.log('info', `Launching ${me.projectPath || ''} ${me.sequence || ''}`);
+        log('info', `Launching ${me.projectPath || ''} ${me.sequence || ''}`);
         this.ps.playMedia(mc);
         ev.preventDefault();
       });

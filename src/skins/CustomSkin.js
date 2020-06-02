@@ -69,7 +69,7 @@ export class CustomSkin extends Skin {
     if (options.buttons) {
       Object.keys(options.buttons.button).forEach(k => {
         const k2 = k === 'about' ? 'reports' : k;
-        const msg = ps.getMsg(this.msgKeys[k2] || k2);
+        const msg = Utils.getMsg(this.msgKeys[k2] || k2);
         this.buttons[k2] = $('<button/>', { class: `JClicBtn JClicTransform Btn-${k2}`, title: msg, 'aria-label': msg, disabled: typeof this.msgKeys[k2] === 'undefined' })
           .on('click', evt => { if (ps.actions[k2]) ps.actions[k2].processEvent(evt); });
         this.$mainPanel.append(this.buttons[k2]);
@@ -92,7 +92,7 @@ export class CustomSkin extends Skin {
     if (false !== this.ps.options.counters && options.counters && options.counters.counter) {
       $.each(Skin.prototype.counters, (name, _val) => {
         if (options.counters.counter[name]) {
-          const msg = ps.getMsg(name);
+          const msg = Utils.getMsg(name);
           this.counters[name] = new Counter(name, $('<div/>', { class: `JClicCounter JClicTransform Counter-${name}`, title: msg, 'aria-label': msg })
             .html('000')
             .appendTo(this.$mainPanel));
@@ -273,7 +273,7 @@ export class CustomSkin extends Skin {
         // counter:
         css += `.ID .Counter-${k} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;line-height:${h}px;}\n`;
         // label:
-        css += `.ID .Counter-${k}:before {content:"${this.ps.getMsg(k)}";font-size:${lbFntSize}px;font-family:${lbFntFamily};width:${wLb}px;height:${hLb}px;line-height:${hLb}px;position:absolute;top:${yl - y}px;left:${xl - x}px;}`;
+        css += `.ID .Counter-${k}:before {content:"${Utils.getMsg(k)}";font-size:${lbFntSize}px;font-family:${lbFntFamily};width:${wLb}px;height:${hLb}px;line-height:${hLb}px;position:absolute;top:${yl - y}px;left:${xl - x}px;}`;
         // reduced sizes:
         cssHalf += `.ID .Counter-${k} {${xpHalf}px;${ypHalf}px;}\n`;
         cssTwoThirds += `.ID .Counter-${k} {${xpTwoThirds}px;${ypTwoThirds}px;}\n`;

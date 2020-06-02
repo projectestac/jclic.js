@@ -101,7 +101,7 @@ export class MediaBagElement {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, ['name', 'file', 'animated']);
+    return Utils.getAttr(this, ['name', 'file', 'animated']);
   }
 
   /**

@@ -116,7 +116,7 @@ export class MediaContent {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return Utils.getAttr(this, [
       'type', 'file', 'externalParam',
       'absLocation', // -> AWT.Point
       'absLocationFrom', 'recBuffer',

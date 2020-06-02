@@ -29,7 +29,7 @@
  *  @module
  */
 
-import Utils from './Utils';
+import { log, isEquivalent, getPath, isNullOrUndef } from './Utils';
 
 /**
  *
@@ -101,11 +101,11 @@ export class PlayerHistory {
     if (this.sequenceStack.length > 0) {
       const e = this.sequenceStack.pop();
       if (e.projectPath === this.player.project.path &&
-        Utils.isEquivalent(e.fullZipPath, this.player.zip ? this.player.zip.fullZipPath : null))
+        isEquivalent(e.fullZipPath, this.player.zip ? this.player.zip.fullZipPath : null))
         this.player.load(null, e.activity, null);
       else
         if (this.testMode && e.projectPath !== null && e.projectPath.length > 0)
-          Utils.log('info', `At this point, a jump to "${e.projectPath}" should be performed.`);
+          log('info', `At this point, a jump to "${e.projectPath}" should be performed.`);
         else
           this.player.load(e.fullZipPath || e.projectPath, e.activity, null);
     }
@@ -134,7 +134,7 @@ export class PlayerHistory {
           }
         case 'EXIT':
           if (this.testMode)
-            Utils.log('info', 'At this point, the program should exit.');
+            log('info', 'At this point, the program should exit.');
           else
             this.player.exit(ji.sequence);
           break;
@@ -149,10 +149,10 @@ export class PlayerHistory {
             }
           } else {
             if (this.testMode && ji.projectPath !== null && ji.projectPath.length > 0) {
-              Utils.log('info', `At this point, a jump to "${ji.projectPath}" should be performed.`);
+              log('info', `At this point, a jump to "${ji.projectPath}" should be performed.`);
             } else {
               result = this.jumpToSequence(ji.sequence,
-                ji.projectPath ? Utils.getPath(this.player.project.basePath, ji.projectPath) : null,
+                ji.projectPath ? getPath(this.player.project.basePath, ji.projectPath) : null,
                 allowReturn);
             }
           }
@@ -172,13 +172,13 @@ export class PlayerHistory {
    * allowing to return to the current activity.
    */
   jumpToSequence(sequence, path, allowReturn) {
-    if (Utils.isNullOrUndef(sequence) && Utils.isNullOrUndef(path))
+    if (isNullOrUndef(sequence) && isNullOrUndef(path))
       return false;
-    if (Utils.isNullOrUndef(path))
+    if (isNullOrUndef(path))
       path = this.player.project.path;
     if (this.sequenceStack.length > 0) {
       const e = this.sequenceStack[this.sequenceStack.length - 1];
-      if (!Utils.isNullOrUndef(sequence) && path === e.projectPath) {
+      if (!isNullOrUndef(sequence) && path === e.projectPath) {
         let same = sequence === e.sequence;
         if (path === this.player.project.path) {
           const ase = this.player.project.activitySequence.getElement(e.activity, false);

@@ -31,7 +31,7 @@
 
 /* global window */
 
-import Utils from '../../Utils';
+import { log, attrForEach, getBoolean, setAttr, getAttr } from '../../Utils';
 
 /**
  * This class and its derivatives {@link BasicEvaluator} and
@@ -67,7 +67,7 @@ export class Evaluator {
         ev = new cl(className);
         ev.setProperties($xml);
       } else
-        Utils.log('error', `Unknown evaluator class: "${className}"`);
+        log('error', `Unknown evaluator class: "${className}"`);
     }
     return ev;
   }
@@ -77,7 +77,7 @@ export class Evaluator {
    * @param {external:jQuery} $xml - The jQuery XML element to parse
    */
   setProperties($xml) {
-    Utils.attrForEach($xml.get(0).attributes, (name, value) => {
+    attrForEach($xml.get(0).attributes, (name, value) => {
       switch (name) {
         case 'class':
           this.className = value;
@@ -87,7 +87,7 @@ export class Evaluator {
         case 'checkPunctuation':
         case 'checkDoubleSpaces':
         case 'detail':
-          this[name] = Utils.getBoolean(value);
+          this[name] = getBoolean(value);
           break;
         case 'checkSteps':
         case 'checkScope':
@@ -107,7 +107,7 @@ export class Evaluator {
     const cl = Evaluator.CLASSES[data.className];
     if (cl) {
       const result = new cl(data.className);
-      return Utils.setAttr(result, data, [
+      return setAttr(result, data, [
         'className',
         'checkCase', 'checkAccents', 'checkPunctuation', 'checkDoubleSpaces', 'detail',
         'checkSteps', 'checkScope',
@@ -123,7 +123,7 @@ export class Evaluator {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return getAttr(this, [
       'className',
       'checkCase', 'checkAccents', 'checkPunctuation', 'checkDoubleSpaces', 'detail',
       'checkSteps', 'checkScope',

@@ -117,7 +117,7 @@ export class JClicProject {
       this.activities[k] = act.jquery ? Activity.getActivity(act, this) : act;
     });
 
-    return Utils.getAttributes(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'activities', 'mediaBag']);
+    return Utils.getAttr(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'activities', 'mediaBag']);
   }
 
   /**

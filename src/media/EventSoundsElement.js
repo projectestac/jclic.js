@@ -75,7 +75,7 @@ export class EventSoundsElement {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return Utils.getAttr(this, [
       `enabled|${Utils.DEFAULT}`,
       'file',
     ]);

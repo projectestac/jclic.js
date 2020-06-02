@@ -58,7 +58,7 @@ export class AlignType {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, ['h|center', 'v|center']);
+    return Utils.getAttr(this, ['h|center', 'v|center']);
   }
 
   /**
@@ -175,7 +175,7 @@ export class ActiveBoxContent {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return Utils.getAttr(this, [
       'id', 'item', 'dimension', 'border', 'avoidOverlapping', 'image', 'text',
       'objectType', // Used in TextActivityDocument
       'txtAlign', 'imgAlign', // AlignType        

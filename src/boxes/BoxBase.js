@@ -114,7 +114,7 @@ export class BoxBase {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return Utils.getAttr(this, [
       'shadow', 'transparent', 'margin',
       'borderStroke', 'markerStroke', // AWT.Stroke
       'font', // AWT.Font

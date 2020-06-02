@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import Utils from '../../Utils';
+import { fillString, setSelectionRange, getCaretCharacterOffsetWithin } from '../../Utils';
 import Activity from '../../Activity';
 import TextActivityBase from './TextActivityBase';
 
@@ -121,7 +121,7 @@ export class FillInBlanksPanel extends TextActivityBase.Panel {
       // Use a `span` element with the `contentEditable` attribute set `on`
       target.currentText = target.iniText ?
         target.iniText
-        : Utils.fillString(target.iniChar, target.numIniChars);
+        : fillString(target.iniChar, target.numIniChars);
 
       target.$span = $span.text(target.currentText).attr({
         contenteditable: 'true',
@@ -209,7 +209,7 @@ export class FillInBlanksPanel extends TextActivityBase.Panel {
       const destTarget = this.targets[p];
       if (destTarget.$span) {
         destTarget.$span.focus();
-        Utils.setSelectionRange(destTarget.$span.get(-1), 0, 0);
+        setSelectionRange(destTarget.$span.get(-1), 0, 0);
       } else if (destTarget.$comboList)
         destTarget.$comboList.focus();
     }
@@ -326,10 +326,10 @@ export class FillInBlanksPanel extends TextActivityBase.Panel {
             $span = target.$span;
             pos = Math.min(
               target.currentText.length,
-              Utils.getCaretCharacterOffsetWithin($span.get(-1)));
+              getCaretCharacterOffsetWithin($span.get(-1)));
             $span.empty();
             $span.text(target.currentText);
-            Utils.setSelectionRange($span.get(-1), pos, pos);
+            setSelectionRange($span.get(-1), pos, pos);
             target.flagModified = true;
           } else if (target.$comboList)
             target.$comboList.css(target.doc.style['target'].css);
@@ -367,7 +367,7 @@ export class FillInBlanksPanel extends TextActivityBase.Panel {
             if (added > 0) {
               if (txt.indexOf(target.iniChar) >= 0) {
                 // Remove filling chars
-                pos = Utils.getCaretCharacterOffsetWithin($span.get(-1));
+                pos = getCaretCharacterOffsetWithin($span.get(-1));
                 for (let i = 0; i < added; i++) {
                   const p = txt.indexOf(target.iniChar);
                   if (p < 0)
@@ -377,21 +377,21 @@ export class FillInBlanksPanel extends TextActivityBase.Panel {
                     pos--;
                 }
                 $span.text(txt);
-                Utils.setSelectionRange($span.get(-1), pos, pos);
+                setSelectionRange($span.get(-1), pos, pos);
               }
 
               // Check if current text exceeds max length
               if (txt.length > target.maxLenResp) {
-                pos = Utils.getCaretCharacterOffsetWithin($span.get(-1));
+                pos = getCaretCharacterOffsetWithin($span.get(-1));
                 txt = txt.substr(0, target.maxLenResp);
                 pos = Math.min(pos, txt.length);
                 $span.text(txt);
-                Utils.setSelectionRange($span.get(-1), pos, pos);
+                setSelectionRange($span.get(-1), pos, pos);
               }
             } else if (txt === '') {
               txt = target.iniChar;
               $span.text(txt);
-              Utils.setSelectionRange($span.get(-1), 0, 0);
+              setSelectionRange($span.get(-1), 0, 0);
             }
             target.currentText = txt;
           }

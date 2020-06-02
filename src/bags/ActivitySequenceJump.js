@@ -82,7 +82,7 @@ export class ActivitySequenceJump extends JumpInfo {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Object.assign(super.getAttributes(), Utils.getAttributes(this, ['upperJump', 'lowerJump']));
+    return Object.assign(super.getAttributes(), Utils.getAttr(this, ['upperJump', 'lowerJump']));
   }
 
   /**

@@ -85,7 +85,7 @@ export class AutoContentProvider {
    */
   getAttributes() {
     // To be overrided!
-    return Utils.getAttributes(this, ['className']);
+    return Utils.getAttr(this, ['className']);
   }
 
   /**

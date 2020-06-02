@@ -204,7 +204,7 @@ export class Shaper {
       ].forEach(f => fields.push(f));
     }
 
-    return Utils.getAttributes(this, fields);
+    return Utils.getAttr(this, fields);
   }
 
   /**

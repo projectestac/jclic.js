@@ -169,7 +169,7 @@ export class ProjectSettings {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return Utils.getAttr(this, [
       'title', 'description',
       'tags', 'languages', 'license',
       'authors', 'organizations',

@@ -142,7 +142,7 @@ import $ from 'jquery';
 import JClicPlayer from './JClicPlayer';
 import JClicProject from './project/JClicProject';
 import AWT from './AWT';
-import Utils from './Utils';
+import Utils, { init, log } from './Utils';
 import Deps from './Deps';
 
 /**
@@ -205,19 +205,19 @@ export const JClicObject = {
  */
 export function loadProject(div, projectName, options) {
 
-  //options = Utils.init(Object.assign({}, JClicObject.options, options))
-  options = Utils.init($.extend(Object.create(JClicObject.options), options || {}));
+  //options = init(Object.assign({}, JClicObject.options, options))
+  options = init($.extend(Object.create(JClicObject.options), options || {}));
   let player = null;
 
   // Find if there is another player already running on 'div'
   for (const pl of JClicObject.currentPlayers) {
     if (pl && pl.$topDiv && pl.$topDiv.get(-1) === div) {
       // Player found! Check if it has the same options
-      Utils.log('debug', 'Existing JClicPlayer found in div. I will try to reuse it.');
+      log('debug', 'Existing JClicPlayer found in div. I will try to reuse it.');
       player = pl;
       for (const prop of Object.getOwnPropertyNames(options)) {
         if (!player.options.hasOwnProperty(prop) || player.options[prop] !== options[prop]) {
-          Utils.log('debug', 'Existing JClicPlayer has diferent options! Creating a new one from scratch.');
+          log('debug', 'Existing JClicPlayer has diferent options! Creating a new one from scratch.');
           player = null;
           break;
         }
@@ -229,7 +229,7 @@ export function loadProject(div, projectName, options) {
   if (player)
     player.reset();
   else {
-    Utils.log('debug', 'Creating a new instance of JClicPlayer');
+    log('debug', 'Creating a new instance of JClicPlayer');
     player = new JClicPlayer($(div).empty(), options);
   }
 
@@ -237,7 +237,7 @@ export function loadProject(div, projectName, options) {
     player.initReporter()
       .then(() => player.load(projectName))
       .catch(err => {
-        Utils.log('error', `Unable to start reporting: ${err.toString()}.\n JClicPlayer will be removed.'`);
+        log('error', `Unable to start reporting: ${err.toString()}.\n JClicPlayer will be removed.'`);
         $(div).empty().removeAttr('style').append($('<h2/>').html(player.getMsg('ERROR'))).append($('<p/>').html(err));
         const i = JClicObject.currentPlayers.indexOf(player);
         if (i >= 0)

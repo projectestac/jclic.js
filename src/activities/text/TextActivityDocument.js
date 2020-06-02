@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import Utils from '../../Utils';
+import { log, attrForEach, checkColor, getBoolean, getAttr, setAttr, getVal, getNumber } from '../../Utils';
 import ActiveBoxContent from '../../boxes/ActiveBoxContent';
 import MediaContent from '../../media/MediaContent';
 
@@ -82,7 +82,7 @@ export class TextActivityDocument {
       const p = { elements: [] };
 
       // Read paragraph attributes
-      Utils.attrForEach(par.attributes, (name, value) => {
+      attrForEach(par.attributes, (name, value) => {
         switch (name) {
           case 'style':
             p[name] = value;
@@ -119,7 +119,7 @@ export class TextActivityDocument {
             break;
 
           default:
-            Utils.log('error', `Unknown object in activity document: "${child.nodeName}"`);
+            log('error', `Unknown object in activity document: "${child.nodeName}"`);
         }
         if (obj) {
           obj.objectType = child.nodeName;
@@ -141,15 +141,15 @@ export class TextActivityDocument {
     let
       attr = {},
       css = {};
-    Utils.attrForEach($xml.get(0).attributes, (name, val) => {
+    attrForEach($xml.get(0).attributes, (name, val) => {
       switch (name) {
         case 'background':
-          val = Utils.checkColor(val, 'white');
+          val = checkColor(val, 'white');
           attr[name] = val;
           css['background-color'] = val;
           break;
         case 'foreground':
-          val = Utils.checkColor(val, 'black');
+          val = checkColor(val, 'black');
           attr[name] = val;
           css['color'] = val;
           break;
@@ -173,17 +173,17 @@ export class TextActivityDocument {
           }
           break;
         case 'bold':
-          val = Utils.getBoolean(val);
+          val = getBoolean(val);
           attr[name] = val;
           css['font-weight'] = val ? 'bold' : 'normal';
           break;
         case 'italic':
-          val = Utils.getBoolean(val);
+          val = getBoolean(val);
           attr[name] = val;
           css['font-style'] = val ? 'italic' : 'normal';
           break;
         case 'target':
-          attr[name] = Utils.getBoolean(val);
+          attr[name] = getBoolean(val);
           break;
         case 'size':
           attr[name] = Number(val);
@@ -197,7 +197,7 @@ export class TextActivityDocument {
           css['white-space'] = 'pre-wrap';
           break;
         default:
-          Utils.log('warn', `Unknown text attribute: "${name}" = "${val}"`);
+          log('warn', `Unknown text attribute: "${name}" = "${val}"`);
           attr[name] = val;
           break;
       }
@@ -217,7 +217,7 @@ export class TextActivityDocument {
    */
   getAttributes() {
     // TODO: simplify the serialization of styles (now too verbose!)
-    return Utils.getAttributes(this, ['style', 'tabSpc', 'targetType', 'p']);
+    return getAttr(this, ['style', 'tabSpc', 'targetType', 'p']);
   }
 
   /**
@@ -227,7 +227,7 @@ export class TextActivityDocument {
    */
   setAttributes(data, mediaBag) {
 
-    Utils.setAttr(this, data, ['style', 'tabSpc', 'targetType', 'p']);
+    setAttr(this, data, ['style', 'tabSpc', 'targetType', 'p']);
 
     // Build paragraphs:
     this.p.forEach(p => {
@@ -393,16 +393,16 @@ export class TextTarget {
           break;
 
         case 'response':
-          this.iniChar = Utils.getVal($node.attr('fill'), this.iniChar).charAt(0);
-          this.numIniChars = Utils.getNumber($node.attr('length'), this.numIniChars);
-          this.maxLenResp = Utils.getNumber($node.attr('maxLength'), this.maxLenResp);
-          this.iniText = Utils.getVal($node.attr('show'), this.iniText);
+          this.iniChar = getVal($node.attr('fill'), this.iniChar).charAt(0);
+          this.numIniChars = getNumber($node.attr('length'), this.numIniChars);
+          this.maxLenResp = getNumber($node.attr('maxLength'), this.maxLenResp);
+          this.iniText = getVal($node.attr('show'), this.iniText);
           break;
 
         case 'info':
-          this.infoMode = Utils.getVal($node.attr('mode'), 'always');
-          this.popupDelay = Utils.getNumber($node.attr('delay'), this.popupDelay);
-          this.popupMaxTime = Utils.getNumber($node.attr('maxTime'), this.popupMaxTime);
+          this.infoMode = getVal($node.attr('mode'), 'always');
+          this.popupDelay = getNumber($node.attr('delay'), this.popupDelay);
+          this.popupMaxTime = getNumber($node.attr('maxTime'), this.popupMaxTime);
           $node.children('media').each((_n, media) => {
             this.onlyPlay = true;
             this.popupContent = new ActiveBoxContent();
@@ -435,7 +435,7 @@ export class TextTarget {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return getAttr(this, [
       'objectType', 'text', 'attr', 'isList',
       'answers', 'options', 'iniChar', 'numIniChars', 'maxLenResp', 'iniText',
       'infoMode', 'popupDelay', 'popupKey', 'popupMaxTime', 'onlyPlay',
@@ -449,7 +449,7 @@ export class TextTarget {
    * @returns {TextTarget}
    */
   setAttributes(data, mediaBag) {
-    return Utils.setAttr(this, data, [
+    return setAttr(this, data, [
       'objectType', 'text', 'attr', 'isList',
       'answers', 'options', 'iniChar', 'numIniChars', 'maxLenResp', 'iniText',
       'infoMode', 'popupDelay', 'popupKey', 'popupMaxTime', 'onlyPlay',

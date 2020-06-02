@@ -35,6 +35,7 @@ import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
 import BoxConnector from '../../boxes/BoxConnector';
 import AWT from '../../AWT';
+import { getMsg } from '../../Utils';
 
 /**
  * This class of {@link Activity} uses two panels (`primary` and `secondary`) formed by
@@ -193,8 +194,8 @@ export class SimpleAssociationPanel extends Activity.Panel {
       if (this.$animatedBgB)
         this.bgB.setCellAttr('tmpTrans', true);
 
-      this.bgA.accessibleText = this.ps.getMsg('source');
-      this.bgB.accessibleText = this.ps.getMsg('target');
+      this.bgA.accessibleText = getMsg('source');
+      this.bgB.accessibleText = getMsg('target');
 
       this.bgA.setVisible(true);
       this.bgB.setVisible(true);

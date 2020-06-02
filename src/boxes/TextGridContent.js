@@ -103,7 +103,7 @@ export class TextGridContent {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return Utils.getAttr(this, [
       'ncw', 'nch',
       'w', 'h',
       'text',

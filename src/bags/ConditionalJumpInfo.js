@@ -82,7 +82,7 @@ export class ConditionalJumpInfo extends JumpInfo {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Object.assign(super.getAttributes(), Utils.getAttributes(this, ['threshold', 'time']));
+    return Object.assign(super.getAttributes(), Utils.getAttr(this, ['threshold', 'time']));
   }
 
   /**

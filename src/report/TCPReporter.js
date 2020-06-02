@@ -183,7 +183,7 @@ export class TCPReporter extends Reporter {
               if (this.serviceUrl !== null &&
                 (this.tasks.length > 0 || this.processingTasks)) {
                 this.flushTasksPromise().then();
-                const result = this.ps.getMsg('Please wait until the results of your activities are sent to the reports system');
+                const result = Utils.getMsg('Please wait until the results of your activities are sent to the reports system');
                 if (event)
                   event.returnValue = result;
                 return result;
@@ -371,7 +371,7 @@ export class TCPReporter extends Reporter {
           .done((data, _textStatus, _jqXHR) => {
             const $user = $(data).find('user');
             if ($user.length !== 1) {
-              window.alert(this.ps.getMsg('Invalid user'));
+              window.alert(Utils.getMsg('Invalid user'));
               resolve('Invalid user ID');
             } else {
               const user = { id: $user.attr('id'), name: $user.attr('name') };
@@ -405,7 +405,7 @@ export class TCPReporter extends Reporter {
     if (this.initiated) {
       result = this.flushTasksPromise().then(() => {
         this.serviceUrl = null;
-        this.descriptionDetail = `${this.serverPath} (${this.ps.getMsg('not connected')})`;
+        this.descriptionDetail = `${this.serverPath} (${Utils.getMsg('not connected')})`;
         this.initiated = false;
       });
     }

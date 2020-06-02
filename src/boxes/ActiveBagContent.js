@@ -175,7 +175,7 @@ export class ActiveBagContent {
     ];
     if (!this.initiallyEmptyCells)
       fields.push(this.ids ? 'ids' : 'cells'); // ActiveBoxContent
-    return Utils.getAttributes(this, fields);
+    return Utils.getAttr(this, fields);
   }
 
   /**

@@ -40,22 +40,11 @@ import ScriptJS from 'scriptjs';
 import WebFont from 'webfontloader';
 
 /**
- * Returns the two-digits text expression representing the given number (lesser than 100) zero-padded at left
- * Useful for representing hours, minutes and seconds
- * @param {number} val - The number to be processed
- * @returns {string}
- */
-export function _zp(val) {
-  return `0${val}`.slice(-2);
-};
-
-/**
  * Exports third-party NPM packages used by JClic, so they become available to other scripts through
  * the global variable `JClicObject` (defined in {@link JClic})
  * @example <caption>Example usage of JSZip through JClicObject</caption>
  * var WebFont = window.JClicObject.Utils.pkg.WebFont;
  * WebFont.load({google: {families: ['Roboto']}});
- * @name Utils#pkg
  * @type: {object}
  */
 export const pkg = {
@@ -69,15 +58,34 @@ export const pkg = {
 };
 
 /**
+ * Function obtained from `i18next` that will return the translation of the provided key
+ * into the current language.
+ * The real function will be initiated by constructor. Meanwhile, it returns always `key`.
+ * @param {string} key - ID of the expression to be translated
+ * @returns {string} - Translated text
+ */
+export function getMsg(key) {
+  return _getMsgFunction(key);
+}
+
+let _getMsgFunction = key => key;
+
+/**
+ * Sets the function usd to obtain real messages from keys
+ * @param {function} fn 
+ */
+export function setGetMsgFunction(fn) {
+  _getMsgFunction = fn;
+}
+
+/**
  * List of valid verbosity levels
- * @name Utils#LOG_LEVELS
  * @const {string[]}
  */
 export const LOG_LEVELS = ['none', 'error', 'warn', 'info', 'debug', 'trace', 'all'];
 
 /**
  * Labels printed on logs for each message type
- * @name Utils#LOG_PRINT_LABELS
  * @const {string[]}
  */
 export const LOG_PRINT_LABELS = ['     ', 'ERROR', 'WARN ', 'INFO ', 'DEBUG', 'TRACE', 'ALL  '];
@@ -86,6 +94,7 @@ export const LOG_PRINT_LABELS = ['     ', 'ERROR', 'WARN ', 'INFO ', 'DEBUG', 'T
  * Options of the logging system
  * @type {object} */
 export const LOG_OPTIONS = {
+  level: 2, // warn
   prefix: 'JClic',
   timestamp: true,
   popupOnErrors: false,
@@ -116,7 +125,7 @@ export function init(options) {
 export function setLogLevel(level) {
   const log = LOG_LEVELS.indexOf(level);
   if (log >= 0)
-    Utils.LOG_LEVEL = log;
+    LOG_OPTIONS.level = log;
 };
 
 /**
@@ -130,7 +139,7 @@ export function log(type, msg) {
   const args = Array.prototype.slice.call(arguments);
 
   // Check if message should currently be logged
-  if (level < 0 || level <= Utils.LOG_LEVEL) {
+  if (level < 0 || level <= LOG_OPTIONS.level) {
     if (LOG_OPTIONS.pipeTo)
       LOG_OPTIONS.pipeTo.apply(null, args);
     else {
@@ -183,6 +192,16 @@ export function getPercent(val) {
 }
 
 /**
+ * Returns the two-digits text expression representing the given number (lesser than 100) zero-padded at left
+ * Useful for representing hours, minutes and seconds
+ * @param {number} val - The number to be processed
+ * @returns {string}
+ */
+export function zp(val) {
+  return `0${val}`.slice(-2);
+};
+
+/**
  * Returns a given time in [00h 00'00"] format
  * @param {number} millis - Amount of milliseconds to be processed
  * @returns {string}
@@ -190,7 +209,7 @@ export function getPercent(val) {
 export function getHMStime(millis) {
   const d = new Date(millis);
   const h = d.getUTCHours(), m = d.getUTCMinutes(), s = d.getUTCSeconds();
-  return `${h ? h + 'h ' : ''}${h || m ? _zp(m) + '\'' : ''}${_zp(s)}"`;
+  return `${h ? h + 'h ' : ''}${h || m ? zp(m) + '\'' : ''}${zp(s)}"`;
 };
 
 /**
@@ -199,7 +218,7 @@ export function getHMStime(millis) {
  * @returns {string}
  */
 export function getDateTime(date = new Date()) {
-  return `${date.getFullYear()}/${_zp(date.getMonth() + 1)}/${_zp(date.getDate())} ${_zp(date.getHours())}:${_zp(date.getMinutes())}:${_zp(date.getSeconds())}`;
+  return `${date.getFullYear()}/${zp(date.getMonth() + 1)}/${zp(date.getDate())} ${zp(date.getHours())}:${zp(date.getMinutes())}:${zp(date.getSeconds())}`;
 };
 
 /**
@@ -505,7 +524,7 @@ export function normalizeObject(obj) {
  * Attributes with default value will be excluded from the resulting object.
  * @returns {object}
  */
-export function getAttributes(obj, keys = null) {
+export function getAttr(obj, keys = null) {
   let result = {};
   keys = keys || Object.keys(obj);
   keys.forEach(key => {
@@ -538,7 +557,7 @@ export function getValue(value) {
       value instanceof Date ?
         value.toISOString() :
         value instanceof Object ?
-          getAttributes(value) :
+          getAttr(value) :
           value;
 };
 
@@ -1136,18 +1155,19 @@ export const settings = {
 export const Utils = {
   pkg,
   settings,
-  getMsg: key => key,
+  getMsg,
+  setGetMsgFunction,
   LOG_LEVELS,
   LOG_PRINT_LABELS,
-  LOG_LEVEL: 2, // warn
   LOG_OPTIONS,
   init,
   setLogLevel,
-  log,
+  log,  
   getBoolean,
   getVal,
   getNumber,
   getPercent,
+  zp,
   getHMStime,
   getDateTime,
   parseOldDate,
@@ -1168,7 +1188,7 @@ export const Utils = {
   colorHasTransparency,
   cloneObject,
   normalizeObject,
-  getAttributes,
+  getAttr,
   getValue,
   isEmpty,
   setAttr,

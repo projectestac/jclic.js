@@ -209,7 +209,7 @@ export class Reporter {
             $groupSelect.change(ev => { sel = ev.target.selectedIndex; });
             this.ps.skin.showDlg(true, {
               main: [
-                $('<h2/>', { class: 'subtitle' }).html(this.ps.getMsg('Select group:')),
+                $('<h2/>', { class: 'subtitle' }).html(Utils.getMsg('Select group:')),
                 $groupSelect],
               bottom: [
                 this.ps.skin.$okDlgBtn,
@@ -250,16 +250,16 @@ export class Reporter {
                 $userSelect.change(ev => { sel = ev.target.selectedIndex; });
                 this.ps.skin.showDlg(true, {
                   main: [
-                    $('<h2/>', { class: 'subtitle' }).html(this.ps.getMsg('Select user:')),
+                    $('<h2/>', { class: 'subtitle' }).html(Utils.getMsg('Select user:')),
                     $userSelect,
-                    $('<h2/>', { class: 'subtitle' }).html(this.ps.getMsg('Password:')).append($pwdInput)],
+                    $('<h2/>', { class: 'subtitle' }).html(Utils.getMsg('Password:')).append($pwdInput)],
                   bottom: [
                     this.ps.skin.$okDlgBtn,
                     this.ps.skin.$cancelDlgBtn]
                 }).then(() => {
                   if (sel >= 0) {
                     if (userList[sel].pwd && Encryption.Decrypt(userList[sel].pwd) !== $pwdInput.val()) {
-                      window.alert(this.ps.getMsg('Incorrect password'));
+                      window.alert(Utils.getMsg('Incorrect password'));
                       reject('Incorrect password');
                     } else {
                       this.userId = userList[sel].id;
@@ -276,9 +276,9 @@ export class Reporter {
           this.ps.skin.showDlg(true, {
             main: [
               $('<div/>').css({ 'text-align': 'right' })
-                .append($('<h2/>', { class: 'subtitle' }).html(this.ps.getMsg('User:'))
+                .append($('<h2/>', { class: 'subtitle' }).html(Utils.getMsg('User:'))
                   .append($userInput))
-                .append($('<h2/>', { class: 'subtitle' }).html(this.ps.getMsg('Password:'))
+                .append($('<h2/>', { class: 'subtitle' }).html(Utils.getMsg('Password:'))
                   .append($pwdInput))],
             bottom: [
               this.ps.skin.$okDlgBtn,
@@ -286,7 +286,7 @@ export class Reporter {
           }).then(() => {
             this.getUserData($userInput.val()).then(user => {
               if (user.pwd && Encryption.Decrypt(user.pwd) !== $pwdInput.val()) {
-                window.alert(this.ps.getMsg('Incorrect password'));
+                window.alert(Utils.getMsg('Incorrect password'));
                 reject('Incorrect password');
               } else {
                 this.userId = user.id;

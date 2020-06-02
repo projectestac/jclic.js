@@ -35,6 +35,7 @@ import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
 import BoxConnector from '../../boxes/BoxConnector';
 import AWT from '../../AWT';
+import { getMsg } from '../../Utils';
 
 /**
  * The aim of this class of {@link Activity} is to put in order the shuffled elements of an
@@ -147,8 +148,8 @@ export class DoublePuzzlePanel extends Activity.Panel {
 
       this.bgA.setContent(abc);
 
-      this.bgA.accessibleText = this.ps.getMsg('source');
-      this.bgB.accessibleText = this.ps.getMsg('target');
+      this.bgA.accessibleText = getMsg('source');
+      this.bgB.accessibleText = getMsg('target');
 
       this.bgA.setVisible(true);
       this.bgB.setVisible(true);

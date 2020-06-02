@@ -88,7 +88,7 @@ export class JumpInfo {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, ['id', 'action', 'actNum', 'sequence', 'projectPath']);
+    return Utils.getAttr(this, ['id', 'action', 'actNum', 'sequence', 'projectPath']);
   }
 
   /**

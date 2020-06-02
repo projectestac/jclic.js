@@ -144,7 +144,7 @@ export class Arith extends AutoContentProvider {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return Utils.getAttr(this, [
       'className',
       'opA', 'opB', // Operator
       'use_add', 'use_subst', 'use_mult', 'use_div',
@@ -777,7 +777,7 @@ Arith.Operator = class {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return Utils.getAttr(this, [
       'limInf', 'limSup',
       'numDec|0',
       'wZero|false', 'wOne|false', 'wMinusOne|false',

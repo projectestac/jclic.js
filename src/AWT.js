@@ -32,7 +32,7 @@
 /* global console, window */
 
 import $ from 'jquery';
-import Utils from './Utils';
+import { settings, findParentsWithChild, getBoolean, getAttr, setAttr, checkColor, colorHasTransparency, fx } from './Utils';
 import WebFont from 'webfontloader';
 
 /**
@@ -111,7 +111,7 @@ export class Font {
         }
       });
     else {
-      Utils.findParentsWithChild($tree, 'family').forEach(parent => {
+      findParentsWithChild($tree, 'family').forEach(parent => {
         if (typeof parent.family === 'string') {
           const name = parent.family;
           if (Font.GOOGLEFONTS.includes(name))
@@ -160,9 +160,9 @@ export class Font {
     if ($xml.attr('size'))
       this.size = Number($xml.attr('size'));
     if ($xml.attr('bold'))
-      this.bold = Utils.getBoolean($xml.attr('bold'));
+      this.bold = getBoolean($xml.attr('bold'));
     if ($xml.attr('italic'))
-      this.italic = Utils.getBoolean($xml.attr('italic'));
+      this.italic = getBoolean($xml.attr('italic'));
     if ($xml.attr('variant'))
       this.variant = $xml.attr('variant');
     return this;
@@ -175,7 +175,7 @@ export class Font {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, ['family|Arial', 'size|17', 'bold|0', 'italic|0', 'variant']);
+    return getAttr(this, ['family|Arial', 'size|17', 'bold|0', 'italic|0', 'variant']);
   }
 
   /**
@@ -184,7 +184,7 @@ export class Font {
    * @returns {Font}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, ['family', 'size', 'bold', 'italic', 'variant']);
+    return setAttr(this, data, ['family', 'size', 'bold', 'italic', 'variant']);
   }
 
   /**
@@ -417,8 +417,8 @@ export class Gradient {
    * @returns {Gradient}
    */
   setProperties($xml) {
-    this.c1 = Utils.checkColor($xml.attr('source'), 'black');
-    this.c2 = Utils.checkColor($xml.attr('dest'), 'white');
+    this.c1 = checkColor($xml.attr('source'), 'black');
+    this.c2 = checkColor($xml.attr('dest'), 'white');
     this.angle = Number($xml.attr('angle') || 0) % 360;
     this.cycles = Number($xml.attr('cycles') || 1);
     return this;
@@ -431,7 +431,7 @@ export class Gradient {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return getAttr(this, [
       'c1', 'c2', 'angle|0', 'cycles|1'
     ]);
   }
@@ -442,7 +442,7 @@ export class Gradient {
    * @returns {Gradient}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, ['c1', 'c2', 'angle', 'cycles']);
+    return setAttr(this, data, ['c1', 'c2', 'angle', 'cycles']);
   }
 
   /**
@@ -478,7 +478,7 @@ export class Gradient {
    * @returns {boolean} - `true` if this gradient uses colors with transparency, `false` otherwise.
    */
   hasTransparency() {
-    return Utils.colorHasTransparency(this.c1) || Utils.colorHasTransparency(this.c2);
+    return colorHasTransparency(this.c1) || colorHasTransparency(this.c2);
   }
 }
 
@@ -538,7 +538,7 @@ export class Stroke {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, [
+    return getAttr(this, [
       'lineWidth|1', 'lineCap|butt', 'lineJoin|miter', 'miterLimit|10',
     ]);
   }
@@ -549,7 +549,7 @@ export class Stroke {
    * @returns {Stroke}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, ['lineWidth', 'lineCap', 'lineJoin', 'miterLimit']);
+    return setAttr(this, data, ['lineWidth', 'lineCap', 'lineJoin', 'miterLimit']);
   }
 
   /**
@@ -628,7 +628,7 @@ export class Point {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, ['x', 'y']);
+    return getAttr(this, ['x', 'y']);
   }
 
   /**
@@ -637,7 +637,7 @@ export class Point {
    * @returns {Point}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, ['x', 'y']);
+    return setAttr(this, data, ['x', 'y']);
   }
 
   /**
@@ -757,7 +757,7 @@ class Dimension {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, ['width', 'height']);
+    return getAttr(this, ['width', 'height']);
   }
 
   /**
@@ -766,7 +766,7 @@ class Dimension {
    * @returns {Dimension}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, ['width', 'height']);
+    return setAttr(this, data, ['width', 'height']);
   }
 
   /**
@@ -998,7 +998,7 @@ export class Shape {
   setAttributes(data) {
     return Shape.buildShape(data);
     /*
-    return Utils.setAttr(this, data, [
+    return setAttr(this, data, [
       'type',
       { key: 'pos', fn: Point },
     ]);
@@ -1250,7 +1250,7 @@ export class Rectangle extends Shape {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttributes(this, ['type', 'pos', 'dim']);
+    return getAttr(this, ['type', 'pos', 'dim']);
   }
 
   /**
@@ -1259,7 +1259,7 @@ export class Rectangle extends Shape {
    * @returns {Rectangle}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, [
+    return setAttr(this, data, [
       'type',
       { key: 'pos', fn: Point },
       { key: 'dim', fn: Dimension },
@@ -1640,12 +1640,12 @@ export class PathStroke {
    * @param {Point} p1 - Control point
    * @param {Point} p2 - Ending point
    * @param {number} [numPoints] - The number of intermediate points to calculate. When not defined,
-   * the value will be obtained from {@link Utils.settings.BEZIER_POINTS}.
+   * the value will be obtained from {@link module:Utils.settings.BEZIER_POINTS}.
    * @returns {Point[]} - Array with some intermediate points from the resulting Bézier curve
    */
   static getQuadraticPoints(p0, p1, p2, numPoints) {
     if (!numPoints)
-      numPoints = Utils.settings.BEZIER_POINTS;
+      numPoints = settings.BEZIER_POINTS;
     const
       result = [],
       pxa = new Point(),
@@ -1669,13 +1669,13 @@ export class PathStroke {
    * @param {Point} p2 - Second control point
    * @param {Point} p3 - Ending point
    * @param {number} [numPoints] - The number of intermediate points to calculate. When not defined,
-   * the value will be obtained from {@link Utils.settings.BEZIER_POINTS}.
+   * the value will be obtained from {@link module:Utils.settings.BEZIER_POINTS}.
    * @returns {Point[]} - Array with some intermediate points from the resulting Bézier curve
    */
   static getCubicPoints(p0, p1, p2, p3, numPoints) {
     const result = [];
     if (!numPoints)
-      numPoints = Utils.settings.BEZIER_POINTS;
+      numPoints = settings.BEZIER_POINTS;
     const pr = PathStroke.getQuadraticPoints(p0, p1, p2, numPoints);
     const pq = PathStroke.getQuadraticPoints(p1, p2, p3, numPoints);
     for (let i = 0; i < numPoints; i++) {
@@ -1778,7 +1778,7 @@ export class PathStroke {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return `${this.type}:${this.points ? this.points.map(p => `${Utils.fx(p.x)},${Utils.fx(p.y)}`).join(',') : ''}`;
+    return `${this.type}:${this.points ? this.points.map(p => `${fx(p.x)},${fx(p.y)}`).join(',') : ''}`;
   }
 }
 

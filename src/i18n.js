@@ -33,7 +33,7 @@
 
 import i18next from 'i18next';
 import GlobalData from './GlobalData';
-import Utils from './Utils';
+import { log, setGetMsgFunction } from './Utils';
 
 /**
  * Checks if the language preferred by the user (based on browser and/or specific settings)
@@ -97,9 +97,9 @@ export function i18n(ps) {
     }
   }, (err, t) => {
     if (err)
-      Utils.log('error', `Error initializing "i18next": ${err.message}`);
+      log('error', `Error initializing "i18next": ${err.message}`);
     else {
-      Utils.getMsg = ps.getMsg = t;
+      setGetMsgFunction(t);
       ps.JClicVersion = GlobalData.version;
     }
   });
