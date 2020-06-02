@@ -37,8 +37,6 @@ import AudioBuffer from './AudioBuffer';
 /**
  * This kind of object encapsulates a realized {@link MediaContent} and provides methods to start,
  * stop, pause and record different types of media (audio, video, MIDI, voice recording...)
- * @exports ActiveMediaPlayer
- * @class
  */
 export class ActiveMediaPlayer {
   /**

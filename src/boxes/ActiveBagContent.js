@@ -41,8 +41,6 @@ import { settings, attrForEach, nSlash, getBoolean, getAttr, setAttr } from '../
  * and manage it. The two main members of `ActiveBagContent` are the {@link Shaper}, responsible for
  * determining the position and shape of each {@link ActiveBox}, and the {@link BoxBase} (field `style`),
  * provider of a common visual style.
- * @exports ActiveBagContent
- * @class
  */
 export class ActiveBagContent {
   /**

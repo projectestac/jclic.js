@@ -48,8 +48,6 @@ import { log, getXmlNodeText, parseXmlNode, reduceTextsToStrings, parseOldDate, 
  * - authors
  * - organizations
  * - revisions
- * @exports ProjectSettings
- * @class
  */
 export class ProjectSettings {
   /**

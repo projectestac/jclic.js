@@ -36,8 +36,6 @@ import {log, getAttr} from '../Utils';
  * activities, usually using random parameters to assure different content in each session.
  *
  * Activities with `AutoContentProvider` objects rely on them to build new content on every start.
- * @exports AutoContentProvider
- * @class
  */
 export class AutoContentProvider {
   /**
@@ -153,7 +151,6 @@ Object.assign(AutoContentProvider.prototype, {
 
 /**
  * Utility class used to encapsulate multiple sets of box contents
- * @class
  * @param {number} nRows - Number of rows to be processed
  * @param {number} nCols - Number of columns to be processed
  * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}

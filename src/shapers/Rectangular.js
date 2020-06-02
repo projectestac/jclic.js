@@ -36,9 +36,7 @@ import { Rectangle, Point, Dimension } from '../AWT';
  *
  * This is the simplest {@link Shaper}. It divides the graphic object in a set of rectangular
  * shapes distributed in the specified number of rows and columns.
- * @exports Rectangular
- * @class
- * @extends Shaper
+ * @extends module:Shaper
  */
 export class Rectangular extends Shaper {
   /**

@@ -852,7 +852,7 @@ export function toCssSize(exp, css, key, def) {
 /**
  * Gets a clip of the give image data, in a URL base64 encoded format
  * @param {object} img - The binary data of the realized image, usually obtained from a {@link MediaBagElement}
- * @param {AWT.Rectangle} rect - A rectangle containing the requested clip
+ * @param {module:AWT.Rectangle} rect - A rectangle containing the requested clip
  * @returns {string} - The URL with the image clip, as a PNG file encoded in base64
  */
 export function getImgClipUrl(img, rect) {
@@ -1150,7 +1150,6 @@ export const settings = {
 
 /**
  * Miscellaneous utility functions and constants
- * @exports Utils
  */
 export const Utils = {
   pkg,

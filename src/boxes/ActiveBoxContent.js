@@ -81,8 +81,6 @@ Object.assign(AlignType.prototype, {
  * can be a text, an image, a fragment of an image or a combination of text and images. The style
  * (colors, font and size, borders, shadows, margins, etc.) are specified in the `style` attribute,
  * always pointing to a {@link BoxBase} object.
- * @exports ActiveBoxContent
- * @class
  */
 export class ActiveBoxContent {
   /**
@@ -298,7 +296,7 @@ export class ActiveBoxContent {
    * Cells cannot have two graphic contents, so `image` (the specific image of this cell) should
    * be cleared with this setting.
    * @param {external:HTMLImageElement} img - The image data
-   * @param {AWT.Shape} imgClip - A shape that clips the portion of image assigned to this content.
+   * @param {module:AWT.Shape} imgClip - A shape that clips the portion of image assigned to this content.
    * @param {string} [animatedGifFile] - When `img` is an animated GIF, its file name
    */
   setImgContent(img, imgClip, animatedGifFile) {
@@ -389,7 +387,7 @@ Object.assign(ActiveBoxContent.prototype, {
   /**
    * Optimal dimension of any {@link ActiveBox} taking this content.
    * @name ActiveBoxContent#dimension
-   * @type {AWT.Dimension} */
+   * @type {module:AWT.Dimension} */
   dimension: null,
   /**
    * The {@link ActiveBox} can have or not a border despite the settings of {@link BoxBase}.
@@ -410,7 +408,7 @@ Object.assign(ActiveBoxContent.prototype, {
   /**
    * An optional shape used to clip the image.
    * @name ActiveBoxContent#imgClip
-   * @type {AWT.Shape} */
+   * @type {module:AWT.Shape} */
   imgClip: null,
   /**
    * The media content associated with this object.

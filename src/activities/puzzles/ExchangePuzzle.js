@@ -40,9 +40,7 @@ import { Rectangle, Point } from '../../AWT';
  * This class of {@link Activity} shows only one panel with shuffled {@link ActiveBox} objects.
  * To solve the activity, each cell must exchange its location with another one. When all cells are
  * on place, the activity is done.
- * @exports ExchangePuzzle
- * @class
- * @extends Activity
+ * @extends module:Activity
  */
 export class ExchangePuzzle extends Activity {
   /**
@@ -92,8 +90,7 @@ export class ExchangePuzzle extends Activity {
 
 /**
  * The {@link ActivityPanel} where activities of type {@link ExchangePuzzle} are played.
- * @class
- * @extends ActivityPanel
+ * @extends module:ActivityPanel
  */
 class ExchangePuzzlePanel extends Activity.Panel {
   /**
@@ -165,9 +162,9 @@ class ExchangePuzzlePanel extends Activity.Panel {
 
   /**
    * Updates the graphic content of this panel.
-   * This method will be called from {@link AWT.Container#update} when needed.
+   * This method will be called from {@link module:AWT.Container#update} when needed.
    * @override
-   * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+   * @param {module:AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
    * it's the whole panel.
    */
   updateContent(dirtyRegion) {
@@ -187,8 +184,8 @@ class ExchangePuzzlePanel extends Activity.Panel {
   /**
    * Sets the real dimension of this panel.
    * @override
-   * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
-   * @returns {AWT.Dimension}
+   * @param {module:AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+   * @returns {module:AWT.Dimension}
    */
   setDimension(preferredMaxSize) {
     return !this.bg || this.getBounds().equals(preferredMaxSize) ?
@@ -199,7 +196,7 @@ class ExchangePuzzlePanel extends Activity.Panel {
   /**
    * Sets the size and position of this activity panel
    * @override
-   * @param {AWT.Rectangle} rect
+   * @param {module:AWT.Rectangle} rect
    */
   setBounds(rect) {
     if (this.$canvas)

@@ -53,9 +53,7 @@ import { settings } from '../../Utils';
  *
  * Two special buttons placed near this boxes allow to write on the grid horizontally or vertically.
  * The aim of the activity is to fill all the text grid with the correct words.
- * @exports CrossWord
- * @class
- * @extends Activity
+ * @extends module:Activity
  */
 export class CrossWord extends Activity {
   /**
@@ -105,8 +103,7 @@ Object.assign(CrossWord.prototype, {
 
 /**
  * The {@link ActivityPanel} where {@link CrossWord} activities are played.
- * @class
- * @extends ActivityPanel
+ * @extends module:ActivityPanel
  */
 export class CrossWordPanel extends Activity.Panel {
   /**
@@ -262,9 +259,9 @@ export class CrossWordPanel extends Activity.Panel {
 
   /**
    * Updates the graphic content of this panel.
-   * This method will be called from {@link AWT.Container#update} when needed.
+   * This method will be called from {@link module:AWT.Container#update} when needed.
    * @override
-   * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+   * @param {module:AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
    * it's the whole panel.
    */
   updateContent(dirtyRegion) {
@@ -285,8 +282,8 @@ export class CrossWordPanel extends Activity.Panel {
   /**
    * Sets the real dimension of this panel.
    * @override
-   * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
-   * @returns {AWT.Dimension}
+   * @param {module:AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+   * @returns {module:AWT.Dimension}
    */
   setDimension(preferredMaxSize) {
     return !this.grid || !this.style || this.getBounds().equals(preferredMaxSize) ?
@@ -297,7 +294,7 @@ export class CrossWordPanel extends Activity.Panel {
   /**
    * Sets the size and position of this activity panel
    * @override
-   * @param {AWT.Rectangle} rect
+   * @param {module:AWT.Rectangle} rect
    */
   setBounds(rect) {
     if (this.$canvas) {

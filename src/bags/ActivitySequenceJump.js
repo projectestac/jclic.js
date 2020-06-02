@@ -42,9 +42,7 @@ import { getAttr } from '../Utils';
  * or action to be performed, but can also have up to two {@link ConditionalJumpInfo} objects. These
  * define alternative jumps that are performed only when score or time are below or over a specific
  * threshold.
- * @exports ActivitySequenceJump
- * @class
- * @extends JumpInfo
+ * @extends module:JumpInfo
  */
 export class ActivitySequenceJump extends JumpInfo {
   /**

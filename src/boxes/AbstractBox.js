@@ -34,21 +34,19 @@ import BoxBase from './BoxBase';
 
 /**
  * This abstract class is the base for most graphic components of JClic. It describes an area
- * (by default an {@link AWT.Rectangle}) with some special properties that determine how it must
+ * (by default an {@link module:AWT.Rectangle}) with some special properties that determine how it must
  * be drawn on screen.
  *
  * Some types of boxes can act as containers for other boxes, establishing a hierarchy of dependences.
- * @exports AbstractBox
  * @abstract
- * @class
- * @extends AWT.Rectangle
+ * @extends module:AWT.Rectangle
  */
 export class AbstractBox extends Rectangle {
   /**
    * AbstractBox constructor
-   * @param {?AbstractBox} parent - The AbstractBox to which this one belongs
-   * @param {?AWT.Container} container - The container where this box is placed.
-   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   * @param {module:AbstractBox} parent - The AbstractBox to which this one belongs
+   * @param {module:AWT.Container} container - The container where this box is placed.
+   * @param {module:BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * of this box are defined.
    */
   constructor(parent, container, boxBase) {
@@ -86,7 +84,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Setter method for `container`
-   * @param {AWT.Container} newContainer - The new Container assigned to this box
+   * @param {module:AWT.Container} newContainer - The new Container assigned to this box
    */
   setContainer(newContainer) {
     this.container = newContainer;
@@ -116,8 +114,8 @@ export class AbstractBox extends Rectangle {
   }
 
   /**
-   * Invalidates the zone corresponding to this box in the associated {@link AWT.Container}, if any.
-   * @param {AWT.Rectangle} rect - The rectangle to be invalidated. When `null`, it's the full
+   * Invalidates the zone corresponding to this box in the associated {@link module:AWT.Container}, if any.
+   * @param {module:AWT.Rectangle} rect - The rectangle to be invalidated. When `null`, it's the full
    * container area.
    */
   invalidate(rect) {
@@ -148,7 +146,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Sets the shape used to draw the content of this box
-   * @param {AWT.Shape} sh - The shape to be set
+   * @param {module:AWT.Shape} sh - The shape to be set
    */
   setShape(sh) {
     this.shape = sh;
@@ -160,7 +158,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Gets the current shape used in this box
-   * @returns {AWT.Shape}
+   * @returns {module:AWT.Shape}
    */
   getShape() {
     return this.shape;
@@ -169,7 +167,7 @@ export class AbstractBox extends Rectangle {
   /**
    * Check if this box contains the specified point
    * @override
-   * @param {AWT.Point} p - The point to be checked
+   * @param {module:AWT.Point} p - The point to be checked
    * @returns {boolean}
    */
   contains(p) {
@@ -424,7 +422,7 @@ export class AbstractBox extends Rectangle {
    * {@link AbstractBox#updateContent}.
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
    * box content.
-   * @param {AWT.Rectangle} [dirtyRegion=null] - The area that must be repainted. `null` refers to the whole box.
+   * @param {module:AWT.Rectangle} [dirtyRegion=null] - The area that must be repainted. `null` refers to the whole box.
    */
   update(ctx, dirtyRegion = null) {
     if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
@@ -471,7 +469,7 @@ export class AbstractBox extends Rectangle {
    * content. Background and border are already painted in {@link AbstractBox#update}.
    * @param {external:CanvasRenderingContext2D} _ctx - The canvas rendering context used to draw the
    * box content.
-   * @param {AWT.Rectangle} [_dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
+   * @param {module:AWT.Rectangle} [_dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
    */
   //
   // Abstract method, to be implemented in subclasses
@@ -506,7 +504,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Returns the enclosing Rectangle of this box including its border (if any)
-   * @returns {AWT.Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   getBorderBounds() {
     const result = new Rectangle(this.getBounds());
@@ -608,7 +606,7 @@ Object.assign(AbstractBox.prototype, {
   /**
    * The Container to which this AbstractBox belongs
    * @name AbstractBox#container
-   * @type {AWT.Container} */
+   * @type {module:AWT.Container} */
   container: null,
   /**
    * The {@link BoxBase} related to this AbstractBox. When `null`, the parent can provide an
@@ -624,7 +622,7 @@ Object.assign(AbstractBox.prototype, {
   /**
    * The shape of this box (the box Rectangle or a special Shape, if set)
    * @name AbstractBox#shape
-   * @type {AWT.Shape} */
+   * @type {module:AWT.Shape} */
   shape: null,
   /**
    * Whether this box has a shape that is not a rectangle

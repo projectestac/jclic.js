@@ -38,8 +38,6 @@ import { log, nSlash } from '../Utils';
  * This class stores and manages all the media components (images, sounds, animations, video,
  * MIDI files, etc.) needed to run the activities of a {@link JClicProject}. The main member of
  * the class is `elements`. This is where {@link MediaBagElement} objects are stored.
- * @exports MediaBag
- * @class
  */
 export class MediaBag {
   /**

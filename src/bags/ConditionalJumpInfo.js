@@ -42,9 +42,7 @@ import { getAttr, isEmpty } from '../Utils';
  *
  * The exact meaning of this members will depend on the type of `ConditionalJumpInfo` in the
  * {@link ActivitySequenceJump} (it can be `upperJump` or `lowerJump`).
- * @exports ConditionalJumpInfo
- * @class
- * @extends JumpInfo
+ * @extends module:JumpInfo
  */
 export class ConditionalJumpInfo extends JumpInfo {
   /**

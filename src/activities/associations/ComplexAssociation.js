@@ -37,9 +37,7 @@ import SimpleAssociation from './SimpleAssociation';
 /**
  * This is a special case of {@link SimpleAssociation} where the elements of the 'secondary' panel
  * can have zero, one or more associated elements in the 'primary' panel.
- * @exports ComplexAssociation
- * @class
- * @extends SimpleAssociation
+ * @extends module:SimpleAssociation
  */
 export class ComplexAssociation extends SimpleAssociation {
   /**
@@ -89,8 +87,7 @@ Object.assign(ComplexAssociation.prototype, {
 
 /**
  * The {@link ActivityPanel} where {@link ComplexAssociation} activities are played.
- * @class
- * @extends SimpleAssociationPanel
+ * @extends module:SimpleAssociationPanel
  */
 export class ComplexAssociationPanel extends SimpleAssociation.Panel {
   /**

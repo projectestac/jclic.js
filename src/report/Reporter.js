@@ -42,8 +42,6 @@ import { log, getMsg, getVal } from '../Utils';
  * done by users playing JClic activities. These operations include: identification of users,
  * compilation of data coming from the activities, storage of this data for later use, and
  * presentation of summarized results.
- * @exports Reporter
- * @class
  */
 export class Reporter {
   /**
@@ -574,7 +572,6 @@ Object.assign(Reporter.prototype, {
 
 /**
  * This object stores the global results of a {@link Reporter}
- * @class
  */
 export class ReporterInfo {
   /**

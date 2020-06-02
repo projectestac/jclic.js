@@ -39,8 +39,6 @@ import BoxBase from './BoxBase';
  * It implements methods to set and retrieve individual characters on the grid, and parsing of
  * XML objects. It also contains information about the optimal size and other graphic properties
  * (fonts, colors, etc.) of the grid.
- * @exports TextGridContent
- * @class
  */
 export class TextGridContent {
   /**

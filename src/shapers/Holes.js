@@ -34,13 +34,11 @@ import Shaper from './Shaper';
 /**
  * This {@link Shaper} consists of a set of arbitrary shapes placed over a main rectangle that
  * acts as a enclosure.
- * The components can be of type {@link AWT.Rectangle}, {@link AWT.Ellipse} or {@link AWT.Path}.
+ * The components can be of type {@link module:AWT.Rectangle}, {@link module:AWT.Ellipse} or {@link module:AWT.Path}.
  * This components have internal dimension values relative to the horizontal and vertical
  * sizes of the enclosure. Its values (always between 0 and 1) must be scaled to real sizes
  * of graphic objects.
- * @exports Holes
- * @class
- * @extends Shaper
+ * @extends module:Shaper
  */
 export class Holes extends Shaper {
   /**
@@ -68,7 +66,7 @@ export class Holes extends Shaper {
   /**
    * Gets the rectangle that contains all shapes
    * @override
-   * @returns {AWT.Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   getEnclosingShapeData() {
     return this.showEnclosure ? (this.enclosing || super.getEnclosingShapeData()) : null;

@@ -40,9 +40,7 @@ import { Rectangle, Point } from '../../AWT';
 /**
  * The aim of this type of {@link Activity} is to identify {@link ActiveBox} elements in a panel
  * that satisfy a specific condition, usually exposed in the main message.
- * @exports Identify
- * @class
- * @extends Activity
+ * @extends module:Activity
  */
 export class Identify extends Activity {
   /**
@@ -88,8 +86,7 @@ Object.assign(Identify.prototype, {
 
 /**
  * The {@link ActivityPanel} where {@link Identify} activities are played.
- * @class
- * @extends ActivityPanel
+ * @extends module:ActivityPanel
  * @param {Activity} act - The {@link Activity} to which this Panel belongs
  * @param {JClicPlayer} ps - Any object implementing the methods defined in the
  * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -201,9 +198,9 @@ export class IdentifyPanel extends Activity.Panel {
 
   /**
    * Updates the graphic content of this panel.
-   * This method will be called from {@link AWT.Container#update} when needed.
+   * This method will be called from {@link module:AWT.Container#update} when needed.
    * @override
-   * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+   * @param {module:AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
    * it's the whole panel.
    */
   updateContent(dirtyRegion) {
@@ -224,8 +221,8 @@ export class IdentifyPanel extends Activity.Panel {
   /**
    * Sets the real dimension of this panel.
    * @override
-   * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
-   * @returns {AWT.Dimension}
+   * @param {module:AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+   * @returns {module:AWT.Dimension}
    */
   setDimension(preferredMaxSize) {
     return this.getBounds().equals(preferredMaxSize) ?
@@ -236,7 +233,7 @@ export class IdentifyPanel extends Activity.Panel {
   /**
    * Sets the size and position of this activity panel
    * @override
-   * @param {AWT.Rectangle} rect
+   * @param {module:AWT.Rectangle} rect
    */
   setBounds(rect) {
     if (this.$canvas)

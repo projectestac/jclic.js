@@ -38,9 +38,7 @@ import { Point } from '../../AWT';
 /**
  * In this type of text activity users must put in order some words or paragraphs that have been
  * initially shuffled.
- * @exports OrderText
- * @class
- * @extends TextActivityBase
+ * @extends module:TextActivityBase
  */
 export class OrderText extends TextActivityBase {
   /**
@@ -94,8 +92,7 @@ Object.assign(OrderText.prototype, {
 
 /**
  * The {@link TextActivityBasePanel} where {@link OrderText} activities are played.
- * @class
- * @extends TextActivityBasePanel
+ * @extends module:TextActivityBasePanel
  */
 export class OrderTextPanel extends TextActivityBase.Panel {
   /**
@@ -122,7 +119,7 @@ export class OrderTextPanel extends TextActivityBase.Panel {
   /**
    * Sets the size and position of this activity panel
    * @override
-   * @param {AWT.Rectangle} rect
+   * @param {module:AWT.Rectangle} rect
    */
   setBounds(rect) {
     if (this.$canvas)

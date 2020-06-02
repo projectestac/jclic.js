@@ -40,8 +40,6 @@ import { nSlash } from '../Utils';
  * {@link JClicProject}. The sequence are formed by an ordered list of objects of type
  * {@link ActivitySequenceElement}.
  * It stores also a transient pointer to the current sequence element.
- * @exports ActivitySequence
- * @class
  */
 export class ActivitySequence {
   /**

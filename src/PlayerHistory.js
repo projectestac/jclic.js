@@ -35,8 +35,6 @@ import { log, isEquivalent, getPath, isNullOrUndef } from './Utils';
  *
  * PlayerHistory uses an array to store the list of projects and activities done by the user.
  * This class allows {@link JClicPlayer} objects to rewind a sequence or to go back to a caller menu.
- * @exports PlayerHistory
- * @class
  */
 export class PlayerHistory {
   /**
@@ -218,7 +216,6 @@ Object.assign(PlayerHistory.prototype, {
   /**
    * Inner class used to store history elements.
    * @name PlayerHistory#HistoryElement
-   * @class
    */
   HistoryElement: class {
     /**

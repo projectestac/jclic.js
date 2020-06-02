@@ -40,9 +40,7 @@ import { log, getMsg, getSvg, svgToURI } from '../Utils';
 
 /**
  * This is the default {@link Skin} used by JClic.js
- * @exports DefaultSkin
- * @class
- * @extends Skin
+ * @extends module:Skin
  */
 export class DefaultSkin extends Skin {
   /**

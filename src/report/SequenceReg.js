@@ -34,8 +34,6 @@ import ActivityReg from './ActivityReg';
 /**
  * This class stores the results of the activities related to an {@link ActivitySequenceElement}.
  * It's main component is an array of {@link ActivityReg} elements.
- * @exports SequenceReg
- * @class
  */
 export class SequenceReg {
   /**
@@ -166,7 +164,6 @@ Object.assign(SequenceReg.prototype, {
 
 /**
  * This object stores the global results of a {@link SequenceReg}
- * @class
  */
 export class SequenceRegInfo {
   /**

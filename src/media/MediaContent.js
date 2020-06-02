@@ -39,8 +39,6 @@ import { nSlash, attrForEach, getBoolean, getAttr, setAttr } from '../Utils';
  * This object contains a description of any multimedia content (sound, video, MIDI, voice
  * recording..) or special actions (jump to another point in the sequence, link to an URL, etc.)
  * associated to an {@link ActiveBox} object.
- * @exports MediaContent
- * @class
  */
 export class MediaContent {
   /**
@@ -269,7 +267,7 @@ Object.assign(MediaContent.prototype, {
   /**
    * Places the video window at a specific location.
    * @name MediaContent#absLocation
-   * @type {AWT.Point} */
+   * @type {module:AWT.Point} */
   absLocation: null,
   /**
    * When {@link MediaContent#absLocation} is not `null`, this field indicates from where to

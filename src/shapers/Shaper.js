@@ -37,8 +37,6 @@ import { Shape, Rectangle, Ellipse, PathStroke, Path } from '../AWT';
  * The function of this class and its subclasses is to draw a set of "shapes" that will be used to
  * place {@link ActiveBox} objects at a specific position, and to determine its dimension and
  * appearance.
- * @exports Shaper
- * @class
  */
 export class Shaper {
   /**
@@ -152,7 +150,7 @@ export class Shaper {
    * @param {external:jQuery} $xml - The XML element with the shape data
    * @param {number} scaleX
    * @param {number} scaleY
-   * @returns {AWT.Shape}
+   * @returns {module:AWT.Shape}
    */
   static readShapeData(xml, scaleX, scaleY) {
     const shd = [];
@@ -238,8 +236,8 @@ export class Shaper {
   /**
    * Gets a clone of the nth Shape object, scaled and located inside a Rectangle
    * @param {number} n
-   * @param {AWT.Rectangle} rect
-   * @returns {AWT.Shape}
+   * @param {module:AWT.Rectangle} rect
+   * @returns {module:AWT.Shape}
    */
   getShape(n, rect) {
     if (!this.initiated)
@@ -260,7 +258,7 @@ export class Shaper {
 
   /**
    * Gets the AWT.Rectangle that contains all shapes of this Shaper.
-   * @returns {AWT.Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   getEnclosingShapeData() {
     return new Rectangle(0, 0, 1, 1);
@@ -269,8 +267,8 @@ export class Shaper {
   /**
    * When `hasRemainder` is true, this method gets the rectangle containing the full surface where
    * the Shaper develops.
-   * @param {AWT.Rectangle} rect - The frame where to move and scale all the shapes
-   * @returns {AWT.Rectangle}
+   * @param {module:AWT.Rectangle} rect - The frame where to move and scale all the shapes
+   * @returns {module:AWT.Rectangle}
    */
   getRemainderShape(rect) {
     if (!this.hasRemainder)
@@ -354,7 +352,7 @@ Object.assign(Shaper.prototype, {
   /**
    * In {@link Holes}, the enclosing area where all shapes are placed.
    * @name Shaper#enclosing
-   * @type {AWT.Shape} */
+   * @type {module:AWT.Shape} */
   enclosing: null,
   /**
    * In {@link Holes}, when `true`, the enclosing area will be drawn

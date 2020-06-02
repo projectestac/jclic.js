@@ -52,8 +52,6 @@ const TOUCH_TEST_EVENT = 'touchstart';
  * content.
  * Activities should extend both `Activity` and `ActivityPanel` classes in order to become fully
  * operative.
- * @exports Activity
- * @class
  * @abstract
  */
 export class Activity {
@@ -567,7 +565,7 @@ export class Activity {
   /**
    *
    * Getter method for `windowSize`
-   * @returns {AWT.Dimension}
+   * @returns {module:AWT.Dimension}
    */
   getWindowSize() {
     return new Dimension(this.windowSize);
@@ -575,7 +573,7 @@ export class Activity {
 
   /**
    * Setter method for `windowSize`
-   * @param {AWT.Dimension} windowSize
+   * @param {module:AWT.Dimension} windowSize
    */
   setWindowSize(windowSize) {
     this.windowSize = new Dimension(windowSize);
@@ -647,7 +645,7 @@ Object.assign(Activity.prototype, {
   /**
    * When set, gradient used to draw the activity window background
    * @name Activity#bgGradient
-   * @type {AWT.Gradient} */
+   * @type {module:AWT.Gradient} */
   bgGradient: null,
   /**
    * Whether the bgImage (if any) has to be tiled across the panel background
@@ -673,7 +671,7 @@ Object.assign(Activity.prototype, {
   /**
    * The position of the activity panel on the player.
    * @name Activity#absolutePosition
-   * @type {AWT.Point} */
+   * @type {module:AWT.Point} */
   absolutePosition: null,
   /**
    * Whether to generate usage reports
@@ -764,7 +762,7 @@ Object.assign(Activity.prototype, {
   /**
    * Preferred dimension of the activity window
    * @name Activity#windowSize
-   * @type {AWT.Dimension} */
+   * @type {module:AWT.Dimension} */
   windowSize: new Dimension(settings.DEFAULT_WIDTH, settings.DEFAULT_HEIGHT),
   /**
    * Whether the activity window has transparent background.
@@ -779,7 +777,7 @@ Object.assign(Activity.prototype, {
   /**
    * Gradient used to draw backgrounds inside the activity.
    * @name Activity#activityBgGradient
-   * @type {AWT.Gradient} */
+   * @type {module:AWT.Gradient} */
   activityBgGradient: null,
   /**
    * Whether to display or not the 'time' counter
@@ -866,8 +864,7 @@ Object.assign(Activity.prototype, {
  * In JClic, {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html Activity.Panel}
  * extends {@link http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html javax.swing.JPanel}.
  * In this implementation, the JPanel will be replaced by an HTML `div` tag.
- * @class
- * @extends AWT.Container
+ * @extends module:AWT.Container
  */
 export class ActivityPanel extends Container {
   /**
@@ -894,7 +891,7 @@ export class ActivityPanel extends Container {
 
   /**
    * Sets the size and position of this activity panel
-   * @param {AWT.Rectangle} rect
+   * @param {module:AWT.Rectangle} rect
    */
   setBounds(rect) {
     this.pos.x = rect.pos.x;
@@ -957,8 +954,8 @@ export class ActivityPanel extends Container {
 
   /**
    * Activities should implement this method to update the graphic content of its panel. The method
-   * will be called from {@link AWT.Container#update} when needed.
-   * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+   * will be called from {@link module:AWT.Container#update} when needed.
+   * @param {module:AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
    * it's the whole panel.
    */
   updateContent(dirtyRegion) {
@@ -1012,8 +1009,8 @@ export class ActivityPanel extends Container {
 
   /**
    * Sets the real dimension of this ActivityPanel.
-   * @param {AWT.Dimension} maxSize - The maximum surface available for the activity panel
-   * @returns {AWT.Dimension}
+   * @param {module:AWT.Dimension} maxSize - The maximum surface available for the activity panel
+   * @returns {module:AWT.Dimension}
    */
   setDimension(maxSize) {
     return new Dimension(
@@ -1064,8 +1061,8 @@ export class ActivityPanel extends Container {
   /**
    * Fits the panel within the `proposed` rectangle. The panel can occupy more space, but always
    * not surpassing the `bounds` rectangle.
-   * @param {AWT.Rectangle} proposed - The proposed rectangle
-   * @param {AWT.Rectangle} bounds - The maximum allowed bounds
+   * @param {module:AWT.Rectangle} proposed - The proposed rectangle
+   * @param {module:AWT.Rectangle} bounds - The maximum allowed bounds
    */
   fitTo(proposed, bounds) {
     const origin = new Point();
@@ -1287,12 +1284,12 @@ Object.assign(ActivityPanel.prototype, {
   /**
    * The minimum size of this kind of ActivityPanel
    * @name ActivityPanel#minimumSize
-   * @type {AWT.Dimension} */
+   * @type {module:AWT.Dimension} */
   minimumSize: null,
   /**
    * The preferred size of this kind of ActivityPanel
    * @name ActivityPanel#preferredSize
-   * @type {AWT.Dimension} */
+   * @type {module:AWT.Dimension} */
   preferredSize: null,
   /**
    * List of events intercepted by this ActivityPanel. Current events are: 'keydown', 'keyup',

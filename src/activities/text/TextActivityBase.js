@@ -39,9 +39,7 @@ import BoxBase from '../../boxes/BoxBase';
 /**
  * This class and its visual component {@link TextActivityBasePanel} are the base for text
  * activities like {@link FillInBlanks}, {@link IdentifyText}, {@link OrderText} and {@link Complete}.
- * @exports TextActivityBase
- * @class
- * @extends Activity
+ * @extends module:Activity
  */
 export class TextActivityBase extends Activity {
   /**
@@ -98,8 +96,7 @@ Object.assign(TextActivityBase.prototype, {
 
 /**
  * The {@link ActivityPanel} where text activities (based on {@link TextActivityBase}) are played.
- * @class
- * @extends ActivityPanel
+ * @extends module:ActivityPanel
  */
 //export class TextActivityBasePanel extends Activity.Panel {
 export class TextActivityBasePanel extends ActivityPanel {

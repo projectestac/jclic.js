@@ -47,7 +47,6 @@ import WebFont from 'webfontloader';
 
 /**
  * Font contains properties and provides methods to manage fonts
- * @class
  */
 export class Font {
   /**
@@ -390,7 +389,6 @@ Object.assign(Font.prototype, {
 
 /**
  * Contains parameters and methods to draw complex color gradients
- * @class
  */
 export class Gradient {
   /**
@@ -508,7 +506,6 @@ Object.assign(Gradient.prototype, {
 /**
  * Contains properties used to draw lines in HTML `canvas` elements.
  * @see {@link http://bucephalus.org/text/CanvasHandbook/CanvasHandbook.html#line-caps-and-joins}
- * @class
  */
 export class Stroke {
   /**
@@ -591,7 +588,6 @@ Object.assign(Stroke.prototype, {
 
 /**
  * Contains the `x` andy `y` coordinates of a point, and provides some useful methods.
- * @class
  */
 export class Point {
   /**
@@ -719,7 +715,6 @@ Object.assign(Point.prototype, {
 
 /**
  * This class encapsulates `width` and `height` properties.
- * @class
  */
 export class Dimension {
   /**
@@ -829,7 +824,6 @@ Object.assign(Dimension.prototype, {
 /**
  * Shape is a generic abstract class for rectangles, ellipses and stroke-free shapes.
  * @abstract
- * @class
  */
 export class Shape {
   /**
@@ -1052,8 +1046,7 @@ Object.assign(Shape.prototype, {
  * new Rectangle([x0, y0, x1, y1])
  * // Four single numbers, meaning the same coordinates as above:
  * new Rectangle(x0, y0, x1, y1)
- * @class
- * @extends Shape
+ * @extends module:Shape
  */
 export class Rectangle extends Shape {
   /**
@@ -1282,8 +1275,7 @@ Object.assign(Rectangle.prototype, {
 
 /**
  * The Ellipse shape has the same constructor options as {@link Rectangle}
- * @class
- * @extends Rectangle
+ * @extends module:Rectangle
  */
 export class Ellipse extends Rectangle {
   /**
@@ -1386,8 +1378,7 @@ Object.assign(Ellipse.prototype, {
 /**
  * A `Path` is a {@link Shape} formed by a serie of strokes, represented by
  * {@link PathStroke} objects
- * @class
- * @extends Shape
+ * @extends module:Shape
  */
 export class Path extends Shape {
   /**
@@ -1604,7 +1595,6 @@ Object.assign(Path.prototype, {
 
 /**
  * PathStroke is the basic component of {@link Path} objects
- * @class
  */
 export class PathStroke {
   /**
@@ -1798,7 +1788,6 @@ Object.assign(PathStroke.prototype, {
 
 /**
  * This class encapsulates actions that can be linked to buttons, menus and other active objects
- * @class
  */
 export class Action {
   /**
@@ -1888,7 +1877,6 @@ Object.assign(Action.prototype, {
 
 /**
  * This class provides a timer that will launch a function at specific intervals
- * @class
  */
 export class Timer {
   /**
@@ -1998,8 +1986,7 @@ Object.assign(Timer.prototype, {
  * Logic object that takes care of an "invalidated" rectangle that will be repainted
  * at the next update of a 2D object, usually an HTML Canvas.
  * Container has the same constructor options as {@link Rectangle}
- * @class
- * @extends Rectangle
+ * @extends module:Rectangle
  */
 export class Container extends Rectangle {
   /**

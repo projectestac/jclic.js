@@ -41,8 +41,6 @@
  * IMPORTANT: This is a shortened version of Encryption with only the methods needed to decrypt
  * stored passwords. Full version is on file `src/misc/encryption/Encryption.js`
  *
- * @exports Encryption
- * @class
  * @abstract
  */
 export class Encryption {

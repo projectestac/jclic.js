@@ -45,9 +45,7 @@ import TextGrid from '../../boxes/TextGrid';
  * The aim of the activity is to find all the words hidden on the text grid.
  * The content of an optional {@link ActiveBagContent} can be revealed on an auxiliary panel as
  * words are found.
- * @exports WordSearch
- * @class
- * @extends Activity
+ * @extends module:Activity
  */
 export class WordSearch extends Activity {
   /**
@@ -115,8 +113,7 @@ Object.assign(WordSearch.prototype, {
 
 /**
  * The {@link ActivityPanel} where {@link WordSearch} activities are played.
- * @class
- * @extends ActivityPanel
+ * @extends module:ActivityPanel
  */
 export class WordSearchPanel extends Activity.Panel {
   /**
@@ -221,9 +218,9 @@ export class WordSearchPanel extends Activity.Panel {
 
   /**
    * Updates the graphic content of this panel.
-   * This method will be called from {@link AWT.Container#update} when needed.
+   * This method will be called from {@link module:AWT.Container#update} when needed.
    * @override
-   * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+   * @param {module:AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
    * it's the whole panel.
    */
   updateContent(dirtyRegion) {
@@ -245,8 +242,8 @@ export class WordSearchPanel extends Activity.Panel {
   /**
    * Sets the real dimension of this panel.
    * @override
-   * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
-   * @returns {AWT.Dimension}
+   * @param {module:AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+   * @returns {module:AWT.Dimension}
    */
   setDimension(preferredMaxSize) {
     if (!this.grid || this.getBounds().equals(preferredMaxSize))
@@ -260,7 +257,7 @@ export class WordSearchPanel extends Activity.Panel {
   /**
    * Sets the size and position of this activity panel
    * @override
-   * @param {AWT.Rectangle} rect
+   * @param {module:AWT.Rectangle} rect
    */
   setBounds(rect) {
     if (this.$canvas)

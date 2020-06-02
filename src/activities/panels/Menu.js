@@ -37,9 +37,7 @@ import { log } from '../../Utils';
 /**
  * This class of {@link Activity} is only used in legacy JClic project libraries. It contains
  * one or more buttons pointing to specific JClic projects or to other `Menu` activity panels.
- * @exports Menu
- * @class
- * @extends Activity
+ * @extends module:Activity
  */
 export class Menu extends Activity {
   /**
@@ -57,8 +55,7 @@ export class Menu extends Activity {
 
 /**
  * The {@link ActivityPanel} where Menu will show its content.
- * @class
- * @extends ActivityPanel
+ * @extends module:ActivityPanel
  * @param {Activity} act - The {@link Activity} to which this Panel belongs
  * @param {JClicPlayer} ps - Any object implementing the methods defined in the
  * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -159,8 +156,8 @@ export class MenuPanel extends Activity.Panel {
   /**
    * Sets the real dimension of this panel.
    * @override
-   * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
-   * @returns {AWT.Dimension}
+   * @param {module:AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+   * @returns {module:AWT.Dimension}
    */
   setDimension(preferredMaxSize) {
     return preferredMaxSize;

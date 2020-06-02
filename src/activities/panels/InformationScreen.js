@@ -42,9 +42,7 @@ import { Rectangle, Point } from '../../AWT';
  * Because active boxes can act as a links to specific points in the project's sequence of
  * activities, this kind of activity is often used as a menu where users can choose from different
  * options.
- * @exports InformationScreen
- * @class
- * @extends Activity
+ * @extends module:Activity
  */
 export class InformationScreen extends Activity {
   /**
@@ -61,8 +59,7 @@ export class InformationScreen extends Activity {
 
 /**
  * The {@link ActivityPanel} where {@link InformationScreen} activities should display its content
- * @class
- * @extends ActivityPanel
+ * @extends module:ActivityPanel
  * @param {Activity} act - The {@link Activity} to which this Panel belongs
  * @param {JClicPlayer} ps - Any object implementing the methods defined in the
  * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
@@ -140,9 +137,9 @@ export class InformationScreenPanel extends Activity.Panel {
 
   /**
    * Updates the graphic content of this panel.
-   * This method will be called from {@link AWT.Container#update} when needed.
+   * This method will be called from {@link module:AWT.Container#update} when needed.
    * @override
-   * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+   * @param {module:AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
    * it's the whole panel.
    */
   updateContent(dirtyRegion) {
@@ -162,8 +159,8 @@ export class InformationScreenPanel extends Activity.Panel {
   /**
    * Sets the real dimension of this panel.
    * @override
-   * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
-   * @returns {AWT.Dimension}
+   * @param {module:AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+   * @returns {module:AWT.Dimension}
    */
   setDimension(preferredMaxSize) {
     return this.getBounds().equals(preferredMaxSize) ?
@@ -174,7 +171,7 @@ export class InformationScreenPanel extends Activity.Panel {
   /**
    * Sets the size and position of this activity panel
    * @override
-   * @param {AWT.Rectangle} rect
+   * @param {module:AWT.Rectangle} rect
    */
   setBounds(rect) {
     if (this.$canvas)

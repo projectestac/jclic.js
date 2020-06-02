@@ -43,8 +43,6 @@ import { log } from '../Utils';
  * A simple MIDI player based on MidiPlayerJS
  * https://github.com/grimmdude/MidiPlayerJS
  * See also: http://www.midijs.net (https://github.com/babelsberg/babelsberg-js/tree/master/midijs)
- * @exports MidiAudioPlayer
- * @class
  */
 export class MidiAudioPlayer {
   /**

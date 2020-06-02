@@ -45,9 +45,7 @@ import Rectangular from '../../shapers/Rectangular';
  * The cell pairs can have identical content, defined in the `primary` {@link ActiveBagContent} of
  * the activity, or two different contents. In this case, the `secondary` bag elements will have
  * content related to each `primary` element.
- * @exports MemoryGame
- * @class
- * @extends Activity
+ * @extends module:Activity
  */
 export class MemoryGame extends Activity {
   /**
@@ -88,8 +86,7 @@ export class MemoryGame extends Activity {
 
 /**
  * The {@link ActivityPanel} where {@link MemoryGame} activities are played.
- * @class
- * @extends ActivityPanel
+ * @extends module:ActivityPanel
  */
 export class MemoryGamePanel extends Activity.Panel {
   /**
@@ -187,9 +184,9 @@ export class MemoryGamePanel extends Activity.Panel {
 
   /**
    * Updates the graphic content of this panel.
-   * This method will be called from {@link AWT.Container#update} when needed.
+   * This method will be called from {@link module:AWT.Container#update} when needed.
    * @override
-   * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
+   * @param {module:AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
    * it's the whole panel.
    */
   updateContent(dirtyRegion) {
@@ -209,8 +206,8 @@ export class MemoryGamePanel extends Activity.Panel {
   /**
    * Sets the real dimension of this panel.
    * @override
-   * @param {AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
-   * @returns {AWT.Dimension}
+   * @param {module:AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
+   * @returns {module:AWT.Dimension}
    */
   setDimension(preferredMaxSize) {
     if (!this.bg || this.getBounds().equals(preferredMaxSize))
@@ -221,7 +218,7 @@ export class MemoryGamePanel extends Activity.Panel {
   /**
    * Sets the size and position of this activity panel
    * @override
-   * @param {AWT.Rectangle} rect
+   * @param {module:AWT.Rectangle} rect
    */
   setBounds(rect) {
     if (this.$canvas)

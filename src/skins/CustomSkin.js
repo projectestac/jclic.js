@@ -38,9 +38,7 @@ import ActiveBox from '../boxes/ActiveBox';
 
 /**
  * Custom {@link Skin} for JClic.js, built assembling specific cuts of a canvas (usually a PNG file) defined in an XML file
- * @exports CustomSkin
- * @class
- * @extends Skin
+ * @extends module:Skin
  */
 export class CustomSkin extends Skin {
 

@@ -39,8 +39,6 @@ import MediaContent from '../../media/MediaContent';
  * {@link IdentifyText}, {@link OrderText} and {@link Complete}. It contains the main document of
  * the activity, usually with some elements marked as "targets". In {@link FillInBlanks}, this
  * targets are encapsulated in {@link TextTarget} objects.
- * @exports TextActivityDocument
- * @class
  */
 export class TextActivityDocument {
   /**
@@ -337,7 +335,6 @@ Object.assign(TextActivityDocument.prototype, {
 /**
  * This class contains the properties and methods of the document elements that are the real
  * targets of user actions in text activities.
- * @class
  */
 export class TextTarget {
   /**

@@ -38,9 +38,7 @@ import { Point } from '../AWT';
  * In addition to the members and methods of `BoxBag`, it implements specific methods to deal with
  * {@link ActiveBagContent} objects and with the other specific members of `ActiveBox` like its "ids"
  * (`idOrder`, `idLoc` and `idAss`).
- * @exports ActiveBoxBag
- * @class
- * @extends BoxBag
+ * @extends module:BoxBag
  */
 export class ActiveBoxBag extends BoxBag {
   /**
@@ -117,7 +115,7 @@ export class ActiveBoxBag extends BoxBag {
 
   /**
    * Finds an ActiveBox by location
-   * @param {AWT.Point} point - The location to search for
+   * @param {module:AWT.Point} point - The location to search for
    * @returns {ActiveBox}
    */
   findActiveBox(point) {

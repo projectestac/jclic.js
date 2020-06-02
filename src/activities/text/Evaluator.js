@@ -37,8 +37,6 @@ import { log, attrForEach, getBoolean, setAttr, getAttr } from '../../Utils';
  * This class and its derivatives {@link BasicEvaluator} and
  * {@link ComplexEvaluator} are used to evaluate the answers written by the final users
  * in text activities.
- * @exports Evaluator
- * @class
  */
 export class Evaluator {
   /**
@@ -228,8 +226,7 @@ Object.assign(Evaluator.prototype, {
 /**
  * A basic evaluator that just compares texts, without looking for possible coincidences of text
  * fragments once erroneous characters removed.
- * @class
- * @extends Evaluator
+ * @extends module:Evaluator
  */
 export class BasicEvaluator extends Evaluator {
   /**
@@ -348,8 +345,7 @@ Object.assign(BasicEvaluator.prototype, {
 /**
  * ComplexEvaluator acts like {@link BasicEvaluator}, but providing feedback about
  * the location of mistakes on the user's answer.
- * @class
- * @extends BasicEvaluator
+ * @extends module:BasicEvaluator
  */
 export class ComplexEvaluator extends BasicEvaluator {
   /**

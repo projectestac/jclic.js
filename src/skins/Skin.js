@@ -41,10 +41,8 @@ import { Container, Dimension, Rectangle } from '../AWT';
  * player window, message box, counters, buttons, status... and also the appearance of the main
  * container.
  * The basic implementation of Skin is {@link DefaultSkin}.
- * @exports Skin
- * @class
  * @abstract
- * @extends AWT.Container
+ * @extends module:AWT.Container
  */
 export class Skin extends Container {
   /**
@@ -345,7 +343,7 @@ export class Skin extends Container {
    * Updates the graphic contents of this skin.
    * This method should be called from {@link Skin#update}
    * @override
-   * @param {AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`, it's the
+   * @param {module:AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`, it's the
    * whole panel.
    */
   updateContent(dirtyRegion) {
@@ -668,7 +666,7 @@ export class Skin extends Container {
 
   /**
    * adjusts the skin to the dimension of its `$div` container
-   * @returns {AWT.Dimension} the new dimension of the skin
+   * @returns {module:AWT.Dimension} the new dimension of the skin
    */
   fit() {
     this.doLayout();
@@ -706,7 +704,7 @@ export class Skin extends Container {
 
   /**
    * Method used to notify this skin that a specific action has changed its enabled/disabled status
-   * @param {AWT.Action} _action - The action originating the change event
+   * @param {module:AWT.Action} _action - The action originating the change event
    */
   actionStatusChanged(act) {
     if (act.name && this.buttons[act.name])

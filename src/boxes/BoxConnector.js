@@ -42,13 +42,11 @@ const DEFAULT_COMPOSITE_OP = 'source-over';
  * - Dragging the ActiveBox from one location to another.
  *
  * The connecting lines can have arrowheads at its endings.
- * @exports BoxConnector
- * @class
  */
 export class BoxConnector {
   /**
    * BoxConnector constructor
-   * @param {AWT.Container} parent - The Container to which this BoxConnector belongs
+   * @param {module:AWT.Container} parent - The Container to which this BoxConnector belongs
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context where to draw
    */
   constructor(parent, ctx) {
@@ -71,7 +69,7 @@ export class BoxConnector {
 
   /**
    * Moves the ending point of the connector to a new position
-   * @param {AWT.Point} pt - The new position
+   * @param {module:AWT.Point} pt - The new position
    * @param {boolean} forcePaint - When `true`, forces the repaint of all the area also if there is
    * no movement at all.
    */
@@ -118,7 +116,7 @@ export class BoxConnector {
 
   /**
    * Starts the box connector operation
-   * @param {AWT.Point} pt - Starting point
+   * @param {module:AWT.Point} pt - Starting point
    * @param {ActiveBox} [box] -  Passed only when the BoxConnector runs in drag&drop mode
    */
   begin(pt, box) {
@@ -231,17 +229,17 @@ Object.assign(BoxConnector.prototype, {
   /**
    * The rectangle of {@link ActivityPanel} saved in `bgImg`
    * @name BoxConnector#bgRect
-   * @type {AWT.Rectangle} */
+   * @type {module:AWT.Rectangle} */
   bgRect: null,
   /**
    * Initial position of the connector
    * @name BoxConnector#origin
-   * @type {AWT.Point} */
+   * @type {module:AWT.Point} */
   origin: null,
   /**
    * Current (while moving) and final position of the connector
    * @name BoxConnector#dest
-   * @type {AWT.Point} */
+   * @type {module:AWT.Point} */
   dest: null,
   /**
    * When `true`, the connector must end on arrowhead
@@ -295,7 +293,7 @@ Object.assign(BoxConnector.prototype, {
   /**
    * Relative position of point B regarding A
    * @name BoxConnector#relativePos
-   * @type {AWT.Point} */
+   * @type {module:AWT.Point} */
   relativePos: null,
   /**
    * The ActiveBox to connect or move
@@ -310,12 +308,12 @@ Object.assign(BoxConnector.prototype, {
   /**
    * The dimension of the HTML canvas where to draw
    * @name BoxConnector#dim
-   * @type {AWT.Dimension} */
+   * @type {module:AWT.Dimension} */
   dim: null,
   /**
    * The container to which this connector belongs
    * @name BoxConnector#parent
-   * @type {AWT.Container} */
+   * @type {module:AWT.Container} */
   parent: null,
   /**
    * Width of the connector line

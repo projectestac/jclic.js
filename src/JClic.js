@@ -161,10 +161,10 @@ import Deps from './Deps';
  * need to make direct calls to the main components of JClic.
  *
  * The main members of the global variable `JClicObject` are:
- * - `JClicObject.JClicPlayer` (the {@link JClicPlayer} object)
- * - `JClicObject.JClicProject` (the {@link JClicProject} object)
- * - `JClicObject.AWT` (the {@link AWT} object)
- * - `JClicObject.Utils` (the {@link Utils} object)
+ * - `JClicObject.JClicPlayer` (the {@link module:JClicPlayer} object)
+ * - `JClicObject.JClicProject` (the {@link module:JClicProject} object)
+ * - `JClicObject.AWT` (the {@link module:AWT} object)
+ * - `JClicObject.Utils` (the {@link module:Utils} object)
  * - `JClicObject.$` (the JQuery object)
  * - `JClicObject.options` (the main options loaded at startup, usually the content of the global variable `JClicDataOptions`)
  * - `JClicObject.projectFiles` (used by JSONP to store the content of some files when inaccessible to the browser because CORS or other restrictions)
@@ -172,7 +172,6 @@ import Deps from './Deps';
  * - `JClicObject.loadProject` (a function that starts a JClicPlayer on a specific `div`)
  *
  *  @module JClic
- * @exports JClicObject
  * @example <caption>
  * Creates a JClic div and loads "myproject.jclic" on it:
  * </caption><div class ="JClic" data-project="myproject.jclic"></div>

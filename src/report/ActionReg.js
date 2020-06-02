@@ -36,8 +36,6 @@ import { attrForEach, getBoolean } from '../Utils';
  * This class stores information about one specific action done by the current user while playing
  * an activity.
  *
- * @exports ActionReg
- * @class
  */
 export class ActionReg {
   /**

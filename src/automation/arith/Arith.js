@@ -51,9 +51,7 @@ const
  * The operations can be additions, subtractions, multiplications or divides. The unknown of these
  * operations can be the result of the operation (`A op B = ?`), any of the two operators
  * (`A op ? = C` or `? op B = C`) or also the operator itself (`A ? B = C`).
- * @exports Arith
- * @class
- * @extends AutoContentProvider
+ * @extends module:AutoContentProvider
  */
 export class Arith extends AutoContentProvider {
   /**
@@ -724,7 +722,6 @@ Object.assign(Arith.prototype, {
 /**
  * Operator is an Utility class used by Arith to encapsulate the properties and methods related
  * to the members of the operations.
- * @class
  */
 Arith.Operator = class {
   constructor() {

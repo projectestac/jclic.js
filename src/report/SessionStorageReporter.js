@@ -39,9 +39,7 @@ import Reporter from './Reporter';
  * Connection parameters (`key`, `context`...) are passed through the `options` element of {@link JClicPlayer} (acting as {@link PlayStation}).
  * Set `storage=local` in `options` to store reports in [`window.localStorage`]{@link https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage}
  * instead of [`window.sessionStorage`]{@link https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage} (default).
- * @exports SessionStorageReporter
- * @class
- * @extends Reporter
+ * @extends module:Reporter
  */
 export class SessionStorageReporter extends Reporter {
   /**

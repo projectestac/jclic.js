@@ -36,9 +36,7 @@ import { PathStroke } from '../AWT';
 /**
  * This is the classic {@link JigSaw} {@link Shaper} used in puzzle toys, where teeth and slots
  * are shaped by Bézier curves.
- * @exports ClassicJigSaw
- * @class
- * @extends JigSaw
+ * @extends module:JigSaw
  */
 export class ClassicJigSaw extends JigSaw {
   /**
@@ -53,7 +51,7 @@ export class ClassicJigSaw extends JigSaw {
   /**
    * Overrides {@link JigSaw#hLine}
    * @override
-   * @param {AWT.Path} sd - The Path to which the line will be added
+   * @param {module:AWT.Path} sd - The Path to which the line will be added
    * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, and 2 means tooth down
    * @param {number} x - X coordinate of the starting point
    * @param {number} y - Y coordinate of the starting point
@@ -89,7 +87,7 @@ export class ClassicJigSaw extends JigSaw {
   /**
    * Overrides {@link JigSaw#vLine}
    * @override
-   * @param {AWT.Path} sd - The Path to which the line will be added
+   * @param {module:AWT.Path} sd - The Path to which the line will be added
    * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, and 2 means tooth left
    * @param {number} x - X coordinate of the starting point
    * @param {number} y - Y coordinate of the starting point

@@ -43,8 +43,6 @@ import { Font } from '../AWT';
  * a `data` field pointing to a object containing the real media. They have also a flag indicating
  * if the data must be saved on the {@link JClicProject} zip file or just maintained as a reference
  * to an external file.
- * @exports MediaBagElement
- * @class
  */
 export class MediaBagElement {
   /**

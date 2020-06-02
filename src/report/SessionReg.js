@@ -34,8 +34,6 @@ import SequenceReg from './SequenceReg';
 /**
  * This class encapsulates data of a user's working session, usually associated to a single {@link JClicProject}
  * It's main component is `sequences`, an array of {@link SequenceReg} objects.
- * @exports SessionReg
- * @class
  */
 export class SessionReg {
   /**
@@ -224,7 +222,6 @@ Object.assign(SessionReg.prototype, {
 
 /**
  * This object stores the global results of a {@link SessionReg}
- * @class
  */
 export class SessionRegInfo {
   /**

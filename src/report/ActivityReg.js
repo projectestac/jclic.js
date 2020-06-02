@@ -35,8 +35,6 @@ import ActionReg from './ActionReg';
 
 /**
  * This class stores miscellaneous data obtained by the current user playing an {@link Activity}.
- * @exports ActivityReg
- * @class
  */
 export class ActivityReg {
   /**

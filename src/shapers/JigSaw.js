@@ -35,9 +35,7 @@ import { Path, PathStroke } from '../AWT';
 /**
  *
  * This {@link Shaper} returns a set of rectangular shapes with teeth and slots that fit between them.
- * @exports JigSaw
- * @class
- * @extends Shaper
+ * @extends module:Shaper
  */
 export class JigSaw extends Shaper {
   /**
@@ -93,7 +91,7 @@ export class JigSaw extends Shaper {
 
   /**
    * Adds an horizontal line to the provided path
-   * @param {AWT.Path} sd - The Path to which the line will be added
+   * @param {module:AWT.Path} sd - The Path to which the line will be added
    * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, and 2 means tooth down
    * @param {number} x - X coordinate of the starting point
    * @param {number} y - Y coordinate of the starting point
@@ -127,7 +125,7 @@ export class JigSaw extends Shaper {
   /**
    *
    * Adds a vertical line to the provided path
-   * @param {AWT.Path} sd - The Path to which the line will be added
+   * @param {module:AWT.Path} sd - The Path to which the line will be added
    * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, and 2 means tooth left
    * @param {number} x - X coordinate of the starting point
    * @param {number} y - Y coordinate of the starting point

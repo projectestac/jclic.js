@@ -54,9 +54,7 @@ import Reporter from './report/Reporter';
  * JClicPlayer offers to {@link Activity#Panel} objects all the necessary resources and functions:
  * media bags (to load and realize images and other media contents), sequence control, management
  * of the reporting system, user interface, display of system messages, etc.
- * @exports JClicPlayer
- * @class
- * @extends AWT.Container
+ * @extends module:AWT.Container
  */
 export class JClicPlayer extends Container {
 
@@ -124,7 +122,7 @@ export class JClicPlayer extends Container {
   }
 
   /**
-   * Builds the {@link AWT.Action} objects for this player
+   * Builds the {@link module:AWT.Action} objects for this player
    */
   buildActions() {
     this.actions = {
@@ -221,7 +219,7 @@ export class JClicPlayer extends Container {
 
   /**
    *
-   * Creates and initializes objects of type {@link AWT.Timer}
+   * Creates and initializes objects of type {@link module:AWT.Timer}
    */
   initTimers() {
     // Main timer
@@ -1159,24 +1157,24 @@ Object.assign(JClicPlayer.prototype, {
    * @type {Reporter} */
   reporter: null,
   /**
-   * Collection of {@link AWT.Action} objects used by this player.
+   * Collection of {@link module:AWT.Action} objects used by this player.
    * @name JClicPlayer#actions
-   * @type {AWT.Action[]} */
+   * @type {module:AWT.Action[]} */
   actions: {},
   /**
    * Main timer object used to feed the time counter. Ticks every second.
    * @name JClicPlayer#timer
-   * @type {AWT.Timer} */
+   * @type {module:AWT.Timer} */
   timer: null,
   /**
    * Timer for delayed actions
    * @name JClicPlayer#delayedTimer
-   * @type {AWT.Timer} */
+   * @type {module:AWT.Timer} */
   delayedTimer: null,
   /**
    * This variable holds the action to be executed by `delayedTimer`
    * @name JClicPlayer#delayedAction
-   * @type {AWT.Action} */
+   * @type {module:AWT.Action} */
   delayedAction: null,
   /**
    * @typedef JClicPlayer~counterValType
@@ -1192,7 +1190,7 @@ Object.assign(JClicPlayer.prototype, {
   /**
    * Point indicating the upper-left corner of the current background image
    * @name JClicPlayer#bgImageOrigin
-   * @type {AWT.Point} */
+   * @type {module:AWT.Point} */
   bgImageOrigin: null,
   /**
    * Whether the player must play all sounds (including system sounds) and other media content

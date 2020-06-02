@@ -36,9 +36,7 @@ import DefaultSkin from './DefaultSkin';
 /**
  * This is a variant of the default {@link Skin} used by JClic.js
  * It has the buttons at top, and don't has counters.
- * @exports SimpleSkin
- * @class
- * @extends DefaultSkin
+ * @extends module:DefaultSkin
  */
 export class SimpleSkin extends DefaultSkin {
   /**

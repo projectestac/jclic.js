@@ -38,8 +38,6 @@ import { log } from '../Utils';
  * This class detects if JClic.js is running in an SCORM environment and, if true,
  * exposes the methods needed to notify the results of activities.
  * Both SCORM 1.2 and 2004 are supported.
- * @exports SCORM
- * @class
  */
 export class SCORM {
   /**

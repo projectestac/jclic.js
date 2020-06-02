@@ -44,8 +44,6 @@ const defaultValues = settings.BoxBase;
  * of other boxes (like {@link BoxBag}). Most of the attributes of `BoxBase` can be `null`,
  * meaning that the value of the ancestor -or the default value if the box has no ancestors- must
  * be used.
- * @exports BoxBase
- * @class
  */
 export class BoxBase {
   /**
@@ -234,7 +232,7 @@ export class BoxBase {
    * @param {number} maxWidth - Maximum width
    * @param {number} maxHeight - Maximum height
    * @returns {object[]} - An array of objects representing lines of text. Each object has a `text`
-   * member with the text displayed in the line, and a `size` member with the line {@link AWT.Dimension}
+   * member with the text displayed in the line, and a `size` member with the line {@link module:AWT.Dimension}
    */
   prepareText(ctx, text, maxWidth, maxHeight) {
     const
@@ -314,7 +312,7 @@ Object.assign(BoxBase.prototype, {
    * `BoxBase` requests it. When this happen, this field contains the real font currently used
    * to draw text.
    * @name BoxBase#font
-   * @type {AWT.Font} */
+   * @type {module:AWT.Font} */
   font: new Font(),
   /**
    * The current font size of this BoxBase. Can be dynamically adjusted when drawing.
@@ -335,7 +333,7 @@ Object.assign(BoxBase.prototype, {
   /**
    * The background gradient. Default is `null`.
    * @name BoxBase#bgGradient
-   * @type {AWT.Gradient} */
+   * @type {module:AWT.Gradient} */
   bgGradient: null,
   /**
    * The color used to write text.
@@ -386,12 +384,12 @@ Object.assign(BoxBase.prototype, {
   /**
    * The stroke used to draw the border.
    * @name BoxBase#borderStroke
-   * @type {AWT.Stroke} */
+   * @type {module:AWT.Stroke} */
   borderStroke: new Stroke(defaultValues.BORDER_STROKE_WIDTH),
   /**
    * The stroke used to draw a border around marked cells.
    * @name BoxBase#markerStroke
-   * @type {AWT.Stroke} */
+   * @type {module:AWT.Stroke} */
   markerStroke: new Stroke(defaultValues.MARKER_STROKE_WIDTH),
 });
 

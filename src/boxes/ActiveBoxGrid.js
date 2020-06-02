@@ -39,9 +39,7 @@ import { settings, roundTo } from '../Utils';
  * {@link Shaper} used to build all its {@link ActiveBox}components. It also maintains information
  * about the number of "rows" and "columns", useful to compute valid (integer) values when
  * resizing or moving its components.
- * @exports ActiveBoxGrid
- * @class
- * @extends ActiveBoxBag
+ * @extends module:ActiveBoxBag
  */
 export class ActiveBoxGrid extends ActiveBoxBag {
   /**
@@ -119,7 +117,7 @@ export class ActiveBoxGrid extends ActiveBoxBag {
 
   /**
    * Gets the minimum size of this grid
-   * @returns {AWT.Dimension}
+   * @returns {module:AWT.Dimension}
    */
   getMinimumSize() {
     return new Dimension(
@@ -130,7 +128,7 @@ export class ActiveBoxGrid extends ActiveBoxBag {
   /**
    * Gets a scaled size of this grid, rounded to the nearest integer values
    * @param {number} scale - The scale factor
-   * @returns {AWT.Dimension}
+   * @returns {module:AWT.Dimension}
    */
   getScaledSize(scale) {
     return new Dimension(
@@ -143,7 +141,7 @@ export class ActiveBoxGrid extends ActiveBoxBag {
    * The units of the result are not pixels, but ordinal numbers (relative positions) of columns
    * and rows in the grid.
    * @param {ActiveBox} bx - The box to process
-   * @returns {AWT.Point}
+   * @returns {module:AWT.Point}
    */
   getCoord(bx) {
     return new Point(bx.idLoc % this.nCols, Math.floor(bx.idLoc / this.nCols));
@@ -155,7 +153,7 @@ export class ActiveBoxGrid extends ActiveBoxBag {
    * in the grid.
    * @param {ActiveBox} src - First box
    * @param {ActiveBox} dest - Second box
-   * @returns {AWT.Point}
+   * @returns {module:AWT.Point}
    */
   getCoordDist(src, dest) {
     const

@@ -40,9 +40,7 @@ import { log, startsWith, getMsg } from '../Utils';
  * the {@link https://github.com/projectestac/jclic/wiki/JClic-Reports-developers-guide JClic Reports API}.
  * Connection parameters to the reports server (`path`, `service`, `userId`, `key`, `context`...)
  * are passed through the `options` element of {@link JClicPlayer} (acting as {@link PlayStation}).
- * @exports TCPReporter
- * @class
- * @extends Reporter
+ * @extends module:Reporter
  */
 export class TCPReporter extends Reporter {
   /**
@@ -580,7 +578,6 @@ Object.assign(TCPReporter.prototype, {
 /**
  * This inner class encapsulates a chunk of information in XML format, ready to be
  * transmitted to the remote reports server.
- * @class
  */
 export class ReportBean {
   /**

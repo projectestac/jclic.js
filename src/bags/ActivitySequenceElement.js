@@ -45,8 +45,6 @@ import { attrForEach, nSlash, getAttr, isEmpty } from '../Utils';
  * - The behavior of the  "prev" button
  *
  * Sequence points can also have a "tag", used to refer to them with a unique name.
- * @exports ActivitySequenceElement
- * @class
  */
 export class ActivitySequenceElement {
   constructor() {

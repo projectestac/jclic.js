@@ -43,9 +43,7 @@ define([], function() {
    * This is the full version, with methods for encrypt and decrypt. JClic.js needs only decrypt
    * methods, defined in EncryptMin.js
    *
-   * @exports Encryption
-   * @class
-   * @abstract
+       * @abstract
    */
   var Encryption = {
     /**

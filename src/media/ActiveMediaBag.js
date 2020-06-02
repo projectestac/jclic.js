@@ -35,8 +35,6 @@ import { settings } from '../Utils';
 /**
  * This class stores a collection of realized {@link ActiveMediaPlayer} objects, related to a
  * {@link JClicProject} or {@link Activity}.
- * @exports ActiveMediaBag
- * @class
  */
 export class ActiveMediaBag {
   /**

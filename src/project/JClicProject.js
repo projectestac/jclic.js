@@ -46,8 +46,6 @@ import { Font } from '../AWT';
  *  educational topics...
  *  - {@link ActivitySequence}: defines the order in which the activities must be shown.
  *  - {@link MediaBag}: contains the list of all media files used by the activities
- * @exports JClicProject
- * @class
  */
 export class JClicProject {
   /**

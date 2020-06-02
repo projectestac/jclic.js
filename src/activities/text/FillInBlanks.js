@@ -38,9 +38,7 @@ import TextActivityBase from './TextActivityBase';
  * In this type of activity the text document has some blanks that must be filled-in. The blanks
  * can be drop-down boxes or text fields (empty or pre-filled with an initial text). Blanks can
  * also have associated clues, shown as "pop-ups".
- * @exports FillInBlanks
- * @class
- * @extends TextActivityBase
+ * @extends module:TextActivityBase
  */
 export class FillInBlanks extends TextActivityBase {
   /**
@@ -77,8 +75,7 @@ Object.assign(FillInBlanks.prototype, {
 
 /**
  * The {@link TextActivityBasePanel} where {@link FillInBlanks} activities are played.
- * @class
- * @extends TextActivityBasePanel
+ * @extends module:TextActivityBasePanel
  */
 export class FillInBlanksPanel extends TextActivityBase.Panel {
   /**

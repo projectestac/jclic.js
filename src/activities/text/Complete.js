@@ -35,9 +35,7 @@ import TextActivityBase from './TextActivityBase';
 /**
  * This type of text activity suggests users to complete a given text, without any help on where to
  * write the missing words or phrases.
- * @exports Complete
- * @class
- * @extends TextActivityBase
+ * @extends module:TextActivityBase
  */
 export class Complete extends TextActivityBase {
   /**
@@ -51,8 +49,7 @@ export class Complete extends TextActivityBase {
 
 /**
  * The {@link TextActivityBasePanel} where {@link Complete} activities are played.
- * @class
- * @extends TextActivityBasePanel
+ * @extends module:TextActivityBasePanel
  */
 export class CompletePanel extends TextActivityBase.Panel {
   /**

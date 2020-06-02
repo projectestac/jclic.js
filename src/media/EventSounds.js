@@ -43,8 +43,6 @@ import { getTriState, getAttr, setAttr, DEFAULT } from '../Utils';
  * - finishedOk
  *
  * The sounds are stored in an array of {@link EventSoundsElement} objects.
- * @exports EventSounds
- * @class
  */
 export class EventSounds {
   /**

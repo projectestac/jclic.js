@@ -43,8 +43,6 @@ import { nSlash, getAttr, isEmpty } from '../Utils';
  * - EXIT: to exit the program (thus navigating to another URL)
  * - STOP: to do nothing.
  * - JUMP: to jump to a specific point in the sequence of activities, or to another JClic project.
- * @exports JumpInfo
- * @class
  * @see {@link ActivitySequenceJump}
  * @see {@link ConditionalJumpInfo}
  */

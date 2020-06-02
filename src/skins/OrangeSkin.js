@@ -35,9 +35,7 @@ import DefaultSkin from './DefaultSkin';
 /**
  * This is a variant of the default {@link Skin} used by JClic.js
  * It differs from {@link DefaultSkin} only in some colors
- * @exports OrangeSkin
- * @class
- * @extends DefaultSkin
+ * @extends module:DefaultSkin
  */
 export class OrangeSkin extends DefaultSkin {
   /**

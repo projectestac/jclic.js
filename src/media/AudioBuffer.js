@@ -35,8 +35,6 @@ import { log } from '../Utils';
 
 /**
  * The AudioBuffer object provides sound recording and replaying to activities.
- * @exports AudioBuffer
- * @class
  */
 export class AudioBuffer {
   /**

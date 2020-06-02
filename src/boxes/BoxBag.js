@@ -37,15 +37,13 @@ import { settings } from '../Utils';
  * BoxBag is a class derived from {@link AbstractBox} that contains a collection of "boxes"
  * (objects also derived from {@link AbstractBox}). This class implements methods to add, remove
  * and retrieve boxes, and to manage some of its properties like visibility, status, location and size.
- * @exports BoxBag
- * @class
- * @extends AbstractBox
+ * @extends module:AbstractBox
  */
 export class BoxBag extends AbstractBox {
   /**
    * BoxBag constructor
    * @param {AbstractBox} [parent] - The AbstractBox to which this box bag belongs
-   * @param {AWT.Container} [container] - The container where this box bag is placed.
+   * @param {module:AWT.Container} [container] - The container where this box bag is placed.
    * @param {BoxBase} [boxBase] - The object where colors, fonts, border and other graphic properties
    */
   constructor(parent, container, boxBase) {
@@ -58,12 +56,12 @@ export class BoxBag extends AbstractBox {
   /**
    * Static method that sets the position and dimension of a `Resizable` object based on a
    * preferred maximum dimension and a margin.
-   * @param {AWT.Dimension} preferredMaxSize - The preferred maximum size
+   * @param {module:AWT.Dimension} preferredMaxSize - The preferred maximum size
    * @param {Resizable} rs - A resizable object implementing the methods described in the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html Resizable}
    * interface of JClic. Currently a {@link BoxBag} or {@link TextGrid}.
    * @param {number} margin - The margin between the available area and the BoxBag
-   * @returns {AWT.Dimension} - The resulting size of the container
+   * @returns {module:AWT.Dimension} - The resulting size of the container
    */
   static layoutSingle(preferredMaxSize, rs, margin) {
 
@@ -103,7 +101,7 @@ export class BoxBag extends AbstractBox {
   /**
    * Static method that sets the position and dimension of two `Resizable` objects based on a
    * preferred maximum size, a layout schema and a margin.
-   * @param {AWT.Dimension} desiredMaxSize - The preferred maximum size
+   * @param {module:AWT.Dimension} desiredMaxSize - The preferred maximum size
    * @param {Resizable} rsA - First resizable object implementing the methods described in the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html Resizable}
    * interface of JClic. Currently a {@link BoxBag} or {@link TextGrid}.
@@ -114,7 +112,7 @@ export class BoxBag extends AbstractBox {
    * - "AUB" (_A_ above _B_)
    * - "BUA" (_A_ below _B_).
    * @param {number} margin - The margin between the available area and the BoxBag
-   * @returns {AWT.Dimension} - The resulting size of the container
+   * @returns {module:AWT.Dimension} - The resulting size of the container
    */
   static layoutDouble(desiredMaxSize, rsA, rsB, boxGridPos, margin) {
     // number of horizontal and vertical grid lines
@@ -227,7 +225,7 @@ export class BoxBag extends AbstractBox {
 
   /**
    * Gets the preferred size of this `BoxBag`
-   * @returns {AWT.Dimension}
+   * @returns {module:AWT.Dimension}
    */
   getPreferredSize() {
     return this.preferredBounds.dim;
@@ -235,7 +233,7 @@ export class BoxBag extends AbstractBox {
 
   /**
    * Gets the minimum size requested by this `BoxBag`
-   * @returns {AWT.Dimension}
+   * @returns {module:AWT.Dimension}
    */
   getMinimumSize() {
     const d = this.getPreferredSize();
@@ -247,7 +245,7 @@ export class BoxBag extends AbstractBox {
   /**
    * Scales the current size of this box bag, multiplying all values by a specific factor
    * @param {number} scale - The scale factor
-   * @returns {AWT.Dimension}
+   * @returns {module:AWT.Dimension}
    */
   getScaledSize(scale) {
     const d = this.getPreferredSize();
@@ -428,7 +426,7 @@ export class BoxBag extends AbstractBox {
    * @override
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
    * box contents.
-   * @param {AWT.Rectangle} [dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
+   * @param {module:AWT.Rectangle} [dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
    */
   update(ctx, dirtyRegion) {
     if (this.isEmpty() || !this.isVisible() || this.isTemporaryHidden())
@@ -455,7 +453,7 @@ export class BoxBag extends AbstractBox {
 
   /**
    * Finds the first visible {@link AbstractBox} located under the specified point
-   * @param {AWT.Point} p
+   * @param {module:AWT.Point} p
    * @returns {AbstractBox}
    */
   findBox(p) {
@@ -488,7 +486,7 @@ Object.assign(BoxBag.prototype, {
   /**
    * Rectangle containing the preferred bounds of the BoxBag
    * @name BoxBag#preferredBounds
-   * @type {AWT.Rectangle} */
+   * @type {module:AWT.Rectangle} */
   preferredBounds: new Rectangle(),
   /**
    * An optional box used as a background by this BoxBag

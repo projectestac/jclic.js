@@ -33,9 +33,7 @@ import Skin from './Skin';
 
 /**
  * A minimalist {@link Skin} for JClic.js with just the player, without messages, counters nor any button.
- * @exports EmptySkin
- * @class
- * @extends Skin
+ * @extends module:Skin
  */
 export class EmptySkin extends Skin {
 

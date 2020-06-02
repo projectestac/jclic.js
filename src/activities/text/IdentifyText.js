@@ -35,9 +35,7 @@ import TextActivityBase from './TextActivityBase';
 /**
  * This type of text activity suggests users to click on specific words or single letters of a
  * given text, without any help on where these elements are placed.
- * @exports IdentifyText
- * @class
- * @extends TextActivityBase
+ * @extends module:TextActivityBase
  */
 export class IdentifyText extends TextActivityBase {
   /**
@@ -51,8 +49,7 @@ export class IdentifyText extends TextActivityBase {
 
 /**
  * The {@link TextActivityBasePanel} where {@link IdentifyText} activities are played.
- * @class
- * @extends TextActivityBasePanel
+ * @extends module:TextActivityBasePanel
  */
 class IdentifyTextPanel extends TextActivityBase.Panel {
   /**

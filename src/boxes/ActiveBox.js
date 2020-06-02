@@ -49,9 +49,7 @@ import { settings, log, getMsg } from '../Utils';
  *
  * Active boxes can host video and interactive media content (specified in the `mediaContent`
  * member of the {@link ActiveBoxContent} through its `hostedMediaPlayer` member.
- * @exports ActiveBox
- * @class
- * @extends AbstractBox
+ * @extends module:AbstractBox
  */
 export class ActiveBox extends AbstractBox {
   /**
@@ -61,7 +59,7 @@ export class ActiveBox extends AbstractBox {
    * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * of this box are defined.
    * @param {number} [setIdLoc] - A numeric identifier, used to locate this box in a set of sibling objects.
-   * @param {AWT.Rectangle} [rect] - The initial bounds of the box.
+   * @param {module:AWT.Rectangle} [rect] - The initial bounds of the box.
    */
   constructor(parent, container, boxBase, setIdLoc, rect) {
     // ActiveBox extends AbstractBox
@@ -404,7 +402,7 @@ export class ActiveBox extends AbstractBox {
    * @override
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
    * box content.
-   * @param {AWT.Rectangle} [dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
+   * @param {module:AWT.Rectangle} [dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
    */
   updateContent(ctx, dirtyRegion) {
 
@@ -780,7 +778,7 @@ Object.assign(ActiveBox.prototype, {
   /**
    * Backup of the original position of the cell, useful when the real position must be restored after a temporary change.
    * @name ActiveBox#pos0
-   * @type {AWT.Point} */
+   * @type {module:AWT.Point} */
   pos0: null,
   /**
    * Main content of this box

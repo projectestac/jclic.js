@@ -62,15 +62,13 @@ export const flags = {
  * characters.
  *
  * It's used {@link CrossWord} and {@link WordSearch} activities.
- * @exports TextGrid
- * @class
- * @extends AbstractBox
+ * @extends module:AbstractBox
  */
 export class TextGrid extends AbstractBox {
   /**
    * TextGrid constructor
    * @param {AbstractBox} parent - The AbstractBox to which this text grid belongs
-   * @param {AWT.Container} container - The container where this text grid is placed.
+   * @param {module:AWT.Container} container - The container where this text grid is placed.
    * @param {BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * @param {number} x - `X` coordinate of the upper left corner of this grid
    * @param {number} y - `Y` coordinate of the upper left corner of this grid
@@ -104,7 +102,7 @@ export class TextGrid extends AbstractBox {
   /**
    * Factory constructor that creates an empty grid based on a {@link TextGridContent}
    * @param {AbstractBox} parent - The AbstractBox to which the text grid belongs
-   * @param {AWT.Container} container - The container where the text grid will be placed.
+   * @param {module:AWT.Container} container - The container where the text grid will be placed.
    * @param {number} x - `X` coordinate of the upper left corner of the grid
    * @param {number} y - `Y` coordinate of the upper left corner of the grid
    * @param {TextGridContent} tgc - Object with the content and other settings of the grid
@@ -206,7 +204,7 @@ export class TextGrid extends AbstractBox {
    * The result is returned as 'x' and 'y' properties of a logical point.
    * @param {type} rx - The 'X' position of the cell
    * @param {type} ry - The 'Y' position of the cell
-   * @returns {AWT.Point} - The logical positions of the definition for this cell inside the list
+   * @returns {module:AWT.Point} - The logical positions of the definition for this cell inside the list
    * of current definitions of its row and column. '0' means first definition of its row/column,
    * '1' the second one, etc.
    */
@@ -261,7 +259,7 @@ export class TextGrid extends AbstractBox {
   }
 
   /**
-   * Starts the {@link AWT.Timer} that makes the cursor blink.
+   * Starts the {@link module:AWT.Timer} that makes the cursor blink.
    */
   startCursorBlink() {
     if (this.useCursor && this.cursorEnabled && this.cursorTimer && !this.cursorTimer.isRunning()) {
@@ -271,7 +269,7 @@ export class TextGrid extends AbstractBox {
   }
 
   /**
-   * Stops the {@link AWT.Timer} that makes the cursor blink.
+   * Stops the {@link module:AWT.Timer} that makes the cursor blink.
    */
   stopCursorBlink() {
     if (this.cursorTimer && this.cursorTimer.isRunning()) {
@@ -300,10 +298,10 @@ export class TextGrid extends AbstractBox {
   /**
    * Finds the coordinates of the nearest non-locked cell (non-wildcard) moving on the indicated
    * 'X' and 'Y' directions.
-   * @param {AWT.Point} - Logical coordinates of the starting point
+   * @param {module:AWT.Point} - Logical coordinates of the starting point
    * @param {number} dx - 0 means no movement, 1 go right, -1 go left.
    * @param {number} dy - 0 means no movement, 1 go down, -1 go up.
-   * @returns {AWT.Point}
+   * @returns {module:AWT.Point}
    */
   findFreeCell(from, dx, dy) {
     let result = null;
@@ -330,7 +328,7 @@ export class TextGrid extends AbstractBox {
    * @param {number} dx - 0 means no movement, 1 go right, -1 go left.
    * @param {number} dy - 0 means no movement, 1 go down, -1 go up.
    * @param {boolean} attrState - Desired state (enabled or disabled) of `attr`
-   * @returns {AWT.Point}
+   * @returns {module:AWT.Point}
    */
   findNextCellWithAttr(startX, startY, attr, dx, dy, attrState) {
     const point = new Point(startX + dx, startY + dy);
@@ -401,7 +399,7 @@ export class TextGrid extends AbstractBox {
 
   /**
    * Gets the current position of the blinking cursor
-   * @returns {AWT.Point}
+   * @returns {module:AWT.Point}
    */
   getCursor() {
     return this.cursor;
@@ -467,8 +465,8 @@ export class TextGrid extends AbstractBox {
 
   /**
    * Gets the logical coordinates (in 'cell' units) of a device point into the grid
-   * @param {AWT.Point} devicePoint
-   * @returns {AWT.Point}
+   * @param {module:AWT.Point} devicePoint
+   * @returns {module:AWT.Point}
    */
   getLogicalCoords(devicePoint) {
     if (!this.contains(devicePoint))
@@ -613,7 +611,7 @@ export class TextGrid extends AbstractBox {
    * Gets the rectangle enclosing a specific cell
    * @param {number} px - The 'X' coordinate of the cell
    * @param {number} py - The 'Y' coordinate of the cell
-   * @returns {AWT.Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   getCellRect(px, py) {
     return new Rectangle(this.pos.x + px * this.cellWidth, this.pos.y + py * this.cellHeight, this.cellWidth, this.cellHeight);
@@ -623,7 +621,7 @@ export class TextGrid extends AbstractBox {
    * Gets the rectangle enclosing a specific cell, including the border thick.
    * @param {number} px - The 'X' coordinate of the cell
    * @param {number} py - The 'Y' coordinate of the cell
-   * @returns {AWT.Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   getCellBorderBounds(px, py) {
     const isMarked = this.getCellAttribute(px, py, flags.MARKED);
@@ -649,7 +647,7 @@ export class TextGrid extends AbstractBox {
 
   /**
    * Gets the preferred size of this grid
-   * @returns {AWT.Dimension}
+   * @returns {module:AWT.Dimension}
    */
   getPreferredSize() {
     return this.preferredBounds.dim;
@@ -657,7 +655,7 @@ export class TextGrid extends AbstractBox {
 
   /**
    * Gets the minimum size of this grid
-   * @returns {AWT.Dimension}
+   * @returns {module:AWT.Dimension}
    */
   getMinimumSize() {
     return new Dimension(defaults.MIN_CELL_SIZE * this.nCols, defaults.MIN_CELL_SIZE * this.nRows);
@@ -666,7 +664,7 @@ export class TextGrid extends AbstractBox {
   /**
    * Scales the grid to a new size
    * @param {number} scale - The factor used to multiply all coordinates and sizes
-   * @returns {AWT.Dimension}
+   * @returns {module:AWT.Dimension}
    */
   getScaledSize(scale) {
     return new Dimension(
@@ -694,7 +692,7 @@ export class TextGrid extends AbstractBox {
    * @override
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
    * grid.
-   * @param {AWT.Rectangle} [dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
+   * @param {module:AWT.Rectangle} [dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
    */
   updateContent(ctx, dirtyRegion) {
     const style = this.getBoxBaseResolve();
@@ -832,7 +830,7 @@ Object.assign(TextGrid.prototype, {
   /**
    * The preferred bounds of this grid
    * @name TextGrid#preferredBounds
-   * @type {AWT.Rectangle} */
+   * @type {module:AWT.Rectangle} */
   preferredBounds: null,
   /**
    * The character to be used as wildcard
@@ -858,7 +856,7 @@ Object.assign(TextGrid.prototype, {
   /**
    * The current position of the cursor
    * @name TextGrid#cursor
-   * @type {AWT.Point} */
+   * @type {module:AWT.Point} */
   cursor: null,
   /**
    * `true` when the cursor is "blinking" (cell drawn with {@link BoxBase} `inverse` attributes)
@@ -868,7 +866,7 @@ Object.assign(TextGrid.prototype, {
   /**
    * Controls the blinking of the cursor
    * @name TextGrid#cursorTimer
-   * @type {AWT.Timer} */
+   * @type {module:AWT.Timer} */
   cursorTimer: null,
   /**
    * Whether the wildcard character is transparent or opaque
