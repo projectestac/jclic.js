@@ -33,7 +33,7 @@
 
 import $ from 'jquery';
 import AWT from '../AWT';
-import Utils from '../Utils';
+import { nSlash, attrForEach, getBoolean, getAttr, setAttr } from '../Utils';
 
 /**
  * This object contains a description of any multimedia content (sound, video, MIDI, voice
@@ -61,16 +61,16 @@ export class MediaContent {
    * @param {external:jQuery} $xml
    */
   setProperties($xml) {
-    Utils.attrForEach($xml.get(0).attributes, (name, val) => {
+    attrForEach($xml.get(0).attributes, (name, val) => {
       switch (name) {
         case 'type':
           this.type = val;
           break;
         case 'file':
-          this.file = Utils.nSlash(val);
+          this.file = nSlash(val);
           break;
         case 'params':
-          this.externalParam = Utils.nSlash(val);
+          this.externalParam = nSlash(val);
           break;
 
         case 'pFrom':
@@ -102,7 +102,7 @@ export class MediaContent {
         case 'catchMouseEvents':
         case 'loop':
         case 'autostart':
-          this[name] = Utils.getBoolean(val);
+          this[name] = getBoolean(val);
           break;
       }
     });
@@ -116,7 +116,7 @@ export class MediaContent {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, [
+    return getAttr(this, [
       'type', 'file', 'externalParam',
       'absLocation', // -> AWT.Point
       'absLocationFrom', 'recBuffer',
@@ -131,7 +131,7 @@ export class MediaContent {
    * @returns {MediaContent}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, [
+    return setAttr(this, data, [
       'type', 'file', 'externalParam',
       { key: 'absLocation', fn: AWT.Point },
       'absLocationFrom', 'recBuffer',

@@ -36,7 +36,7 @@ import AWT from '../AWT';
 import Skin from './Skin';
 import ActiveBox from '../boxes/ActiveBox';
 import Counter from './Counter';
-import Utils from '../Utils';
+import { log, getMsg, getSvg, svgToURI } from '../Utils';
 
 /**
  * This is the default {@link Skin} used by JClic.js
@@ -65,9 +65,9 @@ export class DefaultSkin extends Skin {
     this.$div.append(this.$ctrlCnt);
 
     // Add `prev` button
-    msg = Utils.getMsg('Previous activity');
+    msg = getMsg('Previous activity');
     this.buttons.prev = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
-      .append($(Utils.getSvg(this.prevIcon, this.iconWidth, this.iconHeight, this.iconFill)))
+      .append($(getSvg(this.prevIcon, this.iconWidth, this.iconHeight, this.iconFill)))
       .on('click', evt => {
         if (this.ps)
           this.ps.actions.prev.processEvent(evt);
@@ -85,9 +85,9 @@ export class DefaultSkin extends Skin {
     this.$ctrlCnt.append(this.$msgBoxDiv);
 
     // Add `next` button
-    msg = Utils.getMsg('Next activity');
+    msg = getMsg('Next activity');
     this.buttons.next = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
-      .append($(Utils.getSvg(this.nextIcon, this.iconWidth, this.iconHeight, this.iconFill)))
+      .append($(getSvg(this.nextIcon, this.iconWidth, this.iconHeight, this.iconFill)))
       .on('click', evt => {
         if (this.ps)
           this.ps.actions.next.processEvent(evt);
@@ -97,17 +97,17 @@ export class DefaultSkin extends Skin {
     // Add counters
     if (false !== this.ps.options.counters && false !== options.counters) {
       // Create counters
-      msg = Utils.getMsg('Reports');
+      msg = getMsg('Reports');
       const $countCnt = $('<button/>', { class: 'JClicCountCnt', 'aria-label': msg })
         .on('click', evt => {
           if (this.ps)
             this.ps.actions.reports.processEvent(evt);
         });
       $.each(Skin.prototype.counters, (name, _val) => {
-        msg = Utils.getMsg(name);
+        msg = getMsg(name);
         this.counters[name] = new Counter(name, $('<div/>', { class: 'JClicCounter', title: msg, 'aria-label': msg })
           .css({
-            'background-image': `url(${Utils.svgToURI(this[name + 'Icon'], this.counterIconWidth, this.counterIconHeight, this.counterIconFill)})`,
+            'background-image': `url(${svgToURI(this[name + 'Icon'], this.counterIconWidth, this.counterIconHeight, this.counterIconFill)})`,
             color: this.counterIconFill
           })
           .html('000')
@@ -118,9 +118,9 @@ export class DefaultSkin extends Skin {
 
     // Add info button
     if (true === this.ps.options.info || true === options.info) {
-      msg = Utils.getMsg('Information');
+      msg = getMsg('Information');
       this.buttons.info = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
-        .append($(Utils.getSvg(this.infoIcon, this.iconWidth, this.iconHeight, this.iconFill)))
+        .append($(getSvg(this.infoIcon, this.iconWidth, this.iconHeight, this.iconFill)))
         .on('click', evt => {
           if (this.ps)
             this.ps.actions.info.processEvent(evt);
@@ -130,9 +130,9 @@ export class DefaultSkin extends Skin {
 
     // Add reports button
     if (true === this.ps.options.reportsBtn || true === options.reportsBtn) {
-      msg = Utils.getMsg('Reports');
+      msg = getMsg('Reports');
       this.buttons.about = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
-        .append($(Utils.getSvg(this.reportsIcon, this.iconWidth, this.iconHeight, this.iconFill)))
+        .append($(getSvg(this.reportsIcon, this.iconWidth, this.iconHeight, this.iconFill)))
         .on('click', evt => {
           if (this.ps)
             this.ps.actions.reports.processEvent(evt);
@@ -142,9 +142,9 @@ export class DefaultSkin extends Skin {
 
     // Add `full screen` button
     if (document && document.fullscreenEnabled) {
-      msg = Utils.getMsg('Toggle full screen');
+      msg = getMsg('Toggle full screen');
       this.buttons.fullscreen = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
-        .append($('<img/>', { src: Utils.svgToURI(this.fullScreenIcon, this.iconWidth, this.iconHeight, this.iconFill) }))
+        .append($('<img/>', { src: svgToURI(this.fullScreenIcon, this.iconWidth, this.iconHeight, this.iconFill) }))
         .on('click', () => {
           this.setScreenFull(null);
         });
@@ -153,12 +153,12 @@ export class DefaultSkin extends Skin {
 
     // Add `close` button
     if (typeof this.ps.options.closeFn === 'function') {
-      msg = Utils.getMsg('Close');
+      msg = getMsg('Close');
       const closeFn = this.ps.options.closeFn;
       this.buttons.close = $('<button/>', { class: 'JClicBtn', title: msg, 'aria-label': msg })
-        .append($(Utils.getSvg(this.closeIcon, this.iconWidth, this.iconHeight, this.iconFill)))
+        .append($(getSvg(this.closeIcon, this.iconWidth, this.iconHeight, this.iconFill)))
         .on('click', () => {
-          Utils.log('info', 'Closing the player');
+          log('info', 'Closing the player');
           closeFn();
         });
       this.$ctrlCnt.append(this.buttons.close);
@@ -171,7 +171,7 @@ export class DefaultSkin extends Skin {
     $.each(this.buttons, (_key, value) => {
       if (value && (typeof value[0].focus !== 'function' || typeof value[0].blur !== 'function')) {
         if (nilFunc === null)
-          nilFunc = () => Utils.log('error', '"blur" and "focus" not defined for SVG objects in Explorer/Edge');
+          nilFunc = () => log('error', '"blur" and "focus" not defined for SVG objects in Explorer/Edge');
         value[0].focus = value[0].blur = nilFunc;
       }
     });
@@ -197,7 +197,7 @@ export class DefaultSkin extends Skin {
 
     // Set the fullScreen icon
     if (this.buttons.fullscreen)
-      this.buttons.fullscreen.find('img').get(-1).src = Utils.svgToURI(
+      this.buttons.fullscreen.find('img').get(-1).src = svgToURI(
         this[(document && document.fullscreenElement) ? 'fullScreenExitIcon' : 'fullScreenIcon'],
         this.iconWidth, this.iconHeight, this.iconFill);
   }

@@ -33,7 +33,7 @@
 
 import $ from 'jquery';
 import Reporter from './Reporter';
-import Utils from '../Utils';
+import { log, startsWith, getMsg } from '../Utils';
 
 /**
  * This special case of {@link Reporter} connects with an external service reporter providing
@@ -101,7 +101,7 @@ export class TCPReporter extends Reporter {
       for (let i = 0; i < this.tasks.length; i++)
         reportBean.appendData(this.tasks[i].$bean);
 
-      Utils.log('debug', 'Reporting:', reportBean.$bean[0]);
+      log('debug', 'Reporting:', reportBean.$bean[0]);
 
       return new Promise((resolve, reject) => {
         this.transaction(reportBean.$bean)
@@ -159,7 +159,7 @@ export class TCPReporter extends Reporter {
     this.serverPath = options.path || this.DEFAULT_SERVER_PATH;
     this.descriptionDetail = this.serverPath;
     let serverService = options.service || this.DEFAULT_SERVER_SERVICE;
-    if (!Utils.startsWith(serverService, '/'))
+    if (!startsWith(serverService, '/'))
       serverService = `/${serverService}`;
     const serverProtocol = options.protocol || this.DEFAULT_SERVER_PROTOCOL;
     this.serviceUrl = `${serverProtocol}://${this.serverPath}${serverService}`;
@@ -183,7 +183,7 @@ export class TCPReporter extends Reporter {
               if (this.serviceUrl !== null &&
                 (this.tasks.length > 0 || this.processingTasks)) {
                 this.flushTasksPromise().then();
-                const result = Utils.getMsg('Please wait until the results of your activities are sent to the reports system');
+                const result = getMsg('Please wait until the results of your activities are sent to the reports system');
                 if (event)
                   event.returnValue = result;
                 return result;
@@ -371,7 +371,7 @@ export class TCPReporter extends Reporter {
           .done((data, _textStatus, _jqXHR) => {
             const $user = $(data).find('user');
             if ($user.length !== 1) {
-              window.alert(Utils.getMsg('Invalid user'));
+              window.alert(getMsg('Invalid user'));
               resolve('Invalid user ID');
             } else {
               const user = { id: $user.attr('id'), name: $user.attr('name') };
@@ -405,7 +405,7 @@ export class TCPReporter extends Reporter {
     if (this.initiated) {
       result = this.flushTasksPromise().then(() => {
         this.serviceUrl = null;
-        this.descriptionDetail = `${this.serverPath} (${Utils.getMsg('not connected')})`;
+        this.descriptionDetail = `${this.serverPath} (${getMsg('not connected')})`;
         this.initiated = false;
       });
     }

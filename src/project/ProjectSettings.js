@@ -33,7 +33,7 @@
 
 import $ from 'jquery';
 import EventSounds from '../media/EventSounds';
-import Utils from '../Utils';
+import { log, getXmlNodeText, parseXmlNode, reduceTextsToStrings, parseOldDate, cleanOldLanguageTag, getAttr, setAttr } from '../Utils';
 
 /**
  * This class contains miscellaneous settings of JClic projects.
@@ -81,25 +81,25 @@ export class ProjectSettings {
           this.title = child.textContent;
           break;
         case 'description':
-          single_description = Utils.getXmlNodeText(child);
+          single_description = getXmlNodeText(child);
           break;
         case 'descriptions':
-          $(child).children().each((_n, desc) => multiple_descriptions.push(Utils.parseXmlNode(desc)));
+          $(child).children().each((_n, desc) => multiple_descriptions.push(parseXmlNode(desc)));
           break;
         case 'author':
-          this.authors.push(Utils.reduceTextsToStrings(Utils.parseXmlNode(child)));
+          this.authors.push(reduceTextsToStrings(parseXmlNode(child)));
           break;
         case 'organization':
-          this.organizations.push(Utils.reduceTextsToStrings(Utils.parseXmlNode(child)));
+          this.organizations.push(reduceTextsToStrings(parseXmlNode(child)));
           break;
         case 'revision':
-          const revision = Utils.reduceTextsToStrings(Utils.parseXmlNode(child));
+          const revision = reduceTextsToStrings(parseXmlNode(child));
           if (revision.date)
-            revision.date = Utils.parseOldDate(revision.date);
+            revision.date = parseOldDate(revision.date);
           this.revisions.push(revision);
           break;
         case 'language':
-          this.languages.push(Utils.cleanOldLanguageTag(child.textContent));
+          this.languages.push(cleanOldLanguageTag(child.textContent));
           break;
         case 'eventSounds':
           this.eventSounds = new EventSounds();
@@ -109,18 +109,18 @@ export class ProjectSettings {
           this.skinFileName = $(child).attr('file');
           break;
         case 'descriptors':
-          this.tags = Utils.parseXmlNode(child, true);
+          this.tags = parseXmlNode(child, true);
           if (this.tags['#text']) {
             this.tags.other = this.tags['#text'].textContent;
             delete this.tags['#text'];
           }
           break;
         case 'license':
-          this.license = Utils.getXmlNodeText(child);
+          this.license = getXmlNodeText(child);
           break;
         case 'cover':
         case 'thumb':
-          const img = Utils.getXmlNodeText(child);
+          const img = getXmlNodeText(child);
           if (img.file)
             this[child.nodeName] = img.file;
           break;
@@ -154,7 +154,7 @@ export class ProjectSettings {
             if (canonicals)
               this.locales = this.locales.concat(canonicals);
           } catch (err) {
-            Utils.log('error', `Invalid language: ${lang}`);
+            log('error', `Invalid language: ${lang}`);
           }
         }
       });
@@ -169,7 +169,7 @@ export class ProjectSettings {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, [
+    return getAttr(this, [
       'title', 'description',
       'tags', 'languages', 'license',
       'authors', 'organizations',
@@ -185,7 +185,7 @@ export class ProjectSettings {
    * @returns {ProjectSettings}
    */
   setAttributes(data) {
-    Utils.setAttr(this, data, [
+    setAttr(this, data, [
       'title', 'description',
       'tags', 'languages', 'license',
       'authors', 'organizations',

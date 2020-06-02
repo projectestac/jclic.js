@@ -30,7 +30,7 @@
  */
 
 import JumpInfo from './JumpInfo';
-import Utils from '../Utils';
+import { getAttr, isEmpty } from '../Utils';
 
 /**
  * This special case of {@link JumpInfo} is used in {@link ActivitySequenceJump} objects to decide
@@ -82,7 +82,7 @@ export class ConditionalJumpInfo extends JumpInfo {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Object.assign(super.getAttributes(), Utils.getAttr(this, ['threshold', 'time']));
+    return Object.assign(super.getAttributes(), getAttr(this, ['threshold', 'time']));
   }
 
   /**
@@ -92,7 +92,7 @@ export class ConditionalJumpInfo extends JumpInfo {
   setAttributes(data) {
     super.setAttributes(data);
     ['threshold', 'time'].forEach(t => {
-      if (!Utils.isEmpty(data[t]))
+      if (!isEmpty(data[t]))
         this[t] = data[t];
     });
     return this;

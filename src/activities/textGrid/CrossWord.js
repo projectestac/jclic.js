@@ -39,9 +39,7 @@ import TextGrid from '../../boxes/TextGrid';
 import AbstractBox from '../../boxes/AbstractBox';
 import ActiveBox from '../../boxes/ActiveBox';
 import AWT from '../../AWT';
-import Utils from '../../Utils';
-
-const K = Utils.settings;
+import { settings } from '../../Utils';
 
 /**
  * This class of {@link Activity} shows a {@link TextGrid} initially empty, with some cells
@@ -347,7 +345,7 @@ export class CrossWordPanel extends Activity.Panel {
             const pt = this.grid.getLogicalCoords(p);
             if (pt !== null) {
               this.setCursorAt(pt.x, pt.y);
-              if (K.TOUCH_DEVICE) {
+              if (settings.TOUCH_DEVICE) {
                 // We are in a touch device, so prompt user to write text:
                 const d = this.advance === 'ADVANCE_DOWN';
                 const txt = window.prompt(`${d ? 'Vertical' : 'Horizontal'} word:`, '');
@@ -376,16 +374,16 @@ export class CrossWordPanel extends Activity.Panel {
         case 'keydown':
           let dx = 0, dy = 0;
           switch (event.keyCode) {
-            case K.VK.RIGHT:
+            case settings.VK.RIGHT:
               dx = 1;
               break;
-            case K.VK.LEFT:
+            case settings.VK.LEFT:
               dx = -1;
               break;
-            case K.VK.DOWN:
+            case settings.VK.DOWN:
               dy = 1;
               break;
-            case K.VK.UP:
+            case settings.VK.UP:
               dy = -1;
               break;
           }

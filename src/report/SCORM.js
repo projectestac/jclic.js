@@ -32,7 +32,7 @@
 /* global window */
 
 import $ from 'jquery';
-import Utils from '../Utils';
+import { log } from '../Utils';
 
 /**
  * This class detects if JClic.js is running in an SCORM environment and, if true,
@@ -96,7 +96,7 @@ export class SCORM {
       }
     } catch (ex) {
       result = null;
-      Utils.log('warn', 'Unable to use SCORM: %s', ex.toString());
+      log('warn', 'Unable to use SCORM: %s', ex.toString());
     }
     return result;
   }
@@ -120,9 +120,9 @@ export class SCORM {
           this.API = null;
         });
       }
-      Utils.log('debug', 'SCORM initialized');
+      log('debug', 'SCORM initialized');
     } catch (ex) {
-      Utils.log('error', `Error initializing SCORM API: ${ex.message}`);
+      log('error', `Error initializing SCORM API: ${ex.message}`);
     }
     return result;
   }
@@ -136,7 +136,7 @@ export class SCORM {
     try {
       result = this.API[this.is2004 ? 'Terminate' : 'LMSFinish']('');
     } catch (ex) {
-      Utils.log('error', `Error terminating SCORM API: ${ex.message}`);
+      log('error', `Error terminating SCORM API: ${ex.message}`);
     }
     return result;
   }
@@ -153,7 +153,7 @@ export class SCORM {
     this.setValue(this.core + 'score.raw', score);
     this.setValue(this.core + 'session_time', time);
     this.commit();
-    Utils.log('debug', `SCORM results reported: ${score} (${time})`);
+    log('debug', `SCORM results reported: ${score} (${time})`);
   }
 
   /**
@@ -165,7 +165,7 @@ export class SCORM {
     try {
       result = this.API[this.prefix + 'Commit']('');
     } catch (ex) {
-      Utils.log('error', 'Error commiting data to the SCORM API: ${ex.message}');
+      log('error', 'Error commiting data to the SCORM API: ${ex.message}');
     }
     return result;
   }
@@ -181,7 +181,7 @@ export class SCORM {
     try {
       result = this.API[this.prefix + 'SetValue'](key, value);
     } catch (ex) {
-      Utils.log('error', `Error setting value "${value}" to "${key}" in SCORM API: ${ex.message}`);
+      log('error', `Error setting value "${value}" to "${key}" in SCORM API: ${ex.message}`);
     }
     return result;
   }
@@ -196,7 +196,7 @@ export class SCORM {
     try {
       result = this.API[this.prefix + 'GetValue'](key);
     } catch (ex) {
-      Utils.log('error', `Error retrieving "${key}" from SCORM API: ${ex.message}`);
+      log('error', `Error retrieving "${key}" from SCORM API: ${ex.message}`);
     }
     return result;
   }

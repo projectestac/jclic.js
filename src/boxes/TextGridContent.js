@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import Utils from '../Utils';
+import { settings, attrForEach, getBoolean, getAttr, setAttr } from '../Utils';
 import BoxBase from './BoxBase';
 
 /**
@@ -57,7 +57,7 @@ export class TextGridContent {
    */
   setProperties($xml) {
     // Read attributes
-    Utils.attrForEach($xml.get(0).attributes, (name, val) => {
+    attrForEach($xml.get(0).attributes, (name, val) => {
       switch (name) {
         case 'rows':
           // WARNING: Due to a bug in JClic, the meaning of "rows" and "columns" must be
@@ -74,7 +74,7 @@ export class TextGridContent {
           this.h = Number(val);
           break;
         case 'border':
-          this.border = Utils.getBoolean(val);
+          this.border = getBoolean(val);
           break;
         case 'wild':
         case 'randomChars':
@@ -103,14 +103,14 @@ export class TextGridContent {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, [
+    return getAttr(this, [
       'ncw', 'nch',
       'w', 'h',
       'text',
       'style', // BoxBase
       'border',
       'wild|*',
-      `randomChars|${Utils.settings.RANDOM_CHARS}`,
+      `randomChars|${settings.RANDOM_CHARS}`,
     ]);
   }
 
@@ -120,7 +120,7 @@ export class TextGridContent {
    * @returns {TextGridContent}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, [
+    return setAttr(this, data, [
       'ncw', 'nch',
       'w', 'h',
       'text',
@@ -211,7 +211,7 @@ Object.assign(TextGridContent.prototype, {
    * A String with the chars to take as source when randomly filling empty cells
    * @name TextGridContent#randomChars
    * @type {string} */
-  randomChars: Utils.settings.RANDOM_CHARS,
+  randomChars: settings.RANDOM_CHARS,
 });
 
 export default TextGridContent;

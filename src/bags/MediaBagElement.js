@@ -33,7 +33,7 @@
 
 import $ from 'jquery';
 import MidiAudioPlayer from '../media/MidiAudioPlayer';
-import Utils from '../Utils';
+import { log, settings, nSlash, getAttr, isEmpty, getPathPromise, parseXmlNode, appendStyleAtHead } from '../Utils';
 import AWT from '../AWT';
 
 /**
@@ -57,8 +57,8 @@ export class MediaBagElement {
     if (basePath)
       this.basePath = basePath;
     if (file) {
-      this.file = Utils.nSlash(file);
-      this.name = Utils.nSlash(file);
+      this.file = nSlash(file);
+      this.name = nSlash(file);
       this.ext = this.file.toLowerCase().split('.').pop();
       this.type = this.getFileType(this.ext);
       if (this.ext === 'gif')
@@ -66,7 +66,7 @@ export class MediaBagElement {
     }
     if (zip)
       this.zip = zip;
-    this.timeout = Date.now() + Utils.settings.LOAD_TIMEOUT;
+    this.timeout = Date.now() + settings.LOAD_TIMEOUT;
   }
 
   /**
@@ -74,8 +74,8 @@ export class MediaBagElement {
    * @param {external:jQuery} $xml - The XML element to parse
    */
   setProperties($xml) {
-    this.name = Utils.nSlash($xml.attr('name'));
-    this.file = Utils.nSlash($xml.attr('file'));
+    this.name = nSlash($xml.attr('name'));
+    this.file = nSlash($xml.attr('file'));
     this.ext = this.file.toLowerCase().split('.').pop();
     this.type = this.getFileType(this.ext);
     // Check if it's an animated GIF
@@ -101,7 +101,7 @@ export class MediaBagElement {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, ['name', 'file', 'animated']);
+    return getAttr(this, ['name', 'file', 'animated']);
   }
 
   /**
@@ -110,7 +110,7 @@ export class MediaBagElement {
    */
   setAttributes(data) {
     ['name', 'file', 'animated'].forEach(attr => {
-      if (!Utils.isEmpty(data[attr]))
+      if (!isEmpty(data[attr]))
         this[attr] = data[attr];
     });
 
@@ -171,7 +171,7 @@ export class MediaBagElement {
             (arr[afterblock + 1] === 0x2C || arr[afterblock + 1] === 0x21)) {
             if (++frames > 1) {
               this.animated = true;
-              Utils.log('debug', `Animated GIF detected: ${this.file}`);
+              log('debug', `Animated GIF detected: ${this.file}`);
               break;
             }
           }
@@ -201,8 +201,8 @@ export class MediaBagElement {
    */
   getFileType(ext) {
     let result = null;
-    for (let type in Utils.settings.FILE_TYPES) {
-      if (Utils.settings.FILE_TYPES[type].indexOf(ext) >= 0) {
+    for (let type in settings.FILE_TYPES) {
+      if (settings.FILE_TYPES[type].indexOf(ext) >= 0) {
         result = type;
         break;
       }
@@ -230,7 +230,7 @@ export class MediaBagElement {
               format = this.ext === 'ttf' ? 'truetype' : this.ext === 'otf' ? 'embedded-opentype' : this.ext,
               css = `@font-face{font-family:"${this.fontName}";src:url(${fullPath}) format("${format}");}`;
 
-            Utils.appendStyleAtHead(css, ps);
+            appendStyleAtHead(css, ps);
             this.data = new AWT.Font(this.name);
             this.ready = true;
             break;
@@ -262,10 +262,10 @@ export class MediaBagElement {
           case 'xml':
             $.get(fullPath, null, null, 'xml').done(xmlData => {
               const children = xmlData ? xmlData.children || xmlData.childNodes : null;
-              this.data = children && children.length > 0 ? Utils.parseXmlNode(children[0]) : null;
+              this.data = children && children.length > 0 ? parseXmlNode(children[0]) : null;
               this._onReady();
             }).fail(err => {
-              Utils.log('error', `Error loading ${this.name}: ${err}`);
+              log('error', `Error loading ${this.name}: ${err}`);
               this._onReady();
             });
             break;
@@ -277,7 +277,7 @@ export class MediaBagElement {
                 if (request.status === 200)
                   this.data = new MidiAudioPlayer(request.response, ps && ps.options);
                 else
-                  Utils.log('error', `Error loading ${this.name}: ${request.statusText}`);
+                  log('error', `Error loading ${this.name}: ${request.statusText}`);
                 this._onReady();
               }
             };
@@ -293,14 +293,14 @@ export class MediaBagElement {
                 this._onReady()
               })
               .catch(err => {
-                Utils.log('error', `Error loading ${this.name}: ${err}`)
+                log('error', `Error loading ${this.name}: ${err}`)
                 this._onReady()
               })
             */
             break;
 
           default:
-            Utils.log('trace', `Media currently not supported: ${this.name}`);
+            log('trace', `Media currently not supported: ${this.name}`);
             this.ready = true;
         }
 
@@ -342,7 +342,7 @@ export class MediaBagElement {
   checkTimeout() {
     const result = Date.now() > this.timeout;
     if (result)
-      Utils.log('warn', `Timeout while loading: ${this.name}`);
+      log('warn', `Timeout while loading: ${this.name}`);
     return result;
   }
 
@@ -372,7 +372,7 @@ export class MediaBagElement {
    */
   getFullPathPromise() {
     return new Promise((resolve, reject) => {
-      Utils.getPathPromise(this.basePath, this.file, this.zip).then(fullPath => {
+      getPathPromise(this.basePath, this.file, this.zip).then(fullPath => {
         this._fullPath = fullPath;
         resolve(fullPath);
       }).catch(reject);

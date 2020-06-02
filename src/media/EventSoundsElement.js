@@ -31,7 +31,7 @@
 
 /* global Audio */
 
-import Utils from '../Utils';
+import { startsWith, getTriState, getAttr, setAttr, DEFAULT } from '../Utils';
 import ActiveMediaPlayer from './ActiveMediaPlayer';
 import MediaContent from './MediaContent';
 
@@ -51,7 +51,7 @@ export class EventSoundsElement {
   constructor(id, file) {
     this.id = id;
     if (file) {
-      if (Utils.startsWith(file, 'data:'))
+      if (startsWith(file, 'data:'))
         this.audio = new Audio(file);
       else
         this.file = file;
@@ -64,7 +64,7 @@ export class EventSoundsElement {
    */
   setProperties($xml) {
     this.file = $xml.attr('file');
-    this.enabled = Utils.getTriState($xml.attr('enabled'));
+    this.enabled = getTriState($xml.attr('enabled'));
     return this;
   }
 
@@ -75,8 +75,8 @@ export class EventSoundsElement {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, [
-      `enabled|${Utils.DEFAULT}`,
+    return getAttr(this, [
+      `enabled|${DEFAULT}`,
       'file',
     ]);
   }
@@ -87,7 +87,7 @@ export class EventSoundsElement {
    * @returns {EventSoundsElement}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, [
+    return setAttr(this, data, [
       'enabled',
       'file',
     ]);
@@ -141,7 +141,7 @@ Object.assign(EventSoundsElement.prototype, {
    * Whether the sound for this event is enabled or not
    * @name EventSoundsElement#enabled
    * @type {number} */
-  enabled: Utils.DEFAULT,
+  enabled: DEFAULT,
   /**
    * Media player used to play this sound
    * @name EventSoundsElement#player

@@ -30,10 +30,10 @@
  */
 
 import $ from 'jquery';
-import Utils from '../Utils';
+import { settings, attrForEach, getBoolean, checkColor, getAttr, setAttr, cloneObject, isSeparator } from '../Utils';
 import AWT from '../AWT';
 
-const defaultValues = Utils.settings.BoxBase;
+const defaultValues = settings.BoxBase;
 
 /**
  * This class contains all the main visual attributes needed to draw {@link AbstractBox} objects:
@@ -64,11 +64,11 @@ export class BoxBase {
   setProperties($xml) {
     //
     // Read attributes
-    Utils.attrForEach($xml.get(0).attributes, (name, val) => {
+    attrForEach($xml.get(0).attributes, (name, val) => {
       switch (name) {
         case 'shadow':
         case 'transparent':
-          this[name] = Utils.getBoolean(val, false);
+          this[name] = getBoolean(val, false);
           break;
         case 'margin':
           this[name] = Number(val);
@@ -95,12 +95,12 @@ export class BoxBase {
           break;
 
         case 'color':
-          this.textColor = Utils.checkColor($node.attr('foreground'), this.textColor);
-          this.backColor = Utils.checkColor($node.attr('background'), this.backColor);
-          this.shadowColor = Utils.checkColor($node.attr('shadow'), this.shadowColor);
-          this.inactiveColor = Utils.checkColor($node.attr('inactive'), this.inactiveColor);
-          this.alternativeColor = Utils.checkColor($node.attr('alternative'), this.alternativeColor);
-          this.borderColor = Utils.checkColor($node.attr('border'), this.borderColor);
+          this.textColor = checkColor($node.attr('foreground'), this.textColor);
+          this.backColor = checkColor($node.attr('background'), this.backColor);
+          this.shadowColor = checkColor($node.attr('shadow'), this.shadowColor);
+          this.inactiveColor = checkColor($node.attr('inactive'), this.inactiveColor);
+          this.alternativeColor = checkColor($node.attr('alternative'), this.alternativeColor);
+          this.borderColor = checkColor($node.attr('border'), this.borderColor);
           break;
       }
     });
@@ -114,7 +114,7 @@ export class BoxBase {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, [
+    return getAttr(this, [
       'shadow', 'transparent', 'margin',
       'borderStroke', 'markerStroke', // AWT.Stroke
       'font', // AWT.Font
@@ -134,7 +134,7 @@ export class BoxBase {
    * @returns {BoxBase}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, [
+    return setAttr(this, data, [
       'shadow', 'transparent', 'margin',
       { key: 'borderStroke', fn: AWT.Stroke },
       { key: 'markerStroke', fn: AWT.Stroke },
@@ -184,7 +184,7 @@ export class BoxBase {
       return this.parent.getOwn(property);
     else {
       if (typeof this[property] === 'object')
-        this[property] = Utils.cloneObject(BoxBase.prototype[property]);
+        this[property] = cloneObject(BoxBase.prototype[property]);
       else
         this[property] = BoxBase.prototype[property];
     }
@@ -256,7 +256,7 @@ export class BoxBase {
           lastOKWidth = 0;
         for (let p = 0; p < line.length; p++) {
           // Find next separator
-          if (Utils.isSeparator(line[p])) {
+          if (isSeparator(line[p])) {
             const w = ctx.measureText(line.substr(0, p).trim()).width;
             if (w > maxWidth)
               break;

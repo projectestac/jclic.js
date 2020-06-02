@@ -30,7 +30,7 @@
  */
 
 import AWT from '../AWT';
-import Utils from '../Utils';
+import { roundTo } from '../Utils';
 import AbstractBox from './AbstractBox';
 import TextGridContent from './TextGridContent';
 
@@ -670,8 +670,8 @@ export class TextGrid extends AbstractBox {
    */
   getScaledSize(scale) {
     return new AWT.Dimension(
-      Utils.roundTo(scale * this.preferredBounds.dim.width, this.nCols),
-      Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
+      roundTo(scale * this.preferredBounds.dim.width, this.nCols),
+      roundTo(scale * this.preferredBounds.dim.height, this.nRows));
   }
 
   /**

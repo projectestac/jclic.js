@@ -31,7 +31,7 @@
 
 import $ from 'jquery';
 import EventSoundsElement from './EventSoundsElement';
-import Utils from '../Utils';
+import { getTriState, getAttr, setAttr, DEFAULT } from '../Utils';
 
 /**
  * The EventSounds objects contains specific sounds to be played when JClic events are fired:
@@ -64,7 +64,7 @@ export class EventSounds {
    * @param {external:jQuery} $xml - The XML element to be parsed
    */
   setProperties($xml) {
-    this.enabled = Utils.getTriState($xml.attr('enabled'), this.enabled);
+    this.enabled = getTriState($xml.attr('enabled'), this.enabled);
     $xml.children().each((_n, child) => {
       const id = child.getAttribute('id');
       this.elements[id] = new EventSoundsElement(id);
@@ -80,8 +80,8 @@ export class EventSounds {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, [
-      `enabled|${Utils.DEFAULT}`,
+    return getAttr(this, [
+      `enabled|${DEFAULT}`,
       'elements',
     ]);
   }
@@ -92,7 +92,7 @@ export class EventSounds {
    * @returns {EventSounds}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, [
+    return setAttr(this, data, [
       'enabled',
       { key: 'elements', fn: EventSoundsElement, group: 'object' },
     ]);
@@ -349,7 +349,7 @@ Object.assign(EventSounds.prototype, {
    * Whether this event sounds are enabled or not
    * @name EventSounds#enabled
    * @type {number} */
-  enabled: Utils.DEFAULT,
+  enabled: DEFAULT,
   /**
    * This attribute is intended to be used at prototype level, to indicate a globally disabled
    * or enabled state.

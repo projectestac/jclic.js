@@ -34,7 +34,7 @@ import ProjectSettings from './ProjectSettings';
 import ActivitySequence from '../bags/ActivitySequence';
 import MediaBag from '../bags/MediaBag';
 import Activity from '../Activity';
-import Utils from '../Utils';
+import { getBasePath, nSlash, getAttr } from '../Utils';
 import AWT from '../AWT';
 
 /**
@@ -74,7 +74,7 @@ export class JClicProject {
       if (path.file)
         this.basePath = path;
       else
-        this.basePath = Utils.getBasePath(path);
+        this.basePath = getBasePath(path);
     }
     this.zip = zip;
     this.name = $xml.attr('name');
@@ -96,7 +96,7 @@ export class JClicProject {
     AWT.Font.checkTree($acts, options);
     $acts.each((_n, act) => {
       const $act = $(act);
-      this._activities[Utils.nSlash($act.attr('name'))] = $act;
+      this._activities[nSlash($act.attr('name'))] = $act;
       if ($act.children('settings').attr('report') === 'true')
         this.reportableActs++;
     });
@@ -117,7 +117,7 @@ export class JClicProject {
       this.activities[k] = act.jquery ? Activity.getActivity(act, this) : act;
     });
 
-    return Utils.getAttr(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'activities', 'mediaBag']);
+    return getAttr(this, ['name', 'version', 'type', 'code', 'settings', 'activitySequence', 'activities', 'mediaBag']);
   }
 
   /**
@@ -148,7 +148,7 @@ export class JClicProject {
       if (path.file)
         this.basePath = path;
       else
-        this.basePath = Utils.getBasePath(path);
+        this.basePath = getBasePath(path);
     }
     this.zip = zip;
     this.name = data.name;
@@ -180,7 +180,7 @@ export class JClicProject {
    * @returns {Activity}
    */
   getActivity(name) {
-    return Activity.getActivity(this._activities[Utils.nSlash(name)], this);
+    return Activity.getActivity(this._activities[nSlash(name)], this);
   }
 
   /**

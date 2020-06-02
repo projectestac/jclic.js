@@ -32,7 +32,7 @@
 /* global window */
 
 import MidiPlayer from '@francesc/basic-midi-player-js';
-import Utils from '../Utils';
+import { log } from '../Utils';
 
 // TODO: Use multiple instruments, at least one for each track
 // TODO: Use multiple midi channels (currently flattened to a single channel)
@@ -84,11 +84,11 @@ export class MidiAudioPlayer {
         options.MIDISoundFontObject || MidiAudioPlayer.MIDISoundFontObject ||
         `${options.MIDISoundFontBase || MidiAudioPlayer.MIDISoundFontBase}/${options.MIDISoundFontName || MidiAudioPlayer.MIDISoundFontName}${options.MIDISoundFontExtension || MidiAudioPlayer.MIDISoundFontExtension}`)
         .then(instrument => {
-          Utils.log('info', 'MIDI soundfont instrument loaded');
+          log('info', 'MIDI soundfont instrument loaded');
           MidiAudioPlayer.instrument = instrument;
         })
         .catch(err => {
-          Utils.log('error', `Error loading soundfont base instrument: ${err}`);
+          log('error', `Error loading soundfont base instrument: ${err}`);
         });
     }
   }

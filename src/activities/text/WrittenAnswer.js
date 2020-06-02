@@ -34,7 +34,7 @@ import Activity from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
 import AWT from '../../AWT';
-import Utils from '../../Utils';
+import { compareMultipleOptions } from '../../Utils';
 import Rectangular from '../../shapers/Rectangular';
 
 /**
@@ -401,7 +401,7 @@ export class WrittenAnswerPanel extends Activity.Panel {
           id = bx.idAss,
           txCheck = id >= 0 ? this.act.abc['answers'].getActiveBoxContent(id).text : '',
           txAnswer = this.$textField.val().trim();
-        if (Utils.compareMultipleOptions(txAnswer, txCheck, false, this.act.numericContent)) {
+        if (compareMultipleOptions(txAnswer, txCheck, false, this.act.numericContent)) {
           ok = true;
           bx.idAss = -1;
           // When in multiple-answer, fill-in textField with the first valid option:

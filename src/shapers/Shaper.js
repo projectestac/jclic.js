@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import Utils from '../Utils';
+import { log, attrForEach, getBoolean, getAttr, setAttr } from '../Utils';
 import AWT from '../AWT';
 
 /**
@@ -71,7 +71,7 @@ export class Shaper {
   static getShaper(className, nx, ny) {
     const cl = Shaper.CLASSES[(className || '').replace(/^edu\.xtec\.jclic\.shapers\./, '@')];
     if (!cl)
-      Utils.log('error', `Unknown shaper: ${className}`);
+      log('error', `Unknown shaper: ${className}`);
     return cl ? new cl(nx, ny) : null;
   }
 
@@ -95,7 +95,7 @@ export class Shaper {
    * @param {external:jQuery} $xml - The XML element with the shaper data
    */
   setProperties($xml) {
-    Utils.attrForEach($xml.get(0).attributes, (name, value) => {
+    attrForEach($xml.get(0).attributes, (name, value) => {
       switch (name) {
         case 'class':
           this.className = value;
@@ -114,7 +114,7 @@ export class Shaper {
           break;
         case 'randomLines':
         case 'showEnclosure':
-          this[name] = Utils.getBoolean(value, true);
+          this[name] = getBoolean(value, true);
           break;
       }
     });
@@ -204,7 +204,7 @@ export class Shaper {
       ].forEach(f => fields.push(f));
     }
 
-    return Utils.getAttr(this, fields);
+    return getAttr(this, fields);
   }
 
   /**
@@ -214,7 +214,7 @@ export class Shaper {
    */
   static factory(data) {
     const result = Shaper.getShaper(data.className, data.nCols, data.nRows);
-    Utils.setAttr(result, data, [
+    setAttr(result, data, [
       'className', 'nCols', 'nRows',
       'baseWidthFactor', 'toothHeightFactor',
       'scaleX', 'scaleY',

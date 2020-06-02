@@ -32,7 +32,7 @@
 import $ from 'jquery';
 import JumpInfo from './JumpInfo';
 import ConditionalJumpInfo from './ConditionalJumpInfo';
-import Utils from '../Utils';
+import { getAttr } from '../Utils';
 
 /**
  * This is a special case of {@link JumpInfo}, used only in {@link ActivitySequenceElement} objects.
@@ -82,7 +82,7 @@ export class ActivitySequenceJump extends JumpInfo {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Object.assign(super.getAttributes(), Utils.getAttr(this, ['upperJump', 'lowerJump']));
+    return Object.assign(super.getAttributes(), getAttr(this, ['upperJump', 'lowerJump']));
   }
 
   /**

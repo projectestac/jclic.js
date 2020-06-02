@@ -32,7 +32,7 @@
 import ActiveBoxBag from './ActiveBoxBag';
 import ActiveBox from './ActiveBox';
 import AWT from '../AWT';
-import Utils from '../Utils';
+import { settings, roundTo } from '../Utils';
 
 /**
  * This class extends {@link ActiveBoxBag} with constructors that take an argument of type
@@ -123,8 +123,8 @@ export class ActiveBoxGrid extends ActiveBoxBag {
    */
   getMinimumSize() {
     return new AWT.Dimension(
-      Utils.settings.MIN_CELL_SIZE * this.nCols,
-      Utils.settings.MIN_CELL_SIZE * this.nRows);
+      settings.MIN_CELL_SIZE * this.nCols,
+      settings.MIN_CELL_SIZE * this.nRows);
   }
 
   /**
@@ -134,8 +134,8 @@ export class ActiveBoxGrid extends ActiveBoxBag {
    */
   getScaledSize(scale) {
     return new AWT.Dimension(
-      Utils.roundTo(scale * this.preferredBounds.dim.width, this.nCols),
-      Utils.roundTo(scale * this.preferredBounds.dim.height, this.nRows));
+      roundTo(scale * this.preferredBounds.dim.width, this.nCols),
+      roundTo(scale * this.preferredBounds.dim.height, this.nRows));
   }
 
   /**

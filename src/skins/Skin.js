@@ -33,7 +33,7 @@
 
 import $ from 'jquery';
 import clipboard from 'clipboard-js';
-import Utils from '../Utils';
+import { appendStyleAtHead, cloneObject, getMsg, setLogLevel, log, getRootHead, toCssSize, $HTML, getPercent, getHMStime } from '../Utils';
 import AWT from '../AWT';
 
 /**
@@ -76,7 +76,7 @@ export class Skin extends AWT.Container {
       let half = this._getStyleSheets('half');
       if (half.length > 0)
         css += ` @media (max-width:${this.halfMedia.width}px),(max-height:${this.halfMedia.height}px){${half}}`;
-      Utils.appendStyleAtHead(css.replace(/\.ID/g, `.${this.skinId}`), ps);
+      appendStyleAtHead(css.replace(/\.ID/g, `.${this.skinId}`), ps);
     }
 
     let msg = '';
@@ -95,9 +95,9 @@ export class Skin extends AWT.Container {
         .append(this.$progress));
     this.$playerCnt.append(this.$waitPanel);
 
-    this.buttons = Utils.cloneObject(Skin.prototype.buttons);
-    this.counters = Utils.cloneObject(Skin.prototype.counters);
-    this.msgArea = Utils.cloneObject(Skin.prototype.msgArea);
+    this.buttons = cloneObject(Skin.prototype.buttons);
+    this.counters = cloneObject(Skin.prototype.counters);
+    this.msgArea = cloneObject(Skin.prototype.msgArea);
 
     // Create dialog overlay and panel
     this.$dlgOverlay = $('<div/>', { class: 'dlgOverlay' }).css({
@@ -143,50 +143,50 @@ export class Skin extends AWT.Container {
           this.$dlgMainPanel,
           this.$dlgBottomPanel)));
 
-    msg = Utils.getMsg('JClic logo');
+    msg = getMsg('JClic logo');
     this.$infoHead = $('<div/>', { class: 'infoHead' })
       .append($('<div/>', { class: 'headTitle unselectableText' })
         .append($(this.appLogo, { 'aria-label': msg }).css({ width: '1.5em', height: '1.5em', 'vertical-align': 'bottom' })
           .dblclick(() => {
             // Double click on JClic logo is a hidden method to increase verbosity on Javascript console
-            Utils.setLogLevel('all');
-            Utils.log('trace', 'Log level set to "trace"');
+            setLogLevel('all');
+            log('trace', 'Log level set to "trace"');
           }))
         .append($('<span/>').html('JClic.js')))
       .append($('<p/>').css({ 'margin-top': 0, 'margin-left': '3.5em' })
         .append($('<a/>', { href: 'http://clic.xtec.cat/repo/index.html?page=info' }).html('http://clic.xtec.cat'))
         .append($('<br>'))
-        .append($('<span/>').html(Utils.getMsg('Version') + ' ' + this.ps.JClicVersion)));
+        .append($('<span/>').html(getMsg('Version') + ' ' + this.ps.JClicVersion)));
 
     this.$reportsPanel = $('<div/>', { class: 'reportsPanel', role: 'document' });
 
-    msg = Utils.getMsg('Copy data to clipboard');
+    msg = getMsg('Copy data to clipboard');
     this.$copyBtn = $('<button/>', { title: msg, 'aria-label': msg })
       .append($(this.copyIcon).css({ width: '26px', height: '26px' }))
       .on('click', () => {
         clipboard.copy({
-          'text/plain': `===> ${Utils.getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor')} <===`,
+          'text/plain': `===> ${getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor')} <===`,
           'text/html': this.$reportsPanel.html()
         });
         this.$copyBtn.parent().append(
           $('<div/>', { class: 'smallPopup' })
-            .html(Utils.getMsg('The data has been copied to clipboard'))
+            .html(getMsg('The data has been copied to clipboard'))
             .fadeIn()
             .delay(3000)
             .fadeOut(function () { $(this).remove(); }));
       });
 
-    msg = Utils.getMsg('Close');
+    msg = getMsg('Close');
     this.$closeDlgBtn = $('<button/>', { title: msg, 'aria-label': msg })
       .append($(this.closeDialogIcon).css({ width: '26px', height: '26px' }))
       .on('click', () => this._closeDlg(true));
 
-    msg = Utils.getMsg('OK');
+    msg = getMsg('OK');
     this.$okDlgBtn = $('<button/>', { title: msg, 'aria-label': msg })
       .append($(this.okDialogIcon).css({ width: '26px', height: '26px' }))
       .on('click', () => this._closeDlg(true));
 
-    msg = Utils.getMsg('Cancel');
+    msg = getMsg('Cancel');
     this.$cancelDlgBtn = $('<button/>', { title: msg, 'aria-label': msg })
       .append($(this.closeDialogIcon).css({ width: '26px', height: '26px' }))
       .on('click', () => this._closeDlg(false));
@@ -214,7 +214,7 @@ export class Skin extends AWT.Container {
    */
   static registerStyleSheet(skinId, ps) {
     let result = false;
-    const root = Utils.getRootHead(ps);
+    const root = getRootHead(ps);
     if (!root['__JClicID'])
       root.__JClicID = `SK${Skin.lastId++}`;
 
@@ -225,7 +225,7 @@ export class Skin extends AWT.Container {
     }
 
     if (styles.indexOf(skinId) < 0) {
-      Utils.log('trace', `Stylesheet "${skinId}" has been registered for root node labeled as "${root.__JClicID}"`);
+      log('trace', `Stylesheet "${skinId}" has been registered for root node labeled as "${root.__JClicID}"`);
       styles.push(skinId);
     } else
       result = true;
@@ -274,7 +274,7 @@ export class Skin extends AWT.Container {
         && ps.project.mediaBag.getElement(options.image, false).data)
         cl = Skin.CLASSES.custom;
       else {
-        Utils.log('warn', `Unknown skin class: ${skinName}`);
+        log('warn', `Unknown skin class: ${skinName}`);
         cl = Skin.CLASSES.default;
       }
     }
@@ -321,12 +321,12 @@ export class Skin extends AWT.Container {
     if (typeof full === 'undefined')
       full = document && document.fullscreenElement ? true : false;
 
-    Utils.toCssSize(full ? '100vw' : this.ps.options.minWidth, css, 'min-width', nilValue);
-    Utils.toCssSize(full ? '100vh' : this.ps.options.minHeight, css, 'min-height', nilValue);
-    Utils.toCssSize(full ? '100vw' : this.ps.options.maxWidth, css, 'max-width', nilValue);
-    Utils.toCssSize(full ? '100vh' : this.ps.options.maxHeight, css, 'max-height', nilValue);
-    Utils.toCssSize(full ? '100vw' : this.ps.options.width, css, 'width', '100%');
-    Utils.toCssSize(full ? '100vh' : this.ps.options.height, css, 'height', topHeight > 0 ? '100%' : '100vh');
+    toCssSize(full ? '100vw' : this.ps.options.minWidth, css, 'min-width', nilValue);
+    toCssSize(full ? '100vh' : this.ps.options.minHeight, css, 'min-height', nilValue);
+    toCssSize(full ? '100vw' : this.ps.options.maxWidth, css, 'max-width', nilValue);
+    toCssSize(full ? '100vh' : this.ps.options.maxHeight, css, 'max-height', nilValue);
+    toCssSize(full ? '100vw' : this.ps.options.width, css, 'width', '100%');
+    toCssSize(full ? '100vh' : this.ps.options.height, css, 'height', topHeight > 0 ? '100%' : '100vh');
     this.$div.css(css);
   }
 
@@ -417,7 +417,7 @@ export class Skin extends AWT.Container {
         }
         this.$progress.attr('value', val);
       }
-      Utils.log('trace', `Progress: ${this.currentProgress}/${this.maxProgress}`);
+      log('trace', `Progress: ${this.currentProgress}/${this.maxProgress}`);
     }
   }
 
@@ -514,62 +514,61 @@ export class Skin extends AWT.Container {
     let result = [];
     if (reporter) {
       const
-        $html = Utils.$HTML,
         report = reporter.getData(),
         started = new Date(report.started);
 
-      result.push($('<div/>', { class: 'subTitle', id: this.ps.getUniqueId('ReportsLb') }).html(Utils.getMsg('Current results')));
+      result.push($('<div/>', { class: 'subTitle', id: this.ps.getUniqueId('ReportsLb') }).html(getMsg('Current results')));
 
       const $t = $('<table/>', { class: 'JCGlobalResults' });
       $t.append(
-        $html.doubleCell(
-          Utils.getMsg('Session started:'),
+        $HTML.doubleCell(
+          getMsg('Session started:'),
           `${started.toLocaleDateString()} ${started.toLocaleTimeString()}`),
-        $html.doubleCell(
-          Utils.getMsg('Reports system:'),
-          `${Utils.getMsg(report.descriptionKey)} ${report.descriptionDetail}`));
+        $HTML.doubleCell(
+          getMsg('Reports system:'),
+          `${getMsg(report.descriptionKey)} ${report.descriptionDetail}`));
       if (report.userId)
-        $t.append($html.doubleCell(
-          Utils.getMsg('User:'),
+        $t.append($HTML.doubleCell(
+          getMsg('User:'),
           report.userId));
       else if (report.user) // SCORM user
-        $t.append($html.doubleCell(
-          Utils.getMsg('User:'),
+        $t.append($HTML.doubleCell(
+          getMsg('User:'),
           report.user));
 
       if (report.sequences > 0) {
         if (report.sessions.length > 1)
-          $t.append($html.doubleCell(
-            Utils.getMsg('Projects:'),
+          $t.append($HTML.doubleCell(
+            getMsg('Projects:'),
             report.sessions.length));
         $t.append(
-          $html.doubleCell(
-            Utils.getMsg('Sequences:'),
+          $HTML.doubleCell(
+            getMsg('Sequences:'),
             report.sequences),
-          $html.doubleCell(
-            Utils.getMsg('Activities done:'),
+          $HTML.doubleCell(
+            getMsg('Activities done:'),
             report.activitiesDone),
-          $html.doubleCell(
-            Utils.getMsg('Activities played at least once:'),
-            `${report.playedOnce}/${report.reportable} (${Utils.getPercent(report.ratioPlayed / 100)})`));
+          $HTML.doubleCell(
+            getMsg('Activities played at least once:'),
+            `${report.playedOnce}/${report.reportable} (${getPercent(report.ratioPlayed / 100)})`));
         if (report.activitiesDone > 0) {
-          $t.append($html.doubleCell(
-            Utils.getMsg('Activities solved:'),
-            `${report.activitiesSolved} (${Utils.getPercent(report.ratioSolved / 100)})`));
+          $t.append($HTML.doubleCell(
+            getMsg('Activities solved:'),
+            `${report.activitiesSolved} (${getPercent(report.ratioSolved / 100)})`));
           if (report.actScore > 0)
             $t.append(
-              $html.doubleCell(
-                Utils.getMsg('Partial score:'),
-                `${Utils.getPercent(report.partialScore / 100)} ${Utils.getMsg('(out of played activities)')}`),
-              $html.doubleCell(
-                Utils.getMsg('Global score:'),
-                `${Utils.getPercent(report.globalScore / 100)} ${Utils.getMsg('(out of all project activities)')}`));
+              $HTML.doubleCell(
+                getMsg('Partial score:'),
+                `${getPercent(report.partialScore / 100)} ${getMsg('(out of played activities)')}`),
+              $HTML.doubleCell(
+                getMsg('Global score:'),
+                `${getPercent(report.globalScore / 100)} ${getMsg('(out of all project activities)')}`));
           $t.append(
-            $html.doubleCell(
-              Utils.getMsg('Total time in activities:'),
-              Utils.getHMStime(report.time * 1000)),
-            $html.doubleCell(
-              Utils.getMsg('Actions done:'),
+            $HTML.doubleCell(
+              getMsg('Total time in activities:'),
+              getHMStime(report.time * 1000)),
+            $HTML.doubleCell(
+              getMsg('Actions done:'),
               report.actions));
         }
         result.push($t);
@@ -577,28 +576,28 @@ export class Skin extends AWT.Container {
         report.sessions.forEach(sr => {
           if (sr.sequences.length > 0) {
             const $t = $('<table/>', { class: 'JCDetailed' });
-            result.push($('<p/>').html(report.sessions.length > 1 ? `${Utils.getMsg('Project')} ${sr.projectName}` : ''));
+            result.push($('<p/>').html(report.sessions.length > 1 ? `${getMsg('Project')} ${sr.projectName}` : ''));
             $t.append($('<thead/>').append($('<tr/>').append(
-              $html.th(Utils.getMsg('sequence')),
-              $html.th(Utils.getMsg('activity')),
-              $html.th(Utils.getMsg('OK')),
-              $html.th(Utils.getMsg('actions')),
-              $html.th(Utils.getMsg('score')),
-              $html.th(Utils.getMsg('time')))));
+              $HTML.th(getMsg('sequence')),
+              $HTML.th(getMsg('activity')),
+              $HTML.th(getMsg('OK')),
+              $HTML.th(getMsg('actions')),
+              $HTML.th(getMsg('score')),
+              $HTML.th(getMsg('time')))));
 
             sr.sequences.forEach(seq => {
               let $tr = $('<tr/>').append($('<td/>', { rowspan: seq.activities.length }).html(seq.sequence));
               seq.activities.forEach(act => {
                 if (act.closed) {
-                  $tr.append($html.td(act.name));
-                  $tr.append(act.solved ? $html.td(Utils.getMsg('YES'), 'ok') : $html.td(Utils.getMsg('NO'), 'no'));
-                  $tr.append($html.td(act.actions));
-                  $tr.append($html.td(Utils.getPercent(act.precision / 100)));
-                  $tr.append($html.td(Utils.getHMStime(act.time * 1000)));
+                  $tr.append($HTML.td(act.name));
+                  $tr.append(act.solved ? $HTML.td(getMsg('YES'), 'ok') : $HTML.td(getMsg('NO'), 'no'));
+                  $tr.append($HTML.td(act.actions));
+                  $tr.append($HTML.td(getPercent(act.precision / 100)));
+                  $tr.append($HTML.td(getHMStime(act.time * 1000)));
                 } else {
-                  $tr.append($html.td(act.name, 'incomplete'));
+                  $tr.append($HTML.td(act.name, 'incomplete'));
                   for (let r = 0; r < 4; r++)
-                    $tr.append($html.td('-', 'incomplete'));
+                    $tr.append($HTML.td('-', 'incomplete'));
                 }
                 $t.append($tr);
                 $tr = $('<tr/>');
@@ -606,18 +605,18 @@ export class Skin extends AWT.Container {
             });
 
             $t.append($('<tr/>').append(
-              $html.td(Utils.getMsg('Total:')),
-              $html.td(`${sr.played} (${Utils.getPercent(sr.ratioPlayed / 100)})`),
-              $html.td(`${sr.solved} (${Utils.getPercent(sr.ratioSolved / 100)})`),
-              $html.td(sr.actions),
-              $html.td(Utils.getPercent(sr.score / 100)),
-              $html.td(Utils.getHMStime(sr.time * 1000))));
+              $HTML.td(getMsg('Total:')),
+              $HTML.td(`${sr.played} (${getPercent(sr.ratioPlayed / 100)})`),
+              $HTML.td(`${sr.solved} (${getPercent(sr.ratioSolved / 100)})`),
+              $HTML.td(sr.actions),
+              $HTML.td(getPercent(sr.score / 100)),
+              $HTML.td(getHMStime(sr.time * 1000))));
 
             result.push($t);
           }
         }, this);
       } else
-        result.push($('<p/>').html(Utils.getMsg('No activities done!')));
+        result.push($('<p/>').html(getMsg('No activities done!')));
     }
     return result;
   }

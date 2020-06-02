@@ -35,7 +35,7 @@ import $ from 'jquery';
 import SessionReg from './SessionReg';
 import Encryption from './EncryptMin';
 import Scorm from './SCORM';
-import Utils from '../Utils';
+import { log, getMsg, getVal } from '../Utils';
 
 /**
  * This class implements the basic operations related with the processing of times and scores
@@ -86,7 +86,7 @@ export class Reporter {
     if (Reporter.CLASSES.hasOwnProperty(className))
       result = new Reporter.CLASSES[className](ps);
     else
-      Utils.log('error', 'Unknown reporter class: %s', className);
+      log('error', 'Unknown reporter class: %s', className);
 
     return result;
   }
@@ -209,7 +209,7 @@ export class Reporter {
             $groupSelect.change(ev => { sel = ev.target.selectedIndex; });
             this.ps.skin.showDlg(true, {
               main: [
-                $('<h2/>', { class: 'subtitle' }).html(Utils.getMsg('Select group:')),
+                $('<h2/>', { class: 'subtitle' }).html(getMsg('Select group:')),
                 $groupSelect],
               bottom: [
                 this.ps.skin.$okDlgBtn,
@@ -250,16 +250,16 @@ export class Reporter {
                 $userSelect.change(ev => { sel = ev.target.selectedIndex; });
                 this.ps.skin.showDlg(true, {
                   main: [
-                    $('<h2/>', { class: 'subtitle' }).html(Utils.getMsg('Select user:')),
+                    $('<h2/>', { class: 'subtitle' }).html(getMsg('Select user:')),
                     $userSelect,
-                    $('<h2/>', { class: 'subtitle' }).html(Utils.getMsg('Password:')).append($pwdInput)],
+                    $('<h2/>', { class: 'subtitle' }).html(getMsg('Password:')).append($pwdInput)],
                   bottom: [
                     this.ps.skin.$okDlgBtn,
                     this.ps.skin.$cancelDlgBtn]
                 }).then(() => {
                   if (sel >= 0) {
                     if (userList[sel].pwd && Encryption.Decrypt(userList[sel].pwd) !== $pwdInput.val()) {
-                      window.alert(Utils.getMsg('Incorrect password'));
+                      window.alert(getMsg('Incorrect password'));
                       reject('Incorrect password');
                     } else {
                       this.userId = userList[sel].id;
@@ -276,9 +276,9 @@ export class Reporter {
           this.ps.skin.showDlg(true, {
             main: [
               $('<div/>').css({ 'text-align': 'right' })
-                .append($('<h2/>', { class: 'subtitle' }).html(Utils.getMsg('User:'))
+                .append($('<h2/>', { class: 'subtitle' }).html(getMsg('User:'))
                   .append($userInput))
-                .append($('<h2/>', { class: 'subtitle' }).html(Utils.getMsg('Password:'))
+                .append($('<h2/>', { class: 'subtitle' }).html(getMsg('Password:'))
                   .append($pwdInput))],
             bottom: [
               this.ps.skin.$okDlgBtn,
@@ -286,7 +286,7 @@ export class Reporter {
           }).then(() => {
             this.getUserData($userInput.val()).then(user => {
               if (user.pwd && Encryption.Decrypt(user.pwd) !== $pwdInput.val()) {
-                window.alert(Utils.getMsg('Incorrect password'));
+                window.alert(getMsg('Incorrect password'));
                 reject('Incorrect password');
               } else {
                 this.userId = user.id;
@@ -350,18 +350,18 @@ export class Reporter {
   init(options) {
     if (!options)
       options = this.ps.options;
-    this.userId = Utils.getVal(options.user);
-    this.sessionKey = Utils.getVal(options.key);
-    this.sessionContext = Utils.getVal(options.context);
-    this.groupCodeFilter = Utils.getVal(options.groupCodeFilter);
-    this.userCodeFilter = Utils.getVal(options.userCodeFilter);
+    this.userId = getVal(options.user);
+    this.sessionKey = getVal(options.key);
+    this.sessionContext = getVal(options.context);
+    this.groupCodeFilter = getVal(options.groupCodeFilter);
+    this.userCodeFilter = getVal(options.userCodeFilter);
     if (options.SCORM !== false) {
       this.SCORM = Scorm.getSCORM(this);
       if (this.SCORM !== null && this.descriptionKey === Reporter.prototype.descriptionKey)
         this.descriptionKey = this.SCORM.getScormType();
     }
     this.initiated = true;
-    Utils.log('debug', 'Basic Reporter initialized');
+    log('debug', 'Basic Reporter initialized');
     return Promise.resolve(true);
   }
 
@@ -370,7 +370,7 @@ export class Reporter {
    * @returns {Promise} - A Promise object to be fullfilled when all pending tasks are finished.
    */
   end() {
-    Utils.log('debug', 'Basic Reporter ending');
+    log('debug', 'Basic Reporter ending');
     this.endSession();
     return Promise.resolve(true);
   }

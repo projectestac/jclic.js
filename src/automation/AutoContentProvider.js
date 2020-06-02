@@ -29,7 +29,7 @@
  *  @module
  */
 
-import Utils from '../Utils';
+import {log, getAttr} from '../Utils';
 
 /**
  * This abstract class is the base for classes that create on-time automatic content for JClic
@@ -63,7 +63,7 @@ export class AutoContentProvider {
         automation = new cl();
         automation.setProperties($xml);
       } else
-        Utils.log('error', `Unknown AutoContentProvider class: ${className}`);
+        log('error', `Unknown AutoContentProvider class: ${className}`);
     }
     return automation;
   }
@@ -85,7 +85,7 @@ export class AutoContentProvider {
    */
   getAttributes() {
     // To be overrided!
-    return Utils.getAttr(this, ['className']);
+    return getAttr(this, ['className']);
   }
 
   /**

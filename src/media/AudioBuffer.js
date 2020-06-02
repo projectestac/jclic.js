@@ -31,7 +31,7 @@
 
 /* global navigator, window, document, Blob, URL, MediaRecorder */
 
-import Utils from '../Utils';
+import { log } from '../Utils';
 
 /**
  * The AudioBuffer object provides sound recording and replaying to activities.
@@ -93,17 +93,17 @@ export class AudioBuffer {
           this.mediaRecorder.ondataavailable = ev => this.chunks.push(ev.data);
 
           this.mediaRecorder.onerror = err => {
-            Utils.log('error', `Error recording audio: ${err}`);
+            log('error', `Error recording audio: ${err}`);
             this.mediaRecorder = null;
           };
 
           this.mediaRecorder.onstart = () => {
-            Utils.log('debug', 'Recording audio started');
+            log('debug', 'Recording audio started');
             this.visualFeedbak(true, $div);
           };
 
           this.mediaRecorder.onstop = () => {
-            Utils.log('debug', 'Recording audio finished');
+            log('debug', 'Recording audio finished');
             this.visualFeedbak(false, $div);
 
             if (this.timeoutID) {
@@ -126,7 +126,7 @@ export class AudioBuffer {
             }
           };
 
-          this.mediaRecorder.onwarning = ev => Utils.log('warn', `Warning recording audio: ${ev}`);
+          this.mediaRecorder.onwarning = ev => log('warn', `Warning recording audio: ${ev}`);
 
           this.playWhenFinished = false;
 
@@ -138,7 +138,7 @@ export class AudioBuffer {
           }, this.seconds * 1000);
         })
         .catch(err => {
-          Utils.log('error', err.toString());
+          log('error', err.toString());
           this.visualFeedbak(false, $div);
         });
     }

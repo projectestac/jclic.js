@@ -36,7 +36,7 @@ import AbstractBox from './AbstractBox';
 import ActiveBoxContent from './ActiveBoxContent';
 import ActiveBagContent from './ActiveBagContent';
 import AWT from '../AWT';
-import Utils from '../Utils';
+import { settings, log, getMsg } from '../Utils';
 
 /**
  * Objects of this class are widely used in JClic activities: cells in puzzles and associations,
@@ -450,7 +450,7 @@ export class ActiveBox extends AbstractBox {
             imgh = abc.img.naturalHeight || this.dim.height,
             compress = false,
             scale = 1.0;
-          if (Utils.settings.COMPRESS_IMAGES &&
+          if (settings.COMPRESS_IMAGES &&
             (this.dim.width > 0 && this.dim.height > 0) &&
             (imgw > this.dim.width || imgh > this.dim.height)) {
 
@@ -476,7 +476,7 @@ export class ActiveBox extends AbstractBox {
               Math.min(this.dim.width, imgw), Math.min(this.dim.height, imgh));
         }
       } catch (ex) {
-        Utils.log('warn', `Unable to draw image "${abc.image}": ${ex.message}`);
+        log('warn', `Unable to draw image "${abc.image}": ${ex.message}`);
       }
     }
     if (abc.text && abc.text.length > 0) {
@@ -592,7 +592,7 @@ export class ActiveBox extends AbstractBox {
    * box content.
    */
   _focusAccessibleElement(ctx) {
-    if (Utils.settings.CANVAS_DRAW_FOCUS && this.$accessibleElement) {
+    if (settings.CANVAS_DRAW_FOCUS && this.$accessibleElement) {
       this.shape.preparePath(ctx);
       ctx.drawFocusIfNeeded(this.$accessibleElement.get(-1));
     }
@@ -612,7 +612,7 @@ export class ActiveBox extends AbstractBox {
    * @returns {String}
    */
   toString() {
-    return (this.role !== 'cell' ? Utils.getMsg(this.role) : '') + (this.getCurrentContent() || '-').toString();
+    return (this.role !== 'cell' ? getMsg(this.role) : '') + (this.getCurrentContent() || '-').toString();
   }
 
   /**
@@ -623,7 +623,7 @@ export class ActiveBox extends AbstractBox {
   playMedia(ps, delayedActions = null) {
     const abc = this.getCurrentContent();
     if (abc && abc.mediaContent) {
-      Utils.log('debug', `Playing: ${abc.mediaContent.toString()}`);
+      log('debug', `Playing: ${abc.mediaContent.toString()}`);
       ps.playMedia(abc.mediaContent, this, delayedActions);
       return true;
     }
@@ -736,7 +736,7 @@ export class ActiveBox extends AbstractBox {
             // Mouse clicks should be processed odirectly by the canvas, so ignore this accessible event
             return true;
           }
-          Utils.log('debug', `Click on accessible element: ${this.toString()}`);
+          log('debug', `Click on accessible element: ${this.toString()}`);
           const
             $event = $.Event(eventType || 'click'),
             bounds = this.getBounds(),
@@ -748,9 +748,9 @@ export class ActiveBox extends AbstractBox {
         });
       const $dest = $canvasGroup || $canvas;
       $dest.append(this.$accessibleElement);
-      if (Utils.settings.CANVAS_DRAW_FOCUS) {
+      if (settings.CANVAS_DRAW_FOCUS) {
         this.$accessibleElement.on('focus blur', ev => {
-          Utils.log('debug', `${ev.type} accessible element: ${this.toString()}`);
+          log('debug', `${ev.type} accessible element: ${this.toString()}`);
           if (this.container)
             this.container.update();
           this.updateContent(canvas.getContext('2d'), null);

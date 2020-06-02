@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import Utils from '../Utils';
+import { attrForEach, getBoolean } from '../Utils';
 
 /**
  * This class stores information about one specific action done by the current user while playing
@@ -76,7 +76,7 @@ export class ActionReg {
    * @param {external:jQuery} $xml - The XML element to be processed, already wrapped as jQuery object
    */
   setProperties($xml) {
-    Utils.attrForEach($xml.get(0).attributes, (name, value) => {
+    attrForEach($xml.get(0).attributes, (name, value) => {
       switch (name) {
         case 'type':
         case 'source':
@@ -87,7 +87,7 @@ export class ActionReg {
           this[name] = Number(value);
           break;
         case 'ok':
-          this[name] = Utils.getBoolean(value, false);
+          this[name] = getBoolean(value, false);
           break;
       }
     });

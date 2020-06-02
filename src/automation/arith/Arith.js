@@ -33,7 +33,7 @@
 
 import $ from 'jquery';
 import AutoContentProvider from '../AutoContentProvider';
-import Utils from '../../Utils';
+import { getNumber, getBoolean, getAttr, setAttr, attrForEach } from '../../Utils';
 
 //
 // Miscellaneous constants used by Arith:
@@ -108,25 +108,25 @@ export class Arith extends AutoContentProvider {
           }
           break;
         case 'operations':
-          this.use_add = Utils.getBoolean($node.attr('plus'));
-          this.use_subst = Utils.getBoolean($node.attr('minus'));
-          this.use_mult = Utils.getBoolean($node.attr('multiply'));
-          this.use_div = Utils.getBoolean($node.attr('divide'));
+          this.use_add = getBoolean($node.attr('plus'));
+          this.use_subst = getBoolean($node.attr('minus'));
+          this.use_mult = getBoolean($node.attr('multiply'));
+          this.use_div = getBoolean($node.attr('divide'));
           break;
         case 'unknown':
-          this.exp_abx = Utils.getBoolean($node.attr('result'));
-          this.exp_xbc = Utils.getBoolean($node.attr('first'));
-          this.exp_axc = Utils.getBoolean($node.attr('last'));
-          this.exp_axbc = Utils.getBoolean($node.attr('operand'));
-          this.exp_caxb = Utils.getBoolean($node.attr('inverse'));
+          this.exp_abx = getBoolean($node.attr('result'));
+          this.exp_xbc = getBoolean($node.attr('first'));
+          this.exp_axc = getBoolean($node.attr('last'));
+          this.exp_axbc = getBoolean($node.attr('operand'));
+          this.exp_caxb = getBoolean($node.attr('inverse'));
           break;
         case 'result':
           xNum = $node.attr('from');
-          this.resultLimInf = Utils.getNumber(xNum === 'x' ? 0 : xNum, this.resultLimInf);
+          this.resultLimInf = getNumber(xNum === 'x' ? 0 : xNum, this.resultLimInf);
           xNum = $node.attr('to');
-          this.resultLimSup = Utils.getNumber(xNum === 'x' ? 0 : xNum, this.resultLimSup);
-          this.resultCarry = Utils.getBoolean($node.attr('notCarry'), this.resultCarry);
-          this.resultNoDup = !Utils.getBoolean($node.attr('duplicates'), !this.resultNoDup);
+          this.resultLimSup = getNumber(xNum === 'x' ? 0 : xNum, this.resultLimSup);
+          this.resultCarry = getBoolean($node.attr('notCarry'), this.resultCarry);
+          this.resultNoDup = !getBoolean($node.attr('duplicates'), !this.resultNoDup);
           let s = $node.attr('order');
           this.resultOrder = s === 'ascending' ? 'SORTASC' : s === 'descending' ? 'SORTDESC' : 'NOSORT';
           s = $node.attr('condition');
@@ -144,7 +144,7 @@ export class Arith extends AutoContentProvider {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, [
+    return getAttr(this, [
       'className',
       'opA', 'opB', // Operator
       'use_add', 'use_subst', 'use_mult', 'use_div',
@@ -160,7 +160,7 @@ export class Arith extends AutoContentProvider {
    * @returns {EventSounds}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, [
+    return setAttr(this, data, [
       'className',
       { key: 'opA', fn: Arith.Operator },
       { key: 'opB', fn: Arith.Operator },
@@ -736,7 +736,7 @@ Arith.Operator = class {
    */
   setProperties($xml) {
     // Read attributes
-    Utils.attrForEach($xml.get(0).attributes, (name, val) => {
+    attrForEach($xml.get(0).attributes, (name, val) => {
       switch (name) {
         case 'decimals':
           this.numDec = Number(val);
@@ -760,9 +760,9 @@ Arith.Operator = class {
         const $node = $(child);
         switch (child.nodeName) {
           case 'include':
-            this.wZero = Utils.getBoolean($node.attr('zero'));
-            this.wOne = Utils.getBoolean($node.attr('one'));
-            this.wMinusOne = Utils.getBoolean($node.attr('minusOne'));
+            this.wZero = getBoolean($node.attr('zero'));
+            this.wOne = getBoolean($node.attr('one'));
+            this.wMinusOne = getBoolean($node.attr('minusOne'));
             break;
         }
       });
@@ -777,7 +777,7 @@ Arith.Operator = class {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, [
+    return getAttr(this, [
       'limInf', 'limSup',
       'numDec|0',
       'wZero|false', 'wOne|false', 'wMinusOne|false',
@@ -791,7 +791,7 @@ Arith.Operator = class {
    * @returns {Arith}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, [
+    return setAttr(this, data, [
       'limInf', 'limSup',
       'numDec',
       'wZero', 'wOne', 'wMinusOne',

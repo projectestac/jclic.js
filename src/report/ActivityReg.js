@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import Utils from '../Utils';
+import { attrForEach, getBoolean } from '../Utils';
 import ActionReg from './ActionReg';
 
 /**
@@ -107,7 +107,7 @@ export class ActivityReg {
    * @param {external:jQuery} $xml -The XML element to be processed, already wrapped as jQuery object
    */
   setProperties($xml) {
-    Utils.attrForEach($xml.get(0).attributes, (name, value) => {
+    attrForEach($xml.get(0).attributes, (name, value) => {
       switch (name) {
         case 'name':
         case 'code':
@@ -123,7 +123,7 @@ export class ActivityReg {
         case 'solved':
         case 'closed':
         case 'reportActions':
-          this[name] = Utils.getBoolean(value, false);
+          this[name] = getBoolean(value, false);
           break;
       }
     });

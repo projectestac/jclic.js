@@ -32,7 +32,7 @@
 import $ from 'jquery';
 import Skin from './Skin';
 import Counter from './Counter';
-import Utils from '../Utils';
+import { getMsg, checkColor, getImgClipUrl } from '../Utils';
 import AWT from '../AWT';
 import ActiveBox from '../boxes/ActiveBox';
 
@@ -69,7 +69,7 @@ export class CustomSkin extends Skin {
     if (options.buttons) {
       Object.keys(options.buttons.button).forEach(k => {
         const k2 = k === 'about' ? 'reports' : k;
-        const msg = Utils.getMsg(this.msgKeys[k2] || k2);
+        const msg = getMsg(this.msgKeys[k2] || k2);
         this.buttons[k2] = $('<button/>', { class: `JClicBtn JClicTransform Btn-${k2}`, title: msg, 'aria-label': msg, disabled: typeof this.msgKeys[k2] === 'undefined' })
           .on('click', evt => { if (ps.actions[k2]) ps.actions[k2].processEvent(evt); });
         this.$mainPanel.append(this.buttons[k2]);
@@ -92,7 +92,7 @@ export class CustomSkin extends Skin {
     if (false !== this.ps.options.counters && options.counters && options.counters.counter) {
       $.each(Skin.prototype.counters, (name, _val) => {
         if (options.counters.counter[name]) {
-          const msg = Utils.getMsg(name);
+          const msg = getMsg(name);
           this.counters[name] = new Counter(name, $('<div/>', { class: `JClicCounter JClicTransform Counter-${name}`, title: msg, 'aria-label': msg })
             .html('000')
             .appendTo(this.$mainPanel));
@@ -149,17 +149,17 @@ export class CustomSkin extends Skin {
       pv5 = pv0 + this.options.rectangle.frame.height,
       imgElement = this.ps.project.mediaBag.getElement(this.options.image, true),
       imgUrl = imgElement.data && imgElement.data.src ? imgElement.data.src : '',
-      box1 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv0, ph2 - ph0, pv2 - pv0)) : '',
-      box2 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv0, ph3 - ph2, pv2 - pv0)) : '',
-      box3 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv0, ph5 - ph3, pv2 - pv0)) : '',
-      box4 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv2 - pv0, ph2 - ph0, pv3 - pv2)) : '',
-      box6 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3 - ph0, pv2 - pv0, ph5 - ph3, pv3 - pv2)) : '',
-      box7 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv3 - pv0, ph2 - ph0, pv5 - pv3)) : '',
-      box8 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : '',
-      box9 = imgElement.data ? Utils.getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv3 - pv0, ph5 - ph3, pv5 - pv3)) : '';
+      box1 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv0, ph2 - ph0, pv2 - pv0)) : '',
+      box2 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv0, ph3 - ph2, pv2 - pv0)) : '',
+      box3 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv0, ph5 - ph3, pv2 - pv0)) : '',
+      box4 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv2 - pv0, ph2 - ph0, pv3 - pv2)) : '',
+      box6 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3 - ph0, pv2 - pv0, ph5 - ph3, pv3 - pv2)) : '',
+      box7 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph0, pv3 - pv0, ph2 - ph0, pv5 - pv3)) : '',
+      box8 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph2 - ph0, pv3 - pv0, ph3 - ph2, pv5 - pv3)) : '',
+      box9 = imgElement.data ? getImgClipUrl(imgElement.data, new AWT.Rectangle(ph3, pv3 - pv0, ph5 - ph3, pv5 - pv3)) : '';
 
     let css = `
-.ID .JClicCustomMainPanel {flex-grow:1;position:relative;background-color: ${Utils.checkColor(this.options.color.fill.value)};}
+.ID .JClicCustomMainPanel {flex-grow:1;position:relative;background-color: ${checkColor(this.options.color.fill.value)};}
 .ID .JClicGridPanel {position:absolute;width:100%;height:100%;display:grid;grid-template-columns:${ph2 - ph0}px 1fr ${ph5 - ph3}px;grid-template-rows:${pv2 - pv0}px 1fr ${pv5 - pv3}px;}
 .ID .JClicCell {background-repeat:no-repeat;background-size:contain;}
 .ID .JClicPlayerCell {position:absolute;top:${pv1 - pv0}px;right:${ph5 - ph4}px;bottom:${pv5 - pv4}px;left:${ph1 - ph0}px;}
@@ -246,7 +246,7 @@ export class CustomSkin extends Skin {
       }
       let bColor = 'black';
       if (cnt.style && cnt.style.color && cnt.style.color.foreground)
-        bColor = Utils.checkColor(cnt.style.color.foreground.value || bColor);
+        bColor = checkColor(cnt.style.color.foreground.value || bColor);
       let lbFntSize = hLb - 4;
       let lbFntFamily = 'Roboto';
       if (cnt.style && cnt.style.font && cnt.style.font.label) {
@@ -273,7 +273,7 @@ export class CustomSkin extends Skin {
         // counter:
         css += `.ID .Counter-${k} {position:absolute;${xp}px;${yp}px;width:${w}px;height:${h}px;line-height:${h}px;}\n`;
         // label:
-        css += `.ID .Counter-${k}:before {content:"${Utils.getMsg(k)}";font-size:${lbFntSize}px;font-family:${lbFntFamily};width:${wLb}px;height:${hLb}px;line-height:${hLb}px;position:absolute;top:${yl - y}px;left:${xl - x}px;}`;
+        css += `.ID .Counter-${k}:before {content:"${getMsg(k)}";font-size:${lbFntSize}px;font-family:${lbFntFamily};width:${wLb}px;height:${hLb}px;line-height:${hLb}px;position:absolute;top:${yl - y}px;left:${xl - x}px;}`;
         // reduced sizes:
         cssHalf += `.ID .Counter-${k} {${xpHalf}px;${ypHalf}px;}\n`;
         cssTwoThirds += `.ID .Counter-${k} {${xpTwoThirds}px;${ypTwoThirds}px;}\n`;

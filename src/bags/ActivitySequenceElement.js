@@ -31,7 +31,7 @@
 
 import $ from 'jquery';
 import ActivitySequenceJump from './ActivitySequenceJump';
-import Utils from '../Utils';
+import { attrForEach, nSlash, getAttr, isEmpty } from '../Utils';
 
 /**
  *
@@ -59,10 +59,10 @@ export class ActivitySequenceElement {
   setProperties($xml) {
 
     // Iterate on all provided attributes
-    Utils.attrForEach($xml.get(0).attributes, (name, val) => {
+    attrForEach($xml.get(0).attributes, (name, val) => {
       switch (name) {
         case 'id':
-          this['tag'] = Utils.nSlash(val);
+          this['tag'] = nSlash(val);
           break;
         case 'name':
           this['activity'] = val;
@@ -96,7 +96,7 @@ export class ActivitySequenceElement {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, ['tag', 'description', 'activity', 'fwdJump', 'backJump', 'navButtons', 'delay']);
+    return getAttr(this, ['tag', 'description', 'activity', 'fwdJump', 'backJump', 'navButtons', 'delay']);
   }
 
   /**
@@ -105,7 +105,7 @@ export class ActivitySequenceElement {
    */
   setAttributes(data) {
     ['tag', 'description', 'activity', 'navButtons', 'delay'].forEach(t => {
-      if (!Utils.isEmpty(data[t]))
+      if (!isEmpty(data[t]))
         this[t] = data[t];
     });
 

@@ -29,7 +29,7 @@
  *  @module
  */
 
-import Utils from '../Utils';
+import { nSlash, getAttr, isEmpty } from '../Utils';
 
 /**
  * This class contains information about what things JClic sequence manager has to do in certain
@@ -75,9 +75,9 @@ export class JumpInfo {
     this.id = $xml.attr('id');
     this.action = $xml.attr('action') || 'JUMP';
     if ($xml.attr('tag'))
-      this.sequence = Utils.nSlash($xml.attr('tag'));
+      this.sequence = nSlash($xml.attr('tag'));
     if ($xml.attr('project'))
-      this.projectPath = Utils.nSlash($xml.attr('project'));
+      this.projectPath = nSlash($xml.attr('project'));
     return this;
   }
 
@@ -88,7 +88,7 @@ export class JumpInfo {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, ['id', 'action', 'actNum', 'sequence', 'projectPath']);
+    return getAttr(this, ['id', 'action', 'actNum', 'sequence', 'projectPath']);
   }
 
   /**
@@ -97,7 +97,7 @@ export class JumpInfo {
    */
   setAttributes(data) {
     ['id', 'action', 'actNum', 'sequence', 'projectPath'].forEach(t => {
-      if (!Utils.isEmpty(data[t]))
+      if (!isEmpty(data[t]))
         this[t] = data[t];
     });
     return this;

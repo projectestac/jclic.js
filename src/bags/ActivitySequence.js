@@ -33,7 +33,7 @@ import $ from 'jquery';
 import JumpInfo from './JumpInfo';
 import ActivitySequenceElement from './ActivitySequenceElement';
 import ActivitySequenceJump from './ActivitySequenceJump';
-import Utils from '../Utils';
+import { nSlash } from '../Utils';
 
 /**
  * This class stores the definition of the sequence to follow to show the activities of a
@@ -117,7 +117,7 @@ export class ActivitySequence {
       result = null,
       resultIndex = -1;
     if (tag) {
-      tag = Utils.nSlash(tag);
+      tag = nSlash(tag);
       this.elements.some((el, index) => {
         if (el.tag === tag) {
           result = el;

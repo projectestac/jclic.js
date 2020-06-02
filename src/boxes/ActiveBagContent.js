@@ -34,7 +34,7 @@ import BoxBase from './BoxBase';
 import ActiveBoxContent from './ActiveBoxContent';
 import Shaper from '../shapers/Shaper';
 import AWT from '../AWT';
-import Utils from '../Utils';
+import { settings, attrForEach, nSlash, getBoolean, getAttr, setAttr } from '../Utils';
 
 /**
  * This class packs a collection of {@link ActiveBoxContent} objects and provides methods to access
@@ -66,13 +66,13 @@ export class ActiveBagContent {
    */
   setProperties($xml, mediaBag) {
     let bug = false;
-    Utils.attrForEach($xml.get(0).attributes, (name, val) => {
+    attrForEach($xml.get(0).attributes, (name, val) => {
       switch (name) {
         case 'id':
           this.id = val;
           break;
         case 'image':
-          this.image = Utils.nSlash(val);
+          this.image = nSlash(val);
           break;
         // Bug in JClic beta 1: "columns" is number of rows, and "rows" is number of columns.
         // Was corrected in beta 2: If "cols" is specified, "rows" are rows and "cols" are columns.
@@ -92,7 +92,7 @@ export class ActiveBagContent {
           this.h = Number(val);
           break;
         case 'border':
-          this.border = Utils.getBoolean(val);
+          this.border = getBoolean(val);
           break;
       }
     });
@@ -175,7 +175,7 @@ export class ActiveBagContent {
     ];
     if (!this.initiallyEmptyCells)
       fields.push(this.ids ? 'ids' : 'cells'); // ActiveBoxContent
-    return Utils.getAttr(this, fields);
+    return getAttr(this, fields);
   }
 
   /**
@@ -185,7 +185,7 @@ export class ActiveBagContent {
    * @returns {ActiveBagContent}
    */
   setAttributes(data, mediaBag) {
-    Utils.setAttr(this, data, [
+    setAttr(this, data, [
       'id', 'image',
       'ncw', 'nch',
       'w', 'h', 'border',
@@ -450,12 +450,12 @@ Object.assign(ActiveBagContent.prototype, {
    * Optimal cell width
    * @name ActiveBagContent#w
    * @type {number} */
-  w: Utils.settings.DEFAULT_GRID_ELEMENT_SIZE,
+  w: settings.DEFAULT_GRID_ELEMENT_SIZE,
   /**
    * Optimal cell height
    * @name ActiveBagContent#h
    * @type {number} */
-  h: Utils.settings.DEFAULT_GRID_ELEMENT_SIZE,
+  h: settings.DEFAULT_GRID_ELEMENT_SIZE,
   /**
    * Whether the cells must have a border or not
    * @name ActiveBagContent#border

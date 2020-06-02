@@ -30,7 +30,7 @@
  */
 
 import ActiveMediaPlayer from './ActiveMediaPlayer';
-import Utils from '../Utils';
+import { settings } from '../Utils';
 
 /**
  * This class stores a collection of realized {@link ActiveMediaPlayer} objects, related to a
@@ -59,7 +59,7 @@ export class ActiveMediaBag {
     let amp = null;
     switch (mc.type) {
       case 'RECORD_AUDIO':
-        if (mc.length <= 0 || mc.length >= Utils.settings.MAX_RECORD_LENGTH)
+        if (mc.length <= 0 || mc.length >= settings.MAX_RECORD_LENGTH)
           break;
       /* falls through */
       case 'PLAY_RECORDED_AUDIO':

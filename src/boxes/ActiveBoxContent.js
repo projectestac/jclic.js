@@ -31,7 +31,7 @@
 
 import $ from 'jquery';
 import AWT from '../AWT';
-import Utils from '../Utils';
+import { getAttr, setAttr, attrForEach, getBoolean, nSlash, startsWith, getMsg } from '../Utils';
 import BoxBase from './BoxBase';
 import MediaContent from '../media/MediaContent';
 
@@ -58,7 +58,7 @@ export class AlignType {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, ['h|center', 'v|center']);
+    return getAttr(this, ['h|center', 'v|center']);
   }
 
   /**
@@ -67,7 +67,7 @@ export class AlignType {
    * @returns {AlignType}
    */
   setAttributes(data) {
-    return Utils.setAttr(this, data, ['h', 'v']);
+    return setAttr(this, data, ['h', 'v']);
   }
 }
 
@@ -105,7 +105,7 @@ export class ActiveBoxContent {
   setProperties($xml, mediaBag) {
     //
     // Read attributes
-    Utils.attrForEach($xml.get(0).attributes, (name, val) => {
+    attrForEach($xml.get(0).attributes, (name, val) => {
       switch (name) {
         case 'id':
         case 'item':
@@ -132,11 +132,11 @@ export class ActiveBoxContent {
 
         case 'border':
         case 'avoidOverlapping':
-          this[name] = Utils.getBoolean(val);
+          this[name] = getBoolean(val);
           break;
 
         case 'image':
-          this.image = Utils.nSlash(val);
+          this.image = nSlash(val);
           break;
       }
     });
@@ -175,7 +175,7 @@ export class ActiveBoxContent {
    * @returns {object} - The resulting object, with minimal attrributes
    */
   getAttributes() {
-    return Utils.getAttr(this, [
+    return getAttr(this, [
       'id', 'item', 'dimension', 'border', 'avoidOverlapping', 'image', 'text',
       'objectType', // Used in TextActivityDocument
       'txtAlign', 'imgAlign', // AlignType        
@@ -195,7 +195,7 @@ export class ActiveBoxContent {
     if (typeof data === 'string')
       this.text = data;
     else
-      Utils.setAttr(this, data, [
+      setAttr(this, data, [
         'id', 'item', 'border', 'avoidOverlapping', 'image', 'text',
         'objectType',
         { key: 'dimension', fn: AWT.Dimension },
@@ -282,7 +282,7 @@ export class ActiveBoxContent {
    */
   checkHtmlText() {
     this.innerHtmlText = null;
-    if (Utils.startsWith(this.text, '<html>', true)) {
+    if (startsWith(this.text, '<html>', true)) {
       const htmlText = this.text.trim();
       const s = htmlText.toLocaleLowerCase();
       if (s.indexOf('<body') === -1) {
@@ -353,7 +353,7 @@ export class ActiveBoxContent {
     if (this.text && this.text.length)
       result.push(this.text);
     if (this.image)
-      result.push(`${Utils.getMsg('image')} ${this.image}`);
+      result.push(`${getMsg('image')} ${this.image}`);
     if (this.imgClip)
       result.push(this.imgClip.toString());
     if (this.mediaContent)
@@ -371,10 +371,10 @@ export class ActiveBoxContent {
     if (this.text && this.text.length)
       result.push(this.text);
     if (this.image)
-      result.push(`${Utils.getMsg('image')} ${this.image}`);
+      result.push(`${getMsg('image')} ${this.image}`);
     if (this.imgClip)
-      result.push(`${Utils.getMsg('image fragment')} ${(this.id >= 0 ? this.id : this.item) + 1}`);
-    return result.join(' ') || Utils.getMsg('cell');
+      result.push(`${getMsg('image fragment')} ${(this.id >= 0 ? this.id : this.item) + 1}`);
+    return result.join(' ') || getMsg('cell');
   }
 }
 

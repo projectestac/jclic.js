@@ -32,7 +32,7 @@
 import $ from 'jquery';
 import MediaBagElement from './MediaBagElement';
 import Skin from '../skins/Skin';
-import Utils from '../Utils';
+import { log, nSlash } from '../Utils';
 
 /**
  * This class stores and manages all the media components (images, sounds, animations, video,
@@ -95,7 +95,7 @@ export class MediaBag {
    * @returns {MediaBagElement}
    */
   getElement(name, create) {
-    name = Utils.nSlash(name);
+    name = nSlash(name);
     let result = this.elements[name];
     if (create && !result)
       result = this.getElementByFileName(name, create);
@@ -112,7 +112,7 @@ export class MediaBag {
   getElementByFileName(file, create) {
     let result = null;
     if (file) {
-      file = Utils.nSlash(file);
+      file = nSlash(file);
       for (let name in this.elements) {
         if (this.elements[name].file === file) {
           result = this.elements[name];
@@ -181,7 +181,7 @@ export class MediaBag {
     // TODO: Check loading process!
     $.each(this.elements, (name, element) => {
       if (element.data && !element.ready && !element.checkReady() && !element.checkTimeout()) {
-        Utils.log('debug', '... waiting for: %s', name);
+        log('debug', '... waiting for: %s', name);
         allReady = false;
       } else
         ready++;

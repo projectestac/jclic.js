@@ -31,7 +31,7 @@
 
 import AbstractBox from './AbstractBox';
 import AWT from '../AWT';
-import Utils from '../Utils';
+import { settings } from '../Utils';
 
 /**
  * BoxBag is a class derived from {@link AbstractBox} that contains a collection of "boxes"
@@ -240,8 +240,8 @@ export class BoxBag extends AbstractBox {
   getMinimumSize() {
     const d = this.getPreferredSize();
     return new AWT.Dimension(
-      Math.max(Utils.settings.MIN_CELL_SIZE, d.width),
-      Math.max(Utils.settings.MIN_CELL_SIZE, d.height));
+      Math.max(settings.MIN_CELL_SIZE, d.width),
+      Math.max(settings.MIN_CELL_SIZE, d.height));
   }
 
   /**
