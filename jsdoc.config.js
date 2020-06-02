@@ -10,7 +10,7 @@ module.exports = {
   source: {
     include: ['misc/jsdoc/index.md', 'src'],
     includePattern: '.+\\.js$',
-    exclude: ['src/GlobalData.js']
+    exclude: ['src/GlobalData.js', 'src/Deps.js'],
   },  
   opts: {
     recurse: true,
