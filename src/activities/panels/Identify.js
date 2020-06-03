@@ -73,13 +73,13 @@ export class Identify extends Activity {
 Object.assign(Identify.prototype, {
   /**
    * Number of not assigned cells (calculated in {@link IdentifyPanel#buildVisualComponents})
-   * @name Identify#nonAssignedCells
+   * @name module:activities/panels/Identify.Identify#nonAssignedCells
    * @type {number} */
   nonAssignedCells: 0,
   /**
    * Number of cells the user must identify to complete the activity (calculated in
    * {@link IdentifyPanel#buildVisualComponents})
-   * @name Identify#cellsToMatch
+   * @name module:activities/panels/Identify.Identify#cellsToMatch
    * @type {number} */
   cellsToMatch: 1,
 });
@@ -336,13 +336,13 @@ export class IdentifyPanel extends ActivityPanel {
 Object.assign(IdentifyPanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed on the panel.
-   * @name IdentifyPanel#bg
+   * @name module:activities/panels/Identify.IdentifyPanel#bg
    * @type {ActiveBoxBag} */
   bg: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
-   * @name IdentifyPanel#events
+   * @name module:activities/panels/Identify.IdentifyPanel#events
    * @type {string[]} */
   events: ['click'],
 });

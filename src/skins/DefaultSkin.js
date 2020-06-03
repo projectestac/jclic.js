@@ -40,7 +40,7 @@ import { log, getMsg, getSvg, svgToURI } from '../Utils';
 
 /**
  * This is the default {@link module:skins/Skin.Skin Skin} used by JClic.js
- * @extends module:Skin
+ * @extends module:skins/Skin.Skin
  */
 export class DefaultSkin extends Skin {
   /**
@@ -221,34 +221,34 @@ export class DefaultSkin extends Skin {
 Object.assign(DefaultSkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-   * @name DefaultSkin#skinId
+   * @name module:skins/DefaultSkin.DefaultSkin#skinId
    * @override
    * @type {string}
    */
   skinId: 'JClicDefaultSkin',
   /**
    * The HTML div where buttons, counters and message box are placed
-   * @name DefaultSkin#$ctrlCnt
+   * @name module:skins/DefaultSkin.DefaultSkin#$ctrlCnt
    * @type {external:jQuery} */
   $ctrlCnt: null,
   /**
    * Space (pixels) between the components of this {@link module:skins/Skin.Skin Skin}
-   * @name DefaultSkin#margin
+   * @name module:skins/DefaultSkin.DefaultSkin#margin
    * @type {number} */
   margin: 18,
   /**
    * Height of {@link DefaultSkin#msgBox}
-   * @name DefaultSkin#msgBoxHeight
+   * @name module:skins/DefaultSkin.DefaultSkin#msgBoxHeight
    * @type {number} */
   msgBoxHeight: 60,
   /**
    * Width of counters, in pixels
-   * @name DefaultSkin#countersWidth
+   * @name module:skins/DefaultSkin.DefaultSkin#countersWidth
    * @type {number} */
   countersWidth: 60,
   /**
    * Height of counters, in pixels
-   * @name DefaultSkin#countersHeight
+   * @name module:skins/DefaultSkin.DefaultSkin#countersHeight
    * @type {number} */
   countersHeight: 20,
   //
@@ -256,7 +256,7 @@ Object.assign(DefaultSkin.prototype, {
   //
   /**
    * Styles used in this skin
-   * @name DefaultSkin#mainCSS
+   * @name module:skins/DefaultSkin.DefaultSkin#mainCSS
    * @type {string} */
   mainCSS: '\
 .ID .JClicCtrlCnt {margin:0 9px 18px 9px; display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row; -webkit-align-items:center; align-items:center;}\
@@ -267,7 +267,7 @@ Object.assign(DefaultSkin.prototype, {
 .ID .JClicCounter {width:40px; height:20px; padding-left:20px; color:white; cursor:pointer; font-family:Roboto,Sans-serif; font-size:18px; text-align:center; background-repeat:no-repeat; background-position:left; box-sizing:content-box;}',
   /**
    * Styles used in this skin, sized to half its regular size
-   * @name DefaultSkin#mainCSSHalf
+   * @name module:skins/DefaultSkin.DefaultSkin#mainCSSHalf
    * @type {string} */
   mainCSSHalf: '\
 .ID .JClicPlayerCnt {margin:9px;}\
@@ -277,7 +277,7 @@ Object.assign(DefaultSkin.prototype, {
 .ID .JClicCounter {width:20px; height:10px; margin-left:-15px; transform:scale(0.5);}',
   /**
    * Styles used in this skin, sized to two thirds of its regular size
-   * @name DefaultSkin#mainCSSTwoThirds
+   * @name module:skins/DefaultSkin.DefaultSkin#mainCSSTwoThirds
    * @type {string} */
   mainCSSTwoThirds: '\
 .ID .JClicPlayerCnt {margin:12px;}\
@@ -287,24 +287,24 @@ Object.assign(DefaultSkin.prototype, {
 .ID .JClicCounter {width:27px; height:13px; margin-left:-10px; transform:scale(0.666);}',
   /**
    * Fonts used in this skin
-   * @name DefaultSkin#cssFonts
+   * @name module:skins/DefaultSkin.DefaultSkin#cssFonts
    * @type {string[]} */
   cssFonts: ['Roboto'],
   //
   // Default settings for icons (can be overridden in subclasses):
   /**
    * Icon width
-   * @name DefaultSkin#iconWidth
+   * @name module:skins/DefaultSkin.DefaultSkin#iconWidth
    * @type {number} */
   iconWidth: 36,
   /**
    * Icon height
-   * @name DefaultSkin#iconHeight
+   * @name module:skins/DefaultSkin.DefaultSkin#iconHeight
    * @type {number} */
   iconHeight: 36,
   /**
    * Fill color for icons
-   * @name DefaultSkin#iconFill
+   * @name module:skins/DefaultSkin.DefaultSkin#iconFill
    * @type {string} */
   iconFill: '#FFFFFF',
   //
@@ -313,49 +313,49 @@ Object.assign(DefaultSkin.prototype, {
   //
   /**
    * Icon for 'previous activity' button
-   * @name DefaultSkin#prevIcon
+   * @name module:skins/DefaultSkin.DefaultSkin#prevIcon
    * @type {string} */
   prevIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>\
 </svg>',
   /**
    * Icon for 'next activity' button
-   * @name DefaultSkin#nextIcon
+   * @name module:skins/DefaultSkin.DefaultSkin#nextIcon
    * @type {string} */
   nextIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>\
 </svg>',
   /**
    * Full screen on icon
-   * @name DefaultSkin#fullScreenIcon
+   * @name module:skins/DefaultSkin.DefaultSkin#fullScreenIcon
    * @type {string} */
   fullScreenIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>\
 </svg>',
   /**
    * Full screen off icon
-   * @name DefaultSkin#fullScreenExitIcon
+   * @name module:skins/DefaultSkin.DefaultSkin#fullScreenExitIcon
    * @type {string} */
   fullScreenExitIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>\
 </svg>',
   /**
    * Close button
-   * @name DefaultSkin#closeIcon
+   * @name module:skins/DefaultSkin.DefaultSkin#closeIcon
    * @type {string} */
   closeIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
 </svg>',
   /**
    * Info button
-   * @name DefaultSkin#infoIcon
+   * @name module:skins/DefaultSkin.DefaultSkin#infoIcon
    * @type {string} */
   infoIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>\
 </svg>',
   /**
    * Reports button
-   * @name DefaultSkin#reportsIcon
+   * @name module:skins/DefaultSkin.DefaultSkin#reportsIcon
    * @type {string} */
   reportsIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>\
@@ -364,23 +364,23 @@ Object.assign(DefaultSkin.prototype, {
   // Settings for counters:
   /**
    * Counter icon width
-   * @name DefaultSkin#counterIconWidth
+   * @name module:skins/DefaultSkin.DefaultSkin#counterIconWidth
    * @type {number} */
   counterIconWidth: 18,
   /**
    * Counter icon height
-   * @name DefaultSkin#counterIconHeight
+   * @name module:skins/DefaultSkin.DefaultSkin#counterIconHeight
    * @type {number} */
   counterIconHeight: 18,
   /**
    * Counter icon fill color
-   * @name DefaultSkin#counterIconFill
+   * @name module:skins/DefaultSkin.DefaultSkin#counterIconFill
    * @type {string} */
   counterIconFill: '#FFFFFF',
   // Counters:
   /**
    * Time icon
-   * @name DefaultSkin#timeIcon
+   * @name module:skins/DefaultSkin.DefaultSkin#timeIcon
    * @type {string} */
   timeIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">\
 <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>\
@@ -388,14 +388,14 @@ Object.assign(DefaultSkin.prototype, {
 </svg>',
   /**
    * Score icon
-   * @name DefaultSkin#scoreIcon
+   * @name module:skins/DefaultSkin.DefaultSkin#scoreIcon
    * @type {string} */
   scoreIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">\
 <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>\
 </svg>',
   /**
    * Actions icon
-   * @name DefaultSkin#actionsIcon
+   * @name module:skins/DefaultSkin.DefaultSkin#actionsIcon
    * @type {string} */
   actionsIcon: '<svg fill="#FFFFFF" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">\
 <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>\

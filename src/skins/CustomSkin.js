@@ -38,7 +38,7 @@ import ActiveBox from '../boxes/ActiveBox';
 
 /**
  * Custom {@link module:skins/Skin.Skin Skin} for JClic.js, built assembling specific cuts of a canvas (usually a PNG file) defined in an XML file
- * @extends module:Skin
+ * @extends module:skins/Skin.Skin
  */
 export class CustomSkin extends Skin {
 
@@ -371,18 +371,18 @@ export class CustomSkin extends Skin {
 Object.assign(CustomSkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-   * @name CustomSkin#skinId
+   * @name module:skins/CustomSkin.CustomSkin#skinId
    * @override
    * @type {string} */
   skinId: 'JClicCustomSkin',
   /**
    * The name of the image file to be used as a base of this skin.
-   * @name CustomSkin#image
+   * @name module:skins/CustomSkin.CustomSkin#image
    * @type {string} */
   image: null,
   /**
    * Styles used in this skin
-   * @name CustomSkin#skinCSS
+   * @name module:skins/CustomSkin.CustomSkin#skinCSS
    * @override
    * @type {string} */
   mainCSS: '\
@@ -392,12 +392,12 @@ Object.assign(CustomSkin.prototype, {
   /**
    * Specifc styles (`default`, `half` and `twoThirds`) computed at run-time,
    * based on the provided XML file
-   * @name CustomSkin#cssVariants
+   * @name module:skins/CustomSkin.CustomSkin#cssVariants
    * @type {object} */
   cssVariants: null,
   /**
    * Key ids of currently supported buttons, associated with its helper literal
-   * @name CustomSkin#msgKeys
+   * @name module:skins/CustomSkin.CustomSkin#msgKeys
    * @type {object} */
   msgKeys: {
     next: 'Next activity',
@@ -411,7 +411,7 @@ Object.assign(CustomSkin.prototype, {
   },
   /**
    * Graphic indicator of loading progress
-   * @name Skin#$progressAnimation
+   * @name module:skins/CustomSkin.Skin#$progressAnimation
    * @type {external:jQuery} */
   $progressAnimation: null,
 });

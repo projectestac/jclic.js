@@ -208,62 +208,62 @@ export class ActivityReg {
 Object.assign(ActivityReg.prototype, {
   /**
    * Name of the associated activity
-   * @name ActivityReg#name
+   * @name module:report/ActivityReg.ActivityReg#name
    * @type {string} */
   name: '',
   /**
    * Optional code assigned to this activity, used for later filtering
-   * @name ActivityReg#code
+   * @name module:report/ActivityReg.ActivityReg#code
    * @type {string} */
   code: '',
   /**
    * Timestamp when the user starts playing the activity
-   * @name ActivityReg#startTime
+   * @name module:report/ActivityReg.ActivityReg#startTime
    * @type {number} */
   startTime: 0,
   /**
    * Total time spent by the user in the activity, measured in milliseconds
-   * @name ActivityReg#totalTime
+   * @name module:report/ActivityReg.ActivityReg#totalTime
    * @type {number} */
   totalTime: 0,
   /**
    * Collection of actions done by the user while playing the activity
-   * @name ActivityReg#actions
+   * @name module:report/ActivityReg.ActivityReg#actions
    * @type {ActionReg[]} */
   actions: [],
   /**
    * `true` only when the user has finished and solved the activity
-   * @name ActivityReg#solved
+   * @name module:report/ActivityReg.ActivityReg#solved
    * @type {boolean} */
   solved: false,
   /**
    * Last {@link ActionReg} performed by the user in this activity
-   * @name ActivityReg#lastAction
+   * @name module:report/ActivityReg.ActivityReg#lastAction
    * @type {ActionReg} */
   lastAction: null,
   /**
    * Final score obtained by the current user in this activity
-   * @name ActivityReg#score
+   * @name module:report/ActivityReg.ActivityReg#score
    * @type {number} */
   score: 0,
   /**
    * Minimum number of actions needed to solve the activity
-   * @name ActivityReg#minActions
+   * @name module:report/ActivityReg.ActivityReg#minActions
    * @type {number} */
   minActions: 0,
   /**
    * `true` when the activity has finished, `false` for the activity that is currently playing
-   * @name ActivityReg#closed
+   * @name module:report/ActivityReg.ActivityReg#closed
    * @type {boolean} */
   closed: false,
   /**
    * `true` when this type of activity should record specific actions done by the users
-   * @name ActivityReg#reportActions
+   * @name module:report/ActivityReg.ActivityReg#reportActions
    * @type {boolean} */
   reportActions: false,
   /**
    * Number of actions done by the user playing this activity
-   * @name ActivityReg#numActions
+   * @name module:report/ActivityReg.ActivityReg#numActions
    * @type {number} */
   numActions: 0,
 });

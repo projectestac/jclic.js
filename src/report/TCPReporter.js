@@ -40,7 +40,7 @@ import { log, startsWith, getMsg } from '../Utils';
  * the {@link https://github.com/projectestac/jclic/wiki/JClic-Reports-developers-guide JClic Reports API}.
  * Connection parameters to the reports server (`path`, `service`, `userId`, `key`, `context`...)
  * are passed through the `options` element of {@link module:JClicPlayer.JClicPlayer JClicPlayer} (acting as {@link module:JClicPlayer.JClicPlayer JClicPlayer}).
- * @extends module:Reporter
+ * @extends module:reports/Reporter.Reporter
  */
 export class TCPReporter extends Reporter {
   /**
@@ -467,110 +467,110 @@ export class TCPReporter extends Reporter {
 Object.assign(TCPReporter.prototype, {
   /**
    * Description of this reporting system
-   * @name TCPReporter#descriptionKey
+   * @name module:report/TCPReporter.TCPReporter#descriptionKey
    * @override
    * @type {string} */
   descriptionKey: 'Reporting to remote server',
   /**
    * Additional info to display after the reporter's `description`
-   * @name TCPReporter#descriptionDetail
+   * @name module:report/TCPReporter.TCPReporter#descriptionDetail
    * @override
    * @type {string} */
   descriptionDetail: '(not connected)',
   /**
    * Main path of the reports server (without protocol nor service)
-   * @name TCPReporter#serverPath
+   * @name module:report/TCPReporter.TCPReporter#serverPath
    * @type {string} */
   serverPath: '',
   /**
    * Function to be called by the browser before leaving the current page
-   * @name TCPReporter#beforeUnloadFunction
+   * @name module:report/TCPReporter.TCPReporter#beforeUnloadFunction
    * @type {function} */
   beforeUnloadFunction: null,
   /**
    * Identifier of the current session, provided by the server
-   * @name TCPReporter#currentSessionId
+   * @name module:report/TCPReporter.TCPReporter#currentSessionId
    * @type {string} */
   currentSessionId: '',
   /**
    * Last activity reported
-   * @name TCPReporter#lastActivity
+   * @name module:report/TCPReporter.TCPReporter#lastActivity
    * @type {ActivityReg} */
   lastActivity: null,
   /**
    * Number of activities processed
-   * @name TCPReporter#actCount
+   * @name module:report/TCPReporter.TCPReporter#actCount
    * @type {number} */
   actCount: 0,
   /**
    * Service URL of the JClic Reports server
-   * @name TCPReporter#serviceUrl
+   * @name module:report/TCPReporter.TCPReporter#serviceUrl
    * @type {string} */
   serviceUrl: null,
   /**
    * Object used to store specific properties of the connected reports system
-   * @name TCPReporter#dbProperties
+   * @name module:report/TCPReporter.TCPReporter#dbProperties
    * @type {object} */
   dbProperties: null,
   /**
    * List of {@link ReportBean} objects pending to be processed
-   * @name TCPReporter#tasks
+   * @name module:report/TCPReporter.TCPReporter#tasks
    * @type {ReportBean[]} */
   tasks: null,
   /**
    * Waiting list of tasks, to be used while `tasks` is being processed
-   * @name TCPReporter#waitingTasks
+   * @name module:report/TCPReporter.TCPReporter#waitingTasks
    * @type {ReportBean[]} */
   waitingTasks: null,
   /**
    * Flag used to indicate if `transaction` is currently running
-   * @name TCPReporter#processingTasks
+   * @name module:report/TCPReporter.TCPReporter#processingTasks
    * @type {boolean} */
   processingTasks: false,
   /**
    * Force processing of pending tasks as soon as possible
-   * @name TCPReporter#forceFlush
+   * @name module:report/TCPReporter.TCPReporter#forceFlush
    * @type {boolean} */
   forceFlush: false,
   /**
    * Identifier of the background function obtained with a call to `window.setInterval`
-   * @name TCPReporter#timer
+   * @name module:report/TCPReporter.TCPReporter#timer
    * @type {number} */
   timer: -1,
   /**
    * Time between calls to the background function, in seconds
-   * @name TCPReporter#timerLap
+   * @name module:report/TCPReporter.TCPReporter#timerLap
    * @type {number} */
   timerLap: 5,
   /**
    * Counter of unsuccessful connection attempts with the report server
-   * @name TCPReporter#failCount
+   * @name module:report/TCPReporter.TCPReporter#failCount
    * @type {number} */
   failCount: 0,
   /**
    * Maximum number of failed attempts allowed before disconnecting
-   * @name TCPReporter#maxFails
+   * @name module:report/TCPReporter.TCPReporter#maxFails
    * @type {number} */
   maxFails: 5,
   /**
    * Default path of JClic Reports Server
-   * @name TCPReporter#DEFAULT_SERVER_PATH
+   * @name module:report/TCPReporter.TCPReporter#DEFAULT_SERVER_PATH
    * @type {string} */
   DEFAULT_SERVER_PATH: 'localhost:9000',
   /**
    * Default name for the reports service
-   * @name TCPReporter#DEFAULT_SERVER_SERVICE
+   * @name module:report/TCPReporter.TCPReporter#DEFAULT_SERVER_SERVICE
    * @type {string} */
   DEFAULT_SERVER_SERVICE: '/JClicReportService',
   /**
    * Default server protocol
    * Use always 'https' except when in 'http' and protocol not set in options
-   * @name TCPReporter#DEFAULT_SERVER_PROTOCOL
+   * @name module:report/TCPReporter.TCPReporter#DEFAULT_SERVER_PROTOCOL
    * @type {string} */
   DEFAULT_SERVER_PROTOCOL: (document && document.location && document.location.protocol === 'http:') ? 'http' : 'https',
   /**
    * Default lap between calls to `flushTasks`, in seconds
-   * @name TCPReporter#DEFAULT_TIMER_LAP
+   * @name module:report/TCPReporter.TCPReporter#DEFAULT_TIMER_LAP
    * @type {number} */
   DEFAULT_TIMER_LAP: 20,
 });
@@ -617,7 +617,7 @@ export class ReportBean {
 Object.assign(ReportBean.prototype, {
   /**
    * The main jQuery XML object managed by this ReportBean
-   * @name ReportBean#$bean
+   * @name module:report/TCPReporter.ReportBean#$bean
    * @type {external:jQuery} */
   $bean: null,
 });

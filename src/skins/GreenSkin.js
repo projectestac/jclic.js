@@ -35,7 +35,7 @@ import DefaultSkin from './DefaultSkin';
 /**
  * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js
  * It differs from {@link module:skins/DefaultSkin.DefaultSkin DefaultSkin} only in some colors
- * @extends module:DefaultSkin
+ * @extends module:skins/DefaultSkin.DefaultSkin
  */
 export class GreenSkin extends DefaultSkin {
   /**
@@ -65,7 +65,7 @@ export class GreenSkin extends DefaultSkin {
 Object.assign(GreenSkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-   * @name GreenSkin#skinId
+   * @name module:skins/GreenSkin.GreenSkin#skinId
    * @override
    * @type {string} */
   skinId: 'JClicGreenSkin',
@@ -73,19 +73,19 @@ Object.assign(GreenSkin.prototype, {
   // Buttons and other graphical resources used by this skin:
   /**
    * Fill color for icons
-   * @name GreenSkin#iconFill
+   * @name module:skins/GreenSkin.GreenSkin#iconFill
    * @override
    * @type {string} */
   iconFill: '#20640E',
   /**
    * Fill-in color for counters
-   * @name GreenSkin#counterIconFill
+   * @name module:skins/GreenSkin.GreenSkin#counterIconFill
    * @override
    * @type {string} */
   counterIconFill: '#20640E',
   /**
    * Styles used in this skin
-   * @name GreenSkin#skinCSS
+   * @name module:skins/GreenSkin.GreenSkin#skinCSS
    * @type {string} */
   skinCSS: '.ID {background-color:#4AFF19;}'
 });

@@ -347,7 +347,7 @@ export class Skin extends Container {
 
   /**
    * Updates the graphic contents of this skin.
-   * This method should be called from {@link Skin#update}
+   * This method should be called from {@link module:skins/Skin.Skin#update}
    * @override
    * @param {module:AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`, it's the
    * whole panel.
@@ -499,7 +499,7 @@ export class Skin extends Container {
   /**
    * Displays a dialog with a report of the current results achieved by the user.
    * @param {Reporter} reporter - The reporter system currently in use
-   * @returns {Promise} - The Promise returned by {@link Skin.showDlg}.
+   * @returns {Promise} - The Promise returned by {@link module:skins/Skin.Skin.showDlg}.
    */
   showReports(reporter) {
     this.$reportsPanel.html(this.$printReport(reporter));
@@ -778,127 +778,127 @@ Skin.CLASSES = {};
 Object.assign(Skin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-   * @name Skin#skinId
+   * @name module:skins/Skin.Skin#skinId
    * @type {string} */
   skinId: 'JClicBasicSkin',
   /**
    * The HTML div object used by this Skin
-   * @name Skin#$div
+   * @name module:skins/Skin.Skin#$div
    * @type {external:jQuery} */
   $div: null,
   /**
    * The HTML div where JClic Player will be placed
-   * @name Skin#$playerCnt
+   * @name module:skins/Skin.Skin#$playerCnt
    * @type {external:jQuery} */
   $playerCnt: null,
   /**
    * Current name of the skin.
-   * @name Skin#name
+   * @name module:skins/Skin.Skin#name
    * @type {string} */
   name: 'default',
   /**
    * Specific options of this skin
-   * @name Skin#options
+   * @name module:skins/Skin.Skin#options
    * @type {object} */
   options: {},
   /**
    * Waiting panel, displayed while loading resources.
-   * @name Skin#$waitPanel
+   * @name module:skins/Skin.Skin#$waitPanel
    * @type {external:jQuery} */
   $waitPanel: null,
   /**
    * Graphic indicator of loading progress
-   * @name Skin#$progress
+   * @name module:skins/Skin.Skin#$progress
    * @type {external:jQuery} */
   $progress: null,
   /**
    * Current value of the progress bar
-   * @name Skin#currentProgress
+   * @name module:skins/Skin.Skin#currentProgress
    * @type {number} */
   currentProgress: -1,
   /**
    * Max value of the progress bar
-   * @name Skin#maxProgress
+   * @name module:skins/Skin.Skin#maxProgress
    * @type {number} */
   maxProgress: 0,
   /**
    * The box used to display the main messages of JClic activities
-   * @name DefaultSkin#msgBox
+   * @name module:skins/Skin.DefaultSkin#msgBox
    * @type {ActiveBox} */
   msgBox: null,
   /**
    * The `div` DOM object where `msgBox` is located
-   * @name DefaultSkin#$msgBoxDiv
+   * @name module:skins/Skin.DefaultSkin#$msgBoxDiv
    * @type {external:jQuery} */
   $msgBoxDiv: null,
   /*
    * An HTML `canvas` object created in `$msgBoxDiv`
-   * @name DefaultSkin#$msgBoxDivCanvas
+   * @name module:skins/Skin.DefaultSkin#$msgBoxDivCanvas
    * @type {external:jQuery} */
   $msgBoxDivCanvas: null,
   /**
    * Main panel used to display modal and non-modal dialogs
-   * @name Skin#$dlgOverlay
+   * @name module:skins/Skin.Skin#$dlgOverlay
    * @type {external:jQuery} */
   $dlgOverlay: null,
   /**
    * Main panel of dialogs, where relevant information must be placed
-   * @name Skin#$dlgMainPanel
+   * @name module:skins/Skin.Skin#$dlgMainPanel
    * @type {external:jQuery} */
   $dlgMainPanel: null,
   /**
    * Bottom panel of dialogs, used for action buttons
-   * @name Skin#$dlgBottomPanel
+   * @name module:skins/Skin.Skin#$dlgBottomPanel
    * @type {external:jQuery} */
   $dlgBottomPanel: null,
   /**
    * Element usually used as header in dialogs, with JClic logo, name and version
-   * @name Skin#infoHead
+   * @name module:skins/Skin.Skin#infoHead
    * @type {external:jQuery} */
   $infoHead: null,
   /**
    * Iconic button used to copy content to clipboard
-   * @name Skin#$copyBtn
+   * @name module:skins/Skin.Skin#$copyBtn
    * @type {external:jQuery} */
   $copyBtn: null,
   /**
    * Iconic button used to close the dialog
-   * @name Skin#$closeDlgBtn
+   * @name module:skins/Skin.Skin#$closeDlgBtn
    * @type {external:jQuery} */
   $closeDlgBtn: null,
   /**
    * OK dialog button
-   * @name Skin#$okDlgBtn
+   * @name module:skins/Skin.Skin#$okDlgBtn
    * @type {external:jQuery} */
   $okDlgBtn: null,
   /**
    * Cancel dialog button
-   * @name Skin#$cancelDlgBtn
+   * @name module:skins/Skin.Skin#$cancelDlgBtn
    * @type {external:jQuery} */
   $cancelDlgBtn: null,
   /**
    * Value to be returned by the dialog promise when the presented task is fulfilled
-   * @name Skin#_dlgOkValue
+   * @name module:skins/Skin.Skin#_dlgOkValue
    * @type {Object} */
   _dlgOkValue: null,
   /**
    * Value to be returned in user-canceled dialogs
-   * @name Skin#_dlgCancelValue
+   * @name module:skins/Skin.Skin#_dlgCancelValue
    * @type {Object} */
   _dlgCancelValue: null,
   /**
    * Flag indicating if the current dialog is modal or not
-   * @name Skin#_isModalDlg
+   * @name module:skins/Skin.Skin#_isModalDlg
    * @type {boolean} */
   _isModalDlg: false,
   /**
    * Div inside {@link $dlgOverlay} where JClicPlayer will place the information to be shown
-   * @name Skin#$reportsPanel
+   * @name module:skins/Skin.Skin#$reportsPanel
    * @type {external:jQuery} */
   $reportsPanel: null,
   /**
    * The basic collection of buttons that most skins implement
-   * @name Skin#buttons
+   * @name module:skins/Skin.Skin#buttons
    * @type {object} */
   buttons: {
     'prev': null,
@@ -914,7 +914,7 @@ Object.assign(Skin.prototype, {
   },
   /**
    * The collection of counters
-   * @name Skin#counters
+   * @name module:skins/Skin.Skin#counters
    * @type {object} */
   counters: {
     'actions': null,
@@ -923,7 +923,7 @@ Object.assign(Skin.prototype, {
   },
   /**
    * The collection of message areas
-   * @name Skin#msgArea
+   * @name module:skins/Skin.Skin#msgArea
    * @type {object} */
   msgArea: {
     'main': null,
@@ -932,18 +932,18 @@ Object.assign(Skin.prototype, {
   },
   /**
    * The {@link module:JClicPlayer.JClicPlayer JClicPlayer} object associated to this skin
-   * @name Skin#player
+   * @name module:skins/Skin.Skin#player
    * @type {JClicPlayer} */
   player: null,
   /**
    * The {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation}
    * used by this Skin. Usually, the same as `player`
-   * @name Skin#ps
+   * @name module:skins/Skin.Skin#ps
    * @type {PlayStation} */
   ps: null,
   /**
    * Counter to be incremented or decremented as `waitCursor` is requested or released.
-   * @name Skin#waitCursorCount
+   * @name module:skins/Skin.Skin#waitCursorCount
    * @type {number} */
   waitCursorCount: 0,
   //
@@ -951,7 +951,7 @@ Object.assign(Skin.prototype, {
   //
   /**
    * Main styles
-   * @name Skin#basicCSS
+   * @name module:skins/Skin.Skin#basicCSS
    * @type {string} */
   basicCSS: '\
 .ID {width:100%; background-color:#3F51B5; display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column;}\
@@ -962,7 +962,7 @@ Object.assign(Skin.prototype, {
 .ID .progressBar {width: 250px}',
   /**
    * Waiting screen styles
-   * @name Skin#waitAnimCSS
+   * @name module:skins/Skin.Skin#waitAnimCSS
    * @type {string} */
   waitAnimCSS: '\
 .ID .waitPanel {display:-webkit-flex; display:flex; width:100%; height:100%; -webkit-justify-content:center; justify-content:center; -webkit-align-items:center; align-items:center;}\
@@ -975,7 +975,7 @@ Object.assign(Skin.prototype, {
   /**
    * Animated image displayed while loading resources
    * Based on Ryan Allen's [svg-spinner](http://articles.dappergentlemen.com/2015/01/13/svg-spinner/)
-   * @name Skin#waitImgBig
+   * @name module:skins/Skin.Skin#waitImgBig
    * @type {string} */
   waitImgBig: '<svg id="waitImgBig" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
 <path fill="#3F51B5" d="m 65.99,40.19 c -0.42,5.33 7.80,4.94 8.11,0.20 C 74.50,34.37 66.35,8.59 42.92,\
@@ -983,7 +983,7 @@ Object.assign(Skin.prototype, {
 </svg>',
   /**
    * Animated image displayed while loading resources (small)
-   * @name Skin#waitImgSmall
+   * @name module:skins/Skin.Skin#waitImgSmall
    * @type {string} */
   waitImgSmall: '<svg id="waitImgSmall" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
 <path fill="#3F51B5"d="m 57.00,39.43 c -0.28,-3.53 5.16,-3.27 5.37,-0.13 0.26,3.99 -5.13,21.04 -20.63,\
@@ -991,7 +991,7 @@ Object.assign(Skin.prototype, {
 </svg>',
   /**
    * Reports screen styles
-   * @name Skin#reportsCSS
+   * @name module:skins/Skin.Skin#reportsCSS
    * @type {string} */
   reportsCSS: '\
 .ID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
@@ -1026,28 +1026,28 @@ Object.assign(Skin.prototype, {
   //
   /**
    * Icon for 'close dialog' button
-   * @name Skin#closeDialogIcon
+   * @name module:skins/Skin.Skin#closeDialogIcon
    * @type {string} */
   closeDialogIcon: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
 </svg>',
   /**
    * Icon for 'ok' button
-   * @name Skin#okDialogIcon
+   * @name module:skins/Skin.Skin#okDialogIcon
    * @type {string} */
   okDialogIcon: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>\
 </svg>',
   /**
    * Icon for 'copy' button
-   * @name Skin#copyIcon
+   * @name module:skins/Skin.Skin#copyIcon
    * @type {string} */
   copyIcon: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
 <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>\
 </svg>',
   /**
    * JClic logo
-   * @name Skin#appLogo
+   * @name module:skins/Skin.Skin#appLogo
    * @type {string} */
   appLogo: '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(.02081 0 0-.02081 5 62.33)">\
 <path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1999 519 3 11 999-266 999-266z" fill="none" stroke="#9d6329" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\
@@ -1057,12 +1057,12 @@ Object.assign(Skin.prototype, {
 </g></svg>',
   /**
    * Screen sizes (width and height) below which will half sized elements will be used
-   * @name DefaultSkin#halfMedia
+   * @name module:skins/Skin.DefaultSkin#halfMedia
    * @type {object} */
   halfMedia: { width: 376, height: 282 },
   /**
    * Screen sizes (width and height) below which will two-thirds sized elements will be used
-   * @name DefaultSkin#twoThirdsMedia
+   * @name module:skins/Skin.DefaultSkin#twoThirdsMedia
    * @type {object} */
   twoThirdsMedia: { width: 420, height: 315 },
 });

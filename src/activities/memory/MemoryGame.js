@@ -398,18 +398,18 @@ export class MemoryGamePanel extends ActivityPanel {
 Object.assign(MemoryGamePanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed.
-   * @name MemoryGamePanel#bg
+   * @name module:activities/memory/MemoryGame.MemoryGamePanel#bg
    * @type {ActiveBoxBag} */
   bg: null,
   /**
    * The {@link BoxConnector} used to reveal pairs of cells
-   * @name MemoryGamePanel#bc
+   * @name module:activities/memory/MemoryGame.MemoryGamePanel#bc
    * @type {BoxConnector} */
   bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
-   * @name MemoryGamePanel#events
+   * @name module:activities/memory/MemoryGame.MemoryGamePanel#events
    * @type {string[]} */
   events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
 });

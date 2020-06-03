@@ -36,7 +36,7 @@ import { PathStroke } from '../AWT';
 /**
  * This is the classic {@link module:shapers/JigSaw.JigSaw JigSaw} {@link module:shapers/Shaper.Shaper Shaper} used in puzzle toys, where teeth and slots
  * are shaped by Bézier curves.
- * @extends module:JigSaw
+ * @extends module:shapers/JigSaw.JigSaw
  */
 export class ClassicJigSaw extends JigSaw {
   /**
@@ -49,7 +49,7 @@ export class ClassicJigSaw extends JigSaw {
   }
 
   /**
-   * Overrides {@link JigSaw#hLine}
+   * Overrides {@link module:shapers/JigSaw.JigSaw#hLine}
    * @override
    * @param {module:AWT.Path} sd - The Path to which the line will be added
    * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, and 2 means tooth down
@@ -85,7 +85,7 @@ export class ClassicJigSaw extends JigSaw {
   }
 
   /**
-   * Overrides {@link JigSaw#vLine}
+   * Overrides {@link module:shapers/JigSaw.JigSaw#vLine}
    * @override
    * @param {module:AWT.Path} sd - The Path to which the line will be added
    * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, and 2 means tooth left
@@ -124,12 +124,12 @@ export class ClassicJigSaw extends JigSaw {
 Object.assign(ClassicJigSaw.prototype, {
   /**
    * ClassicJigSaw needs a biggest base width
-   * @name ClassicJigSaw#baseWidthFactor
+   * @name module:shapers/ClassicJigSaw.ClassicJigSaw#baseWidthFactor
    * @type {number} */
   baseWidthFactor: 3.0 / 4,
   /**
    * ClassicJigSaw needs a biggest base height factor
-   * @name ClassicJigSaw#toothHeightFactor
+   * @name module:shapers/ClassicJigSaw.ClassicJigSaw#toothHeightFactor
    * @type {number} */
   toothHeightFactor: 3.0 / 5,
 });

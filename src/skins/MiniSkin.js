@@ -35,7 +35,7 @@ import DefaultSkin from './DefaultSkin';
 /**
  * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js
  * It differs from {@link module:skins/DefaultSkin.DefaultSkin DefaultSkin} in colors and sizes
- * @extends module:DefaultSkin
+ * @extends module:skins/DefaultSkin.DefaultSkin
  */
 export class MiniSkin extends DefaultSkin {
   /**

@@ -121,7 +121,7 @@ export class EventSounds {
 
 /**
  * Audio data for default event sounds
- * @name EventSounds.MEDIA
+ * @name module:media/EventSounds.EventSounds.MEDIA
  * @type {object} */
 EventSounds.MEDIA = {
   start: 'data:audio/mp3;base64,' +
@@ -333,7 +333,7 @@ EventSounds.MEDIA = {
 Object.assign(EventSounds.prototype, {
   /**
    * Collection of {@link EventSoundsElement} objects
-   * @name EventSounds#elements
+   * @name module:media/EventSounds.EventSounds#elements
    * @type {object} */
   elements: {
     start: new EventSoundsElement('start', EventSounds.MEDIA.start),
@@ -345,13 +345,13 @@ Object.assign(EventSounds.prototype, {
   },
   /**
    * Whether this event sounds are enabled or not
-   * @name EventSounds#enabled
+   * @name module:media/EventSounds.EventSounds#enabled
    * @type {number} */
   enabled: DEFAULT,
   /**
    * This attribute is intended to be used at prototype level, to indicate a globally disabled
    * or enabled state.
-   * @name EventSounds#globalEnabled
+   * @name module:media/EventSounds.EventSounds#globalEnabled
    * @type {boolean} */
   globalEnabled: true,
 });

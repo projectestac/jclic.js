@@ -349,18 +349,18 @@ class ExchangePuzzlePanel extends ActivityPanel {
 Object.assign(ExchangePuzzlePanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the panel.
-   * @name ExchangePuzzlePanel#bg
+   * @name module:activities/puzzles/ExchangePuzzle.ExchangePuzzlePanel#bg
    * @type {ActiveBoxBag} */
   bg: null,
   /**
    * The box connector
-   * @name ExchangePuzzlePanel#bc
+   * @name module:activities/puzzles/ExchangePuzzle.ExchangePuzzlePanel#bc
    * @type {BoxConnector} */
   bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
-   * @name ExchangePuzzlePanel#events
+   * @name module:activities/puzzles/ExchangePuzzle.ExchangePuzzlePanel#events
    * @type {string[]} */
   events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
 });

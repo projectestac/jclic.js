@@ -119,27 +119,27 @@ export class ActivitySequenceElement {
 Object.assign(ActivitySequenceElement.prototype, {
   /**
    * Optional unique identifier of this element in the {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence}.
-   * @name ActivitySequenceElement#tag
+   * @name module:bags/ActivitySequenceElement.ActivitySequenceElement#tag
    * @type {string} */
   tag: null,
   /**
    * Optional description of this sequence element.
-   * @name ActivitySequenceElement#description
+   * @name module:bags/ActivitySequenceElement.ActivitySequenceElement#description
    * @type {string} */
   description: null,
   /**
    * Name of the {@link module:Activity.Activity Activity} pointed by this element.
-   * @name ActivitySequenceElement#activity
+   * @name module:bags/ActivitySequenceElement.ActivitySequenceElement#activity
    * @type {string} */
   activity: '',
   /**
    * Jump to be processed by the 'next' button action
-   * @name ActivitySequenceElement#fwdJump
+   * @name module:bags/ActivitySequenceElement.ActivitySequenceElement#fwdJump
    * @type {ActivitySequenceJump} */
   fwdJump: null,
   /**
    * Jump to be processed by the 'prev' button action.
-   * @name ActivitySequenceElement#backJump
+   * @name module:bags/ActivitySequenceElement.ActivitySequenceElement#backJump
    * @type {ActivitySequenceJump} */
   backJump: null,
   /**
@@ -148,12 +148,12 @@ Object.assign(ActivitySequenceElement.prototype, {
    * - 'fwd'
    * - 'back'
    * - 'both'
-   * @name ActivitySequenceElement#navButtons
+   * @name module:bags/ActivitySequenceElement.ActivitySequenceElement#navButtons
    * @type {string} */
   navButtons: 'both',
   /**
    * Time delay (in seconds) before passing to the next/prev activity
-   * @name ActivitySequenceElement#delay
+   * @name module:bags/ActivitySequenceElement.ActivitySequenceElement#delay
    * @type {number} */
   delay: 0,
 });

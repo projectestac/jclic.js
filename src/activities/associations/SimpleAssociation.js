@@ -95,7 +95,7 @@ export class SimpleAssociation extends Activity {
 Object.assign(SimpleAssociation.prototype, {
   /**
    * When `true`, the cell's `idAss` field will be used to check pairing matches.
-   * @name SimpleAssociation#useIdAss
+   * @name module:activities/associations/SimpleAssociation.SimpleAssociation#useIdAss
    * @type {boolean} */
   useIdAss: false,
 });
@@ -489,23 +489,23 @@ export class SimpleAssociationPanel extends ActivityPanel {
 Object.assign(SimpleAssociationPanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
-   * @name SimpleAssociationPanel#bgA
+   * @name module:activities/associations/SimpleAssociation.SimpleAssociationPanel#bgA
    * @type {ActiveBoxBag} */
   bgA: null,
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `secondary` panel
-   * @name SimpleAssociationPanel#bgB
+   * @name module:activities/associations/SimpleAssociation.SimpleAssociationPanel#bgB
    * @type {ActiveBoxBag} */
   bgB: null,
   /**
    * The box connector
-   * @name SimpleAssociationPanel#bc
+   * @name module:activities/associations/SimpleAssociation.SimpleAssociationPanel#bc
    * @type {BoxConnector} */
   bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
-   * @name SimpleAssociationPanel#events
+   * @name module:activities/associations/SimpleAssociation.SimpleAssociationPanel#events
    * @type {string[]} */
   events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
 });

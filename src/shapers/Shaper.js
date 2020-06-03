@@ -290,49 +290,49 @@ export class Shaper {
 Object.assign(Shaper.prototype, {
   /**
    * This shaper class name
-   * @name Shaper#className
+   * @name module:shapers/Shaper.Shaper#className
    * @type {string} */
   className: 'Shaper',
   /**
    * Number of columns (useful in grid-based shapers)
-   * @name Shaper#nCols
+   * @name module:shapers/Shaper.Shaper#nCols
    * @type {number} */
   nCols: 0,
   /**
    * Number of rows (useful in grid-based shapers)
-   * @name Shaper#nRows
+   * @name module:shapers/Shaper.Shaper#nRows
    * @type {number} */
   nRows: 0,
   /**
    * Number of cells managed by this shaper
-   * @name Shaper#nCells
+   * @name module:shapers/Shaper.Shaper#nCells
    * @type {number} */
   nCells: 0,
   /**
    * Contains the specific definition of each shape
-   * @name Shaper#shapeData
+   * @name module:shapers/Shaper.Shaper#shapeData
    * @type {object} */
   shapeData: null,
   /**
    * Flag used to check if the `Shaper` has been initialized against a real surface
-   * @name Shaper#initiated
+   * @name module:shapers/Shaper.Shaper#initiated
    * @type {boolean} */
   initiated: false,
   //
   // Fields used only in JigSaw shapers
   /**
    * In {@link module:shapers/JigSaw.JigSaw JigSaw}, ratio between the base width of the tooth and the total length of the side.
-   * @name Shaper#baseWidthFactor
+   * @name module:shapers/Shaper.Shaper#baseWidthFactor
    * @type {number} */
   baseWidthFactor: 1.0 / 3,
   /**
    * In {@link module:shapers/JigSaw.JigSaw JigSaw}, ratio between the tooth height and the total length of the side.
-   * @name Shaper#toothHeightFactor
+   * @name module:shapers/Shaper.Shaper#toothHeightFactor
    * @type {number} */
   toothHeightFactor: 1.0 / 6,
   /**
    * In {@link module:shapers/JigSaw.JigSaw JigSaw}, whether the tooths take random directions or not
-   * @name Shaper#randomLines
+   * @name module:shapers/Shaper.Shaper#randomLines
    * @type {boolean} */
   randomLines: false,
   //
@@ -340,39 +340,39 @@ Object.assign(Shaper.prototype, {
   /**
    * In {@link module:shapers/Holes.Holes Holes}, scale to be applied to horizontal positions and lengths to achieve the real
    * value of the shape placed on a real surface.
-   * @name Shaper#scaleX
+   * @name module:shapers/Shaper.Shaper#scaleX
    * @type {number} */
   scaleX: 1.0,
   /**
    * In {@link module:shapers/Holes.Holes Holes}, scale to be applied to vertical positions and lengths to achieve the real
    * value of the shape placed on a real surface.
-   * @name Shaper#scaleY
+   * @name module:shapers/Shaper.Shaper#scaleY
    * @type {number} */
   scaleY: 1.0,
   /**
    * In {@link module:shapers/Holes.Holes Holes}, the enclosing area where all shapes are placed.
-   * @name Shaper#enclosing
+   * @name module:shapers/Shaper.Shaper#enclosing
    * @type {module:AWT.Shape} */
   enclosing: null,
   /**
    * In {@link module:shapers/Holes.Holes Holes}, when `true`, the enclosing area will be drawn
-   * @name Shaper#showEnclosure
+   * @name module:shapers/Shaper.Shaper#showEnclosure
    * @type {boolean} */
   showEnclosure: false,
   /**
    * Flag indicating if this shaper organizes its cells in rows and columns
-   * @name Shaper#rectangularShapes
+   * @name module:shapers/Shaper.Shaper#rectangularShapes
    * @type {boolean} */
   rectangularShapes: false,
   /**
    * Flag indicating if this Shaper deploys over a surface biggest than the rectangle enclosing
    * all its shapes
-   * @name Shaper#hasRemainder
+   * @name module:shapers/Shaper.Shaper#hasRemainder
    * @type {boolean} */
   hasRemainder: false,
   /**
    * Only the `Holes` shaper has this flag activated
-   * @name Shaper#customShapes
+   * @name module:shapers/Shaper.Shaper#customShapes
    * @type {boolean} */
   customShapes: false,
 });

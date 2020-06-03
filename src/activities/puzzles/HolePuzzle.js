@@ -324,29 +324,29 @@ export class HolePuzzlePanel extends ActivityPanel {
 Object.assign(HolePuzzlePanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the panel.
-   * @name HolePuzzlePanel#bg
+   * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#bg
    * @type {ActiveBoxBag} */
   bg: null,
   /**
    * An auxiliary box bag with only one box, used to store the "missing piece" of
    * the puzzle.
-   * @name HolePuzzlePanel#parkBg
+   * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#parkBg
    * @type {ActiveBoxGrid} */
   parkBg: null,
   /**
    * The hidden cell
-   * @name HolePuzzlePanel#hiddenBox
+   * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#hiddenBox
    * @type {ActiveBox} */
   hiddenBox: null,
   /**
    * Index of the hidden cell on the ActiveBagContent
-   * @name HolePuzzlePanel#hiddenBoxIndex
+   * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#hiddenBoxIndex
    * @type {number} */
   hiddenBoxIndex: -1,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
-   * @name HolePuzzlePanel#events
+   * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#events
    * @type {string[]} */
   events: ['click'],
 });

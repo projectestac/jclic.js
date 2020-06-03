@@ -49,7 +49,7 @@ import { settings, log, getMsg } from '../Utils';
  *
  * Active boxes can host video and interactive media content (specified in the `mediaContent`
  * member of the {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} through its `hostedMediaPlayer` member.
- * @extends module:AbstractBox
+ * @extends module:boxes/AbstractBox.AbstractBox
  */
 export class ActiveBox extends AbstractBox {
   /**
@@ -388,7 +388,7 @@ export class ActiveBox extends AbstractBox {
   }
 
   /**
-   * Checks if the call has a {@link MediaContent} set to `autostart`, and launches it when found.
+   * Checks if the call has a {@link module:media/MediaContent.MediaContent} set to `autostart`, and launches it when found.
    */
   checkAutoStartMedia() {
     const cnt = this.getContent();
@@ -663,7 +663,7 @@ export class ActiveBox extends AbstractBox {
   }
 
   /**
-   * Places and resizes {@link AbstractBox#$hostedComponent $hostedComponent}, based on the size
+   * Places and resizes {@link module:boxes/AbstractBox.AbstractBox#$hostedComponent $hostedComponent}, based on the size
    * and position of this box.
    * @override
    * @param {boolean} sizeChanged - `true` when this {@link module:boxes/ActiveBox.ActiveBox ActiveBox} has changed its size
@@ -762,47 +762,47 @@ export class ActiveBox extends AbstractBox {
 Object.assign(ActiveBox.prototype, {
   /**
    * Identifier used to set the relative position of this box in a set.
-   * @name ActiveBox#idOrder
+   * @name module:boxes/ActiveBox.ActiveBox#idOrder
    * @type {number} */
   idOrder: -1,
   /**
    * Identifier used to set a relative position in the space.
-   * @name ActiveBox#idLoc
+   * @name module:boxes/ActiveBox.ActiveBox#idLoc
    * @type {number} */
   idLoc: -1,
   /**
    * Identifier used to establish relationships between cells of different sets (in associations)
-   * @name ActiveBox#idAss
+   * @name module:boxes/ActiveBox.ActiveBox#idAss
    * @type {number} */
   idAss: -1,
   /**
    * Backup of the original position of the cell, useful when the real position must be restored after a temporary change.
-   * @name ActiveBox#pos0
+   * @name module:boxes/ActiveBox.ActiveBox#pos0
    * @type {module:AWT.Point} */
   pos0: null,
   /**
    * Main content of this box
-   * @name ActiveBox#content
+   * @name module:boxes/ActiveBox.ActiveBox#content
    * @type {ActiveBoxContent} */
   content: null,
   /**
    * Alternative content of this box
-   * @name ActiveBox#altContent
+   * @name module:boxes/ActiveBox.ActiveBox#altContent
    * @type {ActiveBoxContent} */
   altContent: null,
   /**
    * Flag to check if this box has a 'hosted component'
-   * @name ActiveBox#hostedComponent
+   * @name module:boxes/ActiveBox.ActiveBox#hostedComponent
    * @type {boolean} */
   hasHostedComponent: false,
   /**
    * The media player associated to this box
-   * @name ActiveBox#hostedMediaPlayer
+   * @name module:boxes/ActiveBox.ActiveBox#hostedMediaPlayer
    * @type {ActiveMediaPlayer} */
   hostedMediaPlayer: null,
   /**
    * Indicates that this box is used as a background. When drawing, the clipping region must be respected.
-   * @name ActiveBox#isBackground
+   * @name module:boxes/ActiveBox.ActiveBox#isBackground
    * @type {boolean} */
   isBackground: false,
 });

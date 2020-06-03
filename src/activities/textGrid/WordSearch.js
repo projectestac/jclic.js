@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import Activity from '../../Activity';
+import { Activity, ActivityPanel } from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
 import BoxConnector from '../../boxes/BoxConnector';
@@ -45,7 +45,7 @@ import TextGrid from '../../boxes/TextGrid';
  * The aim of the activity is to find all the words hidden on the text grid.
  * The content of an optional {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent} can be revealed on an auxiliary panel as
  * words are found.
- * @extends module:Activity
+ * @extends module:Activity.Activity
  */
 export class WordSearch extends Activity {
   /**
@@ -87,41 +87,40 @@ export class WordSearch extends Activity {
 Object.assign(WordSearch.prototype, {
   /**
    * String array containing all the valid clues.
-   * @name WordSearch#clues
+   * @name module:activities/textGrid/WordSearch.WordSearch#clues
    * @type {string[]} */
   clues: null,
   /**
    * Array of integers containing __for each clue__ the index
    * of an associated {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} located on the secondary {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag}.
    * This associated element is optional.
-   * @name WordSearch#clueItems
+   * @name module:activities/textGrid/WordSearch.WordSearch#clueItems
    * @type {number[]} */
   clueItems: null,
   /**
    * Objects that indicate if box grids A and B must be shuffled.
    * (defaults to _false_ in WordSearch activities)
-   * @name WordSearch#shuffleA
+   * @name module:activities/textGrid/WordSearch.WordSearch#shuffleA
    * @type {boolean} */
   shuffleA: false,
   /**
    * Objects that indicate if box grids A and B must be shuffled.
    * (defaults to _false_ in WordSearch activities)
-   * @name WordSearch#shuffleB
+   * @name module:activities/textGrid/WordSearch.WordSearch#shuffleB
    * @type {boolean} */
   shuffleB: false,
 });
 
 /**
  * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/textGrid/WordSearch.WordSearch WordSearch} activities are played.
- * @extends module:ActivityPanel
+ * @extends module:Activity.ActivityPanel
  */
-export class WordSearchPanel extends Activity.Panel {
+export class WordSearchPanel extends ActivityPanel {
   /**
    * WordSearchPanel constructor
    * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-   * Java interface.
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {
@@ -424,28 +423,28 @@ export class WordSearchPanel extends Activity.Panel {
 Object.assign(WordSearchPanel.prototype, {
   /**
    * The {@link module:boxes/TextGrid.TextGrid TextGrid} object of this ActivityPanel
-   * @name WordSearchPanel#grid
+   * @name module:activities/textGrid/WordSearch.WordSearchPanel#grid
    * @type {TextGrid} */
   grid: null,
   /**
    * An optional {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} used to display information associated with the hidden words.
-   * @name WordSearchPanel#bgAlt
+   * @name module:activities/textGrid/WordSearch.WordSearchPanel#bgAlt
    * @type {ActiveBoxBag} */
   bgAlt: null,
   /**
    * An array of boolean values indicating which clues have been found
-   * @name WordSearchPanel#resolvedClues
+   * @name module:activities/textGrid/WordSearch.WordSearchPanel#resolvedClues
    * @type {boolean[]} */
   resolvedClues: null,
   /**
    * The box connector object
-   * @name WordSearchPanel#bc
+   * @name module:activities/textGrid/WordSearch.WordSearchPanel#bc
    * @type {BoxConnector} */
   bc: null,
   /**
    * Mouse and touch events intercepted by this panel
    * @override
-   * @name WordSearchPanel#events
+   * @name module:activities/textGrid/WordSearch.WordSearchPanel#events
    * @type {string[]} */
   events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
 });

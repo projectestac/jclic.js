@@ -62,7 +62,7 @@ export const flags = {
  * characters.
  *
  * It's used {@link module:activities/textGrid/CrossWord.CrossWord CrossWord} and {@link module:activities/textGrid/WordSearch.WordSearch WordSearch} activities.
- * @extends module:AbstractBox
+ * @extends module:boxes/AbstractBox.AbstractBox
  */
 export class TextGrid extends AbstractBox {
   /**
@@ -324,7 +324,7 @@ export class TextGrid extends AbstractBox {
    * at specified point.
    * @param {number} startX - Starting X coordinate
    * @param {number} startY - Starting Y coordinate
-   * @param {number} attr - Attribute to check. See {@link TextGrid.flags}.
+   * @param {number} attr - Attribute to check. See {@link module:boxes/TextGrid.TextGrid.flags}.
    * @param {number} dx - 0 means no movement, 1 go right, -1 go left.
    * @param {number} dy - 0 means no movement, 1 go down, -1 go up.
    * @param {boolean} attrState - Desired state (enabled or disabled) of `attr`
@@ -546,7 +546,7 @@ export class TextGrid extends AbstractBox {
    * @param {number} y0 - 'Y' coordinate of the first cell
    * @param {number} x1 - 'X' coordinate of the second cell
    * @param {number} y1 - 'Y' coordinate of the second cell
-   * @param {number} attribute - The binary flag representing this attribute. See {@link TextGrid.flags}.
+   * @param {number} attribute - The binary flag representing this attribute. See {@link module:boxes/TextGrid.TextGrid.flags}.
    * @param {boolean} value - Whether to set or unset the attribute.
    */
   setAttributeBetween(x0, y0, x1, y1, attribute, value) {
@@ -571,7 +571,7 @@ export class TextGrid extends AbstractBox {
    * Sets or unsets a specifi attrobut to a cell.
    * @param {number} px - The 'X' coordinate of the cell
    * @param {number} py - The 'Y' coordinate of the cell
-   * @param {number} attribute - The binary flag representing this attribute. See {@link TextGrid.flags}.
+   * @param {number} attribute - The binary flag representing this attribute. See {@link module:boxes/TextGrid.TextGrid.flags}.
    * @param {boolean} state - Whether to set or unset the attribute.
    */
   setAttribute(px, py, attribute, state) {
@@ -587,7 +587,7 @@ export class TextGrid extends AbstractBox {
 
   /**
    * Sets the specified attribute to all cells.
-   * @param {number} attribute - The binary flag representing this attribute. See {@link TextGrid.flags}.
+   * @param {number} attribute - The binary flag representing this attribute. See {@link module:boxes/TextGrid.TextGrid.flags}.
    * @param {boolean} state - Whether to set or unset the attribute.
    */
   setAllCellsAttribute(attribute, state) {
@@ -600,7 +600,7 @@ export class TextGrid extends AbstractBox {
    * Gets the specified attribute of a cell
    * @param {number} px - The 'X' coordinate of the cell
    * @param {number} py - The 'Y' coordinate of the cell
-   * @param {number} attribute - The binary flag representing this attribute. See {@link TextGrid.flags}.
+   * @param {number} attribute - The binary flag representing this attribute. See {@link module:boxes/TextGrid.TextGrid.flags}.
    * @returns {boolean} - `true` if the cell has this attribute, `false` otherwise.
    */
   getCellAttribute(px, py, attribute) {
@@ -673,7 +673,7 @@ export class TextGrid extends AbstractBox {
   }
 
   /**
-   * Overrides {@link AbstractBox#setBounds}
+   * Overrides {@link module:boxes/AbstractBox.AbstractBox#setBounds}
    * @override
    * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
    * upper-left corner of a new rectangle.
@@ -688,7 +688,7 @@ export class TextGrid extends AbstractBox {
   }
 
   /**
-   * Overrides {@link AbstractBox#updateContent}
+   * Overrides {@link module:boxes/AbstractBox.AbstractBox#updateContent}
    * @override
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
    * grid.
@@ -768,7 +768,7 @@ export class TextGrid extends AbstractBox {
 
   /**
    * Makes the cursor blink, alternating between two states. This method should be called only by
-   * {@link TextGrid#cursorTimer}
+   * {@link module:boxes/TextGrid.TextGrid#cursorTimer}
    * @param {boolean} status
    */
   blink(status) {
@@ -793,98 +793,98 @@ export class TextGrid extends AbstractBox {
 Object.assign(TextGrid.prototype, {
   /**
    * Number of rows
-   * @name TextGrid#nRows
+   * @name module:boxes/TextGrid.TextGrid#nRows
    * @type {number} */
   nRows: 1,
   /**
    * Number of columns
-   * @name TextGrid#nCols
+   * @name module:boxes/TextGrid.TextGrid#nCols
    * @type {number} */
   nCols: 1,
   /**
    * Two-dimension array of characters
-   * @name TextGrid#chars
+   * @name module:boxes/TextGrid.TextGrid#chars
    * @type {string[][]} */
   chars: null,
   /**
    * Two-dimension array with the expected characters, used to check user's answers.
-   * @name TextGrid#answers
+   * @name module:boxes/TextGrid.TextGrid#answers
    * @type {string[][]} */
   answers: null,
   /**
    * Two-dimension array of bytes used as containers of boolean attributes
-   * @name TextGrid#attributes
+   * @name module:boxes/TextGrid.TextGrid#attributes
    * @see TextGrid.flags
    * @type {number[][]} */
   attributes: null,
   /**
    * The cell width, in pixels
-   * @name TextGrid#cellWidth
+   * @name module:boxes/TextGrid.TextGrid#cellWidth
    * @type {number} */
   cellWidth: 20,
   /**
    * The cell height, in pixels
-   * @name TextGrid#cellHeight
+   * @name module:boxes/TextGrid.TextGrid#cellHeight
    * @type {number} */
   cellHeight: 20,
   /**
    * The preferred bounds of this grid
-   * @name TextGrid#preferredBounds
+   * @name module:boxes/TextGrid.TextGrid#preferredBounds
    * @type {module:AWT.Rectangle} */
   preferredBounds: null,
   /**
    * The character to be used as wildcard
-   * @name TextGrid#wild
+   * @name module:boxes/TextGrid.TextGrid#wild
    * @type {string} */
   wild: TextGridContent.prototype.wild,
   /**
    * Characters that can be used when randomizing the content of this grid
-   * @name TextGrid#randomChars
+   * @name module:boxes/TextGrid.TextGrid#randomChars
    * @see TextGridContent#randomChars
    * @type {string} */
   randomChars: TextGridContent.prototype.randomChars,
   /**
    * Whether the blinking cursor is enabled or disabled
-   * @name TextGrid#cursorEnabled
+   * @name module:boxes/TextGrid.TextGrid#cursorEnabled
    * @type {boolean} */
   cursorEnabled: false,
   /**
    * Whether this grid uses a blinking cursor or not
-   * @name TextGrid#useCursor
+   * @name module:boxes/TextGrid.TextGrid#useCursor
    * @type {boolean} */
   useCursor: false,
   /**
    * The current position of the cursor
-   * @name TextGrid#cursor
+   * @name module:boxes/TextGrid.TextGrid#cursor
    * @type {module:AWT.Point} */
   cursor: null,
   /**
    * `true` when the cursor is "blinking" (cell drawn with {@link module:boxes/BoxBase.BoxBase BoxBase} `inverse` attributes)
-   * @name TextGrid#cursorBlink
+   * @name module:boxes/TextGrid.TextGrid#cursorBlink
    * @type {boolean} */
   cursorBlink: false,
   /**
    * Controls the blinking of the cursor
-   * @name TextGrid#cursorTimer
+   * @name module:boxes/TextGrid.TextGrid#cursorTimer
    * @type {module:AWT.Timer} */
   cursorTimer: null,
   /**
    * Whether the wildcard character is transparent or opaque
-   * @name TextGrid#wildTransparent
+   * @name module:boxes/TextGrid.TextGrid#wildTransparent
    * @type {boolean} */
   wildTransparent: false,
 });
 
 /**
  * TextGrid default values
- * @name TextGrid.defaults
+ * @name module:boxes/TextGrid.TextGrid.defaults
  * @constant
  * @type {object} */
 TextGrid.defaults = defaults;
 
 /**
  * Binary flags used to mark status
- * @name TextGrid.flags
+ * @name module:boxes/TextGrid.TextGrid.flags
  * @constant
  * @type {object} */
 TextGrid.flags = flags;

@@ -42,7 +42,7 @@ import { getAttr } from '../Utils';
  * or action to be performed, but can also have up to two {@link module:bags/ConditionalJumpInfo.ConditionalJumpInfo ConditionalJumpInfo} objects. These
  * define alternative jumps that are performed only when score or time are below or over a specific
  * threshold.
- * @extends module:JumpInfo
+ * @extends module:bags/JumpInfo.JumpInfo
  */
 export class ActivitySequenceJump extends JumpInfo {
   /**
@@ -127,12 +127,12 @@ export class ActivitySequenceJump extends JumpInfo {
 Object.assign(ActivitySequenceJump.prototype, {
   /**
    * Optional jump to be performed when the results (score and time) are above a specific threshold.
-   * @name ActivitySequenceJump#upperJump
+   * @name module:bags/ActivitySequenceJump.ActivitySequenceJump#upperJump
    * @type {ConditionalJumpInfo} */
   upperJump: null,
   /**
    * Optional jump to be performed when the results (score or time) are below a specific threshold.
-   * @name ActivitySequenceJump#lowerJump
+   * @name module:bags/ActivitySequenceJump.ActivitySequenceJump#lowerJump
    * @type {ConditionalJumpInfo} */
   lowerJump: null,
 });

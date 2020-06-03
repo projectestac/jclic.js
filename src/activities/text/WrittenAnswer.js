@@ -108,12 +108,12 @@ export class WrittenAnswer extends Activity {
 Object.assign(WrittenAnswer.prototype, {
   /**
    * Number of unassigned cells
-   * @name WrittenAnswer#nonAssignedCells
+   * @name module:activities/text/WrittenAnswer.WrittenAnswer#nonAssignedCells
    * @type {number} */
   nonAssignedCells: 0,
   /**
    * Whether to use or not the cell's `idAss` field to check if pairings match
-   * @name WrittenAnswer#useIdAss
+   * @name module:activities/text/WrittenAnswer.WrittenAnswer#useIdAss
    * @type {boolean} */
   useIdAss: true,
 });
@@ -509,33 +509,33 @@ export class WrittenAnswerPanel extends ActivityPanel {
 Object.assign(WrittenAnswerPanel.prototype, {
   /**
    * The input text field where users write the answers
-   * @name WrittenAnswerPanel#$textField
+   * @name module:activities/text/WrittenAnswer.WrittenAnswerPanel#$textField
    * @type {external:jQuery} */
   $textField: null,
   /**
    * Array for storing checked associations
-   * @name WrittenAnswerPanel#invAssCheck
+   * @name module:activities/text/WrittenAnswer.WrittenAnswerPanel#invAssCheck
    * @type {boolean[]} */
   invAssCheck: null,
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the questions
-   * @name WrittenAnswerPanel#bgA
+   * @name module:activities/text/WrittenAnswer.WrittenAnswerPanel#bgA
    * @type {ActiveBoxBag} */
   bgA: null,
   /**
    * An optional {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} with content displayed as cells are solved.
-   * @name WrittenAnswerPanel#bgB
+   * @name module:activities/text/WrittenAnswer.WrittenAnswerPanel#bgB
    * @type {ActiveBoxBag} */
   bgB: null,
   /**
    * The currently selected cell
-   * @name WrittenAnswerPanel#currentCell
+   * @name module:activities/text/WrittenAnswer.WrittenAnswerPanel#currentCell
    * @type {number} */
   currentCell: -1,
   /**
    * Mouse events intercepted by this panel
    * @override
-   * @name WrittenAnswerPanel#events
+   * @name module:activities/text/WrittenAnswer.WrittenAnswerPanel#events
    * @type {string[]} */
   events: ['click', 'change'],
 });

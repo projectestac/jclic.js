@@ -299,96 +299,96 @@ export class BoxBase {
 Object.assign(BoxBase.prototype, {
   /**
    * The parent BoxBase object
-   * @name BoxBase#parent
+   * @name module:boxes/BoxBase.BoxBase#parent
    * @type {BoxBase} */
   parent: null,
   /**
    * Default values
-   * @name BoxBase#defaultValues
+   * @name module:boxes/BoxBase.BoxBase#defaultValues
    * @type {object} */
   default: defaultValues,
   /**
    * Font size can be dynamically reduced to fit the available space if any element using this
    * `BoxBase` requests it. When this happen, this field contains the real font currently used
    * to draw text.
-   * @name BoxBase#font
+   * @name module:boxes/BoxBase.BoxBase#font
    * @type {module:AWT.Font} */
   font: new Font(),
   /**
    * The current font size of this BoxBase. Can be dynamically adjusted when drawing.
-   * @name BoxBase#dynFontSize
+   * @name module:boxes/BoxBase.BoxBase#dynFontSize
    * @type {number} */
   dynFontSize: 0,
   /**
    * Counts the number of times the `dynFontSize` has been reset. This is useful to avoid excessive
    * recursive loops searching the optimal font size.
-   * @name BoxBase#resetFontCounter
+   * @name module:boxes/BoxBase.BoxBase#resetFontCounter
    * @type {number} */
   resetFontCounter: 0,
   /**
    * The background color
-   * @name BoxBase#backColor
+   * @name module:boxes/BoxBase.BoxBase#backColor
    * @type {string} */
   backColor: defaultValues.BACK_COLOR,
   /**
    * The background gradient. Default is `null`.
-   * @name BoxBase#bgGradient
+   * @name module:boxes/BoxBase.BoxBase#bgGradient
    * @type {module:AWT.Gradient} */
   bgGradient: null,
   /**
    * The color used to write text.
-   * @name BoxBase#textColor
+   * @name module:boxes/BoxBase.BoxBase#textColor
    * @type {string} */
   textColor: defaultValues.TEXT_COLOR,
   /**
    * The color used to draw a shadow below regular text.
-   * @name BoxBase#shadowColor
+   * @name module:boxes/BoxBase.BoxBase#shadowColor
    * @type {string} */
   shadowColor: defaultValues.SHADOW_COLOR,
   /**
    * The color of the border.
-   * @name BoxBase#borderColor
+   * @name module:boxes/BoxBase.BoxBase#borderColor
    * @type {string} */
   borderColor: defaultValues.BORDER_COLOR,
   /**
    * The color used to draw text when a cell is in `inactive` state.
-   * @name BoxBase#inactiveColor
+   * @name module:boxes/BoxBase.BoxBase#inactiveColor
    * @type {string} */
   inactiveColor: defaultValues.INACTIVE_COLOR,
   /**
    * The color used to draw text when a cell is in `alternative` state.
-   * @name BoxBase#alternativeColor
+   * @name module:boxes/BoxBase.BoxBase#alternativeColor
    * @type {string} */
   alternativeColor: defaultValues.ALTERNATIVE_COLOR,
   /**
    * Whether the text should have a shadow or not
-   * @name BoxBase#shadow
+   * @name module:boxes/BoxBase.BoxBase#shadow
    * @type {boolean} */
   shadow: false,
   /**
    * Whether the cell's background (and its hosted component, if any) should be transparent
-   * @name BoxBase#transparent
+   * @name module:boxes/BoxBase.BoxBase#transparent
    * @type {boolean} */
   transparent: false,
   /**
    * Wheter the cell's background should be painted or not. This property has no effect on
    * hosted components.
-   * @name BoxBase#dontFill
+   * @name module:boxes/BoxBase.BoxBase#dontFill
    * @type {boolean} */
   dontFill: false,
   /**
    * The margin to respect between text elements and the limits of the cell or other elements.
-   * @name BoxBase#textMargin
+   * @name module:boxes/BoxBase.BoxBase#textMargin
    * @type {number} */
   textMargin: defaultValues.AC_MARGIN,
   /**
    * The stroke used to draw the border.
-   * @name BoxBase#borderStroke
+   * @name module:boxes/BoxBase.BoxBase#borderStroke
    * @type {module:AWT.Stroke} */
   borderStroke: new Stroke(defaultValues.BORDER_STROKE_WIDTH),
   /**
    * The stroke used to draw a border around marked cells.
-   * @name BoxBase#markerStroke
+   * @name module:boxes/BoxBase.BoxBase#markerStroke
    * @type {module:AWT.Stroke} */
   markerStroke: new Stroke(defaultValues.MARKER_STROKE_WIDTH),
 });

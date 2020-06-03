@@ -33,7 +33,7 @@ import Skin from './Skin';
 
 /**
  * A minimalist {@link module:skins/Skin.Skin Skin} for JClic.js with just the player, without messages, counters nor any button.
- * @extends module:Skin
+ * @extends module:skins/Skin.Skin
  */
 export class EmptySkin extends Skin {
 
@@ -63,13 +63,13 @@ export class EmptySkin extends Skin {
 Object.assign(EmptySkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-   * @name EmptySkin#skinId
+   * @name module:skins/EmptySkin.EmptySkin#skinId
    * @override
    * @type {string} */
   skinId: 'JClicEmptySkin',
   /**
    * Styles used in this skin
-   * @name EmptySkin#skinCSS
+   * @name module:skins/EmptySkin.EmptySkin#skinCSS
    * @override
    * @type {string} */
   mainCSS: '.ID .JClicPlayerCnt {margin:0;}'

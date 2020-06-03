@@ -211,84 +211,84 @@ Object.assign(MediaContent.prototype, {
    * The type of media. Valid values are: `UNKNOWN`, `PLAY_AUDIO`, `PLAY_VIDEO`,
    * `PLAY_MIDI`, `PLAY_CDAUDIO`, `RECORD_AUDIO`, `PLAY_RECORDED_AUDIO`, `RUN_CLIC_ACTIVITY`,
    * `RUN_CLIC_PACKAGE`, `RUN_EXTERNAL`, `URL`, `EXIT` and `RETURN`
-   * @name MediaContent#type
+   * @name module:media/MediaContent.MediaContent#type
    * @type {string} */
   type: 'UNKNOWN',
   /**
    * The priority level is important when different medias want to play together. Objects with
    * highest priority level can mute lower ones.
-   * @name MediaContent#level
+   * @name module:media/MediaContent.MediaContent#level
    * @type {number} */
   level: 1,
   /**
    * Media file name
-   * @name MediaContent#file
+   * @name module:media/MediaContent.MediaContent#file
    * @type {String} */
   file: null,
   /**
    * Optional parameters passed to external calls
-   * @name MediaContent#externalParams
+   * @name module:media/MediaContent.MediaContent#externalParams
    * @type {string} */
   externalParam: null,
   /**
    * Special setting used to play only a fragment of media. `-1` means not used (plays full
    * length, from the beginning)
-   * @name MediaContent#from
+   * @name module:media/MediaContent.MediaContent#from
    * @type {number} */
   from: -1,
   /**
    * Special setting used to play only a fragment of media. `-1` means not used (plays to the end
    * of the media)
-   * @name MediaContent#to
+   * @name module:media/MediaContent.MediaContent#to
    * @type {number} */
   to: -1,
   /**
    * When `type` is `RECORD_AUDIO`, this member stores the maximum length of the recorded
    * sound, in seconds.
-   * @name MediaContent#length
+   * @name module:media/MediaContent.MediaContent#length
    * @type {number} */
   length: 3,
   /**
    * When `type` is `RECORD_AUDIO`, this member stores the buffer ID where the recording
    * will be stored.
-   * @name MediaContent#recBuffer
+   * @name module:media/MediaContent.MediaContent#recBuffer
    * @type {number} */
   recBuffer: 0,
   /**
    * Whether to stretch or not the video size to fit the cell space.
-   * @name MediaContent#stretch
+   * @name module:media/MediaContent.MediaContent#stretch
    * @type {boolean} */
   stretch: false,
   /**
    * When `true`, the video plays out of the cell, centered on the activity window.
-   * @name MediaContent#free
+   * @name module:media/MediaContent.MediaContent#free
    * @type {boolean} */
   free: false,
   /**
    * Places the video window at a specific location.
-   * @name MediaContent#absLocation
+   * @name module:media/MediaContent.MediaContent#absLocation
    * @type {module:AWT.Point} */
   absLocation: null,
   /**
-   * When {@link MediaContent#absLocation} is not `null`, this field indicates from where to
+   * When {@link module:media/MediaContent.MediaContent#absLocation} is not `null`, this field indicates from where to
    * measure its coordinates. Valid values are: `BOX`, `WINDOW` or `FRAME`.
-   * @name MediaContent#absLocationFrom
+   * @name module:media/MediaContent.MediaContent#absLocationFrom
    * @type {string} */
   absLocationFrom: null,
   /**
    * `true` when the video window must catch mouse clicks.
-   * @name MediaContent#catchMouseEvents
+   * @name module:media/MediaContent.MediaContent#catchMouseEvents
    * @type {boolean} */
   catchMouseEvents: false,
   /**
    * Whether to repeat the media in loop, or just one time.
-   * @name MediaContent#loop
+   * @name module:media/MediaContent.MediaContent#loop
    * @type {boolean} */
   loop: false,
   /**
    * When `true`, the media will automatically start playing when the associated {@link module:boxes/ActiveBox.ActiveBox ActiveBox}
    * become active.
-   * @name MediaContent#autoStart
+   * @name module:media/MediaContent.MediaContent#autoStart
    * @type {boolean} */
   autoStart: false,
 });
@@ -346,7 +346,7 @@ const ICONS = {
 
 /**
  * Collection of icon {@link external:HTMLImageElement} objects
- * @name MediaContent.ICONS
+ * @name module:media/MediaContent.MediaContent.ICONS
  * @type {object} */
 MediaContent.ICONS = {};
 

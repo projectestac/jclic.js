@@ -75,12 +75,12 @@ export class ComplexAssociation extends SimpleAssociation {
 Object.assign(ComplexAssociation.prototype, {
   /**
    * Number of unassigned cells
-   * @name ComplexAssociation#nonAssignedCells
+   * @name module:activities/associations/ComplexAssociation.ComplexAssociation#nonAssignedCells
    * @type {number} */
   nonAssignedCells: 0,
   /**
    * Uses cell's `idAss` field to check if pairings match
-   * @name ComplexAssociation#useIdAss
+   * @name module:activities/associations/ComplexAssociation.ComplexAssociation#useIdAss
    * @type {boolean} */
   useIdAss: false,
 });
@@ -307,7 +307,7 @@ export class ComplexAssociationPanel extends SimpleAssociationPanel {
 Object.assign(ComplexAssociationPanel.prototype, {
   /**
    * Array for storing checked associations
-   * @name ComplexAssociation#Panel#invAssCheck
+   * @name module:activities/associations/ComplexAssociation.ComplexAssociationPanel#invAssCheck
    * @type {boolean[]} */
   invAssCheck: null,
 });

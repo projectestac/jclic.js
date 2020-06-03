@@ -80,12 +80,12 @@ export class OrderText extends TextActivityBase {
 Object.assign(OrderText.prototype, {
   /**
    * Whether to allow or not to shuffle words among different paragraphs.
-   * @name OrderText#amongParagraphs
+   * @name module:activities/text/OrderText.OrderText#amongParagraphs
    * @type {boolean} */
   amongParagraphs: false,
   /**
    * The box connector
-   * @name OrderText#bc
+   * @name module:activities/text/OrderText.OrderText#bc
    * @type {BoxConnector} */
   bc: null,
 });
@@ -396,18 +396,18 @@ export class OrderTextPanel extends TextActivityBasePanel {
 Object.assign(OrderTextPanel.prototype, {
   /**
    * Currently selected text target
-   * @name OrderTextPanel#currentTarget
+   * @name module:activities/text/OrderText.OrderTextPanel#currentTarget
    * @type {TextActivityDocument.TextTarget} */
   currentTarget: null,
   /**
    * The box connector
-   * @name OrderTextPanel#bc
+   * @name module:activities/text/OrderText.OrderTextPanel#bc
    * @type {BoxConnector} */
   bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
-   * @name OrderTextPanel#events
+   * @name module:activities/text/OrderText.OrderTextPanel#events
    * @type {string[]} */
   events: ['click', 'mousemove'],
 });

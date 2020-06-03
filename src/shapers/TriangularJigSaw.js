@@ -36,7 +36,7 @@ import { PathStroke } from '../AWT';
 /**
  * This {@link module:shapers/Shaper.Shaper Shaper} returns a set of rectangular shapes with triangular teeth and slots that
  * fit between them.
- * @extends module:JigSaw
+ * @extends module:shapers/JigSaw.JigSaw
  */
 export class TriangularJigSaw extends JigSaw {
   /**
@@ -49,7 +49,7 @@ export class TriangularJigSaw extends JigSaw {
   }
 
   /**
-   * Overrides {@link JigSaw#hLine}
+   * Overrides {@link module:shapers/JigSaw.JigSaw#hLine}
    * @override
    * @param {module:AWT.Path} sd - The Path to which the line will be added
    * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth up, and 2 means tooth down
@@ -82,7 +82,7 @@ export class TriangularJigSaw extends JigSaw {
   }
 
   /**
-   * Overrides {@link JigSaw#vLine}
+   * Overrides {@link module:shapers/JigSaw.JigSaw#vLine}
    * @override
    * @param {module:AWT.Path} sd - The Path to which the line will be added
    * @param {number} type - Type  of tooth: 0 is flat (no tooth), 1 means tooth right, and 2 means tooth left

@@ -242,13 +242,13 @@ export class InformationScreenPanel extends ActivityPanel {
 Object.assign(InformationScreenPanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed.
-   * @name InformationScreenPanel#bg
+   * @name module:activities/panels/InformationScreen.InformationScreenPanel#bg
    * @type {ActiveBoxBag} */
   bg: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
-   * @name InformationScreenPanel#events
+   * @name module:activities/panels/InformationScreen.InformationScreenPanel#events
    * @type {string[]} */
   events: ['click'],
 });

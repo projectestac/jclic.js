@@ -42,7 +42,7 @@ import { getAttr, isEmpty } from '../Utils';
  *
  * The exact meaning of this members will depend on the type of `ConditionalJumpInfo` in the
  * {@link module:bags/ActivitySequenceJump.ActivitySequenceJump ActivitySequenceJump} (it can be `upperJump` or `lowerJump`).
- * @extends module:JumpInfo
+ * @extends module:bags/JumpInfo.JumpInfo
  */
 export class ConditionalJumpInfo extends JumpInfo {
   /**
@@ -100,12 +100,12 @@ export class ConditionalJumpInfo extends JumpInfo {
 Object.assign(ConditionalJumpInfo.prototype, {
   /**
    * Threshold above or below which the action will be triggered, depending on the type of JumpInfo.
-   * @name ConditionalJumpInfo#threshold
+   * @name module:bags/ConditionalJumpInfo.ConditionalJumpInfo#threshold
    * @type {number} */
   threshold: -1,
   /**
    * Delay to be applied in automatic jumps.
-   * @name ConditionalJumpInfo#time
+   * @name module:bags/ConditionalJumpInfo.ConditionalJumpInfo#time
    * @type {number} */
   time: -1,
 });

@@ -132,22 +132,22 @@ export class EventSoundsElement {
 Object.assign(EventSoundsElement.prototype, {
   /**
    * The name of the sound file used by this element
-   * @name EventSoundsElement#file
+   * @name module:media/EventSoundsElement.EventSoundsElement#file
    * @type {string} */
   file: null,
   /**
    * Whether the sound for this event is enabled or not
-   * @name EventSoundsElement#enabled
+   * @name module:media/EventSoundsElement.EventSoundsElement#enabled
    * @type {number} */
   enabled: DEFAULT,
   /**
    * Media player used to play this sound
-   * @name EventSoundsElement#player
+   * @name module:media/EventSoundsElement.EventSoundsElement#player
    * @type {ActiveMediaPlayer} */
   player: null,
   /**
    * HTMLAudioElement used to play this sound
-   * @name EventSoundsElement#audio
+   * @name module:media/EventSoundsElement.EventSoundsElement#audio
    * @type {HTMLAudioElement} */
   audio: null,
 });

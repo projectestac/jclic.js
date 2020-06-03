@@ -35,7 +35,7 @@ import $ from 'jquery';
 import AudioBuffer from './AudioBuffer';
 
 /**
- * This kind of object encapsulates a realized {@link MediaContent} and provides methods to start,
+ * This kind of object encapsulates a realized {@link module:media/MediaContent.MediaContent} and provides methods to start,
  * stop, pause and record different types of media (audio, video, MIDI, voice recording...)
  */
 export class ActiveMediaPlayer {
@@ -242,32 +242,32 @@ export class ActiveMediaPlayer {
 Object.assign(ActiveMediaPlayer.prototype, {
   /**
    * The MediaContent associated to this player.
-   * @name ActiveMediaPlayer#mc
+   * @name module:media/ActiveMediaPlayer.ActiveMediaPlayer#mc
    * @type {MediaContent} */
   mc: null,
   /**
    * The player to which this player belongs.
-   * @name ActiveMediaPlayer#ps
+   * @name module:media/ActiveMediaPlayer.ActiveMediaPlayer#ps
    * @type {JClicPlayer} */
   ps: null,
   /**
    * MediaPlayers should be linked to {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects.
-   * @name ActiveMediaPlayer#bx
+   * @name module:media/ActiveMediaPlayer.ActiveMediaPlayer#bx
    * @type {ActiveBox} */
   bx: null,
   /**
    * The visual component for videos, usually a `video` HTML element
-   * @name ActiveMediaPlayer#$visualComponent
+   * @name module:media/ActiveMediaPlayer.ActiveMediaPlayer#$visualComponent
    * @type {external:jQuery} */
   $visualComponent: null,
   /**
    * When `true`, this player makes use of a recording audio buffer
-   * @name ActiveMediaPlayer#useAudioBuffer
+   * @name module:media/ActiveMediaPlayer.ActiveMediaPlayer#useAudioBuffer
    * @type {boolean} */
   useAudioBuffer: false,
   /**
-   * The {@link MediaBagElement} containing the reference to the media to be played
-   * @name ActiveMediaPlayer#mbe
+   * The {@link module:bads/MediaBagElement.MediaBagElement} containing the reference to the media to be played
+   * @name module:media/ActiveMediaPlayer.ActiveMediaPlayer#mbe
    * @type {MediaBagElement} */
   mbe: null,
 });

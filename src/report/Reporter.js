@@ -490,82 +490,82 @@ export class Reporter {
 Object.assign(Reporter.prototype, {
   /**
    * The {@link ReporterInfo} used to calculate and store global results.
-   * @name Reporter#info
+   * @name module:report/Reporter.Reporter#info
    * @type {ReporterInfo} */
   info: null,
   /**
    * The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve messages
-   * @name Reporter#ps
+   * @name module:report/Reporter.Reporter#ps
    * @type {PlayStation} */
   ps: null,
   /**
    * A valid SCORM bridge, or `null` if no SCORM API detected.
-   * @name Reporter#SCORM */
+   * @name module:report/Reporter.Reporter#SCORM */
   SCORM: null,
   /**
    * User ID currently associated with this reporting system
-   * @name Reporter#userId
+   * @name module:report/Reporter.Reporter#userId
    * @type {string} */
   userId: null,
   /**
    * Optional key to be added as a field in session records
-   * @name Reporter#sessionKey
+   * @name module:report/Reporter.Reporter#sessionKey
    * @type {string} */
   sessionKey: null,
   /**
    * A second optional key to be reported as a field in session records
-   * @name Reporter#sessionContext
+   * @name module:report/Reporter.Reporter#sessionContext
    * @type {string} */
   sessionContext: null,
   /**
    * Optional filter key to be used in the group selection dialog
-   * @name Reporter#groupCodeFilter
+   * @name module:report/Reporter.Reporter#groupCodeFilter
    * @type {string} */
   groupCodeFilter: null,
   /**
    * Another optional filter key to be used in the user selection dialog
-   * @name Reporter#userCodeFilter
+   * @name module:report/Reporter.Reporter#userCodeFilter
    * @type {string} */
   userCodeFilter: null,
   /**
    * Description of this reporting system
-   * @name Reporter#descriptionKey
+   * @name module:report/Reporter.Reporter#descriptionKey
    * @type {string} */
   descriptionKey: 'Results are not currently being saved',
   /**
    * Additional info to display after the reporter's `description`
-   * @name Reporter#descriptionDetail
+   * @name module:report/Reporter.Reporter#descriptionDetail
    * @type {string} */
   descriptionDetail: '',
   /**
    * Starting date and time of this report
-   * @name Reporter#started
+   * @name module:report/Reporter.Reporter#started
    * @type {Date} */
   started: null,
   /**
    * Array of sessions included in this report
-   * @name Reporter#sessions
+   * @name module:report/Reporter.Reporter#sessions
    * @type {SessionReg[]} */
   sessions: [],
   /**
    * Currently active session
-   * @name Reporter#currentSession
+   * @name module:report/Reporter.Reporter#currentSession
    * @type {SessionReg} */
   currentSession: null,
   /**
    * `true` if the system was successfully initiated, `false` otherwise
-   * @name Reporter#initiated
+   * @name module:report/Reporter.Reporter#initiated
    * @type {boolean} */
   initiated: false,
   /**
    * `true` if the system is connected to a database with user's data.
    * When `false`, a generic ID will be used.
-   * @name Reporter#bUserBased
+   * @name module:report/Reporter.Reporter#bUserBased
    * @type {boolean} */
   bUserBased: null,
   /**
    * Maximum number of incorrect UserID attempts
-   * @name Reporter#MAX_USERID_PROMPT_ATTEMPTS
+   * @name module:report/Reporter.Reporter#MAX_USERID_PROMPT_ATTEMPTS
    * @type {number} */
   MAX_USERID_PROMPT_ATTEMPTS: 3,
 });
@@ -634,84 +634,84 @@ export class ReporterInfo {
 Object.assign(ReporterInfo.prototype, {
   /**
    * The Reporter linked to this Info object
-   * @name ReporterInfo#rep
+   * @name module:report/Reporter.ReporterInfo#rep
    * @type {Reporter}
    */
   rep: null,
   /**
    * When `false`, data must be recalculated
-   * @name ReporterInfo#valid
+   * @name module:report/Reporter.ReporterInfo#valid
    * @type {boolean} */
   valid: false,
   /**
    * Number of sessions registered
-   * @name ReporterInfo#numSessions
+   * @name module:report/Reporter.ReporterInfo#numSessions
    * @type {number} */
   numSessions: 0,
   /**
    * Number of sequences played
-   * @name ReporterInfo#numSequences
+   * @name module:report/Reporter.ReporterInfo#numSequences
    * @type {number} */
   numSequences: 0,
   /**
    * Number of activities played
-   * @name ReporterInfo#nActivities
+   * @name module:report/Reporter.ReporterInfo#nActivities
    * @type {number} */
   nActivities: 0,
   /**
    * Number of activities in existing in the played projects suitable to be reported
-   * @name ReporterInfo#reportableActs
+   * @name module:report/Reporter.ReporterInfo#reportableActs
    * @type {number} */
   reportableActs: 0,
   /**
    * Number of activities solved
-   * @name ReporterInfo#nActSolved
+   * @name module:report/Reporter.ReporterInfo#nActSolved
    * @type {number} */
   nActSolved: 0,
   /**
    * Number of different activities played
-   * @name ReporterInfo#nActPlayed
+   * @name module:report/Reporter.ReporterInfo#nActPlayed
    * @type {number} */
   nActPlayed: 0,
   /**
    * Global score obtained in all sessions registered by this reporter
-   * @name ReporterInfo#nActScore
+   * @name module:report/Reporter.ReporterInfo#nActScore
    * @type {number} */
   nActScore: 0,
   /**
    * Number of actions done by the user while in this working session
-   * @name ReporterInfo#nActions
+   * @name module:report/Reporter.ReporterInfo#nActions
    * @type {number} */
   nActions: 0,
   /**
    * Percentage of solved activities
-   * @name ReporterInfo#ratioSolved
+   * @name module:report/Reporter.ReporterInfo#ratioSolved
    * @type {number} */
   ratioSolved: 0,
   /**
    * Percentage of reportable activities played
-   * @name ReporterInfo#ratioPlayed
+   * @name module:report/Reporter.ReporterInfo#ratioPlayed
    * @type {number} */
   ratioPlayed: 0,
   /**
    * Sum of the scores of all the activities played
-   * @name ReporterInfo#tScore
+   * @name module:report/Reporter.ReporterInfo#tScore
    * @type {number} */
   tScore: 0,
   /**
    * Global score obtained
-   * @name ReporterInfo#partialScore
+   * @name module:report/Reporter.ReporterInfo#partialScore
    * @type {number} */
   partialScore: 0,
   /**
    * Sum of the playing time reported by each activity (not always equals to the sum of all session's time)
-   * @name ReporterInfo#tTime
+   * @name module:report/Reporter.ReporterInfo#tTime
    * @type {number} */
   tTime: 0,
   /**
    * Final score based on the percent of reportable activities played. If the user plays all the
    * activities, this result equals to `partialScore`.
-   * @name ReporterInfo#globalScore
+   * @name module:report/Reporter.ReporterInfo#globalScore
    * @type {number} */
   globalScore: 0,
 });

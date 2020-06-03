@@ -393,23 +393,23 @@ export class DoublePuzzlePanel extends ActivityPanel {
 Object.assign(DoublePuzzlePanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
-   * @name DoublePuzzlePanel#bgA
+   * @name module:activities/puzzles/DoublePuzzle.DoublePuzzlePanel#bgA
    * @type {ActiveBoxBag} */
   bgA: null,
   /**
    * The secondary {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag}, initially empty.
-   * @name DoublePuzzlePanel#bgB
+   * @name module:activities/puzzles/DoublePuzzle.DoublePuzzlePanel#bgB
    * @type {ActiveBoxBag} */
   bgB: null,
   /**
    * The box connector
-   * @name DoublePuzzlePanel#bc
+   * @name module:activities/puzzles/DoublePuzzle.DoublePuzzlePanel#bc
    * @type {BoxConnector} */
   bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
-   * @name DoublePuzzlePanel#events
+   * @name module:activities/puzzles/DoublePuzzle.DoublePuzzlePanel#events
    * @type {string[]} */
   events: ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchend', 'touchmove', 'touchcancel'],
 });

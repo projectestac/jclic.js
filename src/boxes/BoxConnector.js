@@ -223,101 +223,101 @@ export class BoxConnector {
 Object.assign(BoxConnector.prototype, {
   /**
    * The background image, saved and redrawn on each movement
-   * @name BoxConnector#bgImg
+   * @name module:boxes/BoxConnector.BoxConnector#bgImg
    * @type {external:HTMLImageElement} */
   bgImg: null,
   /**
    * The rectangle of {@link module:Activity.ActivityPanel ActivityPanel} saved in `bgImg`
-   * @name BoxConnector#bgRect
+   * @name module:boxes/BoxConnector.BoxConnector#bgRect
    * @type {module:AWT.Rectangle} */
   bgRect: null,
   /**
    * Initial position of the connector
-   * @name BoxConnector#origin
+   * @name module:boxes/BoxConnector.BoxConnector#origin
    * @type {module:AWT.Point} */
   origin: null,
   /**
    * Current (while moving) and final position of the connector
-   * @name BoxConnector#dest
+   * @name module:boxes/BoxConnector.BoxConnector#dest
    * @type {module:AWT.Point} */
   dest: null,
   /**
    * When `true`, the connector must end on arrowhead
-   * @name BoxConnector#arrow
+   * @name module:boxes/BoxConnector.BoxConnector#arrow
    * @type {boolean} */
   arrow: false,
   /**
    * `true` while the connector is active
-   * @name BoxConnector#active
+   * @name module:boxes/BoxConnector.BoxConnector#active
    * @type {boolean} */
   active: false,
   /**
    * `true` while the line has already been painted (used for XOR expressions)
-   * @name BoxConnector#linePainted
+   * @name module:boxes/BoxConnector.BoxConnector#linePainted
    * @type {boolean} */
   linePainted: false,
   /**
    * The arrowhead length (in pixels)
-   * @name BoxConnector#arrowLength
+   * @name module:boxes/BoxConnector.BoxConnector#arrowLength
    * @type {number} */
   arrowLength: 10,
   /**
    * The arrowhead angle
-   * @name BoxConnector#arrowAngle
+   * @name module:boxes/BoxConnector.BoxConnector#arrowAngle
    * @type {number} */
   arrowAngle: Math.PI / 6,
   /**
    * The main color used in XOR operations
-   * @name BoxConnector#lineColor
+   * @name module:boxes/BoxConnector.BoxConnector#lineColor
    * @type {string} */
   lineColor: 'black',
   /**
    * The complementary color used in XOR operations
-   * @name BoxConnector#xorColor
+   * @name module:boxes/BoxConnector.BoxConnector#xorColor
    * @type {string} */
   xorColor: 'white',
   /**
    * The global composite operator used when drawing in XOR mode. Default is "difference".
    * For a list of possible values see:
    * {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation}
-   * @name BoxConnector#compositeOp
+   * @name module:boxes/BoxConnector.BoxConnector#compositeOp
    * @type {string} */
   compositeOp: 'difference',
   /**
    * The default {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation composite operator}
    * ("source-over").
-   * @name BoxConnector#DEFAULT_COMPOSITE_OP
+   * @name module:boxes/BoxConnector.BoxConnector#DEFAULT_COMPOSITE_OP
    * @static
    * @type {string} */
   DEFAULT_COMPOSITE_OP: DEFAULT_COMPOSITE_OP,
   /**
    * Relative position of point B regarding A
-   * @name BoxConnector#relativePos
+   * @name module:boxes/BoxConnector.BoxConnector#relativePos
    * @type {module:AWT.Point} */
   relativePos: null,
   /**
    * The ActiveBox to connect or move
-   * @name BoxConnector#bx
+   * @name module:boxes/BoxConnector.BoxConnector#bx
    * @type {ActiveBox} */
   bx: null,
   /**
    * The Graphics context where the BoxConnector will paint
-   * @name BoxConnector#ctx
+   * @name module:boxes/BoxConnector.BoxConnector#ctx
    * @type {external:CanvasRenderingContext2D} */
   ctx: null,
   /**
    * The dimension of the HTML canvas where to draw
-   * @name BoxConnector#dim
+   * @name module:boxes/BoxConnector.BoxConnector#dim
    * @type {module:AWT.Dimension} */
   dim: null,
   /**
    * The container to which this connector belongs
-   * @name BoxConnector#parent
+   * @name module:boxes/BoxConnector.BoxConnector#parent
    * @type {module:AWT.Container} */
   parent: null,
   /**
    * Width of the connector line
-   * @name BoxConnector#lineWidth
+   * @name module:boxes/BoxConnector.BoxConnector#lineWidth
    * @type {number} */
   lineWidth: 1.5,
 });

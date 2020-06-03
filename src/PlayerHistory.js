@@ -48,8 +48,8 @@ export class PlayerHistory {
 
   /**
    *
-   * Counts the number of {@link PlayerHistory#HistoryElement HistoryElement} objects stored in
-   * {@link PlayerHistory#sequenceStack sequenceStack}
+   * Counts the number of {@link module:PlayerHistory.PlayerHistory#HistoryElement HistoryElement} objects stored in
+   * {@link module:PlayerHistory.PlayerHistory#sequenceStack sequenceStack}
    * @returns {number}
    */
   storedElementsCount() {
@@ -58,7 +58,7 @@ export class PlayerHistory {
 
   /**
    *
-   * Removes all elements from {@link PlayerHistory#sequenceStack sequenceStack}
+   * Removes all elements from {@link module:PlayerHistory.PlayerHistory#sequenceStack sequenceStack}
    */
   clearHistory() {
     this.sequenceStack = [0];
@@ -89,7 +89,7 @@ export class PlayerHistory {
   }
 
   /**
-   * Retrieves the {@link PlayerHistory#HistoryElement HistoryElement} placed at the top of the
+   * Retrieves the {@link module:PlayerHistory.PlayerHistory#HistoryElement HistoryElement} placed at the top of the
    * stack (if any) and instructs {@link module:JClicPlayer.JClicPlayer JClicPlayer} to load it. The obtained effect is to
    * "rewind" or "go back", usually to an activity that acts as a menu.
    * @returns {boolean}
@@ -199,23 +199,23 @@ export class PlayerHistory {
 Object.assign(PlayerHistory.prototype, {
   /**
    * The {@link module:JClicPlayer.JClicPlayer JClicPlayer} object to which this `PlayerHistory` belongs
-   * @name PlayerHistory#player
+   * @name module:PlayerHistory.PlayerHistory#player
    * @type {JClicPlayer} */
   player: null,
   /**
    * This is the main member of the class. PlayerHistory puts and retrieves
    * on it information about the proects and activities done by the current user.
-   * @name PlayerHistory#sequenceStack
+   * @name module:PlayerHistory.PlayerHistory#sequenceStack
    * @type {PlayerHistory#HistoryElement[]} */
   sequenceStack: [],
   /**
    * When in test mode, jumps are only simulated.
-   * @name PlayerHistory#testMode
+   * @name module:PlayerHistory.PlayerHistory#testMode
    * @type {boolean} */
   testMode: false,
   /**
    * Inner class used to store history elements.
-   * @name PlayerHistory#HistoryElement
+   * @name module:PlayerHistory.PlayerHistory#HistoryElement
    */
   HistoryElement: class {
     /**

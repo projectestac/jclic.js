@@ -35,7 +35,7 @@ import { Path, PathStroke } from '../AWT';
 /**
  *
  * This {@link module:shapers/Shaper.Shaper Shaper} returns a set of rectangular shapes with teeth and slots that fit between them.
- * @extends module:Shaper
+ * @extends module:shapers/Shaper.Shaper
  */
 export class JigSaw extends Shaper {
   /**

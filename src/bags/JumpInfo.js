@@ -107,28 +107,28 @@ Object.assign(JumpInfo.prototype, {
    * The JumpInfo identifier
    * - For regular jumps: 'forward', 'back'
    * - For conditional jumps: 'upper', 'lower'
-   * @name JumpInfo#id
+   * @name module:bags/JumpInfo.JumpInfo#id
    * @type {string} */
   id: null,
   /**
    * The current action.
    * Possible values are: `JUMP`, `STOP`, `RETURN` and `EXIT`.
-   * @name JumpInfo#action
+   * @name module:bags/JumpInfo.JumpInfo#action
    * @type {string} */
   action: null,
   /**
    * Activity number in the sequence list
-   * @name JumpInfo#actNum
+   * @name module:bags/JumpInfo.JumpInfo#actNum
    * @type {number} */
   actNum: -1,
   /**
    * Current sequence tag
-   * @name JumpInfo#sequence
+   * @name module:bags/JumpInfo.JumpInfo#sequence
    * @type {string} */
   sequence: null,
   /**
    * Path of another JClic project to jump to
-   * @name JumpInfo#projectPath
+   * @name module:bags/JumpInfo.JumpInfo#projectPath
    * @type {string} */
   projectPath: null,
 });

@@ -312,19 +312,19 @@ export class ExplorePanel extends ActivityPanel {
 Object.assign(ExplorePanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
-   * @name ExplorePanel#bgA
+   * @name module:activities/panels/Explore.ExplorePanel#bgA
    * @type {ActiveBoxBag} */
   bgA: null,
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information associated to `primary` elements.
    * Only one of this elements will be showed for each click done in the `primary` panel.
-   * @name ExplorePanel#bgB
+   * @name module:activities/panels/Explore.ExplorePanel#bgB
    * @type {ActiveBoxBag} */
   bgB: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel
    * @override
-   * @name ExplorePanel#events
+   * @name module:activities/panels/Explore.ExplorePanel#events
    * @type {string[]} */
   events: ['click'],
 });

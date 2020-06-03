@@ -193,12 +193,12 @@ Object.assign(IdentifyTextPanel.prototype, {
   /**
    * Flag indicating if targets must be visually marked when the activity begins. In this type of
    * activity should be always `false` to avoid revealing the words o letters that must be found.
-   * @name IdentifyTextPanel#targetsMarked
+   * @name module:activities/text/IdentifyText.IdentifyTextPanel#targetsMarked
    * @type {boolean} */
   targetsMarked: false,
   /**
    * Used to avoid duplicate event processing
-   * @name IdentifyTextPanel#lastTimeStamp
+   * @name module:activities/text/IdentifyText.IdentifyTextPanel#lastTimeStamp
    * @type {number}
    */
   lastTimeStamp: 0,

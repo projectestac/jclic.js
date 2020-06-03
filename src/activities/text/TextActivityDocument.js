@@ -296,38 +296,38 @@ export class TextActivityDocument {
 Object.assign(TextActivityDocument.prototype, {
   /**
    * Number of blank spaces between tabulators.
-   * @name TextActivityDocument#tabSpc
+   * @name module:activities/text/TextActivityDocument.TextActivityDocument#tabSpc
    * @type {number} */
   tabSpc: 12,
   /**
    * Index of the last {@link module:boxes/ActiveBox.ActiveBox ActiveBox} activated.
-   * @name TextActivityDocument#lastBoxId
+   * @name module:activities/text/TextActivityDocument.TextActivityDocument#lastBoxId
    * @type {number} */
   lastBoxId: 0,
   /**
    * A bag of {@link TargetMarker} objects
-   * @name TextActivityDocument#tmb
+   * @name module:activities/text/TextActivityDocument.TextActivityDocument#tmb
    * @type {object} */
   tmb: null,
   /**
    * Number of targets
-   * @name TextActivityDocument#numTargets
+   * @name module:activities/text/TextActivityDocument.TextActivityDocument#numTargets
    * @type {number} */
   numTargets: 0,
   /**
    * Type of targets used in this activity. Possible values are: `TT_FREE`, `TT_CHAR`, `TT_WORD`
    * and `TT_PARAGRAPH`.
-   * @name TextActivityDocument#targetType
+   * @name module:activities/text/TextActivityDocument.TextActivityDocument#targetType
    * @type {string} */
   targetType: 'TT_FREE',
   /**
    * Collection of named styles of the document
-   * @name TextActivityDocument#style
+   * @name module:activities/text/TextActivityDocument.TextActivityDocument#style
    * @type {object} */
   style: null,
   /**
    * The main document, represented as a collection of DOM objects
-   * @name TextActivityDocument#p
+   * @name module:activities/text/TextActivityDocument.TextActivityDocument#p
    * @type {object} */
   p: null,
 });
@@ -494,84 +494,84 @@ export class TextTarget {
 Object.assign(TextTarget.prototype, {
   /**
    * The {@link module:activities/text/TextActivityDocument.TextActivityDocument TextActivityDocument} to which this target belongs
-   * @name TextTarget#doc
+   * @name module:activities/text/TextActivityDocument.TextTarget#doc
    * @type {TextActivityDocument} */
   doc: null,
   /**
    * The current text displayed by this TextTarget
-   * @name TextTarget#text
+   * @name module:activities/text/TextActivityDocument.TextTarget#text
    * @type {string} */
   text: null,
   /**
    * A set of optional attributes for `text`
-   * @name TextTarget#attr
+   * @name module:activities/text/TextActivityDocument.TextTarget#attr
    * @type {object} */
   attr: null,
   /**
    * `true` when the target is a drop-down list
-   * @name TextTarget#isList
+   * @name module:activities/text/TextActivityDocument.TextTarget#isList
    * @type {boolean} */
   isList: false,
   /**
    * Number of characters initially displayed on the text field
-   * @name TextTarget#numIniChars
+   * @name module:activities/text/TextActivityDocument.TextTarget#numIniChars
    * @type {number} */
   numIniChars: 1,
   /**
    * Character used to fill-in the text field
-   * @name TextTarget#iniChar
+   * @name module:activities/text/TextActivityDocument.TextTarget#iniChar
    * @type {string} */
   iniChar: '_',
   /**
    * Maximum length of the answer
-   * @name TextTarget#maxLenResp
+   * @name module:activities/text/TextActivityDocument.TextTarget#maxLenResp
    * @type {number} */
   maxLenResp: 0,
   /**
    * Array of valid answers
-   * @name TextTarget#answers
+   * @name module:activities/text/TextActivityDocument.TextTarget#answers
    * @type {string[]} */
   answers: null,
   /**
    * Set of specific options
-   * @name TextTarget#options
+   * @name module:activities/text/TextActivityDocument.TextTarget#options
    * @type {object} */
   options: null,
   /**
    * Text displayed by the target when the activity begins
-   * @name TextTarget#iniText
+   * @name module:activities/text/TextActivityDocument.TextTarget#iniText
    * @type {string} */
   iniText: null,
   /**
    * Type of additional information offered to the user. Possible values are: `no_info`, `always`,
    * `onError` and `onDemand`.
-   * @name TextTarget#infoMode
+   * @name module:activities/text/TextActivityDocument.TextTarget#infoMode
    * @type {string} */
   infoMode: 'no_info',
   /**
    * Key that triggers the associated popup when `infoMode` is `onDemand`
-   * @name TextTarget#popupKey
+   * @name module:activities/text/TextActivityDocument.TextTarget#popupKey
    * @type {string} */
   popupKey: 'F1',
   /**
    * An optional {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} with information about this TextTarget
-   * @name TextTarget#popupContent
+   * @name module:activities/text/TextActivityDocument.TextTarget#popupContent
    * @type {ActiveBoxContent} */
   popupContent: null,
   /**
    * Time (seconds) to wait before showing the additional information
-   * @name TextTarget#popupDelay
+   * @name module:activities/text/TextActivityDocument.TextTarget#popupDelay
    * @type {number} */
   popupDelay: 0,
   /**
    * Maximum amount of time (seconds) that the additional information will be shown
-   * @name TextTarget#popupMaxTime
+   * @name module:activities/text/TextActivityDocument.TextTarget#popupMaxTime
    * @type {number} */
   popupMaxTime: 0,
   /**
    * When this flag is `true` and `popupContent` contains audio, no visual feedback will be
    * provided (meaning that audio will be just played)
-   * @name TextTarget#onlyPlay
+   * @name module:activities/text/TextActivityDocument.TextTarget#onlyPlay
    * @type {boolean} */
   onlyPlay: false,
   //
@@ -579,53 +579,53 @@ Object.assign(TextTarget.prototype, {
   //
   /**
    * The drop-down list associated to this target
-   * @name TextTarget#$comboList
+   * @name module:activities/text/TextActivityDocument.TextTarget#$comboList
    * @type {external:jQuery} */
   $comboList: null,
   /**
    * The span element associated to this target
-   * @name TextTarget#$span
+   * @name module:activities/text/TextActivityDocument.TextTarget#$span
    * @type {external:jQuery} */
   $span: null,
   /**
    * The paragraph element where $span is currently located
-   * @name TextTarget#$p
+   * @name module:activities/text/TextActivityDocument.TextTarget#$p
    * @type {external:jQuery} */
   $p: null,
   /**
    * The span element containing the popup
-   * @name TextTarget#$popup
+   * @name module:activities/text/TextActivityDocument.TextTarget#$popup
    * @type {external:jQuery} */
   $popup: null,
   /**
    * Current text in the $span element
-   * @name TextTarget#currentText
+   * @name module:activities/text/TextActivityDocument.TextTarget#currentText
    * @type {string} */
   currentText: '',
   /**
    * Ordinal number of this target in the collection of targets
-   * @name TextTarget#num
+   * @name module:activities/text/TextActivityDocument.TextTarget#num
    * @type {number} */
   num: 0,
   /**
    * Current ordinal position of this target in the document
    * (used in {@link module:activities/text/OrderText.OrderText OrderText} activities)
-   * @name TextTarget#pos
+   * @name module:activities/text/TextActivityDocument.TextTarget#pos
    * @type {number} */
   pos: 0,
   /**
    * Current status of the target. Valid values are: `NOT_EDITED`, `EDITED`, `SOLVED`, `WITH_ERROR` and `HIDDEN`
-   * @name TextTarget#targetStatus
+   * @name module:activities/text/TextActivityDocument.TextTarget#targetStatus
    * @type {string} */
   targetStatus: 'NOT_EDITED',
   /**
    * Flag to control if the initial content of this TextTarget has been modified
-   * @name TextTarget#flagModified
+   * @name module:activities/text/TextActivityDocument.TextTarget#flagModified
    * @type {boolean} */
   flagModified: false,
   /**
    * Pointer to the activity panel containing this TextTarget
-   * @name TextTarget#parentPane
+   * @name module:activities/text/TextActivityDocument.TextTarget#parentPane
    * @type {TextActivityBasePanel} */
   parentPane: null,
 });

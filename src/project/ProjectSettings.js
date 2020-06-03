@@ -206,43 +206,43 @@ export class ProjectSettings {
 Object.assign(ProjectSettings.prototype, {
   /**
    * The JClicProject to which this ProjectSettings belongs
-   * @name ProjectSettings#project
+   * @name module:project/ProjectSettings.ProjectSettings#project
    * @type {JClicProject} */
   project: null,
   /**
    * The project title
-   * @name ProjectSettings#title
+   * @name module:project/ProjectSettings.ProjectSettings#title
    * @type {string} */
   title: 'Untitled',
   /**
    * The authors of this project.
    * Each author is represented by an object with the following attributes:
    * `name` (mandatory), `mail`, `rol`, `organization` and `url`
-   * @name ProjectSettings#authors
+   * @name module:project/ProjectSettings.ProjectSettings#authors
    * @type {object[]} */
   authors: null,
   /**
    * Schools, companies and other institutions involved on this project.
    * Each organization is represented by an object with the following attributes:
    * `name` (mandatory), `mail`, `url`, `address`, `pc`, `city`, `state`, `country`, `comments`
-   * @name ProjectSettings#organizations
+   * @name module:project/ProjectSettings.ProjectSettings#organizations
    * @type {object[]} */
   organizations: null,
   /**
    * The history of revisions made to this project.
    * Revisions are represented by objects with the following attributes:
    * `date` (mandatory), `description`, `comments` and `author`
-   * @name ProjectSettings#revisions
+   * @name module:project/ProjectSettings.ProjectSettings#revisions
    * @type {object[]} */
   revisions: null,
   /**
    * Project's description, maybe in multiple languages.
-   * @name ProjectSettings#description
+   * @name module:project/ProjectSettings.ProjectSettings#description
    * @type {object} */
   description: null,
   /**
    * JClic projects can use more than one language, so use a string array
-   * @name ProjectSettings#languages
+   * @name module:project/ProjectSettings.ProjectSettings#languages
    * @type {string[]} */
   languages: null,
   tags: null,
@@ -255,17 +255,17 @@ Object.assign(ProjectSettings.prototype, {
   /**
    * Array of canonical locales, as defined in 
    * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation|Intl}
-   * @name ProjectSettings#locales
+   * @name module:project/ProjectSettings.ProjectSettings#locales
    * @type {string[]} */
   locales: null,
   /**
    * The name of an optional 'skin' (visual aspect) can be set for the whole project, or for each {@link module:Activity.Activity Activity}
-   * @name ProjectSettings#skinFileName
+   * @name module:project/ProjectSettings.ProjectSettings#skinFileName
    * @type {string} */
   skinFileName: null,
   /**
    * The main {@link module:media/EventSounds.EventSounds EventSounds} object of the project
-   * @name ProjectSettings#eventSounds
+   * @name module:project/ProjectSettings.ProjectSettings#eventSounds
    * @type {EventSounds} */
   eventSounds: new EventSounds(),
 });

@@ -36,7 +36,7 @@ import { Rectangle, Point, Dimension } from '../AWT';
  *
  * This is the simplest {@link module:shapers/Shaper.Shaper Shaper}. It divides the graphic object in a set of rectangular
  * shapes distributed in the specified number of rows and columns.
- * @extends module:Shaper
+ * @extends module:shapers/Shaper.Shaper
  */
 export class Rectangular extends Shaper {
   /**
@@ -68,7 +68,7 @@ export class Rectangular extends Shaper {
 Object.assign(Rectangular.prototype, {
   /**
    * Overrides same flag in {@link Shaper#rectangularShapes}
-   * @name Rectangular#rectangularShapes
+   * @name module:shapers/Rectangular.Rectangular#rectangularShapes
    * @override
    * @type {boolean} */
   rectangularShapes: true,

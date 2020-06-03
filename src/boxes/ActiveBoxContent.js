@@ -381,38 +381,38 @@ Object.assign(ActiveBoxContent.prototype, {
    * The {@link module:boxes/BoxBase.BoxBase BoxBase} attribute of this content. Can be `null`, meaning {@link module:boxes/ActiveBox.ActiveBox ActiveBox} will
    * try to find a suitable style scanning down through its own BoxBase, their parent's and, finally,
    * the default values defined in `BoxBase.prototype`.
-   * @name ActiveBoxContent#style
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#style
    * @type {BoxBase} */
   style: null,
   /**
    * Optimal dimension of any {@link module:boxes/ActiveBox.ActiveBox ActiveBox} taking this content.
-   * @name ActiveBoxContent#dimension
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#dimension
    * @type {module:AWT.Dimension} */
   dimension: null,
   /**
    * The {@link module:boxes/ActiveBox.ActiveBox ActiveBox} can have or not a border despite the settings of {@link module:boxes/BoxBase.BoxBase BoxBase}.
    * The default value `null` means not to take in consideration this setting.
-   * @name ActiveBoxContent#border
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#border
    * @type {(null|boolean)} */
   border: null,
   /**
    * The text to display on the {@link module:boxes/ActiveBox.ActiveBox ActiveBox}. It can have up to two paragraphs.
-   * @name ActiveBoxContent#text
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#text
    * @type {string} */
   text: null,
   /**
    * The name of the image file to display on the {@link module:boxes/ActiveBox.ActiveBox ActiveBox}.
-   * @name ActiveBoxContent#image
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#image
    * @type {string} */
   image: null,
   /**
    * An optional shape used to clip the image.
-   * @name ActiveBoxContent#imgClip
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#imgClip
    * @type {module:AWT.Shape} */
   imgClip: null,
   /**
    * The media content associated with this object.
-   * @name ActiveBoxContent#mediaContent
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#mediaContent
    * @type {MediaContent} */
   mediaContent: null,
   /**
@@ -422,55 +422,55 @@ Object.assign(ActiveBoxContent.prototype, {
    * @property {string} v - Valud values are: `top`, `middle`, `bottom` */
   /**
    * The horizontal and vertical alignment of the image inside the cell.
-   * @name ActiveBoxContent#imgAlign
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#imgAlign
    * @type {AlignType} */
   imgAlign: null,
   /**
    * The horizontal and vertical alignment of the text inside the cell.
    * Valid values are: `left`, `middle`, `right`, `top` and `bottom`.
-   * @name ActiveBoxContent#txtAlign
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#txtAlign
    * @type {AlignType} */
   txtAlign: null,
   /**
    * Whether to avoid overlapping of image and text inside the cell when both are present.
-   * @name ActiveBoxContent#avoidOverlapping
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#avoidOverlapping
    * @type {boolean} */
   avoidOverlapping: false,
   /**
    * Numeric identifier used in activities to resolve relationships between cells
-   * @name ActiveBoxContent#id
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#id
    * @type {number} */
   id: -1,
   /**
    * Numeric identifier used in activities to resolve relationships between cells
-   * @name ActiveBoxContent#item
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#item
    * @type {number} */
   item: -1,
   //
   // Transient properties build and modified at run-time
   /**
    * The realized image used by this box content.
-   * @name ActiveBoxContent#img
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#img
    * @type {external:HTMLImageElement} */
   img: null,
   /**
    * When `img` is an animated GIF file, this field should contain its file name
-   * @name ActiveBoxContent#animatedGifFile
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#animatedGifFile
    * @type {string} */
   animatedGifFile: null,
   /**
    * When not null, this content should be treated as an HTML element
-   * @name ActiveBoxContent#innerHtmlText
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#innerHtmlText
    * @type {string} */
   innerHtmlText: null,
   /**
    * The {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} associated with this content. Updated at run-time.
-   * @name ActiveBoxContent#amp
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#amp
    * @type {ActiveMediaPlayer} */
   amp: null,
   /**
-   * The {@link MediaBagElement} associated with this content, if any. Updated at run-time.
-   * @name ActiveBoxContent#mbe
+   * The {@link module:bads/MediaBagElement.MediaBagElement} associated with this content, if any. Updated at run-time.
+   * @name module:boxes/ActiveBoxContent.ActiveBoxContent#mbe
    * @type {MediaBagElement} */
   mbe: null,
 });

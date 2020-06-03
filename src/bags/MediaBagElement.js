@@ -381,69 +381,69 @@ export class MediaBagElement {
 Object.assign(MediaBagElement.prototype, {
   /**
    * The name of this element. Usually is the same as `file`
-   * @name MediaBagElement#name
+   * @name module:bags/MediaBagElement.MediaBagElement#name
    * @type {string} */
   name: '',
   /**
    * The name of the file where this element is stored
-   * @name MediaBagElement#file
+   * @name module:bags/MediaBagElement.MediaBagElement#file
    * @type {string} */
   file: '',
   /**
    * The font family name, used only in elements of type 'font'
-   * @name MediaBagElement#fontName
+   * @name module:bags/MediaBagElement.MediaBagElement#fontName
    * @type {string} */
   fontName: '',
   /**
    * The path to be used as base to access this media element
-   * @name MediaBagElement#basePath
+   * @name module:bags/MediaBagElement.MediaBagElement#basePath
    * @type {string} */
   basePath: '',
   /**
    * An optional JSZip object that can act as a container of this media
-   * @name MediaBagElement#zip
+   * @name module:bags/MediaBagElement.MediaBagElement#zip
    * @type {external:JSZip} */
   zip: null,
   /**
    * When loaded, this field will store the realized media object
-   * @name MediaBagElement#data
+   * @name module:bags/MediaBagElement.MediaBagElement#data
    * @type {object} */
   data: null,
   /**
    * Flag indicating that `data` is ready to be used
-   * @name MediaBagElement#ready
+   * @name module:bags/MediaBagElement.MediaBagElement#ready
    * @type {boolean} */
   ready: false,
   /**
    * Array of callback methods to be called when the resource becomes ready
-   * @name MediaBagElement#_whenReady
+   * @name module:bags/MediaBagElement.MediaBagElement#_whenReady
    * @private
    * @type {function[]} */
   _whenReady: null,
   /**
    * Normalized extension of `file`, useful to guess the media type
-   * @name MediaBagElement#ext
+   * @name module:bags/MediaBagElement.MediaBagElement#ext
    * @type {string} */
   ext: '',
   /**
    * The resource type ('audio', 'image', 'midi', 'video', 'font')
-   * @name MediaBagElement#type
+   * @name module:bags/MediaBagElement.MediaBagElement#type
    * @type {string} */
   type: null,
   /**
    * Time set to load the resource before leaving
-   * @name MediaBagElement#timeout
+   * @name module:bags/MediaBagElement.MediaBagElement#timeout
    * @type {number} */
   timeout: 0,
   //
   /**
    * Flag used for animated GIFs
-   * @name MediaBagElement#animated
+   * @name module:bags/MediaBagElement.MediaBagElement#animated
    * @type {boolean} */
   animated: false,
   /**
    * Full path obtained after a successful call to getFullPathPromise
-   * @name MediaBagElement#_fullPath
+   * @name module:bags/MediaBagElement.MediaBagElement#_fullPath
    * @private
    * @type {string}
    */

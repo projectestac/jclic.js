@@ -171,28 +171,28 @@ export class MidiAudioPlayer {
 Object.assign(MidiAudioPlayer.prototype, {
   /**
    * The MIDI file data used by this MIDI player
-   * @name MidiAudioPlayer#data
+   * @name module:media/MidiAudioPlayer.MidiAudioPlayer#data
    * @type {ArrayBuffer} */
   data: null,
   /**
    * The grimmdude's MidiPlayer used by this player
-   * @name MidiAudioPlayer#player
+   * @name module:media/MidiAudioPlayer.MidiAudioPlayer#player
    * @type {MidiPlayerJS} */
   player: null,
   /**
    * When >0, time position at which the music must end
-   * @name MidiAudioPlayer#playTo
+   * @name module:media/MidiAudioPlayer.MidiAudioPlayer#playTo
    * @type {number} */
   playTo: 0,
   /**
    * Main volume of this track (set with a MIDI message of type `Controller Change` #7)
-   * @name MidiAudioPlayer#mainVolume
+   * @name module:media/MidiAudioPlayer.MidiAudioPlayer#mainVolume
    * @type {number} */
   mainVolume: 1.0,
   /**
    * This array is used when processing 'Note off' events to stop notes that are currently playing.
    * It contains a collection of 'instrument.play' instances, one for each active note
-   * @name MidiAudioPlayer#startedNotes
+   * @name module:media/MidiAudioPlayer.MidiAudioPlayer#startedNotes
    * @type {function[]} */
   startedNotes: [],
 });

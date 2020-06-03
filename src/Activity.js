@@ -602,201 +602,201 @@ Activity.CLASSES = {
 Object.assign(Activity.prototype, {
   /**
    * The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
-   * @name Activity#project
+   * @name module:Activity.Activity#project
    * @type {JClicProject} */
   project: null,
   /**
    * The Activity name
-   * @name Activity#name
+   * @name module:Activity.Activity#name
    * @type {string} */
   name: settings.DEFAULT_NAME,
   /**
    * The class name of this Activity
-   * @name Activity#className
+   * @name module:Activity.Activity#className
    * @type {string} */
   className: null,
   /**
    * Code used in reports to filter queries. Default is `null`.
-   * @name Activity#code
+   * @name module:Activity.Activity#code
    * @type {string} */
   code: null,
   /**
    * Type of activity, used in text activities to distinguish between different variants of the
    * same activity. Possible values are: `orderWords`, `orderParagraphs`, `identifyWords` and
    * `identifyChars`.
-   * @name Activity#type
+   * @name module:Activity.Activity#type
    * @type {string} */
   type: null,
   /**
    * A short description of the activity
-   * @name Activity#description
+   * @name module:Activity.Activity#description
    * @type {string} */
   description: null,
   /**
    * The space between the activity components measured in pixels.
-   * @name Activity#margin
+   * @name module:Activity.Activity#margin
    * @type {number} */
   margin: settings.DEFAULT_MARGIN,
   /**
    * The background color of the activity panel
-   * @name Activity#bgColor
+   * @name module:Activity.Activity#bgColor
    * @type {string} */
   bgColor: settings.DEFAULT_BG_COLOR,
   /**
    * When set, gradient used to draw the activity window background
-   * @name Activity#bgGradient
+   * @name module:Activity.Activity#bgGradient
    * @type {module:AWT.Gradient} */
   bgGradient: null,
   /**
    * Whether the bgImage (if any) has to be tiled across the panel background
-   * @name Activity#tiledBgImg
+   * @name module:Activity.Activity#tiledBgImg
    * @type {boolean} */
   tiledBgImg: false,
   /**
    * Filename of the image used as a panel background.
-   * @name Activity#bgImageFile
+   * @name module:Activity.Activity#bgImageFile
    * @type {string} */
   bgImageFile: null,
   /**
    * Whether to draw a border around the activity panel
-   * @name Activity#border
+   * @name module:Activity.Activity#border
    * @type {boolean} */
   border: true,
   /**
    * Whether to place the activity panel at the point specified by `absolutePosition` or leave
    * it centered on the main player's window.
-   * @name Activity#absolutePositioned
+   * @name module:Activity.Activity#absolutePositioned
    * @type {boolean} */
   absolutePositioned: false,
   /**
    * The position of the activity panel on the player.
-   * @name Activity#absolutePosition
+   * @name module:Activity.Activity#absolutePosition
    * @type {module:AWT.Point} */
   absolutePosition: null,
   /**
    * Whether to generate usage reports
-   * @name Activity#includeInReports
+   * @name module:Activity.Activity#includeInReports
    * @type {boolean} */
   includeInReports: true,
   /**
    * Whether to send action events to the {@link module:Reporter.Reporter Reporter}
-   * @name Activity#reportActions
+   * @name module:Activity.Activity#reportActions
    * @type {boolean} */
   reportActions: false,
   /**
    * Whether to allow help about the activity or not.
-   * @name Activity#helpWindow
+   * @name module:Activity.Activity#helpWindow
    * @type {boolean} */
   helpWindow: false,
   /**
    * Whether to show the solution on the help window.
-   * @name Activity#showSolution
+   * @name module:Activity.Activity#showSolution
    * @type {boolean} */
   showSolution: false,
   /**
    * Message to be shown in the help window when `showSolution` is `false`.
-   * @name Activity#helpMsg
+   * @name module:Activity.Activity#helpMsg
    * @type {string} */
   helpMsg: '',
   /**
    * Specific set of {@link module:media/EventSounds.EventSounds EventSounds} used in the activity. The default is `null`, meaning
    * to use the default event sounds.
-   * @name Activity#eventSounds
+   * @name module:Activity.Activity#eventSounds
    * @type {EventSounds} */
   eventSounds: null,
   /**
    * Wheter the activity must be solved in a specific order or not.
-   * @name Activity#useOrder
+   * @name module:Activity.Activity#useOrder
    * @type {boolean} */
   useOrder: false,
   /**
    * Wheter the cells of the activity will be dragged across the screen.
    * When `false`, a line will be painted to link elements.
-   * @name Activity#dragCells
+   * @name module:Activity.Activity#dragCells
    * @type {boolean} */
   dragCells: false,
   /**
    * File name of the Skin used by the activity. The default value is `null`, meaning that the
    * activity will use the skin specified for the project.
-   * @name Activity#skinFileName
+   * @name module:Activity.Activity#skinFileName
    * @type {string} */
   skinFileName: null,
   /**
    * Maximum amount of time (seconds) to solve the activity. The default value is 0, meaning
    * unlimited time.
-   * @name Activity#maxTime
+   * @name module:Activity.Activity#maxTime
    * @type {number}*/
   maxTime: 0,
   /**
    * Whether the time counter should display a countdown when `maxTime > 0`
-   * @name Activity#countDownTime
+   * @name module:Activity.Activity#countDownTime
    * @type {boolean} */
   countDownTime: false,
   /**
    * Maximum number of actions allowed to solve the activity. The default value is 0, meaning
    * unlimited actions.
-   * @name Activity#maxActions
+   * @name module:Activity.Activity#maxActions
    * @type {number}*/
   maxActions: 0,
   /**
    * Whether the actions counter should display a countdown when `maxActions > 0`
-   * @name Activity#countDownActions
+   * @name module:Activity.Activity#countDownActions
    * @type {boolean} */
   countDownActions: false,
   /**
    * URL to be launched when the user clicks on the 'info' button. Default is `null`.
-   * @name Activity#infoUrl
+   * @name module:Activity.Activity#infoUrl
    * @type {string} */
   infoUrl: null,
   /**
    * System command to be launched when the user clicks on the 'info' button. Default is `null`.
    * Important: this parameter is currently not being used
-   * @name Activity#infoCmd
+   * @name module:Activity.Activity#infoCmd
    * @type {string} */
   infoCmd: null,
   /**
    * The content of the initial, final, previous and error messages shown by the activity.
-   * @name Activity#messages
+   * @name module:Activity.Activity#messages
    * @type {ActiveBoxContent[]} */
   messages: null,
   /**
    * Preferred dimension of the activity window
-   * @name Activity#windowSize
+   * @name module:Activity.Activity#windowSize
    * @type {module:AWT.Dimension} */
   windowSize: new Dimension(settings.DEFAULT_WIDTH, settings.DEFAULT_HEIGHT),
   /**
    * Whether the activity window has transparent background.
-   * @name Activity#transparentBg
+   * @name module:Activity.Activity#transparentBg
    * @type {boolean} */
   transparentBg: false,
   /**
    * The background color of the activity
-   * @name Activity#activityBgColor
+   * @name module:Activity.Activity#activityBgColor
    * @type {string} */
   activityBgColor: settings.DEFAULT_BG_COLOR,
   /**
    * Gradient used to draw backgrounds inside the activity.
-   * @name Activity#activityBgGradient
+   * @name module:Activity.Activity#activityBgGradient
    * @type {module:AWT.Gradient} */
   activityBgGradient: null,
   /**
    * Whether to display or not the 'time' counter
-   * @name Activity#bTimeCounter
+   * @name module:Activity.Activity#bTimeCounter
    * @type {boolean} */
   bTimeCounter: true,
   /**
    * Whether to display or not the 'score' counter
-   * @name Activity#bScoreCounter
+   * @name module:Activity.Activity#bScoreCounter
    * @type {boolean} */
   bScoreCounter: true,
   /**
    * Whether to display or not the 'actions' counter
-   * @name Activity#bActionsCounter
+   * @name module:Activity.Activity#bActionsCounter
    * @type {boolean} */
   bActionsCounter: true,
   /**
    * Special object used to generate random content at the start of the activity
-   * @name Activity#acp
+   * @name module:Activity.Activity#acp
    * @type {AutoContentProvider} */
   acp: null,
   //
@@ -805,54 +805,54 @@ Object.assign(Activity.prototype, {
   //
   /**
    * Array of bags with the description of the content to be displayed on panels and cells.
-   * @name Activity#abc
+   * @name module:Activity.Activity#abc
    * @type {ActiveBagContent[]} */
   abc: null,
   /**
    * Content of the grid of letters used in crosswords and shuffled letters
-   * @name Activity#tgc
+   * @name module:Activity.Activity#tgc
    * @type {TextGridContent} */
   tgc: null,
   /**
    * The main document used in text activities
-   * @name Activity#document
+   * @name module:Activity.Activity#document
    * @type {TextActivityDocument} */
   document: null,
   /**
    * Relative position of the text grid (uses the same position codes as box grids)
-   * @name Activity#boxGridPos
+   * @name module:Activity.Activity#boxGridPos
    * @type {string} */
   boxGridPos: 'AB',
   /**
    * Number of times to shuffle the cells at the beginning of the activity
-   * @name Activity#shuffles
+   * @name module:Activity.Activity#shuffles
    * @type {number} */
   shuffles: settings.DEFAULT_SHUFFLES,
   /**
    * Box grid A must be shuffled.
-   * @name Activity#shuffleA
+   * @name module:Activity.Activity#shuffleA
    * @type {boolean} */
   shuffleA: true,
   /**
    * Box grid B must be shuffled.
-   * @name Activity#shuffleB
+   * @name module:Activity.Activity#shuffleB
    * @type {boolean} */
   shuffleB: true,
   /**
    * Flag to indicate "inverse resolution" in complex associations
-   * @name Activity#invAss
+   * @name module:Activity.Activity#invAss
    * @type {boolean} */
   invAss: false,
   /**
    * Array of menu elements, used in activities of type {@link module:activities/panels/Menu.Menu Menu}
-   * @name Activity#menuElements
+   * @name module:Activity.Activity#menuElements
    * @type {array} */
   menuElements: null,
   /**
    * This activity uses numeric expressions, so text literals should be
    * converted to numbers for comparisions, taking in account the
    * number format of the current locale (dot or comma as decimal separator)
-   * @name Activity#numericContent
+   * @name module:Activity.Activity#numericContent
    * @type {boolean} */
   numericContent: false,
 });
@@ -1210,92 +1210,92 @@ export class ActivityPanel extends Container {
 Object.assign(ActivityPanel.prototype, {
   /**
    * The Activity this panel is related to
-   * @name ActivityPanel#act
+   * @name module:Activity.ActivityPanel#act
    * @type {Activity} */
   act: null,
   /**
    * The jQuery div element used by this panel
-   * @name ActivityPanel#$div
+   * @name module:Activity.ActivityPanel#$div
    * @type {external:jQuery} */
   $div: null,
   /**
    * The jQuery main canvas element used by this panel
-   * @name ActivityPanel#$canvas
+   * @name module:Activity.ActivityPanel#$canvas
    * @type {external:jQuery} */
   $canvas: null,
   /**
    * Always true, since canvas hit regions have been deprecated!
    * See: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility
-   * @name ActivityPanel#accessibleCanvas
+   * @name module:Activity.ActivityPanel#accessibleCanvas
    * @type {boolean}
    */
   accessibleCanvas: true,
   /**
    * The realized current {@link module:skins/Skin.Skin Skin}
-   * @name ActivityPanel#skin
+   * @name module:Activity.ActivityPanel#skin
    * @type {Skin} */
   skin: null,
   /**
    * Background element (currently a `span`) used to place animated GIFs when needed
-   * @name ActivityPanel#$animatedBg
+   * @name module:Activity.ActivityPanel#$animatedBg
    * @type {external:jQuery} */
   $animatedBg: null,
   /**
    * Additional background element for animated GIFs, used in associations
-   * @name ActivityPanel#$animatedBgB
+   * @name module:Activity.ActivityPanel#$animatedBgB
    * @type {external:jQuery} */
   $animatedBgB: null,
   /**
    * `true` when the activity is solved, `false` otherwise
-   * @name ActivityPanel#solved
+   * @name module:Activity.ActivityPanel#solved
    * @type {boolean} */
   solved: false,
   /**
    * The realized image used as a background
-   * @name ActivityPanel#bgImage
+   * @name module:Activity.ActivityPanel#bgImage
    * @type {external:HTMLImageElement} */
   bgImage: null,
   /**
    * `true` while the activity is playing
-   * @name ActivityPanel#playing
+   * @name module:Activity.ActivityPanel#playing
    * @type {boolean} */
   playing: false,
   /**
    * `true` if the activity is running for first time (not due to a click on the `replay` button)
-   * @name ActivityPanel#firstRun
+   * @name module:Activity.ActivityPanel#firstRun
    * @type {boolean} */
   firstRun: true,
   /**
    * Currently selected item. Used in some types of activities.
-   * @name ActivityPanel#currentItem
+   * @name module:Activity.ActivityPanel#currentItem
    * @type {number} */
   currentItem: 0,
   /**
    * The object used to connect cells and other elements in some types of activity
-   * @name ActivityPanel#bc
+   * @name module:Activity.ActivityPanel#bc
    * @type {BoxConnector} */
   bc: null,
   /**
    * The PlayStation used to realize media objects and communicate with the player services
    * (usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}
-   * @name ActivityPanel#ps
+   * @name module:Activity.ActivityPanel#ps
    * @type {PlayStation} */
   ps: null,
   /**
    * The minimum size of this kind of ActivityPanel
-   * @name ActivityPanel#minimumSize
+   * @name module:Activity.ActivityPanel#minimumSize
    * @type {module:AWT.Dimension} */
   minimumSize: null,
   /**
    * The preferred size of this kind of ActivityPanel
-   * @name ActivityPanel#preferredSize
+   * @name module:Activity.ActivityPanel#preferredSize
    * @type {module:AWT.Dimension} */
   preferredSize: null,
   /**
    * List of events intercepted by this ActivityPanel. Current events are: 'keydown', 'keyup',
    * 'keypress', 'mousedown', 'mouseup', 'click', 'dblclick', 'mousemove', 'mouseenter',
    * 'mouseleave', 'mouseover', 'mouseout', 'touchstart', 'touchend', 'touchmove' and 'touchcancel'.
-   * @name ActivityPanel#events
+   * @name module:Activity.ActivityPanel#events
    * @type {string[]} */
   events: ['click'],
   backgroundColor: null,

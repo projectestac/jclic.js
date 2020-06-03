@@ -51,7 +51,7 @@ const
  * The operations can be additions, subtractions, multiplications or divides. The unknown of these
  * operations can be the result of the operation (`A op B = ?`), any of the two operators
  * (`A op ? = C` or `? op B = C`) or also the operator itself (`A ? B = C`).
- * @extends module:AutoContentProvider
+ * @extends module:automation/AutoContentProvider.AutoContentProvider
  */
 export class Arith extends AutoContentProvider {
   /**
@@ -632,89 +632,89 @@ Object.assign(Arith.prototype, {
   // Operations use two operators:
   /**
    * First operator
-   * @name Arith#opA
+   * @name module:automation/arith/Arith.Arith#opA
    * @type {Arith.Operator} */
   opA: null,
   /**
    * Second operator
-   * @name Arith#opB
+   * @name module:automation/arith/Arith.Arith#opB
    * @type {Arith.Operator} */
   opB: null,
   /**
    * Allow additions
-   * @name Arith#use_add
+   * @name module:automation/arith/Arith.Arith#use_add
    * @type {boolean} */
   use_add: true,
   /**
    * Allow subtractions
-   * @name Arith#use_subst
+   * @name module:automation/arith/Arith.Arith#use_subst
    * @type {boolean} */
   use_subst: false,
   /**
    * Allow multiplications
-   * @name Arith#use_mult
+   * @name module:automation/arith/Arith.Arith#use_mult
    * @type {boolean} */
   use_mult: false,
   /**
    * Allow divides
-   * @name Arith#use_div
+   * @name module:automation/arith/Arith.Arith#use_div
    * @type {boolean} */
   use_div: false,
   /**
    * Allow expressions of type `A op B = X`
-   * @name Arith#exp_abx
+   * @name module:automation/arith/Arith.Arith#exp_abx
    * @type {boolean} */
   exp_abx: true,
   /**
    * Allow expressions of type `A op X = C`
-   * @name Arith#exp_axc
+   * @name module:automation/arith/Arith.Arith#exp_axc
    * @type {boolean} */
   exp_axc: false,
   /**
    * Allow expressions of type `X op B = C`
-   * @name Arith#exp_xbc
+   * @name module:automation/arith/Arith.Arith#exp_xbc
    * @type {boolean} */
   exp_xbc: false,
   /**
    * Allow expressions of type `A x B = C`
-   * @name Arith#exp_axbc
+   * @name module:automation/arith/Arith.Arith#exp_axbc
    * @type {boolean} */
   exp_axbc: false,
   /**
    * Allow inverse expressions, like `C = A op B`
-   * @name Arith#exp_caxb
+   * @name module:automation/arith/Arith.Arith#exp_caxb
    * @type {boolean} */
   exp_caxb: false,
   /**
    * Lower limit of the result
-   * @name Arith#resultLimInf
+   * @name module:automation/arith/Arith.Arith#resultLimInf
    * @type {number} */
   resultLimInf: 0,
   /**
    * Upper limit of the result
-   * @name Arith#resultLimSup
+   * @name module:automation/arith/Arith.Arith#resultLimSup
    * @type {number} */
   resultLimSup: 9999,
   /**
    * Allow carry operations
    * @see {@link https://en.wikipedia.org/wiki/Carry_(arithmetic)}
-   * @name Arith#resultCarry
+   * @name module:automation/arith/Arith.Arith#resultCarry
    * @type {boolean} */
   resultCarry: false,
   /**
    * Avoid operations with the same result
-   * @name Arith#resultNoDup
+   * @name module:automation/arith/Arith.Arith#resultNoDup
    * @type {boolean} */
   resultNoDup: false,
   /**
    * Type of sorting of results. Possible values are: 'NOSORT', 'SORTASC' and 'SORTDESC'
-   * @name Arith#resultOrder
+   * @name module:automation/arith/Arith.Arith#resultOrder
    * @type {string} */
   resultOrder: 'NOSORT',
   /**
    * Sorting of the operands in commutative operations. Possible values are: 'AGB' (_A greater than B_),
    * 'BGA' (_B greater tan A_) and 'INDIF' (default)
-   * @name Arith#opCond
+   * @name module:automation/arith/Arith.Arith#opCond
    * @type {string} */
   opCond: 'INDIF',
 });
@@ -800,42 +800,42 @@ Arith.Operator = class {
 Object.assign(Arith.Operator.prototype, {
   /**
    * Lower limit
-   * @name Arith.Operator#limInf
+   * @name module:automation/arith/Arith.Arith.Operator#limInf
    * @type {number} */
   limInf: 0,
   /**
    * Upper limit
-   * @name Arith.Operator#limSup
+   * @name module:automation/arith/Arith.Arith.Operator#limSup
    * @type {number} */
   limSup: 10,
   /**
    * Number of decimal places
-   * @name Arith.Operator#numDec
+   * @name module:automation/arith/Arith.Arith.Operator#numDec
    * @type {number} */
   numDec: 0,
   /**
    * Including 0
-   * @name Arith.Operator#wZero
+   * @name module:automation/arith/Arith.Arith.Operator#wZero
    * @type {boolean} */
   wZero: false,
   /**
    * Including 1
-   * @name Arith.Operator#wOne
+   * @name module:automation/arith/Arith.Arith.Operator#wOne
    * @type {boolean} */
   wOne: false,
   /**
    * Including -1
-   * @name Arith.Operator#wMinusOne
+   * @name module:automation/arith/Arith.Arith.Operator#wMinusOne
    * @type {boolean} */
   wMinusOne: false,
   /**
    * Take values from list. This member stores the list length.
-   * @name Arith.Operator#fromList
+   * @name module:automation/arith/Arith.Arith.Operator#fromList
    * @type {number} */
   fromList: 0,
   /**
    * The list of possible values
-   * @name Arith.Operator#lst
+   * @name module:automation/arith/Arith.Arith.Operator#lst
    * @type {number[]} */
   lst: [],
 });

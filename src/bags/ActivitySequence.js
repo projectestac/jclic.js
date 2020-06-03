@@ -299,18 +299,18 @@ export class ActivitySequence {
 Object.assign(ActivitySequence.prototype, {
   /**
    * The ordered list of {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} objects
-   * @name ActivitySequence#elements
+   * @name module:bags/ActivitySequence.ActivitySequence#elements
    * @type {ActivitySequenceElement[]} */
   elements: null,
   /**
    * The JClic project to which this ActivitySequence belongs.
-   * @name ActivitySequence#project
+   * @name module:bags/ActivitySequence.ActivitySequence#project
    * @type {JClicProject} */
   project: null,
   /**
    * Pointer to the {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} currently running (points inside
    * the `elements` array).
-   * @name ActivitySequence#currentAct
+   * @name module:bags/ActivitySequence.ActivitySequence#currentAct
    * @type {number} */
   currentAct: -1,
 });

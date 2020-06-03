@@ -203,22 +203,22 @@ export class Evaluator {
 Object.assign(Evaluator.prototype, {
   /**
    * The type of evaluator.
-   * @name Evaluator#className
+   * @name module:activities/text/Evaluator.Evaluator#className
    * @type {string} */
   className: null,
   /**
    * Whether this evaluator has been initialized or not.
-   * @name Evaluator#initiated
+   * @name module:activities/text/Evaluator.Evaluator#initiated
    * @type {boolean} */
   initiated: false,
   /**
    * The Intl.Collator object used to compare strings, when available.
-   * @name Evaluator#collator
+   * @name module:activities/text/Evaluator.Evaluator#collator
    * @type {external:Collator} */
   collator: null,
   /**
    * Whether uppercase and lowercase expressions must be considered equivalent or not.
-   * @name Evaluator#checkcase
+   * @name module:activities/text/Evaluator.Evaluator#checkcase
    * @type {boolean} */
   checkCase: false,
 });
@@ -322,22 +322,22 @@ export class BasicEvaluator extends Evaluator {
 Object.assign(BasicEvaluator.prototype, {
   /**
    * Whether accented letters must be considered equivalent or not.
-   * @name BasicEvaluator#checkAccents
+   * @name module:activities/text/Evaluator.BasicEvaluator#checkAccents
    * @type {boolean} */
   checkAccents: true,
   /**
    * Whether to check or not dots, commas and other punctuation marks when comparing texts.
-   * @name BasicEvaluator#checkPunctuation
+   * @name module:activities/text/Evaluator.BasicEvaluator#checkPunctuation
    * @type {boolean} */
   checkPunctuation: true,
   /**
    * Whether to check or not the extra spaces added between words.
-   * @name BasicEvaluator#checkDoubleSpaces
+   * @name module:activities/text/Evaluator.BasicEvaluator#checkDoubleSpaces
    * @type {boolean} */
   checkDoubleSpaces: false,
   /**
    * String containing all the characters considered as punctuation marks (currently ".,;:")
-   * @name BasicEvaluator#PUNCTUATION
+   * @name module:activities/text/Evaluator.BasicEvaluator#PUNCTUATION
    * @type {string} */
   PUNCTUATION: '.,;:',
 });
@@ -501,13 +501,13 @@ export class ComplexEvaluator extends BasicEvaluator {
 Object.assign(ComplexEvaluator.prototype, {
   /**
    * Whether to detail or not the location of errors found on the analyzed text.
-   * @name ComplexEvaluator#detail
+   * @name module:activities/text/Evaluator.ComplexEvaluator#detail
    * @type {boolean} */
   detail: true,
   /**
    * Number of times to repeat the evaluation process if an error is found, eliminating in each
    * cycle the extra characters that caused the error.
-   * @name ComplexEvaluator#checkSteps
+   * @name module:activities/text/Evaluator.ComplexEvaluator#checkSteps
    * @type {number} */
   checkSteps: 3,
   /**
@@ -520,7 +520,7 @@ Object.assign(ComplexEvaluator.prototype, {
    * greater, the "_zy dog_" expression at position 8 will be found and evaluated as valid, while
    * a value of 1 or less will not found any coincident expression beyond the error position, thus
    * evaluating all the remaining sentence as erroneous.
-   * @name ComplexEvaluator#checkScope
+   * @name module:activities/text/Evaluator.ComplexEvaluator#checkScope
    * @type {number} */
   checkScope: 6,
 });

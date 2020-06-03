@@ -416,77 +416,77 @@ export class ActiveBagContent {
 Object.assign(ActiveBagContent.prototype, {
   /**
    * The global identifier of this object: `primary`, `secondary`...
-   * @name ActiveBagContent#id
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#id
    * @type {string} */
   id: 'primary',
   /**
    * The name of the image file used as a common image of this bag
-   * @name ActiveBagContent#image
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#image
    * @type {string} */
   image: null,
   /**
    * The built image object
-   * @name ActiveBagContent#img
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#img
    * @type {external:HTMLImageElement} */
   img: null,
   /**
    * Name of the img source when is an animated GIF
-   * @name ActiveBagContent#animatedGifFile
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#animatedGifFile
    * @type {string} */
   animatedGifFile: null,
   /**
    * Number of columns when cells are distributed in a grid
-   * @name ActiveBagContent#ncw
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#ncw
    * @type {number} */
   ncw: 1,
   /**
    * Number of rows when cells are distributed in a grid
-   * @name ActiveBagContent#nch
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#nch
    * @type {number} */
   nch: 1,
   /**
    * Optimal cell width
-   * @name ActiveBagContent#w
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#w
    * @type {number} */
   w: settings.DEFAULT_GRID_ELEMENT_SIZE,
   /**
    * Optimal cell height
-   * @name ActiveBagContent#h
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#h
    * @type {number} */
   h: settings.DEFAULT_GRID_ELEMENT_SIZE,
   /**
    * Whether the cells must have a border or not
-   * @name ActiveBagContent#border
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#border
    * @type {boolean} */
   border: true,
   /**
    * The BoxBase used for this bag of cell contents
-   * @name ActiveBagContent#style
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#style
    * @type {BoxBase} */
   style: null,
   /**
    * The Shaper used to define the specific shape of each cell
-   * @name ActiveBagContent#shaper
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#shaper
    * @type {Shaper} */
   shaper: null,
   /**
    * An optional ActiveBoxContent object with background settings.
-   * @name ActiveBagContent#backgroundContent
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#backgroundContent
    * @type {ActiveBoxContent} */
   backgroundContent: null,
   /**
    * The main Array of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects
-   * @name ActiveBagContent#cells
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#cells
    * @type {ActiveBoxContent[]} */
   cells: null,
   /**
    * The default value to be assigned at the 'id' field of children
-   * @name ActiveBagContent#defaultIdValue
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#defaultIdValue
    * @type {number} */
   defaultIdValue: -1,
   /**
    * Used in special cases where all cells have empty content with only numeric identifiers
-   * @name ActiveBagContent#ids
+   * @name module:boxes/ActiveBagContent.ActiveBagContent#ids
    * @type {string} */
   ids: null,
 });

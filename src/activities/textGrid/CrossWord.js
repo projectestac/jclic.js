@@ -32,7 +32,7 @@
 /* global window */
 
 import $ from 'jquery';
-import Activity from '../../Activity';
+import { Activity, ActivityPanel } from '../../Activity';
 import BoxBase from '../../boxes/BoxBase';
 import BoxBag from '../../boxes/BoxBag';
 import TextGrid from '../../boxes/TextGrid';
@@ -53,7 +53,7 @@ import { settings } from '../../Utils';
  *
  * Two special buttons placed near this boxes allow to write on the grid horizontally or vertically.
  * The aim of the activity is to fill all the text grid with the correct words.
- * @extends module:Activity
+ * @extends module:Activity.Activity
  */
 export class CrossWord extends Activity {
   /**
@@ -86,32 +86,31 @@ export class CrossWord extends Activity {
 Object.assign(CrossWord.prototype, {
   /**
    * Whether all letters of the {@link module:boxes/TextGrid.TextGrid TextGrid} should be displayed in upper case
-   * @name CrossWord#upperCase
+   * @name module:activities/textGrid/CrossWord.CrossWord#upperCase
    * @type {boolean} */
   upperCase: true,
   /**
    * Whether the case is significant to evaluate answers
-   * @name CrossWord#checkCase
+   * @name module:activities/textGrid/CrossWord.CrossWord#checkCase
    * @type {boolean} */
   checkCase: true,
   /**
    * When `true`, the wildcard character of the {@link module:boxes/TextGrid.TextGrid TextGrid} will be transparent.
-   * @name CrossWord#wildTransparent
+   * @name module:activities/textGrid/CrossWord.CrossWord#wildTransparent
    * @type {boolean} */
   wildTransparent: false,
 });
 
 /**
  * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/textGrid/CrossWord.CrossWord CrossWord} activities are played.
- * @extends module:ActivityPanel
+ * @extends module:Activity.ActivityPanel
  */
-export class CrossWordPanel extends Activity.Panel {
+export class CrossWordPanel extends ActivityPanel {
   /**
    * CrossWordPanel constructor
    * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-   * Java interface.
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {
@@ -478,61 +477,61 @@ export class CrossWordPanel extends Activity.Panel {
 Object.assign(CrossWordPanel.prototype, {
   /**
    * The default width of the 'Horizontal' and 'Vertical' buttons (currently 40 pixels)
-   * @name CrossWordPanel#LABEL_WIDTH
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#LABEL_WIDTH
    * @type {number} */
   LABEL_WIDTH: 40,
   /**
    * The text grid of this ActivityPanel
-   * @name CrossWordPanel#grid
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#grid
    * @type {textGrid} */
   grid: null,
   /**
    * A BoxBag used to place the across and down clues, and the `toggle direction` button.
-   * @name CrossWordPanel#style
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#style
    * @type {BoxBag} */
   style: null,
   /**
    * The total number of letters of this cross word
-   * @name CrossWordPanel#numLetters
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#numLetters
    * @type {number} */
   numLetters: 0,
   /**
    * Flag indicating the type of automatic advance of the cursor.
    * Possible values are: `NO_ADVANCE` (default), 'ADVANCE_RIGHT' and 'ADVANCE_DOWN'.
    * TODO: Implement 'ADVANCE_LEFT' for LTR languages
-   * @name CrossWordPanel#advance
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#advance
    * @type {string} */
   advance: 'NO_ADVANCE',
   /**
    * The ActiveBox object used to display the 'across' clues
-   * @name CrossWordPanel#hClue
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#hClue
    * @type {ActiveBox} */
   hClue: null,
   /**
    * The ActiveBox object used to display the 'down' clues
-   * @name CrossWordPanel#vClue
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#vClue
    * @type {ActiveBox} */
   vClue: null,
   /**
    * Button used to set the advance mode to 'ADVANCE_RIGHT'
-   * @name CrossWordPanel#hClueBtn
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#hClueBtn
    * @type {ActiveBox} */
   hClueBtn: null,
   /**
    * Button used to set the advance mode to 'ADVANCE_BOTTOM'
-   * @name CrossWordPanel#vClueBtn
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#vClueBtn
    * @type {ActiveBox} */
   vClueBtn: null,
   /**
    * Mouse and touch events intercepted by this panel
    * @override
-   * @name CrossWordPanel#events
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#events
    * @type {string[]} */
   events: ['click', 'keydown', 'keypress'],
   /**
    * Graphic icon for the horizontal direction button, represented as a string containing
    * an SVG file codified in base64.
-   * @name CrossWordPanel#hIcon
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#hIcon
    * @type {string} */
   hIcon: 'data:image/svg+xml;base64,' +
     'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
@@ -545,7 +544,7 @@ Object.assign(CrossWordPanel.prototype, {
   /**
    * Graphic icon for the vertical direction button, represented as a string containing
    * an SVG file codified in base64.
-   * @name CrossWordPanel#vIcon
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#vIcon
    * @type {string} */
   vIcon: 'data:image/svg+xml;base64,' +
     'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGZpbGw9IiNGRkZGRkYi' +
@@ -557,12 +556,12 @@ Object.assign(CrossWordPanel.prototype, {
     'PC9zdmc+Cg==',
   /**
    * Sizes of the icons (currently 36 x 36 pixel)
-   * @name CrossWordPanel#icoSize
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#icoSize
    * @type {Object} */
   icoSize: { w: 36, h: 36 },
   /**
    * BoxBase with the style to be used by the direction buttons.
-   * @name CrossWordPanel#icoBB
+   * @name module:activities/textGrid/CrossWord.CrossWordPanel#icoBB
    * @type {BoxBase} */
   icoBB: new BoxBase().set('backColor', '#4285F4').set('inactiveColor', '#70A2F6').set('dontFill', true)
 });

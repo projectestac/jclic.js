@@ -39,7 +39,7 @@ import Reporter from './Reporter';
  * Connection parameters (`key`, `context`...) are passed through the `options` element of {@link module:JClicPlayer.JClicPlayer JClicPlayer} (acting as {@link module:JClicPlayer.JClicPlayer JClicPlayer}).
  * Set `storage=local` in `options` to store reports in [`window.localStorage`]{@link https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage}
  * instead of [`window.sessionStorage`]{@link https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage} (default).
- * @extends module:Reporter
+ * @extends module:reports/Reporter.Reporter
  */
 export class SessionStorageReporter extends Reporter {
   /**
@@ -105,24 +105,24 @@ export class SessionStorageReporter extends Reporter {
 Object.assign(SessionStorageReporter.prototype, {
   /**
    * Type of storage to be used. Defaults to `window.sessionStorage`
-   * @name SessionStorageReporter#storage
+   * @name module:report/SessionStorageReporter.SessionStorageReporter#storage
    * @type {external:Storage} */
   storage: window.sessionStorage,
   /**
    * Description of this reporting system
-   * @name SessionStorageReporter#descriptionKey
+   * @name module:report/SessionStorageReporter.SessionStorageReporter#descriptionKey
    * @override
    * @type {string} */
   descriptionKey: 'Reporting to session storage',
   /**
    * Additional info to display after the reporter's `description`
-   * @name SessionStorageReporter#descriptionDetail
+   * @name module:report/SessionStorageReporter.SessionStorageReporter#descriptionDetail
    * @override
    * @type {string} */
   descriptionDetail: '(browser session)',
   /**
    * Key used to save the report into sessionStorage
-   * @name SessionStorageReporter#key 
+   * @name module:report/SessionStorageReporter.SessionStorageReporter#key 
    * @type {string} */
   key: null,
 });

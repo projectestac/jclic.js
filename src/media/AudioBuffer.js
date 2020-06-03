@@ -166,45 +166,45 @@ export class AudioBuffer {
 Object.assign(AudioBuffer.prototype, {
   /**
    * AudioBuffer is enabled only in browsers with `navigator.MediaDevices.getuserMedia`
-   * @name AudioBuffer#enabled
+   * @name module:media/AudioBuffer.AudioBuffer#enabled
    * @type {boolean}
    */
   enabled: false,
   /**
    * Maximum length of recordings allowed to this AudioBuffer (in seconds)
-   * @name AudioBuffer#seconds
+   * @name module:media/AudioBuffer.AudioBuffer#seconds
    * @type {number}
    */
   seconds: 20,
   /**
    * The object used to record audio data and convert it to a valid stream for the {@link mediaPlayer}
-   * @name AudioBuffer#mediaRecorder
+   * @name module:media/AudioBuffer.AudioBuffer#mediaRecorder
    * @type {external:MediaRecorder}
    */
   mediaRecorder: null,
   /**
    * Array of data chunks collected during the recording
-   * @name AudioBuffer#chunks
+   * @name module:media/AudioBuffer.AudioBuffer#chunks
    * @type {Blob[]}
    */
   chunks: null,
   /**
    * The HTML audio element used to play the recorded sound
-   * @name AudioBuffer#mediaPlayer
+   * @name module:media/AudioBuffer.AudioBuffer#mediaPlayer
    * @type {external:HTMLAudioElement}
    */
   mediaPlayer: null,
   /**
    * The identifier of the timer launched to stop the recording when the maximum time is exceeded.
    * This member is `null` when no timeout function is associated to this AudioBuffer
-   * @name AudioBuffer#timeoutID
+   * @name module:media/AudioBuffer.AudioBuffer#timeoutID
    * @type {number}
    */
   timeoutID: null,
   /**
    * Instructs this AudioBuffer recorder to start playing the collected audio at the end of the
    * current `mediaRecorder` task.
-   * @name AudioBuffer#playWhenFinished
+   * @name module:media/AudioBuffer.AudioBuffer#playWhenFinished
    * @type {boolean}
    */
   playWhenFinished: false,

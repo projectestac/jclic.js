@@ -127,37 +127,37 @@ export class SequenceReg {
 Object.assign(SequenceReg.prototype, {
   /**
    * The `tag` member of the associated {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement}
-   * @name SequenceReg#name
+   * @name module:report/SequenceReg.SequenceReg#name
    * @type {string} */
   name: '',
   /**
    * Optional description given to the {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement}
-   * @name SequenceReg#description
+   * @name module:report/SequenceReg.SequenceReg#description
    * @type {string} */
   description: '',
   /**
    * Collection of all the {@link ActivityReg} elements done during this sequence.
-   * @name SequenceReg#activities
+   * @name module:report/SequenceReg.SequenceReg#activities
    * @type {ActivityReg[]} */
   activities: [],
   /**
    * Registry linked to the {@link module:Activity.Activity Activity} that is currently running
-   * @name SequenceReg#currentActivity
+   * @name module:report/SequenceReg.SequenceReg#currentActivity
    * @type {ActivityReg} */
   currentActivity: null,
   /**
    * Total time spent on the activities of this sequence
-   * @name SequenceReg#totalTime
+   * @name module:report/SequenceReg.SequenceReg#totalTime
    * @type {number} */
   totalTime: 0,
   /**
    * Flag indicating if the sequence is closed or already available for more activities
-   * @name SequenceReg#closed
+   * @name module:report/SequenceReg.SequenceReg#closed
    * @type {boolean} */
   closed: false,
   /**
    * Object with global information associated to this sequence
-   * @name SequenceReg#info
+   * @name module:report/SequenceReg.SequenceReg#info
    * @type {SequenceRegInfo} */
   info: null,
 });
@@ -220,52 +220,52 @@ export class SequenceRegInfo {
 Object.assign(SequenceRegInfo.prototype, {
   /**
    * The {@link SequenceReg} associated to this "info" object
-   * @name SequenceRegInfo#sqReg
+   * @name module:report/SequenceReg.SequenceRegInfo#sqReg
    * @type {SequenceReg} */
   sqReg: null,
   /**
    * When `false`, data must be recalculated
-   * @name SequenceRegInfo#valid
+   * @name module:report/SequenceReg.SequenceRegInfo#valid
    * @type {boolean} */
   valid: false,
   /**
    * Number of activities played in this sequence
-   * @name SequenceRegInfo#nActivities
+   * @name module:report/SequenceReg.SequenceRegInfo#nActivities
    * @type {number} */
   nActivities: 0,
   /**
    * Number of activities already closed
-   * @name SequenceRegInfo#nActClosed
+   * @name module:report/SequenceReg.SequenceRegInfo#nActClosed
    * @type {number} */
   nActClosed: 0,
   /**
    * Number of activities solved
-   * @name SequenceRegInfo#nActSolved
+   * @name module:report/SequenceReg.SequenceRegInfo#nActSolved
    * @type {number} */
   nActSolved: 0,
   /**
    * Number of activities with score > 0
-   * @name SequenceRegInfo#nActScore
+   * @name module:report/SequenceReg.SequenceRegInfo#nActScore
    * @type {number} */
   nActScore: 0,
   /**
    * Percentage of solved activities
-   * @name SequenceRegInfo#ratioSolved
+   * @name module:report/SequenceReg.SequenceRegInfo#ratioSolved
    * @type {number} */
   ratioSolved: 0,
   /**
    * Number of actions done by the user while in this sequence
-   * @name SequenceRegInfo#nActions
+   * @name module:report/SequenceReg.SequenceRegInfo#nActions
    * @type {number} */
   nActions: 0,
   /**
    * Sum of the scores of all the activities played
-   * @name SequenceRegInfo#tScore
+   * @name module:report/SequenceReg.SequenceRegInfo#tScore
    * @type {number} */
   tScore: 0,
   /**
    * Sum of the playing time reported by each activity (not always equals to the sequence's total time)
-   * @name SequenceRegInfo#tTime
+   * @name module:report/SequenceReg.SequenceRegInfo#tTime
    * @type {number} */
   tTime: 0,
 });

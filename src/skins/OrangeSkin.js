@@ -35,7 +35,7 @@ import DefaultSkin from './DefaultSkin';
 /**
  * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js
  * It differs from {@link module:skins/DefaultSkin.DefaultSkin DefaultSkin} only in some colors
- * @extends module:DefaultSkin
+ * @extends module:skins/DefaultSkin.DefaultSkin
  */
 export class OrangeSkin extends DefaultSkin {
   /**
@@ -64,13 +64,13 @@ export class OrangeSkin extends DefaultSkin {
 Object.assign(OrangeSkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-   * @name OrangeSkin#skinId
+   * @name module:skins/OrangeSkin.OrangeSkin#skinId
    * @override
    * @type {string} */
   skinId: 'JClicOrangeSkin',
   /**
    * Styles used in this skin
-   * @name OrangeSkin#skinCSS
+   * @name module:skins/OrangeSkin.OrangeSkin#skinCSS
    * @type {string} */
   skinCSS: '.ID {background-color:#FF8B19;}'
 });

@@ -180,42 +180,42 @@ export class SessionReg {
 Object.assign(SessionReg.prototype, {
   /**
    * Number of activities suitable to be reported in this session
-   * @name SessionReg#reportableActs
+   * @name module:report/SessionReg.SessionReg#reportableActs
    * @type {number} */
   reportableActs: 0,
   /**
    * Array with unique names of the activities being reported in this session
-   * @name SessionReg#actNames
+   * @name module:report/SessionReg.SessionReg#actNames
    * @type {string[]} */
   actNames: null,
   /**
    * List of sequences done in this session
-   * @name SessionReg#sequences
+   * @name module:report/SessionReg.SessionReg#sequences
    * @type {SequenceReg[]} */
   sequences: null,
   /**
    * The sequence currently active
-   * @name SessionReg#currentSequence
+   * @name module:report/SessionReg.SessionReg#currentSequence
    * @type {SequenceReg} */
   currentSequence: null,
   /**
    * Starting date and time of this session
-   * @name SessionReg#started
+   * @name module:report/SessionReg.SessionReg#started
    * @type {Date} */
   started: null,
   /**
    * Name of the {@link module:project/JClicProject.JClicProject JClicProject} associated to this session
-   * @name SessionReg#projectName
+   * @name module:report/SessionReg.SessionReg#projectName
    * @type {string} */
   projectName: '',
   /**
    * Current session info
-   * @name SessionReg#info
+   * @name module:report/SessionReg.SessionReg#info
    * @type {SessionRegInfo} */
   info: null,
   /**
    * Optional code to be used with this session
-   * @name SessionReg#code
+   * @name module:report/SessionReg.SessionReg#code
    * @type {string} */
   code: null,
 });
@@ -280,57 +280,57 @@ export class SessionRegInfo {
 Object.assign(SessionRegInfo.prototype, {
   /**
    * The SessionReg linked to this Info object
-   * @name SessionRegInfo#sReg
+   * @name module:report/SessionReg.SessionRegInfo#sReg
    * @type {SessionReg} */
   sReg: null,
   /**
    * When `false`, this session info needs to be recalculated
-   * @name SessionRegInfo#valid
+   * @name module:report/SessionReg.SessionRegInfo#valid
    * @type {boolean} */
   valid: false,
   /**
    * Number of sequences played
-   * @name SessionRegInfo#numSequences
+   * @name module:report/SessionReg.SessionRegInfo#numSequences
    * @type {number} */
   numSequences: 0,
   /**
    * Number of activities played
-   * @name SessionRegInfo#nActivities
+   * @name module:report/SessionReg.SessionRegInfo#nActivities
    * @type {number} */
   nActivities: 0,
   /**
    * Number of activities solved
-   * @name SessionRegInfo#nActSolved
+   * @name module:report/SessionReg.SessionRegInfo#nActSolved
    * @type {number} */
   nActSolved: 0,
   /**
    * Number of activities with score > 0
-   * @name SessionRegInfo#nActScore
+   * @name module:report/SessionReg.SessionRegInfo#nActScore
    * @type {number} */
   nActScore: 0,
   /**
    * Percentage of solved activities
-   * @name SessionRegInfo#ratioSolved
+   * @name module:report/SessionReg.SessionRegInfo#ratioSolved
    * @type {number} */
   ratioSolved: 0,
   /**
    * Percentage of reportable activities played
-   * @name SessionRegInfo#ratioPlayed
+   * @name module:report/SessionReg.SessionRegInfo#ratioPlayed
    * @type {number} */
   ratioPlayed: 0,
   /**
    * Number of actions done by the user while in this working session
-   * @name SessionRegInfo#nActions
+   * @name module:report/SessionReg.SessionRegInfo#nActions
    * @type {number} */
   nActions: 0,
   /**
    * Sum of the scores of all the activities played
-   * @name SessionRegInfo#tScore
+   * @name module:report/SessionReg.SessionRegInfo#tScore
    * @type {number} */
   tScore: 0,
   /**
    * Sum of the playing time reported by each activity (not always equals to the session's total time)
-   * @name SessionRegInfo#tTime
+   * @name module:report/SessionReg.SessionRegInfo#tTime
    * @type {number} */
   tTime: 0,
 });

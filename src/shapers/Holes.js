@@ -38,7 +38,7 @@ import Shaper from './Shaper';
  * This components have internal dimension values relative to the horizontal and vertical
  * sizes of the enclosure. Its values (always between 0 and 1) must be scaled to real sizes
  * of graphic objects.
- * @extends module:Shaper
+ * @extends module:shapers/Shaper.Shaper
  */
 export class Holes extends Shaper {
   /**

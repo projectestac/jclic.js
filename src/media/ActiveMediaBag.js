@@ -91,7 +91,7 @@ export class ActiveMediaBag {
   }
 
   /**
-   * Removes from the list of players the {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} related to the specified {@link MediaContent}.
+   * Removes from the list of players the {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} related to the specified {@link module:media/MediaContent.MediaContent}.
    * @param {MediaContent} mc - The media content to look for.
    */
   removeActiveMediaPlayer(mc) {
@@ -137,7 +137,7 @@ export class ActiveMediaBag {
 Object.assign(ActiveMediaBag.prototype, {
   /**
    * The collection of {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} objects stored in this media bag.
-   * @name ActiveMediaBag#players
+   * @name module:media/ActiveMediaBag.ActiveMediaBag#players
    * @type {ActiveMediaPlayer[]} */
   players: [],
 });

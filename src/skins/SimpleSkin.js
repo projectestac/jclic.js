@@ -36,7 +36,7 @@ import DefaultSkin from './DefaultSkin';
 /**
  * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js
  * It has the buttons at top, and don't has counters.
- * @extends module:DefaultSkin
+ * @extends module:skins/DefaultSkin.DefaultSkin
  */
 export class SimpleSkin extends DefaultSkin {
   /**
@@ -70,13 +70,13 @@ export class SimpleSkin extends DefaultSkin {
 Object.assign(SimpleSkin.prototype, {
   /**
    * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-   * @name SimpleSkin#skinId
+   * @name module:skins/SimpleSkin.SimpleSkin#skinId
    * @override
    * @type {string} */
   skinId: 'JClicSimpleSkin',
   /**
    * Styles used in this skin
-   * @name SimpleSkin#skinCSS
+   * @name module:skins/SimpleSkin.SimpleSkin#skinCSS
    * @type {string} */
   skinCSS: '\
 .ID {background-color:#888888;}\

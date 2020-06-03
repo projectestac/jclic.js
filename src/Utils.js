@@ -41,7 +41,7 @@ import WebFont from 'webfontloader';
 
 /**
  * Exports third-party NPM packages used by JClic, so they become available to other scripts through
- * the global variable `JClicObject` (defined in {@link JClic})
+ * the global variable `JClicObject` (defined in {@link module:JClic.JClic})
  * @example <caption>Example usage of JSZip through JClicObject</caption>
  * var WebFont = window.JClicObject.Utils.pkg.WebFont;
  * WebFont.load({google: {families: ['Roboto']}});
@@ -120,7 +120,7 @@ export function init(options) {
 
 /**
  * Establishes the current verbosity level of the logging system
- * @param {string} level - One of the valid strings in {@link LOG_LEVELS}
+ * @param {string} level - One of the valid strings in {@link module:Utils.LOG_LEVELS}
  */
 export function setLogLevel(level) {
   const log = LOG_LEVELS.indexOf(level);
@@ -851,7 +851,7 @@ export function toCssSize(exp, css, key, def) {
 
 /**
  * Gets a clip of the give image data, in a URL base64 encoded format
- * @param {object} img - The binary data of the realized image, usually obtained from a {@link MediaBagElement}
+ * @param {object} img - The binary data of the realized image, usually obtained from a {@link module:bads/MediaBagElement.MediaBagElement}
  * @param {module:AWT.Rectangle} rect - A rectangle containing the requested clip
  * @returns {string} - The URL with the image clip, as a PNG file encoded in base64
  */

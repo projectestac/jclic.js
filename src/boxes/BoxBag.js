@@ -37,7 +37,7 @@ import { settings } from '../Utils';
  * BoxBag is a class derived from {@link module:boxes/AbstractBox.AbstractBox AbstractBox} that contains a collection of "boxes"
  * (objects also derived from {@link module:boxes/AbstractBox.AbstractBox AbstractBox}). This class implements methods to add, remove
  * and retrieve boxes, and to manage some of its properties like visibility, status, location and size.
- * @extends module:AbstractBox
+ * @extends module:boxes/AbstractBox.AbstractBox
  */
 export class BoxBag extends AbstractBox {
   /**
@@ -351,7 +351,7 @@ export class BoxBag extends AbstractBox {
   }
 
   /**
-   * Overrides {@link AbstractBox#setBorder} iterating over all the cells stored in this box bag.
+   * Overrides {@link module:boxes/AbstractBox.AbstractBox#setBorder} iterating over all the cells stored in this box bag.
    * @override
    * @param {boolean} newVal - Whether to set or unset the border
    */
@@ -360,7 +360,7 @@ export class BoxBag extends AbstractBox {
   }
 
   /**
-   * Overrides {@link AbstractBox#setVisible} iterating over all the cells stored in this box bag.
+   * Overrides {@link module:boxes/AbstractBox.AbstractBox#setVisible} iterating over all the cells stored in this box bag.
    * @override
    * @param {boolean} newVal - Whether to set the cells visible or not
    */
@@ -369,7 +369,7 @@ export class BoxBag extends AbstractBox {
   }
 
   /**
-   * Overrides {@link AbstractBox#setAlternative} iterating over all the cells stored in this box bag.
+   * Overrides {@link module:boxes/AbstractBox.AbstractBox#setAlternative} iterating over all the cells stored in this box bag.
    * @override
    * @param {boolean} newVal - Whether to set or unset the cells in "alternative" mode
    */
@@ -379,7 +379,7 @@ export class BoxBag extends AbstractBox {
   }
 
   /**
-   * Overrides {@link AbstractBox#setBounds} adjusting the position and size of all cells
+   * Overrides {@link module:boxes/AbstractBox.AbstractBox#setBounds} adjusting the position and size of all cells
    * @override
    * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
    * upper-left corner of a new rectangle.
@@ -422,7 +422,7 @@ export class BoxBag extends AbstractBox {
 
   /**
    * Performs graphics operations for each cell.
-   * Overrides {@link AbstractBox#update}
+   * Overrides {@link module:boxes/AbstractBox.AbstractBox#update}
    * @override
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
    * box contents.
@@ -480,17 +480,17 @@ export class BoxBag extends AbstractBox {
 Object.assign(BoxBag.prototype, {
   /**
    * The array of cells
-   * @name BoxBag#cells
+   * @name module:boxes/BoxBag.BoxBag#cells
    * @type {AbstractBox[]} */
   cells: [],
   /**
    * Rectangle containing the preferred bounds of the BoxBag
-   * @name BoxBag#preferredBounds
+   * @name module:boxes/BoxBag.BoxBag#preferredBounds
    * @type {module:AWT.Rectangle} */
   preferredBounds: new Rectangle(),
   /**
    * An optional box used as a background by this BoxBag
-   * @name BoxBag#backgroundBox
+   * @name module:boxes/BoxBag.BoxBag#backgroundBox
    * @type {AbstractBox} */
   backgroundBox: null,
 });

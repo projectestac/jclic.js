@@ -38,7 +38,7 @@ import { Point } from '../AWT';
  * In addition to the members and methods of `BoxBag`, it implements specific methods to deal with
  * {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent} objects and with the other specific members of `ActiveBox` like its "ids"
  * (`idOrder`, `idLoc` and `idAss`).
- * @extends module:BoxBag
+ * @extends module:boxes/BoxBag.BoxBag
  */
 export class ActiveBoxBag extends BoxBag {
   /**
@@ -349,7 +349,7 @@ export class ActiveBoxBag extends BoxBag {
 Object.assign(ActiveBoxBag.prototype, {
   /**
    * `div` containing the accessible elements associated to this ActiveBoxBag
-   * @name ActiveBoxBag#$accessibleDiv
+   * @name module:boxes/ActiveBoxBag.ActiveBoxBag#$accessibleDiv
    * @type {external:jQuery} */
   $accessibleDiv: null,
 });

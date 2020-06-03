@@ -278,7 +278,7 @@ export class AbstractBox extends Rectangle {
   }
 
   /**
-   * Makes {@link AbstractBox#$hostedComponent} visible or invisible, based on the value of
+   * Makes {@link module:boxes/AbstractBox.AbstractBox#$hostedComponent} visible or invisible, based on the value of
    * the AbstractBox `visible` flag.
    */
   setHostedComponentVisible() {
@@ -419,7 +419,7 @@ export class AbstractBox extends Rectangle {
   /**
    * Draws the content of this box on an HTML `canvas` element. At this level, only background
    * and border are painted/stroked. Derived classes should implement specific drawing tasks in
-   * {@link AbstractBox#updateContent}.
+   * {@link module:boxes/AbstractBox.AbstractBox#updateContent}.
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
    * box content.
    * @param {module:AWT.Rectangle} [dirtyRegion=null] - The area that must be repainted. `null` refers to the whole box.
@@ -466,7 +466,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Here is where classes derived from {@link module:boxes/AbstractBox.AbstractBox AbstractBox} should implement the drawing of its
-   * content. Background and border are already painted in {@link AbstractBox#update}.
+   * content. Background and border are already painted in {@link module:boxes/AbstractBox.AbstractBox#update}.
    * @param {external:CanvasRenderingContext2D} _ctx - The canvas rendering context used to draw the
    * box content.
    * @param {module:AWT.Rectangle} [_dirtyRegion] - The area that must be repainted. `null` refers to the whole box.
@@ -519,7 +519,7 @@ export class AbstractBox extends Rectangle {
   }
 
   /**
-   * Sets the {@link AbstractBox#$hostedComponent $hostedComponent} member.
+   * Sets the {@link module:boxes/AbstractBox.AbstractBox#$hostedComponent $hostedComponent} member.
    * @param {external:jQuery} $hc - The jQuery DOM component hosted by this box.
    */
   setHostedComponent($hc) {
@@ -539,7 +539,7 @@ export class AbstractBox extends Rectangle {
   }
 
   /**
-   * Gets the current {@link AbstractBox#$hostedComponent|$hostedComponent} member
+   * Gets the current {@link module:boxes/AbstractBox.AbstractBox#$hostedComponent|$hostedComponent} member
    * @returns {external:jQuery}
    */
   getHostedComponent() {
@@ -547,7 +547,7 @@ export class AbstractBox extends Rectangle {
   }
 
   /**
-   * Sets {@link AbstractBox#$hostedComponent|$hostedComponent} colors and other css properties
+   * Sets {@link module:boxes/AbstractBox.AbstractBox#$hostedComponent|$hostedComponent} colors and other css properties
    * based on the current {@link module:boxes/BoxBase.BoxBase BoxBase} of this box.
    */
   setHostedComponentColors() {
@@ -562,7 +562,7 @@ export class AbstractBox extends Rectangle {
   }
 
   /**
-   * Sets the {@link AbstractBox#$hostedComponent|$hostedComponent} border, based on the current
+   * Sets the {@link module:boxes/AbstractBox.AbstractBox#$hostedComponent|$hostedComponent} border, based on the current
    * {@link module:boxes/BoxBase.BoxBase BoxBase} of this box.
    */
   setHostedComponentBorder() {
@@ -577,7 +577,7 @@ export class AbstractBox extends Rectangle {
   }
 
   /**
-   * Places and resizes {@link AbstractBox#$hostedComponent|$hostedComponent}, based on the size
+   * Places and resizes {@link module:boxes/AbstractBox.AbstractBox#$hostedComponent|$hostedComponent}, based on the size
    * and position of this box.
    * @param {boolean} _sizeChanged - `true` when this {@link module:boxes/ActiveBox.ActiveBox ActiveBox} has changed its size
    */
@@ -600,98 +600,98 @@ export class AbstractBox extends Rectangle {
 Object.assign(AbstractBox.prototype, {
   /**
    * The parent AbstractBox (can be `null`)
-   * @name AbstractBox#parent
+   * @name module:boxes/AbstractBox.AbstractBox#parent
    * @type {AbstractBox} */
   parent: null,
   /**
    * The Container to which this AbstractBox belongs
-   * @name AbstractBox#container
+   * @name module:boxes/AbstractBox.AbstractBox#container
    * @type {module:AWT.Container} */
   container: null,
   /**
    * The {@link module:boxes/BoxBase.BoxBase BoxBase} related to this AbstractBox. When `null`, the parent can provide an
    * alternative one.
-   * @name AbstractBox#boxBase
+   * @name module:boxes/AbstractBox.AbstractBox#boxBase
    * @type {BoxBase} */
   boxBase: null,
   /**
    * Whether this box has a border or not
-   * @name AbstractBox#border
+   * @name module:boxes/AbstractBox.AbstractBox#border
    * @type {boolean} */
   border: false,
   /**
    * The shape of this box (the box Rectangle or a special Shape, if set)
-   * @name AbstractBox#shape
+   * @name module:boxes/AbstractBox.AbstractBox#shape
    * @type {module:AWT.Shape} */
   shape: null,
   /**
    * Whether this box has a shape that is not a rectangle
-   * @name AbstractBox#specialShape
+   * @name module:boxes/AbstractBox.AbstractBox#specialShape
    * @type {boolean} */
   specialShape: false,
   /**
    * Whether this box is visible or not
-   * @name AbstractBox#visible
+   * @name module:boxes/AbstractBox.AbstractBox#visible
    * @type {boolean} */
   visible: true,
   /**
    * Used to temporary hide a box while other drawing operations are done
-   * @name AbstractBox#temporaryHidden
+   * @name module:boxes/AbstractBox.AbstractBox#temporaryHidden
    * @type {boolean} */
   temporaryHidden: false,
   /**
    * Cells with this attribute will be transparent but with painted border
-   * @name AbstractBox#tmpTrans
+   * @name module:boxes/AbstractBox.AbstractBox#tmpTrans
    * @type {boolean}*/
   tmpTrans: false,
   /**
    * Whether this box is active or inactive
-   * @name AbstractBox#inactive
+   * @name module:boxes/AbstractBox.AbstractBox#inactive
    * @type {boolean} */
   inactive: false,
   /**
    * Whether this box must be displayed with inverted or regular colors
-   * @name AbstractBox#inverted
+   * @name module:boxes/AbstractBox.AbstractBox#inverted
    * @type {boolean} */
   inverted: false,
   /**
    * Whether this box must be displayed with alternative or regular color and font settings
-   * @name AbstractBox#alternative
+   * @name module:boxes/AbstractBox.AbstractBox#alternative
    * @type {boolean} */
   alternative: false,
   /**
    * Whether this box is marked (selected) or not
-   * @name AbstractBox#marked
+   * @name module:boxes/AbstractBox.AbstractBox#marked
    * @type {boolean} */
   marked: false,
   /**
    * Whether this box holds the input focus
-   * @name AbstractBox#focused
+   * @name module:boxes/AbstractBox.AbstractBox#focused
    * @type {boolean} */
   focused: false,
   /**
    * Text to be used in accessible contexts
-   * @name AbstractBox#accessibleText
+   * @name module:boxes/AbstractBox.AbstractBox#accessibleText
    * @type {string} */
   accessibleText: '',
   /**
    * Describes the main role of this box on the activity. Useful in wai-aria descriptions.
-   * @name AbstractBox#role
+   * @name module:boxes/AbstractBox.AbstractBox#role
    * @type {string} */
   role: 'cell',
   /**
    * DOM element used to display this cell content in wai-aria contexts
-   * @name AbstractBox#$accessibleElement
+   * @name module:boxes/AbstractBox.AbstractBox#$accessibleElement
    * @type {external:jQuery} */
   $accessibleElement: null,
   /**
    * Flag indicating that $accessibleElement should be always active
-   * @name AbstractBox#accessibleAlwaysActive
+   * @name module:boxes/AbstractBox.AbstractBox#accessibleAlwaysActive
    * @type {boolean} */
   accessibleAlwaysActive: false,
   /**
    * An external JQuery DOM element hosted by this box
-   * @name AbstractBox#$hostedComponent
+   * @name module:boxes/AbstractBox.AbstractBox#$hostedComponent
    * @type {external:jQuery} */
   $hostedComponent: null,
 });

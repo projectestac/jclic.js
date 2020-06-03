@@ -66,7 +66,7 @@ export class Font {
    * substitution list, replacing the `family` attribute and loading the alternative font when needed.
    * @param {external:jQuery} $tree - The xml element to be processed
    * @param {Object} [options] - Optional param that can contain a `fontSubstitutions` attribute with
-   * a substition table to be added to {@link Font.SUBSTITUTIONS}
+   * a substition table to be added to {@link module:AWT.Font.SUBSTITUTIONS SUBSTITUTIONS}
    */
   static checkTree($tree, options) {
     let substitutions = Font.SUBSTITUTIONS;
@@ -257,7 +257,7 @@ export class Font {
    * vertical dimension of rendered text using a `span` element.
    * The code has been slighty adapted to deal with Font objects.
    *
-   * _Warning_: Do not call this method direcly. Use {@link Font#getHeight getHeight()} instead
+   * _Warning_: Do not call this method direcly. Use {@link module:AWT.Font#getHeight getHeight()} instead
    * 
    * @returns {Font}
    */
@@ -342,36 +342,35 @@ Font.GOOGLEFONTS = [
 Object.assign(Font.prototype, {
   /**
    * The `font-family` property
-   * @name Font#family
+   * @name module:AWT.Font#family
    * @type {string} */
   family: 'Arial',
   /**
    * The font size
-   * __Warning__: Do not change `size` directly. Use the {@link Font#setSize|setSize()}
-   * method instead.
-   * @name Font#size
+   * __Warning__: Do not change `size` directly. Use {@link module:AWT.Font#setSize setSize()} instead.
+   * @name module:AWT.Font#size
    * @type {number} */
   size: 17,
   /**
    * The font _bold_ value
-   * @name Font#bold
+   * @name module:AWT.Font#bold
    * @type {number} */
   bold: 0,
   /**
    * The font _italic_ value
-   * @name Font#italic
+   * @name module:AWT.Font#italic
    * @type {number} */
   italic: 0,
   /**
    * The font _variant_ value
-   * @name Font#variant
+   * @name module:AWT.Font#variant
    * @type {string}*/
   variant: '',
   /**
    * The font *_metrics* property contains the values for `ascent`, `descent` and `height`
    * attributes. Vertical font metrics are calculated in
-   * {@link Font#_calcHeight|calcHeight()} as needed.
-   * @name Font#_metrics
+   * {@link module:AWT.Font#_calcHeight|calcHeight()} as needed.
+   * @name module:AWT.Font#_metrics
    * @private
    * @type {{ascent: number, descent: number, height: number}} */
   _metrics: { ascent: -1, descent: -1, height: -1 },
@@ -473,22 +472,22 @@ export class Gradient {
 Object.assign(Gradient.prototype, {
   /**
    * Initial color
-   * @name Gradient#c1
+   * @name module:AWT.Gradient#c1
    * @type {string} */
   c1: 'white',
   /**
    * Final color
-   * @name Gradient#c2
+   * @name module:AWT.Gradient#c2
    * @type {string} */
   c2: 'black',
   /**
    * Tilt angle
-   * @name Gradient#angle
+   * @name module:AWT.Gradient#angle
    * @type {number} */
   angle: 0,
   /**
    * Number of repetitions of the gradient
-   * @name Gradient#cycles
+   * @name module:AWT.Gradient#cycles
    * @type {number} */
   cycles: 1,
 });
@@ -556,22 +555,22 @@ export class Stroke {
 Object.assign(Stroke.prototype, {
   /**
    * The line width
-   * @name Stroke#lineWidth
+   * @name module:AWT.Stroke#lineWidth
    * @type {number} */
   lineWidth: 1.0,
   /**
    * The line ending type (`butt`, `round` or `square`)
-   * @name Stroke#lineCap
+   * @name module:AWT.Stroke#lineCap
    * @type {string} */
   lineCap: 'butt',
   /**
    * The drawing used when two lines join (`round`, `bevel` or `miter`)
-   * @name Stroke#lineJoin
+   * @name module:AWT.Stroke#lineJoin
    * @type {string} */
   lineJoin: 'miter',
   /**
    * Ratio between the miter length and half `lineWidth`
-   * @name Stroke#miterLimit
+   * @name module:AWT.Stroke#miterLimit
    * @type {number} */
   miterLimit: 10.0,
 });
@@ -694,11 +693,11 @@ export class Point {
 
 Object.assign(Point.prototype, {
   /**
-   * @name Point#x
+   * @name module:AWT.Point#x
    * @type {number} */
   x: 0,
   /**
-   * @name Point#y
+   * @name module:AWT.Point#y
    * @type {number} */
   y: 0,
 });
@@ -802,11 +801,11 @@ export class Dimension {
 
 Object.assign(Dimension.prototype, {
   /**
-   * @name Dimension#width
+   * @name module:AWT.Dimension#width
    * @type {number} */
   width: 0,
   /**
-   * @name Dimension#height
+   * @name module:AWT.Dimension#height
    * @type {number} */
   height: 0,
 });
@@ -883,7 +882,7 @@ export class Shape {
   }
 
   /**
-   * Checks if the provided {@link Point} is inside this shape.
+   * Checks if the provided {@link module:AWT.Point} is inside this shape.
    * @param {Point} _p - The point to check
    * @returns {boolean}
    */
@@ -1007,23 +1006,23 @@ export class Shape {
 Object.assign(Shape.prototype, {
   /**
    * Shape type id
-   * @name Shape#type
+   * @name module:AWT.Shape#type
    * @type {string} */
   type: 'shape',
   /**
    * The current position of the shape
-   * @name Shape#pos
+   * @name module:AWT.Shape#pos
    * @type {Point} */
   pos: new Point(),
   /**
    * The type of shape (Rectangle, ellipse, path...)
-   * @name Shape#type
+   * @name module:AWT.Shape#type
    * @type {string} */
   type: 'shape',
 });
 
 /**
- * The rectangular {@link Shape} accepts five different sets of parameters:
+ * The rectangular {@link module:AWT.Shape} accepts five different sets of parameters:
  * @example
  * // Calling Rectangle() with different sets of parameters
  * // A Point and a Dimension:
@@ -1143,7 +1142,7 @@ export class Rectangle extends Shape {
   }
 
   /**
-   * Gets the {@link Point} corresponding to the lower-right vertex of the Rectangle.
+   * Gets the {@link module:AWT.Point} corresponding to the lower-right vertex of the Rectangle.
    * @returns {Point}
    */
   getOppositeVertex() {
@@ -1152,7 +1151,7 @@ export class Rectangle extends Shape {
 
   /**
    * Adds the boundaries of another shape to the current one
-   * @param {Shape} shape - The {@link Shape} to be added
+   * @param {Shape} shape - The {@link module:AWT.Shape} to be added
    * @returns {Rectangle}
    */
   add(shape) {
@@ -1253,12 +1252,12 @@ export class Rectangle extends Shape {
 Object.assign(Rectangle.prototype, {
   /**
    * Shape type id
-   * @name Rectangle#type
+   * @name module:AWT.Rectangle#type
    * @type {string} */
   type: 'rect',
   /**
    * The {@link module:AWT.Dimension Dimension} of the Rectangle
-   * @name Rectangle#dim
+   * @name module:AWT.Rectangle#dim
    * @type {Dimension} */
   dim: new Dimension(),
 });
@@ -1360,20 +1359,20 @@ export class Ellipse extends Rectangle {
 Object.assign(Ellipse.prototype, {
   /**
    * Shape type id
-   * @name Ellipse#type
+   * @name module:AWT.Ellipse#type
    * @type {string} */
   type: 'ellipse',
 });
 
 /**
- * A `Path` is a {@link Shape} formed by a serie of strokes, represented by
- * {@link PathStroke} objects
+ * A `Path` is a {@link module:AWT.Shape} formed by a serie of strokes, represented by
+ * {@link module:AWT.PathStroke} objects
  * @extends module:AWT.Shape
  */
 export class Path extends Shape {
   /**
    * Path constructor
-   * @param {PathStroke[]} strokes - The array of {@link PathStroke} objects defining this Path.
+   * @param {PathStroke[]} strokes - The array of {@link module:AWT.PathStroke} objects defining this Path.
    */
   constructor(strokes) {
     super();
@@ -1401,7 +1400,7 @@ export class Path extends Shape {
   }
 
   /**
-   * Adds a {@link PathStroke} to `strokes`
+   * Adds a {@link module:AWT.PathStroke} to `strokes`
    * @param {PathStroke} stroke
    */
   addStroke(stroke) {
@@ -1563,35 +1562,35 @@ export class Path extends Shape {
 Object.assign(Path.prototype, {
   /**
    * Shape type id
-   * @name Path#type
+   * @name module:AWT.Path#type
    * @type {string} */
   type: 'path',
   /**
    * The strokes forming this Path.
-   * @name Path#strokes
+   * @name module:AWT.Path#strokes
    * @type {PathStroke[]} */
   strokes: [],
   /**
    * The {@link module:AWT.Rectangle Rectangle} enclosing this Path (when drawing, this Rectangle don't include border width!)
-   * @name Path#enclosing
+   * @name module:AWT.Path#enclosing
    * @type {Rectangle} */
   enclosing: new Rectangle(),
   /**
    * Set of vertexs of a polygon close to the real path of this shape
-   * @name Path#enclosingPoints
+   * @name module:AWT.Path#enclosingPoints
    * @type {Point[]} */
   enclosingPoints: [],
 });
 
 /**
- * PathStroke is the basic component of {@link Path} objects
+ * PathStroke is the basic component of {@link module:AWT.Path} objects
  */
 export class PathStroke {
   /**
    * PathStroke constructor
    * @param {string} type - The type of stroke. Possible values are: `M` (move to), `L` (line to),
    * `Q` (quadratic to), `B` (bezier to) and `X` (close path).
-   * @param {Point[]} points - The array of {@link Point} objects used in this Stroke.
+   * @param {Point[]} points - The array of {@link module:AWT.Point} objects used in this Stroke.
    */
   constructor(type, points) {
     this.type = type;
@@ -1687,7 +1686,7 @@ export class PathStroke {
 
   /**
    * Multiplies each point coordinates by the `x` and `y` (or `w` and `h`) values of the
-   * passed {@link Point} or {@link module:AWT.Dimension Dimension}.
+   * passed {@link module:AWT.Point} or {@link module:AWT.Dimension Dimension}.
    * @param {Point|Dimension} delta
    */
   multBy(delta) {
@@ -1766,12 +1765,12 @@ Object.assign(PathStroke.prototype, {
   /**
    * The Stroke type. Possible values are: `M` (move to), `L` (line to), `Q` (quadratic to),
    * `B` (bezier to) and `X` (close path).
-   * @name PathStroke#type
+   * @name module:AWT.PathStroke#type
    * @type {string} */
   type: 'X',
   /**
    * The array of points used by this stroke. Can be `null`.
-   * @name PathStroke#points
+   * @name module:AWT.PathStroke#points
    * @type {Point[]} */
   points: null,
 });
@@ -1844,22 +1843,22 @@ export class Action {
 Object.assign(Action.prototype, {
   /**
    * The action's name
-   * @name Action#name
+   * @name module:AWT.Action#name
    * @type {string} */
   name: null,
   /**
    * An optional description
-   * @name Action#description
+   * @name module:AWT.Action#description
    * @type {string} */
   description: null,
   /**
    * Action status. `true` means enabled, `false` disabled
-   * @name Action#enabled
+   * @name module:AWT.Action#enabled
    * @type {boolean} */
   enabled: false,
   /**
    * Array of callback functions to be triggered when the `enabled` flag changes
-   * @name Action#_statusListeners
+   * @name module:AWT.Action#_statusListeners
    * @private
    * @type {function[]} */
   _statusListeners: null,
@@ -1952,22 +1951,22 @@ export class Timer {
 Object.assign(Timer.prototype, {
   /**
    * The timer interval, in milliseconds
-   * @name Timer#interval
+   * @name module:AWT.Timer#interval
    * @type {number} */
   interval: 0,
   /**
    * The ticks counter
-   * @name Timer#ticks
+   * @name module:AWT.Timer#ticks
    * @type {number} */
   ticks: 0,
   /**
    * The object returned by `window.setInterval`
-   * @name Timer#timer
+   * @name module:AWT.Timer#timer
    * @type {object} */
   timer: null,
   /**
    * When `true`, the timer should repeat until `stop` is called
-   * @name Timer#repeats
+   * @name module:AWT.Timer#repeats
    * @type {boolean} */
   repeats: true,
 });
@@ -2016,7 +2015,7 @@ export class Container extends Rectangle {
 
   /**
    * Containers should implement this method to update its graphic contents. It should
-   * be called from {@link Container~update}
+   * be called from {@link module:AWT.Container#update}
    * @param {Shape} _dirtyRegion - Specifies the area to be updated. When `null`, it's the whole
    * Container.
    */
@@ -2029,7 +2028,7 @@ export class Container extends Rectangle {
 Object.assign(Container.prototype, {
   /**
    * The currently "invalidated" area
-   * @name Container#invalidatedRect
+   * @name module:AWT.Container#invalidatedRect
    * @type {Rectangle} */
   invalidatedRect: null,
 });

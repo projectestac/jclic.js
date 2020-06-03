@@ -63,33 +63,33 @@ export class TextActivityBase extends Activity {
 Object.assign(TextActivityBase.prototype, {
   /**
    * This is the object used to evaluate user's answers in text activities.
-   * @name TextActivityBase#ev
+   * @name module:activities/text/TextActivityBase.TextActivityBase#ev
    * @type {Evaluator} */
   ev: null,
   /**
    * This is the label used by text activities for the `check` button, when present.
-   * @name TextActivityBase#checkButtonText
+   * @name module:activities/text/TextActivityBase.TextActivityBase#checkButtonText
    * @type {string} */
   checkButtonText: null,
   /**
    * When `true`, a text will be shown before the beginning of the activity.
-   * @name TextActivityBase#prevScreen
+   * @name module:activities/text/TextActivityBase.TextActivityBase#prevScreen
    * @type {boolean} */
   prevScreen: false,
   /**
    * Optional text to be shown before the beginning of the activity. When `null`, this text is
    * the main document.
-   * @name TextActivityBase#prevScreenText
+   * @name module:activities/text/TextActivityBase.TextActivityBase#prevScreenText
    * @type {string} */
   prevScreenText: null,
   /**
    * The style of the optional text to be shown before the beginning of the activity.
-   * @name TextActivityBase#prevScreenStyle
+   * @name module:activities/text/TextActivityBase.TextActivityBase#prevScreenStyle
    * @type {BoxBase} */
   prevScreenStyle: null,
   /**
    * Maximum amount of time for showing the previous document.
-   * @name TextActivityBase#prevScreenMaxTime
+   * @name module:activities/text/TextActivityBase.TextActivityBase#prevScreenMaxTime
    * @type {number} */
   prevScreenMaxTime: -1,
 });
@@ -469,38 +469,38 @@ export class TextActivityBasePanel extends ActivityPanel {
 Object.assign(TextActivityBasePanel.prototype, {
   /**
    * Array of jQuery DOM elements (usually of type 'span') containing the targets of this activity
-   * @name TextActivityBasePanel#targets
+   * @name module:activities/text/TextActivityBase.TextActivityBasePanel#targets
    * @type {external:jQuery[]} */
   targets: null,
   /**
    * Flag indicating if targets must be visually marked at the beginning of the activity.
    * Should be `true` except for {@link module:activities/text/IdentifyText.IdentifyText IdentifyText} activities.
-   * @name TextActivityBasePanel#targetsMarked
+   * @name module:activities/text/TextActivityBase.TextActivityBasePanel#targetsMarked
    * @type {boolean} */
   targetsMarked: true,
   /**
    * The button used to check the activity, only when `Activity.checkButtonText` is not null
-   * @name TextActivityBasePanel#$checkButton
+   * @name module:activities/text/TextActivityBase.TextActivityBasePanel#$checkButton
    * @type {external:jQuery}*/
   $checkButton: null,
   /**
    * System timer used to close the previous document when act.maxTime is reached.
-   * @name TextActivityBasePanel#prevScreenTimer
+   * @name module:activities/text/TextActivityBase.TextActivityBasePanel#prevScreenTimer
    * @type {number} */
   prevScreenTimer: null,
   /**
    * The popup currently been displayed
-   * @name TextActivityBasePanel#$currentPopup
+   * @name module:activities/text/TextActivityBase.TextActivityBasePanel#$currentPopup
    * @type {external:jQuery} */
   $currentPopup: null,
   /**
    * A timer controlling the time the current popup will be displayed
-   * @name TextActivityBasePanel#currentPopupTimer
+   * @name module:activities/text/TextActivityBase.TextActivityBasePanel#currentPopupTimer
    * @type {number} */
   currentPopupTimer: 0,
   /**
    * A timer prepared to display a popup after a while
-   * @name TextActivityBasePanel#popupWaitTimer
+   * @name module:activities/text/TextActivityBase.TextActivityBasePanel#popupWaitTimer
    * @type {number} */
   popupWaitTimer: 0,
 });

@@ -37,7 +37,7 @@ import { log, nSlash } from '../Utils';
 /**
  * This class stores and manages all the media components (images, sounds, animations, video,
  * MIDI files, etc.) needed to run the activities of a {@link module:project/JClicProject.JClicProject JClicProject}. The main member of
- * the class is `elements`. This is where {@link MediaBagElement} objects are stored.
+ * the class is `elements`. This is where {@link module:bads/MediaBagElement.MediaBagElement} objects are stored.
  */
 export class MediaBag {
   /**
@@ -86,7 +86,7 @@ export class MediaBag {
   }
 
   /**
-   * Finds a {@link MediaBagElement} by its name, creating a new one if not found and requested.
+   * Finds a {@link module:bads/MediaBagElement.MediaBagElement} by its name, creating a new one if not found and requested.
    * @param {string} name - The name of the element
    * @param {boolean} [create] - When `true`, a new MediaBagElement will be created if not found,
    * using 'name' as its file name.
@@ -101,9 +101,9 @@ export class MediaBag {
   }
 
   /**
-   * Gets a {@link MediaBagElement} by its file name.
+   * Gets a {@link module:bads/MediaBagElement.MediaBagElement} by its file name.
    * @param {string} file - The requested file name
-   * @param {boolean} [create] - When `true`, a new {@link MediaBagElement} will be created if not
+   * @param {boolean} [create] - When `true`, a new {@link module:bads/MediaBagElement.MediaBagElement} will be created if not
    * found.
    * @returns {MediaBagElement}
    */
@@ -200,13 +200,13 @@ export class MediaBag {
 
 Object.assign(MediaBag.prototype, {
   /**
-   * The collection of {@link MediaBagElement} objects
-   * @name MediaBag#elements
+   * The collection of {@link module:bads/MediaBagElement.MediaBagElement} objects
+   * @name module:bags/MediaBag.MediaBag#elements
    * @type {object} */
   elements: null,
   /**
    * The JClic project to which this MediaBag belongs
-   * @name MediaBag#project
+   * @name module:bags/MediaBag.MediaBag#project
    * @type {JClicProject} */
   project: null,
 });

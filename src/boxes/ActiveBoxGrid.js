@@ -39,7 +39,7 @@ import { settings, roundTo } from '../Utils';
  * {@link module:shapers/Shaper.Shaper Shaper} used to build all its {@link module:boxes/ActiveBox.ActiveBox ActiveBox}components. It also maintains information
  * about the number of "rows" and "columns", useful to compute valid (integer) values when
  * resizing or moving its components.
- * @extends module:ActiveBoxBag
+ * @extends module:boxes/ActiveBoxBag.ActiveBoxBag
  */
 export class ActiveBoxGrid extends ActiveBoxBag {
   /**
@@ -166,12 +166,12 @@ export class ActiveBoxGrid extends ActiveBoxBag {
 Object.assign(ActiveBoxGrid.prototype, {
   /**
    * Number of columns of this box grid
-   * @name ActiveBoxGrid#nCols
+   * @name module:boxes/ActiveBoxGrid.ActiveBoxGrid#nCols
    * @type {number} */
   nCols: 1,
   /**
    * Number of rows of this box grid
-   * @name ActiveBoxGrid#nRows
+   * @name module:boxes/ActiveBoxGrid.ActiveBoxGrid#nRows
    * @type {number} */
   nRows: 1,
 });

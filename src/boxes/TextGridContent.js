@@ -166,48 +166,48 @@ export class TextGridContent {
 Object.assign(TextGridContent.prototype, {
   /**
    * Grid columns
-   * @name TextGridContent#ncw
+   * @name module:boxes/TextGridContent.TextGridContent#ncw
    * @type {number} */
   ncw: 1,
   /**
    * Grid rows
-   * @name TextGridContent#nch
+   * @name module:boxes/TextGridContent.TextGridContent#nch
    * @type {number} */
   nch: 1,
   /**
    * Width of cells
-   * @name TextGridContent#w
+   * @name module:boxes/TextGridContent.TextGridContent#w
    * @type {number} */
   w: 20,
   /**
    * Height of cells
-   * @name TextGridContent#h
+   * @name module:boxes/TextGridContent.TextGridContent#h
    * @type {number} */
   h: 20,
   /**
    * Whether the cells must be surrounded by a border or not
-   * @name TextGridContent#border
+   * @name module:boxes/TextGridContent.TextGridContent#border
    * @type {boolean} */
   border: false,
   /**
    * The {@link module:boxes/BoxBase.BoxBase BoxBase} object with visual settings of the text grid
-   * @name TextGridContent#style
+   * @name module:boxes/TextGridContent.TextGridContent#style
    * @type {BoxBase} */
   style: null,
   /**
    * An array of String objects textning the chars of cells. One string per row, one character of
    * this string per cell.
-   * @name TextGridContent#text
+   * @name module:boxes/TextGridContent.TextGridContent#text
    * @type {string[]} */
   text: null,
   /**
    * The letter used as wildcardtext
-   * @name TextGridContent#wild
+   * @name module:boxes/TextGridContent.TextGridContent#wild
    * @type {string} */
   wild: '*',
   /**
    * A String with the chars to take as source when randomly filling empty cells
-   * @name TextGridContent#randomChars
+   * @name module:boxes/TextGridContent.TextGridContent#randomChars
    * @type {string} */
   randomChars: settings.RANDOM_CHARS,
 });

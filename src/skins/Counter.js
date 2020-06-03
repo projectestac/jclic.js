@@ -111,39 +111,39 @@ export class Counter {
 Object.assign(Counter.prototype, {
   /**
    * Type of counter (usually: `score`, `actions` or `time`)
-   * @name Counter#id
+   * @name module:skins/Counter.Counter#id
    * @type {string} */
   id: '',
   /**
    * The HTML element where this counter shows its value
-   * @name Counter#$div
+   * @name module:skins/Counter.Counter#$div
    * @type {external:jQuery}
    */
   $div: null,
   /**
    * Current value of this counter
-   * @name Counter#value
+   * @name module:skins/Counter.Counter#value
    * @type {number} */
   value: 0,
   /**
    * When set, the counter displays a countdown from this value to zero
-   * @name Counter#countDown
+   * @name module:skins/Counter.Counter#countDown
    * @type {number} */
   countDown: 0,
   /**
    * Flag indicating if this counter is currently enabled
-   * @name Counter#enabled
+   * @name module:skins/Counter.Counter#enabled
    * @type {boolean} */
   enabled: true,
   /**
    * Maximum value to be displayed by this counter
-   * @name Counter#MAX_DISPLAY_VALUE
+   * @name module:skins/Counter.Counter#MAX_DISPLAY_VALUE
    * @type {Number} */
   MAX_DISPLAY_VALUE: 999,
   /**
    * An optional Counter used as a subtractor to display the current value.
    * Useful to display `errors` subtracting `score` from `actions`.
-   * @name Counter#displayDiffFrom
+   * @name module:skins/Counter.Counter#displayDiffFrom
    * @type {Counter}
    */
   displayDiffFrom: null,
