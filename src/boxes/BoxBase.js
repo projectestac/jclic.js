@@ -36,12 +36,12 @@ import { Stroke, Gradient, Font, Dimension } from '../AWT';
 const defaultValues = settings.BoxBase;
 
 /**
- * This class contains all the main visual attributes needed to draw {@link AbstractBox} objects:
+ * This class contains all the main visual attributes needed to draw {@link module:boxes/AbstractBox.AbstractBox AbstractBox} objects:
  * background and foreground colors, gradients, colors for special states (inactive, alternative,
  * disabled...), margins, fonts, border strokes, etc.
  *
- * Objects derived from {@link AbstractBox} can have inheritance: boxes that act as "containers"
- * of other boxes (like {@link BoxBag}). Most of the attributes of `BoxBase` can be `null`,
+ * Objects derived from {@link module:boxes/AbstractBox.AbstractBox AbstractBox} can have inheritance: boxes that act as "containers"
+ * of other boxes (like {@link module:boxes/BoxBag.BoxBag BoxBag}). Most of the attributes of `BoxBase` can be `null`,
  * meaning that the value of the ancestor -or the default value if the box has no ancestors- must
  * be used.
  */

@@ -33,8 +33,8 @@ import ActiveMediaPlayer from './ActiveMediaPlayer';
 import { settings } from '../Utils';
 
 /**
- * This class stores a collection of realized {@link ActiveMediaPlayer} objects, related to a
- * {@link JClicProject} or {@link Activity}.
+ * This class stores a collection of realized {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} objects, related to a
+ * {@link module:project/JclicProject.JClicProject JClicProject} or {@link module:Activity.Activity Activity}.
  */
 export class ActiveMediaBag {
   /**
@@ -45,12 +45,12 @@ export class ActiveMediaBag {
   }
 
   /**
-   * Creates a new {@link ActiveMediaPlayer} linked to this media bag
+   * Creates a new {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} linked to this media bag
    * @param {MediaContent} mc - The content used by the new player
    * @param {MediaBag} mb - The project's MediaBag
    * @param {PlayStation} ps - An object implementing the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) interface,
-   * usually a {@link JClicPlayer}.
+   * usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}.
    * @returns {ActiveMediaPlayer}
    */
   createActiveMediaPlayer(mc, mb, ps) {
@@ -76,13 +76,13 @@ export class ActiveMediaBag {
   }
 
   /**
-   * Looks for an already existing {@link ActiveMediaPlayer} equivalent to the requested.
+   * Looks for an already existing {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} equivalent to the requested.
    * When not found, a new one is created and and returned.
    * @param {MediaContent} mc - The content used by the new player
    * @param {MediaBag} mb - The project's MediaBag
    * @param {PlayStation} ps - An object implementing the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation} interface,
-   * usually a {@link JClicPlayer}.
+   * usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}.
    * @returns {ActiveMediaPlayer}
    */
   getActiveMediaPlayer(mc, mb, ps) {
@@ -91,7 +91,7 @@ export class ActiveMediaBag {
   }
 
   /**
-   * Removes from the list of players the {@link ActiveMediaPlayer} related to the specified {@link MediaContent}.
+   * Removes from the list of players the {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} related to the specified {@link MediaContent}.
    * @param {MediaContent} mc - The media content to look for.
    */
   removeActiveMediaPlayer(mc) {
@@ -136,7 +136,7 @@ export class ActiveMediaBag {
 
 Object.assign(ActiveMediaBag.prototype, {
   /**
-   * The collection of {@link ActiveMediaPlayer} objects stored in this media bag.
+   * The collection of {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} objects stored in this media bag.
    * @name ActiveMediaBag#players
    * @type {ActiveMediaPlayer[]} */
   players: [],

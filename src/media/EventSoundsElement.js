@@ -38,7 +38,7 @@ import MediaContent from './MediaContent';
 /**
  * The EventSoundsElement object contains the description of a specific sound to be played when
  * one of the JClic events are fired.
- * For a full list of the JClic events see: {@link EventSounds}
+ * For a full list of the JClic events see: {@link module:media/EventSounds.EventSounds EventSounds}
  */
 export class EventSoundsElement {
   /**

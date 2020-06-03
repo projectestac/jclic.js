@@ -37,8 +37,8 @@ import { nSlash } from '../Utils';
 
 /**
  * This class stores the definition of the sequence to follow to show the activities of a
- * {@link JClicProject}. The sequence are formed by an ordered list of objects of type
- * {@link ActivitySequenceElement}.
+ * {@link module:project/JclicProject.JClicProject JClicProject}. The sequence are formed by an ordered list of objects of type
+ * {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement}.
  * It stores also a transient pointer to the current sequence element.
  */
 export class ActivitySequence {
@@ -252,7 +252,7 @@ export class ActivitySequence {
   }
 
   /**
-   * Gets the first {@link ActivitySequenceElement} in the `elements` list pointing to the
+   * Gets the first {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} in the `elements` list pointing to the
    * specified activity name.
    * The search is always case-insensitive.
    * @param {string} activity - The name of the activity to search for.
@@ -298,7 +298,7 @@ export class ActivitySequence {
 
 Object.assign(ActivitySequence.prototype, {
   /**
-   * The ordered list of {@link ActivitySequenceElement} objects
+   * The ordered list of {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} objects
    * @name ActivitySequence#elements
    * @type {ActivitySequenceElement[]} */
   elements: null,
@@ -308,7 +308,7 @@ Object.assign(ActivitySequence.prototype, {
    * @type {JClicProject} */
   project: null,
   /**
-   * Pointer to the {@link ActivitySequenceElement} currently running (points inside
+   * Pointer to the {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} currently running (points inside
    * the `elements` array).
    * @name ActivitySequence#currentAct
    * @type {number} */

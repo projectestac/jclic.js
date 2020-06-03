@@ -48,13 +48,13 @@ export class IdentifyText extends TextActivityBase {
 }
 
 /**
- * The {@link TextActivityBasePanel} where {@link IdentifyText} activities are played.
+ * The {@link TextActivityBasePanel} where {@link module:activities/text/IdentifyText.IdentifyText IdentifyText} activities are played.
  * @extends module:TextActivityBasePanel
  */
 class IdentifyTextPanel extends TextActivityBase.Panel {
   /**
    * IdentifyTextPanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.

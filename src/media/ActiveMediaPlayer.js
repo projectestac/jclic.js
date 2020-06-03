@@ -45,7 +45,7 @@ export class ActiveMediaPlayer {
    * @param {MediaBag} mb - The project's MediaBag
    * @param {PlayStation} ps - An object implementing the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation} interface,
-   * usually a {@link JClicPlayer}.
+   * usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}.
    */
   constructor(mc, mb, ps) {
     this.mc = mc;
@@ -251,7 +251,7 @@ Object.assign(ActiveMediaPlayer.prototype, {
    * @type {JClicPlayer} */
   ps: null,
   /**
-   * MediaPlayers should be linked to {@link ActiveBox} objects.
+   * MediaPlayers should be linked to {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects.
    * @name ActiveMediaPlayer#bx
    * @type {ActiveBox} */
   bx: null,
@@ -289,7 +289,7 @@ if (ActiveMediaPlayer.REC_ENABLED) {
 
 /**
  * Audio buffers used for recording and playing voice are stored in a static array because
- * they are common to all instances of {@link ActiveMediaPlayer}
+ * they are common to all instances of {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer}
  * Only initialized when {@link REC_ENABLED} is `true`.
  * @type {AudioBuffer[]} */
 ActiveMediaPlayer.AUDIO_BUFFERS = ActiveMediaPlayer.REC_ENABLED ? [] : null;

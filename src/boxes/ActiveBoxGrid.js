@@ -35,8 +35,8 @@ import { Rectangle, Dimension, Point } from '../AWT';
 import { settings, roundTo } from '../Utils';
 
 /**
- * This class extends {@link ActiveBoxBag} with constructors that take an argument of type
- * {@link Shaper} used to build all its {@link ActiveBox}components. It also maintains information
+ * This class extends {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} with constructors that take an argument of type
+ * {@link module:shapers/Shaper.Shaper Shaper} used to build all its {@link module:boxes/ActiveBox.ActiveBox ActiveBox}components. It also maintains information
  * about the number of "rows" and "columns", useful to compute valid (integer) values when
  * resizing or moving its components.
  * @extends module:ActiveBoxBag
@@ -91,7 +91,7 @@ export class ActiveBoxGrid extends ActiveBoxBag {
 
   /**
    * This factory constructor creates a new empty grid with the number of cells indicated by the
-   * {@link ActiveBagContent} `abc`, not filling the cells with any content.
+   * {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent} `abc`, not filling the cells with any content.
    * @param {?AbstractBox} parent - The AbstractBox to which this box grid belongs
    * @param {?AWT.Container} container - The container where this box grid is placed.
    * @param {number} px - `X` coordinate of the upper left corner of this box grid
@@ -137,7 +137,7 @@ export class ActiveBoxGrid extends ActiveBoxBag {
   }
 
   /**
-   * Returns the logical coordinates of the provided {@link ActiveBox}.
+   * Returns the logical coordinates of the provided {@link module:boxes/ActiveBox.ActiveBox ActiveBox}.
    * The units of the result are not pixels, but ordinal numbers (relative positions) of columns
    * and rows in the grid.
    * @param {ActiveBox} bx - The box to process
@@ -148,7 +148,7 @@ export class ActiveBoxGrid extends ActiveBoxBag {
   }
 
   /**
-   * Calculates the logical distance between two {@link ActiveBox} objects.
+   * Calculates the logical distance between two {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects.
    * Resulting units are not pixels, but ordinal numbers (relative positions) of columns and rows
    * in the grid.
    * @param {ActiveBox} src - First box

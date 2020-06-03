@@ -35,9 +35,9 @@ import ActiveBoxContent from '../../boxes/ActiveBoxContent';
 import MediaContent from '../../media/MediaContent';
 
 /**
- * This is the HTML DOM element used in text activities like {@link FillInBlanks},
- * {@link IdentifyText}, {@link OrderText} and {@link Complete}. It contains the main document of
- * the activity, usually with some elements marked as "targets". In {@link FillInBlanks}, this
+ * This is the HTML DOM element used in text activities like {@link module:activities/text/FillInBlanks.FillInBlanks FillInBlanks},
+ * {@link module:activities/text/IdentifyText.IdentifyText IdentifyText}, {@link module:activities/text/OrderText.OrderText OrderText} and {@link module:activities/text/Complete.Complete Complete}. It contains the main document of
+ * the activity, usually with some elements marked as "targets". In {@link module:activities/text/FillInBlanks.FillInBlanks FillInBlanks}, this
  * targets are encapsulated in {@link TextTarget} objects.
  */
 export class TextActivityDocument {
@@ -300,7 +300,7 @@ Object.assign(TextActivityDocument.prototype, {
    * @type {number} */
   tabSpc: 12,
   /**
-   * Index of the last {@link ActiveBox} activated.
+   * Index of the last {@link module:boxes/ActiveBox.ActiveBox ActiveBox} activated.
    * @name TextActivityDocument#lastBoxId
    * @type {number} */
   lastBoxId: 0,
@@ -493,7 +493,7 @@ export class TextTarget {
 
 Object.assign(TextTarget.prototype, {
   /**
-   * The {@link TextActivityDocument} to which this target belongs
+   * The {@link module:activities/text/TextActivityDocument.TextActivityDocument TextActivityDocument} to which this target belongs
    * @name TextTarget#doc
    * @type {TextActivityDocument} */
   doc: null,
@@ -554,7 +554,7 @@ Object.assign(TextTarget.prototype, {
    * @type {string} */
   popupKey: 'F1',
   /**
-   * An optional {@link ActiveBoxContent} with information about this TextTarget
+   * An optional {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} with information about this TextTarget
    * @name TextTarget#popupContent
    * @type {ActiveBoxContent} */
   popupContent: null,
@@ -609,7 +609,7 @@ Object.assign(TextTarget.prototype, {
   num: 0,
   /**
    * Current ordinal position of this target in the document
-   * (used in {@link OrderText} activities)
+   * (used in {@link module:activities/text/OrderText.OrderText OrderText} activities)
    * @name TextTarget#pos
    * @type {number} */
   pos: 0,

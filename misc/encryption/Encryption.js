@@ -37,8 +37,8 @@ define([], function() {
    * passwords in plain text in data and configuration files. Do not use it as a
    * secure cryptographic system!
    *
-   * Based on {@link https://github.com/projectestac/jclic/blob/master/src/utilities/edu/xtec/util/Encryption.java|Encryption}
-   * utilities, created by Albert Llastarri for {@link https://github.com/projectestac/jclic|JClic}.
+   * Based on {@link https://github.com/projectestac/jclic/blob/master/src/utilities/edu/xtec/util/Encryption.java Encryption}
+   * utilities, created by Albert Llastarri for {@link https://github.com/projectestac/jclic JClic}.
    *
    * This is the full version, with methods for encrypt and decrypt. JClic.js needs only decrypt
    * methods, defined in EncryptMin.js

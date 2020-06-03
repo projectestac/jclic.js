@@ -80,7 +80,7 @@ export function checkPreferredLanguage(availableLanguages, defaultLanguage = 'en
 };
 
 /**
- * Initializes i18next, assigning the translation function to ps
+ * Initializes i18next, assigning the translation function to {@link module:Utils.getMsg Utils.getMsg}
  * @param {type} ps
  */
 export function i18n(ps) {

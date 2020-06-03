@@ -43,7 +43,7 @@ import TextActivityBase from './TextActivityBase';
 export class FillInBlanks extends TextActivityBase {
   /**
    * FillInBlanks constructor
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -74,13 +74,13 @@ Object.assign(FillInBlanks.prototype, {
 });
 
 /**
- * The {@link TextActivityBasePanel} where {@link FillInBlanks} activities are played.
+ * The {@link TextActivityBasePanel} where {@link module:activities/text/FillInBlanks.FillInBlanks FillInBlanks} activities are played.
  * @extends module:TextActivityBasePanel
  */
 export class FillInBlanksPanel extends TextActivityBase.Panel {
   /**
    * FillInBlanksPanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
@@ -273,7 +273,7 @@ export class FillInBlanksPanel extends TextActivityBase.Panel {
   }
 
   /**
-   * Called by {@link JClicPlayer} when this activity panel is fully visible, just after the
+   * Called by {@link module:JClicPlayer.JClicPlayer JClicPlayer} when this activity panel is fully visible, just after the
    * initialization process.
    * @override
    */

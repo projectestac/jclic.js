@@ -38,11 +38,11 @@ import { Rectangle, Point } from '../../AWT';
 import Rectangular from '../../shapers/Rectangular';
 
 /**
- * This class of {@link Activity} shows a panel with duplicate {@link ActiveBox} objects initially
+ * This class of {@link module:Activity.Activity Activity} shows a panel with duplicate {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects initially
  * hidden and shuffled. To complete the activity, all object pairs must be found. Only two objects
  * are revealed in every move, so the user must remember the content of each cell.
  *
- * The cell pairs can have identical content, defined in the `primary` {@link ActiveBagContent} of
+ * The cell pairs can have identical content, defined in the `primary` {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent} of
  * the activity, or two different contents. In this case, the `secondary` bag elements will have
  * content related to each `primary` element.
  * @extends module:Activity
@@ -50,7 +50,7 @@ import Rectangular from '../../shapers/Rectangular';
 export class MemoryGame extends Activity {
   /**
    * MemoryGame constructor
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -85,13 +85,13 @@ export class MemoryGame extends Activity {
 }
 
 /**
- * The {@link ActivityPanel} where {@link MemoryGame} activities are played.
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/memory/MemoryGame.MemoryGame MemoryGame} activities are played.
  * @extends module:ActivityPanel
  */
 export class MemoryGamePanel extends Activity.Panel {
   /**
    * MemoryGamePanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
@@ -398,7 +398,7 @@ export class MemoryGamePanel extends Activity.Panel {
 
 Object.assign(MemoryGamePanel.prototype, {
   /**
-   * The {@link ActiveBoxBag} containing the information to be displayed.
+   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed.
    * @name MemoryGamePanel#bg
    * @type {ActiveBoxBag} */
   bg: null,

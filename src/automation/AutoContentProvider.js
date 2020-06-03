@@ -108,9 +108,9 @@ export class AutoContentProvider {
    * Builds an {@link AutoContentProvider.ActiveBagContentKit} and generates the automatized content.
    * @param {number} nRows - Number of rows to be processed
    * @param {number} nCols - Number of columns to be processed
-   * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
+   * @param {ActiveBagContent[]} content - Array with one or more containers of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent}
    * objects to be filled with new content.
-   * @param {bolean} useIds - When `true`, the `id` field of {@link ActiveBoxContent} objects is significant
+   * @param {bolean} useIds - When `true`, the `id` field of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects is significant
    * @returns {boolean} - `true` if the process was OK. `false` otherwise.
    */
   generateContent(nRows, nCols, content, useIds) {
@@ -153,9 +153,9 @@ Object.assign(AutoContentProvider.prototype, {
  * Utility class used to encapsulate multiple sets of box contents
  * @param {number} nRows - Number of rows to be processed
  * @param {number} nCols - Number of columns to be processed
- * @param {ActiveBagContent[]} content - Array with one or more containers of {@link ActiveBoxContent}
+ * @param {ActiveBagContent[]} content - Array with one or more containers of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent}
  * objects to be filled with new content.
- * @param {bolean} useIds - `true` when the `id` field of {@link ActiveBoxContent} objects is significant.
+ * @param {bolean} useIds - `true` when the `id` field of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects is significant.
  */
 AutoContentProvider.ActiveBagContentKit = class {
   constructor(nRows, nCols, content, useIds) {
@@ -169,7 +169,7 @@ AutoContentProvider.ActiveBagContentKit = class {
 /**
  * Contains the current list of classes derived from AutoContentProvider.
  * This object should be updated by real automation classes at declaration time.
- * Currently, only two types of "AutoContentProvider" are defined: {@link Arith} and TagReplace.
+ * Currently, only two types of "AutoContentProvider" are defined: {@link module:automation/arith/Arith.Arith Arith} and TagReplace.
  * @type {object} */
 AutoContentProvider.CLASSES = {
   // TODO: Implement TagReplace

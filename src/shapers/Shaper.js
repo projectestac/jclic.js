@@ -35,7 +35,7 @@ import { Shape, Rectangle, Ellipse, PathStroke, Path } from '../AWT';
 
 /**
  * The function of this class and its subclasses is to draw a set of "shapes" that will be used to
- * place {@link ActiveBox} objects at a specific position, and to determine its dimension and
+ * place {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects at a specific position, and to determine its dimension and
  * appearance.
  */
 export class Shaper {
@@ -321,41 +321,41 @@ Object.assign(Shaper.prototype, {
   //
   // Fields used only in JigSaw shapers
   /**
-   * In {@link JigSaw}, ratio between the base width of the tooth and the total length of the side.
+   * In {@link module:shapers/JigSaw.JigSaw JigSaw}, ratio between the base width of the tooth and the total length of the side.
    * @name Shaper#baseWidthFactor
    * @type {number} */
   baseWidthFactor: 1.0 / 3,
   /**
-   * In {@link JigSaw}, ratio between the tooth height and the total length of the side.
+   * In {@link module:shapers/JigSaw.JigSaw JigSaw}, ratio between the tooth height and the total length of the side.
    * @name Shaper#toothHeightFactor
    * @type {number} */
   toothHeightFactor: 1.0 / 6,
   /**
-   * In {@link JigSaw}, whether the tooths take random directions or not
+   * In {@link module:shapers/JigSaw.JigSaw JigSaw}, whether the tooths take random directions or not
    * @name Shaper#randomLines
    * @type {boolean} */
   randomLines: false,
   //
   // Fields used only in the `Holes` shaper
   /**
-   * In {@link Holes}, scale to be applied to horizontal positions and lengths to achieve the real
+   * In {@link module:shapers/Holes.Holes Holes}, scale to be applied to horizontal positions and lengths to achieve the real
    * value of the shape placed on a real surface.
    * @name Shaper#scaleX
    * @type {number} */
   scaleX: 1.0,
   /**
-   * In {@link Holes}, scale to be applied to vertical positions and lengths to achieve the real
+   * In {@link module:shapers/Holes.Holes Holes}, scale to be applied to vertical positions and lengths to achieve the real
    * value of the shape placed on a real surface.
    * @name Shaper#scaleY
    * @type {number} */
   scaleY: 1.0,
   /**
-   * In {@link Holes}, the enclosing area where all shapes are placed.
+   * In {@link module:shapers/Holes.Holes Holes}, the enclosing area where all shapes are placed.
    * @name Shaper#enclosing
    * @type {module:AWT.Shape} */
   enclosing: null,
   /**
-   * In {@link Holes}, when `true`, the enclosing area will be drawn
+   * In {@link module:shapers/Holes.Holes Holes}, when `true`, the enclosing area will be drawn
    * @name Shaper#showEnclosure
    * @type {boolean} */
   showEnclosure: false,

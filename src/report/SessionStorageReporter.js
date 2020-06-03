@@ -34,9 +34,9 @@
 import Reporter from './Reporter';
 
 /**
- * This JClic {@link Reporter} writes persistent data to the browser local session storage. It uses some of
+ * This JClic {@link module:Reporter.Reporter Reporter} writes persistent data to the browser local session storage. It uses some of
  * the {@link https://github.com/projectestac/jclic/wiki/JClic-Reports-developers-guide JClic Reports API}.
- * Connection parameters (`key`, `context`...) are passed through the `options` element of {@link JClicPlayer} (acting as {@link PlayStation}).
+ * Connection parameters (`key`, `context`...) are passed through the `options` element of {@link module:JClicPlayer.JClicPlayer JClicPlayer} (acting as {@link module:JClicPlayer.JClicPlayer JClicPlayer}).
  * Set `storage=local` in `options` to store reports in [`window.localStorage`]{@link https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage}
  * instead of [`window.sessionStorage`]{@link https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage} (default).
  * @extends module:Reporter
@@ -44,7 +44,7 @@ import Reporter from './Reporter';
 export class SessionStorageReporter extends Reporter {
   /**
    * SessionStorageReporter constructor
-   * @param {PlayStation} ps - The {@link PlayStation} used to retrieve settings and localized messages
+   * @param {PlayStation} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve settings and localized messages
    */
   constructor(ps) {
     super(ps);

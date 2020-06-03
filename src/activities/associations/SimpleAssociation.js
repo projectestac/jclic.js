@@ -38,10 +38,10 @@ import { Rectangle, Point } from '../../AWT';
 import { getMsg } from '../../Utils';
 
 /**
- * This class of {@link Activity} uses two panels (`primary` and `secondary`) formed by
- * {@link ActiveBox} objects filled with data stored in {@link ActiveBagContent} repositories.
+ * This class of {@link module:Activity.Activity Activity} uses two panels (`primary` and `secondary`) formed by
+ * {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects filled with data stored in {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent} repositories.
  *
- * Both panels have the same number of elements, associated one-to-one. A third {@link ActiveBagContent}
+ * Both panels have the same number of elements, associated one-to-one. A third {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent}
  * can be used as alternative content, that will be revealed in the `primary` panel as the pairings
  * of its cells are solved.
  * @extends module:Activity
@@ -101,13 +101,13 @@ Object.assign(SimpleAssociation.prototype, {
 });
 
 /**
- * The {@link ActivityPanel} where {@link SimpleAssociation} activities are played.
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/associations/SimpleAssociation.SimpleAssociation SimpleAssociation} activities are played.
  * @extends module:ActivityPanel
  */
 export class SimpleAssociationPanel extends Activity.Panel {
   /**
    * SimpleAssociationPanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
@@ -489,12 +489,12 @@ export class SimpleAssociationPanel extends Activity.Panel {
 
 Object.assign(SimpleAssociationPanel.prototype, {
   /**
-   * The {@link ActiveBoxBag} object containing the information to be displayed in the `primary` panel
+   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
    * @name SimpleAssociationPanel#bgA
    * @type {ActiveBoxBag} */
   bgA: null,
   /**
-   * The {@link ActiveBoxBag} object containing the information to be displayed in the `secondary` panel
+   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `secondary` panel
    * @name SimpleAssociationPanel#bgB
    * @type {ActiveBoxBag} */
   bgB: null,

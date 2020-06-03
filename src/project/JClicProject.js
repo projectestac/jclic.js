@@ -44,7 +44,7 @@ import { Font } from '../AWT';
  *  This encapsulation is achieved by three auxiliary objects:
  *  - {@link ProjectSettings}: stores metadata like full title, description, authors, languages,
  *  educational topics...
- *  - {@link ActivitySequence}: defines the order in which the activities must be shown.
+ *  - {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence}: defines the order in which the activities must be shown.
  *  - {@link MediaBag}: contains the list of all media files used by the activities
  */
 export class JClicProject {
@@ -173,7 +173,7 @@ export class JClicProject {
   }
 
   /**
-   * Finds activities by name and builds the corresponding {@link Activity} object.
+   * Finds activities by name and builds the corresponding {@link module:Activity.Activity Activity} object.
    * @param {string} name - The name of the requested activity
    * @returns {Activity}
    */
@@ -183,8 +183,8 @@ export class JClicProject {
 
   /**
    *
-   * Builds the {@link Skin}, {@link EventSounds} and {@link MediaBag} fonts associated to this project.
-   * @param {PlayStation} ps - The PlayStation (usually a {@link JClicPlayer}) linked to this project.
+   * Builds the {@link module:skins/Skin.Skin Skin}, {@link module:media/EventSounds.EventSounds EventSounds} and {@link MediaBag} fonts associated to this project.
+   * @param {PlayStation} ps - The PlayStation (usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) linked to this project.
    */
   realize(ps) {
     // Build skin

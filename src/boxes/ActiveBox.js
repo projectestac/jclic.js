@@ -43,12 +43,12 @@ import { settings, log, getMsg } from '../Utils';
  * messages and other objects are active boxes.
  *
  * The specific content, size and location of `ActiveBox` objects is determined by its
- * {@link ActiveBoxContent} member. Most ActiveBoxes have only one content, but some of them can
+ * {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} member. Most ActiveBoxes have only one content, but some of them can
  * have a secondary or "alternative" content stored in the `altContent` field. This content is
  * used only when the `alternative` flag of the ActiveBox is `on`.
  *
  * Active boxes can host video and interactive media content (specified in the `mediaContent`
- * member of the {@link ActiveBoxContent} through its `hostedMediaPlayer` member.
+ * member of the {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} through its `hostedMediaPlayer` member.
  * @extends module:AbstractBox
  */
 export class ActiveBox extends AbstractBox {
@@ -254,9 +254,9 @@ export class ActiveBox extends AbstractBox {
   }
 
   /**
-   * Sets the {@link ActiveBoxContent} of this ActiveBox
+   * Sets the {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} of this ActiveBox
    * @param {(ActiveBoxContent|ActiveBagContent)} abc - Object containing the content to set.
-   * @param {number} i - When `abc` is an {@link ActiveBagContent}, this field indicates an
+   * @param {number} i - When `abc` is an {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent}, this field indicates an
    * index in the content array.
    */
   setContent(abc, i) {
@@ -318,10 +318,10 @@ export class ActiveBox extends AbstractBox {
   }
 
   /**
-   * Sets the {@link ActiveBoxContent} that will act as an alternative content (`altContent` field)
+   * Sets the {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} that will act as an alternative content (`altContent` field)
    * of this ActiveBox,
    * @param {(ActiveBoxContent|ActiveBagContent)} abc - Object containing the content to set.
-   * @param {number} i - When `abc` is an {@link ActiveBagContent}, this field indicates an
+   * @param {number} i - When `abc` is an {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent}, this field indicates an
    * index in the content array.
    */
   setAltContent(abc, i) {
@@ -598,7 +598,7 @@ export class ActiveBox extends AbstractBox {
 
 
   /**
-   * Gets the `description` field of the current {@link ActiveBoxContent}
+   * Gets the `description` field of the current {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent}
    * @returns {string}
    */
   getDescription() {
@@ -615,7 +615,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    * Plays the action or media associated with this ActiveBox
-   * @param {PlayStation} ps - Usually, a {@link JClicPlayer}
+   * @param {PlayStation} ps - Usually, a {@link module:JClicPlayer.JClicPlayer JClicPlayer}
    * @param {function[]} delayedActions - If set, store the the action in this array for future execution
    */
   playMedia(ps, delayedActions = null) {
@@ -666,7 +666,7 @@ export class ActiveBox extends AbstractBox {
    * Places and resizes {@link AbstractBox#$hostedComponent $hostedComponent}, based on the size
    * and position of this box.
    * @override
-   * @param {boolean} sizeChanged - `true` when this {@link ActiveBox} has changed its size
+   * @param {boolean} sizeChanged - `true` when this {@link module:boxes/ActiveBox.ActiveBox ActiveBox} has changed its size
    */
   setHostedComponentBounds(sizeChanged) {
     if (this.$hostedComponent) {

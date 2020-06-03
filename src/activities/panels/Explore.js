@@ -37,7 +37,7 @@ import { Rectangle, Point } from '../../AWT';
 import Rectangular from '../../shapers/Rectangular';
 
 /**
- * This class of {@link Activity} shows a panel with {@link ActiveBox} objects. Users can click
+ * This class of {@link module:Activity.Activity Activity} shows a panel with {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects. Users can click
  * on this objects to obtain associated information. This associated information, displayed in
  * a second panel, can be text graphics, sound, video... or a combination of them.
  * @extends module:Activity
@@ -45,7 +45,7 @@ import Rectangular from '../../shapers/Rectangular';
 export class Explore extends Activity {
   /**
    * Explore constructor
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -81,9 +81,9 @@ export class Explore extends Activity {
 }
 
 /**
- * The {@link ActivityPanel} where {@link Explore} activities are played.
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/panels/Explore.Explore Explore} activities are played.
  * @extends module:ActivityPanel
- * @param {Activity} act - The {@link Activity} to which this Panel belongs
+ * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
  * @param {JClicPlayer} ps - Any object implementing the methods defined in the
  * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
  * Java interface.
@@ -312,12 +312,12 @@ export class ExplorePanel extends Activity.Panel {
 
 Object.assign(ExplorePanel.prototype, {
   /**
-   * The {@link ActiveBoxBag} object containing the information to be displayed in the `primary` panel
+   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
    * @name ExplorePanel#bgA
    * @type {ActiveBoxBag} */
   bgA: null,
   /**
-   * The {@link ActiveBoxBag} object containing the information associated to `primary` elements.
+   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information associated to `primary` elements.
    * Only one of this elements will be showed for each click done in the `primary` panel.
    * @name ExplorePanel#bgB
    * @type {ActiveBoxBag} */

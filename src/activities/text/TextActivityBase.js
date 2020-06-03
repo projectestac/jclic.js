@@ -38,7 +38,7 @@ import BoxBase from '../../boxes/BoxBase';
 
 /**
  * This class and its visual component {@link TextActivityBasePanel} are the base for text
- * activities like {@link FillInBlanks}, {@link IdentifyText}, {@link OrderText} and {@link Complete}.
+ * activities like {@link module:activities/text/FillInBlanks.FillInBlanks FillInBlanks}, {@link module:activities/text/IdentifyText.IdentifyText IdentifyText}, {@link module:activities/text/OrderText.OrderText OrderText} and {@link module:activities/text/Complete.Complete Complete}.
  * @extends module:Activity
  */
 export class TextActivityBase extends Activity {
@@ -95,14 +95,14 @@ Object.assign(TextActivityBase.prototype, {
 });
 
 /**
- * The {@link ActivityPanel} where text activities (based on {@link TextActivityBase}) are played.
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where text activities (based on {@link module:activities/text/TextActivityBase.TextActivityBase TextActivityBase}) are played.
  * @extends module:ActivityPanel
  */
 //export class TextActivityBasePanel extends Activity.Panel {
 export class TextActivityBasePanel extends ActivityPanel {
   /**
    * TextActivityBasePanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
@@ -114,7 +114,7 @@ export class TextActivityBasePanel extends ActivityPanel {
   }
 
   /**
-   * Fills a jQuery DOM element (usually a 'div') with the specified {@link TextActivityDocument}.
+   * Fills a jQuery DOM element (usually a 'div') with the specified {@link module:activities/text/TextActivityDocument.TextActivityDocument TextActivityDocument}.
    * @param {external:jQuery} $div - The jQuery DOM object to be filled with the document.
    * @param {TextActivityDocument} doc - The document
    */
@@ -475,7 +475,7 @@ Object.assign(TextActivityBasePanel.prototype, {
   targets: null,
   /**
    * Flag indicating if targets must be visually marked at the beginning of the activity.
-   * Should be `true` except for {@link IdentifyText} activities.
+   * Should be `true` except for {@link module:activities/text/IdentifyText.IdentifyText IdentifyText} activities.
    * @name TextActivityBasePanel#targetsMarked
    * @type {boolean} */
   targetsMarked: true,

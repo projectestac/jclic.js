@@ -32,7 +32,7 @@
 import SequenceReg from './SequenceReg';
 
 /**
- * This class encapsulates data of a user's working session, usually associated to a single {@link JClicProject}
+ * This class encapsulates data of a user's working session, usually associated to a single {@link module:project/JclicProject.JClicProject JClicProject}
  * It's main component is `sequences`, an array of {@link SequenceReg} objects.
  */
 export class SessionReg {
@@ -109,7 +109,7 @@ export class SessionReg {
 
   /**
    * This method should be invoked when a new sequence starts
-   * @param {ActivitySequenceElement} ase - The {@link ActivitySequenceElement} referenced by this sequence.
+   * @param {ActivitySequenceElement} ase - The {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} referenced by this sequence.
    */
   newSequence(ase) {
     this.endSequence();
@@ -120,7 +120,7 @@ export class SessionReg {
 
   /**
    * This method should be invoked when the user starts a new activity
-   * @param {Activity} act - The {@link Activity} that has just started
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} that has just started
    */
   newActivity(act) {
     if (this.currentSequence) {
@@ -204,7 +204,7 @@ Object.assign(SessionReg.prototype, {
    * @type {Date} */
   started: null,
   /**
-   * Name of the {@link JClicProject} associated to this session
+   * Name of the {@link module:project/JclicProject.JClicProject JClicProject} associated to this session
    * @name SessionReg#projectName
    * @type {string} */
   projectName: '',

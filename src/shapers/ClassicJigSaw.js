@@ -34,7 +34,7 @@ import JigSaw from './JigSaw';
 import { PathStroke } from '../AWT';
 
 /**
- * This is the classic {@link JigSaw} {@link Shaper} used in puzzle toys, where teeth and slots
+ * This is the classic {@link module:shapers/JigSaw.JigSaw JigSaw} {@link module:shapers/Shaper.Shaper Shaper} used in puzzle toys, where teeth and slots
  * are shaped by Bézier curves.
  * @extends module:JigSaw
  */

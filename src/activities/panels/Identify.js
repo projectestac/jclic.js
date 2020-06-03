@@ -38,14 +38,14 @@ import BoxBag from '../../boxes/BoxBag';
 import { Rectangle, Point } from '../../AWT';
 
 /**
- * The aim of this type of {@link Activity} is to identify {@link ActiveBox} elements in a panel
+ * The aim of this type of {@link module:Activity.Activity Activity} is to identify {@link module:boxes/ActiveBox.ActiveBox ActiveBox} elements in a panel
  * that satisfy a specific condition, usually exposed in the main message.
  * @extends module:Activity
  */
 export class Identify extends Activity {
   /**
    * Identify constructor
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -85,9 +85,9 @@ Object.assign(Identify.prototype, {
 });
 
 /**
- * The {@link ActivityPanel} where {@link Identify} activities are played.
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/panels/Identify.Identify Identify} activities are played.
  * @extends module:ActivityPanel
- * @param {Activity} act - The {@link Activity} to which this Panel belongs
+ * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
  * @param {JClicPlayer} ps - Any object implementing the methods defined in the
  * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
  * Java interface.
@@ -336,7 +336,7 @@ export class IdentifyPanel extends Activity.Panel {
 
 Object.assign(IdentifyPanel.prototype, {
   /**
-   * The {@link ActiveBoxBag} containing the information to be displayed on the panel.
+   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed on the panel.
    * @name IdentifyPanel#bg
    * @type {ActiveBoxBag} */
   bg: null,

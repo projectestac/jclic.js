@@ -36,16 +36,6 @@ import { settings, findParentsWithChild, getBoolean, getAttr, setAttr, checkColo
 import WebFont from 'webfontloader';
 
 /**
- * This object contains utility clases for painting graphics and images,
- * as found in the Java [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html)
- *
- * The objects defined here are: {@link Font}, {@link Gradient}, {@link Stroke},
- * {@link Point}, {@link Dimension}, {@link Shape}, {@link Rectangle},
- * {@link Ellipse}, {@link Path}, {@link PathStroke}, {@link Action},
- * {@link Timer} and {@link Container}.
- */
-
-/**
  * Font contains properties and provides methods to manage fonts
  */
 export class Font {
@@ -855,7 +845,7 @@ export class Shape {
   }
 
   /**
-   * Gets the enclosing {@link Rectangle} of this Shape.
+   * Gets the enclosing {@link module:AWT.Rectangle Rectangle} of this Shape.
    * @returns {Rectangle}
    */
   getBounds() {
@@ -903,7 +893,7 @@ export class Shape {
   }
 
   /**
-   * Checks if the provided {@link Rectangle} `r` intersects with this shape.
+   * Checks if the provided {@link module:AWT.Rectangle Rectangle} `r` intersects with this shape.
    * @param {Rectangle} _r
    * @returns {boolean}
    */
@@ -969,7 +959,7 @@ export class Shape {
   }
 
   /**
-   * Shorthand method for determining if a Shape is an {@link Rectangle}
+   * Shorthand method for determining if a Shape is an {@link module:AWT.Rectangle Rectangle}
    * @returns {Boolean}
    */
   isRect() {
@@ -1088,7 +1078,7 @@ export class Rectangle extends Shape {
   }
 
   /**
-   * Gets the enclosing {@link Rectangle} of this Shape.
+   * Gets the enclosing {@link module:AWT.Rectangle Rectangle} of this Shape.
    * @returns {Rectangle}
    */
   getBounds() {
@@ -1267,14 +1257,14 @@ Object.assign(Rectangle.prototype, {
    * @type {string} */
   type: 'rect',
   /**
-   * The {@link Dimension} of the Rectangle
+   * The {@link module:AWT.Dimension Dimension} of the Rectangle
    * @name Rectangle#dim
    * @type {Dimension} */
   dim: new Dimension(),
 });
 
 /**
- * The Ellipse shape has the same constructor options as {@link Rectangle}
+ * The Ellipse shape has the same constructor options as {@link module:AWT.Rectangle Rectangle}
  * @extends module:Rectangle
  */
 export class Ellipse extends Rectangle {
@@ -1582,7 +1572,7 @@ Object.assign(Path.prototype, {
    * @type {PathStroke[]} */
   strokes: [],
   /**
-   * The {@link Rectangle} enclosing this Path (when drawing, this Rectangle don't include border width!)
+   * The {@link module:AWT.Rectangle Rectangle} enclosing this Path (when drawing, this Rectangle don't include border width!)
    * @name Path#enclosing
    * @type {Rectangle} */
   enclosing: new Rectangle(),
@@ -1697,7 +1687,7 @@ export class PathStroke {
 
   /**
    * Multiplies each point coordinates by the `x` and `y` (or `w` and `h`) values of the
-   * passed {@link Point} or {@link Dimension}.
+   * passed {@link Point} or {@link module:AWT.Dimension Dimension}.
    * @param {Point|Dimension} delta
    */
   multBy(delta) {
@@ -1985,7 +1975,7 @@ Object.assign(Timer.prototype, {
 /**
  * Logic object that takes care of an "invalidated" rectangle that will be repainted
  * at the next update of a 2D object, usually an HTML Canvas.
- * Container has the same constructor options as {@link Rectangle}
+ * Container has the same constructor options as {@link module:AWT.Rectangle Rectangle}
  * @extends module:Rectangle
  */
 export class Container extends Rectangle {
@@ -2044,7 +2034,15 @@ Object.assign(Container.prototype, {
   invalidatedRect: null,
 });
 
-// Exports a composite object with all classes
+/**
+ * This object contains utility clases for painting graphics and images,
+ * as found in the Java [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html)
+ *
+ * The objects defined here are: {@link module:AWT.Font Font}, {@link module:AWT.Gradient Gradient}, {@link module:AWT.Stroke Stroke},
+ * {@link module:AWT.Point Point}, {@link module:AWT.Dimension Dimension}, {@link module:AWT.Shape Shape}, {@link module:AWT.Rectangle Rectangle},
+ * {@link module:AWT.Ellipse Ellipse}, {@link module:AWT.Path Path}, {@link module:AWT.PathStroke PathStroke}, {@link module:AWT.Action Action},
+ * {@link module:AWT.Timer Timer} and {@link module:AWT.Container Container}.
+ */
 export default {
   Font,
   Gradient,

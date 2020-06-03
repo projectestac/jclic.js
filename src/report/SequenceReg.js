@@ -32,13 +32,13 @@
 import ActivityReg from './ActivityReg';
 
 /**
- * This class stores the results of the activities related to an {@link ActivitySequenceElement}.
+ * This class stores the results of the activities related to an {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement}.
  * It's main component is an array of {@link ActivityReg} elements.
  */
 export class SequenceReg {
   /**
    * SequenceReg constructor
-   * @param {ActivitySequenceElement} ase - The {@link ActivitySequenceElement} related to this sequence.
+   * @param {ActivitySequenceElement} ase - The {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} related to this sequence.
    */
   constructor(ase) {
     this.name = ase.tag;
@@ -85,7 +85,7 @@ export class SequenceReg {
 
   /**
    * This method should be invoked when the user starts a new activity
-   * @param {Activity} act - The {@link Activity} that has just started
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} that has just started
    */
   newActivity(act) {
     if (!this.closed) {
@@ -126,12 +126,12 @@ export class SequenceReg {
 
 Object.assign(SequenceReg.prototype, {
   /**
-   * The `tag` member of the associated {@link ActivitySequenceElement}
+   * The `tag` member of the associated {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement}
    * @name SequenceReg#name
    * @type {string} */
   name: '',
   /**
-   * Optional description given to the {@link ActivitySequenceElement}
+   * Optional description given to the {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement}
    * @name SequenceReg#description
    * @type {string} */
   description: '',
@@ -141,7 +141,7 @@ Object.assign(SequenceReg.prototype, {
    * @type {ActivityReg[]} */
   activities: [],
   /**
-   * Registry linked to the {@link Activity} that is currently running
+   * Registry linked to the {@link module:Activity.Activity Activity} that is currently running
    * @name SequenceReg#currentActivity
    * @type {ActivityReg} */
   currentActivity: null,

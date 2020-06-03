@@ -32,7 +32,7 @@
 import Shaper from './Shaper';
 
 /**
- * This {@link Shaper} consists of a set of arbitrary shapes placed over a main rectangle that
+ * This {@link module:shapers/Shaper.Shaper Shaper} consists of a set of arbitrary shapes placed over a main rectangle that
  * acts as a enclosure.
  * The components can be of type {@link module:AWT.Rectangle}, {@link module:AWT.Ellipse} or {@link module:AWT.Path}.
  * This components have internal dimension values relative to the horizontal and vertical
@@ -55,7 +55,7 @@ export class Holes extends Shaper {
   }
 
   /**
-   * Shapes are already loaded by {@link Shaper}, so this function just sets `initiated` to `true`
+   * Shapes are already loaded by {@link module:shapers/Shaper.Shaper Shaper}, so this function just sets `initiated` to `true`
    * @override
    */
   buildShapes() {

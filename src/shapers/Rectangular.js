@@ -34,7 +34,7 @@ import { Rectangle, Point, Dimension } from '../AWT';
 
 /**
  *
- * This is the simplest {@link Shaper}. It divides the graphic object in a set of rectangular
+ * This is the simplest {@link module:shapers/Shaper.Shaper Shaper}. It divides the graphic object in a set of rectangular
  * shapes distributed in the specified number of rows and columns.
  * @extends module:Shaper
  */

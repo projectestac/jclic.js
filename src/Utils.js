@@ -896,7 +896,7 @@ export function getRootHead(el) {
 /**
  * Appends a stylesheet element to the `head` or root node nearest to the given `HTMLElement`.
  * @param {String} css - The content of the stylesheet
- * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link JClicPlayer}) used as a base to find the root node
+ * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used as a base to find the root node
  * @returns {HTMLStyleElement} - The appended style element
  */
 export function appendStyleAtHead(css, ps) {

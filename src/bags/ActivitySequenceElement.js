@@ -35,7 +35,7 @@ import { attrForEach, nSlash, getAttr, isEmpty } from '../Utils';
 
 /**
  *
- * This class is the basic component of {@link ActivitySequence} objects. It represents a specific
+ * This class is the basic component of {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence} objects. It represents a specific
  * point in the project's sequence of JClic activities.
  *
  * For each point of the sequence, some options can be set:
@@ -118,7 +118,7 @@ export class ActivitySequenceElement {
 
 Object.assign(ActivitySequenceElement.prototype, {
   /**
-   * Optional unique identifier of this element in the {@link ActivitySequence}.
+   * Optional unique identifier of this element in the {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence}.
    * @name ActivitySequenceElement#tag
    * @type {string} */
   tag: null,
@@ -128,7 +128,7 @@ Object.assign(ActivitySequenceElement.prototype, {
    * @type {string} */
   description: null,
   /**
-   * Name of the {@link Activity} pointed by this element.
+   * Name of the {@link module:Activity.Activity Activity} pointed by this element.
    * @name ActivitySequenceElement#activity
    * @type {string} */
   activity: '',

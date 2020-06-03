@@ -91,13 +91,13 @@ Object.assign(OrderText.prototype, {
 });
 
 /**
- * The {@link TextActivityBasePanel} where {@link OrderText} activities are played.
+ * The {@link TextActivityBasePanel} where {@link module:activities/text/OrderText.OrderText OrderText} activities are played.
  * @extends module:TextActivityBasePanel
  */
 export class OrderTextPanel extends TextActivityBase.Panel {
   /**
    * OrderTextPanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
@@ -240,7 +240,7 @@ export class OrderTextPanel extends TextActivityBase.Panel {
    * Randomly shuffles a set of targets
    * @param {TextActivityDocument.TextTarget[]} targets - The set of targets to shuffle (can be all
    * document targets or just the targets belonging to the same paragraph, depending on the value of
-   * `amongParagraphs` in {@link Activity}.
+   * `amongParagraphs` in {@link module:Activity.Activity Activity}.
    * @param {number} steps - The number of times to shuffle the elements
    */
   shuffleTargets(targets, steps) {

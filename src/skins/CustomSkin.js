@@ -37,7 +37,7 @@ import { Rectangle } from '../AWT';
 import ActiveBox from '../boxes/ActiveBox';
 
 /**
- * Custom {@link Skin} for JClic.js, built assembling specific cuts of a canvas (usually a PNG file) defined in an XML file
+ * Custom {@link module:skins/Skin.Skin Skin} for JClic.js, built assembling specific cuts of a canvas (usually a PNG file) defined in an XML file
  * @extends module:Skin
  */
 export class CustomSkin extends Skin {
@@ -45,7 +45,7 @@ export class CustomSkin extends Skin {
   /**
    * CustomSkin constructor
    * 
-   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+   * @param {PlayStation} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
    * realize the media objects needed tot build the Skin.
    * @param {string} [name] - The skin class name
    * @param {object} [options] - Optional parameter with additional options
@@ -348,7 +348,7 @@ export class CustomSkin extends Skin {
   }
 
   /**
-   * Gets the {@link ActiveBox} used to display the main messages of activities
+   * Gets the {@link module:boxes/ActiveBox.ActiveBox ActiveBox} used to display the main messages of activities
    * @returns {ActiveBox}
    */
   getMsgBox() {

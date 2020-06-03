@@ -150,7 +150,7 @@ import Deps from './Deps';
  *
  * Executes on `document.ready()`.
  *
- * The method iterates over all `div` objects with `JClic` class and creates a {@link JClicPlayer}
+ * The method iterates over all `div` objects with `JClic` class and creates a {@link module:JClicPlayer.JClicPlayer JClicPlayer}
  * within them. Each player loads the JClic project file specified in the `data-project` attribute of
  * the `div` tag.
  *

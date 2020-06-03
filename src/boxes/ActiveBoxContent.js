@@ -77,10 +77,10 @@ Object.assign(AlignType.prototype, {
 });
 
 /**
- * This class defines a content that can be displayed by {@link ActiveBox} objects. This content
+ * This class defines a content that can be displayed by {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects. This content
  * can be a text, an image, a fragment of an image or a combination of text and images. The style
  * (colors, font and size, borders, shadows, margins, etc.) are specified in the `style` attribute,
- * always pointing to a {@link BoxBase} object.
+ * always pointing to a {@link module:boxes/BoxBase.BoxBase BoxBase} object.
  */
 export class ActiveBoxContent {
   /**
@@ -309,7 +309,7 @@ export class ActiveBoxContent {
 
   /**
    * Prepares the media content
-   * @param {PlayStation} playStation - Usually a {@link JClicPlayer}
+   * @param {PlayStation} playStation - Usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}
    */
   prepareMedia(playStation) {
     if (!this.amp && this.mediaContent && this.mediaContent.type === 'PLAY_VIDEO') {
@@ -378,30 +378,30 @@ export class ActiveBoxContent {
 
 Object.assign(ActiveBoxContent.prototype, {
   /**
-   * The {@link BoxBase} attribute of this content. Can be `null`, meaning {@link ActiveBox} will
+   * The {@link module:boxes/BoxBase.BoxBase BoxBase} attribute of this content. Can be `null`, meaning {@link module:boxes/ActiveBox.ActiveBox ActiveBox} will
    * try to find a suitable style scanning down through its own BoxBase, their parent's and, finally,
    * the default values defined in `BoxBase.prototype`.
    * @name ActiveBoxContent#style
    * @type {BoxBase} */
   style: null,
   /**
-   * Optimal dimension of any {@link ActiveBox} taking this content.
+   * Optimal dimension of any {@link module:boxes/ActiveBox.ActiveBox ActiveBox} taking this content.
    * @name ActiveBoxContent#dimension
    * @type {module:AWT.Dimension} */
   dimension: null,
   /**
-   * The {@link ActiveBox} can have or not a border despite the settings of {@link BoxBase}.
+   * The {@link module:boxes/ActiveBox.ActiveBox ActiveBox} can have or not a border despite the settings of {@link module:boxes/BoxBase.BoxBase BoxBase}.
    * The default value `null` means not to take in consideration this setting.
    * @name ActiveBoxContent#border
    * @type {(null|boolean)} */
   border: null,
   /**
-   * The text to display on the {@link ActiveBox}. It can have up to two paragraphs.
+   * The text to display on the {@link module:boxes/ActiveBox.ActiveBox ActiveBox}. It can have up to two paragraphs.
    * @name ActiveBoxContent#text
    * @type {string} */
   text: null,
   /**
-   * The name of the image file to display on the {@link ActiveBox}.
+   * The name of the image file to display on the {@link module:boxes/ActiveBox.ActiveBox ActiveBox}.
    * @name ActiveBoxContent#image
    * @type {string} */
   image: null,
@@ -464,7 +464,7 @@ Object.assign(ActiveBoxContent.prototype, {
    * @type {string} */
   innerHtmlText: null,
   /**
-   * The {@link ActiveMediaPlayer} associated with this content. Updated at run-time.
+   * The {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} associated with this content. Updated at run-time.
    * @name ActiveBoxContent#amp
    * @type {ActiveMediaPlayer} */
   amp: null,

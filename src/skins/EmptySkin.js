@@ -32,7 +32,7 @@
 import Skin from './Skin';
 
 /**
- * A minimalist {@link Skin} for JClic.js with just the player, without messages, counters nor any button.
+ * A minimalist {@link module:skins/Skin.Skin Skin} for JClic.js with just the player, without messages, counters nor any button.
  * @extends module:Skin
  */
 export class EmptySkin extends Skin {
@@ -40,7 +40,7 @@ export class EmptySkin extends Skin {
   /**
    * EmptySkin constructor
    * 
-   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+   * @param {PlayStation} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
    * realize the media objects needed tot build the Skin.
    * @param {string} [name] - The skin class name
    * @param {object} [options] - Optional parameter with additional options

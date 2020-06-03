@@ -35,11 +35,11 @@ import ConditionalJumpInfo from './ConditionalJumpInfo';
 import { getAttr } from '../Utils';
 
 /**
- * This is a special case of {@link JumpInfo}, used only in {@link ActivitySequenceElement} objects.
+ * This is a special case of {@link module:bags/JumpInfo.JumpInfo JumpInfo}, used only in {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} objects.
  * Sequence elements can contain up to two ActivitySequenceJump objects: one to be processed
  * when the user clicks on the "next" button (or when the activity finishes, if in automatic mode),
  * and the other used with the "prev" button. ActivitySequenceJump objects define a default jump
- * or action to be performed, but can also have up to two {@link ConditionalJumpInfo} objects. These
+ * or action to be performed, but can also have up to two {@link module:bags/ConditionalJumpInfo.ConditionalJumpInfo ConditionalJumpInfo} objects. These
  * define alternative jumps that are performed only when score or time are below or over a specific
  * threshold.
  * @extends module:JumpInfo
@@ -100,7 +100,7 @@ export class ActivitySequenceJump extends JumpInfo {
 
 
   /**
-   * Resolves what {@link JumpInfo} must be taken, based on a done time and average rating obtained
+   * Resolves what {@link module:bags/JumpInfo.JumpInfo JumpInfo} must be taken, based on a done time and average rating obtained
    * in activities.
    * @param {number} rating - Average rating obtained by the user in the activities done during the
    * last sequence stretch.

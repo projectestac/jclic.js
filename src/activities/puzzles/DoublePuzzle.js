@@ -38,8 +38,8 @@ import { Rectangle, Point } from '../../AWT';
 import { getMsg } from '../../Utils';
 
 /**
- * The aim of this class of {@link Activity} is to put in order the shuffled elements of an
- * {@link ActiveBagContent} that contains an image, sounds, text... or any other media content.
+ * The aim of this class of {@link module:Activity.Activity Activity} is to put in order the shuffled elements of an
+ * {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent} that contains an image, sounds, text... or any other media content.
  *
  * The activity uses two panels: one with the shuffled cells, and other initially empty where
  * this cells must be placed in order.
@@ -48,7 +48,7 @@ import { getMsg } from '../../Utils';
 export class DoublePuzzle extends Activity {
   /**
    * DoublePuzzle constructor
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -92,13 +92,13 @@ export class DoublePuzzle extends Activity {
 }
 
 /**
- * The {@link ActivityPanel} where {@link DoublePuzzle} activities are played.
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/puzzles/DoublePuzzle.DoublePuzzle DoublePuzzle} activities are played.
  * @extends module:ActivityPanel
  */
 export class DoublePuzzlePanel extends Activity.Panel {
   /**
    * DoublePuzzlePanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
@@ -392,12 +392,12 @@ export class DoublePuzzlePanel extends Activity.Panel {
 
 Object.assign(DoublePuzzlePanel.prototype, {
   /**
-   * The {@link ActiveBoxBag} object containing the information to be displayed in the `primary` panel
+   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
    * @name DoublePuzzlePanel#bgA
    * @type {ActiveBoxBag} */
   bgA: null,
   /**
-   * The secondary {@link ActiveBoxBag}, initially empty.
+   * The secondary {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag}, initially empty.
    * @name DoublePuzzlePanel#bgB
    * @type {ActiveBoxBag} */
   bgB: null,

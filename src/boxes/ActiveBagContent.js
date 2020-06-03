@@ -37,9 +37,9 @@ import { Rectangle } from '../AWT';
 import { settings, attrForEach, nSlash, getBoolean, getAttr, setAttr } from '../Utils';
 
 /**
- * This class packs a collection of {@link ActiveBoxContent} objects and provides methods to access
- * and manage it. The two main members of `ActiveBagContent` are the {@link Shaper}, responsible for
- * determining the position and shape of each {@link ActiveBox}, and the {@link BoxBase} (field `style`),
+ * This class packs a collection of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects and provides methods to access
+ * and manage it. The two main members of `ActiveBagContent` are the {@link module:shapers/Shaper.Shaper Shaper}, responsible for
+ * determining the position and shape of each {@link module:boxes/ActiveBox.ActiveBox ActiveBox}, and the {@link module:boxes/BoxBase.BoxBase BoxBase} (field `style`),
  * provider of a common visual style.
  */
 export class ActiveBagContent {
@@ -232,7 +232,7 @@ export class ActiveBagContent {
 
   /**
    * Prepares the media content of all elements
-   * @param {PlayStation} playStation - The {@link JClicPlayer}
+   * @param {PlayStation} playStation - The {@link module:JClicPlayer.JClicPlayer JClicPlayer}
    */
   prepareMedia(playStation) {
     this.cells.forEach(abc => abc.prepareMedia(playStation));
@@ -271,7 +271,7 @@ export class ActiveBagContent {
   }
 
   /**
-   * Retrieves the {@link Shaper} of this bag, creating a new one if it was _null_
+   * Retrieves the {@link module:shapers/Shaper.Shaper Shaper} of this bag, creating a new one if it was _null_
    * @returns {Shaper}
    */
   getShaper() {
@@ -281,7 +281,7 @@ export class ActiveBagContent {
   }
 
   /**
-   * Retrieves the {@link BoxBase} of this bag, creating a new one if it was _null_
+   * Retrieves the {@link module:boxes/BoxBase.BoxBase BoxBase} of this bag, creating a new one if it was _null_
    * @returns {BoxBase}
    */
   getBoxBase() {
@@ -291,7 +291,7 @@ export class ActiveBagContent {
   }
 
   /**
-   * Adds a new {@link ActiveBoxContent} to this bag
+   * Adds a new {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} to this bag
    * @param {ActiveBoxContent} ab - The ActiveBoxContent to add
    */
   addActiveBoxContent(ab) {
@@ -302,7 +302,7 @@ export class ActiveBagContent {
   }
 
   /**
-   * Gets the nth {@link ActiveBoxContent} in `cells`
+   * Gets the nth {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} in `cells`
    * @param {number} i - The index of the content to be retrieved
    * @returns {ActiveBoxContent}
    */
@@ -382,7 +382,7 @@ export class ActiveBagContent {
   }
 
   /**
-   * Sets `id` values to a all the {@link ActiveBoxContent} elements of his bag.
+   * Sets `id` values to a all the {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} elements of his bag.
    * @param {number[]} ids -Array of numeric identifiers
    */
   setIds(ids) {
@@ -401,7 +401,7 @@ export class ActiveBagContent {
 
   /**
    *
-   * Cheks if the `id` values of all {@link ActiveBoxContent} objects are -1 and, if true,
+   * Cheks if the `id` values of all {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects are -1 and, if true,
    * sets new ids to them, with values between 0 and `maxId`
    * @param {number} maxId - The maximum value of identifiers
    */
@@ -475,7 +475,7 @@ Object.assign(ActiveBagContent.prototype, {
    * @type {ActiveBoxContent} */
   backgroundContent: null,
   /**
-   * The main Array of {@link ActiveBoxContent} objects
+   * The main Array of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects
    * @name ActiveBagContent#cells
    * @type {ActiveBoxContent[]} */
   cells: null,

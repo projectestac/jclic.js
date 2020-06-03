@@ -125,7 +125,7 @@ export class AbstractBox extends Rectangle {
   }
 
   /**
-   * Sets the {@link BoxBase} of this box
+   * Sets the {@link module:boxes/BoxBase.BoxBase BoxBase} of this box
    * @param {BoxBase} boxBase - The new BoxBase
    */
   setBoxBase(boxBase) {
@@ -134,7 +134,7 @@ export class AbstractBox extends Rectangle {
   }
 
   /**
-   * Gets the real {@link BoxBase} associated to this box, scanning down parent relationships.
+   * Gets the real {@link module:boxes/BoxBase.BoxBase BoxBase} associated to this box, scanning down parent relationships.
    * @returns {BoxBase}
    */
   getBoxBaseResolve() {
@@ -465,7 +465,7 @@ export class AbstractBox extends Rectangle {
   }
 
   /**
-   * Here is where classes derived from {@link AbstractBox} should implement the drawing of its
+   * Here is where classes derived from {@link module:boxes/AbstractBox.AbstractBox AbstractBox} should implement the drawing of its
    * content. Background and border are already painted in {@link AbstractBox#update}.
    * @param {external:CanvasRenderingContext2D} _ctx - The canvas rendering context used to draw the
    * box content.
@@ -548,7 +548,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Sets {@link AbstractBox#$hostedComponent|$hostedComponent} colors and other css properties
-   * based on the current {@link BoxBase} of this box.
+   * based on the current {@link module:boxes/BoxBase.BoxBase BoxBase} of this box.
    */
   setHostedComponentColors() {
     if (this.$hostedComponent) {
@@ -563,7 +563,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Sets the {@link AbstractBox#$hostedComponent|$hostedComponent} border, based on the current
-   * {@link BoxBase} of this box.
+   * {@link module:boxes/BoxBase.BoxBase BoxBase} of this box.
    */
   setHostedComponentBorder() {
     if (this.$hostedComponent && (this.border || this.marked)) {
@@ -579,7 +579,7 @@ export class AbstractBox extends Rectangle {
   /**
    * Places and resizes {@link AbstractBox#$hostedComponent|$hostedComponent}, based on the size
    * and position of this box.
-   * @param {boolean} _sizeChanged - `true` when this {@link ActiveBox} has changed its size
+   * @param {boolean} _sizeChanged - `true` when this {@link module:boxes/ActiveBox.ActiveBox ActiveBox} has changed its size
    */
   setHostedComponentBounds(_sizeChanged) {
     if (this.$hostedComponent) {
@@ -609,7 +609,7 @@ Object.assign(AbstractBox.prototype, {
    * @type {module:AWT.Container} */
   container: null,
   /**
-   * The {@link BoxBase} related to this AbstractBox. When `null`, the parent can provide an
+   * The {@link module:boxes/BoxBase.BoxBase BoxBase} related to this AbstractBox. When `null`, the parent can provide an
    * alternative one.
    * @name AbstractBox#boxBase
    * @type {BoxBase} */

@@ -36,7 +36,7 @@ import { log, nSlash } from '../Utils';
 
 /**
  * This class stores and manages all the media components (images, sounds, animations, video,
- * MIDI files, etc.) needed to run the activities of a {@link JClicProject}. The main member of
+ * MIDI files, etc.) needed to run the activities of a {@link module:project/JclicProject.JClicProject JClicProject}. The main member of
  * the class is `elements`. This is where {@link MediaBagElement} objects are stored.
  */
 export class MediaBag {
@@ -152,7 +152,7 @@ export class MediaBag {
    * @param {string} type - The type of media to be build. When `null` or `undefined`, all
    * resources will be build.
    * @param {function} [callback] - Function to be called when each element is ready.
-   * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link JClicPlayer}) used to dynamically load fonts
+   * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to dynamically load fonts
    * @returns {number} - The total number of elements that will be build     * 
    */
   buildAll(type, callback, ps) {
@@ -188,9 +188,9 @@ export class MediaBag {
   }
 
   /**
-   * Loads a {@link Skin} object
+   * Loads a {@link module:skins/Skin.Skin Skin} object
    * @param {string} name - The skin name to be loaded
-   * @param {string} ps - The {@link PlayStation} linked to the skin
+   * @param {string} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} linked to the skin
    * @returns {Skin}
    */
   getSkinElement(name, ps) {

@@ -51,7 +51,7 @@ export class Evaluator {
   }
 
   /**
-   * Factory constructor that returns a specific type of {@link Evaluator} based on the `class`
+   * Factory constructor that returns a specific type of {@link module:activities/text/Evaluator.Evaluator Evaluator} based on the `class`
    * attribute declared in the $xml element.
    * @param {external:jQuery} $xml - The XML element to be parsed.
    * @returns {Evaluator}

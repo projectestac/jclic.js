@@ -34,7 +34,7 @@ import { settings, attrForEach, getBoolean, getAttr, setAttr } from '../Utils';
 import BoxBase from './BoxBase';
 
 /**
- * This class encapsulates the content of {@link TextGrid} objects.
+ * This class encapsulates the content of {@link module:boxes/TextGrid.TextGrid TextGrid} objects.
  *
  * It implements methods to set and retrieve individual characters on the grid, and parsing of
  * XML objects. It also contains information about the optimal size and other graphic properties
@@ -190,7 +190,7 @@ Object.assign(TextGridContent.prototype, {
    * @type {boolean} */
   border: false,
   /**
-   * The {@link BoxBase} object with visual settings of the text grid
+   * The {@link module:boxes/BoxBase.BoxBase BoxBase} object with visual settings of the text grid
    * @name TextGridContent#style
    * @type {BoxBase} */
   style: null,

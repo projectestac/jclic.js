@@ -34,9 +34,9 @@ import BoxBag from './BoxBag';
 import { Point } from '../AWT';
 
 /**
- * This class is a special case of {@link BoxBag} containing only objects of type {@link ActiveBox}.
+ * This class is a special case of {@link module:boxes/BoxBag.BoxBag BoxBag} containing only objects of type {@link module:boxes/ActiveBox.ActiveBox ActiveBox}.
  * In addition to the members and methods of `BoxBag`, it implements specific methods to deal with
- * {@link ActiveBagContent} objects and with the other specific members of `ActiveBox` like its "ids"
+ * {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent} objects and with the other specific members of `ActiveBox` like its "ids"
  * (`idOrder`, `idLoc` and `idAss`).
  * @extends module:BoxBag
  */
@@ -54,7 +54,7 @@ export class ActiveBoxBag extends BoxBag {
   }
 
   /**
-   * Adds an {@link ActiveBox} to this bag
+   * Adds an {@link module:boxes/ActiveBox.ActiveBox ActiveBox} to this bag
    * @param {ActiveBox} bx - The ActiveBox to be added to this bag
    */
   addActiveBox(bx) {
@@ -81,7 +81,7 @@ export class ActiveBoxBag extends BoxBag {
   }
 
   /**
-   * Sets the content of members of this ActiveBoxBag, based on one or more {@link ActiveBagContent}
+   * Sets the content of members of this ActiveBoxBag, based on one or more {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent}
    * objects.
    * @param {ActiveBagContent} abc - The main bag of content
    * @param {ActiveBagContent} [altAbc] - The alternative bag of content
@@ -147,7 +147,7 @@ export class ActiveBoxBag extends BoxBag {
   }
 
   /**
-   * Finds the {@link ActiveBox} that has the specified `idLoc` attribute
+   * Finds the {@link module:boxes/ActiveBox.ActiveBox ActiveBox} that has the specified `idLoc` attribute
    * @param {number} idLoc - The idLoc to search for
    * @returns {ActiveBox}
    */

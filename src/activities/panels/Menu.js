@@ -35,14 +35,14 @@ import MediaContent from '../../media/MediaContent';
 import { log } from '../../Utils';
 
 /**
- * This class of {@link Activity} is only used in legacy JClic project libraries. It contains
+ * This class of {@link module:Activity.Activity Activity} is only used in legacy JClic project libraries. It contains
  * one or more buttons pointing to specific JClic projects or to other `Menu` activity panels.
  * @extends module:Activity
  */
 export class Menu extends Activity {
   /**
    * Menu constructor
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -54,9 +54,9 @@ export class Menu extends Activity {
 }
 
 /**
- * The {@link ActivityPanel} where Menu will show its content.
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where Menu will show its content.
  * @extends module:ActivityPanel
- * @param {Activity} act - The {@link Activity} to which this Panel belongs
+ * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
  * @param {JClicPlayer} ps - Any object implementing the methods defined in the
  * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
  * Java interface.

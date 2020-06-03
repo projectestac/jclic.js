@@ -34,7 +34,7 @@ import { log, isEquivalent, getPath, isNullOrUndef } from './Utils';
 /**
  *
  * PlayerHistory uses an array to store the list of projects and activities done by the user.
- * This class allows {@link JClicPlayer} objects to rewind a sequence or to go back to a caller menu.
+ * This class allows {@link module:JClicPlayer.JClicPlayer JClicPlayer} objects to rewind a sequence or to go back to a caller menu.
  */
 export class PlayerHistory {
   /**
@@ -90,7 +90,7 @@ export class PlayerHistory {
 
   /**
    * Retrieves the {@link PlayerHistory#HistoryElement HistoryElement} placed at the top of the
-   * stack (if any) and instructs {@link JClicPlayer} to load it. The obtained effect is to
+   * stack (if any) and instructs {@link module:JClicPlayer.JClicPlayer JClicPlayer} to load it. The obtained effect is to
    * "rewind" or "go back", usually to an activity that acts as a menu.
    * @returns {boolean}
    */
@@ -112,7 +112,7 @@ export class PlayerHistory {
 
   /**
    *
-   * Processes the provided {@link JumpInfo} object, instructing {@link JClicPlayer} to go back,
+   * Processes the provided {@link module:bags/JumpInfo.JumpInfo JumpInfo} object, instructing {@link module:JClicPlayer.JClicPlayer JClicPlayer} to go back,
    * stop or jump to another point in the sequence.
    * @param {JumpInfo} ji - The object to be processed
    * @param {boolean} allowReturn - When this parameter is `true`, the jump instructed by `ji` (if any)
@@ -162,9 +162,9 @@ export class PlayerHistory {
 
   /**
    * Performs a jump to the specified sequence
-   * @param {string} sequence - The {@link ActivitySequence} tag to jump to.
+   * @param {string} sequence - The {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence} tag to jump to.
    * @param {?string} path - When not `null`, indicates a new project file that must be loaded.
-   * Otherwise, the `sequence` parameter refers to a tag on the {@link ActivitySequence} of the
+   * Otherwise, the `sequence` parameter refers to a tag on the {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence} of the
    * current project.
    * @param {boolean} allowReturn - When this parameter is `true`, the jump will be recorded, thus
    * allowing to return to the current activity.
@@ -198,7 +198,7 @@ export class PlayerHistory {
 
 Object.assign(PlayerHistory.prototype, {
   /**
-   * The {@link JClicPlayer} object to which this `PlayerHistory` belongs
+   * The {@link module:JClicPlayer.JClicPlayer JClicPlayer} object to which this `PlayerHistory` belongs
    * @name PlayerHistory#player
    * @type {JClicPlayer} */
   player: null,
@@ -222,7 +222,7 @@ Object.assign(PlayerHistory.prototype, {
      * HistoryElement constructor
      * @param {string} projectPath - The full path of the project file
      * @param {?string} sequence - The nearest sequence tag
-     * @param {number} activity - The index of the current activity on the project's {@link ActivitySequence}
+     * @param {number} activity - The index of the current activity on the project's {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence}
      * @param {?type} fullZipPath - If `projectPath` resides in a {@link external:JSZip JSZip} object,
      * the full path of the zip file.
      */

@@ -34,8 +34,8 @@ import { Rectangle, Dimension, Point } from '../AWT';
 import { settings } from '../Utils';
 
 /**
- * BoxBag is a class derived from {@link AbstractBox} that contains a collection of "boxes"
- * (objects also derived from {@link AbstractBox}). This class implements methods to add, remove
+ * BoxBag is a class derived from {@link module:boxes/AbstractBox.AbstractBox AbstractBox} that contains a collection of "boxes"
+ * (objects also derived from {@link module:boxes/AbstractBox.AbstractBox AbstractBox}). This class implements methods to add, remove
  * and retrieve boxes, and to manage some of its properties like visibility, status, location and size.
  * @extends module:AbstractBox
  */
@@ -59,7 +59,7 @@ export class BoxBag extends AbstractBox {
    * @param {module:AWT.Dimension} preferredMaxSize - The preferred maximum size
    * @param {Resizable} rs - A resizable object implementing the methods described in the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html Resizable}
-   * interface of JClic. Currently a {@link BoxBag} or {@link TextGrid}.
+   * interface of JClic. Currently a {@link module:boxes/BoxBag.BoxBag BoxBag} or {@link module:boxes/TextGrid.TextGrid TextGrid}.
    * @param {number} margin - The margin between the available area and the BoxBag
    * @returns {module:AWT.Dimension} - The resulting size of the container
    */
@@ -104,7 +104,7 @@ export class BoxBag extends AbstractBox {
    * @param {module:AWT.Dimension} desiredMaxSize - The preferred maximum size
    * @param {Resizable} rsA - First resizable object implementing the methods described in the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/boxes/Resizable.html Resizable}
-   * interface of JClic. Currently a {@link BoxBag} or {@link TextGrid}.
+   * interface of JClic. Currently a {@link module:boxes/BoxBag.BoxBag BoxBag} or {@link module:boxes/TextGrid.TextGrid TextGrid}.
    * @param {Resizable} rsB - Second resizable object
    * @param {string} boxGridPos - The layout schema. Possible values are:
    * - "AB" (_A_ at left, _B_ at right)
@@ -253,7 +253,7 @@ export class BoxBag extends AbstractBox {
   }
 
   /**
-   * Adds an {@link AbstractBox} to the collection of cells
+   * Adds an {@link module:boxes/AbstractBox.AbstractBox AbstractBox} to the collection of cells
    * @param {AbstractBox} bx - The box to add
    */
   addBox(bx) {
@@ -452,7 +452,7 @@ export class BoxBag extends AbstractBox {
   }
 
   /**
-   * Finds the first visible {@link AbstractBox} located under the specified point
+   * Finds the first visible {@link module:boxes/AbstractBox.AbstractBox AbstractBox} located under the specified point
    * @param {module:AWT.Point} p
    * @returns {AbstractBox}
    */

@@ -34,8 +34,8 @@ import { Point, Dimension, Rectangle } from '../AWT';
 const DEFAULT_COMPOSITE_OP = 'source-over';
 
 /**
- * BoxConnector allows users to visually connect two {@link ActiveBox} objects of an
- * {@link ActivityPanel}. There are two modes of operation:
+ * BoxConnector allows users to visually connect two {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects of an
+ * {@link module:Activity.ActivityPanel ActivityPanel}. There are two modes of operation:
  *
  * - Drawing a line between an origin point (usually the point where the user clicks on) and a
  * destination point.
@@ -227,7 +227,7 @@ Object.assign(BoxConnector.prototype, {
    * @type {external:HTMLImageElement} */
   bgImg: null,
   /**
-   * The rectangle of {@link ActivityPanel} saved in `bgImg`
+   * The rectangle of {@link module:Activity.ActivityPanel ActivityPanel} saved in `bgImg`
    * @name BoxConnector#bgRect
    * @type {module:AWT.Rectangle} */
   bgRect: null,

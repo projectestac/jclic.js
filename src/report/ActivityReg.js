@@ -34,12 +34,12 @@ import { attrForEach, getBoolean } from '../Utils';
 import ActionReg from './ActionReg';
 
 /**
- * This class stores miscellaneous data obtained by the current user playing an {@link Activity}.
+ * This class stores miscellaneous data obtained by the current user playing an {@link module:Activity.Activity Activity}.
  */
 export class ActivityReg {
   /**
    * ActivityReg constructor
-   * @param {Activity} act - The {@link Activity} referenced by this object.
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} referenced by this object.
    */
   constructor(act) {
     this.name = act.name;

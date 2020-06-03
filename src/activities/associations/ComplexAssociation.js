@@ -35,7 +35,7 @@ import { Point } from '../../AWT';
 import SimpleAssociation from './SimpleAssociation';
 
 /**
- * This is a special case of {@link SimpleAssociation} where the elements of the 'secondary' panel
+ * This is a special case of {@link module:activities/associations/SimpleAssociation.SimpleAssociation SimpleAssociation} where the elements of the 'secondary' panel
  * can have zero, one or more associated elements in the 'primary' panel.
  * @extends module:SimpleAssociation
  */
@@ -86,13 +86,13 @@ Object.assign(ComplexAssociation.prototype, {
 });
 
 /**
- * The {@link ActivityPanel} where {@link ComplexAssociation} activities are played.
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/associations/ComplexAssociation.ComplexAssociation ComplexAssociation} activities are played.
  * @extends module:SimpleAssociationPanel
  */
 export class ComplexAssociationPanel extends SimpleAssociation.Panel {
   /**
    * ComplexAssociationPanel prototype
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.

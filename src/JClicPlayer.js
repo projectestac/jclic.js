@@ -51,7 +51,7 @@ import Reporter from './report/Reporter';
  * JClicPlayer is one of the the main classes of the JClic system. It implements the
  * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation}
  * interface, needed to host JClic activities.
- * JClicPlayer offers to {@link Activity#Panel} objects all the necessary resources and functions:
+ * JClicPlayer offers to {@link module:Activity.ActivityPanel ActivityPanel} objects all the necessary resources and functions:
  * media bags (to load and realize images and other media contents), sequence control, management
  * of the reporting system, user interface, display of system messages, etc.
  * @extends module:AWT.Container
@@ -205,7 +205,7 @@ export class JClicPlayer extends Container {
   }
 
   /**
-   * Creates and initializes the {@link Reporter} member
+   * Creates and initializes the {@link module:Reporter.Reporter Reporter} member
    * @return {Promise}
    */
   initReporter() {
@@ -286,7 +286,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Loads the specified project and starts playing at the specified activity or sequence tag.
-   * @param {?(string|JClicProject)} project - The project to load (if it's a string) or to use (if it's an object of type {@link JClicProject}).
+   * @param {?(string|JClicProject)} project - The project to load (if it's a string) or to use (if it's an object of type {@link module:project/JclicProject.JClicProject JClicProject}).
    * When it's a `string`, it can be the absolute or relative path to:
    * - A `.jclic` project file, in XML format
    * - A `.jclic.json` project file in JSON format
@@ -294,8 +294,8 @@ export class JClicPlayer extends Container {
    * - A `.scorm.zip` file, as exported by JClic Author.
    * - A `project.json` file, as exported by JClic Author
    * When `null` or `undefined`, refers to the current project.
-   * @param {(string|number)} [sequence] - Sequence tag or numeric order in the {@link ActivitySequence}
-   * to be loaded. If _sequence_ and _activity_ are both `null`, the first {@link ActivitySequenceElement}
+   * @param {(string|number)} [sequence] - Sequence tag or numeric order in the {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence}
+   * to be loaded. If _sequence_ and _activity_ are both `null`, the first {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement}
    * will be loaded.
    * @param {string} [activity] - Name of the activity to be loaded (usually `null`)
    */
@@ -601,7 +601,7 @@ export class JClicPlayer extends Container {
 
   /**
    *
-   * Removes the current {@link Activity#Panel} from this player
+   * Removes the current {@link module:Activity.ActivityPanel ActivityPanel} from this player
    */
   removeActivity() {
     this.forceFinishActivity();
@@ -635,7 +635,7 @@ export class JClicPlayer extends Container {
   }
 
   /**
-   * Called by {@link JClicPlayer#load} when the {@link Activity#Panel} is fully visible, just
+   * Called by {@link JClicPlayer#load} when the {@link module:Activity.ActivityPanel ActivityPanel} is fully visible, just
    * after the JQuery animation effect.
    */
   activityReady() {
@@ -805,7 +805,7 @@ export class JClicPlayer extends Container {
   }
 
   /**
-   * Called from {@link Activity} when finished.
+   * Called from {@link module:Activity.Activity Activity} when finished.
    * @param {boolean} _completedOK - `true` when the activity was successfully completed, `false`
    * otherwise.
    */
@@ -942,7 +942,7 @@ export class JClicPlayer extends Container {
   }
 
   /**
-   * Builds an {@link ActiveMediaPlayer} for the specified {@link MediaContent}
+   * Builds an {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} for the specified {@link MediaContent}
    * @param {MediaContent} mediaContent - The media content to be played
    * @returns {ActiveMediaPlayer}
    */
@@ -1096,7 +1096,7 @@ Object.assign(JClicPlayer.prototype, {
    * @type {boolean} */
   fullScreenChecked: false,
   /**
-   * The {@link JClicProject} currently hosted in this player
+   * The {@link module:project/JclicProject.JClicProject JClicProject} currently hosted in this player
    * @name JClicPlayer#project
    * @type {JClicProject} */
   project: null,
@@ -1121,7 +1121,7 @@ Object.assign(JClicPlayer.prototype, {
    */
   localFS: false,
   /**
-   * The {@link Activity#Panel} currently running on this player.
+   * The {@link module:Activity.ActivityPanel ActivityPanel} currently running on this player.
    * @name JClicPlayer#actPanel
    * @type {Activity#Panel} */
   actPanel: null,
@@ -1141,7 +1141,7 @@ Object.assign(JClicPlayer.prototype, {
    * @type {Skin} */
   defaultSkin: null,
   /**
-   * The last skin directly specified by a {@link JClicProject}
+   * The last skin directly specified by a {@link module:project/JclicProject.JClicProject JClicProject}
    * @name JClicPlayer#defaultSkin
    * @type {Skin} */
   lastProjectSkin: null,

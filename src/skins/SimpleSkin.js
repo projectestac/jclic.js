@@ -34,14 +34,14 @@ import Skin from './Skin';
 import DefaultSkin from './DefaultSkin';
 
 /**
- * This is a variant of the default {@link Skin} used by JClic.js
+ * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js
  * It has the buttons at top, and don't has counters.
  * @extends module:DefaultSkin
  */
 export class SimpleSkin extends DefaultSkin {
   /**
    * SimpleSkin constructor
-   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+   * @param {PlayStation} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
    * realize the media objects meeded tot build the Skin.
    * @param {string} [name] - The skin class name
    * @param {object} [options] - Optional parameter with additional options

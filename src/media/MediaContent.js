@@ -38,7 +38,7 @@ import { nSlash, attrForEach, getBoolean, getAttr, setAttr } from '../Utils';
 /**
  * This object contains a description of any multimedia content (sound, video, MIDI, voice
  * recording..) or special actions (jump to another point in the sequence, link to an URL, etc.)
- * associated to an {@link ActiveBox} object.
+ * associated to an {@link module:boxes/ActiveBox.ActiveBox ActiveBox} object.
  */
 export class MediaContent {
   /**
@@ -286,7 +286,7 @@ Object.assign(MediaContent.prototype, {
    * @type {boolean} */
   loop: false,
   /**
-   * When `true`, the media will automatically start playing when the associated {@link ActiveBox}
+   * When `true`, the media will automatically start playing when the associated {@link module:boxes/ActiveBox.ActiveBox ActiveBox}
    * become active.
    * @name MediaContent#autoStart
    * @type {boolean} */

@@ -48,13 +48,13 @@ export class Complete extends TextActivityBase {
 }
 
 /**
- * The {@link TextActivityBasePanel} where {@link Complete} activities are played.
+ * The {@link TextActivityBasePanel} where {@link module:activities/text/Complete.Complete Complete} activities are played.
  * @extends module:TextActivityBasePanel
  */
 export class CompletePanel extends TextActivityBase.Panel {
   /**
    * CompletePanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.

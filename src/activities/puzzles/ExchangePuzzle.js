@@ -37,7 +37,7 @@ import BoxConnector from '../../boxes/BoxConnector';
 import { Rectangle, Point } from '../../AWT';
 
 /**
- * This class of {@link Activity} shows only one panel with shuffled {@link ActiveBox} objects.
+ * This class of {@link module:Activity.Activity Activity} shows only one panel with shuffled {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects.
  * To solve the activity, each cell must exchange its location with another one. When all cells are
  * on place, the activity is done.
  * @extends module:Activity
@@ -45,7 +45,7 @@ import { Rectangle, Point } from '../../AWT';
 export class ExchangePuzzle extends Activity {
   /**
    * ExchangePuzzle constructor
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -89,13 +89,13 @@ export class ExchangePuzzle extends Activity {
 }
 
 /**
- * The {@link ActivityPanel} where activities of type {@link ExchangePuzzle} are played.
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where activities of type {@link module:activities/puzzles/ExchangePuzzle.ExchangePuzzle ExchangePuzzle} are played.
  * @extends module:ActivityPanel
  */
 class ExchangePuzzlePanel extends Activity.Panel {
   /**
    * ExchangePuzzlePanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
@@ -349,7 +349,7 @@ class ExchangePuzzlePanel extends Activity.Panel {
 
 Object.assign(ExchangePuzzlePanel.prototype, {
   /**
-   * The {@link ActiveBoxBag} object containing the information to be displayed in the panel.
+   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the panel.
    * @name ExchangePuzzlePanel#bg
    * @type {ActiveBoxBag} */
   bg: null,

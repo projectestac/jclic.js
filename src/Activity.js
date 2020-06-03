@@ -48,7 +48,7 @@ const TOUCH_TEST_EVENT = 'touchstart';
 
 /**
  * Activity is the abstract base class of JClic activities. It defines also the inner class
- * {@link Activity.ActivityPanel}, wich is responsible for user interaction with the activity
+ * {@link module:Activity.ActivityPanel ActivityPanel}, wich is responsible for user interaction with the activity
  * content.
  * Activities should extend both `Activity` and `ActivityPanel` classes in order to become fully
  * operative.
@@ -57,7 +57,7 @@ const TOUCH_TEST_EVENT = 'touchstart';
 export class Activity {
   /**
    * Activity constructor
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     this.project = project;
@@ -81,7 +81,7 @@ export class Activity {
    * Factory constructor that returns a specific type of Activity based on the `class` attribute
    * declared in `data`.
    * @param {object|external:jQuery} data - Can be a jQuery XML element, or an object obtained with a call to `getAttributes`
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
    * @returns {Activity}
    */
   static getActivity(data, project) {
@@ -285,7 +285,7 @@ export class Activity {
           });
           break;
 
-        // Element specific to {@link Menu} activities:
+        // Element specific to 'Menu' activities:
         case 'menuElement':
           this.menuElements.push({
             caption: $node.attr('caption') || '',
@@ -296,14 +296,14 @@ export class Activity {
           });
           break;
 
-        // Element specific to {@link CrossWord} and
-        // {@link WordSearch} activities:
+        // Element specific to 'CrossWord' and
+        // 'WordSearch' activities:
         case 'textGrid':
-          // Read the 'textGrid' element into a {@link TextGridContent}
+          // Read the 'textGrid' element into a 'TextGridContent'
           this.tgc = new TextGridContent().setProperties($node);
           break;
 
-        // Read the clues of {@link WordSearch} activities
+        // Read the clues of 'WordSearch' activities
         case 'clues':
           // Read the array of clues
           this.clues = [];
@@ -450,7 +450,7 @@ export class Activity {
   }
 
   /**
-   * Initialises the {@link AutoContentProvider}, when defined.
+   * Initialises the {@link module:automation/AutoContentProvider.AutoContentProvider AutoContentProvider}, when defined.
    */
   initAutoContentProvider() {
     if (this.acp !== null)
@@ -459,7 +459,7 @@ export class Activity {
 
   /**
    * Preloads the media content of the activity.
-   * @param {PlayStation} ps - The {@link PlayStation} used to realize the media objects.
+   * @param {PlayStation} ps - The {@link module:JClicPlayer.JClicPlayer} used to realize the media objects.
    */
   prepareMedia(ps) {
     this.eventSounds.realize(ps, this.project.mediaBag);
@@ -580,9 +580,9 @@ export class Activity {
   }
 
   /**
-   * Builds the {@link Activity.Panel} object.
+   * Builds the {@link module:Activity.ActivityPanel ActivityPanel} object.
    * Subclasses must update the `Panel` member of its prototypes to produce specific panels.
-   * @param {PlayStation} ps - The {@link PlayStation} used to build media objects.
+   * @param {PlayStation} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to build media objects.
    * @returns {ActivityPanel}
    */
   getActivityPanel(ps) {
@@ -601,7 +601,7 @@ Activity.CLASSES = {
 
 Object.assign(Activity.prototype, {
   /**
-   * The {@link JClicProject} to which this activity belongs
+   * The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
    * @name Activity#project
    * @type {JClicProject} */
   project: null,
@@ -679,7 +679,7 @@ Object.assign(Activity.prototype, {
    * @type {boolean} */
   includeInReports: true,
   /**
-   * Whether to send action events to the {@link Reporter}
+   * Whether to send action events to the {@link module:Reporter.Reporter Reporter}
    * @name Activity#reportActions
    * @type {boolean} */
   reportActions: false,
@@ -699,7 +699,7 @@ Object.assign(Activity.prototype, {
    * @type {string} */
   helpMsg: '',
   /**
-   * Specific set of {@link EventSounds} used in the activity. The default is `null`, meaning
+   * Specific set of {@link module:media/EventSounds.EventSounds EventSounds} used in the activity. The default is `null`, meaning
    * to use the default event sounds.
    * @name Activity#eventSounds
    * @type {EventSounds} */
@@ -844,7 +844,7 @@ Object.assign(Activity.prototype, {
    * @type {boolean} */
   invAss: false,
   /**
-   * Array of menu elements, used in activities of type {@link Menu}
+   * Array of menu elements, used in activities of type {@link module:activities/panels/Menu.Menu Menu}
    * @name Activity#menuElements
    * @type {array} */
   menuElements: null,
@@ -869,7 +869,7 @@ Object.assign(Activity.prototype, {
 export class ActivityPanel extends Container {
   /**
    * ActivityPanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation}
    * Java interface.
@@ -993,7 +993,7 @@ export class ActivityPanel extends Container {
   }
 
   /**
-   * Called by {@link JClicPlayer} when this activity panel is fully visible, just after the
+   * Called by {@link module:JClicPlayer.JClicPlayer JClicPlayer} when this activity panel is fully visible, just after the
    * initialization process.
    */
   activityReady() {
@@ -1231,7 +1231,7 @@ Object.assign(ActivityPanel.prototype, {
    */
   accessibleCanvas: true,
   /**
-   * The realized current {@link Skin}
+   * The realized current {@link module:skins/Skin.Skin Skin}
    * @name ActivityPanel#skin
    * @type {Skin} */
   skin: null,
@@ -1277,7 +1277,7 @@ Object.assign(ActivityPanel.prototype, {
   bc: null,
   /**
    * The PlayStation used to realize media objects and communicate with the player services
-   * (usually a {@link JClicPlayer}
+   * (usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}
    * @name ActivityPanel#ps
    * @type {PlayStation} */
   ps: null,

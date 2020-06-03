@@ -38,12 +38,12 @@ import { compareMultipleOptions } from '../../Utils';
 import Rectangular from '../../shapers/Rectangular';
 
 /**
- * This class of {@link Activity} shows a panel with {@link ActiveBox} objects acting as cells
+ * This class of {@link module:Activity.Activity Activity} shows a panel with {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects acting as cells
  * with questions. The answers to these questions must be written in a separate text field.
  *
- * The ActiveBox objects are filled with data stored in {@link ActiveBagContent} repositories.
+ * The ActiveBox objects are filled with data stored in {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent} repositories.
  *
- * A second {@link ActiveBagContent} can be used as alternative content, revealed as the questions
+ * A second {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent} can be used as alternative content, revealed as the questions
  * are solved.
  * @extends module:Activity
  */
@@ -119,13 +119,13 @@ Object.assign(WrittenAnswer.prototype, {
 });
 
 /**
- * The {@link ActivityPanel} where {@link WrittenAnswer} activities are played.
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/text/WrittenAnswer.WrittenAnswer WrittenAnswer} activities are played.
  * @extends module:ActivityPanel
  */
 export class WrittenAnswerPanel extends Activity.Panel {
   /**
    * WrittenAnswerPanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
@@ -377,7 +377,7 @@ export class WrittenAnswerPanel extends Activity.Panel {
 
   /**
    * Updates the currently selected cell, evaluating the answer written by the user on the text field.
-   * @param {number} i - Index into the {@link ActiveBoxBag} of the cell to make active
+   * @param {number} i - Index into the {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} of the cell to make active
    * @param {function[]} delayedActions - If set, store the the action in this array for future execution
    */
   setCurrentCell(i, delayedActions = null) {
@@ -519,12 +519,12 @@ Object.assign(WrittenAnswerPanel.prototype, {
    * @type {boolean[]} */
   invAssCheck: null,
   /**
-   * The {@link ActiveBoxBag} object containing the questions
+   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the questions
    * @name WrittenAnswerPanel#bgA
    * @type {ActiveBoxBag} */
   bgA: null,
   /**
-   * An optional {@link ActiveBoxBag} with content displayed as cells are solved.
+   * An optional {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} with content displayed as cells are solved.
    * @name WrittenAnswerPanel#bgB
    * @type {ActiveBoxBag} */
   bgB: null,

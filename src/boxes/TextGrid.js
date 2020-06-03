@@ -58,10 +58,10 @@ export const flags = {
 };
 
 /**
- * This class is a special type of {@link AbstractBox} that displays a grid of single
+ * This class is a special type of {@link module:boxes/AbstractBox.AbstractBox AbstractBox} that displays a grid of single
  * characters.
  *
- * It's used {@link CrossWord} and {@link WordSearch} activities.
+ * It's used {@link module:activities/textGrid/CrossWord.CrossWord CrossWord} and {@link module:activities/textGrid/WordSearch.WordSearch WordSearch} activities.
  * @extends module:AbstractBox
  */
 export class TextGrid extends AbstractBox {
@@ -199,7 +199,7 @@ export class TextGrid extends AbstractBox {
   /**
    * For a specific cell located at column `rx` and row `ry`, finds the number of words delimited
    * by wildchars located behind its current position and in the same row and column. Used in
-   * {@link CrossWord} activities to find the definition for a specific cell.
+   * {@link module:activities/textGrid/CrossWord.CrossWord CrossWord} activities to find the definition for a specific cell.
    *
    * The result is returned as 'x' and 'y' properties of a logical point.
    * @param {type} rx - The 'X' position of the cell
@@ -282,7 +282,7 @@ export class TextGrid extends AbstractBox {
    * Moves the cursor in the specified x and y directions.
    * @param {number} dx - Amount to move in the 'X' axis
    * @param {number} dy - Amount to move in the 'Y' axis
-   * @param {boolean} skipLocked - Skip locked cells (wildcards in {@link CrossWord})
+   * @param {boolean} skipLocked - Skip locked cells (wildcards in {@link module:activities/textGrid/CrossWord.CrossWord CrossWord})
    */
   moveCursor(dx, dy, skipLocked) {
     if (this.useCursor) {
@@ -859,7 +859,7 @@ Object.assign(TextGrid.prototype, {
    * @type {module:AWT.Point} */
   cursor: null,
   /**
-   * `true` when the cursor is "blinking" (cell drawn with {@link BoxBase} `inverse` attributes)
+   * `true` when the cursor is "blinking" (cell drawn with {@link module:boxes/BoxBase.BoxBase BoxBase} `inverse` attributes)
    * @name TextGrid#cursorBlink
    * @type {boolean} */
   cursorBlink: false,

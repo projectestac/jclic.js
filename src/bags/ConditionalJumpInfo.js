@@ -33,15 +33,15 @@ import JumpInfo from './JumpInfo';
 import { getAttr, isEmpty } from '../Utils';
 
 /**
- * This special case of {@link JumpInfo} is used in {@link ActivitySequenceJump} objects to decide
+ * This special case of {@link module:bags/JumpInfo.JumpInfo JumpInfo} is used in {@link module:bags/ActivitySequenceJump.ActivitySequenceJump ActivitySequenceJump} objects to decide
  * the type of jump or action to be performed, based on the results obtained by the user when
  * playing previous JClic activities.
  *
- * In addition to the standard {@link JumpInfo} fields and methods, this class has two public
+ * In addition to the standard {@link module:bags/JumpInfo.JumpInfo JumpInfo} fields and methods, this class has two public
  * members where score and time thresholds are stored.
  *
  * The exact meaning of this members will depend on the type of `ConditionalJumpInfo` in the
- * {@link ActivitySequenceJump} (it can be `upperJump` or `lowerJump`).
+ * {@link module:bags/ActivitySequenceJump.ActivitySequenceJump ActivitySequenceJump} (it can be `upperJump` or `lowerJump`).
  * @extends module:JumpInfo
  */
 export class ConditionalJumpInfo extends JumpInfo {

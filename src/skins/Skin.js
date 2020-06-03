@@ -40,14 +40,14 @@ import { Container, Dimension, Rectangle } from '../AWT';
  * This abstract class manages the layout, position ans size of the visual components of JClic:
  * player window, message box, counters, buttons, status... and also the appearance of the main
  * container.
- * The basic implementation of Skin is {@link DefaultSkin}.
+ * The basic implementation of Skin is {@link module:skins/DefaultSkin.DefaultSkin DefaultSkin}.
  * @abstract
  * @extends module:AWT.Container
  */
 export class Skin extends Container {
   /**
    * Skin constructor
-   * @param {PlayStation} ps - The `PlayStation` (currently a {@link JClicPlayer}) used to load and
+   * @param {PlayStation} ps - The `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
    * realize the media objects needed tot build the Skin.
    * @param {string} [name] - The skin name
    * @param {object} [options] - Optional parameter with additional options
@@ -213,7 +213,7 @@ export class Skin extends Container {
   /**
    * Checks if the provided stylesheet ID is already registered in the root node where the current player is placed
    * @param {String} skinId - The unique identifier of the skin to check
-   * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link JClicPlayer}) used as a base to find the root node
+   * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used as a base to find the root node
    * @returns {Boolean} - _true_ when the skin stylesheet is already defined in the current root node, _false_ otherwise
    */
   static registerStyleSheet(skinId, ps) {
@@ -241,7 +241,7 @@ export class Skin extends Container {
    * Gets the specified Skin from `skinStack`, or creates a new one if not found.
    * This function should be used only through `Skin.getSkin`
    * @param {string} skinName - The name of the searched skin
-   * @param {PlayStation} ps - The PlayStation (usually a {@link JClicPlayer}) used to build the new skin.
+   * @param {PlayStation} ps - The PlayStation (usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to build the new skin.
    * @param {object} [options] - Optional parameter with additional options
    * @returns {Skin}
    */
@@ -298,7 +298,7 @@ export class Skin extends Container {
   }
 
   /**
-   * Attaches a {@link JClicPlayer} object to this Skin
+   * Attaches a {@link module:JClicPlayer.JClicPlayer JClicPlayer} object to this Skin
    * @param {JClicPlayer} player
    */
   attach(player) {
@@ -742,7 +742,7 @@ export class Skin extends Container {
   }
 
   /**
-   * Gets the {@link ActiveBox} used to display the main messages of activities
+   * Gets the {@link module:boxes/ActiveBox.ActiveBox ActiveBox} used to display the main messages of activities
    * @returns {ActiveBox}
    */
   getMsgBox() {
@@ -931,7 +931,7 @@ Object.assign(Skin.prototype, {
     'mem': null
   },
   /**
-   * The {@link JClicPlayer} object associated to this skin
+   * The {@link module:JClicPlayer.JClicPlayer JClicPlayer} object associated to this skin
    * @name Skin#player
    * @type {JClicPlayer} */
   player: null,

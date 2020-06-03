@@ -46,7 +46,7 @@ import { log, getMsg, getVal } from '../Utils';
 export class Reporter {
   /**
    * Reporter constructor
-   * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
+   * @param {PlayStation} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve localized messages
    */
   constructor(ps) {
     this.ps = ps;
@@ -71,7 +71,7 @@ export class Reporter {
    * Creates a new Reporter of the requested class
    * The resulting object must be prepared to operate with a call to its `init` method.
    * @param {string} className - Class name of the requested reporter. When `null`, a basic Reporter is created.
-   * @param {PlayStation} ps - The {@link PlayStation} used to retrieve localized messages
+   * @param {PlayStation} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve localized messages
    * @returns {Reporter}
    */
   static getReporter(className, ps) {
@@ -409,7 +409,7 @@ export class Reporter {
 
   /**
    * This method should be invoked when a new session starts.
-   * @param {JClicProject} jcp - The {@link JClicProject} this session refers to.
+   * @param {JClicProject} jcp - The {@link module:project/JclicProject.JClicProject JClicProject} this session refers to.
    */
   newSession(jcp) {
     this.endSession();
@@ -420,7 +420,7 @@ export class Reporter {
 
   /**
    * This method should be invoked when a new sequence starts
-   * @param {ActivitySequenceElement} ase - The {@link ActivitySequenceElement} referenced by this sequence.
+   * @param {ActivitySequenceElement} ase - The {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} referenced by this sequence.
    */
   newSequence(ase) {
     if (this.currentSession) {
@@ -433,7 +433,7 @@ export class Reporter {
 
   /**
    * This method should be invoked when the user starts a new activity
-   * @param {Activity} act - The {@link Activity} reporter has just started
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} reporter has just started
    */
   newActivity(act) {
     if (this.currentSession) {
@@ -494,7 +494,7 @@ Object.assign(Reporter.prototype, {
    * @type {ReporterInfo} */
   info: null,
   /**
-   * The {@link PlayStation} used to retrieve messages
+   * The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve messages
    * @name Reporter#ps
    * @type {PlayStation} */
   ps: null,
@@ -571,12 +571,12 @@ Object.assign(Reporter.prototype, {
 });
 
 /**
- * This object stores the global results of a {@link Reporter}
+ * This object stores the global results of a {@link module:Reporter.Reporter Reporter}
  */
 export class ReporterInfo {
   /**
    * ReporterInfo constructor
-   * @param {Reporter} rep - The {@link Reporter} associated tho this `Info` object.
+   * @param {Reporter} rep - The {@link module:Reporter.Reporter Reporter} associated tho this `Info` object.
    */
   constructor(rep) {
     this.rep = rep;

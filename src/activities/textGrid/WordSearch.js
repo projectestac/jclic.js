@@ -38,12 +38,12 @@ import { Rectangle, Point } from '../../AWT';
 import TextGrid from '../../boxes/TextGrid';
 
 /**
- * This class of {@link Activity} shows a {@link TextGrid} with some words placed in horizontal,
+ * This class of {@link module:Activity.Activity Activity} shows a {@link module:boxes/TextGrid.TextGrid TextGrid} with some words placed in horizontal,
  * vertical or diagonal direction, written right or upside down. The remaining grid cells will be
  * filled with randomly selected characters.
  *
  * The aim of the activity is to find all the words hidden on the text grid.
- * The content of an optional {@link ActiveBagContent} can be revealed on an auxiliary panel as
+ * The content of an optional {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent} can be revealed on an auxiliary panel as
  * words are found.
  * @extends module:Activity
  */
@@ -92,7 +92,7 @@ Object.assign(WordSearch.prototype, {
   clues: null,
   /**
    * Array of integers containing __for each clue__ the index
-   * of an associated {@link ActiveBoxContent} located on the secondary {@link ActiveBoxBag}.
+   * of an associated {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} located on the secondary {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag}.
    * This associated element is optional.
    * @name WordSearch#clueItems
    * @type {number[]} */
@@ -112,13 +112,13 @@ Object.assign(WordSearch.prototype, {
 });
 
 /**
- * The {@link ActivityPanel} where {@link WordSearch} activities are played.
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/textGrid/WordSearch.WordSearch WordSearch} activities are played.
  * @extends module:ActivityPanel
  */
 export class WordSearchPanel extends Activity.Panel {
   /**
    * WordSearchPanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
@@ -423,12 +423,12 @@ export class WordSearchPanel extends Activity.Panel {
 
 Object.assign(WordSearchPanel.prototype, {
   /**
-   * The {@link TextGrid} object of this ActivityPanel
+   * The {@link module:boxes/TextGrid.TextGrid TextGrid} object of this ActivityPanel
    * @name WordSearchPanel#grid
    * @type {TextGrid} */
   grid: null,
   /**
-   * An optional {@link ActiveBoxBag} used to display information associated with the hidden words.
+   * An optional {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} used to display information associated with the hidden words.
    * @name WordSearchPanel#bgAlt
    * @type {ActiveBoxBag} */
   bgAlt: null,

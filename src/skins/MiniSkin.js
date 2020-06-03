@@ -33,15 +33,15 @@ import Skin from './Skin';
 import DefaultSkin from './DefaultSkin';
 
 /**
- * This is a variant of the default {@link Skin} used by JClic.js
- * It differs from {@link DefaultSkin} in colors and sizes
+ * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js
+ * It differs from {@link module:skins/DefaultSkin.DefaultSkin DefaultSkin} in colors and sizes
  * @extends module:DefaultSkin
  */
 export class MiniSkin extends DefaultSkin {
   /**
    * MiniSkin constructor
    * 
-   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+   * @param {PlayStation} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
    * realize the media objects meeded tot build the Skin.
    * @param {string} [name] - The skin class name
    * @param {object} [options] - Optional parameter with additional options

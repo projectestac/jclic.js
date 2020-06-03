@@ -259,12 +259,12 @@ Object.assign(ProjectSettings.prototype, {
    * @type {string[]} */
   locales: null,
   /**
-   * The name of an optional 'skin' (visual aspect) can be set for the whole project, or for each {@link Activity}
+   * The name of an optional 'skin' (visual aspect) can be set for the whole project, or for each {@link module:Activity.Activity Activity}
    * @name ProjectSettings#skinFileName
    * @type {string} */
   skinFileName: null,
   /**
-   * The main {@link EventSounds} object of the project
+   * The main {@link module:media/EventSounds.EventSounds EventSounds} object of the project
    * @name ProjectSettings#eventSounds
    * @type {EventSounds} */
   eventSounds: new EventSounds(),

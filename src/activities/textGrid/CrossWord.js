@@ -42,13 +42,13 @@ import { Rectangle, Point } from '../../AWT';
 import { settings } from '../../Utils';
 
 /**
- * This class of {@link Activity} shows a {@link TextGrid} initially empty, with some cells
+ * This class of {@link module:Activity.Activity Activity} shows a {@link module:boxes/TextGrid.TextGrid TextGrid} initially empty, with some cells
  * marked in negative color that act as word stoppers. A blinking "cursor" indicates the cell that
  * will receive the next character entered by the user on the keyboard.
  *
  * The letter in each cell of the grid is always shared by two words: one in horizontal direction
- * and the other one in vertical direction. Two {@link ActiveBox} objects are placed next to the
- * {@link TextGrid}, hosting the definitions of the horizontal and vertical words crossing at the
+ * and the other one in vertical direction. Two {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects are placed next to the
+ * {@link module:boxes/TextGrid.TextGrid TextGrid}, hosting the definitions of the horizontal and vertical words crossing at the
  * cell currently marked by the cursor.
  *
  * Two special buttons placed near this boxes allow to write on the grid horizontally or vertically.
@@ -85,7 +85,7 @@ export class CrossWord extends Activity {
 
 Object.assign(CrossWord.prototype, {
   /**
-   * Whether all letters of the {@link TextGrid} should be displayed in upper case
+   * Whether all letters of the {@link module:boxes/TextGrid.TextGrid TextGrid} should be displayed in upper case
    * @name CrossWord#upperCase
    * @type {boolean} */
   upperCase: true,
@@ -95,20 +95,20 @@ Object.assign(CrossWord.prototype, {
    * @type {boolean} */
   checkCase: true,
   /**
-   * When `true`, the wildcard character of the {@link TextGrid} will be transparent.
+   * When `true`, the wildcard character of the {@link module:boxes/TextGrid.TextGrid TextGrid} will be transparent.
    * @name CrossWord#wildTransparent
    * @type {boolean} */
   wildTransparent: false,
 });
 
 /**
- * The {@link ActivityPanel} where {@link CrossWord} activities are played.
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/textGrid/CrossWord.CrossWord CrossWord} activities are played.
  * @extends module:ActivityPanel
  */
 export class CrossWordPanel extends Activity.Panel {
   /**
    * CrossWordPanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
@@ -134,7 +134,7 @@ export class CrossWordPanel extends Activity.Panel {
   }
 
   /**
-   * Creates a {@link BoxBag} with a label ("Horizontal" or "Vertical") and an {@link ActiveBox}
+   * Creates a {@link module:boxes/BoxBag.BoxBag BoxBag} with a label ("Horizontal" or "Vertical") and an {@link module:boxes/ActiveBox.ActiveBox ActiveBox}
    * that will be used to display clues.
    * @param {string} type - `acrossClues` for horizontal clues, 'downClues' for vertical.
    * @returns {BoxBag}

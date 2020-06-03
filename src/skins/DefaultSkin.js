@@ -39,13 +39,13 @@ import Counter from './Counter';
 import { log, getMsg, getSvg, svgToURI } from '../Utils';
 
 /**
- * This is the default {@link Skin} used by JClic.js
+ * This is the default {@link module:skins/Skin.Skin Skin} used by JClic.js
  * @extends module:Skin
  */
 export class DefaultSkin extends Skin {
   /**
    * DefaultSkin constructor
-   * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
+   * @param {PlayStation} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
    * realize the media objects needed tot build the Skin.
    * @param {string} [name] - The skin class name
    * @param {object} [options] - Optional parameter with additional options, used by subclasses
@@ -201,7 +201,7 @@ export class DefaultSkin extends Skin {
   }
 
   /**
-   * Gets the {@link ActiveBox} used to display the main messages of activities
+   * Gets the {@link module:boxes/ActiveBox.ActiveBox ActiveBox} used to display the main messages of activities
    * @returns {ActiveBox}
    */
   getMsgBox() {
@@ -232,7 +232,7 @@ Object.assign(DefaultSkin.prototype, {
    * @type {external:jQuery} */
   $ctrlCnt: null,
   /**
-   * Space (pixels) between the components of this {@link Skin}
+   * Space (pixels) between the components of this {@link module:skins/Skin.Skin Skin}
    * @name DefaultSkin#margin
    * @type {number} */
   margin: 18,

@@ -36,16 +36,16 @@ import Reporter from './Reporter';
 import { log, startsWith, getMsg } from '../Utils';
 
 /**
- * This special case of {@link Reporter} connects with an external service reporter providing
+ * This special case of {@link module:Reporter.Reporter Reporter} connects with an external service reporter providing
  * the {@link https://github.com/projectestac/jclic/wiki/JClic-Reports-developers-guide JClic Reports API}.
  * Connection parameters to the reports server (`path`, `service`, `userId`, `key`, `context`...)
- * are passed through the `options` element of {@link JClicPlayer} (acting as {@link PlayStation}).
+ * are passed through the `options` element of {@link module:JClicPlayer.JClicPlayer JClicPlayer} (acting as {@link module:JClicPlayer.JClicPlayer JClicPlayer}).
  * @extends module:Reporter
  */
 export class TCPReporter extends Reporter {
   /**
    * TCPReporter constructor
-   * @param {PlayStation} ps - The {@link PlayStation} used to retrieve settings and localized messages
+   * @param {PlayStation} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve settings and localized messages
    */
   constructor(ps) {
     super(ps);
@@ -205,7 +205,7 @@ export class TCPReporter extends Reporter {
   /**
    * This method should be invoked when a new session starts.
    * @override
-   * @param {JClicProject} jcp - The {@link JClicProject} this session refers to.
+   * @param {JClicProject} jcp - The {@link module:project/JclicProject.JClicProject JClicProject} this session refers to.
    */
   newSession(jcp) {
     super.newSession(jcp);
@@ -443,7 +443,7 @@ export class TCPReporter extends Reporter {
   /**
    * This method should be invoked when the user starts a new activity
    * @override
-   * @param {Activity} act - The {@link Activity} reporter has just started
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} reporter has just started
    */
   newActivity(act) {
     super.newActivity(act);

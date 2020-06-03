@@ -38,7 +38,7 @@ import BoxBag from '../../boxes/BoxBag';
 import { Rectangle, Point } from '../../AWT';
 
 /**
- * This class of {@link Activity} just shows a panel with {@link ActiveBox} objects.
+ * This class of {@link module:Activity.Activity Activity} just shows a panel with {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects.
  * Because active boxes can act as a links to specific points in the project's sequence of
  * activities, this kind of activity is often used as a menu where users can choose from different
  * options.
@@ -47,7 +47,7 @@ import { Rectangle, Point } from '../../AWT';
 export class InformationScreen extends Activity {
   /**
    * InformationScreen constructor
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -58,9 +58,9 @@ export class InformationScreen extends Activity {
 }
 
 /**
- * The {@link ActivityPanel} where {@link InformationScreen} activities should display its content
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/panels/InformationScreen.InformationScreen InformationScreen} activities should display its content
  * @extends module:ActivityPanel
- * @param {Activity} act - The {@link Activity} to which this Panel belongs
+ * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
  * @param {JClicPlayer} ps - Any object implementing the methods defined in the
  * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
  * Java interface.
@@ -242,7 +242,7 @@ export class InformationScreenPanel extends Activity.Panel {
 
 Object.assign(InformationScreenPanel.prototype, {
   /**
-   * The {@link ActiveBoxBag} containing the information to be displayed.
+   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed.
    * @name InformationScreenPanel#bg
    * @type {ActiveBoxBag} */
   bg: null,

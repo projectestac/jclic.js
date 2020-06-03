@@ -43,7 +43,7 @@ export class SCORM {
   /**
    * SCORM constructor
    * @param {object} API - The global SCORM API object
-   * @param {Reporter} reporter - The {@link Reporter} associated to this SCORM object
+   * @param {Reporter} reporter - The {@link module:Reporter.Reporter Reporter} associated to this SCORM object
    */
   constructor(API, reporter) {
     this.API = API;
@@ -78,7 +78,7 @@ export class SCORM {
   /**
    * Checks for the presence of a SCORM API on the current browser session.
    * @returns {SCORM} - A valid SCORM object, or `null` if no SCORM API was found.
-   * @param {Reporter} reporter - The {@link Reporter} linked to the requested SCORM object
+   * @param {Reporter} reporter - The {@link module:Reporter.Reporter Reporter} linked to the requested SCORM object
    */
   static getSCORM(reporter) {
     let result = null;

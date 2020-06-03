@@ -72,97 +72,97 @@ JClic.js is organized in three main groups of classes: _Player_, _Document_ and 
 &nbsp;
 #### Document classes
 
-[JClicProject](JClicProject.html) encapsulates all data needed to play JClic activities. Its main components are:
-* [ProjectSettings](ProjectSettings.html)
-* A collection of [Activity](Activity.html) objects (see below)
-* An [ActivitySequence](ActivitySequence.html) formed by [ActivitySequenceElement](ActivitySequenceElement.html) objects.
-* A [MediaBag](MediaBag.html) formed by [MediaBagElement](MediaBagElement.html) objects.
+[JClicProject](module-project_JClicProject.JClicProject.html) encapsulates all data needed to play JClic activities. Its main components are:
+* [ProjectSettings](module-project_ProjectSettings.ProjectSettings.html)
+* A collection of [Activity](module_Activity.Activity.html) objects (see below)
+* An [ActivitySequence](module-bags_ActivitySequence.ActivitySequence.html) formed by [ActivitySequenceElement](module-bags_ActivitySequenceElement.ActivitySequenceElement.html) objects.
+* A [MediaBag](module-bags_MediaBag.MediaBag.html) formed by [MediaBagElement](module-bags_MediaBagElement.MediaBagElement.html) objects.
 
-The [Activity](Activity.html) class has the following subclasses:
-* [SimpleAssociation](SimpleAssociation.html)
-  * [ComplexAssociation](ComplexAssociation.html)
-* [WrittenAnswer](WrittenAnswer.html)
-* [MemoryGame](MemoryGame.html)
-* [Explore](Explore.html)
-* [Identify](Identify.html)
-* [InformationScreen](InformationScreen.html)
-* [DoublePuzzle](DoublePuzzle.html)
-* [ExchangePuzzle](ExchangePuzzle.html)
-* [HolePuzzle](HolePuzzle.html)
-* [TextActivityBase](TextActivityBase.html) (see below)
-  * [FillInBlanks](FillInBlanks.html)
-  * [Complete](Complete.html)
-  * [IdentifyText](IdentifyText.html)
-  * [OrderText](OrderText.html)
-* [CrossWord](CrossWord.html)
-* [WordSearch](WordSearch.html)
+The [Activity](module-Activity.Activity.html) class has the following subclasses:
+* [SimpleAssociation](module-activities_associations_SimpleAssociation.SimpleAssociation.html)
+  * [ComplexAssociation](module-activities_associations_ComplexAssociation.ComplexAssociation.html)
+* [WrittenAnswer](module-activities_text_WrittenAnswer.WrittenAnswer.html)
+* [MemoryGame](module-activities_memory_MemoryGame.MemoryGame.html)
+* [Explore](module-activities_panels_Explore.Explore.html)
+* [Identify](module-activities_panels_Identify.Identify.html)
+* [InformationScreen](module-activities_panels_InformationScreen.InformationScreen.html)
+* [DoublePuzzle](module-activities_puzzles_DoublePuzzle.DoublePuzzle.html)
+* [ExchangePuzzle](module-activities_puzzles_ExchangePuzzle.ExchangePuzzle.html)
+* [HolePuzzle](module-activities_puzzles_HolePuzzle.HolePuzzle.html)
+* [TextActivityBase](module-activities_text_TextActivityBase.TextActivityBase.html) (see below)
+  * [FillInBlanks](module-activities_text_FillInBlanks.FillInBlanks.html)
+  * [Complete](module-activities_text_Complete.Complete.html)
+  * [IdentifyText](module-activities_text_IdentifyText.IdentifyText.html)
+  * [OrderText](module-activities_text_OrderText.OrderText.html)
+* [CrossWord](module-activities_textGrid_CrossWord.CrossWord.html)
+* [WordSearch](module-activities_textGrid_WordSearch.WordSearch.html)
 
-All classes derived from [TextActivityBase](TextActivityBase.html) have:
-* One [TextActivityDocument](TextActivityDocument.html)
-* An [Evaluator](Evaluator.html)
+All classes derived from [TextActivityBase](module-activities_text_TextActivityBase.TextActivityBase.html) have:
+* One [TextActivityDocument](module-activities_text_TextActivityDocument.TextActivityDocument.html)
+* An [Evaluator](module-activities_text_Evaluator.Evaluator.html)
 
-At run time, all classes derived from [Activity](Activity.html) generate a specific [Activity.Panel](Activity.Panel.html), that is a real DOM object with wich users interact.
+At run time, all classes derived from [Activity](module-Activity.Activity.html) generate a specific [ActivityPanel](module-Activity.ActivityPanel.html), that is a real DOM object with wich users interact.
 
 &nbsp;
 #### Utility classes
 
 __AWT:__
 AWT contains some classes similar to those defined in Java's [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html):
-* [Font](Font.html)
-* [Gradient](Gradient.html)
-* [Stroke](Stroke.html)
-* [Point](Point.html)
-* [Dimension](Dimension.html)
-* [Shape](Shape.html)
-  * [Rectangle](Rectangle.html)
-  * [Ellipse](Ellipse.html)
-  * [Path](Path.html): formed by [PathStroke](PathStroke.html) elements
-* [Action](Action.html)
-* [Timer](Timer.html)
-* [Container](Container.html)
+* [Font](module-AWT.Font.html)
+* [Gradient](module-AWT.Gradient.html)
+* [Stroke](module-AWT.Stroke.html)
+* [Point](module-AWT.Point.html)
+* [Dimension](module-AWT.Dimension.html)
+* [Shape](module-AWT.Shape.html)
+  * [Rectangle](module-AWT.Rectangle.html)
+  * [Ellipse](module-AWT.Ellipse.html)
+  * [Path](module-AWT.Path.html): formed by [PathStroke](module-AWT.PathStroke.html) elements
+* [Action](module-AWT.Action.html)
+* [Timer](module-AWT.Timer.html)
+* [Container](module-AWT.Container.html)
 
 __Boxes:__
-[AbstractBox](AbstractBox.html) is a special class derived from [AWT.Rectangle](AWT.Rectangle.html) that has the following subclasses:
-* [ActiveBox](ActiveBox.html): an AbstractBox with active content (see below)
-* [BoxBag](BoxBag.html): a collection of AbstractBox objects.
-  * [ActiveBoxBag](ActiveBoxBag.html): a collection of [ActiveBox](ActiveBox.html) objects.
-    * [ActiveBoxGrid](ActiveBoxGrid.html): a special case of ActiveBoxBag with boxes distributed in rows and columns.
-* [TextGrid](TextGrid.html): a grid of single letters.
+[AbstractBox](module-boxes_AbstractBox.AbstractBox.html) is a special class derived from [AWT.Rectangle](module-AWT.Rectangle.html) that has the following subclasses:
+* [ActiveBox](module-boxes_ActiveBox.ActiveBox.html): an AbstractBox with active content (see below)
+* [BoxBag](module-boxes_BoxBag.BoxBag.html): a collection of AbstractBox objects.
+  * [ActiveBoxBag](module-boxes_ActiveBoxBag.ActiveBoxBag.html): a collection of [ActiveBox](module-boxes_ActiveBox.ActiveBox.html) objects.
+    * [ActiveBoxGrid](module-boxes_ActiveBoxGrid.ActiveBoxGrid.html): a special case of ActiveBoxBag with boxes distributed in rows and columns.
+* [TextGrid](module-boxes_TextGrid.TextGrid.html): a grid of single letters.
 
 __Box content:__
-* [ActiveBoxContent](ActiveBoxContent.html): encapsulates the content of a single _ActiveBox_.
-* [BoxBase](BoxBase.html): contains style specs (color, gradient, border, font, size...) common to one or more _ActiveBoxContent_ objects. Also used by _TextActivityDocument_ to encapsulate text styles.
-* [ActiveBagContent](ActiveBagContent.html): a collection of _ActiveBoxContent_ objects.
-* [TextGridContent](TextGridContent.html): encapsulates the content of a _TextGrid_ object.
+* [ActiveBoxContent](module-boxes_ActiveBoxContent.ActiveBoxContent.html): encapsulates the content of a single _ActiveBox_.
+* [BoxBase](module-boxes_BoxBase.BoxBase.html): contains style specs (color, gradient, border, font, size...) common to one or more _ActiveBoxContent_ objects. Also used by _TextActivityDocument_ to encapsulate text styles.
+* [ActiveBagContent](module-boxes_ActiveBagContent.ActiveBagContent.html): a collection of _ActiveBoxContent_ objects.
+* [TextGridContent](module-boxes_TextGridContent.TextGridContent.html): encapsulates the content of a _TextGrid_ object.
 
 __Shapers:__
-* [Shaper](Shaper.html): describes how to cut a panel in multiple cells.
-  * [Rectangular](Rectangular.html): divides the panel in rectangular cells.
-  * [Holes](Holes.html): a free-form shaper.
-  * [JigSaw](JigSaw.html): generates cells with teeth and slots.
-    * [ClassicJigSaw](ClassicJigSaw.html)
-    * [TriangularJigSaw](TriangularJigSaw.html)
+* [Shaper](module-shapers_Shaper.Shaper.html): describes how to cut a panel in multiple cells.
+  * [Rectangular](module-shapers_Rectangular.Rectangular.html): divides the panel in rectangular cells.
+  * [Holes](module-shapers_Holes.Holes.html): a free-form shaper.
+  * [JigSaw](module-shapers_JigSaw.JigSaw.html): generates cells with teeth and slots.
+    * [ClassicJigSaw](module-shapers_ClassicJigSaw.ClassicJigSaw.html)
+    * [TriangularJigSaw](module-shapers_TriangularJigSaw.TriangularJigSaw.html)
 
 __Media:__
-* [EventSounds](EventSounds.html): a collection of [EventSoundsElement](EventSoundsElement.html)
-* [ActiveMediaBag](ActiveMediaBag.html): a collection of [MediaContent](MediaContent.html)
-* [ActiveMediaPlayer](ActiveMediaPlayer.html): performs playing of _MediaContent_
-* [AudioBuffer](AudioBuffer.html): Provides sound recording (usually from the microphone) so, in language activities, students can compare their pronunciation with a pattern.
-* [MidiAudioPlayer](MidiAudioPlayer.html): performs playing of MIDI files
+* [EventSounds](module-media_EventSounds.EventSounds.html): a collection of [EventSoundsElement](module-media_EventSoundsElement.EventSoundsElement.html)
+* [ActiveMediaBag](module-media_ActiveMediaBag.ActiveMediaBag.html): a collection of [MediaContent](module-media_MediaContent.MediaContent.html)
+* [ActiveMediaPlayer](module-media_ActiveMediaPlayer.html): performs playing of _MediaContent_
+* [AudioBuffer](module-media_AudioBuffer.html): Provides sound recording (usually from the microphone) so, in language activities, students can compare their pronunciation with a pattern.
+* [MidiAudioPlayer](module-media_MidiAudioPlayer.html): performs playing of MIDI files
 
 __Automation:__
-* [AutoContentProvider](AutoContentProvider.html): builds dynamic content for activities
-  * [Arith](Arith.html): random generator of menthal arithmetics operations
+* [AutoContentProvider](module-automation_AutoContentProvider.AutoContentProvider.html): builds dynamic content for activities
+  * [Arith](module-automation_arith_Arith.Arith.html): random generator of menthal arithmetics operations
 
 __Jump between sequence points:__
-* [JumpInfo](JumpInfo.html): stores information about what to do when an activity finishes or when the user clicks on a link or button.
-  * [ActivitySequenceJump](ActivitySequenceJump.html): used by _ActivitySequenceElement_ objects.
-  * [ConditionalJumpInfo](ConditionalJumpInfo.html): used to decide where to jump, based on the current timing and scoring
+* [JumpInfo](module-bags_JumpInfo.JumpInfo.html): stores information about what to do when an activity finishes or when the user clicks on a link or button.
+  * [ActivitySequenceJump](module-bags_ActivitySequenceJump.ActivitySequenceJump.html): used by _ActivitySequenceElement_ objects.
+  * [ConditionalJumpInfo](module-bags_ConditionalJumpInfo.ConditionalJumpInfo.html): used to decide where to jump, based on the current timing and scoring
 
 __Miscellaneous utility classes:__
-* [BoxConnector](BoxConnector.html): Used to link two cells with a thin line dragged by the user.
-* [Utils](Utils.html): Miscellaneous constants and functions.
-* [i18n](i18n.js): Internationalization utilities.
+* [BoxConnector](module-boxes_BoxConnector.BoxConnector.html): Used to link two cells with a thin line dragged by the user.
+* [Utils](module-Utils.html): Miscellaneous constants and functions.
+* [i18n](module-i18n.html): Internationalization utilities.
 
 ## Sponsors that make possible JClic.js
 

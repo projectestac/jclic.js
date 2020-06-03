@@ -37,7 +37,7 @@ import { Rectangle, Point } from '../../AWT';
 import Rectangular from '../../shapers/Rectangular';
 
 /**
- * This class of {@link Activity} shows only one panel with shuffled {@link ActiveBox} cells.
+ * This class of {@link module:Activity.Activity Activity} shows only one panel with shuffled {@link module:boxes/ActiveBox.ActiveBox ActiveBox} cells.
  *
  * One of the cells is out of the main panel, thus allowing its neighbors occupy their space.
  * Only immediate neighbors of the "hole" can move into it.
@@ -48,7 +48,7 @@ import Rectangular from '../../shapers/Rectangular';
 export class HolePuzzle extends Activity {
   /**
    * HolePuzzle constructor
-   * @param {JClicProject} project - The {@link JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -92,13 +92,13 @@ export class HolePuzzle extends Activity {
 }
 
 /**
- * The {@link ActivityPanel} where {@link HolePuzzle} activities are played
+ * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/puzzles/HolePuzzle.HolePuzzle HolePuzzle} activities are played
  * @extends module:ActivityPanel
  */
 export class HolePuzzlePanel extends Activity.Panel {
   /**
    * HolePuzzlePanel constructor
-   * @param {Activity} act - The {@link Activity} to which this Panel belongs
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
    * Java interface.
@@ -324,7 +324,7 @@ export class HolePuzzlePanel extends Activity.Panel {
 
 Object.assign(HolePuzzlePanel.prototype, {
   /**
-   * The {@link ActiveBoxBag} object containing the information to be displayed in the panel.
+   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the panel.
    * @name HolePuzzlePanel#bg
    * @type {ActiveBoxBag} */
   bg: null,
