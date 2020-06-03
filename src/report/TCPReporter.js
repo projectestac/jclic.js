@@ -205,7 +205,7 @@ export class TCPReporter extends Reporter {
   /**
    * This method should be invoked when a new session starts.
    * @override
-   * @param {JClicProject} jcp - The {@link module:project/JclicProject.JClicProject JClicProject} this session refers to.
+   * @param {JClicProject} jcp - The {@link module:project/JClicProject.JClicProject JClicProject} this session refers to.
    */
   newSession(jcp) {
     super.newSession(jcp);

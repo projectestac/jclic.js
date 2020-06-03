@@ -286,7 +286,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Loads the specified project and starts playing at the specified activity or sequence tag.
-   * @param {?(string|JClicProject)} project - The project to load (if it's a string) or to use (if it's an object of type {@link module:project/JclicProject.JClicProject JClicProject}).
+   * @param {?(string|JClicProject)} project - The project to load (if it's a string) or to use (if it's an object of type {@link module:project/JClicProject.JClicProject JClicProject}).
    * When it's a `string`, it can be the absolute or relative path to:
    * - A `.jclic` project file, in XML format
    * - A `.jclic.json` project file in JSON format
@@ -1096,7 +1096,7 @@ Object.assign(JClicPlayer.prototype, {
    * @type {boolean} */
   fullScreenChecked: false,
   /**
-   * The {@link module:project/JclicProject.JClicProject JClicProject} currently hosted in this player
+   * The {@link module:project/JClicProject.JClicProject JClicProject} currently hosted in this player
    * @name JClicPlayer#project
    * @type {JClicProject} */
   project: null,
@@ -1141,7 +1141,7 @@ Object.assign(JClicPlayer.prototype, {
    * @type {Skin} */
   defaultSkin: null,
   /**
-   * The last skin directly specified by a {@link module:project/JclicProject.JClicProject JClicProject}
+   * The last skin directly specified by a {@link module:project/JClicProject.JClicProject JClicProject}
    * @name JClicPlayer#defaultSkin
    * @type {Skin} */
   lastProjectSkin: null,

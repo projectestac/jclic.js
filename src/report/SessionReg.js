@@ -32,7 +32,7 @@
 import SequenceReg from './SequenceReg';
 
 /**
- * This class encapsulates data of a user's working session, usually associated to a single {@link module:project/JclicProject.JClicProject JClicProject}
+ * This class encapsulates data of a user's working session, usually associated to a single {@link module:project/JClicProject.JClicProject JClicProject}
  * It's main component is `sequences`, an array of {@link SequenceReg} objects.
  */
 export class SessionReg {
@@ -204,7 +204,7 @@ Object.assign(SessionReg.prototype, {
    * @type {Date} */
   started: null,
   /**
-   * Name of the {@link module:project/JclicProject.JClicProject JClicProject} associated to this session
+   * Name of the {@link module:project/JClicProject.JClicProject JClicProject} associated to this session
    * @name SessionReg#projectName
    * @type {string} */
   projectName: '',

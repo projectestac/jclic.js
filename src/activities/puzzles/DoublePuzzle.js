@@ -48,7 +48,7 @@ import { getMsg } from '../../Utils';
 export class DoublePuzzle extends Activity {
   /**
    * DoublePuzzle constructor
-   * @param {JClicProject} project - The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);

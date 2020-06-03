@@ -47,7 +47,7 @@ import { Rectangle, Point } from '../../AWT';
 export class InformationScreen extends Activity {
   /**
    * InformationScreen constructor
-   * @param {JClicProject} project - The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);

@@ -37,7 +37,7 @@ import { nSlash } from '../Utils';
 
 /**
  * This class stores the definition of the sequence to follow to show the activities of a
- * {@link module:project/JclicProject.JClicProject JClicProject}. The sequence are formed by an ordered list of objects of type
+ * {@link module:project/JClicProject.JClicProject JClicProject}. The sequence are formed by an ordered list of objects of type
  * {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement}.
  * It stores also a transient pointer to the current sequence element.
  */

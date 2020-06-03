@@ -36,7 +36,7 @@ import { log, nSlash } from '../Utils';
 
 /**
  * This class stores and manages all the media components (images, sounds, animations, video,
- * MIDI files, etc.) needed to run the activities of a {@link module:project/JclicProject.JClicProject JClicProject}. The main member of
+ * MIDI files, etc.) needed to run the activities of a {@link module:project/JClicProject.JClicProject JClicProject}. The main member of
  * the class is `elements`. This is where {@link MediaBagElement} objects are stored.
  */
 export class MediaBag {

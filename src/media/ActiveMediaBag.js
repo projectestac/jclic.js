@@ -34,7 +34,7 @@ import { settings } from '../Utils';
 
 /**
  * This class stores a collection of realized {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} objects, related to a
- * {@link module:project/JclicProject.JClicProject JClicProject} or {@link module:Activity.Activity Activity}.
+ * {@link module:project/JClicProject.JClicProject JClicProject} or {@link module:Activity.Activity Activity}.
  */
 export class ActiveMediaBag {
   /**

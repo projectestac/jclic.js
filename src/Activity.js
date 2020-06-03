@@ -601,7 +601,7 @@ Activity.CLASSES = {
 
 Object.assign(Activity.prototype, {
   /**
-   * The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
+   * The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
    * @name Activity#project
    * @type {JClicProject} */
   project: null,

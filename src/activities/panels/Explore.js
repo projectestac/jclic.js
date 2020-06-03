@@ -45,7 +45,7 @@ import Rectangular from '../../shapers/Rectangular';
 export class Explore extends Activity {
   /**
    * Explore constructor
-   * @param {JClicProject} project - The {@link module:project/JclicProject.JClicProject JClicProject} to which this activity belongs
+   * @param {JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);

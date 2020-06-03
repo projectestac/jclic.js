@@ -41,7 +41,7 @@ import { Font } from '../AWT';
  *
  * Media elements have a name, a reference to a file (the `file` field) and, when initialized,
  * a `data` field pointing to a object containing the real media. They have also a flag indicating
- * if the data must be saved on the {@link module:project/JclicProject.JClicProject JClicProject} zip file or just maintained as a reference
+ * if the data must be saved on the {@link module:project/JClicProject.JClicProject JClicProject} zip file or just maintained as a reference
  * to an external file.
  */
 export class MediaBagElement {
