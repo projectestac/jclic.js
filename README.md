@@ -1,8 +1,8 @@
 # JClic.js
 
-[![Bower version](https://badge.fury.io/bo/jclic.svg)](https://badge.fury.io/bo/jclic)
 [![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic)
 [![CDNJS version](https://img.shields.io/cdnjs/v/jclic.js.svg)](https://cdnjs.com/libraries/jclic.js)
+[![](https://data.jsdelivr.com/v1/package/npm/jclic/badge)](https://www.jsdelivr.com/package/npm/jclic)
 [![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player of [JClic](https://github.com/projectestac/jclic) activities. See a [demo](https://clic.xtec.cat/projects/demo_eng/jclic.js/index.html) on how it works.
