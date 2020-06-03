@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import Activity from '../../Activity';
+import { Activity, ActivityPanel } from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
 import { Rectangle, Point } from '../../AWT';
@@ -40,7 +40,7 @@ import Rectangular from '../../shapers/Rectangular';
  * This class of {@link module:Activity.Activity Activity} shows a panel with {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects. Users can click
  * on this objects to obtain associated information. This associated information, displayed in
  * a second panel, can be text graphics, sound, video... or a combination of them.
- * @extends module:Activity
+ * @extends module:Activity.Activity
  */
 export class Explore extends Activity {
   /**
@@ -82,15 +82,14 @@ export class Explore extends Activity {
 
 /**
  * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/panels/Explore.Explore Explore} activities are played.
- * @extends module:ActivityPanel
- * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
- * @param {JClicPlayer} ps - Any object implementing the methods defined in the
- * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
- * Java interface.
+ * @extends module:Activity.ActivityPanel
  */
-export class ExplorePanel extends Activity.Panel {
+export class ExplorePanel extends ActivityPanel {
   /**
    * ExplorePanel constructor
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {

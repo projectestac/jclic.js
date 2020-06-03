@@ -1036,7 +1036,7 @@ Object.assign(Shape.prototype, {
  * new Rectangle([x0, y0, x1, y1])
  * // Four single numbers, meaning the same coordinates as above:
  * new Rectangle(x0, y0, x1, y1)
- * @extends module:Shape
+ * @extends module:AWT.Shape
  */
 export class Rectangle extends Shape {
   /**
@@ -1265,7 +1265,7 @@ Object.assign(Rectangle.prototype, {
 
 /**
  * The Ellipse shape has the same constructor options as {@link module:AWT.Rectangle Rectangle}
- * @extends module:Rectangle
+ * @extends module:AWT.Rectangle
  */
 export class Ellipse extends Rectangle {
   /**
@@ -1368,7 +1368,7 @@ Object.assign(Ellipse.prototype, {
 /**
  * A `Path` is a {@link Shape} formed by a serie of strokes, represented by
  * {@link PathStroke} objects
- * @extends module:Shape
+ * @extends module:AWT.Shape
  */
 export class Path extends Shape {
   /**
@@ -1976,7 +1976,7 @@ Object.assign(Timer.prototype, {
  * Logic object that takes care of an "invalidated" rectangle that will be repainted
  * at the next update of a 2D object, usually an HTML Canvas.
  * Container has the same constructor options as {@link module:AWT.Rectangle Rectangle}
- * @extends module:Rectangle
+ * @extends module:AWT.Rectangle
  */
 export class Container extends Rectangle {
   /**

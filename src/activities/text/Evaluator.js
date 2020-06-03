@@ -226,7 +226,7 @@ Object.assign(Evaluator.prototype, {
 /**
  * A basic evaluator that just compares texts, without looking for possible coincidences of text
  * fragments once erroneous characters removed.
- * @extends module:Evaluator
+ * @extends module:activities/text/Evaluator.Evaluator
  */
 export class BasicEvaluator extends Evaluator {
   /**
@@ -345,7 +345,7 @@ Object.assign(BasicEvaluator.prototype, {
 /**
  * ComplexEvaluator acts like {@link BasicEvaluator}, but providing feedback about
  * the location of mistakes on the user's answer.
- * @extends module:BasicEvaluator
+ * @extends module:activities/text/Evaluator.BasicEvaluator
  */
 export class ComplexEvaluator extends BasicEvaluator {
   /**

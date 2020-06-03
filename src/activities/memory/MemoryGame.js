@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import Activity from '../../Activity';
+import { Activity, ActivityPanel } from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
 import BoxConnector from '../../boxes/BoxConnector';
@@ -45,7 +45,7 @@ import Rectangular from '../../shapers/Rectangular';
  * The cell pairs can have identical content, defined in the `primary` {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent} of
  * the activity, or two different contents. In this case, the `secondary` bag elements will have
  * content related to each `primary` element.
- * @extends module:Activity
+ * @extends module:Activity.Activity
  */
 export class MemoryGame extends Activity {
   /**
@@ -86,15 +86,14 @@ export class MemoryGame extends Activity {
 
 /**
  * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/memory/MemoryGame.MemoryGame MemoryGame} activities are played.
- * @extends module:ActivityPanel
+ * @extends module:Activity.ActivityPanel
  */
-export class MemoryGamePanel extends Activity.Panel {
+export class MemoryGamePanel extends ActivityPanel {
   /**
    * MemoryGamePanel constructor
    * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-   * Java interface.
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {

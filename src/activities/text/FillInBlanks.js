@@ -29,16 +29,16 @@
  *  @module
  */
 
+import Activity from '../../Activity';
 import $ from 'jquery';
 import { fillString, setSelectionRange, getCaretCharacterOffsetWithin } from '../../Utils';
-import Activity from '../../Activity';
-import TextActivityBase from './TextActivityBase';
+import { TextActivityBase, TextActivityBasePanel } from './TextActivityBase';
 
 /**
  * In this type of activity the text document has some blanks that must be filled-in. The blanks
  * can be drop-down boxes or text fields (empty or pre-filled with an initial text). Blanks can
  * also have associated clues, shown as "pop-ups".
- * @extends module:TextActivityBase
+ * @extends module:activities/text/TextActivityBase.TextActivityBase
  */
 export class FillInBlanks extends TextActivityBase {
   /**
@@ -75,15 +75,14 @@ Object.assign(FillInBlanks.prototype, {
 
 /**
  * The {@link TextActivityBasePanel} where {@link module:activities/text/FillInBlanks.FillInBlanks FillInBlanks} activities are played.
- * @extends module:TextActivityBasePanel
+ * @extends module:activities/text/TextActivityBase.TextActivityBasePanel
  */
-export class FillInBlanksPanel extends TextActivityBase.Panel {
+export class FillInBlanksPanel extends TextActivityBasePanel {
   /**
    * FillInBlanksPanel constructor
    * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-   * Java interface.
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {

@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import Activity from '../../Activity';
+import { Activity, ActivityPanel } from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
 import { Rectangle, Point } from '../../AWT';
@@ -43,7 +43,7 @@ import Rectangular from '../../shapers/Rectangular';
  * Only immediate neighbors of the "hole" can move into it.
  *
  * When all cells are on place, the initially "expulsed" cell comes back home and the activity is done.
- * @extends module:Activity
+ * @extends module:Activity.Activity
  */
 export class HolePuzzle extends Activity {
   /**
@@ -93,15 +93,14 @@ export class HolePuzzle extends Activity {
 
 /**
  * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/puzzles/HolePuzzle.HolePuzzle HolePuzzle} activities are played
- * @extends module:ActivityPanel
+ * @extends module:Activity.ActivityPanel
  */
-export class HolePuzzlePanel extends Activity.Panel {
+export class HolePuzzlePanel extends ActivityPanel {
   /**
    * HolePuzzlePanel constructor
    * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-   * Java interface.
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {

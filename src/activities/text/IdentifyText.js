@@ -30,12 +30,12 @@
  */
 
 import Activity from '../../Activity';
-import TextActivityBase from './TextActivityBase';
+import { TextActivityBase, TextActivityBasePanel } from './TextActivityBase';
 
 /**
  * This type of text activity suggests users to click on specific words or single letters of a
  * given text, without any help on where these elements are placed.
- * @extends module:TextActivityBase
+ * @extends module:activities/text/TextActivityBase.TextActivityBase
  */
 export class IdentifyText extends TextActivityBase {
   /**
@@ -49,15 +49,14 @@ export class IdentifyText extends TextActivityBase {
 
 /**
  * The {@link TextActivityBasePanel} where {@link module:activities/text/IdentifyText.IdentifyText IdentifyText} activities are played.
- * @extends module:TextActivityBasePanel
+ * @extends module:activities/text/TextActivityBase.TextActivityBasePanel
  */
-class IdentifyTextPanel extends TextActivityBase.Panel {
+class IdentifyTextPanel extends TextActivityBasePanel {
   /**
    * IdentifyTextPanel constructor
    * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-   * Java interface.
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {

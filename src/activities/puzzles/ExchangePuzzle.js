@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import Activity from '../../Activity';
+import { Activity, ActivityPanel } from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
 import BoxConnector from '../../boxes/BoxConnector';
@@ -40,7 +40,7 @@ import { Rectangle, Point } from '../../AWT';
  * This class of {@link module:Activity.Activity Activity} shows only one panel with shuffled {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects.
  * To solve the activity, each cell must exchange its location with another one. When all cells are
  * on place, the activity is done.
- * @extends module:Activity
+ * @extends module:Activity.Activity
  */
 export class ExchangePuzzle extends Activity {
   /**
@@ -90,15 +90,14 @@ export class ExchangePuzzle extends Activity {
 
 /**
  * The {@link module:Activity.ActivityPanel ActivityPanel} where activities of type {@link module:activities/puzzles/ExchangePuzzle.ExchangePuzzle ExchangePuzzle} are played.
- * @extends module:ActivityPanel
+ * @extends module:Activity.ActivityPanel
  */
-class ExchangePuzzlePanel extends Activity.Panel {
+class ExchangePuzzlePanel extends ActivityPanel {
   /**
    * ExchangePuzzlePanel constructor
    * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-   * Java interface.
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {

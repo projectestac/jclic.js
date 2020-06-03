@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import Activity from '../../Activity';
+import { Activity, ActivityPanel } from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
 import BoxConnector from '../../boxes/BoxConnector';
@@ -43,7 +43,7 @@ import { getMsg } from '../../Utils';
  *
  * The activity uses two panels: one with the shuffled cells, and other initially empty where
  * this cells must be placed in order.
- * @extends module:Activity
+ * @extends module:Activity.Activity
  */
 export class DoublePuzzle extends Activity {
   /**
@@ -93,9 +93,9 @@ export class DoublePuzzle extends Activity {
 
 /**
  * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/puzzles/DoublePuzzle.DoublePuzzle DoublePuzzle} activities are played.
- * @extends module:ActivityPanel
+ * @extends module:Activity.ActivityPanel
  */
-export class DoublePuzzlePanel extends Activity.Panel {
+export class DoublePuzzlePanel extends ActivityPanel {
   /**
    * DoublePuzzlePanel constructor
    * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs

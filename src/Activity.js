@@ -863,7 +863,7 @@ Object.assign(Activity.prototype, {
  * Each type of Activity must implement its own `ActivityPanel`.
  * In JClic, {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/Activity.Panel.html Activity.Panel}
  * extends {@link http://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html javax.swing.JPanel}.
- * In this implementation, the JPanel will be replaced by an HTML `div` tag.
+ * On this implementation, the JPanel will be replaced by an HTML `div` tag.
  * @extends module:AWT.Container
  */
 export class ActivityPanel extends Container {

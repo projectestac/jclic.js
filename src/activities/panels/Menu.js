@@ -30,14 +30,14 @@
  */
 
 import $ from 'jquery';
-import Activity from '../../Activity';
+import { Activity, ActivityPanel } from '../../Activity';
 import MediaContent from '../../media/MediaContent';
 import { log } from '../../Utils';
 
 /**
  * This class of {@link module:Activity.Activity Activity} is only used in legacy JClic project libraries. It contains
  * one or more buttons pointing to specific JClic projects or to other `Menu` activity panels.
- * @extends module:Activity
+ * @extends module:Activity.Activity
  */
 export class Menu extends Activity {
   /**
@@ -55,15 +55,14 @@ export class Menu extends Activity {
 
 /**
  * The {@link module:Activity.ActivityPanel ActivityPanel} where Menu will show its content.
- * @extends module:ActivityPanel
- * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
- * @param {JClicPlayer} ps - Any object implementing the methods defined in the
- * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
- * Java interface.
+ * @extends module:Activity.ActivityPanel
  */
-export class MenuPanel extends Activity.Panel {
+export class MenuPanel extends ActivityPanel {
   /**
    * MenuPanel constructor
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {

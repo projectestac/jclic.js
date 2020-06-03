@@ -32,7 +32,7 @@
 /* global window */
 
 import $ from 'jquery';
-import Activity from '../../Activity';
+import { Activity, ActivityPanel } from '../../Activity';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
 import BoxBag from '../../boxes/BoxBag';
 import { Rectangle, Point } from '../../AWT';
@@ -40,7 +40,7 @@ import { Rectangle, Point } from '../../AWT';
 /**
  * The aim of this type of {@link module:Activity.Activity Activity} is to identify {@link module:boxes/ActiveBox.ActiveBox ActiveBox} elements in a panel
  * that satisfy a specific condition, usually exposed in the main message.
- * @extends module:Activity
+ * @extends module:Activity.Activity
  */
 export class Identify extends Activity {
   /**
@@ -86,15 +86,14 @@ Object.assign(Identify.prototype, {
 
 /**
  * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/panels/Identify.Identify Identify} activities are played.
- * @extends module:ActivityPanel
- * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
- * @param {JClicPlayer} ps - Any object implementing the methods defined in the
- * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
- * Java interface.
+ * @extends module:Activity.ActivityPanel
  */
-export class IdentifyPanel extends Activity.Panel {
+export class IdentifyPanel extends ActivityPanel {
   /**
    * IdentifyPanel constructor
+   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
+   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {

@@ -39,7 +39,7 @@ import BoxBase from '../../boxes/BoxBase';
 /**
  * This class and its visual component {@link TextActivityBasePanel} are the base for text
  * activities like {@link module:activities/text/FillInBlanks.FillInBlanks FillInBlanks}, {@link module:activities/text/IdentifyText.IdentifyText IdentifyText}, {@link module:activities/text/OrderText.OrderText OrderText} and {@link module:activities/text/Complete.Complete Complete}.
- * @extends module:Activity
+ * @extends module:Activity.Activity
  */
 export class TextActivityBase extends Activity {
   /**
@@ -96,7 +96,7 @@ Object.assign(TextActivityBase.prototype, {
 
 /**
  * The {@link module:Activity.ActivityPanel ActivityPanel} where text activities (based on {@link module:activities/text/TextActivityBase.TextActivityBase TextActivityBase}) are played.
- * @extends module:ActivityPanel
+ * @extends module:Activity.ActivityPanel
  */
 //export class TextActivityBasePanel extends Activity.Panel {
 export class TextActivityBasePanel extends ActivityPanel {
@@ -104,8 +104,7 @@ export class TextActivityBasePanel extends ActivityPanel {
    * TextActivityBasePanel constructor
    * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
    * @param {JClicPlayer} ps - Any object implementing the methods defined in the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html)
-   * Java interface.
+   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
   constructor(act, ps, $div) {
