@@ -32,7 +32,7 @@
 /* global Promise, window, document */
 
 import $ from 'jquery';
-import clipboard from 'clipboard-js';
+import * as clipboard from 'clipboard-polyfill';
 import { appendStyleAtHead, cloneObject, getMsg, setLogLevel, log, getRootHead, toCssSize, $HTML, getPercent, getHMStime } from '../Utils';
 import { Container, Dimension, Rectangle } from '../AWT';
 
@@ -162,16 +162,22 @@ export class Skin extends Container {
     this.$copyBtn = $('<button/>', { title: msg, 'aria-label': msg })
       .append($(this.copyIcon).css({ width: '26px', height: '26px' }))
       .on('click', () => {
-        clipboard.copy({
-          'text/plain': `===> ${getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor')} <===`,
-          'text/html': this.$reportsPanel.html()
-        });
-        this.$copyBtn.parent().append(
-          $('<div/>', { class: 'smallPopup' })
-            .html(getMsg('The data has been copied to clipboard'))
-            .fadeIn()
-            .delay(3000)
-            .fadeOut(function () { $(this).remove(); }));
+        const dt = new clipboard.DT();
+        dt.setData('text/plain', `===> ${getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor')} <===`);
+        dt.setData('text/html', this.$reportsPanel.html());
+        clipboard.write(dt)
+          .then(() => this.$copyBtn.parent().append(
+            $('<div/>', { class: 'smallPopup' })
+              .html(getMsg('The data has been copied to clipboard'))
+              .fadeIn()
+              .delay(3000)
+              .fadeOut(function () { $(this).remove(); })))
+          .catch(err => this.$copyBtn.parent().append(
+            $('<div/>', { class: 'smallPopup' })
+              .html(`ERROR: Unable to write data into the clipboard: ${err}`)
+              .fadeIn()
+              .delay(3000)
+              .fadeOut(function () { $(this).remove(); })));
       });
 
     msg = getMsg('Close');

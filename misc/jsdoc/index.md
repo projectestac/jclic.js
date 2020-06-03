@@ -3,10 +3,12 @@
 JClic.js
 ========
 
-A JavaScript player of __JClic__ activities.<br>
+[![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic)
+[![CDNJS version](https://img.shields.io/cdnjs/v/jclic.js.svg)](https://cdnjs.com/libraries/jclic.js)
+[![](https://data.jsdelivr.com/v1/package/npm/jclic/badge)](https://www.jsdelivr.com/package/npm/jclic)
+[![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic) 
-
+[JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player of [JClic](https://github.com/projectestac/jclic) activities. See a [demo](https://clic.xtec.cat/projects/demo_eng/jclic.js/index.html) on how it works.
 
 ## JClic and JClic-repo
 
@@ -16,44 +18,20 @@ The program includes an authoring tool to create activities, a player and a repo
 
 JClic is a Java application that runs on Linux, Windows and Mac OS. Full [source code](https://github.com/projectestac/jclic) and [documentation](http://projectestac.github.io/jclic/) are available on GitHub.
 
-Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge [library](http://clic.xtec.cat/repo) created with [jclic-repo](https://github.com/projectestac/jclic-repo), another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.
+Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge [library](https://clic.xtec.cat/repo) created with [jclic-repo](https://github.com/projectestac/jclic-repo), another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.
 
-## JClic project files
-
-Groups of single __activities__ are often grouped in __JClic projects__ and organized in one or more __sequences__ (lists of activities that must be performed in a specific order). The resulting set of activities, sequences and media elements are packaged into __JClic project files__ (files with extension ".jclic.zip").
-
-## JClic.js components
-
-JClic.js makes use of:
-* [jQuery](https://jquery.com/) to parse XML documents and manage DOM objects
-* [JSZip](https://stuk.github.io/jszip/) to extract contents from "jclic.zip" files
-* [clipboard.js](https://github.com/lgarron/clipboard.js) to copy reports data into the user's clipboard
-* [i18next](https://github.com/i18next/i18next) to deal with messages translated into different languages
-* [screenfull.js](https://github.com/sindresorhus/screenfull.js) to allow activities play at full screen
-* [script.js](https://github.com/ded/script.js) to read JClic projects from local file systems as JSONP
-* [webfontloader](https://github.com/typekit/webfontloader) to dynamically load web fonts as needed
-* [MidiPlayerJS](https://github.com/grimmdude/MidiPlayerJS), [soundfont-player](https://github.com/danigb/soundfont-player), [audio-loader](https://github.com/audiojs/audio-loader) and [sample-player](https://github.com/danigb/sample-player) to process and play MIDI files
-
-The build brocess of JClic.js is based on:
-* [npm](https://www.npmjs.com/) (the package manager of [Node.js](https://nodejs.org/)) to build, install, update and track package dependencies
-* [ESLint](https://eslint.org/) to check for errors and lint the source code
-* [webpack](https://webpack.js.org/) to bundle all components together
-* [Babel](https://babeljs.io/) to make it also compatible with old versions of some browsers
-* [UglifyJS](https://github.com/mishoo/UglifyJS2) to minimize the size of the final deliverable script
-* [Live Server](https://github.com/tapio/live-server) to test and debug
-* [JSDoc](http://usejsdoc.org/) and [ink-bootstrap](https://github.com/docstrap/docstrap) to build the [API docs](http://projectestac.github.io/jclic.js/doc)
-
-## How to set-up the development environtment
+## How to build JClic.js
 
 JClic.js uses [Node.js](https://nodejs.org/) modules encapsulated in [npm](https://www.npmjs.com/) packages. First of all, you must have Node.js (which includes 'npm') [installed](https://nodejs.org/download/) on your system.
+
 
 To install the required packages, just go to the project's root directory and write:
 
 ```
-npm install
+npm ci
 ```
 
-This will install jQuery, webpack and other needed components into `node_modules` 
+This will install jQuery, Webpack and other needed components into `node_modules`
 
 To build jclic.js, just invoke:
 
@@ -61,19 +39,15 @@ To build jclic.js, just invoke:
 npm run build
 ```
 
-This will generate the file `dist/jclic.min.js`
+This will generate the main file `dist/jclic.min.js` (along with other files useful for development)
 
-To test this resulting bundle and see the demo on your browser, launch the test server:
+To test this resulting bundle and see the demo on your browser, launch the webpack dev server:
 
 ```
 npm start
 ```
 
-You can also launch the program in "unbundled" mode, directly invoking the source scripts, useful for debug purposes:
-
-```
-npm run debug
-```
+This will launch a local HTTP server allowing to choose between pages in development mode (bundle build dynamically by [webpack-dev-server](https://webpack.js.org/configuration/dev-server/)) and in production mode (serving the latest build on `/dist`)
 
 You can also build this documentation running `npm run build-doc`
 
@@ -84,16 +58,16 @@ JClic.js is organized in three main groups of classes: _Player_, _Document_ and 
 &nbsp;
 #### Player
 
-[JClicPlayer](JClicPlayer.html) loads JClic project files, manages the user interaction and acts as a interface between the browser and JClic classes for multiple functions. The player has:
+[JClicPlayer](module-JClicPlayer.JClicPlayer.html) loads JClic project files, manages the user interaction and acts as a interface between the browser and JClic classes for multiple functions. The player has:
 
-* [Skin](Skin.html): manages the visual appareance. Can have up to three [Counter](Counter.html) objects.
-  * [DefaultSkin](DefaultSkin.html): is the basic implementation of _Skin_.
-  * [BlueSkin](BlueSkin.html), [OrangeSkin](OrangeSkin.html), [GreenSkin](GreenSkin.html), [MiniSkin](MiniSkin.html) and [SimpleSkin](SimpleSkin.html): are the implementations of the stock skins of JClic.
-* [PlayerHistory](PlayerHistory.html): used to track the user's navigation between activities.
-* [Reporter](Reporter.html): Used to collect and display scores, times and other data generated by users while playing activities.
-  * [TCPReporter](TCPReporter.html): Special case of _Reporter_ used to connect with external reporting systems like [JClic Reports] (http://clic.xtec.cat/en/jclic/reports/index.htm) or the [JClic module for Moodle](https://moodle.org/plugins/view.php?id=305).  
-  * [SCORM](SCORM.js): Utility functions to interact with SCORM 1.2 and 2004 when available
-  * [SessionStorageReporter](SessionStorageReporter.html): writes the report as a persistent data into the browser session or local storage.
+* [Skin](module-skins_Skin.Skin.html): manages the visual appareance. Can have up to three [Counter](module-skins_Counter.Counter.html) objects.
+  * [DefaultSkin](module-skins_DefaultSkin.DefaultSkin.html): is the basic implementation of _Skin_.
+  * [BlueSkin](module-skins_BlueSkin.BlueSkin.html), [OrangeSkin](module-skins_OrangeSkin.OrangeSkin.html), [GreenSkin](module-skins_GreenSkin.GreenSkin.html), [MiniSkin](module-skins_MiniSkin.MiniSkin.html) and [SimpleSkin](module-skins_SimpleSkin.SimpleSkin.html): are the implementations of the stock skins of JClic.
+* [PlayerHistory](module-PlayerHistory.PlayerHistory.html): used to track the user's navigation between activities.
+* [Reporter](module-report_Reporter.Reporter.html): Used to collect and display scores, times and other data generated by users while playing activities.
+  * [TCPReporter](module-report_TCPReporter.TCPReporter.html): Special case of _Reporter_ used to connect with external reporting systems like [JClic Reports] (http://clic.xtec.cat/en/jclic/reports/index.htm) or the [JClic module for Moodle](https://moodle.org/plugins/view.php?id=305).  
+  * [SCORM](module-report_SCORM.SCORM.js): Utility functions to interact with SCORM 1.2 and 2004 when available
+  * [SessionStorageReporter](module-report_SessionStorageReporter.SessionStorageReporter.html): writes the report as a persistent data into the browser session or local storage.
 
 &nbsp;
 #### Document classes
@@ -192,14 +166,17 @@ __Miscellaneous utility classes:__
 
 ## Sponsors that make possible JClic.js
 
-JClic is an open-source project supported by [XTEC](http://www.xtec.cat), the Telematic Network of the Catalan Ministry of Education
+[![XTEC](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-xtec.png?raw=true)](http://www.xtec.cat)<br>
+JClic.js is an open-source project sustained by [XTEC](http://www.xtec.cat), the Telematic Network of the Catalan Ministry of Education.
 
-We use [Transifex](https://www.transifex.com/francesc/jclicjs) as a platform for translations of JClic.js into many languages. Please read [TRANSLATIONS.md](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md) if you want to contribute to the project creating a new translation or improving the existing ones.
+[![BrowserStack](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-browserstack.png?raw=true)](https://www.browserstack.com)<br>
+Checking the operation of JClic.js on different browsers and platforms is possible thanks to virtual machines provided by [BrowserStack](https://www.browserstack.com).
 
-Checking the operation of JClic.js on different browsers and platforms is possible thanks to [BrowserStack](https://www.browserstack.com)
+[![JSDelivr](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-jsdelivr.png?raw=true)](http://www.jsdelivr.com/projects/jclic.js)<br>
+The production releases of JClic.js are smoothly distributed to the final users thanks to the [JSDelivr](http://www.jsdelivr.com/projects/jclic.js) network of servers.
 
-The production releases of JClic.js are smoothly distributed to the final users thanks to [XTEC](http://www.xtec.cat), [JSDelivr](http://www.jsdelivr.com/projects/jclic.js), [unpkg.com](https://unpkg.com/jclic/dist/jclic.min.js) and [CDNJS](https://cdnjs.com/libraries/jclic.js).
+[![cdnjs](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-cdnjs.png?raw=true)](https://cdnjs.com/libraries/jclic.js)<br>
+All project files are also available through [cdnjs](https://cdnjs.com/about), a very powerful content delivery service powered by [Cloudflare](https://www.cloudflare.com).
 
-__jclic.js__ is also available as an [NPM](https://www.npmjs.com/package/jclic) package.
-
-[![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Transifex](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-transifex.png?raw=true)](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md)<br>
+We use [Transifex](https://www.transifex.com/francesc/jclicjs) as a platform to translate JClic.js into many languages. Please read [TRANSLATIONS.md](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md) if you want to contribute to the project creating a new translation or improving the existing ones.

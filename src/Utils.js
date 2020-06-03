@@ -32,7 +32,7 @@
 /* global Promise, window, document, console, btoa, HTMLElement, CanvasRenderingContext2D */
 
 import $ from 'jquery';
-import clipboard from 'clipboard-js';
+import * as clipboard from 'clipboard-polyfill';
 import i18next from 'i18next';
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
@@ -48,13 +48,13 @@ import WebFont from 'webfontloader';
  * @type: {object}
  */
 export const pkg = {
-  ClipboardJS: clipboard,
-  i18next: i18next,
-  $: $,
-  JSZip: JSZip,
-  JSZipUtils: JSZipUtils,
-  ScriptJS: ScriptJS,
-  WebFont: WebFont,
+  clipboard,
+  i18next,
+  $,
+  JSZip,
+  JSZipUtils,
+  ScriptJS,
+  WebFont,
 };
 
 /**
@@ -1161,7 +1161,7 @@ export const Utils = {
   LOG_OPTIONS,
   init,
   setLogLevel,
-  log,  
+  log,
   getBoolean,
   getVal,
   getNumber,
