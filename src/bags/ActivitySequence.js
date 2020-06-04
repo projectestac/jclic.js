@@ -191,7 +191,7 @@ export class ActivitySequence {
 
   /**
    * Gets the current state for the 'next' and 'prev' buttons.
-   * @returns {string} - One of the possible values of {@link ActivitySequenceElement#navButtons},
+   * @returns {string} - One of the possible values of {@link module:bags/ActivitySequenceElement.ActivitySequenceElement#navButtons navButtons},
    * thus: `none`, `fwd`, `back` or `both`
    */
   getNavButtonsFlag() {

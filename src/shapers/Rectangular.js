@@ -67,7 +67,7 @@ export class Rectangular extends Shaper {
 
 Object.assign(Rectangular.prototype, {
   /**
-   * Overrides same flag in {@link Shaper#rectangularShapes}
+   * Overrides same flag in {@link module:/shapers/Shaper.Shaper#rectangularShapes Shaper#rectangularShapes}
    * @name module:shapers/Rectangular.Rectangular#rectangularShapes
    * @override
    * @type {boolean} */

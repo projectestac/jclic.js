@@ -72,13 +72,13 @@ export class Identify extends Activity {
 
 Object.assign(Identify.prototype, {
   /**
-   * Number of not assigned cells (calculated in {@link IdentifyPanel#buildVisualComponents})
+   * Number of not assigned cells (calculated in {@link module:activities/panels/Identify.IdentifyPanel#buildVisualComponents buildVisualComponents})
    * @name module:activities/panels/Identify.Identify#nonAssignedCells
    * @type {number} */
   nonAssignedCells: 0,
   /**
    * Number of cells the user must identify to complete the activity (calculated in
-   * {@link IdentifyPanel#buildVisualComponents})
+   * {@link module:activities/panels/Identify.IdentifyPanel#buildVisualComponents buildVisualComponents})
    * @name module:activities/panels/Identify.Identify#cellsToMatch
    * @type {number} */
   cellsToMatch: 1,
@@ -348,7 +348,7 @@ Object.assign(IdentifyPanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link IdentifyPanel}
+ * Panel class associated to this type of activity: {@link module:activities/panels/Identify.IdentifyPanel IdentifyPanel}
  * @type {class} */
 Identify.Panel = IdentifyPanel;
 

@@ -177,7 +177,7 @@ Object.assign(AudioBuffer.prototype, {
    */
   seconds: 20,
   /**
-   * The object used to record audio data and convert it to a valid stream for the {@link mediaPlayer}
+   * The object used to record audio data and convert it to a valid stream for the {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer}
    * @name module:media/AudioBuffer.AudioBuffer#mediaRecorder
    * @type {external:MediaRecorder}
    */

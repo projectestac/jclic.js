@@ -166,7 +166,7 @@ export class ActiveMediaPlayer {
 
   /**
    * Clears the specified audio buffer
-   * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
+   * @param {number} buffer - Index of the buffer in {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer#AUDIO_BUFFERS AUDIO_BUFFERS}
    */
   clearAudioBuffer(buffer) {
     if (ActiveMediaPlayer.AUDIO_BUFFERS &&
@@ -203,7 +203,7 @@ export class ActiveMediaPlayer {
 
   /**
    * Stops a specific audio buffer
-   * @param {number} buffer - Index of the buffer in {@link ActiveMediaPlayer.AUDIO_BUFFERS}
+   * @param {number} buffer - Index of the buffer in {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer#AUDIO_BUFFERS AUDIO_BUFFERS}
    */
   stopAudioBuffer(buffer) {
     if (ActiveMediaPlayer.AUDIO_BUFFERS &&
@@ -290,7 +290,7 @@ if (ActiveMediaPlayer.REC_ENABLED) {
 /**
  * Audio buffers used for recording and playing voice are stored in a static array because
  * they are common to all instances of {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer}
- * Only initialized when {@link REC_ENABLED} is `true`.
+ * Only initialized when {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer#REC_ENABLED REC_ENABLED} is `true`.
  * @type {AudioBuffer[]} */
 ActiveMediaPlayer.AUDIO_BUFFERS = ActiveMediaPlayer.REC_ENABLED ? [] : null;
 

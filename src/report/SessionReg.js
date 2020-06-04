@@ -33,7 +33,7 @@ import SequenceReg from './SequenceReg';
 
 /**
  * This class encapsulates data of a user's working session, usually associated to a single {@link module:project/JClicProject.JClicProject JClicProject}
- * It's main component is `sequences`, an array of {@link SequenceReg} objects.
+ * It's main component is `sequences`, an array of {@link module:report/SequenceReg.SequenceReg SequenceReg} objects.
  */
 export class SessionReg {
   /**
@@ -54,7 +54,7 @@ export class SessionReg {
   /**
    * Builds a complex object with the results of all activities done during this working session
    * @param {booolean} recalcInfo - When `true`, global variables (number of sequences, score, total time...)
-   * will be recalculated from the data stored in the {@link SequenceReg} objects.
+   * will be recalculated from the data stored in the {@link module:report/SequenceReg.SequenceReg SequenceReg} objects.
    * @param {booolean} includeEmpty - When `true`, sequences without reported activities will be also included in the results
    * @returns {Object} - An object containing the full session data
    */
@@ -221,12 +221,12 @@ Object.assign(SessionReg.prototype, {
 });
 
 /**
- * This object stores the global results of a {@link SessionReg}
+ * This object stores the global results of a {@link module:report/SessionReg.SessionReg SessionReg}
  */
 export class SessionRegInfo {
   /**
    * SessionRegInfo constructor
-   * @param {SessionReg} sReg - The {@link SessionReg} associated tho this `Info` object.
+   * @param {SessionReg} sReg - The {@link module:report/SessionReg.SessionReg SessionReg} associated tho this `Info` object.
    */
   constructor(sReg) {
     this.sReg = sReg;

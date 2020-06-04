@@ -47,7 +47,7 @@ export class AutoContentProvider {
   /**
    * Dynamic constructor that returns a specific type of AutoContentProvider based on the `class`
    * attribute declared on an $xml element.
-   * It should be called only from {@link Activity#setproperties}
+   * It should be called only from {@link module:Activity.Activity#setProperties Activity.setProperties}
    * @param {external.jQuery} $xml - The XML element to parse
    * @returns {AutoContentProvider}
    */
@@ -105,7 +105,7 @@ export class AutoContentProvider {
   }
 
   /**
-   * Builds an {@link AutoContentProvider.ActiveBagContentKit} and generates the automatized content.
+   * Builds an {@link module:automation/AutoContentProvider/ActiveBagContentKit ActiveBagContentKit} and generates the automatized content.
    * @param {number} nRows - Number of rows to be processed
    * @param {number} nCols - Number of columns to be processed
    * @param {ActiveBagContent[]} content - Array with one or more containers of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent}

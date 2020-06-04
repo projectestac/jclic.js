@@ -541,7 +541,7 @@ Object.assign(WrittenAnswerPanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link WrittenAnswerPanel}
+ * Panel class associated to this type of activity: {@link module:activities/text/WrittenAnswer.WrittenAnswerPanel WrittenAnswerPanel}
  * @type {class} */
 WrittenAnswer.Panel = WrittenAnswerPanel;
 

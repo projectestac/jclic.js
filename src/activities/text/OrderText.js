@@ -91,7 +91,7 @@ Object.assign(OrderText.prototype, {
 });
 
 /**
- * The {@link TextActivityBasePanel} where {@link module:activities/text/OrderText.OrderText OrderText} activities are played.
+ * The {@link module:activities/text/TextActivityBase.TextActivityBasePanel TextActivityBasePanel} where {@link module:activities/text/OrderText.OrderText OrderText} activities are played.
  * @extends module:activities/text/TextActivityBase.TextActivityBasePanel
  */
 export class OrderTextPanel extends TextActivityBasePanel {
@@ -413,7 +413,7 @@ Object.assign(OrderTextPanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link OrderTextPanel}
+ * Panel class associated to this type of activity: {@link module:activities/text/OrderText.OrderTextPanel OrderTextPanel}
  * @type {class} */
 OrderText.Panel = OrderTextPanel;
 

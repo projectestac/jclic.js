@@ -48,7 +48,7 @@ export class Complete extends TextActivityBase {
 }
 
 /**
- * The {@link TextActivityBasePanel} where {@link module:activities/text/Complete.Complete Complete} activities are played.
+ * The {@link module:activities/text/TextActivityBase.TextActivityBasePanel TextActivityBasePanel} where {@link module:activities/text/Complete.Complete Complete} activities are played.
  * @extends module:activities/text/TextActivityBasePanel.TextActivityBasePanel
  */
 export class CompletePanel extends TextActivityBasePanel {
@@ -119,7 +119,7 @@ export class CompletePanel extends TextActivityBasePanel {
 }
 
 /**
- * Panel class associated to this type of activity: {@link CompletePanel}
+ * Panel class associated to this type of activity: {@link module:activities/text/Complete.CompletePanel CompletePanel}
  * @type {class} */
 Complete.Panel = CompletePanel;
 

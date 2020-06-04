@@ -147,7 +147,7 @@ export class ActivityReg {
   }
 
   /**
-   * Retrieves a specific {@link ActionReg} element from `actions`
+   * Retrieves a specific {@link module:report/ActionReg.ActionReg ActionReg} element from `actions`
    * @param {number} index - The nth action to be retrieved
    * @returns {ActionReg}
    */
@@ -237,7 +237,7 @@ Object.assign(ActivityReg.prototype, {
    * @type {boolean} */
   solved: false,
   /**
-   * Last {@link ActionReg} performed by the user in this activity
+   * Last {@link module:report/ActionReg.ActionReg ActionReg} performed by the user in this activity
    * @name module:report/ActivityReg.ActivityReg#lastAction
    * @type {ActionReg} */
   lastAction: null,

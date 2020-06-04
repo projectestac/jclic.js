@@ -100,7 +100,7 @@ export class TextGrid extends AbstractBox {
   }
 
   /**
-   * Factory constructor that creates an empty grid based on a {@link TextGridContent}
+   * Factory constructor that creates an empty grid based on a {@link module:boxes/TextGridContent.TextGridContent TextGridContent}
    * @param {AbstractBox} parent - The AbstractBox to which the text grid belongs
    * @param {module:AWT.Container} container - The container where the text grid will be placed.
    * @param {number} x - `X` coordinate of the upper left corner of the grid

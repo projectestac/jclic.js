@@ -254,7 +254,7 @@ Object.assign(InformationScreenPanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link InformationScreenPanel}
+ * Panel class associated to this type of activity: {@link module:activities/panels/InformationScreen.InformationScreenPanel InformationScreenPanel}
  * @type {class} */
 InformationScreen.Panel = InformationScreenPanel;
 

@@ -402,7 +402,7 @@ Object.assign(MemoryGamePanel.prototype, {
    * @type {ActiveBoxBag} */
   bg: null,
   /**
-   * The {@link BoxConnector} used to reveal pairs of cells
+   * The {@link module:boxes/BoxConnector.BoxConnector BoxConnector} used to reveal pairs of cells
    * @name module:activities/memory/MemoryGame.MemoryGamePanel#bc
    * @type {BoxConnector} */
   bc: null,
@@ -415,7 +415,7 @@ Object.assign(MemoryGamePanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link MemoryGamePanel}
+ * Panel class associated to this type of activity: {@link module:activities/memory/MemoryGame.MemoryGamePanel MemoryGamePanel}
  * @type {class} */
 MemoryGame.Panel = MemoryGamePanel;
 

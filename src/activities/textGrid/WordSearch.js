@@ -450,7 +450,7 @@ Object.assign(WordSearchPanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link WordSearchPanel}
+ * Panel class associated to this type of activity: {@link module:activities/textGrid/WordSearch.WordSearchPanel WordSearchPanel}
  * @type {class} */
 WordSearch.Panel = WordSearchPanel;
 

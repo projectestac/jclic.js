@@ -170,8 +170,8 @@ export class Arith extends AutoContentProvider {
   }
 
   /**
-   * Fills the `n` parameter (an {@link Arith.Num}) with a value in accordance with the
-   * specifications of `op` (an {@link Arith.Operator}), between two limits.
+   * Fills the `n` parameter (an {@link module:automation/arith/Arith.Num Num}) with a value in accordance with the
+   * specifications of `op` (an {@link module:automation/arith/Arith.Operator Operator}), between two limits.
    * @param {Arith.Num} n - The number
    * @param {Arith.Operator} op - The operator
    * @param {number} limInf2 - Lower limit
@@ -225,7 +225,7 @@ export class Arith extends AutoContentProvider {
   }
 
   /**
-   * Fills the provided {@link Arith.Operator} with real values
+   * Fills the provided {@link module:automation/arith/Arith.Operator Operator} with real values
    * @param {Arith.Operator} o - The operator to use to generate the operation
    * @returns {boolean} - `true` if all was OK
    */

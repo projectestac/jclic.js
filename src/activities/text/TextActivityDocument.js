@@ -38,7 +38,7 @@ import MediaContent from '../../media/MediaContent';
  * This is the HTML DOM element used in text activities like {@link module:activities/text/FillInBlanks.FillInBlanks FillInBlanks},
  * {@link module:activities/text/IdentifyText.IdentifyText IdentifyText}, {@link module:activities/text/OrderText.OrderText OrderText} and {@link module:activities/text/Complete.Complete Complete}. It contains the main document of
  * the activity, usually with some elements marked as "targets". In {@link module:activities/text/FillInBlanks.FillInBlanks FillInBlanks}, this
- * targets are encapsulated in {@link TextTarget} objects.
+ * targets are encapsulated in {@link module:activities/text/TextActivityDocument.TextTarget TextTarget} objects.
  */
 export class TextActivityDocument {
   /**
@@ -305,7 +305,7 @@ Object.assign(TextActivityDocument.prototype, {
    * @type {number} */
   lastBoxId: 0,
   /**
-   * A bag of {@link TargetMarker} objects
+   * A bag of {@link module:activities/text/TextActivityDocument.TargetMarker TargetMarker} objects
    * @name module:activities/text/TextActivityDocument.TextActivityDocument#tmb
    * @type {object} */
   tmb: null,

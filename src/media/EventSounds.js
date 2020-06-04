@@ -42,7 +42,7 @@ import { getTriState, getAttr, setAttr, DEFAULT } from '../Utils';
  * - finishedError
  * - finishedOk
  *
- * The sounds are stored in an array of {@link EventSoundsElement} objects.
+ * The sounds are stored in an array of {@link module:media/EventSoundsElement EventSoundsElement} objects.
  */
 export class EventSounds {
   /**
@@ -332,7 +332,7 @@ EventSounds.MEDIA = {
 
 Object.assign(EventSounds.prototype, {
   /**
-   * Collection of {@link EventSoundsElement} objects
+   * Collection of {@link module:media/EventSoundsElement EventSoundsElement} objects
    * @name module:media/EventSounds.EventSounds#elements
    * @type {object} */
   elements: {

@@ -511,7 +511,7 @@ Object.assign(SimpleAssociationPanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link SimpleAssociationPanel}
+ * Panel class associated to this type of activity: {@link module:activities/associations/SimpleAssociation.SimpleAssociationPanel SimpleAssociationPanel}
  * @type {class} */
 SimpleAssociation.Panel = SimpleAssociationPanel;
 

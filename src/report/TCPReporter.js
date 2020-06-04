@@ -411,7 +411,7 @@ export class TCPReporter extends Reporter {
   }
 
   /**
-   * Prepares a {@link ReportBean} object with information related to the current
+   * Prepares a {@link module:report/TCPReporter.ReportBean ReportBean} object with information related to the current
    * activity, and pushes it into the list of pending `tasks`, to be processed by the main `timer`.
    * @param {boolean} flushNow - When `true`, the activity data will be sent to server as soon as possible
    */
@@ -513,7 +513,7 @@ Object.assign(TCPReporter.prototype, {
    * @type {object} */
   dbProperties: null,
   /**
-   * List of {@link ReportBean} objects pending to be processed
+   * List of {@link module:report/TCPReporter.ReportBean ReportBean} objects pending to be processed
    * @name module:report/TCPReporter.TCPReporter#tasks
    * @type {ReportBean[]} */
   tasks: null,

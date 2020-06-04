@@ -415,7 +415,7 @@ Object.assign(DoublePuzzlePanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link DoublePuzzlePanel}
+ * Panel class associated to this type of activity: {@link module:activities/puzzles/DoublePuzzle.DoublePuzzlePanel DoublePuzzlePanel}
  * @type {class} */
 DoublePuzzle.Panel = DoublePuzzlePanel;
 

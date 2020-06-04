@@ -567,7 +567,7 @@ Object.assign(CrossWordPanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link CrossWordPanel}
+ * Panel class associated to this type of activity: {@link module:activities/textGrid/CrossWord.CrossWordPanel CrossWordPanel}
  * @type {class} */
 CrossWord.Panel = CrossWordPanel;
 

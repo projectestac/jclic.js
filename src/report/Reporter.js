@@ -489,7 +489,7 @@ export class Reporter {
 
 Object.assign(Reporter.prototype, {
   /**
-   * The {@link ReporterInfo} used to calculate and store global results.
+   * The {@link module:report/Reporter.ReporterInfo ReporterInfo} used to calculate and store global results.
    * @name module:report/Reporter.Reporter#info
    * @type {ReporterInfo} */
   info: null,

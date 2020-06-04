@@ -352,7 +352,7 @@ Object.assign(HolePuzzlePanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link HolePuzzlePanel}
+ * Panel class associated to this type of activity: {@link module:activities/puzzles/HolePuzzle.HolePuzzlePanel HolePuzzlePanel}
  * @type {class} */
 HolePuzzle.Panel = HolePuzzlePanel;
 

@@ -150,7 +150,7 @@ export class ActiveBox extends AbstractBox {
   }
 
   /**
-   * Same functionality as {@link ActiveBox#isEquivalent isEquivalent}, but comparing the current content.
+   * Same functionality as {@link module:boxes/ActiveBox.ActiveBox#isEquivalent isEquivalent}, but comparing the current content.
    * @param {ActiveBox} bx - The ActiveBox to check against this.
    * @param {boolean} [checkCase] - When `true`, the comparing will be case-sensitive.
    * @returns {boolean}

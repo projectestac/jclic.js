@@ -330,7 +330,7 @@ Object.assign(ExplorePanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link ExplorePanel}
+ * Panel class associated to this type of activity: {@link module:activities/panels/Explore.ExplorePanel ExplorePanel}
  * @type {class} */
 Explore.Panel = ExplorePanel;
 

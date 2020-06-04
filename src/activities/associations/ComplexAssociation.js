@@ -313,7 +313,7 @@ Object.assign(ComplexAssociationPanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link ComplexAssociationPanel}
+ * Panel class associated to this type of activity: {@link module:activities/associations/ComplexAssociation.ComplexAssociationPanel ComplexAssociationPanel}
  * @type {class} */
 ComplexAssociation.Panel = ComplexAssociationPanel;
 

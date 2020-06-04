@@ -892,7 +892,7 @@ Object.assign(Skin.prototype, {
    * @type {boolean} */
   _isModalDlg: false,
   /**
-   * Div inside {@link $dlgOverlay} where JClicPlayer will place the information to be shown
+   * Div inside {@link module:skins/Skin.Skin#$dlgOverlay $dlgOverlay} where JClicPlayer will place the information to be shown
    * @name module:skins/Skin.Skin#$reportsPanel
    * @type {external:jQuery} */
   $reportsPanel: null,

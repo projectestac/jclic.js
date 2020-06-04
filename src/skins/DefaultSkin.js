@@ -237,7 +237,7 @@ Object.assign(DefaultSkin.prototype, {
    * @type {number} */
   margin: 18,
   /**
-   * Height of {@link DefaultSkin#msgBox}
+   * Height of {@link module:skins/DefaultSkin.DefaultSkin#msgBox msgBox}
    * @name module:skins/DefaultSkin.DefaultSkin#msgBoxHeight
    * @type {number} */
   msgBoxHeight: 60,

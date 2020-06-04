@@ -37,7 +37,7 @@ import ActiveBox from '../../boxes/ActiveBox';
 import BoxBase from '../../boxes/BoxBase';
 
 /**
- * This class and its visual component {@link TextActivityBasePanel} are the base for text
+ * This class and its visual component {@link module:activities/text/TextActivityBase.TextActivityBasePanel TextActivityBasePanel} are the base for text
  * activities like {@link module:activities/text/FillInBlanks.FillInBlanks FillInBlanks}, {@link module:activities/text/IdentifyText.IdentifyText IdentifyText}, {@link module:activities/text/OrderText.OrderText OrderText} and {@link module:activities/text/Complete.Complete Complete}.
  * @extends module:Activity.Activity
  */
@@ -506,7 +506,7 @@ Object.assign(TextActivityBasePanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link TextActivityBasePanel}
+ * Panel class associated to this type of activity: {@link module:activities/text/TextActivityBase.TextActivityBasePanel TextActivityBasePanel}
  * @type {class} */
 TextActivityBase.Panel = TextActivityBasePanel;
 

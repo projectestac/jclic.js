@@ -34,8 +34,8 @@
 import { log, attrForEach, getBoolean, setAttr, getAttr } from '../../Utils';
 
 /**
- * This class and its derivatives {@link BasicEvaluator} and
- * {@link ComplexEvaluator} are used to evaluate the answers written by the final users
+ * This class and its derivatives {@link module:activities/text/Evaluator.BasicEvaluator BasicEvaluator} and
+ * {@link module:activities/text/Evaluator.ComplexEvaluator ComplexEvaluator} are used to evaluate the answers written by the final users
  * in text activities.
  */
 export class Evaluator {
@@ -238,7 +238,7 @@ export class BasicEvaluator extends Evaluator {
   }
 
   /**
-   * Initializes the {@link Evaluator#collator}.
+   * Initializes the {@link module:activities/text/Evaluator.Evaluator#collator collator}.
    * @override
    * @param {string[]} locales - An array of valid locales to be used by the Inlt.Collator object
    */
@@ -270,7 +270,7 @@ export class BasicEvaluator extends Evaluator {
    * Performs the evaluation of a string against an array of valid matches, returning an array of
    * flags useful to indicate where the mistakes are located.
    * In BasicEvaluator, all characters are just marked as 1 (error) or 0 (OK). See
-   * {@link ComplexEvaluator} for more detailed analysis of answers.
+   * {@link module:activities/text/Evaluator.ComplexEvaluator ComplexEvaluator} for more detailed analysis of answers.
    * @override
    * @param {string} text - The text to be checked
    * @param {string} match - A valid expression with which to compare.
@@ -343,7 +343,7 @@ Object.assign(BasicEvaluator.prototype, {
 });
 
 /**
- * ComplexEvaluator acts like {@link BasicEvaluator}, but providing feedback about
+ * ComplexEvaluator acts like {@link module:activities/text/Evaluator.BasicEvaluator BasicEvaluator}, but providing feedback about
  * the location of mistakes on the user's answer.
  * @extends module:activities/text/Evaluator.BasicEvaluator
  */
@@ -360,7 +360,7 @@ export class ComplexEvaluator extends BasicEvaluator {
    * Performs the evaluation of a string against an array of valid matches, returning an array of
    * flags useful to indicate where the mistakes are located.
    * In BasicEvaluator, all characters are just marked as 1 (error) or 0 (OK). See
-   * {@link ComplexEvaluator} for more detailed analysis of answers.
+   * {@link module:activities/text/Evaluator.ComplexEvaluator ComplexEvaluator} for more detailed analysis of answers.
    * @override
    * @param {string} text - The text to be checked
    * @param {string} match - A valid expression with which to compare.

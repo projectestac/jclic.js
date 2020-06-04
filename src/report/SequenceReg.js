@@ -33,7 +33,7 @@ import ActivityReg from './ActivityReg';
 
 /**
  * This class stores the results of the activities related to an {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement}.
- * It's main component is an array of {@link ActivityReg} elements.
+ * It's main component is an array of {@link module:report/ActivityReg.ActivityReg ActivityReg} elements.
  */
 export class SequenceReg {
   /**
@@ -136,7 +136,7 @@ Object.assign(SequenceReg.prototype, {
    * @type {string} */
   description: '',
   /**
-   * Collection of all the {@link ActivityReg} elements done during this sequence.
+   * Collection of all the {@link module:report/ActivityReg.ActivityReg ActivityReg} elements done during this sequence.
    * @name module:report/SequenceReg.SequenceReg#activities
    * @type {ActivityReg[]} */
   activities: [],
@@ -163,12 +163,12 @@ Object.assign(SequenceReg.prototype, {
 });
 
 /**
- * This object stores the global results of a {@link SequenceReg}
+ * This object stores the global results of a {@link module:report/SequenceReg.SequenceReg SequenceReg}
  */
 export class SequenceRegInfo {
   /**
    * SequenceRegInfo constructor
-   * @param {SequenceReg} sqReg - The {@link SequenceReg} associated tho this `Info` object.
+   * @param {SequenceReg} sqReg - The {@link module:report/SequenceReg.SequenceReg SequenceReg} associated tho this `Info` object.
    */
   constructor(sqReg) {
     this.sqReg = sqReg;
@@ -219,7 +219,7 @@ export class SequenceRegInfo {
 
 Object.assign(SequenceRegInfo.prototype, {
   /**
-   * The {@link SequenceReg} associated to this "info" object
+   * The {@link module:report/SequenceReg.SequenceReg SequenceReg} associated to this "info" object
    * @name module:report/SequenceReg.SequenceRegInfo#sqReg
    * @type {SequenceReg} */
   sqReg: null,

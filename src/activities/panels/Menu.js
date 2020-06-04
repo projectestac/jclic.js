@@ -217,7 +217,7 @@ cAXZ0IfsVKS3BTGUMDas0E9NfkO/ovmQBv2v0BJ+xAaYuQX2hCJNtwAAAABJRU5ErkJggg=='
 };
 
 /**
- * Panel class associated to this type of activity: {@link MenuPanel}
+ * Panel class associated to this type of activity: {@link module:activities/panels/Menu.MenuPanel MenuPanel}
  * @type {class} */
 Menu.Panel = MenuPanel;
 

@@ -37,7 +37,7 @@ import { log, settings, nSlash, getAttr, isEmpty, getPathPromise, parseXmlNode, 
 import { Font } from '../AWT';
 
 /**
- * This kind of objects are the components of {@link MediaBag}.
+ * This kind of objects are the components of {@link module:bags/MediaBag.MediaBag MediaBag}.
  *
  * Media elements have a name, a reference to a file (the `file` field) and, when initialized,
  * a `data` field pointing to a object containing the real media. They have also a flag indicating

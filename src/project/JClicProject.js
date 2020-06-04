@@ -42,10 +42,10 @@ import { Font } from '../AWT';
  *  files, descriptors and metadata.
  *
  *  This encapsulation is achieved by three auxiliary objects:
- *  - {@link ProjectSettings}: stores metadata like full title, description, authors, languages,
+ *  - {@link module:project/ProjectSettings.ProjectSettings ProjectSettings}: stores metadata like full title, description, authors, languages,
  *  educational topics...
  *  - {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence}: defines the order in which the activities must be shown.
- *  - {@link MediaBag}: contains the list of all media files used by the activities
+ *  - {@link module:bags/MediaBag.MediaBag MediaBag}: contains the list of all media files used by the activities
  */
 export class JClicProject {
   /**
@@ -183,7 +183,7 @@ export class JClicProject {
 
   /**
    *
-   * Builds the {@link module:skins/Skin.Skin Skin}, {@link module:media/EventSounds.EventSounds EventSounds} and {@link MediaBag} fonts associated to this project.
+   * Builds the {@link module:skins/Skin.Skin Skin}, {@link module:media/EventSounds.EventSounds EventSounds} and {@link module:bags/MediaBag.MediaBag MediaBag} fonts associated to this project.
    * @param {PlayStation} ps - The PlayStation (usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) linked to this project.
    */
   realize(ps) {
@@ -238,7 +238,7 @@ Object.assign(JClicProject.prototype, {
   activitySequence: null,
   /**
    * Array of jQuery xml elements containing the data of each activity. Don't rely on this object
-   * to retrieve real activities. Use the method {@link @JClicProject#getActivity} instead.
+   * to retrieve real activities. Use the method {@link module:project/JClicProject.JClicProject#getActivity getActivity} instead.
    * @name module:project/JClicProject.JClicProject#_activities
    * @private
    * @type {external:jQuery[]} */

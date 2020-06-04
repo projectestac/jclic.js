@@ -74,7 +74,7 @@ Object.assign(FillInBlanks.prototype, {
 });
 
 /**
- * The {@link TextActivityBasePanel} where {@link module:activities/text/FillInBlanks.FillInBlanks FillInBlanks} activities are played.
+ * The {@link module:activities/text/TextActivityBase.TextActivityBasePanel} where {@link module:activities/text/FillInBlanks.FillInBlanks FillInBlanks} activities are played.
  * @extends module:activities/text/TextActivityBase.TextActivityBasePanel
  */
 export class FillInBlanksPanel extends TextActivityBasePanel {
@@ -418,7 +418,7 @@ Object.assign(FillInBlanksPanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link FillInBlanksPanel}
+ * Panel class associated to this type of activity: {@link module:activities/text/FillInBlanks.FillInBlanksPanel FillInBlanksPanel}
  * @type {class} */
 FillInBlanks.Panel = FillInBlanksPanel;
 

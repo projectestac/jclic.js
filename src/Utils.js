@@ -973,7 +973,7 @@ export function getCaretCharacterOffsetWithin(element) {
 };
 
 /**
- * Utility function called by {@link Utils~getCaretCharacterOffsetWithin}
+ * Utility function called by {@link module:Utils.getCaretCharacterOffsetWithin}
  * @param {object} node - A text node
  * @returns {object[]}
  */

@@ -366,7 +366,7 @@ Object.assign(ExchangePuzzlePanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link ExchangePuzzlePanel}
+ * Panel class associated to this type of activity: {@link module:activities/puzzles/ExchangePuzzle.ExchangePuzzlePanel ExchangePuzzlePanel}
  * @type {class} */
 ExchangePuzzle.Panel = ExchangePuzzlePanel;
 

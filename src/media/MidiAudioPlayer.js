@@ -198,7 +198,7 @@ Object.assign(MidiAudioPlayer.prototype, {
 });
 
 /**
- * The {@link AudioContext} used by this MIDI player.
+ * The {@link external:AudioContext} used by this MIDI player.
  * @type {AudioContext}
  */
 MidiAudioPlayer.audioContext = null;
@@ -211,13 +211,13 @@ MidiAudioPlayer.audioContext = null;
 MidiAudioPlayer.instrument = null;
 
 /**
- * A flag used to avoid re-entrant calls to {@link MidiAudioPlayer.prepareInstrument}
+ * A flag used to avoid re-entrant calls to {@link module:media/MidiAudioPlayer.MidiAudioPlayer#prepareInstrument prepareInstrument}
  * @type {boolean}
  */
 MidiAudioPlayer.loadingInstrument = false;
 
 /**
- * An object containing the full soundfont data used by {@link MidiAudioPlayer.instrument}
+ * An object containing the full soundfont data used by {@link module:media/MidiAudioPlayer.MidiAudioPlayer#instrument instrument}
  * When this member is set, no other settings related to the sounfFont will be used.
  * This value can be overwritten by the global parameter `MIDISoundFontObject`
  * @type {object}

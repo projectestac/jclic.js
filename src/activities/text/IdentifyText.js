@@ -48,7 +48,7 @@ export class IdentifyText extends TextActivityBase {
 }
 
 /**
- * The {@link TextActivityBasePanel} where {@link module:activities/text/IdentifyText.IdentifyText IdentifyText} activities are played.
+ * The {@link module:activities/text/TextActivityBase.TextActivityBasePanel TextActivityBasePanel} where {@link module:activities/text/IdentifyText.IdentifyText IdentifyText} activities are played.
  * @extends module:activities/text/TextActivityBase.TextActivityBasePanel
  */
 class IdentifyTextPanel extends TextActivityBasePanel {
@@ -205,7 +205,7 @@ Object.assign(IdentifyTextPanel.prototype, {
 });
 
 /**
- * Panel class associated to this type of activity: {@link IdentifyTextPanel}
+ * Panel class associated to this type of activity: {@link module:activities/text/IdentifyText.IdentifyTextPanel IdentifyTextPanel}
  * @type {class} */
 IdentifyText.Panel = IdentifyTextPanel;
 
