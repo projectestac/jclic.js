@@ -325,18 +325,18 @@ Object.assign(HolePuzzlePanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the panel.
    * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#bg
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bg: null,
   /**
    * An auxiliary box bag with only one box, used to store the "missing piece" of
    * the puzzle.
    * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#parkBg
-   * @type {ActiveBoxGrid} */
+   * @type {module:boxes/ActiveBoxGrid.ActiveBoxGrid} */
   parkBg: null,
   /**
    * The hidden cell
    * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#hiddenBox
-   * @type {ActiveBox} */
+   * @type {module:boxes/ActiveBox.ActiveBox} */
   hiddenBox: null,
   /**
    * Index of the hidden cell on the ActiveBagContent

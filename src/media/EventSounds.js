@@ -87,7 +87,7 @@ export class EventSounds {
   /**
    * Reads the properties of this EventSounds from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {EventSounds}
+   * @returns {module:media/EventSounds.EventSounds}
    */
   setAttributes(data) {
     return setAttr(this, data, [

@@ -155,7 +155,7 @@ export class Arith extends AutoContentProvider {
   /**
    * Reads the properties of this Arith object from a dataset
    * @param {object} data - The data object to be parsed
-   * @returns {EventSounds}
+   * @returns {object}
    */
   setAttributes(data) {
     return setAttr(this, data, [
@@ -633,12 +633,12 @@ Object.assign(Arith.prototype, {
   /**
    * First operator
    * @name module:automation/arith/Arith.Arith#opA
-   * @type {Arith.Operator} */
+   * @type {module:automation/arith/Arith.Operator} */
   opA: null,
   /**
    * Second operator
    * @name module:automation/arith/Arith.Arith#opB
-   * @type {Arith.Operator} */
+   * @type {module:automation/arith/Arith.Operator} */
   opB: null,
   /**
    * Allow additions
@@ -785,7 +785,7 @@ Arith.Operator = class {
   /**
    * Reads the properties of this operator from a dataset
    * @param {object} data - The data object to be parsed
-   * @returns {Arith}
+   * @returns {module:automation/arith/Arith.Arith}
    */
   setAttributes(data) {
     return setAttr(this, data, [

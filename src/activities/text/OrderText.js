@@ -86,7 +86,7 @@ Object.assign(OrderText.prototype, {
   /**
    * The box connector
    * @name module:activities/text/OrderText.OrderText#bc
-   * @type {BoxConnector} */
+   * @type {module:boxes/BoxConnector.BoxConnector} */
   bc: null,
 });
 
@@ -397,12 +397,12 @@ Object.assign(OrderTextPanel.prototype, {
   /**
    * Currently selected text target
    * @name module:activities/text/OrderText.OrderTextPanel#currentTarget
-   * @type {TextActivityDocument.TextTarget} */
+   * @type {module:activities/text/TextActivityDocument.TextActivityDocument.TextTarget} */
   currentTarget: null,
   /**
    * The box connector
    * @name module:activities/text/OrderText.OrderTextPanel#bc
-   * @type {BoxConnector} */
+   * @type {module:boxes/BoxConnector.BoxConnector} */
   bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel

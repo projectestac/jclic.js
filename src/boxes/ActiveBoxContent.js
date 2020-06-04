@@ -64,7 +64,7 @@ export class AlignType {
   /**
    * Reads the properties of this AlignType from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {AlignType}
+   * @returns {module:boxes/ActiveBoxContent.AlignType}
    */
   setAttributes(data) {
     return setAttr(this, data, ['h', 'v']);
@@ -382,7 +382,7 @@ Object.assign(ActiveBoxContent.prototype, {
    * try to find a suitable style scanning down through its own BoxBase, their parent's and, finally,
    * the default values defined in `BoxBase.prototype`.
    * @name module:boxes/ActiveBoxContent.ActiveBoxContent#style
-   * @type {BoxBase} */
+   * @type {module:boxes/BoxBase.BoxBase} */
   style: null,
   /**
    * Optimal dimension of any {@link module:boxes/ActiveBox.ActiveBox ActiveBox} taking this content.
@@ -393,7 +393,7 @@ Object.assign(ActiveBoxContent.prototype, {
    * The {@link module:boxes/ActiveBox.ActiveBox ActiveBox} can have or not a border despite the settings of {@link module:boxes/BoxBase.BoxBase BoxBase}.
    * The default value `null` means not to take in consideration this setting.
    * @name module:boxes/ActiveBoxContent.ActiveBoxContent#border
-   * @type {(null|boolean)} */
+   * @type {boolean|null} */
   border: null,
   /**
    * The text to display on the {@link module:boxes/ActiveBox.ActiveBox ActiveBox}. It can have up to two paragraphs.
@@ -413,7 +413,7 @@ Object.assign(ActiveBoxContent.prototype, {
   /**
    * The media content associated with this object.
    * @name module:boxes/ActiveBoxContent.ActiveBoxContent#mediaContent
-   * @type {MediaContent} */
+   * @type {module:media/MediaContent.MediaContent} */
   mediaContent: null,
   /**
    * @typedef ActiveBoxContent~alignType
@@ -423,13 +423,13 @@ Object.assign(ActiveBoxContent.prototype, {
   /**
    * The horizontal and vertical alignment of the image inside the cell.
    * @name module:boxes/ActiveBoxContent.ActiveBoxContent#imgAlign
-   * @type {AlignType} */
+   * @type {module:boxes/ActiveBoxContent.AlignType} */
   imgAlign: null,
   /**
    * The horizontal and vertical alignment of the text inside the cell.
    * Valid values are: `left`, `middle`, `right`, `top` and `bottom`.
    * @name module:boxes/ActiveBoxContent.ActiveBoxContent#txtAlign
-   * @type {AlignType} */
+   * @type {module:boxes/ActiveBoxContent.AlignType} */
   txtAlign: null,
   /**
    * Whether to avoid overlapping of image and text inside the cell when both are present.
@@ -466,18 +466,18 @@ Object.assign(ActiveBoxContent.prototype, {
   /**
    * The {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} associated with this content. Updated at run-time.
    * @name module:boxes/ActiveBoxContent.ActiveBoxContent#amp
-   * @type {ActiveMediaPlayer} */
+   * @type {module:media/ActiveMediaPlayer.ActiveMediaPlayer} */
   amp: null,
   /**
    * The {@link module:bads/MediaBagElement.MediaBagElement} associated with this content, if any. Updated at run-time.
    * @name module:boxes/ActiveBoxContent.ActiveBoxContent#mbe
-   * @type {MediaBagElement} */
+   * @type {module:bags/MediaBagElement.MediaBagElement} */
   mbe: null,
 });
 
 /**
  * An empty ActiveBoxContent
- * @type {ActiveBoxContent}
+ * @type {module:boxes/ActiveBoxContent.ActiveBoxContent}
  */
 ActiveBoxContent.EMPTY_CONTENT = new ActiveBoxContent();
 

@@ -60,7 +60,7 @@ export class Reporter {
    * Registers a new type of reporter
    * @param {string} reporterName - The name used to identify this reporter
    * @param {function} reporterClass - The reporter class, usually extending Reporter
-   * @returns {Reporter} - The provided reporter class
+   * @returns {module:report/Reporter.Reporter} - The provided reporter class
    */
   static registerClass(reporterName, reporterClass) {
     Reporter.CLASSES[reporterName] = reporterClass;
@@ -72,7 +72,7 @@ export class Reporter {
    * The resulting object must be prepared to operate with a call to its `init` method.
    * @param {string} className - Class name of the requested reporter. When `null`, a basic Reporter is created.
    * @param {module:JClicPlayer.JClicPlayer} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve localized messages
-   * @returns {Reporter}
+   * @returns {module:report/Reporter.Reporter}
    */
   static getReporter(className, ps) {
     let result = null;
@@ -91,7 +91,7 @@ export class Reporter {
 
   /**
    * Returns the `info` element associated to this Reporter.
-   * @returns {ReporterInfo}
+   * @returns {module:report/Reporter.ReporterInfo}
    */
   getInfo() {
     return this.info.recalc();
@@ -472,7 +472,7 @@ export class Reporter {
 
   /**
    * Gets information about the current sequence
-   * @returns {SequenceReg.Info}
+   * @returns {module:report/SequenceReg.SequenceRegInfo}
    */
   getCurrentSequenceInfo() {
     return this.currentSession === null ? null : this.currentSession.getCurrentSequenceInfo();
@@ -491,12 +491,12 @@ Object.assign(Reporter.prototype, {
   /**
    * The {@link module:report/Reporter.ReporterInfo ReporterInfo} used to calculate and store global results.
    * @name module:report/Reporter.Reporter#info
-   * @type {ReporterInfo} */
+   * @type {module:report/Reporter.ReporterInfo} */
   info: null,
   /**
    * The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve messages
    * @name module:report/Reporter.Reporter#ps
-   * @type {PlayStation} */
+   * @type {module:JClicPlayer.JClicPlayer} */
   ps: null,
   /**
    * A valid SCORM bridge, or `null` if no SCORM API detected.
@@ -540,17 +540,17 @@ Object.assign(Reporter.prototype, {
   /**
    * Starting date and time of this report
    * @name module:report/Reporter.Reporter#started
-   * @type {Date} */
+   * @type {external:Date} */
   started: null,
   /**
    * Array of sessions included in this report
    * @name module:report/Reporter.Reporter#sessions
-   * @type {SessionReg[]} */
+   * @type {module:report/SessionReg.SessionReg[]} */
   sessions: [],
   /**
    * Currently active session
    * @name module:report/Reporter.Reporter#currentSession
-   * @type {SessionReg} */
+   * @type {module:report/SessionReg.SessionReg} */
   currentSession: null,
   /**
    * `true` if the system was successfully initiated, `false` otherwise
@@ -594,7 +594,7 @@ export class ReporterInfo {
 
   /**
    * Computes the value of all global variables based on the data stored in `sessions`
-   * @returns {ReporterInfo} - This "info" object
+   * @returns {module:report/Reporter.ReporterInfo} - This "info" object
    */
   recalc() {
     if (!this.valid) {
@@ -635,7 +635,7 @@ Object.assign(ReporterInfo.prototype, {
   /**
    * The Reporter linked to this Info object
    * @name module:report/Reporter.ReporterInfo#rep
-   * @type {Reporter}
+   * @type {module:report/Reporter.Reporter}
    */
   rep: null,
   /**
@@ -720,7 +720,7 @@ Reporter.Info = ReporterInfo;
 
 /**
  * Static list of classes derived from Reporter. It should be filled by Reporter classes at declaration time.
- * @type {Object}
+ * @type {object}
  */
 Reporter.CLASSES = { 'Reporter': Reporter };
 

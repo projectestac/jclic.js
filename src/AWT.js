@@ -401,7 +401,7 @@ export class Gradient {
   /**
    * Reads the properties of this Gradient from an XML element
    * @param {external:jQuery} $xml - The xml element to be parsed
-   * @returns {Gradient}
+   * @returns {module:AWT.Gradient}
    */
   setProperties($xml) {
     this.c1 = checkColor($xml.attr('source'), 'black');
@@ -426,7 +426,7 @@ export class Gradient {
   /**
    * Reads the properties of this Gradient from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {Gradient}
+   * @returns {module:AWT.Gradient}
    */
   setAttributes(data) {
     return setAttr(this, data, ['c1', 'c2', 'angle', 'cycles']);
@@ -437,7 +437,7 @@ export class Gradient {
    * based on the provided context and rectangle.
    * @param {external:CanvasRenderingContext2D} ctx - The 2D rendering context
    * @param {module:AWT.Rectangle} rect - The rectangle where this gradient will be applied to
-   * @returns {Gradient}
+   * @returns {module:AWT.Gradient}
    */
   getGradient(ctx, rect) {
     const
@@ -532,7 +532,7 @@ export class Stroke {
   /**
    * Reads the properties of this Stroke from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {Stroke}
+   * @returns {module:AWT.Stroke}
    */
   setAttributes(data) {
     return setAttr(this, data, ['lineWidth', 'lineCap', 'lineJoin', 'miterLimit']);
@@ -598,7 +598,7 @@ export class Point {
   /**
    * Reads the properties of this Point from an XML element
    * @param {external:jQuery} $xml - The xml element to be parsed
-   * @returns {Point}
+   * @returns {module:AWT.Point}
    */
   setProperties($xml) {
     this.x = Number($xml.attr('x'));
@@ -619,7 +619,7 @@ export class Point {
   /**
    * Reads the properties of this Point from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {Point}
+   * @returns {module:AWT.Point}
    */
   setAttributes(data) {
     return setAttr(this, data, ['x', 'y']);
@@ -628,7 +628,7 @@ export class Point {
   /**
    * Moves this Point to a new position, by a specified displacement
    * @param {Point|Dimension} delta - The amount to move
-   * @returns {Point}
+   * @returns {module:AWT.Point}
    */
   moveBy(delta) {
     this.x += delta.x || delta.width || 0;
@@ -640,7 +640,7 @@ export class Point {
    * Moves this Point to a new position
    * @param {number|Point} newPos - The new position, or a x coordinate
    * @param {number} [y] - `null` or `undefined` when `newPos` is a Point
-   * @returns {Point}
+   * @returns {module:AWT.Point}
    */
   moveTo(newPos, y) {
     if (typeof newPos === 'number') {
@@ -656,7 +656,7 @@ export class Point {
   /**
    * Multiplies the `x` and `y` coordinates by a specified `delta`
    * @param {Point|Dimension} delta - The amount to multiply by.
-   * @returns {Point}
+   * @returns {module:AWT.Point}
    */
   multBy(delta) {
     this.x *= delta.x || delta.width || 0;
@@ -684,7 +684,7 @@ export class Point {
 
   /**
    * Clones this point
-   * @returns {Point}
+   * @returns {module:AWT.Point}
    */
   clone() {
     return new Point(this);
@@ -726,7 +726,7 @@ export class Dimension {
   /**
    * Reads the properties of this Dimension from an XML element
    * @param {external:jQuery} $xml - The xml element to be parsed
-   * @returns {Dimension}
+   * @returns {module:AWT.Dimension}
    */
   setProperties($xml) {
     this.width = Number($xml.attr('width'));
@@ -747,7 +747,7 @@ export class Dimension {
   /**
    * Reads the properties of this Dimension from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {Dimension}
+   * @returns {module:AWT.Dimension}
    */
   setAttributes(data) {
     return setAttr(this, data, ['width', 'height']);
@@ -765,7 +765,7 @@ export class Dimension {
   /**
    * Multiplies the `w` and `h` co-ordinates by a specified `delta`
    * @param {Point|Dimension} delta
-   * @returns {Dimension}
+   * @returns {module:AWT.Dimension}
    */
   multBy(delta) {
     this.width *= delta.x || delta.width || 0;
@@ -778,7 +778,7 @@ export class Dimension {
    * `width` can be a number or another `Dimension` object
    * @param {number|Dimension} width - The new width, or a full Dimension to copy it from.
    * @param {number} [height] - Not used when `width` is a Dimension
-   * @returns {Dimension}
+   * @returns {module:AWT.Dimension}
    */
   setDimension(width, height) {
     if (width instanceof Dimension) {
@@ -826,7 +826,7 @@ export class Shape {
   /**
    * Shifts the shape a specified amount in horizontal and vertical directions
    * @param {Point|Dimension} delta - The amount to shift the Shape
-   * @returns {Shape}
+   * @returns {module:AWT.Shape}
    */
   moveBy(delta) {
     this.pos.moveBy(delta);
@@ -836,7 +836,7 @@ export class Shape {
   /**
    * Moves this shape to a new position
    * @param {module:AWT.Point} newPos - The new position of the shape
-   * @returns {Shape}
+   * @returns {module:AWT.Shape}
    */
   moveTo(newPos) {
     this.pos.moveTo(newPos);
@@ -845,7 +845,7 @@ export class Shape {
 
   /**
    * Gets the enclosing {@link module:AWT.Rectangle Rectangle} of this Shape.
-   * @returns {Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   getBounds() {
     return new Rectangle(this.pos);
@@ -863,7 +863,7 @@ export class Shape {
   /**
    * Multiplies the dimension of the Shape by the specified `delta` amount.
    * @param {Point|Dimension} _delta - Object containing the X and Y ratio to be scaled.
-   * @returns {Shape}
+   * @returns {module:AWT.Shape}
    */
   scaleBy(_delta) {
     // Nothing to scale in abstract shapes
@@ -875,7 +875,7 @@ export class Shape {
    * by its `dim` value.
    * @param {module:AWT.Rectangle} rect - The rectangle to be taken as a base for moving and scaling
    * this shape.
-   * @returns {Shape}
+   * @returns {module:AWT.Shape}
    */
   getShape(rect) {
     return this.clone().scaleBy(rect.dim).moveBy(rect.pos);
@@ -976,7 +976,7 @@ export class Shape {
   /**
    * Reads the properties of this Shape from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {Shape}
+   * @returns {module:AWT.Shape}
    */
   setAttributes(data) {
     return Shape.buildShape(data);
@@ -992,7 +992,7 @@ export class Shape {
    * Builds a shape based on the provided `data` object.
    * Data should contain a 'type' member, specifying the type of shape requested ('rect', 'ellipse', 'rectangle' or 'path')
    * @param {object} data - Specific data for this shape
-   * @returns {Shape}
+   * @returns {module:AWT.Shape}
    */
   static buildShape(data) {
     const shapeType = (data.type === 'rect' && Rectangle) || (data.type === 'ellipse' && Ellipse) || (data.type === 'path' && Path) || null;
@@ -1012,7 +1012,7 @@ Object.assign(Shape.prototype, {
   /**
    * The current position of the shape
    * @name module:AWT.Shape#pos
-   * @type {Point} */
+   * @type {module:AWT.Point} */
   pos: new Point(),
   /**
    * The type of shape (Rectangle, ellipse, path...)
@@ -1078,7 +1078,7 @@ export class Rectangle extends Shape {
 
   /**
    * Gets the enclosing {@link module:AWT.Rectangle Rectangle} of this Shape.
-   * @returns {Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   getBounds() {
     return this;
@@ -1087,7 +1087,7 @@ export class Rectangle extends Shape {
   /**
    * Sets this Rectangle the position and dimension of another one
    * @param {module:AWT.Rectangle} rect
-   * @returns {Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   setBounds(rect) {
     if (!rect)
@@ -1110,7 +1110,7 @@ export class Rectangle extends Shape {
 
   /**
    * Clones this Rectangle
-   * @returns {Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   clone() {
     return new Rectangle(this);
@@ -1119,7 +1119,7 @@ export class Rectangle extends Shape {
   /**
    * Multiplies the dimension of the Shape by the specified `delta` amount.
    * @param {Point|Dimension} delta - Object containing the X and Y ratio to be scaled.
-   * @returns {Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   scaleBy(delta) {
     this.pos.multBy(delta);
@@ -1131,7 +1131,7 @@ export class Rectangle extends Shape {
    * Expands the boundaries of this shape. This affects the current position and dimension.
    * @param {number} dx - The amount to grow (or decrease) in horizontal direction
    * @param {number} dy - The amount to grow (or decrease) in vertical direction
-   * @returns {Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   grow(dx, dy) {
     this.pos.x -= dx;
@@ -1143,7 +1143,7 @@ export class Rectangle extends Shape {
 
   /**
    * Gets the {@link module:AWT.Point} corresponding to the lower-right vertex of the Rectangle.
-   * @returns {Point}
+   * @returns {module:AWT.Point}
    */
   getOppositeVertex() {
     return new Point(this.pos.x + this.dim.width, this.pos.y + this.dim.height);
@@ -1152,7 +1152,7 @@ export class Rectangle extends Shape {
   /**
    * Adds the boundaries of another shape to the current one
    * @param {module:AWT.Shape} shape - The {@link module:AWT.Shape} to be added
-   * @returns {Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   add(shape) {
     const
@@ -1238,7 +1238,7 @@ export class Rectangle extends Shape {
   /**
    * Reads the properties of this Rectangle from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   setAttributes(data) {
     return setAttr(this, data, [
@@ -1258,7 +1258,7 @@ Object.assign(Rectangle.prototype, {
   /**
    * The {@link module:AWT.Dimension Dimension} of the Rectangle
    * @name module:AWT.Rectangle#dim
-   * @type {Dimension} */
+   * @type {module:AWT.Dimension} */
   dim: new Dimension(),
 });
 
@@ -1410,7 +1410,7 @@ export class Path extends Shape {
 
   /**
    * Calculates the polygon and the rectangle that (approximately) encloses this shape
-   * @returns {Rectangle}
+   * @returns {module:AWT.Rectangle}
    */
   calcEnclosingRect() {
     this.enclosingPoints = [];
@@ -1547,7 +1547,7 @@ export class Path extends Shape {
   /**
    * Reads the properties of this Path from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {Path}
+   * @returns {module:AWT.Path}
    */
   setAttributes(data) {
     const strData = data.strokes.split('|');
@@ -1568,17 +1568,17 @@ Object.assign(Path.prototype, {
   /**
    * The strokes forming this Path.
    * @name module:AWT.Path#strokes
-   * @type {PathStroke[]} */
+   * @type {module:AWT.PathStroke[]} */
   strokes: [],
   /**
    * The {@link module:AWT.Rectangle Rectangle} enclosing this Path (when drawing, this Rectangle don't include border width!)
    * @name module:AWT.Path#enclosing
-   * @type {Rectangle} */
+   * @type {module:AWT.Rectangle} */
   enclosing: new Rectangle(),
   /**
    * Set of vertexs of a polygon close to the real path of this shape
    * @name module:AWT.Path#enclosingPoints
-   * @type {Point[]} */
+   * @type {module:AWT.Point[]} */
   enclosingPoints: [],
 });
 
@@ -1620,7 +1620,7 @@ export class PathStroke {
    * @param {module:AWT.Point} p2 - Ending point
    * @param {number} [numPoints] - The number of intermediate points to calculate. When not defined,
    * the value will be obtained from {@link module:Utils.settings.BEZIER_POINTS}.
-   * @returns {Point[]} - Array with some intermediate points from the resulting Bézier curve
+   * @returns {module:AWT.Point[]} - Array with some intermediate points from the resulting Bézier curve
    */
   static getQuadraticPoints(p0, p1, p2, numPoints) {
     if (!numPoints)
@@ -1649,7 +1649,7 @@ export class PathStroke {
    * @param {module:AWT.Point} p3 - Ending point
    * @param {number} [numPoints] - The number of intermediate points to calculate. When not defined,
    * the value will be obtained from {@link module:Utils.settings.BEZIER_POINTS}.
-   * @returns {Point[]} - Array with some intermediate points from the resulting Bézier curve
+   * @returns {module:AWT.Point[]} - Array with some intermediate points from the resulting Bézier curve
    */
   static getCubicPoints(p0, p1, p2, p3, numPoints) {
     const result = [];
@@ -1666,7 +1666,7 @@ export class PathStroke {
 
   /**
    * Clones this PathStroke
-   * @returns {PathStroke}
+   * @returns {module:AWT.PathStroke}
    */
   clone() {
     // The constructors of PathStroke always make a deep copy of the `points` array
@@ -1729,7 +1729,7 @@ export class PathStroke {
    * Gets the set of points that will be included as a vertexs on the owner's shape
    * enclosing polygon.
    * @param {module:AWT.Point} from - The starting point for this stroke
-   * @returns {Point[]}
+   * @returns {module:AWT.Point[]}
    */
   getEnclosingPoints(from) {
     let result = [];
@@ -1771,7 +1771,7 @@ Object.assign(PathStroke.prototype, {
   /**
    * The array of points used by this stroke. Can be `null`.
    * @name module:AWT.PathStroke#points
-   * @type {Point[]} */
+   * @type {module:AWT.Point[]} */
   points: null,
 });
 
@@ -2029,7 +2029,7 @@ Object.assign(Container.prototype, {
   /**
    * The currently "invalidated" area
    * @name module:AWT.Container#invalidatedRect
-   * @type {Rectangle} */
+   * @type {module:AWT.Rectangle} */
   invalidatedRect: null,
 });
 

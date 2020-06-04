@@ -149,7 +149,7 @@ export class ActivityReg {
   /**
    * Retrieves a specific {@link module:report/ActionReg.ActionReg ActionReg} element from `actions`
    * @param {number} index - The nth action to be retrieved
-   * @returns {ActionReg}
+   * @returns {module:report/ActionReg.ActionReg}
    */
   getActionReg(index) {
     return index >= this.actions.length ? null : this.actions[index];
@@ -229,7 +229,7 @@ Object.assign(ActivityReg.prototype, {
   /**
    * Collection of actions done by the user while playing the activity
    * @name module:report/ActivityReg.ActivityReg#actions
-   * @type {ActionReg[]} */
+   * @type {module:report/ActionReg.ActionReg[]} */
   actions: [],
   /**
    * `true` only when the user has finished and solved the activity
@@ -239,7 +239,7 @@ Object.assign(ActivityReg.prototype, {
   /**
    * Last {@link module:report/ActionReg.ActionReg ActionReg} performed by the user in this activity
    * @name module:report/ActivityReg.ActivityReg#lastAction
-   * @type {ActionReg} */
+   * @type {module:report/ActionReg.ActionReg} */
   lastAction: null,
   /**
    * Final score obtained by the current user in this activity

@@ -84,7 +84,7 @@ export class SessionReg {
 
   /**
    * Returns the `info` element associated to this SessionReg.
-   * @returns {SessionRegInfo}
+   * @returns {module:report/SessionReg.SessionRegInfo}
    */
   getInfo() {
     return this.info.recalc();
@@ -170,7 +170,7 @@ export class SessionReg {
 
   /**
    * Gets information about the current sequence
-   * @returns {SequenceReg.Info}
+   * @returns {module:report/SequenceReg.SequenceRegInfo}
    */
   getCurrentSequenceInfo() {
     return this.currentSequence ? this.currentSequence.getInfo() : null;
@@ -191,17 +191,17 @@ Object.assign(SessionReg.prototype, {
   /**
    * List of sequences done in this session
    * @name module:report/SessionReg.SessionReg#sequences
-   * @type {SequenceReg[]} */
+   * @type {module:report/SequenceReg.SequenceReg[]} */
   sequences: null,
   /**
    * The sequence currently active
    * @name module:report/SessionReg.SessionReg#currentSequence
-   * @type {SequenceReg} */
+   * @type {module:report/SequenceReg.SequenceReg} */
   currentSequence: null,
   /**
    * Starting date and time of this session
    * @name module:report/SessionReg.SessionReg#started
-   * @type {Date} */
+   * @type {external:Date} */
   started: null,
   /**
    * Name of the {@link module:project/JClicProject.JClicProject JClicProject} associated to this session
@@ -211,7 +211,7 @@ Object.assign(SessionReg.prototype, {
   /**
    * Current session info
    * @name module:report/SessionReg.SessionReg#info
-   * @type {SessionRegInfo} */
+   * @type {module:report/SessionReg.SessionRegInfo} */
   info: null,
   /**
    * Optional code to be used with this session
@@ -243,7 +243,7 @@ export class SessionRegInfo {
 
   /**
    * Computes the value of all global variables based on the data stored in `sequences`
-   * @returns {SessionRegInfo} - This "info" object
+   * @returns {module:report/SessionReg.SessionRegInfo} - This "info" object
    */
   recalc() {
     if (!this.valid) {
@@ -281,7 +281,7 @@ Object.assign(SessionRegInfo.prototype, {
   /**
    * The SessionReg linked to this Info object
    * @name module:report/SessionReg.SessionRegInfo#sReg
-   * @type {SessionReg} */
+   * @type {module:report/SessionReg.SessionReg} */
   sReg: null,
   /**
    * When `false`, this session info needs to be recalculated

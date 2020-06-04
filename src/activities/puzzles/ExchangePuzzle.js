@@ -350,12 +350,12 @@ Object.assign(ExchangePuzzlePanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the panel.
    * @name module:activities/puzzles/ExchangePuzzle.ExchangePuzzlePanel#bg
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bg: null,
   /**
    * The box connector
    * @name module:activities/puzzles/ExchangePuzzle.ExchangePuzzlePanel#bc
-   * @type {BoxConnector} */
+   * @type {module:boxes/BoxConnector.BoxConnector} */
   bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel

@@ -280,7 +280,7 @@ export class BoxBag extends AbstractBox {
   /**
    * Returns the box at a specific index in the `cells` array
    * @param {number} n - The index
-   * @returns {AbstractBox}
+   * @returns {module:boxes/AbstractBox.AbstractBox}
    */
   getBox(n) {
     return n < 0 || n >= this.cells.length ? null : this.cells[n];
@@ -288,7 +288,7 @@ export class BoxBag extends AbstractBox {
 
   /**
    * Gets the background box
-   * @returns {AbstractBox}
+   * @returns {module:boxes/AbstractBox.AbstractBox}
    */
   getBackgroundBox() {
     return this.backgroundBox;
@@ -454,7 +454,7 @@ export class BoxBag extends AbstractBox {
   /**
    * Finds the first visible {@link module:boxes/AbstractBox.AbstractBox AbstractBox} located under the specified point
    * @param {module:AWT.Point} p
-   * @returns {AbstractBox}
+   * @returns {module:boxes/AbstractBox.AbstractBox}
    */
   findBox(p) {
     let result = null;
@@ -481,7 +481,7 @@ Object.assign(BoxBag.prototype, {
   /**
    * The array of cells
    * @name module:boxes/BoxBag.BoxBag#cells
-   * @type {AbstractBox[]} */
+   * @type {module:boxes/AbstractBox.AbstractBox[]} */
   cells: [],
   /**
    * Rectangle containing the preferred bounds of the BoxBag
@@ -491,7 +491,7 @@ Object.assign(BoxBag.prototype, {
   /**
    * An optional box used as a background by this BoxBag
    * @name module:boxes/BoxBag.BoxBag#backgroundBox
-   * @type {AbstractBox} */
+   * @type {module:boxes/AbstractBox.AbstractBox} */
   backgroundBox: null,
 });
 

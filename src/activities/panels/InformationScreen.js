@@ -243,7 +243,7 @@ Object.assign(InformationScreenPanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed.
    * @name module:activities/panels/InformationScreen.InformationScreenPanel#bg
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bg: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel

@@ -135,12 +135,12 @@ Object.assign(ActivitySequenceElement.prototype, {
   /**
    * Jump to be processed by the 'next' button action
    * @name module:bags/ActivitySequenceElement.ActivitySequenceElement#fwdJump
-   * @type {ActivitySequenceJump} */
+   * @type {module:bags/ActivitySequenceJump.ActivitySequenceJump} */
   fwdJump: null,
   /**
    * Jump to be processed by the 'prev' button action.
    * @name module:bags/ActivitySequenceElement.ActivitySequenceElement#backJump
-   * @type {ActivitySequenceJump} */
+   * @type {module:bags/ActivitySequenceJump.ActivitySequenceJump} */
   backJump: null,
   /**
    * What buttons should be active at this point of the sequence. Valid values are:

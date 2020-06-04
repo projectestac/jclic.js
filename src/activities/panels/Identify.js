@@ -337,7 +337,7 @@ Object.assign(IdentifyPanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed on the panel.
    * @name module:activities/panels/Identify.IdentifyPanel#bg
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bg: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel

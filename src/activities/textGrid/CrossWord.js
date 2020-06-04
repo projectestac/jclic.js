@@ -136,7 +136,7 @@ export class CrossWordPanel extends ActivityPanel {
    * Creates a {@link module:boxes/BoxBag.BoxBag BoxBag} with a label ("Horizontal" or "Vertical") and an {@link module:boxes/ActiveBox.ActiveBox ActiveBox}
    * that will be used to display clues.
    * @param {string} type - `acrossClues` for horizontal clues, 'downClues' for vertical.
-   * @returns {BoxBag}
+   * @returns {module:boxes/BoxBag.BoxBag}
    */
   createBoxBag(type) {
     const
@@ -483,12 +483,12 @@ Object.assign(CrossWordPanel.prototype, {
   /**
    * The text grid of this ActivityPanel
    * @name module:activities/textGrid/CrossWord.CrossWordPanel#grid
-   * @type {textGrid} */
+   * @type {module:boxes/TextGrid.TextGrid} */
   grid: null,
   /**
    * A BoxBag used to place the across and down clues, and the `toggle direction` button.
    * @name module:activities/textGrid/CrossWord.CrossWordPanel#style
-   * @type {BoxBag} */
+   * @type {module:boxes/BoxBag.BoxBag} */
   style: null,
   /**
    * The total number of letters of this cross word
@@ -505,22 +505,22 @@ Object.assign(CrossWordPanel.prototype, {
   /**
    * The ActiveBox object used to display the 'across' clues
    * @name module:activities/textGrid/CrossWord.CrossWordPanel#hClue
-   * @type {ActiveBox} */
+   * @type {module:boxes/ActiveBox.ActiveBox} */
   hClue: null,
   /**
    * The ActiveBox object used to display the 'down' clues
    * @name module:activities/textGrid/CrossWord.CrossWordPanel#vClue
-   * @type {ActiveBox} */
+   * @type {module:boxes/ActiveBox.ActiveBox} */
   vClue: null,
   /**
    * Button used to set the advance mode to 'ADVANCE_RIGHT'
    * @name module:activities/textGrid/CrossWord.CrossWordPanel#hClueBtn
-   * @type {ActiveBox} */
+   * @type {module:boxes/ActiveBox.ActiveBox} */
   hClueBtn: null,
   /**
    * Button used to set the advance mode to 'ADVANCE_BOTTOM'
    * @name module:activities/textGrid/CrossWord.CrossWordPanel#vClueBtn
-   * @type {ActiveBox} */
+   * @type {module:boxes/ActiveBox.ActiveBox} */
   vClueBtn: null,
   /**
    * Mouse and touch events intercepted by this panel
@@ -557,12 +557,12 @@ Object.assign(CrossWordPanel.prototype, {
   /**
    * Sizes of the icons (currently 36 x 36 pixel)
    * @name module:activities/textGrid/CrossWord.CrossWordPanel#icoSize
-   * @type {Object} */
+   * @type {object} */
   icoSize: { w: 36, h: 36 },
   /**
    * BoxBase with the style to be used by the direction buttons.
    * @name module:activities/textGrid/CrossWord.CrossWordPanel#icoBB
-   * @type {BoxBase} */
+   * @type {module:boxes/BoxBase.BoxBase} */
   icoBB: new BoxBase().set('backColor', '#4285F4').set('inactiveColor', '#70A2F6').set('dontFill', true)
 });
 

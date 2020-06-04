@@ -172,12 +172,12 @@ Object.assign(MidiAudioPlayer.prototype, {
   /**
    * The MIDI file data used by this MIDI player
    * @name module:media/MidiAudioPlayer.MidiAudioPlayer#data
-   * @type {ArrayBuffer} */
+   * @type {external:ArrayBuffer} */
   data: null,
   /**
    * The grimmdude's MidiPlayer used by this player
    * @name module:media/MidiAudioPlayer.MidiAudioPlayer#player
-   * @type {MidiPlayerJS} */
+   * @type {external:MidiPlayerJS} */
   player: null,
   /**
    * When >0, time position at which the music must end
@@ -199,14 +199,14 @@ Object.assign(MidiAudioPlayer.prototype, {
 
 /**
  * The {@link external:AudioContext} used by this MIDI player.
- * @type {AudioContext}
+ * @type {external:AudioContext}
  */
 MidiAudioPlayer.audioContext = null;
 
 /**
  * The "Instrument" object used by this MIDI player.
  * See: https://github.com/danigb/soundfont-player
- * @type {Instrument}
+ * @type {external:Instrument}
  */
 MidiAudioPlayer.instrument = null;
 

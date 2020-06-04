@@ -298,7 +298,7 @@ Object.assign(BoxConnector.prototype, {
   /**
    * The ActiveBox to connect or move
    * @name module:boxes/BoxConnector.BoxConnector#bx
-   * @type {ActiveBox} */
+   * @type {module:boxes/ActiveBox.ActiveBox} */
   bx: null,
   /**
    * The Graphics context where the BoxConnector will paint

@@ -92,7 +92,7 @@ export class ActivitySequence {
    * Returns the nth element of the sequence.
    * @param {number} n - Index of the requested element
    * @param {boolean} updateCurrentAct - when `true`, the `currentAct` index will be updated.
-   * @returns {ActivitySequenceElement} - The requested element, or `null` if out of range.
+   * @returns {module:bags/ActivitySequenceElement.ActivitySequenceElement} - The requested element, or `null` if out of range.
    */
   getElement(n, updateCurrentAct) {
     let result = null;
@@ -108,7 +108,7 @@ export class ActivitySequence {
    * Search into the sequence for a element with the provided tag
    * @param {string} tag - The tag to search
    * @param {boolean} updateCurrentAct - when `true`, the `currentAct` index will be updated.
-   * @returns {ActivitySequenceElement} - The requested element, or `null` if not found.
+   * @returns {module:bags/ActivitySequenceElement.ActivitySequenceElement} - The requested element, or `null` if not found.
    */
   getElementByTag(tag, updateCurrentAct) {
     let
@@ -131,7 +131,7 @@ export class ActivitySequence {
 
   /**
    * Gets the sequence element pointed by the `currentAct` member.
-   * @returns {ActivitySequenceElement} - The current sequence element, or `null` if not set.
+   * @returns {module:bags/ActivitySequenceElement.ActivitySequenceElement} - The current sequence element, or `null` if not set.
    */
   getCurrentAct() {
     return this.getElement(this.currentAct, false);
@@ -208,7 +208,7 @@ export class ActivitySequence {
    * for the 'next' one.
    * @param {module:report/Reporter.Reporter} reporter - The reporting engine that will provide values about score average
    * and time spend on the activities, used only to compute conditional jumps.
-   * @returns {JumpInfo} - The jump info if a valid jump is possible, `null` otherwise.
+   * @returns {module:bags/JumpInfo.JumpInfo} - The jump info if a valid jump is possible, `null` otherwise.
    */
   getJump(back, reporter) {
     const ase = this.getCurrentAct();
@@ -256,7 +256,7 @@ export class ActivitySequence {
    * specified activity name.
    * The search is always case-insensitive.
    * @param {string} activity - The name of the activity to search for.
-   * @returns {ActivitySequenceElement} The requested element or `null` if not found.
+   * @returns {module:bags/ActivitySequenceElement.ActivitySequenceElement} The requested element or `null` if not found.
    */
   getElementByActivityName(activity) {
     let result = null;
@@ -300,12 +300,12 @@ Object.assign(ActivitySequence.prototype, {
   /**
    * The ordered list of {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} objects
    * @name module:bags/ActivitySequence.ActivitySequence#elements
-   * @type {ActivitySequenceElement[]} */
+   * @type {module:bags/ActivitySequenceElement.ActivitySequenceElement[]} */
   elements: null,
   /**
    * The JClic project to which this ActivitySequence belongs.
    * @name module:bags/ActivitySequence.ActivitySequence#project
-   * @type {JClicProject} */
+   * @type {module:project/JClicProject.JClicProject} */
   project: null,
   /**
    * Pointer to the {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} currently running (points inside

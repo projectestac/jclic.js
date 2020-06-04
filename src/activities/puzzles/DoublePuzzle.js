@@ -394,17 +394,17 @@ Object.assign(DoublePuzzlePanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
    * @name module:activities/puzzles/DoublePuzzle.DoublePuzzlePanel#bgA
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgA: null,
   /**
    * The secondary {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag}, initially empty.
    * @name module:activities/puzzles/DoublePuzzle.DoublePuzzlePanel#bgB
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgB: null,
   /**
    * The box connector
    * @name module:activities/puzzles/DoublePuzzle.DoublePuzzlePanel#bc
-   * @type {BoxConnector} */
+   * @type {module:boxes/BoxConnector.BoxConnector} */
   bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel

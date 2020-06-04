@@ -52,7 +52,7 @@ export class Shaper {
    * Registers a new type of shaper
    * @param {string} shaperName - The name used to identify this shaper
    * @param {function} shaperClass - The shaper class, usually extending Shaper
-   * @returns {Shaper} - The provided shaper class
+   * @returns {module:shapers/Shaper.Shaper} - The provided shaper class
    */
   static registerClass(shaperName, shaperClass) {
     Shaper.CLASSES[shaperName] = shaperClass;
@@ -64,7 +64,7 @@ export class Shaper {
    * @param {string} className - The class name of the requested Shaper.
    * @param {number} nx - Number of columns (in grid-based shapers)
    * @param {number} ny - Number of rows (in grid-based shapers)
-   * @returns {Shaper}
+   * @returns {module:shapers/Shaper.Shaper}
    */
   static getShaper(className, nx, ny) {
     const cl = Shaper.CLASSES[(className || '').replace(/^edu\.xtec\.jclic\.shapers\./, '@')];
@@ -208,7 +208,7 @@ export class Shaper {
   /**
    * Builds a new shaper, based on the properties specified in a data object
    * @param {object} data - The data object to be parsed
-   * @returns {Shaper}
+   * @returns {module:shapers/Shaper.Shaper}
    */
   static factory(data) {
     const result = Shaper.getShaper(data.className, data.nCols, data.nRows);

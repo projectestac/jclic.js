@@ -200,13 +200,13 @@ Object.assign(PlayerHistory.prototype, {
   /**
    * The {@link module:JClicPlayer.JClicPlayer JClicPlayer} object to which this `PlayerHistory` belongs
    * @name module:PlayerHistory.PlayerHistory#player
-   * @type {JClicPlayer} */
+   * @type {module:JClicPlayer.JClicPlayer} */
   player: null,
   /**
    * This is the main member of the class. PlayerHistory puts and retrieves
    * on it information about the proects and activities done by the current user.
    * @name module:PlayerHistory.PlayerHistory#sequenceStack
-   * @type {PlayerHistory#HistoryElement[]} */
+   * @type {module:PlayerHistory.PlayerHistory#HistoryElement[]} */
   sequenceStack: [],
   /**
    * When in test mode, jumps are only simulated.

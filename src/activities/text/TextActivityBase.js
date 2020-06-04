@@ -64,7 +64,7 @@ Object.assign(TextActivityBase.prototype, {
   /**
    * This is the object used to evaluate user's answers in text activities.
    * @name module:activities/text/TextActivityBase.TextActivityBase#ev
-   * @type {Evaluator} */
+   * @type {module:activities/text/Evaluator.Evaluator} */
   ev: null,
   /**
    * This is the label used by text activities for the `check` button, when present.
@@ -85,7 +85,7 @@ Object.assign(TextActivityBase.prototype, {
   /**
    * The style of the optional text to be shown before the beginning of the activity.
    * @name module:activities/text/TextActivityBase.TextActivityBase#prevScreenStyle
-   * @type {BoxBase} */
+   * @type {module:boxes/BoxBase.BoxBase} */
   prevScreenStyle: null,
   /**
    * Maximum amount of time for showing the previous document.

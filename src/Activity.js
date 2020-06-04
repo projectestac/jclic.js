@@ -603,7 +603,7 @@ Object.assign(Activity.prototype, {
   /**
    * The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
    * @name module:Activity.Activity#project
-   * @type {JClicProject} */
+   * @type {module:project/JClicProject.JClicProject} */
   project: null,
   /**
    * The Activity name
@@ -702,7 +702,7 @@ Object.assign(Activity.prototype, {
    * Specific set of {@link module:media/EventSounds.EventSounds EventSounds} used in the activity. The default is `null`, meaning
    * to use the default event sounds.
    * @name module:Activity.Activity#eventSounds
-   * @type {EventSounds} */
+   * @type {module:media/EventSounds.EventSounds} */
   eventSounds: null,
   /**
    * Wheter the activity must be solved in a specific order or not.
@@ -757,7 +757,7 @@ Object.assign(Activity.prototype, {
   /**
    * The content of the initial, final, previous and error messages shown by the activity.
    * @name module:Activity.Activity#messages
-   * @type {ActiveBoxContent[]} */
+   * @type {module:boxes/ActiveBoxContent.ActiveBoxContent[]} */
   messages: null,
   /**
    * Preferred dimension of the activity window
@@ -797,7 +797,7 @@ Object.assign(Activity.prototype, {
   /**
    * Special object used to generate random content at the start of the activity
    * @name module:Activity.Activity#acp
-   * @type {AutoContentProvider} */
+   * @type {module:automation/AutoContentProvider.AutoContentProvider} */
   acp: null,
   //
   // Fields used only in certain activity types
@@ -806,17 +806,17 @@ Object.assign(Activity.prototype, {
   /**
    * Array of bags with the description of the content to be displayed on panels and cells.
    * @name module:Activity.Activity#abc
-   * @type {ActiveBagContent[]} */
+   * @type {module:boxes/ActiveBagContent.ActiveBagContent[]} */
   abc: null,
   /**
    * Content of the grid of letters used in crosswords and shuffled letters
    * @name module:Activity.Activity#tgc
-   * @type {TextGridContent} */
+   * @type {module:boxes/TextGridContent.TextGridContent} */
   tgc: null,
   /**
    * The main document used in text activities
    * @name module:Activity.Activity#document
-   * @type {TextActivityDocument} */
+   * @type {module:activities/text/TextActivityDocument.TextActivityDocument} */
   document: null,
   /**
    * Relative position of the text grid (uses the same position codes as box grids)
@@ -846,7 +846,7 @@ Object.assign(Activity.prototype, {
   /**
    * Array of menu elements, used in activities of type {@link module:activities/panels/Menu.Menu Menu}
    * @name module:Activity.Activity#menuElements
-   * @type {array} */
+   * @type {object[]} */
   menuElements: null,
   /**
    * This activity uses numeric expressions, so text literals should be
@@ -1211,7 +1211,7 @@ Object.assign(ActivityPanel.prototype, {
   /**
    * The Activity this panel is related to
    * @name module:Activity.ActivityPanel#act
-   * @type {Activity} */
+   * @type {module:Activity.Activity} */
   act: null,
   /**
    * The jQuery div element used by this panel
@@ -1233,7 +1233,7 @@ Object.assign(ActivityPanel.prototype, {
   /**
    * The realized current {@link module:skins/Skin.Skin Skin}
    * @name module:Activity.ActivityPanel#skin
-   * @type {Skin} */
+   * @type {module:skins/Skin.Skin} */
   skin: null,
   /**
    * Background element (currently a `span`) used to place animated GIFs when needed
@@ -1273,13 +1273,13 @@ Object.assign(ActivityPanel.prototype, {
   /**
    * The object used to connect cells and other elements in some types of activity
    * @name module:Activity.ActivityPanel#bc
-   * @type {BoxConnector} */
+   * @type {module:boxes/BoxConnector.BoxConnector} */
   bc: null,
   /**
    * The PlayStation used to realize media objects and communicate with the player services
    * (usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}
    * @name module:Activity.ActivityPanel#ps
-   * @type {PlayStation} */
+   * @type {module:JClicPlayer.JClicPlayer} */
   ps: null,
   /**
    * The minimum size of this kind of ActivityPanel
@@ -1305,7 +1305,7 @@ Object.assign(ActivityPanel.prototype, {
 
 /**
  * The panel class associated to each type of activity
- * @type {ActivityPanel} */
+ * @type {module:Activity.ActivityPanel} */
 Activity.Panel = ActivityPanel;
 
 export default Activity;

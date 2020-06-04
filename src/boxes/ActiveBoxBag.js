@@ -66,7 +66,7 @@ export class ActiveBoxBag extends BoxBag {
   /**
    * Finds an ActiveBox by its relative location (`idLoc` field)
    * @param {number} idLoc
-   * @returns {ActiveBox}
+   * @returns {module:boxes/ActiveBox.ActiveBox}
    */
   getActiveBox(idLoc) {
     return this.getBox(idLoc);
@@ -74,7 +74,7 @@ export class ActiveBoxBag extends BoxBag {
 
   /**
    * Gets the background box
-   * @returns {ActiveBox}
+   * @returns {module:boxes/ActiveBox.ActiveBox}
    */
   getBackgroundActiveBox() {
     return this.getBackgroundBox();
@@ -116,7 +116,7 @@ export class ActiveBoxBag extends BoxBag {
   /**
    * Finds an ActiveBox by location
    * @param {module:AWT.Point} point - The location to search for
-   * @returns {ActiveBox}
+   * @returns {module:boxes/ActiveBox.ActiveBox}
    */
   findActiveBox(point) {
     return this.findBox(point);
@@ -149,7 +149,7 @@ export class ActiveBoxBag extends BoxBag {
   /**
    * Finds the {@link module:boxes/ActiveBox.ActiveBox ActiveBox} that has the specified `idLoc` attribute
    * @param {number} idLoc - The idLoc to search for
-   * @returns {ActiveBox}
+   * @returns {module:boxes/ActiveBox.ActiveBox}
    */
   getActiveBoxWithIdLoc(idLoc) {
     return this.cells.find(bx => bx.idLoc === idLoc) || null;

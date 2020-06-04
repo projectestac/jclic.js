@@ -51,7 +51,7 @@ export class ActiveMediaBag {
    * @param {module:JClicPlayer.JClicPlayer} ps - An object implementing the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) interface,
    * usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}.
-   * @returns {ActiveMediaPlayer}
+   * @returns {module:media/ActiveMediaPlayer.ActiveMediaPlayer}
    */
   createActiveMediaPlayer(mc, mb, ps) {
     let amp = null;
@@ -83,7 +83,7 @@ export class ActiveMediaBag {
    * @param {module:JClicPlayer.JClicPlayer} ps - An object implementing the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation} interface,
    * usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}.
-   * @returns {ActiveMediaPlayer}
+   * @returns {module:media/ActiveMediaPlayer.ActiveMediaPlayer}
    */
   getActiveMediaPlayer(mc, mb, ps) {
     return this.players.find(p => p.mc === mc || p.mc.isEquivalent(mc))
@@ -138,7 +138,7 @@ Object.assign(ActiveMediaBag.prototype, {
   /**
    * The collection of {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} objects stored in this media bag.
    * @name module:media/ActiveMediaBag.ActiveMediaBag#players
-   * @type {ActiveMediaPlayer[]} */
+   * @type {module:media/ActiveMediaPlayer.ActiveMediaPlayer[]} */
   players: [],
 });
 

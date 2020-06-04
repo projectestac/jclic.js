@@ -243,17 +243,17 @@ Object.assign(ActiveMediaPlayer.prototype, {
   /**
    * The MediaContent associated to this player.
    * @name module:media/ActiveMediaPlayer.ActiveMediaPlayer#mc
-   * @type {MediaContent} */
+   * @type {module:media/MediaContent.MediaContent} */
   mc: null,
   /**
    * The player to which this player belongs.
    * @name module:media/ActiveMediaPlayer.ActiveMediaPlayer#ps
-   * @type {JClicPlayer} */
+   * @type {module:JClicPlayer.JClicPlayer} */
   ps: null,
   /**
    * MediaPlayers should be linked to {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects.
    * @name module:media/ActiveMediaPlayer.ActiveMediaPlayer#bx
-   * @type {ActiveBox} */
+   * @type {module:boxes/ActiveBox.ActiveBox} */
   bx: null,
   /**
    * The visual component for videos, usually a `video` HTML element
@@ -268,7 +268,7 @@ Object.assign(ActiveMediaPlayer.prototype, {
   /**
    * The {@link module:bads/MediaBagElement.MediaBagElement} containing the reference to the media to be played
    * @name module:media/ActiveMediaPlayer.ActiveMediaPlayer#mbe
-   * @type {MediaBagElement} */
+   * @type {module:bags/MediaBagElement.MediaBagElement} */
   mbe: null,
 });
 
@@ -291,7 +291,7 @@ if (ActiveMediaPlayer.REC_ENABLED) {
  * Audio buffers used for recording and playing voice are stored in a static array because
  * they are common to all instances of {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer}
  * Only initialized when {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer#REC_ENABLED REC_ENABLED} is `true`.
- * @type {AudioBuffer[]} */
+ * @type {external:AudioBuffer[]} */
 ActiveMediaPlayer.AUDIO_BUFFERS = ActiveMediaPlayer.REC_ENABLED ? [] : null;
 
 export default ActiveMediaPlayer;

@@ -82,7 +82,7 @@ export class EventSoundsElement {
   /**
    * Reads the properties of this EventSoundsElement from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {EventSoundsElement}
+   * @returns {module:media/EventSoundsElement.EventSoundsElement}
    */
   setAttributes(data) {
     return setAttr(this, data, [
@@ -143,12 +143,12 @@ Object.assign(EventSoundsElement.prototype, {
   /**
    * Media player used to play this sound
    * @name module:media/EventSoundsElement.EventSoundsElement#player
-   * @type {ActiveMediaPlayer} */
+   * @type {module:media/ActiveMediaPlayer.ActiveMediaPlayer} */
   player: null,
   /**
    * HTMLAudioElement used to play this sound
    * @name module:media/EventSoundsElement.EventSoundsElement#audio
-   * @type {HTMLAudioElement} */
+   * @type {external:HTMLAudioElement} */
   audio: null,
 });
 

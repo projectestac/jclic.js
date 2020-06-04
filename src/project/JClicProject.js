@@ -138,7 +138,7 @@ export class JClicProject {
    * @param {string} path - The full path of this project
    * @param {external:JSZip} [zip] - An optional JSZip object where this project is encapsulated
    * @param {object} [options] - An object with miscellaneous options
-   * @returns {JClicProject}
+   * @returns {module:project/JClicProject.JClicProject}
    */
   setAttributes(data, path, zip, options) {
     if (path) {
@@ -229,12 +229,12 @@ Object.assign(JClicProject.prototype, {
   /**
    * Object containing the project settings
    * @name module:project/JClicProject.JClicProject#settings
-   * @type {ProjectSettings} */
+   * @type {module:project/ProjectSettings.ProjectSettings} */
   settings: null,
   /**
    * Object containing the order in which the activities should be played
    * @name module:project/JClicProject.JClicProject#activitySequence
-   * @type {ActivitySequence} */
+   * @type {module:bags/ActivitySequence.ActivitySequence} */
   activitySequence: null,
   /**
    * Array of jQuery xml elements containing the data of each activity. Don't rely on this object
@@ -252,12 +252,12 @@ Object.assign(JClicProject.prototype, {
   /**
    * The collection of all media elements used in this project
    * @name module:project/JClicProject.JClicProject#mediaBag
-   * @type {MediaBag} */
+   * @type {module:bags/MediaBag.MediaBag} */
   mediaBag: null,
   /**
    * The object that builds and manages the visual interface presented to users
    * @name module:project/JClicProject.JClicProject#skin
-   * @type {Skin} */
+   * @type {module:skins/Skin.Skin} */
   skin: null,
   /**
    * Relative path or absolute URL to be used as a base to access files, usually in conjunction

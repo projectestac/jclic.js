@@ -399,12 +399,12 @@ Object.assign(MemoryGamePanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed.
    * @name module:activities/memory/MemoryGame.MemoryGamePanel#bg
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bg: null,
   /**
    * The {@link module:boxes/BoxConnector.BoxConnector BoxConnector} used to reveal pairs of cells
    * @name module:activities/memory/MemoryGame.MemoryGamePanel#bc
-   * @type {BoxConnector} */
+   * @type {module:boxes/BoxConnector.BoxConnector} */
   bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel

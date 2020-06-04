@@ -54,7 +54,7 @@ export class Evaluator {
    * Factory constructor that returns a specific type of {@link module:activities/text/Evaluator.Evaluator Evaluator} based on the `class`
    * attribute declared in the $xml element.
    * @param {external:jQuery} $xml - The XML element to be parsed.
-   * @returns {Evaluator}
+   * @returns {module:activities/text/Evaluator.Evaluator}
    */
   static getEvaluator($xml) {
     let ev = null;
@@ -99,7 +99,7 @@ export class Evaluator {
   /**
    * Builds a new Evaluator, based on the properties specified in a data object
    * @param {object} data - The data object to be parsed
-   * @returns {Evaluator}
+   * @returns {module:activities/text/Evaluator.Evaluator}
    */
   static factory(data) {
     const cl = Evaluator.CLASSES[data.className];

@@ -424,12 +424,12 @@ Object.assign(WordSearchPanel.prototype, {
   /**
    * The {@link module:boxes/TextGrid.TextGrid TextGrid} object of this ActivityPanel
    * @name module:activities/textGrid/WordSearch.WordSearchPanel#grid
-   * @type {TextGrid} */
+   * @type {module:boxes/TextGrid.TextGrid} */
   grid: null,
   /**
    * An optional {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} used to display information associated with the hidden words.
    * @name module:activities/textGrid/WordSearch.WordSearchPanel#bgAlt
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgAlt: null,
   /**
    * An array of boolean values indicating which clues have been found
@@ -439,7 +439,7 @@ Object.assign(WordSearchPanel.prototype, {
   /**
    * The box connector object
    * @name module:activities/textGrid/WordSearch.WordSearchPanel#bc
-   * @type {BoxConnector} */
+   * @type {module:boxes/BoxConnector.BoxConnector} */
   bc: null,
   /**
    * Mouse and touch events intercepted by this panel

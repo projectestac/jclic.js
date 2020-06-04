@@ -182,7 +182,6 @@ export class TextGrid extends AbstractBox {
    * @param {number} px - The logical 'X' coordinate of the cell
    * @param {number} py - The logical 'Y' coordinate of the cell
    * @param {boolean} locked - When true, the `locked` attribute will be on.
-   * @returns {undefined}
    */
   setCellLocked(px, py, locked) {
     if (px >= 0 && px < this.nCols && py >= 0 && py < this.nRows) {

@@ -79,7 +79,7 @@ export class ActiveBox extends AbstractBox {
    * @param {external:jQuery} $dom - The DOM element that will act as a container
    * @param {module:boxes/ActiveBoxContent.ActiveBoxContent} abc - The cell's content. Must not be null and have the `dimension`
    * member initialized.
-   * @returns {ActiveBox}
+   * @returns {module:boxes/ActiveBox.ActiveBox}
    */
   static createCell($dom, abc) {
     if (abc && abc.dimension) {
@@ -783,12 +783,12 @@ Object.assign(ActiveBox.prototype, {
   /**
    * Main content of this box
    * @name module:boxes/ActiveBox.ActiveBox#content
-   * @type {ActiveBoxContent} */
+   * @type {module:boxes/ActiveBoxContent.ActiveBoxContent} */
   content: null,
   /**
    * Alternative content of this box
    * @name module:boxes/ActiveBox.ActiveBox#altContent
-   * @type {ActiveBoxContent} */
+   * @type {module:boxes/ActiveBoxContent.ActiveBoxContent} */
   altContent: null,
   /**
    * Flag to check if this box has a 'hosted component'
@@ -798,7 +798,7 @@ Object.assign(ActiveBox.prototype, {
   /**
    * The media player associated to this box
    * @name module:boxes/ActiveBox.ActiveBox#hostedMediaPlayer
-   * @type {ActiveMediaPlayer} */
+   * @type {module:media/ActiveMediaPlayer.ActiveMediaPlayer} */
   hostedMediaPlayer: null,
   /**
    * Indicates that this box is used as a background. When drawing, the clipping region must be respected.

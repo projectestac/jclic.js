@@ -65,7 +65,7 @@ export class SequenceReg {
 
   /**
    * Returns the `info` element associated to this SequenceReg.
-   * @returns {SequenceRegInfo}
+   * @returns {module:report/SequenceReg.SequenceRegInfo}
    */
   getInfo() {
     return this.info.recalc();
@@ -138,12 +138,12 @@ Object.assign(SequenceReg.prototype, {
   /**
    * Collection of all the {@link module:report/ActivityReg.ActivityReg ActivityReg} elements done during this sequence.
    * @name module:report/SequenceReg.SequenceReg#activities
-   * @type {ActivityReg[]} */
+   * @type {module:report/ActivityReg.ActivityReg[]} */
   activities: [],
   /**
    * Registry linked to the {@link module:Activity.Activity Activity} that is currently running
    * @name module:report/SequenceReg.SequenceReg#currentActivity
-   * @type {ActivityReg} */
+   * @type {module:report/ActivityReg.ActivityReg} */
   currentActivity: null,
   /**
    * Total time spent on the activities of this sequence
@@ -158,7 +158,7 @@ Object.assign(SequenceReg.prototype, {
   /**
    * Object with global information associated to this sequence
    * @name module:report/SequenceReg.SequenceReg#info
-   * @type {SequenceRegInfo} */
+   * @type {module:report/SequenceReg.SequenceRegInfo} */
   info: null,
 });
 
@@ -185,7 +185,7 @@ export class SequenceRegInfo {
 
   /**
    * Computes the value of all global variables based on the data stored in `activities`
-   * @returns {SequenceRegInfo} - This "info" object
+   * @returns {module:report/SequenceReg.SequenceRegInfo} - This "info" object
    */
   recalc() {
     if (!this.valid) {
@@ -221,7 +221,7 @@ Object.assign(SequenceRegInfo.prototype, {
   /**
    * The {@link module:report/SequenceReg.SequenceReg SequenceReg} associated to this "info" object
    * @name module:report/SequenceReg.SequenceRegInfo#sqReg
-   * @type {SequenceReg} */
+   * @type {module:report/SequenceReg.SequenceReg} */
   sqReg: null,
   /**
    * When `false`, data must be recalculated

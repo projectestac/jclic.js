@@ -77,8 +77,8 @@ export class SCORM {
 
   /**
    * Checks for the presence of a SCORM API on the current browser session.
-   * @returns {SCORM} - A valid SCORM object, or `null` if no SCORM API was found.
    * @param {module:report/Reporter.Reporter} reporter - The {@link module:Reporter.Reporter Reporter} linked to the requested SCORM object
+   * @returns {module:report/SCORM.SCORM} - A valid SCORM object, or `null` if no SCORM API was found.
    */
   static getSCORM(reporter) {
     let result = null;
@@ -235,7 +235,7 @@ Object.assign(SCORM.prototype, {
   /**
    * The Reporter associated to this SCORM object
    * @name module:report/SCORM.SCORM#reporter
-   * @type {Reporter} */
+   * @type {module:report/Reporter.Reporter} */
   reporter: null,
   /**
    * Prefix to be used in SCORM function names. Should be 'LMS' for SCORM 1.2

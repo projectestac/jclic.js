@@ -180,7 +180,7 @@ export class ActiveBagContent {
    * Reads the properties of this ActiveBagContent from a data object
    * @param {object} data - The data object to be parsed
    * @param {module:bags/MediaBag.MediaBag} mediaBag - The project's MediaBag
-   * @returns {ActiveBagContent}
+   * @returns {module:boxes/ActiveBagContent.ActiveBagContent}
    */
   setAttributes(data, mediaBag) {
     setAttr(this, data, [
@@ -272,7 +272,7 @@ export class ActiveBagContent {
 
   /**
    * Retrieves the {@link module:shapers/Shaper.Shaper Shaper} of this bag, creating a new one if it was _null_
-   * @returns {Shaper}
+   * @returns {module:shapers/Shaper.Shaper}
    */
   getShaper() {
     if (this.shaper === null)
@@ -282,7 +282,7 @@ export class ActiveBagContent {
 
   /**
    * Retrieves the {@link module:boxes/BoxBase.BoxBase BoxBase} of this bag, creating a new one if it was _null_
-   * @returns {BoxBase}
+   * @returns {module:boxes/BoxBase.BoxBase}
    */
   getBoxBase() {
     if (this.style === null)
@@ -462,22 +462,22 @@ Object.assign(ActiveBagContent.prototype, {
   /**
    * The BoxBase used for this bag of cell contents
    * @name module:boxes/ActiveBagContent.ActiveBagContent#style
-   * @type {BoxBase} */
+   * @type {module:boxes/BoxBase.BoxBase} */
   style: null,
   /**
    * The Shaper used to define the specific shape of each cell
    * @name module:boxes/ActiveBagContent.ActiveBagContent#shaper
-   * @type {Shaper} */
+   * @type {module:shapers/Shaper.Shaper} */
   shaper: null,
   /**
    * An optional ActiveBoxContent object with background settings.
    * @name module:boxes/ActiveBagContent.ActiveBagContent#backgroundContent
-   * @type {ActiveBoxContent} */
+   * @type {module:boxes/ActiveBoxContent.ActiveBoxContent} */
   backgroundContent: null,
   /**
    * The main Array of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects
    * @name module:boxes/ActiveBagContent.ActiveBagContent#cells
-   * @type {ActiveBoxContent[]} */
+   * @type {module:boxes/ActiveBoxContent.ActiveBoxContent[]} */
   cells: null,
   /**
    * The default value to be assigned at the 'id' field of children

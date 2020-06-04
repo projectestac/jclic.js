@@ -105,7 +105,7 @@ export class ActivitySequenceJump extends JumpInfo {
    * @param {number} rating - Average rating obtained by the user in the activities done during the
    * last sequence stretch.
    * @param {number} time - Total time spend doing the activities.
-   * @returns {JumpInfo}
+   * @returns {module:bags/JumpInfo.JumpInfo}
    */
   resolveJump(rating, time) {
     let result = this;
@@ -128,12 +128,12 @@ Object.assign(ActivitySequenceJump.prototype, {
   /**
    * Optional jump to be performed when the results (score and time) are above a specific threshold.
    * @name module:bags/ActivitySequenceJump.ActivitySequenceJump#upperJump
-   * @type {ConditionalJumpInfo} */
+   * @type {module:bags/ConditionalJumpInfo.ConditionalJumpInfo} */
   upperJump: null,
   /**
    * Optional jump to be performed when the results (score or time) are below a specific threshold.
    * @name module:bags/ActivitySequenceJump.ActivitySequenceJump#lowerJump
-   * @type {ConditionalJumpInfo} */
+   * @type {module:bags/ConditionalJumpInfo.ConditionalJumpInfo} */
   lowerJump: null,
 });
 

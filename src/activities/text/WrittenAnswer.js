@@ -520,12 +520,12 @@ Object.assign(WrittenAnswerPanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the questions
    * @name module:activities/text/WrittenAnswer.WrittenAnswerPanel#bgA
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgA: null,
   /**
    * An optional {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} with content displayed as cells are solved.
    * @name module:activities/text/WrittenAnswer.WrittenAnswerPanel#bgB
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgB: null,
   /**
    * The currently selected cell

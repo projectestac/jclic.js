@@ -166,7 +166,7 @@ export function getBoolean(val, defaultValue = false) {
  * Gets a value from an given expression that can be `null`, `undefined` or empty string ('')
  * @param {any} val - The expression to parse
  * @param {any} [defaultValue=null] - The value to return when `val` is `null`, `''` or `undefined`
- * @returns {*}
+ * @returns {any}
  */
 export function getVal(val, defaultValue = null) {
   return (val === '' || val === null || typeof val === 'undefined') ? defaultValue : val;

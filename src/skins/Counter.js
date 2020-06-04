@@ -138,13 +138,13 @@ Object.assign(Counter.prototype, {
   /**
    * Maximum value to be displayed by this counter
    * @name module:skins/Counter.Counter#MAX_DISPLAY_VALUE
-   * @type {Number} */
+   * @type {number} */
   MAX_DISPLAY_VALUE: 999,
   /**
    * An optional Counter used as a subtractor to display the current value.
    * Useful to display `errors` subtracting `score` from `actions`.
    * @name module:skins/Counter.Counter#displayDiffFrom
-   * @type {Counter}
+   * @type {module:skins/Counter.Counter}
    */
   displayDiffFrom: null,
 });

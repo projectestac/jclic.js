@@ -49,7 +49,7 @@ export class AutoContentProvider {
    * attribute declared on an $xml element.
    * It should be called only from {@link module:Activity.Activity#setProperties Activity.setProperties}
    * @param {external.jQuery} $xml - The XML element to parse
-   * @returns {AutoContentProvider}
+   * @returns {module:automation/AutoContentProvider.AutoContentProvider}
    */
   static getProvider($xml) {
     let automation = null;
@@ -90,7 +90,7 @@ export class AutoContentProvider {
    * Builds a new AutoContentProvider, based on the properties specified in a data object
    * @param {object} data - The data object to be parsed
    * @param {object[]} params - Optional parameters to be passed to `setAttributes`
-   * @returns {Shaper}
+   * @returns {module:shapers/Shaper.Shaper}
    */
   static factory(data, params = []) {
     const cl = AutoContentProvider.CLASSES[data.className];
@@ -131,7 +131,7 @@ export class AutoContentProvider {
    * Registers a new type of AutoContentProvider
    * @param {string} providerName - The name used to identify this AutoContentProvider
    * @param {function} providerClass - The activity class, usually extending AutoContentProvider
-   * @returns {AutoContentProvider} - The provider class
+   * @returns {module:automation/AutoContentProvider.AutoContentProvider} - The provider class
    */
   static registerClass(providerName, providerClass) {
     AutoContentProvider.CLASSES[providerName] = providerClass;

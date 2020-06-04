@@ -349,7 +349,7 @@ export class CustomSkin extends Skin {
 
   /**
    * Gets the {@link module:boxes/ActiveBox.ActiveBox ActiveBox} used to display the main messages of activities
-   * @returns {ActiveBox}
+   * @returns {module:boxes/ActiveBox.ActiveBox}
    */
   getMsgBox() {
     return this.msgBox;

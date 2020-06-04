@@ -129,7 +129,7 @@ export class BoxBase {
   /**
    * Reads the properties of this BoxBase from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {BoxBase}
+   * @returns {module:boxes/BoxBase.BoxBase}
    */
   setAttributes(data) {
     return setAttr(this, data, [
@@ -150,7 +150,7 @@ export class BoxBase {
   /**
    * Gets the value of the specified property, scanning down to parents and prototype if not defined.
    * @param {string} property - The property to retrieve
-   * @returns {*} - The object or value associated to this property
+   * @returns {any} - The object or value associated to this property
    */
   get(property) {
     if (this.hasOwnProperty(property) || this.parent === null)
@@ -173,7 +173,7 @@ export class BoxBase {
    * Gets the value of the specified property, scanning down to parents if not defined, and returning
    * always an own property (not from prototype)
    * @param {string} property - The property to retrieve
-   * @returns {*} - The object associated to this property
+   * @returns {any} - The object or value associated to this property
    */
   getOwn(property) {
     if (this.hasOwnProperty(property))
@@ -300,7 +300,7 @@ Object.assign(BoxBase.prototype, {
   /**
    * The parent BoxBase object
    * @name module:boxes/BoxBase.BoxBase#parent
-   * @type {BoxBase} */
+   * @type {module:boxes/BoxBase.BoxBase} */
   parent: null,
   /**
    * Default values

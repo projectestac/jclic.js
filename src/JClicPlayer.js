@@ -944,7 +944,7 @@ export class JClicPlayer extends Container {
   /**
    * Builds an {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} for the specified {@link module:media/MediaContent.MediaContent}
    * @param {module:media/MediaContent.MediaContent} mediaContent - The media content to be played
-   * @returns {ActiveMediaPlayer}
+   * @returns {module:media/ActiveMediaPlayer.ActiveMediaPlayer}
    */
   getActiveMediaPlayer(mediaContent) {
     return this.activeMediaBag && mediaContent ? this.activeMediaBag.getActiveMediaPlayer(mediaContent, this.project.mediaBag, this) : null;
@@ -1098,7 +1098,7 @@ Object.assign(JClicPlayer.prototype, {
   /**
    * The {@link module:project/JClicProject.JClicProject JClicProject} currently hosted in this player
    * @name module:JClicPlayer.JClicPlayer#project
-   * @type {JClicProject} */
+   * @type {module:project/JClicProject.JClicProject} */
   project: null,
   /**
    * Relative path or absolute URL to be used as a base to access files
@@ -1123,38 +1123,38 @@ Object.assign(JClicPlayer.prototype, {
   /**
    * The {@link module:Activity.ActivityPanel ActivityPanel} currently running on this player.
    * @name module:JClicPlayer.JClicPlayer#actPanel
-   * @type {Activity#Panel} */
+   * @type {module:Activity.Activity#Panel} */
   actPanel: null,
   /**
    * This object records the list of the activities played during the current session.
    * @name module:JClicPlayer.JClicPlayer#history
-   * @type {PlayerHistory} */
+   * @type {module:PlayerHistory.PlayerHistory} */
   history: null,
   /**
    * The Skin currently used by this player.
    * @name module:JClicPlayer.JClicPlayer#skin
-   * @type {Skin} */
+   * @type {module:skins/Skin.Skin} */
   skin: null,
   /**
    * The default Skin to be used if none specified
    * @name module:JClicPlayer.JClicPlayer#defaultSkin
-   * @type {Skin} */
+   * @type {module:skins/Skin.Skin} */
   defaultSkin: null,
   /**
    * The last skin directly specified by a {@link module:project/JClicProject.JClicProject JClicProject}
    * @name module:JClicPlayer.JClicPlayer#defaultSkin
-   * @type {Skin} */
+   * @type {module:skins/Skin.Skin} */
   lastProjectSkin: null,
   /**
    * Object containing references to realized media objects, ready to play.
    * @name module:JClicPlayer.JClicPlayer#activeMediaBag
-   * @type {ActiveMediaBag} */
+   * @type {module:media/ActiveMediaBag.ActiveMediaBag} */
   activeMediaBag: null,
   /**
    * Object responsible for passing the scores obtained by users to a external reporting systems
    * when playing activities.
    * @name module:JClicPlayer.JClicPlayer#reporter
-   * @type {Reporter} */
+   * @type {module:report/Reporter.Reporter} */
   reporter: null,
   /**
    * Collection of {@link module:AWT.Action} objects used by this player.
@@ -1185,7 +1185,7 @@ Object.assign(JClicPlayer.prototype, {
   /**
    * Current values of the counters
    * @name module:JClicPlayer.JClicPlayer#counterVal
-   * @type {JClicPlayer~counterValType} */
+   * @type {module:JClicPlayer.JClicPlayer~counterValType} */
   counterVal: { score: 0, actions: 0, time: 0 },
   /**
    * Point indicating the upper-left corner of the current background image

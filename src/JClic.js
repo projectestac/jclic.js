@@ -154,6 +154,18 @@
 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLStyleElement}
 */
 
+/**
+ * Type of MIDI instrument used by Soundfont Player 
+ * @external Instrument
+ * @see {@link https://github.com/danigb/soundfont-player}
+ */
+
+/**
+ * The Tgrimmdude's MidiPlayer object
+ * @external MidiPlayerJS
+ * @see {@link http://grimmdude.com/MidiPlayerJS/}
+ */
+
 /* global JClicDataProject, JClicDataOptions, window, document */
 
 import $ from 'jquery';
@@ -218,7 +230,7 @@ export const JClicObject = {
  * @param {external:HTMLElement} div - The HTML element (usually a `<div/>`) that will be used as a main container of the player.
  * @param {string} projectName - The file name or URL of the JClic project to be loaded
  * @param {object} [options] - An optional set of preferences
- * @returns {JClicPlayer}
+ * @returns {module:JClicPlayer.JClicPlayer}
  */
 export function loadProject(div, projectName, options) {
 

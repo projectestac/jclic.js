@@ -185,7 +185,7 @@ Object.assign(AudioBuffer.prototype, {
   /**
    * Array of data chunks collected during the recording
    * @name module:media/AudioBuffer.AudioBuffer#chunks
-   * @type {Blob[]}
+   * @type {external:Blob[]}
    */
   chunks: null,
   /**

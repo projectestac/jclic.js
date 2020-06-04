@@ -126,7 +126,7 @@ export class MediaContent {
   /**
    * Reads the properties of this MediaContent from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {MediaContent}
+   * @returns {module:media/MediaContent.MediaContent}
    */
   setAttributes(data) {
     return setAttr(this, data, [
@@ -223,7 +223,7 @@ Object.assign(MediaContent.prototype, {
   /**
    * Media file name
    * @name module:media/MediaContent.MediaContent#file
-   * @type {String} */
+   * @type {string} */
   file: null,
   /**
    * Optional parameters passed to external calls

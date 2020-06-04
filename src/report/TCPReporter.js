@@ -495,7 +495,7 @@ Object.assign(TCPReporter.prototype, {
   /**
    * Last activity reported
    * @name module:report/TCPReporter.TCPReporter#lastActivity
-   * @type {ActivityReg} */
+   * @type {module:report/ActivityReg.ActivityReg} */
   lastActivity: null,
   /**
    * Number of activities processed
@@ -515,12 +515,12 @@ Object.assign(TCPReporter.prototype, {
   /**
    * List of {@link module:report/TCPReporter.ReportBean ReportBean} objects pending to be processed
    * @name module:report/TCPReporter.TCPReporter#tasks
-   * @type {ReportBean[]} */
+   * @type {module:report/TCPReporter.ReportBean[]} */
   tasks: null,
   /**
    * Waiting list of tasks, to be used while `tasks` is being processed
    * @name module:report/TCPReporter.TCPReporter#waitingTasks
-   * @type {ReportBean[]} */
+   * @type {module:report/TCPReporter.ReportBean[]} */
   waitingTasks: null,
   /**
    * Flag used to indicate if `transaction` is currently running

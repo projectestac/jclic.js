@@ -90,7 +90,7 @@ export class MediaBag {
    * @param {string} name - The name of the element
    * @param {boolean} [create] - When `true`, a new MediaBagElement will be created if not found,
    * using 'name' as its file name.
-   * @returns {MediaBagElement}
+   * @returns {module:bags/MediaBagElement.MediaBagElement}
    */
   getElement(name, create) {
     name = nSlash(name);
@@ -105,7 +105,7 @@ export class MediaBag {
    * @param {string} file - The requested file name
    * @param {boolean} [create] - When `true`, a new {@link module:bads/MediaBagElement.MediaBagElement} will be created if not
    * found.
-   * @returns {MediaBagElement}
+   * @returns {module:bags/MediaBagElement.MediaBagElement}
    */
   getElementByFileName(file, create) {
     let result = null;
@@ -191,7 +191,7 @@ export class MediaBag {
    * Loads a {@link module:skins/Skin.Skin Skin} object
    * @param {string} name - The skin name to be loaded
    * @param {string} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} linked to the skin
-   * @returns {Skin}
+   * @returns {module:skins/Skin.Skin}
    */
   getSkinElement(name, ps) {
     return Skin.getSkin(name, ps);
@@ -207,7 +207,7 @@ Object.assign(MediaBag.prototype, {
   /**
    * The JClic project to which this MediaBag belongs
    * @name module:bags/MediaBag.MediaBag#project
-   * @type {JClicProject} */
+   * @type {module:project/JClicProject.JClicProject} */
   project: null,
 });
 

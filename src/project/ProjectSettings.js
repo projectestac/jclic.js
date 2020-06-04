@@ -180,7 +180,7 @@ export class ProjectSettings {
   /**
    * Reads the properties of this ProjectSettings from a data object
    * @param {object} data - The data object to be parsed, or just the text content
-   * @returns {ProjectSettings}
+   * @returns {module:project/ProjectSettings.ProjectSettings}
    */
   setAttributes(data) {
     setAttr(this, data, [
@@ -207,7 +207,7 @@ Object.assign(ProjectSettings.prototype, {
   /**
    * The JClicProject to which this ProjectSettings belongs
    * @name module:project/ProjectSettings.ProjectSettings#project
-   * @type {JClicProject} */
+   * @type {module:project/JClicProject.JClicProject} */
   project: null,
   /**
    * The project title
@@ -266,7 +266,7 @@ Object.assign(ProjectSettings.prototype, {
   /**
    * The main {@link module:media/EventSounds.EventSounds EventSounds} object of the project
    * @name module:project/ProjectSettings.ProjectSettings#eventSounds
-   * @type {EventSounds} */
+   * @type {module:media/EventSounds.EventSounds} */
   eventSounds: new EventSounds(),
 });
 

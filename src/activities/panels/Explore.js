@@ -313,13 +313,13 @@ Object.assign(ExplorePanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
    * @name module:activities/panels/Explore.ExplorePanel#bgA
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgA: null,
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information associated to `primary` elements.
    * Only one of this elements will be showed for each click done in the `primary` panel.
    * @name module:activities/panels/Explore.ExplorePanel#bgB
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgB: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel

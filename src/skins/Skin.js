@@ -203,7 +203,7 @@ export class Skin extends Container {
    * Registers a new type of skin
    * @param {string} skinName - The name used to identify this skin
    * @param {function} skinClass - The skin class, usually extending Skin
-   * @returns {Skin} - The provided skin class
+   * @returns {module:skins/Skin.Skin} - The provided skin class
    */
   static registerClass(skinName, skinClass) {
     Skin.CLASSES[skinName] = skinClass;
@@ -243,7 +243,7 @@ export class Skin extends Container {
    * @param {string} skinName - The name of the searched skin
    * @param {module:JClicPlayer.JClicPlayer} ps - The PlayStation (usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to build the new skin.
    * @param {object} [options] - Optional parameter with additional options
-   * @returns {Skin}
+   * @returns {module:skins/Skin.Skin}
    */
   static getSkin(skinName = 'default', ps, options = {}) {
     skinName = skinName || 'default';
@@ -743,7 +743,7 @@ export class Skin extends Container {
 
   /**
    * Gets the {@link module:boxes/ActiveBox.ActiveBox ActiveBox} used to display the main messages of activities
-   * @returns {ActiveBox}
+   * @returns {module:boxes/ActiveBox.ActiveBox}
    */
   getMsgBox() {
     // Method to be implemented by subclasses
@@ -753,19 +753,19 @@ export class Skin extends Container {
 
 /**
  * Collection of realized __Skin__ objects.
- * @type {Skin[]}
+ * @type {module:skins/Skin.Skin[]}
  */
 Skin.skinStack = [];
 
 /**
  * Collection of skin style sheets already registered on the current document
- * @type {Object}
+ * @type {object}
  */
 Skin.rootStyles = {};
 
 /**
  * Counter used to label root nodes with unique IDs
- * @type {Number}
+ * @type {number}
  */
 Skin.lastId = 1;
 
@@ -824,7 +824,7 @@ Object.assign(Skin.prototype, {
   /**
    * The box used to display the main messages of JClic activities
    * @name module:skins/Skin.DefaultSkin#msgBox
-   * @type {ActiveBox} */
+   * @type {module:boxes/ActiveBox.ActiveBox} */
   msgBox: null,
   /**
    * The `div` DOM object where `msgBox` is located
@@ -879,12 +879,12 @@ Object.assign(Skin.prototype, {
   /**
    * Value to be returned by the dialog promise when the presented task is fulfilled
    * @name module:skins/Skin.Skin#_dlgOkValue
-   * @type {Object} */
+   * @type {object} */
   _dlgOkValue: null,
   /**
    * Value to be returned in user-canceled dialogs
    * @name module:skins/Skin.Skin#_dlgCancelValue
-   * @type {Object} */
+   * @type {object} */
   _dlgCancelValue: null,
   /**
    * Flag indicating if the current dialog is modal or not
@@ -933,13 +933,13 @@ Object.assign(Skin.prototype, {
   /**
    * The {@link module:JClicPlayer.JClicPlayer JClicPlayer} object associated to this skin
    * @name module:skins/Skin.Skin#player
-   * @type {JClicPlayer} */
+   * @type {module:JClicPlayer.JClicPlayer} */
   player: null,
   /**
    * The {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation}
    * used by this Skin. Usually, the same as `player`
    * @name module:skins/Skin.Skin#ps
-   * @type {PlayStation} */
+   * @type {module:JClicPlayer.JClicPlayer} */
   ps: null,
   /**
    * Counter to be incremented or decremented as `waitCursor` is requested or released.

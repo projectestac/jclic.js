@@ -221,7 +221,7 @@ export class TextActivityDocument {
   /**
    * Reads the properties of this TextActivityDocument from a data object
    * @param {object} data - The data object to be parsed, or just the text content
-   * @returns {TextActivityDocument}
+   * @returns {module:activities/text/TextActivityDocument.TextActivityDocument}
    */
   setAttributes(data, mediaBag) {
 
@@ -443,7 +443,7 @@ export class TextTarget {
   /**
    * Reads the properties of this TextTarget from a data object
    * @param {object} data - The data object to be parsed, or just the text content
-   * @returns {TextTarget}
+   * @returns {module:activities/text/TextActivityDocument.TextTarget}
    */
   setAttributes(data, mediaBag) {
     return setAttr(this, data, [
@@ -495,7 +495,7 @@ Object.assign(TextTarget.prototype, {
   /**
    * The {@link module:activities/text/TextActivityDocument.TextActivityDocument TextActivityDocument} to which this target belongs
    * @name module:activities/text/TextActivityDocument.TextTarget#doc
-   * @type {TextActivityDocument} */
+   * @type {module:activities/text/TextActivityDocument.TextActivityDocument} */
   doc: null,
   /**
    * The current text displayed by this TextTarget
@@ -556,7 +556,7 @@ Object.assign(TextTarget.prototype, {
   /**
    * An optional {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} with information about this TextTarget
    * @name module:activities/text/TextActivityDocument.TextTarget#popupContent
-   * @type {ActiveBoxContent} */
+   * @type {module:boxes/ActiveBoxContent.ActiveBoxContent} */
   popupContent: null,
   /**
    * Time (seconds) to wait before showing the additional information
@@ -626,7 +626,7 @@ Object.assign(TextTarget.prototype, {
   /**
    * Pointer to the activity panel containing this TextTarget
    * @name module:activities/text/TextActivityDocument.TextTarget#parentPane
-   * @type {TextActivityBasePanel} */
+   * @type {module:activities/text/TextActivityBase.TextActivityBasePanel} */
   parentPane: null,
 });
 

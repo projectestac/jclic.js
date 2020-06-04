@@ -490,17 +490,17 @@ Object.assign(SimpleAssociationPanel.prototype, {
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
    * @name module:activities/associations/SimpleAssociation.SimpleAssociationPanel#bgA
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgA: null,
   /**
    * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `secondary` panel
    * @name module:activities/associations/SimpleAssociation.SimpleAssociationPanel#bgB
-   * @type {ActiveBoxBag} */
+   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgB: null,
   /**
    * The box connector
    * @name module:activities/associations/SimpleAssociation.SimpleAssociationPanel#bc
-   * @type {BoxConnector} */
+   * @type {module:boxes/BoxConnector.BoxConnector} */
   bc: null,
   /**
    * List of mouse, touch and keyboard events intercepted by this panel

@@ -115,7 +115,7 @@ export class TextGridContent {
   /**
    * Reads the properties of this TextGridContent from a data object
    * @param {object|string} data - The data object to be parsed, or just the text content
-   * @returns {TextGridContent}
+   * @returns {module:boxes/TextGridContent.TextGridContent}
    */
   setAttributes(data) {
     return setAttr(this, data, [
@@ -145,7 +145,7 @@ export class TextGridContent {
 
   /**
    * Counts the total number of characters, including wildcard characters.
-   * @returns {Number}
+   * @returns {number}
    */
   getNumChars() {
     return this.ncw * this.nch;
@@ -192,7 +192,7 @@ Object.assign(TextGridContent.prototype, {
   /**
    * The {@link module:boxes/BoxBase.BoxBase BoxBase} object with visual settings of the text grid
    * @name module:boxes/TextGridContent.TextGridContent#style
-   * @type {BoxBase} */
+   * @type {module:boxes/BoxBase.BoxBase} */
   style: null,
   /**
    * An array of String objects textning the chars of cells. One string per row, one character of

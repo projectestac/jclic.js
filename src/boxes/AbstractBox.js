@@ -70,7 +70,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Gets the current parent of this box
-   * @returns {AbstractBox}
+   * @returns {module:boxes/AbstractBox.AbstractBox}
    */
   getParent() {
     return this.parent;
@@ -96,7 +96,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Gets the `container` attribute of this box, without checking its parent
-   * @returns {?AWT.Container}
+   * @returns {module:AWT.Container}
    */
   getContainerX() {
     return this.container;
@@ -104,7 +104,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Gets the container associated to this box, asking its parents when `null`.
-   * @returns {?AWT.Container}
+   * @returns {module:AWT.Container}
    */
   getContainerResolve() {
     let ab = this;
@@ -135,7 +135,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Gets the real {@link module:boxes/BoxBase.BoxBase BoxBase} associated to this box, scanning down parent relationships.
-   * @returns {BoxBase}
+   * @returns {module:boxes/BoxBase.BoxBase}
    */
   getBoxBaseResolve() {
     let ab = this;
@@ -601,7 +601,7 @@ Object.assign(AbstractBox.prototype, {
   /**
    * The parent AbstractBox (can be `null`)
    * @name module:boxes/AbstractBox.AbstractBox#parent
-   * @type {AbstractBox} */
+   * @type {module:boxes/AbstractBox.AbstractBox} */
   parent: null,
   /**
    * The Container to which this AbstractBox belongs
@@ -612,7 +612,7 @@ Object.assign(AbstractBox.prototype, {
    * The {@link module:boxes/BoxBase.BoxBase BoxBase} related to this AbstractBox. When `null`, the parent can provide an
    * alternative one.
    * @name module:boxes/AbstractBox.AbstractBox#boxBase
-   * @type {BoxBase} */
+   * @type {module:boxes/BoxBase.BoxBase} */
   boxBase: null,
   /**
    * Whether this box has a border or not
