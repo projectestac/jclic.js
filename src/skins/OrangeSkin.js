@@ -9,9 +9,9 @@
  *
  *  @source https://github.com/projectestac/jclic.js
  *
- *  @license EUPL-1.1
+ *  @license EUPL-1.2
  *  @licstart
- *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
+ *  (c) 2000-2020 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -26,63 +26,53 @@
  *  Licence for the specific language governing permissions and limitations
  *  under the Licence.
  *  @licend
+ *  @module
  */
 
-/* global define */
+import Skin from './Skin';
+import DefaultSkin from './DefaultSkin';
 
-define([
-  "jquery",
-  "./Skin",
-  "./DefaultSkin"
-], function ($, Skin, DefaultSkin) {
-
+/**
+ * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js
+ * It differs from {@link module:skins/DefaultSkin.DefaultSkin DefaultSkin} only in some colors
+ * @extends module:skins/DefaultSkin.DefaultSkin
+ */
+export class OrangeSkin extends DefaultSkin {
   /**
-   * This is a variant of the default {@link Skin} used by JClic.js
-   * It differs from {@link DefaultSkin} only in some colors
-   * @exports OrangeSkin
-   * @class
-   * @extends DefaultSkin
+   * OrangeSkin constructor
+   * @param {module:JClicPlayer.JClicPlayer} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
+   * realize the media objects meeded tot build the Skin.
+   * @param {string} [name] - The skin class name
+   * @param {object} [options] - Optional parameter with additional options
    */
-  class OrangeSkin extends DefaultSkin {
-    /**
-     * OrangeSkin constructor
-     * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-     * realize the media objects meeded tot build the Skin.
-     * @param {string=} name - The skin class name
-     * @param {object=} options - Optional parameter with additional options
-     */
-    constructor(ps, name = null, options = {}) {
-      // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
-      super(ps, name, options);
-    }
-
-    /**
-     * Returns the CSS styles used by this skin. This method should be called only from
-     * the `Skin` constructor, and overridded by subclasses if needed.
-     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
-     * @returns {string}
-     */
-    _getStyleSheets(media = 'default') {
-      return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '');
-    }
+  constructor(ps, name = null, options = {}) {
+    // OrangeSkin extends [DefaultSkin](DefaultSkin.html)
+    super(ps, name, options);
   }
 
-  Object.assign(OrangeSkin.prototype, {
-    /**
-     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @name OrangeSkin#skinId
-     * @override
-     * @type {string} */
-    skinId: 'JClicOrangeSkin',
-    /**
-     * Styles used in this skin
-     * @name OrangeSkin#skinCSS
-     * @type {string} */
-    skinCSS: '.ID {background-color:#FF8B19;}'
-  });
+  /**
+   * Returns the CSS styles used by this skin. This method should be called only from
+   * the `Skin` constructor, and overridded by subclasses if needed.
+   * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
+   * @returns {string}
+   */
+  _getStyleSheets(media = 'default') {
+    return super._getStyleSheets(media) + (media === 'default' ? this.skinCSS : '');
+  }
+}
 
-  // Register this class in the list of available skins
-  Skin.CLASSES['orange'] = OrangeSkin;
-
-  return OrangeSkin;
+Object.assign(OrangeSkin.prototype, {
+  /**
+   * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+   * @name module:skins/OrangeSkin.OrangeSkin#skinId
+   * @override
+   * @type {string} */
+  skinId: 'JClicOrangeSkin',
+  /**
+   * Styles used in this skin
+   * @name module:skins/OrangeSkin.OrangeSkin#skinCSS
+   * @type {string} */
+  skinCSS: '.ID {background-color:#FF8B19;}'
 });
+
+export default Skin.registerClass('orange', OrangeSkin);

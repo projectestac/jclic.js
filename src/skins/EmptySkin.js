@@ -9,9 +9,9 @@
  *
  *  @source https://github.com/projectestac/jclic.js
  *
- *  @license EUPL-1.1
+ *  @license EUPL-1.2
  *  @licstart
- *  (c) 2000-2019 Educational Telematic Network of Catalonia (XTEC)
+ *  (c) 2000-2020 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -26,64 +26,54 @@
  *  Licence for the specific language governing permissions and limitations
  *  under the Licence.
  *  @licend
+ *  @module
  */
 
-/* global define */
+import Skin from './Skin';
 
-define([
-  "jquery",
-  "./Skin"
-], function ($, Skin) {
+/**
+ * A minimalist {@link module:skins/Skin.Skin Skin} for JClic.js with just the player, without messages, counters nor any button.
+ * @extends module:skins/Skin.Skin
+ */
+export class EmptySkin extends Skin {
 
   /**
-   * A minimalist {@link Skin} for JClic.js with just the player, without messages, counters nor any button.
-   * @exports EmptySkin
-   * @class
-   * @extends Skin
+   * EmptySkin constructor
+   * 
+   * @param {module:JClicPlayer.JClicPlayer} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
+   * realize the media objects needed tot build the Skin.
+   * @param {string} [name] - The skin class name
+   * @param {object} [options] - Optional parameter with additional options
    */
-  class EmptySkin extends Skin {
-
-    /**
-     * EmptySkin constructor
-     * 
-     * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
-     * realize the media objects needed tot build the Skin.
-     * @param {string=} name - The skin class name
-     * @param {object=} options - Optional parameter with additional options
-     */
-    constructor(ps, name = null, options = {}) {
-      // EmptySkin extends [Skin](Skin.html)
-      super(ps, name, options);
-    }
-    /**
-     * Returns the CSS styles used by this skin. This method should be called only from
-     * the `Skin` constructor, and overridded by subclasses if needed.
-     * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
-     * @returns {string}
-     */
-    _getStyleSheets(media = 'default') {
-      return super._getStyleSheets(media) + (media === 'default' ? this.mainCSS : '');
-    }
-
+  constructor(ps, name = null, options = {}) {
+    // EmptySkin extends [Skin](Skin.html)
+    super(ps, name, options);
   }
+  /**
+   * Returns the CSS styles used by this skin. This method should be called only from
+   * the `Skin` constructor, and overridded by subclasses if needed.
+   * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
+   * @returns {string}
+   */
+  _getStyleSheets(media = 'default') {
+    return super._getStyleSheets(media) + (media === 'default' ? this.mainCSS : '');
+  }
+}
 
-  Object.assign(EmptySkin.prototype, {
-    /**
-     * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
-     * @name EmptySkin#skinId
-     * @override
-     * @type {string} */
-    skinId: 'JClicEmptySkin',
-    /**
-     * Styles used in this skin
-     * @name EmptySkin#skinCSS
-     * @override
-     * @type {string} */
-    mainCSS: '.ID .JClicPlayerCnt {margin:0;}'
-  });
-
-  // Register this class in the list of available skins
-  Skin.CLASSES['empty'] = EmptySkin;
-
-  return EmptySkin;
+Object.assign(EmptySkin.prototype, {
+  /**
+   * Class name of this skin. It will be used as a base selector in the definition of all CSS styles.
+   * @name module:skins/EmptySkin.EmptySkin#skinId
+   * @override
+   * @type {string} */
+  skinId: 'JClicEmptySkin',
+  /**
+   * Styles used in this skin
+   * @name module:skins/EmptySkin.EmptySkin#skinCSS
+   * @override
+   * @type {string} */
+  mainCSS: '.ID .JClicPlayerCnt {margin:0;}'
 });
+
+// Register this class in the list of available skins
+export default Skin.registerClass('empty', EmptySkin);

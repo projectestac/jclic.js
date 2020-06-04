@@ -64,8 +64,7 @@ const writeDataToJSFile = function (opt, file = _GLOBALDATA, verbose = true) {
 // WARNING: Auto-generated file, based on "language.po" files stored in "/locales". Do not edit!
 // Launch "npm run build-locales" to update this file
 
-/* global define */
-define(${JSON.stringify(opt)})`)
+export default ${JSON.stringify(opt)};`)
   } catch (e) {
     console.error(`Error generating file ${file}: ${e}`)
   }

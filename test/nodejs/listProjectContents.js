@@ -7,7 +7,7 @@
 // node listProjectContents.js [filename]
 //
 
-/* global process */
+/* global process, global, require, console */
 
 const fs = require('fs');
 
@@ -22,14 +22,11 @@ global.Audio = function () { };
 // Use `xmldom` as DOM parser
 global.DOMParser = require('xmldom').DOMParser;
 
-// amdefine allows to load AMD modules into node.js modules
-require('amdefine/intercept');
-
-// Load the main JClic module.
+// Load the global [JClicObject](http://projectestac.github.io/jclic.js/doc/module-JClic.html).
 // Here this is done with a relative path. In other contexts just install
 // the 'jclic' NPM package and require it, like in:
 // `var jclic = require('jclic');`
-const jclic = require('../../src/JClic.js');
+const jclic = require('../../dist/jclic-node.js');
 
 // Get the file name from the command line arguments, using 'demo.jclic' if none provided.
 const file = process.argv.length > 2 ? process.argv[2] : '../jclic-demo/demo.jclic.json';
@@ -40,7 +37,7 @@ const project = new jclic.JClicProject();
 if (file.endsWith('.jclic')) {
   // Read file and parse it into a DOM object
   const contents = fs.readFileSync(file, 'utf8');
-  const doc = new DOMParser().parseFromString(contents);
+  const doc = new global.DOMParser().parseFromString(contents);
   // Initialize project with the file contents
   project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
 }

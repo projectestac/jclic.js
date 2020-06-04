@@ -9,9 +9,9 @@
  *
  *  @source https://github.com/projectestac/jclic.js
  *
- *  @license EUPL-1.1
+ *  @license EUPL-1.2
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2020 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -26,61 +26,53 @@
  *  Licence for the specific language governing permissions and limitations
  *  under the Licence.
  *  @licend
+ *  @module
  */
 
-/* global define */
+import Shaper from './Shaper';
+import { Rectangle, Point, Dimension } from '../AWT';
 
-define([
-  "jquery",
-  "./Shaper",
-  "../AWT"
-], function ($, Shaper, AWT) {
+/**
+ *
+ * This is the simplest {@link module:shapers/Shaper.Shaper Shaper}. It divides the graphic object in a set of rectangular
+ * shapes distributed in the specified number of rows and columns.
+ * @extends module:shapers/Shaper.Shaper
+ */
+export class Rectangular extends Shaper {
   /**
-   *
-   * This is the simplest {@link Shaper}. It divides the graphic object in a set of rectangular
-   * shapes distributed in the specified number of rows and columns.
-   * @exports Rectangular
-   * @class
-   * @extends Shaper
+   * Rectangular constructor
+   * @param {number} nx - Number of columns
+   * @param {number} ny - Number of rows
    */
-  class Rectangular extends Shaper {
-    /**
-     * Rectangular constructor
-     * @param {number} nx - Number of columns
-     * @param {number} ny - Number of rows
-     */
-    constructor(nx, ny) {
-      super(nx, ny);
-    }
-
-    /**
-     * Builds the rectangular shapes based on the number of rows and columns
-     * @override
-     */
-    buildShapes() {
-      const
-        w = 1 / this.nCols,
-        h = 1 / this.nRows;
-      for (let y = 0; y < this.nRows; y++) {
-        for (let x = 0; x < this.nCols; x++) {
-          this.shapeData[y * this.nCols + x] = new AWT.Rectangle(new AWT.Point(x * w, y * h), new AWT.Dimension(w, h));
-        }
-      }
-      this.initiated = true;
-    }
+  constructor(nx, ny) {
+    super(nx, ny);
   }
 
-  Object.assign(Rectangular.prototype, {
-    /**
-     * Overrides same flag in {@link Shaper#rectangularShapes}
-     * @name Rectangular#rectangularShapes
-     * @override
-     * @type {boolean} */
-    rectangularShapes: true,
-  });
+  /**
+   * Builds the rectangular shapes based on the number of rows and columns
+   * @override
+   */
+  buildShapes() {
+    const
+      w = 1 / this.nCols,
+      h = 1 / this.nRows;
+    for (let y = 0; y < this.nRows; y++) {
+      for (let x = 0; x < this.nCols; x++) {
+        this.shapeData[y * this.nCols + x] = new Rectangle(new Point(x * w, y * h), new Dimension(w, h));
+      }
+    }
+    this.initiated = true;
+  }
+}
 
-  // Register this class in the list of known shapers
-  Shaper.CLASSES['@Rectangular'] = Rectangular;
-
-  return Rectangular;
+Object.assign(Rectangular.prototype, {
+  /**
+   * Overrides same flag in {@link module:/shapers/Shaper.Shaper#rectangularShapes Shaper#rectangularShapes}
+   * @name module:shapers/Rectangular.Rectangular#rectangularShapes
+   * @override
+   * @type {boolean} */
+  rectangularShapes: true,
 });
+
+// Register this class in the list of known shapers
+export default Shaper.registerClass('@Rectangular', Rectangular);

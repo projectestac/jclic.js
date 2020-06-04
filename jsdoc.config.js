@@ -1,14 +1,16 @@
 
-const fs = require('fs-extra')
+/* global require, module */
+
+const fs = require('fs-extra');
 
 // Empty "doc" and copy "ico.png"
-fs.emptyDirSync('doc')
+fs.emptyDirSync('doc');
 
 module.exports = {
   source: {
     include: ['misc/jsdoc/index.md', 'src'],
     includePattern: '.+\\.js$',
-    exclude: ['src/GlobalData.js']
+    exclude: ['src/GlobalData.js', 'src/Deps.js'],
   },  
   opts: {
     recurse: true,
@@ -66,4 +68,4 @@ module.exports = {
     hardwrap: true,
     tags: ['examples']
   }
-}
+};

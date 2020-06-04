@@ -1,9 +1,11 @@
-### v2.0.1 (Not yet released)
+### v2.1.0 (Not yet released)
 #### Breaking changes
 - JClic projects can be now encapsulated in JSON format (files with extension `.jclic.json`). Current files in XML format (`.jclic`) will be still supported, but JSON will be the default format from now. Both formats can also be packaged in ZIP files (files of type `.jclic.zip` and `.scorm.zip`). This will simplify the development of the upcoming new project _JClic Author HTML5_.
+- JClic.js uses now [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) instead of [AMD modules](https://github.com/amdjs/amdjs-api/wiki/AMD) and [RequireJS](https://requirejs.org/). All members of complex modules like [AWT](https://github.com/projectestac/jclic.js/blob/master/src/AWT.js) and [Utils](https://github.com/projectestac/jclic.js/blob/master/src/Utils.js) can now be imported directly.
 - Static factory methods in classes with multiple descendants.
 - New methods `getAttributes` and `setAttributes` in core classes, used to serialize and de-serialize projects data.
 - Drop Bower support.
+- Open source license updated to [European Union Public License 1.2](https://spdx.org/licenses/EUPL-1.2.html).
 
 #### Bug fixes
 - Check for numeric digits in _Arith_ activity answers before converting them to numbers.
@@ -11,20 +13,23 @@
 - Use the `box-sizing` CSS attribute to compute the real with of the counters area in `DefaultSkin`.
 - Audio recorder features now enabled for all modern browsers using [MediaDevices.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) instead of the deprecated method [navigator.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia).
 - Find [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) with vendor prefix in MIDI audio player (needed for Safari)
-- Unset `box-shadow` and `text-shadow` attributes in custom buttons
+- Unset `box-shadow` and `text-shadow` attributes in custom buttons.
 - Accessible components for `canvas` regions should always be created since [`HitRegions`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/addHitRegion) have been deprecated. Also, [`CanvasRenderingContext2D.drawFocusIfNeeded`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawFocusIfNeeded) should be called on each call to `updateContent` on `ActiveBox` objects, not just at creation time.
+- Parse new JClic project multiple descriptions in XML files.
 
 #### Improvements
 - Updated core components to their latest versions.
 - Use of `package-lock` instead of `npm-shinkwrap` to lock version dependencies.
-- Restored semicolons in all source files
-- Deliverable files are now minimized with [Terser](https://github.com/terser/terser) intead of [Uglifyjs](https://github.com/mishoo/UglifyJS2)
-- Full screen mode now using direct calls to the [Full Screen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) instead of [screenfull](https://www.npmjs.com/package/screenfull)
-- Upgraded components
-- Max audio recording time increased to 180"
-- Provide visual feedback while recording audio
-- Map JDK logical fonts ("Dialog", "Serif", etc.) to [HTML5 generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
-- Improved experience with screen readers like [ChromeVox](https://www.chromevox.com/) and [Chromevox Classic](https://chrome.google.com/webstore/detail/chromevox-classic-extensi/kgejglhpjiefppelpmljglcjbhoiplfn) 
+- Restored semicolons in all source files.
+- Deliverable files are now minimized with [Terser](https://github.com/terser/terser) intead of [Uglifyjs](https://github.com/mishoo/UglifyJS2).
+- Full screen mode now using direct calls to the [Full Screen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) instead of [screenfull](https://www.npmjs.com/package/screenfull).
+- Upgraded components.
+- Max audio recording time increased to 180".
+- Provide visual feedback while recording audio.
+- Map JDK logical fonts ("Dialog", "Serif", etc.) to [HTML5 generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family).
+- Improved experience with screen readers like [ChromeVox](https://www.chromevox.com/) and [Chromevox Classic](https://chrome.google.com/webstore/detail/chromevox-classic-extensi/kgejglhpjiefppelpmljglcjbhoiplfn).
+- Updated JSDoc comments. Published full [API Docs](http://projectestac.github.io/jclic.js/doc/index.html) with working links.
+- Updated test suites.
 
 ### v1.1.11 (2019-02-11)
 #### Bug fixes
