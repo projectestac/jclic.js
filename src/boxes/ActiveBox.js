@@ -54,9 +54,9 @@ import { settings, log, getMsg } from '../Utils';
 export class ActiveBox extends AbstractBox {
   /**
    * ActiveBox constructor
-   * @param {?AbstractBox} parent - The AbstractBox to which this ActiveBox belongs
-   * @param {?AWT.Container} container - The container where this box is placed.
-   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   * @param {module:boxes/AbstractBox.AbstractBox} [parent] - The AbstractBox to which this ActiveBox belongs
+   * @param {module:AWT.Container} [container] - The container where this box is placed.
+   * @param {module:boxes/BoxBase.BoxBase} [boxBase] - The object where colors, fonts, border and other graphic properties
    * of this box are defined.
    * @param {number} [setIdLoc] - A numeric identifier, used to locate this box in a set of sibling objects.
    * @param {module:AWT.Rectangle} [rect] - The initial bounds of the box.
@@ -77,7 +77,7 @@ export class ActiveBox extends AbstractBox {
   /**
    * Factory constructor that creates a new cell inside a JQuery DOM element.
    * @param {external:jQuery} $dom - The DOM element that will act as a container
-   * @param {ActiveBoxContent} abc - The cell's content. Must not be null and have the `dimension`
+   * @param {module:boxes/ActiveBoxContent.ActiveBoxContent} abc - The cell's content. Must not be null and have the `dimension`
    * member initialized.
    * @returns {ActiveBox}
    */
@@ -103,7 +103,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    * Returns the current content used by the box
-   * @returns {ActiveBoxContent}
+   * @returns {module:boxes/ActiveBoxContent.ActiveBoxContent}
    */
   getCurrentContent() {
     return this.isAlternative() ? this.altContent : this.content;
@@ -111,7 +111,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    * Returns the current content, creating an empty one if needed.
-   * @returns {ActiveBoxContent}
+   * @returns {module:boxes/ActiveBoxContent.ActiveBoxContent}
    */
   getContent() {
     if (!this.content)
@@ -139,7 +139,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    * Checks if two ActiveBox objects have equivalent content
-   * @param {ActiveBox} bx - The ActiveBox to check against this.
+   * @param {module:boxes/ActiveBox.ActiveBox} bx - The ActiveBox to check against this.
    * @param {boolean} [checkCase] - When `true`, the comparing will be case-sensitive.
    * @returns {boolean} - `true` if both cells are equivalent.
    */
@@ -151,7 +151,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    * Same functionality as {@link module:boxes/ActiveBox.ActiveBox#isEquivalent isEquivalent}, but comparing the current content.
-   * @param {ActiveBox} bx - The ActiveBox to check against this.
+   * @param {module:boxes/ActiveBox.ActiveBox} bx - The ActiveBox to check against this.
    * @param {boolean} [checkCase] - When `true`, the comparing will be case-sensitive.
    * @returns {boolean}
    */
@@ -163,7 +163,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    * Swaps the location of two active boxes
-   * @param {ActiveBox} bx - The ActiveBox to swap with this one.
+   * @param {module:boxes/ActiveBox.ActiveBox} bx - The ActiveBox to swap with this one.
    */
   exchangeLocation(bx) {
     const
@@ -177,7 +177,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    * Copy the content of another ActiveBox into this one
-   * @param {ActiveBox} bx - The ActiveBox from which to take the content
+   * @param {module:boxes/ActiveBox.ActiveBox} bx - The ActiveBox from which to take the content
    */
   copyContent(bx) {
     this.idOrder = bx.idOrder;
@@ -205,7 +205,7 @@ export class ActiveBox extends AbstractBox {
   /**
    *
    * Exhanges the content of this ActiveBox with another one
-   * @param {ActiveBox} bx - The ActiveBox with which to exchange the content.
+   * @param {module:boxes/ActiveBox.ActiveBox} bx - The ActiveBox with which to exchange the content.
    */
   exchangeContent(bx) {
     const bx0 = new ActiveBox(this.getParent(), this.getContainerX(), this.boxBase);
@@ -217,7 +217,7 @@ export class ActiveBox extends AbstractBox {
   /**
    *
    * Sets the text content of this ActiveBox.
-   * @param {strint} tx - The text to set.
+   * @param {string} tx - The text to set.
    */
   setTextContent(tx) {
     // only plain text!
@@ -255,7 +255,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    * Sets the {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} of this ActiveBox
-   * @param {(ActiveBoxContent|ActiveBagContent)} abc - Object containing the content to set.
+   * @param {ActiveBoxContent|ActiveBagContent} abc - Object containing the content to set.
    * @param {number} i - When `abc` is an {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent}, this field indicates an
    * index in the content array.
    */
@@ -320,7 +320,7 @@ export class ActiveBox extends AbstractBox {
   /**
    * Sets the {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} that will act as an alternative content (`altContent` field)
    * of this ActiveBox,
-   * @param {(ActiveBoxContent|ActiveBagContent)} abc - Object containing the content to set.
+   * @param {ActiveBoxContent|ActiveBagContent} abc - Object containing the content to set.
    * @param {number} i - When `abc` is an {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent}, this field indicates an
    * index in the content array.
    */
@@ -344,7 +344,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    * Sets the current content of this ActiveBox
-   * @param {ActiveBoxContent} abc - The content to set.
+   * @param {module:boxes/ActiveBoxContent.ActiveBoxContent} abc - The content to set.
    */
   setCurrentContent(abc) {
     if (this.isAlternative())
@@ -607,7 +607,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    * Gets a descriptive text for this ActiveBox
-   * @returns {String}
+   * @returns {string}
    */
   toString() {
     return (this.role !== 'cell' ? getMsg(this.role) : '') + (this.getCurrentContent() || '-').toString();
@@ -615,7 +615,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    * Plays the action or media associated with this ActiveBox
-   * @param {PlayStation} ps - Usually, a {@link module:JClicPlayer.JClicPlayer JClicPlayer}
+   * @param {module:JClicPlayer.JClicPlayer} ps - Usually, a {@link module:JClicPlayer.JClicPlayer JClicPlayer}
    * @param {function[]} delayedActions - If set, store the the action in this array for future execution
    */
   playMedia(ps, delayedActions = null) {
@@ -630,7 +630,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    * Sets the hosted media player of this ActiveBox
-   * @param {ActiveMediaPlayer} amp - The media player.
+   * @param {module:media/ActiveMediaPlayer.ActiveMediaPlayer} amp - The media player.
    */
   setHostedMediaPlayer(amp) {
     const old = this.hostedMediaPlayer;
@@ -644,7 +644,7 @@ export class ActiveBox extends AbstractBox {
   /**
    * Sets a new size and/or dimension to this box.
    * @override
-   * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
+   * @param {AWT.Rectangle|number} rect - An AWT.Rectangle object, or the `x` coordinate of the
    * upper-left corner of a new rectangle.
    * @param {number} [y] - `y` coordinate of the upper-left corner of the new rectangle.
    * @param {number} [w] - Width of the new rectangle.

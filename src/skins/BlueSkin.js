@@ -41,7 +41,7 @@ import DefaultSkin from './DefaultSkin';
 export class BlueSkin extends DefaultSkin {
   /**
    * BlueSkin constructor
-   * @param {PlayStation} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
+   * @param {module:JClicPlayer.JClicPlayer} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
    * realize the media objects needed to build the Skin.
    * @param {string} [name] - The skin class name
    * @param {object} [options] - Optional parameter with additional options

@@ -42,7 +42,7 @@ import { SimpleAssociation, SimpleAssociationPanel } from './SimpleAssociation';
 export class ComplexAssociation extends SimpleAssociation {
   /**
    * ComplexAssociation constructor
-   * @param {JClicProject} project - The JClic project to which this activity belongs
+   * @param {module:project/JClicProject.JClicProject} project - The JClic project to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -92,8 +92,8 @@ Object.assign(ComplexAssociation.prototype, {
 export class ComplexAssociationPanel extends SimpleAssociationPanel {
   /**
    * ComplexAssociationPanel prototype
-   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
+   * @param {module:JClicPlayer.JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
@@ -139,7 +139,7 @@ export class ComplexAssociationPanel extends SimpleAssociationPanel {
   /**
    * Main handler used to process mouse, touch, keyboard and edit events
    * @override
-   * @param {HTMLEvent} event - The HTML event to be processed
+   * @param {external:Event} event - The HTML event to be processed
    * @returns {boolean} - When this event handler returns `false`, jQuery will stop its
    * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
    */

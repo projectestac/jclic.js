@@ -180,7 +180,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Executes miscellaneous finalization routines.
-   * @returns {Promise} - A promise to be fullfilled when all pending tasks are finished.
+   * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished.
    */
   end() {
     let result = null;
@@ -206,7 +206,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Creates and initializes the {@link module:Reporter.Reporter Reporter} member
-   * @return {Promise}
+   * @returns {external:Promise}
    */
   initReporter() {
     if (this.reporter) {
@@ -259,7 +259,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Sets the current skin
-   * @param {?Skin} newSkin - The skin to use. When `null`, `defaultSkin` will be used.
+   * @param {module:skins/Skin.Skin} [newSkin] - The skin to use. When `null`, `defaultSkin` will be used.
    */
   setSkin(newSkin) {
     newSkin = newSkin || (this.project && this.project.skin ? this.project.skin : this.defaultSkin);
@@ -272,7 +272,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Sets the current project of this player, without starting any activity
-   * @param {JClicProject} project - The project to be set
+   * @param {module:project/JClicProject.JClicProject} project - The project to be set
    */
   setProject(project) {
     if (this.project) {
@@ -286,7 +286,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Loads the specified project and starts playing at the specified activity or sequence tag.
-   * @param {?(string|JClicProject)} project - The project to load (if it's a string) or to use (if it's an object of type {@link module:project/JClicProject.JClicProject JClicProject}).
+   * @param {string|JClicProject} [project] - The project to load (if it's a string) or to use (if it's an object of type {@link module:project/JClicProject.JClicProject JClicProject}).
    * When it's a `string`, it can be the absolute or relative path to:
    * - A `.jclic` project file, in XML format
    * - A `.jclic.json` project file in JSON format
@@ -294,7 +294,7 @@ export class JClicPlayer extends Container {
    * - A `.scorm.zip` file, as exported by JClic Author.
    * - A `project.json` file, as exported by JClic Author
    * When `null` or `undefined`, refers to the current project.
-   * @param {(string|number)} [sequence] - Sequence tag or numeric order in the {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence}
+   * @param {string|number} [sequence] - Sequence tag or numeric order in the {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence}
    * to be loaded. If _sequence_ and _activity_ are both `null`, the first {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement}
    * will be loaded.
    * @param {string} [activity] - Name of the activity to be loaded (usually `null`)
@@ -715,8 +715,8 @@ export class JClicPlayer extends Container {
 
   /**
    * Plays the specified media.
-   * @param {MediaContent} mediaContent - The media to be played
-   * @param {ActiveBox} [mediaPlacement] - The cell where the graphic component of this media should be placed (used with video objects)
+   * @param {module:media/MediaContent.MediaContent} mediaContent - The media to be played
+   * @param {module:boxes/ActiveBox.ActiveBox} [mediaPlacement] - The cell where the graphic component of this media should be placed (used with video objects)
    * @param {function[]} [delayedActions] - If set, store the the action in this array for future execution
    */
   playMedia(mediaContent, mediaPlacement = null, delayedActions = null) {
@@ -831,7 +831,7 @@ export class JClicPlayer extends Container {
   /**
    *
    * Sets the current main message.
-   * @param {ActiveBoxContent} abc - The content of the message
+   * @param {module:boxes/ActiveBoxContent.ActiveBoxContent} abc - The content of the message
    */
   setMsg(abc) {
     const ab = this.skin ? this.skin.getMsgBox() : null;
@@ -943,7 +943,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Builds an {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} for the specified {@link module:media/MediaContent.MediaContent}
-   * @param {MediaContent} mediaContent - The media content to be played
+   * @param {module:media/MediaContent.MediaContent} mediaContent - The media content to be played
    * @returns {ActiveMediaPlayer}
    */
   getActiveMediaPlayer(mediaContent) {
@@ -952,7 +952,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Notifies the reporting system that a new activity has started
-   * @param {Activity} act - The activity that is sending the notification
+   * @param {module:Activity.Activity} act - The activity that is sending the notification
    */
   reportNewActivity(act) {
     const ase = this.project.activitySequence.getCurrentAct();
@@ -969,10 +969,10 @@ export class JClicPlayer extends Container {
 
   /**
    * Notifies the reporting system that a new action has been performed on the current activity
-   * @param {Activity} act - The activity that is sending the notification
+   * @param {module:Activity.Activity} act - The activity that is sending the notification
    * @param {string} type - Type of action (match, move, switch...)
-   * @param {?string} source - Object acting as a source of the action (cell, grid, clue...)
-   * @param {?string} dest - When applicable, object acting as a receiver of the action (cell, grid...)
+   * @param {string} source - Object acting as a source of the action (cell, grid, clue...)
+   * @param {string} dest - When applicable, object acting as a receiver of the action (cell, grid...)
    * @param {boolean} ok - Whether the action was OK or not
    * @param {number} currentScore - The current score of the activity
    */
@@ -987,7 +987,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Notifies the reporting system that the current activity has finished
-   * @param {Activity} act - The activity that is sending the notification
+   * @param {module:Activity.Activity} act - The activity that is sending the notification
    * @param {boolean} solved - Whether the activity was successfully completed or not.
    */
   reportEndActivity(act, solved) {

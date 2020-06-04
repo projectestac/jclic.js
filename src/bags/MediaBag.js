@@ -42,7 +42,7 @@ import { log, nSlash } from '../Utils';
 export class MediaBag {
   /**
    * MediaBag constructor
-   * @param {JClicProject} project - The JClic project to which this media bag belongs
+   * @param {module:project/JClicProject.JClicProject} project - The JClic project to which this media bag belongs
    */
   constructor(project) {
     this.project = project;
@@ -133,7 +133,7 @@ export class MediaBag {
    * Get the names of the media elements that are of the given type.
    * When the search type is `font`, the `fontName` property is used instead of `name`
    * @param {string} type - The type of elements to search
-   * @returns {String[]}
+   * @returns {string[]}
    */
   getElementsOfType(type) {
     const result = [];
@@ -152,7 +152,7 @@ export class MediaBag {
    * @param {string} type - The type of media to be build. When `null` or `undefined`, all
    * resources will be build.
    * @param {function} [callback] - Function to be called when each element is ready.
-   * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to dynamically load fonts
+   * @param {module:JClicPlayer.JClicPlayer} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to dynamically load fonts
    * @returns {number} - The total number of elements that will be build     * 
    */
   buildAll(type, callback, ps) {

@@ -50,7 +50,7 @@ import Rectangular from '../../shapers/Rectangular';
 export class WrittenAnswer extends Activity {
   /**
    * WrittenAnswer constructor
-   * @param {JClicProject} project - The JClic project to which this activity belongs
+   * @param {module:project/JClicProject.JClicProject} project - The JClic project to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -125,8 +125,8 @@ Object.assign(WrittenAnswer.prototype, {
 export class WrittenAnswerPanel extends ActivityPanel {
   /**
    * WrittenAnswerPanel constructor
-   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
+   * @param {module:JClicPlayer.JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
@@ -465,7 +465,7 @@ export class WrittenAnswerPanel extends ActivityPanel {
   /**
    * Main handler used to process mouse, touch, keyboard and edit events
    * @override
-   * @param {HTMLEvent} event - The HTML event to be processed
+   * @param {external:Event} event - The HTML event to be processed
    * @returns {boolean} - When this event handler returns `false`, jQuery will stop its
    * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
    */

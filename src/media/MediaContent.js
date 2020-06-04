@@ -140,7 +140,7 @@ export class MediaContent {
 
   /**
    * Compares this object with another MediaContent.
-   * @param {MediaContent} mc - The Media Content to compare against to.
+   * @param {module:media/MediaContent.MediaContent} mc - The Media Content to compare against to.
    * @returns {boolean} - `true` when both objects are equivalent.
    */
   isEquivalent(mc) {

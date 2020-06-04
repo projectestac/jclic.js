@@ -43,9 +43,9 @@ import { Point } from '../AWT';
 export class ActiveBoxBag extends BoxBag {
   /**
    * ActiveBoxBag constructor
-   * @param {?AbstractBox} parent - The AbstractBox to which this box bag belongs
-   * @param {?AWT.Container} container - The container where this box bag is placed.
-   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   * @param {module:boxes/AbstractBox.AbstractBox} [parent] - The AbstractBox to which this box bag belongs
+   * @param {module:AWT.Container} [container] - The container where this box bag is placed.
+   * @param {module:boxes/BoxBase.BoxBase} [boxBase] - The object where colors, fonts, border and other graphic properties
    * of this box bag are defined.
    */
   constructor(parent, container, boxBase) {
@@ -55,7 +55,7 @@ export class ActiveBoxBag extends BoxBag {
 
   /**
    * Adds an {@link module:boxes/ActiveBox.ActiveBox ActiveBox} to this bag
-   * @param {ActiveBox} bx - The ActiveBox to be added to this bag
+   * @param {module:boxes/ActiveBox.ActiveBox} bx - The ActiveBox to be added to this bag
    */
   addActiveBox(bx) {
     bx.idLoc = this.cells.length;
@@ -83,11 +83,11 @@ export class ActiveBoxBag extends BoxBag {
   /**
    * Sets the content of members of this ActiveBoxBag, based on one or more {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent}
    * objects.
-   * @param {ActiveBagContent} abc - The main bag of content
-   * @param {ActiveBagContent} [altAbc] - The alternative bag of content
+   * @param {module:boxes/ActiveBagContent.ActiveBagContent} abc - The main bag of content
+   * @param {module:boxes/ActiveBagContent.ActiveBagContent} [altAbc] - The alternative bag of content
    * @param {number} [fromIndex] - Starts taking the cell content located at this position on the bag
    * @param {number} [toCell] - Starts filling the box located at this position on the ActiveBoxBag
-   * @param {type} [numCells] - Acts only with a limited number of elements.
+   * @param {number} [numCells] - Acts only with a limited number of elements.
    */
   setContent(abc, altAbc, fromIndex, toCell, numCells) {
     if (!fromIndex)
@@ -157,7 +157,7 @@ export class ActiveBoxBag extends BoxBag {
 
   /**
    * Checks if the place occupied by a cell corresponds to a cell with equivalent content.
-   * @param {ActiveBox} bx - The box to check
+   * @param {module:boxes/ActiveBox.ActiveBox} bx - The box to check
    * @param {boolean} checkCase - If `true`, check case when comparing texts
    * @returns {boolean}
    */
@@ -168,7 +168,7 @@ export class ActiveBoxBag extends BoxBag {
 
   /**
    * Count the number of cells that are at its original place or equivalent
-   * @param {type} checkCase -  - If `true`, check case when comparing texts
+   * @param {boolean} checkCase -  - If `true`, check case when comparing texts
    * @returns {number}
    */
   countCellsAtEquivalentPlace(checkCase) {
@@ -240,7 +240,7 @@ export class ActiveBoxBag extends BoxBag {
 
   /**
    * Fits cells inside the ActiveBoxBag area. Useful when non-rectangular cells exchange its positions.
-   * @param {ActiveBox[]} boxes - The boxes to be checked
+   * @param {module:boxes/ActiveBox.ActiveBox[]} boxes - The boxes to be checked
    */
   fitCellsInArea(boxes) {
     const
@@ -262,8 +262,8 @@ export class ActiveBoxBag extends BoxBag {
 
   /**
    * Exchange the positions of two cells inside the ActiveBoxBag area.
-   * @param {ActiveBox} bxa - The first box
-   * @param {ActiveBox} bxb - The second box
+   * @param {module:boxes/ActiveBox.ActiveBox} bxa - The first box
+   * @param {module:boxes/ActiveBox.ActiveBox} bxb - The second box
    * @param {boolean} fitInArea - Ensure that all cells are inside the bag rectangle
    */
   swapCellPositions(bxa, bxb, fitInArea) {
@@ -302,8 +302,8 @@ export class ActiveBoxBag extends BoxBag {
    * Gets the index of box located in the `cells` array after the provided index, having the
    * provided `idAssValid` value as `idAss` attribute.
    * When `idAssValid` is `null` or `undefined`, search for the next cell with `idAss>0`
-   * @param {type} currentItem - The index after to which start scanning
-   * @param {type} [idAssValid] - The `idAss` attribute value to search
+   * @param {number} currentItem - The index after to which start scanning
+   * @param {string} [idAssValid] - The `idAss` attribute value to search
    * @returns {number}
    */
   getNextItem(currentItem, idAssValid) {

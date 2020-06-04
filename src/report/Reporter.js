@@ -46,7 +46,7 @@ import { log, getMsg, getVal } from '../Utils';
 export class Reporter {
   /**
    * Reporter constructor
-   * @param {PlayStation} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve localized messages
+   * @param {module:JClicPlayer.JClicPlayer} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve localized messages
    */
   constructor(ps) {
     this.ps = ps;
@@ -71,7 +71,7 @@ export class Reporter {
    * Creates a new Reporter of the requested class
    * The resulting object must be prepared to operate with a call to its `init` method.
    * @param {string} className - Class name of the requested reporter. When `null`, a basic Reporter is created.
-   * @param {PlayStation} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve localized messages
+   * @param {module:JClicPlayer.JClicPlayer} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve localized messages
    * @returns {Reporter}
    */
   static getReporter(className, ps) {
@@ -121,7 +121,7 @@ export class Reporter {
   /**
    * Gets the list of groups or organizations currently registered in the system. This
    * method should be implemented by classes derived of `Reporter`.
-   * @returns {Promise} - When fulfilled, an array of group data is returned as a result
+   * @returns {external:Promise} - When fulfilled, an array of group data is returned as a result
    */
   getGroups() {
     return Promise.reject('No groups defined!');
@@ -131,7 +131,7 @@ export class Reporter {
    * Gets the list of users currently registered in the system, optionally filtered by
    * a specific group ID. This method should be implemented by classes derived of `Reporter`.
    * @param {string}+ groupId - Optional group ID to be used as a filter criteria
-   * @returns {Promise} - When fulfilled, an object with a collection of user data records
+   * @returns {external:Promise} - When fulfilled, an object with a collection of user data records
    * is returned
    */
   getUsers(groupId) {
@@ -142,7 +142,7 @@ export class Reporter {
    * Gets extended data associated with a specific user. This is a method intended to be
    * implemented in subclasses.
    * @param {string} _userId - The requested user ID
-   * @returns {Promise} - When fulfilled, an object with user data is returned.
+   * @returns {external:Promise} - When fulfilled, an object with user data is returned.
    */
   getUserData(_userId) {
     return Promise.reject('Unknown user!');
@@ -152,7 +152,7 @@ export class Reporter {
    * Gets extended data associated with a specific group or organization. This
    * is a method intended to be implemented in subclasses.
    * @param {string} _groupId - The requested group ID
-   * @returns {Promise} - When fulfilled, an object with group data is returned.
+   * @returns {external:Promise} - When fulfilled, an object with group data is returned.
    */
   getGroupData(_groupId) {
     return Promise.reject('Unknown group!');
@@ -170,7 +170,7 @@ export class Reporter {
 
   /**
    * Allows the current user to create a new group, and asks his name
-   * @returns {Promise} - When fulfilled, the chosen name for the new group is returned.
+   * @returns {external:Promise} - When fulfilled, the chosen name for the new group is returned.
    */
   promptForNewGroup() {
     // TODO: Implement promptForNewGroup
@@ -179,7 +179,7 @@ export class Reporter {
 
   /**
    * Allows the current user to create a new user ID, and asks his ID and password
-   * @returns {Promise} - When fulfilled, an object with the new user ID and password
+   * @returns {external:Promise} - When fulfilled, an object with the new user ID and password
    * is returned.
    */
   promptForNewUser() {
@@ -189,7 +189,7 @@ export class Reporter {
 
   /**
    * Allows the current user to select its group or organization from the current groups list
-   * @returns {Promise}
+   * @returns {external:Promise}
    */
   promptGroupId() {
     return new Promise((resolve, reject) => {
@@ -224,7 +224,7 @@ export class Reporter {
   /**
    * Asks for a valid user ID fulfilling the promise if found, rejecting it otherwise
    * @param {boolean}+ forcePrompt - Prompt also if `userId` is already defined (default is `false`)
-   * @returns {Promise}
+   * @returns {external:Promise}
    */
   promptUserId(forcePrompt) {
     return new Promise((resolve, reject) => {
@@ -299,7 +299,7 @@ export class Reporter {
 
   /**
    * Builds a complex object containing all the results reported while playing activities
-   * @returns {Object} - The current results
+   * @returns {object} - The current results
    */
   getData() {
 
@@ -342,8 +342,8 @@ export class Reporter {
   /**
    * Initializes this report system with an optional set of parameters.
    * Returns a Promise, fulfilled when the reporter is fully initialized.
-   * @param {?Object} options - Initial settings passed to the reporting system
-   * @returns {Promise}
+   * @param {object} [options] - Initial settings passed to the reporting system
+   * @returns {external:Promise}
    */
   init(options) {
     if (!options)
@@ -365,7 +365,7 @@ export class Reporter {
 
   /**
    * Closes this reporting system
-   * @returns {Promise} - A Promise object to be fullfilled when all pending tasks are finished.
+   * @returns {external:Promise} - A Promise object to be fullfilled when all pending tasks are finished.
    */
   end() {
     log('debug', 'Basic Reporter ending');
@@ -393,7 +393,7 @@ export class Reporter {
 
   /**
    * Creates a new group (method to be implemented in subclasses)
-   * @param {GroupData} _gd
+   * @param {object} _gd
    */
   newGroup(_gd) {
     throw "No database!";
@@ -401,7 +401,7 @@ export class Reporter {
 
   /**
    * Creates a new user (method to be implemented in subclasses)
-   * @param {UserData} _ud
+   * @param {object} _ud
    */
   newUser(_ud) {
     throw "No database!";
@@ -409,7 +409,7 @@ export class Reporter {
 
   /**
    * This method should be invoked when a new session starts.
-   * @param {JClicProject} jcp - The {@link module:project/JClicProject.JClicProject JClicProject} this session refers to.
+   * @param {module:project/JClicProject.JClicProject} jcp - The {@link module:project/JClicProject.JClicProject JClicProject} this session refers to.
    */
   newSession(jcp) {
     this.endSession();
@@ -420,7 +420,7 @@ export class Reporter {
 
   /**
    * This method should be invoked when a new sequence starts
-   * @param {ActivitySequenceElement} ase - The {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} referenced by this sequence.
+   * @param {module:bags/ActivitySequenceElement.ActivitySequenceElement} ase - The {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} referenced by this sequence.
    */
   newSequence(ase) {
     if (this.currentSession) {
@@ -433,7 +433,7 @@ export class Reporter {
 
   /**
    * This method should be invoked when the user starts a new activity
-   * @param {Activity} act - The {@link module:Activity.Activity Activity} reporter has just started
+   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} reporter has just started
    */
   newActivity(act) {
     if (this.currentSession) {
@@ -576,7 +576,7 @@ Object.assign(Reporter.prototype, {
 export class ReporterInfo {
   /**
    * ReporterInfo constructor
-   * @param {Reporter} rep - The {@link module:Reporter.Reporter Reporter} associated tho this `Info` object.
+   * @param {module:report/Reporter.Reporter} rep - The {@link module:Reporter.Reporter Reporter} associated tho this `Info` object.
    */
   constructor(rep) {
     this.rep = rep;

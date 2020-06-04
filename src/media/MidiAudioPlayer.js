@@ -47,7 +47,7 @@ import { log } from '../Utils';
 export class MidiAudioPlayer {
   /**
    * MidiAudioPlayer constructor
-   * @param {ArrayBuffer} data - The MIDI file content, in ArrayBuffer format
+   * @param {external:ArrayBuffer} data - The MIDI file content, in ArrayBuffer format
    * @param {object} [options={}] - Optional params related to the type of soundfont used. Valid options inside this object are:<br>
    * - `MIDISoundFontObject`: An object containing the full soundfont data. When this param is provided, no other one will be used.
    * - `MIDISoundFontBase`: The URL used as base for the current collection of MIDI soundfonts. Defaults to `https://clic.xtec.cat/dist/jclic.js/soundfonts/MusyngKite`
@@ -71,7 +71,7 @@ export class MidiAudioPlayer {
    * NOTE: This will not work when off-line!
    * TODO: Provided a basic, simple, static soundfont
    * @param {object} options - Optional param with options related to the MIDI soundfont. See details in `constructor` description.
-   * @param {AudioContext} audioContext - The AudioContext object (see: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext)
+   * @param {external:AudioContext} audioContext - The AudioContext object (see: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext)
    */
   static prepareInstrument(options = {}, audioContext) {
     if (MidiAudioPlayer.loadingInstrument === false) {

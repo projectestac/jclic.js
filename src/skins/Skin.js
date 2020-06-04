@@ -47,7 +47,7 @@ import { Container, Dimension, Rectangle } from '../AWT';
 export class Skin extends Container {
   /**
    * Skin constructor
-   * @param {PlayStation} ps - The `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
+   * @param {module:JClicPlayer.JClicPlayer} ps - The `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
    * realize the media objects needed tot build the Skin.
    * @param {string} [name] - The skin name
    * @param {object} [options] - Optional parameter with additional options
@@ -212,9 +212,9 @@ export class Skin extends Container {
 
   /**
    * Checks if the provided stylesheet ID is already registered in the root node where the current player is placed
-   * @param {String} skinId - The unique identifier of the skin to check
-   * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used as a base to find the root node
-   * @returns {Boolean} - _true_ when the skin stylesheet is already defined in the current root node, _false_ otherwise
+   * @param {string} skinId - The unique identifier of the skin to check
+   * @param {module:JClicPlayer.JClicPlayer} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used as a base to find the root node
+   * @returns {boolean} - _true_ when the skin stylesheet is already defined in the current root node, _false_ otherwise
    */
   static registerStyleSheet(skinId, ps) {
     let result = false;
@@ -241,7 +241,7 @@ export class Skin extends Container {
    * Gets the specified Skin from `skinStack`, or creates a new one if not found.
    * This function should be used only through `Skin.getSkin`
    * @param {string} skinName - The name of the searched skin
-   * @param {PlayStation} ps - The PlayStation (usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to build the new skin.
+   * @param {module:JClicPlayer.JClicPlayer} ps - The PlayStation (usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to build the new skin.
    * @param {object} [options] - Optional parameter with additional options
    * @returns {Skin}
    */
@@ -299,7 +299,7 @@ export class Skin extends Container {
 
   /**
    * Attaches a {@link module:JClicPlayer.JClicPlayer JClicPlayer} object to this Skin
-   * @param {JClicPlayer} player
+   * @param {module:JClicPlayer.JClicPlayer} player
    */
   attach(player) {
     this.detach();
@@ -449,7 +449,7 @@ export class Skin extends Container {
    * @param {object} options - This object should have two components: `main` and `bottom`, both
    * containing a jQuery HTML element (or array of elements) to be placed on the main and bottom panels
    * of the dialog.
-   * @returns {Promise} - A Promise that will be fulfilled when the dialog is closed.
+   * @returns {external:Promise} - A Promise that will be fulfilled when the dialog is closed.
    */
   showDlg(modal, options) {
     return new Promise((resolve, reject) => {
@@ -498,8 +498,8 @@ export class Skin extends Container {
 
   /**
    * Displays a dialog with a report of the current results achieved by the user.
-   * @param {Reporter} reporter - The reporter system currently in use
-   * @returns {Promise} - The Promise returned by {@link module:skins/Skin.Skin.showDlg}.
+   * @param {module:report/Reporter.Reporter} reporter - The reporter system currently in use
+   * @returns {external:Promise} - The Promise returned by {@link module:skins/Skin.Skin.showDlg}.
    */
   showReports(reporter) {
     this.$reportsPanel.html(this.$printReport(reporter));
@@ -511,7 +511,7 @@ export class Skin extends Container {
 
   /**
    * Formats the current report in a DOM tree, ready to be placed in `$reportsPanel`
-   * @param {Reporter} reporter - The reporter system currently in use
+   * @param {module:report/Reporter.Reporter} reporter - The reporter system currently in use
    * @returns {external:jQuery[]} - An array of jQuery objects containing the full report
    */
   $printReport(reporter) {
@@ -732,7 +732,7 @@ export class Skin extends Container {
 
   /**
    * Compares two Skin objects
-   * @param {Skin} skin - The Skin to compare against this
+   * @param {module:skins/Skin.Skin} skin - The Skin to compare against this
    * @returns {boolean} - `true` if both skins are equivalent.
    */
   equals(skin) {

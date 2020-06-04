@@ -60,7 +60,7 @@ export class ActiveBagContent {
   /**
    * Loads the object settings from a specific JQuery XML element
    * @param {external:jQuery} $xml - The XML element to parse
-   * @param {MediaBag} mediaBag - The project's MediaBag
+   * @param {module:bags/MediaBag.MediaBag} mediaBag - The project's MediaBag
    */
   setProperties($xml, mediaBag) {
     let bug = false;
@@ -179,7 +179,7 @@ export class ActiveBagContent {
   /**
    * Reads the properties of this ActiveBagContent from a data object
    * @param {object} data - The data object to be parsed
-   * @param {MediaBag} mediaBag - The project's MediaBag
+   * @param {module:bags/MediaBag.MediaBag} mediaBag - The project's MediaBag
    * @returns {ActiveBagContent}
    */
   setAttributes(data, mediaBag) {
@@ -232,7 +232,7 @@ export class ActiveBagContent {
 
   /**
    * Prepares the media content of all elements
-   * @param {PlayStation} playStation - The {@link module:JClicPlayer.JClicPlayer JClicPlayer}
+   * @param {module:JClicPlayer.JClicPlayer} playStation - The {@link module:JClicPlayer.JClicPlayer JClicPlayer}
    */
   prepareMedia(playStation) {
     this.cells.forEach(abc => abc.prepareMedia(playStation));
@@ -292,7 +292,7 @@ export class ActiveBagContent {
 
   /**
    * Adds a new {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} to this bag
-   * @param {ActiveBoxContent} ab - The ActiveBoxContent to add
+   * @param {module:boxes/ActiveBoxContent.ActiveBoxContent} ab - The ActiveBoxContent to add
    */
   addActiveBoxContent(ab) {
     this.cells.push(ab);
@@ -304,7 +304,7 @@ export class ActiveBagContent {
   /**
    * Gets the nth {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} in `cells`
    * @param {number} i - The index of the content to be retrieved
-   * @returns {ActiveBoxContent}
+   * @returns {module:boxes/ActiveBoxContent.ActiveBoxContent}
    */
   getActiveBoxContent(i) {
     if (i >= this.cells.length) {
@@ -318,7 +318,7 @@ export class ActiveBagContent {
    * Finds the ActiveBoxContent with specific `id` and `item` values
    * @param {number} id
    * @param {number} item
-   * @returns {ActiveBoxContent}
+   * @returns {module:boxes/ActiveBoxContent.ActiveBoxContent}
    */
   getActiveBoxContentWith(id, item) {
     return this.cells.find(bxc => bxc.id === id && bxc.item === item);
@@ -326,8 +326,8 @@ export class ActiveBagContent {
 
   /**
    * Sets the content of the cells based on a image spliced by a shaper
-   * @param {MediaBag} mb - The MediaBag used to retrieve the image
-   * @param {Shaper} sh - The Shaper used to splice the image
+   * @param {module:bags/MediaBag.MediaBag} mb - The MediaBag used to retrieve the image
+   * @param {module:shapers/Shaper.Shaper} sh - The Shaper used to splice the image
    * @param {boolean} roundSizes - When `true`, the size and coordinates of cells will be rounded
    * to the nearest integer values.
    */
@@ -393,7 +393,7 @@ export class ActiveBagContent {
   /**
    * Sets `value` to the `key` attribute of all cells
    * @param {string} key - The key where the value will be stored
-   * @param {*} value - The supplied value. Can be of any type.
+   * @param {any} value - The supplied value. Can be of any type.
    */
   setCellsAttribute(key, value) {
     this.cells.forEach(abc => abc[key] = value);

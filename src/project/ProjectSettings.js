@@ -52,7 +52,7 @@ import { log, getXmlNodeText, parseXmlNode, reduceTextsToStrings, parseOldDate, 
 export class ProjectSettings {
   /**
    * ProjectSettings constructor
-   * @param {JClicProject} project - The project to which this settings belongs
+   * @param {module:project/JClicProject.JClicProject} project - The project to which this settings belongs
    */
   constructor(project) {
     this.project = project;

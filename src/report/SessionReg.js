@@ -38,7 +38,7 @@ import SequenceReg from './SequenceReg';
 export class SessionReg {
   /**
    * SessionReg constructor
-   * @param {JClicProject} project - The JClicProject referenced by this session.
+   * @param {module:project/JClicProject.JClicProject} project - The JClicProject referenced by this session.
    * @param {string} [code] - Optional code to be used by this SessionReg
    */
   constructor(project, code) {
@@ -53,10 +53,10 @@ export class SessionReg {
 
   /**
    * Builds a complex object with the results of all activities done during this working session
-   * @param {booolean} recalcInfo - When `true`, global variables (number of sequences, score, total time...)
+   * @param {boolean} recalcInfo - When `true`, global variables (number of sequences, score, total time...)
    * will be recalculated from the data stored in the {@link module:report/SequenceReg.SequenceReg SequenceReg} objects.
-   * @param {booolean} includeEmpty - When `true`, sequences without reported activities will be also included in the results
-   * @returns {Object} - An object containing the full session data
+   * @param {boolean} includeEmpty - When `true`, sequences without reported activities will be also included in the results
+   * @returns {object} - An object containing the full session data
    */
   getData(recalcInfo, includeEmpty) {
     if (recalcInfo)
@@ -109,7 +109,7 @@ export class SessionReg {
 
   /**
    * This method should be invoked when a new sequence starts
-   * @param {ActivitySequenceElement} ase - The {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} referenced by this sequence.
+   * @param {module:bags/ActivitySequenceElement.ActivitySequenceElement} ase - The {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} referenced by this sequence.
    */
   newSequence(ase) {
     this.endSequence();
@@ -120,7 +120,7 @@ export class SessionReg {
 
   /**
    * This method should be invoked when the user starts a new activity
-   * @param {Activity} act - The {@link module:Activity.Activity Activity} that has just started
+   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} that has just started
    */
   newActivity(act) {
     if (this.currentSequence) {
@@ -226,7 +226,7 @@ Object.assign(SessionReg.prototype, {
 export class SessionRegInfo {
   /**
    * SessionRegInfo constructor
-   * @param {SessionReg} sReg - The {@link module:report/SessionReg.SessionReg SessionReg} associated tho this `Info` object.
+   * @param {module:report/SessionReg.SessionReg} sReg - The {@link module:report/SessionReg.SessionReg SessionReg} associated tho this `Info` object.
    */
   constructor(sReg) {
     this.sReg = sReg;

@@ -39,7 +39,7 @@ import ActionReg from './ActionReg';
 export class ActivityReg {
   /**
    * ActivityReg constructor
-   * @param {Activity} act - The {@link module:Activity.Activity Activity} referenced by this object.
+   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} referenced by this object.
    */
   constructor(act) {
     this.name = act.name;
@@ -82,7 +82,7 @@ export class ActivityReg {
 
   /**
    * Builds an object with relevant data about the results obtained by the current student in this activity
-   * @returns {Object} - The results of this activity
+   * @returns {object} - The results of this activity
    */
   getData() {
     const result = {

@@ -44,7 +44,7 @@ import BoxBase from '../../boxes/BoxBase';
 export class TextActivityBase extends Activity {
   /**
    * TextActivityBase constructor
-   * @param {JClicProject} project - The project to which this activity belongs
+   * @param {module:project/JClicProject.JClicProject} project - The project to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -102,8 +102,8 @@ Object.assign(TextActivityBase.prototype, {
 export class TextActivityBasePanel extends ActivityPanel {
   /**
    * TextActivityBasePanel constructor
-   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
+   * @param {module:JClicPlayer.JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
@@ -115,7 +115,7 @@ export class TextActivityBasePanel extends ActivityPanel {
   /**
    * Fills a jQuery DOM element (usually a 'div') with the specified {@link module:activities/text/TextActivityDocument.TextActivityDocument TextActivityDocument}.
    * @param {external:jQuery} $div - The jQuery DOM object to be filled with the document.
-   * @param {TextActivityDocument} doc - The document
+   * @param {module:activities/text/TextActivityDocument.TextActivityDocument} doc - The document
    */
   setDocContent($div, doc) {
 
@@ -300,7 +300,7 @@ export class TextActivityBasePanel extends ActivityPanel {
   /**
    * Creates a target DOM element.
    * This method can be overridden in subclasses to create specific types of targets.
-   * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
+   * @param {module:activities/text/TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
    * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
    * to store the target, or replaced by another type of object.
    * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
@@ -410,7 +410,7 @@ export class TextActivityBasePanel extends ActivityPanel {
   /**
    * Main handler used to process mouse, touch, keyboard and edit events
    * @override
-   * @param {HTMLEvent} _event - The HTML event to be processed
+   * @param {external:Event} _event - The HTML event to be processed
    * @returns {boolean} - When this event handler returns `false`, jQuery will stop its
    * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
    */

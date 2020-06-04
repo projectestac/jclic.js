@@ -44,14 +44,14 @@ import { settings, roundTo } from '../Utils';
 export class ActiveBoxGrid extends ActiveBoxBag {
   /**
    * ActiveBxGrid constructor
-   * @param {?AbstractBox} parent - The AbstractBox to which this box grid belongs
-   * @param {?AWT.Container} container - The container where this box grid is placed.
-   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   * @param {module:boxes/AbstractBox.AbstractBox} parent - The AbstractBox to which this box grid belongs
+   * @param {module:AWT.Container} container - The container where this box grid is placed.
+   * @param {module:boxes/BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * @param {number} px - `X` coordinate of the upper left corner of this box grid
    * @param {number} py - `Y` coordinate of the upper left corner of this box grid
    * @param {number} setWidth - Total width of the box grid
    * @param {number} setHeight - Total height of the box grid
-   * @param {Shaper} sh - Shaper used to build the ActiveBox objects
+   * @param {module:shapers/Shaper.Shaper} sh - Shaper used to build the ActiveBox objects
    */
   constructor(parent, container, boxBase, px, py, setWidth, setHeight, sh) {
     // ActiveBoxGrid derives from ActiveBoxBag
@@ -92,15 +92,15 @@ export class ActiveBoxGrid extends ActiveBoxBag {
   /**
    * This factory constructor creates a new empty grid with the number of cells indicated by the
    * {@link module:boxes/ActiveBagContent.ActiveBagContent ActiveBagContent} `abc`, not filling the cells with any content.
-   * @param {?AbstractBox} parent - The AbstractBox to which this box grid belongs
-   * @param {?AWT.Container} container - The container where this box grid is placed.
+   * @param {module:boxes/AbstractBox.AbstractBox} parent - The AbstractBox to which this box grid belongs
+   * @param {module:AWT.Container} container - The container where this box grid is placed.
    * @param {number} px - `X` coordinate of the upper left corner of this box grid
    * @param {number} py - `Y` coordinate of the upper left corner of this box grid
-   * @param {ActiveBagContent} abc - Used only to get the number of cells and the shaper (when `sh` is `null`)
-   * @param {?Shaper} sh - Shaper used to build the ActiveBox objects
-   * @param {?BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   * @param {module:boxes/ActiveBagContent.ActiveBagContent} abc - Used only to get the number of cells and the shaper (when `sh` is `null`)
+   * @param {module:shapers/Shaper.Shaper} sh - Shaper used to build the ActiveBox objects
+   * @param {module:boxes/BoxBase.BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * of this box grid are defined.
-   * @returns {ActiveBoxGrid}
+   * @returns {module:boxes/ActiveBoxGrid.ActiveBoxGrid}
    */
   static createEmptyGrid(parent, container, px, py, abc, sh, boxBase) {
     const result = abc ? new ActiveBoxGrid(parent, container,
@@ -140,7 +140,7 @@ export class ActiveBoxGrid extends ActiveBoxBag {
    * Returns the logical coordinates of the provided {@link module:boxes/ActiveBox.ActiveBox ActiveBox}.
    * The units of the result are not pixels, but ordinal numbers (relative positions) of columns
    * and rows in the grid.
-   * @param {ActiveBox} bx - The box to process
+   * @param {module:boxes/ActiveBox.ActiveBox} bx - The box to process
    * @returns {module:AWT.Point}
    */
   getCoord(bx) {
@@ -151,8 +151,8 @@ export class ActiveBoxGrid extends ActiveBoxBag {
    * Calculates the logical distance between two {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects.
    * Resulting units are not pixels, but ordinal numbers (relative positions) of columns and rows
    * in the grid.
-   * @param {ActiveBox} src - First box
-   * @param {ActiveBox} dest - Second box
+   * @param {module:boxes/ActiveBox.ActiveBox} src - First box
+   * @param {module:boxes/ActiveBox.ActiveBox} dest - Second box
    * @returns {module:AWT.Point}
    */
   getCoordDist(src, dest) {

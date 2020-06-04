@@ -48,7 +48,7 @@ const defaultValues = settings.BoxBase;
 export class BoxBase {
   /**
    * BoxBase constructor
-   * @param {BoxBase} [parent] - Another BoxBase object used to determine the value of properties not
+   * @param {module:boxes/BoxBase.BoxBase} [parent] - Another BoxBase object used to determine the value of properties not
    * locally set.
    */
   constructor(parent) {
@@ -162,7 +162,7 @@ export class BoxBase {
   /**
    * Sets the value of a specific property.
    * @param {string} property - The property name.
-   * @param {*} value - Depends on the type of property
+   * @param {any} value - Depends on the type of property
    */
   set(property, value) {
     this[property] = value;

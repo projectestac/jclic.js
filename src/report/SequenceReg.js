@@ -38,7 +38,7 @@ import ActivityReg from './ActivityReg';
 export class SequenceReg {
   /**
    * SequenceReg constructor
-   * @param {ActivitySequenceElement} ase - The {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} related to this sequence.
+   * @param {module:bags/ActivitySequenceElement.ActivitySequenceElement} ase - The {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} related to this sequence.
    */
   constructor(ase) {
     this.name = ase.tag;
@@ -52,7 +52,7 @@ export class SequenceReg {
 
   /**
    * Builds a complex object with data about the results of the activities done in this sequence
-   * @returns {Object} - The sequence results
+   * @returns {object} - The sequence results
    */
   getData() {
     const result = {
@@ -85,7 +85,7 @@ export class SequenceReg {
 
   /**
    * This method should be invoked when the user starts a new activity
-   * @param {Activity} act - The {@link module:Activity.Activity Activity} that has just started
+   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} that has just started
    */
   newActivity(act) {
     if (!this.closed) {
@@ -168,7 +168,7 @@ Object.assign(SequenceReg.prototype, {
 export class SequenceRegInfo {
   /**
    * SequenceRegInfo constructor
-   * @param {SequenceReg} sqReg - The {@link module:report/SequenceReg.SequenceReg SequenceReg} associated tho this `Info` object.
+   * @param {module:report/SequenceReg.SequenceReg} sqReg - The {@link module:report/SequenceReg.SequenceReg SequenceReg} associated tho this `Info` object.
    */
   constructor(sqReg) {
     this.sqReg = sqReg;

@@ -44,7 +44,7 @@ import { nSlash } from '../Utils';
 export class ActivitySequence {
   /**
    * ActivitySequence constructor
-   * @param {JClicProject} project - The JClic project to which this ActivitySequence belongs
+   * @param {module:project/JClicProject.JClicProject} project - The JClic project to which this ActivitySequence belongs
    */
   constructor(project) {
     this.project = project;
@@ -81,7 +81,7 @@ export class ActivitySequence {
 
   /**
    * Returns the index of the specified element in the sequence.
-   * @param {ActivitySequenceElement} ase - The element to search.
+   * @param {module:bags/ActivitySequenceElement.ActivitySequenceElement} ase - The element to search.
    * @returns {number} - The requested index, or `null` if not found.
    */
   getElementIndex(ase) {
@@ -206,7 +206,7 @@ export class ActivitySequence {
    * Computes the jump to perform from the current position on the sequence
    * @param {boolean} back - When `true`, the request is for the 'go back' button. Otherwise, is
    * for the 'next' one.
-   * @param {Reporter} reporter - The reporting engine that will provide values about score average
+   * @param {module:report/Reporter.Reporter} reporter - The reporting engine that will provide values about score average
    * and time spend on the activities, used only to compute conditional jumps.
    * @returns {JumpInfo} - The jump info if a valid jump is possible, `null` otherwise.
    */

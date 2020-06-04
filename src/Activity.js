@@ -57,7 +57,7 @@ const TOUCH_TEST_EVENT = 'touchstart';
 export class Activity {
   /**
    * Activity constructor
-   * @param {JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
+   * @param {module:project/JClicProject.JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     this.project = project;
@@ -70,7 +70,7 @@ export class Activity {
    * Registers a new type of activity
    * @param {string} activityName - The name used to identify this activity
    * @param {function} activityClass - The activity class, usually extending Activity
-   * @returns {Activity} - The provided activity class
+   * @returns {module:Activity.Activity} - The provided activity class
    */
   static registerClass(activityName, activityClass) {
     Activity.CLASSES[activityName] = activityClass;
@@ -81,8 +81,8 @@ export class Activity {
    * Factory constructor that returns a specific type of Activity based on the `class` attribute
    * declared in `data`.
    * @param {object|external:jQuery} data - Can be a jQuery XML element, or an object obtained with a call to `getAttributes`
-   * @param {JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
-   * @returns {Activity}
+   * @param {module:project/JClicProject.JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
+   * @returns {module:Activity.Activity}
    */
   static getActivity(data, project) {
     let act = null;
@@ -352,7 +352,7 @@ export class Activity {
   /**
    * Read an activity message from an XML element
    * @param {external:jQuery} $xml - The XML element to be parsed
-   * @returns {ActiveBoxContent}
+   * @returns {module:boxes/ActiveBoxContent.ActiveBoxContent}
    */
   readMessage($xml) {
     const msg = new ActiveBoxContent().setProperties($xml, this.project.mediaBag);
@@ -459,7 +459,7 @@ export class Activity {
 
   /**
    * Preloads the media content of the activity.
-   * @param {PlayStation} ps - The {@link module:JClicPlayer.JClicPlayer} used to realize the media objects.
+   * @param {module:JClicPlayer.JClicPlayer} ps - The {@link module:JClicPlayer.JClicPlayer} used to realize the media objects.
    */
   prepareMedia(ps) {
     this.eventSounds.realize(ps, this.project.mediaBag);
@@ -582,8 +582,8 @@ export class Activity {
   /**
    * Builds the {@link module:Activity.ActivityPanel ActivityPanel} object.
    * Subclasses must update the `Panel` member of its prototypes to produce specific panels.
-   * @param {PlayStation} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to build media objects.
-   * @returns {ActivityPanel}
+   * @param {module:JClicPlayer.JClicPlayer} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to build media objects.
+   * @returns {module:Activity.ActivityPanel}
    */
   getActivityPanel(ps) {
     return new this.constructor.Panel(this, ps);
@@ -869,8 +869,8 @@ Object.assign(Activity.prototype, {
 export class ActivityPanel extends Container {
   /**
    * ActivityPanel constructor
-   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
+   * @param {module:JClicPlayer.JClicPlayer} ps - Any object implementing the methods defined in the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation}
    * Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
@@ -1050,7 +1050,7 @@ export class ActivityPanel extends Container {
 
   /**
    * Main handler used to process mouse, touch, keyboard and edit events.
-   * @param {HTMLEvent} event - The HTML event to be processed
+   * @param {external:Event} event - The HTML event to be processed
    * @returns {boolean} - When this event handler returns `false`, jQuery will stop its
    * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
    */
@@ -1192,7 +1192,7 @@ export class ActivityPanel extends Container {
 
   /**
    * Shuffles the contents of the activity
-   * @param {ActiveBoxBag[]} bg - The sets of boxes to be shuffled
+   * @param {module:boxes/ActiveBoxBag.ActiveBoxBag[]} bg - The sets of boxes to be shuffled
    * @param {boolean} visible - The shuffle process must be animated on the screen (not yet implemented!)
    * @param {boolean} fitInArea - Shuffled pieces cannot go out of the current area
    */

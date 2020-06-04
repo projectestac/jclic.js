@@ -46,9 +46,9 @@ export class ActiveMediaBag {
 
   /**
    * Creates a new {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} linked to this media bag
-   * @param {MediaContent} mc - The content used by the new player
-   * @param {MediaBag} mb - The project's MediaBag
-   * @param {PlayStation} ps - An object implementing the
+   * @param {module:media/MediaContent.MediaContent} mc - The content used by the new player
+   * @param {module:bags/MediaBag.MediaBag} mb - The project's MediaBag
+   * @param {module:JClicPlayer.JClicPlayer} ps - An object implementing the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) interface,
    * usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}.
    * @returns {ActiveMediaPlayer}
@@ -78,9 +78,9 @@ export class ActiveMediaBag {
   /**
    * Looks for an already existing {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} equivalent to the requested.
    * When not found, a new one is created and and returned.
-   * @param {MediaContent} mc - The content used by the new player
-   * @param {MediaBag} mb - The project's MediaBag
-   * @param {PlayStation} ps - An object implementing the
+   * @param {module:media/MediaContent.MediaContent} mc - The content used by the new player
+   * @param {module:bags/MediaBag.MediaBag} mb - The project's MediaBag
+   * @param {module:JClicPlayer.JClicPlayer} ps - An object implementing the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html|PlayStation} interface,
    * usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}.
    * @returns {ActiveMediaPlayer}
@@ -92,7 +92,7 @@ export class ActiveMediaBag {
 
   /**
    * Removes from the list of players the {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} related to the specified {@link module:media/MediaContent.MediaContent}.
-   * @param {MediaContent} mc - The media content to look for.
+   * @param {module:media/MediaContent.MediaContent} mc - The media content to look for.
    */
   removeActiveMediaPlayer(mc) {
     const i = this.players.findIndex(p => p.mc === mc);

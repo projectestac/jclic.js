@@ -43,7 +43,7 @@ export class SCORM {
   /**
    * SCORM constructor
    * @param {object} API - The global SCORM API object
-   * @param {Reporter} reporter - The {@link module:Reporter.Reporter Reporter} associated to this SCORM object
+   * @param {module:report/Reporter.Reporter} reporter - The {@link module:Reporter.Reporter Reporter} associated to this SCORM object
    */
   constructor(API, reporter) {
     this.API = API;
@@ -78,7 +78,7 @@ export class SCORM {
   /**
    * Checks for the presence of a SCORM API on the current browser session.
    * @returns {SCORM} - A valid SCORM object, or `null` if no SCORM API was found.
-   * @param {Reporter} reporter - The {@link module:Reporter.Reporter Reporter} linked to the requested SCORM object
+   * @param {module:report/Reporter.Reporter} reporter - The {@link module:Reporter.Reporter Reporter} linked to the requested SCORM object
    */
   static getSCORM(reporter) {
     let result = null;
@@ -101,7 +101,7 @@ export class SCORM {
 
   /**
    * Initializes communication with the SCORM API
-   * @returns {Boolean}
+   * @returns {boolean}
    */
   initialize() {
     let result = false;
@@ -127,7 +127,7 @@ export class SCORM {
 
   /**
    * Terminates communication with the SCORM API
-   * @returns {Boolean}
+   * @returns {boolean}
    */
   terminate() {
     let result = false;
@@ -156,7 +156,7 @@ export class SCORM {
 
   /**
    * Commits current pending data to the SCORM API
-   * @returns {Boolean}
+   * @returns {boolean}
    */
   commit() {
     let result = false;
@@ -170,7 +170,7 @@ export class SCORM {
 
   /**
    * Sends a specific value to the SCORM API
-   * @param {tring} key - A SCORM valid key
+   * @param {string} key - A SCORM valid key
    * @param {string|number} value - The value associated with this key
    * @returns {string}
    */
@@ -186,7 +186,7 @@ export class SCORM {
 
   /**
    * Gets a specific value from the SCORM API
-   * @param {tring} key - A SCORM valid key
+   * @param {string} key - A SCORM valid key
    * @returns {string} - The value associated with the provided key, or `null` if not found
    */
   getValue(key) {
@@ -202,8 +202,8 @@ export class SCORM {
   /**
    * Gets a string expression of the given time (in milliseconds) suitable for a SCORM transaction.
    * @see {@link http://www.ostyn.com/standards/scorm/samples/ISOTimeForSCORM.htm}
-   * @param {type} millis - The amount of time, in milliseconds
-   * @returns {String} - An ISO8601 valid expression
+   * @param {number} millis - The amount of time, in milliseconds
+   * @returns {string} - An ISO8601 valid expression
    */
   getTimeExpression(millis) {
     const

@@ -74,7 +74,7 @@ export class AudioBuffer {
 
   /**
    * Starts recording audio, or stops the recording if already started.
-   * @param {jQuery} [$div] - Optional `div` element where the recording is performed, as a jQuery ref.
+   * @param {external:jQuery} [$div] - Optional `div` element where the recording is performed, as a jQuery ref.
    */
   record($div) {
     if (this.mediaRecorder && this.mediaRecorder.state === 'recording')
@@ -147,7 +147,7 @@ export class AudioBuffer {
    * Currently changes the cursor pointer associated to the HTML element
    * containing the recorder.
    * @param {boolean} enabled - Flag indicating if the visual feedback should be active or inactive
-   * @param {jQuery} [$div] - Optional `div` element where the recording is performed, as a jQuery ref.
+   * @param {external:jQuery} [$div] - Optional `div` element where the recording is performed, as a jQuery ref.
    */
   visualFeedbak(enabled, $div) {
     if ($div)

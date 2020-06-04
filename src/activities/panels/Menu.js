@@ -42,7 +42,7 @@ import { log } from '../../Utils';
 export class Menu extends Activity {
   /**
    * Menu constructor
-   * @param {JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
+   * @param {module:project/JClicProject.JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -60,8 +60,8 @@ export class Menu extends Activity {
 export class MenuPanel extends ActivityPanel {
   /**
    * MenuPanel constructor
-   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
+   * @param {module:JClicPlayer.JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */

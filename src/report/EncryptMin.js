@@ -58,7 +58,7 @@ export class Encryption {
 
   /**
    * @param {string} cA (was char[])
-   * @param {integer} fromIndex
+   * @param {number} fromIndex
    * @returns {string} (was char)
    */
   static hexCharArrayToChar(cA, fromIndex) {

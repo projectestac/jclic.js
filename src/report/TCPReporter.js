@@ -45,7 +45,7 @@ import { log, startsWith, getMsg } from '../Utils';
 export class TCPReporter extends Reporter {
   /**
    * TCPReporter constructor
-   * @param {PlayStation} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve settings and localized messages
+   * @param {module:JClicPlayer.JClicPlayer} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve settings and localized messages
    */
   constructor(ps) {
     super(ps);
@@ -67,7 +67,7 @@ export class TCPReporter extends Reporter {
 
   /**
    * Adds a new element to the list of report beans pending to be transmitted.
-   * @param {ReportBean} bean
+   * @param {module:report/TCPReporter.ReportBean} bean
    */
   addTask(bean) {
     if (this.processingTasks) {
@@ -81,7 +81,7 @@ export class TCPReporter extends Reporter {
 
   /**
    * Transmits all report beans currently stored in `tasks` to the reports server
-   * @returns {Promise}
+   * @returns {external:Promise}
    */
   flushTasksPromise() {
     if (this.processingTasks || this.currentSessionId === null ||
@@ -144,8 +144,8 @@ export class TCPReporter extends Reporter {
    * Initializes this report system with an optional set of parameters.
    * Returns a Promise, fulfilled when the reporter is fully initialized.
    * @override
-   * @param {?Object} options - Initial settings passed to the reporting system
-   * @returns {Promise}
+   * @param {object} [options] - Initial settings passed to the reporting system
+   * @returns {external:Promise}
    */
   init(options) {
     if (typeof options === 'undefined' || options === null)
@@ -205,7 +205,7 @@ export class TCPReporter extends Reporter {
   /**
    * This method should be invoked when a new session starts.
    * @override
-   * @param {JClicProject} jcp - The {@link module:project/JClicProject.JClicProject JClicProject} this session refers to.
+   * @param {module:project/JClicProject.JClicProject} jcp - The {@link module:project/JClicProject.JClicProject JClicProject} this session refers to.
    */
   newSession(jcp) {
     super.newSession(jcp);
@@ -218,7 +218,7 @@ export class TCPReporter extends Reporter {
   /**
    * Creates a new session in the remote database and records its ID for future use
    * @param {boolean} forceNewSession - When `true`, a new session will always be created.
-   * @returns {Promise} - A Promise reporter will be successfully resolved
+   * @returns {external:Promise} - A Promise reporter will be successfully resolved
    * only when `currentSessionId` have a valid value.
    */
   createDBSession(forceNewSession) {
@@ -259,7 +259,7 @@ export class TCPReporter extends Reporter {
   /**
    * Closes this reporting system
    * @override
-   * @returns {Promise} - A promise to be fullfilled when all pending tasks are finished, or _null_ if not active.
+   * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished, or _null_ if not active.
    */
   end() {
     this.reportActivity(true);
@@ -289,7 +289,7 @@ export class TCPReporter extends Reporter {
   /**
    * Gets the list of current groups or organizations registered on this reporting system.
    * @override
-   * @returns {Promise} - When fulfilled, an array of group data is returned as a result
+   * @returns {external:Promise} - When fulfilled, an array of group data is returned as a result
    */
   getGroups() {
     return new Promise((resolve, reject) => {
@@ -318,7 +318,7 @@ export class TCPReporter extends Reporter {
    * a specific group ID.
    * @override
    * @param {string}+ groupId - Optional group ID to be used as a filter criteria
-   * @returns {Promise} - When fulfilled, an object with a collection of user data records
+   * @returns {external:Promise} - When fulfilled, an object with a collection of user data records
    * is returned
    */
   getUsers(groupId) {
@@ -351,7 +351,7 @@ export class TCPReporter extends Reporter {
   /**
    * Gets extended data associated with a specific user.
    * @param {string} userId - The requested user ID
-   * @returns {Promise} - When fulfilled, an object with user data is returned.
+   * @returns {external:Promise} - When fulfilled, an object with user data is returned.
    */
   getUserData(userId) {
     return new Promise((resolve, reject) => {
@@ -388,7 +388,7 @@ export class TCPReporter extends Reporter {
   /**
    * Stops the reporting system, usually as a result of repeated errors or because the player
    * shuts down.
-   * @returns {Promise} - A promise to be fullfilled when all pending tasks are finished.
+   * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished.
    */
   stopReporting() {
     let result = null;
@@ -443,7 +443,7 @@ export class TCPReporter extends Reporter {
   /**
    * This method should be invoked when the user starts a new activity
    * @override
-   * @param {Activity} act - The {@link module:Activity.Activity Activity} reporter has just started
+   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} reporter has just started
    */
   newActivity(act) {
     super.newActivity(act);

@@ -43,7 +43,7 @@ import { Point } from '../../AWT';
 export class OrderText extends TextActivityBase {
   /**
    * OrderText constructor
-   * @param {JClicProject} project - The project to which this activity belongs
+   * @param {module:project/JClicProject.JClicProject} project - The project to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -97,8 +97,8 @@ Object.assign(OrderText.prototype, {
 export class OrderTextPanel extends TextActivityBasePanel {
   /**
    * OrderTextPanel constructor
-   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
+   * @param {module:JClicPlayer.JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
@@ -147,7 +147,7 @@ export class OrderTextPanel extends TextActivityBasePanel {
   /**
    * Creates a target DOM element for the provided target.
    * @override
-   * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
+   * @param {module:activities/text/TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
    * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
    * to store the target, or replaced by another type of object.
    * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
@@ -165,8 +165,8 @@ export class OrderTextPanel extends TextActivityBasePanel {
 
   /**
    * Swaps the position of two targets in the document
-   * @param {TextActivityDocument.TextTarget} t1 - One target
-   * @param {TextActivityDocument.TextTarget} t2 - Another target
+   * @param {module:activities/text/TextActivityDocument.TextTarget} t1 - One target
+   * @param {module:activities/text/TextActivityDocument.TextTarget} t2 - Another target
    */
   swapTargets(t1, t2) {
     const
@@ -237,7 +237,7 @@ export class OrderTextPanel extends TextActivityBasePanel {
 
   /**
    * Randomly shuffles a set of targets
-   * @param {TextActivityDocument.TextTarget[]} targets - The set of targets to shuffle (can be all
+   * @param {module:activities/text/TextActivityDocument.TextTarget[]} targets - The set of targets to shuffle (can be all
    * document targets or just the targets belonging to the same paragraph, depending on the value of
    * `amongParagraphs` in {@link module:Activity.Activity Activity}.
    * @param {number} steps - The number of times to shuffle the elements
@@ -262,7 +262,7 @@ export class OrderTextPanel extends TextActivityBasePanel {
 
   /**
    * Sets the current target
-   * @param {TextActivityDocument.TextTarget} target - The currently selected target. Can be `null`.
+   * @param {module:activities/text/TextActivityDocument.TextTarget} target - The currently selected target. Can be `null`.
    */
   setCurrentTarget(target) {
     const targetCss = this.act.document.getFullStyle('target').css;
@@ -326,7 +326,7 @@ export class OrderTextPanel extends TextActivityBasePanel {
   /**
    * Main handler used to process mouse, touch, keyboard and edit events.
    * @override
-   * @param {HTMLEvent} event - The HTML event to be processed
+   * @param {external:Event} event - The HTML event to be processed
    * @returns {boolean} - When this event handler returns `false`, jQuery will stop its
    * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
    */

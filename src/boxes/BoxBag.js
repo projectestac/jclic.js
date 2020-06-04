@@ -42,9 +42,9 @@ import { settings } from '../Utils';
 export class BoxBag extends AbstractBox {
   /**
    * BoxBag constructor
-   * @param {AbstractBox} [parent] - The AbstractBox to which this box bag belongs
+   * @param {module:boxes/AbstractBox.AbstractBox} [parent] - The AbstractBox to which this box bag belongs
    * @param {module:AWT.Container} [container] - The container where this box bag is placed.
-   * @param {BoxBase} [boxBase] - The object where colors, fonts, border and other graphic properties
+   * @param {module:boxes/BoxBase.BoxBase} [boxBase] - The object where colors, fonts, border and other graphic properties
    */
   constructor(parent, container, boxBase) {
     // BoxBag extends AbstractBox
@@ -254,7 +254,7 @@ export class BoxBag extends AbstractBox {
 
   /**
    * Adds an {@link module:boxes/AbstractBox.AbstractBox AbstractBox} to the collection of cells
-   * @param {AbstractBox} bx - The box to add
+   * @param {module:boxes/AbstractBox.AbstractBox} bx - The box to add
    */
   addBox(bx) {
     this.cells.push(bx);
@@ -270,7 +270,7 @@ export class BoxBag extends AbstractBox {
 
   /**
    * Returns the index of a specific box in the `cells` array
-   * @param {AbstractBox} bx
+   * @param {module:boxes/AbstractBox.AbstractBox} bx
    * @returns {number}
    */
   boxIndex(bx) {
@@ -296,7 +296,7 @@ export class BoxBag extends AbstractBox {
 
   /**
    * Sets the background box
-   * @param {AbstractBox} bx
+   * @param {module:boxes/AbstractBox.AbstractBox} bx
    */
   setBackgroundBox(bx) {
     this.backgroundBox = bx;
@@ -342,7 +342,7 @@ export class BoxBag extends AbstractBox {
   /**
    * Sets the specified key - value pair to all cells of this bag.
    * @param {string} key - The key to be established
-   * @param {} value - The value, of any type
+   * @param {any} value - The value, of any type
    */
   setCellAttr(key, value) {
     this.cells.forEach(bx => bx[key] = value);

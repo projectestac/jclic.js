@@ -44,7 +44,7 @@ import Reporter from './Reporter';
 export class SessionStorageReporter extends Reporter {
   /**
    * SessionStorageReporter constructor
-   * @param {PlayStation} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve settings and localized messages
+   * @param {module:JClicPlayer.JClicPlayer} ps - The {@link module:JClicPlayer.JClicPlayer JClicPlayer} used to retrieve settings and localized messages
    */
   constructor(ps) {
     super(ps);
@@ -55,8 +55,8 @@ export class SessionStorageReporter extends Reporter {
    * Initializes this report system with an optional set of parameters.
    * Returns a Promise, fulfilled when the reporter is fully initialized.
    * @override
-   * @param {?Object} options - Initial settings passed to the reporting system
-   * @returns {Promise}
+   * @param {object} [options] - Initial settings passed to the reporting system
+   * @returns {external:Promise}
    */
   init(options) {
     if (typeof options === 'undefined' || options === null)

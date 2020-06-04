@@ -47,7 +47,7 @@ import { getTriState, getAttr, setAttr, DEFAULT } from '../Utils';
 export class EventSounds {
   /**
    * EventSounds constructor
-   * @param {EventSounds} [parent] - Another EventSounds object that will act as a parent of this one,
+   * @param {module:media/EventSounds.EventSounds} [parent] - Another EventSounds object that will act as a parent of this one,
    * used to resolve which sound must be played for events when not defined here.
    */
   constructor(parent) {
@@ -98,8 +98,8 @@ export class EventSounds {
 
   /**
    * Instantiates the audio objects needed to play event sounds
-   * @param {PlayStation} ps
-   * @param {MediaBag} mediaBag
+   * @param {module:JClicPlayer.JClicPlayer} ps
+   * @param {module:bags/MediaBag.MediaBag} mediaBag
    */
   realize(ps, mediaBag) {
     // Values are {EventSoundElement} objects

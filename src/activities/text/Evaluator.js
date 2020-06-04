@@ -139,7 +139,7 @@ export class Evaluator {
   /**
    * Checks the given text against a set of valid matches
    * @param {string} text - The text to be checked
-   * @param {(string|string[])} match - The valid expression or expressions with which to compare.
+   * @param {string|string[]} match - The valid expression or expressions with which to compare.
    * @returns {boolean} - `true` if the checked expression is valid, `false` otherwise.
    */
   checkText(text, match) {
@@ -166,7 +166,7 @@ export class Evaluator {
    * Evaluates the given text against a set of valid matches, returning an array of flags useful
    * to indicate where the mistakes are located.
    * @param {string} text - The text to be checked
-   * @param {(string|string[])} match - The valid expression or expressions with which to compare.
+   * @param {string|string[]} match - The valid expression or expressions with which to compare.
    * @returns {number[]} - An array of flags (one number for character) indicating whether each
    * position is erroneous or ok.
    */

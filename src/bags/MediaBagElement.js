@@ -211,7 +211,7 @@ export class MediaBagElement {
   /**
    * Instantiates the media content
    * @param {function} callback - Callback method called when the referred resource is ready
-   * @param {PlayStation} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to dynamically load fonts
+   * @param {module:JClicPlayer.JClicPlayer} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to dynamically load fonts
    */
   build(callback, ps) {
     if (callback) {
@@ -313,7 +313,7 @@ export class MediaBagElement {
 
   /**
    * Checks if this media element is ready to start
-   * @returns {Boolean} - `true` if ready, `false` otherwise
+   * @returns {boolean} - `true` if ready, `false` otherwise
    */
   checkReady() {
     if (this.data && !this.ready) {
@@ -335,7 +335,7 @@ export class MediaBagElement {
 
   /**
    * Checks if this resource has timed out.
-   * @returns {Boolean} - `true` if the resource has exhausted the allowed time to load, `false` otherwise
+   * @returns {boolean} - `true` if the resource has exhausted the allowed time to load, `false` otherwise
    */
   checkTimeout() {
     const result = Date.now() > this.timeout;
@@ -366,7 +366,7 @@ export class MediaBagElement {
 
   /**
    * Gets a promise with the full path of the file associated to this element.
-   * @returns {Promise}
+   * @returns {external:Promise}
    */
   getFullPathPromise() {
     return new Promise((resolve, reject) => {

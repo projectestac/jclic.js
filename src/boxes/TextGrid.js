@@ -67,9 +67,9 @@ export const flags = {
 export class TextGrid extends AbstractBox {
   /**
    * TextGrid constructor
-   * @param {AbstractBox} parent - The AbstractBox to which this text grid belongs
+   * @param {module:boxes/AbstractBox.AbstractBox} parent - The AbstractBox to which this text grid belongs
    * @param {module:AWT.Container} container - The container where this text grid is placed.
-   * @param {BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
+   * @param {module:boxes/BoxBase.BoxBase} boxBase - The object where colors, fonts, border and other graphic properties
    * @param {number} x - `X` coordinate of the upper left corner of this grid
    * @param {number} y - `Y` coordinate of the upper left corner of this grid
    * @param {number} ncw - Number of columns of the grid
@@ -101,13 +101,13 @@ export class TextGrid extends AbstractBox {
 
   /**
    * Factory constructor that creates an empty grid based on a {@link module:boxes/TextGridContent.TextGridContent TextGridContent}
-   * @param {AbstractBox} parent - The AbstractBox to which the text grid belongs
+   * @param {module:boxes/AbstractBox.AbstractBox} parent - The AbstractBox to which the text grid belongs
    * @param {module:AWT.Container} container - The container where the text grid will be placed.
    * @param {number} x - `X` coordinate of the upper left corner of the grid
    * @param {number} y - `Y` coordinate of the upper left corner of the grid
-   * @param {TextGridContent} tgc - Object with the content and other settings of the grid
+   * @param {module:boxes/TextGridContent.TextGridContent} tgc - Object with the content and other settings of the grid
    * @param {boolean} wildTransparent - When `true`, the wildcard character will be transparent
-   * @returns {TextGrid}
+   * @returns {module:boxes/TextGrid.TextGrid}
    */
   static createEmptyGrid(parent, container, x, y, tgc, wildTransparent) {
     const result = new TextGrid(parent, container, tgc.style,
@@ -202,8 +202,8 @@ export class TextGrid extends AbstractBox {
    * {@link module:activities/textGrid/CrossWord.CrossWord CrossWord} activities to find the definition for a specific cell.
    *
    * The result is returned as 'x' and 'y' properties of a logical point.
-   * @param {type} rx - The 'X' position of the cell
-   * @param {type} ry - The 'Y' position of the cell
+   * @param {number} rx - The 'X' position of the cell
+   * @param {number} ry - The 'Y' position of the cell
    * @returns {module:AWT.Point} - The logical positions of the definition for this cell inside the list
    * of current definitions of its row and column. '0' means first definition of its row/column,
    * '1' the second one, etc.
@@ -675,7 +675,7 @@ export class TextGrid extends AbstractBox {
   /**
    * Overrides {@link module:boxes/AbstractBox.AbstractBox#setBounds}
    * @override
-   * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
+   * @param {AWT.Rectangle|number} rect - An AWT.Rectangle object, or the `x` coordinate of the
    * upper-left corner of a new rectangle.
    * @param {number} [y] - `y` coordinate of the upper-left corner of the new rectangle.
    * @param {number} [w] - Width of the new rectangle.

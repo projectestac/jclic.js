@@ -53,7 +53,7 @@ export class TextActivityDocument {
   /**
    * Loads the document settings from a specific JQuery XML element
    * @param {external:jQuery} $xml - The XML element to parse
-   * @param {MediaBag} mediaBag - The media bag used to load images and media content
+   * @param {module:bags/MediaBag.MediaBag} mediaBag - The media bag used to load images and media content
    */
   setProperties($xml, mediaBag) {
     // Read named styles
@@ -246,7 +246,7 @@ export class TextActivityDocument {
 
   /**
    * Gets the full text of this document in raw format
-   * @returns {String} - The text of the document.
+   * @returns {string} - The text of the document.
    */
   getRawText() {
     const $html = $('<div/>');
@@ -284,7 +284,7 @@ export class TextActivityDocument {
    * Gets a `style` object filled with default attributes plus attributes present in the
    * requested style name.
    * @param {string} name - The requested style name
-   * @returns {Object} - The result of combining `default` with the requested style
+   * @returns {object} - The result of combining `default` with the requested style
    */
   getFullStyle(name) {
     const st = $.extend(true, {}, this.style.default);
@@ -339,7 +339,7 @@ Object.assign(TextActivityDocument.prototype, {
 export class TextTarget {
   /**
    * TextTarget constructor
-   * @param {TextActivityDocument} doc - The document to which this target belongs.
+   * @param {module:activities/text/TextActivityDocument.TextActivityDocument} doc - The document to which this target belongs.
    * @param {string} text - Main text of this target.
    */
   constructor(doc, text = '') {
@@ -362,7 +362,7 @@ export class TextTarget {
   /**
    * Loads the text target settings from a specific JQuery XML element
    * @param {external:jQuery} $xml - The XML element to parse
-   * @param {MediaBag} mediaBag - The media bag used to load images and media content
+   * @param {module:bags/MediaBag.MediaBag} mediaBag - The media bag used to load images and media content
    */
   setProperties($xml, mediaBag) {
     let firstAnswer = true;
@@ -480,7 +480,7 @@ export class TextTarget {
 
   /**
    * Fills the `currentText` member with the text currently hosted in $span or selected in $comboList
-   * @returns {String} - The current text of this target
+   * @returns {string} - The current text of this target
    */
   readCurrentText() {
     if (this.$span)

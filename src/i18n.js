@@ -81,7 +81,7 @@ export function checkPreferredLanguage(availableLanguages, defaultLanguage = 'en
 
 /**
  * Initializes i18next, assigning the translation function to {@link module:Utils.getMsg Utils.getMsg}
- * @param {type} ps
+ * @param {module:JClicPlayer.JClicPlayer} ps
  */
 export function i18n(ps) {
   i18next.init({

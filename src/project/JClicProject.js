@@ -62,9 +62,9 @@ export class JClicProject {
    * Loads the project settings from a main jQuery XML element
    * @param {external:jQuery} $xml - The XML element
    * @param {string} path - The full path of this project
-   * @param {?external:JSZip} zip - An optional JSZip object where this project is encapsulated
-   * @param {?object} options - An object with miscellaneous options
-   * @returns {JClicProject}
+   * @param {external:JSZip} [zip] - An optional JSZip object where this project is encapsulated
+   * @param {object} [options] - An object with miscellaneous options
+   * @returns {module:project/JClicProject.JClicProject}
    */
   setProperties($xml, path, zip, options) {
     if (path) {
@@ -136,8 +136,8 @@ export class JClicProject {
    * Loads the project settings from a data object
    * @param {object} data - The data object
    * @param {string} path - The full path of this project
-   * @param {?external:JSZip} zip - An optional JSZip object where this project is encapsulated
-   * @param {?object} options - An object with miscellaneous options
+   * @param {external:JSZip} [zip] - An optional JSZip object where this project is encapsulated
+   * @param {object} [options] - An object with miscellaneous options
    * @returns {JClicProject}
    */
   setAttributes(data, path, zip, options) {
@@ -175,7 +175,7 @@ export class JClicProject {
   /**
    * Finds activities by name and builds the corresponding {@link module:Activity.Activity Activity} object.
    * @param {string} name - The name of the requested activity
-   * @returns {Activity}
+   * @returns {module:Activity.Activity}
    */
   getActivity(name) {
     return Activity.getActivity(this._activities[nSlash(name)], this);
@@ -184,7 +184,7 @@ export class JClicProject {
   /**
    *
    * Builds the {@link module:skins/Skin.Skin Skin}, {@link module:media/EventSounds.EventSounds EventSounds} and {@link module:bags/MediaBag.MediaBag MediaBag} fonts associated to this project.
-   * @param {PlayStation} ps - The PlayStation (usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) linked to this project.
+   * @param {module:JClicPlayer.JClicPlayer} ps - The PlayStation (usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) linked to this project.
    */
   realize(ps) {
     // Build skin

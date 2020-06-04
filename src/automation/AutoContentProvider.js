@@ -89,7 +89,7 @@ export class AutoContentProvider {
   /**
    * Builds a new AutoContentProvider, based on the properties specified in a data object
    * @param {object} data - The data object to be parsed
-   * @param {array} params - Optional parameters to be passed to `setAttributes`
+   * @param {object[]} params - Optional parameters to be passed to `setAttributes`
    * @returns {Shaper}
    */
   static factory(data, params = []) {
@@ -108,9 +108,9 @@ export class AutoContentProvider {
    * Builds an {@link module:automation/AutoContentProvider/ActiveBagContentKit ActiveBagContentKit} and generates the automatized content.
    * @param {number} nRows - Number of rows to be processed
    * @param {number} nCols - Number of columns to be processed
-   * @param {ActiveBagContent[]} content - Array with one or more containers of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent}
+   * @param {module:boxes/ActiveBagContent.ActiveBagContent[]} content - Array with one or more containers of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent}
    * objects to be filled with new content.
-   * @param {bolean} useIds - When `true`, the `id` field of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects is significant
+   * @param {boolean} useIds - When `true`, the `id` field of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects is significant
    * @returns {boolean} - `true` if the process was OK. `false` otherwise.
    */
   generateContent(nRows, nCols, content, useIds) {
@@ -119,7 +119,7 @@ export class AutoContentProvider {
 
   /**
    * Generates the automatized content
-   * @param {AutoContentProvider.ActiveBagContentKit} _kit - The objects to be filled with content
+   * @param {module:automation/AutoContentProvider.ActiveBagContentKit} _kit - The objects to be filled with content
    * @returns {boolean} - `true` if the process was OK. `false` otherwise.
    */
   process(_kit) {
@@ -153,9 +153,9 @@ Object.assign(AutoContentProvider.prototype, {
  * Utility class used to encapsulate multiple sets of box contents
  * @param {number} nRows - Number of rows to be processed
  * @param {number} nCols - Number of columns to be processed
- * @param {ActiveBagContent[]} content - Array with one or more containers of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent}
+ * @param {module:boxes/ActiveBagContent.ActiveBagContent[]} content - Array with one or more containers of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent}
  * objects to be filled with new content.
- * @param {bolean} useIds - `true` when the `id` field of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects is significant.
+ * @param {boolean} useIds - `true` when the `id` field of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects is significant.
  */
 AutoContentProvider.ActiveBagContentKit = class {
   constructor(nRows, nCols, content, useIds) {

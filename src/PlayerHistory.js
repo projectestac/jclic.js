@@ -39,7 +39,7 @@ import { log, isEquivalent, getPath, isNullOrUndef } from './Utils';
 export class PlayerHistory {
   /**
    * PlayerHistory constructor
-   * @param {JClicPlayer} player - The JClicPlayer associated to this history
+   * @param {module:JClicPlayer.JClicPlayer} player - The JClicPlayer associated to this history
    */
   constructor(player) {
     this.player = player;
@@ -114,7 +114,7 @@ export class PlayerHistory {
    *
    * Processes the provided {@link module:bags/JumpInfo.JumpInfo JumpInfo} object, instructing {@link module:JClicPlayer.JClicPlayer JClicPlayer} to go back,
    * stop or jump to another point in the sequence.
-   * @param {JumpInfo} ji - The object to be processed
+   * @param {module:bags/JumpInfo.JumpInfo} ji - The object to be processed
    * @param {boolean} allowReturn - When this parameter is `true`, the jump instructed by `ji` (if any)
    * will be recorded, thus allowing to return to the current activity.
    * @returns {boolean} - `true` if the jump can be processed without errors, `false` otherwise.
@@ -163,13 +163,13 @@ export class PlayerHistory {
   /**
    * Performs a jump to the specified sequence
    * @param {string} sequence - The {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence} tag to jump to.
-   * @param {?string} path - When not `null`, indicates a new project file that must be loaded.
+   * @param {string} [path] - When not `null`, indicates a new project file that must be loaded.
    * Otherwise, the `sequence` parameter refers to a tag on the {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence} of the
    * current project.
-   * @param {boolean} allowReturn - When this parameter is `true`, the jump will be recorded, thus
+   * @param {boolean} [allowReturn] - When this parameter is `true`, the jump will be recorded, thus
    * allowing to return to the current activity.
    */
-  jumpToSequence(sequence, path, allowReturn) {
+  jumpToSequence(sequence, path = null, allowReturn = false) {
     if (isNullOrUndef(sequence) && isNullOrUndef(path))
       return false;
     if (isNullOrUndef(path))
@@ -221,9 +221,9 @@ Object.assign(PlayerHistory.prototype, {
     /**
      * HistoryElement constructor
      * @param {string} projectPath - The full path of the project file
-     * @param {?string} sequence - The nearest sequence tag
+     * @param {string} sequence - The nearest sequence tag
      * @param {number} activity - The index of the current activity on the project's {@link module:bags/ActivitySequence.ActivitySequence ActivitySequence}
-     * @param {?type} fullZipPath - If `projectPath` resides in a {@link external:JSZip JSZip} object,
+     * @param {string} fullZipPath - If `projectPath` resides in a {@link external:JSZip JSZip} object,
      * the full path of the zip file.
      */
     constructor(projectPath, sequence, activity, fullZipPath) {

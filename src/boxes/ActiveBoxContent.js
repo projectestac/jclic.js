@@ -98,7 +98,7 @@ export class ActiveBoxContent {
    *
    * Loads settings from a specific JQuery XML element
    * @param {external:jQuery} $xml - The XML element to be parsed
-   * @param {MediaBag} mediaBag - The media bag used to retrieve images and other media
+   * @param {module:bags/MediaBag.MediaBag} mediaBag - The media bag used to retrieve images and other media
    */
   setProperties($xml, mediaBag) {
     //
@@ -185,8 +185,8 @@ export class ActiveBoxContent {
   /**
    * Reads the properties of this ActiveBoxContent from a data object
    * @param {object|string} data - The data object to be parsed, or just the text content
-   * @param {MediaBag} mediaBag - The media bag used to retrieve images and other media
-   * @returns {ActiveBoxContent}
+   * @param {module:bags/MediaBag.MediaBag} mediaBag - The media bag used to retrieve images and other media
+   * @returns {module:boxes/ActiveBoxContent.ActiveBoxContent}
    */
   setAttributes(data, mediaBag) {
 
@@ -197,7 +197,7 @@ export class ActiveBoxContent {
         'id', 'item', 'border', 'avoidOverlapping', 'image', 'text',
         'objectType',
         { key: 'dimension', fn: Dimension },
-        { key: 'txAlign', fn: AlignType },
+        { key: 'txtAlign', fn: AlignType },
         { key: 'imgAlign', fn: AlignType },
         { key: 'style', fn: BoxBase },
         { key: 'mediaContent', fn: MediaContent },
@@ -213,7 +213,7 @@ export class ActiveBoxContent {
    * Decode expressions with combined values of horizontal and vertical alignments in the form:
    * "(left|middle|right),(top|middle|bottom)"
    * @param {string} str - The string to parse
-   * @returns {ActiveBoxContent~alignType}
+   * @returns {module:boxes/ActiveBoxContent.ActiveBoxContent~alignType}
    */
   readAlign(str) {
     const align = new AlignType();
@@ -234,7 +234,7 @@ export class ActiveBoxContent {
 
   /**
    * Checks if two contents are equivalent
-   * @param {ActiveBoxContent} abc - The content to compare with this.
+   * @param {module:boxes/ActiveBoxContent.ActiveBoxContent} abc - The content to compare with this.
    * @param {boolean} checkCase - When `true` the comparing will be case-sensitive.
    * @returns {boolean}
    */
@@ -309,7 +309,7 @@ export class ActiveBoxContent {
 
   /**
    * Prepares the media content
-   * @param {PlayStation} playStation - Usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}
+   * @param {module:JClicPlayer.JClicPlayer} playStation - Usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}
    */
   prepareMedia(playStation) {
     if (!this.amp && this.mediaContent && this.mediaContent.type === 'PLAY_VIDEO') {
@@ -320,7 +320,7 @@ export class ActiveBoxContent {
 
   /**
    * Reads and initializes the image associated to this content
-   * @param {MediaBag} mediaBag - The media bag of the current project.
+   * @param {module:bags/MediaBag.MediaBag} mediaBag - The media bag of the current project.
    */
   realizeContent(mediaBag) {
     if (this.image !== null && this.image.length > 0) {
@@ -362,7 +362,7 @@ export class ActiveBoxContent {
   /**
    * 
    * Overwrites the original `Object.toString` method, returning `getDescription` instead
-   * @returns {String}
+   * @returns {string}
    */
   toString() {
     const result = [];

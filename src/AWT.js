@@ -65,7 +65,7 @@ export class Font {
    * Finds the XML elements with typeface specifications, checks its value against the font
    * substitution list, replacing the `family` attribute and loading the alternative font when needed.
    * @param {external:jQuery} $tree - The xml element to be processed
-   * @param {Object} [options] - Optional param that can contain a `fontSubstitutions` attribute with
+   * @param {object} [options] - Optional param that can contain a `fontSubstitutions` attribute with
    * a substition table to be added to {@link module:AWT.Font.SUBSTITUTIONS SUBSTITUTIONS}
    */
   static checkTree($tree, options) {
@@ -141,7 +141,7 @@ export class Font {
   /**
    * Reads the properties of this Font from an XML element
    * @param {external:jQuery} $xml - The xml element to be parsed
-   * @returns {Font}
+   * @returns {module:AWT.Font}
    */
   setProperties($xml) {
     if ($xml.attr('family'))
@@ -170,7 +170,7 @@ export class Font {
   /**
    * Reads the properties of this Font from a data object
    * @param {object} data - The data object to be parsed
-   * @returns {Font}
+   * @returns {module:AWT.Font}
    */
   setAttributes(data) {
     return setAttr(this, data, ['family', 'size', 'bold', 'italic', 'variant']);
@@ -179,7 +179,7 @@ export class Font {
   /**
    * Allows to change the `size` member, recalculating the vertical metrics.
    * @param {number} size - The new size to set
-   * @returns {Font}
+   * @returns {module:AWT.Font}
    */
   setSize(size) {
     const currentSize = this.size;
@@ -192,7 +192,7 @@ export class Font {
   /**
    * Increases or decreases the current font size by the specified amount
    * @param {number} amount - The amount to increase or decrease current size
-   * @returns {Font}
+   * @returns {module:AWT.Font}
    */
   zoom(amount) {
     return this.setSize(this.size + amount);
@@ -220,9 +220,9 @@ export class Font {
 
   /**
    * Translates the Font properties into CSS statements
-   * @param {Object} css - The object where to add CSS properties. When null or undefined, a new
+   * @param {object} css - The object where to add CSS properties. When null or undefined, a new
    * object will be created and returned.
-   * @returns {Object} - A set of CSS property-values pairs, ready to be used by JQuery
+   * @returns {object} - A set of CSS property-values pairs, ready to be used by JQuery
    * [.css(properties)](http://api.jquery.com/css/#css-properties).
    */
   toCss(css) {
@@ -242,7 +242,7 @@ export class Font {
   /**
    * Gets the codification of this font in a single string, suitable to be used in a `font`
    * CSS attribute.
-   * @returns {String} - A string with all the CSS font properties concatenated
+   * @returns {string} - A string with all the CSS font properties concatenated
    */
   cssFont() {
     return `${this.italic ? 'italic ' : 'normal'} ${this.variant === '' ? 'normal' : this.variant} ${this.bold ? 'bold ' : 'normal'} ${this.size}pt ${this.family}`;
@@ -259,7 +259,7 @@ export class Font {
    *
    * _Warning_: Do not call this method direcly. Use {@link module:AWT.Font#getHeight getHeight()} instead
    * 
-   * @returns {Font}
+   * @returns {module:AWT.Font}
    */
   _calcHeight() {
     const
@@ -282,8 +282,8 @@ export class Font {
 
   /**
    * Checks if two Font objects are equivalent
-   * @param {Font} font - The Font object to compare against this one
-   * @returns {Boolean} - `true` if both objects are equivalent, `false` otherwise
+   * @param {module:AWT.Font} font - The Font object to compare against this one
+   * @returns {boolean} - `true` if both objects are equivalent, `false` otherwise
    */
   equals(font) {
     return this.family === font.family &&
@@ -436,7 +436,7 @@ export class Gradient {
    * Creates a {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasGradient|CanvasGradient}
    * based on the provided context and rectangle.
    * @param {external:CanvasRenderingContext2D} ctx - The 2D rendering context
-   * @param {Rectangle} rect - The rectangle where this gradient will be applied to
+   * @param {module:AWT.Rectangle} rect - The rectangle where this gradient will be applied to
    * @returns {Gradient}
    */
   getGradient(ctx, rect) {
@@ -666,7 +666,7 @@ export class Point {
 
   /**
    * Checks if two points are at the same place
-   * @param {Point} p - The Point to check against to
+   * @param {module:AWT.Point} p - The Point to check against to
    * @returns {boolean}
    */
   equals(p) {
@@ -675,7 +675,7 @@ export class Point {
 
   /**
    * Calculates the distance between two points
-   * @param {Point} point - The Point to calculate the distance against to
+   * @param {module:AWT.Point} point - The Point to calculate the distance against to
    * @returns {number} - The distance between the two points.
    */
   distanceTo(point) {
@@ -755,8 +755,8 @@ export class Dimension {
 
   /**
    * Check if two dimensions are equivalent
-   * @param {Dimension} d
-   * @returns {Boolean}
+   * @param {module:AWT.Dimension} d
+   * @returns {boolean}
    */
   equals(d) {
     return this.width === d.width && this.height === d.height;
@@ -792,7 +792,7 @@ export class Dimension {
 
   /**
    * Calculates the area of a Rectangle with this dimension
-   * @return {number} The resulting area
+   * @returns {number} The resulting area
    */
   getSurface() {
     return this.width * this.height;
@@ -817,7 +817,7 @@ Object.assign(Dimension.prototype, {
 export class Shape {
   /**
    * Shape  constructor
-   * @param {Point} pos - The top-left coordinates of this Shape
+   * @param {module:AWT.Point} pos - The top-left coordinates of this Shape
    */
   constructor(pos) {
     this.pos = pos || new Point();
@@ -835,7 +835,7 @@ export class Shape {
 
   /**
    * Moves this shape to a new position
-   * @param {Point} newPos - The new position of the shape
+   * @param {module:AWT.Point} newPos - The new position of the shape
    * @returns {Shape}
    */
   moveTo(newPos) {
@@ -853,7 +853,7 @@ export class Shape {
 
   /**
    * Checks if two shapes are equivalent.
-   * @param {Shape} p - The Shape to compare against
+   * @param {module:AWT.Shape} p - The Shape to compare against
    * @returns {boolean}
    */
   equals(p) {
@@ -873,7 +873,7 @@ export class Shape {
   /**
    * Gets a clone of this shape moved to the `pos` component of the rectangle and scaled
    * by its `dim` value.
-   * @param {Rectangle} rect - The rectangle to be taken as a base for moving and scaling
+   * @param {module:AWT.Rectangle} rect - The rectangle to be taken as a base for moving and scaling
    * this shape.
    * @returns {Shape}
    */
@@ -883,7 +883,7 @@ export class Shape {
 
   /**
    * Checks if the provided {@link module:AWT.Point} is inside this shape.
-   * @param {Point} _p - The point to check
+   * @param {module:AWT.Point} _p - The point to check
    * @returns {boolean}
    */
   contains(_p) {
@@ -893,7 +893,7 @@ export class Shape {
 
   /**
    * Checks if the provided {@link module:AWT.Rectangle Rectangle} `r` intersects with this shape.
-   * @param {Rectangle} _r
+   * @param {module:AWT.Rectangle} _r
    * @returns {boolean}
    */
   intersects(_r) {
@@ -904,7 +904,7 @@ export class Shape {
   /**
    * Fills the Shape with the current style in the provided HTML canvas context
    * @param {external:CanvasRenderingContext2D} ctx - The canvas 2D rendering context where to fill this shape.
-   * @param {Rectangle} [dirtyRegion] - The context region to be updated. Used as clipping
+   * @param {module:AWT.Rectangle} [dirtyRegion] - The context region to be updated. Used as clipping
    * region when drawing.
    * @returns {external:CanvasRenderingContext2D} - The provided rendering context
    */
@@ -959,7 +959,7 @@ export class Shape {
 
   /**
    * Shorthand method for determining if a Shape is an {@link module:AWT.Rectangle Rectangle}
-   * @returns {Boolean}
+   * @returns {boolean}
    */
   isRect() {
     return false;
@@ -967,7 +967,7 @@ export class Shape {
 
   /**
    * Overwrites the original 'Object.toString' method with a more descriptive text
-   * @returns {String}
+   * @returns {string}
    */
   toString() {
     return `Shape enclosed in ${this.getBounds().getCoords()}`;
@@ -1086,7 +1086,7 @@ export class Rectangle extends Shape {
 
   /**
    * Sets this Rectangle the position and dimension of another one
-   * @param {Rectangle} rect
+   * @param {module:AWT.Rectangle} rect
    * @returns {Rectangle}
    */
   setBounds(rect) {
@@ -1101,7 +1101,7 @@ export class Rectangle extends Shape {
 
   /**
    * Checks if two shapes are equivalent.
-   * @param {Shape} r - The Shape to compare against
+   * @param {module:AWT.Shape} r - The Shape to compare against
    * @returns {boolean}
    */
   equals(r) {
@@ -1151,7 +1151,7 @@ export class Rectangle extends Shape {
 
   /**
    * Adds the boundaries of another shape to the current one
-   * @param {Shape} shape - The {@link module:AWT.Shape} to be added
+   * @param {module:AWT.Shape} shape - The {@link module:AWT.Shape} to be added
    * @returns {Rectangle}
    */
   add(shape) {
@@ -1219,7 +1219,7 @@ export class Rectangle extends Shape {
   /**
    * Gets a string with the co-ordinates of the upper-left and lower-right vertexs of this rectangle,
    * (with values rounded to int)
-   * @returns {String}
+   * @returns {string}
    */
   getCoords() {
     return `[${Math.round(this.pos.x)},${Math.round(this.pos.y)},${Math.round(this.pos.x + this.dim.width)},${Math.round(this.pos.y + this.dim.height)}]`;
@@ -1372,7 +1372,7 @@ Object.assign(Ellipse.prototype, {
 export class Path extends Shape {
   /**
    * Path constructor
-   * @param {PathStroke[]} strokes - The array of {@link module:AWT.PathStroke} objects defining this Path.
+   * @param {module:AWT.PathStroke[]} strokes - The array of {@link module:AWT.PathStroke} objects defining this Path.
    */
   constructor(strokes) {
     super();
@@ -1401,7 +1401,7 @@ export class Path extends Shape {
 
   /**
    * Adds a {@link module:AWT.PathStroke} to `strokes`
-   * @param {PathStroke} stroke
+   * @param {module:AWT.PathStroke} stroke
    */
   addStroke(stroke) {
     this.strokes.push(stroke);
@@ -1590,7 +1590,7 @@ export class PathStroke {
    * PathStroke constructor
    * @param {string} type - The type of stroke. Possible values are: `M` (move to), `L` (line to),
    * `Q` (quadratic to), `B` (bezier to) and `X` (close path).
-   * @param {Point[]} points - The array of {@link module:AWT.Point} objects used in this Stroke.
+   * @param {module:AWT.Point[]} points - The array of {@link module:AWT.Point} objects used in this Stroke.
    */
   constructor(type, points) {
     this.type = type;
@@ -1615,9 +1615,9 @@ export class PathStroke {
    * @see {@link https://en.wikipedia.org/wiki/B%C3%A9zier_curve}
    * @see {@link https://www.jasondavies.com/animated-bezier/}
    *
-   * @param {Point} p0 - Starting point of the quadratic Bézier curve
-   * @param {Point} p1 - Control point
-   * @param {Point} p2 - Ending point
+   * @param {module:AWT.Point} p0 - Starting point of the quadratic Bézier curve
+   * @param {module:AWT.Point} p1 - Control point
+   * @param {module:AWT.Point} p2 - Ending point
    * @param {number} [numPoints] - The number of intermediate points to calculate. When not defined,
    * the value will be obtained from {@link module:Utils.settings.BEZIER_POINTS}.
    * @returns {Point[]} - Array with some intermediate points from the resulting Bézier curve
@@ -1643,10 +1643,10 @@ export class PathStroke {
   /**
    * Calculates some of the points included in a cubic Bézier (curve with two control points)
    * The number of points being calculated is defined in Utils.settings.BEZIER_POINTS
-   * @param {Point} p0 - Starting point of the cubic Bézier curve
-   * @param {Point} p1 - First control point
-   * @param {Point} p2 - Second control point
-   * @param {Point} p3 - Ending point
+   * @param {module:AWT.Point} p0 - Starting point of the cubic Bézier curve
+   * @param {module:AWT.Point} p1 - First control point
+   * @param {module:AWT.Point} p2 - Second control point
+   * @param {module:AWT.Point} p3 - Ending point
    * @param {number} [numPoints] - The number of intermediate points to calculate. When not defined,
    * the value will be obtained from {@link module:Utils.settings.BEZIER_POINTS}.
    * @returns {Point[]} - Array with some intermediate points from the resulting Bézier curve
@@ -1728,7 +1728,7 @@ export class PathStroke {
   /**
    * Gets the set of points that will be included as a vertexs on the owner's shape
    * enclosing polygon.
-   * @param {Point} from - The starting point for this stroke
+   * @param {module:AWT.Point} from - The starting point for this stroke
    * @returns {Point[]}
    */
   getEnclosingPoints(from) {
@@ -1793,7 +1793,7 @@ export class Action {
   /**
    * Here is where subclasses must define the callback to be triggered when
    * this Action object is called
-   * @param {Action} _thisAction - Pointer to this Action object
+   * @param {module:AWT.Action} _thisAction - Pointer to this Action object
    * @param {object} _event - The original action event that has originated this action
    */
   actionPerformed(_thisAction, _event) {
@@ -1882,7 +1882,7 @@ export class Timer {
 
   /**
    * Here is where subclasses must define the function to be performed when this timer ticks.
-   * @param {Timer} _thisTimer
+   * @param {module:AWT.Timer} _thisTimer
    */
   actionPerformed(_thisTimer) {
     return this;
@@ -1890,7 +1890,7 @@ export class Timer {
 
   /**
    * This is the method called by `window.setInterval`
-   * @param {Event} _event
+   * @param {external:Event} _event
    */
   processTimer(_event) {
     this.ticks++;
@@ -1925,7 +1925,7 @@ export class Timer {
 
   /**
    * Checks if this timer is running
-   * @returns {Boolean}
+   * @returns {boolean}
    */
   isRunning() {
     return this.timer !== null;
@@ -1991,7 +1991,7 @@ export class Container extends Rectangle {
 
   /**
    * Adds the provided rectangle to the invalidated area.
-   * @param {Rectangle} rect
+   * @param {module:AWT.Rectangle} rect
    */
   invalidate(rect) {
     if (rect) {
@@ -2016,7 +2016,7 @@ export class Container extends Rectangle {
   /**
    * Containers should implement this method to update its graphic contents. It should
    * be called from {@link module:AWT.Container#update}
-   * @param {Shape} _dirtyRegion - Specifies the area to be updated. When `null`, it's the whole
+   * @param {module:AWT.Shape} _dirtyRegion - Specifies the area to be updated. When `null`, it's the whole
    * Container.
    */
   updateContent(_dirtyRegion) {

@@ -32,6 +32,12 @@
 // Declaration of JSDoc external objects:
 
 /**
+ * The Event interface represents an event which takes place in the DOM.
+ * @external Event
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Event}
+ */
+
+/**
  * The HTMLElement interface represents any HTML element. Some elements directly implement this
  * interface, others implement it via an interface that inherits it.
  * @external HTMLElement
@@ -136,6 +142,18 @@
  * @see {@link https://github.com/grimmdude/MidiPlayerJS}
  */
 
+/**
+ * JavaScript Date objects represent a single moment in time in a platform-independent format.
+ * @external Date
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date}
+ */
+
+/**
+* The HTMLStyleElement interface represents a <style> element. It inherits properties and methods from its parent, HTMLElement, and from LinkStyle.
+* @external HTMLStyleElement
+* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLStyleElement}
+*/
+
 /* global JClicDataProject, JClicDataOptions, window, document */
 
 import $ from 'jquery';
@@ -197,7 +215,7 @@ export const JClicObject = {
 /**
  *
  * Creates a new JClicPlayer hosted on the specified `div`, and loads an specific project on it.
- * @param {HTMLElement} div - The HTML element (usually a `<div/>`) that will be used as a main container of the player.
+ * @param {external:HTMLElement} div - The HTML element (usually a `<div/>`) that will be used as a main container of the player.
  * @param {string} projectName - The file name or URL of the JClic project to be loaded
  * @param {object} [options] - An optional set of preferences
  * @returns {JClicPlayer}

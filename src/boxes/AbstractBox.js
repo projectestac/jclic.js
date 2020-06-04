@@ -62,7 +62,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Setter method for `parent`
-   * @param {AbstractBox} parent - The new parent of this box
+   * @param {module:boxes/AbstractBox.AbstractBox} parent - The new parent of this box
    */
   setParent(parent) {
     this.parent = parent;
@@ -126,7 +126,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Sets the {@link module:boxes/BoxBase.BoxBase BoxBase} of this box
-   * @param {BoxBase} boxBase - The new BoxBase
+   * @param {module:boxes/BoxBase.BoxBase} boxBase - The new BoxBase
    */
   setBoxBase(boxBase) {
     this.boxBase = boxBase;
@@ -177,7 +177,7 @@ export class AbstractBox extends Rectangle {
   /**
    * Sets a new size and/or dimension to this box
    * @override
-   * @param {(AWT.Rectangle|number)} rect - An AWT.Rectangle object, or the `x` coordinate of the
+   * @param {AWT.Rectangle|number} rect - An AWT.Rectangle object, or the `x` coordinate of the
    * upper-left corner of a new rectangle.
    * @param {number} [y] - `y` coordinate of the upper-left corner of the new rectangle.
    * @param {number} [w] - Width of the new rectangle.
@@ -212,7 +212,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    * Sets a new location for this box. In JClic this method was named `setLocation`
-   * @param {(AWT.Point|number)} newPos - A point or the `x` coordinate of a new point.
+   * @param {AWT.Point|number} newPos - A point or the `x` coordinate of a new point.
    * @param {number} [y] - The `y` coordinate of a new point.
    */
   moveTo(newPos, y) {

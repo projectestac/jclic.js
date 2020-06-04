@@ -41,9 +41,9 @@ import AudioBuffer from './AudioBuffer';
 export class ActiveMediaPlayer {
   /**
    * ActiveMediaPlayer constructor
-   * @param {MediaContent} mc - - The content used by this player
-   * @param {MediaBag} mb - The project's MediaBag
-   * @param {PlayStation} ps - An object implementing the
+   * @param {module:media/MediaContent.MediaContent} mc - - The content used by this player
+   * @param {module:bags/MediaBag.MediaBag} mb - The project's MediaBag
+   * @param {module:JClicPlayer.JClicPlayer} ps - An object implementing the
    * {@link http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html PlayStation} interface,
    * usually a {@link module:JClicPlayer.JClicPlayer JClicPlayer}.
    */
@@ -88,7 +88,7 @@ export class ActiveMediaPlayer {
 
   /**
    * Plays the media, realizing it if needed.
-   * @param {ActiveBox} [_setBx] - The active box where this media will be placed (when video)
+   * @param {module:boxes/ActiveBox.ActiveBox} [_setBx] - The active box where this media will be placed (when video)
    */
   playNow(_setBx) {
     // TODO: Remove unused param "_setBx"
@@ -138,7 +138,7 @@ export class ActiveMediaPlayer {
 
   /**
    * Plays the media when available, without blocking the current thread.
-   * @param {ActiveBox} [setBx] - The active box where this media will be placed (when video)
+   * @param {module:boxes/ActiveBox.ActiveBox} [setBx] - The active box where this media will be placed (when video)
    */
   play(setBx) {
     this.stopAllAudioBuffers();
@@ -214,7 +214,7 @@ export class ActiveMediaPlayer {
 
   /**
    * Checks the position of visual components after a displacement or resizing of its container
-   * @param {ActiveBox} _bxi - The container where this player is hosted
+   * @param {module:boxes/ActiveBox.ActiveBox} _bxi - The container where this player is hosted
    */
   checkVisualComponentBounds(_bxi) {
     // does nothing
@@ -230,7 +230,7 @@ export class ActiveMediaPlayer {
 
   /**
    * Sets the ActiveBox associated to this media player
-   * @param {?ActiveBox} setBx - The new container of this media. Can be `null`.
+   * @param {module:boxes/ActiveBox.ActiveBox} setBx - The new container of this media. Can be `null`.
    */
   linkTo(setBx) {
     this.bx = setBx;

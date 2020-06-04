@@ -80,7 +80,7 @@ define([], function() {
     },
     /**
      * @param {string} cA (was char[])
-     * @param {integer} fromIndex
+     * @param {number} fromIndex
      * @returns {string} (was char)
      */
     hexCharArrayToChar: function (cA, fromIndex) {

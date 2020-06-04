@@ -71,7 +71,7 @@ export class Arith extends AutoContentProvider {
    * @param {number} val - The value to format
    * @param {number} dec - Number of decimals
    * @param {number} pre - Minimal number of digits before dot.
-   * @returns {String}
+   * @returns {string}
    */
   static DecFormat(val, dec, pre) {
     let result = val.toFixed(dec);
@@ -172,8 +172,8 @@ export class Arith extends AutoContentProvider {
   /**
    * Fills the `n` parameter (an {@link module:automation/arith/Arith.Num Num}) with a value in accordance with the
    * specifications of `op` (an {@link module:automation/arith/Arith.Operator Operator}), between two limits.
-   * @param {Arith.Num} n - The number
-   * @param {Arith.Operator} op - The operator
+   * @param {module:automation/arith/Arith.Num} n - The number
+   * @param {module:automation/arith/Arith.Operator} op - The operator
    * @param {number} limInf2 - Lower limit
    * @param {number} limSup2 - Upper limit
    * @returns {boolean} - `true` if all was OK
@@ -226,7 +226,7 @@ export class Arith extends AutoContentProvider {
 
   /**
    * Fills the provided {@link module:automation/arith/Arith.Operator Operator} with real values
-   * @param {Arith.Operator} o - The operator to use to generate the operation
+   * @param {module:automation/arith/Arith.Operator} o - The operator to use to generate the operation
    * @returns {boolean} - `true` if all was OK
    */
   genOp(o) {
@@ -417,7 +417,7 @@ export class Arith extends AutoContentProvider {
   /**
    * Fills the provided ActiveBagContentKit with randomly generated operations
    * @override
-   * @param {AutoContentProvider.ActiveBagContentKit} kit - The composite object to be filled with data.
+   * @param {module:automation/AutoContentProvider.ActiveBagContentKit} kit - The composite object to be filled with data.
    * @returns {boolean} - `true` if all was OK
    */
   process(kit) {

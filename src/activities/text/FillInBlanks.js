@@ -43,7 +43,7 @@ import { TextActivityBase, TextActivityBasePanel } from './TextActivityBase';
 export class FillInBlanks extends TextActivityBase {
   /**
    * FillInBlanks constructor
-   * @param {JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
+   * @param {module:project/JClicProject.JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
    */
   constructor(project) {
     super(project);
@@ -80,8 +80,8 @@ Object.assign(FillInBlanks.prototype, {
 export class FillInBlanksPanel extends TextActivityBasePanel {
   /**
    * FillInBlanksPanel constructor
-   * @param {Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
-   * @param {JClicPlayer} ps - Any object implementing the methods defined in the
+   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
+   * @param {module:JClicPlayer.JClicPlayer} ps - Any object implementing the methods defined in the
    * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
    * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
    */
@@ -93,7 +93,7 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
    * Creates a target DOM element for the provided target. This DOM element can be an editable
    * `span` or a `select` with specific `option` elements (when the target is a drop-down list)
    * @override
-   * @param {TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
+   * @param {module:activities/text/TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
    * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
    * to store the target, or replaced by another type of object.
    * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
@@ -171,7 +171,7 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
 
   /**
    * Checks if the specified TextTarget has a valid answer in its `currentText` field
-   * @param {TextActivityDocument.TextTarget} target - The target to check
+   * @param {module:activities/text/TextActivityDocument.TextTarget} target - The target to check
    * @param {boolean} onlyCheck - When `true`, the cursor will no be re-positioned
    * @param {number} [jumpDirection] - `1` to go forward, `-1` to go back.
    * @returns {boolean} - `true` when the target contains a valid answer
@@ -231,7 +231,7 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
 
   /**
    * Visually marks the target as 'solved OK' or 'with errors'.
-   * @param {TextActivityDocument.TextTarget} target - The text target to be marked.
+   * @param {module:activities/text/TextActivityDocument.TextTarget} target - The text target to be marked.
    * @param {number[]} attributes -  - Array of flags indicating the status (OK or error) for each
    * character in `target.currentText`.
    */
@@ -304,7 +304,7 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
   /**
    * Main handler used to process mouse, touch, keyboard and edit events.
    * @override
-   * @param {HTMLEvent} event - The HTML event to be processed
+   * @param {external:Event} event - The HTML event to be processed
    * @returns {boolean} - When this event handler returns `false`, jQuery will stop its
    * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
    */

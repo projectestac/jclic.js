@@ -93,8 +93,8 @@ export class EventSoundsElement {
 
   /**
    * Instantiates this audio object
-   * @param {PlayStation} ps
-   * @param {MediaBag} mediaBag
+   * @param {module:JClicPlayer.JClicPlayer} ps
+   * @param {module:bags/MediaBag.MediaBag} mediaBag
    */
   realize(ps, mediaBag) {
     if (!this.audio && this.player === null && this.file !== null) {
