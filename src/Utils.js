@@ -72,7 +72,7 @@ let _getMsgFunction = key => key;
 
 /**
  * Sets the function usd to obtain real messages from keys
- * @param {function} fn 
+ * @param {function} fn
  */
 export function setGetMsgFunction(fn) {
   _getMsgFunction = fn;
@@ -262,7 +262,7 @@ export function cleanOldLanguageTag(text) {
   // Allow only ISO-639-1 and ISO-639-2 language codes
   else if (!text.match(/^[a-z][a-z][a-z]?$/)) {
     const matches = text.match(/\(([a-z][a-z][a-z]?)\)/);
-    if (matches.length === 2)
+    if (matches && matches.length === 2)
       text = matches[1];
     else
       text = '--';
@@ -597,7 +597,7 @@ export function isEmpty(v) {
  *                                               should be aggregated in a resulting object or array with the same keys (or ordering) as data.
  *                          - `init` {string} - Optional parameter indicating if `fn` should be passed with an additional param. This param can be:
  *                            - `key` - The member's key
- * 
+ *
  * @returns {object} - Always returns `obj`
  */
 export function setAttr(obj, data, attr) {
