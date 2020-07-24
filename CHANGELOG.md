@@ -1,3 +1,7 @@
+### v1.1.16 (not yet released)
+#### Improvements
+- Updated NPM components
+
 ### v1.1.15 (2020-05-26)
 #### Bug fixes
 - Unset `box-shadow` and `text-shadow` attributes in custom buttons
