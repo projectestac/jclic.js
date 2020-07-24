@@ -162,10 +162,11 @@ export class Skin extends Container {
     this.$copyBtn = $('<button/>', { title: msg, 'aria-label': msg })
       .append($(this.copyIcon).css({ width: '26px', height: '26px' }))
       .on('click', () => {
-        const dt = new clipboard.DT();
-        dt.setData('text/plain', `===> ${getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor')} <===`);
-        dt.setData('text/html', this.$reportsPanel.html());
-        clipboard.write(dt)
+        const item = new clipboard.ClipboardItem({
+          'text/plain': `===> ${getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor')} <===`,
+          'text/html': this.$reportsPanel.html(),
+        });
+        clipboard.write([item])
           .then(() => this.$copyBtn.parent().append(
             $('<div/>', { class: 'smallPopup' })
               .html(getMsg('The data has been copied to clipboard'))
