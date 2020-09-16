@@ -1,0 +1,194 @@
+# JClic.js  
+# HTML5 player of [JClic](http://clic.xtec.cat) activities  
+# https://github.com/projectestac/jclic.js  
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: JClic.js 0.1.28\n"
+"POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
+"PO-Revision-Date: 2016-06-20T10:14:00.362Z\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: about_window_lb_version
+msgid "Version"
+msgstr ""
+
+#: label_time
+msgid "time"
+msgstr ""
+
+#: label_actions
+msgid "actions"
+msgstr ""
+
+#: label_score
+msgid "score"
+msgstr ""
+
+#: action_next_tooltip
+msgid "Next activity"
+msgstr ""
+
+#: action_prev_tooltip
+msgid "Previous activity"
+msgstr ""
+
+#: action_reset_tooltip
+msgid "Restart activity"
+msgstr ""
+
+#: action_info_caption
+msgid "Information"
+msgstr ""
+
+#: report_system_standard
+msgid "Results are not currently being saved"
+msgstr ""
+
+#: action_about_tooltip
+msgid "Current results"
+msgstr ""
+
+#: report_started
+msgid "Session started:"
+msgstr ""
+
+#: report_system
+msgid "Reports system:"
+msgstr ""
+
+#: report_user
+msgid "User:"
+msgstr ""
+
+#: report_num_projects
+msgid "Projects:"
+msgstr ""
+
+#: report_num_sequences
+msgid "Sequences:"
+msgstr ""
+
+#: report_num_activities
+msgid "Activities done:"
+msgstr ""
+
+#: report_num_activities_solved
+msgid "Activities solved:"
+msgstr ""
+
+#: report_global_score
+msgid "Global score:"
+msgstr ""
+
+# Explanation of 'global score'
+msgid "(out of all project activities)"
+msgstr ""
+
+#: report_total_time
+msgid "Total time in activities:"
+msgstr ""
+
+#: report_num_actions
+msgid "Actions done:"
+msgstr ""
+
+#: report_no_activities
+msgid "No activities done!"
+msgstr ""
+
+#: report_project
+msgid "Project"
+msgstr ""
+
+#: report_lb_sequence
+msgid "sequence"
+msgstr ""
+
+#: about_window_lb_activity
+msgid "activity"
+msgstr ""
+
+# 'Activity solved' header column
+#: report_lb_solved
+msgid "OK"
+msgstr ""
+
+# Value for 'OK' column
+msgid "YES"
+msgstr ""
+
+# Value for 'OK' column
+msgid "NO"
+msgstr ""
+
+#: report_lb_totals
+msgid "Total:"
+msgstr ""
+
+# Select group for reports in a list
+msgid "Select group:"
+msgstr ""
+
+# Select user for reports in a list
+msgid "Select user:"
+msgstr ""
+
+# Cancel dialog
+msgid "Cancel"
+msgstr ""
+
+# Close dialog
+msgid "Close"
+msgstr ""
+
+# Caption for 'copy' button in reports dialog
+msgid "Copy data to clipboard"
+msgstr ""
+
+# Text shown when reports data is pasted in plain-text editors
+msgid "The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor"
+msgstr ""
+
+# Notification shown when reports data has been copied
+msgid "The data has been copied to clipboard"
+msgstr ""
+
+# Added to TCPReporter description when the connection to the remote server is unsuccessful
+msgid "not connected"
+msgstr ""
+
+# Message displayed when the user attempts to close the player with data pending to be reported
+msgid "Please wait until the results of your activities are sent to the reports system"
+msgstr ""
+
+# Caption for password input
+msgid "Password:"
+msgstr ""
+
+# Error displayed when the provided password is incorrect
+msgid "Incorrect password"
+msgstr ""
+
+# Error displayed when the user ID does not exist
+msgid "Invalid user"
+msgstr ""
+
+# Average score of played activities
+msgid "Partial score:"
+msgstr ""
+
+# Explanation of 'partial score'
+msgid "(out of played activities)"
+msgstr ""
+
+# Number of project's activities played at least one time
+msgid "Activities played at least once:"
+msgstr ""
