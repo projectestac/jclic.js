@@ -1,6 +1,7 @@
-### v1.1.16 (not yet released)
+### v1.1.16 (2020-10-10)
 #### Improvements
 - Updated NPM components
+- Implemented Clic 3.0 behavior on "panels/Explore" activities without buttons and automatic step forward.
 
 ### v1.1.15 (2020-05-26)
 #### Bug fixes
@@ -9,7 +10,7 @@
 
 #### Improvements
 - Map JDK logical fonts ("Dialog", "Serif", etc.) to [HTML5 generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
-- Improved experience with screen readers like [ChromeVox](https://www.chromevox.com/) and [Chromevox Classic](https://chrome.google.com/webstore/detail/chromevox-classic-extensi/kgejglhpjiefppelpmljglcjbhoiplfn) 
+- Improved experience with screen readers like [ChromeVox](https://www.chromevox.com/) and [Chromevox Classic](https://chrome.google.com/webstore/detail/chromevox-classic-extensi/kgejglhpjiefppelpmljglcjbhoiplfn)
 
 ### v1.1.14 (2020-04-23)
 #### Bug fixes

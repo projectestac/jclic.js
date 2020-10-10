@@ -34,8 +34,7 @@ define([
   "jquery",
   "./BoxBag",
   "../AWT",
-  "../Utils"
-], function ($, BoxBag, AWT, Utils) {
+], function ($, BoxBag, AWT) {
 
   /**
    * This class is a special case of {@link BoxBag} containing only objects of type {@link ActiveBox}.
