@@ -295,6 +295,17 @@ export class ExplorePanel extends ActivityPanel {
               // Modified May 2020: Focusing `accessibleElement` will always draw a border on bx2
               // if (bx2.$accessibleElement)
               //   bx2.$accessibleElement.focus();
+
+              // Clic 3.0 behavior, applied only to one-cell activities:
+              if (bx1.idAss === 0 && this.bgA.getNumCells() === 1) {
+                const seq = this.act.project.activitySequence;
+                const ase = seq.getCurrentAct();
+                if (ase && seq.hasNextAct(true) && ase.delay > 0
+                  && (seq.getNavButtonsFlag() !== 'both' && seq.getNavButtonsFlag() !== 'fwd')) {
+                  this.finishActivity(true);
+                }
+              }
+
             } else {
               bx2.clear();
               bx2.setInactive(false);
