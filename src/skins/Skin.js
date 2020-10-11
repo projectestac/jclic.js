@@ -732,8 +732,7 @@ define([
      * @returns {ActiveBox}
      */
     getMsgBox() {
-      // Method to be implemented by subclasses
-      return null
+      return this.msgBox
     }
 
   }

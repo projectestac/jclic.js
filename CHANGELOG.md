@@ -1,7 +1,11 @@
+### v1.1.17 (2020-10-11)
+#### Improvements
+- Added a hidden message box to `skins/EmptySkin`, thus allowing activities to play audio at start.
+
 ### v1.1.16 (2020-10-10)
 #### Improvements
 - Updated NPM components
-- Implemented Clic 3.0 behavior on "panels/Explore" activities without buttons and automatic step forward.
+- Implemented Clic 3.0 behavior on `panels/Explore` activities without buttons and automatic step forward.
 
 ### v1.1.15 (2020-05-26)
 #### Bug fixes

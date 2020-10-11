@@ -31,9 +31,9 @@
 /* global define */
 
 define([
-  "jquery",
-  "./Skin"
-], function ($, Skin) {
+  "./Skin",
+  "../boxes/ActiveBox"
+], function (Skin, ActiveBox) {
 
   /**
    * A minimalist {@link Skin} for JClic.js with just the player, without messages, counters nor any button.
@@ -45,7 +45,7 @@ define([
 
     /**
      * EmptySkin constructor
-     * 
+     *
      * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
      * realize the media objects needed tot build the Skin.
      * @param {string=} name - The skin class name
@@ -54,7 +54,10 @@ define([
     constructor(ps, name = null, options = {}) {
       // EmptySkin extends [Skin](Skin.html)
       super(ps, name, options)
+      this.msgBox = new ActiveBox()
+      this.msgBox.role = 'message'
     }
+
     /**
      * Returns the CSS styles used by this skin. This method should be called only from
      * the `Skin` constructor, and overridded by subclasses if needed.

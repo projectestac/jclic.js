@@ -49,7 +49,7 @@ define([
 
     /**
      * CustomSkin constructor
-     * 
+     *
      * @param {PlayStation} ps - The PlayStation (currently a {@link JClicPlayer}) used to load and
      * realize the media objects needed tot build the Skin.
      * @param {string=} name - The skin class name
@@ -350,14 +350,6 @@ define([
       if (!this.cssVariants)
         this._computeStyleSheets()
       return `${super._getStyleSheets(media)}${this.cssVariants[media] || ''}`
-    }
-
-    /**
-     * Gets the {@link ActiveBox} used to display the main messages of activities
-     * @returns {ActiveBox}
-     */
-    getMsgBox() {
-      return this.msgBox
     }
 
     /**
