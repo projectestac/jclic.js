@@ -30,7 +30,8 @@
 - Improved experience with screen readers like [ChromeVox](https://www.chromevox.com/) and [Chromevox Classic](https://chrome.google.com/webstore/detail/chromevox-classic-extensi/kgejglhpjiefppelpmljglcjbhoiplfn).
 - Updated JSDoc comments. Published full [API Docs](http://projectestac.github.io/jclic.js/doc/index.html) with working links.
 - Updated test suites.
-- Implemented Clic 3.0 behavior on "panels/Explore" activities without buttons and automatic step forward.
+- Implemented Clic 3.0 behavior on `panels/Explore` activities without buttons and automatic step forward.
+- Added a hidden message box to `skins/EmptySkin`, thus allowing activities to play audio at start.
 
 ### v1.1.11 (2019-02-11)
 #### Bug fixes

@@ -201,14 +201,6 @@ export class DefaultSkin extends Skin {
   }
 
   /**
-   * Gets the {@link module:boxes/ActiveBox.ActiveBox ActiveBox} used to display the main messages of activities
-   * @returns {module:boxes/ActiveBox.ActiveBox}
-   */
-  getMsgBox() {
-    return this.msgBox;
-  }
-
-  /**
    * Enables or disables the `tabindex` attribute of the main buttons. Useful when a modal dialog
    * overlay is active, to avoid direct access to controls not related with the dialog.
    * @param {boolean} status - `true` to make main controls navigable, `false` otherwise

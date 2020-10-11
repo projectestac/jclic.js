@@ -44,7 +44,7 @@ export class CustomSkin extends Skin {
 
   /**
    * CustomSkin constructor
-   * 
+   *
    * @param {module:JClicPlayer.JClicPlayer} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
    * realize the media objects needed tot build the Skin.
    * @param {string} [name] - The skin class name
@@ -345,14 +345,6 @@ export class CustomSkin extends Skin {
     if (!this.cssVariants)
       this._computeStyleSheets();
     return `${super._getStyleSheets(media)}${this.cssVariants[media] || ''}`;
-  }
-
-  /**
-   * Gets the {@link module:boxes/ActiveBox.ActiveBox ActiveBox} used to display the main messages of activities
-   * @returns {module:boxes/ActiveBox.ActiveBox}
-   */
-  getMsgBox() {
-    return this.msgBox;
   }
 
   /**

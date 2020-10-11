@@ -30,6 +30,7 @@
  */
 
 import Skin from './Skin';
+import ActiveBox from '../boxes/ActiveBox';
 
 /**
  * A minimalist {@link module:skins/Skin.Skin Skin} for JClic.js with just the player, without messages, counters nor any button.
@@ -39,7 +40,7 @@ export class EmptySkin extends Skin {
 
   /**
    * EmptySkin constructor
-   * 
+   *
    * @param {module:JClicPlayer.JClicPlayer} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
    * realize the media objects needed tot build the Skin.
    * @param {string} [name] - The skin class name
@@ -48,6 +49,8 @@ export class EmptySkin extends Skin {
   constructor(ps, name = null, options = {}) {
     // EmptySkin extends [Skin](Skin.html)
     super(ps, name, options);
+    this.msgBox = new ActiveBox();
+    this.msgBox.role = 'message';
   }
   /**
    * Returns the CSS styles used by this skin. This method should be called only from
