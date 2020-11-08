@@ -205,7 +205,7 @@ define([
       if (!css)
         css = {}
       css['font-family'] = this.family
-      css['font-size'] = `${this.size}px`
+      css['font-size'] = `${this.size}pt`
       if (this.hasOwnProperty('bold'))
         css['font-weight'] = this.bold ? 'bold' : 'normal'
       if (this.hasOwnProperty('italic'))
@@ -234,7 +234,7 @@ define([
      * The code has been slighty adapted to deal with Font objects.
      *
      * _Warning_: Do not call this method direcly. Use {@link Font#getHeight getHeight()} instead
-     * 
+     *
      * @returns {Font}
      */
     _calcHeight() {
@@ -275,7 +275,7 @@ define([
   Font.ALREADY_CALCULATED_FONTS = []
 
   /**
-   * Array of font names already loaded from Google Fonts, or generic names provided by browsers by default 
+   * Array of font names already loaded from Google Fonts, or generic names provided by browsers by default
    * See: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family */
   Font.ALREADY_LOADED_FONTS = ['serif', 'sans-serif', 'monospace', 'cursive', 'fantasy']
 

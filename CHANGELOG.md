@@ -1,3 +1,7 @@
+### v1.1.18 (2020-11-08)
+#### Bug fixes
+- `AWT.Font.toCss` should use `pt` as `font-size` unit.
+
 ### v1.1.17 (2020-10-11)
 #### Improvements
 - Added a hidden message box to `skins/EmptySkin`, thus allowing activities to play audio at start.
