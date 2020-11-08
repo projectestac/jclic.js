@@ -16,6 +16,7 @@
 - Unset `box-shadow` and `text-shadow` attributes in custom buttons.
 - Accessible components for `canvas` regions should always be created since [`HitRegions`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/addHitRegion) have been deprecated. Also, [`CanvasRenderingContext2D.drawFocusIfNeeded`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawFocusIfNeeded) should be called on each call to `updateContent` on `ActiveBox` objects, not just at creation time.
 - Parse new JClic project multiple descriptions in XML files.
+- `AWT.Font.toCss` should use `pt` as `font-size` unit.
 
 #### Improvements
 - Updated core components to their latest versions.
