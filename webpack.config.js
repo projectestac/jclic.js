@@ -1,21 +1,23 @@
 /* global module:true __dirname require */
 
 const TerserPlugin = require('terser-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 const pkg = require('./package.json');
 const buildLocales = require('./build-locales');
-// const WebpackBar = require('webpackbar');
 const date = new Date();
 const dist = path.resolve(__dirname, 'dist');
 
 buildLocales();
 
+const ESLintOptions = {};
+
 const banner = `
 ${pkg.title} version ${pkg.version} (${date.toISOString().substr(0, 10)})
 ${pkg.description}
 ${pkg.homepage}
- 
+
 (c) 2000-${date.getFullYear()} ${pkg.author.name || pkg.author}
 
 Licensed under the EUPL, Version 1.2 or -as soon they will be approved by
@@ -87,9 +89,7 @@ const mainConfig = {
   optimization: {
     minimizer: [
       new TerserPlugin({
-        cache: true,
         parallel: true,
-        sourceMap: true,
         extractComments: {
           condition: /^\!/,
           filename: 'jclic.components.LICENSE',
@@ -101,7 +101,12 @@ const mainConfig = {
       }),
     ],
   },
-  plugins: [],
+  plugins: [
+    new ESLintPlugin(ESLintOptions),
+  ],
+  resolve: {
+    fallback: { stream: false }
+  },
 };
 
 /**
@@ -119,6 +124,9 @@ const nodeConfig = {
     libraryExport: 'default',
   },
   externals: [nodeExternals()],
+  plugins: [
+    new ESLintPlugin(ESLintOptions),
+  ],
 };
 
 module.exports = [mainConfig, nodeConfig];
