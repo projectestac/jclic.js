@@ -1,6 +1,9 @@
-### v1.1.18 (2020-11-08)
+### v1.1.18 (2020-11-09)
 #### Bug fixes
-- `AWT.Font.toCss` should use `pt` as `font-size` unit.
+- `AWT.Font.toCss` should use `px` as `font-size` unit for consistency with JClic
+
+#### Improvements
+- Avoid browser's spell checking on written answer activities
 
 ### v1.1.17 (2020-10-11)
 #### Improvements
