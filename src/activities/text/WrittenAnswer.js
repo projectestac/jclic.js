@@ -206,11 +206,19 @@ export class WrittenAnswerPanel extends ActivityPanel {
         return false;
       });
 
-      this.$textField = $('<input/>', { type: 'text', size: 200 }).css(abcB.style.getCSS()).css({
-        position: 'absolute', top: 0, left: 0,
-        border: 0, padding: 0, margin: 0,
-        'text-align': 'center'
-      });
+      this.$textField = $('<input/>', { type: 'text', size: 200 })
+        .css(abcB.style.getCSS())
+        .css({
+          position: 'absolute', top: 0, left: 0,
+          border: 0, padding: 0, margin: 0,
+          'text-align': 'center'
+        })
+        .attr({
+          autocomplete: 'off',
+          autocorrect: 'off',
+          autocapitalize: 'off',
+          spellcheck: 'false',
+        });
 
       this.$div.append(this.$form.append(this.$textField));
       this.bgA.setContent(abcA, solved || null);

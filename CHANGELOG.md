@@ -16,7 +16,7 @@
 - Unset `box-shadow` and `text-shadow` attributes in custom buttons.
 - Accessible components for `canvas` regions should always be created since [`HitRegions`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/addHitRegion) have been deprecated. Also, [`CanvasRenderingContext2D.drawFocusIfNeeded`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawFocusIfNeeded) should be called on each call to `updateContent` on `ActiveBox` objects, not just at creation time.
 - Parse new JClic project multiple descriptions in XML files.
-- `AWT.Font.toCss` should use `pt` as `font-size` unit.
+- `AWT.Font.cssFont` should use `px` as `font-size` unit for consistency with JClic.
 
 #### Improvements
 - Updated core components to their latest versions.
@@ -33,6 +33,7 @@
 - Updated test suites.
 - Implemented Clic 3.0 behavior on `panels/Explore` activities without buttons and automatic step forward.
 - Added a hidden message box to `skins/EmptySkin`, thus allowing activities to play audio at start.
+- Avoid browser's spell checking on written answer activities.
 
 ### v1.1.11 (2019-02-11)
 #### Bug fixes

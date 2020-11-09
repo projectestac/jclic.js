@@ -229,7 +229,7 @@ export class Font {
     if (!css)
       css = {};
     css['font-family'] = this.family;
-    css['font-size'] = `${this.size}pt`;
+    css['font-size'] = `${this.size}px`;
     if (this.hasOwnProperty('bold'))
       css['font-weight'] = this.bold ? 'bold' : 'normal';
     if (this.hasOwnProperty('italic'))
@@ -245,7 +245,7 @@ export class Font {
    * @returns {string} - A string with all the CSS font properties concatenated
    */
   cssFont() {
-    return `${this.italic ? 'italic ' : 'normal'} ${this.variant === '' ? 'normal' : this.variant} ${this.bold ? 'bold ' : 'normal'} ${this.size}pt ${this.family}`;
+    return `${this.italic ? 'italic ' : 'normal'} ${this.variant === '' ? 'normal' : this.variant} ${this.bold ? 'bold ' : 'normal'} ${this.size}px ${this.family}`;
   }
 
   /**
