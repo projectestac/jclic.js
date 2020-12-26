@@ -580,6 +580,8 @@ export class JClicPlayer extends Container {
       this.doLayout();
       this.initActivity();
 
+      this.history.pushBrowserHistory();
+
       this.actPanel.$div.fadeIn(this.options.fade, () => this.activityReady());
     }
     this.setWaitCursor(false);

@@ -29,6 +29,9 @@
  *  @module
  */
 
+/* global window */
+
+import $ from 'jquery';
 import { log, isEquivalent, getPath, isNullOrUndef } from './Utils';
 
 /**
@@ -44,6 +47,60 @@ export class PlayerHistory {
   constructor(player) {
     this.player = player;
     this.sequenceStack = [];
+    if (window && window.history && player.options.browserHistory) {
+      this.browserHistory = true;
+      $(window).on('popstate', (ev) => {
+        const state = ev.originalEvent.state;
+        if (state)
+          this.processPopStateEvent(state);
+      });
+    }
+  }
+
+  /**
+   *
+   * Process the `state` object received in a `popstate` event
+   * @param {PlayerHistory#HistoryElement} state - The previously stored state
+   */
+  processPopStateEvent(state) {
+    log('info', 'Processing History popstate event with state:', state);
+    this.processingPop = true;
+    if (state.projectPath === this.player.project.path &&
+      isEquivalent(state.fullZipPath, this.player.zip ? this.player.zip.fullZipPath : null))
+      this.player.load(null, state.activity, null);
+    else
+      this.player.load(state.fullZipPath || state.projectPath, state.activity, null);
+  }
+
+  /**
+   * Push a new entry on the window.History stack,
+   * only when `browserHistory` is true and there is no `popstate` event in progress
+   */
+  pushBrowserHistory() {
+    if (this.browserHistory) {
+
+      if (this.processingPop) {
+        // A 'popstate' event is currently being processed, so just clear this flag and return
+        this.processingPop = false;
+        return;
+      }
+
+      const
+        ase = this.player.project.activitySequence,
+        act = ase.currentAct,
+        title = this.player.actPanel.act.name || 'No name',
+        state = new this.HistoryElement(
+          this.player.project.path,
+          ase.getSequenceForElement(act),
+          act,
+          this.player.zip ? this.player.zip.fullZipPath : null);
+
+      // Push a new history entry, or update the current one if it has no `state`
+      if (!window.history.state)
+        window.history.replaceState(state, title);
+      else
+        window.history.pushState(state, title);
+    }
   }
 
   /**
@@ -213,6 +270,16 @@ Object.assign(PlayerHistory.prototype, {
    * @name module:PlayerHistory.PlayerHistory#testMode
    * @type {boolean} */
   testMode: false,
+  /**
+   * When true, JClic history is in sync with browser history
+   * @name PlayerHistory#browserHistory
+   * @type {boolean} */
+  browserHistory: false,
+  /**
+   * When true, a window.history event is currently being processed, so window.pushState should not be performed
+   * @name PlayerHistory#processingPop
+   * @type {boolean} */
+  processingPop: false,
   /**
    * Inner class used to store history elements.
    * @name module:PlayerHistory.PlayerHistory#HistoryElement

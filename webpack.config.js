@@ -43,6 +43,7 @@ ${pkg.homepage}
  * Bundle used in HTML browsers
  */
 const mainConfig = {
+  mode: 'production',
   entry: './src/JClic.js',
   devtool: 'source-map',
   output: {
@@ -114,6 +115,7 @@ const mainConfig = {
  */
 const nodeConfig = {
   target: 'node',
+  mode: 'production',
   entry: './src/JClic.js',
   devtool: 'source-map',
   output: {
