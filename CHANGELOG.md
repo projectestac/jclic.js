@@ -1,3 +1,7 @@
+### v1.1.19 (2020-12-26)
+#### Improvements
+- Use the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History) to record the list of played JClic activities, thus allowing to navigate between them with the browser's `back` and `forward` buttons.
+
 ### v1.1.18 (2020-11-09)
 #### Bug fixes
 - `AWT.Font.toCss` should use `px` as `font-size` unit for consistency with JClic

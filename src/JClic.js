@@ -280,6 +280,11 @@ define([
             JClicObject.projectFile :
             null
 
+      // Enable sync with browser history only when there is a single element of class 'JClic'.
+      // This is done automatically when this element is a direct child of body, or when 'browserHistory' is
+      // explicitly set
+      options.browserHistory = $('body>div.JClic').length === 1 || options.browserHistory && $('.JClic').length === 1;
+
       // Search DOM elements with class "JClic" (usually of type 'div') and iterate over them
       // initializing players
       $('.JClic').each((_n, element) => {
