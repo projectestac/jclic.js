@@ -1,3 +1,7 @@
+### v1.1.20 (Not yet released)
+#### Bug fixes
+- Use underscore instead of blank space as filling character in `TextActivityDocument.TextTarget`
+
 ### v1.1.19 (2020-12-26)
 #### Improvements
 - Use the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History) to record the list of played JClic activities, thus allowing to navigate between them with the browser's `back` and `forward` buttons.

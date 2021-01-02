@@ -391,6 +391,9 @@ define([
 
           case 'response':
             this.iniChar = Utils.getVal($node.attr('fill'), this.iniChar).charAt(0)
+            // Use underscores instead of whitespace chars
+            if (Utils.settings.WHITESPACES.indexOf(this.iniChar) >= 0)
+              this.iniChar = '_'
             this.numIniChars = Utils.getNumber($node.attr('length'), this.numIniChars)
             this.maxLenResp = Utils.getNumber($node.attr('maxLength'), this.maxLenResp)
             this.iniText = Utils.getVal($node.attr('show'), this.iniText)

@@ -700,7 +700,8 @@ define([
       // CANVAS_HITREGIONS_FOCUS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function',
       //
       CANVAS_DRAW_FOCUS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function',
-      
+      // Whitespaces (see: https://emptycharacter.com/)
+      WHITESPACES: ' \xA0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u2028\u205F\u3000',
     },
     //
     // Functions useful to deal with caret position in `contentEditable` DOM elements
