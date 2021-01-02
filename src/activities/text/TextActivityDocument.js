@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import { log, attrForEach, checkColor, getBoolean, getAttr, setAttr, getVal, getNumber } from '../../Utils';
+import { log, attrForEach, checkColor, getBoolean, getAttr, setAttr, getVal, getNumber, settings } from '../../Utils';
 import ActiveBoxContent from '../../boxes/ActiveBoxContent';
 import MediaContent from '../../media/MediaContent';
 
@@ -391,6 +391,9 @@ export class TextTarget {
 
         case 'response':
           this.iniChar = getVal($node.attr('fill'), this.iniChar).charAt(0);
+          // Use underscores instead of whitespace chars
+          if (settings.WHITESPACES.indexOf(this.iniChar) >= 0)
+            this.iniChar = '_';
           this.numIniChars = getNumber($node.attr('length'), this.numIniChars);
           this.maxLenResp = getNumber($node.attr('maxLength'), this.maxLenResp);
           this.iniText = getVal($node.attr('show'), this.iniText);
