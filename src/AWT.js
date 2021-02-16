@@ -175,10 +175,18 @@ define([
     }
 
     /**
-     * Calculates the vertical font metrics and returns its height
+     * Calculates the font metrics and returns its height
      * @returns {number} - The font height
      */
     getHeight() {
+      return this.getMetrics().height
+    }
+
+    /**
+     * Calculates the font metrics
+     * @returns {Object} - The current font metrics
+     */
+    getMetrics() {
       if (this._metrics.height < 0) {
         // Look for an equivalent font already calculated
         const font = Font.ALREADY_CALCULATED_FONTS.find(font => font.equals(this))
@@ -191,7 +199,7 @@ define([
             Font.ALREADY_CALCULATED_FONTS.push(this)
         }
       }
-      return this._metrics.height
+      return this._metrics
     }
 
     /**
@@ -233,7 +241,7 @@ define([
      * vertical dimension of rendered text using a `span` element.
      * The code has been slighty adapted to deal with Font objects.
      *
-     * _Warning_: Do not call this method direcly. Use {@link Font#getHeight getHeight()} instead
+     * _Warning_: Do not call this method direcly. Use {@link Font#getHeight getHeight()} or {@link Font#getMetrics getMetrics()} instead
      *
      * @returns {Font}
      */

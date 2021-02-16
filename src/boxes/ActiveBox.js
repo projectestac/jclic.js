@@ -549,17 +549,16 @@ define([
         const lines = bb.prepareText(ctx, abc.text, availWidth, availHeight)
 
         ctx.font = bb.font.cssFont()
-        ctx.textBaseline = 'hanging'
+        ctx.textBaseline = 'alphabetic'
         const
           lineHeight = bb.font.getHeight(),
           totalHeight = lineHeight * lines.length
 
         // Calc the vertical co-ordinate of the first line
         // Default is 'middle'
-
         let y = py + bb.textMargin + (abc.txtAlign.v === 'top' ? 0
-          : abc.txtAlign.v === 'bottom' ?
-            availHeight - totalHeight : (availHeight - totalHeight) / 2)
+          : abc.txtAlign.v === 'bottom' ? availHeight - totalHeight
+            : (availHeight - totalHeight) / 2) + bb.font.getMetrics().ascent
 
         for (let l = 0; l < lines.length; l++, y += lineHeight) {
           // Calc the horizontal position of each line
