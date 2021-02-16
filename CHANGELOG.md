@@ -1,4 +1,4 @@
-### v1.1.20 (2021-02-16)
+### v1.1.21 (2021-02-16)
 #### Bug fixes
 - Use underscore instead of blank space as filling character in `TextActivityDocument.TextTarget`
 - Correct the vertical position of centered text in boxes and grid cells
