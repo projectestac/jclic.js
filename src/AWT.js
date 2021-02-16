@@ -199,10 +199,10 @@ export class Font {
   }
 
   /**
-   * Calculates the vertical font metrics and returns its height
-   * @returns {number} - The font height
+   * Calculates the font metrics
+   * @returns {Object} - The font metrics
    */
-  getHeight() {
+  getMetrics() {
     if (this._metrics.height < 0) {
       // Look for an equivalent font already calculated
       const font = Font.ALREADY_CALCULATED_FONTS.find(font => font.equals(this));
@@ -215,7 +215,15 @@ export class Font {
           Font.ALREADY_CALCULATED_FONTS.push(this);
       }
     }
-    return this._metrics.height;
+    return this._metrics;
+  }
+
+  /**
+   * Calculates the font metrics and returns its height
+   * @returns {number} - The font height
+   */
+  getHeight() {
+    return this.getMetrics().height;
   }
 
   /**
@@ -257,7 +265,7 @@ export class Font {
    * vertical dimension of rendered text using a `span` element.
    * The code has been slighty adapted to deal with Font objects.
    *
-   * _Warning_: Do not call this method direcly. Use {@link module:AWT.Font#getHeight getHeight()} instead
+   * _Warning_: Do not call this method direcly. Use {@link module:AWT.Font#getHeight getHeight()} or {@link module:AWT.Font#getMetrics getMetrics()} instead
    *
    * @returns {module:AWT.Font}
    */
@@ -369,7 +377,7 @@ Object.assign(Font.prototype, {
   /**
    * The font *_metrics* property contains the values for `ascent`, `descent` and `height`
    * attributes. Vertical font metrics are calculated in
-   * {@link module:AWT.Font#_calcHeight|calcHeight()} as needed.
+   * {@link module:AWT.Font#_calcHeight|_calcHeight()} as needed.
    * @name module:AWT.Font#_metrics
    * @private
    * @type {{ascent: number, descent: number, height: number}} */

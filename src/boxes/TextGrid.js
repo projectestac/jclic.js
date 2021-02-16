@@ -698,17 +698,13 @@ export class TextGrid extends AbstractBox {
 
     // test font size
     ctx.font = style.font.cssFont();
-    ctx.textBaseline = 'hanging';
+    ctx.textBaseline = 'alphabetic';
     style.prepareText(ctx, 'W',
       this.cellWidth - 2 * defaults.MIN_INTERNAL_MARGIN,
       this.cellHeight - 2 * defaults.MIN_INTERNAL_MARGIN);
 
     const ch = [];
-    //
-    // TODO: Check in different browsers and devices what is the real font height.
-    // In Chrome on Linux (Gnome), subtracting `style.font._metrics.descent / 4` produces
-    // good results, but in iPad this correction places the character at the bottom of the cell.
-    const ry = (this.cellHeight - style.font.getHeight()) / 2;
+    const ry = (this.cellHeight - style.font.getHeight()) / 2 + style.font.getMetrics().ascent;
 
     for (let py = 0; py < this.nRows; py++) {
       for (let px = 0; px < this.nCols; px++) {

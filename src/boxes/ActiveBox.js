@@ -546,17 +546,16 @@ export class ActiveBox extends AbstractBox {
       const lines = style.prepareText(ctx, abc.text, availWidth, availHeight);
 
       ctx.font = style.font.cssFont();
-      ctx.textBaseline = 'hanging';
+      ctx.textBaseline = 'alphabetic';
       const
         lineHeight = style.font.getHeight(),
         totalHeight = lineHeight * lines.length;
 
       // Calc the vertical co-ordinate of the first line
       // Default is 'middle'
-
       let y = py + style.textMargin + (abc.txtAlign.v === 'top' ? 0
-        : abc.txtAlign.v === 'bottom' ?
-          availHeight - totalHeight : (availHeight - totalHeight) / 2);
+        : abc.txtAlign.v === 'bottom' ? availHeight - totalHeight
+          : (availHeight - totalHeight) / 2) + style.font.getMetrics().ascent;
 
       for (let l = 0; l < lines.length; l++, y += lineHeight) {
         // Calc the horizontal position of each line
