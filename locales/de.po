@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JClic.js 0.1.25\n"
 "POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
-"PO-Revision-Date: 2019-05-06 20:48+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"PO-Revision-Date: 2021-03-07 00:50+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/jclic/jclicjs/de/>"
 "\n"
 "Language: de\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7-dev\n"
+"X-Generator: Weblate 4.5.1\n"
 
 #: about_window_lb_version
 msgid "Version"
@@ -47,7 +47,7 @@ msgstr "Übung neu starten"
 
 #: action_info_caption
 msgid "Information"
-msgstr "Information"
+msgstr "Informationen"
 
 #: report_system_standard
 msgid "Results are not currently being saved"
