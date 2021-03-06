@@ -37,6 +37,7 @@
 - Added a hidden message box to `skins/EmptySkin`, thus allowing activities to play audio at start.
 - Avoid browser's spell checking on written answer activities.
 - Use the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History) to record the list of played JClic activities, thus allowing to navigate between them with the browser's `back` and `forward` buttons.
+- Interpret negative values as percentages when setting CSS sizes, useful for the [JClic module for Moodle](https://moodle.org/plugins/mod_jclic).
 
 ### v1.1.11 (2019-02-11)
 #### Bug fixes
