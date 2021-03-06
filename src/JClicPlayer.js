@@ -86,8 +86,8 @@ define([
         if (this.$topDiv.parent().is('td')) {
           // Set explicit width and height to fill-in the TD
           this.$topDiv.css({
-            width: this.options.width || '100%',
-            height: this.options.height || '100%'
+            width: Utils.toCssSize(this.options.width, null, null, '100%'),
+            height: Utils.toCssSize(this.options.height, null, null, '100%'),
           })
         }
 

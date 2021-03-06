@@ -510,14 +510,15 @@ define([
     svgToURI: (svg, width, height, fill) => 'data:image/svg+xml;base64,' + btoa(Utils.getSvg(svg, width, height, fill)),
     /**
      * Converts the given expression into a valid value for CSS size values
-     * @param {string|number} exp - The expression to be evaluated (can be a valid value, `null` or `undefined`)
+     * @param {string|number} exp - The expression to be evaluated. Can be a numeric value, `null` or `undefined`.
+     *                              Positive values are in "px" units, negative ones are "%"
      * @param {Object} css - An optional Object where the resulting expression (if any) will be saved
      * @param {string} key - The key under which the result will be stored in `css`
      * @param {string} def - Default value to be used when `exp` is `null` or `undefined`
      * @returns {string} - A valid CSS value, or `null` if it can't be found. Default units are `px`
      */
     toCssSize: (exp, css, key, def) => {
-      const result = typeof exp === 'undefined' || exp === null ? null : isNaN(exp) ? exp : `${exp}px`
+      const result = typeof exp === 'undefined' || exp === null ? null : isNaN(exp) ? exp : exp < 0 ? `${Math.abs(exp)}%` : `${exp}px`
       if (css && key && (result || def))
         css[key] = result !== null ? result : def
       return result
