@@ -6,7 +6,6 @@ const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 const pkg = require('./package.json');
 const buildLocales = require('./build-locales');
-const WebpackBar = require('webpackbar');
 const date = new Date();
 const dist = path.resolve('dist');
 
@@ -16,7 +15,7 @@ const banner = `
 JClic.js version ${pkg.version} (${date.toISOString().substr(0, 10)})
 An HTML5 player of JClic activities
 ${pkg.homepage}
- 
+
 (c) 2000-${date.getFullYear()} Catalan Educational Telematic Network (XTEC)
 
 Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
@@ -79,7 +78,4 @@ module.exports = {
     path: dist,
     filename: 'jclic.min.js',
   },
-  plugins: [
-    new WebpackBar()
-  ]
 };

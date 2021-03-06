@@ -4,7 +4,6 @@
 
 const path = require('path');
 const buildLocales = require('./build-locales');
-const WebpackBar = require('webpackbar');
 const dist = path.resolve('dist');
 
 buildLocales();
@@ -37,7 +36,4 @@ module.exports = {
     path: dist,
     filename: 'jclic.js',
   },
-  plugins: [
-    new WebpackBar()
-  ]
 };

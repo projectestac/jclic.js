@@ -1,3 +1,7 @@
+### v1.1.22 (2021-03-06)
+#### Improvements
+- Interpret negative values as percentages when setting CSS sizes, useful for the [JClic module for Moodle](https://moodle.org/plugins/mod_jclic).
+
 ### v1.1.21 (2021-02-16)
 #### Bug fixes
 - Use underscore instead of blank space as filling character in `TextActivityDocument.TextTarget`
