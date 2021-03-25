@@ -1038,6 +1038,17 @@ export function setSelectionRange(el, start, end) {
 };
 
 /**
+ * Performs multiple replacements on the provided string
+ * See: https://stackoverflow.com/questions/2501435/replacing-multiple-patterns-in-a-block-of-data
+ * @param {Object[]} replacements - Array of pairs formed by an "expression" (regexp or string) and a "value" (string) to replace the fragments found
+ * @param {String} str - The string to be checked for replacements
+ * @returns {String} - The original string with the fragments found already replaced
+ */
+export function mReplace(replacements, str) {
+  return replacements.reduce((result, [exp, replacement]) => result.replace(exp, replacement), str);
+};
+
+/**
  * Global constants
  * @const
  */

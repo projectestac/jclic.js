@@ -36,7 +36,7 @@ import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import ScriptJS from 'scriptjs';
 import i18n from './i18n';
-import { log, init, settings, getPath, endsWith, getBasePath, getRelativePath, isNullOrUndef } from './Utils';
+import { log, init, settings, getPath, endsWith, getBasePath, getRelativePath, isNullOrUndef, mReplace, toCssSize } from './Utils';
 import { Container, Point, Action, Timer, Rectangle } from './AWT';
 import PlayerHistory from './PlayerHistory';
 import ActiveMediaBag from './media/ActiveMediaBag';
@@ -46,7 +46,6 @@ import JClicProject from './project/JClicProject';
 import JumpInfo from './bags/JumpInfo';
 import ActiveBoxContent from './boxes/ActiveBoxContent';
 import Reporter from './report/Reporter';
-import Utils from './Utils';
 
 /**
  * JClicPlayer is one of the the main classes of the JClic system. It implements the
@@ -83,8 +82,8 @@ export class JClicPlayer extends Container {
     if (this.$topDiv.parent().is('td')) {
       // Set explicit width and height to fill-in the TD
       this.$topDiv.css({
-        width: Utils.toCssSize(this.options.width, null, null, '100%'),
-        height: Utils.toCssSize(this.options.height, null, null, '100%'),
+        width: toCssSize(this.options.width, null, null, '100%'),
+        height: toCssSize(this.options.height, null, null, '100%'),
       });
     }
 
@@ -388,7 +387,18 @@ export class JClicPlayer extends Container {
           });
           return;
         } else if (this.localFS && window.JClicObject && !window.JClicObject.projectFiles[fullPath]) {
-          ScriptJS(`${fullPath}.js`, () => this.load(project, sequence, activity));
+          ScriptJS(`${fullPath}.js`, () => {
+            // 25 Mar 20201:
+            // Workaround for a bug on Chrome and Firefox XML parsers, throwing errors whith hexadecimal character entities
+            if (window.JClicObject.projectFiles[fullPath]) {
+              window.JClicObject.projectFiles[fullPath] = mReplace([
+                [/&#xD;/g, '\r'],
+                [/&#xA;/g, '\n'],
+                [/&#x9;/g, '\t'],
+              ], window.JClicObject.projectFiles[fullPath]);
+              this.load(project, sequence, activity);
+            }
+          });
           this.setWaitCursor(false);
           return;
         }

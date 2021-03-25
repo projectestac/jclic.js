@@ -19,6 +19,7 @@
 - `AWT.Font.cssFont` should use `px` as `font-size` unit for consistency with JClic.
 - Use underscore instead of blank space as filling character in `TextActivityDocument.TextTarget`
 - Correct the vertical position of centered text in boxes and grid cells
+- Workaround for a bug on Chrome and Firefox XML parsers, throwing errors whith hexadecimal character entities
 
 #### Improvements
 - Updated core components to their latest versions.
