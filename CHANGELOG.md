@@ -1,3 +1,7 @@
+### v1.1.23 (2021-03-25)
+#### Bug fixes
+- Workaround for a bug on Chrome and Firefox XML parsers, throwing errors whith hexadecimal character entities
+
 ### v1.1.22 (2021-03-06)
 #### Improvements
 - Interpret negative values as percentages when setting CSS sizes, useful for the [JClic module for Moodle](https://moodle.org/plugins/mod_jclic).

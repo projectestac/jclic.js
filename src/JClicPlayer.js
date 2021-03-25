@@ -390,7 +390,17 @@ define([
               })
               return
             } else if (this.localFS && window.JClicObject && !window.JClicObject.projectFiles[fullPath]) {
-              ScriptJS(`${fullPath}.js`, () => this.load(project, sequence, activity))
+              ScriptJS(`${fullPath}.js`, () => {
+                // 25 Mar 20201:
+                // Workaround for a bug on Chrome and Firefox XML parsers, throwing errors whith hexadecimal character entities
+                if (window.JClicObject.projectFiles[fullPath])
+                  window.JClicObject.projectFiles[fullPath] = Utils.mReplace([
+                    [/&#xD;/g, '\r'],
+                    [/&#xA;/g, '\n'],
+                    [/&#x9;/g, '\t'],
+                  ], window.JClicObject.projectFiles[fullPath])
+                this.load(project, sequence, activity)
+              })
               this.setWaitCursor(false)
               return
             }
