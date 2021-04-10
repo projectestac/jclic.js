@@ -9,9 +9,9 @@
  *
  *  @source https://github.com/projectestac/jclic.js
  *
- *  @license EUPL-1.1
+ *  @license EUPL-1.2
  *  @licstart
- *  (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2020 Catalan Educational Telematic Network (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -26,6 +26,7 @@
  *  Licence for the specific language governing permissions and limitations
  *  under the Licence.
  *  @licend
+ *  @module
  */
 
 define([], function() {
@@ -36,15 +37,13 @@ define([], function() {
    * passwords in plain text in data and configuration files. Do not use it as a
    * secure cryptographic system!
    *
-   * Based on {@link https://github.com/projectestac/jclic/blob/master/src/utilities/edu/xtec/util/Encryption.java|Encryption}
-   * utilities, created by Albert Llastarri for {@link https://github.com/projectestac/jclic|JClic}.
+   * Based on {@link https://github.com/projectestac/jclic/blob/master/src/utilities/edu/xtec/util/Encryption.java Encryption}
+   * utilities, created by Albert Llastarri for {@link https://github.com/projectestac/jclic JClic}.
    *
    * This is the full version, with methods for encrypt and decrypt. JClic.js needs only decrypt
    * methods, defined in EncryptMin.js
    *
-   * @exports Encryption
-   * @class
-   * @abstract
+       * @abstract
    */
   var Encryption = {
     /**
@@ -81,7 +80,7 @@ define([], function() {
     },
     /**
      * @param {string} cA (was char[])
-     * @param {integer} fromIndex
+     * @param {number} fromIndex
      * @returns {string} (was char)
      */
     hexCharArrayToChar: function (cA, fromIndex) {

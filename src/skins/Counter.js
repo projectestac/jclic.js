@@ -9,9 +9,9 @@
  *
  *  @source https://github.com/projectestac/jclic.js
  *
- *  @license EUPL-1.1
+ *  @license EUPL-1.2
  *  @licstart
- *  (c) 2000-2018 Catalan Educational Telematic Network (XTEC)
+ *  (c) 2000-2020 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -26,132 +26,127 @@
  *  Licence for the specific language governing permissions and limitations
  *  under the Licence.
  *  @licend
+ *  @module
  */
 
-/* global define */
-
-define([], function () {
+/**
+ * This class encapsulates the operation of a numeric counter, used to display the current
+ * values of score, actions and time.
+ */
+export class Counter {
+  /**
+   * Counter constructor
+   * @param {string} id - The type of information stored on this counter
+   * @param {external:jQuery} [$div] - The HTML element where this counter will show values (can be _null_)
+   */
+  constructor(id, $div) {
+    if (id)
+      this.id = id;
+    if ($div)
+      this.$div = $div;
+  }
 
   /**
-   * This class encapsulates the operation of a numeric counter, used to display the current
-   * values of score, actions and time.
+   * Gets the current display value of this counter
+   * @returns {number}
    */
-  class Counter {
-    /**
-     * Counter constructor
-     * @param {string} id - The type of information stored on this counter
-     * @param {external:jQuery=} $div - The HTML element where this counter will show values (can be _null_)
-     */
-    constructor(id, $div) {
-      if (id)
-        this.id = id
-      if ($div)
-        this.$div = $div
-    }
+  getDisplayValue() {
+    let result = this.countDown > 0 ? this.countDown - this.value : this.value;
+    if (this.displayDiffFrom)
+      result = result - this.displayDiffFrom.value;
+    return Math.max(0, Math.min(this.MAX_DISPLAY_VALUE, result));
+  }
 
-    /**
-     * Gets the current display value of this counter
-     * @returns {number}
-     */
-    getDisplayValue() {
-      let result = this.countDown > 0 ? this.countDown - this.value : this.value
-      if (this.displayDiffFrom)
-        result = result - this.displayDiffFrom.value
-      return Math.max(0, Math.min(this.MAX_DISPLAY_VALUE, result))
-    }
+  /**
+   * Paints the value of this counter on screen
+   * (method to be overridden by subclasses)
+   */
+  refreshDisplay() {
+    if (this.$div)
+      this.$div.html(this.enabled ? (this.getDisplayValue() + 1000).toString().substr(1) : '000');
+  }
 
-    /**
-     * Paints the value of this counter on screen
-     * (method to be overridden by subclasses)
-     */
-    refreshDisplay() {
-      if (this.$div)
-        this.$div.html(this.enabled ? (this.getDisplayValue() + 1000).toString().substr(1) : '000')
-    }
-
-    /**
-     * Enables or disables this counter
-     * @param {boolean} enabled - State been assigned to this counter
-     */
-    setEnabled(enabled) {
-      if (this.enabled !== enabled) {
-        this.enabled = enabled
-        if (this.$div) {
-          this.refreshDisplay()
-          this.$div.css('opacity', this.enabled ? 1.0 : 0.3)
-        }
+  /**
+   * Enables or disables this counter
+   * @param {boolean} enabled - State been assigned to this counter
+   */
+  setEnabled(enabled) {
+    if (this.enabled !== enabled) {
+      this.enabled = enabled;
+      if (this.$div) {
+        this.refreshDisplay();
+        this.$div.css('opacity', this.enabled ? 1.0 : 0.3);
       }
-    }
-
-    /**
-     * Sets the initial value of the counter
-     * @param {number} maxValue - Value from which the countdown will start
-     */
-    setCountDown(maxValue) {
-      if (this.countDown !== (this.countDown = maxValue))
-        this.refreshDisplay()
-    }
-
-    /**
-     * Increments by one the value of this counter
-     */
-    incValue() {
-      this.value++
-      if (this.enabled)
-        this.refreshDisplay()
-    }
-
-    /**
-     * Sets a specific value to this counter
-     * @param {number} value - The value to set
-     */
-    setValue(value) {
-      if (this.enabled && this.value !== (this.value = value))
-        this.refreshDisplay()
     }
   }
 
-  Object.assign(Counter.prototype, {
-    /**
-     * Type of counter (usually: `score`, `actions` or `time`)
-     * @name Counter#id
-     * @type {string} */
-    id: '',
-    /**
-     * The HTML element where this counter shows its value
-     * @name Counter#$div
-     * @type {external:jQuery}
-     */
-    $div: null,
-    /**
-     * Current value of this counter
-     * @name Counter#value
-     * @type {number} */
-    value: 0,
-    /**
-     * When set, the counter displays a countdown from this value to zero
-     * @name Counter#countDown
-     * @type {number} */
-    countDown: 0,
-    /**
-     * Flag indicating if this counter is currently enabled
-     * @name Counter#enabled
-     * @type {boolean} */
-    enabled: true,
-    /**
-     * Maximum value to be displayed by this counter
-     * @name Counter#MAX_DISPLAY_VALUE
-     * @type {Number} */
-    MAX_DISPLAY_VALUE: 999,
-    /**
-     * An optional Counter used as a subtractor to display the current value.
-     * Useful to display `errors` subtracting `score` from `actions`.
-     * @name Counter#displayDiffFrom
-     * @type {Counter}
-     */
-    displayDiffFrom: null,
-  })
+  /**
+   * Sets the initial value of the counter
+   * @param {number} maxValue - Value from which the countdown will start
+   */
+  setCountDown(maxValue) {
+    if (this.countDown !== (this.countDown = maxValue))
+      this.refreshDisplay();
+  }
 
-  return Counter
+  /**
+   * Increments by one the value of this counter
+   */
+  incValue() {
+    this.value++;
+    if (this.enabled)
+      this.refreshDisplay();
+  }
 
-})
+  /**
+   * Sets a specific value to this counter
+   * @param {number} value - The value to set
+   */
+  setValue(value) {
+    if (this.enabled && this.value !== (this.value = value))
+      this.refreshDisplay();
+  }
+}
+
+Object.assign(Counter.prototype, {
+  /**
+   * Type of counter (usually: `score`, `actions` or `time`)
+   * @name module:skins/Counter.Counter#id
+   * @type {string} */
+  id: '',
+  /**
+   * The HTML element where this counter shows its value
+   * @name module:skins/Counter.Counter#$div
+   * @type {external:jQuery}
+   */
+  $div: null,
+  /**
+   * Current value of this counter
+   * @name module:skins/Counter.Counter#value
+   * @type {number} */
+  value: 0,
+  /**
+   * When set, the counter displays a countdown from this value to zero
+   * @name module:skins/Counter.Counter#countDown
+   * @type {number} */
+  countDown: 0,
+  /**
+   * Flag indicating if this counter is currently enabled
+   * @name module:skins/Counter.Counter#enabled
+   * @type {boolean} */
+  enabled: true,
+  /**
+   * Maximum value to be displayed by this counter
+   * @name module:skins/Counter.Counter#MAX_DISPLAY_VALUE
+   * @type {number} */
+  MAX_DISPLAY_VALUE: 999,
+  /**
+   * An optional Counter used as a subtractor to display the current value.
+   * Useful to display `errors` subtracting `score` from `actions`.
+   * @name module:skins/Counter.Counter#displayDiffFrom
+   * @type {module:skins/Counter.Counter}
+   */
+  displayDiffFrom: null,
+});
+
+export default Counter;

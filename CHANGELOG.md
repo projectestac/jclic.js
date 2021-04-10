@@ -1,77 +1,50 @@
-### v1.1.23 (2021-03-25)
-#### Bug fixes
-- Workaround for a bug on Chrome and Firefox XML parsers, throwing errors whith hexadecimal character entities
+### v2.1.0 (2021-04-10)
+#### Breaking changes
+- JClic projects can be now encapsulated in JSON format (files with extension `.jclic.json`). Current files in XML format (`.jclic`) will be still supported, but JSON will be the default format from now. Both formats can also be packaged in ZIP files (files of type `.jclic.zip` and `.scorm.zip`). This will simplify the development of the upcoming new project _JClic Author HTML5_.
+- JClic.js uses now [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) instead of [AMD modules](https://github.com/amdjs/amdjs-api/wiki/AMD) and [RequireJS](https://requirejs.org/). All members of complex modules like [AWT](https://github.com/projectestac/jclic.js/blob/master/src/AWT.js) and [Utils](https://github.com/projectestac/jclic.js/blob/master/src/Utils.js) can now be imported directly.
+- Static factory methods in classes with multiple descendants.
+- New methods `getAttributes` and `setAttributes` in core classes, used to serialize and de-serialize projects data.
+- Drop Bower support.
+- Open source license updated to [European Union Public License 1.2](https://spdx.org/licenses/EUPL-1.2.html).
 
-### v1.1.22 (2021-03-06)
-#### Improvements
-- Interpret negative values as percentages when setting CSS sizes, useful for the [JClic module for Moodle](https://moodle.org/plugins/mod_jclic).
-
-### v1.1.21 (2021-02-16)
-#### Bug fixes
-- Use underscore instead of blank space as filling character in `TextActivityDocument.TextTarget`
-- Correct the vertical position of centered text in boxes and grid cells
-
-### v1.1.19 (2020-12-26)
-#### Improvements
-- Use the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History) to record the list of played JClic activities, thus allowing to navigate between them with the browser's `back` and `forward` buttons.
-
-### v1.1.18 (2020-11-09)
-#### Bug fixes
-- `AWT.Font.toCss` should use `px` as `font-size` unit for consistency with JClic
-
-#### Improvements
-- Avoid browser's spell checking on written answer activities
-
-### v1.1.17 (2020-10-11)
-#### Improvements
-- Added a hidden message box to `skins/EmptySkin`, thus allowing activities to play audio at start.
-
-### v1.1.16 (2020-10-10)
-#### Improvements
-- Updated NPM components
-- Implemented Clic 3.0 behavior on `panels/Explore` activities without buttons and automatic step forward.
-
-### v1.1.15 (2020-05-26)
-#### Bug fixes
-- Unset `box-shadow` and `text-shadow` attributes in custom buttons
-- Accessible components for `canvas` regions should always be created since [`HitRegions`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/addHitRegion) have been deprecated. Also, [`CanvasRenderingContext2D.drawFocusIfNeeded`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawFocusIfNeeded) should be called on each call to `updateContent` on ActiveBox objects, not just at creation time.
-
-#### Improvements
-- Map JDK logical fonts ("Dialog", "Serif", etc.) to [HTML5 generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
-- Improved experience with screen readers like [ChromeVox](https://www.chromevox.com/) and [Chromevox Classic](https://chrome.google.com/webstore/detail/chromevox-classic-extensi/kgejglhpjiefppelpmljglcjbhoiplfn)
-
-### v1.1.14 (2020-04-23)
-#### Bug fixes
-- Audio recorder features now enabled for all modern browsers using [MediaDevices.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) instead of the deprecated method [navigator.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia).
-- Find [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) with vendor prefix in MIDI audio player (needed for Safari)
-
-#### Improvements
-- Upgraded components
-- Max audio recording time increased to 180"
-- Provide visual feedback while recording audio
-
-### v1.1.13 (2020-04-20)
-#### Bug fixes
-- Use `idempotent-babel-polyfill` instead of `babel-polyfill` as a workaround to [this issue](https://github.com/babel/babel-loader/issues/401).
-- Use the `box-sizing` CSS attribute to compute the real with of the counters area in `DefaultSkin`.
-
-#### Improvements
-- Full screen mode now using direct calls to the [Full Screen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) instead of [screenfull](https://www.npmjs.com/package/screenfull).
-- Use [Terser](https://github.com/terser/terser) instead of [UglifyJS](https://github.com/mishoo/UglifyJS2) for code minification.
-
-### v1.1.12 (2020-02-05)
 #### Bug fixes
 - Check for numeric digits in _Arith_ activity answers before converting them to numbers.
-- Page reloads when entering text to the first question on _Written Answer_ activities (jQuery related)
+- Page reloads when entering text to the first question on _Written Answer_ activities (jQuery related)- Use 'idempotent-babel-polyfill' instead of 'babel-polyfill' as a workaround to [this issue](https://github.com/babel/babel-loader/issues/401), causing problems in JClic module for Moodle.
+- Use the `box-sizing` CSS attribute to compute the real with of the counters area in `DefaultSkin`.
+- Audio recorder features now enabled for all modern browsers using [MediaDevices.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) instead of the deprecated method [navigator.getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia).
+- Find [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) with vendor prefix in MIDI audio player (needed for Safari)
+- Unset `box-shadow` and `text-shadow` attributes in custom buttons.
+- Accessible components for `canvas` regions should always be created since [`HitRegions`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/addHitRegion) have been deprecated. Also, [`CanvasRenderingContext2D.drawFocusIfNeeded`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawFocusIfNeeded) should be called on each call to `updateContent` on `ActiveBox` objects, not just at creation time.
+- Parse new JClic project multiple descriptions in XML files.
+- `AWT.Font.cssFont` should use `px` as `font-size` unit for consistency with JClic.
+- Use underscore instead of blank space as filling character in `TextActivityDocument.TextTarget`
+- Correct the vertical position of centered text in boxes and grid cells
+- Workaround for a bug on Chrome and Firefox XML parsers, throwing errors whith hexadecimal character entities
 
 #### Improvements
-- Deliverable files are now minimized with [Terser](https://github.com/terser/terser) intead of [Uglifyjs](https://github.com/mishoo/UglifyJS2)
+- Updated core components to their latest versions.
+- Use of `package-lock` instead of `npm-shinkwrap` to lock version dependencies.
+- Restored semicolons in all source files.
+- Deliverable files are now minimized with [Terser](https://github.com/terser/terser) intead of [Uglifyjs](https://github.com/mishoo/UglifyJS2).
+- Full screen mode now using direct calls to the [Full Screen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) instead of [screenfull](https://www.npmjs.com/package/screenfull).
+- Upgraded components.
+- Max audio recording time increased to 180".
+- Provide visual feedback while recording audio.
+- Map JDK logical fonts ("Dialog", "Serif", etc.) to [HTML5 generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family).
+- Improved experience with screen readers like [ChromeVox](https://www.chromevox.com/) and [Chromevox Classic](https://chrome.google.com/webstore/detail/chromevox-classic-extensi/kgejglhpjiefppelpmljglcjbhoiplfn).
+- Updated JSDoc comments. Published full [API Docs](http://projectestac.github.io/jclic.js/doc/index.html) with working links.
+- Updated test suites.
+- Implemented Clic 3.0 behavior on `panels/Explore` activities without buttons and automatic step forward.
+- Added a hidden message box to `skins/EmptySkin`, thus allowing activities to play audio at start.
+- Avoid browser's spell checking on written answer activities.
+- Use the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History) to record the list of played JClic activities, thus allowing to navigate between them with the browser's `back` and `forward` buttons.
+- Interpret negative values as percentages when setting CSS sizes, useful for the [JClic module for Moodle](https://moodle.org/plugins/mod_jclic).
 
 ### v1.1.11 (2019-02-11)
 #### Bug fixes
 - Corrected a bug in `automation/arith/Arith.js` that affected operations with decimals with _do not carry_ option.
 
-### Improvements
+#### Improvements
 - Numeric expressions generated by "Arith" (the mental arithmetics moduleof JClic) use now dot or comma as a decimal separator, depending on the browser's "locale" settings.
 - The new `numericContent` activity flag is used by _Arith_ activities to check written answers. So expressions like "0.1", "0.10" and "00,100" (with dot or comma) are considered equivalent.
 

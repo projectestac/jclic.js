@@ -3,10 +3,9 @@
 JClic.js
 ========
 
-A JavaScript player of __JClic__ activities.<br>
+[![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic) [![CDNJS version](https://img.shields.io/cdnjs/v/jclic.js.svg)](https://cdnjs.com/libraries/jclic.js) [![](https://data.jsdelivr.com/v1/package/npm/jclic/badge)](https://www.jsdelivr.com/package/npm/jclic) [![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![npm version](https://badge.fury.io/js/jclic.svg)](https://badge.fury.io/js/jclic) [![Bower version](https://badge.fury.io/bo/jclic.svg)](https://badge.fury.io/bo/jclic) 
-
+[JClic.js](https://github.com/projectestac/jclic.js) is an HTML5 player of [JClic](https://github.com/projectestac/jclic) activities. See a [demo](https://clic.xtec.cat/projects/demo_eng/jclic.js/index.html) on how it works.
 
 ## JClic and JClic-repo
 
@@ -16,44 +15,20 @@ The program includes an authoring tool to create activities, a player and a repo
 
 JClic is a Java application that runs on Linux, Windows and Mac OS. Full [source code](https://github.com/projectestac/jclic) and [documentation](http://projectestac.github.io/jclic/) are available on GitHub.
 
-Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge [library](http://clic.xtec.cat/repo) created with [jclic-repo](https://github.com/projectestac/jclic-repo), another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.
+Many teachers from different countries have used JClic to create interactive materials for a wide variety of levels, subjects, languages and curriculum areas. Some of these materials have been collected in a huge [library](https://clic.xtec.cat/repo) created with [jclic-repo](https://github.com/projectestac/jclic-repo), another open source project that will facilitate the publication of collections of JClic projects in static web hosting services.
 
-## JClic project files
-
-Groups of single __activities__ are often grouped in __JClic projects__ and organized in one or more __sequences__ (lists of activities that must be performed in a specific order). The resulting set of activities, sequences and media elements are packaged into __JClic project files__ (files with extension ".jclic.zip").
-
-## JClic.js components
-
-JClic.js makes use of:
-* [jQuery](https://jquery.com/) to parse XML documents and manage DOM objects
-* [JSZip](https://stuk.github.io/jszip/) to extract contents from "jclic.zip" files
-* [clipboard.js](https://github.com/lgarron/clipboard.js) to copy reports data into the user's clipboard
-* [i18next](https://github.com/i18next/i18next) to deal with messages translated into different languages
-* [screenfull.js](https://github.com/sindresorhus/screenfull.js) to allow activities play at full screen
-* [script.js](https://github.com/ded/script.js) to read JClic projects from local file systems as JSONP
-* [webfontloader](https://github.com/typekit/webfontloader) to dynamically load web fonts as needed
-* [MidiPlayerJS](https://github.com/grimmdude/MidiPlayerJS), [soundfont-player](https://github.com/danigb/soundfont-player), [audio-loader](https://github.com/audiojs/audio-loader) and [sample-player](https://github.com/danigb/sample-player) to process and play MIDI files
-
-The build brocess of JClic.js is based on:
-* [npm](https://www.npmjs.com/) (the package manager of [Node.js](https://nodejs.org/)) to build, install, update and track package dependencies
-* [ESLint](https://eslint.org/) to check for errors and lint the source code
-* [webpack](https://webpack.js.org/) to bundle all components together
-* [Babel](https://babeljs.io/) to make it also compatible with old versions of some browsers
-* [UglifyJS](https://github.com/mishoo/UglifyJS2) to minimize the size of the final deliverable script
-* [Live Server](https://github.com/tapio/live-server) to test and debug
-* [JSDoc](http://usejsdoc.org/) and [ink-bootstrap](https://github.com/docstrap/docstrap) to build the [API docs](http://projectestac.github.io/jclic.js/doc)
-
-## How to set-up the development environtment
+## How to build JClic.js
 
 JClic.js uses [Node.js](https://nodejs.org/) modules encapsulated in [npm](https://www.npmjs.com/) packages. First of all, you must have Node.js (which includes 'npm') [installed](https://nodejs.org/download/) on your system.
+
 
 To install the required packages, just go to the project's root directory and write:
 
 ```
-npm install
+npm ci
 ```
 
-This will install jQuery, webpack and other needed components into `node_modules` 
+This will install jQuery, Webpack and other needed components into `node_modules`
 
 To build jclic.js, just invoke:
 
@@ -61,19 +36,15 @@ To build jclic.js, just invoke:
 npm run build
 ```
 
-This will generate the file `dist/jclic.min.js`
+This will generate the main file `dist/jclic.min.js` (along with other files useful for development)
 
-To test this resulting bundle and see the demo on your browser, launch the test server:
+To test this resulting bundle and see the demo on your browser, launch the webpack dev server:
 
 ```
 npm start
 ```
 
-You can also launch the program in "unbundled" mode, directly invoking the source scripts, useful for debug purposes:
-
-```
-npm run debug
-```
+This will launch a local HTTP server allowing to choose between pages in development mode (bundle build dynamically by [webpack-dev-server](https://webpack.js.org/configuration/dev-server/)) and in production mode (serving the latest build on `/dist`)
 
 You can also build this documentation running `npm run build-doc`
 
@@ -84,122 +55,125 @@ JClic.js is organized in three main groups of classes: _Player_, _Document_ and 
 &nbsp;
 #### Player
 
-[JClicPlayer](JClicPlayer.html) loads JClic project files, manages the user interaction and acts as a interface between the browser and JClic classes for multiple functions. The player has:
+[JClicPlayer](module-JClicPlayer.JClicPlayer.html) loads JClic project files, manages the user interaction and acts as a interface between the browser and JClic classes for multiple functions. The player has:
 
-* [Skin](Skin.html): manages the visual appareance. Can have up to three [Counter](Counter.html) objects.
-  * [DefaultSkin](DefaultSkin.html): is the basic implementation of _Skin_.
-  * [BlueSkin](BlueSkin.html), [OrangeSkin](OrangeSkin.html), [GreenSkin](GreenSkin.html), [MiniSkin](MiniSkin.html) and [SimpleSkin](SimpleSkin.html): are the implementations of the stock skins of JClic.
-* [PlayerHistory](PlayerHistory.html): used to track the user's navigation between activities.
-* [Reporter](Reporter.html): Used to collect and display scores, times and other data generated by users while playing activities.
-  * [TCPReporter](TCPReporter.html): Special case of _Reporter_ used to connect with external reporting systems like [JClic Reports] (http://clic.xtec.cat/en/jclic/reports/index.htm) or the [JClic module for Moodle](https://moodle.org/plugins/view.php?id=305).  
-  * [SCORM](SCORM.js): Utility functions to interact with SCORM 1.2 and 2004 when available
-  * [SessionStorageReporter](SessionStorageReporter.html): writes the report as a persistent data into the browser session or local storage.
+* [Skin](module-skins_Skin.Skin.html): manages the visual appareance. Can have up to three [Counter](module-skins_Counter.Counter.html) objects.
+  * [DefaultSkin](module-skins_DefaultSkin.DefaultSkin.html): is the basic implementation of _Skin_.
+  * [BlueSkin](module-skins_BlueSkin.BlueSkin.html), [OrangeSkin](module-skins_OrangeSkin.OrangeSkin.html), [GreenSkin](module-skins_GreenSkin.GreenSkin.html), [MiniSkin](module-skins_MiniSkin.MiniSkin.html) and [SimpleSkin](module-skins_SimpleSkin.SimpleSkin.html): are the implementations of the stock skins of JClic.
+* [PlayerHistory](module-PlayerHistory.PlayerHistory.html): used to track the user's navigation between activities.
+* [Reporter](module-report_Reporter.Reporter.html): Used to collect and display scores, times and other data generated by users while playing activities.
+  * [TCPReporter](module-report_TCPReporter.TCPReporter.html): Special case of _Reporter_ used to connect with external reporting systems like [JClic Reports] (http://clic.xtec.cat/en/jclic/reports/index.htm) or the [JClic module for Moodle](https://moodle.org/plugins/view.php?id=305).  
+  * [SCORM](module-report_SCORM.SCORM.js): Utility functions to interact with SCORM 1.2 and 2004 when available
+  * [SessionStorageReporter](module-report_SessionStorageReporter.SessionStorageReporter.html): writes the report as a persistent data into the browser session or local storage.
 
 &nbsp;
 #### Document classes
 
-[JClicProject](JClicProject.html) encapsulates all data needed to play JClic activities. Its main components are:
-* [ProjectSettings](ProjectSettings.html)
-* A collection of [Activity](Activity.html) objects (see below)
-* An [ActivitySequence](ActivitySequence.html) formed by [ActivitySequenceElement](ActivitySequenceElement.html) objects.
-* A [MediaBag](MediaBag.html) formed by [MediaBagElement](MediaBagElement.html) objects.
+[JClicProject](module-project_JClicProject.JClicProject.html) encapsulates all data needed to play JClic activities. Its main components are:
+* [ProjectSettings](module-project_ProjectSettings.ProjectSettings.html)
+* A collection of [Activity](module_Activity.Activity.html) objects (see below)
+* An [ActivitySequence](module-bags_ActivitySequence.ActivitySequence.html) formed by [ActivitySequenceElement](module-bags_ActivitySequenceElement.ActivitySequenceElement.html) objects.
+* A [MediaBag](module-bags_MediaBag.MediaBag.html) formed by [MediaBagElement](module-bags_MediaBagElement.MediaBagElement.html) objects.
 
-The [Activity](Activity.html) class has the following subclasses:
-* [SimpleAssociation](SimpleAssociation.html)
-  * [ComplexAssociation](ComplexAssociation.html)
-* [WrittenAnswer](WrittenAnswer.html)
-* [MemoryGame](MemoryGame.html)
-* [Explore](Explore.html)
-* [Identify](Identify.html)
-* [InformationScreen](InformationScreen.html)
-* [DoublePuzzle](DoublePuzzle.html)
-* [ExchangePuzzle](ExchangePuzzle.html)
-* [HolePuzzle](HolePuzzle.html)
-* [TextActivityBase](TextActivityBase.html) (see below)
-  * [FillInBlanks](FillInBlanks.html)
-  * [Complete](Complete.html)
-  * [IdentifyText](IdentifyText.html)
-  * [OrderText](OrderText.html)
-* [CrossWord](CrossWord.html)
-* [WordSearch](WordSearch.html)
+The [Activity](module-Activity.Activity.html) class has the following subclasses:
+* [SimpleAssociation](module-activities_associations_SimpleAssociation.SimpleAssociation.html)
+  * [ComplexAssociation](module-activities_associations_ComplexAssociation.ComplexAssociation.html)
+* [WrittenAnswer](module-activities_text_WrittenAnswer.WrittenAnswer.html)
+* [MemoryGame](module-activities_memory_MemoryGame.MemoryGame.html)
+* [Explore](module-activities_panels_Explore.Explore.html)
+* [Identify](module-activities_panels_Identify.Identify.html)
+* [InformationScreen](module-activities_panels_InformationScreen.InformationScreen.html)
+* [DoublePuzzle](module-activities_puzzles_DoublePuzzle.DoublePuzzle.html)
+* [ExchangePuzzle](module-activities_puzzles_ExchangePuzzle.ExchangePuzzle.html)
+* [HolePuzzle](module-activities_puzzles_HolePuzzle.HolePuzzle.html)
+* [TextActivityBase](module-activities_text_TextActivityBase.TextActivityBase.html) (see below)
+  * [FillInBlanks](module-activities_text_FillInBlanks.FillInBlanks.html)
+  * [Complete](module-activities_text_Complete.Complete.html)
+  * [IdentifyText](module-activities_text_IdentifyText.IdentifyText.html)
+  * [OrderText](module-activities_text_OrderText.OrderText.html)
+* [CrossWord](module-activities_textGrid_CrossWord.CrossWord.html)
+* [WordSearch](module-activities_textGrid_WordSearch.WordSearch.html)
 
-All classes derived from [TextActivityBase](TextActivityBase.html) have:
-* One [TextActivityDocument](TextActivityDocument.html)
-* An [Evaluator](Evaluator.html)
+All classes derived from [TextActivityBase](module-activities_text_TextActivityBase.TextActivityBase.html) have:
+* One [TextActivityDocument](module-activities_text_TextActivityDocument.TextActivityDocument.html)
+* An [Evaluator](module-activities_text_Evaluator.Evaluator.html)
 
-At run time, all classes derived from [Activity](Activity.html) generate a specific [Activity.Panel](Activity.Panel.html), that is a real DOM object with wich users interact.
+At run time, all classes derived from [Activity](module-Activity.Activity.html) generate a specific [ActivityPanel](module-Activity.ActivityPanel.html), that is a real DOM object with wich users interact.
 
 &nbsp;
 #### Utility classes
 
 __AWT:__
 AWT contains some classes similar to those defined in Java's [Abstract Window Toolkit](http://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html):
-* [Font](Font.html)
-* [Gradient](Gradient.html)
-* [Stroke](Stroke.html)
-* [Point](Point.html)
-* [Dimension](Dimension.html)
-* [Shape](Shape.html)
-  * [Rectangle](Rectangle.html)
-  * [Ellipse](Ellipse.html)
-  * [Path](Path.html): formed by [PathStroke](PathStroke.html) elements
-* [Action](Action.html)
-* [Timer](Timer.html)
-* [Container](Container.html)
+* [Font](module-AWT.Font.html)
+* [Gradient](module-AWT.Gradient.html)
+* [Stroke](module-AWT.Stroke.html)
+* [Point](module-AWT.Point.html)
+* [Dimension](module-AWT.Dimension.html)
+* [Shape](module-AWT.Shape.html)
+  * [Rectangle](module-AWT.Rectangle.html)
+  * [Ellipse](module-AWT.Ellipse.html)
+  * [Path](module-AWT.Path.html): formed by [PathStroke](module-AWT.PathStroke.html) elements
+* [Action](module-AWT.Action.html)
+* [Timer](module-AWT.Timer.html)
+* [Container](module-AWT.Container.html)
 
 __Boxes:__
-[AbstractBox](AbstractBox.html) is a special class derived from [AWT.Rectangle](AWT.Rectangle.html) that has the following subclasses:
-* [ActiveBox](ActiveBox.html): an AbstractBox with active content (see below)
-* [BoxBag](BoxBag.html): a collection of AbstractBox objects.
-  * [ActiveBoxBag](ActiveBoxBag.html): a collection of [ActiveBox](ActiveBox.html) objects.
-    * [ActiveBoxGrid](ActiveBoxGrid.html): a special case of ActiveBoxBag with boxes distributed in rows and columns.
-* [TextGrid](TextGrid.html): a grid of single letters.
+[AbstractBox](module-boxes_AbstractBox.AbstractBox.html) is a special class derived from [AWT.Rectangle](module-AWT.Rectangle.html) that has the following subclasses:
+* [ActiveBox](module-boxes_ActiveBox.ActiveBox.html): an AbstractBox with active content (see below)
+* [BoxBag](module-boxes_BoxBag.BoxBag.html): a collection of AbstractBox objects.
+  * [ActiveBoxBag](module-boxes_ActiveBoxBag.ActiveBoxBag.html): a collection of [ActiveBox](module-boxes_ActiveBox.ActiveBox.html) objects.
+    * [ActiveBoxGrid](module-boxes_ActiveBoxGrid.ActiveBoxGrid.html): a special case of ActiveBoxBag with boxes distributed in rows and columns.
+* [TextGrid](module-boxes_TextGrid.TextGrid.html): a grid of single letters.
 
 __Box content:__
-* [ActiveBoxContent](ActiveBoxContent.html): encapsulates the content of a single _ActiveBox_.
-* [BoxBase](BoxBase.html): contains style specs (color, gradient, border, font, size...) common to one or more _ActiveBoxContent_ objects. Also used by _TextActivityDocument_ to encapsulate text styles.
-* [ActiveBagContent](ActiveBagContent.html): a collection of _ActiveBoxContent_ objects.
-* [TextGridContent](TextGridContent.html): encapsulates the content of a _TextGrid_ object.
+* [ActiveBoxContent](module-boxes_ActiveBoxContent.ActiveBoxContent.html): encapsulates the content of a single _ActiveBox_.
+* [BoxBase](module-boxes_BoxBase.BoxBase.html): contains style specs (color, gradient, border, font, size...) common to one or more _ActiveBoxContent_ objects. Also used by _TextActivityDocument_ to encapsulate text styles.
+* [ActiveBagContent](module-boxes_ActiveBagContent.ActiveBagContent.html): a collection of _ActiveBoxContent_ objects.
+* [TextGridContent](module-boxes_TextGridContent.TextGridContent.html): encapsulates the content of a _TextGrid_ object.
 
 __Shapers:__
-* [Shaper](Shaper.html): describes how to cut a panel in multiple cells.
-  * [Rectangular](Rectangular.html): divides the panel in rectangular cells.
-  * [Holes](Holes.html): a free-form shaper.
-  * [JigSaw](JigSaw.html): generates cells with teeth and slots.
-    * [ClassicJigSaw](ClassicJigSaw.html)
-    * [TriangularJigSaw](TriangularJigSaw.html)
+* [Shaper](module-shapers_Shaper.Shaper.html): describes how to cut a panel in multiple cells.
+  * [Rectangular](module-shapers_Rectangular.Rectangular.html): divides the panel in rectangular cells.
+  * [Holes](module-shapers_Holes.Holes.html): a free-form shaper.
+  * [JigSaw](module-shapers_JigSaw.JigSaw.html): generates cells with teeth and slots.
+    * [ClassicJigSaw](module-shapers_ClassicJigSaw.ClassicJigSaw.html)
+    * [TriangularJigSaw](module-shapers_TriangularJigSaw.TriangularJigSaw.html)
 
 __Media:__
-* [EventSounds](EventSounds.html): a collection of [EventSoundsElement](EventSoundsElement.html)
-* [ActiveMediaBag](ActiveMediaBag.html): a collection of [MediaContent](MediaContent.html)
-* [ActiveMediaPlayer](ActiveMediaPlayer.html): performs playing of _MediaContent_
-* [AudioBuffer](AudioBuffer.html): Provides sound recording (usually from the microphone) so, in language activities, students can compare their pronunciation with a pattern.
-* [MidiAudioPlayer](MidiAudioPlayer.html): performs playing of MIDI files
+* [EventSounds](module-media_EventSounds.EventSounds.html): a collection of [EventSoundsElement](module-media_EventSoundsElement.EventSoundsElement.html)
+* [ActiveMediaBag](module-media_ActiveMediaBag.ActiveMediaBag.html): a collection of [MediaContent](module-media_MediaContent.MediaContent.html)
+* [ActiveMediaPlayer](module-media_ActiveMediaPlayer.html): performs playing of _MediaContent_
+* [AudioBuffer](module-media_AudioBuffer.html): Provides sound recording (usually from the microphone) so, in language activities, students can compare their pronunciation with a pattern.
+* [MidiAudioPlayer](module-media_MidiAudioPlayer.html): performs playing of MIDI files
 
 __Automation:__
-* [AutoContentProvider](AutoContentProvider.html): builds dynamic content for activities
-  * [Arith](Arith.html): random generator of menthal arithmetics operations
+* [AutoContentProvider](module-automation_AutoContentProvider.AutoContentProvider.html): builds dynamic content for activities
+  * [Arith](module-automation_arith_Arith.Arith.html): random generator of menthal arithmetics operations
 
 __Jump between sequence points:__
-* [JumpInfo](JumpInfo.html): stores information about what to do when an activity finishes or when the user clicks on a link or button.
-  * [ActivitySequenceJump](ActivitySequenceJump.html): used by _ActivitySequenceElement_ objects.
-  * [ConditionalJumpInfo](ConditionalJumpInfo.html): used to decide where to jump, based on the current timing and scoring
+* [JumpInfo](module-bags_JumpInfo.JumpInfo.html): stores information about what to do when an activity finishes or when the user clicks on a link or button.
+  * [ActivitySequenceJump](module-bags_ActivitySequenceJump.ActivitySequenceJump.html): used by _ActivitySequenceElement_ objects.
+  * [ConditionalJumpInfo](module-bags_ConditionalJumpInfo.ConditionalJumpInfo.html): used to decide where to jump, based on the current timing and scoring
 
 __Miscellaneous utility classes:__
-* [BoxConnector](BoxConnector.html): Used to link two cells with a thin line dragged by the user.
-* [Utils](Utils.html): Miscellaneous constants and functions.
-* [i18n](i18n.js): Internationalization utilities.
+* [BoxConnector](module-boxes_BoxConnector.BoxConnector.html): Used to link two cells with a thin line dragged by the user.
+* [Utils](module-Utils.html): Miscellaneous constants and functions.
+* [i18n](module-i18n.html): Internationalization utilities.
 
 ## Sponsors that make possible JClic.js
 
-JClic is an open-source project supported by [XTEC](http://www.xtec.cat), the Telematic Network of the Catalan Ministry of Education
+[![XTEC](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-xtec.png?raw=true)](http://www.xtec.cat)<br>
+JClic.js is an open-source project sustained by [XTEC](http://www.xtec.cat), the Telematic Network of the Catalan Ministry of Education.
 
-We use [Transifex](https://www.transifex.com/francesc/jclicjs) as a platform for translations of JClic.js into many languages. Please read [TRANSLATIONS.md](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md) if you want to contribute to the project creating a new translation or improving the existing ones.
+[![BrowserStack](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-browserstack.png?raw=true)](https://www.browserstack.com)<br>
+Checking the operation of JClic.js on different browsers and platforms is possible thanks to virtual machines provided by [BrowserStack](https://www.browserstack.com).
 
-Checking the operation of JClic.js on different browsers and platforms is possible thanks to [BrowserStack](https://www.browserstack.com)
+[![JSDelivr](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-jsdelivr.png?raw=true)](http://www.jsdelivr.com/projects/jclic.js)<br>
+The production releases of JClic.js are smoothly distributed to the final users thanks to the [JSDelivr](http://www.jsdelivr.com/projects/jclic.js) network of servers.
 
-The production releases of JClic.js are smoothly distributed to the final users thanks to [XTEC](http://www.xtec.cat), [JSDelivr](http://www.jsdelivr.com/projects/jclic.js), [unpkg.com](https://unpkg.com/jclic/dist/jclic.min.js) and [CDNJS](https://cdnjs.com/libraries/jclic.js).
+[![cdnjs](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-cdnjs.png?raw=true)](https://cdnjs.com/libraries/jclic.js)<br>
+All project files are also available through [cdnjs](https://cdnjs.com/about), a very powerful content delivery service powered by [Cloudflare](https://www.cloudflare.com).
 
-__jclic.js__ is also available as a [NPM](https://www.npmjs.com/package/jclic) and [Bower](https://libraries.io/bower/jclic) packages.
-
-[![Join the chat at https://gitter.im/projectestac/jclic.js](https://badges.gitter.im/projectestac/jclic.js.svg)](https://gitter.im/projectestac/jclic.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Transifex](https://github.com/projectestac/jclic.js/blob/master/misc/graphics/logo-transifex.png?raw=true)](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md)<br>
+We use [Transifex](https://www.transifex.com/francesc/jclicjs) as a platform to translate JClic.js into many languages. Please read [TRANSLATIONS.md](https://github.com/projectestac/jclic.js/blob/master/TRANSLATIONS.md) if you want to contribute to the project creating a new translation or improving the existing ones.

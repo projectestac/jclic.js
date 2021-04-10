@@ -38,21 +38,17 @@ npm run build
 
 This will generate the main file `dist/jclic.min.js` (along with other files useful for development)
 
-To test this resulting bundle and see the demo on your browser, launch the test server:
+To test and debug the resulting bundle, launch the webpack dev server:
 
 ```
 npm start
 ```
 
-You can also launch the program in "unbundled" mode, directly invoking the source scripts. This is useful for debugging:
-
-```
-npm run debug
-```
+This will launch a local HTTP server allowing to choose between pages in development mode (bundle build dynamically by [webpack-dev-server](https://webpack.js.org/configuration/dev-server/)) and in production mode (serving the latest build on `/dist`)
 
 Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc
 
-The project is also available as a [NPM](https://www.npmjs.com/package/jclic) and [Bower](https://libraries.io/bower/jclic) packages.
+The project is also available as an [NPM](https://www.npmjs.com/package/jclic) package.
 
 ## Direct download
 
@@ -68,7 +64,7 @@ The latest version of the compiled and minified script `jclic.min.js` is current
 JClic.js makes use of:
 * [jQuery](https://jquery.com/) to parse XML documents and manage DOM objects
 * [JSZip](https://stuk.github.io/jszip/) to extract contents from "jclic.zip" files
-* [clipboard.js](https://github.com/lgarron/clipboard.js) to copy reports data into the user's clipboard
+* [clipboard-polyfill](https://github.com/lgarron/clipboard-polyfill) to copy reports data into the user's clipboard
 * [i18next](https://github.com/i18next/i18next) to deal with messages translated into different languages
 * [script.js](https://github.com/ded/script.js) to read JClic projects from local file systems as JSONP
 * [webfontloader](https://github.com/typekit/webfontloader) to dynamically load web fonts as needed
@@ -79,8 +75,7 @@ The build process of JClic.js makes use of:
 * [ESLint](https://eslint.org/) to check for errors and lint the source code
 * [webpack](https://webpack.js.org/) to bundle all components together
 * [Babel](https://babeljs.io/) to make it also compatible with old versions of some browsers
-* [UglifyJS](https://github.com/mishoo/UglifyJS2) to minimize the size of the final deliverable script
-* [Live Server](https://github.com/tapio/live-server) to test and debug
+* [terser](https://terser.org/) to minimize the size of the final deliverable script
 * [JSDoc](http://usejsdoc.org/) and [ink-bootstrap](https://github.com/docstrap/docstrap) to build the [API docs](http://projectestac.github.io/jclic.js/doc)
 
 ## Sponsors that make possible JClic.js

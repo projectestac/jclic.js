@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 //
 // Lists the contents of a JClic project file
 //
@@ -5,38 +7,46 @@
 // node listProjectContents.js [filename]
 //
 
-var fs = require('fs');
+/* global process, global, require, console */
+
+const fs = require('fs');
 
 // Use mock-browser as a browser simulator
-var MockBrowser = require('mock-browser').mocks.MockBrowser;
-var mock = new MockBrowser();
+const MockBrowser = require('mock-browser').mocks.MockBrowser;
+const mock = new MockBrowser();
 global.window = mock.getWindow();
 global.document = mock.getDocument();
-global.Image = function () {};
-global.Audio = function () {};
+global.Image = function () { };
+global.Audio = function () { };
 
 // Use `xmldom` as DOM parser
 global.DOMParser = require('xmldom').DOMParser;
 
-// amdefine allows to load AMD modules into node.js modules
-require('amdefine/intercept');
-
-// Load the main JClic module.
+// Load the global [JClicObject](http://projectestac.github.io/jclic.js/doc/module-JClic.html).
 // Here this is done with a relative path. In other contexts just install
 // the 'jclic' NPM package and require it, like in:
 // `var jclic = require('jclic');`
-var jclic = require('../../src/JClic.js');
+const jclic = require('../../dist/jclic-node.js');
 
 // Get the file name from the command line arguments, using 'demo.jclic' if none provided.
-var file = process.argv.length > 2 ? process.argv[2] : '../jclic-demo/demo.jclic';
+const file = process.argv.length > 2 ? process.argv[2] : '../jclic-demo/demo.jclic.json';
 
-// Read file and parse it into a DOM object
-var contents = fs.readFileSync(file, 'utf8');
-var doc = new DOMParser().parseFromString(contents);
+// Create an empty JClicProject
+const project = new jclic.JClicProject();
 
-// Create a JClicProject and initialize it with the file contents
-var project = new jclic.JClicProject();
-project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
+if (file.endsWith('.jclic')) {
+  // Read file and parse it into a DOM object
+  const contents = fs.readFileSync(file, 'utf8');
+  const doc = new global.DOMParser().parseFromString(contents);
+  // Initialize project with the file contents
+  project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
+}
+else {
+  // Is a JSON file
+  const data = require(file);
+  // Initialize project with the file contents
+  project.setAttributes(data, file, null, {});
+}
 
 // Log project properties to stdout
 console.log('Project "%s" loaded', file);
@@ -68,7 +78,3 @@ for (var p = 0; p < nMedia; p++)
   console.log('- %s', media[p]);
 
 console.log('\nTOTAL: %d activities, %d sequences, %d media files', nActivities, nSequences, nMedia);
-
-
-
-

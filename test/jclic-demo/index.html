@@ -1,20 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>JClic HTML Player Test Page</title>
-    <meta charset="UTF-8">
-    <link rel="shortcut icon" href="./favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
-  <body>
-    <h2>JClic.js test pages</h2>    
-    <ul>
-    <li><a href="debug.html">debug.html</a> Direct loading of <code>/src</code> files using <a href="http://requirejs.org/docs/api.html#config">requirejs.config</a></li>
-    <li><a href="index-min.html">index-min.html</a> Using transpiled, minified code from <code>/dist/jclic.min.js</code>.</li>
-    <li><a href="index-es6.html">index-es6.html</a> Using compacted ES6 code from <code>/dist/jclic-es6.js</code>.</li>
-    <li><a href="index-es5.html">index-es5.html</a> Using compacted ES5 code from <code>/dist/jclic.js</code>.</li>
-    <li><a href="index-framed.html">index-framed.html</a> JClic.js running into a framed <code>div</code> (debug mode).</li>
-    <li><a href="index-sized.html">index-sized.html</a> JClic.js running into a fixed-size <code>div</code> (debug mode).</li>
+
+<head>
+  <title>JClic HTML Player Test Page</title>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="../favicon.ico">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <h1>JClic.js test suites</h1>
+  <h2>Debug mode</h2>
+  <p>Dynamic loading of <code>/src</code> files using <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>.</p>
+  <h3>Test pages with "demo.jclic"</h3>
+  <ul>
+    <li><a href="debug.html">debug.html</a> Full page mode.</li>
+    <li><a href="index-framed.html">index-framed.html</a> JClic.js running into a framed <code>div</code>.
+    </li>
+    <li><a href="index-sized.html">index-sized.html</a> JClic.js running into a fixed-size <code>div</code>.</li>
   </ul>
-  </body>
+  <h3>Test pages with "demo.jclic.json"</h3>
+  <ul>
+    <li><a href="debug-json.html">debug-json.html</a> Full page mode.</li>
+  </ul>
+  <h3>Test pages with "demo.jclic.zip"</h3>
+  <ul>
+    <li><a href="debug-zip.html">debug-zip.html</a> Full page mode.</li>
+  </ul>
+  <h3>Test pages with remote ".jclic" file</h3>
+  <ul>
+    <li><a href="remote.html">remote.html</a> Full page mode.</li>
+  </ul>
+
+  <hr />
+
+  <h2>Production mode</h2>
+  <p>Using built code from <code>/dist/jclic.min.js</code></p>
+  <h3>Test pages with "demo.jclic"</h3>
+  <ul>
+    <li><a href="index-min.html">index-min.html</a> Full page mode.</li>
+  </ul>
+  <h3>Test pages with "demo.jclic.json"</h3>
+  <ul>
+    <li><a href="index-json-min.html">index-json-min.html</a> Full page mode.</li>
+  </ul>
+  <h3>Test pages with "demo.jclic.zip"</h3>
+  <ul>
+    <li><a href="index-zip-min.html">index-zip-min.html</a> Full page mode.</li>
+  </ul>
+</body>
+
 </html>

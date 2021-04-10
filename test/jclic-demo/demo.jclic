@@ -132,7 +132,7 @@
   </item>
   <item name="anim1" />
   <item name="puzanim.puz" />
-  <item name="puzanim2.puz" />  
+  <item name="puzanim2.puz" />
   <item name="anim2">
    <jump action="RETURN" id="forward" />
   </item>
@@ -1415,7 +1415,7 @@
        <p>and each cell...</p>
       </cell>
       <text> </text>
-      <cell width="100" height="80" border="true" vAlign="top" hAlign="left">
+      <cell width="100" height="80" border="true" vAlign="top" hAlign="left" txtAlign="left,top">
        <style>
         <font family="Arial" size="13" bold="true" />
         <color background="green" foreground="white" />
@@ -1424,7 +1424,7 @@
        <p>...can have...</p>
       </cell>
       <text> </text>
-      <cell width="100" height="80" border="true" vAlign="bottom" hAlign="right">
+      <cell width="100" height="80" border="true" vAlign="bottom" hAlign="right" txtAlign="right,bottom">
        <style>
         <font family="Arial" size="13" bold="true" />
         <color background="yellow" foreground="white" />
@@ -3872,7 +3872,7 @@
        </optionList>
        <text>nach</text>
       </target>
-      <text> zehn.</text>     
+      <text> zehn.</text>
      </p -->
     </section>
    </document>
@@ -4267,14 +4267,14 @@
      <p>
       <text>"Casablanca"</text>
      </p>
-     <p />     
+     <p />
      <p>
       <text>The following text is used only to test layout and overflow behavior</text>
-     </p>       
+     </p>
      <p><text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text></p>
      <p><text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text></p>
      <p><text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text></p>
-     <p><text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text></p>     
+     <p><text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text></p>
     </section>
    </document>
    <evaluator class="@ComplexEvaluator" checkCase="true" detail="false" checkSteps="4" />
@@ -5285,4 +5285,3 @@
   <media name="scratch.png" file="scratch.png" />
  </mediaBag>
 </JClicProject>
-

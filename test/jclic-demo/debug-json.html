@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JClic HTML Player Test Page (debug mode)</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="./favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="/jclic.min.js"></script>
+    <style type="text/css">
+      .JClicX {
+        width: 800px;
+        height: 600px;
+      }
+    </style>
+  </head>
+  <body style="margin: 0">
+    <div class ="JClic"
+         data-project="demo.jclic.json"
+         data-options='{"logLevel":"trace"}'
+         data-options-with-midi-instrument='{"logLevel":"trace","MIDISoundFontName":"kalimba"}'
+         data-options-reporter-session='{"logLevel":"trace","reporter":"SessionStorageReporter"}'
+         data-options-report-with-user='{"reporter":"TCPReporter","path":"localhost:9000","user":"test01","lap":"15"}'
+         data-options-reporter='{"reporter":"TCPReporter","path":"localhost:9000","SCORM":"false"}'
+         data-backOptions='{"skin":"@empty.xml","logLevel":"trace","skin":"@orange.xml","lang":"es","counters":"false","width":"900","height":"600","fade":"400","fontSubstitutions":{"arial":"Roboto Slab"},"skin":"gali.xml"}'>
+    </div>
+  </body>
+</html>
