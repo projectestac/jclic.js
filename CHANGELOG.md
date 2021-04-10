@@ -1,4 +1,4 @@
-### v2.1.0 (Not yet released)
+### v2.1.0 (2021-04-10)
 #### Breaking changes
 - JClic projects can be now encapsulated in JSON format (files with extension `.jclic.json`). Current files in XML format (`.jclic`) will be still supported, but JSON will be the default format from now. Both formats can also be packaged in ZIP files (files of type `.jclic.zip` and `.scorm.zip`). This will simplify the development of the upcoming new project _JClic Author HTML5_.
 - JClic.js uses now [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) instead of [AMD modules](https://github.com/amdjs/amdjs-api/wiki/AMD) and [RequireJS](https://requirejs.org/). All members of complex modules like [AWT](https://github.com/projectestac/jclic.js/blob/master/src/AWT.js) and [Utils](https://github.com/projectestac/jclic.js/blob/master/src/Utils.js) can now be imported directly.
