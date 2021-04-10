@@ -1,0 +1,3745 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>JClic.js Class: JigSaw</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.united.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">JClic.js</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu inline">
+					<li><a href="module-activities_associations_ComplexAssociation.html">activities/associations/ComplexAssociation</a></li><li><a href="module-activities_associations_SimpleAssociation.html">activities/associations/SimpleAssociation</a></li><li><a href="module-activities_memory_MemoryGame.html">activities/memory/MemoryGame</a></li><li><a href="module-activities_panels_Explore.html">activities/panels/Explore</a></li><li><a href="module-activities_panels_Identify.html">activities/panels/Identify</a></li><li><a href="module-activities_panels_InformationScreen.html">activities/panels/InformationScreen</a></li><li><a href="module-activities_panels_Menu.html">activities/panels/Menu</a></li><li><a href="module-activities_puzzles_DoublePuzzle.html">activities/puzzles/DoublePuzzle</a></li><li><a href="module-activities_puzzles_ExchangePuzzle.html">activities/puzzles/ExchangePuzzle</a></li><li><a href="module-activities_puzzles_HolePuzzle.html">activities/puzzles/HolePuzzle</a></li><li><a href="module-activities_text_Complete.html">activities/text/Complete</a></li><li><a href="module-activities_text_Evaluator.html">activities/text/Evaluator</a></li><li><a href="module-activities_text_FillInBlanks.html">activities/text/FillInBlanks</a></li><li><a href="module-activities_text_IdentifyText.html">activities/text/IdentifyText</a></li><li><a href="module-activities_text_OrderText.html">activities/text/OrderText</a></li><li><a href="module-activities_text_TextActivityBase.html">activities/text/TextActivityBase</a></li><li><a href="module-activities_text_TextActivityDocument.html">activities/text/TextActivityDocument</a></li><li><a href="module-activities_text_WrittenAnswer.html">activities/text/WrittenAnswer</a></li><li><a href="module-activities_textGrid_CrossWord.html">activities/textGrid/CrossWord</a></li><li><a href="module-activities_textGrid_WordSearch.html">activities/textGrid/WordSearch</a></li><li><a href="module-Activity.html">Activity</a></li><li><a href="module-automation_arith_Arith.html">automation/arith/Arith</a></li><li><a href="module-automation_AutoContentProvider.html">automation/AutoContentProvider</a></li><li><a href="module-AWT.html">AWT</a></li><li><a href="module-bags_ActivitySequence.html">bags/ActivitySequence</a></li><li><a href="module-bags_ActivitySequenceElement.html">bags/ActivitySequenceElement</a></li><li><a href="module-bags_ActivitySequenceJump.html">bags/ActivitySequenceJump</a></li><li><a href="module-bags_ConditionalJumpInfo.html">bags/ConditionalJumpInfo</a></li><li><a href="module-bags_JumpInfo.html">bags/JumpInfo</a></li><li><a href="module-bags_MediaBag.html">bags/MediaBag</a></li><li><a href="module-bags_MediaBagElement.html">bags/MediaBagElement</a></li><li><a href="module-boxes_AbstractBox.html">boxes/AbstractBox</a></li><li><a href="module-boxes_ActiveBagContent.html">boxes/ActiveBagContent</a></li><li><a href="module-boxes_ActiveBox.html">boxes/ActiveBox</a></li><li><a href="module-boxes_ActiveBoxBag.html">boxes/ActiveBoxBag</a></li><li><a href="module-boxes_ActiveBoxContent.html">boxes/ActiveBoxContent</a></li><li><a href="module-boxes_ActiveBoxGrid.html">boxes/ActiveBoxGrid</a></li><li><a href="module-boxes_BoxBag.html">boxes/BoxBag</a></li><li><a href="module-boxes_BoxBase.html">boxes/BoxBase</a></li><li><a href="module-boxes_BoxConnector.html">boxes/BoxConnector</a></li><li><a href="module-boxes_TextGrid.html">boxes/TextGrid</a></li><li><a href="module-boxes_TextGridContent.html">boxes/TextGridContent</a></li><li><a href="module-i18n.html">i18n</a></li><li><a href="module-JClic.html">JClic</a></li><li><a href="module-JClicPlayer.html">JClicPlayer</a></li><li><a href="module-media_ActiveMediaBag.html">media/ActiveMediaBag</a></li><li><a href="module-media_ActiveMediaPlayer.html">media/ActiveMediaPlayer</a></li><li><a href="module-media_AudioBuffer.html">media/AudioBuffer</a></li><li><a href="module-media_EventSounds.html">media/EventSounds</a></li><li><a href="module-media_EventSoundsElement.html">media/EventSoundsElement</a></li><li><a href="module-media_MediaContent.html">media/MediaContent</a></li><li><a href="module-media_MidiAudioPlayer.html">media/MidiAudioPlayer</a></li><li><a href="module-PlayerHistory.html">PlayerHistory</a></li><li><a href="module-project_JClicProject.html">project/JClicProject</a></li><li><a href="module-project_ProjectSettings.html">project/ProjectSettings</a></li><li><a href="module-report_ActionReg.html">report/ActionReg</a></li><li><a href="module-report_ActivityReg.html">report/ActivityReg</a></li><li><a href="module-report_EncryptMin.html">report/EncryptMin</a></li><li><a href="module-report_Reporter.html">report/Reporter</a></li><li><a href="module-report_SCORM.html">report/SCORM</a></li><li><a href="module-report_SequenceReg.html">report/SequenceReg</a></li><li><a href="module-report_SessionReg.html">report/SessionReg</a></li><li><a href="module-report_SessionStorageReporter.html">report/SessionStorageReporter</a></li><li><a href="module-report_TCPReporter.html">report/TCPReporter</a></li><li><a href="module-shapers_ClassicJigSaw.html">shapers/ClassicJigSaw</a></li><li><a href="module-shapers_Holes.html">shapers/Holes</a></li><li><a href="module-shapers_JigSaw.html">shapers/JigSaw</a></li><li><a href="module-shapers_Rectangular.html">shapers/Rectangular</a></li><li><a href="module-shapers_Shaper.html">shapers/Shaper</a></li><li><a href="module-shapers_TriangularJigSaw.html">shapers/TriangularJigSaw</a></li><li><a href="module-skins_BlueSkin.html">skins/BlueSkin</a></li><li><a href="module-skins_Counter.html">skins/Counter</a></li><li><a href="module-skins_CustomSkin.html">skins/CustomSkin</a></li><li><a href="module-skins_DefaultSkin.html">skins/DefaultSkin</a></li><li><a href="module-skins_EmptySkin.html">skins/EmptySkin</a></li><li><a href="module-skins_GreenSkin.html">skins/GreenSkin</a></li><li><a href="module-skins_MiniSkin.html">skins/MiniSkin</a></li><li><a href="module-skins_OrangeSkin.html">skins/OrangeSkin</a></li><li><a href="module-skins_SimpleSkin.html">skins/SimpleSkin</a></li><li><a href="module-skins_Skin.html">skins/Skin</a></li><li><a href="module-Utils.html">Utils</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu inline">
+					<li><a href="module-activities_associations_ComplexAssociation.ComplexAssociation.html">activities/associations/ComplexAssociation.ComplexAssociation</a></li><li><a href="module-activities_associations_ComplexAssociation.ComplexAssociationPanel.html">activities/associations/ComplexAssociation.ComplexAssociationPanel</a></li><li><a href="module-activities_associations_SimpleAssociation.SimpleAssociation.html">activities/associations/SimpleAssociation.SimpleAssociation</a></li><li><a href="module-activities_associations_SimpleAssociation.SimpleAssociationPanel.html">activities/associations/SimpleAssociation.SimpleAssociationPanel</a></li><li><a href="module-activities_memory_MemoryGame.MemoryGame.html">activities/memory/MemoryGame.MemoryGame</a></li><li><a href="module-activities_memory_MemoryGame.MemoryGamePanel.html">activities/memory/MemoryGame.MemoryGamePanel</a></li><li><a href="module-activities_panels_Explore.Explore.html">activities/panels/Explore.Explore</a></li><li><a href="module-activities_panels_Explore.ExplorePanel.html">activities/panels/Explore.ExplorePanel</a></li><li><a href="module-activities_panels_Identify.Identify.html">activities/panels/Identify.Identify</a></li><li><a href="module-activities_panels_Identify.IdentifyPanel.html">activities/panels/Identify.IdentifyPanel</a></li><li><a href="module-activities_panels_InformationScreen.InformationScreen.html">activities/panels/InformationScreen.InformationScreen</a></li><li><a href="module-activities_panels_InformationScreen.InformationScreenPanel.html">activities/panels/InformationScreen.InformationScreenPanel</a></li><li><a href="module-activities_panels_Menu.Menu.html">activities/panels/Menu.Menu</a></li><li><a href="module-activities_panels_Menu.MenuPanel.html">activities/panels/Menu.MenuPanel</a></li><li><a href="module-activities_puzzles_DoublePuzzle.DoublePuzzle.html">activities/puzzles/DoublePuzzle.DoublePuzzle</a></li><li><a href="module-activities_puzzles_DoublePuzzle.DoublePuzzlePanel.html">activities/puzzles/DoublePuzzle.DoublePuzzlePanel</a></li><li><a href="module-activities_puzzles_ExchangePuzzle.ExchangePuzzle.html">activities/puzzles/ExchangePuzzle.ExchangePuzzle</a></li><li><a href="module-activities_puzzles_ExchangePuzzle-ExchangePuzzlePanel.html">activities/puzzles/ExchangePuzzle~ExchangePuzzlePanel</a></li><li><a href="module-activities_puzzles_HolePuzzle.HolePuzzle.html">activities/puzzles/HolePuzzle.HolePuzzle</a></li><li><a href="module-activities_puzzles_HolePuzzle.HolePuzzlePanel.html">activities/puzzles/HolePuzzle.HolePuzzlePanel</a></li><li><a href="module-activities_text_Complete.Complete.html">activities/text/Complete.Complete</a></li><li><a href="module-activities_text_Complete.CompletePanel.html">activities/text/Complete.CompletePanel</a></li><li><a href="module-activities_text_Evaluator.BasicEvaluator.html">activities/text/Evaluator.BasicEvaluator</a></li><li><a href="module-activities_text_Evaluator.ComplexEvaluator.html">activities/text/Evaluator.ComplexEvaluator</a></li><li><a href="module-activities_text_Evaluator.Evaluator.html">activities/text/Evaluator.Evaluator</a></li><li><a href="module-activities_text_FillInBlanks.FillInBlanks.html">activities/text/FillInBlanks.FillInBlanks</a></li><li><a href="module-activities_text_FillInBlanks.FillInBlanksPanel.html">activities/text/FillInBlanks.FillInBlanksPanel</a></li><li><a href="module-activities_text_IdentifyText.IdentifyText.html">activities/text/IdentifyText.IdentifyText</a></li><li><a href="module-activities_text_IdentifyText-IdentifyTextPanel.html">activities/text/IdentifyText~IdentifyTextPanel</a></li><li><a href="module-activities_text_OrderText.OrderText.html">activities/text/OrderText.OrderText</a></li><li><a href="module-activities_text_OrderText.OrderTextPanel.html">activities/text/OrderText.OrderTextPanel</a></li><li><a href="module-activities_text_TextActivityBase.TextActivityBase.html">activities/text/TextActivityBase.TextActivityBase</a></li><li><a href="module-activities_text_TextActivityBase.TextActivityBasePanel.html">activities/text/TextActivityBase.TextActivityBasePanel</a></li><li><a href="module-activities_text_TextActivityDocument.TextActivityDocument.html">activities/text/TextActivityDocument.TextActivityDocument</a></li><li><a href="module-activities_text_TextActivityDocument.TextTarget.html">activities/text/TextActivityDocument.TextTarget</a></li><li><a href="module-activities_text_WrittenAnswer.WrittenAnswer.html">activities/text/WrittenAnswer.WrittenAnswer</a></li><li><a href="module-activities_text_WrittenAnswer.WrittenAnswerPanel.html">activities/text/WrittenAnswer.WrittenAnswerPanel</a></li><li><a href="module-activities_textGrid_CrossWord.CrossWord.html">activities/textGrid/CrossWord.CrossWord</a></li><li><a href="module-activities_textGrid_CrossWord.CrossWordPanel.html">activities/textGrid/CrossWord.CrossWordPanel</a></li><li><a href="module-activities_textGrid_WordSearch.WordSearch.html">activities/textGrid/WordSearch.WordSearch</a></li><li><a href="module-activities_textGrid_WordSearch.WordSearchPanel.html">activities/textGrid/WordSearch.WordSearchPanel</a></li><li><a href="module-Activity.Activity.html">Activity.Activity</a></li><li><a href="module-Activity.ActivityPanel.html">Activity.ActivityPanel</a></li><li><a href="module-automation_arith_Arith.Arith.html">automation/arith/Arith.Arith</a></li><li><a href="module-automation_arith_Arith.Arith.Operator.html">automation/arith/Arith.Arith.Operator</a></li><li><a href="module-automation_AutoContentProvider.AutoContentProvider.html">automation/AutoContentProvider.AutoContentProvider</a></li><li><a href="module-automation_AutoContentProvider.AutoContentProvider.ActiveBagContentKit.html">automation/AutoContentProvider.AutoContentProvider.ActiveBagContentKit</a></li><li><a href="module-AWT.Action.html">AWT.Action</a></li><li><a href="module-AWT.Container.html">AWT.Container</a></li><li><a href="module-AWT.Dimension.html">AWT.Dimension</a></li><li><a href="module-AWT.Ellipse.html">AWT.Ellipse</a></li><li><a href="module-AWT.Font.html">AWT.Font</a></li><li><a href="module-AWT.Gradient.html">AWT.Gradient</a></li><li><a href="module-AWT.Path.html">AWT.Path</a></li><li><a href="module-AWT.PathStroke.html">AWT.PathStroke</a></li><li><a href="module-AWT.Point.html">AWT.Point</a></li><li><a href="module-AWT.Rectangle.html">AWT.Rectangle</a></li><li><a href="module-AWT.Shape.html">AWT.Shape</a></li><li><a href="module-AWT.Stroke.html">AWT.Stroke</a></li><li><a href="module-AWT.Timer.html">AWT.Timer</a></li><li><a href="module-bags_ActivitySequence.ActivitySequence.html">bags/ActivitySequence.ActivitySequence</a></li><li><a href="module-bags_ActivitySequenceElement.ActivitySequenceElement.html">bags/ActivitySequenceElement.ActivitySequenceElement</a></li><li><a href="module-bags_ActivitySequenceJump.ActivitySequenceJump.html">bags/ActivitySequenceJump.ActivitySequenceJump</a></li><li><a href="module-bags_ConditionalJumpInfo.ConditionalJumpInfo.html">bags/ConditionalJumpInfo.ConditionalJumpInfo</a></li><li><a href="module-bags_JumpInfo.JumpInfo.html">bags/JumpInfo.JumpInfo</a></li><li><a href="module-bags_MediaBag.MediaBag.html">bags/MediaBag.MediaBag</a></li><li><a href="module-bags_MediaBagElement.MediaBagElement.html">bags/MediaBagElement.MediaBagElement</a></li><li><a href="module-boxes_AbstractBox.AbstractBox.html">boxes/AbstractBox.AbstractBox</a></li><li><a href="module-boxes_ActiveBagContent.ActiveBagContent.html">boxes/ActiveBagContent.ActiveBagContent</a></li><li><a href="module-boxes_ActiveBox.ActiveBox.html">boxes/ActiveBox.ActiveBox</a></li><li><a href="module-boxes_ActiveBoxBag.ActiveBoxBag.html">boxes/ActiveBoxBag.ActiveBoxBag</a></li><li><a href="module-boxes_ActiveBoxContent.ActiveBoxContent.html">boxes/ActiveBoxContent.ActiveBoxContent</a></li><li><a href="module-boxes_ActiveBoxContent.AlignType.html">boxes/ActiveBoxContent.AlignType</a></li><li><a href="module-boxes_ActiveBoxGrid.ActiveBoxGrid.html">boxes/ActiveBoxGrid.ActiveBoxGrid</a></li><li><a href="module-boxes_BoxBag.BoxBag.html">boxes/BoxBag.BoxBag</a></li><li><a href="module-boxes_BoxBase.BoxBase.html">boxes/BoxBase.BoxBase</a></li><li><a href="module-boxes_BoxConnector.BoxConnector.html">boxes/BoxConnector.BoxConnector</a></li><li><a href="module-boxes_TextGrid.TextGrid.html">boxes/TextGrid.TextGrid</a></li><li><a href="module-boxes_TextGridContent.TextGridContent.html">boxes/TextGridContent.TextGridContent</a></li><li><a href="module-JClicPlayer.JClicPlayer.html">JClicPlayer.JClicPlayer</a></li><li><a href="module-media_ActiveMediaBag.ActiveMediaBag.html">media/ActiveMediaBag.ActiveMediaBag</a></li><li><a href="module-media_ActiveMediaPlayer.ActiveMediaPlayer.html">media/ActiveMediaPlayer.ActiveMediaPlayer</a></li><li><a href="module-media_AudioBuffer.AudioBuffer.html">media/AudioBuffer.AudioBuffer</a></li><li><a href="module-media_EventSounds.EventSounds.html">media/EventSounds.EventSounds</a></li><li><a href="module-media_EventSoundsElement.EventSoundsElement.html">media/EventSoundsElement.EventSoundsElement</a></li><li><a href="module-media_MediaContent.MediaContent.html">media/MediaContent.MediaContent</a></li><li><a href="module-media_MidiAudioPlayer.MidiAudioPlayer.html">media/MidiAudioPlayer.MidiAudioPlayer</a></li><li><a href="module-PlayerHistory.PlayerHistory.html">PlayerHistory.PlayerHistory</a></li><li><a href="module-project_JClicProject.JClicProject.html">project/JClicProject.JClicProject</a></li><li><a href="module-project_ProjectSettings.ProjectSettings.html">project/ProjectSettings.ProjectSettings</a></li><li><a href="module-report_ActionReg.ActionReg.html">report/ActionReg.ActionReg</a></li><li><a href="module-report_ActivityReg.ActivityReg.html">report/ActivityReg.ActivityReg</a></li><li><a href="module-report_EncryptMin.Encryption.html">report/EncryptMin.Encryption</a></li><li><a href="module-report_Reporter.Reporter.html">report/Reporter.Reporter</a></li><li><a href="module-report_Reporter.ReporterInfo.html">report/Reporter.ReporterInfo</a></li><li><a href="module-report_SCORM.SCORM.html">report/SCORM.SCORM</a></li><li><a href="module-report_SequenceReg.SequenceReg.html">report/SequenceReg.SequenceReg</a></li><li><a href="module-report_SequenceReg.SequenceRegInfo.html">report/SequenceReg.SequenceRegInfo</a></li><li><a href="module-report_SessionReg.SessionReg.html">report/SessionReg.SessionReg</a></li><li><a href="module-report_SessionReg.SessionRegInfo.html">report/SessionReg.SessionRegInfo</a></li><li><a href="module-report_SessionStorageReporter.SessionStorageReporter.html">report/SessionStorageReporter.SessionStorageReporter</a></li><li><a href="module-report_TCPReporter.ReportBean.html">report/TCPReporter.ReportBean</a></li><li><a href="module-report_TCPReporter.TCPReporter.html">report/TCPReporter.TCPReporter</a></li><li><a href="module-shapers_ClassicJigSaw.ClassicJigSaw.html">shapers/ClassicJigSaw.ClassicJigSaw</a></li><li><a href="module-shapers_Holes.Holes.html">shapers/Holes.Holes</a></li><li><a href="module-shapers_JigSaw.JigSaw.html">shapers/JigSaw.JigSaw</a></li><li><a href="module-shapers_Rectangular.Rectangular.html">shapers/Rectangular.Rectangular</a></li><li><a href="module-shapers_Shaper.Shaper.html">shapers/Shaper.Shaper</a></li><li><a href="module-shapers_TriangularJigSaw.TriangularJigSaw.html">shapers/TriangularJigSaw.TriangularJigSaw</a></li><li><a href="module-skins_BlueSkin.BlueSkin.html">skins/BlueSkin.BlueSkin</a></li><li><a href="module-skins_Counter.Counter.html">skins/Counter.Counter</a></li><li><a href="module-skins_CustomSkin.CustomSkin.html">skins/CustomSkin.CustomSkin</a></li><li><a href="module-skins_DefaultSkin.DefaultSkin.html">skins/DefaultSkin.DefaultSkin</a></li><li><a href="module-skins_EmptySkin.EmptySkin.html">skins/EmptySkin.EmptySkin</a></li><li><a href="module-skins_GreenSkin.GreenSkin.html">skins/GreenSkin.GreenSkin</a></li><li><a href="module-skins_MiniSkin.MiniSkin.html">skins/MiniSkin.MiniSkin</a></li><li><a href="module-skins_OrangeSkin.OrangeSkin.html">skins/OrangeSkin.OrangeSkin</a></li><li><a href="module-skins_SimpleSkin.SimpleSkin.html">skins/SimpleSkin.SimpleSkin</a></li><li><a href="module-skins_Skin.Skin.html">skins/Skin.Skin</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="externals.list.html" class="dropdown-toggle" data-toggle="dropdown">Externals<b class="caret"></b></a>
+				<ul class="dropdown-menu inline">
+					<li><a href="external-AudioContext.html">AudioContext</a></li><li><a href="external-CanvasRenderingContext2D.html">CanvasRenderingContext2D</a></li><li><a href="external-Collator.html">Collator</a></li><li><a href="external-Date.html">Date</a></li><li><a href="external-Event.html">Event</a></li><li><a href="external-HTMLAudioElement.html">HTMLAudioElement</a></li><li><a href="external-HTMLElement.html">HTMLElement</a></li><li><a href="external-HTMLImageElement.html">HTMLImageElement</a></li><li><a href="external-HTMLStyleElement.html">HTMLStyleElement</a></li><li><a href="external-i18next.html">i18next</a></li><li><a href="external-Instrument.html">Instrument</a></li><li><a href="external-jQuery.html">jQuery</a></li><li><a href="external-jqXHR.html">jqXHR</a></li><li><a href="external-JSZip.html">JSZip</a></li><li><a href="external-MediaRecorder.html">MediaRecorder</a></li><li><a href="external-MidiPlayerJS.html">MidiPlayerJS</a></li><li><a href="external-NamedNodeMap.html">NamedNodeMap</a></li><li><a href="external-Promise.html">Promise</a></li><li><a href="external-Storage.html">Storage</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	<h1 class="page-title">Class: JigSaw</h1>
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="module-shapers_JigSaw.html">shapers/JigSaw</a>.</span>
+        
+        JigSaw
+        </h2>
+        
+            <div class="class-description"><p>This <a href="module-shapers_Shaper.Shaper.html"><code>Shaper</code></a> returns a set of rectangular shapes with teeth and slots that fit between them.</p></div>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+<hr>
+<dt>
+    <h4 class="name" id="JigSaw"><span class="type-signature"></span>new JigSaw(nx, ny)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>JigSaw constructor</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>nx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Number of columns</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ny</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Number of rows</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_JigSaw.js.html">shapers/JigSaw.js</a>,
+				 <a href="shapers_JigSaw.js.html#sunlight-1-line-40">line 40</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="module-shapers_Shaper.Shaper.html">module:shapers/Shaper.Shaper</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+<hr>
+<dt class="name" id="baseWidthFactor">
+    <h4 id="baseWidthFactor"><span class="type-signature"></span>baseWidthFactor<span class="type-signature"> :number</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>In <a href="module-shapers_JigSaw.JigSaw.html"><code>JigSaw</code></a>, ratio between the base width of the tooth and the total length of the side.</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">number</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#baseWidthFactor">module:shapers/Shaper.Shaper#baseWidthFactor</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#baseWidthFactor">module:shapers/Shaper.Shaper#baseWidthFactor</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-323">line 323</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="className">
+    <h4 id="className"><span class="type-signature"></span>className<span class="type-signature"> :string</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>This shaper class name</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">string</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#className">module:shapers/Shaper.Shaper#className</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#className">module:shapers/Shaper.Shaper#className</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-291">line 291</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="customShapes">
+    <h4 id="customShapes"><span class="type-signature"></span>customShapes<span class="type-signature"> :boolean</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Only the <code>Holes</code> shaper has this flag activated</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">boolean</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#customShapes">module:shapers/Shaper.Shaper#customShapes</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#customShapes">module:shapers/Shaper.Shaper#customShapes</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-373">line 373</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="enclosing">
+    <h4 id="enclosing"><span class="type-signature"></span>enclosing<span class="type-signature"> :<a href="module-AWT.Shape.html">module:AWT.Shape</a></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>In <a href="module-shapers_Holes.Holes.html"><code>Holes</code></a>, the enclosing area where all shapes are placed.</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type"><a href="module-AWT.Shape.html">module:AWT.Shape</a></span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#enclosing">module:shapers/Shaper.Shaper#enclosing</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#enclosing">module:shapers/Shaper.Shaper#enclosing</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-352">line 352</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="hasRemainder">
+    <h4 id="hasRemainder"><span class="type-signature"></span>hasRemainder<span class="type-signature"> :boolean</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Flag indicating if this Shaper deploys over a surface biggest than the rectangle enclosing<br>
+all its shapes</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">boolean</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#hasRemainder">module:shapers/Shaper.Shaper#hasRemainder</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#hasRemainder">module:shapers/Shaper.Shaper#hasRemainder</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-367">line 367</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="initiated">
+    <h4 id="initiated"><span class="type-signature"></span>initiated<span class="type-signature"> :boolean</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Flag used to check if the <code>Shaper</code> has been initialized against a real surface</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">boolean</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#initiated">module:shapers/Shaper.Shaper#initiated</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#initiated">module:shapers/Shaper.Shaper#initiated</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-316">line 316</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="nCells">
+    <h4 id="nCells"><span class="type-signature"></span>nCells<span class="type-signature"> :number</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Number of cells managed by this shaper</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">number</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#nCells">module:shapers/Shaper.Shaper#nCells</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#nCells">module:shapers/Shaper.Shaper#nCells</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-306">line 306</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="nCols">
+    <h4 id="nCols"><span class="type-signature"></span>nCols<span class="type-signature"> :number</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Number of columns (useful in grid-based shapers)</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">number</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#nCols">module:shapers/Shaper.Shaper#nCols</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#nCols">module:shapers/Shaper.Shaper#nCols</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-296">line 296</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="nRows">
+    <h4 id="nRows"><span class="type-signature"></span>nRows<span class="type-signature"> :number</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Number of rows (useful in grid-based shapers)</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">number</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#nRows">module:shapers/Shaper.Shaper#nRows</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#nRows">module:shapers/Shaper.Shaper#nRows</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-301">line 301</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="randomLines">
+    <h4 id="randomLines"><span class="type-signature"></span>randomLines<span class="type-signature"> :boolean</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>In <a href="module-shapers_JigSaw.JigSaw.html"><code>JigSaw</code></a>, whether the tooths take random directions or not</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">boolean</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#randomLines">module:shapers/Shaper.Shaper#randomLines</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#randomLines">module:shapers/Shaper.Shaper#randomLines</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-333">line 333</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="rectangularShapes">
+    <h4 id="rectangularShapes"><span class="type-signature"></span>rectangularShapes<span class="type-signature"> :boolean</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Flag indicating if this shaper organizes its cells in rows and columns</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">boolean</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#rectangularShapes">module:shapers/Shaper.Shaper#rectangularShapes</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#rectangularShapes">module:shapers/Shaper.Shaper#rectangularShapes</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-362">line 362</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="scaleX">
+    <h4 id="scaleX"><span class="type-signature"></span>scaleX<span class="type-signature"> :number</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>In <a href="module-shapers_Holes.Holes.html"><code>Holes</code></a>, scale to be applied to horizontal positions and lengths to achieve the real<br>
+value of the shape placed on a real surface.</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">number</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#scaleX">module:shapers/Shaper.Shaper#scaleX</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#scaleX">module:shapers/Shaper.Shaper#scaleX</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-340">line 340</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="scaleY">
+    <h4 id="scaleY"><span class="type-signature"></span>scaleY<span class="type-signature"> :number</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>In <a href="module-shapers_Holes.Holes.html"><code>Holes</code></a>, scale to be applied to vertical positions and lengths to achieve the real<br>
+value of the shape placed on a real surface.</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">number</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#scaleY">module:shapers/Shaper.Shaper#scaleY</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#scaleY">module:shapers/Shaper.Shaper#scaleY</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-346">line 346</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="shapeData">
+    <h4 id="shapeData"><span class="type-signature"></span>shapeData<span class="type-signature"> :object</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Contains the specific definition of each shape</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#shapeData">module:shapers/Shaper.Shaper#shapeData</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#shapeData">module:shapers/Shaper.Shaper#shapeData</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-311">line 311</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="showEnclosure">
+    <h4 id="showEnclosure"><span class="type-signature"></span>showEnclosure<span class="type-signature"> :boolean</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>In <a href="module-shapers_Holes.Holes.html"><code>Holes</code></a>, when <code>true</code>, the enclosing area will be drawn</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">boolean</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#showEnclosure">module:shapers/Shaper.Shaper#showEnclosure</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#showEnclosure">module:shapers/Shaper.Shaper#showEnclosure</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-357">line 357</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id="toothHeightFactor">
+    <h4 id="toothHeightFactor"><span class="type-signature"></span>toothHeightFactor<span class="type-signature"> :number</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>In <a href="module-shapers_JigSaw.JigSaw.html"><code>JigSaw</code></a>, ratio between the tooth height and the total length of the side.</p>
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">number</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#toothHeightFactor">module:shapers/Shaper.Shaper#toothHeightFactor</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#toothHeightFactor">module:shapers/Shaper.Shaper#toothHeightFactor</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-328">line 328</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<hr>
+<dt>
+    <h4 class="name" id="buildShapes"><span class="type-signature"></span>buildShapes()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Builds the jigsaw shapes based on the number of rows and columns</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_JigSaw.JigSaw.html#buildShapes">module:shapers/JigSaw.JigSaw#buildShapes</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#buildShapes">module:shapers/Shaper.Shaper#buildShapes</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_JigSaw.js.html">shapers/JigSaw.js</a>,
+				 <a href="shapers_JigSaw.js.html#sunlight-1-line-54">line 54</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getAttributes"><span class="type-signature"></span>getAttributes()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Gets a object with the basic attributes needed to rebuild this instance excluding functions,<br>
+parent references, constants and also attributes retaining the default value.<br>
+The resulting object is commonly usued to serialize elements in JSON format.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#getAttributes">module:shapers/Shaper.Shaper#getAttributes</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#getAttributes">module:shapers/Shaper.Shaper#getAttributes</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-191">line 191</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <ul>
+<li>The resulting object, with minimal attrributes</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getEnclosingShapeData"><span class="type-signature"></span>getEnclosingShapeData()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Gets the AWT.Rectangle that contains all shapes of this Shaper.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#getEnclosingShapeData">module:shapers/Shaper.Shaper#getEnclosingShapeData</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#getEnclosingShapeData">module:shapers/Shaper.Shaper#getEnclosingShapeData</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-263">line 263</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="module-AWT.Rectangle.html">module:AWT.Rectangle</a></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getRemainderShape"><span class="type-signature"></span>getRemainderShape(rect)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>When <code>hasRemainder</code> is true, this method gets the rectangle containing the full surface where<br>
+the Shaper develops.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>rect</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="module-AWT.Rectangle.html">module:AWT.Rectangle</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The frame where to move and scale all the shapes</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#getRemainderShape">module:shapers/Shaper.Shaper#getRemainderShape</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#getRemainderShape">module:shapers/Shaper.Shaper#getRemainderShape</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-273">line 273</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="module-AWT.Rectangle.html">module:AWT.Rectangle</a></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getShape"><span class="type-signature"></span>getShape(n, rect)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Gets a clone of the nth Shape object, scaled and located inside a Rectangle</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>n</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rect</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="module-AWT.Rectangle.html">module:AWT.Rectangle</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#getShape">module:shapers/Shaper.Shaper#getShape</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#getShape">module:shapers/Shaper.Shaper#getShape</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-242">line 242</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="module-AWT.Shape.html">module:AWT.Shape</a></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getShapeData"><span class="type-signature"></span>getShapeData(n)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Gets the nth Shape data object</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>n</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#getShapeData">module:shapers/Shaper.Shaper#getShapeData</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#getShapeData">module:shapers/Shaper.Shaper#getShapeData</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-255">line 255</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="hLine"><span class="type-signature"></span>hLine(sd, type, x, y, w, h, inv)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Adds an horizontal line to the provided path</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sd</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="module-AWT.Path.html">module:AWT.Path</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The Path to which the line will be added</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Type  of tooth: 0 is flat (no tooth), 1 means tooth up, and 2 means tooth down</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>X coordinate of the starting point</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Y coordinate of the starting point</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>w</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Width of the piece</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>h</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Height of the piece</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>inv</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The line must be drawn right to left</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_JigSaw.js.html">shapers/JigSaw.js</a>,
+				 <a href="shapers_JigSaw.js.html#sunlight-1-line-102">line 102</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="reset"><span class="type-signature"></span>reset(nCols, nRows)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Initializes this Shaper to default values</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>nCols</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Number of columns</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nRows</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Number of rows</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#reset">module:shapers/Shaper.Shaper#reset</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#reset">module:shapers/Shaper.Shaper#reset</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-81">line 81</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="setProperties"><span class="type-signature"></span>setProperties($xml)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Loads this shaper settings from a specific JQuery XML element</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>$xml</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="external-jQuery.html">external:jQuery</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The XML element with the shaper data</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-shapers_Shaper.Shaper.html#setProperties">module:shapers/Shaper.Shaper#setProperties</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-shapers_Shaper.Shaper.html#setProperties">module:shapers/Shaper.Shaper#setProperties</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_Shaper.js.html">shapers/Shaper.js</a>,
+				 <a href="shapers_Shaper.js.html#sunlight-1-line-95">line 95</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="vLine"><span class="type-signature"></span>vLine(sd, type, x, y, w, h, inv)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Adds a vertical line to the provided path</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sd</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="module-AWT.Path.html">module:AWT.Path</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The Path to which the line will be added</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Type  of tooth: 0 is flat (no tooth), 1 means tooth right, and 2 means tooth left</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>X coordinate of the starting point</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Y coordinate of the starting point</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>w</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Width of the piece</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>h</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Height of the piece</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>inv</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The line must be drawn bottom to top</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="shapers_JigSaw.js.html">shapers/JigSaw.js</a>,
+				 <a href="shapers_JigSaw.js.html#sunlight-1-line-136">line 136</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
