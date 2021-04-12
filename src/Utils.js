@@ -88,8 +88,8 @@ let _messages = {};
 /**
  * Initializes the global settings
  * @param {object} options - An object with global settings
- * @param {boolean=true} setLog - When `true`, the log level will be set
- * @param {boolean=true} setLang - When `true`, the current language will be set
+ * @param {boolean} [setLog=true] - When `true`, the log level will be set
+ * @param {boolean} [setLang=true] - When `true`, the current language will be set
  * @returns {object} The normalized `options` object
  */
 export function init(options, setLog = true, setLang = true) {
@@ -117,7 +117,7 @@ export function init(options, setLog = true, setLang = true) {
  * Function that will return the translation of the provided key
  * into the current language.
  * @param {string} key - ID of the expression to be translated
- * @returns {string} - Translated text
+ * @returns {string} - The translated text
  */
 export function getMsg(key) {
   return _messages[key] || key;
@@ -127,8 +127,8 @@ export function getMsg(key) {
  * Converts expressions of type 'pt-br', 'FR', 'ca_es@valencia'... to the format expected by the i18n system:
  * lc[_CC][@variant] where 'lc' is a two or three lowercase letter language code, CC is an optional two uppercase
  * letter country code, followed by an optional 'variant' consisting in letters and/or digits.
- * @param {string} locale
- * @returns string
+ * @param {string} locale - The locale expression to be normalized
+ * @returns string - The normalized locale
  */
 export function normalizeLocale(locale = '') {
   const [, language = null, country = null, variant = null] = /^([a-zA-Z]{2,3})[_-]?([a-zA-Z]{2})?@?([a-zA-Z0-9]*)?$/.exec(locale.trim()) || [];
@@ -141,7 +141,7 @@ export function normalizeLocale(locale = '') {
  * Checks if the language preferred by the user (based on browser and/or specific settings)
  * is in a list of available languages.
  * @param {string[]} availableLangs - Array of available languages. It should contain at least one item.
- * @param {string} [defaultLang=en] -Language to be used by default when not found the selected one
+ * @param {string} [defaultLang=en] - Language to be used by default when not found the selected one
  * @param {string} [requestedLang=''] - Request this specific language
  * @returns {string} - The most suitable language for this request
  */
