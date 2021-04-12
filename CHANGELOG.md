@@ -1,3 +1,10 @@
+### v2.1.1 (2021-04-12)
+#### Bug fixes
+- Fixed an issue with i18n, which did not correctly apply the required language selection.
+
+#### Improvements
+- i18n has been written from scratch, simplifying its operation and supporting different "locale" encodings.
+
 ### v2.1.0 (2021-04-10)
 #### Breaking changes
 - JClic projects can be now encapsulated in JSON format (files with extension `.jclic.json`). Current files in XML format (`.jclic`) will be still supported, but JSON will be the default format from now. Both formats can also be packaged in ZIP files (files of type `.jclic.zip` and `.scorm.zip`). This will simplify the development of the upcoming new project _JClic Author HTML5_.

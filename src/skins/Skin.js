@@ -33,7 +33,7 @@
 
 import $ from 'jquery';
 import * as clipboard from 'clipboard-polyfill';
-import { appendStyleAtHead, cloneObject, getMsg, setLogLevel, log, getRootHead, toCssSize, $HTML, getPercent, getHMStime } from '../Utils';
+import { appendStyleAtHead, cloneObject, getMsg, setLogLevel, log, getRootHead, toCssSize, $HTML, getPercent, getHMStime, settings } from '../Utils';
 import { Container, Dimension, Rectangle } from '../AWT';
 
 /**
@@ -154,7 +154,7 @@ export class Skin extends Container {
       .append($('<p/>').css({ 'margin-top': 0, 'margin-left': '3.5em' })
         .append($('<a/>', { href: 'http://clic.xtec.cat/repo/index.html?page=info' }).html('http://clic.xtec.cat'))
         .append($('<br>'))
-        .append($('<span/>').html(getMsg('Version') + ' ' + this.ps.JClicVersion)));
+        .append($('<span/>').html(`${getMsg('Version')} ${settings.VERSION}`)));
 
     this.$reportsPanel = $('<div/>', { class: 'reportsPanel', role: 'document' });
 

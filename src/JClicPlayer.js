@@ -35,7 +35,6 @@ import $ from 'jquery';
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import ScriptJS from 'scriptjs';
-import i18n from './i18n';
 import { log, init, settings, getPath, endsWith, getBasePath, getRelativePath, isNullOrUndef, mReplace, toCssSize } from './Utils';
 import { Container, Point, Action, Timer, Rectangle } from './AWT';
 import PlayerHistory from './PlayerHistory';
@@ -68,7 +67,6 @@ export class JClicPlayer extends Container {
     // JClicPlayer extends Container
     super();
     // Build cascading options
-    //this.options = Object.assign({}, this.options, init(options))
     options = init(options);
     this.options = $.extend(Object.create(this.options), options);
     // Generate unique ID
@@ -91,9 +89,6 @@ export class JClicPlayer extends Container {
     this.$mainContainer = $('<div/>', { class: 'JClicContainer', id: this.id })
       .css({ width: '100%', height: '100%' })
       .appendTo(this.$topDiv);
-
-    // Attach the localization
-    i18n(this);
 
     // Intitialize other elements
     this.localFS = location && location.protocol === 'file:';
@@ -1050,11 +1045,6 @@ export class JClicPlayer extends Container {
 }
 
 Object.assign(JClicPlayer.prototype, {
-  /**
-   * Current version will be updated by i18n.js
-   * @name module:JClicPlayer.JClicPlayer#JClicVersion
-   * @type {string} */
-  JClicVersion: '0',
   /**
    * Object with miscellaneous options.
    * @name module:JClicPlayer.JClicPlayer#options

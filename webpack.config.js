@@ -43,6 +43,8 @@ ${pkg.homepage}
  * Bundle used in HTML browsers
  */
 const mainConfig = {
+  // Override when debugging with: `webpack --mode=development`
+  // See: https://webpack.js.org/configuration/mode/
   mode: 'production',
   entry: './src/JClic.js',
   devtool: 'source-map',

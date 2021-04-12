@@ -162,7 +162,6 @@ __Jump between sequence points:__
 __Miscellaneous utility classes:__
 * [BoxConnector](module-boxes_BoxConnector.BoxConnector.html): Used to link two cells with a thin line dragged by the user.
 * [Utils](module-Utils.html): Miscellaneous constants and functions.
-* [i18n](module-i18n.html): Internationalization utilities.
 
 ## Sponsors that make possible JClic.js
 

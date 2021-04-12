@@ -33,11 +33,11 @@
 
 import $ from 'jquery';
 import * as clipboard from 'clipboard-polyfill';
-import i18next from 'i18next';
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import ScriptJS from 'scriptjs';
 import WebFont from 'webfontloader';
+import GlobalData from './GlobalData';
 
 /**
  * Exports third-party NPM packages used by JClic, so they become available to other scripts through
@@ -49,34 +49,12 @@ import WebFont from 'webfontloader';
  */
 export const pkg = {
   clipboard,
-  i18next,
   $,
   JSZip,
   JSZipUtils,
   ScriptJS,
   WebFont,
 };
-
-/**
- * Function obtained from `i18next` that will return the translation of the provided key
- * into the current language.
- * The real function will be initiated by constructor. Meanwhile, it returns always `key`.
- * @param {string} key - ID of the expression to be translated
- * @returns {string} - Translated text
- */
-export function getMsg(key) {
-  return _getMsgFunction(key);
-}
-
-let _getMsgFunction = key => key;
-
-/**
- * Sets the function usd to obtain real messages from keys
- * @param {function} fn
- */
-export function setGetMsgFunction(fn) {
-  _getMsgFunction = fn;
-}
 
 /**
  * List of valid verbosity levels
@@ -103,19 +81,110 @@ export const LOG_OPTIONS = {
 };
 
 /**
+ * Current dictionary of string translations
+ */
+let _messages = {};
+
+/**
  * Initializes the global settings
  * @param {object} options - An object with global settings
+ * @param {boolean=true} setLog - When `true`, the log level will be set
+ * @param {boolean=true} setLang - When `true`, the current language will be set
  * @returns {object} The normalized `options` object
  */
-export function init(options) {
+export function init(options, setLog = true, setLang = true) {
   options = normalizeObject(options);
-  if (typeof options.logLevel !== 'undefined')
-    setLogLevel(options.logLevel);
-  if (typeof options.chainLogTo === 'function')
-    LOG_OPTIONS.chainTo = options.chainLogTo;
-  if (typeof options.pipeLogTo === 'function')
-    LOG_OPTIONS.pipeTo = options.pipeLogTo;
+  if (setLog) {
+    if (typeof options.logLevel !== 'undefined')
+      setLogLevel(options.logLevel);
+    if (typeof options.chainLogTo === 'function')
+      LOG_OPTIONS.chainTo = options.chainLogTo;
+    if (typeof options.pipeLogTo === 'function')
+      LOG_OPTIONS.pipeTo = options.pipeLogTo;
+  }
+
+  if (setLang) {
+    const lngRequested = options.lang;
+    const lng = checkPreferredLanguage(GlobalData.languages, 'en', lngRequested);
+    log('debug', `Language ${lngRequested ? `requested: "${lngRequested}" ` : ''} used: "${lng}"`);
+    _messages = lng === 'en' ? {} : GlobalData.messages[lng];
+  }
+
   return options;
+};
+
+/**
+ * Function that will return the translation of the provided key
+ * into the current language.
+ * @param {string} key - ID of the expression to be translated
+ * @returns {string} - Translated text
+ */
+export function getMsg(key) {
+  return _messages[key] || key;
+}
+
+/**
+ * Converts expressions of type 'pt-br', 'FR', 'ca_es@valencia'... to the format expected by the i18n system:
+ * lc[_CC][@variant] where 'lc' is a two or three lowercase letter language code, CC is an optional two uppercase
+ * letter country code, followed by an optional 'variant' consisting in letters and/or digits.
+ * @param {string} locale
+ * @returns string
+ */
+export function normalizeLocale(locale = '') {
+  const [, language = null, country = null, variant = null] = /^([a-zA-Z]{2,3})[_-]?([a-zA-Z]{2})?@?([a-zA-Z0-9]*)?$/.exec(locale.trim()) || [];
+  return language
+    ? `${language.toLowerCase()}${country ? `_${country.toUpperCase()}` : ''}${variant ? `@${variant.toLowerCase()}` : ''}`
+    : '';
+};
+
+/**
+ * Checks if the language preferred by the user (based on browser and/or specific settings)
+ * is in a list of available languages.
+ * @param {string[]} availableLangs - Array of available languages. It should contain at least one item.
+ * @param {string} [defaultLang=en] -Language to be used by default when not found the selected one
+ * @param {string} [requestedLang=''] - Request this specific language
+ * @returns {string} - The most suitable language for this request
+ */
+export function checkPreferredLanguage(availableLangs, defaultLang = 'en', requestedLang = '') {
+  let result = -1;
+
+  // Create an array to store possible values
+  let tries = [];
+
+  // If "setLang" is specified, check it
+  if (requestedLang) {
+    // Normalize requested locale
+    const lang = normalizeLocale(requestedLang);
+    if (lang)
+      tries.push(lang);
+  }
+
+  // Add user's preferred languages, if any
+  if (window.navigator.languages)
+    tries = tries.concat(window.navigator.languages);
+
+  // Add the navigator main language, if defined
+  if (window.navigator.language)
+    tries.push(window.navigator.language);
+
+  // Add English as final option
+  tries.push(defaultLang);
+
+  for (let i = 0; i < tries.length; i++) {
+    let match = -1;
+    for (let n in availableLangs) {
+      if (tries[i].indexOf(availableLangs[n]) === 0) {
+        match = n;
+        if (tries[i] === availableLangs[n]) {
+          result = n;
+          break;
+        }
+      }
+    }
+    if (result >= 0 || (result = match) >= 0)
+      break;
+  }
+  return availableLangs[result >= 0 ? result : 0];
 };
 
 /**
@@ -1053,6 +1122,8 @@ export function mReplace(replacements, str) {
  * @const
  */
 export const settings = {
+  // JClic.js Version
+  VERSION: GlobalData.version,
   // layout constants
   AB: 0, BA: 1, AUB: 2, BUA: 3,
   LAYOUT_NAMES: ['AB', 'BA', 'AUB', 'BUA'],
@@ -1169,7 +1240,6 @@ export const Utils = {
   pkg,
   settings,
   getMsg,
-  setGetMsgFunction,
   LOG_LEVELS,
   LOG_PRINT_LABELS,
   LOG_OPTIONS,

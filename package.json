@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "dist/jclic-node.js",
   "jsdelivr": "dist/jclic.min.js",
   "homepage": "http://projectestac.github.io/jclic.js",
@@ -47,7 +47,6 @@
   "license": "EUPL-1.2",
   "dependencies": {
     "@francesc/basic-midi-player-js": "^3.0.2",
-    "i18next": "^20.2.1",
     "jquery": "^3.6.0",
     "jszip": "^3.6.0",
     "jszip-utils": "0.1.0",
@@ -75,11 +74,11 @@
     "xmldom": "^0.5.0"
   },
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --mode=production",
     "build-locales": "node build-locales.js",
     "build-doc": "jsdoc -c jsdoc.config.js",
     "lint": "eslint -c .eslintrc.json \"src/**/*.js\"",
-    "start": "webpack serve --open google-chrome"
+    "start": "webpack serve --mode=development --open google-chrome"
   },
   "browserslist": "> 0.25%, not dead"
 }

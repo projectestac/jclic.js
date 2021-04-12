@@ -110,12 +110,6 @@
  */
 
 /**
- * An i18next object, used to translate literals
- * @external i18next
- * @see {@link http://i18next.com}
- */
-
-/**
  * The Promise object is used for asynchronous computations. A Promise represents an operation
  * that hasn't completed yet, but is expected in the future.
  * @external Promise
@@ -232,10 +226,9 @@ export const JClicObject = {
  * @param {object} [options] - An optional set of preferences
  * @returns {module:JClicPlayer.JClicPlayer}
  */
-export function loadProject(div, projectName, options) {
+export function loadProject(div, projectName, options = {}) {
 
-  //options = init(Object.assign({}, JClicObject.options, options))
-  options = init($.extend(Object.create(JClicObject.options), options || {}));
+  options = init({ ...JClicObject.options, ...options }, true, false);
   let player = null;
 
   // Find if there is another player already running on 'div'
@@ -288,7 +281,7 @@ if (typeof window !== 'undefined') {
       player.skin.fit();
   });
   $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', fnFit);
-  $(window).resize(fnFit);
+  $(window).on('resize', fnFit);
 }
 
 // Execute on document ready
