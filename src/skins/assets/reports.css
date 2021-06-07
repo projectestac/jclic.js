@@ -1,0 +1,156 @@
+.ID .dlgDiv {
+  background-color: #efefef;
+  color: #757575;
+  font-family: Roboto, sans-serif;
+  font-size: 10pt;
+  line-height: normal;
+}
+
+.ID .dlgDiv a, a:visited, a:active, a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.ID .dlgMainPanel {
+  padding: 1em 2em;
+  max-height: calc(100vh - 8em);
+  max-width: calc(100vw - 2em);
+  min-width: 20em;
+  overflow: auto;
+}
+
+.ID .dlgMainPanel .headTitle {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin: auto;
+}
+
+.ID .dlgMainPanel .subTitle {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.ID .dlgMainPanel p {
+  font-size: 1.1em;
+  margin-bottom: 0.5em;
+}
+
+.ID .dlgMainPanel table {
+  table-layout: fixed;
+  width: 40em;
+  margin: 0.5em 0 1.7em 0;
+  border-collapse: collapse;
+}
+
+.ID .dlgMainPanel select {
+  min-width: 20em;
+  font-size: 1.2em;
+  font-family: Roboto, sans-serif;
+  color: #757575;
+}
+
+.ID .dlgMainPanel input {
+  margin-left: 1em;
+  font-size: 1.2em;
+  font-family: Roboto, sans-serif;
+  border-color: lightgray;
+}
+
+.ID .infoHead {
+  padding: 1em 0em 0.5em;
+}
+
+.ID .JCGlobalResults td {
+  padding: 0.4em;
+  border-bottom: 1px solid #b6b6b6;
+}
+
+.ID .JCGlobalResults td:first-child {
+  font-weight: 600;
+  width: 14em;
+}
+
+.ID .JCDetailed td, th {
+  border-bottom: 1px solid #b6b6b6;
+  padding: 0.3em 0.4em;
+  vertical-align: top;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ID .JCDetailed thead {
+  font-weight: 600;
+}
+
+.ID .JCDetailed th:first-child {
+  width: 7em;
+}
+
+.ID .JCDetailed th:nth-last-child(4) {
+  width: 4em;
+}
+
+.ID .JCDetailed th:nth-last-child(-n+3) {
+  width: 4.1em;
+  text-align: right;
+}
+
+.ID .JCDetailed td:nth-last-child(-n+3) {
+  text-align: right;
+}
+
+.ID .JCDetailed .ok {
+  color: #4bae4f;
+  font-weight: 600;
+}
+
+.ID .JCDetailed .no {
+  color: #f34235;
+  font-weight: 600;
+}
+
+.ID .JCDetailed tr:last-child {
+  font-weight: bold;
+}
+
+.ID .JCDetailed .incomplete {
+  font-style: italic;
+}
+
+.ID .dlgBottomPanel {
+  height: 3.5em;
+  background-color: white;
+  padding: 0.5em;
+  font-weight: bold;
+  text-align: right;
+  border-top: 1px solid #eee;
+  position: relative;
+}
+
+.ID .dlgBottomPanel .smallPopup {
+  background-color: #222;
+  color: #ddd;
+  padding: 0.5em;
+  font-size: 0.9em;
+  position: absolute;
+  right: 6em;
+  top: 1em;
+}
+
+.ID .dlgBottomPanel button {
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.ID .dlgBottomPanel button:hover {
+  background-color: #eee;
+  border-radius: 80px;
+}
+
+.ID .dlgBottomPanel button:active {
+  background-color: #b3e5fc;
+}

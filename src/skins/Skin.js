@@ -36,6 +36,17 @@ import * as clipboard from 'clipboard-polyfill';
 import { appendStyleAtHead, cloneObject, getMsg, setLogLevel, log, getRootHead, toCssSize, $HTML, getPercent, getHMStime, settings } from '../Utils';
 import { Container, Dimension, Rectangle } from '../AWT';
 
+// Use Webpack to import CSS and SVG files
+import basicCSS from './assets/basic.css';
+import waitAnimCSS from './assets/waitAnim.css';
+import reportsCSS from './assets/reports.css';
+import waitImgSmall from './assets/waitImgSmall.svg';
+import waitImgBig from './assets/waitImgBig.svg';
+import appLogo from './assets/appLogo.svg';
+import closeDialogIcon from './assets/closeDialogIcon.svg';
+import okDialogIcon from './assets/okDialogIcon.svg';
+import copyIcon from './assets/copyIcon.svg';
+
 /**
  * This abstract class manages the layout, position ans size of the visual components of JClic:
  * player window, message box, counters, buttons, status... and also the appearance of the main
@@ -953,74 +964,28 @@ Object.assign(Skin.prototype, {
    * Main styles
    * @name module:skins/Skin.Skin#basicCSS
    * @type {string} */
-  basicCSS: '\
-.ID {width:100%; background-color:#3F51B5; display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column;}\
-.ID .JClicPlayerCnt {background-color:lightblue; margin:18px; -webkit-flex-grow:1; flex-grow:1; position:relative;}\
-.ID .JClicPlayerCnt > div {position:absolute; width:100%; height:100%;}\
-.ID button:not(.StockBtn) {background:transparent; padding:0; border:none; box-shadow:none; text-shadow:none;}\
-.ID .unselectableText {-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}\
-.ID .progressBar {width: 250px}',
+  basicCSS,
   /**
    * Waiting screen styles
    * @name module:skins/Skin.Skin#waitAnimCSS
    * @type {string} */
-  waitAnimCSS: '\
-.ID .waitPanel {display:-webkit-flex; display:flex; width:100%; height:100%; -webkit-justify-content:center; justify-content:center; -webkit-align-items:center; align-items:center;}\
-.ID .animImgBox {position:relative; width:300px; height:300px; max-width:80%; max-height:80%;}\
-.ID .animImgBox svg {position:absolute; width:100%; height:100%; animation-iteration-count:infinite; animation-timing-function:linear;}\
-.ID #waitImgBig {animation-duration:0.8s; animation-name:rotate-right;}\
-@keyframes rotate-right {from {transform:rotate(0);} to {transform:rotate(1turn);}}\
-.ID #waitImgSmall {animation-duration:0.6s; animation-name:rotate-left;}\
-@keyframes rotate-left {from {transform:rotate(0);} to {transform:rotate(-1turn);}}',
+  waitAnimCSS,
   /**
    * Animated image displayed while loading resources
    * Based on Ryan Allen's [svg-spinner](http://articles.dappergentlemen.com/2015/01/13/svg-spinner/)
    * @name module:skins/Skin.Skin#waitImgBig
    * @type {string} */
-  waitImgBig: '<svg id="waitImgBig" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
-<path fill="#3F51B5" d="m 65.99,40.19 c -0.42,5.33 7.80,4.94 8.11,0.20 C 74.50,34.37 66.35,8.59 42.92,\
-7.98 15.90,7.29 9.96,29.50 9.94,39.41 15.33,-1.66 68.61,7.048 65.99,40.19 Z" />\
-</svg>',
+  waitImgBig,
   /**
    * Animated image displayed while loading resources (small)
    * @name module:skins/Skin.Skin#waitImgSmall
    * @type {string} */
-  waitImgSmall: '<svg id="waitImgSmall" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">\
-<path fill="#3F51B5"d="m 57.00,39.43 c -0.28,-3.53 5.16,-3.27 5.37,-0.13 0.26,3.99 -5.13,21.04 -20.63,\
-21.44 C 23.85,61.19 19.93,46.50 19.92,39.94 23.48,67.11 58.73,61.35 57.00,39.43 Z"/>\
-</svg>',
+  waitImgSmall,
   /**
    * Reports screen styles
    * @name module:skins/Skin.Skin#reportsCSS
    * @type {string} */
-  reportsCSS: '\
-.ID .dlgDiv {background-color:#efefef; color:#757575; font-family:Roboto,sans-serif; font-size:10pt; line-height:normal;}\
-.ID .dlgDiv a,a:visited,a:active,a:hover {text-decoration:none; color:inherit;}\
-.ID .dlgMainPanel {padding:1em 2em; max-height:calc(100vh - 8em); max-width:calc(100vw - 2em); min-width:20em; overflow:auto;}\
-.ID .dlgMainPanel .headTitle {font-size:2.5em; font-weight:bold; margin:auto;}\
-.ID .dlgMainPanel .subTitle {font-size:1.4em; font-weight:bold; margin-bottom:0.5em;}\
-.ID .dlgMainPanel p {font-size:1.1em; margin-bottom:0.5em;}\
-.ID .dlgMainPanel table {table-layout:fixed; width:40em; margin:0.5em 0 1.7em 0; border-collapse:collapse;}\
-.ID .dlgMainPanel select {min-width:20em; font-size:1.2em; font-family:Roboto,sans-serif; color:#757575;}\
-.ID .dlgMainPanel input {margin-left:1em; font-size:1.2em; font-family:Roboto,sans-serif; border-color:lightgray;}\
-.ID .infoHead {padding:1em 0em 0.5em;}\
-.ID .JCGlobalResults td {padding:0.4em; border-bottom:1px solid #b6b6b6;}\
-.ID .JCGlobalResults td:first-child {font-weight:600; width:14em;}\
-.ID .JCDetailed td,th {border-bottom:1px solid #b6b6b6; padding:0.3em 0.4em; vertical-align:top; text-align:center; overflow:hidden; text-overflow:ellipsis;}\
-.ID .JCDetailed thead {font-weight:600;}\
-.ID .JCDetailed th:first-child {width:7em;}\
-.ID .JCDetailed th:nth-last-child(4) {width:4em;}\
-.ID .JCDetailed th:nth-last-child(-n+3) {width:4.1em; text-align:right;}\
-.ID .JCDetailed td:nth-last-child(-n+3) {text-align:right;}\
-.ID .JCDetailed .ok {color:#4bae4f; font-weight:600;}\
-.ID .JCDetailed .no {color:#f34235; font-weight:600;}\
-.ID .JCDetailed tr:last-child {font-weight:bold;}\
-.ID .JCDetailed .incomplete {font-style:italic;}\
-.ID .dlgBottomPanel {height:3.5em; background-color:white; padding:0.5em; font-weight:bold; text-align:right; border-top:1px solid #eee; position:relative;}\
-.ID .dlgBottomPanel .smallPopup {background-color:#222; color:#ddd; padding:0.5em; font-size:0.9em; position:absolute; right:6em; top:1em;}\
-.ID .dlgBottomPanel button {display:inline-block; padding:10px; cursor:pointer; line-height:0;}\
-.ID .dlgBottomPanel button:hover {background-color:#eee; border-radius:80px;}\
-.ID .dlgBottomPanel button:active {background-color:#b3e5fc;}',
+  reportsCSS,
   //
   // Icons used in buttons:
   //
@@ -1028,33 +993,22 @@ Object.assign(Skin.prototype, {
    * Icon for 'close dialog' button
    * @name module:skins/Skin.Skin#closeDialogIcon
    * @type {string} */
-  closeDialogIcon: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
-<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>\
-</svg>',
+  closeDialogIcon,
   /**
    * Icon for 'ok' button
    * @name module:skins/Skin.Skin#okDialogIcon
    * @type {string} */
-  okDialogIcon: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
-<path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>\
-</svg>',
+  okDialogIcon,
   /**
    * Icon for 'copy' button
    * @name module:skins/Skin.Skin#copyIcon
    * @type {string} */
-  copyIcon: '<svg fill="#757575" viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">\
-<path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>\
-</svg>',
+  copyIcon,
   /**
    * JClic logo
    * @name module:skins/Skin.Skin#appLogo
    * @type {string} */
-  appLogo: '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(.02081 0 0-.02081 5 62.33)">\
-<path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1999 519 3 11 999-266 999-266z" fill="none" stroke="#9d6329" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\
-<path d="m1263 1297l270 1003 996-267-267-990c-427-1583-2420-1046-1998 519 3 11 999-266 999-266" fill="#f89c0e"/>\
-<path d="m357 2850l1000-268-267-992-1000 266 267 994z" fill="none" stroke="#86882b" stroke-linejoin="round" stroke-linecap="round" stroke-width="180" stroke-miterlimit="3.864"/>\n\
-<path d="m357 2850l1000-268-267-992-1000 266 267 994" fill="#d9e70c"/>\n\
-</g></svg>',
+  appLogo,
   /**
    * Screen sizes (width and height) below which will half sized elements will be used
    * @name module:skins/Skin.DefaultSkin#halfMedia

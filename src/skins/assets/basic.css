@@ -1,0 +1,41 @@
+.ID {
+  width: 100%;
+  background-color: #3F51B5;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.ID .JClicPlayerCnt {
+  background-color: lightblue;
+  margin: 18px;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  position: relative;
+}
+
+.ID .JClicPlayerCnt>div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.ID button:not(.StockBtn) {
+  background: transparent;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.ID .unselectableText {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.ID .progressBar {
+  width: 250px
+}

@@ -32,6 +32,9 @@
 import Skin from './Skin';
 import DefaultSkin from './DefaultSkin';
 
+// Use Webpack to import CSS and SVG files
+import skinCSS from './assets/mini.css';
+
 /**
  * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js
  * It differs from {@link module:skins/DefaultSkin.DefaultSkin DefaultSkin} in colors and sizes
@@ -40,7 +43,7 @@ import DefaultSkin from './DefaultSkin';
 export class MiniSkin extends DefaultSkin {
   /**
    * MiniSkin constructor
-   * 
+   *
    * @param {module:JClicPlayer.JClicPlayer} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
    * realize the media objects meeded tot build the Skin.
    * @param {string} [name] - The skin class name
@@ -106,11 +109,7 @@ Object.assign(MiniSkin.prototype, {
    * Styles used in this skin
    * @name MiniSkin#skinCSS
    * @type {string} */
-  skinCSS: '\
-.ID {background-color:#F4F4F4;}\
-.ID .JClicPlayerCnt {margin:4px;}\
-.ID .JClicCtrlCnt {margin:0 2px 4px 2px;}\
-.ID .JClicMsgBox {height:25px;}',
+  skinCSS,
   /**
    * Styles used in this skin, sized to half its regular size.
    * (_null_ here because MiniSkin it's already very small)

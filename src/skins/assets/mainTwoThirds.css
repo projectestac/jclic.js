@@ -1,0 +1,23 @@
+.ID .JClicPlayerCnt {
+  margin: 12px;
+}
+
+.ID .JClicCtrlCnt {
+  margin: 0 6px 12px 6px;
+}
+
+.ID .JClicCtrlCnt button svg, img {
+  width: 24px;
+  height: 24px;
+}
+
+.ID .JClicMsgBox {
+  height: 40px;
+}
+
+.ID .JClicCounter {
+  width: 27px;
+  height: 13px;
+  margin-left: -10px;
+  transform: scale(0.666);
+}

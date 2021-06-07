@@ -33,6 +33,11 @@ import $ from 'jquery';
 import Skin from './Skin';
 import DefaultSkin from './DefaultSkin';
 
+// Use Webpack to import CSS and SVG files
+import skinCSS from './assets/simple.css';
+import skinCSSHalf from './assets/simpleHalf.css';
+import skinCSSTwoThirds from './assets/simpleTwoThirds.css';
+
 /**
  * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js
  * It has the buttons at top, and don't has counters.
@@ -78,19 +83,9 @@ Object.assign(SimpleSkin.prototype, {
    * Styles used in this skin
    * @name module:skins/SimpleSkin.SimpleSkin#skinCSS
    * @type {string} */
-  skinCSS: '\
-.ID {background-color:#888888;}\
-.ID .JClicCtrlCnt {margin:9px;}\
-.ID .JClicPlayerCnt {margin:0px 18px 18px;}\
-.ID .JClicMsgBox {flex-grow:0; margin:0 18px 18px 18px;}',
-  skinCSSHalf: '\
-.ID .JClicCtrlCnt {margin:4px;}\
-.ID .JClicPlayerCnt {margin:0px 9px 9px;}\
-.ID .JClicMsgBox {margin:0 9px 9px 9px;}',
-  skinCSSTwoThirds: '\
-.ID .JClicCtrlCnt {margin:6px;}\
-.ID .JClicPlayerCnt {margin:0px 12px 12px;}\
-.ID .JClicMsgBox {margin:0 12px 12px 12px;}',
+  skinCSS,
+  skinCSSHalf,
+  skinCSSTwoThirds,
 });
 
 // Register this class in the list of available skins

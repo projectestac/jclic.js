@@ -1,0 +1,16 @@
+.ID {
+  background-color: #888888;
+}
+
+.ID .JClicCtrlCnt {
+  margin: 9px;
+}
+
+.ID .JClicPlayerCnt {
+  margin: 0px 18px 18px;
+}
+
+.ID .JClicMsgBox {
+  flex-grow: 0;
+  margin: 0 18px 18px 18px;
+}

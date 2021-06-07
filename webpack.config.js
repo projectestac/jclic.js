@@ -67,12 +67,12 @@ const mainConfig = {
         },
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        test: /\.(css|svg)$/,
+        loader: 'raw-loader',
       },
       {
-        test: /\.(jpg|png|svg)$/,
-        loader: 'file-loader',
+        test: /\.mp3$/,
+        loader: 'url-loader',
       },
     ]
   },
@@ -119,6 +119,18 @@ const nodeConfig = {
   target: 'node',
   mode: 'production',
   entry: './src/JClic.js',
+  module: {
+    rules: [
+      {
+        test: /\.(css|svg)$/,
+        loader: 'raw-loader',
+      },
+      {
+        test: /\.mp3$/,
+        loader: 'url-loader',
+      },
+    ],
+  },
   devtool: 'source-map',
   output: {
     path: dist,
