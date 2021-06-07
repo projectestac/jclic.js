@@ -1,0 +1,242 @@
+# JClic.js
+# HTML5 player of [JClic](http://clic.xtec.cat) activities
+# https://github.com/projectestac/jclic.js
+# 
+# Translators:
+# Studio Davis Tutoriale Programe <maxxro2012@gmail.com>, 2021
+msgid ""
+msgstr ""
+"Project-Id-Version: JClic.js\n"
+"POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
+"PO-Revision-Date: 2021-06-06 20:40+0000\n"
+"Last-Translator: Studio Davis Tutoriale Programe <maxxro2012@gmail.com>\n"
+"Language-Team: Romanian (http://www.transifex.com/francesc/jclicjs/language/ro/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+#: about_window_lb_version
+msgid "Version"
+msgstr "Versiune"
+
+#: label_time
+msgid "time"
+msgstr "timp"
+
+#: label_actions
+msgid "actions"
+msgstr "acțiuni"
+
+#: label_score
+msgid "score"
+msgstr "rezultat"
+
+#: action_next_tooltip
+msgid "Next activity"
+msgstr "Activitatea următoare"
+
+#: action_prev_tooltip
+msgid "Previous activity"
+msgstr "Activitatea anterioară"
+
+#: action_reset_tooltip
+msgid "Restart activity"
+msgstr "Restartează activitatea"
+
+#: action_info_caption
+msgid "Information"
+msgstr "Informații"
+
+#: report_system_standard
+msgid "Results are not currently being saved"
+msgstr "Rezultatul nu pare a fi salvat"
+
+#: action_about_tooltip
+msgid "Current results"
+msgstr "Rezultatul curent"
+
+#: report_started
+msgid "Session started:"
+msgstr "Sesiune pornită la:"
+
+#: report_system
+msgid "Reports system:"
+msgstr "Sistem raportare:"
+
+#: report_user
+msgid "User:"
+msgstr "Utilizator"
+
+#: report_num_projects
+msgid "Projects:"
+msgstr "Proiecte:"
+
+#: report_num_sequences
+msgid "Sequences:"
+msgstr "Secvențe:"
+
+#: report_num_activities
+msgid "Activities done:"
+msgstr "Activități realizate: "
+
+#: report_num_activities_solved
+msgid "Activities solved:"
+msgstr "Activități rezolvate: "
+
+#: report_global_score
+msgid "Global score:"
+msgstr "Rezultat global:"
+
+# Explanation of 'global score'
+msgid "(out of all project activities)"
+msgstr "(în afara activităților din proiect)"
+
+#: report_total_time
+msgid "Total time in activities:"
+msgstr "Timp total în activitate:"
+
+#: report_num_actions
+msgid "Actions done:"
+msgstr "Activități realizate: "
+
+#: report_no_activities
+msgid "No activities done!"
+msgstr "Activități nerealizate: "
+
+#: report_project
+msgid "Project"
+msgstr "Proiect"
+
+#: report_lb_sequence
+msgid "sequence"
+msgstr "secvență"
+
+#: about_window_lb_activity
+msgid "activity"
+msgstr "activitate"
+
+# 'Activity solved' header column
+#: report_lb_solved
+msgid "OK"
+msgstr "OK"
+
+# Value for 'OK' column
+msgid "YES"
+msgstr "DA"
+
+# Value for 'OK' column
+msgid "NO"
+msgstr "NU"
+
+#: report_lb_totals
+msgid "Total:"
+msgstr "Total:"
+
+# Select group for reports in a list
+msgid "Select group:"
+msgstr "Alege grup:"
+
+# Select user for reports in a list
+msgid "Select user:"
+msgstr "Alege utilizator:"
+
+# Cancel dialog
+msgid "Cancel"
+msgstr "Anuleaza"
+
+# Close dialog
+msgid "Close"
+msgstr "Închide"
+
+# Caption for 'copy' button in reports dialog
+msgid "Copy data to clipboard"
+msgstr "Copiază datele in clipboard"
+
+# Text shown when reports data is pasted in plain-text editors
+msgid ""
+"The data has been copied in HTML format. Please paste them into a "
+"spreadsheet or in a rich text editor"
+msgstr "Datele au fost copiate în format HTML. Vă rog lipiți-le într-o foaie de calcul sau într-un editor compatibil rich text"
+
+# Notification shown when reports data has been copied
+msgid "The data has been copied to clipboard"
+msgstr "Datele au fost copiate în clipboard"
+
+# Added to TCPReporter description when the connection to the remote server is
+# unsuccessful
+msgid "not connected"
+msgstr "neconectat"
+
+# Message displayed when the user attempts to close the player with data
+# pending to be reported
+msgid ""
+"Please wait until the results of your activities are sent to the reports "
+"system"
+msgstr "Vă rugăm să așteptați până ce rezultatele activităților sunt trimise către sistemul de raportare"
+
+# Caption for password input
+msgid "Password:"
+msgstr "Parolă:"
+
+# Error displayed when the provided password is incorrect
+msgid "Incorrect password"
+msgstr "Parolă incorectă"
+
+# Error displayed when the user ID does not exist
+msgid "Invalid user"
+msgstr "Utilizator incorect"
+
+# Average score of played activities
+msgid "Partial score:"
+msgstr "Rezultat parțial:"
+
+# Explanation of 'partial score'
+msgid "(out of played activities)"
+msgstr "(în afara activități jucate) "
+
+# Number of project's activities played at least one time
+msgid "Activities played at least once:"
+msgstr "Activități jucate cel puțin o dată: "
+
+# Caption of the 'Reports' button
+msgid "Reports"
+msgstr "Rapoarte"
+
+# Caption of the 'Full screen' button
+msgid "Toggle full screen"
+msgstr "Comută în ecran plin"
+
+# Label for JClic logo, used in wai-aria contexts
+msgid "JClic logo"
+msgstr "Jclic logo"
+
+# Role of the main message box, used in wai-aria contexts
+msgid "message"
+msgstr "mesaj"
+
+# Label for the activity panel, used in wai-aria contexts
+msgid "Activity panel"
+msgstr "Panou activități"
+
+# Role of regular cells, used in wai-aria contexts
+msgid "cell"
+msgstr "celulă"
+
+# Label for 'image', used in wai-aria contexts
+msgid "image"
+msgstr "imagine"
+
+# Name of the group of 'source' cells in associations
+msgid "source"
+msgstr "sursă"
+
+# Name of the group of 'target' cells in associations
+msgid "target"
+msgstr "țintă"
+
+# Label used to describe generic shapes within images, used in accessibility
+# contexts
+msgid "image fragment"
+msgstr "fragment de imagine "

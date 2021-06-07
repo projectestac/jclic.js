@@ -1,3 +1,7 @@
+### v2.1.2 (not yet released)
+#### Improvements
+- Added Romanian translation, thanks to Studio Davis Tutoriale Programe.
+
 ### v2.1.1 (2021-04-12)
 #### Bug fixes
 - Fixed an issue with i18n, which did not correctly apply the required language selection.
