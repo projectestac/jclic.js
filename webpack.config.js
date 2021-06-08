@@ -40,6 +40,25 @@ ${pkg.homepage}
 `;
 
 /**
+ * Inline assets as raw text or Base64 URIs
+ * See: https://webpack.js.org/guides/asset-modules/
+ */
+const assetRules = [
+  {
+    test: /\.css$/,
+    type: 'asset/source',
+  },
+  {
+    test: /\.svg$/,
+    type: 'asset/source',
+  },
+  {
+    test: /\.mp3$/,
+    type: 'asset/inline',
+  },
+];
+
+/**
  * Bundle used in HTML browsers
  */
 const mainConfig = {
@@ -66,14 +85,7 @@ const mainConfig = {
           }
         },
       },
-      {
-        test: /\.(css|svg)$/,
-        loader: 'raw-loader',
-      },
-      {
-        test: /\.mp3$/,
-        loader: 'url-loader',
-      },
+      ...assetRules,
     ]
   },
   devServer: {
@@ -120,16 +132,7 @@ const nodeConfig = {
   mode: 'production',
   entry: './src/JClic.js',
   module: {
-    rules: [
-      {
-        test: /\.(css|svg)$/,
-        loader: 'raw-loader',
-      },
-      {
-        test: /\.mp3$/,
-        loader: 'url-loader',
-      },
-    ],
+    rules: [...assetRules],
   },
   devtool: 'source-map',
   output: {
