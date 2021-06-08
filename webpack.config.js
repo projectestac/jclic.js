@@ -138,9 +138,10 @@ const nodeConfig = {
   output: {
     path: dist,
     filename: 'jclic-node.js',
-    library: 'jclic',
-    libraryTarget: 'commonjs2',
-    libraryExport: 'default',
+    library: {
+      type: 'commonjs2',
+      export: 'default',
+    },
   },
   externals: [nodeExternals()],
   plugins: [
