@@ -2,7 +2,7 @@
 #### Improvements
 - Added Romanian translation, thanks to Studio Davis Tutoriale Programe.
 - Upgraded dependencies.
-- Use real files instead of inline variables in CSS, SVG and MP3 assets
+- Use real files instead of inline variables in CSS, SVG, PNG and MP3 assets
 
 ### v2.1.1 (2021-04-12)
 #### Bug fixes

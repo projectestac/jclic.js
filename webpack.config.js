@@ -53,6 +53,10 @@ const assetRules = [
     type: 'asset/source',
   },
   {
+    test: /\.png$/,
+    type: 'asset/inline',
+  },
+  {
     test: /\.mp3$/,
     type: 'asset/inline',
   },
