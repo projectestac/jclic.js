@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "2.1.2-beta3",
+  "version": "2.1.2",
   "main": "dist/jclic-node.js",
   "jsdelivr": "dist/jclic.min.js",
   "homepage": "http://projectestac.github.io/jclic.js",
@@ -54,8 +54,8 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.4",
+    "@babel/core": "^7.14.5",
+    "@babel/preset-env": "^7.14.5",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "clipboard-polyfill": "^3.0.3",

@@ -1,8 +1,8 @@
-### v2.1.2 (not yet released)
+### v2.1.2 (2021-06-10)
 #### Improvements
 - Added Romanian translation, thanks to Studio Davis Tutoriale Programe.
 - Upgraded dependencies.
-- Use real files instead of inline variables in CSS, SVG, PNG and MP3 assets
+- Use real files instead of inline JS constants for CSS, SVG, PNG and MP3 assets. These files are finally codified and inlined by WebPack at compile time.
 
 ### v2.1.1 (2021-04-12)
 #### Bug fixes
