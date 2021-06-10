@@ -79,7 +79,7 @@ export class CustomSkin extends Skin {
       this.msgBox = new ActiveBox();
       this.msgBox.role = 'message';
       this.$msgBoxDiv = $('<div/>', { class: 'JClicMsgBox' })
-        .click(() => {
+        .on('click', () => {
           this.msgBox.playMedia(ps);
           return false;
         });

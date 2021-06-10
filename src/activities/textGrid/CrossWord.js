@@ -156,7 +156,7 @@ export class CrossWordPanel extends ActivityPanel {
       'background-position': 'center',
       'border-radius': 6,
       'z-index': 10
-    }).click(() => {
+    }).on('click', () => {
       this.advance = type === 'acrossClues' ?
         this.advance === 'ADVANCE_RIGHT' ?
           'NO_ADVANCE' : 'ADVANCE_RIGHT' :

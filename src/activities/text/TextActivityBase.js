@@ -450,7 +450,7 @@ export class TextActivityBasePanel extends ActivityPanel {
 
     if ($popup) {
       $popup.css({ display: '' });
-      $popup.click();
+      $popup.trigger('click');
 
       this.$currentPopup = $popup;
       if (maxTime) {

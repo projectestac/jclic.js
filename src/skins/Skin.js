@@ -156,7 +156,7 @@ export class Skin extends Container {
     this.$infoHead = $('<div/>', { class: 'infoHead' })
       .append($('<div/>', { class: 'headTitle unselectableText' })
         .append($(this.appLogo, { 'aria-label': msg }).css({ width: '1.5em', height: '1.5em', 'vertical-align': 'bottom' })
-          .dblclick(() => {
+          .on('dblclick', () => {
             // Double click on JClic logo is a hidden method to increase verbosity on Javascript console
             setLogLevel('all');
             log('trace', 'Log level set to "trace"');

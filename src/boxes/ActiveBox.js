@@ -727,7 +727,7 @@ export class ActiveBox extends AbstractBox {
         disabled: disabled
       })
         .html(this.toString())
-        .click(ev => {
+        .on('click', ev => {
           // Check if event was produced by a mouse click
           if (ev.originalEvent && (ev.originalEvent.pageX !== 0 || ev.originalEvent.pageY !== 0)) {
             // Mouse clicks should be processed odirectly by the canvas, so ignore this accessible event
