@@ -82,7 +82,7 @@ export class ActiveMediaPlayer {
           this.$visualComponent = $(mbe.data);
           this.$visualComponent.css('z-index', 20);
         }
-      });
+      }, this.ps, false, this.mc.level);
     }
   }
 
@@ -132,7 +132,7 @@ export class ActiveMediaPlayer {
           this.mbe.data.currentTime = this.mc.from > 0 ? this.mc.from / 1000 : 0;
           this.mbe.data.play();
         }
-      });
+      }, this.ps, true, this.mc.level);
     }
   }
 

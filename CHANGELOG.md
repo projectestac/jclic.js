@@ -1,3 +1,11 @@
+### v2.1.3 (2021-07-28)
+#### Improvements
+- Recycle HTML audio elements instead of building one for each audio file at startup. This has been motivated by a breaking change
+  introduced in Chrome 92+, limiting the maximum number of media player elements per document.
+  (see: https://bugs.chromium.org/p/chromium/issues/detail?id=1144736).
+  This improvement will reduce the startup time of JClic projects and the size of media bytes to be downloaded, but can have a side effect,
+  introducing latency when playing audio because is now always fetched "on demand" (no more preloading)
+
 ### v2.1.2 (2021-06-10)
 #### Improvements
 - Added Romanian translation, thanks to Studio Davis Tutoriale Programe.

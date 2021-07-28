@@ -176,7 +176,7 @@ export class ActiveBoxContent {
     return getAttr(this, [
       'id', 'item', 'dimension', 'border', 'avoidOverlapping', 'image', 'text',
       'objectType', // Used in TextActivityDocument
-      'txtAlign', 'imgAlign', // AlignType        
+      'txtAlign', 'imgAlign', // AlignType
       'style', // BoxBase
       'mediaContent', // MediaContent
     ]);
@@ -322,14 +322,14 @@ export class ActiveBoxContent {
    * Reads and initializes the image associated to this content
    * @param {module:bags/MediaBag.MediaBag} mediaBag - The media bag of the current project.
    */
-  realizeContent(mediaBag) {
+  realizeContent(mediaBag, ps = null) {
     if (this.image !== null && this.image.length > 0) {
       this.mbe = mediaBag.getElement(this.image, true);
       if (this.mbe) {
         this.mbe.build(() => {
           this.img = this.mbe.data;
           this.animatedGifFile = this.mbe.animated ? this.mbe.getFullPath() : null;
-        });
+        }, ps, true);
       }
     }
     if (this.mediaContent !== null) {
@@ -360,7 +360,7 @@ export class ActiveBoxContent {
   }
 
   /**
-   * 
+   *
    * Overwrites the original `Object.toString` method, returning `getDescription` instead
    * @returns {string}
    */

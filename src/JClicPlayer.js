@@ -45,6 +45,7 @@ import JClicProject from './project/JClicProject';
 import JumpInfo from './bags/JumpInfo';
 import ActiveBoxContent from './boxes/ActiveBoxContent';
 import Reporter from './report/Reporter';
+import MediaBagElement from './bags/MediaBagElement';
 
 /**
  * JClicPlayer is one of the the main classes of the JClic system. It implements the
@@ -524,6 +525,8 @@ export class JClicPlayer extends Container {
       if (act) {
         // Success! We have a real [Activity](Activity.html)
         log('info', `Loading activity: ${activity}`);
+        // Clean static references to previous audio elements
+        MediaBagElement.resetAudioElements();
         act.prepareMedia(this);
         this.project.activitySequence.checkCurrentActivity(act.name);
         actp = act.getActivityPanel(this);

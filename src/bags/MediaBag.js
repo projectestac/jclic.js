@@ -153,13 +153,13 @@ export class MediaBag {
    * resources will be build.
    * @param {function} [callback] - Function to be called when each element is ready.
    * @param {module:JClicPlayer.JClicPlayer} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to dynamically load fonts
-   * @returns {number} - The total number of elements that will be build     * 
+   * @returns {number} - The total number of elements that will be built
    */
   buildAll(type, callback, ps) {
     let count = 0;
     $.each(this.elements, (name, element) => {
       if (!type || element.type === type) {
-        element.build(callback, ps);
+        element.build(callback, ps, false);
         count++;
       }
     });
