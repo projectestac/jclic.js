@@ -115,7 +115,7 @@
  *  @module
  */
 
-/* global Uint8Array, XMLHttpRequest, Image, document, Promise */
+/* global URL, Uint8Array, XMLHttpRequest, Image, document */
 
 import $ from 'jquery';
 import MidiAudioPlayer from '../media/MidiAudioPlayer';
@@ -151,6 +151,44 @@ export class MediaBagElement {
     if (zip)
       this.zip = zip;
     this.timeout = Date.now() + settings.LOAD_TIMEOUT;
+  }
+
+
+  /**
+   * Private static array of {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement HTMLAudioElements},
+   * to be reused between all media elements of type 'audio'. One for each priority level
+   * @name module:bags/MediaBagElement#_audioPlayers
+   * @type {external:HTMLAudioElement[]}
+   */
+  static _audioPlayers = [];
+
+  /**
+   * Gets the static {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement HTMLAudioElement}
+   * associated to the requested priority level.
+   * @param {number} level=1 - The priority level
+   * @returns {external:HTMLAudioElement}
+   */
+  static getAudioPlayer(level = 1) {
+    if (!MediaBagElement._audioPlayers[level])
+      MediaBagElement._audioPlayers[level] = document.createElement('audio');
+    return MediaBagElement._audioPlayers[level];
+  }
+
+  /**
+   * Private static array of {@link bags/MediaBagElement MediaBagElements},
+   * used to store a reference to the element using each `audioPlayer`
+   * @name module:bags/MediaBagElement#_currentAudioElements
+   * @type {bags/MediaBagElement[]}
+   */
+  static _currentAudioElements = [];
+
+  /**
+   * Clear all references to audio players and audio elements
+   * To be called when a new activity starts
+   */
+  static resetAudioElements() {
+    MediaBagElement._audioPlayers.fill(null);
+    MediaBagElement._currentAudioElements.fill(null);
   }
 
   /**
@@ -263,11 +301,12 @@ export class MediaBagElement {
       }
     });
 
-    this.getFullPathPromise().then(fullPath => {
-      request.open('GET', fullPath, true);
-      request.responseType = 'arraybuffer';
-      request.send();
-    });
+    this.getFullPathPromise()
+      .then(fullPath => {
+        request.open('GET', fullPath, true);
+        request.responseType = 'arraybuffer';
+        request.send();
+      });
   }
 
   /**
@@ -297,9 +336,11 @@ export class MediaBagElement {
   /**
    * Instantiates the media content
    * @param {function} callback - Callback method called when the referred resource is ready
-   * @param {module:JClicPlayer.JClicPlayer} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to dynamically load fonts
+   * @param {module:JClicPlayer.JClicPlayer} ps=null - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to dynamically load fonts
+   * @param {boolean} force=false - Used only in media of type 'audio'. When `true`, a static {@link MediaBagElement._audioPlayers audioPlayer element} will be loaded with this media source
+   * @param {number} level=1 - Priority level of the media content to be built. Used only n audio elements.
    */
-  build(callback, ps) {
+  build(callback, ps = null, force = false, level = 1) {
     if (callback) {
       if (!this._whenReady)
         this._whenReady = [];
@@ -307,90 +348,104 @@ export class MediaBagElement {
     }
 
     if (!this.data)
-      this.getFullPathPromise().then(fullPath => {
-        switch (this.type) {
-          case 'font':
-            const
-              format = this.ext === 'ttf' ? 'truetype' : this.ext === 'otf' ? 'embedded-opentype' : this.ext,
-              css = `@font-face{font-family:"${this.fontName}";src:url(${fullPath}) format("${format}");}`;
+      this.getFullPathPromise()
+        .then(fullPath => {
+          switch (this.type) {
+            case 'font':
+              const
+                format = this.ext === 'ttf' ? 'truetype' : this.ext === 'otf' ? 'embedded-opentype' : this.ext,
+                css = `@font-face{font-family:"${this.fontName}";src:url(${fullPath}) format("${format}");}`;
 
-            appendStyleAtHead(css, ps);
-            this.data = new Font(this.name);
-            this.ready = true;
-            break;
+              appendStyleAtHead(css, ps);
+              this.data = new Font(this.name);
+              this.ready = true;
+              break;
 
-          case 'image':
-            this.data = new Image();
-            $(this.data).on('load', () => this._onReady.call(this));
-            this.data.src = fullPath;
-            break;
+            case 'image':
+              this.data = new Image();
+              this.data.addEventListener('load', () => { this._onReady.call(this); }, { once: true });
+              this.data.src = fullPath;
+              break;
 
-          case 'audio':
-          case 'video':
-            this.data = document.createElement(this.type);
-            $(this.data).on('canplay', () => this._onReady.call(this));
-            this.data.src = fullPath;
-            // Forced call to "load" because the 'canplay' event is not fired in Android &lt; 7 just setting 'src' (until 'play')
-            // See: https://stackoverflow.com/questions/44344242/canplay-event-does-not-occur-on-google-chrome-mobile-until-audio-play-is-calle
-            this.data.load();
-            // --------------------------------------------------
-            this.data.pause();
-            break;
+            case 'video':
+              this.data = document.createElement(this.type);
+              this.data.addEventListener('canplay', () => { this._onReady.call(this); }, { once: true });
+              this.data.src = fullPath;
+              this.data.load();
+              this.data.pause();
+              break;
 
-          case 'anim':
-            this.data = $(`&lt;object type"application/x-shockwave-flash" width="300" height="200" data="${fullPath}"/>`).get(-1);
-            // Unable to check the loading progress in elements of type `object`. so we mark it always as `ready`:
-            this.ready = true;
-            break;
-
-          case 'xml':
-            $.get(fullPath, null, null, 'xml').done(xmlData => {
-              const children = xmlData ? xmlData.children || xmlData.childNodes : null;
-              this.data = children &amp;&amp; children.length > 0 ? parseXmlNode(children[0]) : null;
-              this._onReady();
-            }).fail(err => {
-              log('error', `Error loading ${this.name}: ${err}`);
-              this._onReady();
-            });
-            break;
-
-          case 'midi':
-            const request = new XMLHttpRequest();
-            request.onreadystatechange = () => {
-              if (request.readyState === 4) {
-                if (request.status === 200)
-                  this.data = new MidiAudioPlayer(request.response, ps &amp;&amp; ps.options);
+            case 'audio':
+              // HTML Audio objects will be created on demand, when the param 'force' is set to true
+              if (force) {
+                // Clean up state in current audio element, if any
+                const currentAudioElement = MediaBagElement._currentAudioElements[level];
+                if (currentAudioElement &amp;&amp; currentAudioElement !== this) {
+                  currentAudioElement.data = null;
+                  currentAudioElement.ready = false;
+                }
+                // Register as a current audio element
+                MediaBagElement._currentAudioElements[level] = this;
+                // Configure the audio player
+                const audioPlayer = MediaBagElement.getAudioPlayer(level);
+                if (audioPlayer.src !== fullPath) {
+                  log('trace', `Loading static player #${level} with new audio: ${fullPath}`);
+                  this.data = audioPlayer;
+                  this.ready = false;
+                  audioPlayer.addEventListener('canplay', () => { this._onReady.call(this); }, { once: true });
+                  audioPlayer.src = fullPath;
+                  audioPlayer.load();
+                  audioPlayer.pause();
+                }
                 else
-                  log('error', `Error loading ${this.name}: ${request.statusText}`);
-                this._onReady();
+                  log('trace', `Reusing existing audio in player #${level}: ${fullPath}`);
               }
-            };
-            request.open('GET', fullPath, true);
-            request.responseType = 'arraybuffer';
-            request.send();
+              else
+                this.ready = true;
+              break;
 
-            /* USING 'fetch':
-            fetch(fullPath)
-              .then(res => res.arrayBuffer())
-              .then(result => {
-                this.data = new MidiAudioPlayer(result)
-                this._onReady()
-              })
-              .catch(err => {
-                log('error', `Error loading ${this.name}: ${err}`)
-                this._onReady()
-              })
-            */
-            break;
+            case 'anim':
+              // TODO: Use [Ruffle](https://ruffle.rs/) to play Flash movies
+              this.data = $(`&lt;object type"application/x-shockwave-flash" width="300" height="200" data="${fullPath}"/>`).get(-1);
+              // Unable to check the loading progress in elements of type `object`. so we mark it always as `ready`:
+              this.ready = true;
+              break;
 
-          default:
-            log('trace', `Media currently not supported: ${this.name}`);
-            this.ready = true;
-        }
+            case 'xml':
+              $.get(fullPath, null, null, 'xml').done(xmlData => {
+                const children = xmlData ? xmlData.children || xmlData.childNodes : null;
+                this.data = children &amp;&amp; children.length > 0 ? parseXmlNode(children[0]) : null;
+                this._onReady();
+              }).fail(err => {
+                log('error', `Error loading ${this.name}: ${err}`);
+                this._onReady();
+              });
+              break;
 
-        if (this.ready)
-          this._onReady();
-      });
+            case 'midi':
+              const request = new XMLHttpRequest();
+              request.onreadystatechange = () => {
+                if (request.readyState === 4) {
+                  if (request.status === 200)
+                    this.data = new MidiAudioPlayer(request.response, ps &amp;&amp; ps.options);
+                  else
+                    log('error', `Error loading ${this.name}: ${request.statusText}`);
+                  this._onReady();
+                }
+              };
+              request.open('GET', fullPath, true);
+              request.responseType = 'arraybuffer';
+              request.send();
+              break;
+
+            default:
+              log('trace', `Media currently not supported: ${this.name}`);
+              this.ready = true;
+          }
+
+          if (this.ready)
+            this._onReady();
+        });
     else if (this.ready)
       this._onReady();
 
@@ -455,12 +510,11 @@ export class MediaBagElement {
    * @returns {external:Promise}
    */
   getFullPathPromise() {
-    return new Promise((resolve, reject) => {
-      getPathPromise(this.basePath, this.file, this.zip).then(fullPath => {
-        this._fullPath = fullPath;
-        resolve(fullPath);
-      }).catch(reject);
-    });
+    return getPathPromise(this.basePath, this.file, this.zip)
+      .then(fullPath => {
+        this._fullPath = (new URL(fullPath, document.location.href)).toString();
+        return this._fullPath;
+      });
   }
 }
 
@@ -576,7 +630,7 @@ export default MediaBagElement;
 
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a>
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
