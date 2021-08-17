@@ -1,3 +1,7 @@
+### v2.1.4 (Not yet released)
+#### Improvements
+- Upgraded dependencies
+
 ### v2.1.3 (2021-07-28)
 #### Improvements
 - Recycle HTML audio elements instead of building one for each audio file at startup. This has been motivated by a breaking change
