@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.2
  *  @licstart
- *  (c) 2000-2020 Educational Telematic Network of Catalonia (XTEC)
+ *  (c) 2000-2021 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -27,137 +27,6 @@
  *  under the Licence.
  *  @licend
  *  @module
- */
-
-// Declaration of JSDoc external objects:
-
-/**
- * The Event interface represents an event which takes place in the DOM.
- * @external Event
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Event}
- */
-
-/**
- * The HTMLElement interface represents any HTML element. Some elements directly implement this
- * interface, others implement it via an interface that inherits it.
- * @external HTMLElement
- * @see {@link https://developer.mozilla.org/ca/docs/Web/API/HTMLElement}
- */
-
-/**
- * A jQuery object
- * @external jQuery
- * @see {@link http://api.jquery.com/jQuery/}
- */
-
-/**
- * The jQuery XMLHttpRequest (jqXHR) object returned by `$.ajax()` as of jQuery 1.5 is a superset
- * of the browser's native [XMLHttpRequest](https://developer.mozilla.org/docs/XMLHttpRequest) object.
- * As of jQuery 1.5, jqXHR objects implement the Promise interface, giving them
- * all the properties, methods, and behavior of a Promise.
- * @external jqXHR
- * @see {@link https://api.jquery.com/jQuery.ajax/#jqXHR}
- */
-
-/**
- * The CanvasRenderingContext2D interface provides the 2D rendering context for the drawing surface
- * of a &lt;canvas&gt; element.
- * @external CanvasRenderingContext2D
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D}
- */
-
-/**
- * The HTMLImageElement interface provides special properties and methods (beyond the regular
- * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement HTMLElement} interface it
- * also has available to it by inheritance) for manipulating the layout and presentation of
- * &lt;img&gt; elements.
- * @external HTMLImageElement
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement}
- */
-
-/**
- * The HTMLAudioElement interface provides access to the properties of &lt;audio&gt; elements, as
- * well as methods to manipulate them. It derives from the
- * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement HTMLMediaElement} interface.
- * @external HTMLAudioElement
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement}
- */
-
-/**
- * The AudioContext interface represents an audio-processing graph built from audio modules linked together.
- * @external AudioContext
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/AudioContext}
- */
-
-/**
- * The Intl.Collator object is a constructor for collators, objects that enable language sensitive
- * string comparison.
- * @external Collator
- * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Collator}
- */
-
-/**
- * A JSZip object
- * @external JSZip
- * @see {@link https://stuk.github.io/jszip}
- */
-
-/**
- * The MediaRecorder interface of the {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API MediaRecorder API}
- * provides functionality to easily capture media.
- * @external MediaRecorder
- * @see {@link https://developer.mozilla.org/ca/docs/Web/API/MediaRecorder}
- */
-
-/**
- * The Promise object is used for asynchronous computations. A Promise represents an operation
- * that hasn't completed yet, but is expected in the future.
- * @external Promise
- * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise}
- */
-
-/**
-* The Storage interface of the Web Storage API provides access to the session storage or local storage for a particular domain,
-* allowing you to for example add, modify or delete stored data items.
-* @external Storage
-* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Storage}
-*/
-
-/**
- * The NamedNodeMap interface represents a collection of Attr objects. Objects inside a NamedNodeMap are not in any particular
- * order, unlike NodeList, although they may be accessed by an index as in an array.
- * @external NamedNodeMap
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap}
- */
-
-/**
- * MidiPlayerJS is a JavaScript library which reads standard MIDI files and emits JSON events in real time.
- * @external MidiPlayerJS
- * @see {@link https://github.com/grimmdude/MidiPlayerJS}
- */
-
-/**
- * JavaScript Date objects represent a single moment in time in a platform-independent format.
- * @external Date
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date}
- */
-
-/**
-* The HTMLStyleElement interface represents a <style> element. It inherits properties and methods from its parent, HTMLElement, and from LinkStyle.
-* @external HTMLStyleElement
-* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLStyleElement}
-*/
-
-/**
- * Type of MIDI instrument used by Soundfont Player
- * @external Instrument
- * @see {@link https://github.com/danigb/soundfont-player}
- */
-
-/**
- * The Tgrimmdude's MidiPlayer object
- * @external MidiPlayerJS
- * @see {@link http://grimmdude.com/MidiPlayerJS/}
  */
 
 /* global JClicDataProject, JClicDataOptions, window, document */
