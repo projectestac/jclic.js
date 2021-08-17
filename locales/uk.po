@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JClic.js 0.1.28\n"
 "POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
-"PO-Revision-Date: 2021-08-15 22:33+0000\n"
+"PO-Revision-Date: 2021-08-18 08:32+0000\n"
 "Last-Translator: Tymofii Lytvynenko <till.svit@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/jclic/jclicjs/"
 "uk/>\n"
@@ -28,23 +28,23 @@ msgstr "Час"
 
 #: label_actions
 msgid "actions"
-msgstr ""
+msgstr "спроби"
 
 #: label_score
 msgid "score"
-msgstr ""
+msgstr "оцінка"
 
 #: action_next_tooltip
 msgid "Next activity"
-msgstr ""
+msgstr "Наступна діяльність"
 
 #: action_prev_tooltip
 msgid "Previous activity"
-msgstr ""
+msgstr "Попередня діяльність"
 
 #: action_reset_tooltip
 msgid "Restart activity"
-msgstr ""
+msgstr "Перезапуск діяльності"
 
 #: action_info_caption
 msgid "Information"
@@ -52,15 +52,15 @@ msgstr "Інформація"
 
 #: report_system_standard
 msgid "Results are not currently being saved"
-msgstr ""
+msgstr "Звіт не зареєстровано в БД"
 
 #: action_about_tooltip
 msgid "Current results"
-msgstr ""
+msgstr "Звіти користувача"
 
 #: report_started
 msgid "Session started:"
-msgstr ""
+msgstr "Сеанс розпочато:"
 
 #: report_system
 msgid "Reports system:"
@@ -72,31 +72,31 @@ msgstr "Користувач:"
 
 #: report_num_projects
 msgid "Projects:"
-msgstr "Проекти:"
+msgstr "Проєкти:"
 
 #: report_num_sequences
 msgid "Sequences:"
-msgstr ""
+msgstr "Послідовності:"
 
 #: report_num_activities
 msgid "Activities done:"
-msgstr ""
+msgstr "Виконані діяльності:"
 
 #: report_num_activities_solved
 msgid "Activities solved:"
-msgstr ""
+msgstr "Вирішені діяльності:"
 
 #: report_global_score
 msgid "Global score:"
-msgstr ""
+msgstr "Загальна оцінка:"
 
 # Explanation of 'global score'
 msgid "(out of all project activities)"
-msgstr ""
+msgstr "(з усіх діяльностей проєкту)"
 
 #: report_total_time
 msgid "Total time in activities:"
-msgstr ""
+msgstr "Загальний час діяльності:"
 
 #: report_num_actions
 msgid "Actions done:"
@@ -104,11 +104,11 @@ msgstr "Виконані дії:"
 
 #: report_no_activities
 msgid "No activities done!"
-msgstr ""
+msgstr "Жодних діяльностей не виконано!"
 
 #: report_project
 msgid "Project"
-msgstr "Проект"
+msgstr "Проєкт"
 
 #: report_lb_sequence
 msgid "sequence"
@@ -133,7 +133,7 @@ msgstr "Ні"
 
 #: report_lb_totals
 msgid "Total:"
-msgstr ""
+msgstr "Підсумок:"
 
 # Select group for reports in a list
 msgid "Select group:"
@@ -141,7 +141,7 @@ msgstr "Вибрати групу:"
 
 # Select user for reports in a list
 msgid "Select user:"
-msgstr ""
+msgstr "Виберіть користувача:"
 
 # Cancel dialog
 msgid "Cancel"
@@ -153,11 +153,13 @@ msgstr "Закрити"
 
 # Caption for 'copy' button in reports dialog
 msgid "Copy data to clipboard"
-msgstr ""
+msgstr "Копіювати дані в буфер обміну"
 
 # Text shown when reports data is pasted in plain-text editors
 msgid "The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor"
 msgstr ""
+"Дані скопійовані у форматі HTML. Будь ласка, вставте їх в електронну таблицю "
+"або у текстовий редактор"
 
 # Notification shown when reports data has been copied
 msgid "The data has been copied to clipboard"
@@ -170,6 +172,8 @@ msgstr "Немає з’єднання"
 # Message displayed when the user attempts to close the player with data pending to be reported
 msgid "Please wait until the results of your activities are sent to the reports system"
 msgstr ""
+"Будь ласка, зачекайте, поки результати вашої діяльності будуть надіслані до "
+"системи звітів"
 
 # Caption for password input
 msgid "Password:"
@@ -185,12 +189,12 @@ msgstr "Неприпустимий користувач"
 
 # Average score of played activities
 msgid "Partial score:"
-msgstr ""
+msgstr "Часткова оцінка:"
 
 # Explanation of 'partial score'
 msgid "(out of played activities)"
-msgstr ""
+msgstr "(поза відтвореними діяльностями)"
 
 # Number of project's activities played at least one time
 msgid "Activities played at least once:"
-msgstr ""
+msgstr "Діяльності, які відтворювалися принаймні один раз:"
