@@ -1,4 +1,4 @@
-### v2.1.4 (Not yet released)
+### v2.1.5 (Not yet released)
 #### Improvements
 - Upgraded dependencies
 

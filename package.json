@@ -2,15 +2,15 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "main": "dist/jclic-node.js",
   "jsdelivr": "dist/jclic.min.js",
-  "homepage": "http://projectestac.github.io/jclic.js",
+  "homepage": "https://projectestac.github.io/jclic.js",
   "readmeFilename": "README.md",
   "author": {
     "name": "Catalan Educational Telematic Network (XTEC)",
     "email": "clic@xtec.cat",
-    "url": "http://clic.xtec.cat"
+    "url": "https://clic.xtec.cat"
   },
   "contributors": [
     {
@@ -54,9 +54,9 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "@babel/eslint-parser": "^7.15.0",
-    "@babel/preset-env": "^7.15.0",
+    "@babel/core": "^7.15.5",
+    "@babel/eslint-parser": "^7.15.7",
+    "@babel/preset-env": "^7.15.6",
     "babel-loader": "^8.2.2",
     "clipboard-polyfill": "^3.0.3",
     "eslint": "^7.32.0",
@@ -66,19 +66,19 @@
     "jsdoc": "^3.6.7",
     "mock-browser": "^0.92.14",
     "po2json": "^1.0.0-alpha",
-    "terser-webpack-plugin": "^5.1.4",
-    "webpack": "^5.50.0",
+    "terser-webpack-plugin": "^5.2.4",
+    "webpack": "^5.53.0",
     "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^3.11.2",
+    "webpack-dev-server": "^4.2.1",
     "webpack-node-externals": "^3.0.0",
     "xmldom": "^0.6.0"
   },
   "scripts": {
-    "build": "webpack --mode=production",
+    "build": "webpack --mode production",
     "build-locales": "node build-locales.js",
     "build-doc": "jsdoc -c jsdoc.config.js",
     "lint": "eslint -c .eslintrc.json \"src/**/*.js\"",
-    "start": "webpack serve --mode=development --open google-chrome"
+    "start": "webpack serve --mode development"
   },
   "browserslist": "> 0.25%, not dead"
 }

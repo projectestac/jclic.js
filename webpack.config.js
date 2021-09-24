@@ -93,24 +93,28 @@ const mainConfig = {
     ]
   },
   devServer: {
-    host: '0.0.0.0',
-    contentBase: path.join(__dirname, 'test'),
-    watchContentBase: true,
-    compress: true,
+    host: 'localhost',
     port: 9001,
-    overlay: true,
-    public: 'localhost:9001',
+    open: true,
+    static: {
+      directory: path.join(__dirname, 'test'),
+      watch: true,
+    },
+    client: {
+      overlay: true,
+      progress: true,
+    },
   },
   performance: {
     maxAssetSize: 2000000,
     maxEntrypointSize: 2000000,
   },
   optimization: {
+    minimize: true,
     minimizer: [
       new TerserPlugin({
         parallel: true,
         extractComments: {
-          condition: /^\!/,
           filename: 'jclic.components.LICENSE',
           banner: () => banner,
         },

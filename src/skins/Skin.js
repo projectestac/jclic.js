@@ -330,7 +330,7 @@ export class Skin extends Container {
   setSkinSizes(full) {
     const
       css = {},
-      topHeight = this.player.$topDiv.height(),
+      topHeight = this.player?.$topDiv.height() || 0,
       nilValue = this.player.fullScreenChecked ? 'inherit' : null;
 
     // When `full` no set, detect the current status
