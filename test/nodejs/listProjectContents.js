@@ -20,7 +20,7 @@ global.Image = function () { };
 global.Audio = function () { };
 
 // Use `xmldom` as DOM parser
-global.DOMParser = require('xmldom').DOMParser;
+global.DOMParser = require('@xmldom/xmldom').DOMParser;
 
 // Load the global [JClicObject](http://projectestac.github.io/jclic.js/doc/module-JClic.html).
 // Here this is done with a relative path. In other contexts just install
@@ -68,7 +68,7 @@ var sequences = project.activitySequence.elements;
 var nSequences = sequences.length;
 for (var p = 0; p < nSequences; p++) {
   var el = sequences[p];
-  console.log('- %s %s %s | buttons: %s | delay: %d', el.tag ? '[' + el.tag + ']' : '', el.activityName, el.description ? el.description : '', el.navButtons, el.delay);
+  console.log('- %s %s %s | buttons: %s | delay: %d', el.tag ? '[' + el.tag + ']' : '', el.activity, el.description ? el.description : '', el.navButtons, el.delay);
 }
 
 console.log('\nMEDIA:');

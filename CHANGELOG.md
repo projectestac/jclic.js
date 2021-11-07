@@ -1,6 +1,9 @@
-### v2.1.5 (Not yet released)
+### v2.1.5 (2021-11-07)
 #### Improvements
 - Upgraded dependencies
+
+#### Bug fixes
+- Avoid bad URLs in local files when running on NodeJS with JSDOM
 
 ### v2.1.3 (2021-07-28)
 #### Improvements

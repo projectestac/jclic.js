@@ -29,7 +29,7 @@
  *  @module
  */
 
-/* global Promise, window, document, console, btoa, HTMLElement, CanvasRenderingContext2D */
+/* global Promise, window, document, console, HTMLElement */
 
 import $ from 'jquery';
 import * as clipboard from 'clipboard-polyfill';
@@ -900,7 +900,7 @@ export function getSvg(svg, width, height, fill) {
  * @returns {string} - The resulting Data URI
  */
 export function svgToURI(svg, width, height, fill) {
-  return 'data:image/svg+xml;base64,' + btoa(getSvg(svg, width, height, fill));
+  return 'data:image/svg+xml;base64,' + window.btoa(getSvg(svg, width, height, fill));
 };
 
 /**
@@ -1124,6 +1124,8 @@ export function mReplace(replacements, str) {
 export const settings = {
   // JClic.js Version
   VERSION: GlobalData.version,
+  // Check if we are running on NodeJS with JSDOM
+  NODEJS: window.name === 'nodejs',
   // layout constants
   AB: 0, BA: 1, AUB: 2, BUA: 3,
   LAYOUT_NAMES: ['AB', 'BA', 'AUB', 'BUA'],
@@ -1228,7 +1230,7 @@ export const settings = {
   // CANVAS_HITREGIONS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.addHitRegion === 'function',
   // CANVAS_HITREGIONS_FOCUS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function',
   //
-  CANVAS_DRAW_FOCUS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function',
+  CANVAS_DRAW_FOCUS: typeof window.CanvasRenderingContext2D !== 'undefined' && typeof window.CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function',
   // Whitespaces (see: https://emptycharacter.com/)
   WHITESPACES: ' \xA0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u2028\u205F\u3000',
 };

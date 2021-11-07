@@ -151,6 +151,9 @@ const nodeConfig = {
       export: 'default',
     },
   },
+  optimization: {
+    minimize: false,
+  },
   externals: [nodeExternals()],
   plugins: [
     new ESLintPlugin(ESLintOptions),

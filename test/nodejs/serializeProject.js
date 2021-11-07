@@ -20,7 +20,7 @@ global.Image = function () { };
 global.Audio = function () { };
 
 // Use `xmldom` as DOM parser
-global.DOMParser = require('xmldom').DOMParser;
+global.DOMParser = require('@xmldom/xmldom').DOMParser;
 
 // Load the main JClic module.
 // Here this is done with a relative path. In other contexts just install
@@ -45,7 +45,7 @@ if (isXML) {
 
   // Create a JClicProject and initialize it with the file contents
   project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
-} 
+}
 else {
   var doc = JSON.parse(contents);
   project.setAttributes(doc, file, null, {});

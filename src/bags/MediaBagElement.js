@@ -255,6 +255,12 @@ export class MediaBagElement {
    * @param {number} level=1 - Priority level of the media content to be built. Used only n audio elements.
    */
   build(callback, ps = null, force = false, level = 1) {
+    // Mock data when running in NodeJS
+    if (settings.NODEJS) {
+      this.data = [];
+      this.ready = true;
+    }
+
     if (callback) {
       if (!this._whenReady)
         this._whenReady = [];
@@ -426,7 +432,10 @@ export class MediaBagElement {
   getFullPathPromise() {
     return getPathPromise(this.basePath, this.file, this.zip)
       .then(fullPath => {
-        this._fullPath = (new URL(fullPath, document.location.href)).toString();
+        // Process full URL only when running in a browser
+        this._fullPath = settings.NODEJS
+          ? fullPath
+          : (new URL(fullPath, document.location.href)).toString();
         return this._fullPath;
       });
   }
