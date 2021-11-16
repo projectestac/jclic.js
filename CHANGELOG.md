@@ -1,3 +1,7 @@
+### v2.1.6 (not yet released)
+#### Improvements
+- Upgraded dependencies
+
 ### v2.1.5 (2021-11-07)
 #### Improvements
 - Upgraded dependencies
