@@ -1,6 +1,7 @@
 ### v2.1.6 (not yet released)
 #### Improvements
 - Upgraded dependencies
+- Use [ink-docstrap-template](https://www.npmjs.com/package/ink-docstrap-template) instead [ink-docstrap](https://www.npmjs.com/package/ink-docstrap) to deal with updated components, thus avoiding security warnings
 
 ### v2.1.5 (2021-11-07)
 #### Improvements

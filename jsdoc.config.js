@@ -11,12 +11,12 @@ module.exports = {
     include: ['misc/jsdoc/index.md', 'src'],
     includePattern: '.+\\.js$',
     exclude: ['src/GlobalData.js', 'src/Deps.js'],
-  },  
+  },
   opts: {
     recurse: true,
     verbose: true,
     destination: 'doc',
-    template: 'node_modules/ink-docstrap/template',
+    template: 'node_modules/ink-docstrap-template/template',
   },
   tags: {
     allowUnknownTags: true
@@ -42,7 +42,7 @@ module.exports = {
     syntaxTheme: 'default',
     sort: true,
     search: true,
-    
+
     cleverLinks: true,
     monospaceLinks: true,
     disqus: '',
