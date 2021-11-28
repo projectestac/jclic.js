@@ -11,13 +11,13 @@
 
 var fs = require('fs');
 
-// Use mock-browser as a browser simulator
-var MockBrowser = require('mock-browser').mocks.MockBrowser;
-var mock = new MockBrowser();
-global.window = mock.getWindow();
-global.document = mock.getDocument();
-global.Image = function () { };
-global.Audio = function () { };
+// Use jsdom as a browser simulator
+const jsdom = require('jsdom');
+const dom = new jsdom.JSDOM('<!DOCTYPE html><head></head><body></body>', { url: 'https://example.com' });
+global.window = dom.window;
+global.document = dom.window.document;
+global.Image = dom.window.Image;
+global.Audio = dom.window.Audio;
 
 // Use `xmldom` as DOM parser
 global.DOMParser = require('@xmldom/xmldom').DOMParser;
