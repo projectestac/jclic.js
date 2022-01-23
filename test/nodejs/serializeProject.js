@@ -28,11 +28,14 @@ global.DOMParser = require('@xmldom/xmldom').DOMParser;
 // `var jclic = require('jclic');`
 var jclic = require('../../dist/jclic-node.js');
 
+if (process.argv.length < 3) {
+  console.log('Usage: serializeProject.js {path/to/project.jclic[.json]}');
+  console.log('Please provide a path to a \'.jclic\' (XML) or \'jclic.json\' file');
+  process.exit(-1);
+}
+
 // Get the file name from the command line arguments
 var file = process.argv[2];
-
-if (!file)
-  throw 'Please indicate a file name!';
 
 const isXML = file.endsWith('.jclic');
 
