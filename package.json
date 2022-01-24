@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "main": "dist/jclic-node.js",
   "jsdelivr": "dist/jclic.min.js",
   "homepage": "https://projectestac.github.io/jclic.js",

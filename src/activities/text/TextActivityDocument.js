@@ -46,7 +46,7 @@ export class TextActivityDocument {
    */
   constructor() {
     // Make a deep clone of the default style
-    this.style = { 'default': $.extend(true, {}, TextActivityDocument.DEFAULT_DOC_STYLE) };
+    this.style = { 'default': { ...TextActivityDocument.DEFAULT_DOC_STYLE } };
     this.p = [];
   }
 
@@ -292,6 +292,26 @@ export class TextActivityDocument {
     //return Object.assign({}, this.style.default, this.style[name] ? this.style[name] : {})
   }
 }
+
+/**
+ * Default style
+ */
+TextActivityDocument.DEFAULT_DOC_STYLE = {
+  background: 'white',
+  foreground: 'black',
+  family: 'Arial',
+  bold: false,
+  italic: false,
+  size: 17,
+  css: {
+    'background-color': 'white',
+    'color': 'black',
+    'font-family': 'Arial',
+    'font-weight': 'normal',
+    'font-style': 'normal',
+    'font-size': '17px',
+  },
+};
 
 Object.assign(TextActivityDocument.prototype, {
   /**
