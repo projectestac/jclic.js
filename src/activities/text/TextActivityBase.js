@@ -165,17 +165,16 @@ export class TextActivityBasePanel extends ActivityPanel {
               ? stringToWords(parsedText)
               : [{ text: parsedText, sep: '' }];
             fragments.forEach(({ text, sep }) => {
+              let initialCSS = { ...this.act.document.style['default'].css };
+              if (element?.attr?.style)
+                initialCSS = { ...initialCSS, ...doc.style[element.attr.style].css };
+              if (element?.attr?.css)
+                initialCSS = { ...initialCSS, ...element.attr.css };
               const txtBlocs = this.spanChars ? [...text] : [text];
               txtBlocs.forEach((str) => {
                 if (element.attr) {
                   // Text uses a specific style and/or individual attributes
-                  $span = $('<span/>').html(str);
-                  let initialCSS = { ...this.act.document.style['default'].css };
-                  if (element.attr.style)
-                    initialCSS = { ...initialCSS, ...doc.style[element.attr.style].css };
-                  if (element.attr.css)
-                    initialCSS = { ...initialCSS, ...element.attr.css };
-                  $span.css(initialCSS);
+                  $span = $('<span/>').html(str).css(initialCSS);
                   // Save initialCSS for later use
                   $span.initialCSS = initialCSS;
                   $p.append(this.$createSpanElement($span));
