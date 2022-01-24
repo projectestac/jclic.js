@@ -102,7 +102,7 @@ class IdentifyTextPanel extends TextActivityBasePanel {
     this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');
     this.$div.find('.JClicTextDocument > span').css('cursor', 'pointer');
     // Clean possible previous errors
-    this.spansChecked.forEach($spanElement => $spanElement.css(this.act.document.style['default'].css));
+    this.spansChecked.forEach($spanElement => $spanElement.css($spanElement.initialCSS || this.act.document.style['default'].css));
     this.spansChecked.clear();
     this.playing = true;
   }
@@ -187,11 +187,14 @@ class IdentifyTextPanel extends TextActivityBasePanel {
         } else {
           if ($spanElement) {
             $spanElement.checked = !$spanElement.checked;
-            if ($spanElement.checked)
+            if ($spanElement.checked) {
               this.spansChecked.add($spanElement);
-            else
+              $spanElement.css(this.act.document.style.target.css);
+            }
+            else {
               this.spansChecked.delete($spanElement);
-            $spanElement.css(this.act.document.style[$spanElement.checked ? 'target' : 'default'].css);
+              $spanElement.css($spanElement.initialCSS || this.act.document.style.default.css);
+            }
             text = $spanElement.text();
           }
           else

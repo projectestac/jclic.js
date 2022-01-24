@@ -297,15 +297,15 @@ export class TextActivityDocument {
  * Default style
  */
 TextActivityDocument.DEFAULT_DOC_STYLE = {
-  background: 'white',
-  foreground: 'black',
+  background: '0xFFFFFF',
+  foreground: '0x000000',
   family: 'Arial',
   bold: false,
   italic: false,
   size: 17,
   css: {
-    'background-color': 'white',
-    'color': 'black',
+    'background-color': '#FFFFFF',
+    'color': '#000000',
     'font-family': 'Arial',
     'font-weight': 'normal',
     'font-style': 'normal',

@@ -170,12 +170,14 @@ export class TextActivityBasePanel extends ActivityPanel {
                 if (element.attr) {
                   // Text uses a specific style and/or individual attributes
                   $span = $('<span/>').html(str);
-                  if (element.attr.style) {
-                    $span.css(doc.style[element.attr.style].css);
-                  }
-                  if (element.attr.css) {
-                    $span.css(element.attr.css);
-                  }
+                  let initialCSS = { ...this.act.document.style['default'].css };
+                  if (element.attr.style)
+                    initialCSS = { ...initialCSS, ...doc.style[element.attr.style].css };
+                  if (element.attr.css)
+                    initialCSS = { ...initialCSS, ...element.attr.css };
+                  $span.css(initialCSS);
+                  // Save initialCSS for later use
+                  $span.initialCSS = initialCSS;
                   $p.append(this.$createSpanElement($span));
                 } else {
                   if (this.spanText) {
