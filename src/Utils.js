@@ -711,8 +711,60 @@ export function buildObj(objType, data, init, params = []) {
  * @returns {boolean}
  */
 export function isSeparator(ch) {
-  return ' .,;-|'.includes(ch);
+  return settings.SEPARATORS.includes(ch);
 };
+
+/**
+ * Check if the given char is a word delimiter
+ * @param {string} ch - A string with a single character
+ * @returns {boolean}
+ */
+export function isWordDelimiter(ch) {
+  return settings.WORD_DELIMITERS.includes(ch);
+}
+
+/**
+ * Converts a string in an array of objects with 'text' and 'sep' attributes, where 'text' are single words and 'sep'
+ * are the word separators following each word in the sentence.
+ * @example
+ * stringToWords("Hello, World! That's all") returns:
+ * [
+ *   {text: "Hello", sep: ", "},
+ *   {text: "World", sep: "! "},
+ *   {text: "That", sep: "'"},
+ *   {text: "s", sep: " "},
+ *   {text: "all", sep: ""},
+ * ]
+ * @param {*} str - The text to be tokenized
+ * @returns {object[]}
+ */
+export function stringToWords(str) {
+  const result = [];
+  let token = { text: '', sep: '' };
+  let inWord = true;
+  for (let i = 0; i < str.length; i++) {
+    const ch = str.charAt(i);
+    const delim = isWordDelimiter(ch);
+    if (inWord) {
+      if (!delim)
+        token.text += ch;
+      else {
+        inWord = false;
+        token.sep = ch;
+      }
+    } else {
+      if (delim)
+        token.sep += ch;
+      else {
+        result.push(token);
+        token = { text: ch, sep: '' };
+        inWord = true;
+      }
+    }
+  }
+  result.push(token);
+  return result;
+}
 
 /**
  * Rounds `v` to the nearest multiple of `n`
@@ -1231,9 +1283,12 @@ export const settings = {
   // CANVAS_HITREGIONS_FOCUS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function',
   //
   CANVAS_DRAW_FOCUS: typeof window.CanvasRenderingContext2D !== 'undefined' && typeof window.CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function',
-  // Whitespaces (see: https://emptycharacter.com/)
-  WHITESPACES: ' \xA0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u2028\u205F\u3000',
+  // See: https://emptycharacter.com/
+  // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes
+  WHITESPACES: '  \f\n\r\t\v\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u2028\u2029\u202f\u205f\u3000\ufeff',
 };
+settings.SEPARATORS = `${settings.WHITESPACES}.,;-|`;
+settings.WORD_DELIMITERS = `${settings.SEPARATORS}…_<>"“”«»'\xB4\x60\u2018\u2019\u2022~+\u2013\u2014\u2015=%¿?¡!:/\\()[]{}$£€`;
 
 /**
  * Miscellaneous utility functions and constants
@@ -1279,6 +1334,8 @@ export const Utils = {
   setAttr,
   buildObj,
   isSeparator,
+  isWordDelimiter,
+  stringToWords,
   roundTo,
   fx,
   compareMultipleOptions,

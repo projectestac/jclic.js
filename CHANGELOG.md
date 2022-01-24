@@ -1,8 +1,11 @@
-### v2.1.6 (not yet released)
+### v2.1.6 (2022-01-24)
 #### Improvements
 - Upgraded dependencies
 - Use [ink-docstrap-template](https://www.npmjs.com/package/ink-docstrap-template) instead [ink-docstrap](https://www.npmjs.com/package/ink-docstrap) to deal with updated components, thus avoiding security warnings
 - Direct use of [jsdom](https://www.npmjs.com/package/jsdom) instead of [mock-browser](https://www.npmjs.com/package/mock-browser) (outdated) in `test/nodejs`, to avoid security warnings
+
+#### Bug fixes
+- `IdentifyText` activities were not fully implemented: only targets could be selected. You can now select any word (or letter in `identifyChars` mode), although not part of a target. To be successful with the activity, only the targets must be selected.
 
 ### v2.1.5 (2021-11-07)
 #### Improvements

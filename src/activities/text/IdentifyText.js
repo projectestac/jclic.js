@@ -61,6 +61,9 @@ class IdentifyTextPanel extends TextActivityBasePanel {
    */
   constructor(act, ps, $div) {
     super(act, ps, $div);
+    this.spanText = true;
+    this.spanChars = act.type === 'identifyChars';
+    this.spansChecked = new Set();
   }
 
   /**
@@ -82,6 +85,14 @@ class IdentifyTextPanel extends TextActivityBasePanel {
     return $span;
   }
 
+  $createSpanElement($span) {
+    $span.bind('click', event => {
+      event.$spanElement = $span;
+      this.processEvent(event);
+    });
+    return $span;
+  }
+
   /**
    * Basic initialization procedure
    * @override
@@ -89,6 +100,10 @@ class IdentifyTextPanel extends TextActivityBasePanel {
   initActivity() {
     super.initActivity(this);
     this.$div.find('.JClicTextDocument > p').css('cursor', 'pointer');
+    this.$div.find('.JClicTextDocument > span').css('cursor', 'pointer');
+    // Clean possible previous errors
+    this.spansChecked.forEach($spanElement => $spanElement.css(this.act.document.style['default'].css));
+    this.spansChecked.clear();
     this.playing = true;
   }
 
@@ -97,7 +112,7 @@ class IdentifyTextPanel extends TextActivityBasePanel {
    * @returns {number}
    */
   countSolvedTargets() {
-    return this.targets.length.reduce((n, target) => target.targetStatus === 'SOLVED' ? ++n : n, 0);
+    return this.targets.filter(({ targetStatus }) => targetStatus === 'SOLVED').length;
   }
 
   /**
@@ -114,11 +129,16 @@ class IdentifyTextPanel extends TextActivityBasePanel {
       target.checkColors();
       this.ps.reportNewAction(this.act, 'SELECT', target.text, target.pos, ok, targetsOk);
     });
-    if (targetsOk === this.targets.length) {
+
+
+    if (targetsOk === this.targets.length && this.spansChecked.size === 0) {
       this.finishActivity(true);
       return true;
-    } else
+    } else {
+      // Mark selected spans as error
+      this.spansChecked.forEach($spanElement => $spanElement.css(this.act.document.style['targetError'].css));
       this.playEvent('finishedError');
+    }
     return false;
   }
 
@@ -148,6 +168,8 @@ class IdentifyTextPanel extends TextActivityBasePanel {
       this.lastTimeStamp = event.timeStamp;
 
     const target = event.textTarget;
+    const $spanElement = event.$spanElement;
+
     switch (event.type) {
       case 'click':
         let text, pos, ok = false;
@@ -163,8 +185,17 @@ class IdentifyTextPanel extends TextActivityBasePanel {
           // TODO: Just on/off target colors, don't mark it as error!
           target.checkColors();
         } else {
-          // TODO: Get current text at click position, perhaps using [window|document].getSelection
-          text = 'unknown';
+          if ($spanElement) {
+            $spanElement.checked = !$spanElement.checked;
+            if ($spanElement.checked)
+              this.spansChecked.add($spanElement);
+            else
+              this.spansChecked.delete($spanElement);
+            $spanElement.css(this.act.document.style[$spanElement.checked ? 'target' : 'default'].css);
+            text = $spanElement.text();
+          }
+          else
+            text = 'unknown';
           pos = 0;
         }
 
@@ -174,7 +205,7 @@ class IdentifyTextPanel extends TextActivityBasePanel {
           this.ps.reportNewAction(this.act, 'SELECT', text, pos, ok, cellsAtPlace);
 
           // End activity or play event sound
-          if (ok && cellsAtPlace === this.targets.length)
+          if (ok && this.spansChecked.size === 0 && cellsAtPlace === this.targets.length)
             this.finishActivity(true);
           else
             this.playEvent(ok ? 'actionOk' : 'actionError');
@@ -202,6 +233,12 @@ Object.assign(IdentifyTextPanel.prototype, {
    * @type {number}
    */
   lastTimeStamp: 0,
+  /**
+   * Set of non-target spans currently selected by the player.
+   * This attribute should be empty to solve the activity.
+   * @name module:activities/text/IdentifyText.IdentifyTextPanel#spansChecked
+   * @type {set} */
+  spansChecked: new Set(),
 });
 
 /**

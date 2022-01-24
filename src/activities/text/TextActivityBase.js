@@ -32,6 +32,7 @@
 /* global window */
 
 import $ from 'jquery';
+import { stringToWords } from '../../Utils';
 import { Activity, ActivityPanel } from '../../Activity';
 import ActiveBox from '../../boxes/ActiveBox';
 import BoxBase from '../../boxes/BoxBase';
@@ -156,26 +157,43 @@ export class TextActivityBasePanel extends ActivityPanel {
       p.elements.forEach(element => {
         // Elements will be inserted as 'span' DOM elements, or as simple text if they don't
         // have specific attributes.
-        let $span = $('<span/>');
+        let $span;
         switch (element.objectType) {
           case 'text':
-            if (element.attr) {
-              // Text uses a specific style and/or individual attributes
-              $span.html(element.text);
-              if (element.attr.style) {
-                $span.css(doc.style[element.attr.style].css);
-              }
-              if (element.attr.css) {
-                $span.css(element.attr.css);
-              }
-              $p.append($span);
-            } else {
-              $p.append(element.text);
-            }
+            const parsedText = $('<span/>').html(element.text).text();
+            const fragments = this.spanText
+              ? stringToWords(parsedText)
+              : [{ text: parsedText, sep: '' }];
+            fragments.forEach(({ text, sep }) => {
+              const txtBlocs = this.spanChars ? [...text] : [text];
+              txtBlocs.forEach((str) => {
+                if (element.attr) {
+                  // Text uses a specific style and/or individual attributes
+                  $span = $('<span/>').html(str);
+                  if (element.attr.style) {
+                    $span.css(doc.style[element.attr.style].css);
+                  }
+                  if (element.attr.css) {
+                    $span.css(element.attr.css);
+                  }
+                  $p.append(this.$createSpanElement($span));
+                } else {
+                  if (this.spanText) {
+                    $span = $('<span/>').html(str);
+                    $p.append(this.$createSpanElement($span));
+                  }
+                  else
+                    $p.append(str);
+                }
+              });
+              if (sep !== '')
+                $p.append(sep);
+            });
             break;
 
           case 'cell':
             // Create a new ActiveBox based on this ActiveBoxContent
+            $span = $('<span/>');
             const box = ActiveBox.createCell($span.css({ position: 'relative' }), element);
             $span.css({ 'display': 'inline-block', 'vertical-align': 'middle' });
             if (element.mediaContent) {
@@ -190,6 +208,7 @@ export class TextActivityBasePanel extends ActivityPanel {
             break;
 
           case 'target':
+            $span = $('<span/>');
             if (this.showingPrevScreen) {
               $span.text(element.text);
               $p.append($span);
@@ -301,13 +320,24 @@ export class TextActivityBasePanel extends ActivityPanel {
    * Creates a target DOM element.
    * This method can be overridden in subclasses to create specific types of targets.
    * @param {module:activities/text/TextActivityDocument.TextTarget} target - The target related to the DOM object to be created
-   * @param {external:jQuery} $span -  - An initial DOM object (usually a `span`) that can be used
+   * @param {external:jQuery} $span - An initial DOM object (usually a `span`) that can be used
    * to store the target, or replaced by another type of object.
    * @returns {external:jQuery} - The jQuery DOM element loaded with the target data.
    */
   $createTargetElement(target, $span) {
     $span.text(target.text);
     target.$span = $span;
+    return $span;
+  }
+
+  /**
+   * Creates a 'span' element, used to isolate elements of text not involved in targets.
+   * Used only when {@link spanText} is true.
+   * @param {external:jQuery} $span - An initial DOM object (usually a `span`) that can be used
+   * to store the target, or replaced by another type of object.
+   * @returns {external:jQuery} - The jQuery DOM element loaded with the span data.
+   */
+  $createSpanElement($span) {
     return $span;
   }
 
@@ -503,6 +533,19 @@ Object.assign(TextActivityBasePanel.prototype, {
    * @name module:activities/text/TextActivityBase.TextActivityBasePanel#popupWaitTimer
    * @type {number} */
   popupWaitTimer: 0,
+  /**
+   * When true, all text outside of targets and cells will be inserted as independent words or letters,
+   * using 'span' elements. {@link module:activities/text/TextActivityBase.TextActivityBasePanel#$createSpanElement} can be used
+   * to customize these elements.
+   * @name module:activities/text/TextActivityBase.TextActivityBasePanel#spanText
+   * @type {boolean} */
+  spanText: false,
+  /**
+   * When true, text spanning will be done at char level: each single letter will be a clickacle span.
+   * Used only in activities of type "itentify letters"
+   * @name module:activities/text/TextActivityBase.TextActivityBasePanel#spanChars
+   * @type {boolean} */
+  spanChars: false,
 });
 
 /**

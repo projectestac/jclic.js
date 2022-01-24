@@ -282,7 +282,7 @@ export class OrderTextPanel extends TextActivityBasePanel {
    * @returns {number}
    */
   countSolvedTargets() {
-    return this.targets.reduce((n, target) => target.num === target.pos ? ++n : n, 0);
+    return this.targets.filter(({ num, pos }) => num === pos).length;
   }
 
   /**
