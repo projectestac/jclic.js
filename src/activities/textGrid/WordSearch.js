@@ -206,7 +206,7 @@ export class WordSearchPanel extends ActivityPanel {
           this.bgAlt.clearAllBoxes();
         if (this.act.shuffleB)
           this.shuffle([this.bgAlt], true, true);
-        this.bgAlt.setVisible(this.$animatedBg !== null);
+        this.bgAlt.setVisible(this.$animatedBg !== null || this.act.invAss);
       }
 
       this.setAndPlayMsg('initial', 'start');
@@ -386,7 +386,7 @@ export class WordSearchPanel extends ActivityPanel {
                   if (k >= 0 && k < this.bgAlt.getNumCells()) {
                     const bx = this.bgAlt.getActiveBox(this.act.clueItems[c]);
                     if (bx) {
-                      bx.setVisible(this.$animatedBg === null);
+                      bx.setVisible(this.$animatedBg === null && !this.act.invAss);
                       m = bx.playMedia(this.ps, delayedActions);
                     }
                   }

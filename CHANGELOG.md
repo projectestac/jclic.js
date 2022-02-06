@@ -1,6 +1,7 @@
 ### v2.1.8 (not yet released)
 #### Improvements
 - Upgraded dependencies
+- Allow "inverse resolution" in word search activities: clues are initially shown, and hidden as they are found on the grid.
 
 ### v2.1.7 (2022-01-24)
 #### Improvements

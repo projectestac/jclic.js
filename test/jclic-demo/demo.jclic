@@ -3406,7 +3406,7 @@
    </cells>
    <layout position="AB" />
   </activity>
-  <activity class="@textGrid.WordSearch" name="sop03.sop">
+  <activity class="@textGrid.WordSearch" name="sop03.sop" inverse="true">
    <description>
     <p>Scrambled letters with MIDI files</p>
    </description>
@@ -3451,12 +3451,15 @@
     </style>
     <shaper class="@Rectangular" cols="1" rows="3" />
     <cell>
+     <p>BACH</p>
      <media type="PLAY_MIDI" level="1" file="bach.mid" />
     </cell>
     <cell>
+     <p>MOZART</p>
      <media type="PLAY_MIDI" level="1" file="mozart.mid" />
     </cell>
     <cell>
+     <p>BRAHMS</p>
      <media type="PLAY_MIDI" level="1" file="bressol.mid" />
     </cell>
    </cells>

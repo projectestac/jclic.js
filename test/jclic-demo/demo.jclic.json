@@ -6588,6 +6588,7 @@
     "sop03.sop": {
       "name": "sop03.sop",
       "className": "@textGrid.WordSearch",
+      "invAss": true,
       "showSolution": true,
       "boxGridPos": "AB",
       "messages": {
@@ -6615,19 +6616,22 @@
               "mediaContent": {
                 "type": "PLAY_MIDI",
                 "file": "bach.mid"
-              }
+              },
+              "text": "BACH"
             },
             {
               "mediaContent": {
                 "type": "PLAY_MIDI",
                 "file": "mozart.mid"
-              }
+              },
+              "text": "MOZART"
             },
             {
               "mediaContent": {
                 "type": "PLAY_MIDI",
                 "file": "bressol.mid"
-              }
+              },
+              "text": "BRAHMS"
             }
           ]
         }
