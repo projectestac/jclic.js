@@ -1,7 +1,10 @@
-### v2.1.8 (not yet released)
+### v2.1.8 (2022-01-07)
 #### Improvements
 - Upgraded dependencies
-- Allow "inverse resolution" in word search activities: clues are initially shown, and hidden as they are found on the grid.
+- Allow "inverse resolution" in word search activities: clues are initially shown, and gradually hidden when the user identifies them.
+
+#### Bug fixes
+- Use of [patch-package](https://www.npmjs.com/package/patch-package) to avoid compilation warnings.
 
 ### v2.1.7 (2022-01-24)
 #### Improvements

@@ -1,0 +1,12 @@
+diff --git a/node_modules/po2json/package.json b/node_modules/po2json/package.json
+index 719cfbf..3af3fca 100644
+--- a/node_modules/po2json/package.json
++++ b/node_modules/po2json/package.json
+@@ -50,7 +50,6 @@
+   "bin": {
+     "po2json": "bin/po2json"
+   },
+-  "main": "./lib/po2json",
+   "engines": {
+     "node": ">=10.0"
+   },
