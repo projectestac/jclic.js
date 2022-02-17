@@ -26,7 +26,6 @@
  *  Licence for the specific language governing permissions and limitations
  *  under the Licence.
  *  @licend
- *  @module
  */
 
 // Declaration of JSDoc external objects:
@@ -143,7 +142,8 @@
  */
 
 /**
-* The HTMLStyleElement interface represents a <style> element. It inherits properties and methods from its parent, HTMLElement, and from LinkStyle.
+* The HTMLStyleElement interface represents a [style](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/style) element.
+* It inherits properties and methods from its parent, HTMLElement, and from LinkStyle.
 * @external HTMLStyleElement
 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLStyleElement}
 */
@@ -154,85 +154,79 @@
  * @see {@link https://github.com/danigb/soundfont-player}
  */
 
-/**
- * The Tgrimmdude's MidiPlayer object
- * @external MidiPlayerJS
- * @see {@link http://grimmdude.com/MidiPlayerJS/}
- */
-
 //
 // The purpose of this file is to ensure that certain classes derived from the main objects of
 // JClic ([Activity](Activity.html), [Shaper](Shaper.html), [Skin](Skin.html) and
 // [AutoContentProvider](AutoContentProvider.html)) are loaded at the beginning.
 
-  import DefaultSkin from './skins/DefaultSkin';
-  import OrangeSkin from './skins/OrangeSkin';
-  import GreenSkin from './skins/GreenSkin';
-  import BlueSkin from './skins/BlueSkin';
-  import SimpleSkin from './skins/SimpleSkin';
-  import MiniSkin from './skins/MiniSkin';
-  import EmptySkin from './skins/EmptySkin';
-  import CustomSkin from './skins/CustomSkin';
-  import Rectangular from './shapers/Rectangular';
-  import Holes from './shapers/Holes';
-  import JigSaw from './shapers/JigSaw';
-  import TriangularJigSaw from './shapers/TriangularJigSaw';
-  import ClassicJigSaw from './shapers/ClassicJigSaw';
-  import Arith from './automation/arith/Arith';
-  import TextActivityBase from './activities/text/TextActivityBase';
-  import FillInBlanks from './activities/text/FillInBlanks';
-  import OrderText from './activities/text/OrderText';
-  import Complete from './activities/text/Complete';
-  import IdentifyText from './activities/text/IdentifyText';
-  import WrittenAnswer from './activities/text/WrittenAnswer';
-  import InformationScreen from './activities/panels/InformationScreen';
-  import Identify from './activities/panels/Identify';
-  import Explore from './activities/panels/Explore';
-  import Menu from './activities/panels/Menu';
-  import DoublePuzzle from './activities/puzzles/DoublePuzzle';
-  import ExchangePuzzle from './activities/puzzles/ExchangePuzzle';
-  import HolePuzzle from './activities/puzzles/HolePuzzle';
-  import MemoryGame from './activities/memory/MemoryGame';
-  import SimpleAssociation from './activities/associations/SimpleAssociation';
-  import ComplexAssociation from './activities/associations/ComplexAssociation';
-  import WordSearch from './activities/textGrid/WordSearch';
-  import CrossWord from './activities/textGrid/CrossWord';
-  import TCPReporter from './report/TCPReporter';
-  import SessionStorageReporter from './report/SessionStorageReporter';
+import DefaultSkin from './skins/DefaultSkin';
+import OrangeSkin from './skins/OrangeSkin';
+import GreenSkin from './skins/GreenSkin';
+import BlueSkin from './skins/BlueSkin';
+import SimpleSkin from './skins/SimpleSkin';
+import MiniSkin from './skins/MiniSkin';
+import EmptySkin from './skins/EmptySkin';
+import CustomSkin from './skins/CustomSkin';
+import Rectangular from './shapers/Rectangular';
+import Holes from './shapers/Holes';
+import JigSaw from './shapers/JigSaw';
+import TriangularJigSaw from './shapers/TriangularJigSaw';
+import ClassicJigSaw from './shapers/ClassicJigSaw';
+import Arith from './automation/arith/Arith';
+import TextActivityBase from './activities/text/TextActivityBase';
+import FillInBlanks from './activities/text/FillInBlanks';
+import OrderText from './activities/text/OrderText';
+import Complete from './activities/text/Complete';
+import IdentifyText from './activities/text/IdentifyText';
+import WrittenAnswer from './activities/text/WrittenAnswer';
+import InformationScreen from './activities/panels/InformationScreen';
+import Identify from './activities/panels/Identify';
+import Explore from './activities/panels/Explore';
+import Menu from './activities/panels/Menu';
+import DoublePuzzle from './activities/puzzles/DoublePuzzle';
+import ExchangePuzzle from './activities/puzzles/ExchangePuzzle';
+import HolePuzzle from './activities/puzzles/HolePuzzle';
+import MemoryGame from './activities/memory/MemoryGame';
+import SimpleAssociation from './activities/associations/SimpleAssociation';
+import ComplexAssociation from './activities/associations/ComplexAssociation';
+import WordSearch from './activities/textGrid/WordSearch';
+import CrossWord from './activities/textGrid/CrossWord';
+import TCPReporter from './report/TCPReporter';
+import SessionStorageReporter from './report/SessionStorageReporter';
 
-  export default {
-    DefaultSkin,
-    OrangeSkin,
-    GreenSkin,
-    BlueSkin,
-    SimpleSkin,
-    MiniSkin,
-    EmptySkin,
-    CustomSkin,
-    Rectangular,
-    Holes,
-    JigSaw,
-    TriangularJigSaw,
-    ClassicJigSaw,
-    Arith,
-    TextActivityBase,
-    FillInBlanks,
-    OrderText,
-    Complete,
-    IdentifyText,
-    WrittenAnswer,
-    InformationScreen,
-    Identify,
-    Explore,
-    Menu,
-    DoublePuzzle,
-    ExchangePuzzle,
-    HolePuzzle,
-    MemoryGame,
-    SimpleAssociation,
-    ComplexAssociation,
-    WordSearch,
-    CrossWord,
-    TCPReporter,
-    SessionStorageReporter,
-  };
+export default {
+  DefaultSkin,
+  OrangeSkin,
+  GreenSkin,
+  BlueSkin,
+  SimpleSkin,
+  MiniSkin,
+  EmptySkin,
+  CustomSkin,
+  Rectangular,
+  Holes,
+  JigSaw,
+  TriangularJigSaw,
+  ClassicJigSaw,
+  Arith,
+  TextActivityBase,
+  FillInBlanks,
+  OrderText,
+  Complete,
+  IdentifyText,
+  WrittenAnswer,
+  InformationScreen,
+  Identify,
+  Explore,
+  Menu,
+  DoublePuzzle,
+  ExchangePuzzle,
+  HolePuzzle,
+  MemoryGame,
+  SimpleAssociation,
+  ComplexAssociation,
+  WordSearch,
+  CrossWord,
+  TCPReporter,
+  SessionStorageReporter,
+};
