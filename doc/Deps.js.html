@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>JClic.js Source: activities/puzzles/HolePuzzle.js</title>
+	<title>JClic.js Source: Deps.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -79,14 +79,14 @@
 		<div id="main">
 			
 
-		<h1 class="page-title">Source: activities/puzzles/HolePuzzle.js</h1>
+		<h1 class="page-title">Source: Deps.js</h1>
     
 <section>
     <article>
         <pre
             class="sunlight-highlight-javascript linenums">/**
- *  File    : activities/puzzles/HolePuzzle.js
- *  Created : 01/06/2015
+ *  File    : Deps.js
+ *  Created : 19/05/2015
  *  By      : Francesc Busquets &lt;francesc@gmail.com>
  *
  *  JClic.js
@@ -97,7 +97,7 @@
  *
  *  @license EUPL-1.2
  *  @licstart
- *  (c) 2000-2020 Educational Telematic Network of Catalonia (XTEC)
+ *  (c) 2000-2021 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -112,338 +112,210 @@
  *  Licence for the specific language governing permissions and limitations
  *  under the Licence.
  *  @licend
- *  @module
  */
 
-import $ from 'jquery';
-import { Activity, ActivityPanel } from '../../Activity';
-import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
-import BoxBag from '../../boxes/BoxBag';
-import { Rectangle, Point } from '../../AWT';
-import Rectangular from '../../shapers/Rectangular';
+// Declaration of JSDoc external objects:
 
 /**
- * This class of {@link module:Activity.Activity Activity} shows only one panel with shuffled {@link module:boxes/ActiveBox.ActiveBox ActiveBox} cells.
- *
- * One of the cells is out of the main panel, thus allowing its neighbors occupy their space.
- * Only immediate neighbors of the "hole" can move into it.
- *
- * When all cells are on place, the initially "expulsed" cell comes back home and the activity is done.
- * @extends module:Activity.Activity
+ * The Event interface represents an event which takes place in the DOM.
+ * @external Event
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Event}
  */
-export class HolePuzzle extends Activity {
-  /**
-   * HolePuzzle constructor
-   * @param {module:project/JClicProject.JClicProject} project - The {@link module:project/JClicProject.JClicProject JClicProject} to which this activity belongs
-   */
-  constructor(project) {
-    super(project);
-  }
-
-  /**
-   * Retrieves the minimum number of actions needed to solve this activity.
-   * @override
-   * @returns {number}
-   */
-  getMinNumActions() {
-    return this.abc.primary.getNumCells();
-  }
-
-  /**
-   * Whether or not the activity uses random to shuffle internal components
-   * @override
-   * @returns {boolean}
-   */
-  hasRandom() {
-    return true;
-  }
-
-  /**
-   * When `true`, the activity must always be shuffled
-   * @override
-   * @returns {boolean}
-   */
-  shuffleAlways() {
-    return true;
-  }
-
-  /**
-   * Whether the activity allows the user to request help
-   * @override
-   * @returns {boolean}
-   */
-  helpSolutionAllowed() {
-    return true;
-  }
-}
 
 /**
- * The {@link module:Activity.ActivityPanel ActivityPanel} where {@link module:activities/puzzles/HolePuzzle.HolePuzzle HolePuzzle} activities are played
- * @extends module:Activity.ActivityPanel
+ * The HTMLElement interface represents any HTML element. Some elements directly implement this
+ * interface, others implement it via an interface that inherits it.
+ * @external HTMLElement
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/API/HTMLElement}
  */
-export class HolePuzzlePanel extends ActivityPanel {
-  /**
-   * HolePuzzlePanel constructor
-   * @param {module:Activity.Activity} act - The {@link module:Activity.Activity Activity} to which this Panel belongs
-   * @param {module:JClicPlayer.JClicPlayer} ps - Any object implementing the methods defined in the
-   * [PlayStation](http://projectestac.github.io/jclic/apidoc/edu/xtec/jclic/PlayStation.html) Java interface.
-   * @param {external:jQuery} [$div] - The jQuery DOM element where this Panel will deploy
-   */
-  constructor(act, ps, $div) {
-    super(act, ps, $div);
-  }
-
-  /**
-   * Miscellaneous cleaning operations
-   * @override
-   */
-  clear() {
-    if (this.bg) {
-      this.bg.end();
-      this.bg = null;
-    }
-    if (this.parkBg) {
-      this.parkBg.end();
-      this.parkBg = null;
-    }
-  }
-
-  /**
-   * Prepares the visual components of the activity
-   * @override
-   */
-  buildVisualComponents() {
-    if (this.firstRun)
-      super.buildVisualComponents();
-    this.clear();
-
-    const abc = this.act.abc['primary'];
-    if (abc) {
-      if (abc.image)
-        abc.setImgContent(this.act.project.mediaBag, null, false);
-
-      if (this.act.acp !== null)
-        this.act.acp.generateContent(abc.nch, abc.ncw, [abc], false);
-
-      this.bg = ActiveBoxGrid.createEmptyGrid(null, this, this.act.margin, this.act.margin, abc);
-      this.bg.setContent(abc);
-      this.bg.setVisible(true);
-
-      this.hiddenBoxIndex = Math.floor(Math.random() * this.bg.getNumCells());
-      this.hiddenBox = this.bg.getActiveBox(this.hiddenBoxIndex);
-      this.hiddenBox.setVisible(false);
-      this.parkBg = new ActiveBoxGrid(null, this, abc.style, this.act.margin, this.act.margin,
-        this.hiddenBox.dim.width, this.hiddenBox.dim.height, new Rectangular(1, 1));
-      this.parkBg.setContent(abc, null, this.hiddenBoxIndex, 0, 1);
-      this.parkBg.setBorder(this.bg.hasBorder());
-      this.parkBg.setVisible(true);
-    }
-  }
-
-  /**
-   * Basic initialization procedure
-   * @override
-   */
-  initActivity() {
-    super.initActivity();
-    if (!this.firstRun)
-      this.buildVisualComponents();
-    else
-      this.firstRun = false;
-
-    if (this.bg) {
-      //
-      // This activity has an special shuffle method. Cells can move only to places near the 'hole'
-      if (this.act.shuffles % 2 !== 1)
-        this.act.shuffles++;
-      for (var i = 0; i &lt; this.act.shuffles; i++) {
-        const pth = this.bg.getCoord(this.hiddenBox);
-        const v = Math.floor(Math.random() * 2) === 0 ? 1 : -1;
-
-        if (Math.floor(Math.random() * 2) === 0) {
-          pth.x += v;
-          if (pth.x &lt; 0 || pth.x >= this.bg.nCols)
-            pth.x -= 2 * v;
-        } else {
-          pth.y += v;
-          if (pth.y &lt; 0 || pth.y >= this.bg.nRows)
-            pth.y -= 2 * v;
-        }
-        var dstBx = this.bg.getActiveBoxWithIdLoc(pth.y * this.bg.nCols + pth.x);
-        if (dstBx !== null)
-          this.hiddenBox.exchangeLocation(dstBx);
-      }
-      this.setAndPlayMsg('initial', 'start');
-      this.invalidate().update();
-      this.playing = true;
-    }
-  }
-
-  /**
-   * Updates the graphic content of this panel.
-   * This method will be called from {@link module:AWT.Container#update} when needed.
-   * @override
-   * @param {module:AWT.Rectangle} dirtyRegion - Specifies the area to be updated. When `null`,
-   * it's the whole panel.
-   */
-  updateContent(dirtyRegion) {
-    super.updateContent(dirtyRegion);
-    if (this.bg &amp;&amp; this.parkBg &amp;&amp; this.$canvas) {
-      const
-        canvas = this.$canvas.get(-1),
-        ctx = canvas.getContext('2d');
-      if (!dirtyRegion)
-        dirtyRegion = new Rectangle(0, 0, canvas.width, canvas.height);
-      ctx.clearRect(dirtyRegion.pos.x, dirtyRegion.pos.y, dirtyRegion.dim.width, dirtyRegion.dim.height);
-      this.bg.update(ctx, dirtyRegion);
-      this.parkBg.update(ctx, dirtyRegion);
-    }
-    return this;
-  }
-
-  /**
-   * Sets the real dimension of this panel.
-   * @override
-   * @param {module:AWT.Dimension} preferredMaxSize - The maximum surface available for the activity panel
-   * @returns {module:AWT.Dimension}
-   */
-  setDimension(preferredMaxSize) {
-    return !this.bg || !this.parkBg || this.getBounds().equals(preferredMaxSize) ?
-      preferredMaxSize :
-      BoxBag.layoutDouble(preferredMaxSize, this.bg, this.parkBg, this.act.boxGridPos, this.act.margin);
-  }
-
-  /**
-   * Sets the size and position of this activity panel
-   * @override
-   * @param {module:AWT.Rectangle} rect
-   */
-  setBounds(rect) {
-    if (this.$canvas)
-      this.$canvas.remove();
-
-    super.setBounds(rect);
-    if (this.bg &amp;&amp; this.parkBg) {
-      // Create the main canvas
-      this.$canvas = $(`&lt;canvas width="${rect.dim.width}" height="${rect.dim.height}"/>`).css({
-        position: 'absolute',
-        top: 0,
-        left: 0
-      });
-      this.$div.append(this.$canvas);
-
-      // Repaint all
-      this.invalidate().update();
-    }
-  }
-
-  /**
-   * Builds the accessible components needed for this ActivityPanel
-   * This method is called when all main elements are placed and visible, when the activity is ready
-   * to start or when resized.
-   * @override
-   */
-  buildAccessibleComponents() {
-    if (this.$canvas &amp;&amp; this.accessibleCanvas &amp;&amp; this.bg) {
-      super.buildAccessibleComponents();
-      this.bg.buildAccessibleElements(this.$canvas, this.$div);
-    }
-  }
-
-  /**
-   * Main handler used to process mouse, touch, keyboard and edit events
-   * @override
-   * @param {external:Event} event - The HTML event to be processed
-   * @returns {boolean} - When this event handler returns `false`, jQuery will stop its
-   * propagation through the DOM tree. See: {@link http://api.jquery.com/on}
-   */
-  processEvent(event) {
-    if (this.playing) {
-      const p = new Point(
-        event.pageX - this.$div.offset().left,
-        event.pageY - this.$div.offset().top);
-      // Array to be filled with actions to be executed at the end of event processing
-      const delayedActions = [];
-
-      switch (event.type) {
-        case 'click':
-          this.ps.stopMedia(1);
-          // Find the box behind the clicked point
-          const bx = this.bg.findActiveBox(p);
-          if (bx) {
-            if (bx.isVisible()) {
-              // Check if it's a valid move
-              const pt = this.bg.getCoordDist(bx, this.hiddenBox);
-              if (Math.abs(pt.x) + Math.abs(pt.y) === 1) {
-                // Ok, the cell is adjacent to the hole. Complete the move.
-                let m = bx.playMedia(this.ps, delayedActions);
-                const
-                  src = `${bx.getDescription()} (${bx.idOrder})`,
-                  dest = `(${this.hiddenBox.idLoc})`;
-                bx.exchangeLocation(this.hiddenBox);
-                const ok = bx.idOrder === bx.idLoc;
-                // Check results and notify action
-                const cellsAtPlace = this.bg.countCellsAtEquivalentPlace(true);
-                this.ps.reportNewAction(this.act, 'SELECT', src, dest, ok, cellsAtPlace);
-                if (ok &amp;&amp; cellsAtPlace === this.bg.getNumCells()) {
-                  // Activity completed!
-                  this.hiddenBox.setVisible(true);
-                  this.parkBg.setVisible(false);
-                  this.finishActivity(true);
-                } else
-                  if (!m)
-                    this.playEvent('click');
-              }
-              this.update();
-            } else {
-              this.playEvent('actionError');
-            }
-          }
-          break;
-      }
-      delayedActions.forEach(action => action());
-      event.preventDefault();
-    }
-  }
-}
-
-Object.assign(HolePuzzlePanel.prototype, {
-  /**
-   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the panel.
-   * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#bg
-   * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
-  bg: null,
-  /**
-   * An auxiliary box bag with only one box, used to store the "missing piece" of
-   * the puzzle.
-   * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#parkBg
-   * @type {module:boxes/ActiveBoxGrid.ActiveBoxGrid} */
-  parkBg: null,
-  /**
-   * The hidden cell
-   * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#hiddenBox
-   * @type {module:boxes/ActiveBox.ActiveBox} */
-  hiddenBox: null,
-  /**
-   * Index of the hidden cell on the ActiveBagContent
-   * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#hiddenBoxIndex
-   * @type {number} */
-  hiddenBoxIndex: -1,
-  /**
-   * List of mouse, touch and keyboard events intercepted by this panel
-   * @override
-   * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#events
-   * @type {string[]} */
-  events: ['click'],
-});
 
 /**
- * Panel class associated to this type of activity: {@link module:activities/puzzles/HolePuzzle.HolePuzzlePanel HolePuzzlePanel}
- * @type {class} */
-HolePuzzle.Panel = HolePuzzlePanel;
+ * A jQuery object
+ * @external jQuery
+ * @see {@link http://api.jquery.com/jQuery/}
+ */
 
-// Register activity class
-export default Activity.registerClass('@puzzles.HolePuzzle', HolePuzzle);
+/**
+ * The jQuery XMLHttpRequest (jqXHR) object returned by `$.ajax()` as of jQuery 1.5 is a superset
+ * of the browser's native [XMLHttpRequest](https://developer.mozilla.org/docs/XMLHttpRequest) object.
+ * As of jQuery 1.5, jqXHR objects implement the Promise interface, giving them
+ * all the properties, methods, and behavior of a Promise.
+ * @external jqXHR
+ * @see {@link https://api.jquery.com/jQuery.ajax/#jqXHR}
+ */
+
+/**
+ * The CanvasRenderingContext2D interface provides the 2D rendering context for the drawing surface
+ * of a &amp;lt;canvas&amp;gt; element.
+ * @external CanvasRenderingContext2D
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D}
+ */
+
+/**
+ * The HTMLImageElement interface provides special properties and methods (beyond the regular
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement HTMLElement} interface it
+ * also has available to it by inheritance) for manipulating the layout and presentation of
+ * &amp;lt;img&amp;gt; elements.
+ * @external HTMLImageElement
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement}
+ */
+
+/**
+ * The HTMLAudioElement interface provides access to the properties of &amp;lt;audio&amp;gt; elements, as
+ * well as methods to manipulate them. It derives from the
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement HTMLMediaElement} interface.
+ * @external HTMLAudioElement
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement}
+ */
+
+/**
+ * The AudioContext interface represents an audio-processing graph built from audio modules linked together.
+ * @external AudioContext
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/AudioContext}
+ */
+
+/**
+ * The Intl.Collator object is a constructor for collators, objects that enable language sensitive
+ * string comparison.
+ * @external Collator
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Collator}
+ */
+
+/**
+ * A JSZip object
+ * @external JSZip
+ * @see {@link https://stuk.github.io/jszip}
+ */
+
+/**
+ * The MediaRecorder interface of the {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API MediaRecorder API}
+ * provides functionality to easily capture media.
+ * @external MediaRecorder
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/API/MediaRecorder}
+ */
+
+/**
+ * The Promise object is used for asynchronous computations. A Promise represents an operation
+ * that hasn't completed yet, but is expected in the future.
+ * @external Promise
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise}
+ */
+
+/**
+* The Storage interface of the Web Storage API provides access to the session storage or local storage for a particular domain,
+* allowing you to for example add, modify or delete stored data items.
+* @external Storage
+* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Storage}
+*/
+
+/**
+ * The NamedNodeMap interface represents a collection of Attr objects. Objects inside a NamedNodeMap are not in any particular
+ * order, unlike NodeList, although they may be accessed by an index as in an array.
+ * @external NamedNodeMap
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap}
+ */
+
+/**
+ * MidiPlayerJS is a JavaScript library which reads standard MIDI files and emits JSON events in real time.
+ * @external MidiPlayerJS
+ * @see {@link https://github.com/grimmdude/MidiPlayerJS}
+ */
+
+/**
+ * JavaScript Date objects represent a single moment in time in a platform-independent format.
+ * @external Date
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date}
+ */
+
+/**
+* The HTMLStyleElement interface represents a [style](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/style) element.
+* It inherits properties and methods from its parent, HTMLElement, and from LinkStyle.
+* @external HTMLStyleElement
+* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLStyleElement}
+*/
+
+/**
+ * Type of MIDI instrument used by Soundfont Player
+ * @external Instrument
+ * @see {@link https://github.com/danigb/soundfont-player}
+ */
+
+//
+// The purpose of this file is to ensure that certain classes derived from the main objects of
+// JClic ([Activity](Activity.html), [Shaper](Shaper.html), [Skin](Skin.html) and
+// [AutoContentProvider](AutoContentProvider.html)) are loaded at the beginning.
+
+import DefaultSkin from './skins/DefaultSkin';
+import OrangeSkin from './skins/OrangeSkin';
+import GreenSkin from './skins/GreenSkin';
+import BlueSkin from './skins/BlueSkin';
+import SimpleSkin from './skins/SimpleSkin';
+import MiniSkin from './skins/MiniSkin';
+import EmptySkin from './skins/EmptySkin';
+import CustomSkin from './skins/CustomSkin';
+import Rectangular from './shapers/Rectangular';
+import Holes from './shapers/Holes';
+import JigSaw from './shapers/JigSaw';
+import TriangularJigSaw from './shapers/TriangularJigSaw';
+import ClassicJigSaw from './shapers/ClassicJigSaw';
+import Arith from './automation/arith/Arith';
+import TextActivityBase from './activities/text/TextActivityBase';
+import FillInBlanks from './activities/text/FillInBlanks';
+import OrderText from './activities/text/OrderText';
+import Complete from './activities/text/Complete';
+import IdentifyText from './activities/text/IdentifyText';
+import WrittenAnswer from './activities/text/WrittenAnswer';
+import InformationScreen from './activities/panels/InformationScreen';
+import Identify from './activities/panels/Identify';
+import Explore from './activities/panels/Explore';
+import Menu from './activities/panels/Menu';
+import DoublePuzzle from './activities/puzzles/DoublePuzzle';
+import ExchangePuzzle from './activities/puzzles/ExchangePuzzle';
+import HolePuzzle from './activities/puzzles/HolePuzzle';
+import MemoryGame from './activities/memory/MemoryGame';
+import SimpleAssociation from './activities/associations/SimpleAssociation';
+import ComplexAssociation from './activities/associations/ComplexAssociation';
+import WordSearch from './activities/textGrid/WordSearch';
+import CrossWord from './activities/textGrid/CrossWord';
+import TCPReporter from './report/TCPReporter';
+import SessionStorageReporter from './report/SessionStorageReporter';
+
+export default {
+  DefaultSkin,
+  OrangeSkin,
+  GreenSkin,
+  BlueSkin,
+  SimpleSkin,
+  MiniSkin,
+  EmptySkin,
+  CustomSkin,
+  Rectangular,
+  Holes,
+  JigSaw,
+  TriangularJigSaw,
+  ClassicJigSaw,
+  Arith,
+  TextActivityBase,
+  FillInBlanks,
+  OrderText,
+  Complete,
+  IdentifyText,
+  WrittenAnswer,
+  InformationScreen,
+  Identify,
+  Explore,
+  Menu,
+  DoublePuzzle,
+  ExchangePuzzle,
+  HolePuzzle,
+  MemoryGame,
+  SimpleAssociation,
+  ComplexAssociation,
+  WordSearch,
+  CrossWord,
+  TCPReporter,
+  SessionStorageReporter,
+};
 </pre>
     </article>
 </section>
