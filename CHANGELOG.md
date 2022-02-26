@@ -1,3 +1,9 @@
+### v2.1.9 (2022-02-26)
+#### Improvements
+- Upgraded dependencies
+#### Bug fixes
+- Calling `patch-package` in `postinst` does not work with the NPM package. Moved to `prebuild`.
+
 ### v2.1.8 (2022-01-07)
 #### Improvements
 - Upgraded dependencies
