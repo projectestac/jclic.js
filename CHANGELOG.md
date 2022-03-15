@@ -1,4 +1,4 @@
-### v2.1.10 (Not yet released)
+### v2.1.10 (2022-03-15)
 #### Bug fixes
 - Clear `pos0` attribute in `ActiveBox` after bag resize or move.
 
