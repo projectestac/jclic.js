@@ -405,6 +405,8 @@ export class BoxBag extends AbstractBox {
           dy + this.pos.y + scaleH * p.y,
           scaleW * bx.dim.width,
           scaleH * bx.dim.height);
+        // Clear pos0
+        bx.pos0 = null;
       });
       if (this.backgroundBox !== null) {
         const
