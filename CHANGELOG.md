@@ -1,6 +1,7 @@
-### v2.1.11 (not yet released)
+### v2.1.11 (2022-08-03)
 #### Improvements
 - Upgraded dependencies
+- Detect swipe gestures on touch devices to go back or forward in the sequence of activities. 
 
 ### v2.1.10 (2022-03-15)
 #### Bug fixes
