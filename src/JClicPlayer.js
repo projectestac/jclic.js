@@ -11,7 +11,7 @@
  *
  *  @license EUPL-1.2
  *  @licstart
- *  (c) 2000-2020 Educational Telematic Network of Catalonia (XTEC)
+ *  (c) 2000-2022 Educational Telematic Network of Catalonia (XTEC)
  *
  *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
  *  the European Commission- subsequent versions of the EUPL (the "Licence");
@@ -29,7 +29,7 @@
  *  @module
  */
 
-/* global JSON, Promise, location, window */
+/* global JSON, Promise, location, window, document */
 
 import $ from 'jquery';
 import JSZip from 'jszip';
@@ -110,61 +110,82 @@ export class JClicPlayer extends Container {
   }
 
   /**
-   * Detects swipe-right and swipe-left gestures on touch devices,
-   * and associates them with 'next activity' and 'prev activity' actions 
+   *
+   * Detects swipe-right, swipe-left and double touch gestures on touch devices,
+   * associating them with 'next activity', 'previous activity' and 'toggle full screen' actions
    */
   listenTouchEvents() {
 
     // Enable listeners only in touch devices
-    if ('ontouchstart' in window) {
+    //if ('ontouchstart' in window) {
 
-      let startTouch = null;
-      let thisDiv = this.$div[0];
-      const { minSwipeX, maxSwipeY, rightToLeft } = this.options;
+    let startTouch = null;
+    let startTouchTime = 0;
+    let thisDiv = this.$div[0];
+    const { minSwipeX, maxSwipeY, rightToLeft } = this.options;
 
-      // Generic handler for touch events
-      const touchEventHandler = event => {
-        // Process only single-finger events targeted to our main 'div'
-        if (event.target === thisDiv && event.changedTouches && event.changedTouches.length === 1) {
-          const touch = event.changedTouches[0];
-          switch (event.type) {
-            case 'touchstart':
+    // Generic handler for touch events
+    const touchEventHandler = event => {
+      // Process only single-finger events targeted to our main 'div'
+      if (event.target === thisDiv && event.changedTouches && event.changedTouches.length === 1) {
+        const touch = event.changedTouches[0];
+        const dx = startTouch ? touch.clientX - startTouch.clientX : 0;
+        const dy = startTouch ? touch.clientY - startTouch.clientY : 0;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        switch (event.type) {
+          case 'touchstart':
+            const currentTime = new Date();
+            // Detect double taps, done in less than 800 ms and at short distance
+            if (
+              document && document.fullscreenEnabled
+              && startTouch && startTouchTime
+              && currentTime - startTouchTime < 800
+              && dist < minSwipeX
+            ) {
+              event.preventDefault();
+              log('info', 'Toggle full screen mode from double touch');
+              this.skin.setScreenFull();
+              startTouch = null;
+            }
+            else {
               startTouch = touch;
-              break;
+              startTouchTime = currentTime;
+            }
+            break;
 
-            case 'touchend':
-              if (touch && startTouch) {
-                // Get touch distances, and discard non true and significant horizontal gestures
-                const dx = touch.clientX - startTouch.clientX;
-                const dy = touch.clientY - startTouch.clientY;
-                if (Math.abs(dx) > minSwipeX && Math.abs(dy) < maxSwipeY) {
-                  const actionName = dx < 0 && !rightToLeft ? 'next' : 'prev';
-                  const action = this.actions[actionName];
-                  if (action && action.enabled) {
-                    log('info', `Performing action "${actionName}" from touch gesture`);
-                    action.actionPerformed(event);
-                  }
-                }
+          case 'touchend':
+            // Discard non-horizontal gestures and those that do not have sufficient length
+            if (startTouch && Math.abs(dx) > minSwipeX && Math.abs(dy) < maxSwipeY) {
+              const actionName = dx < 0 && !rightToLeft ? 'next' : 'prev';
+              const action = this.actions[actionName];
+              if (action && action.enabled) {
+                event.preventDefault();
+                log('info', `Performing action "${actionName}" from touch gesture`);
+                action.actionPerformed(event);
               }
               startTouch = null;
-              break;
-
-            default:
+            }
+            // Cancel double touch detection when long gestures detected
+            else if (dist > minSwipeX)
               startTouch = null;
-              break;
-          }
-          event.preventDefault();
-        }
-        else
-          // Cancel any started gesture
-          startTouch = null;
-      };
+            break;
 
-      // Handle touch events
-      thisDiv.addEventListener('touchstart', touchEventHandler);
-      thisDiv.addEventListener('touchend', touchEventHandler);
-      thisDiv.addEventListener('touchcancel', touchEventHandler);
-    }
+          case 'touchcancel':
+            startTouch = null;
+            break;
+        }
+      }
+      else
+        // Cancel any started gesture
+        startTouch = null;
+    };
+
+    // Handle touch events
+    thisDiv.addEventListener('touchstart', touchEventHandler);
+    thisDiv.addEventListener('touchend', touchEventHandler);
+    thisDiv.addEventListener('touchcancel', touchEventHandler);
+    //}
   }
 
   /**
@@ -273,7 +294,6 @@ export class JClicPlayer extends Container {
   }
 
   /**
-   *
    * Creates and initializes objects of type {@link module:AWT.Timer}
    */
   initTimers() {
@@ -1138,7 +1158,7 @@ Object.assign(JClicPlayer.prototype, {
     minSwipeX: 40,
     // Maximum vertical swipe length to be considered an activity change gesture
     maxSwipeY: 100,
-    // Read swipe gestures as in right-to-left languages (default is left-to-right) 
+    // Read swipe gestures as in right-to-left languages (default is left-to-right)
     rightToLeft: false,
   },
   /**

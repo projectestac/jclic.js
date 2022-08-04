@@ -699,7 +699,7 @@ export class Skin extends Container {
    * @returns {boolean} `true` if the request was successful, `false` otherwise.
    */
   setScreenFull(status) {
-    if (document && document && document.fullscreenEnabled && (
+    if (document && document.fullscreenEnabled && (
       status === true && !document.fullscreenElement ||
       status === false && !document.fullscreenElement ||
       status !== true && status !== false)) {
