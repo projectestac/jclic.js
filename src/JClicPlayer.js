@@ -34,7 +34,6 @@
 import $ from 'jquery';
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
-import ScriptJS from 'scriptjs';
 import { log, init, settings, getPath, endsWith, getBasePath, getRelativePath, isNullOrUndef, mReplace, toCssSize } from './Utils';
 import { Container, Point, Action, Timer, Rectangle } from './AWT';
 import PlayerHistory from './PlayerHistory';
@@ -462,7 +461,9 @@ export class JClicPlayer extends Container {
           });
           return;
         } else if (this.localFS && window.JClicObject && !window.JClicObject.projectFiles[fullPath]) {
-          ScriptJS(`${fullPath}.js`, () => {
+          const scriptTag = document.createElement('script');
+          scriptTag.src = `${fullPath}.js`;
+          scriptTag.onload = () => {
             // 25 Mar 20201:
             // Workaround for a bug on Chrome and Firefox XML parsers, throwing errors whith hexadecimal character entities
             if (window.JClicObject.projectFiles[fullPath]) {
@@ -473,7 +474,8 @@ export class JClicPlayer extends Container {
               ], window.JClicObject.projectFiles[fullPath]);
               this.load(project, sequence, activity);
             }
-          });
+          };
+          document.head.appendChild(scriptTag);
           this.setWaitCursor(false);
           return;
         }

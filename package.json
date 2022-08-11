@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "2.1.11",
+  "version": "2.1.12",
   "main": "dist/jclic-node.js",
   "jsdelivr": "dist/jclic.min.js",
   "homepage": "https://projectestac.github.io/jclic.js",
@@ -50,7 +50,6 @@
     "jquery": "^3.6.0",
     "jszip": "^3.10.1",
     "jszip-utils": "0.1.0",
-    "scriptjs": "^2.5.9",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
@@ -71,7 +70,7 @@
     "terser-webpack-plugin": "^5.3.3",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.9.3",
+    "webpack-dev-server": "^4.10.0",
     "webpack-node-externals": "^3.0.0"
   },
   "scripts": {

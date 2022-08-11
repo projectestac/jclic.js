@@ -35,7 +35,6 @@ import $ from 'jquery';
 import * as clipboard from 'clipboard-polyfill';
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
-import ScriptJS from 'scriptjs';
 import WebFont from 'webfontloader';
 import GlobalData from './GlobalData';
 
@@ -52,7 +51,6 @@ export const pkg = {
   $,
   JSZip,
   JSZipUtils,
-  ScriptJS,
   WebFont,
 };
 
