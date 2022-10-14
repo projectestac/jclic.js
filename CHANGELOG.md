@@ -1,6 +1,7 @@
 ### v2.1.12 (not yet released)
 #### Improvements
-- Remove unnecessary dependencies: `scriptjs`.
+- Upgraded dependencies
+- Remove unnecessary dependencies: `scriptjs`
 
 ### v2.1.11 (2022-08-04)
 #### Improvements
