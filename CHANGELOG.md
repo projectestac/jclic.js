@@ -1,7 +1,8 @@
-### v2.1.12 (not yet released)
+### v2.1.12 (2022-11-26)
 #### Improvements
 - Upgraded dependencies
 - Remove unnecessary dependencies: `scriptjs`
+- Improve graphics performance setting [willReadFrequently](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext#willreadfrequently) when adquiring [CanvasRenderingContext2D](https://html.spec.whatwg.org/multipage/canvas.html#canvasrenderingcontext2d) in activities using [BoxConnector](https://github.com/projectestac/jclic.js/blob/master/src/boxes/BoxConnector.js).
 
 ### v2.1.11 (2022-08-04)
 #### Improvements

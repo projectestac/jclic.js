@@ -283,7 +283,7 @@ export class WordSearchPanel extends ActivityPanel {
       this.$div.append(this.$canvas);
 
       // Create a [BoxConnector](BoxConnector.html) and attach it to the canvas context
-      this.bc = new BoxConnector(this, this.$canvas.get(-1).getContext('2d'));
+      this.bc = new BoxConnector(this, this.$canvas);
 
       // Repaint all
       this.invalidate().update();

@@ -47,12 +47,12 @@ export class BoxConnector {
   /**
    * BoxConnector constructor
    * @param {module:AWT.Container} parent - The Container to which this BoxConnector belongs
-   * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context where to draw
+   * @param {external:jQuery} $canvas - The HTML `canvas` element where this BoxConnector will draw.
    */
-  constructor(parent, ctx) {
+  constructor(parent, $canvas) {
     this.parent = parent;
-    this.ctx = ctx;
-    this.dim = new Dimension(ctx.canvas.width, ctx.canvas.height);
+    this.ctx = $canvas.get(-1).getContext('2d', { willReadFrequently: true });
+    this.dim = new Dimension(this.ctx.canvas.width, this.ctx.canvas.height);
     this.origin = new Point();
     this.dest = new Point();
     this.relativePos = new Point();
