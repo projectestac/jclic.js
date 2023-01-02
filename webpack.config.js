@@ -14,7 +14,7 @@ buildLocales();
 const ESLintOptions = {};
 
 const banner = `
-${pkg.title} version ${pkg.version} (${date.toISOString().substr(0, 10)})
+${pkg.title} version ${pkg.version} (${date.toISOString().substring(0, 10)})
 ${pkg.description}
 ${pkg.homepage}
 
