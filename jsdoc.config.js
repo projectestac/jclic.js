@@ -16,7 +16,7 @@ module.exports = {
     recurse: true,
     verbose: true,
     destination: 'doc',
-    template: 'node_modules/ink-docstrap-template/template',
+    template: 'node_modules/clean-jsdoc-theme',
   },
   tags: {
     allowUnknownTags: true

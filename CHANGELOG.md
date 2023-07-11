@@ -1,6 +1,7 @@
-### v2.1.13 (Not yet released)
+### v2.1.13 (2023-07-11)
 #### Improvements
 - Upgraded dependencies
+- Use [clean-jsdoc-theme](https://ankdev.me/clean-jsdoc-theme/v4/index.html) instead of the outdated [ink-docstrap](https://www.npmjs.com/package/ink-docstrap) theme to generate the [technical documentation](http://projectestac.github.io/jclic.js/doc/index.html) with [JSDoc](https://jsdoc.app/).
 
 ### v2.1.12 (2022-11-26)
 #### Improvements
