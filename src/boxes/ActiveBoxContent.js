@@ -286,7 +286,7 @@ export class ActiveBoxContent {
       if (s.indexOf('<body') === -1) {
         const s2 = s.indexOf('</html>');
         if (s2 >= 0)
-          this.innerHtmlText = htmlText.substr(6, s2);
+          this.innerHtmlText = htmlText.substring(6, s2);
       }
     }
   }

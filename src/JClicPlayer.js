@@ -70,7 +70,7 @@ export class JClicPlayer extends Container {
     options = init(options);
     this.options = $.extend(Object.create(this.options), options);
     // Generate unique ID
-    this.id = `JC${(0x10000 + Math.round(Math.random() * 0xFFFF)).toString(16).toUpperCase().substr(1)}`;
+    this.id = `JC${(0x10000 + Math.round(Math.random() * 0xFFFF)).toString(16).toUpperCase().substring(1)}`;
     // Identify the HTML element where this player will deploy
     this.$topDiv = $topDiv || $('<div/>');
     // Avoid side effects of 'align=center' in old HTML pages

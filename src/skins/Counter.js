@@ -63,7 +63,7 @@ export class Counter {
    */
   refreshDisplay() {
     if (this.$div)
-      this.$div.html(this.enabled ? (this.getDisplayValue() + 1000).toString().substr(1) : '000');
+      this.$div.html(this.enabled ? (this.getDisplayValue() + 1000).toString().substring(1) : '000');
   }
 
   /**

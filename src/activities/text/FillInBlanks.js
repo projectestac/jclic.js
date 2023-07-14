@@ -255,7 +255,7 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
         fragments[currentFragment] += txt.charAt(i);
       }
       if (i < txt.length)
-        fragments[currentFragment] += txt.substr(i);
+        fragments[currentFragment] += txt.substring(i);
       // Empty and re-fill $span
       target.$span.empty();
       currentStatus = attributes[0];
@@ -368,7 +368,7 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
                   const p = txt.indexOf(target.iniChar);
                   if (p < 0)
                     break;
-                  txt = txt.substr(0, p) + txt.substr(p + 1);
+                  txt = txt.substring(0, p) + txt.substring(p + 1);
                   if (p < pos)
                     pos--;
                 }
@@ -379,7 +379,7 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
               // Check if current text exceeds max length
               if (txt.length > target.maxLenResp) {
                 pos = getCaretCharacterOffsetWithin($span.get(-1));
-                txt = txt.substr(0, target.maxLenResp);
+                txt = txt.substring(0, target.maxLenResp);
                 pos = Math.min(pos, txt.length);
                 $span.text(txt);
                 setSelectionRange($span.get(-1), pos, pos);

@@ -27,7 +27,7 @@ const getData = function (locales = _LOCALES, verbose = true) {
 
   // Initialize the options object
   const opt = {
-    version: `${pkg.version} (${(new Date()).toISOString().substr(0, 10)})`,
+    version: `${pkg.version} (${(new Date()).toISOString().substring(0, 10)})`,
     languages: ['en'],
     messages: {},
   };
@@ -36,7 +36,7 @@ const getData = function (locales = _LOCALES, verbose = true) {
   fs.readdirSync(locales).forEach(fn => {
     if (fn.endsWith('.po')) {
       // Gent language code from file name, skipping extension
-      const lang = fn.substr(0, fn.lastIndexOf('.'));
+      const lang = fn.substring(0, fn.lastIndexOf('.'));
       const file = path.resolve(locales, fn);
       if (verbose)
         console.log(`Processing language ${lang}`);

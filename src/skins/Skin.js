@@ -261,8 +261,8 @@ export class Skin extends Container {
     skinName = skinName || 'default';
 
     // Correct old skin names
-    if (skinName.charAt(0, 1) === '@' && skinName.substr(-4) === '.xml')
-      skinName = skinName.substr(1, skinName.length - 5);
+    if (skinName.charAt(0, 1) === '@' && skinName.endsWith('.xml'))
+      skinName = skinName.substring(1, skinName.length - 4);
 
     // look for the skin in the stack of realized skins
     if (skinName && ps) {

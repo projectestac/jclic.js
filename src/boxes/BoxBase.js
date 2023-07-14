@@ -255,7 +255,7 @@ export class BoxBase {
         for (let p = 0; p < line.length; p++) {
           // Find next separator
           if (isSeparator(line[p])) {
-            const w = ctx.measureText(line.substr(0, p).trim()).width;
+            const w = ctx.measureText(line.substring(0, p).trim()).width;
             if (w > maxWidth)
               break;
             lastOK = p;
@@ -264,9 +264,9 @@ export class BoxBase {
         }
         if (lastOK > 0) {
           // Add a new line with the tail of the line
-          lines.splice(l + 1, 0, line.substr(lastOK + 1).trim());
+          lines.splice(l + 1, 0, line.substring(lastOK + 1).trim());
           // Adjust the current line
-          line = lines[l] = line.substr(0, lastOK).trim();
+          line = lines[l] = line.substring(0, lastOK).trim();
           width = lastOKWidth;
         }
         else {

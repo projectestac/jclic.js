@@ -547,7 +547,7 @@ export function checkColor(color, defaultColor = settings.BoxBase.BACK_COLOR) {
  */
 export function colorHasTransparency(color) {
   if (startsWith(color, 'rgba(')) {
-    var alpha = parseInt(color.substr(color.lastIndexOf(',')));
+    var alpha = parseInt(color.substring(color.lastIndexOf(',')));
     return typeof alpha === 'number' && alpha < 1.0;
   }
   return false;
@@ -873,7 +873,7 @@ export function getBasePath(path) {
  * @returns {string}
  */
 export function getRelativePath(file, path) {
-  return (!path || path === '' || file.indexOf(path) !== 0) ? file : file.substr(path.length);
+  return (!path || path === '' || file.indexOf(path) !== 0) ? file : file.substring(path.length);
 };
 
 /**
