@@ -1,4 +1,6 @@
-### v2.1.14 (not yet released)
+### v2.1.14 (2023-09-16)
+#### Improvements
+- Upgraded dependencies
 #### Bug fixes
 - Replace calls to `substr` (deprecated) by `substring`
 
