@@ -1,3 +1,7 @@
+### v2.1.15 (2023-09-26)
+#### Improvements
+- Upgraded dependencies
+
 ### v2.1.14 (2023-09-16)
 #### Improvements
 - Upgraded dependencies
