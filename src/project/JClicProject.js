@@ -34,7 +34,7 @@ import ProjectSettings from './ProjectSettings';
 import ActivitySequence from '../bags/ActivitySequence';
 import MediaBag from '../bags/MediaBag';
 import Activity from '../Activity';
-import { getBasePath, nSlash, getAttr } from '../Utils';
+import { getBasePath, nSlash, getAttr, settings } from '../Utils';
 import { Font } from '../AWT';
 
 /**
@@ -91,7 +91,9 @@ export class JClicProject {
     const ownFonts = this.mediaBag.getElementsOfType('font');
     if (ownFonts.length > 0)
       options.ownFonts = (options.ownFonts || []).concat(ownFonts);
-    Font.checkTree($acts, options);
+    // Skip checkTree when in NodeJS, due to a JSDOM error with jQuery in XML mode
+    if (!settings.NODEJS)
+      Font.checkTree($acts, options);
     $acts.each((_n, act) => {
       const $act = $(act);
       this._activities[nSlash($act.attr('name'))] = $act;

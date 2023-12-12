@@ -1175,7 +1175,7 @@ export const settings = {
   // JClic.js Version
   VERSION: GlobalData.version,
   // Check if we are running on NodeJS with JSDOM
-  NODEJS: window.name === 'nodejs',
+  NODEJS: window.navigator.userAgent.includes('jsdom'),
   // layout constants
   AB: 0, BA: 1, AUB: 2, BUA: 3,
   LAYOUT_NAMES: ['AB', 'BA', 'AUB', 'BUA'],

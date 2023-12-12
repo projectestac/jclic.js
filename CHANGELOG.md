@@ -1,3 +1,10 @@
+### v2.1.16 (2023-12-12)
+#### Improvements
+- Upgraded dependencies
+#### Bug fixes
+- Uninstall `webpack-node-externals` due to an incompatibility with `clipboard-polyfill` version 4
+- Avoid font checking when running on NodeJS due to an error of [JSDOM](https://github.com/jsdom/jsdom) with [jQuery](https://jquery.com/) XML node trees.
+
 ### v2.1.15 (2023-09-26)
 #### Improvements
 - Upgraded dependencies

@@ -2,7 +2,6 @@
 
 const TerserPlugin = require('terser-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 const pkg = require('./package.json');
 const buildLocales = require('./build-locales');
@@ -154,7 +153,6 @@ const nodeConfig = {
   optimization: {
     minimize: false,
   },
-  externals: [nodeExternals()],
   plugins: [
     new ESLintPlugin(ESLintOptions),
   ],
