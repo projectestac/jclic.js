@@ -69,6 +69,7 @@ export class SessionReg {
       solved: this.info.nActSolved,
       ratioSolved: Math.round(this.info.ratioSolved * 100),
       actions: this.info.nActions,
+      errors: this.info.nErrors,
       score: this.info.tScore,
       time: Math.round(this.info.tTime / 10) / 100,
       sequences: []
@@ -138,10 +139,11 @@ export class SessionReg {
    * @param {number} score - The final score, usually in a 0-100 scale.
    * @param {number} numActions - The total number of actions done by the user to solve the activity
    * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
+   * @param {number} numErrors - The total number of errors done by the user when playing the activity
    */
-  endActivity(score, numActions, solved) {
+  endActivity(score, numActions, solved, numErrors) {
     if (this.currentSequence) {
-      this.currentSequence.endActivity(score, numActions, solved);
+      this.currentSequence.endActivity(score, numActions, solved, numErrors);
       this.info.valid = false;
     }
   }
@@ -237,7 +239,7 @@ export class SessionRegInfo {
    */
   clear() {
     this.numSequences = this.nActivities = this.nActSolved = this.nActScore = 0;
-    this.ratioSolved = this.ratioPlayed = this.nActions = this.tScore = this.tTime = 0;
+    this.ratioSolved = this.ratioPlayed = this.nActions = this.nErrors = this.tScore = this.tTime = 0;
     this.valid = false;
   }
 
@@ -255,6 +257,7 @@ export class SessionRegInfo {
           if (sri.nActClosed > 0) {
             this.nActivities += sri.nActClosed;
             this.nActions += sri.nActions;
+            this.nErrors += sri.nErrors;
             if (sri.nActScore > 0) {
               this.nActScore += sri.nActScore;
               this.tScore += sri.tScore * sri.nActScore;
@@ -323,6 +326,11 @@ Object.assign(SessionRegInfo.prototype, {
    * @name module:report/SessionReg.SessionRegInfo#nActions
    * @type {number} */
   nActions: 0,
+  /**
+   * Number of errors done by the user while in this working session
+   * @name module:report/SessionReg.SessionRegInfo#nErrors
+   * @type {number} */
+  nErrors: 0,
   /**
    * Sum of the scores of all the activities played
    * @name module:report/SessionReg.SessionRegInfo#tScore

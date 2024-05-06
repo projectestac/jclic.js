@@ -95,7 +95,7 @@ export class JClicPlayer extends Container {
     this.$div = $('<div/>', { class: 'JClicPlayer' });
     this.project = new JClicProject();
     this.activeMediaBag = new ActiveMediaBag();
-    this.counterVal = { score: 0, actions: 0, time: 0 };
+    this.counterVal = { score: 0, actions: 0, errors: 0, time: 0 };
     this.bgImageOrigin = new Point();
     this.buildActions();
     this.history = new PlayerHistory(this);
@@ -241,6 +241,7 @@ export class JClicPlayer extends Container {
     this.setMsg(null);
     this.setCounterValue('score', 0);
     this.setCounterValue('actions', 0);
+    this.setCounterValue('errors', 0);
     this.setCounterValue('time', 0);
     if (this.skin)
       this.skin.setWaitCursor('reset');
@@ -947,7 +948,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Sets a value to the specified counter
-   * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
+   * @param {string} counter - The id of the counter ('score', 'actions', 'errors' or 'time')
    * @param {number} newValue - The value to be set
    */
   setCounterValue(counter, newValue) {
@@ -958,7 +959,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Gets the current value for the specified counter
-   * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
+   * @param {string} counter - The id of the counter ('score', 'actions', 'errors' or 'time')
    * @returns {number}
    */
   getCounterValue(counter) {
@@ -967,7 +968,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Enables or disables a specific counter
-   * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
+   * @param {string} counter - The id of the counter ('score', 'actions', 'errors', or 'time')
    * @param {boolean} bEnabled - When `true`, the counter will be enabled.
    */
   setCounterEnabled(counter, bEnabled) {
@@ -979,28 +980,31 @@ export class JClicPlayer extends Container {
 
   /**
    * Increments by 1 the value of the specified counter
-   * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
+   * @param {string} counter - The id of the counter ('score', 'actions', 'errors' or 'time')
    */
   incCounterValue(counter) {
+
     this.counterVal[counter]++;
 
     const
       actp = this.actPanel,
-      cnt = this.skin ? this.skin.counters[counter] : null;
+      act = actp?.act,
+      cnt = this?.skin?.counters[counter];
 
     if (cnt)
       cnt.setValue(this.counterVal[counter]);
-    if (counter === 'actions' && actp !== null && actp.act.maxActions > 0 && actp.playing && this.counterVal['actions'] >= actp.act.maxActions)
+    if (act && actp.playing && (
+      (counter === 'actions' && act.maxActions > 0 && this.counterVal['actions'] >= act.maxActions) ||
+      (counter === 'errors' && act.maxErrors > 0 && this.counterVal['errors'] > act.maxErrors)))
       window.setTimeout(() => { actp.finishActivity(actp.solved); }, 0);
   }
 
   /**
    * Sets the specified counter in count-down status, starting at `maxValue`.
-   * @param {string} counter - The id of the counter ('score', 'actions' or 'time')
+   * @param {string} counter - The id of the counter ('score', 'actions', 'errors' or 'time')
    * @param {number} maxValue - The value from which to start counting down
    */
   setCountDown(counter, maxValue) {
-    //this.counterVal[counter] = maxValue
     if (this.skin && this.skin.counters[counter])
       this.skin.counters[counter].setCountDown(maxValue);
   }
@@ -1056,6 +1060,7 @@ export class JClicPlayer extends Container {
         this.reporter.newActivity(act);
     }
     this.setCounterValue('actions', 0);
+    this.setCounterValue('errors', 0);
     this.setCounterValue('score', 0);
   }
 
@@ -1075,6 +1080,9 @@ export class JClicPlayer extends Container {
       this.incCounterValue('actions');
       this.setCounterValue('score', currentScore);
     }
+    if (!ok) {
+      this.incCounterValue('errors');
+    }
   }
 
   /**
@@ -1084,7 +1092,7 @@ export class JClicPlayer extends Container {
    */
   reportEndActivity(act, solved) {
     if (this.reporter && act.includeInReports)
-      this.reporter.endActivity(this.counterVal['score'], this.counterVal['actions'], solved);
+      this.reporter.endActivity(this.counterVal['score'], this.counterVal['actions'], solved, this.counterVal['errors']);
   }
 
   /**
@@ -1279,7 +1287,7 @@ Object.assign(JClicPlayer.prototype, {
    * Current values of the counters
    * @name module:JClicPlayer.JClicPlayer#counterVal
    * @type {module:JClicPlayer.JClicPlayer~counterValType} */
-  counterVal: { score: 0, actions: 0, time: 0 },
+  counterVal: { score: 0, actions: 0, errors: 0, time: 0 },
   /**
    * Point indicating the upper-left corner of the current background image
    * @name module:JClicPlayer.JClicPlayer#bgImageOrigin

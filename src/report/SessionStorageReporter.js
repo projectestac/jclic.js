@@ -95,9 +95,10 @@ export class SessionStorageReporter extends Reporter {
    * @param {number} score - The final score, usually in a 0-100 scale.
    * @param {number} numActions - The total number of actions done by the user to solve the activity
    * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
+   * @param {number} numErrors - The total number of errors done by the user when playing the activity
    */
-  endActivity(score, numActions, solved) {
-    super.endActivity(score, numActions, solved);
+  endActivity(score, numActions, solved, numErrors) {
+    super.endActivity(score, numActions, solved, numErrors);
     this.saveCurrentReport();
   }
 }

@@ -101,10 +101,11 @@ export class SequenceReg {
    * @param {number} score - The final score, usually in a 0-100 scale.
    * @param {number} numActions - The total number of actions done by the user to solve the activity
    * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
+   * @param {number} numErrors - The total number of errors done by the user when playing the activity
    */
-  endActivity(score, numActions, solved) {
+  endActivity(score, numActions, solved, numErrors) {
     if (this.currentActivity) {
-      this.currentActivity.endActivity(score, numActions, solved);
+      this.currentActivity.endActivity(score, numActions, solved, numErrors);
       this.info.valid = false;
     }
   }
@@ -179,7 +180,7 @@ export class SequenceRegInfo {
    */
   clear() {
     this.nActivities = this.nActClosed = this.nActSolved = this.nActScore = 0;
-    this.ratioSolved = this.nActions = this.tScore = this.tTime = 0;
+    this.ratioSolved = this.nActions = this.nErrors = this.tScore = this.tTime = 0;
     this.valid = false;
   }
 
@@ -197,6 +198,7 @@ export class SequenceRegInfo {
             this.nActClosed++;
             this.tTime += ar.totalTime;
             this.nActions += ar.numActions;
+            this.nErrors += ar.numErrors;
             if (ar.solved)
               this.nActSolved++;
             const r = ar.getPrecision();
@@ -258,6 +260,11 @@ Object.assign(SequenceRegInfo.prototype, {
    * @name module:report/SequenceReg.SequenceRegInfo#nActions
    * @type {number} */
   nActions: 0,
+  /**
+   * Number of errors done by the user while in this sequence
+   * @name module:report/SequenceReg.SequenceRegInfo#nErrors
+   * @type {number} */
+  nErrors: 0,
   /**
    * Sum of the scores of all the activities played
    * @name module:report/SequenceReg.SequenceRegInfo#tScore

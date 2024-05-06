@@ -31,6 +31,10 @@ msgstr "temps"
 msgid "actions"
 msgstr "accions"
 
+#: label_errors
+msgid "errors"
+msgstr "errors"
+
 #: label_score
 msgid "score"
 msgstr "encerts"
@@ -102,6 +106,10 @@ msgstr "Temps total en les activitats:"
 #: report_num_actions
 msgid "Actions done:"
 msgstr "Accions fetes:"
+
+#: report_num_errors
+msgid "Errors done:"
+msgstr "Errors comesos:"
 
 #: report_no_activities
 msgid "No activities done!"
