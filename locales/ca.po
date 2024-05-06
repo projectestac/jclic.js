@@ -1,7 +1,7 @@
 # JClic.js
 # HTML5 player of [JClic](http://clic.xtec.cat) activities
 # https://github.com/projectestac/jclic.js
-# 
+#
 # Translators:
 # francesc <francesc@gmail.com>, 2016
 msgid ""
@@ -28,6 +28,10 @@ msgstr "temps"
 #: label_actions
 msgid "actions"
 msgstr "accions"
+
+#: label_errors
+msgid "errors"
+msgstr "errors"
 
 #: label_score
 msgid "score"
@@ -100,6 +104,10 @@ msgstr "Temps total en les activitats:"
 #: report_num_actions
 msgid "Actions done:"
 msgstr "Accions fetes:"
+
+#: report_num_errors
+msgid "Errors done:"
+msgstr "Errors comesos:"
 
 #: report_no_activities
 msgid "No activities done!"

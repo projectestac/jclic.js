@@ -323,6 +323,7 @@ export class Reporter {
       globalScore: Math.round(this.info.globalScore * 100),
       time: Math.round(this.info.tTime / 10) / 100,
       actions: this.info.nActions,
+      errors: this.info.nErrors,
       sessions: []
     };
 
@@ -448,10 +449,11 @@ export class Reporter {
    * @param {number} score - The final score, usually in a 0-100 scale.
    * @param {number} numActions - The total number of actions done by the user to solve the activity
    * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
+   * @param {number} numErrors - The total number of errors done by the user when playing the activity
    */
-  endActivity(score, numActions, solved) {
+  endActivity(score, numActions, solved, numErrors) {
     if (this.currentSession) {
-      this.currentSession.endActivity(score, numActions, solved);
+      this.currentSession.endActivity(score, numActions, solved, numErrors);
       this.info.valid = false;
     }
   }
@@ -587,7 +589,7 @@ export class ReporterInfo {
    */
   clear() {
     this.numSessions = this.numSequences = this.nActivities = this.reportableActs = this.nActSolved =
-      this.nActPlayed = this.nActScore = this.nActions = this.ratioSolved = this.ratioPlayed =
+      this.nActPlayed = this.nActScore = this.nActions = this.nErrors = this.ratioSolved = this.ratioPlayed =
       this.tScore = this.tTime = this.partialScore = this.globalScore = 0;
     this.valid = false;
   }
@@ -610,6 +612,7 @@ export class ReporterInfo {
             this.nActPlayed += inf.sReg.actNames.length;
             this.nActSolved += inf.nActSolved;
             this.nActions += inf.nActions;
+            this.nErrors += inf.nErrors;
             if (inf.nActScore > 0) {
               this.tScore += inf.tScore * inf.nActScore;
               this.nActScore += inf.nActScore;
@@ -683,6 +686,11 @@ Object.assign(ReporterInfo.prototype, {
    * @name module:report/Reporter.ReporterInfo#nActions
    * @type {number} */
   nActions: 0,
+  /**
+   * Number of errors done by the user while in this working session
+   * @name module:report/Reporter.ReporterInfo#nErrors
+   * @type {number} */
+  nErrors: 0,
   /**
    * Percentage of solved activities
    * @name module:report/Reporter.ReporterInfo#ratioSolved

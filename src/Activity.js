@@ -153,6 +153,7 @@ export class Activity {
               case 'margin':
               case 'maxTime':
               case 'maxActions':
+              case 'maxErrors':
                 this[name] = Number(val);
                 break;
 
@@ -346,6 +347,10 @@ export class Activity {
           break;
       }
     });
+
+    // Check if `maxErrors` should be set
+    this.setMaxErrors();
+
     return this;
   }
 
@@ -376,7 +381,7 @@ export class Activity {
       'invAss', 'numericContent',
       'autoJump', 'forceOkToAdvance', 'amongParagraphs',
       'infoUrl', 'infoCmd',
-      `margin|${settings.DEFAULT_MARGIN}`, 'maxTime', 'maxActions',
+      `margin|${settings.DEFAULT_MARGIN}`, 'maxTime', 'maxActions', 'maxErrors',
       'includeInReports|true', 'reportActions|false',
       'countDownTime', 'countDownActions',
       'useOrder', 'dragCells',
@@ -414,7 +419,7 @@ export class Activity {
     setAttr(this, data, [
       'name', 'className', 'code', 'type', 'description', 'invAss', 'numericContent',
       'autoJump', 'forceOkToAdvance', 'amongParagraphs', 'infoUrl', 'infoCmd',
-      'margin', 'maxTime', 'maxActions', 'includeInReports', 'reportActions',
+      'margin', 'maxTime', 'maxActions', 'maxErrors', 'includeInReports', 'reportActions',
       'countDownTime', 'countDownActions', 'useOrder', 'dragCells', 'skinFileName',
       'showSolution', 'helpMsg', 'bgColor', 'bgImageFile', 'tiledBgImg',
       'bTimeCounter', 'bActionsCounter', 'bScoreCounter',
@@ -446,7 +451,18 @@ export class Activity {
     if (this.absolutePosition)
       this.absolutePositioned = true;
 
+    // Check if `maxErrors` should be set
+    this.setMaxErrors();
+
     return this;
+  }
+
+  /**
+   * Set `maxErrors`, only when not already set and specific conditions meet
+   */
+  setMaxErrors() {
+    if(this.maxErrors === 0 && this.maxActions > 0 && this.getMinNumActions() > 0 && this.countDownActions)
+      this.maxErrors = Math.max(0, this.maxActions - this.getMinNumActions());
   }
 
   /**
@@ -743,6 +759,11 @@ Object.assign(Activity.prototype, {
    * @name module:Activity.Activity#countDownActions
    * @type {boolean} */
   countDownActions: false,
+  /**
+   * Maximum number of errors allowed
+   * @name module:Activity.Activity#maxErrors
+   * @type {number} */
+  maxErrors: 0,
   /**
    * URL to be launched when the user clicks on the 'info' button. Default is `null`.
    * @name module:Activity.Activity#infoUrl
@@ -1091,7 +1112,7 @@ export class ActivityPanel extends Container {
   }
 
   /**
-   * 
+   *
    * Builds the accessible components needed for this ActivityPanel
    * This method is called when all main elements are placed and visible, when the activity is ready
    * to start or when resized.

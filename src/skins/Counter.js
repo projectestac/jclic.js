@@ -31,7 +31,7 @@
 
 /**
  * This class encapsulates the operation of a numeric counter, used to display the current
- * values of score, actions and time.
+ * values of score, actions, errors and time.
  */
 export class Counter {
   /**
@@ -110,7 +110,7 @@ export class Counter {
 
 Object.assign(Counter.prototype, {
   /**
-   * Type of counter (usually: `score`, `actions` or `time`)
+   * Type of counter (usually: `score`, `actions`, `errors` or `time`)
    * @name module:skins/Counter.Counter#id
    * @type {string} */
   id: '',

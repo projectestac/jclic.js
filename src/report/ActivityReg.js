@@ -62,7 +62,8 @@ export class ActivityReg {
       solved: this.solved,
       score: this.score,
       minActions: this.minActions,
-      actions: this.numActions
+      actions: this.numActions,
+      errors: this.numErrors,
     };
     if (this.name)
       attr.name = this.name;
@@ -92,6 +93,7 @@ export class ActivityReg {
       score: this.score,
       minActions: this.minActions,
       actions: this.numActions,
+      errors: this.numErrors,
       precision: this.getPrecision(),
       closed: this.closed
     };
@@ -194,11 +196,13 @@ export class ActivityReg {
    * @param {number} score - The final score, usually in a 0-100 scale.
    * @param {number} numActions - The total number of actions done by the user to solve the activity
    * @param {boolean} solved - `true` if the activity was finally solved, `false` otherwise.
+   * @param {number} numErrors - The total number of actions done by the user to solve the activity
    */
-  endActivity(score, numActions, solved) {
+  endActivity(score, numActions, solved, numErrors) {
     if (!this.closed) {
       this.solved = solved;
       this.numActions = numActions;
+      this.numErrors = numErrors;
       this.score = score;
       this.closeActivity();
     }
@@ -266,6 +270,11 @@ Object.assign(ActivityReg.prototype, {
    * @name module:report/ActivityReg.ActivityReg#numActions
    * @type {number} */
   numActions: 0,
+  /**
+   * Number of errors done by the user playing this activity
+   * @name module:report/ActivityReg.ActivityReg#numErrors
+   * @type {number} */
+  numErrors: 0,
 });
 
 export default ActivityReg;

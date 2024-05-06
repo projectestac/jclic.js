@@ -585,7 +585,10 @@ export class Skin extends Container {
               getHMStime(report.time * 1000)),
             $HTML.doubleCell(
               getMsg('Actions done:'),
-              report.actions));
+              report.actions),
+            $HTML.doubleCell(
+              getMsg('Errors done:'),
+              report.errors));
         }
         result.push($t);
 
@@ -598,6 +601,7 @@ export class Skin extends Container {
               $HTML.th(getMsg('activity')),
               $HTML.th(getMsg('OK')),
               $HTML.th(getMsg('actions')),
+              $HTML.th(getMsg('errors')),
               $HTML.th(getMsg('score')),
               $HTML.th(getMsg('time')))));
 
@@ -608,11 +612,12 @@ export class Skin extends Container {
                   $tr.append($HTML.td(act.name));
                   $tr.append(act.solved ? $HTML.td(getMsg('YES'), 'ok') : $HTML.td(getMsg('NO'), 'no'));
                   $tr.append($HTML.td(act.actions));
+                  $tr.append($HTML.td(act.errors));
                   $tr.append($HTML.td(getPercent(act.precision / 100)));
                   $tr.append($HTML.td(getHMStime(act.time * 1000)));
                 } else {
                   $tr.append($HTML.td(act.name, 'incomplete'));
-                  for (let r = 0; r < 4; r++)
+                  for (let r = 0; r < 5; r++)
                     $tr.append($HTML.td('-', 'incomplete'));
                 }
                 $t.append($tr);
@@ -625,6 +630,7 @@ export class Skin extends Container {
               $HTML.td(`${sr.played} (${getPercent(sr.ratioPlayed / 100)})`),
               $HTML.td(`${sr.solved} (${getPercent(sr.ratioSolved / 100)})`),
               $HTML.td(sr.actions),
+              $HTML.td(sr.errors),
               $HTML.td(getPercent(sr.score / 100)),
               $HTML.td(getHMStime(sr.time * 1000))));
 
@@ -929,6 +935,7 @@ Object.assign(Skin.prototype, {
    * @type {object} */
   counters: {
     'actions': null,
+    // 'errors': null,
     'score': null,
     'time': null
   },
