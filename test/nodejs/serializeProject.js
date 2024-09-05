@@ -18,6 +18,7 @@ global.window = dom.window;
 global.document = dom.window.document;
 global.Image = dom.window.Image;
 global.Audio = dom.window.Audio;
+global.XMLHttpRequest = dom.window.XMLHttpRequest;
 
 // Use `xmldom` as DOM parser
 global.DOMParser = require('@xmldom/xmldom').DOMParser;
@@ -44,7 +45,7 @@ const contents = fs.readFileSync(file, 'utf8');
 
 if (isXML) {
   // Read file and parse it into a DOM object
-  var doc = new global.DOMParser().parseFromString(contents);
+  var doc = new global.DOMParser().parseFromString(contents, 'text/xml');
 
   // Create a JClicProject and initialize it with the file contents
   project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
