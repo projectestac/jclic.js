@@ -195,7 +195,7 @@ export class Encryption {
   static decodify(word) {
     try {
       return Encryption.decodifyFromHex(Encryption.decompressZeros(Encryption.unchangeOrder(word)));
-    } catch (e) { //The supplied word was not codified using this system
+    } catch (_ex) { //The supplied word was not codified using this system
       return '';
     }
   }

@@ -151,7 +151,7 @@ export class ProjectSettings {
             const canonicals = window.Intl.getCanonicalLocales(matches[1]);
             if (canonicals)
               this.locales = this.locales.concat(canonicals);
-          } catch (err) {
+          } catch (_err) {
             log('error', `Invalid language: ${lang}`);
           }
         }
@@ -253,7 +253,7 @@ Object.assign(ProjectSettings.prototype, {
     url: 'https://creativecommons.org/licenses/by-nc-sa/4.0',
   },
   /**
-   * Array of canonical locales, as defined in 
+   * Array of canonical locales, as defined in
    * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation|Intl}
    * @name module:project/ProjectSettings.ProjectSettings#locales
    * @type {string[]} */

@@ -140,7 +140,7 @@ export class BoxConnector {
     // Save the full image currently displayed on the panel (with the box hidden)
     try {
       this.bgImg = this.ctx.getImageData(0, 0, this.dim.width, this.dim.height);
-    } catch (ex) {
+    } catch (_ex) {
       // Avoid "canvas tainted by cross-origin data" errors
       // Setting bgImg to null is less efficient, but works
       this.bgImg = null;
