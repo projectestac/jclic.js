@@ -1,5 +1,8 @@
-### v2.1.18 (Not yet released)
+### v2.1.18 (2024-08-13)
 #### Improvements
+- Simplified the initialization and loading of jclic.js as an NPM package
+- Allowed jclic.js to be loaded as an ES6 module from NodeJS
+- Upgraded tests for NodeJS
 - Upgraded dependencies
 
 ### v2.1.17 (2024-08-12)

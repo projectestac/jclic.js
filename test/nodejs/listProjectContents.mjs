@@ -1,37 +1,34 @@
 #!/usr/bin/env node
 
 //
-// Lists the contents of a JClic project file
+// Lists the contents of a JClic project file (module version)
 //
 // Usage:
-// node listProjectContents.js [filename]
+// node listProjectContents.mjs [filename]
 //
 
-/* global process, global, require, console */
+/* global process, global, console */
 
-const fs = require('fs');
-// Load the global [JClicObject](http://projectestac.github.io/jclic.js/doc/module-JClic.html).
-// Here this is done with a relative path. In other contexts just install
-// the 'jclic' NPM package and require it, like in:
-// `var jclic = require('jclic');`
-const jclic = require('../../dist/jclic-node.js');
+import fs from 'node:fs';
+import JClicObject from '../../dist/jclic-node.js';
+const { JClicProject, $ } = JClicObject;
 
 // Get the file name from the command line arguments, using 'demo.jclic' if none provided.
-const file = process.argv.length > 2 ? process.argv[2] : '../jclic-demo/demo.jclic.json';
+const file = process.argv.length > 2 ? process.argv[2] : '../jclic-demo/demo.jclic';
 
 // Create an empty JClicProject
-const project = new jclic.JClicProject();
+const project = new JClicProject();
 
 if (file.endsWith('.jclic')) {
   // Read file and parse it into a DOM object
   const contents = fs.readFileSync(file, 'utf8');
-  const doc = new global.DOMParser().parseFromString(contents);
+  const doc = new global.DOMParser().parseFromString(contents, 'application/xml');
   // Initialize project with the file contents
-  project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
+  project.setProperties($(doc).find('JClicProject'), file, null, {});
 }
 else {
   // Is a JSON file
-  const data = require(file);
+  const data = JSON.parse(fs.readFileSync(file, 'utf8'));
   // Initialize project with the file contents
   project.setAttributes(data, file, null, {});
 }
@@ -66,3 +63,4 @@ for (var p = 0; p < nMedia; p++)
   console.log('- %s', media[p]);
 
 console.log('\nTOTAL: %d activities, %d sequences, %d media files', nActivities, nSequences, nMedia);
+

@@ -139,7 +139,7 @@ const nodeConfig = {
   target: 'node',
   mode: 'production',
   externals: [nodeExternals()],
-  entry: './src/JClic.js',
+  entry: './src/jclic-node.js',
   module: {
     rules: [...assetRules],
   },
