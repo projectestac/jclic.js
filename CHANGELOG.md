@@ -1,3 +1,7 @@
+### v2.1.18 (Not yet released)
+#### Improvements
+- Upgraded dependencies
+
 ### v2.1.17 (2024-08-12)
 #### Improvements
 - Removed dependency of 'clipboard-polyfill'. The clipboard API is now supported in all browsers.
