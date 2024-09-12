@@ -32,26 +32,19 @@
 /* global Promise, window, document, console, HTMLElement */
 
 import $ from 'jquery';
-import * as clipboard from 'clipboard-polyfill';
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
-import WebFont from 'webfontloader';
 import GlobalData from './GlobalData';
 
 /**
  * Exports third-party NPM packages used by JClic, so they become available to other scripts through
  * the global variable `JClicObject` (defined in {@link module:JClic.JClic})
- * @example <caption>Example usage of JSZip through JClicObject</caption>
- * var WebFont = window.JClicObject.Utils.pkg.WebFont;
- * WebFont.load({google: {families: ['Roboto']}});
  * @type: {object}
  */
 export const pkg = {
-  clipboard,
   $,
   JSZip,
   JSZipUtils,
-  WebFont,
 };
 
 /**
@@ -1175,7 +1168,7 @@ export const settings = {
   // JClic.js Version
   VERSION: GlobalData.version,
   // Check if we are running on NodeJS with JSDOM
-  NODEJS: window.navigator.userAgent.includes('jsdom'),
+  NODEJS: typeof window === 'undefined' || window?.navigator?.userAgent?.includes('jsdom'),
   // layout constants
   AB: 0, BA: 1, AUB: 2, BUA: 3,
   LAYOUT_NAMES: ['AB', 'BA', 'AUB', 'BUA'],
@@ -1280,7 +1273,7 @@ export const settings = {
   // CANVAS_HITREGIONS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.addHitRegion === 'function',
   // CANVAS_HITREGIONS_FOCUS: typeof CanvasRenderingContext2D !== 'undefined' && typeof CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function',
   //
-  CANVAS_DRAW_FOCUS: typeof window.CanvasRenderingContext2D !== 'undefined' && typeof window.CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function',
+  CANVAS_DRAW_FOCUS: typeof window !== 'undefined' && typeof window?.CanvasRenderingContext2D?.prototype?.drawFocusIfNeeded === 'function',
   // See: https://emptycharacter.com/
   // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes
   WHITESPACES: '  \f\n\r\t\v\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u2028\u2029\u202f\u205f\u3000\ufeff',

@@ -29,10 +29,9 @@
  *  @module
  */
 
-/* global Promise, window, document */
+/* global Promise, window, document, navigator, ClipboardItem, Blob */
 
 import $ from 'jquery';
-import * as clipboard from 'clipboard-polyfill';
 import { appendStyleAtHead, cloneObject, getMsg, setLogLevel, log, getRootHead, toCssSize, $HTML, getPercent, getHMStime, settings } from '../Utils';
 import { Container, Dimension, Rectangle } from '../AWT';
 
@@ -173,11 +172,11 @@ export class Skin extends Container {
     this.$copyBtn = $('<button/>', { title: msg, 'aria-label': msg })
       .append($(this.copyIcon).css({ width: '26px', height: '26px' }))
       .on('click', () => {
-        const item = new clipboard.ClipboardItem({
-          'text/plain': `===> ${getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor')} <===`,
-          'text/html': this.$reportsPanel.html(),
+        const item = new ClipboardItem({
+          'text/plain': new Blob([`===> ${getMsg('The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor')} <===`], {type: 'text/plain'}),
+          'text/html': new Blob([this.$reportsPanel.html()], {type: 'text/html'}),
         });
-        clipboard.write([item])
+        navigator.clipboard.write([item])
           .then(() => this.$copyBtn.parent().append(
             $('<div/>', { class: 'smallPopup' })
               .html(getMsg('The data has been copied to clipboard'))

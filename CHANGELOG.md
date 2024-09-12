@@ -1,5 +1,7 @@
-### v2.1.17 (not yet released)
+### v2.1.17 (2024-08-12)
 #### Improvements
+- Removed dependency of 'clipboard-polyfill'. The clipboard API is now supported in all browsers.
+- Reincorporation of `webpack-node-externals`, which is used when building the nodeJS package.
 - Upgraded dependencies
 
 ### v2.1.16 (2023-12-12)

@@ -2,6 +2,7 @@
 
 const TerserPlugin = require('terser-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 const pkg = require('./package.json');
 const buildLocales = require('./build-locales');
@@ -137,6 +138,7 @@ const mainConfig = {
 const nodeConfig = {
   target: 'node',
   mode: 'production',
+  externals: [nodeExternals()],
   entry: './src/JClic.js',
   module: {
     rules: [...assetRules],
