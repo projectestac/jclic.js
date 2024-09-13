@@ -30,8 +30,8 @@
  */
 
 import $ from 'jquery';
-import { log, attrForEach, getBoolean, getAttr, setAttr } from '../Utils';
-import { Shape, Rectangle, Ellipse, PathStroke, Path } from '../AWT';
+import { log, attrForEach, getBoolean, getAttr, setAttr } from '../Utils.js';
+import { Shape, Rectangle, Ellipse, PathStroke, Path } from '../AWT.js';
 
 /**
  * The function of this class and its subclasses is to draw a set of "shapes" that will be used to

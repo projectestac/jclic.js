@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 //
-// Lists the contents of a JClic project file
+// Lists the contents of a JClic project file (CommonJS version)
 //
 // Usage:
 // node listProjectContents.js [filename]

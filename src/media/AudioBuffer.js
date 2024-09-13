@@ -31,7 +31,7 @@
 
 /* global navigator, window, document, Blob, URL, MediaRecorder */
 
-import { log } from '../Utils';
+import { log } from '../Utils.js';
 
 /**
  * The AudioBuffer object provides sound recording and replaying to activities.

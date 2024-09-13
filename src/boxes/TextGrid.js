@@ -29,10 +29,10 @@
  *  @module
  */
 
-import { Rectangle, Timer, Point, Dimension, Stroke } from '../AWT';
-import { roundTo } from '../Utils';
-import AbstractBox from './AbstractBox';
-import TextGridContent from './TextGridContent';
+import { Rectangle, Timer, Point, Dimension, Stroke } from '../AWT.js';
+import { roundTo } from '../Utils.js';
+import AbstractBox from './AbstractBox.js';
+import TextGridContent from './TextGridContent.js';
 
 /**
  * Default values

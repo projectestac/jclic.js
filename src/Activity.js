@@ -32,16 +32,16 @@
 /* global window */
 
 import $ from 'jquery';
-import { settings, log, getMsg, attrForEach, nSlash, getBoolean, getXmlText, checkColor, isNullOrUndef, getAttr, setAttr } from './Utils';
-import { Rectangle, Gradient, Point, Dimension, Container } from './AWT';
-import EventSounds from './media/EventSounds';
-import ActiveBoxContent from './boxes/ActiveBoxContent';
-import ActiveBagContent from './boxes/ActiveBagContent';
-import BoxBase from './boxes/BoxBase';
-import AutoContentProvider from './automation/AutoContentProvider';
-import TextGridContent from './boxes/TextGridContent';
-import Evaluator from './activities/text/Evaluator';
-import TextActivityDocument from './activities/text/TextActivityDocument';
+import { settings, log, getMsg, attrForEach, nSlash, getBoolean, getXmlText, checkColor, isNullOrUndef, getAttr, setAttr } from './Utils.js';
+import { Rectangle, Gradient, Point, Dimension, Container } from './AWT.js';
+import EventSounds from './media/EventSounds.js';
+import ActiveBoxContent from './boxes/ActiveBoxContent.js';
+import ActiveBagContent from './boxes/ActiveBagContent.js';
+import BoxBase from './boxes/BoxBase.js';
+import AutoContentProvider from './automation/AutoContentProvider.js';
+import TextGridContent from './boxes/TextGridContent.js';
+import Evaluator from './activities/text/Evaluator.js';
+import TextActivityDocument from './activities/text/TextActivityDocument.js';
 
 // Event used for detecting touch devices
 const TOUCH_TEST_EVENT = 'touchstart';
@@ -1091,7 +1091,7 @@ export class ActivityPanel extends Container {
   }
 
   /**
-   * 
+   *
    * Builds the accessible components needed for this ActivityPanel
    * This method is called when all main elements are placed and visible, when the activity is ready
    * to start or when resized.

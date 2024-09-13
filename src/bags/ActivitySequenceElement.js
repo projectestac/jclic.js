@@ -30,8 +30,8 @@
  */
 
 import $ from 'jquery';
-import ActivitySequenceJump from './ActivitySequenceJump';
-import { attrForEach, nSlash, getAttr, isEmpty } from '../Utils';
+import ActivitySequenceJump from './ActivitySequenceJump.js';
+import { attrForEach, nSlash, getAttr, isEmpty } from '../Utils.js';
 
 /**
  *

@@ -30,10 +30,10 @@
  */
 
 import $ from 'jquery';
-import { Dimension } from '../AWT';
-import { getAttr, setAttr, attrForEach, getBoolean, nSlash, startsWith, getMsg } from '../Utils';
-import BoxBase from './BoxBase';
-import MediaContent from '../media/MediaContent';
+import { Dimension } from '../AWT.js';
+import { getAttr, setAttr, attrForEach, getBoolean, nSlash, startsWith, getMsg } from '../Utils.js';
+import BoxBase from './BoxBase.js';
+import MediaContent from '../media/MediaContent.js';
 
 /**
  * This class is used as a container for horizontal and vertical alignments of content inside a cell.

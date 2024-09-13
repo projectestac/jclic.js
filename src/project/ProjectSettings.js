@@ -32,8 +32,8 @@
 /* global window */
 
 import $ from 'jquery';
-import EventSounds from '../media/EventSounds';
-import { log, getXmlNodeText, parseXmlNode, reduceTextsToStrings, parseOldDate, cleanOldLanguageTag, getAttr, setAttr } from '../Utils';
+import EventSounds from '../media/EventSounds.js';
+import { log, getXmlNodeText, parseXmlNode, reduceTextsToStrings, parseOldDate, cleanOldLanguageTag, getAttr, setAttr } from '../Utils.js';
 
 /**
  * This class contains miscellaneous settings of JClic projects.

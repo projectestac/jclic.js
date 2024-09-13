@@ -32,10 +32,10 @@
 /* global window */
 
 import $ from 'jquery';
-import { Activity, ActivityPanel } from '../../Activity';
-import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
-import BoxBag from '../../boxes/BoxBag';
-import { Rectangle, Point } from '../../AWT';
+import { Activity, ActivityPanel } from '../../Activity.js';
+import ActiveBoxGrid from '../../boxes/ActiveBoxGrid.js';
+import BoxBag from '../../boxes/BoxBag.js';
+import { Rectangle, Point } from '../../AWT.js';
 
 /**
  * The aim of this type of {@link module:Activity.Activity Activity} is to identify {@link module:boxes/ActiveBox.ActiveBox ActiveBox} elements in a panel

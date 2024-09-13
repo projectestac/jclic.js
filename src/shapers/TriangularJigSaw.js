@@ -29,9 +29,9 @@
  *  @module
  */
 
-import Shaper from './Shaper';
-import JigSaw from './JigSaw';
-import { PathStroke } from '../AWT';
+import Shaper from './Shaper.js';
+import JigSaw from './JigSaw.js';
+import { PathStroke } from '../AWT.js';
 
 /**
  * This {@link module:shapers/Shaper.Shaper Shaper} returns a set of rectangular shapes with triangular teeth and slots that

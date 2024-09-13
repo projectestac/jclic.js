@@ -32,8 +32,8 @@
 /* global Intl */
 
 import $ from 'jquery';
-import AutoContentProvider from '../AutoContentProvider';
-import { getNumber, getBoolean, getAttr, setAttr, attrForEach } from '../../Utils';
+import AutoContentProvider from '../AutoContentProvider.js';
+import { getNumber, getBoolean, getAttr, setAttr, attrForEach } from '../../Utils.js';
 
 //
 // Miscellaneous constants used by Arith:

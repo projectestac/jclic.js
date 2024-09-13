@@ -29,10 +29,10 @@
  *  @module
  */
 
-import Activity from '../../Activity';
+import Activity from '../../Activity.js';
 import $ from 'jquery';
-import { fillString, setSelectionRange, getCaretCharacterOffsetWithin } from '../../Utils';
-import { TextActivityBase, TextActivityBasePanel } from './TextActivityBase';
+import { fillString, setSelectionRange, getCaretCharacterOffsetWithin } from '../../Utils.js';
+import { TextActivityBase, TextActivityBasePanel } from './TextActivityBase.js';
 
 /**
  * In this type of activity the text document has some blanks that must be filled-in. The blanks

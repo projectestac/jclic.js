@@ -29,8 +29,8 @@
  *  @module
  */
 
-import Shaper from './Shaper';
-import { Path, PathStroke } from '../AWT';
+import Shaper from './Shaper.js';
+import { Path, PathStroke } from '../AWT.js';
 
 /**
  *

@@ -30,9 +30,9 @@
  */
 
 
-import Activity from '../../Activity';
-import { Point } from '../../AWT';
-import { SimpleAssociation, SimpleAssociationPanel } from './SimpleAssociation';
+import Activity from '../../Activity.js';
+import { Point } from '../../AWT.js';
+import { SimpleAssociation, SimpleAssociationPanel } from './SimpleAssociation.js';
 
 /**
  * This is a special case of {@link module:activities/associations/SimpleAssociation.SimpleAssociation SimpleAssociation} where the elements of the 'secondary' panel

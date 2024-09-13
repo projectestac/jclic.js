@@ -32,11 +32,11 @@
 /* global document */
 
 import $ from 'jquery';
-import { Font } from '../AWT';
-import Skin from './Skin';
-import ActiveBox from '../boxes/ActiveBox';
-import Counter from './Counter';
-import { log, getMsg, getSvg, svgToURI } from '../Utils';
+import { Font } from '../AWT.js';
+import Skin from './Skin.js';
+import ActiveBox from '../boxes/ActiveBox.js';
+import Counter from './Counter.js';
+import { log, getMsg, getSvg, svgToURI } from '../Utils.js';
 
 // Use Webpack to import CSS and SVG files
 import mainCSS from './assets/main.css';

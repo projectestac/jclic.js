@@ -29,9 +29,9 @@
  *  @module
  */
 
-import Shaper from './Shaper';
-import JigSaw from './JigSaw';
-import { PathStroke } from '../AWT';
+import Shaper from './Shaper.js';
+import JigSaw from './JigSaw.js';
+import { PathStroke } from '../AWT.js';
 
 /**
  * This is the classic {@link module:shapers/JigSaw.JigSaw JigSaw} {@link module:shapers/Shaper.Shaper Shaper} used in puzzle toys, where teeth and slots

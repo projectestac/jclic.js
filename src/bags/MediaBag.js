@@ -30,9 +30,9 @@
  */
 
 import $ from 'jquery';
-import MediaBagElement from './MediaBagElement';
-import Skin from '../skins/Skin';
-import { log, nSlash } from '../Utils';
+import MediaBagElement from './MediaBagElement.js';
+import Skin from '../skins/Skin.js';
+import { log, nSlash } from '../Utils.js';
 
 /**
  * This class stores and manages all the media components (images, sounds, animations, video,

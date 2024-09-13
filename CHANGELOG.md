@@ -1,47 +1,54 @@
+### v2.1.19 (Not yet released)
+#### Improvements
+- Upgrade ESLint to v9. Config file is now: `eslint.config.mjs`.
+- Set specific file extensions to diferentiate CommonJS (.cjs) and ECMAScript (.mjs) module formats.
+- Convert `webpack.config` and `build-locales` to ECMAScript module format.
+- Always use file extensions when importing sibling modules.
+
 ### v2.1.18 (2024-08-13)
 #### Improvements
-- Simplified the initialization and loading of jclic.js as an NPM package
-- Allowed jclic.js to be loaded as an ES6 module from NodeJS
-- Upgraded tests for NodeJS
-- Upgraded dependencies
+- Simplified the initialization and loading of jclic.js as an NPM package.
+- Allowed jclic.js to be loaded as an ES6 module from NodeJS.
+- Upgraded tests for NodeJS.
+- Upgraded dependencies.
 
 ### v2.1.17 (2024-08-12)
 #### Improvements
 - Removed dependency of 'clipboard-polyfill'. The clipboard API is now supported in all browsers.
 - Reincorporation of `webpack-node-externals`, which is used when building the nodeJS package.
-- Upgraded dependencies
+- Upgraded dependencies.
 
 ### v2.1.16 (2023-12-12)
 #### Improvements
-- Upgraded dependencies
+- Upgraded dependencies..
 #### Bug fixes
-- Uninstall `webpack-node-externals` due to an incompatibility with `clipboard-polyfill` version 4
+- Uninstall `webpack-node-externals` due to an incompatibility with `clipboard-polyfill` version 4.
 - Avoid font checking when running on NodeJS due to an error of [JSDOM](https://github.com/jsdom/jsdom) with [jQuery](https://jquery.com/) XML node trees.
 
 ### v2.1.15 (2023-09-26)
 #### Improvements
-- Upgraded dependencies
+- Upgraded dependencies.
 
 ### v2.1.14 (2023-09-16)
 #### Improvements
-- Upgraded dependencies
+- Upgraded dependencies.
 #### Bug fixes
-- Replace calls to `substr` (deprecated) by `substring`
+- Replace calls to `substr` (deprecated) by `substring`.
 
 ### v2.1.13 (2023-07-11)
 #### Improvements
-- Upgraded dependencies
+- Upgraded dependencies.
 - Use [clean-jsdoc-theme](https://ankdev.me/clean-jsdoc-theme/v4/index.html) instead of the outdated [ink-docstrap](https://www.npmjs.com/package/ink-docstrap) theme to generate the [technical documentation](http://projectestac.github.io/jclic.js/doc/index.html) with [JSDoc](https://jsdoc.app/).
 
 ### v2.1.12 (2022-11-26)
 #### Improvements
-- Upgraded dependencies
-- Remove unnecessary dependencies: `scriptjs`
+- Upgraded dependencies.
+- Remove unnecessary dependencies: `scriptjs`.
 - Improve graphics performance setting [willReadFrequently](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext#willreadfrequently) to `true` when acquiring [CanvasRenderingContext2D](https://html.spec.whatwg.org/multipage/canvas.html#canvasrenderingcontext2d) in activities using [BoxConnector](https://github.com/projectestac/jclic.js/blob/master/src/boxes/BoxConnector.js).
 
 ### v2.1.11 (2022-08-04)
 #### Improvements
-- Upgraded dependencies
+- Upgraded dependencies.
 - Detect swipe gestures on touch devices to go back or forward in the sequence of activities.
 - Toggle full screen with "double touch" gesture.
 
@@ -51,13 +58,13 @@
 
 ### v2.1.9 (2022-02-26)
 #### Improvements
-- Upgraded dependencies
+- Upgraded dependencies.
 #### Bug fixes
 - Calling `patch-package` in `postinst` does not work with the NPM package. Moved to `prebuild`.
 
 ### v2.1.8 (2022-01-07)
 #### Improvements
-- Upgraded dependencies
+- Upgraded dependencies.
 - Allow "inverse resolution" in word search activities: clues are initially shown, and gradually hidden when the user identifies them.
 
 #### Bug fixes
@@ -65,19 +72,19 @@
 
 ### v2.1.7 (2022-01-24)
 #### Improvements
-- Upgraded dependencies
-- Use [ink-docstrap-template](https://www.npmjs.com/package/ink-docstrap-template) instead [ink-docstrap](https://www.npmjs.com/package/ink-docstrap) to deal with updated components, thus avoiding security warnings
-- Direct use of [jsdom](https://www.npmjs.com/package/jsdom) instead of [mock-browser](https://www.npmjs.com/package/mock-browser) (outdated) in `test/nodejs`, to avoid security warnings
+- Upgraded dependencies.
+- Use [ink-docstrap-template](https://www.npmjs.com/package/ink-docstrap-template) instead [ink-docstrap](https://www.npmjs.com/package/ink-docstrap) to deal with updated components, thus avoiding security warnings.
+- Direct use of [jsdom](https://www.npmjs.com/package/jsdom) instead of [mock-browser](https://www.npmjs.com/package/mock-browser) (outdated) in `test/nodejs`, to avoid security warnings.
 
 #### Bug fixes
 - `IdentifyText` activities were not fully implemented: only targets could be selected. You can now select any word (or letter in `identifyChars` mode), although not part of a target. To be successful with the activity, only the targets must be selected.
 
 ### v2.1.5 (2021-11-07)
 #### Improvements
-- Upgraded dependencies
+- Upgraded dependencies.
 
 #### Bug fixes
-- Avoid bad URLs in local files when running on NodeJS with JSDOM
+- Avoid bad URLs in local files when running on NodeJS with JSDOM.
 
 ### v2.1.3 (2021-07-28)
 #### Improvements
@@ -85,7 +92,7 @@
   introduced in Chrome 92+, limiting the maximum number of media player elements per document.
   (see: https://bugs.chromium.org/p/chromium/issues/detail?id=1144736).
   This improvement will reduce the startup time of JClic projects and the size of media bytes to be downloaded, but can have a side effect,
-  introducing latency when playing audio because is now always fetched "on demand" (no more preloading)
+  introducing latency when playing audio because is now always fetched "on demand" (no more preloading).
 
 ### v2.1.2 (2021-06-10)
 #### Improvements
@@ -119,9 +126,9 @@
 - Accessible components for `canvas` regions should always be created since [`HitRegions`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/addHitRegion) have been deprecated. Also, [`CanvasRenderingContext2D.drawFocusIfNeeded`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawFocusIfNeeded) should be called on each call to `updateContent` on `ActiveBox` objects, not just at creation time.
 - Parse new JClic project multiple descriptions in XML files.
 - `AWT.Font.cssFont` should use `px` as `font-size` unit for consistency with JClic.
-- Use underscore instead of blank space as filling character in `TextActivityDocument.TextTarget`
-- Correct the vertical position of centered text in boxes and grid cells
-- Workaround for a bug on Chrome and Firefox XML parsers, throwing errors whith hexadecimal character entities
+- Use underscore instead of blank space as filling character in `TextActivityDocument.TextTarget`.
+- Correct the vertical position of centered text in boxes and grid cells.
+- Workaround for a bug on Chrome and Firefox XML parsers, throwing errors whith hexadecimal character entities.
 
 #### Improvements
 - Updated core components to their latest versions.
@@ -168,16 +175,16 @@
 
 ### v1.1.7 (2018-06-20)
 #### Bug fixes
-- Allow projects to have multiple custom skins defined in XML files
+- Allow projects to have multiple custom skins defined in XML files.
 
 ### v1.1.5 (2018-05-17)
 #### Improvements
-- Use of [Webpack 4](https://webpack.js.org/) to polyfill, transpile and build the main distributable file `jclic.min.js`
+- Use of [Webpack 4](https://webpack.js.org/) to polyfill, transpile and build the main distributable file `jclic.min.js`.
 
 #### Bug fixes
-- Avoid playing disabled event sounds
-- Declare the `document` member in `Activity.prototype`
-- Use of `Element.getAttribute` instead of `style.attributes.*`
+- Avoid playing disabled event sounds.
+- Declare the `document` member in `Activity.prototype`.
+- Use of `Element.getAttribute` instead of `style.attributes.*`.
 
 ### v1.1.4 (2018-02-27)
 #### Improvements
@@ -189,23 +196,23 @@
 - Basic functionality of JClic "legacy custom skins" (based on XML files) are now supported in browsers compatible with [CSS Grid Layout](https://caniuse.com/#feat=css-grid). This feature is currently used in many great JClic projects created by [Imma Palahí](https://clic.xtec.cat/repo/index.html?lang=ca&author=Imma%20Palahi).
 
 #### Bug fixes
-- Solved a bug in Menu.js
-- Check for null values on AUDIO_BUFFERS and mbe.data
+- Solved a bug in Menu.js.
+- Check for null values on AUDIO_BUFFERS and mbe.data.
 
 ### v1.1.0 (2018-02-08)
 #### Improvements
 - All the code has been updated to [ECMAScript6](http://es6-features.org) (ES6), taking advantage of new JavaScript features (classes, constants, arrow functions, array methods...) in modern browsers. The main file `jclic.min.js` will maintain compability with older browsers for some time, since it is transpiled to ES5 thanks to [Babel](https://babeljs.io/) and [Webpack](https://webpack.js.org).
 - Updated test files.
-- All media is now played at the end of the current event handling, so it's not blocked by mobile browsers (see [this thread](https://bugs.chromium.org/p/chromium/issues/detail?id=178297) for more information about this issue)
-- New JSDoc-Bootstrap theme for the [API Docs](http://projectestac.github.io/jclic.js/doc/index.html)
+- All media is now played at the end of the current event handling, so it's not blocked by mobile browsers (see [this thread](https://bugs.chromium.org/p/chromium/issues/detail?id=178297) for more information about this issue).
+- New JSDoc-Bootstrap theme for the [API Docs](http://projectestac.github.io/jclic.js/doc/index.html).
 
 #### Bug fixes
 - Catch `Enter` key in written answer activities.
-- Disable drop-down lists at the end of text activities
+- Disable drop-down lists at the end of text activities.
 
 ### v1.0.5 (2018-02-05)
 #### Bug fixes
-- WrittenAnswer activities: always update the alternative content off cells when done
+- WrittenAnswer activities: always update the alternative content off cells when done.
 
 ### v1.0.4 (2018-01-22)
 #### Improvements
@@ -243,7 +250,7 @@
 
 ### v0.1.47 (2017-05-16)
 #### Improvements
-- Updated French translation, thanks to [Heluga Valka](https://www.transifex.com/user/profile/Heluga/)
+- Updated French translation, thanks to [Heluga Valka](https://www.transifex.com/user/profile/Heluga/).
 
 #### Bug fixes
 - Control of the maximum display time of previous screen in text activities. This JClic feature was unimplemented until now. Probably closes #12.
@@ -288,7 +295,7 @@
 - Place "check" button always anchored at bottom of text activities.
 - Properly initialize `Evaluator` with `Intl.Collator` in text activities.
 - Solved problems when rounding and ceiling integers in Arith.
-- Avoid calling `buildAccessibleElements` on null panels
+- Avoid calling `buildAccessibleElements` on null panels.
 
 ### v0.1.42 (2017-02-20)
 #### Miscellaneous
@@ -300,7 +307,7 @@
 - Explicit loading of fonts included in JClic projects. The `name` attribute of media elements is now used as `font-family` value.
 
 #### Bug fixes
-- Resolve dependencies and browserless issues affecting `listProjectContents.js` (in `test/nodejs`)
+- Resolve dependencies and browserless issues affecting `listProjectContents.js` (in `test/nodejs`).
 
 #### Miscellaneous
 - Specific developer's settings for [VS-Code](https://code.visualstudio.com/), besides [NetBeans IDE](https://netbeans.org/).
@@ -308,8 +315,8 @@
 
 ### v0.1.40 (2016-11-23)
 #### Bug fixes
-- Don't stop media on mouseup events
-- Play sounds also in grid B, when available
+- Don't stop media on mouseup events.
+- Play sounds also in grid B, when available.
 
 ### v0.1.39 (2016-11-11)
 #### Improvements
@@ -322,49 +329,49 @@
 - Ignore mouse events on accessible components.
 
 ### Improvements
-- Added Japanese to the list of supported languages (thanks to Naofumi!)
-- Improved log system
+- Added Japanese to the list of supported languages (thanks to Naofumi!).
+- Improved log system.
 
 ### v0.1.37 (2016-10-05)
 #### Bug fixes
-- Fixed incorrect calculation of score in __Identify__ activities
+- Fixed incorrect calculation of score in __Identify__ activities.
 
 #### Improvements
-- Improved accessibility based on [WAI-ARIA](https://en.wikipedia.org/wiki/WAI-ARIA) specifications (still in progress)
-- Experimental use of [HTML canvas hit regions](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility). In order to use it, flags `ExperimentalCanvasFeatures` (Chrome) or `canvas.hitregions.enabled` (Firefox) must be enabled. Checked with [ChromeVox](http://www.chromevox.com/)
+- Improved accessibility based on [WAI-ARIA](https://en.wikipedia.org/wiki/WAI-ARIA) specifications (still in progress).
+- Experimental use of [HTML canvas hit regions](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility). In order to use it, flags `ExperimentalCanvasFeatures` (Chrome) or `canvas.hitregions.enabled` (Firefox) must be enabled. Checked with [ChromeVox](http://www.chromevox.com/).
 
 #### Code cleaning and documentation
-- Miscellaneous optimizations: conditional operators, jQuery expressions, allow reuse of JClicPlayer objects, etc. See git log for details
+- Miscellaneous optimizations: conditional operators, jQuery expressions, allow reuse of JClicPlayer objects, etc. See git log for details.
 
 ### v0.1.36 (2016-09-19)
 #### Bug fixes
-- "Full screen" mode should work now as expected (when available)
-- Avoid resizing of BoxBase prototype font attribute
+- "Full screen" mode should work now as expected (when available).
+- Avoid resizing of BoxBase prototype font attribute.
 
 #### Improvements
-- Project license changed to EUPL-1.1 (compatible with GPL-2.0)
+- Project license changed to EUPL-1.1 (compatible with GPL-2.0).
 
 ### v0.1.35 (2016-09-05)
 #### Bug fixes
 - Avoid "same-origin" policy exception when initializing SCORM from an embedded iFrame.
 
 #### Improvements
-- JClic.js can now directly open `project.json` files generated by [JClic Author](https://github.com/projectestac/jclic/releases)
+- JClic.js can now directly open `project.json` files generated by [JClic Author](https://github.com/projectestac/jclic/releases).
 
 ### v0.1.34 (2016-09-02)
 #### Bug fixes
-- Merge styles with its base style (when defined) in `TextActivityDocument`
-- Allow HTML text in `ActiveBox` cells
+- Merge styles with its base style (when defined) in `TextActivityDocument`.
+- Allow HTML text in `ActiveBox` cells.
 - Workaround for an [Edge/Explorer SVG bug](https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8479637/) in 'close' button.
 - Add `-webkit-flex-xxx` CSS properties for Safari 8 compatibility.
 
 #### Improvements
-- Now JClic.js opens the new `.scorm.zip` files generated by [JClic Author 0.3.2.0](https://github.com/projectestac/jclic/releases)
-- More strict settings when checking code with [JSHint](http://jshint.com/)
+- Now JClic.js opens the new `.scorm.zip` files generated by [JClic Author 0.3.2.0](https://github.com/projectestac/jclic/releases).
+- More strict settings when checking code with [JSHint](http://jshint.com/).
 
 ### v0.1.31 (2016-07-20)
 #### Bug fixes
-- Apply `JClicPlayer.defaultSkin` only when `JClicProject.skin` is not specified
+- Apply `JClicPlayer.defaultSkin` only when `JClicProject.skin` is not specified.
 
 #### Improvements
 - Implemented support for SCORM 1.2 and SCORM 2004. Now JClic reports global score and session time when a SCORM API is detected.
@@ -373,252 +380,229 @@
 
 ### v0.1.30 (2016-07-11)
 #### Improvements
-- Skin and player windows fully styled with CSS
-- Updated skin names. Expressions like '@___.xml' are no longer needed (but still supported)
-- Added a `reset` method to `JClicPlayer`
+- Skin and player windows fully styled with CSS.
+- Updated skin names. Expressions like '@___.xml' are no longer needed (but still supported).
+- Added a `reset` method to `JClicPlayer`.
 
 #### Bug fixes
-- Set color and size for _close_ icon
+- Set color and size for _close_ icon.
 
 ### v0.1.29 (2016-07-05)
 #### Improvements
-- Waiting image changed from SVG animation (deprecated) to CSS keyframes
-- Skin support implemented with (almost) pure CSS
-- Implemented support for stock skins (_standard_, _orange_, _blue_, _green_, _simple_ and _mini_)
-- Created `loadProject` function in the global `JClicObject`, thus allowing the creation of JClic players from other scripts
-- Allow JClic.js to be used as a [Node.js](https://nodejs.org) module
-- Added example of Node.js usage in `test/nodejs`
+- Waiting image changed from SVG animation (deprecated) to CSS keyframes.
+- Skin support implemented with (almost) pure CSS.
+- Implemented support for stock skins (_standard_, _orange_, _blue_, _green_, _simple_ and _mini_).
+- Created `loadProject` function in the global `JClicObject`, thus allowing the creation of JClic players from other scripts.
+- Allow JClic.js to be used as a [Node.js](https://nodejs.org) module.
+- Added example of Node.js usage in `test/nodejs`.
 
 ### v0.1.28 (2016-06-22)
 #### Improvements
-- New class `TCPReporter` allows now to connect with external services like [JClic Reports](http://clic.xtec.cat/en/jclic/reports/index.htm) and [JClic module for Moodle](https://moodle.org/plugins/view.php?id=305)
+- New class `TCPReporter` allows now to connect with external services like [JClic Reports](http://clic.xtec.cat/en/jclic/reports/index.htm) and [JClic module for Moodle](https://moodle.org/plugins/view.php?id=305).
 - i18n: New messages waiting for translation in [Transifex](https://www.transifex.com/francesc/jclicjs/). Contributions welcome!
-- Upgrade to jQuery 3.0
+- Upgrade to jQuery 3.0.
 - Improved user interface in reports.
-- Implemented `Skin.showDlg`
+- Implemented `Skin.showDlg`.
 
 #### Bug fixes
-- Use a `try` clause for `canvas.drawImage` to catch exceptions caused by `HTMLImageElement` objects in broken state
+- Use a `try` clause for `canvas.drawImage` to catch exceptions caused by `HTMLImageElement` objects in broken state.
 
 #### Code cleaning and documentation
-- Updated documentation and code comments
-- Unified `this` syntax in closures
-- Added a [Gitter](https://gitter.im) badge to README.md
-
----
+- Updated documentation and code comments.
+- Unified `this` syntax in closures.
+- Added a [Gitter](https://gitter.im) badge to README.md.
 
 ### v0.1.27 (2016-06-03)
 #### Bug fixes
-- Set always base attributes when setting target style in text activities
+- Set always base attributes when setting target style in text activities.
 
 #### Improvements
 - i18n: Opened new project in [Transifex](https://www.transifex.com/francesc/jclicjs/messages/) to help translating messages to any language and locale. Initially filled with partial translations to `ar`, `ast`, `bs`, `ca`, `ca@valencia`, `cs`, `da`, `de`, `el`, `en`, `es`, `eu`, `fr`, `gl`, `he`, `it`, `nl`, `pt`, `pt_BR`, `ru`, `tr`, `vec` and `zh_TW` found on the main [JClic translation project](https://translations.launchpad.net/jclic).
 
----
-
 ### v0.1.25 (2016-05-30)
 #### Improvements
-- Multi-language support using gettext (.po and .pot) files stored in `/locales`
-
----
+- Multi-language support using gettext (.po and .pot) files stored in `/locales`.
 
 ### v0.1.24 (2016-05-25)
 #### Improvements
-- Improved UI in reports
-- Added _copy to clipboard_ and improved UI in reports
-- Optimized JQuery object builders
-- New counters (time, actions, score) and reports system
-
----
+- Improved UI in reports.
+- Added _copy to clipboard_ and improved UI in reports.
+- Optimized JQuery object builders.
+- New counters (time, actions, score) and reports system.
 
 ### v0.1.23 (2016-04-29)
 #### Improvements
-- Use of [Google WebFonts](https://fonts.google.com/), with parameterizable font substitution list
-- Automatic detection of animated GIFs
-- Upgrade to [JSZip](https://stuk.github.io/jszip/) 3.0
+- Use of [Google WebFonts](https://fonts.google.com/), with parameterizable font substitution list.
+- Automatic detection of animated GIFs.
+- Upgrade to [JSZip](https://stuk.github.io/jszip/) 3.0.
 
 #### Code cleaning and documentation
-- Suppressed 'test/lib' folder
-- Added some badges to `README.md`
-
----
+- Suppressed 'test/lib' folder.
+- Added some badges to `README.md`.
 
 ### v0.1.21 (2016-04-25)
 #### Improvements
 - Display animated GIFs out of canvas elements. Some complex paths will not be clipped, but native browser image animation is now used.
 
 #### Bug fixes
-- Adjust borders in `ActiveBox` hosted components
-- Partially reverted commit [ba5330da](https://github.com/projectestac/jclic.js/commit/ba5330da229625fdb5bc077bf4559873d4e55c76) that caused malfunctions in text activities
-- Hide `hostedComponent` when inactive
+- Adjust borders in `ActiveBox` hosted components.
+- Partially reverted commit [ba5330da](https://github.com/projectestac/jclic.js/commit/ba5330da229625fdb5bc077bf4559873d4e55c76) that caused malfunctions in text activities.
+- Hide `hostedComponent` when inactive.
 
 #### Code cleaning and documentation
-- Script for exporting README.md to an HTML snippet, useful to update index.html in https://projectestac.github.io/jclic.js
-- New CDN: JClic.js is now also available from [JSDelivr](http://www.jsdelivr.com/projects/jclic.js)
-- Ignore `src` in Bower package. Now with just `dist` files
-- Updated _readme_ and docs
-
----
+- Script for exporting README.md to an HTML snippet, useful to update index.html in https://projectestac.github.io/jclic.js.
+- New CDN: JClic.js is now also available from [JSDelivr](http://www.jsdelivr.com/projects/jclic.js).
+- Ignore `src` in Bower package. Now with just `dist` files.
+- Updated _readme_ and docs.
 
 ### v0.1.20 (2016-03-07)
 #### Improvements
-- Audio recording is now possible in JClic.js (browser permissions should be accepted on request)
-- Converted `wav` files to `mp3` in test activities
-- Optimized [hit test](https://en.wikipedia.org/wiki/Hit-testing) on Bezier curves, ellipses and complex paths
-- ~~Link event handlers to cells in text activities~~ (reverted by [180c684](https://github.com/projectestac/jclic.js/commit/180c68415518ba2f5809985cccd7bea041bb43c8))
+- Audio recording is now possible in JClic.js (browser permissions should be accepted on request).
+- Converted `wav` files to `mp3` in test activities.
+- Optimized [hit test](https://en.wikipedia.org/wiki/Hit-testing) on Bezier curves, ellipses and complex paths.
+- ~~Link event handlers to cells in text activities~~ (reverted by [180c684](https://github.com/projectestac/jclic.js/commit/180c68415518ba2f5809985cccd7bea041bb43c8)).
 
 #### Bug fixes
-- Solved bug in `MediaContent.isEquivalent`
-
----
+- Solved bug in `MediaContent.isEquivalent`.
 
 ### v0.1.19 (2016-02-25)
 #### Improvements
-- Implemented `ActivitySequence.checkCurrentActivity`
+- Implemented `ActivitySequence.checkCurrentActivity`.
 
 #### Code cleaning and documentation
-- Updated `npm` dependencies
+- Updated `npm` dependencies.
 
 #### Bug fixes
-- Solved error in `ActiveMediaPlayer.linkTo`
-
----
+- Solved error in `ActiveMediaPlayer.linkTo`.
 
 ### v0.1.18 (2016-02-11)
 #### Improvements
-- Play video and Flash objects
-- Optimized loading of audio
-- Add `onClick` event to `msgBox` and process media content in the same thread where user gesture event is generated
+- Play video and Flash objects.
+- Optimized loading of audio.
+- Add `onClick` event to `msgBox` and process media content in the same thread where user gesture event is generated.
 
 #### Bug fixes
-- Solved problems with `readyState` in media elements
-
----
+- Solved problems with `readyState` in media elements.
 
 ### v0.1.15 (2016-01-28)
 #### Improvements
-- "Check" button in text activities
-- `prevScreen` in text activities
+- "Check" button in text activities.
+- `prevScreen` in text activities.
 
 #### Bug fixes
-- Media content of type "URL" not working (fixes [Issue #1](https://github.com/projectestac/jclic.js/issues/1))
-- Corrected error in `EventSounds` inheritance
-
----
+- Media content of type "URL" not working (fixes [Issue #1](https://github.com/projectestac/jclic.js/issues/1)).
+- Corrected error in `EventSounds` inheritance.
 
 ### v0.1.12 (2016-01-21)
 #### Improvements
-- Use of event sounds
-- Updated base versions of `npm` packages
-- "Identify text" activities
-- "Complete text" activities
-- Draw connection lines in "order text" activities
-- Compute relative paths in `PlayerHistory`
-- Update `JClicPlayer` to support "file:" protocol
+- Use of event sounds.
+- Updated base versions of `npm` packages.
+- "Identify text" activities.
+- "Complete text" activities.
+- Draw connection lines in "order text" activities.
+- Compute relative paths in `PlayerHistory`.
+- Update `JClicPlayer` to support "file:" protocol.
 
 #### Bug fixes
-- Correct the calculation of `nShapes` in "Holes" shaper
-- Graphics workaround when working with local files
-
----
+- Correct the calculation of `nShapes` in "Holes" shaper.
+- Graphics workaround when working with local files.
 
 ### v0.1.11 (2015-12-03)
 #### Improvements
-- "order text" activities
-- Adjust automatic forwarding of activities
+- "order text" activities.
+- Adjust automatic forwarding of activities.
 
 #### Bug fixes
-- Avoid calls to nonexistent functions
+- Avoid calls to nonexistent functions.
 
 #### Code cleaning and documentation
-- Updated API docs
-- Normalize backslashes and avoid empty bags
-
----
+- Updated API docs.
+- Normalize backslashes and avoid empty bags.
 
 ### v0.1.7 (2015-10-25) and previous
 #### Improvements
-- Add 'close' button
-- Implemented `Skin.fit`
-- JClic exports now the global variable `JClicObject`
-- Use of `text()` instead of `html()` in text activities
-- Multiple JClic objects in same document
-- Prevent browser spell-check in text activities
-- Tabulators in text activities
-- Allow passing project and options through global variables
-- Support sequences with multiple chained ZIP files
-- Chained calls to `PlayerHistory` push & pop
-- Load `jclic.zip` files using [JSZip](https://stuk.github.io/jszip/)
-- `activityReady` method
-- "Fill-in blanks" text activities
-- Implemented `BasicEvaluator` and `ComplexEvaluator`
-- Moved `TextTarget` to `TextActivityDocument.js`
-- Implemented `TextTarget`
-- "Cross word" activities
-- Blink cursor and optimized shape clipping
-- Action status listeners
-- "Word search" activities
-- New runtime parameters: `autoFit`, `width` & `height`
-- Updated media icons
-- Activity panel fade-in
-- Full screen is now supported
-- "TextGrid" activities
-- Improved responsive design and passing of options
-- Seekable sounds
-- Improved waiting animation and activity borders
-- Form submit in "Written answer" activity
-- Support of touch devices
-- Added support to relative paths when loading projects
-- Added new test suite
-- "Written answer" activities
-- "Memory" activities
-- "Explore" activity
-- "Identify" activities
-- "Complex Association" activities
-- Improved `BoxConnector`
-- "Simple Association"
-- Implemented `AWT.Ellipse`
-- "Hole" puzzle activity
-- Adjust "Holes" shaper
-- "Exchange" puzzle
-- Created "Arith" (automatic content provider)
-- Implemented `BoxConnector`
-- Cell scrambling
-- Clipping of multiple images into a single canvas
-- "JigSaw" shapers
-- "Double" Puzzle
-- "Information Screen" activity
-- Implemented `ActiveBoxGrid`
-- Build `MediaContent`
-- Implemented `TextActivityBase`
-- Check CORS and HttpXMLRequest calls
-- Created `JClicPlayer`
-- Created `DefaultSkin`
+- Add 'close' button.
+- Implemented `Skin.fit`.
+- JClic exports now the global variable `JClicObject`.
+- Use of `text()` instead of `html()` in text activities.
+- Multiple JClic objects in same document.
+- Prevent browser spell-check in text activities.
+- Tabulators in text activities.
+- Allow passing project and options through global variables.
+- Support sequences with multiple chained ZIP files.
+- Chained calls to `PlayerHistory` push & pop.
+- Load `jclic.zip` files using [JSZip](https://stuk.github.io/jszip/).
+- `activityReady` method.
+- "Fill-in blanks" text activities.
+- Implemented `BasicEvaluator` and `ComplexEvaluator`.
+- Moved `TextTarget` to `TextActivityDocument.js`.
+- Implemented `TextTarget`.
+- "Cross word" activities.
+- Blink cursor and optimized shape clipping.
+- Action status listeners.
+- "Word search" activities.
+- New runtime parameters: `autoFit`, `width` & `height`.
+- Updated media icons.
+- Activity panel fade-in.
+- Full screen is now supported.
+- "TextGrid" activities.
+- Improved responsive design and passing of options.
+- Seekable sounds.
+- Improved waiting animation and activity borders.
+- Form submit in "Written answer" activity.
+- Support of touch devices.
+- Added support to relative paths when loading projects.
+- Added new test suite.
+- "Written answer" activities.
+- "Memory" activities.
+- "Explore" activity.
+- "Identify" activities.
+- "Complex Association" activities.
+- Improved `BoxConnector`.
+- "Simple Association".
+- Implemented `AWT.Ellipse`.
+- "Hole" puzzle activity.
+- Adjust "Holes" shaper.
+- "Exchange" puzzle.
+- Created "Arith" (automatic content provider).
+- Implemented `BoxConnector`.
+- Cell scrambling.
+- Clipping of multiple images into a single canvas.
+- "JigSaw" shapers.
+- "Double" Puzzle.
+- "Information Screen" activity.
+- Implemented `ActiveBoxGrid`.
+- Build `MediaContent`.
+- Implemented `TextActivityBase`.
+- Check CORS and HttpXMLRequest calls.
+- Created `JClicPlayer`.
+- Created `DefaultSkin`.
 
 #### Bug fixes
-- Solved invalid assignment of `nCols` and `nRows` in "Holes" shaper
-- Corrections in `PlayerHistory`
-- Force `hasRemainer` in `shapers.Holes` with `bgImg`
-- Avoid overlap of message boxes with transparent background
-- Avoid breaking lines in targets when CSS 'white-space' is set to 'pre-wrap' (only in Chrome)
-- Check origin 'pos' and 'dim' in ctx.drawImage (Firefox crashes when out-of-range)
-- Check for availability of `fullscreen.enabled` prior to use it
-- Solved problem with double events stopping media
-- Solved problem with bad content type in $get
-- Solved erroneous calculation of remainder shape
-- Solved problem with `id` on empty cells
-- Solved problems with parsing of shape data
-- Swap the loading of rows and columns in `ActiveBagContent` due to an old JClic bug
-- Solved problem with color gradients
-- Activity start procedure revised
+- Solved invalid assignment of `nCols` and `nRows` in "Holes" shaper.
+- Corrections in `PlayerHistory`.
+- Force `hasRemainer` in `shapers.Holes` with `bgImg`.
+- Avoid overlap of message boxes with transparent background.
+- Avoid breaking lines in targets when CSS 'white-space' is set to 'pre-wrap' (only in Chrome).
+- Check origin 'pos' and 'dim' in ctx.drawImage (Firefox crashes when out-of-range).
+- Check for availability of `fullscreen.enabled` prior to use it.
+- Solved problem with double events stopping media.
+- Solved problem with bad content type in $get.
+- Solved erroneous calculation of remainder shape.
+- Solved problem with `id` on empty cells.
+- Solved problems with parsing of shape data.
+- Swap the loading of rows and columns in `ActiveBagContent` due to an old JClic bug.
+- Solved problem with color gradients.
+- Activity start procedure revised.
 
 #### Code cleaning and documentation
-- Updated class skeleton
-- Generate just one source map with Browserify
-- Optimized build process
-- Updated 'license' tag in package.json ('licenses' was deprecated)
-- Updated npm module
-- Updated documentation and comments
-- Convert code comments to JSDoc format
-- Move static methods from prototype to constructor
-- Create scripts to convert svg and png files to inline data (in '/misc/scripts`)
+- Updated class skeleton.
+- Generate just one source map with Browserify.
+- Optimized build process.
+- Updated 'license' tag in package.json ('licenses' was deprecated).
+- Updated npm module.
+- Updated documentation and comments.
+- Convert code comments to JSDoc format.
+- Move static methods from prototype to constructor.
+- Create scripts to convert svg and png files to inline data (in '/misc/scripts`).
+

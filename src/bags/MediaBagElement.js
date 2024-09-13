@@ -32,9 +32,9 @@
 /* global URL, Uint8Array, XMLHttpRequest, Image, document */
 
 import $ from 'jquery';
-import MidiAudioPlayer from '../media/MidiAudioPlayer';
-import { log, settings, nSlash, getAttr, isEmpty, getPathPromise, parseXmlNode, appendStyleAtHead } from '../Utils';
-import { Font } from '../AWT';
+import MidiAudioPlayer from '../media/MidiAudioPlayer.js';
+import { log, settings, nSlash, getAttr, isEmpty, getPathPromise, parseXmlNode, appendStyleAtHead } from '../Utils.js';
+import { Font } from '../AWT.js';
 
 /**
  * This kind of objects are the components of {@link module:bags/MediaBag.MediaBag MediaBag}.

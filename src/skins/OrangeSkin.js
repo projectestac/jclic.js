@@ -29,8 +29,8 @@
  *  @module
  */
 
-import Skin from './Skin';
-import DefaultSkin from './DefaultSkin';
+import Skin from './Skin.js';
+import DefaultSkin from './DefaultSkin.js';
 
 /**
  * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js

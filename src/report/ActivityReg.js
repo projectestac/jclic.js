@@ -30,8 +30,8 @@
  */
 
 import $ from 'jquery';
-import { attrForEach, getBoolean } from '../Utils';
-import ActionReg from './ActionReg';
+import { attrForEach, getBoolean } from '../Utils.js';
+import ActionReg from './ActionReg.js';
 
 /**
  * This class stores miscellaneous data obtained by the current user playing an {@link module:Activity.Activity Activity}.

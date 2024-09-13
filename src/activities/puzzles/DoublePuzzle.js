@@ -30,12 +30,12 @@
  */
 
 import $ from 'jquery';
-import { Activity, ActivityPanel } from '../../Activity';
-import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
-import BoxBag from '../../boxes/BoxBag';
-import BoxConnector from '../../boxes/BoxConnector';
-import { Rectangle, Point } from '../../AWT';
-import { getMsg } from '../../Utils';
+import { Activity, ActivityPanel } from '../../Activity.js';
+import ActiveBoxGrid from '../../boxes/ActiveBoxGrid.js';
+import BoxBag from '../../boxes/BoxBag.js';
+import BoxConnector from '../../boxes/BoxConnector.js';
+import { Rectangle, Point } from '../../AWT.js';
+import { getMsg } from '../../Utils.js';
 
 /**
  * The aim of this class of {@link module:Activity.Activity Activity} is to put in order the shuffled elements of an

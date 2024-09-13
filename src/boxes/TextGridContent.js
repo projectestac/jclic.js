@@ -30,8 +30,8 @@
  */
 
 import $ from 'jquery';
-import { settings, attrForEach, getBoolean, getAttr, setAttr } from '../Utils';
-import BoxBase from './BoxBase';
+import { settings, attrForEach, getBoolean, getAttr, setAttr } from '../Utils.js';
+import BoxBase from './BoxBase.js';
 
 /**
  * This class encapsulates the content of {@link module:boxes/TextGrid.TextGrid TextGrid} objects.

@@ -32,7 +32,7 @@
 /* global navigator */
 
 import $ from 'jquery';
-import AudioBuffer from './AudioBuffer';
+import AudioBuffer from './AudioBuffer.js';
 
 /**
  * This kind of object encapsulates a realized {@link module:media/MediaContent.MediaContent} and provides methods to start,

@@ -30,9 +30,9 @@
  */
 
 import $ from 'jquery';
-import { Activity, ActivityPanel } from '../../Activity';
-import MediaContent from '../../media/MediaContent';
-import { log } from '../../Utils';
+import { Activity, ActivityPanel } from '../../Activity.js';
+import MediaContent from '../../media/MediaContent.js';
+import { log } from '../../Utils.js';
 
 // Use Webpack to import PNG files
 import ico00 from './icons/ico00.png';

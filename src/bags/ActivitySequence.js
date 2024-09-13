@@ -30,10 +30,10 @@
  */
 
 import $ from 'jquery';
-import JumpInfo from './JumpInfo';
-import ActivitySequenceElement from './ActivitySequenceElement';
-import ActivitySequenceJump from './ActivitySequenceJump';
-import { nSlash } from '../Utils';
+import JumpInfo from './JumpInfo.js';
+import ActivitySequenceElement from './ActivitySequenceElement.js';
+import ActivitySequenceJump from './ActivitySequenceJump.js';
+import { nSlash } from '../Utils.js';
 
 /**
  * This class stores the definition of the sequence to follow to show the activities of a

@@ -32,7 +32,7 @@
 /* global console, window */
 
 import $ from 'jquery';
-import { settings, findParentsWithChild, getBoolean, getAttr, setAttr, checkColor, colorHasTransparency, fx } from './Utils';
+import { settings, findParentsWithChild, getBoolean, getAttr, setAttr, checkColor, colorHasTransparency, fx } from './Utils.js';
 import WebFont from 'webfontloader';
 
 /**

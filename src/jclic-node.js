@@ -33,9 +33,9 @@
 import './init-jsdom.js';
 
 import $ from 'jquery';
-import JClicProject from './project/JClicProject';
-import Utils from './Utils';
-import Deps from './Deps';
+import JClicProject from './project/JClicProject.js';
+import Utils from './Utils.js';
+import Deps from './Deps.js';
 
 // Just export the JClic core modules, so they can be used in NodeJS
 export default ({

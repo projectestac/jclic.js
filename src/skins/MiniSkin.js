@@ -29,8 +29,8 @@
  *  @module
  */
 
-import Skin from './Skin';
-import DefaultSkin from './DefaultSkin';
+import Skin from './Skin.js';
+import DefaultSkin from './DefaultSkin.js';
 
 // Use Webpack to import CSS and SVG files
 import skinCSS from './assets/mini.css';

@@ -30,12 +30,12 @@
  */
 
 import $ from 'jquery';
-import { Activity, ActivityPanel } from '../../Activity';
-import ActiveBoxGrid from '../../boxes/ActiveBoxGrid';
-import BoxBag from '../../boxes/BoxBag';
-import { Rectangle, Point } from '../../AWT';
-import { compareMultipleOptions } from '../../Utils';
-import Rectangular from '../../shapers/Rectangular';
+import { Activity, ActivityPanel } from '../../Activity.js';
+import ActiveBoxGrid from '../../boxes/ActiveBoxGrid.js';
+import BoxBag from '../../boxes/BoxBag.js';
+import { Rectangle, Point } from '../../AWT.js';
+import { compareMultipleOptions } from '../../Utils.js';
+import Rectangular from '../../shapers/Rectangular.js';
 
 /**
  * This class of {@link module:Activity.Activity Activity} shows a panel with {@link module:boxes/ActiveBox.ActiveBox ActiveBox} objects acting as cells

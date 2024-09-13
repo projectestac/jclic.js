@@ -30,11 +30,11 @@
  */
 
 import $ from 'jquery';
-import BoxBase from './BoxBase';
-import ActiveBoxContent from './ActiveBoxContent';
-import Shaper from '../shapers/Shaper';
-import { Rectangle } from '../AWT';
-import { settings, attrForEach, nSlash, getBoolean, getAttr, setAttr } from '../Utils';
+import BoxBase from './BoxBase.js';
+import ActiveBoxContent from './ActiveBoxContent.js';
+import Shaper from '../shapers/Shaper.js';
+import { Rectangle } from '../AWT.js';
+import { settings, attrForEach, nSlash, getBoolean, getAttr, setAttr } from '../Utils.js';
 
 /**
  * This class packs a collection of {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects and provides methods to access

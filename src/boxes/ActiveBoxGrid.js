@@ -29,10 +29,10 @@
  *  @module
  */
 
-import ActiveBoxBag from './ActiveBoxBag';
-import ActiveBox from './ActiveBox';
-import { Rectangle, Dimension, Point } from '../AWT';
-import { settings, roundTo } from '../Utils';
+import ActiveBoxBag from './ActiveBoxBag.js';
+import ActiveBox from './ActiveBox.js';
+import { Rectangle, Dimension, Point } from '../AWT.js';
+import { settings, roundTo } from '../Utils.js';
 
 /**
  * This class extends {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} with constructors that take an argument of type

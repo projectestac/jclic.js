@@ -29,8 +29,8 @@
  *  @module
  */
 
-import Skin from './Skin';
-import ActiveBox from '../boxes/ActiveBox';
+import Skin from './Skin.js';
+import ActiveBox from '../boxes/ActiveBox.js';
 
 /**
  * A minimalist {@link module:skins/Skin.Skin Skin} for JClic.js with just the player, without messages, counters nor any button.

@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import { attrForEach, getBoolean } from '../Utils';
+import { attrForEach, getBoolean } from '../Utils.js';
 
 /**
  * This class stores information about one specific action done by the current user while playing

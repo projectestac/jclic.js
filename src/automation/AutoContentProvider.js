@@ -29,7 +29,7 @@
  *  @module
  */
 
-import {log, getAttr} from '../Utils';
+import {log, getAttr} from '../Utils.js';
 
 /**
  * This abstract class is the base for classes that create on-time automatic content for JClic

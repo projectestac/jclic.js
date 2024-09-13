@@ -29,8 +29,8 @@
  *  @module
  */
 
-import Skin from './Skin';
-import DefaultSkin from './DefaultSkin';
+import Skin from './Skin.js';
+import DefaultSkin from './DefaultSkin.js';
 
 /**
  * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js
@@ -40,7 +40,7 @@ import DefaultSkin from './DefaultSkin';
 export class GreenSkin extends DefaultSkin {
   /**
    * GreenSkin constructor
-   * 
+   *
    * @param {module:JClicPlayer.JClicPlayer} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
    * realize the media objects needed to build this Skin.
    * @param {string} [name] - The skin class name

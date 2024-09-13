@@ -31,9 +31,9 @@
 
 /* global Audio */
 
-import { startsWith, getTriState, getAttr, setAttr, DEFAULT } from '../Utils';
-import ActiveMediaPlayer from './ActiveMediaPlayer';
-import MediaContent from './MediaContent';
+import { startsWith, getTriState, getAttr, setAttr, DEFAULT } from '../Utils.js';
+import ActiveMediaPlayer from './ActiveMediaPlayer.js';
+import MediaContent from './MediaContent.js';
 
 /**
  * The EventSoundsElement object contains the description of a specific sound to be played when

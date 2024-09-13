@@ -29,8 +29,8 @@
  *  @module
  */
 
-import Activity from '../../Activity';
-import { TextActivityBase, TextActivityBasePanel } from './TextActivityBase';
+import Activity from '../../Activity.js';
+import { TextActivityBase, TextActivityBasePanel } from './TextActivityBase.js';
 
 /**
  * This type of text activity suggests users to complete a given text, without any help on where to

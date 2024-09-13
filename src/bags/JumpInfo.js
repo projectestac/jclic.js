@@ -29,7 +29,7 @@
  *  @module
  */
 
-import { nSlash, getAttr, isEmpty } from '../Utils';
+import { nSlash, getAttr, isEmpty } from '../Utils.js';
 
 /**
  * This class contains information about what things JClic sequence manager has to do in certain

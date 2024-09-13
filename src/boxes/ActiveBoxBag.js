@@ -30,8 +30,8 @@
  */
 
 import $ from 'jquery';
-import BoxBag from './BoxBag';
-import { Point } from '../AWT';
+import BoxBag from './BoxBag.js';
+import { Point } from '../AWT.js';
 
 /**
  * This class is a special case of {@link module:boxes/BoxBag.BoxBag BoxBag} containing only objects of type {@link module:boxes/ActiveBox.ActiveBox ActiveBox}.

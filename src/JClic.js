@@ -32,11 +32,11 @@
 /* global JClicDataProject, JClicDataOptions, window, document */
 
 import $ from 'jquery';
-import JClicPlayer from './JClicPlayer';
-import JClicProject from './project/JClicProject';
-import AWT from './AWT';
-import Utils, { init, log } from './Utils';
-import Deps from './Deps';
+import JClicPlayer from './JClicPlayer.js';
+import JClicProject from './project/JClicProject.js';
+import AWT from './AWT.js';
+import Utils, { init, log } from './Utils.js';
+import Deps from './Deps.js';
 
 /**
  * This is the main method of JClic

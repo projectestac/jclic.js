@@ -32,11 +32,11 @@
 /* global document */
 
 import $ from 'jquery';
-import AbstractBox from './AbstractBox';
-import ActiveBoxContent from './ActiveBoxContent';
-import ActiveBagContent from './ActiveBagContent';
-import { Rectangle, Point, Container } from '../AWT';
-import { settings, log, getMsg } from '../Utils';
+import AbstractBox from './AbstractBox.js';
+import ActiveBoxContent from './ActiveBoxContent.js';
+import ActiveBagContent from './ActiveBagContent.js';
+import { Rectangle, Point, Container } from '../AWT.js';
+import { settings, log, getMsg } from '../Utils.js';
 
 /**
  * Objects of this class are widely used in JClic activities: cells in puzzles and associations,

@@ -30,10 +30,10 @@
  */
 
 import $ from 'jquery';
-import Activity from '../../Activity';
-import { TextActivityBase, TextActivityBasePanel } from './TextActivityBase';
-import BoxConnector from '../../boxes/BoxConnector';
-import { Point } from '../../AWT';
+import Activity from '../../Activity.js';
+import { TextActivityBase, TextActivityBasePanel } from './TextActivityBase.js';
+import BoxConnector from '../../boxes/BoxConnector.js';
+import { Point } from '../../AWT.js';
 
 /**
  * In this type of text activity users must put in order some words or paragraphs that have been

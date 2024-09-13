@@ -32,7 +32,7 @@
 /* global window */
 
 import MidiPlayer from '@francesc/basic-midi-player-js';
-import { log } from '../Utils';
+import { log } from '../Utils.js';
 
 // TODO: Use multiple instruments, at least one for each track
 // TODO: Use multiple midi channels (currently flattened to a single channel)

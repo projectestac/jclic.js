@@ -1,17 +1,24 @@
 /* global module:true __dirname require */
 
-const TerserPlugin = require('terser-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
-const path = require('path');
-const pkg = require('./package.json');
-const buildLocales = require('./build-locales');
+import TerserPlugin from 'terser-webpack-plugin';
+import ESLintPlugin from 'eslint-webpack-plugin';
+import nodeExternals from 'webpack-node-externals';
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import buildLocales from './build-locales.mjs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 const date = new Date();
 const dist = path.resolve(__dirname, 'dist');
 
 buildLocales();
 
-const ESLintOptions = {};
+const ESLintOptions = {
+  configType: 'flat',
+  overrideConfigFile: './eslint.config.mjs',
+};
 
 const banner = `
 ${pkg.title} version ${pkg.version} (${date.toISOString().substring(0, 10)})
@@ -160,4 +167,5 @@ const nodeConfig = {
   ],
 };
 
-module.exports = [mainConfig, nodeConfig];
+export default [mainConfig, nodeConfig];
+

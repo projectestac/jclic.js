@@ -34,7 +34,7 @@
 import $ from 'jquery';
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
-import GlobalData from './GlobalData';
+import GlobalData from './GlobalData.js';
 
 /**
  * Exports third-party NPM packages used by JClic, so they become available to other scripts through

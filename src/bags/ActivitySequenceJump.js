@@ -30,9 +30,9 @@
  */
 
 import $ from 'jquery';
-import JumpInfo from './JumpInfo';
-import ConditionalJumpInfo from './ConditionalJumpInfo';
-import { getAttr } from '../Utils';
+import JumpInfo from './JumpInfo.js';
+import ConditionalJumpInfo from './ConditionalJumpInfo.js';
+import { getAttr } from '../Utils.js';
 
 /**
  * This is a special case of {@link module:bags/JumpInfo.JumpInfo JumpInfo}, used only in {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement} objects.

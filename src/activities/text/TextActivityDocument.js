@@ -30,9 +30,9 @@
  */
 
 import $ from 'jquery';
-import { log, attrForEach, checkColor, getBoolean, getAttr, setAttr, getVal, getNumber, settings } from '../../Utils';
-import ActiveBoxContent from '../../boxes/ActiveBoxContent';
-import MediaContent from '../../media/MediaContent';
+import { log, attrForEach, checkColor, getBoolean, getAttr, setAttr, getVal, getNumber, settings } from '../../Utils.js';
+import ActiveBoxContent from '../../boxes/ActiveBoxContent.js';
+import MediaContent from '../../media/MediaContent.js';
 
 /**
  * This is the HTML DOM element used in text activities like {@link module:activities/text/FillInBlanks.FillInBlanks FillInBlanks},

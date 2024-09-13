@@ -29,8 +29,8 @@
  *  @module
  */
 
-import ActiveMediaPlayer from './ActiveMediaPlayer';
-import { settings } from '../Utils';
+import ActiveMediaPlayer from './ActiveMediaPlayer.js';
+import { settings } from '../Utils.js';
 
 /**
  * This class stores a collection of realized {@link module:media/ActiveMediaPlayer.ActiveMediaPlayer ActiveMediaPlayer} objects, related to a

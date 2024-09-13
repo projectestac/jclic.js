@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 //
-// Lists the contents of a JClic project file (module version)
+// Lists the contents of a JClic project file (ECMAScript version)
 //
 // Usage:
 // node listProjectContents.mjs [filename]

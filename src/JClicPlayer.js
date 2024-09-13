@@ -34,17 +34,17 @@
 import $ from 'jquery';
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
-import { log, init, settings, getPath, endsWith, getBasePath, getRelativePath, isNullOrUndef, mReplace, toCssSize } from './Utils';
-import { Container, Point, Action, Timer, Rectangle } from './AWT';
-import PlayerHistory from './PlayerHistory';
-import ActiveMediaBag from './media/ActiveMediaBag';
-import Skin from './skins/Skin';
-import EventSounds from './media/EventSounds';
-import JClicProject from './project/JClicProject';
-import JumpInfo from './bags/JumpInfo';
-import ActiveBoxContent from './boxes/ActiveBoxContent';
-import Reporter from './report/Reporter';
-import MediaBagElement from './bags/MediaBagElement';
+import { log, init, settings, getPath, endsWith, getBasePath, getRelativePath, isNullOrUndef, mReplace, toCssSize } from './Utils.js';
+import { Container, Point, Action, Timer, Rectangle } from './AWT.js';
+import PlayerHistory from './PlayerHistory.js';
+import ActiveMediaBag from './media/ActiveMediaBag.js';
+import Skin from './skins/Skin.js';
+import EventSounds from './media/EventSounds.js';
+import JClicProject from './project/JClicProject.js';
+import JumpInfo from './bags/JumpInfo.js';
+import ActiveBoxContent from './boxes/ActiveBoxContent.js';
+import Reporter from './report/Reporter.js';
+import MediaBagElement from './bags/MediaBagElement.js';
 
 /**
  * JClicPlayer is one of the the main classes of the JClic system. It implements the

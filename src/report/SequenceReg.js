@@ -29,7 +29,7 @@
  *  @module
  */
 
-import ActivityReg from './ActivityReg';
+import ActivityReg from './ActivityReg.js';
 
 /**
  * This class stores the results of the activities related to an {@link module:bags/ActivitySequenceElement.ActivitySequenceElement ActivitySequenceElement}.

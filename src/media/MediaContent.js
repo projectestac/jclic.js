@@ -32,8 +32,8 @@
 /* global Image */
 
 import $ from 'jquery';
-import { Point } from '../AWT';
-import { nSlash, attrForEach, getBoolean, getAttr, setAttr, svgToURI } from '../Utils';
+import { Point } from '../AWT.js';
+import { nSlash, attrForEach, getBoolean, getAttr, setAttr, svgToURI } from '../Utils.js';
 
 import generic from './icons/generic.svg';
 import audio from './icons/audio.svg';

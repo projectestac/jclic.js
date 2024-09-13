@@ -30,8 +30,8 @@
  */
 
 import $ from 'jquery';
-import EventSoundsElement from './EventSoundsElement';
-import { getTriState, getAttr, setAttr, DEFAULT } from '../Utils';
+import EventSoundsElement from './EventSoundsElement.js';
+import { getTriState, getAttr, setAttr, DEFAULT } from '../Utils.js';
 
 // Use Webpack to import MP3 files
 import start from './sounds/start.mp3';

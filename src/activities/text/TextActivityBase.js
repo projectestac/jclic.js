@@ -32,10 +32,10 @@
 /* global window */
 
 import $ from 'jquery';
-import { stringToWords } from '../../Utils';
-import { Activity, ActivityPanel } from '../../Activity';
-import ActiveBox from '../../boxes/ActiveBox';
-import BoxBase from '../../boxes/BoxBase';
+import { stringToWords } from '../../Utils.js';
+import { Activity, ActivityPanel } from '../../Activity.js';
+import ActiveBox from '../../boxes/ActiveBox.js';
+import BoxBase from '../../boxes/BoxBase.js';
 
 /**
  * This class and its visual component {@link module:activities/text/TextActivityBase.TextActivityBasePanel TextActivityBasePanel} are the base for text

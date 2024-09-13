@@ -30,8 +30,8 @@
  */
 
 import $ from 'jquery';
-import { settings, attrForEach, getBoolean, checkColor, getAttr, setAttr, cloneObject, isSeparator } from '../Utils';
-import { Stroke, Gradient, Font, Dimension } from '../AWT';
+import { settings, attrForEach, getBoolean, checkColor, getAttr, setAttr, cloneObject, isSeparator } from '../Utils.js';
+import { Stroke, Gradient, Font, Dimension } from '../AWT.js';
 
 const defaultValues = settings.BoxBase;
 

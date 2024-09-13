@@ -29,7 +29,7 @@
  *  @module
  */
 
-import SequenceReg from './SequenceReg';
+import SequenceReg from './SequenceReg.js';
 
 /**
  * This class encapsulates data of a user's working session, usually associated to a single {@link module:project/JClicProject.JClicProject JClicProject}

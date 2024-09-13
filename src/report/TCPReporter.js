@@ -32,8 +32,8 @@
 /* global Promise, document, window, XMLSerializer */
 
 import $ from 'jquery';
-import Reporter from './Reporter';
-import { log, startsWith, getMsg } from '../Utils';
+import Reporter from './Reporter.js';
+import { log, startsWith, getMsg } from '../Utils.js';
 
 /**
  * This special case of {@link module:Reporter.Reporter Reporter} connects with an external service reporter providing

@@ -5,16 +5,17 @@
  */
 
 /* global require, console, module:true */
-const fs = require('fs');
-const path = require('path');
-const po2json = require('po2json');
-const pkg = require('./package.json');
+import fs from 'fs';
+import path from 'path';
+import po2json from 'po2json';
+import { fileURLToPath } from 'url';
 
+const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 const _LOCALES = path.resolve('locales');
 const _GLOBALDATA = path.resolve('src', 'GlobalData.js');
 
 // Check if GlobalData.js doesn't exist or is older than any of the `po` files in `locales`
-const newerData = function (locales = _LOCALES, fileName = _GLOBALDATA) {
+function newerData(locales = _LOCALES, fileName = _GLOBALDATA) {
   if (!fs.existsSync(fileName))
     return true;
   const gTime = fs.statSync(fileName).ctimeMs;
@@ -23,8 +24,7 @@ const newerData = function (locales = _LOCALES, fileName = _GLOBALDATA) {
 };
 
 // Compiles all 'po' language files in ./locales, returning the resulting options object
-const getData = function (locales = _LOCALES, verbose = true) {
-
+export function getData(locales = _LOCALES, verbose = true) {
   // Initialize the options object
   const opt = {
     version: `${pkg.version} (${(new Date()).toISOString().substring(0, 10)})`,
@@ -54,7 +54,7 @@ const getData = function (locales = _LOCALES, verbose = true) {
 };
 
 // Generates the AMD module `GlobalData.js`, containing a single call to `define` with the content of `opt`
-const writeDataToJSFile = function (opt, file = _GLOBALDATA, verbose = true) {
+export function writeDataToJSFile(opt, file = _GLOBALDATA, verbose = true) {
   if (verbose)
     console.log(`Generating file ${file}`);
 
@@ -69,16 +69,14 @@ export default ${JSON.stringify(opt)};`);
   }
 };
 
-module.exports = function (locales = _LOCALES, file = _GLOBALDATA, verbose = true) {
+export default function buildLocales(locales = _LOCALES, file = _GLOBALDATA, verbose = true) {
   // Run only if newer data
   if (newerData(locales, file))
     writeDataToJSFile(getData(locales, verbose), file, verbose);
+  else
+    console.log('All language files are up to date');
 };
 
-module.exports.getData = getData;
-module.exports.writeDataToJSFile = writeDataToJSFile;
-
 // Allow direct call from nodejs CLI
-if (require.main == module)
-  module.exports();
-
+if (process.argv.length >= 2 && process.argv[1] === fileURLToPath(import.meta.url))
+  buildLocales();

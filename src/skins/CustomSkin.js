@@ -30,11 +30,11 @@
  */
 
 import $ from 'jquery';
-import Skin from './Skin';
-import Counter from './Counter';
-import { getMsg, checkColor, getImgClipUrl } from '../Utils';
-import { Rectangle } from '../AWT';
-import ActiveBox from '../boxes/ActiveBox';
+import Skin from './Skin.js';
+import Counter from './Counter.js';
+import { getMsg, checkColor, getImgClipUrl } from '../Utils.js';
+import { Rectangle } from '../AWT.js';
+import ActiveBox from '../boxes/ActiveBox.js';
 
 /**
  * Custom {@link module:skins/Skin.Skin Skin} for JClic.js, built assembling specific cuts of a canvas (usually a PNG file) defined in an XML file

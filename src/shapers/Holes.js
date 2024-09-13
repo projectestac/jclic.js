@@ -29,7 +29,7 @@
  *  @module
  */
 
-import Shaper from './Shaper';
+import Shaper from './Shaper.js';
 
 /**
  * This {@link module:shapers/Shaper.Shaper Shaper} consists of a set of arbitrary shapes placed over a main rectangle that

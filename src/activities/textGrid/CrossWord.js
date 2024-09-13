@@ -32,14 +32,14 @@
 /* global window */
 
 import $ from 'jquery';
-import { Activity, ActivityPanel } from '../../Activity';
-import BoxBase from '../../boxes/BoxBase';
-import BoxBag from '../../boxes/BoxBag';
-import TextGrid from '../../boxes/TextGrid';
-import AbstractBox from '../../boxes/AbstractBox';
-import ActiveBox from '../../boxes/ActiveBox';
-import { Rectangle, Point } from '../../AWT';
-import { settings, svgToURI } from '../../Utils';
+import { Activity, ActivityPanel } from '../../Activity.js';
+import BoxBase from '../../boxes/BoxBase.js';
+import BoxBag from '../../boxes/BoxBag.js';
+import TextGrid from '../../boxes/TextGrid.js';
+import AbstractBox from '../../boxes/AbstractBox.js';
+import ActiveBox from '../../boxes/ActiveBox.js';
+import { Rectangle, Point } from '../../AWT.js';
+import { settings, svgToURI } from '../../Utils.js';
 
 // Use Webpack to import SVG files
 import hIcon from './icons/hIcon.svg';

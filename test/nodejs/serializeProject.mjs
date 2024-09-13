@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 //
-// Dumps a JClic project in JSON format (module version)
+// Dumps a JClic project in JSON format (ECMAScript version)
 //
 // Usage:
 // node serializeProject.js [filename]

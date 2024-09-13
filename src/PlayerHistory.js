@@ -32,7 +32,7 @@
 /* global window */
 
 import $ from 'jquery';
-import { log, isEquivalent, getPath, isNullOrUndef } from './Utils';
+import { log, isEquivalent, getPath, isNullOrUndef } from './Utils.js';
 
 /**
  *

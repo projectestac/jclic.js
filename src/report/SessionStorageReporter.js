@@ -31,7 +31,7 @@
 
 /* global window */
 
-import Reporter from './Reporter';
+import Reporter from './Reporter.js';
 
 /**
  * This JClic {@link module:Reporter.Reporter Reporter} writes persistent data to the browser local session storage. It uses some of
@@ -69,7 +69,7 @@ export class SessionStorageReporter extends Reporter {
   }
 
   /**
-   * 
+   *
    * Saves the current report data to sessionStorage
    */
   saveCurrentReport() {
@@ -122,7 +122,7 @@ Object.assign(SessionStorageReporter.prototype, {
   descriptionDetail: '(browser session)',
   /**
    * Key used to save the report into sessionStorage
-   * @name module:report/SessionStorageReporter.SessionStorageReporter#key 
+   * @name module:report/SessionStorageReporter.SessionStorageReporter#key
    * @type {string} */
   key: null,
 });

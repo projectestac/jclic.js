@@ -32,10 +32,10 @@
 /* global Promise, window */
 
 import $ from 'jquery';
-import SessionReg from './SessionReg';
-import Encryption from './EncryptMin';
-import Scorm from './SCORM';
-import { log, getMsg, getVal } from '../Utils';
+import SessionReg from './SessionReg.js';
+import Encryption from './EncryptMin.js';
+import Scorm from './SCORM.js';
+import { log, getMsg, getVal } from '../Utils.js';
 
 /**
  * This class implements the basic operations related with the processing of times and scores

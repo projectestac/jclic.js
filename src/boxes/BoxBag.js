@@ -29,9 +29,9 @@
  *  @module
  */
 
-import AbstractBox from './AbstractBox';
-import { Rectangle, Dimension, Point } from '../AWT';
-import { settings } from '../Utils';
+import AbstractBox from './AbstractBox.js';
+import { Rectangle, Dimension, Point } from '../AWT.js';
+import { settings } from '../Utils.js';
 
 /**
  * BoxBag is a class derived from {@link module:boxes/AbstractBox.AbstractBox AbstractBox} that contains a collection of "boxes"

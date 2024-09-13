@@ -31,7 +31,7 @@
 
 /* global window */
 
-import { log, attrForEach, getBoolean, setAttr, getAttr } from '../../Utils';
+import { log, attrForEach, getBoolean, setAttr, getAttr } from '../../Utils.js';
 
 /**
  * This class and its derivatives {@link module:activities/text/Evaluator.BasicEvaluator BasicEvaluator} and

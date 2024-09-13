@@ -32,8 +32,8 @@
 /* global Promise, window, document, navigator, ClipboardItem, Blob */
 
 import $ from 'jquery';
-import { appendStyleAtHead, cloneObject, getMsg, setLogLevel, log, getRootHead, toCssSize, $HTML, getPercent, getHMStime, settings } from '../Utils';
-import { Container, Dimension, Rectangle } from '../AWT';
+import { appendStyleAtHead, cloneObject, getMsg, setLogLevel, log, getRootHead, toCssSize, $HTML, getPercent, getHMStime, settings } from '../Utils.js';
+import { Container, Dimension, Rectangle } from '../AWT.js';
 
 // Use Webpack to import CSS and SVG files
 import basicCSS from './assets/basic.css';
@@ -162,7 +162,7 @@ export class Skin extends Container {
           }))
         .append($('<span/>').html('JClic.js')))
       .append($('<p/>').css({ 'margin-top': 0, 'margin-left': '3.5em' })
-        .append($('<a/>', { href: 'http://clic.xtec.cat/repo/index.html?page=info' }).html('http://clic.xtec.cat'))
+        .append($('<a/>', { href: 'https://projectes.xtec.cat/clic/' }).html('https://projectes.xtec.cat/clic/'))
         .append($('<br>'))
         .append($('<span/>').html(`${getMsg('Version')} ${settings.VERSION}`)));
 

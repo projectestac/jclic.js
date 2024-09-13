@@ -29,8 +29,8 @@
  *  @module
  */
 
-import Shaper from './Shaper';
-import { Rectangle, Point, Dimension } from '../AWT';
+import Shaper from './Shaper.js';
+import { Rectangle, Point, Dimension } from '../AWT.js';
 
 /**
  *

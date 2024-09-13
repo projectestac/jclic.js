@@ -29,8 +29,8 @@
  *  @module
  */
 
-import JumpInfo from './JumpInfo';
-import { getAttr, isEmpty } from '../Utils';
+import JumpInfo from './JumpInfo.js';
+import { getAttr, isEmpty } from '../Utils.js';
 
 /**
  * This special case of {@link module:bags/JumpInfo.JumpInfo JumpInfo} is used in {@link module:bags/ActivitySequenceJump.ActivitySequenceJump ActivitySequenceJump} objects to decide

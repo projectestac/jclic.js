@@ -32,7 +32,7 @@
 /* global window */
 
 import $ from 'jquery';
-import { log } from '../Utils';
+import { log } from '../Utils.js';
 
 /**
  * This class detects if JClic.js is running in an SCORM environment and, if true,

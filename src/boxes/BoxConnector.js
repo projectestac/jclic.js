@@ -29,7 +29,7 @@
  *  @module
  */
 
-import { Point, Dimension, Rectangle } from '../AWT';
+import { Point, Dimension, Rectangle } from '../AWT.js';
 
 const DEFAULT_COMPOSITE_OP = 'source-over';
 

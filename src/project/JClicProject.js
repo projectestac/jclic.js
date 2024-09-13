@@ -30,12 +30,12 @@
  */
 
 import $ from 'jquery';
-import ProjectSettings from './ProjectSettings';
-import ActivitySequence from '../bags/ActivitySequence';
-import MediaBag from '../bags/MediaBag';
-import Activity from '../Activity';
-import { getBasePath, nSlash, getAttr, settings } from '../Utils';
-import { Font } from '../AWT';
+import ProjectSettings from './ProjectSettings.js';
+import ActivitySequence from '../bags/ActivitySequence.js';
+import MediaBag from '../bags/MediaBag.js';
+import Activity from '../Activity.js';
+import { getBasePath, nSlash, getAttr, settings } from '../Utils.js';
+import { Font } from '../AWT.js';
 
 /**
  *  JClicProject contains all the components of a JClic project: activities, sequences, media

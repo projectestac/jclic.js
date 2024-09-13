@@ -29,8 +29,8 @@
  *  @module
  */
 
-import { Rectangle, Point, Dimension, Stroke } from '../AWT';
-import BoxBase from './BoxBase';
+import { Rectangle, Point, Dimension, Stroke } from '../AWT.js';
+import BoxBase from './BoxBase.js';
 
 /**
  * This abstract class is the base for most graphic components of JClic. It describes an area
