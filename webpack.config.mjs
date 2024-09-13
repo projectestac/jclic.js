@@ -1,5 +1,3 @@
-/* global module:true __dirname require */
-
 import TerserPlugin from 'terser-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
