@@ -4,6 +4,7 @@
 - Set specific file extensions to diferentiate CommonJS (.cjs) and ECMAScript (.mjs) module formats.
 - Convert `webpack.config` and `build-locales` to ECMAScript module format.
 - Always use file extensions when importing sibling modules.
+- Export all JClic classes in the NPM package
 
 ### v2.1.18 (2024-09-13)
 #### Improvements
