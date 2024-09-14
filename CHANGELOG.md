@@ -1,18 +1,18 @@
-### v2.1.19 (Not yet released)
+### v2.1.19 (2024-09-14)
 #### Improvements
 - Upgrade ESLint to v9. Config file is now: `eslint.config.mjs`.
 - Set specific file extensions to diferentiate CommonJS (.cjs) and ECMAScript (.mjs) module formats.
 - Convert `webpack.config` and `build-locales` to ECMAScript module format.
 - Always use file extensions when importing sibling modules.
 
-### v2.1.18 (2024-08-13)
+### v2.1.18 (2024-09-13)
 #### Improvements
 - Simplified the initialization and loading of jclic.js as an NPM package.
 - Allowed jclic.js to be loaded as an ES6 module from NodeJS.
 - Upgraded tests for NodeJS.
 - Upgraded dependencies.
 
-### v2.1.17 (2024-08-12)
+### v2.1.17 (2024-09-12)
 #### Improvements
 - Removed dependency of 'clipboard-polyfill'. The clipboard API is now supported in all browsers.
 - Reincorporation of `webpack-node-externals`, which is used when building the nodeJS package.
