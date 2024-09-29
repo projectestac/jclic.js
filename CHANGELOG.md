@@ -1,7 +1,12 @@
+### v2.1.20 (2024-09-24)
+#### Bug fixes
+- Upgrade dependencies
+- Move `xmldom` and `jsdom` to *Dependencies* in `package.json` (they are no longer *devDependencies*)
+
 ### v2.1.19 (2024-09-14)
 #### Improvements
 - Upgrade ESLint to v9. Config file is now: `eslint.config.mjs`.
-- Set specific file extensions to diferentiate CommonJS (.cjs) and ECMAScript (.mjs) module formats.
+- Set specific file extensions to differentiate CommonJS (.cjs) and ECMAScript (.mjs) module formats.
 - Convert `webpack.config` and `build-locales` to ECMAScript module format.
 - Always use file extensions when importing sibling modules.
 - Export all JClic classes in the NPM package
