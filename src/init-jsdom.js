@@ -29,7 +29,7 @@
  *  @module
  */
 
-/* global global */
+/* global global, globalThis */
 
 /**
  * Initializes some global variables needed for JClic in order to be used in nodeJS
@@ -38,14 +38,28 @@
 import jsdom from 'jsdom';
 import { DOMParser } from '@xmldom/xmldom';
 
+// Create a new DOM object
 const dom = new jsdom.JSDOM('<!DOCTYPE html><head></head><body></body>', { url: 'https://example.com' });
-global.window = dom.window;
-global.document = dom.window.document;
-global.navigator = dom.window.navigator;
-global.Image = dom.window.Image;
-global.Audio = dom.window.Audio;
-global.XMLHttpRequest = dom.window.XMLHttpRequest;
-global.DOMParser = DOMParser;
+
+// `global` is a legacy object in NodeJS 22 and will be replaced soon by `globalThis`
+// Also, provide a fallback empty object in case of no `global` object at all (should not occur!)
+const globalObject = globalThis || global || {};
+
+// Assign global variables, only if not already assigned
+if (!globalObject.window)
+  globalObject.window = dom.window;
+if (!globalObject.document)
+  globalObject.document = dom.window.document;
+if (!globalObject.navigator)
+  globalObject.navigator = dom.window.navigator;
+if (!globalObject.Image)
+  globalObject.Image = dom.window.Image;
+if (!globalObject.Audio)
+  globalObject.Audio = dom.window.Audio;
+if (!globalObject.XMLHttpRequest)
+  globalObject.XMLHttpRequest = dom.window.XMLHttpRequest;
+if (!globalObject.DOMParser)
+  globalObject.DOMParser = DOMParser;
 
 // This is just a side-effect module
 export default {};

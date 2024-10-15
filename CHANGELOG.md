@@ -1,15 +1,22 @@
+### v2.1.21 (2024-10-15)
+#### Improvements
+- Upgraded dependencies
+#### Bug fixes
+- NODE: Use `globalThis` instead of `global` (legacy in NodeJS 22) if available
+- NODE: Avoid overwrite `global.naviogator` and other new global objects in NodeJS 22
+
 ### v2.1.20 (2024-09-24)
 #### Bug fixes
-- Upgrade dependencies
-- Move `xmldom` and `jsdom` to *Dependencies* in `package.json` (they are no longer *devDependencies*)
+- Upgraded dependencies
+- Moved `xmldom` and `jsdom` to *Dependencies* in `package.json` (they are no longer *devDependencies*)
 
 ### v2.1.19 (2024-09-14)
 #### Improvements
-- Upgrade ESLint to v9. Config file is now: `eslint.config.mjs`.
-- Set specific file extensions to differentiate CommonJS (.cjs) and ECMAScript (.mjs) module formats.
-- Convert `webpack.config` and `build-locales` to ECMAScript module format.
+- Upgraded ESLint to v9. Config file is now: `eslint.config.mjs`.
+- Use specific file extensions to differentiate CommonJS (.cjs) and ECMAScript (.mjs) module formats.
+- Converted `webpack.config` and `build-locales` to ECMAScript module format.
 - Always use file extensions when importing sibling modules.
-- Export all JClic classes in the NPM package
+- Exported all JClic classes in the NPM package
 
 ### v2.1.18 (2024-09-13)
 #### Improvements
