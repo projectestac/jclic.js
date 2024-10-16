@@ -1,3 +1,7 @@
+### v2.1.23 (Not yet released)
+#### Bug fixes
+- Corrected an npm warning in `package.json`
+
 ### v2.1.22 (2024-10-16)
 #### Bug fixes
 - Removed unnecessary files from `/build`, affecting the NPM package.
