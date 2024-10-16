@@ -2,8 +2,8 @@
 #### Improvements
 - Upgraded dependencies
 #### Bug fixes
-- NODE: Use `globalThis` instead of `global` (legacy in NodeJS 22) if available
-- NODE: Avoid overwrite `global.naviogator` and other new global objects in NodeJS 22
+- NODE: Use `globalThis` instead of `global` (legacy in NodeJS 22) if available.
+- NODE: Avoid overwrite `global.navigator` and other new global objects in NodeJS 22.
 
 ### v2.1.20 (2024-09-24)
 #### Bug fixes
