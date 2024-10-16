@@ -1,3 +1,7 @@
+### v2.1.22 (2024-10-16)
+#### Bug fixes
+- Removed unnecessary files from `/build`, affecting the NPM package.
+
 ### v2.1.21 (2024-10-15)
 #### Improvements
 - Upgraded dependencies
