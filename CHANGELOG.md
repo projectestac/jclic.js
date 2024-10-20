@@ -4,6 +4,7 @@
 #### Bug fixes
 - Corrected an NPM warning in `package.json`
 - Corrected error parsing undefined `mediaBag` attribute in JSON files.
+- Always encode text-based [data URLs](https://developer.mozilla.org/en-US/docs/Web/URI/Schemes/data).
 
 ### v2.1.22 (2024-10-16)
 #### Bug fixes

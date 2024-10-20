@@ -541,7 +541,7 @@ export class JClicPlayer extends Container {
           const fName = getRelativePath(fp, this.zip.zipBasePath);
           if (this.zip.files[fName]) {
             this.zip.file(fName).async('string').then(text => {
-              processProjectFile(`data:${fName.endsWith('.jclic') ? 'text/xml' : 'application/json'};charset=UTF-8,${text}`);
+              processProjectFile(`data:${fName.endsWith('.jclic') ? 'text/xml' : 'application/json'};charset=UTF-8,${encodeURIComponent(text)}`);
             }).catch(reason => {
               log('error', `Unable to extract "${fName}" from ZIP file because of: ${reason ? reason.toString() : 'unknown reason'}`);
               this.setWaitCursor(false);
@@ -553,7 +553,7 @@ export class JClicPlayer extends Container {
         else if (this.localFS) {
           // Check if file is already loaded in the global variable `JClicObject`
           if (window.JClicObject && window.JClicObject.projectFiles[fullPath]) {
-            fp = `data:${fullPath.endsWith('.jclic') ? 'text/xml' : 'application/json'};charset=UTF-8,${window.JClicObject.projectFiles[fullPath]}`;
+            fp = `data:${fullPath.endsWith('.jclic') ? 'text/xml' : 'application/json'};charset=UTF-8,${encodeURIComponent(window.JClicObject.projectFiles[fullPath])}`;
           } else {
             log('error', `Unable to load: ${fullPath}.js`);
             this.setWaitCursor(false);
