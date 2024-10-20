@@ -1,6 +1,7 @@
 ### v2.1.23 (2024-10-20)
 #### Improvements
 - Upgraded dependencies
+- Add the `dist` folder to the webpack dev server static directory.
 #### Bug fixes
 - Corrected an NPM warning in `package.json`
 - Corrected error parsing undefined `mediaBag` attribute in JSON files.
