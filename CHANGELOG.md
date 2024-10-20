@@ -1,6 +1,9 @@
-### v2.1.23 (Not yet released)
+### v2.1.23 (2024-10-20)
+#### Improvements
+- Upgraded dependencies
 #### Bug fixes
-- Corrected an npm warning in `package.json`
+- Corrected an NPM warning in `package.json`
+- Corrected error parsing undefined `mediaBag` attribute in JSON files.
 
 ### v2.1.22 (2024-10-16)
 #### Bug fixes

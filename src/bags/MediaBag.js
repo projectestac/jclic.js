@@ -77,11 +77,12 @@ export class MediaBag {
    * @param {object} data - The data object to parse
    */
   setAttributes(data) {
-    data.forEach(el => {
-      const mbe = new MediaBagElement(this.project.basePath, null, this.project.zip);
-      mbe.setAttributes(el);
-      this.elements[mbe.name] = mbe;
-    });
+    if (data && data.length)
+      data.forEach(el => {
+        const mbe = new MediaBagElement(this.project.basePath, null, this.project.zip);
+        mbe.setAttributes(el);
+        this.elements[mbe.name] = mbe;
+      });
     return this;
   }
 
