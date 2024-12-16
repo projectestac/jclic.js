@@ -1,3 +1,7 @@
+### v2.1.24 (not yet released)
+#### Improvements
+- Upgraded dependencies
+
 ### v2.1.23 (2024-10-20)
 #### Improvements
 - Upgraded dependencies
