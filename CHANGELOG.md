@@ -5,6 +5,7 @@
 - Added Ukranian translation, thanks to [Tymofii Lytvynenko](https://hosted.weblate.org/user/tymkolt/).
 - Added Croatian translation, thanks to [Milo Ivir](https://hosted.weblate.org/user/milotype/).
 - Added Norwegian Bokmål translation, thamks to [Allan Nordhøy](https://hosted.weblate.org/user/kingu/).
+- Updated Asturian translation, thanks to [Enol P.](https://hosted.weblate.org/user/enolp/).
 
 ### v2.1.23 (2024-10-20)
 #### Improvements
