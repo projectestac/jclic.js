@@ -1,10 +1,10 @@
 ### v2.1.24 (not yet released)
 #### Improvements
-- Upgraded dependencies
+- Updated peer dependencies
 
 ### v2.1.23 (2024-10-20)
 #### Improvements
-- Upgraded dependencies
+- Updated peer dependencies
 - Add the `dist` folder to the webpack dev server static directory.
 #### Bug fixes
 - Corrected an NPM warning in `package.json`
@@ -17,19 +17,19 @@
 
 ### v2.1.21 (2024-10-15)
 #### Improvements
-- Upgraded dependencies
+- Updated peer dependencies
 #### Bug fixes
 - NODE: Use `globalThis` instead of `global` (legacy in NodeJS 22) if available.
 - NODE: Avoid overwrite `global.navigator` and other new global objects in NodeJS 22.
 
 ### v2.1.20 (2024-09-24)
 #### Bug fixes
-- Upgraded dependencies
+- Updated peer dependencies
 - Moved `xmldom` and `jsdom` to *Dependencies* in `package.json` (they are no longer *devDependencies*)
 
 ### v2.1.19 (2024-09-14)
 #### Improvements
-- Upgraded ESLint to v9. Config file is now: `eslint.config.mjs`.
+- Updated ESLint to v9. Config file is now: `eslint.config.mjs`.
 - Use specific file extensions to differentiate CommonJS (.cjs) and ECMAScript (.mjs) module formats.
 - Converted `webpack.config` and `build-locales` to ECMAScript module format.
 - Always use file extensions when importing sibling modules.
@@ -39,46 +39,46 @@
 #### Improvements
 - Simplified the initialization and loading of jclic.js as an NPM package.
 - Allowed jclic.js to be loaded as an ES6 module from NodeJS.
-- Upgraded tests for NodeJS.
-- Upgraded dependencies.
+- Updated tests for NodeJS.
+- Updated peer dependencies.
 
 ### v2.1.17 (2024-09-12)
 #### Improvements
 - Removed dependency of 'clipboard-polyfill'. The clipboard API is now supported in all browsers.
 - Reincorporation of `webpack-node-externals`, which is used when building the nodeJS package.
-- Upgraded dependencies.
+- Updated peer dependencies.
 
 ### v2.1.16 (2023-12-12)
 #### Improvements
-- Upgraded dependencies..
+- Updated peer dependencies.
 #### Bug fixes
 - Uninstall `webpack-node-externals` due to an incompatibility with `clipboard-polyfill` version 4.
 - Avoid font checking when running on NodeJS due to an error of [JSDOM](https://github.com/jsdom/jsdom) with [jQuery](https://jquery.com/) XML node trees.
 
 ### v2.1.15 (2023-09-26)
 #### Improvements
-- Upgraded dependencies.
+- Updated peer dependencies.
 
 ### v2.1.14 (2023-09-16)
 #### Improvements
-- Upgraded dependencies.
+- Updated peer dependencies.
 #### Bug fixes
 - Replace calls to `substr` (deprecated) by `substring`.
 
 ### v2.1.13 (2023-07-11)
 #### Improvements
-- Upgraded dependencies.
+- Updated peer dependencies.
 - Use [clean-jsdoc-theme](https://ankdev.me/clean-jsdoc-theme/v4/index.html) instead of the outdated [ink-docstrap](https://www.npmjs.com/package/ink-docstrap) theme to generate the [technical documentation](http://projectestac.github.io/jclic.js/doc/index.html) with [JSDoc](https://jsdoc.app/).
 
 ### v2.1.12 (2022-11-26)
 #### Improvements
-- Upgraded dependencies.
+- Updated peer dependencies.
 - Remove unnecessary dependencies: `scriptjs`.
 - Improve graphics performance setting [willReadFrequently](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext#willreadfrequently) to `true` when acquiring [CanvasRenderingContext2D](https://html.spec.whatwg.org/multipage/canvas.html#canvasrenderingcontext2d) in activities using [BoxConnector](https://github.com/projectestac/jclic.js/blob/master/src/boxes/BoxConnector.js).
 
 ### v2.1.11 (2022-08-04)
 #### Improvements
-- Upgraded dependencies.
+- Updated peer dependencies.
 - Detect swipe gestures on touch devices to go back or forward in the sequence of activities.
 - Toggle full screen with "double touch" gesture.
 
@@ -88,13 +88,13 @@
 
 ### v2.1.9 (2022-02-26)
 #### Improvements
-- Upgraded dependencies.
+- Updated peer dependencies.
 #### Bug fixes
 - Calling `patch-package` in `postinst` does not work with the NPM package. Moved to `prebuild`.
 
 ### v2.1.8 (2022-01-07)
 #### Improvements
-- Upgraded dependencies.
+- Updated peer dependencies.
 - Allow "inverse resolution" in word search activities: clues are initially shown, and gradually hidden when the user identifies them.
 
 #### Bug fixes
@@ -102,7 +102,7 @@
 
 ### v2.1.7 (2022-01-24)
 #### Improvements
-- Upgraded dependencies.
+- Updated peer dependencies.
 - Use [ink-docstrap-template](https://www.npmjs.com/package/ink-docstrap-template) instead [ink-docstrap](https://www.npmjs.com/package/ink-docstrap) to deal with updated components, thus avoiding security warnings.
 - Direct use of [jsdom](https://www.npmjs.com/package/jsdom) instead of [mock-browser](https://www.npmjs.com/package/mock-browser) (outdated) in `test/nodejs`, to avoid security warnings.
 
@@ -111,7 +111,7 @@
 
 ### v2.1.5 (2021-11-07)
 #### Improvements
-- Upgraded dependencies.
+- Updated peer dependencies.
 
 #### Bug fixes
 - Avoid bad URLs in local files when running on NodeJS with JSDOM.
@@ -127,7 +127,7 @@
 ### v2.1.2 (2021-06-10)
 #### Improvements
 - Added Romanian translation, thanks to Studio Davis Tutoriale Programe.
-- Upgraded dependencies.
+- Updated peer dependencies.
 - Use real files instead of inline JS constants for CSS, SVG, PNG and MP3 assets. These files are finally codified and inlined by WebPack at compile time.
 
 ### v2.1.1 (2021-04-12)
@@ -166,7 +166,7 @@
 - Restored semicolons in all source files.
 - Deliverable files are now minimized with [Terser](https://github.com/terser/terser) intead of [Uglifyjs](https://github.com/mishoo/UglifyJS2).
 - Full screen mode now using direct calls to the [Full Screen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) instead of [screenfull](https://www.npmjs.com/package/screenfull).
-- Upgraded components.
+- Updated peer dependencies.
 - Max audio recording time increased to 180".
 - Provide visual feedback while recording audio.
 - Map JDK logical fonts ("Dialog", "Serif", etc.) to [HTML5 generic font family names](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family).
