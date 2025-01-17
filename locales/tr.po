@@ -5,15 +5,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JClic.js 0.1.25\n"
+"POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
+"PO-Revision-Date: 2019-05-09 01:48+0000\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/jclic/jclicjs/tr/"
+">\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
-"PO-Revision-Date: 2016-06-02 13:23+0200\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: Ahmet YAVUZ <Unknown>\n"
-"Language-Team: Turkish\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.7-dev\n"
 
 #: about_window_lb_version
 msgid "Version"
@@ -33,15 +35,15 @@ msgstr "sonuç"
 
 #: action_next_tooltip
 msgid "Next activity"
-msgstr "Bir sonraki etkinlik"
+msgstr "Sonraki etkinlik"
 
 #: action_prev_tooltip
 msgid "Previous activity"
-msgstr "Bir önceki etkinlik"
+msgstr "Önceki etkinlik"
 
 #: action_reset_tooltip
 msgid "Restart activity"
-msgstr "Etkinliği tekrar başlat"
+msgstr "Etkinliği yeniden başlat"
 
 #: action_info_caption
 msgid "Information"
@@ -49,19 +51,19 @@ msgstr "Bilgi"
 
 #: report_system_standard
 msgid "Results are not currently being saved"
-msgstr "Rapor herhangi bir veritabanında kaydedilmedi"
+msgstr "Sonuçlar şu anda kaydedilmiyor"
 
 #: action_about_tooltip
 msgid "Current results"
-msgstr "Kullanıcı raporları"
+msgstr "Geçerli sonuçlar"
 
 #: report_started
 msgid "Session started:"
-msgstr "Oturum başlatıldı"
+msgstr "Oturum başlatıldı:"
 
 #: report_system
 msgid "Reports system:"
-msgstr "Sistem raporu:"
+msgstr "Sistem raporları:"
 
 #: report_user
 msgid "User:"
@@ -73,31 +75,31 @@ msgstr "Projeler:"
 
 #: report_num_sequences
 msgid "Sequences:"
-msgstr "Etkinlik dizisi"
+msgstr "Sekanslar:"
 
 #: report_num_activities
 msgid "Activities done:"
-msgstr "Etkinlikler başlatılıyor:"
+msgstr "Tamamlanan etkinlikler:"
 
 #: report_num_activities_solved
 msgid "Activities solved:"
-msgstr "Etkinlikler tamam:"
+msgstr "Çözülen etkinlikler:"
 
 #: report_global_score
 msgid "Global score:"
-msgstr "Genel sonuç:"
+msgstr "Genel puan:"
 
 #: report_total_time
 msgid "Total time in activities:"
-msgstr "Etkinlikde geçirilen toplam zaman:"
+msgstr "Toplam etkinlik süresi:"
 
 #: report_num_actions
 msgid "Actions done:"
-msgstr "Eylem gerçekleştiriliyor:"
+msgstr "Tamamlanan işlemler:"
 
 #: report_no_activities
 msgid "No activities done!"
-msgstr "Etkinlik raporu yok!"
+msgstr "Tamamlanan etkinlik yok!"
 
 #: report_project
 msgid "Project"
@@ -122,9 +124,8 @@ msgstr "Evet"
 
 # Value for 'OK' column
 msgid "NO"
-msgstr "hiçbir"
+msgstr "Hayır"
 
 #: report_lb_totals
 msgid "Total:"
 msgstr "Toplam:"
-

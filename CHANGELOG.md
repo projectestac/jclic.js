@@ -10,7 +10,8 @@
 - Updated French translation, thanks to [J. Lavoie](https://hosted.weblate.org/user/Edanas/) and [Nathan](https://hosted.weblate.org/user/NathanBnm/),
 - Updated Italian translation, thanks to [J. Lavoie](https://hosted.weblate.org/user/Edanas/).
 - Updated Japanese translation, thanks to [naofum](https://hosted.weblate.org/user/naofum/).
-- Updated Polish translation, thanks to [WaldiS](https://hosted.weblate.org/user/WaldiS/)
+- Updated Polish translation, thanks to [WaldiS](https://hosted.weblate.org/user/WaldiS/).
+- Updated Turkish translation, thanks to [Deleted](https://hosted.weblate.org/user/deleted-13144/).
 
 ### v2.1.23 (2024-10-20)
 #### Improvements
