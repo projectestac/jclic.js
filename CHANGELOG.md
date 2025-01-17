@@ -1,7 +1,8 @@
 ### v2.1.24 (not yet released)
 #### Improvements
 - Updated peer dependencies
-- Tamil translation added, thanks to [TamilNeram](https://hosted.weblate.org/user/TamilNeram/).
+- Added Tamil translation, thanks to [TamilNeram](https://hosted.weblate.org/user/TamilNeram/).
+- Added Ukranian translation, thanks to [Tymofii Lytvynenko](https://hosted.weblate.org/user/tymkolt/).
 
 ### v2.1.23 (2024-10-20)
 #### Improvements
