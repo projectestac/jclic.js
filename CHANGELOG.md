@@ -7,6 +7,7 @@
 - Added Norwegian Bokmål translation, thamks to [Allan Nordhøy](https://hosted.weblate.org/user/kingu/).
 - Updated Asturian translation, thanks to [Enol P.](https://hosted.weblate.org/user/enolp/).
 - Updated German translation, thanks to [J. Lavoie](https://hosted.weblate.org/user/Edanas/).
+- Updated French translation, thanks to [J. Lavoie](https://hosted.weblate.org/user/Edanas/) and [Nathan](https://hosted.weblate.org/user/NathanBnm/),
 
 ### v2.1.23 (2024-10-20)
 #### Improvements
