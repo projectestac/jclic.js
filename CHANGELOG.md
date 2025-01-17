@@ -9,6 +9,7 @@
 - Updated German translation, thanks to [J. Lavoie](https://hosted.weblate.org/user/Edanas/).
 - Updated French translation, thanks to [J. Lavoie](https://hosted.weblate.org/user/Edanas/) and [Nathan](https://hosted.weblate.org/user/NathanBnm/),
 - Updated Italian translation, thanks to [J. Lavoie](https://hosted.weblate.org/user/Edanas/).
+- Updated Japanese translation, thanks to [naofum](https://hosted.weblate.org/user/naofum/).
 
 ### v2.1.23 (2024-10-20)
 #### Improvements
