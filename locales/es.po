@@ -1,15 +1,15 @@
 # JClic.js
 # HTML5 player of [JClic](http://clic.xtec.cat) activities
 # https://github.com/projectestac/jclic.js
-# 
+#
 # Translators:
-# francesc <francesc@gmail.com>, 2016
+# francesc <francesc@gmail.com>, 2025
 msgid ""
 msgstr ""
-"Project-Id-Version: JClic.js\n"
+"Project-Id-Version: JClic.js 2.1.24\n"
 "POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
-"PO-Revision-Date: 2018-04-10 12:41+0000\n"
-"Last-Translator: Toni Estévez <toni.estevez@gmail.com>\n"
+"PO-Revision-Date: 2025-01-19T18:00:00.000Z\n"
+"Last-Translator: Francesc Busquets <francesc@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/jclic/jclicjs/es/"
 ">\n"
 "Language: es\n"
@@ -69,7 +69,7 @@ msgstr "Sistema de informes:"
 
 #: report_user
 msgid "User:"
-msgstr "Usuario/aria:"
+msgstr "Usuario:"
 
 #: report_num_projects
 msgid "Projects:"

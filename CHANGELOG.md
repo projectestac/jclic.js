@@ -1,4 +1,4 @@
-### v2.1.24 (not yet released)
+### v2.1.24 (2025-01-19)
 #### Improvements
 - Updated peer dependencies
 - Added Tamil translation, thanks to [TamilNeram](https://hosted.weblate.org/user/TamilNeram/).
