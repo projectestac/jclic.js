@@ -89,6 +89,12 @@ msgstr "Activités résolues :"
 msgid "Global score:"
 msgstr "Score global :"
 
+# Explanation of 'partial score'
+#, fuzzy
+#| msgid "(out of played activities)"
+msgid "(out of all project activities)"
+msgstr "(Hors activités jouées)"
+
 #: report_total_time
 msgid "Total time in activities:"
 msgstr "Temps total sur les activités :"

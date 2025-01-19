@@ -89,6 +89,11 @@ msgstr "Çözülen etkinlikler:"
 msgid "Global score:"
 msgstr "Genel puan:"
 
+#, fuzzy
+#| msgid "Total time in activities:"
+msgid "(out of all project activities)"
+msgstr "Toplam etkinlik süresi:"
+
 #: report_total_time
 msgid "Total time in activities:"
 msgstr "Toplam etkinlik süresi:"
@@ -129,3 +134,113 @@ msgstr "Hayır"
 #: report_lb_totals
 msgid "Total:"
 msgstr "Toplam:"
+
+# Select group for reports in a list
+msgid "Select group:"
+msgstr ""
+
+# Select user for reports in a list
+msgid "Select user:"
+msgstr ""
+
+# Cancel dialog
+msgid "Cancel"
+msgstr ""
+
+# Close dialog
+msgid "Close"
+msgstr ""
+
+# Caption for 'copy' button in reports dialog
+msgid "Copy data to clipboard"
+msgstr ""
+
+# Text shown when reports data is pasted in plain-text editors
+msgid ""
+"The data has been copied in HTML format. Please paste them into a "
+"spreadsheet or in a rich text editor"
+msgstr ""
+
+# Notification shown when reports data has been copied
+msgid "The data has been copied to clipboard"
+msgstr ""
+
+# Added to TCPReporter description when the connection to the remote server is unsuccessful
+msgid "not connected"
+msgstr ""
+
+# Message displayed when the user attempts to close the player with data
+# pending to be reported
+msgid ""
+"Please wait until the results of your activities are sent to the reports "
+"system"
+msgstr ""
+
+# Caption for password input
+msgid "Password:"
+msgstr ""
+
+# Error displayed when the provided password is incorrect
+msgid "Incorrect password"
+msgstr ""
+
+# Error displayed when the user ID does not exist
+msgid "Invalid user"
+msgstr ""
+
+#, fuzzy
+#| msgid "Global score:"
+msgid "Partial score:"
+msgstr "Genel puan:"
+
+# Explanation of 'partial score'
+msgid "(out of played activities)"
+msgstr ""
+
+#, fuzzy
+#| msgid "Activities done:"
+msgid "Activities played at least once:"
+msgstr "Tamamlanan etkinlikler:"
+
+#, fuzzy
+#| msgid "Reports system:"
+msgid "Reports"
+msgstr "Sistem raporları:"
+
+# Caption of the 'Full screen' button
+msgid "Toggle full screen"
+msgstr ""
+
+# Label for JClic logo, used in wai-aria contexts
+msgid "JClic logo"
+msgstr ""
+
+# Role of the main message box, used in wai-aria contexts
+msgid "message"
+msgstr ""
+
+#, fuzzy
+#| msgid "Activities done:"
+msgid "Activity panel"
+msgstr "Tamamlanan etkinlikler:"
+
+# Role of regular cells, used in wai-aria contexts
+msgid "cell"
+msgstr ""
+
+# Label for 'image', used in wai-aria contexts
+msgid "image"
+msgstr ""
+
+# Name of the group of 'source' cells in associations
+msgid "source"
+msgstr ""
+
+# Name of the group of 'target' cells in associations
+msgid "target"
+msgstr ""
+
+# Label used to describe generic shapes within images, used in accessibility
+# contexts
+msgid "image fragment"
+msgstr ""

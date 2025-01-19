@@ -155,7 +155,9 @@ msgid "Copy data to clipboard"
 msgstr "Kopier data til utklippstavle"
 
 # Text shown when reports data is pasted in plain-text editors
-msgid "The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor"
+msgid ""
+"The data has been copied in HTML format. Please paste them into a "
+"spreadsheet or in a rich text editor"
 msgstr ""
 "Dataen har blitt kopiert i HTML-format. Lim inn i et regneark eller en "
 "tekstbehandler med støtte for formatering"
@@ -169,7 +171,9 @@ msgid "not connected"
 msgstr "ikke tilkoblet"
 
 # Message displayed when the user attempts to close the player with data pending to be reported
-msgid "Please wait until the results of your activities are sent to the reports system"
+msgid ""
+"Please wait until the results of your activities are sent to the reports "
+"system"
 msgstr "Vent mens resultatet av dine aktiviteter sendes til rapportsystemet"
 
 # Caption for password input
@@ -195,3 +199,46 @@ msgstr "(av utførte aktiviteter)"
 # Number of project's activities played at least one time
 msgid "Activities played at least once:"
 msgstr "Aktiviteter som har blitt utført minst én gang:"
+
+#, fuzzy
+#| msgid "Reports system:"
+msgid "Reports"
+msgstr "Rapportsystem:"
+
+# Caption of the 'Full screen' button
+msgid "Toggle full screen"
+msgstr ""
+
+# Label for JClic logo, used in wai-aria contexts
+msgid "JClic logo"
+msgstr ""
+
+# Role of the main message box, used in wai-aria contexts
+msgid "message"
+msgstr ""
+
+#, fuzzy
+#| msgid "Activities done:"
+msgid "Activity panel"
+msgstr "Aktiviteter fullført:"
+
+# Role of regular cells, used in wai-aria contexts
+msgid "cell"
+msgstr ""
+
+# Label for 'image', used in wai-aria contexts
+msgid "image"
+msgstr ""
+
+# Name of the group of 'source' cells in associations
+msgid "source"
+msgstr ""
+
+# Name of the group of 'target' cells in associations
+msgid "target"
+msgstr ""
+
+# Label used to describe generic shapes within images, used in accessibility
+# contexts
+msgid "image fragment"
+msgstr ""

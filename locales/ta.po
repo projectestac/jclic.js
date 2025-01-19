@@ -8,8 +8,8 @@ msgstr ""
 "POT-Creation-Date: 2016-05-27T13:02:19.362Z\n"
 "PO-Revision-Date: 2025-01-05 03:09+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
-"Language-Team: Tamil <https://hosted.weblate.org/projects/jclic/jclicjs/ta/>"
-"\n"
+"Language-Team: Tamil <https://hosted.weblate.org/projects/jclic/jclicjs/ta/"
+">\n"
 "Language: ta\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -155,7 +155,9 @@ msgid "Copy data to clipboard"
 msgstr "இடைநிலைப்பலகைக்கு தரவை நகலெடுக்கவும்"
 
 # Text shown when reports data is pasted in plain-text editors
-msgid "The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor"
+msgid ""
+"The data has been copied in HTML format. Please paste them into a "
+"spreadsheet or in a rich text editor"
 msgstr ""
 "தரவு உஉகுமொ வடிவத்தில் நகலெடுக்கப்பட்டுள்ளது. தயவுசெய்து அவற்றை ஒரு விரிதாளில் அல்லது "
 "பணக்கார உரை திருத்தியில் ஒட்டவும்"
@@ -169,9 +171,10 @@ msgid "not connected"
 msgstr "இணைக்கப்படவில்லை"
 
 # Message displayed when the user attempts to close the player with data pending to be reported
-msgid "Please wait until the results of your activities are sent to the reports system"
-msgstr ""
-"உங்கள் செயல்பாடுகளின் முடிவுகள் அறிக்கைகள் முறைக்கு அனுப்பப்படும் வரை காத்திருங்கள்"
+msgid ""
+"Please wait until the results of your activities are sent to the reports "
+"system"
+msgstr "உங்கள் செயல்பாடுகளின் முடிவுகள் அறிக்கைகள் முறைக்கு அனுப்பப்படும் வரை காத்திருங்கள்"
 
 # Caption for password input
 msgid "Password:"
@@ -196,3 +199,46 @@ msgstr "(விளையாடிய நடவடிக்கைகளுக்�
 # Number of project's activities played at least one time
 msgid "Activities played at least once:"
 msgstr "செயல்பாடுகள் ஒரு முறையாவது:"
+
+#, fuzzy
+#| msgid "Reports system:"
+msgid "Reports"
+msgstr "அறிக்கை அமைப்பு:"
+
+# Caption of the 'Full screen' button
+msgid "Toggle full screen"
+msgstr ""
+
+# Label for JClic logo, used in wai-aria contexts
+msgid "JClic logo"
+msgstr ""
+
+# Role of the main message box, used in wai-aria contexts
+msgid "message"
+msgstr ""
+
+#, fuzzy
+#| msgid "Activities done:"
+msgid "Activity panel"
+msgstr "முடிந்த நடவடிக்கைகள்:"
+
+# Role of regular cells, used in wai-aria contexts
+msgid "cell"
+msgstr ""
+
+# Label for 'image', used in wai-aria contexts
+msgid "image"
+msgstr ""
+
+# Name of the group of 'source' cells in associations
+msgid "source"
+msgstr ""
+
+# Name of the group of 'target' cells in associations
+msgid "target"
+msgstr ""
+
+# Label used to describe generic shapes within images, used in accessibility
+# contexts
+msgid "image fragment"
+msgstr ""
