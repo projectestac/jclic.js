@@ -178,7 +178,9 @@ msgstr "no conectado"
 msgid ""
 "Please wait until the results of your activities are sent to the reports "
 "system"
-msgstr "Por favor, espera mientras los resultados de las actividades se envian al servidor de informes"
+msgstr ""
+"Por favor, espera mientras los resultados de las actividades se envian al "
+"servidor de informes"
 
 # Caption for password input
 msgid "Password:"

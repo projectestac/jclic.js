@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.3-dev\n"
 
 #: about_window_lb_version
@@ -156,7 +156,9 @@ msgid "Copy data to clipboard"
 msgstr "Kopiraj podatke u međuspremnik"
 
 # Text shown when reports data is pasted in plain-text editors
-msgid "The data has been copied in HTML format. Please paste them into a spreadsheet or in a rich text editor"
+msgid ""
+"The data has been copied in HTML format. Please paste them into a "
+"spreadsheet or in a rich text editor"
 msgstr ""
 "Podaci su kopirani u HTML formatu. Umetni ih u proračunsku tablicu ili u "
 "uređivač formatiranog teksta"
@@ -170,7 +172,9 @@ msgid "not connected"
 msgstr "nepovezano"
 
 # Message displayed when the user attempts to close the player with data pending to be reported
-msgid "Please wait until the results of your activities are sent to the reports system"
+msgid ""
+"Please wait until the results of your activities are sent to the reports "
+"system"
 msgstr "Pričekaj da se rezultati tvojih aktivnosti pošalju sustavu izvještaja"
 
 # Caption for password input
@@ -196,3 +200,46 @@ msgstr "(od odigranih aktivnosti)"
 # Number of project's activities played at least one time
 msgid "Activities played at least once:"
 msgstr "Barem jednom odigrane aktivnosti:"
+
+#, fuzzy
+#| msgid "Reports system:"
+msgid "Reports"
+msgstr "Sustav izvještaja:"
+
+# Caption of the 'Full screen' button
+msgid "Toggle full screen"
+msgstr ""
+
+# Label for JClic logo, used in wai-aria contexts
+msgid "JClic logo"
+msgstr ""
+
+# Role of the main message box, used in wai-aria contexts
+msgid "message"
+msgstr ""
+
+#, fuzzy
+#| msgid "Activities done:"
+msgid "Activity panel"
+msgstr "Obavljene aktivnosti:"
+
+# Role of regular cells, used in wai-aria contexts
+msgid "cell"
+msgstr ""
+
+# Label for 'image', used in wai-aria contexts
+msgid "image"
+msgstr ""
+
+# Name of the group of 'source' cells in associations
+msgid "source"
+msgstr ""
+
+# Name of the group of 'target' cells in associations
+msgid "target"
+msgstr ""
+
+# Label used to describe generic shapes within images, used in accessibility
+# contexts
+msgid "image fragment"
+msgstr ""
