@@ -1,6 +1,7 @@
-### v2.1.25 (Not yet released)
+### v2.1.25 (2025-09-23)
 #### Improvements
 - Updated peer dependencies
+- JSDOM upgraded to v27.0
 
 ### v2.1.24 (2025-01-19)
 #### Improvements
