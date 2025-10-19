@@ -1,3 +1,8 @@
+### v2.1.26 (2025-10-19)
+#### Improvements
+- Updated peer dependencies
+- Updated Brazilian Portuguese translation, thanks to [Khemis](https://github.com/alexrsoares)
+
 ### v2.1.25 (2025-09-23)
 #### Improvements
 - Updated peer dependencies

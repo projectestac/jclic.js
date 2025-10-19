@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "2.1.25",
+  "version": "2.1.26",
   "main": "dist/jclic-node.js",
   "jsdelivr": "dist/jclic.min.js",
   "homepage": "https://projectestac.github.io/jclic.js",
@@ -52,7 +52,7 @@
     "jszip-utils": "0.1.0",
     "webfontloader": "^1.6.28",
     "@xmldom/xmldom": "^0.9.7",
-    "jsdom": "^27.0.0"
+    "jsdom": "^27.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
@@ -60,14 +60,14 @@
     "@babel/preset-env": "^7.28.3",
     "babel-loader": "^10.0.0",
     "clean-jsdoc-theme": "^4.3.0",
-    "eslint": "^9.36.0",
+    "eslint": "^9.38.0",
     "eslint-webpack-plugin": "^5.0.2",
     "fs-extra": "^11.3.2",
-    "jsdoc": "^4.0.4",
-    "patch-package": "^8.0.0",
+    "jsdoc": "^4.0.5",
+    "patch-package": "^8.0.1",
     "po2json": "^1.0.0-alpha",
     "terser-webpack-plugin": "^5.3.14",
-    "webpack": "^5.101.3",
+    "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2",
     "webpack-node-externals": "^3.0.0"
