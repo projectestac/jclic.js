@@ -52,7 +52,7 @@
     "jszip-utils": "0.1.0",
     "webfontloader": "^1.6.28",
     "@xmldom/xmldom": "^0.9.7",
-    "jsdom": "^27.2.0"
+    "jsdom": "^27.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
@@ -60,14 +60,14 @@
     "@babel/preset-env": "^7.28.5",
     "babel-loader": "^10.0.0",
     "clean-jsdoc-theme": "^4.3.0",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "eslint-webpack-plugin": "^5.0.2",
-    "fs-extra": "^11.3.2",
+    "fs-extra": "^11.3.3",
     "jsdoc": "^4.0.5",
     "patch-package": "^8.0.1",
     "po2json": "^1.0.0-alpha",
-    "terser-webpack-plugin": "^5.3.14",
-    "webpack": "^5.103.0",
+    "terser-webpack-plugin": "^5.3.16",
+    "webpack": "^5.104.1",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2",
     "webpack-node-externals": "^3.0.0"
