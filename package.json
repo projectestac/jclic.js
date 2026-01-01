@@ -52,7 +52,7 @@
     "jszip-utils": "0.1.0",
     "webfontloader": "^1.6.28",
     "@xmldom/xmldom": "^0.9.7",
-    "jsdom": "^27.3.0"
+    "jsdom": "^27.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
