@@ -723,9 +723,9 @@ export class ActiveBox extends AbstractBox {
         disabled = this.isInactive() && !this.accessibleAlwaysActive;
       this.$accessibleElement = $('<button/>', {
         tabindex: disabled ? -1 : 0,
-        id: `AE${id}`,
-        disabled: disabled
+        id: `AE${id}`
       })
+        .prop('disabled', disabled ? true : null)
         .html(this.toString())
         .on('click', ev => {
           // Check if event was produced by a mouse click

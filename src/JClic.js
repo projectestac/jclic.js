@@ -151,6 +151,9 @@ if (typeof window !== 'undefined') {
   });
   $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', fnFit);
   $(window).on('resize', fnFit);
+  // Expose jQuery globally if attribute 'data-expose-jQuery' is set:
+  if (document.currentScript && document.currentScript.getAttribute('data-expose-jQuery'))
+    window.jQuery = JClicObject.$;
 }
 
 // Execute on document ready

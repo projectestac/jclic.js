@@ -77,7 +77,7 @@ class IdentifyTextPanel extends TextActivityBasePanel {
   $createTargetElement(target, $span) {
     super.$createTargetElement(target, $span);
     const idLabel = `target${`000${this.targets.length - 1}`.slice(-3)}`;
-    $span.bind('click', event => {
+    $span.on('click', event => {
       event.textTarget = target;
       event.idLabel = idLabel;
       this.processEvent(event);
@@ -86,7 +86,7 @@ class IdentifyTextPanel extends TextActivityBasePanel {
   }
 
   $createSpanElement($span) {
-    $span.bind('click', event => {
+    $span.on('click', event => {
       event.$spanElement = $span;
       this.processEvent(event);
     });

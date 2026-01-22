@@ -155,7 +155,7 @@ export class OrderTextPanel extends TextActivityBasePanel {
   $createTargetElement(target, $span) {
     super.$createTargetElement(target, $span);
     const idLabel = `target${`000${this.targets.length - 1}`.slice(-3)}`;
-    $span.addClass('JClicTextTarget').bind('click', event => {
+    $span.addClass('JClicTextTarget').on('click', event => {
       event.textTarget = target;
       event.idLabel = idLabel;
       this.processEvent(event);

@@ -25,7 +25,7 @@ const project = new jclic.JClicProject();
 if (file.endsWith('.jclic')) {
   // Read file and parse it into a DOM object
   const contents = fs.readFileSync(file, 'utf8');
-  const doc = new global.DOMParser().parseFromString(contents);
+  const doc = new global.DOMParser().parseFromString(contents, 'application/xml');
   // Initialize project with the file contents
   project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});
 }

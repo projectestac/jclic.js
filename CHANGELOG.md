@@ -1,5 +1,6 @@
-### v2.1.27 (not yet released)
+### v2.2.0 (2026-01-22)
 - Updated peer dependencies
+- jQuery upgraded to version 4. Removed inconsistences and updated calls to deprecated APIs.
 
 ### v2.1.26 (2025-10-19)
 #### Improvements

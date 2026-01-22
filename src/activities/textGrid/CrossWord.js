@@ -154,7 +154,7 @@ export class CrossWordPanel extends ActivityPanel {
       'background-image': `url(${type === 'acrossClues' ? this.hIcon : this.vIcon})`,
       'background-repeat': 'no-repeat',
       'background-position': 'center',
-      'border-radius': 6,
+      'border-radius': '6px',
       'z-index': 10
     }).on('click', () => {
       this.advance = type === 'acrossClues' ?
@@ -247,7 +247,7 @@ export class CrossWordPanel extends ActivityPanel {
       this.setAndPlayMsg('initial', 'start');
       this.invalidate().update();
       this.$div.attr("tabindex", 0);
-      this.$div.focus();
+      this.$div.trigger('focus');
       this.playing = true;
     }
   }

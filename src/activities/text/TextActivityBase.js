@@ -264,7 +264,7 @@ export class TextActivityBasePanel extends ActivityPanel {
 
               // Catch on-demand popups with `F1`, cancel with `Escape`
               if ($popup !== null && target.infoMode === 'onDemand') {
-                $span.keydown(ev => {
+                $span.on('keydown', ev => {
                   if (ev.key === target.popupKey) {
                     ev.preventDefault();
                     this.showPopup($popup, target.popupMaxTime, target.popupDelay);
@@ -374,7 +374,7 @@ export class TextActivityBasePanel extends ActivityPanel {
 
     const prevScreenEnd = () => {
       this.showingPrevScreen = false;
-      this.$div.unbind('click');
+      this.$div.off('click');
       if (this.prevScreenTimer) {
         window.clearTimeout(this.prevScreenTimer);
         this.prevScreenTimer = null;
@@ -432,7 +432,7 @@ export class TextActivityBasePanel extends ActivityPanel {
       this.$checkButton.prop('disabled', true);
     this.targets.forEach(t => {
       if (t.$comboList)
-        t.$comboList.attr('disabled', true);
+        t.$comboList.prop('disabled', true);
     });
     this.showPopup(null);
     super.finishActivity(result);

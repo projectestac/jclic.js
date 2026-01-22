@@ -464,7 +464,7 @@ export class WrittenAnswerPanel extends ActivityPanel {
     if (bx)
       this.currentCell = bx.idLoc;
     this.$textField.val('');
-    this.$textField.focus();
+    this.$textField.trigger('focus');
     this.invalidate().update();
     if (bx)
       bx.playMedia(this.ps, delayedActions);
@@ -491,7 +491,7 @@ export class WrittenAnswerPanel extends ActivityPanel {
 
           // Avoid clicks on the text field
           if (this.bgB.contains(p)) {
-            this.$textField.focus();
+            this.$textField.trigger('focus');
             break;
           }
 

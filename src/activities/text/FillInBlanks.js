@@ -109,7 +109,7 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
       if (target.options[0].trim() !== '')
         $('<option selected/>', { value: '', text: '' }).appendTo($span);
       target.options.forEach(op => $('<option/>', { value: op, text: op }).appendTo($span));
-      target.$comboList = $span.bind('focus change', event => {
+      target.$comboList = $span.on('focus change', event => {
         event.textTarget = target;
         this.processEvent(event);
       });
@@ -124,10 +124,10 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
         id: idLabel,
         autocomplete: 'off',
         spellcheck: 'false'
-      }).bind('focus input blur', event => {
+      }).on('focus input blur', event => {
         event.textTarget = target;
         this.processEvent(event);
-      }).bind('keydown keyup', event => {
+      }).on('keydown keyup', event => {
         // Catch `enter` key in Firefox
         if (event.keyCode === 13) {
           event.preventDefault();
@@ -204,10 +204,10 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
 
       const destTarget = this.targets[p];
       if (destTarget.$span) {
-        destTarget.$span.focus();
+        destTarget.$span.trigger('focus');
         setSelectionRange(destTarget.$span.get(-1), 0, 0);
       } else if (destTarget.$comboList)
-        destTarget.$comboList.focus();
+        destTarget.$comboList.trigger('focus');
     }
     return ok;
   }
@@ -283,7 +283,7 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
     // `pre-wrap` (needed for tabulated texts)
     $('.JClicTextTarget').css('white-space', 'normal');
     if (this.targets.length > 0 && this.targets[0].$span)
-      this.targets[0].$span.focus();
+      this.targets[0].$span.trigger('focus');
   }
 
   /**
@@ -294,9 +294,9 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
   finishActivity(result) {
     this.targets.forEach(target => {
       if (target.$span)
-        target.$span.removeAttr('contenteditable').blur();
+        target.$span.removeAttr('contenteditable').trigger('blur');
       else if (target.$comboList)
-        target.$comboList.attr('disabled', 'true').blur();
+        target.$comboList.prop('disabled', true).trigger('blur');
     });
     return super.finishActivity(result);
   }

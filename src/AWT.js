@@ -1813,7 +1813,7 @@ export class Action {
    * @example
    * const myFunc = () => { alert('Hello!') }
    * const myAction = new Action('hello', myFunc)
-   * $( "#foo" ).bind( "click", myAction.processEvent)
+   * $( "#foo" ).on( "click", myAction.processEvent)
    * @param {object} event - The event object passed by the DOM event trigger
    */
   processEvent(event) {

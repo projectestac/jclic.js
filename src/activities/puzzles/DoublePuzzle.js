@@ -331,7 +331,7 @@ export class DoublePuzzlePanel extends ActivityPanel {
 
               // Move the focus to the opposite accessible group
               if (this.bgB.$accessibleDiv)
-                this.bgB.$accessibleDiv.focus();
+                this.bgB.$accessibleDiv.trigger('focus');
             }
           } else {
             this.ps.stopMedia(1);
@@ -375,7 +375,7 @@ export class DoublePuzzlePanel extends ActivityPanel {
 
             // Move the focus to the `source` accessible group
             if (this.bgA.$accessibleDiv)
-              this.bgA.$accessibleDiv.focus();
+              this.bgA.$accessibleDiv.trigger('focus');
           }
           break;
 

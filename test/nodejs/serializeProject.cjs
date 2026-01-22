@@ -33,7 +33,7 @@ const contents = fs.readFileSync(file, 'utf8');
 
 if (isXML) {
   // Read file and parse it into a DOM object
-  var doc = new global.DOMParser().parseFromString(contents, 'text/xml');
+  var doc = new global.DOMParser().parseFromString(contents, 'application/xml');
 
   // Create a JClicProject and initialize it with the file contents
   project.setProperties(jclic.$(doc).find('JClicProject'), file, null, {});

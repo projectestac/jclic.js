@@ -735,10 +735,8 @@ export class Skin extends Container {
    * @param {boolean} enabled
    */
   setEnabled($object, enabled) {
-    if ($object && enabled)
-      $object.removeAttr('disabled');
-    else if ($object)
-      $object.attr('disabled', true);
+    if ($object)
+      $object.prop('disabled', enabled ? null : true);
   }
 
   /**

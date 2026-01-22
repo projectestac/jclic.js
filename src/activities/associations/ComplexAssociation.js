@@ -220,7 +220,7 @@ export class ComplexAssociationPanel extends SimpleAssociationPanel {
             if (bg && bg.$accessibleDiv) {
               bg = bx1 ? this.bgB : this.bgA;
               if (bg && bg.$accessibleDiv)
-                bg.$accessibleDiv.focus();
+                bg.$accessibleDiv.trigger('focus');
             }
           } else {
             this.ps.stopMedia(1);
@@ -289,7 +289,7 @@ export class ComplexAssociationPanel extends SimpleAssociationPanel {
 
             // Move the focus to the `source` accessible group
             if (this.bgA && this.bgA.$accessibleDiv)
-              this.bgA.$accessibleDiv.focus();
+              this.bgA.$accessibleDiv.trigger('focus');
           }
           break;
 
