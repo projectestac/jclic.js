@@ -12,16 +12,19 @@
     <p>Catalonia Department of Education</p>
    </comments>
   </organization>
-  <language>English (en)</language>
-  <description>
-   <p>Compilation of samples of the different types of JClic activities.</p>
-   <p>This package is just for testing and demo purposes.</p>
-  </description>
+  <language>en</language>
   <descriptors area="Not applicable" level="Not applicable">demo activities testing</descriptors>
+  <meta_langs>en</meta_langs>
+  <descriptions>
+   <description language="en">
+    <p>Compilation of samples of the different types of JClic activities.</p>
+    <p>This package is just for testing and demo purposes.</p>
+   </description>
+  </descriptions>
+  <license type="by-nc-sa" url="https://creativecommons.org/licenses/by-nc-sa/4.0" />
  </settings>
  <sequence>
-  <!-- item id="demo.pac" name="pres0.ass" delay="50" -->
-  <item id="demo.pac" name="pres0.ass" >
+  <item id="demo.pac" name="pres0.ass">
    <jump tag="menu0.pac" id="forward" />
    <jump action="RETURN" id="back" />
   </item>
@@ -46,7 +49,6 @@
   <item name="gigpuzzle" />
   <item name="mapa" />
   <item name="puzanim.puz" />
-  <item name="puzanim2.puz" />
   <item name="puz04.puz" />
   <item name="puz05.puz" />
   <item name="puz06.puz" />
@@ -132,7 +134,6 @@
   </item>
   <item name="anim1" />
   <item name="puzanim.puz" />
-  <item name="puzanim2.puz" />
   <item name="anim2">
    <jump action="RETURN" id="forward" />
   </item>
@@ -2856,35 +2857,6 @@
    </cells>
    <scramble times="31" />
   </activity>
-  <activity class="@puzzles.DoublePuzzle" name="puzanim2.puz">
-   <description>
-    <p>Puzzle with animated GIF</p>
-   </description>
-   <messages>
-    <cell type="initial">
-     <style />
-     <p>Example of a puzzle with animated GIF</p>
-    </cell>
-    <cell type="final">
-     <style />
-     <p>Very good!</p>
-    </cell>
-   </messages>
-   <settings margin="8" dragCells="true" report="true" reportActions="false">
-    <helpWindow showSolution="true" />
-    <container bgColor="0xC0C0C0">
-     <counters time="true" actions="true" score="true" />
-    </container>
-    <window bgColor="0xC0C0C0" border="true" >
-      <gradient dest="green" source="lightblue" angle="90" cycles="1" />
-    </window>
-   </settings>
-   <cells rows="3" columns="3" border="true" image="big.gif">
-    <style transparent="true"/>
-    <shaper class="@Rectangular" cols="3" rows="3" />
-   </cells>
-   <scramble times="31" />
-  </activity>
   <activity class="@puzzles.DoublePuzzle" name="shape1">
    <messages>
     <cell type="initial">
@@ -3155,6 +3127,7 @@
     </cell>
    </messages>
    <settings margin="8" report="true" reportActions="false">
+    <skin name="scractch" file="scratch.xml" />
     <helpWindow showSolution="true" />
     <container bgColor="0xFFFFFF">
      <counters time="true" actions="true" score="true" />
@@ -3162,7 +3135,6 @@
     <window bgColor="0xFFFFFF" border="false">
      <size width="540" height="150" />
     </window>
-    <skin file="scratch.xml" />
    </settings>
    <document>
     <style name="default" italic="false" bold="false" family="Arial" foreground="0x004080" size="17" background="0xFFFFFF" tabWidth="16" />
@@ -3232,7 +3204,6 @@
     </cell>
    </messages>
    <settings margin="8" report="true" reportActions="false">
-    <skin name="green" file="@green.xml" />
     <helpWindow showSolution="true" />
     <container bgColor="0xC0C0C0">
      <counters time="true" actions="true" score="true" />
@@ -3863,20 +3834,6 @@
       <text> of bees</text>
      </p>
      <p />
-     <!-- p>
-     <text>    Es ist zwanzig </text>
-      <target>
-       <answer>nach</answer>
-       <optionList>
-        <option> </option>
-        <option>vor</option>
-        <option>nach</option>
-        <option>Uhr</option>
-       </optionList>
-       <text>nach</text>
-      </target>
-      <text> zehn.</text>
-     </p -->
     </section>
    </document>
    <evaluator class="@ComplexEvaluator" />
@@ -4274,10 +4231,18 @@
      <p>
       <text>The following text is used only to test layout and overflow behavior</text>
      </p>
-     <p><text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text></p>
-     <p><text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text></p>
-     <p><text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text></p>
-     <p><text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text></p>
+     <p>
+      <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text>
+     </p>
+     <p>
+      <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text>
+     </p>
+     <p>
+      <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text>
+     </p>
+     <p>
+      <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text>
+     </p>
     </section>
    </document>
    <evaluator class="@ComplexEvaluator" checkCase="true" detail="false" checkSteps="4" />
@@ -4407,7 +4372,7 @@
        <style>
         <color foreground="0x000080" background="0xFFFFFF" inactive="0x000000" alternative="0x000000" />
        </style>
-       <media type="PLAY_AUDIO" level="1" file="nuria.mp3" from="10570" to="15129" catchMouseEvents="true" />
+       <media type="PLAY_AUDIO" level="1" file="nuria.wav" from="10570" to="15129" catchMouseEvents="true" />
       </cell>
       <text> </text>
       <target>
@@ -5234,14 +5199,13 @@
   </activity>
  </activities>
  <mediaBag>
-  <media name="zebra.mp4" file="zebra.mp4" />
   <media name="bici.gif" file="bici.gif" animated="false" />
+  <media name="big.gif" file="big.gif" animated="true" />
   <media name="camio.gif" file="camio.gif" animated="false" />
   <media name="casa.gif" file="casa.gif" animated="false" />
   <media name="cireres.gif" file="cireres.gif" animated="false" />
   <media name="cotxe.gif" file="cotxe.gif" animated="false" />
-  <media name="elmo.gif" file="elmo.gif" />
-  <media name="big.gif" file="big.gif" animated="true" />
+  <media name="elmo.gif" file="elmo.gif" animated="true" />
   <media name="esqui.gif" file="esqui.gif" animated="true" />
   <media name="func2.gif" file="func2.gif" animated="false" />
   <media name="funcio.gif" file="funcio.gif" animated="false" />
@@ -5272,8 +5236,6 @@
   <media name="bressol.mid" file="bressol.mid" />
   <media name="mozart.mid" file="mozart.mid" />
   <media name="novena.mid" file="novena.mid" />
-  <media name="test1.swf" file="test1.swf" />
-  <media name="HandSign" file="handsign.ttf" />
   <media name="bycicle.mp3" file="bycicle.mp3" />
   <media name="car.mp3" file="car.mp3" />
   <media name="lorry.mp3" file="lorry.mp3" />
@@ -5284,7 +5246,11 @@
   <media name="pop.mp3" file="pop.mp3" />
   <media name="whistledown.mp3" file="whistledown.mp3" />
   <media name="whistleup.mp3" file="whistleup.mp3" />
-  <media name="scratch.xml" file="scratch.xml" />
+  <media name="zebra.mp4" file="zebra.mp4" />
   <media name="scratch.png" file="scratch.png" />
+  <media name="test1.swf" file="test1.swf" />
+  <media name="HandSign" file="handsign.ttf" />
+  <media name="scratch.xml" file="scratch.xml" />
  </mediaBag>
 </JClicProject>
+

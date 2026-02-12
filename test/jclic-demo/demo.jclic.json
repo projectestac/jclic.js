@@ -14,6 +14,10 @@
     "languages": [
       "en"
     ],
+    "license": {
+      "type": "by-nc-sa",
+      "url": "https://creativecommons.org/licenses/by-nc-sa/4.0"
+    },
     "authors": [
       {
         "name": "Francesc Busquets",
@@ -122,9 +126,6 @@
     },
     {
       "activity": "puzanim.puz"
-    },
-    {
-      "activity": "puzanim2.puz"
     },
     {
       "activity": "puz04.puz"
@@ -331,9 +332,6 @@
     },
     {
       "activity": "puzanim.puz"
-    },
-    {
-      "activity": "puzanim2.puz"
     },
     {
       "activity": "anim2",
@@ -805,7 +803,7 @@
           "style": {
             "shadow": true,
             "font": {
-              "family": "Vibur",
+              "family": "MeMima",
               "bold": true
             },
             "textColor": "#FFFFFF",
@@ -2392,7 +2390,6 @@
           },
           "cells": [
             {
-              "id": 0,
               "image": "bici.gif",
               "mediaContent": {
                 "type": "PLAY_AUDIO",
@@ -2400,7 +2397,6 @@
               }
             },
             {
-              "id": 1,
               "image": "cotxe.gif",
               "mediaContent": {
                 "type": "PLAY_AUDIO",
@@ -2408,7 +2404,6 @@
               }
             },
             {
-              "id": 2,
               "image": "camio.gif",
               "mediaContent": {
                 "type": "PLAY_AUDIO",
@@ -2416,7 +2411,6 @@
               }
             },
             {
-              "id": 3,
               "image": "moto.gif",
               "mediaContent": {
                 "type": "PLAY_AUDIO",
@@ -2581,39 +2575,39 @@
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 16,
             "css": {
-              "font-family": "Arial",
-              "font-size": "16px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "16",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "target": {
             "background": "#C0C0C0",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 16,
             "css": {
-              "font-family": "Arial",
-              "font-size": "16px",
               "background-color": "#C0C0C0",
               "color": "#0000FF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "16px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -2621,20 +2615,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 16,
             "css": {
-              "font-family": "Arial",
-              "font-size": "16px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "16px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -2725,7 +2719,8 @@
                 "text": "...can have...",
                 "objectType": "cell",
                 "txtAlign": {
-                  "h": "left"
+                  "h": "left",
+                  "v": "top"
                 },
                 "imgAlign": {
                   "h": "left"
@@ -2757,7 +2752,8 @@
                 "text": "...a different style.",
                 "objectType": "cell",
                 "txtAlign": {
-                  "h": "right"
+                  "h": "right",
+                  "v": "bottom"
                 },
                 "imgAlign": {
                   "h": "right"
@@ -3247,39 +3243,39 @@
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 16,
             "css": {
-              "font-family": "Arial",
-              "font-size": "16px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "16",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "target": {
             "background": "#C0C0C0",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 16,
             "css": {
-              "font-family": "Arial",
-              "font-size": "16px",
               "background-color": "#C0C0C0",
               "color": "#0000FF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "16px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -3287,20 +3283,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 16,
             "css": {
-              "font-family": "Arial",
-              "font-size": "16px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "16px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -3435,59 +3431,59 @@
             "background": "white",
             "foreground": "black",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 16,
             "css": {
+              "background-color": "#FFFFFF",
+              "color": "#000000",
               "font-family": "Arial",
-              "font-size": "16px",
-              "background-color": "white",
-              "color": "black",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "16",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "handsign": {
             "background": "white",
             "foreground": "black",
             "family": "HandSign",
+            "bold": false,
+            "italic": false,
             "size": 36,
             "css": {
-              "font-family": "HandSign",
-              "font-size": "36px",
               "background-color": "white",
               "color": "black",
+              "font-family": "HandSign",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "36px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "handsign",
-            "bold": false,
-            "italic": false,
             "base": "default"
           },
           "target": {
             "background": "white",
             "foreground": "blue",
             "family": "HandSign",
+            "bold": false,
+            "italic": false,
             "size": 36,
             "css": {
-              "font-family": "HandSign",
-              "font-size": "36px",
               "background-color": "white",
               "color": "blue",
+              "font-family": "HandSign",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "36px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "handsign",
             "target": true
           },
@@ -3495,20 +3491,20 @@
             "background": "white",
             "foreground": "red",
             "family": "HandSign",
+            "bold": false,
+            "italic": false,
             "size": 36,
             "css": {
-              "font-family": "HandSign",
-              "font-size": "36px",
               "background-color": "white",
               "color": "red",
+              "font-family": "HandSign",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "36px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -4812,39 +4808,39 @@
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 14,
             "css": {
-              "font-family": "Arial",
-              "font-size": "14px",
               "background-color": "#FFFFFF",
               "color": "#000000",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
-              "tab-size": "16",
+              "font-style": "normal",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "italic": false,
-            "bold": false
+            "name": "default"
           },
           "target": {
             "background": "#C0C0C0",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 14,
             "css": {
-              "font-family": "Arial",
-              "font-size": "14px",
               "background-color": "#C0C0C0",
               "color": "#0000FF",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
+              "font-style": "normal",
+              "font-size": "14px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "italic": false,
-            "bold": false,
             "base": "default",
             "target": true
           },
@@ -4852,20 +4848,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 14,
             "css": {
-              "font-family": "Arial",
-              "font-size": "14px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
+              "font-style": "normal",
+              "font-size": "14px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "italic": false,
-            "bold": false,
             "base": "target",
             "target": true
           }
@@ -5374,19 +5370,15 @@
           },
           "cells": [
             {
-              "id": 0,
               "image": "bici.gif"
             },
             {
-              "id": 1,
               "image": "cotxe.gif"
             },
             {
-              "id": 2,
               "image": "camio.gif"
             },
             {
-              "id": 3,
               "image": "moto.gif"
             }
           ]
@@ -5438,40 +5430,6 @@
             "font": {
               "size": 21
             }
-          },
-          "shaper": {
-            "className": "@Rectangular",
-            "nCols": 3,
-            "nRows": 3
-          }
-        }
-      }
-    },
-    "puzanim2.puz": {
-      "name": "puzanim2.puz",
-      "className": "@puzzles.DoublePuzzle",
-      "dragCells": true,
-      "showSolution": true,
-      "shuffleA": false,
-      "shuffleB": false,
-      "shuffles": 31,
-      "activityBgGradient": {
-        "c1": "lightblue",
-        "c2": "green",
-        "angle": 90
-      },
-      "messages": {
-        "initial": "Example of a puzzle with animated GIF",
-        "final": "Very good!"
-      },
-      "abc": {
-        "primary": {
-          "image": "big.gif",
-          "ncw": 3,
-          "nch": 3,
-          "border": true,
-          "style": {
-            "transparent": true
           },
           "shaper": {
             "className": "@Rectangular",
@@ -5751,39 +5709,39 @@
             "background": "#FFFFFF",
             "foreground": "#004080",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
-              "color": "#004080",
-              "font-style": "normal",
+              "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
-              "tab-size": "16",
+              "font-style": "normal",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "italic": false,
-            "bold": false
+            "name": "default"
           },
           "target": {
             "background": "#C0C0C0",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#C0C0C0",
               "color": "#0000FF",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
+              "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "italic": false,
-            "bold": false,
             "base": "default",
             "target": true
           },
@@ -5791,20 +5749,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
+              "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "italic": false,
-            "bold": false,
             "base": "target",
             "target": true
           }
@@ -5876,39 +5834,39 @@
             "background": "#FFFFFF",
             "foreground": "#004080",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
-              "color": "#004080",
-              "font-style": "normal",
+              "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
-              "tab-size": "16",
+              "font-style": "normal",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "italic": false,
-            "bold": false
+            "name": "default"
           },
           "target": {
             "background": "#C0C0C0",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#C0C0C0",
               "color": "#0000FF",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
+              "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "italic": false,
-            "bold": false,
             "base": "default",
             "target": true
           },
@@ -5916,20 +5874,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
+              "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "italic": false,
-            "bold": false,
             "base": "target",
             "target": true
           }
@@ -5992,39 +5950,39 @@
             "background": "#FFFFFF",
             "foreground": "#004080",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
-              "color": "#004080",
-              "font-style": "normal",
+              "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
-              "tab-size": "16",
+              "font-style": "normal",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "italic": false,
-            "bold": false
+            "name": "default"
           },
           "target": {
             "background": "#C0C0C0",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#C0C0C0",
               "color": "#0000FF",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
+              "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "italic": false,
-            "bold": false,
             "base": "default",
             "target": true
           },
@@ -6032,20 +5990,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
+              "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "italic": false,
-            "bold": false,
             "base": "target",
             "target": true
           }
@@ -6107,39 +6065,39 @@
             "background": "#FFFFFF",
             "foreground": "#004080",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
-              "color": "#004080",
-              "font-style": "normal",
+              "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
-              "tab-size": "16",
+              "font-style": "normal",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "italic": false,
-            "bold": false
+            "name": "default"
           },
           "target": {
             "background": "#C0C0C0",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#C0C0C0",
               "color": "#0000FF",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
+              "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "italic": false,
-            "bold": false,
             "base": "default",
             "target": true
           },
@@ -6147,20 +6105,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
+              "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "italic": false,
-            "bold": false,
             "base": "target",
             "target": true
           }
@@ -6215,39 +6173,39 @@
             "background": "#FFFFFF",
             "foreground": "#004080",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
-              "color": "#004080",
-              "font-style": "normal",
+              "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
-              "tab-size": "16",
+              "font-style": "normal",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "italic": false,
-            "bold": false
+            "name": "default"
           },
           "target": {
             "background": "#C0C0C0",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#C0C0C0",
               "color": "#0000FF",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
+              "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "italic": false,
-            "bold": false,
             "base": "default",
             "target": true
           },
@@ -6255,20 +6213,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
-              "font-style": "normal",
+              "font-family": "Arial",
               "font-weight": "normal",
+              "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "16",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "italic": false,
-            "bold": false,
             "base": "target",
             "target": true
           }
@@ -6298,7 +6256,6 @@
     "sop01.sop": {
       "name": "sop01.sop",
       "className": "@textGrid.WordSearch",
-      "skinFileName": "@green.xml",
       "showSolution": true,
       "messages": {
         "initial": "An easy search: find the names of three composers.",
@@ -6613,25 +6570,25 @@
           },
           "cells": [
             {
+              "text": "BACH",
               "mediaContent": {
                 "type": "PLAY_MIDI",
                 "file": "bach.mid"
-              },
-              "text": "BACH"
+              }
             },
             {
+              "text": "MOZART",
               "mediaContent": {
                 "type": "PLAY_MIDI",
                 "file": "mozart.mid"
-              },
-              "text": "MOZART"
+              }
             },
             {
+              "text": "BRAHMS",
               "mediaContent": {
                 "type": "PLAY_MIDI",
                 "file": "bressol.mid"
-              },
-              "text": "BRAHMS"
+              }
             }
           ]
         }
@@ -7039,39 +6996,39 @@
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "31",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "target": {
             "background": "#FFFFFF",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
               "color": "#0000FF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "31",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -7079,20 +7036,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "31",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -7392,59 +7349,59 @@
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "12",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "note": {
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 11,
             "css": {
-              "font-family": "Arial",
-              "font-size": "11px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "11px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "note",
-            "bold": false,
-            "italic": false,
             "base": "default"
           },
           "target": {
             "background": "#FFFFFF",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FFFFFF",
               "color": "#0000FF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -7452,20 +7409,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -7523,8 +7480,8 @@
                   "pride",
                   "flock"
                 ],
-                "numIniChars": 140,
-                "maxLenResp": 140
+                "numIniChars": 129,
+                "maxLenResp": 129
               },
               {
                 "text": " of dogs",
@@ -7633,8 +7590,8 @@
                   "pride",
                   "flock"
                 ],
-                "numIniChars": 142,
-                "maxLenResp": 142
+                "numIniChars": 131,
+                "maxLenResp": 131
               },
               {
                 "text": " of lions",
@@ -7708,39 +7665,39 @@
             "background": "#C0C0C0",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
-              "background-color": "#C0C0C0",
+              "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "2",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "target": {
             "background": "#C0C0C0",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#C0C0C0",
               "color": "#0000FF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "2",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -7748,20 +7705,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "2",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -8002,39 +7959,39 @@
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "12",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "target": {
             "background": "#FFFFFF",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
               "color": "#0000FF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -8042,20 +7999,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -8285,39 +8242,39 @@
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "12",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "target": {
             "background": "#FFFFFF",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FFFFFF",
               "color": "#0000FF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -8325,20 +8282,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -8766,39 +8723,39 @@
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Times New Roman",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Times New Roman",
-              "font-size": "15px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "3",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "target": {
             "background": "#FFFFFF",
             "foreground": "#0000FF",
             "family": "Times New Roman",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Times New Roman",
-              "font-size": "15px",
               "background-color": "#FFFFFF",
               "color": "#0000FF",
+              "font-family": "Times New Roman",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "3",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -8806,20 +8763,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Times New Roman",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Times New Roman",
-              "font-size": "15px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Times New Roman",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "3",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -9053,7 +9010,7 @@
                 },
                 "mediaContent": {
                   "type": "PLAY_AUDIO",
-                  "file": "nuria.mp3",
+                  "file": "nuria.wav",
                   "from": 10570,
                   "to": 15129,
                   "catchMouseEvents": true
@@ -9240,39 +9197,39 @@
             "background": "#008080",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": true,
+            "italic": false,
             "size": 15,
             "css": {
+              "background-color": "#FFFFFF",
+              "color": "#000000",
               "font-family": "Arial",
-              "font-size": "15px",
-              "background-color": "#008080",
-              "color": "#FFFFFF",
-              "font-weight": "bold",
+              "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "7",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": true,
-            "italic": false
+            "name": "default"
           },
           "target": {
             "background": "#008080",
             "foreground": "#00FFFF",
             "family": "Arial",
+            "bold": true,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#008080",
               "color": "#00FFFF",
+              "font-family": "Arial",
               "font-weight": "bold",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "7",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": true,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -9280,20 +9237,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": true,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "bold",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "7",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": true,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -9483,39 +9440,39 @@
             "background": "#008080",
             "foreground": "#C0C0C0",
             "family": "Arial",
+            "bold": true,
+            "italic": false,
             "size": 15,
             "css": {
+              "background-color": "#FFFFFF",
+              "color": "#000000",
               "font-family": "Arial",
-              "font-size": "15px",
-              "background-color": "#008080",
-              "color": "#C0C0C0",
-              "font-weight": "bold",
+              "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "7",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": true,
-            "italic": false
+            "name": "default"
           },
           "target": {
             "background": "#008080",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": true,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#008080",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "bold",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "7",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": true,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -9523,20 +9480,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": true,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "bold",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "7",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": true,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -9776,59 +9733,59 @@
             "background": "#FFFFFF",
             "foreground": "#808080",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
-              "color": "#808080",
+              "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "12",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "note": {
             "background": "#FFFFFF",
             "foreground": "#808080",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 11,
             "css": {
-              "font-family": "Arial",
-              "font-size": "11px",
               "background-color": "#FFFFFF",
               "color": "#808080",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "11px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "note",
-            "bold": false,
-            "italic": false,
             "base": "default"
           },
           "target": {
             "background": "#FFFFFF",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
               "color": "#0000FF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -9836,20 +9793,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -10005,59 +9962,59 @@
             "background": "#FFFFFF",
             "foreground": "#808080",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FFFFFF",
-              "color": "#808080",
+              "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "12",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "note": {
             "background": "#FFFFFF",
             "foreground": "#808080",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 11,
             "css": {
-              "font-family": "Arial",
-              "font-size": "11px",
               "background-color": "#FFFFFF",
               "color": "#808080",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "11px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "note",
-            "bold": false,
-            "italic": false,
             "base": "default"
           },
           "target": {
             "background": "#FFFFFF",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FFFFFF",
               "color": "#0000FF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -10065,20 +10022,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -10253,39 +10210,39 @@
             "background": "#FFFFFF",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 11,
             "css": {
-              "font-family": "Arial",
-              "font-size": "11px",
               "background-color": "#FFFFFF",
-              "color": "#0000FF",
+              "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "12",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "target": {
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 11,
             "css": {
-              "font-family": "Arial",
-              "font-size": "11px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "11px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -10293,20 +10250,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 11,
             "css": {
-              "font-family": "Arial",
-              "font-size": "11px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "11px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -10469,59 +10426,59 @@
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "12",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "note": {
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 11,
             "css": {
-              "font-family": "Arial",
-              "font-size": "11px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "11px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "note",
-            "bold": false,
-            "italic": false,
             "base": "default"
           },
           "target": {
             "background": "#FFFFFF",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FFFFFF",
               "color": "#0000FF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -10529,20 +10486,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 15,
             "css": {
-              "font-family": "Arial",
-              "font-size": "15px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "15px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -10745,59 +10702,59 @@
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
-              "tab-size": "12",
+              "font-size": "17px",
+              "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "note": {
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 11,
             "css": {
-              "font-family": "Arial",
-              "font-size": "11px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "11px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "note",
-            "bold": false,
-            "italic": false,
             "base": "default"
           },
           "target": {
             "background": "#FFFFFF",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
               "color": "#0000FF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -10805,20 +10762,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "12",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -11170,39 +11127,39 @@
             "background": "#FFFFFF",
             "foreground": "#000000",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
               "color": "#000000",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "30",
               "white-space": "pre-wrap"
             },
-            "name": "default",
-            "bold": false,
-            "italic": false
+            "name": "default"
           },
           "target": {
             "background": "#FFFFFF",
             "foreground": "#0000FF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FFFFFF",
               "color": "#0000FF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "30",
               "white-space": "pre-wrap"
             },
             "name": "target",
-            "bold": false,
-            "italic": false,
             "base": "default",
             "target": true
           },
@@ -11210,20 +11167,20 @@
             "background": "#FF0000",
             "foreground": "#FFFFFF",
             "family": "Arial",
+            "bold": false,
+            "italic": false,
             "size": 17,
             "css": {
-              "font-family": "Arial",
-              "font-size": "17px",
               "background-color": "#FF0000",
               "color": "#FFFFFF",
+              "font-family": "Arial",
               "font-weight": "normal",
               "font-style": "normal",
+              "font-size": "17px",
               "tab-size": "30",
               "white-space": "pre-wrap"
             },
             "name": "targetError",
-            "bold": false,
-            "italic": false,
             "base": "target",
             "target": true
           }
@@ -11632,13 +11589,14 @@
   },
   "mediaBag": [
     {
-      "name": "zebra.mp4",
-      "file": "zebra.mp4"
-    },
-    {
       "name": "bici.gif",
       "file": "bici.gif",
       "animated": false
+    },
+    {
+      "name": "big.gif",
+      "file": "big.gif",
+      "animated": true
     },
     {
       "name": "camio.gif",
@@ -11663,11 +11621,6 @@
     {
       "name": "elmo.gif",
       "file": "elmo.gif",
-      "animated": true
-    },
-    {
-      "name": "big.gif",
-      "file": "big.gif",
       "animated": true
     },
     {
@@ -11810,14 +11763,6 @@
       "file": "novena.mid"
     },
     {
-      "name": "test1.swf",
-      "file": "test1.swf"
-    },
-    {
-      "name": "HandSign",
-      "file": "handsign.ttf"
-    },
-    {
       "name": "bycicle.mp3",
       "file": "bycicle.mp3"
     },
@@ -11858,12 +11803,24 @@
       "file": "whistleup.mp3"
     },
     {
-      "name": "scratch.xml",
-      "file": "scratch.xml"
+      "name": "zebra.mp4",
+      "file": "zebra.mp4"
     },
     {
       "name": "scratch.png",
       "file": "scratch.png"
+    },
+    {
+      "name": "test1.swf",
+      "file": "test1.swf"
+    },
+    {
+      "name": "HandSign",
+      "file": "handsign.ttf"
+    },
+    {
+      "name": "scratch.xml",
+      "file": "scratch.xml"
     }
   ]
 }

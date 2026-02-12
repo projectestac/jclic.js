@@ -1,4 +1,12 @@
+### v2.2.1 (2026-02-12)
+#### Improvements
+- Updated peer dependencies
+
+#### Bug fixes
+- Updated "demo.jclic" file in `test/jclic-demo`
+
 ### v2.2.0 (2026-01-22)
+#### Improvements
 - Updated peer dependencies
 - jQuery upgraded to version 4. Removed inconsistences and updated calls to deprecated APIs.
 
