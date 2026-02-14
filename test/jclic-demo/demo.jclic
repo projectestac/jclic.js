@@ -5007,7 +5007,7 @@
     <p>Whenever you want, click to start.</p>
    </prevScreen>
    <document>
-    <style name="default" bold="false" foreground="0x000000" italic="false" family="Arial" size="17" background="0xFFFFFF" tabWidth="30" />
+    <style name="default" bold="false" foreground="0x000000" italic="false" family="Arial" size="17" background="0xFFFFFF" tabWidth="36" />
     <style name="target" base="default" foreground="0x0000FF" target="true" background="0xFFFFFF" />
     <style name="targetError" base="target" foreground="0xFFFFFF" background="0xFF0000" />
     <section>
@@ -5253,4 +5253,3 @@
   <media name="scratch.xml" file="scratch.xml" />
  </mediaBag>
 </JClicProject>
-

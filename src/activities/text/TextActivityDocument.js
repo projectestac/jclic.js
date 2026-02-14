@@ -29,6 +29,8 @@
  *  @module
  */
 
+/* global structuredClone */
+
 import $ from 'jquery';
 import { log, attrForEach, checkColor, getBoolean, getAttr, setAttr, getVal, getNumber, settings } from '../../Utils.js';
 import ActiveBoxContent from '../../boxes/ActiveBoxContent.js';
@@ -46,7 +48,7 @@ export class TextActivityDocument {
    */
   constructor() {
     // Make a deep clone of the default style
-    this.style = { 'default': { ...TextActivityDocument.DEFAULT_DOC_STYLE } };
+    this.style = { 'default': structuredClone(TextActivityDocument.DEFAULT_DOC_STYLE) };
     this.p = [];
   }
 

@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "main": "dist/jclic-node.js",
   "jsdelivr": "dist/jclic.min.js",
   "homepage": "https://projectestac.github.io/jclic.js",
@@ -67,7 +67,7 @@
     "patch-package": "^8.0.1",
     "po2json": "^1.0.0-alpha",
     "terser-webpack-plugin": "^5.3.16",
-    "webpack": "^5.105.1",
+    "webpack": "^5.105.2",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.3",
     "webpack-node-externals": "^3.0.0"
