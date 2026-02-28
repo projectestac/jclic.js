@@ -1,3 +1,7 @@
+### v2.2.2 (Not yet released)
+#### Improvements
+- Updated peer dependencies
+
 ### v2.2.1 (2026-02-14)
 #### Improvements
 - Updated peer dependencies
