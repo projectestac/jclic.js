@@ -1,6 +1,8 @@
-### v2.2.2 (Not yet released)
+### v2.2.2 (2026-05-18)
 #### Improvements
 - Updated peer dependencies
+- Updated Ucranian translation, thanks to [Максим Горпиніч](https://hosted.weblate.org/user/User2068/).
+- Updated Croatian translation, thanks to [Milo Ivir](https://hosted.weblate.org/user/milotype/).
 
 ### v2.2.1 (2026-02-14)
 #### Improvements
