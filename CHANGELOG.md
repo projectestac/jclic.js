@@ -1,3 +1,7 @@
+### v2.2.3 (Not yet published)
+#### Bug fixes
+- Corrected MarkDown typo in TRANSLATIONS.md
+
 ### v2.2.2 (2026-05-18)
 #### Improvements
 - Updated peer dependencies
