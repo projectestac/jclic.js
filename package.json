@@ -55,9 +55,9 @@
     "jsdom": "^29.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.29.0",
-    "@babel/eslint-parser": "^7.28.6",
-    "@babel/preset-env": "^7.29.5",
+    "@babel/core": "^7.29.7",
+    "@babel/eslint-parser": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
     "babel-loader": "^10.1.1",
     "clean-jsdoc-theme": "^4.3.2",
     "eslint": "^9.39.2",
@@ -66,9 +66,9 @@
     "jsdoc": "^4.0.5",
     "patch-package": "^8.0.1",
     "po2json": "^1.0.0-alpha",
-    "terser-webpack-plugin": "^5.6.0",
-    "webpack": "^5.107.1",
-    "webpack-cli": "^7.0.2",
+    "terser-webpack-plugin": "^5.6.1",
+    "webpack": "^5.107.2",
+    "webpack-cli": "^7.0.3",
     "webpack-dev-server": "^5.2.4",
     "webpack-node-externals": "^3.0.0"
   },
