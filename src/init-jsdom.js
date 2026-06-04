@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global global, globalThis */
-
 /**
  * Initializes some global variables needed for JClic in order to be used in nodeJS
  */

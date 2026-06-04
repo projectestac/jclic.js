@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global Audio */
-
 import { startsWith, getTriState, getAttr, setAttr, DEFAULT } from '../Utils.js';
 import ActiveMediaPlayer from './ActiveMediaPlayer.js';
 import MediaContent from './MediaContent.js';

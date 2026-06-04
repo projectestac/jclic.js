@@ -99,7 +99,7 @@ export class Encryption {
       sb = '',
       num = Number.parseInt(cA[0], 32),
       k = 0,
-      i = 0;
+      i;
 
     for (i = 0; num !== 0; i++) {
       while (num > 0) {

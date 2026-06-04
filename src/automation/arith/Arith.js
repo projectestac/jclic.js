@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global Intl */
-
 import $ from 'jquery';
 import AutoContentProvider from '../AutoContentProvider.js';
 import { getNumber, getBoolean, getAttr, setAttr, attrForEach } from '../../Utils.js';
@@ -93,7 +91,7 @@ export class Arith extends AutoContentProvider {
   setProperties($xml) {
     $xml.children().each((_n, child) => {
       const $node = $(child);
-      let xNum = '';
+      let xNum, s;
       switch (child.nodeName) {
         case 'operand':
           switch ($node.attr('id')) {
@@ -125,7 +123,7 @@ export class Arith extends AutoContentProvider {
           this.resultLimSup = getNumber(xNum === 'x' ? 0 : xNum, this.resultLimSup);
           this.resultCarry = getBoolean($node.attr('notCarry'), this.resultCarry);
           this.resultNoDup = !getBoolean($node.attr('duplicates'), !this.resultNoDup);
-          let s = $node.attr('order');
+          s = $node.attr('order');
           this.resultOrder = s === 'ascending' ? 'SORTASC' : s === 'descending' ? 'SORTDESC' : 'NOSORT';
           s = $node.attr('condition');
           this.opCond = s === 'firstBig' ? 'AGB' : s === 'lastBig' ? 'BGA' : 'INDIF';
@@ -430,7 +428,7 @@ export class Arith extends AutoContentProvider {
       tipus = [],
       numTipus, tipX,
       tipInv = this.exp_caxb,
-      va = '', vb = '', vc = '', operator = '',
+      va, vb, vc, operator,
       stra = [], strb = [], strc = [],
       nColsB = nCols, nRowsB = nRows,
       nCells = nRows * nCols,

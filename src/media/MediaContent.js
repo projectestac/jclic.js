@@ -29,18 +29,16 @@
  *  @module
  */
 
-/* global Image */
-
 import $ from 'jquery';
 import { Point } from '../AWT.js';
 import { nSlash, attrForEach, getBoolean, getAttr, setAttr, svgToURI } from '../Utils.js';
 
-import generic from './icons/generic.svg';
-import audio from './icons/audio.svg';
-import mic from './icons/mic.svg';
-import movie from './icons/movie.svg';
-import music from './icons/music.svg';
-import url from './icons/url.svg';
+import generic from './icons/generic.svg?raw';
+import audio from './icons/audio.svg?raw';
+import mic from './icons/mic.svg?raw';
+import movie from './icons/movie.svg?raw';
+import music from './icons/music.svg?raw';
+import url from './icons/url.svg?raw';
 
 /**
  * This object contains a description of any multimedia content (sound, video, MIDI, voice
@@ -187,7 +185,7 @@ export class MediaContent {
    * @returns {external:HTMLImageElement}
    */
   getIcon() {
-    let icon = null;
+    let icon;
     switch (this.type) {
       case 'PLAY_AUDIO':
       case 'PLAY_RECORDED_AUDIO':

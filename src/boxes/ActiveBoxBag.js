@@ -143,7 +143,7 @@ export class ActiveBoxBag extends BoxBag {
    * @returns {number}
    */
   countCellsAtPlace() {
-    return this.cells.reduce((n, bx) => bx.isAtPlace() ? ++n : n, 0);
+    return this.cells.reduce((n, bx) => bx.isAtPlace() ? n + 1 : n, 0);
   }
 
   /**
@@ -172,7 +172,7 @@ export class ActiveBoxBag extends BoxBag {
    * @returns {number}
    */
   countCellsAtEquivalentPlace(checkCase) {
-    return this.cells.reduce((n, bx) => this.cellIsAtEquivalentPlace(bx, checkCase) ? ++n : n, 0);
+    return this.cells.reduce((n, bx) => this.cellIsAtEquivalentPlace(bx, checkCase) ? n + 1 : n, 0);
   }
 
   /**
@@ -181,7 +181,7 @@ export class ActiveBoxBag extends BoxBag {
    * @returns {number}
    */
   countCellsWithIdAss(idAss) {
-    return this.cells.reduce((n, bx) => bx.idAss === idAss ? ++n : n, 0);
+    return this.cells.reduce((n, bx) => bx.idAss === idAss ? n + 1 : n, 0);
   }
 
   /**

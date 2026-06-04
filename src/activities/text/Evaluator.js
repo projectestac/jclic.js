@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global window */
-
 import { log, attrForEach, getBoolean, setAttr, getAttr } from '../../Utils.js';
 
 /**
@@ -413,7 +411,7 @@ export class ComplexEvaluator extends BasicEvaluator {
    * @returns {number}
    */
   countFlagsOk(flags) {
-    return flags.reduce((n, v) => v == 0 ? ++n : n, 0);
+    return flags.reduce((n, v) => v == 0 ? n + 1 : n, 0);
   }
 
   /**
@@ -435,20 +433,15 @@ export class ComplexEvaluator extends BasicEvaluator {
       iok = 0,
       lastIs = 0,
       lastiok = true,
-      result = true,
-      chs = '',
-      chok = '';
+      result = true;
 
     if (ls === 0 || lok === 0 || src === null || ok === null)
       return false;
 
     for (; is < ls; is++, iok++) {
-      chs = src.charAt(is);
+      const chs = src.charAt(is);
+      const chok = (iok >= 0 && iok < lok) ? ok.charAt(iok) : 0;
       lastIs = is;
-      if (iok >= 0 && iok < lok)
-        chok = ok.charAt(iok);
-      else
-        chok = 0;
       if (this.collator.compare(chs, chok) === 0) {
         attr[is] = 0;
         lastiok = true;

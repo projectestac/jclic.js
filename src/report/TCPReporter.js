@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global Promise, document, window, XMLSerializer */
-
 import $ from 'jquery';
 import Reporter from './Reporter.js';
 import { log, startsWith, getMsg } from '../Utils.js';
@@ -60,7 +58,7 @@ export class TCPReporter extends Reporter {
    * @returns {string}
    */
   getProperty(key, defaultValue) {
-    return this.dbProperties !== null && this.dbProperties.hasOwnProperty(key) ?
+    return this.dbProperties !== null && Object.prototype.hasOwnProperty.call(this.dbProperties, key) ?
       this.dbProperties[key] :
       defaultValue;
   }

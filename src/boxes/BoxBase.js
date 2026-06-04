@@ -153,7 +153,7 @@ export class BoxBase {
    * @returns {any} - The object or value associated to this property
    */
   get(property) {
-    if (this.hasOwnProperty(property) || this.parent === null)
+    if (Object.prototype.hasOwnProperty.call(this, property) || this.parent === null)
       return this[property];
     else
       return this.parent.get(property);
@@ -176,7 +176,7 @@ export class BoxBase {
    * @returns {any} - The object or value associated to this property
    */
   getOwn(property) {
-    if (this.hasOwnProperty(property))
+    if (Object.prototype.hasOwnProperty.call(this, property))
       return this[property];
     else if (this.parent !== null)
       return this.parent.getOwn(property);

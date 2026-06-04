@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global window */
-
 import $ from 'jquery';
 import { settings, log, getMsg, attrForEach, nSlash, getBoolean, getXmlText, checkColor, isNullOrUndef, getAttr, setAttr } from './Utils.js';
 import { Rectangle, Gradient, Point, Dimension, Container } from './AWT.js';
@@ -140,6 +138,7 @@ export class Activity {
     // Read specific nodes
     $xml.children().each((_n, child) => {
       const $node = $(child);
+      let cellSet;
       switch (child.nodeName) {
         case 'settings':
           // Read more attributes
@@ -257,7 +256,7 @@ export class Activity {
         // Settings specific to panel-type activities (puzzles, associations...)
         case 'cells':
           // Read the [ActiveBagContent](ActiveBagContent.html) objects
-          const cellSet = new ActiveBagContent().setProperties($node, this.project.mediaBag);
+          cellSet = new ActiveBagContent().setProperties($node, this.project.mediaBag);
           // Valid ids:
           // - Panel activities: 'primary', 'secondary', solvedPrimary'
           // - Textpanel activities: 'acrossClues', 'downClues', 'answers'

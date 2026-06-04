@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global window */
-
 import $ from 'jquery';
 import { Activity, ActivityPanel } from '../../Activity.js';
 import BoxBase from '../../boxes/BoxBase.js';
@@ -41,9 +39,9 @@ import ActiveBox from '../../boxes/ActiveBox.js';
 import { Rectangle, Point } from '../../AWT.js';
 import { settings, svgToURI } from '../../Utils.js';
 
-// Use Webpack to import SVG files
-import hIcon from './icons/hIcon.svg';
-import vIcon from './icons/vIcon.svg';
+// Use Vite to import SVG files
+import hIcon from './icons/hIcon.svg?raw';
+import vIcon from './icons/vIcon.svg?raw';
 
 /**
  * This class of {@link module:Activity.Activity Activity} shows a {@link module:boxes/TextGrid.TextGrid TextGrid} initially empty, with some cells
@@ -328,17 +326,17 @@ export class CrossWordPanel extends ActivityPanel {
    */
   processEvent(event) {
     if (this.playing) {
+      let x, y, p, delayedActions, code, dx, dy;
       switch (event.type) {
         case 'click':
           //
           // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
           // Touch events can have more than one touch, so `pageX` must be obtained from `touches[0]`
-          const
-            x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX,
-            y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY,
-            p = new Point(x - this.$div.offset().left, y - this.$div.offset().top),
-            // Array to be filled with actions to be executed at the end of event processing
-            delayedActions = [];
+          x = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageX : event.pageX;
+          y = event.originalEvent && event.originalEvent.touches ? event.originalEvent.touches[0].pageY : event.pageY;
+          p = new Point(x - this.$div.offset().left, y - this.$div.offset().top);
+          // Array to be filled with actions to be executed at the end of event processing
+          delayedActions = [];
 
           this.ps.stopMedia(1);
           if (this.grid.contains(p)) {
@@ -364,7 +362,7 @@ export class CrossWordPanel extends ActivityPanel {
           break;
 
         case 'keypress':
-          const code = event.charCode || event.keyCode;
+          code = event.charCode || event.keyCode;
           if (code && this.grid.getCursor()) {
             event.preventDefault();
             this.writeChars(String.fromCharCode(code));
@@ -372,7 +370,8 @@ export class CrossWordPanel extends ActivityPanel {
           break;
 
         case 'keydown':
-          let dx = 0, dy = 0;
+          dx = 0;
+          dy = 0;
           switch (event.keyCode) {
             case settings.VK.RIGHT:
               dx = 1;

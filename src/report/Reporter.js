@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global Promise, window */
-
 import $ from 'jquery';
 import SessionReg from './SessionReg.js';
 import Encryption from './EncryptMin.js';
@@ -78,10 +76,10 @@ export class Reporter {
     let result = null;
     if (className === null) {
       className = 'Reporter';
-      if (ps.options.hasOwnProperty('reporter'))
+      if (Object.prototype.hasOwnProperty.call(ps.options, 'reporter'))
         className = ps.options.reporter;
     }
-    if (Reporter.CLASSES.hasOwnProperty(className))
+    if (Object.prototype.hasOwnProperty.call(Reporter.CLASSES, className))
       result = new Reporter.CLASSES[className](ps);
     else
       log('error', 'Unknown reporter class: %s', className);

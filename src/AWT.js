@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global console, window */
-
 import $ from 'jquery';
 import { settings, findParentsWithChild, getBoolean, getAttr, setAttr, checkColor, colorHasTransparency, fx } from './Utils.js';
 import WebFont from 'webfontloader';
@@ -238,11 +236,11 @@ export class Font {
       css = {};
     css['font-family'] = this.family;
     css['font-size'] = `${this.size}px`;
-    if (this.hasOwnProperty('bold'))
+    if (Object.prototype.hasOwnProperty.call(this, 'bold'))
       css['font-weight'] = this.bold ? 'bold' : 'normal';
-    if (this.hasOwnProperty('italic'))
+    if (Object.prototype.hasOwnProperty.call(this, 'italic'))
       css['font-style'] = this.italic ? 'italic' : 'normal';
-    if (this.hasOwnProperty('variant'))
+    if (Object.prototype.hasOwnProperty.call(this, 'variant'))
       css['font-variant'] = this.variant;
     return css;
   }
@@ -1013,7 +1011,7 @@ export class Shape {
 
 Object.assign(Shape.prototype, {
   /**
-   * Shape type id
+   * Shape type id (Rectangle, ellipse, path...)
    * @name module:AWT.Shape#type
    * @type {string} */
   type: 'shape',
@@ -1022,11 +1020,6 @@ Object.assign(Shape.prototype, {
    * @name module:AWT.Shape#pos
    * @type {module:AWT.Point} */
   pos: new Point(),
-  /**
-   * The type of shape (Rectangle, ellipse, path...)
-   * @name module:AWT.Shape#type
-   * @type {string} */
-  type: 'shape',
 });
 
 /**
@@ -1498,7 +1491,7 @@ export class Path extends Shape {
       // Using the "Ray casting algorithm" described in [https://en.wikipedia.org/wiki/Point_in_polygon]
       const N = this.enclosingPoints.length;
       let
-        xinters = 0,
+        xinters,
         counter = 0,
         p1 = this.enclosingPoints[0];
 

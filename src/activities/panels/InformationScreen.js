@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global window */
-
 import $ from 'jquery';
 import { Activity, ActivityPanel } from '../../Activity.js';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid.js';

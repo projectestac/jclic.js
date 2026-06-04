@@ -29,22 +29,20 @@
  *  @module
  */
 
-/* global Promise, window, document, navigator, ClipboardItem, Blob */
-
 import $ from 'jquery';
 import { appendStyleAtHead, cloneObject, getMsg, setLogLevel, log, getRootHead, toCssSize, $HTML, getPercent, getHMStime, settings } from '../Utils.js';
 import { Container, Dimension, Rectangle } from '../AWT.js';
 
-// Use Webpack to import CSS and SVG files
-import basicCSS from './assets/basic.css';
-import waitAnimCSS from './assets/waitAnim.css';
-import reportsCSS from './assets/reports.css';
-import waitImgSmall from './assets/waitImgSmall.svg';
-import waitImgBig from './assets/waitImgBig.svg';
-import appLogo from './assets/appLogo.svg';
-import closeDialogIcon from './assets/closeDialogIcon.svg';
-import okDialogIcon from './assets/okDialogIcon.svg';
-import copyIcon from './assets/copyIcon.svg';
+// Use Vite to import CSS and SVG files
+import basicCSS from './assets/basic.css?raw';
+import waitAnimCSS from './assets/waitAnim.css?raw';
+import reportsCSS from './assets/reports.css?raw';
+import waitImgSmall from './assets/waitImgSmall.svg?raw';
+import waitImgBig from './assets/waitImgBig.svg?raw';
+import appLogo from './assets/appLogo.svg?raw';
+import closeDialogIcon from './assets/closeDialogIcon.svg?raw';
+import okDialogIcon from './assets/okDialogIcon.svg?raw';
+import copyIcon from './assets/copyIcon.svg?raw';
 
 /**
  * This abstract class manages the layout, position ans size of the visual components of JClic:
@@ -87,8 +85,7 @@ export class Skin extends Container {
       appendStyleAtHead(css.replace(/\.ID/g, `.${this.skinId}`), ps);
     }
 
-    let msg = '';
-
+    let msg;
     this.$div = $('<div/>', { class: this.skinId });
     this.$playerCnt = $('<div/>', { class: 'JClicPlayerCnt' });
 

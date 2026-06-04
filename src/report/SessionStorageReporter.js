@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global window */
-
 import Reporter from './Reporter.js';
 
 /**

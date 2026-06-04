@@ -114,8 +114,108 @@ import OrangeSkin from './skins/OrangeSkin.js';
 import SimpleSkin from './skins/SimpleSkin.js';
 import Skin from './skins/Skin.js';
 
-// Export all JClic core classes plus jQuery, so they can be used in NodeJS
-export default ({
+export const JClicActivityClasses = {
+  ComplexAssociation,
+  SimpleAssociation,
+  MemoryGame,
+  Explore,
+  Identify,
+  InformationScreen,
+  Menu,
+  DoublePuzzle,
+  ExchangePuzzle,
+  HolePuzzle,
+  Complete,
+  Evaluator,
+  FillInBlanks,
+  CrossWord,
+  WordSearch,
+  IdentifyText,
+  OrderText,
+  TextActivityBase,
+  TextActivityDocument,
+  WrittenAnswer,
+};
+
+export const JClicAutomationClasses = {
+  Arith,
+  AutoContentProvider,
+};
+
+export const JClicBagClasses = {
+  ActivitySequenceElement,
+  ActivitySequence,
+  ActivitySequenceJump,
+  ConditionalJumpInfo,
+  JumpInfo,
+  MediaBagElement,
+  MediaBag,
+};
+
+export const JClicBoxClasses = {
+  AbstractBox,
+  ActiveBagContent,
+  ActiveBoxBag,
+  ActiveBoxContent,
+  ActiveBoxGrid,
+  ActiveBox,
+  BoxBag,
+  BoxBase,
+  BoxConnector,
+  TextGridContent,
+  TextGrid,
+};
+
+export const JClicMediaClasses = {
+  ActiveMediaBag,
+  ActiveMediaPlayer,
+  AudioBuffer,
+  EventSoundsElement,
+  EventSounds,
+  MediaContent,
+  MidiAudioPlayer,
+};
+
+export const JClicProjectClasses = {
+  JClicProject,
+  ProjectSettings,
+};
+
+export const JClicReportClasses = {
+  ActionReg,
+  ActivityReg,
+  EncryptMin,
+  Reporter,
+  SCORM,
+  SequenceReg,
+  SessionReg,
+  SessionStorageReporter,
+  TCPReporter,
+};
+
+export const JClicShaperClasses = {
+  ClassicJigSaw,
+  Holes,
+  JigSaw,
+  Rectangular,
+  Shaper,
+  TriangularJigSaw,
+};
+
+export const JClicSkinClasses = {
+  BlueSkin,
+  Counter,
+  CustomSkin,
+  DefaultSkin,
+  EmptySkin,
+  GreenSkin,
+  MiniSkin,
+  OrangeSkin,
+  SimpleSkin,
+  Skin,
+};
+
+const ALL_CLASSES = {
   $,
   AWT,
   Activity,
@@ -124,96 +224,28 @@ export default ({
   Utils,
   PlayerHistory,
   JClicProject,
-  activities: {
-    ComplexAssociation,
-    SimpleAssociation,
-    MemoryGame,
-    Explore,
-    Identify,
-    InformationScreen,
-    Menu,
-    DoublePuzzle,
-    ExchangePuzzle,
-    HolePuzzle,
-    Complete,
-    Evaluator,
-    FillInBlanks,
-    CrossWord,
-    WordSearch,
-    IdentifyText,
-    OrderText,
-    TextActivityBase,
-    TextActivityDocument,
-    WrittenAnswer,
-  },
-  automation: {
-    Arith,
-    AutoContentProvider,
-  },
-  bags: {
-    ActivitySequenceElement,
-    ActivitySequence,
-    ActivitySequenceJump,
-    ConditionalJumpInfo,
-    JumpInfo,
-    MediaBagElement,
-    MediaBag,
-  },
-  boxes: {
-    AbstractBox,
-    ActiveBagContent,
-    ActiveBoxBag,
-    ActiveBoxContent,
-    ActiveBoxGrid,
-    ActiveBox,
-    BoxBag,
-    BoxBase,
-    BoxConnector,
-    TextGridContent,
-    TextGrid,
-  },
-  media: {
-    ActiveMediaBag,
-    ActiveMediaPlayer,
-    AudioBuffer,
-    EventSoundsElement,
-    EventSounds,
-    MediaContent,
-    MidiAudioPlayer,
-  },
-  project: {
-    JClicProject,
-    ProjectSettings,
-  },
-  report: {
-    ActionReg,
-    ActivityReg,
-    EncryptMin,
-    Reporter,
-    SCORM,
-    SequenceReg,
-    SessionReg,
-    SessionStorageReporter,
-    TCPReporter,
-  },
-  shapers: {
-    ClassicJigSaw,
-    Holes,
-    JigSaw,
-    Rectangular,
-    Shaper,
-    TriangularJigSaw,
-  },
-  skins: {
-    BlueSkin,
-    Counter,
-    CustomSkin,
-    DefaultSkin,
-    EmptySkin,
-    GreenSkin,
-    MiniSkin,
-    OrangeSkin,
-    SimpleSkin,
-    Skin,
-  },
-});
+  JClicActivityClasses,
+  JClicAutomationClasses,
+  JClicBagClasses,
+  JClicBoxClasses,
+  JClicMediaClasses,
+  JClicProjectClasses,
+  JClicReportClasses,
+  JClicShaperClasses,
+  JClicSkinClasses,
+};
+
+// Export other main classes and jQuery
+export {
+  $,
+  AWT,
+  Activity,
+  GlobalData,
+  JClicPlayer,
+  Utils,
+  PlayerHistory,
+  JClicProject
+};
+
+// Default export of all JClic core classes and jQuery
+export default (ALL_CLASSES);

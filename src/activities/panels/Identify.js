@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global window */
-
 import $ from 'jquery';
 import { Activity, ActivityPanel } from '../../Activity.js';
 import ActiveBoxGrid from '../../boxes/ActiveBoxGrid.js';
@@ -292,12 +290,12 @@ export class IdentifyPanel extends ActivityPanel {
       let m = false;
       // Array to be filled with actions to be executed at the end of event processing
       const delayedActions = [];
-
+      let bx;
       switch (event.type) {
         case 'click':
           this.ps.stopMedia(1);
           // Find the box behind the clicked point
-          const bx = this.bg ? this.bg.findActiveBox(p) : null;
+          bx = this.bg ? this.bg.findActiveBox(p) : null;
           if (bx) {
             if (bx.idAss !== -1) {
               // Check if it's a valid move

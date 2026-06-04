@@ -29,7 +29,7 @@
  *  @module
  */
 
-/* global JClicDataProject, JClicDataOptions, window, document */
+/* global JClicDataProject, JClicDataOptions */
 
 import $ from 'jquery';
 import JClicPlayer from './JClicPlayer.js';
@@ -107,7 +107,7 @@ export function loadProject(div, projectName, options = {}) {
       log('debug', 'Existing JClicPlayer found in div. I will try to reuse it.');
       player = pl;
       for (const prop of Object.getOwnPropertyNames(options)) {
-        if (!player.options.hasOwnProperty(prop) || player.options[prop] !== options[prop]) {
+        if (!Object.prototype.hasOwnProperty.call(player.options, prop) || player.options[prop] !== options[prop]) {
           log('debug', 'Existing JClicPlayer has diferent options! Creating a new one from scratch.');
           player = null;
           break;

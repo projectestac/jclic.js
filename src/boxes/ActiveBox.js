@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global document */
-
 import $ from 'jquery';
 import AbstractBox from './AbstractBox.js';
 import ActiveBoxContent from './ActiveBoxContent.js';
@@ -302,7 +300,7 @@ export class ActiveBox extends AbstractBox {
       if (abc.innerHtmlText)
         this.setHostedComponent($('<div/>').html(abc.innerHtmlText));
 
-      if (abc.hasOwnProperty('border') && this.hasBorder() !== abc.border)
+      if (Object.prototype.hasOwnProperty.call(abc, 'border') && this.hasBorder() !== abc.border)
         this.setBorder(abc.border);
       this.setInactive(false);
       if (abc.amp)

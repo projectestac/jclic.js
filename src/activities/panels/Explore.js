@@ -279,10 +279,11 @@ export class ExplorePanel extends ActivityPanel {
         // Array to be filled with actions to be executed at the end of event processing
         delayedActions = [];
 
+      let bx1;
       switch (event.type) {
         case 'click':
           this.ps.stopMedia(1);
-          const bx1 = this.bgA.findActiveBox(p);
+          bx1 = this.bgA.findActiveBox(p);
           if (bx1) {
             const bx2 = this.bgB.getActiveBox(0);
             if (bx1.idAss !== -1 && (!this.act.useOrder || bx1.idOrder === this.currentItem)) {

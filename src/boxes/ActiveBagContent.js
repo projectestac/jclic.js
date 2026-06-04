@@ -103,14 +103,15 @@ export class ActiveBagContent {
 
     $xml.children().each((_n, child) => {
       const $node = $(child);
+      let shaperClassName, nCols, nRows;
       switch (child.nodeName) {
         case 'style':
           this.style = new BoxBase(null).setProperties($node);
           break;
         case 'shaper':
-          const shaperClassName = $node.attr('class'),
-            nCols = Math.max(1, $node.attr('cols')),
-            nRows = Math.max(1, $node.attr('rows'));
+          shaperClassName = $node.attr('class');
+          nCols = Math.max(1, $node.attr('cols'));
+          nRows = Math.max(1, $node.attr('rows'));
           this.shaper = Shaper.getShaper(shaperClassName, nCols, nRows);
           this.shaper.setProperties($node);
           break;

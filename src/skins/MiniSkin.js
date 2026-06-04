@@ -32,8 +32,8 @@
 import Skin from './Skin.js';
 import DefaultSkin from './DefaultSkin.js';
 
-// Use Webpack to import CSS and SVG files
-import skinCSS from './assets/mini.css';
+// Use Vite to import CSS and SVG files
+import skinCSS from './assets/mini.css?raw';
 
 /**
  * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js

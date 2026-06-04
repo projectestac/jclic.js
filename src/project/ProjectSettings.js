@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global window */
-
 import $ from 'jquery';
 import EventSounds from '../media/EventSounds.js';
 import { log, getXmlNodeText, parseXmlNode, reduceTextsToStrings, parseOldDate, cleanOldLanguageTag, getAttr, setAttr } from '../Utils.js';
@@ -91,10 +89,12 @@ export class ProjectSettings {
           this.organizations.push(reduceTextsToStrings(parseXmlNode(child)));
           break;
         case 'revision':
-          const revision = reduceTextsToStrings(parseXmlNode(child));
-          if (revision.date)
-            revision.date = parseOldDate(revision.date);
-          this.revisions.push(revision);
+          {
+            const revision = reduceTextsToStrings(parseXmlNode(child));
+            if (revision.date)
+              revision.date = parseOldDate(revision.date);
+            this.revisions.push(revision);
+          }
           break;
         case 'language':
           this.languages.push(cleanOldLanguageTag(child.textContent));
@@ -118,9 +118,11 @@ export class ProjectSettings {
           break;
         case 'cover':
         case 'thumb':
-          const img = getXmlNodeText(child);
-          if (img.file)
-            this[child.nodeName] = img.file;
+          {
+            const img = getXmlNodeText(child);
+            if (img.file)
+              this[child.nodeName] = img.file;
+          }
           break;
       }
     });

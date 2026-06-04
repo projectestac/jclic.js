@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global document */
-
 import $ from 'jquery';
 import { Font } from '../AWT.js';
 import Skin from './Skin.js';
@@ -38,20 +36,20 @@ import ActiveBox from '../boxes/ActiveBox.js';
 import Counter from './Counter.js';
 import { log, getMsg, getSvg, svgToURI } from '../Utils.js';
 
-// Use Webpack to import CSS and SVG files
-import mainCSS from './assets/main.css';
-import mainCSSHalf from './assets/mainHalf.css';
-import mainCSSTwoThirds from './assets/mainTwoThirds.css';
-import prevIcon from './assets/prevIcon.svg';
-import nextIcon from './assets/nextIcon.svg';
-import fullScreenIcon from './assets/fullScreenIcon.svg';
-import fullScreenExitIcon from './assets/fullScreenExitIcon.svg';
-import closeIcon from './assets/closeIcon.svg';
-import infoIcon from './assets/infoIcon.svg';
-import reportsIcon from './assets/reportsIcon.svg';
-import timeIcon from './assets/timeIcon.svg';
-import scoreIcon from './assets/scoreIcon.svg';
-import actionsIcon from './assets/actionsIcon.svg';
+// Use Vite to import CSS and SVG files
+import mainCSS from './assets/main.css?raw';
+import mainCSSHalf from './assets/mainHalf.css?raw';
+import mainCSSTwoThirds from './assets/mainTwoThirds.css?raw';
+import prevIcon from './assets/prevIcon.svg?raw';
+import nextIcon from './assets/nextIcon.svg?raw';
+import fullScreenIcon from './assets/fullScreenIcon.svg?raw';
+import fullScreenExitIcon from './assets/fullScreenExitIcon.svg?raw';
+import closeIcon from './assets/closeIcon.svg?raw';
+import infoIcon from './assets/infoIcon.svg?raw';
+import reportsIcon from './assets/reportsIcon.svg?raw';
+import timeIcon from './assets/timeIcon.svg?raw';
+import scoreIcon from './assets/scoreIcon.svg?raw';
+import actionsIcon from './assets/actionsIcon.svg?raw';
 
 /**
  * This is the default {@link module:skins/Skin.Skin Skin} used by JClic.js

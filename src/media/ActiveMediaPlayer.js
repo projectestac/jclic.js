@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global navigator */
-
 import $ from 'jquery';
 import AudioBuffer from './AudioBuffer.js';
 

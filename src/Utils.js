@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global Promise, window, document, console, HTMLElement */
-
 import $ from 'jquery';
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
@@ -473,9 +471,9 @@ export function getXmlNodeText(node) {
   const result = parseXmlNode(node);
   return typeof result === 'string' ?
     result :
-    result.hasOwnProperty('text') ?
+    Object.prototype.hasOwnProperty.call(result, 'text') ?
       result.text :
-      result.hasOwnProperty('textContent') ?
+      Object.prototype.hasOwnProperty.call(result, 'textContent') ?
         result.textContent :
         result;
 };
@@ -589,7 +587,7 @@ export function getAttr(obj, keys = null) {
   keys = keys || Object.keys(obj);
   keys.forEach(key => {
     const [k, d] = key.split('|');
-    if (obj.hasOwnProperty(k) && typeof obj[k] !== 'undefined' && obj[k] !== null && obj[k].toString() !== d) {
+    if (Object.prototype.hasOwnProperty.call(obj, k) && typeof obj[k] !== 'undefined' && obj[k] !== null && obj[k].toString() !== d) {
       const v = getValue(obj[k]);
       if (!isEmpty(v))
         result[k] = v;
@@ -925,11 +923,11 @@ export const $HTML = {
  */
 export function getSvg(svg, width, height, fill) {
   if (width)
-    svg = svg.replace(/width=\"\d*\"/, `width="${width}"`);
+    svg = svg.replace(/width="\d*"/, `width="${width}"`);
   if (height)
-    svg = svg.replace(/height=\"\d*\"/, `height="${height}"`);
+    svg = svg.replace(/height="\d*"/, `height="${height}"`);
   if (fill)
-    svg = svg.replace(/fill=\"[#A-Za-z0-9]*\"/, `fill="${fill}"`);
+    svg = svg.replace(/fill="[#A-Za-z0-9]*"/, `fill="${fill}"`);
   return svg;
 };
 
