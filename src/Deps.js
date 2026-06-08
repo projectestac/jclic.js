@@ -149,6 +149,13 @@
 */
 
 /**
+* The HTMLLinkElement interface represents reference information for external resources and the relationship of those resources to a document and vice versa.
+* It inherits properties and methods from its parent, HTMLElement, and from LinkStyle.
+* @external HTMLLinkElement
+* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLLinkElement}
+*/
+
+/**
  * Type of MIDI instrument used by Soundfont Player
  * @external Instrument
  * @see {@link https://github.com/danigb/soundfont-player}

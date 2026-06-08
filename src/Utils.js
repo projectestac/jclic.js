@@ -1005,7 +1005,7 @@ export function getRootHead(el) {
 };
 
 /**
- * Appends a stylesheet element to the `head` or root node nearest to the given `HTMLElement`.
+ * Appends a style element to the `head` or root node nearest to the given `HTMLElement`.
  * @param {string} css - The content of the stylesheet
  * @param {module:JClicPlayer.JClicPlayer} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used as a base to find the root node
  * @returns {external:HTMLStyleElement} - The appended style element
@@ -1016,6 +1016,21 @@ export function appendStyleAtHead(css, ps) {
   style.type = 'text/css';
   style.appendChild(document.createTextNode(css));
   return root.appendChild(style);
+};
+
+/**
+ * Appends a stylesheet element to the `head` or root node nearest to the given `HTMLElement`.
+ * @param {string} href - URL pointing to the stylesheet
+ * @param {module:JClicPlayer.JClicPlayer} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used as a base to find the root node
+ * @returns {external:HTMLLinkElement} - The appended style element
+ */
+export function appendStylesheetAtHead(href, ps) {
+  const root = getRootHead(ps && ps.$topDiv ? ps.$topDiv[0] : null);
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = href;
+  link.media = 'all';
+  return root.appendChild(link);
 };
 
 /**

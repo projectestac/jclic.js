@@ -49,9 +49,9 @@ export default () => {
       outDir: 'dist-node',
       emptyOutDir: true,
       rolldownOptions: {
-        // jQuery and webfontloader need a "window" object at import time, so we need to include it in the bundle
-        // TODO: Externalize jQuery and webfontloader dependencies
-        external: ['@francesc/basic-midi-player-js', 'jszip', 'jszip-utils', 'jsdom', '@xmldom/xmldom'],
+        // jQuery need a "window" object at import time, so we need to include it in the bundle
+        // TODO: Externalize jQuery dependency
+        external: ['@francesc/basic-midi-player-js', 'jszip', 'jszip-utils', 'jsdom', '@xmldom/xmldom', /* 'jquery' */],
         output: {
           // Global variables to use in the UMD build for externalized deps
           globals: {
@@ -60,6 +60,7 @@ export default () => {
             'jszip-utils': 'JSZipUtils',
             jsdom: 'jsdom',
             '@xmldom/xmldom': 'XMLDOM',
+            // $: 'jquery',
           },
           exports: "named",
         },
