@@ -2,6 +2,9 @@
 #### Improvements
 - Use [Vite](https://vite.dev/) instead of [Webpack](https://webpack.js.org/) as default bundler.
 - Removed dependency on package [webfontloader](https://github.com/typekit/webfontloader).
+- Improved 'build-locales' script.
+- Restructured exports in Nodejs build.
+- Improved [JSDoc](https://jsdoc.app/) build.
 
 #### Bug fixes
 - Corrected MarkDown typo in TRANSLATIONS.md

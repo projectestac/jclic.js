@@ -1,8 +1,12 @@
 import { defineConfig } from "vite";
-import { resolve } from 'node:path'
+import { resolve } from 'node:path';
 import banner from "vite-plugin-banner";
 import eslint from 'vite-plugin-eslint';
 import pkg from "./package.json";
+import buildLocales from './build-locales.js';
+
+// Build `./src/GlobalData.js` from `./locales/*.po`
+buildLocales();
 
 const date = new Date();
 const version = `${pkg.version} (${date.toISOString().substring(0, 10)})`;
@@ -37,6 +41,7 @@ The full source code is freely available at:
 ${pkg?.repository?.url || '---'}
 `;
 
+// Export Vite config for NodeJS
 export default () => {
   return defineConfig({
     plugins: [banner(bannerText), eslint()],

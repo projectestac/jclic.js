@@ -85,9 +85,13 @@
     "preview": "vite --config vite.browser-config.js preview",
     "lint": "eslint src --ext .js,.css",
     "prebuild": "patch-package",
-    "build-locales": "node build-locales.mjs",
-    "build-doc": "jsdoc -c jsdoc.config.js",
+    "build-locales": "node build-locales.js",
+    "build-doc": "rm -r doc && jsdoc -c jsdoc-config.json",
     "prestart": "patch-package"
   },
-  "browserslist": "> 0.25%, not dead"
+  "browserslist": "> 0.25%, not dead",
+  "browser": {
+    "jsdom": false,
+    "@xmldom/xmldom": false
+  }
 }

@@ -4,7 +4,6 @@
  * Process a set of '.po' language files, extracting its keys and messages
  */
 
-/* global require, console, module:true */
 import fs from 'fs';
 import path from 'path';
 import po2json from 'po2json';
@@ -53,7 +52,7 @@ export function getData(locales = _LOCALES, verbose = true) {
   return opt;
 };
 
-// Generates the AMD module `GlobalData.js`, containing a single call to `define` with the content of `opt`
+// Generates the module `GlobalData.js`, containing a single call to `export` with the content of `opt`
 export function writeDataToJSFile(opt, file = _GLOBALDATA, verbose = true) {
   if (verbose)
     console.log(`Generating file ${file}`);
@@ -63,7 +62,7 @@ export function writeDataToJSFile(opt, file = _GLOBALDATA, verbose = true) {
 // WARNING: Auto-generated file, based on "language.po" files stored in "/locales". Do not edit!
 // Launch "npm run build-locales" to update this file
 
-export default ${JSON.stringify(opt)};`);
+export default ${JSON.stringify(opt, null, 2)};`);
   } catch (e) {
     console.error(`Error generating file ${file}: ${e}`);
   }
