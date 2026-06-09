@@ -7,7 +7,7 @@
   "files": [
     "dist-node"
   ],
-  "main": "./dist-node/jclic-node.cjs",
+  "main": "./dist-node/jclic-node.umd.cjs",
   "module": "./dist-node/jclic-node.js",
   "exports": {
     ".": {

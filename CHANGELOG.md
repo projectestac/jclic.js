@@ -1,4 +1,7 @@
 ### v2.3.0 (Not yet published)
+#### Breaking changes
+- `Deps` is no longer included in the globally shared object `JClicObject`.
+
 #### Improvements
 - Use [Vite](https://vite.dev/) instead of [Webpack](https://webpack.js.org/) as default bundler.
 - Removed dependency on package [webfontloader](https://github.com/typekit/webfontloader).

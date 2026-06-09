@@ -6,9 +6,9 @@
 .editorconfig
 .travis.yml
 .vscode
+.npm
 npm-debug.log
 /misc
 /build
 /doc
 /test
-/dist
