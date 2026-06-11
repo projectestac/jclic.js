@@ -1,12 +1,14 @@
-### v2.3.0 (Not yet published)
+### v2.3.0 (2026-06-11)
 #### Breaking changes
 - `Deps` is no longer included in the globally shared object `JClicObject`.
+- NodeJS builds are now created inside `/dist-node`. The standard format for `jclic-node.js` is now ESM, but a UMD build is also provided for backward compatibility (file `jclic-node.umd.cjs`).
 
 #### Improvements
-- Use [Vite](https://vite.dev/) instead of [Webpack](https://webpack.js.org/) as default bundler.
+- Use of [Vite](https://vite.dev/) instead of [Webpack](https://webpack.js.org/) as default bundler.
 - Removed dependency on package [webfontloader](https://github.com/typekit/webfontloader).
 - Improved 'build-locales' script.
 - Restructured exports in Nodejs build.
+- Demo files have also been restructured in "/test".
 - Improved [JSDoc](https://jsdoc.app/) build.
 
 #### Bug fixes
