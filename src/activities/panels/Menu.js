@@ -34,7 +34,7 @@ import { Activity, ActivityPanel } from '../../Activity.js';
 import MediaContent from '../../media/MediaContent.js';
 import { log } from '../../Utils.js';
 
-// Use Webpack to import PNG files
+// Use Vite to import PNG files
 import ico00 from './icons/ico00.png';
 import ico01 from './icons/ico01.png';
 import ico02 from './icons/ico02.png';
@@ -96,7 +96,6 @@ export class MenuPanel extends ActivityPanel {
       'flex-wrap': 'wrap',
       'overflow-y': 'auto',
       'place-content': 'center',
-      'overflow-y': 'auto'
     });
     this.act.menuElements.forEach((me) => {
       // Create a button for each menu element

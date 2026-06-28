@@ -278,12 +278,12 @@ export class HolePuzzlePanel extends ActivityPanel {
         event.pageY - this.$div.offset().top);
       // Array to be filled with actions to be executed at the end of event processing
       const delayedActions = [];
-
+      let bx;
       switch (event.type) {
         case 'click':
           this.ps.stopMedia(1);
           // Find the box behind the clicked point
-          const bx = this.bg.findActiveBox(p);
+          bx = this.bg.findActiveBox(p);
           if (bx) {
             if (bx.isVisible()) {
               // Check if it's a valid move

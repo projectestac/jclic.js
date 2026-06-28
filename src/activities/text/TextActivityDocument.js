@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global structuredClone */
-
 import $ from 'jquery';
 import { log, attrForEach, checkColor, getBoolean, getAttr, setAttr, getVal, getNumber, settings } from '../../Utils.js';
 import ActiveBoxContent from '../../boxes/ActiveBoxContent.js';
@@ -96,7 +94,7 @@ export class TextActivityDocument {
 
       // Read paragraph objects
       $(par).children().each((_n, child) => {
-        let obj;
+        let obj, attr;
         const $child = $(child);
         switch (child.nodeName) {
 
@@ -106,7 +104,7 @@ export class TextActivityDocument {
 
           case 'text':
             obj = { text: child.textContent.replace(/\t/g, '&#9;') };
-            const attr = this.readDocAttributes($child);
+            attr = this.readDocAttributes($child);
             if (!$.isEmptyObject(attr)) {
               obj.attr = attr;
             }
@@ -388,6 +386,7 @@ export class TextTarget {
    */
   setProperties($xml, mediaBag) {
     let firstAnswer = true;
+    let attr;
     // Read specific nodes
     $xml.children().each((_n, child) => {
       const $node = $(child);
@@ -439,7 +438,7 @@ export class TextTarget {
 
         case 'text':
           this.text = child.textContent.replace(/\t/g, '&#9;');
-          const attr = this.doc.readDocAttributes($(child));
+          attr = this.doc.readDocAttributes($(child));
           if (!$.isEmptyObject(attr))
             this.attr = attr;
           break;

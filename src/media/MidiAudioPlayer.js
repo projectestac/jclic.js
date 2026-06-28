@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global window */
-
 import MidiPlayer from '@francesc/basic-midi-player-js';
 import { log } from '../Utils.js';
 

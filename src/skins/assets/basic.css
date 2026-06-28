@@ -33,6 +33,7 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  /* eslint-disable-next-line css/use-baseline */
   user-select: none;
 }
 

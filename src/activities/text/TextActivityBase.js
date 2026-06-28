@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global window */
-
 import $ from 'jquery';
 import { stringToWords } from '../../Utils.js';
 import { Activity, ActivityPanel } from '../../Activity.js';
@@ -160,131 +158,137 @@ export class TextActivityBasePanel extends ActivityPanel {
         let $span;
         switch (element.objectType) {
           case 'text':
-            const parsedText = $('<span/>').html(element.text).text();
-            const fragments = this.spanText
-              ? stringToWords(parsedText)
-              : [{ text: parsedText, sep: '' }];
-            fragments.forEach(({ text, sep }) => {
-              let initialCSS = { ...this.act.document.style['default'].css };
-              if (element?.attr?.style)
-                initialCSS = { ...initialCSS, ...doc.style[element.attr.style].css };
-              if (element?.attr?.css)
-                initialCSS = { ...initialCSS, ...element.attr.css };
-              const txtBlocs = this.spanChars ? [...text] : [text];
-              txtBlocs.forEach((str) => {
-                if (element.attr) {
-                  // Text uses a specific style and/or individual attributes
-                  $span = $('<span/>').html(str).css(initialCSS);
-                  // Save initialCSS for later use
-                  $span.initialCSS = initialCSS;
-                  $p.append(this.$createSpanElement($span));
-                } else {
-                  if (this.spanText) {
-                    $span = $('<span/>').html(str);
+            {
+              const parsedText = $('<span/>').html(element.text).text();
+              const fragments = this.spanText
+                ? stringToWords(parsedText)
+                : [{ text: parsedText, sep: '' }];
+              fragments.forEach(({ text, sep }) => {
+                let initialCSS = { ...this.act.document.style['default'].css };
+                if (element?.attr?.style)
+                  initialCSS = { ...initialCSS, ...doc.style[element.attr.style].css };
+                if (element?.attr?.css)
+                  initialCSS = { ...initialCSS, ...element.attr.css };
+                const txtBlocs = this.spanChars ? [...text] : [text];
+                txtBlocs.forEach((str) => {
+                  if (element.attr) {
+                    // Text uses a specific style and/or individual attributes
+                    $span = $('<span/>').html(str).css(initialCSS);
+                    // Save initialCSS for later use
+                    $span.initialCSS = initialCSS;
                     $p.append(this.$createSpanElement($span));
+                  } else {
+                    if (this.spanText) {
+                      $span = $('<span/>').html(str);
+                      $p.append(this.$createSpanElement($span));
+                    }
+                    else
+                      $p.append(str);
                   }
-                  else
-                    $p.append(str);
-                }
+                });
+                if (sep !== '')
+                  $p.append(sep);
               });
-              if (sep !== '')
-                $p.append(sep);
-            });
+            }
             break;
 
           case 'cell':
-            // Create a new ActiveBox based on this ActiveBoxContent
-            $span = $('<span/>');
-            const box = ActiveBox.createCell($span.css({ position: 'relative' }), element);
-            $span.css({ 'display': 'inline-block', 'vertical-align': 'middle' });
-            if (element.mediaContent) {
-              $span.on('click', event => {
-                event.preventDefault();
-                this.ps.stopMedia(1);
-                box.playMedia(this.ps);
-                return false;
-              });
-            }
-            $p.append($span);
-            break;
-
-          case 'target':
-            $span = $('<span/>');
-            if (this.showingPrevScreen) {
-              $span.text(element.text);
-              $p.append($span);
-              break;
-            }
-
-            const target = element;
-            let $popup = null;
-            // Process target popups
-            if (target.infoMode !== 'no_info' && target.popupContent) {
-              $popup = $('<span/>').css({ position: 'absolute', 'padding-top': '2pt', display: 'none' });
-              // Create a new ActiveBox based on popupContent
-              const popupBox = ActiveBox.createCell($popup, target.popupContent);
-              if (target.popupContent.mediaContent) {
-                $popup.on('click', event => {
+            {
+              // Create a new ActiveBox based on this ActiveBoxContent
+              $span = $('<span/>');
+              const box = ActiveBox.createCell($span.css({ position: 'relative' }), element);
+              $span.css({ 'display': 'inline-block', 'vertical-align': 'middle' });
+              if (element.mediaContent) {
+                $span.on('click', event => {
                   event.preventDefault();
                   this.ps.stopMedia(1);
-                  if (popupBox)
-                    popupBox.playMedia(this.ps);
-                  else if (target.popupContent.mediaContent)
-                    this.ps.playMedia(target.popupContent.mediaContent);
+                  box.playMedia(this.ps);
                   return false;
                 });
               }
-              target.$popup = $popup;
-              // Save for later setting of top-margin
-              popupSpans.push({ p: $p, span: $popup, box: popupBox });
-            }
-
-            $span = this.$createTargetElement(target, $span);
-            target.num = this.targets.length;
-            target.pos = target.num;
-            this.targets.push(target);
-            if ($span) {
-              $span.css(doc.style['default'].css);
-              if (currentPStyle)
-                $span.css(currentPStyle);
-              if (this.targetsMarked) {
-                if (target.attr) {
-                  // Default style name for targets is 'target'
-                  if (!target.attr.style)
-                    target.attr.style = 'target';
-                  $span.css(doc.style[target.attr.style].css);
-                  // Check if target has specific attributes
-                  if (target.attr.css)
-                    $span.css(target.attr.css);
-                } else if (doc.style['target'])
-                  $span.css(doc.style['target'].css);
-              } else {
-                target.targetStatus = 'HIDDEN';
-              }
-
-              // Catch on-demand popups with `F1`, cancel with `Escape`
-              if ($popup !== null && target.infoMode === 'onDemand') {
-                $span.on('keydown', ev => {
-                  if (ev.key === target.popupKey) {
-                    ev.preventDefault();
-                    this.showPopup($popup, target.popupMaxTime, target.popupDelay);
-                  } else if (ev.key === 'Escape') {
-                    ev.preventDefault();
-                    this.showPopup(null);
-                  }
-                });
-              }
-            }
-
-            if ($popup && $span) {
-              if (target.isList)
-                $p.append($span).append($popup);
-              else
-                $p.append($popup).append($span);
-            } else if ($span)
               $p.append($span);
+            }
+            break;
 
-            target.$p = $p;
+          case 'target':
+            {
+              $span = $('<span/>');
+              if (this.showingPrevScreen) {
+                $span.text(element.text);
+                $p.append($span);
+                break;
+              }
+
+              const target = element;
+              let $popup = null;
+              // Process target popups
+              if (target.infoMode !== 'no_info' && target.popupContent) {
+                $popup = $('<span/>').css({ position: 'absolute', 'padding-top': '2pt', display: 'none' });
+                // Create a new ActiveBox based on popupContent
+                const popupBox = ActiveBox.createCell($popup, target.popupContent);
+                if (target.popupContent.mediaContent) {
+                  $popup.on('click', event => {
+                    event.preventDefault();
+                    this.ps.stopMedia(1);
+                    if (popupBox)
+                      popupBox.playMedia(this.ps);
+                    else if (target.popupContent.mediaContent)
+                      this.ps.playMedia(target.popupContent.mediaContent);
+                    return false;
+                  });
+                }
+                target.$popup = $popup;
+                // Save for later setting of top-margin
+                popupSpans.push({ p: $p, span: $popup, box: popupBox });
+              }
+
+              $span = this.$createTargetElement(target, $span);
+              target.num = this.targets.length;
+              target.pos = target.num;
+              this.targets.push(target);
+              if ($span) {
+                $span.css(doc.style['default'].css);
+                if (currentPStyle)
+                  $span.css(currentPStyle);
+                if (this.targetsMarked) {
+                  if (target.attr) {
+                    // Default style name for targets is 'target'
+                    if (!target.attr.style)
+                      target.attr.style = 'target';
+                    $span.css(doc.style[target.attr.style].css);
+                    // Check if target has specific attributes
+                    if (target.attr.css)
+                      $span.css(target.attr.css);
+                  } else if (doc.style['target'])
+                    $span.css(doc.style['target'].css);
+                } else {
+                  target.targetStatus = 'HIDDEN';
+                }
+
+                // Catch on-demand popups with `F1`, cancel with `Escape`
+                if ($popup !== null && target.infoMode === 'onDemand') {
+                  $span.on('keydown', ev => {
+                    if (ev.key === target.popupKey) {
+                      ev.preventDefault();
+                      this.showPopup($popup, target.popupMaxTime, target.popupDelay);
+                    } else if (ev.key === 'Escape') {
+                      ev.preventDefault();
+                      this.showPopup(null);
+                    }
+                  });
+                }
+              }
+
+              if ($popup && $span) {
+                if (target.isList)
+                  $p.append($span).append($popup);
+                else
+                  $p.append($popup).append($span);
+              } else if ($span)
+                $p.append($span);
+
+              target.$p = $p;
+            }
             break;
         }
         empty = false;

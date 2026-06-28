@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global navigator, window, document, Blob, URL, MediaRecorder */
-
 import { log } from '../Utils.js';
 
 /**

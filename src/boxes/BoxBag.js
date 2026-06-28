@@ -475,7 +475,7 @@ export class BoxBag extends AbstractBox {
    * @returns {number}
    */
   countInactiveCells() {
-    return this.cells.reduce((n, bx) => bx.isInactive() ? ++n : n, 0);
+    return this.cells.reduce((n, bx) => bx.isInactive() ? n + 1 : n, 0);
   }
 }
 

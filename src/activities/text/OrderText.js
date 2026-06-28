@@ -335,7 +335,7 @@ export class OrderTextPanel extends TextActivityBasePanel {
       return false;
 
     const target = event.textTarget;
-    let p = null;
+    let p;
     if (this.bc && this.playing && !this.showingPrevScreen) {
       //
       // _touchend_ event don't provide pageX nor pageY information

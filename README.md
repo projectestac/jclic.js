@@ -28,7 +28,7 @@ To install the required packages, just go to the project's root directory and wr
 npm ci
 ```
 
-This will install jQuery, Webpack and other needed components into `node_modules`
+This will install jQuery, Vite and other needed components into `node_modules`
 
 To build jclic.js, just invoke:
 
@@ -38,13 +38,13 @@ npm run build
 
 This will generate the main file `dist/jclic.min.js` (along with other files useful for development)
 
-To test and debug the resulting bundle, launch the webpack dev server:
+To test and debug the resulting bundle, launch the Vite dev server:
 
 ```
-npm start
+npm run dev
 ```
 
-This will launch a local HTTP server allowing to choose between pages in development mode (bundle build dynamically by [webpack-dev-server](https://webpack.js.org/configuration/dev-server/)) and in production mode (serving the latest build on `/dist`)
+This will launch a local HTTP server allowing to choose between pages in development mode bundle build dynamically by Vite and in production mode (serving the latest build on `/dist`)
 
 Full API documentation of jclic.js is available at: http://projectestac.github.io/jclic.js/doc
 
@@ -71,9 +71,7 @@ JClic.js makes use of:
 The build process of JClic.js makes use of:
 * [npm](https://www.npmjs.com/) (the package manager of [Node.js](https://nodejs.org/)) to build, install, update and track package dependencies
 * [ESLint](https://eslint.org/) to check for errors and lint the source code
-* [webpack](https://webpack.js.org/) to bundle all components together
-* [Babel](https://babeljs.io/) to make it also compatible with old versions of some browsers
-* [terser](https://terser.org/) to minimize the size of the final deliverable script
+* [Vite](https://vite.dev/) to bundle all components together
 * [JSDoc](http://usejsdoc.org/) and [ink-bootstrap](https://github.com/docstrap/docstrap) to build the [API docs](http://projectestac.github.io/jclic.js/doc)
 
 ## Sponsors that make possible JClic.js

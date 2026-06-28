@@ -29,7 +29,138 @@
  *  @module
  */
 
-/* global Promise, window, document, console, HTMLElement */
+// Declaration of JSDoc external objects:
+
+/**
+ * The Event interface represents an event which takes place in the DOM.
+ * @external Event
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Event}
+ */
+
+/**
+ * The HTMLElement interface represents any HTML element. Some elements directly implement this
+ * interface, others implement it via an interface that inherits it.
+ * @external HTMLElement
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/API/HTMLElement}
+ */
+
+/**
+ * A jQuery object
+ * @external jQuery
+ * @see {@link http://api.jquery.com/jQuery/}
+ */
+
+/**
+ * The jQuery XMLHttpRequest (jqXHR) object returned by `$.ajax()` as of jQuery 1.5 is a superset
+ * of the browser's native [XMLHttpRequest](https://developer.mozilla.org/docs/XMLHttpRequest) object.
+ * As of jQuery 1.5, jqXHR objects implement the Promise interface, giving them
+ * all the properties, methods, and behavior of a Promise.
+ * @external jqXHR
+ * @see {@link https://api.jquery.com/jQuery.ajax/#jqXHR}
+ */
+
+/**
+ * The CanvasRenderingContext2D interface provides the 2D rendering context for the drawing surface
+ * of a &lt;canvas&gt; element.
+ * @external CanvasRenderingContext2D
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D}
+ */
+
+/**
+ * The HTMLImageElement interface provides special properties and methods (beyond the regular
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement HTMLElement} interface it
+ * also has available to it by inheritance) for manipulating the layout and presentation of
+ * &lt;img&gt; elements.
+ * @external HTMLImageElement
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement}
+ */
+
+/**
+ * The HTMLAudioElement interface provides access to the properties of &lt;audio&gt; elements, as
+ * well as methods to manipulate them. It derives from the
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement HTMLMediaElement} interface.
+ * @external HTMLAudioElement
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement}
+ */
+
+/**
+ * The AudioContext interface represents an audio-processing graph built from audio modules linked together.
+ * @external AudioContext
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/AudioContext}
+ */
+
+/**
+ * The Intl.Collator object is a constructor for collators, objects that enable language sensitive
+ * string comparison.
+ * @external Collator
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Collator}
+ */
+
+/**
+ * A JSZip object
+ * @external JSZip
+ * @see {@link https://stuk.github.io/jszip}
+ */
+
+/**
+ * The MediaRecorder interface of the {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API MediaRecorder API}
+ * provides functionality to easily capture media.
+ * @external MediaRecorder
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/API/MediaRecorder}
+ */
+
+/**
+ * The Promise object is used for asynchronous computations. A Promise represents an operation
+ * that hasn't completed yet, but is expected in the future.
+ * @external Promise
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise}
+ */
+
+/**
+* The Storage interface of the Web Storage API provides access to the session storage or local storage for a particular domain,
+* allowing you to for example add, modify or delete stored data items.
+* @external Storage
+* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Storage}
+*/
+
+/**
+ * The NamedNodeMap interface represents a collection of Attr objects. Objects inside a NamedNodeMap are not in any particular
+ * order, unlike NodeList, although they may be accessed by an index as in an array.
+ * @external NamedNodeMap
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap}
+ */
+
+/**
+ * MidiPlayerJS is a JavaScript library which reads standard MIDI files and emits JSON events in real time.
+ * @external MidiPlayerJS
+ * @see {@link https://github.com/grimmdude/MidiPlayerJS}
+ */
+
+/**
+ * JavaScript Date objects represent a single moment in time in a platform-independent format.
+ * @external Date
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date}
+ */
+
+/**
+* The HTMLStyleElement interface represents a [style](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/style) element.
+* It inherits properties and methods from its parent, HTMLElement, and from LinkStyle.
+* @external HTMLStyleElement
+* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLStyleElement}
+*/
+
+/**
+* The HTMLLinkElement interface represents reference information for external resources and the relationship of those resources to a document and vice versa.
+* It inherits properties and methods from its parent, HTMLElement, and from LinkStyle.
+* @external HTMLLinkElement
+* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLLinkElement}
+*/
+
+/**
+ * Type of MIDI instrument used by Soundfont Player
+ * @external Instrument
+ * @see {@link https://github.com/danigb/soundfont-player}
+ */
 
 import $ from 'jquery';
 import JSZip from 'jszip';
@@ -473,9 +604,9 @@ export function getXmlNodeText(node) {
   const result = parseXmlNode(node);
   return typeof result === 'string' ?
     result :
-    result.hasOwnProperty('text') ?
+    Object.prototype.hasOwnProperty.call(result, 'text') ?
       result.text :
-      result.hasOwnProperty('textContent') ?
+      Object.prototype.hasOwnProperty.call(result, 'textContent') ?
         result.textContent :
         result;
 };
@@ -589,7 +720,7 @@ export function getAttr(obj, keys = null) {
   keys = keys || Object.keys(obj);
   keys.forEach(key => {
     const [k, d] = key.split('|');
-    if (obj.hasOwnProperty(k) && typeof obj[k] !== 'undefined' && obj[k] !== null && obj[k].toString() !== d) {
+    if (Object.prototype.hasOwnProperty.call(obj, k) && typeof obj[k] !== 'undefined' && obj[k] !== null && obj[k].toString() !== d) {
       const v = getValue(obj[k]);
       if (!isEmpty(v))
         result[k] = v;
@@ -925,11 +1056,11 @@ export const $HTML = {
  */
 export function getSvg(svg, width, height, fill) {
   if (width)
-    svg = svg.replace(/width=\"\d*\"/, `width="${width}"`);
+    svg = svg.replace(/width="\d*"/, `width="${width}"`);
   if (height)
-    svg = svg.replace(/height=\"\d*\"/, `height="${height}"`);
+    svg = svg.replace(/height="\d*"/, `height="${height}"`);
   if (fill)
-    svg = svg.replace(/fill=\"[#A-Za-z0-9]*\"/, `fill="${fill}"`);
+    svg = svg.replace(/fill="[#A-Za-z0-9]*"/, `fill="${fill}"`);
   return svg;
 };
 
@@ -1007,7 +1138,7 @@ export function getRootHead(el) {
 };
 
 /**
- * Appends a stylesheet element to the `head` or root node nearest to the given `HTMLElement`.
+ * Appends a style element to the `head` or root node nearest to the given `HTMLElement`.
  * @param {string} css - The content of the stylesheet
  * @param {module:JClicPlayer.JClicPlayer} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used as a base to find the root node
  * @returns {external:HTMLStyleElement} - The appended style element
@@ -1018,6 +1149,21 @@ export function appendStyleAtHead(css, ps) {
   style.type = 'text/css';
   style.appendChild(document.createTextNode(css));
   return root.appendChild(style);
+};
+
+/**
+ * Appends a stylesheet element to the `head` or root node nearest to the given `HTMLElement`.
+ * @param {string} href - URL pointing to the stylesheet
+ * @param {module:JClicPlayer.JClicPlayer} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used as a base to find the root node
+ * @returns {external:HTMLLinkElement} - The appended style element
+ */
+export function appendStylesheetAtHead(href, ps) {
+  const root = getRootHead(ps && ps.$topDiv ? ps.$topDiv[0] : null);
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = href;
+  link.media = 'all';
+  return root.appendChild(link);
 };
 
 /**

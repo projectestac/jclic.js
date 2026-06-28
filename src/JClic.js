@@ -29,14 +29,22 @@
  *  @module
  */
 
-/* global JClicDataProject, JClicDataOptions, window, document */
+/* global JClicDataProject, JClicDataOptions */
 
 import $ from 'jquery';
-import JClicPlayer from './JClicPlayer.js';
-import JClicProject from './project/JClicProject.js';
-import AWT from './AWT.js';
-import Utils, { init, log } from './Utils.js';
-import Deps from './Deps.js';
+import JClicPlayer from './JClicPlayer';
+import { JClicProject } from './project';
+import AWT from './AWT';
+import Utils, { init, log } from './Utils';
+
+// The purpose of these exports is to ensure that certain classes derived from the main objects of
+// JClic ([Activity](Activity.html), [Shaper](Shaper.html), [Skin](Skin.html) and
+// [AutoContentProvider](AutoContentProvider.html)) are loaded at the beginning:
+export * from './skins';
+export * from './shapers';
+export * from './automation';
+export * from './report';
+export * from './activities';
 
 /**
  * This is the main method of JClic
@@ -75,7 +83,6 @@ import Deps from './Deps.js';
  * </caption><div class ="JClic" data-project="myproject.jclic" data-options='{"fade":"400","lang":"es","reporter":"TCPReporter","user":"test01","path":"localhost:9090"}'></div>
  */
 export const JClicObject = {
-  Deps,
   JClicPlayer,
   JClicProject,
   AWT,
@@ -107,7 +114,7 @@ export function loadProject(div, projectName, options = {}) {
       log('debug', 'Existing JClicPlayer found in div. I will try to reuse it.');
       player = pl;
       for (const prop of Object.getOwnPropertyNames(options)) {
-        if (!player.options.hasOwnProperty(prop) || player.options[prop] !== options[prop]) {
+        if (!Object.prototype.hasOwnProperty.call(player.options, prop) || player.options[prop] !== options[prop]) {
           log('debug', 'Existing JClicPlayer has diferent options! Creating a new one from scratch.');
           player = null;
           break;

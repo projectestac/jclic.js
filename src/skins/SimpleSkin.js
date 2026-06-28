@@ -33,10 +33,10 @@ import $ from 'jquery';
 import Skin from './Skin.js';
 import DefaultSkin from './DefaultSkin.js';
 
-// Use Webpack to import CSS and SVG files
-import skinCSS from './assets/simple.css';
-import skinCSSHalf from './assets/simpleHalf.css';
-import skinCSSTwoThirds from './assets/simpleTwoThirds.css';
+// Use Vite to import CSS and SVG files
+import skinCSS from './assets/simple.css?raw';
+import skinCSSHalf from './assets/simpleHalf.css?raw';
+import skinCSSTwoThirds from './assets/simpleTwoThirds.css?raw';
 
 /**
  * This is a variant of the default {@link module:skins/Skin.Skin Skin} used by JClic.js

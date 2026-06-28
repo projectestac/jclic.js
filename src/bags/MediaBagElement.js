@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global URL, Uint8Array, XMLHttpRequest, Image, document */
-
 import $ from 'jquery';
 import MidiAudioPlayer from '../media/MidiAudioPlayer.js';
 import { log, settings, nSlash, getAttr, isEmpty, getPathPromise, parseXmlNode, appendStyleAtHead } from '../Utils.js';
@@ -270,12 +268,11 @@ export class MediaBagElement {
     if (!this.data)
       this.getFullPathPromise()
         .then(fullPath => {
+          let format, css;
           switch (this.type) {
             case 'font':
-              const
-                format = this.ext === 'ttf' ? 'truetype' : this.ext === 'otf' ? 'embedded-opentype' : this.ext,
-                css = `@font-face{font-family:"${this.fontName}";src:url(${fullPath}) format("${format}");}`;
-
+              format = this.ext === 'ttf' ? 'truetype' : this.ext === 'otf' ? 'embedded-opentype' : this.ext;
+              css = `@font-face{font-family:"${this.fontName}";src:url(${fullPath}) format("${format}");}`;
               appendStyleAtHead(css, ps);
               this.data = new Font(this.name);
               this.ready = true;
@@ -343,19 +340,21 @@ export class MediaBagElement {
               break;
 
             case 'midi':
-              const request = new XMLHttpRequest();
-              request.onreadystatechange = () => {
-                if (request.readyState === 4) {
-                  if (request.status === 200)
-                    this.data = new MidiAudioPlayer(request.response, ps && ps.options);
-                  else
-                    log('error', `Error loading ${this.name}: ${request.statusText}`);
-                  this._onReady();
-                }
-              };
-              request.open('GET', fullPath, true);
-              request.responseType = 'arraybuffer';
-              request.send();
+              {
+                const request = new XMLHttpRequest();
+                request.onreadystatechange = () => {
+                  if (request.readyState === 4) {
+                    if (request.status === 200)
+                      this.data = new MidiAudioPlayer(request.response, ps && ps.options);
+                    else
+                      log('error', `Error loading ${this.name}: ${request.statusText}`);
+                    this._onReady();
+                  }
+                };
+                request.open('GET', fullPath, true);
+                request.responseType = 'arraybuffer';
+                request.send();
+              }
               break;
 
             default:

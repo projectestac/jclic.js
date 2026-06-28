@@ -67,6 +67,7 @@ export class ActivitySequenceElement {
           break;
         case 'description':
         // possible navButtons values are: `none`, `fwd`, `back` or `both`
+        // eslint-disable-next-line no-fallthrough
         case 'navButtons':
           this[name] = val;
           break;

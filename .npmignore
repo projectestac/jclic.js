@@ -5,15 +5,10 @@
 .jshintrc
 .editorconfig
 .travis.yml
+.vscode
+.npm
 npm-debug.log
 /misc
 /build
 /doc
-/docco
-/deploy
-/groc
-/nbproject
 /test
-/bower_components
-
-

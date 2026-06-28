@@ -1,4 +1,4 @@
-#How to translate JClic.js
+# How to translate JClic.js
 
 [JClic.js](https://projectestac.github.io/jclic.js) makes use of a small set of strings, mostly placed in button tooltips and user reports.
 

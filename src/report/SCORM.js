@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global window */
-
 import $ from 'jquery';
 import { log } from '../Utils.js';
 

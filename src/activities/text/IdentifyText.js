@@ -169,10 +169,10 @@ class IdentifyTextPanel extends TextActivityBasePanel {
 
     const target = event.textTarget;
     const $spanElement = event.$spanElement;
-
+    let text, pos, ok;
     switch (event.type) {
       case 'click':
-        let text, pos, ok = false;
+        ok = false;
         if (target) {
           if (target.targetStatus === 'SOLVED')
             target.targetStatus = 'HIDDEN';

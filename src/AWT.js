@@ -29,11 +29,8 @@
  *  @module
  */
 
-/* global console, window */
-
 import $ from 'jquery';
-import { settings, findParentsWithChild, getBoolean, getAttr, setAttr, checkColor, colorHasTransparency, fx } from './Utils.js';
-import WebFont from 'webfontloader';
+import { settings, findParentsWithChild, getBoolean, getAttr, setAttr, checkColor, colorHasTransparency, appendStylesheetAtHead, fx, log } from './Utils.js';
 
 /**
  * Font contains properties and provides methods to manage fonts
@@ -73,9 +70,8 @@ export class Font {
     // Load own fonts and remove it from the substitution table
     if (options && options.ownFonts) {
       options.ownFonts.forEach(name => {
-        // Check WebFont as a workaround to avoid problems with a different version of `webfontloader` in agora.xtec.cat
-        if (Font.ALREADY_LOADED_FONTS.indexOf(name) < 0 && WebFont && WebFont.load) {
-          WebFont.load({ custom: { families: [name] } });
+        if (Font.ALREADY_LOADED_FONTS.indexOf(name) < 0) {
+          log('debug', `Loading custom web font: ${name}`);
           Font.ALREADY_LOADED_FONTS.push(name);
           delete substitutions[name.trim().toLowerCase()];
         }
@@ -84,7 +80,6 @@ export class Font {
 
     // Add custom font substitutions
     if (options && options.fontSubstitutions)
-      //substitutions = Object.assign({}, substitutions, options.fontSubstitutions)
       substitutions = $.extend(Object.create(substitutions), options.fontSubstitutions);
 
     if ($tree.jquery)
@@ -121,10 +116,10 @@ export class Font {
    * Try to load a specific font from [http://www.google.com/fonts]
    * @param {string} name - The font family name
    */
-  // Check WebFont as a workaround to avoid problems with a different version of `webfontloader` in agora.xtec.cat
   static loadGoogleFont(name) {
-    if (name && !Font.ALREADY_LOADED_FONTS.includes(name) && WebFont && WebFont.load) {
-      WebFont.load({ google: { families: [name] } });
+    if (name && !Font.ALREADY_LOADED_FONTS.includes(name)) {
+      log('debug', `Loading Google web font: ${name}`);
+      appendStylesheetAtHead(`https://fonts.googleapis.com/css?family=${name}`);
       Font.ALREADY_LOADED_FONTS.push(name);
     }
   }
@@ -238,11 +233,11 @@ export class Font {
       css = {};
     css['font-family'] = this.family;
     css['font-size'] = `${this.size}px`;
-    if (this.hasOwnProperty('bold'))
+    if (Object.prototype.hasOwnProperty.call(this, 'bold'))
       css['font-weight'] = this.bold ? 'bold' : 'normal';
-    if (this.hasOwnProperty('italic'))
+    if (Object.prototype.hasOwnProperty.call(this, 'italic'))
       css['font-style'] = this.italic ? 'italic' : 'normal';
-    if (this.hasOwnProperty('variant'))
+    if (Object.prototype.hasOwnProperty.call(this, 'variant'))
       css['font-variant'] = this.variant;
     return css;
   }
@@ -1005,7 +1000,7 @@ export class Shape {
   static buildShape(data) {
     const shapeType = (data.type === 'rect' && Rectangle) || (data.type === 'ellipse' && Ellipse) || (data.type === 'path' && Path) || null;
     if (!shapeType) {
-      console.log('unknown shape:', data);
+      console.error('unknown shape:', data);
     } else
       return (new shapeType()).setAttributes(data);
   }
@@ -1013,7 +1008,7 @@ export class Shape {
 
 Object.assign(Shape.prototype, {
   /**
-   * Shape type id
+   * Shape type id (Rectangle, ellipse, path...)
    * @name module:AWT.Shape#type
    * @type {string} */
   type: 'shape',
@@ -1022,11 +1017,6 @@ Object.assign(Shape.prototype, {
    * @name module:AWT.Shape#pos
    * @type {module:AWT.Point} */
   pos: new Point(),
-  /**
-   * The type of shape (Rectangle, ellipse, path...)
-   * @name module:AWT.Shape#type
-   * @type {string} */
-  type: 'shape',
 });
 
 /**
@@ -1498,7 +1488,7 @@ export class Path extends Shape {
       // Using the "Ray casting algorithm" described in [https://en.wikipedia.org/wiki/Point_in_polygon]
       const N = this.enclosingPoints.length;
       let
-        xinters = 0,
+        xinters,
         counter = 0,
         p1 = this.enclosingPoints[0];
 

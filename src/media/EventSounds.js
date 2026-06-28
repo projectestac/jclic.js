@@ -33,13 +33,13 @@ import $ from 'jquery';
 import EventSoundsElement from './EventSoundsElement.js';
 import { getTriState, getAttr, setAttr, DEFAULT } from '../Utils.js';
 
-// Use Webpack to import MP3 files
-import start from './sounds/start.mp3';
-import click from './sounds/click.mp3';
-import actionOk from './sounds/actionOk.mp3';
-import actionError from './sounds/actionError.mp3';
-import finishedOk from './sounds/finishedOk.mp3';
-import finishedError from './sounds/finishedError.mp3';
+// Use Vite to import MP3 files
+import start from './sounds/start.mp3?inline';
+import click from './sounds/click.mp3?inline';
+import actionOk from './sounds/actionOk.mp3?inline';
+import actionError from './sounds/actionError.mp3?inline';
+import finishedOk from './sounds/finishedOk.mp3?inline';
+import finishedError from './sounds/finishedError.mp3?inline';
 
 /**
  * The EventSounds objects contains specific sounds to be played when JClic events are fired:

@@ -392,7 +392,7 @@ export class WrittenAnswerPanel extends ActivityPanel {
       return;
 
     let
-      bx = null,
+      bx,
       m = false;
 
     if (this.currentCell !== -1) {
@@ -481,13 +481,15 @@ export class WrittenAnswerPanel extends ActivityPanel {
     if (this.playing) {
       // Array to be filled with actions to be executed at the end of event processing
       const delayedActions = [];
+      let p, bx;
       switch (event.type) {
         case 'click':
           event.preventDefault();
           this.ps.stopMedia(1);
-          const p = new Point(
+          p = new Point(
             event.pageX - this.$div.offset().left,
-            event.pageY - this.$div.offset().top);
+            event.pageY - this.$div.offset().top
+          );
 
           // Avoid clicks on the text field
           if (this.bgB.contains(p)) {
@@ -495,7 +497,7 @@ export class WrittenAnswerPanel extends ActivityPanel {
             break;
           }
 
-          const bx = this.bgA ? this.bgA.findActiveBox(p) : null;
+          bx = this.bgA ? this.bgA.findActiveBox(p) : null;
           if (bx && !bx.isInactive()) {
             if (bx.getContent() && bx.getContent().mediaContent === null)
               this.playEvent('CLICK');

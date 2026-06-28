@@ -29,8 +29,6 @@
  *  @module
  */
 
-/* global window */
-
 import $ from 'jquery';
 import { log, isEquivalent, getPath, isNullOrUndef } from './Utils.js';
 
@@ -187,6 +185,7 @@ export class PlayerHistory {
             result = this.pop();
             break;
           }
+        // eslint-disable-next-line no-fallthrough
         case 'EXIT':
           if (this.testMode)
             log('info', 'At this point, the program should exit.');

@@ -269,7 +269,7 @@ export class DoublePuzzlePanel extends ActivityPanel {
     if (this.bc && this.playing) {
       //
       // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
-      let p = null;
+      let p;
       //
       // Two [ActiveBox](ActiveBox.html) pointers used for the [BoxConnector](BoxConnector.html)
       // `origin` and `dest` points.

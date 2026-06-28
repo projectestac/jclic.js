@@ -295,7 +295,7 @@ export class WordSearchPanel extends ActivityPanel {
    * @returns {number}
    */
   getCurrentScore() {
-    return this.resolvedClues.reduce((n, resolved) => resolved ? ++n : n, 0);
+    return this.resolvedClues.reduce((n, resolved) => resolved ? n + 1 : n, 0);
   }
 
   /**
@@ -309,7 +309,7 @@ export class WordSearchPanel extends ActivityPanel {
     if (this.bc && this.playing) {
       //
       // The [AWT.Point](AWT.html#Point) where the mouse or touch event has been originated
-      let p = null;
+      let p;
       //
       // _touchend_ event don't provide pageX nor pageY information
       if (event.type === 'touchend')

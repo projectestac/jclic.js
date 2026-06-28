@@ -225,7 +225,7 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
         target.readCurrentText();
         this.checkTarget(target, !mark);
       }
-      return target.targetStatus === 'SOLVED' ? ++n : n;
+      return target.targetStatus === 'SOLVED' ? n + 1 : n;
     }, 0);
   }
 
@@ -313,7 +313,7 @@ export class FillInBlanksPanel extends TextActivityBasePanel {
       return false;
 
     const target = event.textTarget;
-    let $span = null, pos = 0;
+    let $span, pos;
     switch (event.type) {
       case 'focus':
         if (target) {
