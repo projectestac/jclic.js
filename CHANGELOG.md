@@ -1,6 +1,7 @@
 ### v2.3.1 (Not yet released)
 #### Improvements
 - Updated peer dependencies
+- Updated Portuguese translation, thanks to ssantos
 
 ### v2.3.0 (2026-06-11)
 #### Breaking changes

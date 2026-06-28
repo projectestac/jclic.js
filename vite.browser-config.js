@@ -2,10 +2,6 @@ import { defineConfig, searchForWorkspaceRoot } from "vite";
 import banner from "vite-plugin-banner";
 import eslint from 'vite-plugin-eslint';
 import pkg from "./package.json";
-import buildLocales from './build-locales.js';
-
-// Build `./src/GlobalData.js` from `./locales/*.po`
-buildLocales();
 
 const date = new Date();
 const version = `${pkg.version} (${date.toISOString().substring(0, 10)})`;
