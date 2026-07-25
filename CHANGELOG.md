@@ -2,6 +2,7 @@
 #### Improvements
 - Updated peer dependencies
 - Updated Portuguese translation, thanks to ssantos
+- Added the CREDITS.md file, unifying the original credits of the JClic project (Java version) with the contributions made to the JClic.js project.
 
 ### v2.3.0 (2026-06-11)
 #### Breaking changes
