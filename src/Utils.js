@@ -961,7 +961,7 @@ export function startsWith(text = '', expr, trim) {
 };
 
 /**
- * Replaces all occurrences of the backslash character (`\`) by a regular slash (`/`)
+ * Replaces all occurrences of the backslash character (\) by a regular slash (/)
  * This is useful to normalize bad path names present in some old JClic projects
  * @param {string} str - The string to be normalized
  * @returns {string}
