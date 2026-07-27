@@ -1,0 +1,1502 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="generator" content="clean-jsdoc-theme 5.1.0" /><title>Utils.js</title><script>(function(){try{var d=document.documentElement;var t=localStorage.getItem('theme');if(t==='dark'){d.dataset.theme='dark'}else{d.dataset.theme='light'}var fs=localStorage.getItem('clean-font-size');if(fs==='sm'){d.style.fontSize='15px'}else if(fs==='lg'){d.style.fontSize='18px'}var ls=localStorage.getItem('clean-line-spacing');if(ls==='compact'){d.style.setProperty('--clean-line-height','1.4')}else if(ls==='relaxed'){d.style.setProperty('--clean-line-height','1.8')}}catch(_){}}());</script><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600;700&amp;family=Roboto:wght@400;500;600;700&amp;display=swap" /><link rel="stylesheet" href="/_assets/styles.ms3c00px-cd763a47.css" /></head><body><div class="flex min-h-screen flex-col bg-background text-(--clean-fg)"><header class="sticky top-0 z-30 border-b border-(--clean-border) bg-background"><div class="mx-auto flex h-16 w-full min-w-0 max-w-screen-2xl items-center gap-4 px-4"><a href="/" class="flex min-w-0 items-center pl-3 no-underline"><span class="truncate text-lg font-heading font-bold text-(--clean-fg)">Documentation</span></a><div class="ml-auto flex shrink-0 items-center gap-1"><div class="flex items-center gap-1"><div data-island="cmdk" data-island-id="i1"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-muted-foreground hover:bg-accent hover:text-accent-foreground h-9 w-9" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Search" title="Search (Ctrl K)"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></button></div></div><div class="hidden items-center gap-1 md:flex"><div data-island="theme-toggle" data-island-id="i2"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-muted-foreground hover:bg-accent hover:text-accent-foreground h-9 w-9" type="button" aria-label="Switch to dark theme" title="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg></button></div><div data-island="settings" data-island-id="i3"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-muted-foreground hover:bg-accent hover:text-accent-foreground h-9 w-9" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Settings" title="Settings"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings" aria-hidden="true"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div><div class="md:hidden"><div data-island="mobile-nav" data-island-id="i4"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-muted-foreground hover:bg-accent hover:text-accent-foreground h-9 w-9" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Open navigation" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M15 3v18"></path></svg></button></div></div></div></div></header><div class="mx-auto grid w-full max-w-screen-2xl flex-1 grid-cols-1 gap-6 px-4 py-6 md:grid-cols-[16rem_minmax(0,1fr)]"><aside class="hidden md:block"><div class="sticky overflow-y-auto [scrollbar-gutter:stable] pr-2 top-20 max-h-[calc(100vh-6rem)]"><div data-island="sidebar" data-island-id="i5"><nav aria-label="Documentation navigation" class="text-(--clean-fg)"><div class="mt-4 first:mt-0"><ul class="m-0 list-none p-0"><li class="my-0.5"><a href="/" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Home</span></a></li></ul></div><div class="mt-4 first:mt-0"><button type="button" aria-expanded="true" class="mb-1 flex w-full items-center rounded-xl py-1.5 px-3 text-left text-sm font-bold text-(--clean-fg) cursor-pointer hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Classes</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right ml-auto shrink-0 transition-transform rotate-90" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button><ul class="m-0 list-none p-0"><li class="my-0.5"><a href="/module/boxes-abstractbox/abstractbox" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">AbstractBox</span></a></li><li class="my-0.5"><a href="/module/awt/action" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Action</span></a></li><li class="my-0.5"><a href="/module/report-actionreg/actionreg" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActionReg</span></a></li><li class="my-0.5"><a href="/module/boxes-activebagcontent/activebagcontent" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActiveBagContent</span></a></li><li class="my-0.5"><a href="/module/automation-autocontentprovider/autocontentprovider/activebagcontentkit" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActiveBagContentKit</span></a></li><li class="my-0.5"><a href="/module/boxes-activebox/activebox" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActiveBox</span></a></li><li class="my-0.5"><a href="/module/boxes-activeboxbag/activeboxbag" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActiveBoxBag</span></a></li><li class="my-0.5"><a href="/module/boxes-activeboxcontent/activeboxcontent" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActiveBoxContent</span></a></li><li class="my-0.5"><a href="/module/boxes-activeboxgrid/activeboxgrid" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActiveBoxGrid</span></a></li><li class="my-0.5"><a href="/module/media-activemediabag/activemediabag" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActiveMediaBag</span></a></li><li class="my-0.5"><a href="/module/media-activemediaplayer/activemediaplayer" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActiveMediaPlayer</span></a></li><li class="my-0.5"><a href="/module/activity/activity" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Activity</span></a></li><li class="my-0.5"><a href="/module/activity/activitypanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActivityPanel</span></a></li><li class="my-0.5"><a href="/module/report-activityreg/activityreg" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActivityReg</span></a></li><li class="my-0.5"><a href="/module/bags-activitysequence/activitysequence" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActivitySequence</span></a></li><li class="my-0.5"><a href="/module/bags-activitysequenceelement/activitysequenceelement" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActivitySequenceElement</span></a></li><li class="my-0.5"><a href="/module/bags-activitysequencejump/activitysequencejump" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ActivitySequenceJump</span></a></li><li class="my-0.5"><a href="/module/boxes-activeboxcontent/aligntype" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">AlignType</span></a></li><li class="my-0.5"><a href="/module/automation-arith-arith/arith" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Arith</span></a></li><li class="my-0.5"><a href="/module/media-audiobuffer/audiobuffer" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">AudioBuffer</span></a></li><li class="my-0.5"><a href="/module/automation-autocontentprovider/autocontentprovider" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">AutoContentProvider</span></a></li><li class="my-0.5"><a href="/module/activities-text-evaluator/basicevaluator" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">BasicEvaluator</span></a></li><li class="my-0.5"><a href="/module/skins-blueskin/blueskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">BlueSkin</span></a></li><li class="my-0.5"><a href="/module/boxes-boxbag/boxbag" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">BoxBag</span></a></li><li class="my-0.5"><a href="/module/boxes-boxbase/boxbase" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">BoxBase</span></a></li><li class="my-0.5"><a href="/module/boxes-boxconnector/boxconnector" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">BoxConnector</span></a></li><li class="my-0.5"><a href="/module/shapers-classicjigsaw/classicjigsaw" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ClassicJigSaw</span></a></li><li class="my-0.5"><a href="/module/activities-text-complete/complete" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Complete</span></a></li><li class="my-0.5"><a href="/module/activities-text-complete/completepanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">CompletePanel</span></a></li><li class="my-0.5"><a href="/module/activities-associations-complexassociation/complexassociation" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ComplexAssociation</span></a></li><li class="my-0.5"><a href="/module/activities-associations-complexassociation/complexassociationpanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ComplexAssociationPanel</span></a></li><li class="my-0.5"><a href="/module/activities-text-evaluator/complexevaluator" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ComplexEvaluator</span></a></li><li class="my-0.5"><a href="/module/bags-conditionaljumpinfo/conditionaljumpinfo" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ConditionalJumpInfo</span></a></li><li class="my-0.5"><a href="/module/awt/container" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Container</span></a></li><li class="my-0.5"><a href="/module/skins-counter/counter" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Counter</span></a></li><li class="my-0.5"><a href="/module/activities-textgrid-crossword/crossword" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">CrossWord</span></a></li><li class="my-0.5"><a href="/module/activities-textgrid-crossword/crosswordpanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">CrossWordPanel</span></a></li><li class="my-0.5"><a href="/module/skins-customskin/customskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">CustomSkin</span></a></li><li class="my-0.5"><a href="/module/skins-defaultskin/defaultskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">DefaultSkin</span></a></li><li class="my-0.5"><a href="/module/awt/dimension" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Dimension</span></a></li><li class="my-0.5"><a href="/module/activities-puzzles-doublepuzzle/doublepuzzle" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">DoublePuzzle</span></a></li><li class="my-0.5"><a href="/module/activities-puzzles-doublepuzzle/doublepuzzlepanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">DoublePuzzlePanel</span></a></li><li class="my-0.5"><a href="/module/awt/ellipse" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Ellipse</span></a></li><li class="my-0.5"><a href="/module/skins-emptyskin/emptyskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">EmptySkin</span></a></li><li class="my-0.5"><a href="/module/report-encryptmin/encryption" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Encryption</span></a></li><li class="my-0.5"><a href="/module/activities-text-evaluator/evaluator" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Evaluator</span></a></li><li class="my-0.5"><a href="/module/media-eventsounds/eventsounds" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">EventSounds</span></a></li><li class="my-0.5"><a href="/module/media-eventsoundselement/eventsoundselement" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">EventSoundsElement</span></a></li><li class="my-0.5"><a href="/module/activities-puzzles-exchangepuzzle/exchangepuzzle" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ExchangePuzzle</span></a></li><li class="my-0.5"><a href="/module/activities-puzzles-exchangepuzzle/exchangepuzzlepanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ExchangePuzzlePanel</span></a></li><li class="my-0.5"><a href="/module/activities-panels-explore/explore" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Explore</span></a></li><li class="my-0.5"><a href="/module/activities-panels-explore/explorepanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ExplorePanel</span></a></li><li class="my-0.5"><a href="/module/activities-text-fillinblanks/fillinblanks" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">FillInBlanks</span></a></li><li class="my-0.5"><a href="/module/activities-text-fillinblanks/fillinblankspanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">FillInBlanksPanel</span></a></li><li class="my-0.5"><a href="/module/awt/font" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Font</span></a></li><li class="my-0.5"><a href="/module/awt/gradient" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Gradient</span></a></li><li class="my-0.5"><a href="/module/skins-greenskin/greenskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">GreenSkin</span></a></li><li class="my-0.5"><a href="/module/activities-puzzles-holepuzzle/holepuzzle" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">HolePuzzle</span></a></li><li class="my-0.5"><a href="/module/activities-puzzles-holepuzzle/holepuzzlepanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">HolePuzzlePanel</span></a></li><li class="my-0.5"><a href="/module/shapers-holes/holes" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Holes</span></a></li><li class="my-0.5"><a href="/module/activities-panels-identify/identify" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Identify</span></a></li><li class="my-0.5"><a href="/module/activities-panels-identify/identifypanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">IdentifyPanel</span></a></li><li class="my-0.5"><a href="/module/activities-text-identifytext/identifytext" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">IdentifyText</span></a></li><li class="my-0.5"><a href="/module/activities-text-identifytext/identifytextpanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">IdentifyTextPanel</span></a></li><li class="my-0.5"><a href="/module/activities-panels-informationscreen/informationscreen" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">InformationScreen</span></a></li><li class="my-0.5"><a href="/module/activities-panels-informationscreen/informationscreenpanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">InformationScreenPanel</span></a></li><li class="my-0.5"><a href="/module/jclicplayer/jclicplayer" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">JClicPlayer</span></a></li><li class="my-0.5"><a href="/module/project-jclicproject/jclicproject" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">JClicProject</span></a></li><li class="my-0.5"><a href="/module/shapers-jigsaw/jigsaw" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">JigSaw</span></a></li><li class="my-0.5"><a href="/module/bags-jumpinfo/jumpinfo" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">JumpInfo</span></a></li><li class="my-0.5"><a href="/module/bags-mediabag/mediabag" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">MediaBag</span></a></li><li class="my-0.5"><a href="/module/bags-mediabagelement/mediabagelement" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">MediaBagElement</span></a></li><li class="my-0.5"><a href="/module/media-mediacontent/mediacontent" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">MediaContent</span></a></li><li class="my-0.5"><a href="/module/activities-memory-memorygame/memorygame" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">MemoryGame</span></a></li><li class="my-0.5"><a href="/module/activities-memory-memorygame/memorygamepanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">MemoryGamePanel</span></a></li><li class="my-0.5"><a href="/module/activities-panels-menu/menu" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Menu</span></a></li><li class="my-0.5"><a href="/module/activities-panels-menu/menupanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">MenuPanel</span></a></li><li class="my-0.5"><a href="/module/media-midiaudioplayer/midiaudioplayer" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">MidiAudioPlayer</span></a></li><li class="my-0.5"><a href="/module/skins-miniskin/miniskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">MiniSkin</span></a></li><li class="my-0.5"><a href="/module/automation-arith-arith/arith/operator" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Operator</span></a></li><li class="my-0.5"><a href="/module/skins-orangeskin/orangeskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">OrangeSkin</span></a></li><li class="my-0.5"><a href="/module/activities-text-ordertext/ordertext" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">OrderText</span></a></li><li class="my-0.5"><a href="/module/activities-text-ordertext/ordertextpanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">OrderTextPanel</span></a></li><li class="my-0.5"><a href="/module/awt/path" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Path</span></a></li><li class="my-0.5"><a href="/module/awt/pathstroke" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">PathStroke</span></a></li><li class="my-0.5"><a href="/module/playerhistory/playerhistory" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">PlayerHistory</span></a></li><li class="my-0.5"><a href="/module/awt/point" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Point</span></a></li><li class="my-0.5"><a href="/module/project-projectsettings/projectsettings" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ProjectSettings</span></a></li><li class="my-0.5"><a href="/module/awt/rectangle" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Rectangle</span></a></li><li class="my-0.5"><a href="/module/shapers-rectangular/rectangular" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Rectangular</span></a></li><li class="my-0.5"><a href="/module/report-tcpreporter/reportbean" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ReportBean</span></a></li><li class="my-0.5"><a href="/module/report-reporter/reporter" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Reporter</span></a></li><li class="my-0.5"><a href="/module/report-reporter/reporterinfo" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">ReporterInfo</span></a></li><li class="my-0.5"><a href="/module/report-scorm/scorm" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">SCORM</span></a></li><li class="my-0.5"><a href="/module/report-sequencereg/sequencereg" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">SequenceReg</span></a></li><li class="my-0.5"><a href="/module/report-sequencereg/sequencereginfo" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">SequenceRegInfo</span></a></li><li class="my-0.5"><a href="/module/report-sessionreg/sessionreg" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">SessionReg</span></a></li><li class="my-0.5"><a href="/module/report-sessionreg/sessionreginfo" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">SessionRegInfo</span></a></li><li class="my-0.5"><a href="/module/report-sessionstoragereporter/sessionstoragereporter" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">SessionStorageReporter</span></a></li><li class="my-0.5"><a href="/module/awt/shape" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Shape</span></a></li><li class="my-0.5"><a href="/module/shapers-shaper/shaper" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Shaper</span></a></li><li class="my-0.5"><a href="/module/activities-associations-simpleassociation/simpleassociation" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">SimpleAssociation</span></a></li><li class="my-0.5"><a href="/module/activities-associations-simpleassociation/simpleassociationpanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">SimpleAssociationPanel</span></a></li><li class="my-0.5"><a href="/module/skins-simpleskin/simpleskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">SimpleSkin</span></a></li><li class="my-0.5"><a href="/module/skins-skin/skin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Skin</span></a></li><li class="my-0.5"><a href="/module/awt/stroke" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Stroke</span></a></li><li class="my-0.5"><a href="/module/report-tcpreporter/tcpreporter" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">TCPReporter</span></a></li><li class="my-0.5"><a href="/module/activities-text-textactivitybase/textactivitybase" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">TextActivityBase</span></a></li><li class="my-0.5"><a href="/module/activities-text-textactivitybase/textactivitybasepanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">TextActivityBasePanel</span></a></li><li class="my-0.5"><a href="/module/activities-text-textactivitydocument/textactivitydocument" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">TextActivityDocument</span></a></li><li class="my-0.5"><a href="/module/boxes-textgrid/textgrid" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">TextGrid</span></a></li><li class="my-0.5"><a href="/module/boxes-textgridcontent/textgridcontent" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">TextGridContent</span></a></li><li class="my-0.5"><a href="/module/activities-text-textactivitydocument/texttarget" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">TextTarget</span></a></li><li class="my-0.5"><a href="/module/awt/timer" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Timer</span></a></li><li class="my-0.5"><a href="/module/shapers-triangularjigsaw/triangularjigsaw" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">TriangularJigSaw</span></a></li><li class="my-0.5"><a href="/module/activities-textgrid-wordsearch/wordsearch" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">WordSearch</span></a></li><li class="my-0.5"><a href="/module/activities-textgrid-wordsearch/wordsearchpanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">WordSearchPanel</span></a></li><li class="my-0.5"><a href="/module/activities-text-writtenanswer/writtenanswer" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">WrittenAnswer</span></a></li><li class="my-0.5"><a href="/module/activities-text-writtenanswer/writtenanswerpanel" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">WrittenAnswerPanel</span></a></li></ul></div><div class="mt-4 first:mt-0"><button type="button" aria-expanded="true" class="mb-1 flex w-full items-center rounded-xl py-1.5 px-3 text-left text-sm font-bold text-(--clean-fg) cursor-pointer hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Modules</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right ml-auto shrink-0 transition-transform rotate-90" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button><ul class="m-0 list-none p-0"><li class="my-0.5"><a href="/module/activities-associations-complexassociation" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/associations/ComplexAssociation</span></a></li><li class="my-0.5"><a href="/module/activities-associations-simpleassociation" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/associations/SimpleAssociation</span></a></li><li class="my-0.5"><a href="/module/activities-memory-memorygame" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/memory/MemoryGame</span></a></li><li class="my-0.5"><a href="/module/activities-panels-explore" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/panels/Explore</span></a></li><li class="my-0.5"><a href="/module/activities-panels-identify" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/panels/Identify</span></a></li><li class="my-0.5"><a href="/module/activities-panels-informationscreen" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/panels/InformationScreen</span></a></li><li class="my-0.5"><a href="/module/activities-panels-menu" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/panels/Menu</span></a></li><li class="my-0.5"><a href="/module/activities-puzzles-doublepuzzle" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/puzzles/DoublePuzzle</span></a></li><li class="my-0.5"><a href="/module/activities-puzzles-exchangepuzzle" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/puzzles/ExchangePuzzle</span></a></li><li class="my-0.5"><a href="/module/activities-puzzles-holepuzzle" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/puzzles/HolePuzzle</span></a></li><li class="my-0.5"><a href="/module/activities-text-complete" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/text/Complete</span></a></li><li class="my-0.5"><a href="/module/activities-text-evaluator" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/text/Evaluator</span></a></li><li class="my-0.5"><a href="/module/activities-text-fillinblanks" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/text/FillInBlanks</span></a></li><li class="my-0.5"><a href="/module/activities-text-identifytext" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/text/IdentifyText</span></a></li><li class="my-0.5"><a href="/module/activities-text-ordertext" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/text/OrderText</span></a></li><li class="my-0.5"><a href="/module/activities-text-textactivitybase" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/text/TextActivityBase</span></a></li><li class="my-0.5"><a href="/module/activities-text-textactivitydocument" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/text/TextActivityDocument</span></a></li><li class="my-0.5"><a href="/module/activities-text-writtenanswer" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/text/WrittenAnswer</span></a></li><li class="my-0.5"><a href="/module/activities-textgrid-crossword" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/textGrid/CrossWord</span></a></li><li class="my-0.5"><a href="/module/activities-textgrid-wordsearch" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">activities/textGrid/WordSearch</span></a></li><li class="my-0.5"><a href="/module/activity" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Activity</span></a></li><li class="my-0.5"><a href="/module/automation-arith-arith" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">automation/arith/Arith</span></a></li><li class="my-0.5"><a href="/module/automation-autocontentprovider" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">automation/AutoContentProvider</span></a></li><li class="my-0.5"><a href="/module/awt" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">AWT</span></a></li><li class="my-0.5"><a href="/module/bags-activitysequence" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">bags/ActivitySequence</span></a></li><li class="my-0.5"><a href="/module/bags-activitysequenceelement" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">bags/ActivitySequenceElement</span></a></li><li class="my-0.5"><a href="/module/bags-activitysequencejump" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">bags/ActivitySequenceJump</span></a></li><li class="my-0.5"><a href="/module/bags-conditionaljumpinfo" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">bags/ConditionalJumpInfo</span></a></li><li class="my-0.5"><a href="/module/bags-jumpinfo" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">bags/JumpInfo</span></a></li><li class="my-0.5"><a href="/module/bags-mediabag" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">bags/MediaBag</span></a></li><li class="my-0.5"><a href="/module/bags-mediabagelement" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">bags/MediaBagElement</span></a></li><li class="my-0.5"><a href="/module/boxes-abstractbox" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">boxes/AbstractBox</span></a></li><li class="my-0.5"><a href="/module/boxes-activebagcontent" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">boxes/ActiveBagContent</span></a></li><li class="my-0.5"><a href="/module/boxes-activebox" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">boxes/ActiveBox</span></a></li><li class="my-0.5"><a href="/module/boxes-activeboxbag" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">boxes/ActiveBoxBag</span></a></li><li class="my-0.5"><a href="/module/boxes-activeboxcontent" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">boxes/ActiveBoxContent</span></a></li><li class="my-0.5"><a href="/module/boxes-activeboxgrid" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">boxes/ActiveBoxGrid</span></a></li><li class="my-0.5"><a href="/module/boxes-boxbag" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">boxes/BoxBag</span></a></li><li class="my-0.5"><a href="/module/boxes-boxbase" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">boxes/BoxBase</span></a></li><li class="my-0.5"><a href="/module/boxes-boxconnector" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">boxes/BoxConnector</span></a></li><li class="my-0.5"><a href="/module/boxes-textgrid" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">boxes/TextGrid</span></a></li><li class="my-0.5"><a href="/module/boxes-textgridcontent" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">boxes/TextGridContent</span></a></li><li class="my-0.5"><a href="/module/jclic" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">JClic</span></a></li><li class="my-0.5"><a href="/module/jclicplayer" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">JClicPlayer</span></a></li><li class="my-0.5"><a href="/module/media-activemediabag" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">media/ActiveMediaBag</span></a></li><li class="my-0.5"><a href="/module/media-activemediaplayer" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">media/ActiveMediaPlayer</span></a></li><li class="my-0.5"><a href="/module/media-audiobuffer" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">media/AudioBuffer</span></a></li><li class="my-0.5"><a href="/module/media-eventsounds" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">media/EventSounds</span></a></li><li class="my-0.5"><a href="/module/media-eventsoundselement" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">media/EventSoundsElement</span></a></li><li class="my-0.5"><a href="/module/media-mediacontent" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">media/MediaContent</span></a></li><li class="my-0.5"><a href="/module/media-midiaudioplayer" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">media/MidiAudioPlayer</span></a></li><li class="my-0.5"><a href="/module/playerhistory" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">PlayerHistory</span></a></li><li class="my-0.5"><a href="/module/project-jclicproject" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">project/JClicProject</span></a></li><li class="my-0.5"><a href="/module/project-projectsettings" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">project/ProjectSettings</span></a></li><li class="my-0.5"><a href="/module/report-actionreg" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">report/ActionReg</span></a></li><li class="my-0.5"><a href="/module/report-activityreg" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">report/ActivityReg</span></a></li><li class="my-0.5"><a href="/module/report-encryptmin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">report/EncryptMin</span></a></li><li class="my-0.5"><a href="/module/report-reporter" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">report/Reporter</span></a></li><li class="my-0.5"><a href="/module/report-scorm" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">report/SCORM</span></a></li><li class="my-0.5"><a href="/module/report-sequencereg" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">report/SequenceReg</span></a></li><li class="my-0.5"><a href="/module/report-sessionreg" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">report/SessionReg</span></a></li><li class="my-0.5"><a href="/module/report-sessionstoragereporter" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">report/SessionStorageReporter</span></a></li><li class="my-0.5"><a href="/module/report-tcpreporter" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">report/TCPReporter</span></a></li><li class="my-0.5"><a href="/module/shapers-classicjigsaw" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">shapers/ClassicJigSaw</span></a></li><li class="my-0.5"><a href="/module/shapers-holes" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">shapers/Holes</span></a></li><li class="my-0.5"><a href="/module/shapers-jigsaw" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">shapers/JigSaw</span></a></li><li class="my-0.5"><a href="/module/shapers-rectangular" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">shapers/Rectangular</span></a></li><li class="my-0.5"><a href="/module/shapers-shaper" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">shapers/Shaper</span></a></li><li class="my-0.5"><a href="/module/shapers-triangularjigsaw" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">shapers/TriangularJigSaw</span></a></li><li class="my-0.5"><a href="/module/skins-blueskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">skins/BlueSkin</span></a></li><li class="my-0.5"><a href="/module/skins-counter" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">skins/Counter</span></a></li><li class="my-0.5"><a href="/module/skins-customskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">skins/CustomSkin</span></a></li><li class="my-0.5"><a href="/module/skins-defaultskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">skins/DefaultSkin</span></a></li><li class="my-0.5"><a href="/module/skins-emptyskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">skins/EmptySkin</span></a></li><li class="my-0.5"><a href="/module/skins-greenskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">skins/GreenSkin</span></a></li><li class="my-0.5"><a href="/module/skins-miniskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">skins/MiniSkin</span></a></li><li class="my-0.5"><a href="/module/skins-orangeskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">skins/OrangeSkin</span></a></li><li class="my-0.5"><a href="/module/skins-simpleskin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">skins/SimpleSkin</span></a></li><li class="my-0.5"><a href="/module/skins-skin" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">skins/Skin</span></a></li><li class="my-0.5"><a href="/module/utils" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Utils</span></a></li></ul></div><div class="mt-4 first:mt-0"><button type="button" aria-expanded="true" class="mb-1 flex w-full items-center rounded-xl py-1.5 px-3 text-left text-sm font-bold text-(--clean-fg) cursor-pointer hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Typedefs</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right ml-auto shrink-0 transition-transform rotate-90" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button><ul class="m-0 list-none p-0"><li class="my-0.5"><a href="/activeboxcontent/aligntype" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">alignType</span></a></li><li class="my-0.5"><a href="/jclicplayer/countervaltype" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">counterValType</span></a></li></ul></div><div class="mt-4 first:mt-0"><ul class="m-0 list-none p-0"><li class="my-0.5"><a href="/source" class="group flex items-start gap-x-3 w-full px-3 py-1.5 text-left text-sm no-underline break-words hyphens-auto overflow-hidden rounded-xl outline-offset-[-1px] cursor-pointer text-[var(--clean-fg)] hover:bg-[var(--clean-bg-muted)]"><span class="min-w-0 wrap-break-words">Source Files</span></a></li></ul></div></nav></div></div></aside><main class="min-w-0 px-4 md:px-8 lg:px-12"><div data-island="code-viewer" data-island-id="i0"><div class="my-4 overflow-hidden rounded-lg border border-(--clean-border) bg-(--clean-bg)"><div class="flex items-center justify-between border-b border-(--clean-border) bg-(--clean-bg-muted) px-3 py-2 text-sm"><span class="font-mono text-(--clean-fg)">Utils.js</span><span class="text-xs text-(--clean-fg-muted)">javascript</span></div><div class="h-[calc(100vh-13rem)] min-h-[24rem]"><pre class="m-0 h-full overflow-auto whitespace-pre p-4 text-sm leading-relaxed text-(--clean-fg)"><code class="language-javascript">/**
+ *  File    : Utils.js
+ *  Created : 01/04/2015
+ *  By      : Francesc Busquets &lt;francesc@gmail.com>
+ *
+ *  JClic.js
+ *  An HTML5 player of JClic activities
+ *  https://projectestac.github.io/jclic.js
+ *
+ *  @source https://github.com/projectestac/jclic.js
+ *
+ *  @license EUPL-1.2
+ *  @licstart
+ *  (c) 2000-2020 Educational Telematic Network of Catalonia (XTEC)
+ *
+ *  Licensed under the EUPL, Version 1.1 or -as soon they will be approved by
+ *  the European Commission- subsequent versions of the EUPL (the &quot;Licence&quot;);
+ *  You may not use this work except in compliance with the Licence.
+ *
+ *  You may obtain a copy of the Licence at:
+ *  https://joinup.ec.europa.eu/software/page/eupl
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the Licence is distributed on an &quot;AS IS&quot; basis, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  Licence for the specific language governing permissions and limitations
+ *  under the Licence.
+ *  @licend
+ *  @module
+ */
+
+// Declaration of JSDoc external objects:
+
+/**
+ * The Event interface represents an event which takes place in the DOM.
+ * @external Event
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Event}
+ */
+
+/**
+ * The HTMLElement interface represents any HTML element. Some elements directly implement this
+ * interface, others implement it via an interface that inherits it.
+ * @external HTMLElement
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/API/HTMLElement}
+ */
+
+/**
+ * A jQuery object
+ * @external jQuery
+ * @see {@link http://api.jquery.com/jQuery/}
+ */
+
+/**
+ * The jQuery XMLHttpRequest (jqXHR) object returned by `$.ajax()` as of jQuery 1.5 is a superset
+ * of the browser's native [XMLHttpRequest](https://developer.mozilla.org/docs/XMLHttpRequest) object.
+ * As of jQuery 1.5, jqXHR objects implement the Promise interface, giving them
+ * all the properties, methods, and behavior of a Promise.
+ * @external jqXHR
+ * @see {@link https://api.jquery.com/jQuery.ajax/#jqXHR}
+ */
+
+/**
+ * The CanvasRenderingContext2D interface provides the 2D rendering context for the drawing surface
+ * of a &amp;lt;canvas&amp;gt; element.
+ * @external CanvasRenderingContext2D
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D}
+ */
+
+/**
+ * The HTMLImageElement interface provides special properties and methods (beyond the regular
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement HTMLElement} interface it
+ * also has available to it by inheritance) for manipulating the layout and presentation of
+ * &amp;lt;img&amp;gt; elements.
+ * @external HTMLImageElement
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement}
+ */
+
+/**
+ * The HTMLAudioElement interface provides access to the properties of &amp;lt;audio&amp;gt; elements, as
+ * well as methods to manipulate them. It derives from the
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement HTMLMediaElement} interface.
+ * @external HTMLAudioElement
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement}
+ */
+
+/**
+ * The AudioContext interface represents an audio-processing graph built from audio modules linked together.
+ * @external AudioContext
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/AudioContext}
+ */
+
+/**
+ * The Intl.Collator object is a constructor for collators, objects that enable language sensitive
+ * string comparison.
+ * @external Collator
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Collator}
+ */
+
+/**
+ * A JSZip object
+ * @external JSZip
+ * @see {@link https://stuk.github.io/jszip}
+ */
+
+/**
+ * The MediaRecorder interface of the {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API MediaRecorder API}
+ * provides functionality to easily capture media.
+ * @external MediaRecorder
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/API/MediaRecorder}
+ */
+
+/**
+ * The Promise object is used for asynchronous computations. A Promise represents an operation
+ * that hasn't completed yet, but is expected in the future.
+ * @external Promise
+ * @see {@link https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise}
+ */
+
+/**
+* The Storage interface of the Web Storage API provides access to the session storage or local storage for a particular domain,
+* allowing you to for example add, modify or delete stored data items.
+* @external Storage
+* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Storage}
+*/
+
+/**
+ * The NamedNodeMap interface represents a collection of Attr objects. Objects inside a NamedNodeMap are not in any particular
+ * order, unlike NodeList, although they may be accessed by an index as in an array.
+ * @external NamedNodeMap
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap}
+ */
+
+/**
+ * MidiPlayerJS is a JavaScript library which reads standard MIDI files and emits JSON events in real time.
+ * @external MidiPlayerJS
+ * @see {@link https://github.com/grimmdude/MidiPlayerJS}
+ */
+
+/**
+ * JavaScript Date objects represent a single moment in time in a platform-independent format.
+ * @external Date
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date}
+ */
+
+/**
+* The HTMLStyleElement interface represents a [style](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/style) element.
+* It inherits properties and methods from its parent, HTMLElement, and from LinkStyle.
+* @external HTMLStyleElement
+* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLStyleElement}
+*/
+
+/**
+* The HTMLLinkElement interface represents reference information for external resources and the relationship of those resources to a document and vice versa.
+* It inherits properties and methods from its parent, HTMLElement, and from LinkStyle.
+* @external HTMLLinkElement
+* @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLLinkElement}
+*/
+
+/**
+ * Type of MIDI instrument used by Soundfont Player
+ * @external Instrument
+ * @see {@link https://github.com/danigb/soundfont-player}
+ */
+
+import $ from 'jquery';
+import JSZip from 'jszip';
+import JSZipUtils from 'jszip-utils';
+import GlobalData from './GlobalData.js';
+
+/**
+ * Exports third-party NPM packages used by JClic, so they become available to other scripts through
+ * the global variable `JClicObject` (defined in {@link module:JClic.JClic})
+ * @type: {object}
+ */
+export const pkg = {
+  $,
+  JSZip,
+  JSZipUtils,
+};
+
+/**
+ * List of valid verbosity levels
+ * @const {string[]}
+ */
+export const LOG_LEVELS = ['none', 'error', 'warn', 'info', 'debug', 'trace', 'all'];
+
+/**
+ * Labels printed on logs for each message type
+ * @const {string[]}
+ */
+export const LOG_PRINT_LABELS = ['     ', 'ERROR', 'WARN ', 'INFO ', 'DEBUG', 'TRACE', 'ALL  '];
+
+/**
+ * Options of the logging system
+ * @type {object} */
+export const LOG_OPTIONS = {
+  level: 2, // warn
+  prefix: 'JClic',
+  timestamp: true,
+  popupOnErrors: false,
+  chainTo: null,
+  pipeTo: null,
+};
+
+/**
+ * Current dictionary of string translations
+ */
+let _messages = {};
+
+/**
+ * Initializes the global settings
+ * @param {object} options - An object with global settings
+ * @param {boolean} [setLog=true] - When `true`, the log level will be set
+ * @param {boolean} [setLang=true] - When `true`, the current language will be set
+ * @returns {object} The normalized `options` object
+ */
+export function init(options, setLog = true, setLang = true) {
+  options = normalizeObject(options);
+  if (setLog) {
+    if (typeof options.logLevel !== 'undefined')
+      setLogLevel(options.logLevel);
+    if (typeof options.chainLogTo === 'function')
+      LOG_OPTIONS.chainTo = options.chainLogTo;
+    if (typeof options.pipeLogTo === 'function')
+      LOG_OPTIONS.pipeTo = options.pipeLogTo;
+  }
+
+  if (setLang) {
+    const lngRequested = options.lang;
+    const lng = checkPreferredLanguage(GlobalData.languages, 'en', lngRequested);
+    log('debug', `Language ${lngRequested ? `requested: &quot;${lngRequested}&quot; ` : ''} used: &quot;${lng}&quot;`);
+    _messages = lng === 'en' ? {} : GlobalData.messages[lng];
+  }
+
+  return options;
+};
+
+/**
+ * Function that will return the translation of the provided key
+ * into the current language.
+ * @param {string} key - ID of the expression to be translated
+ * @returns {string} - The translated text
+ */
+export function getMsg(key) {
+  return _messages[key] || key;
+}
+
+/**
+ * Converts expressions of type 'pt-br', 'FR', 'ca_es@valencia'... to the format expected by the i18n system:
+ * lc[_CC][@variant] where 'lc' is a two or three lowercase letter language code, CC is an optional two uppercase
+ * letter country code, followed by an optional 'variant' consisting in letters and/or digits.
+ * @param {string} locale - The locale expression to be normalized
+ * @returns string - The normalized locale
+ */
+export function normalizeLocale(locale = '') {
+  const [, language = null, country = null, variant = null] = /^([a-zA-Z]{2,3})[_-]?([a-zA-Z]{2})?@?([a-zA-Z0-9]*)?$/.exec(locale.trim()) || [];
+  return language
+    ? `${language.toLowerCase()}${country ? `_${country.toUpperCase()}` : ''}${variant ? `@${variant.toLowerCase()}` : ''}`
+    : '';
+};
+
+/**
+ * Checks if the language preferred by the user (based on browser and/or specific settings)
+ * is in a list of available languages.
+ * @param {string[]} availableLangs - Array of available languages. It should contain at least one item.
+ * @param {string} [defaultLang=en] - Language to be used by default when not found the selected one
+ * @param {string} [requestedLang=''] - Request this specific language
+ * @returns {string} - The most suitable language for this request
+ */
+export function checkPreferredLanguage(availableLangs, defaultLang = 'en', requestedLang = '') {
+  let result = -1;
+
+  // Create an array to store possible values
+  let tries = [];
+
+  // If &quot;setLang&quot; is specified, check it
+  if (requestedLang) {
+    // Normalize requested locale
+    const lang = normalizeLocale(requestedLang);
+    if (lang)
+      tries.push(lang);
+  }
+
+  // Add user's preferred languages, if any
+  if (window.navigator.languages)
+    tries = tries.concat(window.navigator.languages);
+
+  // Add the navigator main language, if defined
+  if (window.navigator.language)
+    tries.push(window.navigator.language);
+
+  // Add English as final option
+  tries.push(defaultLang);
+
+  for (let i = 0; i &lt; tries.length; i++) {
+    let match = -1;
+    for (let n in availableLangs) {
+      if (tries[i].indexOf(availableLangs[n]) === 0) {
+        match = n;
+        if (tries[i] === availableLangs[n]) {
+          result = n;
+          break;
+        }
+      }
+    }
+    if (result >= 0 || (result = match) >= 0)
+      break;
+  }
+  return availableLangs[result >= 0 ? result : 0];
+};
+
+/**
+ * Establishes the current verbosity level of the logging system
+ * @param {string} level - One of the valid strings in {@link module:Utils.LOG_LEVELS}
+ */
+export function setLogLevel(level) {
+  const log = LOG_LEVELS.indexOf(level);
+  if (log >= 0)
+    LOG_OPTIONS.level = log;
+};
+
+/**
+ * Reports a new message to the logging system
+ * @param {string} type - The type of message. Mus be `error`, `warn`, `info`, `debug` or `trace`.
+ * @param {string} msg - The main message to be logged. Additional parameters can be added, like
+ * in `console.log` (see: {@link https://developer.mozilla.org/en-US/docs/Web/API/Console/log})
+ */
+export function log(type, msg) {
+  const level = LOG_LEVELS.indexOf(type);
+  const args = Array.prototype.slice.call(arguments);
+
+  // Check if message should currently be logged
+  if (level &lt; 0 || level &lt;= LOG_OPTIONS.level) {
+    if (LOG_OPTIONS.pipeTo)
+      LOG_OPTIONS.pipeTo.apply(null, args);
+    else {
+      const mainMsg = `${LOG_OPTIONS.prefix || ''} ${LOG_PRINT_LABELS[level]} ${LOG_OPTIONS.timestamp ? getDateTime() : ''} ${msg}`;
+      console[level === 1 ? 'error' : level === 2 ? 'warn' : 'log'].apply(console, [mainMsg].concat(args.slice(2)));
+      // Call chained logger, if anny
+      if (LOG_OPTIONS.chainTo)
+        LOG_OPTIONS.chainTo.apply(null, args);
+    }
+  }
+};
+
+/**
+ * Gets a boolean value from a textual expression
+ * @param {string} val - The value to be parsed (`true` for true, null or otherwise for `false`)
+ * @param {boolean} [defaultValue=false] - The default value to return when `val` is false
+ * @returns {number}
+ */
+export function getBoolean(val, defaultValue = false) {
+  return val === 'true' ? true : val === 'false' ? false : defaultValue;
+};
+
+/**
+ * Gets a value from an given expression that can be `null`, `undefined` or empty string ('')
+ * @param {any} val - The expression to parse
+ * @param {any} [defaultValue=null] - The value to return when `val` is `null`, `''` or `undefined`
+ * @returns {any}
+ */
+export function getVal(val, defaultValue = null) {
+  return (val === '' || val === null || typeof val === 'undefined') ? defaultValue : val;
+};
+
+/**
+ * Gets a number from a string or another number
+ * @param {any} val - The expression to parse
+ * @param {number} [defaultValue=0] - The default value
+ * @returns {number}
+ */
+export function getNumber(val, defaultValue) {
+  return Number(getVal(val, defaultValue));
+};
+
+/**
+ * Gets the plain percent expression (without decimals) of the given value
+ * @param {number} val - The value to be expressed as a percentile
+ * @returns {string}
+ */
+export function getPercent(val) {
+  return `${Math.round(val * 100)}%`;
+}
+
+/**
+ * Returns the two-digits text expression representing the given number (lesser than 100) zero-padded at left
+ * Useful for representing hours, minutes and seconds
+ * @param {number} val - The number to be processed
+ * @returns {string}
+ */
+export function zp(val) {
+  return `0${val}`.slice(-2);
+};
+
+/**
+ * Returns a given time in [00h 00'00&quot;] format
+ * @param {number} millis - Amount of milliseconds to be processed
+ * @returns {string}
+ */
+export function getHMStime(millis) {
+  const d = new Date(millis);
+  const h = d.getUTCHours(), m = d.getUTCMinutes(), s = d.getUTCSeconds();
+  return `${h ? h + 'h ' : ''}${h || m ? zp(m) + '\'' : ''}${zp(s)}&quot;`;
+};
+
+/**
+ * Returns a formatted string with the provided date and time
+ * @param {external:Date} date - The date to be formatted. When `null` or `undefined`, the current date will be used.
+ * @returns {string}
+ */
+export function getDateTime(date = new Date()) {
+  return `${date.getFullYear()}/${zp(date.getMonth() + 1)}/${zp(date.getDate())} ${zp(date.getHours())}:${zp(date.getMinutes())}:${zp(date.getSeconds())}`;
+};
+
+/**
+ * Parse 'date' fields generated by &quot;JClic Author&quot; in format d/m/y, with
+ * variable number of digits.
+ * @param {string} text - The old 'date' field
+ * @returns {external:Date} - Always return a Date object (now, if text was invalid)
+ */
+export function parseOldDate(text) {
+  let result = null;
+  if (text) {
+    const elements = text.trim().split('/');
+    if (elements.length === 3) {
+      let m = parseInt(elements[0]) || 0;
+      let d = parseInt(elements[1]) || 0;
+      let y = parseInt(elements[2]) || 0;
+      if (m > 12 &amp;&amp; d &lt;= 12) {
+        const t = m;
+        m = d;
+        d = t;
+      }
+      if (y &lt; 1980)
+        y += (y &lt; 90 ? 2000 : 1900);
+      if (d &amp;&amp; m &amp;&amp; y) {
+        result = new Date(Date.parse(`${m}/${d}/${y}`));
+      }
+    }
+  }
+  return result || new Date();
+};
+
+/**
+ * Extracts just the ISO-639 language code from complex
+ * expressions like &quot;English (en)&quot;, buid by JClic Author.
+ * @param {string} text - The expression to parse
+ * @returns {string} - The ISO-639 language code, or '--' if none found
+ */
+export function cleanOldLanguageTag(text) {
+  if (!text)
+    text = '--';
+  // Allow only ISO-639-1 and ISO-639-2 language codes
+  else if (!text.match(/^[a-z][a-z][a-z]?$/)) {
+    const matches = text.match(/\(([a-z][a-z][a-z]?)\)/);
+    if (matches &amp;&amp; matches.length === 2)
+      text = matches[1];
+    else
+      text = '--';
+  }
+  return text;
+};
+
+/** @const {number} */
+export const FALSE = 0;
+
+/** @const {number} */
+export const TRUE = 1;
+
+/** @const {number} */
+export const DEFAULT = 2;
+
+/**
+ * Gets a numeric value (0, 1 or 2) from a set of possible values: `false`, `true` and `default`.
+ * @param {string} val - The text to be parsed
+ * @param {any} def - An optional default value
+ * @returns {number}
+ */
+export function getTriState(val, def = DEFAULT) {
+  return val === 'true' ? TRUE : val === 'false' ? FALSE : def;
+};
+
+/**
+ * Returns a string with the given `tag` repeated n times
+ * @param {string} tag - The tag to be repeated
+ * @param {number} repeats - The number of times to repeat the tag
+ * @returns {string}
+ */
+export function fillString(tag, repeats = 0) {
+  return Array(repeats).fill(tag).join('');
+};
+
+/**
+ * Checks if the provided value is 'null' or 'undefined'.
+ * @param {any} val - The value to be parsed
+ * @returns {boolean}
+ */
+export function isNullOrUndef(val) {
+  return typeof val === 'undefined' || val === null;
+};
+
+/**
+ * Checks if two expressions are equivalent.
+ * Returns `true` when both parameters are `null` or `undefined`, and also when both have
+ * equivalent values.
+ * @param {any} a
+ * @param {any} b
+ * @returns {boolean}
+ */
+export function isEquivalent(a, b) {
+  return (typeof a === 'undefined' || a === null) &amp;&amp; (typeof b === 'undefined' || b === null) || a === b;
+};
+
+/**
+ * Reads paragraphs, identified by `&lt;p>&lt;/p>` elements, inside XML data
+ * @param {object} xml - The DOM-XML element to be parsed
+ * @returns {string}
+ */
+export function getXmlText(xml) {
+  let text = '';
+  $(xml).children('p').each((_n, child) => { text += `&lt;p>${child.textContent}&lt;/p>`; });
+  return text;
+};
+
+/**
+ * Parse the provided XML element node, returning a complex object
+ * @param {object} xml - The root XML element to parse
+ * @param {boolean} [withText=false] - When `true`, any text found inside the XML element is also included in the resulting object.
+ * @returns {object}
+ */
+export function parseXmlNode(xml, withText = false) {
+  // Initialize the resulting object
+  const result = {};
+  // Direct copy of root element attributes as object properties
+  if (xml.attributes)
+    attrForEach(xml.attributes, (name, value) => result[name] = /^-?\d*$/.test(value) ? Number(value) : value);
+
+  const keys = [];
+  const children = Array.from(xml.children || xml.childNodes || []);
+
+  // If all children is of type 'p', just compile it in a single string
+  const paragraphs = children.filter(child => child.nodeName === 'p');
+  if (paragraphs.length > 0 &amp;&amp; paragraphs.length === children.filter(ch => ch.nodeName !== '#text').length) {
+    const text = paragraphs.map(ch => ch.textContent).join('\n');
+    if (xml.attributes) {
+      result.text = text;
+      return result;
+    }
+    return text;
+  }
+
+  // Process children elements
+  children.forEach(child => {
+    // Avoid extra text content collected by [xmldom](https://www.npmjs.com/package/xmldom)
+    if (child.nodeName === '#text' &amp;&amp; !withText)
+      return;
+
+    // Recursive processing of children
+    const ch = parseXmlNode(child, withText);
+    // Store the result into a temporary object named as the child node name,
+    if (!result[child.nodeName]) {
+      // Create object and save key for later processing
+      result[child.nodeName] = {};
+      keys.push(child.nodeName);
+    }
+    // Use 'id' (or an incremental number if 'id' is not set) as a key
+    if (ch.id)
+      result[child.nodeName][ch.id] = ch;
+    else {
+      const n = Object.keys(result[child.nodeName]).length;
+      result[child.nodeName][n] = ch;
+    }
+  });
+  // Check temporary objects, converting it to an array, a single object or a complex object
+  keys.forEach(k => {
+    // Retrieve temporary object from `keys`
+    const kx = Object.keys(result[k]);
+    // If all keys are numbers, convert object into an array (or leave it as a single object)
+    if (!kx.find(kk => isNaN(kk))) {
+      if (kx.length === 1)
+        // Array with a single element. Leave it as a simple object:
+        result[k] = result[k][0];
+      else {
+        // Object with numeric keys. Convert it to array:
+        const arr = [];
+        kx.forEach(kk => arr.push(result[k][kk]));
+        result[k] = arr;
+      }
+    }
+  });
+  // Save text content, if any:
+  if (children.length === 0 &amp;&amp; xml.textContent)
+    result.textContent = xml.textContent;
+  return result;
+};
+
+/**
+ * Parse the given XML node, known as containing only text elements,
+ * and return its content as a string (when possible)
+ * @param {object} xml - The XML element to parse
+ * @returns {string|object}
+ */
+export function getXmlNodeText(node) {
+  const result = parseXmlNode(node);
+  return typeof result === 'string' ?
+    result :
+    Object.prototype.hasOwnProperty.call(result, 'text') ?
+      result.text :
+      Object.prototype.hasOwnProperty.call(result, 'textContent') ?
+        result.textContent :
+        result;
+};
+
+/**
+ * Recursively explore the given object, converting to a string
+ * all attributes with a single attribute named 'text'.
+ * Example:
+ * {a:1, b:{text:&quot;hello&quot;}, c:{d:2, text:&quot;world&quot;}} => {a:1, b:&quot;hello&quot;, c:{d:2, text:&quot;world&quot;}}
+ * @param {object} obj - The object to explore
+ * @returns {object} - The same object, with text attributes reduced to strings
+ */
+export function reduceTextsToStrings(obj) {
+  if (obj) {
+    const keys = Object.keys(obj);
+    keys.forEach(k => {
+      const attr = obj[k];
+      if (typeof attr === 'object') {
+        const ko = Object.keys(attr);
+        if (ko.length === 1 &amp;&amp; ko[0] === 'text')
+          obj[k] = attr.text;
+        else
+          obj[k] = reduceTextsToStrings(attr);
+      }
+    });
+  }
+  return obj;
+};
+
+/**
+ * Creates a string suitable to be used in the 'style' attribute of HTML tags, filled with the
+ * CSS attributes contained in the provided object.
+ * @param {object} cssObj
+ * @returns {string}
+ */
+export function cssToString(cssObj) {
+  return Object.keys(cssObj).reduce((s, key) => `${s}${key}:${cssObj[key]};`, '');
+};
+
+/**
+ * Converts java-like color codes (like '0xRRGGBB') to valid CSS values like '#RRGGBB' or 'rgba(r,g,b,a)'
+ * @param {string} [color] - A color, as codified in Java
+ * @param {string} [defaultColor] - The default color to be used
+ * @returns {string}
+ */
+export function checkColor(color, defaultColor = settings.BoxBase.BACK_COLOR) {
+  if (typeof color === 'undefined' || color === null)
+    color = defaultColor;
+  color = color.replace('0x', '#');
+  // Check for Alpha value
+  if (color.charAt(0) === '#' &amp;&amp; color.length > 7) {
+    const alpha = fx(parseInt(color.substring(1, 3), 16) / 255.0, 2);
+    color = `rgba(${parseInt(color.substring(3, 5), 16)},${parseInt(color.substring(5, 7), 16)},${parseInt(color.substring(7, 9), 16)},${alpha})`;
+  }
+  return color;
+};
+
+/**
+ * Checks if the provided color has an alpha value less than 1
+ * @param {string} color - The color to be analyzed
+ * @returns {boolean}
+ */
+export function colorHasTransparency(color) {
+  if (startsWith(color, 'rgba(')) {
+    var alpha = parseInt(color.substring(color.lastIndexOf(',')));
+    return typeof alpha === 'number' &amp;&amp; alpha &lt; 1.0;
+  }
+  return false;
+};
+
+/**
+ * Clones the provided object
+ * See: https://stackoverflow.com/questions/41474986/how-to-clone-a-javascript-es6-class-instance
+ * @param {object} obj
+ * @returns {object}
+ */
+//cloneObject: obj => Object.assign(Object.create(Object.getPrototypeOf(obj)), obj),
+export function cloneObject(obj) {
+  return $.extend(true, Object.create(Object.getPrototypeOf(obj)), obj);
+};
+
+/**
+ * Converts string values to number or boolean when needed
+ * @param {object} obj - The object to be processed
+ * @returns {object} - A new object with normalized content
+ */
+export function normalizeObject(obj) {
+  const result = {};
+  if (obj)
+    $.each(obj, (key, value) => {
+      let s;
+      if (typeof value === 'string' &amp;&amp; (s = value.trim().toLowerCase()) !== '')
+        value = s === 'true' ? true : s === 'false' ? false : isNaN(s) ? value : Number(s);
+      result[key] = value;
+    });
+  return result;
+};
+
+/**
+ * Returns an partial clone of an object, containing only the own attributes specified in an array of possible keys.
+ * When the value of an attribute is of type 'Object' and this object has a method named `getAttributes`, the result of calling
+ * this method is returned instead of the crude object.
+ * @param {object} obj - The object to be processed
+ * @param {string[]} [keys] - An optional array of keys to be included in the resulting object.
+ * When null or not set, all keys of `obj` are included. Keys can include a default value separed by '|'.
+ * Attributes with default value will be excluded from the resulting object.
+ * @returns {object}
+ */
+export function getAttr(obj, keys = null) {
+  let result = {};
+  keys = keys || Object.keys(obj);
+  keys.forEach(key => {
+    const [k, d] = key.split('|');
+    if (Object.prototype.hasOwnProperty.call(obj, k) &amp;&amp; typeof obj[k] !== 'undefined' &amp;&amp; obj[k] !== null &amp;&amp; obj[k].toString() !== d) {
+      const v = getValue(obj[k]);
+      if (!isEmpty(v))
+        result[k] = v;
+    }
+  });
+
+  // Convert to string objects with only a &quot;text&quot; attribute
+  keys = Object.keys(result);
+  if (keys.length === 1 &amp;&amp; keys[0] === 'text')
+    result = result.text;
+
+  return result;
+};
+
+/**
+ * Gets the minimal representation of the given value (object, array, string, number...)
+ * @param {any} value - The value to be processed
+ * @returns {any}
+ */
+export function getValue(value) {
+  return value.getAttributes ?
+    value.getAttributes() :
+    value instanceof Array ?
+      value.map(e => getValue(e)) :
+      value instanceof Date ?
+        value.toISOString() :
+        value instanceof Object ?
+          getAttr(value) :
+          value;
+};
+
+/**
+ * Checks if the given value is an empty object, null or a zero-length string
+ * @param {any} v - The value to be checked
+ * @returns {boolean} - `true` if `v` is `{}`, `null` or `&quot;&quot;`
+ */
+export function isEmpty(v) {
+  let result = (typeof v === 'undefined' || v === null);
+  if (!result) {
+    switch (typeof v) {
+      case 'object':
+        result = Object.keys(v).length === 0;
+        break;
+
+      case 'string':
+        result = v.length === 0;
+        break;
+    }
+  }
+  return result;
+};
+
+/**
+ * Fills an object with specific attributes from another data object
+ * @param {object} obj - The target object
+ * @param {object} data - The data object
+ * @param {string[]} attr - The list of attributes to be copied from `data` to `obj`
+ *                          Elements of this list can be:
+ *                          a) Just a string. In this case, the native object will be used as a value
+ *                          b) An object with the following members:
+ *                          - `key`{string} - The attribute name
+ *                          - `fn` {function} - The function to be invoked to build the object
+ *                          - `params` {string[]} - Optional params to be passed to the `setAttributes` method of the created object
+ *                          - `group` {string} - Used when `data` is an object or an array (possible values are `object` and `array`), and multiple results
+ *                                               should be aggregated in a resulting object or array with the same keys (or ordering) as data.
+ *                          - `init` {string} - Optional parameter indicating if `fn` should be passed with an additional param. This param can be:
+ *                            - `key` - The member's key
+ *
+ * @returns {object} - Always returns `obj`
+ */
+export function setAttr(obj, data, attr) {
+  attr.forEach(a => {
+    if (a.key) {
+      const { key, fn, group, init, params } = a;
+      // A new object should be built
+      if (!isEmpty(data[key])) {
+        const dataset = data[key];
+        if (group === 'object')
+          obj[key] = Object.keys(dataset).reduce((o, k) => {
+            o[k] = buildObj(fn, dataset[k], init === 'key' ? k : init, params);
+            return o;
+          }, {});
+        else if (group === 'array')
+          obj[key] = dataset.map((element, n) => buildObj(fn, element, init === 'key' ? n : init, params));
+        else
+          obj[key] = buildObj(fn, dataset, init, params);
+      }
+    } else if (!isEmpty(data[a]))
+      obj[a] = data[a];
+  });
+  return obj;
+};
+
+/**
+ * Builds a new object based on the provided constructor, data and initialization value
+ * Objects used with this function should implement `setAttributes`, or an static method named `factory`
+ * @param {function} objType - A class or function to be invoked to build the object.
+ * @param {object} [data] - An optional object filled with the attributes to be assigned to the newly created object.
+ * @param {any} [init] - An optional value to be passed to the function when invoked with `new`
+ * @param {object[]} [params=[]] - Optional array of params to be passed when calling `setAttributes` on the final object
+ * @returns {object} - The resulting object
+ */
+export function buildObj(objType, data, init, params = []) {
+  return objType.factory ? objType.factory(data, init, params) : new objType(init).setAttributes(data, ...params);
+};
+
+/**
+ * Check if the given char is a separator
+ * @param {string} ch - A string with a single character
+ * @returns {boolean}
+ */
+export function isSeparator(ch) {
+  return settings.SEPARATORS.includes(ch);
+};
+
+/**
+ * Check if the given char is a word delimiter
+ * @param {string} ch - A string with a single character
+ * @returns {boolean}
+ */
+export function isWordDelimiter(ch) {
+  return settings.WORD_DELIMITERS.includes(ch);
+}
+
+/**
+ * Converts a string in an array of objects with 'text' and 'sep' attributes, where 'text' are single words and 'sep'
+ * are the word separators following each word in the sentence.
+ * @example
+ * stringToWords(&quot;Hello, World! That's all&quot;) returns:
+ * [
+ *   {text: &quot;Hello&quot;, sep: &quot;, &quot;},
+ *   {text: &quot;World&quot;, sep: &quot;! &quot;},
+ *   {text: &quot;That&quot;, sep: &quot;'&quot;},
+ *   {text: &quot;s&quot;, sep: &quot; &quot;},
+ *   {text: &quot;all&quot;, sep: &quot;&quot;},
+ * ]
+ * @param {*} str - The text to be tokenized
+ * @returns {object[]}
+ */
+export function stringToWords(str) {
+  const result = [];
+  let token = { text: '', sep: '' };
+  let inWord = true;
+  for (let i = 0; i &lt; str.length; i++) {
+    const ch = str.charAt(i);
+    const delim = isWordDelimiter(ch);
+    if (inWord) {
+      if (!delim)
+        token.text += ch;
+      else {
+        inWord = false;
+        token.sep = ch;
+      }
+    } else {
+      if (delim)
+        token.sep += ch;
+      else {
+        result.push(token);
+        token = { text: ch, sep: '' };
+        inWord = true;
+      }
+    }
+  }
+  result.push(token);
+  return result;
+}
+
+/**
+ * Rounds `v` to the nearest multiple of `n`
+ * @param {number} v
+ * @param {number} n - Cannot be zero!
+ * @returns {number}
+ */
+export function roundTo(v, n) {
+  return Math.round(v / n) * n;
+};
+
+/**
+ * Set the maximum number of decimals for a number
+ * @param {any} v - The value to be converted to a fixed number of decimals. Can be anything.
+ * @param {number} n=4 - the maximum number of decimals
+ * @returns {any} - When `v` is a number, a number with fixed decimals is returned. Otherwise, returns `v`
+ */
+export function fx(v, n = 4) {
+  return v.toFixed ? Number(v.toFixed(n)) : v;
+};
+
+/**
+ * Compares the provided answer against multiple valid options. These valid options are
+ * concatenated in a string, separated by pipe chars (`|`). The comparing can be case sensitive.
+ * @param {string} answer - The text to check against to
+ * @param {string} check - String containing one or multiple options, separated by `|`
+ * @param {boolean} [checkCase=false] - When true, the comparing will be case-sensitive
+ * @param {boolean} [numeric=false] - When true, we are comparing numeric expressions
+ * @returns {boolean}
+ */
+export function compareMultipleOptions(answer, check, checkCase = false, numeric = false) {
+  if (answer === null || answer.length === 0 || check === null || check.length === 0)
+    return false;
+  if (!checkCase &amp;&amp; !numeric)
+    answer = answer.toUpperCase();
+  answer = answer.trim();
+
+  // Check for numeric digits in answer!
+  numeric = numeric &amp;&amp; /\d/.test(answer);
+
+  for (let token of check.split('|')) {
+    if (numeric) {
+      if (Number.parseFloat(answer.replace(/,/, '.')) === Number.parseFloat(token.replace(/,/, '.')))
+        return true;
+    }
+    else if (answer === (checkCase ? token : token.toUpperCase()).trim())
+      return true;
+  }
+  return false;
+};
+
+/**
+ * Checks if the given string ends with the specified expression
+ * @param {string} text - The string where to find the expression
+ * @param {string} expr - The expression to search for.
+ * @param {boolean} [trim] - When `true`, the `text` string will be trimmed before check
+ * @returns {boolean}
+ */
+export function endsWith(text = '', expr, trim) {
+  return typeof text === 'string' &amp;&amp; (trim ? text.trim() : text).endsWith(expr);
+};
+
+/**
+ * Checks if the given string starts with the specified expression
+ * @param {string} text - The string where to find the expression
+ * @param {string} expr - The expression to search for.
+ * @param {boolean} [trim] - When `true`, the `text` string will be trimmed before check
+ * @returns {boolean}
+ */
+export function startsWith(text = '', expr, trim) {
+  return typeof text === 'string' &amp;&amp; (trim ? text.trim() : text).indexOf(expr) === 0;
+};
+
+/**
+ * Replaces all occurrences of the backslash character (\) by a regular slash (/)
+ * This is useful to normalize bad path names present in some old JClic projects
+ * @param {string} str - The string to be normalized
+ * @returns {string}
+ */
+export function nSlash(str) {
+  return str ? str.replace(/\\/g, '/') : str;
+};
+
+/**
+ * Checks if the given expression is an absolute URL
+ * @param {string} exp - The expression to be checked
+ * @returns {boolean}
+ */
+export function isURL(exp) {
+  return /^(filesystem:)?(https?|file|data|ftps?):/i.test(exp);
+};
+
+/**
+ * Gets the base path of the given file path (absolute or full URL). This base path always ends
+ * with `/`, meaning it can be concatenated with relative paths without adding a separator.
+ * @param {string} path - The full path to be parsed
+ * @returns {string}
+ */
+export function getBasePath(path) {
+  const p = path.lastIndexOf('/');
+  return p >= 0 ? path.substring(0, p + 1) : '';
+};
+
+/**
+ * Gets the full path of `file` relative to `basePath`
+ * @param {string} file - The file name
+ * @param {string} [path] - The base path
+ * @returns {string}
+ */
+export function getRelativePath(file, path) {
+  return (!path || path === '' || file.indexOf(path) !== 0) ? file : file.substring(path.length);
+};
+
+/**
+ * Gets the complete path of a relative or absolute URL, using the provided `basePath`
+ * @param {string} basePath - The base URL
+ * @param {string} path - The filename
+ * @returns {string}
+ */
+export function getPath(basePath, path) {
+  return isURL(path) ? path : basePath + path;
+};
+
+/**
+ * Gets a promise with the complete path of a relative or absolute URL, using the provided `basePath`
+ * @param {string} basePath - The base URL
+ * @param {string} path - The filename
+ * @param {external:JSZip} [zip] - An optional {@link external:JSZip} object where to look
+ * for the file
+ * @returns {external:Promise}
+ */
+export function getPathPromise(basePath, path, zip) {
+  if (zip) {
+    const fName = getRelativePath(basePath + path, zip.zipBasePath);
+    if (zip.files[fName]) {
+      return new Promise((resolve, reject) => {
+        zip.file(fName).async('base64').then(data => {
+          const ext = path.toLowerCase().split('.').pop();
+          const mime = settings.MIME_TYPES[ext] || 'application/octet-stream';
+          resolve(`data:${mime};base64,${data}`);
+        }).catch(reject);
+      });
+    }
+  }
+  return Promise.resolve(getPath(basePath, path));
+};
+
+/**
+ * Utility object that provides several methods to build simple and complex DOM objects
+ * @type {object}
+ */
+export const $HTML = {
+  doubleCell: (a, b) => $('&lt;tr/>').append($('&lt;td/>').html(a)).append($('&lt;td/>').html(b)),
+  p: txt => $('&lt;p/>').html(txt),
+  td: (txt, className) => $('&lt;td/>', className ? { class: className } : null).html(txt),
+  th: (txt, className) => $('&lt;th/>', className ? { class: className } : null).html(txt),
+};
+
+/**
+ * Replaces `width`, `height` and `fill` attributes of a simple SVG image
+ * with the provided values
+ * @param {string} svg - The SVG image as XML string
+ * @param {string} [width] - Optional setting for &quot;width&quot; property
+ * @param {string} [height] - Optional setting for &quot;height&quot; property
+ * @param {string} [fill] - Optional setting for &quot;fill&quot; property
+ * @returns {string} - The resulting svg code
+ */
+export function getSvg(svg, width, height, fill) {
+  if (width)
+    svg = svg.replace(/width=&quot;\d*&quot;/, `width=&quot;${width}&quot;`);
+  if (height)
+    svg = svg.replace(/height=&quot;\d*&quot;/, `height=&quot;${height}&quot;`);
+  if (fill)
+    svg = svg.replace(/fill=&quot;[#A-Za-z0-9]*&quot;/, `fill=&quot;${fill}&quot;`);
+  return svg;
+};
+
+/**
+ * Encodes a svg expression into a {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/data_URIs|data URI}
+ * suitable for the `src` property of `img` elements, optionally changing its original size and fill values.
+ * @param {string} svg - The SVG image as XML string
+ * @param {string} [width] - Optional setting for &quot;width&quot; property
+ * @param {string} [height] - Optional setting for &quot;height&quot; property
+ * @param {string} [fill] - Optional setting for &quot;fill&quot; property
+ * @returns {string} - The resulting Data URI
+ */
+export function svgToURI(svg, width, height, fill) {
+  return 'data:image/svg+xml;base64,' + window.btoa(getSvg(svg, width, height, fill));
+};
+
+/**
+ * Converts the given expression into a valid value for CSS size values
+ * @param {string|number} exp - The expression to be evaluated. Can be a numeric value, `null` or `undefined`.
+ *                              Positive values are in &quot;px&quot; units, negative ones are &quot;%&quot;
+ * @param {object} css - An optional Object where the resulting expression (if any) will be saved
+ * @param {string} key - The key under which the result will be stored in `css`
+ * @param {string} def - Default value to be used when `exp` is `null` or `undefined`
+ * @returns {string} - A valid CSS value, or `null` if it can't be found. Default units are `px`
+ */
+export function toCssSize(exp, css, key, def) {
+  const result = typeof exp === 'undefined' || exp === null ? null : isNaN(exp) ? exp : exp &lt; 0 ? `${Math.abs(exp)}%` : `${exp}px`;
+  if (css &amp;&amp; key &amp;&amp; (result || def))
+    css[key] = result !== null ? result : def;
+  return result;
+};
+
+/**
+ * Gets a clip of the give image data, in a URL base64 encoded format
+ * @param {object} img - The binary data of the realized image, usually obtained from a {@link module:bads/MediaBagElement.MediaBagElement}
+ * @param {module:AWT.Rectangle} rect - A rectangle containing the requested clip
+ * @returns {string} - The URL with the image clip, as a PNG file encoded in base64
+ */
+export function getImgClipUrl(img, rect) {
+  const canvas = document.createElement('canvas');
+  canvas.width = rect.dim.width;
+  canvas.height = rect.dim.height;
+  const ctx = canvas.getContext('2d');
+  let result = '';
+  try {
+    ctx.drawImage(img, rect.pos.x, rect.pos.y, rect.dim.width, rect.dim.height, 0, 0, rect.dim.width, rect.dim.height);
+    result = canvas.toDataURL();
+  } catch (err) {
+    // catch 'tainted canvases may not be exported' and other errors
+    log('error', err);
+  }
+  return result;
+};
+
+/**
+ * Finds the nearest `head` or root node of a given HTMLElement, useful to place `&lt;style/>` elements when
+ * the main component of JClic is behind a shadow-root.
+ * This method will be replaced by a call to [Node.getRootNode()](https://developer.mozilla.org/en-US/docs/Web/API/Node/getRootNode)
+ * when fully supported by all major browsers.
+ * @param {external:HTMLElement} [el] - The element from which to start the search
+ * @returns {external:HTMLElement}
+ */
+export function getRootHead(el) {
+  if (el) {
+    // Skip HTMLElements
+    while (el.parentElement)
+      el = el.parentElement;
+    // Get the parent node of the last HTMLElement
+    if (el instanceof HTMLElement)
+      el = el.parentNode || el;
+    // If the root node has a `head`, take it
+    el = el['head'] || el;
+  }
+  return el || document.head;
+};
+
+/**
+ * Appends a style element to the `head` or root node nearest to the given `HTMLElement`.
+ * @param {string} css - The content of the stylesheet
+ * @param {module:JClicPlayer.JClicPlayer} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used as a base to find the root node
+ * @returns {external:HTMLStyleElement} - The appended style element
+ */
+export function appendStyleAtHead(css, ps) {
+  const root = getRootHead(ps &amp;&amp; ps.$topDiv ? ps.$topDiv[0] : null);
+  const style = document.createElement('style');
+  style.type = 'text/css';
+  style.appendChild(document.createTextNode(css));
+  return root.appendChild(style);
+};
+
+/**
+ * Appends a stylesheet element to the `head` or root node nearest to the given `HTMLElement`.
+ * @param {string} href - URL pointing to the stylesheet
+ * @param {module:JClicPlayer.JClicPlayer} [ps] - An optional `PlayStation` (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used as a base to find the root node
+ * @returns {external:HTMLLinkElement} - The appended style element
+ */
+export function appendStylesheetAtHead(href, ps) {
+  const root = getRootHead(ps &amp;&amp; ps.$topDiv ? ps.$topDiv[0] : null);
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = href;
+  link.media = 'all';
+  return root.appendChild(link);
+};
+
+/**
+ * Traverses all the attributes defined in an Element, calling a function with its name and value as a parameters
+ * @param {external:NamedNodeMap} attributes - The [Element.attributes](https://developer.mozilla.org/en-US/docs/Web/API/Element/attributes)
+ * object to be traversed
+ * @param {function} callback - The function to be called for each [Attr](https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap)
+ * object. It should take two parametres: `name` and `value`
+ */
+export function attrForEach(attributes, callback) {
+  for (let i = 0; i &lt; attributes.length; i++)
+    callback(attributes[i].name, attributes[i].value);
+};
+
+/**
+ * Recursive traversal of all nodes of the given object looking for children having the `childName` attribute
+ * WARNING: Don't call this method on objects with circular dependencies!
+ * @param {object} obj       - The object to be analized
+ * @param {string} childName - Name of the attribute to search for
+ * @returns {object[]}       - Array of children having the searched attribute
+ */
+export function findParentsWithChild(obj, childName, _result = []) {
+  if (obj[childName])
+    _result.push(obj);
+  else
+    Object.values(obj).forEach(val => {
+      if (typeof val === 'object')
+        findParentsWithChild(val, childName, _result);
+    });
+  return _result;
+};
+
+//
+// Functions useful to deal with caret position in `contentEditable` DOM elements
+//
+/**
+ * Gets the caret position within the given element. Thanks to
+ * {@link http://stackoverflow.com/users/96100/tim-down|Tim Down} answers in:
+ * {@link http://stackoverflow.com/questions/4811822/get-a-ranges-start-and-end-offsets-relative-to-its-parent-container}
+ * and {@link http://stackoverflow.com/questions/6240139/highlight-text-range-using-javascript/6242538}
+ * @param {object} element - A DOM element
+ * @returns {number}
+ */
+export function getCaretCharacterOffsetWithin(element) {
+  let caretOffset = 0;
+  const doc = element.ownerDocument || element.document;
+  const win = doc.defaultView || doc.parentWindow;
+  let sel;
+  if (typeof win.getSelection !== &quot;undefined&quot;) {
+    sel = win.getSelection();
+    if (sel.rangeCount > 0) {
+      const range = win.getSelection().getRangeAt(0);
+      const preCaretRange = range.cloneRange();
+      preCaretRange.selectNodeContents(element);
+      preCaretRange.setEnd(range.endContainer, range.endOffset);
+      caretOffset = preCaretRange.toString().length;
+    }
+  } else if ((sel = doc.selection) &amp;&amp; sel.type !== &quot;Control&quot;) {
+    const textRange = sel.createRange();
+    const preCaretTextRange = doc.body.createTextRange();
+    preCaretTextRange.moveToElementText(element);
+    preCaretTextRange.setEndPoint(&quot;EndToEnd&quot;, textRange);
+    caretOffset = preCaretTextRange.text.length;
+  }
+  return caretOffset;
+};
+
+/**
+ * Utility function called by {@link module:Utils.getCaretCharacterOffsetWithin}
+ * @param {object} node - A text node
+ * @returns {object[]}
+ */
+export function getTextNodesIn(node) {
+  const textNodes = [];
+  if (node.nodeType === 3) {
+    textNodes.push(node);
+  } else {
+    const children = node.childNodes;
+    for (let i = 0, len = children.length; i &lt; len; ++i) {
+      textNodes.push.apply(textNodes, getTextNodesIn(children[i]));
+    }
+  }
+  return textNodes;
+};
+
+/**
+ * Sets the selection range (or the cursor position, when `start` and `end` are the same) to a
+ * specific position inside a DOM element.
+ * @param {object} el - The DOM element where to set the cursor
+ * @param {number} start - The start position of the selection (or cursor position)
+ * @param {number} end - The end position of the selection. When null or identical to `start`,
+ * indicates a cursor position.
+ */
+export function setSelectionRange(el, start, end) {
+  if (isNullOrUndef(end))
+    end = start;
+  if (document.createRange &amp;&amp; window.getSelection) {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const textNodes = getTextNodesIn(el);
+    let foundStart = false;
+    let charCount = 0, endCharCount, textNode;
+
+    for (let i = 0; i &lt; textNodes.length; i++) {
+      textNode = textNodes[i];
+      endCharCount = charCount + textNode.length;
+      if (!foundStart &amp;&amp; start >= charCount &amp;&amp;
+        (start &lt; endCharCount ||
+          start === endCharCount &amp;&amp; i + 1 &lt;= textNodes.length)) {
+        range.setStart(textNode, start - charCount);
+        foundStart = true;
+      }
+      if (foundStart &amp;&amp; end &lt;= endCharCount) {
+        range.setEnd(textNode, end - charCount);
+        break;
+      }
+      charCount = endCharCount;
+    }
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  } else if (document.selection &amp;&amp; document.body.createTextRange) {
+    const textRange = document.body.createTextRange();
+    textRange.moveToElementText(el);
+    textRange.collapse(true);
+    textRange.moveEnd('character', end);
+    textRange.moveStart('character', start);
+    textRange.select();
+  }
+};
+
+/**
+ * Performs multiple replacements on the provided string
+ * See: https://stackoverflow.com/questions/2501435/replacing-multiple-patterns-in-a-block-of-data
+ * @param {Object[]} replacements - Array of pairs formed by an &quot;expression&quot; (regexp or string) and a &quot;value&quot; (string) to replace the fragments found
+ * @param {String} str - The string to be checked for replacements
+ * @returns {String} - The original string with the fragments found already replaced
+ */
+export function mReplace(replacements, str) {
+  return replacements.reduce((result, [exp, replacement]) => result.replace(exp, replacement), str);
+};
+
+/**
+ * Global constants
+ * @const
+ */
+export const settings = {
+  // JClic.js Version
+  VERSION: GlobalData.version,
+  // Check if we are running on NodeJS with JSDOM
+  NODEJS: typeof window === 'undefined' || window?.navigator?.userAgent?.includes('jsdom'),
+  // layout constants
+  AB: 0, BA: 1, AUB: 2, BUA: 3,
+  LAYOUT_NAMES: ['AB', 'BA', 'AUB', 'BUA'],
+  DEFAULT_WIDTH: 400,
+  DEFAULT_HEIGHT: 300,
+  MINIMUM_WIDTH: 40,
+  MINIMUM_HEIGHT: 40,
+  DEFAULT_NAME: '---',
+  DEFAULT_MARGIN: 8,
+  DEFAULT_SHUFFLES: 31,
+  DEFAULT_GRID_ELEMENT_SIZE: 20,
+  MIN_CELL_SIZE: 10,
+  //DEFAULT_BG_COLOR: '#D3D3D3', // LightGray
+  DEFAULT_BG_COLOR: '#C0C0C0', // LightGray
+  ACTIONS: {
+    ACTION_MATCH: 'MATCH', ACTION_PLACE: 'PLACE',
+    ACTION_WRITE: 'WRITE', ACTION_SELECT: 'SELECT', ACTION_HELP: 'HELP'
+  },
+  PREVIOUS: 0, MAIN: 1, END: 2, END_ERROR: 3, NUM_MSG: 4,
+  MSG_TYPE: ['previous', 'initial', 'final', 'finalError'],
+  RANDOM_CHARS: &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;,
+  NUM_COUNTERS: 3,
+  MAX_RECORD_LENGTH: 180,
+  // BoxBase defaults
+  BoxBase: {
+    REDUCE_FONT_STEP: 1.0,
+    MIN_FONT_SIZE: 8,
+    STROKE: 1,
+    AC_MARGIN: 6,
+    //BACK_COLOR: 'lightgray',
+    BACK_COLOR: '#C0C0C0',
+    TEXT_COLOR: 'black',
+    SHADOW_COLOR: 'gray',
+    INACTIVE_COLOR: 'gray',
+    ALTERNATIVE_COLOR: 'gray',
+    BORDER_COLOR: 'black',
+    BORDER_STROKE_WIDTH: 0.75,
+    MARKER_STROKE_WIDTH: 2.75
+  },
+  FILE_TYPES: {
+    image: 'gif,jpg,png,jpeg,bmp,ico,svg',
+    audio: 'wav,mp3,ogg,oga,au,aiff,flac',
+    video: 'avi,mov,mpeg,mp4,ogv,m4v,webm',
+    font: 'ttf,otf,eot,woff,woff2',
+    midi: 'mid,midi',
+    anim: 'swf',
+    // Used in custom skins
+    xml: 'xml'
+  },
+  MIME_TYPES: {
+    xml: 'text/xml',
+    gif: 'image/gif',
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    png: 'image/png',
+    bmp: 'image/bmp',
+    svg: 'image/svg+xml',
+    ico: 'image/x-icon',
+    wav: 'audio/wav',
+    mp3: 'audio/mpeg',
+    mp4: 'video/mp4',
+    m4v: 'video/mp4',
+    ogg: 'audio/ogg',
+    oga: 'audio/ogg',
+    ogv: 'video/ogg',
+    webm: 'video/webm',
+    au: 'audio/basic',
+    aiff: 'audio/x-aiff',
+    flac: 'audio/flac',
+    avi: 'video/avi',
+    mov: 'video/quicktime',
+    mpeg: 'video/mpeg',
+    ttf: 'application/font-sfnt',
+    otf: 'application/font-sfnt',
+    eot: ' application/vnd.ms-fontobject',
+    woff: 'application/font-woff',
+    woff2: 'application/font-woff2',
+    swf: 'application/x-shockwave-flash',
+    mid: 'audio/midi',
+    midi: 'audio/midi'
+  },
+  // Global settings susceptible to be modified
+  COMPRESS_IMAGES: true,
+  // Keyboard key codes
+  VK: {
+    LEFT: 37,
+    UP: 38,
+    RIGHT: 39,
+    DOWN: 40
+  },
+  // Flag to indicate that we are running on a touch device
+  TOUCH_DEVICE: false,
+  // Amount of time (in milliseconds) to wait before a media resource is loaded
+  LOAD_TIMEOUT: 10000,
+  // Number of points to be calculated as polygon vertexs when simplifying bezier curves
+  BEZIER_POINTS: 4,
+  // Check if canvas accessibility features are enabled
+  // See: http://codepen.io/francesc/pen/amwvRp
+  // UPDATED May 2020: Detection removed since Canvas HitRegions have been deprecated
+  // See: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility
+  //
+  // CANVAS_HITREGIONS: typeof CanvasRenderingContext2D !== 'undefined' &amp;&amp; typeof CanvasRenderingContext2D.prototype.addHitRegion === 'function',
+  // CANVAS_HITREGIONS_FOCUS: typeof CanvasRenderingContext2D !== 'undefined' &amp;&amp; typeof CanvasRenderingContext2D.prototype.drawFocusIfNeeded === 'function',
+  //
+  CANVAS_DRAW_FOCUS: typeof window !== 'undefined' &amp;&amp; typeof window?.CanvasRenderingContext2D?.prototype?.drawFocusIfNeeded === 'function',
+  // See: https://emptycharacter.com/
+  // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes
+  WHITESPACES: '  \f\n\r\t\v\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u2028\u2029\u202f\u205f\u3000\ufeff',
+};
+settings.SEPARATORS = `${settings.WHITESPACES}.,;-|`;
+settings.WORD_DELIMITERS = `${settings.SEPARATORS}…_&lt;>&quot;“”«»'\xB4\x60\u2018\u2019\u2022~+\u2013\u2014\u2015=%¿?¡!:/\\()[]{}$£€`;
+
+/**
+ * Miscellaneous utility functions and constants
+ */
+export const Utils = {
+  pkg,
+  settings,
+  getMsg,
+  LOG_LEVELS,
+  LOG_PRINT_LABELS,
+  LOG_OPTIONS,
+  init,
+  setLogLevel,
+  log,
+  getBoolean,
+  getVal,
+  getNumber,
+  getPercent,
+  zp,
+  getHMStime,
+  getDateTime,
+  parseOldDate,
+  cleanOldLanguageTag,
+  FALSE,
+  TRUE,
+  DEFAULT,
+  getTriState,
+  fillString,
+  isNullOrUndef,
+  isEquivalent,
+  getXmlText,
+  parseXmlNode,
+  getXmlNodeText,
+  reduceTextsToStrings,
+  cssToString,
+  checkColor,
+  colorHasTransparency,
+  cloneObject,
+  normalizeObject,
+  getAttr,
+  getValue,
+  isEmpty,
+  setAttr,
+  buildObj,
+  isSeparator,
+  isWordDelimiter,
+  stringToWords,
+  roundTo,
+  fx,
+  compareMultipleOptions,
+  endsWith,
+  startsWith,
+  nSlash,
+  isURL,
+  getBasePath,
+  getRelativePath,
+  getPath,
+  getPathPromise,
+  $HTML,
+  getSvg,
+  svgToURI,
+  toCssSize,
+  getImgClipUrl,
+  getRootHead,
+  appendStyleAtHead,
+  attrForEach,
+  findParentsWithChild,
+  getCaretCharacterOffsetWithin,
+  getTextNodesIn,
+  setSelectionRange
+};
+
+export default Utils;
+</code></pre></div></div></div></main></div><footer class="border-t border-(--clean-border) bg-background py-6 text-sm text-muted-foreground"><div class="mx-auto flex w-full max-w-screen-2xl flex-col items-start justify-between gap-2 px-4 md:flex-row md:items-center"><div class="flex items-center gap-1.5"><span>Documentation</span><span>© 2026</span></div></div></footer></div><script type="application/json" data-island-props>{"i0":{"language":"javascript","filename":"Utils.js"},"i1":{"basePath":"/","searchIndexUrl":"/_assets/search-index.ms3c00px-cd763a47.json"},"i2":{},"i3":{},"i4":{"nav":[{"label":"Home","slug":"","order":-1},{"label":"AbstractBox","slug":"module/boxes-abstractbox/abstractbox","group":"Classes","order":0},{"label":"Action","slug":"module/awt/action","group":"Classes","order":0},{"label":"ActionReg","slug":"module/report-actionreg/actionreg","group":"Classes","order":0},{"label":"ActiveBagContent","slug":"module/boxes-activebagcontent/activebagcontent","group":"Classes","order":0},{"label":"ActiveBagContentKit","slug":"module/automation-autocontentprovider/autocontentprovider/activebagcontentkit","group":"Classes","order":0},{"label":"ActiveBox","slug":"module/boxes-activebox/activebox","group":"Classes","order":0},{"label":"ActiveBoxBag","slug":"module/boxes-activeboxbag/activeboxbag","group":"Classes","order":0},{"label":"ActiveBoxContent","slug":"module/boxes-activeboxcontent/activeboxcontent","group":"Classes","order":0},{"label":"ActiveBoxGrid","slug":"module/boxes-activeboxgrid/activeboxgrid","group":"Classes","order":0},{"label":"ActiveMediaBag","slug":"module/media-activemediabag/activemediabag","group":"Classes","order":0},{"label":"ActiveMediaPlayer","slug":"module/media-activemediaplayer/activemediaplayer","group":"Classes","order":0},{"label":"Activity","slug":"module/activity/activity","group":"Classes","order":0},{"label":"ActivityPanel","slug":"module/activity/activitypanel","group":"Classes","order":0},{"label":"ActivityReg","slug":"module/report-activityreg/activityreg","group":"Classes","order":0},{"label":"ActivitySequence","slug":"module/bags-activitysequence/activitysequence","group":"Classes","order":0},{"label":"ActivitySequenceElement","slug":"module/bags-activitysequenceelement/activitysequenceelement","group":"Classes","order":0},{"label":"ActivitySequenceJump","slug":"module/bags-activitysequencejump/activitysequencejump","group":"Classes","order":0},{"label":"AlignType","slug":"module/boxes-activeboxcontent/aligntype","group":"Classes","order":0},{"label":"Arith","slug":"module/automation-arith-arith/arith","group":"Classes","order":0},{"label":"AudioBuffer","slug":"module/media-audiobuffer/audiobuffer","group":"Classes","order":0},{"label":"AutoContentProvider","slug":"module/automation-autocontentprovider/autocontentprovider","group":"Classes","order":0},{"label":"BasicEvaluator","slug":"module/activities-text-evaluator/basicevaluator","group":"Classes","order":0},{"label":"BlueSkin","slug":"module/skins-blueskin/blueskin","group":"Classes","order":0},{"label":"BoxBag","slug":"module/boxes-boxbag/boxbag","group":"Classes","order":0},{"label":"BoxBase","slug":"module/boxes-boxbase/boxbase","group":"Classes","order":0},{"label":"BoxConnector","slug":"module/boxes-boxconnector/boxconnector","group":"Classes","order":0},{"label":"ClassicJigSaw","slug":"module/shapers-classicjigsaw/classicjigsaw","group":"Classes","order":0},{"label":"Complete","slug":"module/activities-text-complete/complete","group":"Classes","order":0},{"label":"CompletePanel","slug":"module/activities-text-complete/completepanel","group":"Classes","order":0},{"label":"ComplexAssociation","slug":"module/activities-associations-complexassociation/complexassociation","group":"Classes","order":0},{"label":"ComplexAssociationPanel","slug":"module/activities-associations-complexassociation/complexassociationpanel","group":"Classes","order":0},{"label":"ComplexEvaluator","slug":"module/activities-text-evaluator/complexevaluator","group":"Classes","order":0},{"label":"ConditionalJumpInfo","slug":"module/bags-conditionaljumpinfo/conditionaljumpinfo","group":"Classes","order":0},{"label":"Container","slug":"module/awt/container","group":"Classes","order":0},{"label":"Counter","slug":"module/skins-counter/counter","group":"Classes","order":0},{"label":"CrossWord","slug":"module/activities-textgrid-crossword/crossword","group":"Classes","order":0},{"label":"CrossWordPanel","slug":"module/activities-textgrid-crossword/crosswordpanel","group":"Classes","order":0},{"label":"CustomSkin","slug":"module/skins-customskin/customskin","group":"Classes","order":0},{"label":"DefaultSkin","slug":"module/skins-defaultskin/defaultskin","group":"Classes","order":0},{"label":"Dimension","slug":"module/awt/dimension","group":"Classes","order":0},{"label":"DoublePuzzle","slug":"module/activities-puzzles-doublepuzzle/doublepuzzle","group":"Classes","order":0},{"label":"DoublePuzzlePanel","slug":"module/activities-puzzles-doublepuzzle/doublepuzzlepanel","group":"Classes","order":0},{"label":"Ellipse","slug":"module/awt/ellipse","group":"Classes","order":0},{"label":"EmptySkin","slug":"module/skins-emptyskin/emptyskin","group":"Classes","order":0},{"label":"Encryption","slug":"module/report-encryptmin/encryption","group":"Classes","order":0},{"label":"Evaluator","slug":"module/activities-text-evaluator/evaluator","group":"Classes","order":0},{"label":"EventSounds","slug":"module/media-eventsounds/eventsounds","group":"Classes","order":0},{"label":"EventSoundsElement","slug":"module/media-eventsoundselement/eventsoundselement","group":"Classes","order":0},{"label":"ExchangePuzzle","slug":"module/activities-puzzles-exchangepuzzle/exchangepuzzle","group":"Classes","order":0},{"label":"ExchangePuzzlePanel","slug":"module/activities-puzzles-exchangepuzzle/exchangepuzzlepanel","group":"Classes","order":0},{"label":"Explore","slug":"module/activities-panels-explore/explore","group":"Classes","order":0},{"label":"ExplorePanel","slug":"module/activities-panels-explore/explorepanel","group":"Classes","order":0},{"label":"FillInBlanks","slug":"module/activities-text-fillinblanks/fillinblanks","group":"Classes","order":0},{"label":"FillInBlanksPanel","slug":"module/activities-text-fillinblanks/fillinblankspanel","group":"Classes","order":0},{"label":"Font","slug":"module/awt/font","group":"Classes","order":0},{"label":"Gradient","slug":"module/awt/gradient","group":"Classes","order":0},{"label":"GreenSkin","slug":"module/skins-greenskin/greenskin","group":"Classes","order":0},{"label":"HolePuzzle","slug":"module/activities-puzzles-holepuzzle/holepuzzle","group":"Classes","order":0},{"label":"HolePuzzlePanel","slug":"module/activities-puzzles-holepuzzle/holepuzzlepanel","group":"Classes","order":0},{"label":"Holes","slug":"module/shapers-holes/holes","group":"Classes","order":0},{"label":"Identify","slug":"module/activities-panels-identify/identify","group":"Classes","order":0},{"label":"IdentifyPanel","slug":"module/activities-panels-identify/identifypanel","group":"Classes","order":0},{"label":"IdentifyText","slug":"module/activities-text-identifytext/identifytext","group":"Classes","order":0},{"label":"IdentifyTextPanel","slug":"module/activities-text-identifytext/identifytextpanel","group":"Classes","order":0},{"label":"InformationScreen","slug":"module/activities-panels-informationscreen/informationscreen","group":"Classes","order":0},{"label":"InformationScreenPanel","slug":"module/activities-panels-informationscreen/informationscreenpanel","group":"Classes","order":0},{"label":"JClicPlayer","slug":"module/jclicplayer/jclicplayer","group":"Classes","order":0},{"label":"JClicProject","slug":"module/project-jclicproject/jclicproject","group":"Classes","order":0},{"label":"JigSaw","slug":"module/shapers-jigsaw/jigsaw","group":"Classes","order":0},{"label":"JumpInfo","slug":"module/bags-jumpinfo/jumpinfo","group":"Classes","order":0},{"label":"MediaBag","slug":"module/bags-mediabag/mediabag","group":"Classes","order":0},{"label":"MediaBagElement","slug":"module/bags-mediabagelement/mediabagelement","group":"Classes","order":0},{"label":"MediaContent","slug":"module/media-mediacontent/mediacontent","group":"Classes","order":0},{"label":"MemoryGame","slug":"module/activities-memory-memorygame/memorygame","group":"Classes","order":0},{"label":"MemoryGamePanel","slug":"module/activities-memory-memorygame/memorygamepanel","group":"Classes","order":0},{"label":"Menu","slug":"module/activities-panels-menu/menu","group":"Classes","order":0},{"label":"MenuPanel","slug":"module/activities-panels-menu/menupanel","group":"Classes","order":0},{"label":"MidiAudioPlayer","slug":"module/media-midiaudioplayer/midiaudioplayer","group":"Classes","order":0},{"label":"MiniSkin","slug":"module/skins-miniskin/miniskin","group":"Classes","order":0},{"label":"Operator","slug":"module/automation-arith-arith/arith/operator","group":"Classes","order":0},{"label":"OrangeSkin","slug":"module/skins-orangeskin/orangeskin","group":"Classes","order":0},{"label":"OrderText","slug":"module/activities-text-ordertext/ordertext","group":"Classes","order":0},{"label":"OrderTextPanel","slug":"module/activities-text-ordertext/ordertextpanel","group":"Classes","order":0},{"label":"Path","slug":"module/awt/path","group":"Classes","order":0},{"label":"PathStroke","slug":"module/awt/pathstroke","group":"Classes","order":0},{"label":"PlayerHistory","slug":"module/playerhistory/playerhistory","group":"Classes","order":0},{"label":"Point","slug":"module/awt/point","group":"Classes","order":0},{"label":"ProjectSettings","slug":"module/project-projectsettings/projectsettings","group":"Classes","order":0},{"label":"Rectangle","slug":"module/awt/rectangle","group":"Classes","order":0},{"label":"Rectangular","slug":"module/shapers-rectangular/rectangular","group":"Classes","order":0},{"label":"ReportBean","slug":"module/report-tcpreporter/reportbean","group":"Classes","order":0},{"label":"Reporter","slug":"module/report-reporter/reporter","group":"Classes","order":0},{"label":"ReporterInfo","slug":"module/report-reporter/reporterinfo","group":"Classes","order":0},{"label":"SCORM","slug":"module/report-scorm/scorm","group":"Classes","order":0},{"label":"SequenceReg","slug":"module/report-sequencereg/sequencereg","group":"Classes","order":0},{"label":"SequenceRegInfo","slug":"module/report-sequencereg/sequencereginfo","group":"Classes","order":0},{"label":"SessionReg","slug":"module/report-sessionreg/sessionreg","group":"Classes","order":0},{"label":"SessionRegInfo","slug":"module/report-sessionreg/sessionreginfo","group":"Classes","order":0},{"label":"SessionStorageReporter","slug":"module/report-sessionstoragereporter/sessionstoragereporter","group":"Classes","order":0},{"label":"Shape","slug":"module/awt/shape","group":"Classes","order":0},{"label":"Shaper","slug":"module/shapers-shaper/shaper","group":"Classes","order":0},{"label":"SimpleAssociation","slug":"module/activities-associations-simpleassociation/simpleassociation","group":"Classes","order":0},{"label":"SimpleAssociationPanel","slug":"module/activities-associations-simpleassociation/simpleassociationpanel","group":"Classes","order":0},{"label":"SimpleSkin","slug":"module/skins-simpleskin/simpleskin","group":"Classes","order":0},{"label":"Skin","slug":"module/skins-skin/skin","group":"Classes","order":0},{"label":"Stroke","slug":"module/awt/stroke","group":"Classes","order":0},{"label":"TCPReporter","slug":"module/report-tcpreporter/tcpreporter","group":"Classes","order":0},{"label":"TextActivityBase","slug":"module/activities-text-textactivitybase/textactivitybase","group":"Classes","order":0},{"label":"TextActivityBasePanel","slug":"module/activities-text-textactivitybase/textactivitybasepanel","group":"Classes","order":0},{"label":"TextActivityDocument","slug":"module/activities-text-textactivitydocument/textactivitydocument","group":"Classes","order":0},{"label":"TextGrid","slug":"module/boxes-textgrid/textgrid","group":"Classes","order":0},{"label":"TextGridContent","slug":"module/boxes-textgridcontent/textgridcontent","group":"Classes","order":0},{"label":"TextTarget","slug":"module/activities-text-textactivitydocument/texttarget","group":"Classes","order":0},{"label":"Timer","slug":"module/awt/timer","group":"Classes","order":0},{"label":"TriangularJigSaw","slug":"module/shapers-triangularjigsaw/triangularjigsaw","group":"Classes","order":0},{"label":"WordSearch","slug":"module/activities-textgrid-wordsearch/wordsearch","group":"Classes","order":0},{"label":"WordSearchPanel","slug":"module/activities-textgrid-wordsearch/wordsearchpanel","group":"Classes","order":0},{"label":"WrittenAnswer","slug":"module/activities-text-writtenanswer/writtenanswer","group":"Classes","order":0},{"label":"WrittenAnswerPanel","slug":"module/activities-text-writtenanswer/writtenanswerpanel","group":"Classes","order":0},{"label":"activities/associations/ComplexAssociation","slug":"module/activities-associations-complexassociation","group":"Modules","order":1},{"label":"activities/associations/SimpleAssociation","slug":"module/activities-associations-simpleassociation","group":"Modules","order":1},{"label":"activities/memory/MemoryGame","slug":"module/activities-memory-memorygame","group":"Modules","order":1},{"label":"activities/panels/Explore","slug":"module/activities-panels-explore","group":"Modules","order":1},{"label":"activities/panels/Identify","slug":"module/activities-panels-identify","group":"Modules","order":1},{"label":"activities/panels/InformationScreen","slug":"module/activities-panels-informationscreen","group":"Modules","order":1},{"label":"activities/panels/Menu","slug":"module/activities-panels-menu","group":"Modules","order":1},{"label":"activities/puzzles/DoublePuzzle","slug":"module/activities-puzzles-doublepuzzle","group":"Modules","order":1},{"label":"activities/puzzles/ExchangePuzzle","slug":"module/activities-puzzles-exchangepuzzle","group":"Modules","order":1},{"label":"activities/puzzles/HolePuzzle","slug":"module/activities-puzzles-holepuzzle","group":"Modules","order":1},{"label":"activities/text/Complete","slug":"module/activities-text-complete","group":"Modules","order":1},{"label":"activities/text/Evaluator","slug":"module/activities-text-evaluator","group":"Modules","order":1},{"label":"activities/text/FillInBlanks","slug":"module/activities-text-fillinblanks","group":"Modules","order":1},{"label":"activities/text/IdentifyText","slug":"module/activities-text-identifytext","group":"Modules","order":1},{"label":"activities/text/OrderText","slug":"module/activities-text-ordertext","group":"Modules","order":1},{"label":"activities/text/TextActivityBase","slug":"module/activities-text-textactivitybase","group":"Modules","order":1},{"label":"activities/text/TextActivityDocument","slug":"module/activities-text-textactivitydocument","group":"Modules","order":1},{"label":"activities/text/WrittenAnswer","slug":"module/activities-text-writtenanswer","group":"Modules","order":1},{"label":"activities/textGrid/CrossWord","slug":"module/activities-textgrid-crossword","group":"Modules","order":1},{"label":"activities/textGrid/WordSearch","slug":"module/activities-textgrid-wordsearch","group":"Modules","order":1},{"label":"Activity","slug":"module/activity","group":"Modules","order":1},{"label":"automation/arith/Arith","slug":"module/automation-arith-arith","group":"Modules","order":1},{"label":"automation/AutoContentProvider","slug":"module/automation-autocontentprovider","group":"Modules","order":1},{"label":"AWT","slug":"module/awt","group":"Modules","order":1},{"label":"bags/ActivitySequence","slug":"module/bags-activitysequence","group":"Modules","order":1},{"label":"bags/ActivitySequenceElement","slug":"module/bags-activitysequenceelement","group":"Modules","order":1},{"label":"bags/ActivitySequenceJump","slug":"module/bags-activitysequencejump","group":"Modules","order":1},{"label":"bags/ConditionalJumpInfo","slug":"module/bags-conditionaljumpinfo","group":"Modules","order":1},{"label":"bags/JumpInfo","slug":"module/bags-jumpinfo","group":"Modules","order":1},{"label":"bags/MediaBag","slug":"module/bags-mediabag","group":"Modules","order":1},{"label":"bags/MediaBagElement","slug":"module/bags-mediabagelement","group":"Modules","order":1},{"label":"boxes/AbstractBox","slug":"module/boxes-abstractbox","group":"Modules","order":1},{"label":"boxes/ActiveBagContent","slug":"module/boxes-activebagcontent","group":"Modules","order":1},{"label":"boxes/ActiveBox","slug":"module/boxes-activebox","group":"Modules","order":1},{"label":"boxes/ActiveBoxBag","slug":"module/boxes-activeboxbag","group":"Modules","order":1},{"label":"boxes/ActiveBoxContent","slug":"module/boxes-activeboxcontent","group":"Modules","order":1},{"label":"boxes/ActiveBoxGrid","slug":"module/boxes-activeboxgrid","group":"Modules","order":1},{"label":"boxes/BoxBag","slug":"module/boxes-boxbag","group":"Modules","order":1},{"label":"boxes/BoxBase","slug":"module/boxes-boxbase","group":"Modules","order":1},{"label":"boxes/BoxConnector","slug":"module/boxes-boxconnector","group":"Modules","order":1},{"label":"boxes/TextGrid","slug":"module/boxes-textgrid","group":"Modules","order":1},{"label":"boxes/TextGridContent","slug":"module/boxes-textgridcontent","group":"Modules","order":1},{"label":"JClic","slug":"module/jclic","group":"Modules","order":1},{"label":"JClicPlayer","slug":"module/jclicplayer","group":"Modules","order":1},{"label":"media/ActiveMediaBag","slug":"module/media-activemediabag","group":"Modules","order":1},{"label":"media/ActiveMediaPlayer","slug":"module/media-activemediaplayer","group":"Modules","order":1},{"label":"media/AudioBuffer","slug":"module/media-audiobuffer","group":"Modules","order":1},{"label":"media/EventSounds","slug":"module/media-eventsounds","group":"Modules","order":1},{"label":"media/EventSoundsElement","slug":"module/media-eventsoundselement","group":"Modules","order":1},{"label":"media/MediaContent","slug":"module/media-mediacontent","group":"Modules","order":1},{"label":"media/MidiAudioPlayer","slug":"module/media-midiaudioplayer","group":"Modules","order":1},{"label":"PlayerHistory","slug":"module/playerhistory","group":"Modules","order":1},{"label":"project/JClicProject","slug":"module/project-jclicproject","group":"Modules","order":1},{"label":"project/ProjectSettings","slug":"module/project-projectsettings","group":"Modules","order":1},{"label":"report/ActionReg","slug":"module/report-actionreg","group":"Modules","order":1},{"label":"report/ActivityReg","slug":"module/report-activityreg","group":"Modules","order":1},{"label":"report/EncryptMin","slug":"module/report-encryptmin","group":"Modules","order":1},{"label":"report/Reporter","slug":"module/report-reporter","group":"Modules","order":1},{"label":"report/SCORM","slug":"module/report-scorm","group":"Modules","order":1},{"label":"report/SequenceReg","slug":"module/report-sequencereg","group":"Modules","order":1},{"label":"report/SessionReg","slug":"module/report-sessionreg","group":"Modules","order":1},{"label":"report/SessionStorageReporter","slug":"module/report-sessionstoragereporter","group":"Modules","order":1},{"label":"report/TCPReporter","slug":"module/report-tcpreporter","group":"Modules","order":1},{"label":"shapers/ClassicJigSaw","slug":"module/shapers-classicjigsaw","group":"Modules","order":1},{"label":"shapers/Holes","slug":"module/shapers-holes","group":"Modules","order":1},{"label":"shapers/JigSaw","slug":"module/shapers-jigsaw","group":"Modules","order":1},{"label":"shapers/Rectangular","slug":"module/shapers-rectangular","group":"Modules","order":1},{"label":"shapers/Shaper","slug":"module/shapers-shaper","group":"Modules","order":1},{"label":"shapers/TriangularJigSaw","slug":"module/shapers-triangularjigsaw","group":"Modules","order":1},{"label":"skins/BlueSkin","slug":"module/skins-blueskin","group":"Modules","order":1},{"label":"skins/Counter","slug":"module/skins-counter","group":"Modules","order":1},{"label":"skins/CustomSkin","slug":"module/skins-customskin","group":"Modules","order":1},{"label":"skins/DefaultSkin","slug":"module/skins-defaultskin","group":"Modules","order":1},{"label":"skins/EmptySkin","slug":"module/skins-emptyskin","group":"Modules","order":1},{"label":"skins/GreenSkin","slug":"module/skins-greenskin","group":"Modules","order":1},{"label":"skins/MiniSkin","slug":"module/skins-miniskin","group":"Modules","order":1},{"label":"skins/OrangeSkin","slug":"module/skins-orangeskin","group":"Modules","order":1},{"label":"skins/SimpleSkin","slug":"module/skins-simpleskin","group":"Modules","order":1},{"label":"skins/Skin","slug":"module/skins-skin","group":"Modules","order":1},{"label":"Utils","slug":"module/utils","group":"Modules","order":1},{"label":"alignType","slug":"activeboxcontent/aligntype","group":"Typedefs","order":7},{"label":"counterValType","slug":"jclicplayer/countervaltype","group":"Typedefs","order":7},{"label":"Source Files","slug":"source","order":11}],"currentSlug":"source/utils-js","basePath":"/","collapsibleGroups":["Classes","Modules","Typedefs"]},"i5":{"nav":[{"label":"Home","slug":"","order":-1},{"label":"AbstractBox","slug":"module/boxes-abstractbox/abstractbox","group":"Classes","order":0},{"label":"Action","slug":"module/awt/action","group":"Classes","order":0},{"label":"ActionReg","slug":"module/report-actionreg/actionreg","group":"Classes","order":0},{"label":"ActiveBagContent","slug":"module/boxes-activebagcontent/activebagcontent","group":"Classes","order":0},{"label":"ActiveBagContentKit","slug":"module/automation-autocontentprovider/autocontentprovider/activebagcontentkit","group":"Classes","order":0},{"label":"ActiveBox","slug":"module/boxes-activebox/activebox","group":"Classes","order":0},{"label":"ActiveBoxBag","slug":"module/boxes-activeboxbag/activeboxbag","group":"Classes","order":0},{"label":"ActiveBoxContent","slug":"module/boxes-activeboxcontent/activeboxcontent","group":"Classes","order":0},{"label":"ActiveBoxGrid","slug":"module/boxes-activeboxgrid/activeboxgrid","group":"Classes","order":0},{"label":"ActiveMediaBag","slug":"module/media-activemediabag/activemediabag","group":"Classes","order":0},{"label":"ActiveMediaPlayer","slug":"module/media-activemediaplayer/activemediaplayer","group":"Classes","order":0},{"label":"Activity","slug":"module/activity/activity","group":"Classes","order":0},{"label":"ActivityPanel","slug":"module/activity/activitypanel","group":"Classes","order":0},{"label":"ActivityReg","slug":"module/report-activityreg/activityreg","group":"Classes","order":0},{"label":"ActivitySequence","slug":"module/bags-activitysequence/activitysequence","group":"Classes","order":0},{"label":"ActivitySequenceElement","slug":"module/bags-activitysequenceelement/activitysequenceelement","group":"Classes","order":0},{"label":"ActivitySequenceJump","slug":"module/bags-activitysequencejump/activitysequencejump","group":"Classes","order":0},{"label":"AlignType","slug":"module/boxes-activeboxcontent/aligntype","group":"Classes","order":0},{"label":"Arith","slug":"module/automation-arith-arith/arith","group":"Classes","order":0},{"label":"AudioBuffer","slug":"module/media-audiobuffer/audiobuffer","group":"Classes","order":0},{"label":"AutoContentProvider","slug":"module/automation-autocontentprovider/autocontentprovider","group":"Classes","order":0},{"label":"BasicEvaluator","slug":"module/activities-text-evaluator/basicevaluator","group":"Classes","order":0},{"label":"BlueSkin","slug":"module/skins-blueskin/blueskin","group":"Classes","order":0},{"label":"BoxBag","slug":"module/boxes-boxbag/boxbag","group":"Classes","order":0},{"label":"BoxBase","slug":"module/boxes-boxbase/boxbase","group":"Classes","order":0},{"label":"BoxConnector","slug":"module/boxes-boxconnector/boxconnector","group":"Classes","order":0},{"label":"ClassicJigSaw","slug":"module/shapers-classicjigsaw/classicjigsaw","group":"Classes","order":0},{"label":"Complete","slug":"module/activities-text-complete/complete","group":"Classes","order":0},{"label":"CompletePanel","slug":"module/activities-text-complete/completepanel","group":"Classes","order":0},{"label":"ComplexAssociation","slug":"module/activities-associations-complexassociation/complexassociation","group":"Classes","order":0},{"label":"ComplexAssociationPanel","slug":"module/activities-associations-complexassociation/complexassociationpanel","group":"Classes","order":0},{"label":"ComplexEvaluator","slug":"module/activities-text-evaluator/complexevaluator","group":"Classes","order":0},{"label":"ConditionalJumpInfo","slug":"module/bags-conditionaljumpinfo/conditionaljumpinfo","group":"Classes","order":0},{"label":"Container","slug":"module/awt/container","group":"Classes","order":0},{"label":"Counter","slug":"module/skins-counter/counter","group":"Classes","order":0},{"label":"CrossWord","slug":"module/activities-textgrid-crossword/crossword","group":"Classes","order":0},{"label":"CrossWordPanel","slug":"module/activities-textgrid-crossword/crosswordpanel","group":"Classes","order":0},{"label":"CustomSkin","slug":"module/skins-customskin/customskin","group":"Classes","order":0},{"label":"DefaultSkin","slug":"module/skins-defaultskin/defaultskin","group":"Classes","order":0},{"label":"Dimension","slug":"module/awt/dimension","group":"Classes","order":0},{"label":"DoublePuzzle","slug":"module/activities-puzzles-doublepuzzle/doublepuzzle","group":"Classes","order":0},{"label":"DoublePuzzlePanel","slug":"module/activities-puzzles-doublepuzzle/doublepuzzlepanel","group":"Classes","order":0},{"label":"Ellipse","slug":"module/awt/ellipse","group":"Classes","order":0},{"label":"EmptySkin","slug":"module/skins-emptyskin/emptyskin","group":"Classes","order":0},{"label":"Encryption","slug":"module/report-encryptmin/encryption","group":"Classes","order":0},{"label":"Evaluator","slug":"module/activities-text-evaluator/evaluator","group":"Classes","order":0},{"label":"EventSounds","slug":"module/media-eventsounds/eventsounds","group":"Classes","order":0},{"label":"EventSoundsElement","slug":"module/media-eventsoundselement/eventsoundselement","group":"Classes","order":0},{"label":"ExchangePuzzle","slug":"module/activities-puzzles-exchangepuzzle/exchangepuzzle","group":"Classes","order":0},{"label":"ExchangePuzzlePanel","slug":"module/activities-puzzles-exchangepuzzle/exchangepuzzlepanel","group":"Classes","order":0},{"label":"Explore","slug":"module/activities-panels-explore/explore","group":"Classes","order":0},{"label":"ExplorePanel","slug":"module/activities-panels-explore/explorepanel","group":"Classes","order":0},{"label":"FillInBlanks","slug":"module/activities-text-fillinblanks/fillinblanks","group":"Classes","order":0},{"label":"FillInBlanksPanel","slug":"module/activities-text-fillinblanks/fillinblankspanel","group":"Classes","order":0},{"label":"Font","slug":"module/awt/font","group":"Classes","order":0},{"label":"Gradient","slug":"module/awt/gradient","group":"Classes","order":0},{"label":"GreenSkin","slug":"module/skins-greenskin/greenskin","group":"Classes","order":0},{"label":"HolePuzzle","slug":"module/activities-puzzles-holepuzzle/holepuzzle","group":"Classes","order":0},{"label":"HolePuzzlePanel","slug":"module/activities-puzzles-holepuzzle/holepuzzlepanel","group":"Classes","order":0},{"label":"Holes","slug":"module/shapers-holes/holes","group":"Classes","order":0},{"label":"Identify","slug":"module/activities-panels-identify/identify","group":"Classes","order":0},{"label":"IdentifyPanel","slug":"module/activities-panels-identify/identifypanel","group":"Classes","order":0},{"label":"IdentifyText","slug":"module/activities-text-identifytext/identifytext","group":"Classes","order":0},{"label":"IdentifyTextPanel","slug":"module/activities-text-identifytext/identifytextpanel","group":"Classes","order":0},{"label":"InformationScreen","slug":"module/activities-panels-informationscreen/informationscreen","group":"Classes","order":0},{"label":"InformationScreenPanel","slug":"module/activities-panels-informationscreen/informationscreenpanel","group":"Classes","order":0},{"label":"JClicPlayer","slug":"module/jclicplayer/jclicplayer","group":"Classes","order":0},{"label":"JClicProject","slug":"module/project-jclicproject/jclicproject","group":"Classes","order":0},{"label":"JigSaw","slug":"module/shapers-jigsaw/jigsaw","group":"Classes","order":0},{"label":"JumpInfo","slug":"module/bags-jumpinfo/jumpinfo","group":"Classes","order":0},{"label":"MediaBag","slug":"module/bags-mediabag/mediabag","group":"Classes","order":0},{"label":"MediaBagElement","slug":"module/bags-mediabagelement/mediabagelement","group":"Classes","order":0},{"label":"MediaContent","slug":"module/media-mediacontent/mediacontent","group":"Classes","order":0},{"label":"MemoryGame","slug":"module/activities-memory-memorygame/memorygame","group":"Classes","order":0},{"label":"MemoryGamePanel","slug":"module/activities-memory-memorygame/memorygamepanel","group":"Classes","order":0},{"label":"Menu","slug":"module/activities-panels-menu/menu","group":"Classes","order":0},{"label":"MenuPanel","slug":"module/activities-panels-menu/menupanel","group":"Classes","order":0},{"label":"MidiAudioPlayer","slug":"module/media-midiaudioplayer/midiaudioplayer","group":"Classes","order":0},{"label":"MiniSkin","slug":"module/skins-miniskin/miniskin","group":"Classes","order":0},{"label":"Operator","slug":"module/automation-arith-arith/arith/operator","group":"Classes","order":0},{"label":"OrangeSkin","slug":"module/skins-orangeskin/orangeskin","group":"Classes","order":0},{"label":"OrderText","slug":"module/activities-text-ordertext/ordertext","group":"Classes","order":0},{"label":"OrderTextPanel","slug":"module/activities-text-ordertext/ordertextpanel","group":"Classes","order":0},{"label":"Path","slug":"module/awt/path","group":"Classes","order":0},{"label":"PathStroke","slug":"module/awt/pathstroke","group":"Classes","order":0},{"label":"PlayerHistory","slug":"module/playerhistory/playerhistory","group":"Classes","order":0},{"label":"Point","slug":"module/awt/point","group":"Classes","order":0},{"label":"ProjectSettings","slug":"module/project-projectsettings/projectsettings","group":"Classes","order":0},{"label":"Rectangle","slug":"module/awt/rectangle","group":"Classes","order":0},{"label":"Rectangular","slug":"module/shapers-rectangular/rectangular","group":"Classes","order":0},{"label":"ReportBean","slug":"module/report-tcpreporter/reportbean","group":"Classes","order":0},{"label":"Reporter","slug":"module/report-reporter/reporter","group":"Classes","order":0},{"label":"ReporterInfo","slug":"module/report-reporter/reporterinfo","group":"Classes","order":0},{"label":"SCORM","slug":"module/report-scorm/scorm","group":"Classes","order":0},{"label":"SequenceReg","slug":"module/report-sequencereg/sequencereg","group":"Classes","order":0},{"label":"SequenceRegInfo","slug":"module/report-sequencereg/sequencereginfo","group":"Classes","order":0},{"label":"SessionReg","slug":"module/report-sessionreg/sessionreg","group":"Classes","order":0},{"label":"SessionRegInfo","slug":"module/report-sessionreg/sessionreginfo","group":"Classes","order":0},{"label":"SessionStorageReporter","slug":"module/report-sessionstoragereporter/sessionstoragereporter","group":"Classes","order":0},{"label":"Shape","slug":"module/awt/shape","group":"Classes","order":0},{"label":"Shaper","slug":"module/shapers-shaper/shaper","group":"Classes","order":0},{"label":"SimpleAssociation","slug":"module/activities-associations-simpleassociation/simpleassociation","group":"Classes","order":0},{"label":"SimpleAssociationPanel","slug":"module/activities-associations-simpleassociation/simpleassociationpanel","group":"Classes","order":0},{"label":"SimpleSkin","slug":"module/skins-simpleskin/simpleskin","group":"Classes","order":0},{"label":"Skin","slug":"module/skins-skin/skin","group":"Classes","order":0},{"label":"Stroke","slug":"module/awt/stroke","group":"Classes","order":0},{"label":"TCPReporter","slug":"module/report-tcpreporter/tcpreporter","group":"Classes","order":0},{"label":"TextActivityBase","slug":"module/activities-text-textactivitybase/textactivitybase","group":"Classes","order":0},{"label":"TextActivityBasePanel","slug":"module/activities-text-textactivitybase/textactivitybasepanel","group":"Classes","order":0},{"label":"TextActivityDocument","slug":"module/activities-text-textactivitydocument/textactivitydocument","group":"Classes","order":0},{"label":"TextGrid","slug":"module/boxes-textgrid/textgrid","group":"Classes","order":0},{"label":"TextGridContent","slug":"module/boxes-textgridcontent/textgridcontent","group":"Classes","order":0},{"label":"TextTarget","slug":"module/activities-text-textactivitydocument/texttarget","group":"Classes","order":0},{"label":"Timer","slug":"module/awt/timer","group":"Classes","order":0},{"label":"TriangularJigSaw","slug":"module/shapers-triangularjigsaw/triangularjigsaw","group":"Classes","order":0},{"label":"WordSearch","slug":"module/activities-textgrid-wordsearch/wordsearch","group":"Classes","order":0},{"label":"WordSearchPanel","slug":"module/activities-textgrid-wordsearch/wordsearchpanel","group":"Classes","order":0},{"label":"WrittenAnswer","slug":"module/activities-text-writtenanswer/writtenanswer","group":"Classes","order":0},{"label":"WrittenAnswerPanel","slug":"module/activities-text-writtenanswer/writtenanswerpanel","group":"Classes","order":0},{"label":"activities/associations/ComplexAssociation","slug":"module/activities-associations-complexassociation","group":"Modules","order":1},{"label":"activities/associations/SimpleAssociation","slug":"module/activities-associations-simpleassociation","group":"Modules","order":1},{"label":"activities/memory/MemoryGame","slug":"module/activities-memory-memorygame","group":"Modules","order":1},{"label":"activities/panels/Explore","slug":"module/activities-panels-explore","group":"Modules","order":1},{"label":"activities/panels/Identify","slug":"module/activities-panels-identify","group":"Modules","order":1},{"label":"activities/panels/InformationScreen","slug":"module/activities-panels-informationscreen","group":"Modules","order":1},{"label":"activities/panels/Menu","slug":"module/activities-panels-menu","group":"Modules","order":1},{"label":"activities/puzzles/DoublePuzzle","slug":"module/activities-puzzles-doublepuzzle","group":"Modules","order":1},{"label":"activities/puzzles/ExchangePuzzle","slug":"module/activities-puzzles-exchangepuzzle","group":"Modules","order":1},{"label":"activities/puzzles/HolePuzzle","slug":"module/activities-puzzles-holepuzzle","group":"Modules","order":1},{"label":"activities/text/Complete","slug":"module/activities-text-complete","group":"Modules","order":1},{"label":"activities/text/Evaluator","slug":"module/activities-text-evaluator","group":"Modules","order":1},{"label":"activities/text/FillInBlanks","slug":"module/activities-text-fillinblanks","group":"Modules","order":1},{"label":"activities/text/IdentifyText","slug":"module/activities-text-identifytext","group":"Modules","order":1},{"label":"activities/text/OrderText","slug":"module/activities-text-ordertext","group":"Modules","order":1},{"label":"activities/text/TextActivityBase","slug":"module/activities-text-textactivitybase","group":"Modules","order":1},{"label":"activities/text/TextActivityDocument","slug":"module/activities-text-textactivitydocument","group":"Modules","order":1},{"label":"activities/text/WrittenAnswer","slug":"module/activities-text-writtenanswer","group":"Modules","order":1},{"label":"activities/textGrid/CrossWord","slug":"module/activities-textgrid-crossword","group":"Modules","order":1},{"label":"activities/textGrid/WordSearch","slug":"module/activities-textgrid-wordsearch","group":"Modules","order":1},{"label":"Activity","slug":"module/activity","group":"Modules","order":1},{"label":"automation/arith/Arith","slug":"module/automation-arith-arith","group":"Modules","order":1},{"label":"automation/AutoContentProvider","slug":"module/automation-autocontentprovider","group":"Modules","order":1},{"label":"AWT","slug":"module/awt","group":"Modules","order":1},{"label":"bags/ActivitySequence","slug":"module/bags-activitysequence","group":"Modules","order":1},{"label":"bags/ActivitySequenceElement","slug":"module/bags-activitysequenceelement","group":"Modules","order":1},{"label":"bags/ActivitySequenceJump","slug":"module/bags-activitysequencejump","group":"Modules","order":1},{"label":"bags/ConditionalJumpInfo","slug":"module/bags-conditionaljumpinfo","group":"Modules","order":1},{"label":"bags/JumpInfo","slug":"module/bags-jumpinfo","group":"Modules","order":1},{"label":"bags/MediaBag","slug":"module/bags-mediabag","group":"Modules","order":1},{"label":"bags/MediaBagElement","slug":"module/bags-mediabagelement","group":"Modules","order":1},{"label":"boxes/AbstractBox","slug":"module/boxes-abstractbox","group":"Modules","order":1},{"label":"boxes/ActiveBagContent","slug":"module/boxes-activebagcontent","group":"Modules","order":1},{"label":"boxes/ActiveBox","slug":"module/boxes-activebox","group":"Modules","order":1},{"label":"boxes/ActiveBoxBag","slug":"module/boxes-activeboxbag","group":"Modules","order":1},{"label":"boxes/ActiveBoxContent","slug":"module/boxes-activeboxcontent","group":"Modules","order":1},{"label":"boxes/ActiveBoxGrid","slug":"module/boxes-activeboxgrid","group":"Modules","order":1},{"label":"boxes/BoxBag","slug":"module/boxes-boxbag","group":"Modules","order":1},{"label":"boxes/BoxBase","slug":"module/boxes-boxbase","group":"Modules","order":1},{"label":"boxes/BoxConnector","slug":"module/boxes-boxconnector","group":"Modules","order":1},{"label":"boxes/TextGrid","slug":"module/boxes-textgrid","group":"Modules","order":1},{"label":"boxes/TextGridContent","slug":"module/boxes-textgridcontent","group":"Modules","order":1},{"label":"JClic","slug":"module/jclic","group":"Modules","order":1},{"label":"JClicPlayer","slug":"module/jclicplayer","group":"Modules","order":1},{"label":"media/ActiveMediaBag","slug":"module/media-activemediabag","group":"Modules","order":1},{"label":"media/ActiveMediaPlayer","slug":"module/media-activemediaplayer","group":"Modules","order":1},{"label":"media/AudioBuffer","slug":"module/media-audiobuffer","group":"Modules","order":1},{"label":"media/EventSounds","slug":"module/media-eventsounds","group":"Modules","order":1},{"label":"media/EventSoundsElement","slug":"module/media-eventsoundselement","group":"Modules","order":1},{"label":"media/MediaContent","slug":"module/media-mediacontent","group":"Modules","order":1},{"label":"media/MidiAudioPlayer","slug":"module/media-midiaudioplayer","group":"Modules","order":1},{"label":"PlayerHistory","slug":"module/playerhistory","group":"Modules","order":1},{"label":"project/JClicProject","slug":"module/project-jclicproject","group":"Modules","order":1},{"label":"project/ProjectSettings","slug":"module/project-projectsettings","group":"Modules","order":1},{"label":"report/ActionReg","slug":"module/report-actionreg","group":"Modules","order":1},{"label":"report/ActivityReg","slug":"module/report-activityreg","group":"Modules","order":1},{"label":"report/EncryptMin","slug":"module/report-encryptmin","group":"Modules","order":1},{"label":"report/Reporter","slug":"module/report-reporter","group":"Modules","order":1},{"label":"report/SCORM","slug":"module/report-scorm","group":"Modules","order":1},{"label":"report/SequenceReg","slug":"module/report-sequencereg","group":"Modules","order":1},{"label":"report/SessionReg","slug":"module/report-sessionreg","group":"Modules","order":1},{"label":"report/SessionStorageReporter","slug":"module/report-sessionstoragereporter","group":"Modules","order":1},{"label":"report/TCPReporter","slug":"module/report-tcpreporter","group":"Modules","order":1},{"label":"shapers/ClassicJigSaw","slug":"module/shapers-classicjigsaw","group":"Modules","order":1},{"label":"shapers/Holes","slug":"module/shapers-holes","group":"Modules","order":1},{"label":"shapers/JigSaw","slug":"module/shapers-jigsaw","group":"Modules","order":1},{"label":"shapers/Rectangular","slug":"module/shapers-rectangular","group":"Modules","order":1},{"label":"shapers/Shaper","slug":"module/shapers-shaper","group":"Modules","order":1},{"label":"shapers/TriangularJigSaw","slug":"module/shapers-triangularjigsaw","group":"Modules","order":1},{"label":"skins/BlueSkin","slug":"module/skins-blueskin","group":"Modules","order":1},{"label":"skins/Counter","slug":"module/skins-counter","group":"Modules","order":1},{"label":"skins/CustomSkin","slug":"module/skins-customskin","group":"Modules","order":1},{"label":"skins/DefaultSkin","slug":"module/skins-defaultskin","group":"Modules","order":1},{"label":"skins/EmptySkin","slug":"module/skins-emptyskin","group":"Modules","order":1},{"label":"skins/GreenSkin","slug":"module/skins-greenskin","group":"Modules","order":1},{"label":"skins/MiniSkin","slug":"module/skins-miniskin","group":"Modules","order":1},{"label":"skins/OrangeSkin","slug":"module/skins-orangeskin","group":"Modules","order":1},{"label":"skins/SimpleSkin","slug":"module/skins-simpleskin","group":"Modules","order":1},{"label":"skins/Skin","slug":"module/skins-skin","group":"Modules","order":1},{"label":"Utils","slug":"module/utils","group":"Modules","order":1},{"label":"alignType","slug":"activeboxcontent/aligntype","group":"Typedefs","order":7},{"label":"counterValType","slug":"jclicplayer/countervaltype","group":"Typedefs","order":7},{"label":"Source Files","slug":"source","order":11}],"currentSlug":"source/utils-js","basePath":"/","collapsibleGroups":["Classes","Modules","Typedefs"]}}</script><script type="module">(function(){var map={"theme-toggle":"/_islands/theme-toggle-MFKEIGBZ.js","settings":"/_islands/settings-TVWSQT6I.js","code-viewer":"/_islands/code-viewer-S3DIZRC3.js","embed":"/_islands/embed-24QZS4CF.js","playground":"/_islands/playground-N5NFYMP6.js","tabs":"/_islands/tabs-NRSQKCSU.js","sidebar":"/_islands/sidebar-AKX3KCQS.js","mobile-nav":"/_islands/mobile-nav-ZFIZP3CE.js","toc":"/_islands/toc-W36SMPYU.js","toc-mobile":"/_islands/toc-mobile-X6HBYLUF.js","cmdk":"/_islands/cmdk-SWB64M4V.js","code-tabs":"/_islands/code-tabs-WLBAIWNH.js","copy-btn":"/_islands/copy-btn-5O25GXTU.js","copy-page":"/_islands/copy-page-OPKTMKVF.js"};var seen=new Set();document.querySelectorAll('[data-island]').forEach(function(el){seen.add(el.getAttribute('data-island'));});seen.forEach(function(name){var src=map[name];if(src){import(src);}});})();</script><script>(function(){function flash(h){var b=h.querySelector('[data-heading-anchor]');if(!b)return;b.setAttribute('data-copied','');window.setTimeout(function(){b.removeAttribute('data-copied');},3000);}function onClick(e){var t=e.target;if(!t||!t.closest)return;if(t.closest('a'))return;var h=t.closest('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');if(!h)return;var id=h.id;if(!id)return;var iconOnly=!!t.closest('[data-heading-anchor]');if(!iconOnly){if(location.hash.slice(1)===id){h.scrollIntoView();}else{location.hash=id;}}try{var url=location.origin+location.pathname+location.search+'#'+id;if(navigator.clipboard){navigator.clipboard.writeText(url).then(function(){flash(h);}).catch(function(){});}}catch(_){}}document.addEventListener('click',onClick);}());</script><script>(function(){var IDLE=700;var timers=new WeakMap();function onScroll(e){var el=e.target;if(el===document||el===window)el=document.documentElement;if(!el||!el.classList)return;el.classList.add('clean-scrolling');var prev=timers.get(el);if(prev)window.clearTimeout(prev);timers.set(el,window.setTimeout(function(){el.classList.remove('clean-scrolling');},IDLE));}document.addEventListener('scroll',onScroll,true);}());</script></body></html>
