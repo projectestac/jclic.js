@@ -60,14 +60,14 @@
     "@francesc/basic-midi-player-js": "^3.0.2",
     "@xmldom/xmldom": "^0.9.10",
     "jquery": "^4.0.0",
-    "jsdom": "^30.0.0",
+    "jsdom": "^30.0.1",
     "jszip": "^3.10.1",
     "jszip-utils": "0.1.0"
   },
   "devDependencies": {
     "@eslint/css": "^1.4.0",
     "@eslint/js": "^10.0.1",
-    "clean-jsdoc-theme": "^5.1.0",
+    "clean-jsdoc-theme": "^5.1.1",
     "eslint": "^10.8.0",
     "fs-extra": "^11.4.0",
     "globals": "^17.8.0",
