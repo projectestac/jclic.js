@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import { resolve } from 'node:path';
 import banner from "vite-plugin-banner";
 import eslint from 'vite-plugin-eslint';
-import pkg from "./package.json";
+import pkg from "./package.json" with { type: 'json' };
 import buildLocales from './build-locales.js';
 
 // Build `./src/GlobalData.js` from `./locales/*.po`
