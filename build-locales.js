@@ -6,7 +6,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import po2json from 'po2json';
+import po2json from '@hainenber/po2json';
 import { fileURLToPath } from 'url';
 
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));

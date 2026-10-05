@@ -60,21 +60,20 @@
     "@francesc/basic-midi-player-js": "^3.0.2",
     "@xmldom/xmldom": "^0.9.12",
     "jquery": "^4.0.0",
-    "jsdom": "^30.1.1",
+    "jsdom": "^30.1.2",
     "jszip": "^3.10.2",
     "jszip-utils": "0.1.0"
   },
   "devDependencies": {
     "@eslint/css": "^2.0.0",
     "@eslint/js": "^10.0.1",
+    "@hainenber/po2json": "^1.1.0",
     "clean-jsdoc-theme": "^5.2.0",
-    "eslint": "^10.11.0",
+    "eslint": "^10.12.0",
     "fs-extra": "^11.4.1",
-    "globals": "^17.12.0",
+    "globals": "^17.13.0",
     "jsdoc": "^4.0.5",
-    "patch-package": "^8.0.1",
-    "po2json": "^1.0.0-alpha",
-    "vite": "^8.3.1",
+    "vite": "^8.3.2",
     "vite-plugin-banner": "^0.8.1",
     "vite-plugin-eslint": "^1.8.1"
   },
@@ -84,10 +83,8 @@
     "build-node": "vite --config vite.node-config.js build",
     "preview": "vite --config vite.browser-config.js preview",
     "lint": "eslint src --ext .js,.css",
-    "prebuild": "patch-package",
     "build-locales": "node build-locales.js",
-    "build-doc": "rm -rf doc && jsdoc -c jsdoc-config.json",
-    "prestart": "patch-package"
+    "build-doc": "rm -rf doc && jsdoc -c jsdoc-config.json"
   },
   "browserslist": "> 0.25%, not dead",
   "browser": {
@@ -95,6 +92,6 @@
     "@xmldom/xmldom": false
   },
   "allowScripts": {
-    "esbuild@0.28.1": true
+    "esbuild@0.28.2": true
   }
 }

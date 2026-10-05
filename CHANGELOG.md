@@ -1,9 +1,10 @@
-### v2.3.1 (Not yet released)
+### v2.3.1 (2026-05-10)
 #### Improvements
 - Updated peer dependencies
 - Updated Portuguese translation, thanks to ssantos
 - Added the CREDITS.md file, unifying the original credits of the JClic project (Java version) with the contributions made to the JClic.js project.
-- Updated the project [docs](https://projectestac.github.io/jclic.js/doc/index.html), now generated with [clean-jsdoc-theme](https://github.com/ankitskvmdam/clean-jsdoc-theme) V5, including ".md" files ready for LLM feeding.
+- Updated the project [docs](https://projectestac.github.io/jclic.js/doc/index.html), now generated with [`clean-jsdoc-theme`](https://github.com/ankitskvmdam/clean-jsdoc-theme) V5, including ".md" files ready for LLM feeding.
+- Replaced [`po2json`](https://www.npmjs.com/package/po2json) (currently not maintained) with [`@hainenber/po2json`](https://www.npmjs.com/package/@hainenber/po2json).
 
 ### v2.3.0 (2026-06-11)
 #### Breaking changes
