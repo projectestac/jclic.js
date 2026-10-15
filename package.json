@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "type": "module",
   "files": [
     "dist-node"
@@ -79,7 +79,8 @@
   },
   "scripts": {
     "dev": "node build-locales.js && vite --config vite.browser-config.js",
-    "build": "node build-locales.js && vite --config vite.browser-config.js build && cd dist && ln -s ../test . && cd ..",
+    "build": "node build-locales.js && vite --config vite.browser-config.js build && cd dist && ln -s ../test . && cd .. && vite --config vite.node-config.js build",
+    "build-browser": "node build-locales.js && vite --config vite.browser-config.js build && cd dist && ln -s ../test . && cd ..",
     "build-node": "vite --config vite.node-config.js build",
     "preview": "vite --config vite.browser-config.js preview",
     "lint": "eslint src --ext .js,.css",
