@@ -1,3 +1,7 @@
+### v2.3.2 (2026-10-15)
+- Updated peer dependencies
+- `eventSoundsPlayer` is a new member of `Activity` and `JClicProject`, implementing the real management of event sounds. The `eventSounds` members remain, but only as store of custom event sounds configurations, both as project and activity levels.
+
 ### v2.3.1 (2026-05-10)
 #### Improvements
 - Updated peer dependencies

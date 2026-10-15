@@ -1,5 +1,5 @@
 /**
- *  File    : media/EventSoundsElement.js
+ *  File    : media/AudioBuffer.js
  *  Created : 01/04/2015
  *  By      : Francesc Busquets <francesc@gmail.com>
  *

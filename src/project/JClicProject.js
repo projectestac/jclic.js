@@ -193,7 +193,7 @@ export class JClicProject {
     if (this.skin === null && this.settings.skinFileName !== null && this.settings.skinFileName.length > 0)
       this.skin = this.mediaBag.getSkinElement(this.settings.skinFileName, ps);
 
-    this.settings.eventSounds.realize(ps, this.mediaBag);
+    this.settings.eventSoundsPlayer.realize(ps, this.mediaBag);
 
     // Build all elements of type `font`
     this.mediaBag.buildAll('font', null, ps);

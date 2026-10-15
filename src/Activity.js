@@ -30,7 +30,7 @@
  */
 
 import $ from 'jquery';
-import { settings, log, getMsg, attrForEach, nSlash, getBoolean, getXmlText, checkColor, isNullOrUndef, getAttr, setAttr } from './Utils.js';
+import { settings, log, getMsg, attrForEach, nSlash, getBoolean, getXmlText, checkColor, isNullOrUndef, getAttr, setAttr, getTriState } from './Utils.js';
 import { Rectangle, Gradient, Point, Dimension, Container } from './AWT.js';
 import EventSounds from './media/EventSounds.js';
 import ActiveBoxContent from './boxes/ActiveBoxContent.js';
@@ -59,7 +59,8 @@ export class Activity {
    */
   constructor(project) {
     this.project = project;
-    this.eventSounds = new EventSounds(this.project.settings.eventSounds);
+    this.eventSounds = {};
+    this.eventSoundsPlayer = new EventSounds(this.project.settings.eventSoundsPlayer);
     this.messages = {};
     this.abc = {};
   }
@@ -230,9 +231,19 @@ export class Activity {
                 break;
 
               case 'eventSounds':
-                // eventSounds is already created in constructor,
+                // eventSoundsPlayer is already created in constructor,
                 // just read properties
-                this.eventSounds.setProperties($node);
+                this.eventSoundsPlayer.setProperties($node);
+                // Store eventSounds attributes for later use, if needed
+                this.eventSounds.enabled = getTriState($node.attr('enabled'));
+                this.eventSounds.elements = {};
+                $node.children().each((_n, child) => {
+                  const id = child.getAttribute('id');
+                  this.eventSounds.elements[id] = {
+                    enabled: getTriState(child.getAttribute('enabled')),
+                    file: child.getAttribute('file'),
+                  };
+                });
                 break;
             }
           });
@@ -439,7 +450,7 @@ export class Activity {
 
     // Reused objects
     if (data.eventSounds)
-      this.eventSounds.setAttributes(data.eventSounds);
+      this.eventSoundsPlayer.setAttributes(data.eventSounds);
 
     // Manual settings
     if (this.absolutePosition)
@@ -461,7 +472,7 @@ export class Activity {
    * @param {module:JClicPlayer.JClicPlayer} ps - The {@link module:JClicPlayer.JClicPlayer} used to realize the media objects.
    */
   prepareMedia(ps) {
-    this.eventSounds.realize(ps, this.project.mediaBag);
+    this.eventSoundsPlayer.realize(ps, this.project.mediaBag);
     $.each(this.messages, (_key, msg) => {
       if (msg !== null) msg.prepareMedia(ps);
     });
@@ -551,7 +562,7 @@ export class Activity {
    * Called when the activity must be disposed
    */
   end() {
-    this.eventSounds.close();
+    this.eventSoundsPlayer.close();
     this.clear();
   }
 
@@ -698,11 +709,17 @@ Object.assign(Activity.prototype, {
    * @type {string} */
   helpMsg: '',
   /**
-   * Specific set of {@link module:media/EventSounds.EventSounds EventSounds} used in the activity. The default is `null`, meaning
+   * Data used to recreate the {@link module:media/EventSounds.EventSounds EventSounds} of the activity. The default is `null`, meaning
    * to use the default event sounds.
    * @name module:Activity.Activity#eventSounds
-   * @type {module:media/EventSounds.EventSounds} */
+   * @type {object} */
   eventSounds: null,
+  /**
+   * Specific set of {@link module:media/EventSounds.EventSounds EventSounds} used in the activity. The default is `null`, meaning
+   * to use the default event sounds.
+   * @name module:Activity.Activity#eventSoundsPlayer
+   * @type {module:media/EventSounds.EventSounds} */
+  eventSoundsPlayer: null,
   /**
    * Wheter the activity must be solved in a specific order or not.
    * @name module:Activity.Activity#useOrder
@@ -967,7 +984,7 @@ export class ActivityPanel extends Container {
    * @param {string} event - The type of event to be performed
    */
   playEvent(event) {
-    this.act.eventSounds.play(event);
+    this.act.eventSoundsPlayer.play(event);
   }
 
   /**

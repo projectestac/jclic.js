@@ -31,7 +31,7 @@
 
 import $ from 'jquery';
 import EventSounds from '../media/EventSounds.js';
-import { log, getXmlNodeText, parseXmlNode, reduceTextsToStrings, parseOldDate, cleanOldLanguageTag, getAttr, setAttr } from '../Utils.js';
+import { log, getXmlNodeText, parseXmlNode, reduceTextsToStrings, parseOldDate, cleanOldLanguageTag, getAttr, setAttr, getTriState } from '../Utils.js';
 
 /**
  * This class contains miscellaneous settings of JClic projects.
@@ -61,6 +61,7 @@ export class ProjectSettings {
     this.locales = [];
     this.description = {};
     this.tags = {};
+    this.eventSounds = {};
   }
 
   /**
@@ -100,8 +101,21 @@ export class ProjectSettings {
           this.languages.push(cleanOldLanguageTag(child.textContent));
           break;
         case 'eventSounds':
-          this.eventSounds = new EventSounds();
-          this.eventSounds.setProperties($(child));
+          {
+            const $node = $(child);
+            this.eventSoundsPlayer = new EventSounds();
+            this.eventSoundsPlayer.setProperties($node);
+            // Store eventSounds attributes for later use, if needed
+            this.eventSounds.enabled = getTriState($node.attr('enabled'));
+            this.eventSounds.elements = {};
+            $node.children().each((_n, child) => {
+              const id = child.getAttribute('id');
+              this.eventSounds.elements[id] = {
+                enabled: getTriState(child.getAttribute('enabled')),
+                file: child.getAttribute('file'),
+              };
+            });
+          }
           break;
         case 'skin':
           this.skinFileName = $(child).attr('file');
@@ -175,7 +189,8 @@ export class ProjectSettings {
       'authors', 'organizations',
       'revisions',
       'cover', 'thumb',
-      'skinFileName', 'eventSounds'
+      'skinFileName',
+      'eventSounds'
     ]);
   }
 
@@ -191,7 +206,8 @@ export class ProjectSettings {
       'authors', 'organizations',
       'revisions',
       'cover', 'thumb',
-      'skinFileName', 'eventSounds'
+      'skinFileName',
+      'eventSounds'
     ]);
 
     // Build Date objects in revisions
@@ -200,6 +216,12 @@ export class ProjectSettings {
         if (rv.date)
           rv.date = new Date(rv.date);
       });
+
+    // Reused objects
+    if (data.eventSounds) {
+      this.eventSoundsPlayer = new EventSounds();
+      this.eventSoundsPlayer.setAttributes(data.eventSounds);
+    }
 
     return this.buildLocales();
   }
@@ -267,9 +289,14 @@ Object.assign(ProjectSettings.prototype, {
   skinFileName: null,
   /**
    * The main {@link module:media/EventSounds.EventSounds EventSounds} object of the project
-   * @name module:project/ProjectSettings.ProjectSettings#eventSounds
+   * @name module:project/ProjectSettings.ProjectSettings#eventSoundsPlayer
    * @type {module:media/EventSounds.EventSounds} */
-  eventSounds: new EventSounds(),
+  eventSoundsPlayer: new EventSounds(),
+  /**
+   * Data used to recreate the main {@link module:media/EventSounds.EventSounds EventSounds} object of the project
+   * @name module:project/ProjectSettings.ProjectSettings#eventSounds
+   * @type {object} */
+  eventSounds: null,
 });
 
 export default ProjectSettings;
