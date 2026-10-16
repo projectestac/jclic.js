@@ -39,7 +39,7 @@ operative.
 
 <MemberHeading id="activitypanel" depth="3" name="ActivityPanel" sig="ActivityPanel" />
 
-<MemberMeta badges="static" sourceHref="/source/activity-js/#L868" sourceLabel="Activity.js:868" />
+<MemberMeta badges="static" sourceHref="/source/activity-js/#L885" sourceLabel="Activity.js:885" />
 
 **Extends:&#x20;**`module:AWT.Container`
 

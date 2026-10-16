@@ -67,7 +67,7 @@ into the current language.
 
 <MemberMeta badges="static" sourceHref="/source/utils-js/#L255" sourceLabel="Utils.js:255" />
 
-Converts expressions of type 'pt-br', 'FR', 'ca\_es\@valencia'... to the format expected by the i18n system:\
+Converts expressions of type 'pt-br', 'FR', 'ca_es\@valencia'... to the format expected by the i18n system:\
 lc\[\_CC]\[@variant] where 'lc' is a two or three lowercase letter language code, CC is an optional two uppercase\
 letter country code, followed by an optional 'variant' consisting in letters and/or digits.
 
@@ -113,7 +113,7 @@ Establishes the current verbosity level of the logging system
 
 **Parameters**
 
-- `level` (string) — One of the valid strings in [module:Utils.LOG\_LEVELS](/module/utils#loglevels)
+- `level` (string) — One of the valid strings in [module:Utils.LOG_LEVELS](/module/utils#loglevels)
 
 <MemberHeading id="log" depth="3" name="log" sig="log(type: string, msg: string)" />
 
@@ -1169,7 +1169,7 @@ The Intl.Collator object is a constructor for collators, objects that enable lan
 string comparison.
 
 - **See:**
-  - [https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global\_Objects/Collator](https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Collator)
+  - [https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Collator](https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Collator)
 
 <MemberHeading id="jszip" depth="3" name="JSZip" sig="JSZip" />
 
@@ -1198,7 +1198,7 @@ The Promise object is used for asynchronous computations. A Promise represents a
 that hasn't completed yet, but is expected in the future.
 
 - **See:**
-  - [https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global\_Objects/Promise](https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+  - [https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise](https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
 <MemberHeading id="storage" depth="3" name="Storage" sig="Storage" />
 
@@ -1236,7 +1236,7 @@ MidiPlayerJS is a JavaScript library which reads standard MIDI files and emits J
 JavaScript Date objects represent a single moment in time in a platform-independent format.
 
 - **See:**
-  - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+  - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
 
 <MemberHeading id="htmlstyleelement" depth="3" name="HTMLStyleElement" sig="HTMLStyleElement" />
 

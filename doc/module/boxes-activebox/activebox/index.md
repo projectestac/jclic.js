@@ -248,7 +248,7 @@ Puts this ActiveBox in "alternative" mode, meaning that `altContent` will be use
 Checks the presence of content susceptible to be treated as HTML DOM embedded in this ActiveBox.
 
 - **See:**
-  - [https://developer.mozilla.org/en-US/docs/Web/API/Canvas\_API/Drawing\_DOM\_objects\_into\_a\_canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas)
+  - [https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas)
 
 <MemberHeading id="checkautostartmedia" depth="3" name="checkAutoStartMedia" sig="checkAutoStartMedia()" />
 
@@ -397,7 +397,7 @@ and position of this box.
 Builds a hidden `buton` that will act as a accessible element associated to the canvas area\
 of this ActiveBox.\
 The button will be created only when `CanvasRenderingContext2D` has a method named `addHitRegion`.\
-See https\://developer.mozilla.org/en-US/docs/Web/API/Canvas\_API/Tutorial/Hit\_regions\_and\_accessibility\
+See https\://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility\
 for more information and supported browsers.
 
 **Parameters**

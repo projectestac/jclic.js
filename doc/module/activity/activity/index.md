@@ -39,7 +39,7 @@ Activity constructor
 
 <MemberHeading id="setproperties" depth="3" name="setProperties" sig="setProperties($xml: external:jQuery)" />
 
-<MemberMeta sourceHref="/source/activity-js/#L107" sourceLabel="Activity.js:107" />
+<MemberMeta sourceHref="/source/activity-js/#L108" sourceLabel="Activity.js:108" />
 
 Loads this object settings from an XML element
 
@@ -56,7 +56,7 @@ Loads this object settings from an XML element
 ): module:boxes/ActiveBoxContent.ActiveBoxContent"
 />
 
-<MemberMeta sourceHref="/source/activity-js/#L356" sourceLabel="Activity.js:356" />
+<MemberMeta sourceHref="/source/activity-js/#L367" sourceLabel="Activity.js:367" />
 
 Read an activity message from an XML element
 
@@ -70,7 +70,7 @@ Read an activity message from an XML element
 
 <MemberHeading id="getattributes" depth="3" name="getAttributes" sig="getAttributes(): object" />
 
-<MemberMeta sourceHref="/source/activity-js/#L372" sourceLabel="Activity.js:372" />
+<MemberMeta sourceHref="/source/activity-js/#L383" sourceLabel="Activity.js:383" />
 
 Gets a object with the basic attributes needed to rebuild this instance excluding functions,\
 parent references, constants and also attributes retaining the default value.\
@@ -82,7 +82,7 @@ The resulting object is commonly usued to serialize elements in JSON format.
 
 <MemberHeading id="setattributes" depth="3" name="setAttributes" sig="setAttributes(data: object)" />
 
-<MemberMeta sourceHref="/source/activity-js/#L412" sourceLabel="Activity.js:412" />
+<MemberMeta sourceHref="/source/activity-js/#L423" sourceLabel="Activity.js:423" />
 
 Load the activity settings from a data object
 
@@ -92,13 +92,13 @@ Load the activity settings from a data object
 
 <MemberHeading id="initautocontentprovider" depth="3" name="initAutoContentProvider" sig="initAutoContentProvider()" />
 
-<MemberMeta sourceHref="/source/activity-js/#L454" sourceLabel="Activity.js:454" />
+<MemberMeta sourceHref="/source/activity-js/#L465" sourceLabel="Activity.js:465" />
 
 Initialises the [AutoContentProvider](/module/automation-autocontentprovider#autocontentprovider), when defined.
 
 <MemberHeading id="preparemedia" depth="3" name="prepareMedia" sig="prepareMedia(ps: module:JClicPlayer.JClicPlayer)" />
 
-<MemberMeta sourceHref="/source/activity-js/#L463" sourceLabel="Activity.js:463" />
+<MemberMeta sourceHref="/source/activity-js/#L474" sourceLabel="Activity.js:474" />
 
 Preloads the media content of the activity.
 
@@ -108,7 +108,7 @@ Preloads the media content of the activity.
 
 <MemberHeading id="helpsolutionallowed" depth="3" name="helpSolutionAllowed" sig="helpSolutionAllowed(): boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L479" sourceLabel="Activity.js:479" />
+<MemberMeta sourceHref="/source/activity-js/#L490" sourceLabel="Activity.js:490" />
 
 Whether the activity allows the user to request the solution.
 
@@ -118,7 +118,7 @@ Whether the activity allows the user to request the solution.
 
 <MemberHeading id="helpwindowallowed" depth="3" name="helpWindowAllowed" sig="helpWindowAllowed(): boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L487" sourceLabel="Activity.js:487" />
+<MemberMeta sourceHref="/source/activity-js/#L498" sourceLabel="Activity.js:498" />
 
 Whether the activity allows the user to request help.
 
@@ -128,7 +128,7 @@ Whether the activity allows the user to request help.
 
 <MemberHeading id="getminnumactions" depth="3" name="getMinNumActions" sig="getMinNumActions(): number" />
 
-<MemberMeta sourceHref="/source/activity-js/#L496" sourceLabel="Activity.js:496" />
+<MemberMeta sourceHref="/source/activity-js/#L507" sourceLabel="Activity.js:507" />
 
 Retrieves the minimum number of actions needed to solve this activity.
 
@@ -138,7 +138,7 @@ Retrieves the minimum number of actions needed to solve this activity.
 
 <MemberHeading id="mustpausesequence" depth="3" name="mustPauseSequence" sig="mustPauseSequence(): boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L505" sourceLabel="Activity.js:505" />
+<MemberMeta sourceHref="/source/activity-js/#L516" sourceLabel="Activity.js:516" />
 
 When this method returns `true`, the automatic jump to the next activity must be paused at\
 this activity.
@@ -149,7 +149,7 @@ this activity.
 
 <MemberHeading id="canreinit" depth="3" name="canReinit" sig="canReinit(): boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L513" sourceLabel="Activity.js:513" />
+<MemberMeta sourceHref="/source/activity-js/#L524" sourceLabel="Activity.js:524" />
 
 Whether or not the activity can be reset
 
@@ -159,7 +159,7 @@ Whether or not the activity can be reset
 
 <MemberHeading id="hasinfo" depth="3" name="hasInfo" sig="hasInfo(): boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L521" sourceLabel="Activity.js:521" />
+<MemberMeta sourceHref="/source/activity-js/#L532" sourceLabel="Activity.js:532" />
 
 Whether or not the activity has additional information to be shown.
 
@@ -169,7 +169,7 @@ Whether or not the activity has additional information to be shown.
 
 <MemberHeading id="hasrandom" depth="3" name="hasRandom" sig="hasRandom(): boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L530" sourceLabel="Activity.js:530" />
+<MemberMeta sourceHref="/source/activity-js/#L541" sourceLabel="Activity.js:541" />
 
 Whether or not the activity uses random to shuffle internal components
 
@@ -179,7 +179,7 @@ Whether or not the activity uses random to shuffle internal components
 
 <MemberHeading id="shufflealways" depth="3" name="shuffleAlways" sig="shuffleAlways(): boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L538" sourceLabel="Activity.js:538" />
+<MemberMeta sourceHref="/source/activity-js/#L549" sourceLabel="Activity.js:549" />
 
 When `true`, the activity must always be shuffled
 
@@ -189,7 +189,7 @@ When `true`, the activity must always be shuffled
 
 <MemberHeading id="needskeyboard" depth="3" name="needsKeyboard" sig="needsKeyboard(): boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L546" sourceLabel="Activity.js:546" />
+<MemberMeta sourceHref="/source/activity-js/#L557" sourceLabel="Activity.js:557" />
 
 When `true`, the activity makes use of the keyboard
 
@@ -199,19 +199,19 @@ When `true`, the activity makes use of the keyboard
 
 <MemberHeading id="end" depth="3" name="end" sig="end()" />
 
-<MemberMeta sourceHref="/source/activity-js/#L553" sourceLabel="Activity.js:553" />
+<MemberMeta sourceHref="/source/activity-js/#L564" sourceLabel="Activity.js:564" />
 
 Called when the activity must be disposed
 
 <MemberHeading id="clear" depth="3" name="clear" sig="clear()" />
 
-<MemberMeta sourceHref="/source/activity-js/#L561" sourceLabel="Activity.js:561" />
+<MemberMeta sourceHref="/source/activity-js/#L572" sourceLabel="Activity.js:572" />
 
 Called when the activity must reset its internal components
 
 <MemberHeading id="getwindowsize" depth="3" name="getWindowSize" sig="getWindowSize(): module:AWT.Dimension" />
 
-<MemberMeta sourceHref="/source/activity-js/#L569" sourceLabel="Activity.js:569" />
+<MemberMeta sourceHref="/source/activity-js/#L580" sourceLabel="Activity.js:580" />
 
 Getter method for `windowSize`
 
@@ -221,7 +221,7 @@ Getter method for `windowSize`
 
 <MemberHeading id="setwindowsize" depth="3" name="setWindowSize" sig="setWindowSize(windowSize: module:AWT.Dimension)" />
 
-<MemberMeta sourceHref="/source/activity-js/#L577" sourceLabel="Activity.js:577" />
+<MemberMeta sourceHref="/source/activity-js/#L588" sourceLabel="Activity.js:588" />
 
 Setter method for `windowSize`
 
@@ -238,7 +238,7 @@ Setter method for `windowSize`
 ): module:Activity.ActivityPanel"
 />
 
-<MemberMeta sourceHref="/source/activity-js/#L587" sourceLabel="Activity.js:587" />
+<MemberMeta sourceHref="/source/activity-js/#L598" sourceLabel="Activity.js:598" />
 
 Builds the [ActivityPanel](/module/activity#activitypanel) object.\
 Subclasses must update the `Panel` member of its prototypes to produce specific panels.
@@ -263,7 +263,7 @@ Subclasses must update the `Panel` member of its prototypes to produce specific 
 ): module:Activity.Activity"
 />
 
-<MemberMeta badges="static" sourceHref="/source/activity-js/#L73" sourceLabel="Activity.js:73" />
+<MemberMeta badges="static" sourceHref="/source/activity-js/#L74" sourceLabel="Activity.js:74" />
 
 Registers a new type of activity
 
@@ -286,7 +286,7 @@ Registers a new type of activity
 ): module:Activity.Activity"
 />
 
-<MemberMeta badges="static" sourceHref="/source/activity-js/#L85" sourceLabel="Activity.js:85" />
+<MemberMeta badges="static" sourceHref="/source/activity-js/#L86" sourceLabel="Activity.js:86" />
 
 Factory constructor that returns a specific type of Activity based on the `class` attribute\
 declared in `data`.
@@ -304,31 +304,31 @@ declared in `data`.
 
 <MemberHeading id="project" depth="3" name="project" sig="project: module:project/JClicProject.JClicProject" />
 
-<MemberMeta sourceHref="/source/activity-js/#L606" sourceLabel="Activity.js:606" />
+<MemberMeta sourceHref="/source/activity-js/#L617" sourceLabel="Activity.js:617" />
 
 The [JClicProject](/module/project-jclicproject#jclicproject) to which this activity belongs
 
 <MemberHeading id="name" depth="3" name="name" sig="name: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L611" sourceLabel="Activity.js:611" />
+<MemberMeta sourceHref="/source/activity-js/#L622" sourceLabel="Activity.js:622" />
 
 The Activity name
 
 <MemberHeading id="classname" depth="3" name="className" sig="className: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L616" sourceLabel="Activity.js:616" />
+<MemberMeta sourceHref="/source/activity-js/#L627" sourceLabel="Activity.js:627" />
 
 The class name of this Activity
 
 <MemberHeading id="code" depth="3" name="code" sig="code: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L621" sourceLabel="Activity.js:621" />
+<MemberMeta sourceHref="/source/activity-js/#L632" sourceLabel="Activity.js:632" />
 
 Code used in reports to filter queries. Default is `null`.
 
 <MemberHeading id="type" depth="3" name="type" sig="type: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L628" sourceLabel="Activity.js:628" />
+<MemberMeta sourceHref="/source/activity-js/#L639" sourceLabel="Activity.js:639" />
 
 Type of activity, used in text activities to distinguish between different variants of the\
 same activity. Possible values are: `orderWords`, `orderParagraphs`, `identifyWords` and\
@@ -336,266 +336,273 @@ same activity. Possible values are: `orderWords`, `orderParagraphs`, `identifyWo
 
 <MemberHeading id="description" depth="3" name="description" sig="description: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L633" sourceLabel="Activity.js:633" />
+<MemberMeta sourceHref="/source/activity-js/#L644" sourceLabel="Activity.js:644" />
 
 A short description of the activity
 
 <MemberHeading id="margin" depth="3" name="margin" sig="margin: number" />
 
-<MemberMeta sourceHref="/source/activity-js/#L638" sourceLabel="Activity.js:638" />
+<MemberMeta sourceHref="/source/activity-js/#L649" sourceLabel="Activity.js:649" />
 
 The space between the activity components measured in pixels.
 
 <MemberHeading id="bgcolor" depth="3" name="bgColor" sig="bgColor: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L643" sourceLabel="Activity.js:643" />
+<MemberMeta sourceHref="/source/activity-js/#L654" sourceLabel="Activity.js:654" />
 
 The background color of the activity panel
 
 <MemberHeading id="bggradient" depth="3" name="bgGradient" sig="bgGradient: module:AWT.Gradient" />
 
-<MemberMeta sourceHref="/source/activity-js/#L648" sourceLabel="Activity.js:648" />
+<MemberMeta sourceHref="/source/activity-js/#L659" sourceLabel="Activity.js:659" />
 
 When set, gradient used to draw the activity window background
 
 <MemberHeading id="tiledbgimg" depth="3" name="tiledBgImg" sig="tiledBgImg: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L653" sourceLabel="Activity.js:653" />
+<MemberMeta sourceHref="/source/activity-js/#L664" sourceLabel="Activity.js:664" />
 
 Whether the bgImage (if any) has to be tiled across the panel background
 
 <MemberHeading id="bgimagefile" depth="3" name="bgImageFile" sig="bgImageFile: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L658" sourceLabel="Activity.js:658" />
+<MemberMeta sourceHref="/source/activity-js/#L669" sourceLabel="Activity.js:669" />
 
 Filename of the image used as a panel background.
 
 <MemberHeading id="border" depth="3" name="border" sig="border: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L663" sourceLabel="Activity.js:663" />
+<MemberMeta sourceHref="/source/activity-js/#L674" sourceLabel="Activity.js:674" />
 
 Whether to draw a border around the activity panel
 
 <MemberHeading id="absolutepositioned" depth="3" name="absolutePositioned" sig="absolutePositioned: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L669" sourceLabel="Activity.js:669" />
+<MemberMeta sourceHref="/source/activity-js/#L680" sourceLabel="Activity.js:680" />
 
 Whether to place the activity panel at the point specified by `absolutePosition` or leave\
 it centered on the main player's window.
 
 <MemberHeading id="absoluteposition" depth="3" name="absolutePosition" sig="absolutePosition: module:AWT.Point" />
 
-<MemberMeta sourceHref="/source/activity-js/#L674" sourceLabel="Activity.js:674" />
+<MemberMeta sourceHref="/source/activity-js/#L685" sourceLabel="Activity.js:685" />
 
 The position of the activity panel on the player.
 
 <MemberHeading id="includeinreports" depth="3" name="includeInReports" sig="includeInReports: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L679" sourceLabel="Activity.js:679" />
+<MemberMeta sourceHref="/source/activity-js/#L690" sourceLabel="Activity.js:690" />
 
 Whether to generate usage reports
 
 <MemberHeading id="reportactions" depth="3" name="reportActions" sig="reportActions: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L684" sourceLabel="Activity.js:684" />
+<MemberMeta sourceHref="/source/activity-js/#L695" sourceLabel="Activity.js:695" />
 
 Whether to send action events to the `Reporter`
 
 <MemberHeading id="helpwindow" depth="3" name="helpWindow" sig="helpWindow: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L689" sourceLabel="Activity.js:689" />
+<MemberMeta sourceHref="/source/activity-js/#L700" sourceLabel="Activity.js:700" />
 
 Whether to allow help about the activity or not.
 
 <MemberHeading id="showsolution" depth="3" name="showSolution" sig="showSolution: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L694" sourceLabel="Activity.js:694" />
+<MemberMeta sourceHref="/source/activity-js/#L705" sourceLabel="Activity.js:705" />
 
 Whether to show the solution on the help window.
 
 <MemberHeading id="helpmsg" depth="3" name="helpMsg" sig="helpMsg: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L699" sourceLabel="Activity.js:699" />
+<MemberMeta sourceHref="/source/activity-js/#L710" sourceLabel="Activity.js:710" />
 
 Message to be shown in the help window when `showSolution` is `false`.
 
-<MemberHeading id="eventsounds" depth="3" name="eventSounds" sig="eventSounds: module:media/EventSounds.EventSounds" />
+<MemberHeading id="eventsounds" depth="3" name="eventSounds" sig="eventSounds: object" />
 
-<MemberMeta sourceHref="/source/activity-js/#L705" sourceLabel="Activity.js:705" />
+<MemberMeta sourceHref="/source/activity-js/#L716" sourceLabel="Activity.js:716" />
+
+Data used to recreate the [EventSounds](/module/media-eventsounds#eventsounds) of the activity. The default is `null`, meaning\
+to use the default event sounds.
+
+<MemberHeading id="eventsoundsplayer" depth="3" name="eventSoundsPlayer" sig="eventSoundsPlayer: module:media/EventSounds.EventSounds" />
+
+<MemberMeta sourceHref="/source/activity-js/#L722" sourceLabel="Activity.js:722" />
 
 Specific set of [EventSounds](/module/media-eventsounds#eventsounds) used in the activity. The default is `null`, meaning\
 to use the default event sounds.
 
 <MemberHeading id="useorder" depth="3" name="useOrder" sig="useOrder: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L710" sourceLabel="Activity.js:710" />
+<MemberMeta sourceHref="/source/activity-js/#L727" sourceLabel="Activity.js:727" />
 
 Wheter the activity must be solved in a specific order or not.
 
 <MemberHeading id="dragcells" depth="3" name="dragCells" sig="dragCells: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L716" sourceLabel="Activity.js:716" />
+<MemberMeta sourceHref="/source/activity-js/#L733" sourceLabel="Activity.js:733" />
 
 Wheter the cells of the activity will be dragged across the screen.\
 When `false`, a line will be painted to link elements.
 
 <MemberHeading id="skinfilename" depth="3" name="skinFileName" sig="skinFileName: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L722" sourceLabel="Activity.js:722" />
+<MemberMeta sourceHref="/source/activity-js/#L739" sourceLabel="Activity.js:739" />
 
 File name of the Skin used by the activity. The default value is `null`, meaning that the\
 activity will use the skin specified for the project.
 
 <MemberHeading id="maxtime" depth="3" name="maxTime" sig="maxTime: number" />
 
-<MemberMeta sourceHref="/source/activity-js/#L728" sourceLabel="Activity.js:728" />
+<MemberMeta sourceHref="/source/activity-js/#L745" sourceLabel="Activity.js:745" />
 
 Maximum amount of time (seconds) to solve the activity. The default value is 0, meaning\
 unlimited time.
 
 <MemberHeading id="countdowntime" depth="3" name="countDownTime" sig="countDownTime: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L733" sourceLabel="Activity.js:733" />
+<MemberMeta sourceHref="/source/activity-js/#L750" sourceLabel="Activity.js:750" />
 
 Whether the time counter should display a countdown when `maxTime > 0`
 
 <MemberHeading id="maxactions" depth="3" name="maxActions" sig="maxActions: number" />
 
-<MemberMeta sourceHref="/source/activity-js/#L739" sourceLabel="Activity.js:739" />
+<MemberMeta sourceHref="/source/activity-js/#L756" sourceLabel="Activity.js:756" />
 
 Maximum number of actions allowed to solve the activity. The default value is 0, meaning\
 unlimited actions.
 
 <MemberHeading id="countdownactions" depth="3" name="countDownActions" sig="countDownActions: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L744" sourceLabel="Activity.js:744" />
+<MemberMeta sourceHref="/source/activity-js/#L761" sourceLabel="Activity.js:761" />
 
 Whether the actions counter should display a countdown when `maxActions > 0`
 
 <MemberHeading id="infourl" depth="3" name="infoUrl" sig="infoUrl: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L749" sourceLabel="Activity.js:749" />
+<MemberMeta sourceHref="/source/activity-js/#L766" sourceLabel="Activity.js:766" />
 
 URL to be launched when the user clicks on the 'info' button. Default is `null`.
 
 <MemberHeading id="infocmd" depth="3" name="infoCmd" sig="infoCmd: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L755" sourceLabel="Activity.js:755" />
+<MemberMeta sourceHref="/source/activity-js/#L772" sourceLabel="Activity.js:772" />
 
 System command to be launched when the user clicks on the 'info' button. Default is `null`.\
 Important: this parameter is currently not being used
 
 <MemberHeading id="messages" depth="3" name="messages" sig="messages: Array.<module:boxes/ActiveBoxContent.ActiveBoxContent>" />
 
-<MemberMeta sourceHref="/source/activity-js/#L760" sourceLabel="Activity.js:760" />
+<MemberMeta sourceHref="/source/activity-js/#L777" sourceLabel="Activity.js:777" />
 
 The content of the initial, final, previous and error messages shown by the activity.
 
 <MemberHeading id="windowsize" depth="3" name="windowSize" sig="windowSize: module:AWT.Dimension" />
 
-<MemberMeta sourceHref="/source/activity-js/#L765" sourceLabel="Activity.js:765" />
+<MemberMeta sourceHref="/source/activity-js/#L782" sourceLabel="Activity.js:782" />
 
 Preferred dimension of the activity window
 
 <MemberHeading id="transparentbg" depth="3" name="transparentBg" sig="transparentBg: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L770" sourceLabel="Activity.js:770" />
+<MemberMeta sourceHref="/source/activity-js/#L787" sourceLabel="Activity.js:787" />
 
 Whether the activity window has transparent background.
 
 <MemberHeading id="activitybgcolor" depth="3" name="activityBgColor" sig="activityBgColor: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L775" sourceLabel="Activity.js:775" />
+<MemberMeta sourceHref="/source/activity-js/#L792" sourceLabel="Activity.js:792" />
 
 The background color of the activity
 
 <MemberHeading id="activitybggradient" depth="3" name="activityBgGradient" sig="activityBgGradient: module:AWT.Gradient" />
 
-<MemberMeta sourceHref="/source/activity-js/#L780" sourceLabel="Activity.js:780" />
+<MemberMeta sourceHref="/source/activity-js/#L797" sourceLabel="Activity.js:797" />
 
 Gradient used to draw backgrounds inside the activity.
 
 <MemberHeading id="btimecounter" depth="3" name="bTimeCounter" sig="bTimeCounter: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L785" sourceLabel="Activity.js:785" />
+<MemberMeta sourceHref="/source/activity-js/#L802" sourceLabel="Activity.js:802" />
 
 Whether to display or not the 'time' counter
 
 <MemberHeading id="bscorecounter" depth="3" name="bScoreCounter" sig="bScoreCounter: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L790" sourceLabel="Activity.js:790" />
+<MemberMeta sourceHref="/source/activity-js/#L807" sourceLabel="Activity.js:807" />
 
 Whether to display or not the 'score' counter
 
 <MemberHeading id="bactionscounter" depth="3" name="bActionsCounter" sig="bActionsCounter: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L795" sourceLabel="Activity.js:795" />
+<MemberMeta sourceHref="/source/activity-js/#L812" sourceLabel="Activity.js:812" />
 
 Whether to display or not the 'actions' counter
 
 <MemberHeading id="acp" depth="3" name="acp" sig="acp: module:automation/AutoContentProvider.AutoContentProvider" />
 
-<MemberMeta sourceHref="/source/activity-js/#L800" sourceLabel="Activity.js:800" />
+<MemberMeta sourceHref="/source/activity-js/#L817" sourceLabel="Activity.js:817" />
 
 Special object used to generate random content at the start of the activity
 
 <MemberHeading id="abc" depth="3" name="abc" sig="abc: Array.<module:boxes/ActiveBagContent.ActiveBagContent>" />
 
-<MemberMeta sourceHref="/source/activity-js/#L809" sourceLabel="Activity.js:809" />
+<MemberMeta sourceHref="/source/activity-js/#L826" sourceLabel="Activity.js:826" />
 
 Array of bags with the description of the content to be displayed on panels and cells.
 
 <MemberHeading id="tgc" depth="3" name="tgc" sig="tgc: module:boxes/TextGridContent.TextGridContent" />
 
-<MemberMeta sourceHref="/source/activity-js/#L814" sourceLabel="Activity.js:814" />
+<MemberMeta sourceHref="/source/activity-js/#L831" sourceLabel="Activity.js:831" />
 
 Content of the grid of letters used in crosswords and shuffled letters
 
 <MemberHeading id="document" depth="3" name="document" sig="document: module:activities/text/TextActivityDocument.TextActivityDocument" />
 
-<MemberMeta sourceHref="/source/activity-js/#L819" sourceLabel="Activity.js:819" />
+<MemberMeta sourceHref="/source/activity-js/#L836" sourceLabel="Activity.js:836" />
 
 The main document used in text activities
 
 <MemberHeading id="boxgridpos" depth="3" name="boxGridPos" sig="boxGridPos: string" />
 
-<MemberMeta sourceHref="/source/activity-js/#L824" sourceLabel="Activity.js:824" />
+<MemberMeta sourceHref="/source/activity-js/#L841" sourceLabel="Activity.js:841" />
 
 Relative position of the text grid (uses the same position codes as box grids)
 
 <MemberHeading id="shuffles" depth="3" name="shuffles" sig="shuffles: number" />
 
-<MemberMeta sourceHref="/source/activity-js/#L829" sourceLabel="Activity.js:829" />
+<MemberMeta sourceHref="/source/activity-js/#L846" sourceLabel="Activity.js:846" />
 
 Number of times to shuffle the cells at the beginning of the activity
 
 <MemberHeading id="shufflea" depth="3" name="shuffleA" sig="shuffleA: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L834" sourceLabel="Activity.js:834" />
+<MemberMeta sourceHref="/source/activity-js/#L851" sourceLabel="Activity.js:851" />
 
 Box grid A must be shuffled.
 
 <MemberHeading id="shuffleb" depth="3" name="shuffleB" sig="shuffleB: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L839" sourceLabel="Activity.js:839" />
+<MemberMeta sourceHref="/source/activity-js/#L856" sourceLabel="Activity.js:856" />
 
 Box grid B must be shuffled.
 
 <MemberHeading id="invass" depth="3" name="invAss" sig="invAss: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L844" sourceLabel="Activity.js:844" />
+<MemberMeta sourceHref="/source/activity-js/#L861" sourceLabel="Activity.js:861" />
 
 Flag to indicate "inverse resolution" in complex associations
 
 <MemberHeading id="menuelements" depth="3" name="menuElements" sig="menuElements: Array.<object>" />
 
-<MemberMeta sourceHref="/source/activity-js/#L849" sourceLabel="Activity.js:849" />
+<MemberMeta sourceHref="/source/activity-js/#L866" sourceLabel="Activity.js:866" />
 
 Array of menu elements, used in activities of type [Menu](/module/activities-panels-menu#menu)
 
 <MemberHeading id="numericcontent" depth="3" name="numericContent" sig="numericContent: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L856" sourceLabel="Activity.js:856" />
+<MemberMeta sourceHref="/source/activity-js/#L873" sourceLabel="Activity.js:873" />
 
 This activity uses numeric expressions, so text literals should be\
 converted to numbers for comparisions, taking in account the\
@@ -605,13 +612,13 @@ number format of the current locale (dot or comma as decimal separator)
 
 <MemberHeading id="classes" depth="3" name="CLASSES" sig="CLASSES: object" />
 
-<MemberMeta badges="static" sourceHref="/source/activity-js/#L597" sourceLabel="Activity.js:597" />
+<MemberMeta badges="static" sourceHref="/source/activity-js/#L608" sourceLabel="Activity.js:608" />
 
 Classes derived from `Activity` should register themselves by adding a field to\
 `Activity.CLASSES` using `Activity.registerClass`
 
 <MemberHeading id="panel" depth="3" name="Panel" sig="Panel: module:Activity.ActivityPanel" />
 
-<MemberMeta badges="static" sourceHref="/source/activity-js/#L1308" sourceLabel="Activity.js:1308" />
+<MemberMeta badges="static" sourceHref="/source/activity-js/#L1325" sourceLabel="Activity.js:1325" />
 
 The panel class associated to each type of activity

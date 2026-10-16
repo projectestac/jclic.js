@@ -127,7 +127,7 @@ The resulting object is commonly usued to serialize elements in JSON format.
 <MemberMeta badges="static" sourceHref="/source/awt-js/#L1623" sourceLabel="AWT.js:1623" />
 
 Calculates some of the points included in a quadratic Bézier curve\
-The number of points being calculated is defined in Utils.settings.BEZIER\_POINTS
+The number of points being calculated is defined in Utils.settings.BEZIER_POINTS
 
 **Parameters**
 
@@ -142,7 +142,7 @@ The number of points being calculated is defined in Utils.settings.BEZIER\_POINT
 - `Array.<`[`module:AWT.Point`](/module/awt#point)`>`
 
 * **See:**
-  - [https://en.wikipedia.org/wiki/B%C3%A9zier\_curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)
+  - [https://en.wikipedia.org/wiki/B%C3%A9zier_curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)
   - [https://www.jasondavies.com/animated-bezier/](https://www.jasondavies.com/animated-bezier/)
 
 <MemberHeading
@@ -161,7 +161,7 @@ The number of points being calculated is defined in Utils.settings.BEZIER\_POINT
 <MemberMeta badges="static" sourceHref="/source/awt-js/#L1652" sourceLabel="AWT.js:1652" />
 
 Calculates some of the points included in a cubic Bézier (curve with two control points)\
-The number of points being calculated is defined in Utils.settings.BEZIER\_POINTS
+The number of points being calculated is defined in Utils.settings.BEZIER_POINTS
 
 **Parameters**
 

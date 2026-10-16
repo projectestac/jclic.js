@@ -172,7 +172,7 @@ Main handler used to process mouse, touch, keyboard and edit events
 
 <MemberHeading id="setbounds" depth="3" name="setBounds" sig="setBounds(rect: module:AWT.Rectangle)" />
 
-<MemberMeta sourceHref="/source/activity-js/#L895" sourceLabel="Activity.js:895" />
+<MemberMeta sourceHref="/source/activity-js/#L912" sourceLabel="Activity.js:912" />
 
 _Inherited from `module:Activity.ActivityPanel#setBounds`_
 
@@ -186,7 +186,7 @@ Sets the size and position of this activity panel
 
 <MemberHeading id="buildvisualcomponents" depth="3" name="buildVisualComponents" sig="buildVisualComponents()" />
 
-<MemberMeta sourceHref="/source/activity-js/#L914" sourceLabel="Activity.js:914" />
+<MemberMeta sourceHref="/source/activity-js/#L931" sourceLabel="Activity.js:931" />
 
 _Inherited from `module:Activity.ActivityPanel#buildVisualComponents`_
 
@@ -196,7 +196,7 @@ Prepares the visual components of the activity
 
 <MemberHeading id="updatecontent" depth="3" name="updateContent" sig="updateContent(dirtyRegion: module:AWT.Rectangle)" />
 
-<MemberMeta sourceHref="/source/activity-js/#L960" sourceLabel="Activity.js:960" />
+<MemberMeta sourceHref="/source/activity-js/#L977" sourceLabel="Activity.js:977" />
 
 _Inherited from `module:Activity.ActivityPanel#updateContent`_
 
@@ -212,7 +212,7 @@ will be called from [module:AWT.Container#update](/module/awt/container#update) 
 
 <MemberHeading id="playevent" depth="3" name="playEvent" sig="playEvent(event: string)" />
 
-<MemberMeta sourceHref="/source/activity-js/#L969" sourceLabel="Activity.js:969" />
+<MemberMeta sourceHref="/source/activity-js/#L986" sourceLabel="Activity.js:986" />
 
 _Inherited from `module:Activity.ActivityPanel#playEvent`_
 
@@ -246,7 +246,7 @@ Called when the activity starts playing
 
 <MemberHeading id="activityready" depth="3" name="activityReady" sig="activityReady()" />
 
-<MemberMeta sourceHref="/source/activity-js/#L998" sourceLabel="Activity.js:998" />
+<MemberMeta sourceHref="/source/activity-js/#L1015" sourceLabel="Activity.js:1015" />
 
 _Inherited from `module:Activity.ActivityPanel#activityReady`_
 
@@ -257,7 +257,7 @@ initialization process.
 
 <MemberHeading id="showhelp" depth="3" name="showHelp" sig="showHelp()" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1005" sourceLabel="Activity.js:1005" />
+<MemberMeta sourceHref="/source/activity-js/#L1022" sourceLabel="Activity.js:1022" />
 
 _Inherited from `module:Activity.ActivityPanel#showHelp`_
 
@@ -274,7 +274,7 @@ Displays help about the activity
 ): module:AWT.Dimension"
 />
 
-<MemberMeta sourceHref="/source/activity-js/#L1014" sourceLabel="Activity.js:1014" />
+<MemberMeta sourceHref="/source/activity-js/#L1031" sourceLabel="Activity.js:1031" />
 
 _Inherited from `module:Activity.ActivityPanel#setDimension`_
 
@@ -292,7 +292,7 @@ Sets the real dimension of this ActivityPanel.
 
 <MemberHeading id="attachevents" depth="3" name="attachEvents" sig="attachEvents()" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1023" sourceLabel="Activity.js:1023" />
+<MemberMeta sourceHref="/source/activity-js/#L1040" sourceLabel="Activity.js:1040" />
 
 _Inherited from `module:Activity.ActivityPanel#attachEvents`_
 
@@ -302,7 +302,7 @@ Attaches the events specified in the `events` member to the `$div` member
 
 <MemberHeading id="attachevent" depth="3" name="attachEvent" sig="attachEvent($obj: external:jQuery, evt: string)" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1035" sourceLabel="Activity.js:1035" />
+<MemberMeta sourceHref="/source/activity-js/#L1052" sourceLabel="Activity.js:1052" />
 
 _Inherited from `module:Activity.ActivityPanel#attachEvent`_
 
@@ -343,7 +343,7 @@ Main handler used to process mouse, touch, keyboard and edit events
 )"
 />
 
-<MemberMeta sourceHref="/source/activity-js/#L1066" sourceLabel="Activity.js:1066" />
+<MemberMeta sourceHref="/source/activity-js/#L1083" sourceLabel="Activity.js:1083" />
 
 _Inherited from `module:Activity.ActivityPanel#fitTo`_
 
@@ -359,7 +359,7 @@ not surpassing the `bounds` rectangle.
 
 <MemberHeading id="buildaccessiblecomponents" depth="3" name="buildAccessibleComponents" sig="buildAccessibleComponents()" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1098" sourceLabel="Activity.js:1098" />
+<MemberMeta sourceHref="/source/activity-js/#L1115" sourceLabel="Activity.js:1115" />
 
 _Inherited from `module:Activity.ActivityPanel#buildAccessibleComponents`_
 
@@ -371,7 +371,7 @@ to start or when resized.
 
 <MemberHeading id="forcefinishactivity" depth="3" name="forceFinishActivity" sig="forceFinishActivity()" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1111" sourceLabel="Activity.js:1111" />
+<MemberMeta sourceHref="/source/activity-js/#L1128" sourceLabel="Activity.js:1128" />
 
 _Inherited from `module:Activity.ActivityPanel#forceFinishActivity`_
 
@@ -395,7 +395,7 @@ Ordinary ending of the activity, usually called form `processEvent`
 
 <MemberHeading id="setandplaymsg" depth="3" name="setAndPlayMsg" sig="setAndPlayMsg(msgCode: string, eventSoundsCode?: string)" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1140" sourceLabel="Activity.js:1140" />
+<MemberMeta sourceHref="/source/activity-js/#L1157" sourceLabel="Activity.js:1157" />
 
 _Inherited from `module:Activity.ActivityPanel#setAndPlayMsg`_
 
@@ -410,7 +410,7 @@ Sets the message to be displayed in the skin message box and optionally plays a 
 
 <MemberHeading id="end" depth="3" name="end" sig="end()" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1150" sourceLabel="Activity.js:1150" />
+<MemberMeta sourceHref="/source/activity-js/#L1167" sourceLabel="Activity.js:1167" />
 
 _Inherited from `module:Activity.ActivityPanel#end`_
 
@@ -420,7 +420,7 @@ Ends the activity
 
 <MemberHeading id="clear" depth="3" name="clear" sig="clear()" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1165" sourceLabel="Activity.js:1165" />
+<MemberMeta sourceHref="/source/activity-js/#L1182" sourceLabel="Activity.js:1182" />
 
 _Inherited from `module:Activity.ActivityPanel#clear`_
 
@@ -439,7 +439,7 @@ Miscellaneous cleaning operations
 )"
 />
 
-<MemberMeta sourceHref="/source/activity-js/#L1175" sourceLabel="Activity.js:1175" />
+<MemberMeta sourceHref="/source/activity-js/#L1192" sourceLabel="Activity.js:1192" />
 
 _Inherited from `module:Activity.ActivityPanel#enableCounters`_
 
@@ -464,7 +464,7 @@ Enables or disables the three counters (time, score and actions)
 )"
 />
 
-<MemberMeta sourceHref="/source/activity-js/#L1198" sourceLabel="Activity.js:1198" />
+<MemberMeta sourceHref="/source/activity-js/#L1215" sourceLabel="Activity.js:1215" />
 
 _Inherited from `module:Activity.ActivityPanel#shuffle`_
 
@@ -1025,7 +1025,7 @@ Used only in activities of type "itentify letters"
 
 <MemberHeading id="act" depth="3" name="act" sig="act: module:Activity.Activity" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1214" sourceLabel="Activity.js:1214" />
+<MemberMeta sourceHref="/source/activity-js/#L1231" sourceLabel="Activity.js:1231" />
 
 _Inherited from `module:Activity.ActivityPanel#act`_
 
@@ -1035,7 +1035,7 @@ The Activity this panel is related to
 
 <MemberHeading id="div" depth="3" name="$div" sig="$div: external:jQuery" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1219" sourceLabel="Activity.js:1219" />
+<MemberMeta sourceHref="/source/activity-js/#L1236" sourceLabel="Activity.js:1236" />
 
 _Inherited from `module:Activity.ActivityPanel#$div`_
 
@@ -1045,7 +1045,7 @@ The jQuery div element used by this panel
 
 <MemberHeading id="canvas" depth="3" name="$canvas" sig="$canvas: external:jQuery" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1224" sourceLabel="Activity.js:1224" />
+<MemberMeta sourceHref="/source/activity-js/#L1241" sourceLabel="Activity.js:1241" />
 
 _Inherited from `module:Activity.ActivityPanel#$canvas`_
 
@@ -1055,18 +1055,18 @@ The jQuery main canvas element used by this panel
 
 <MemberHeading id="accessiblecanvas" depth="3" name="accessibleCanvas" sig="accessibleCanvas: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1231" sourceLabel="Activity.js:1231" />
+<MemberMeta sourceHref="/source/activity-js/#L1248" sourceLabel="Activity.js:1248" />
 
 _Inherited from `module:Activity.ActivityPanel#accessibleCanvas`_
 
 **Overrides:&#x20;**`module:Activity.ActivityPanel#accessibleCanvas`
 
 Always true, since canvas hit regions have been deprecated!\
-See: https\://developer.mozilla.org/en-US/docs/Web/API/Canvas\_API/Tutorial/Hit\_regions\_and\_accessibility
+See: https\://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility
 
 <MemberHeading id="skin" depth="3" name="skin" sig="skin: module:skins/Skin.Skin" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1236" sourceLabel="Activity.js:1236" />
+<MemberMeta sourceHref="/source/activity-js/#L1253" sourceLabel="Activity.js:1253" />
 
 _Inherited from `module:Activity.ActivityPanel#skin`_
 
@@ -1076,7 +1076,7 @@ The realized current [Skin](/module/skins-skin#skin)
 
 <MemberHeading id="animatedbg" depth="3" name="$animatedBg" sig="$animatedBg: external:jQuery" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1241" sourceLabel="Activity.js:1241" />
+<MemberMeta sourceHref="/source/activity-js/#L1258" sourceLabel="Activity.js:1258" />
 
 _Inherited from `module:Activity.ActivityPanel#$animatedBg`_
 
@@ -1086,7 +1086,7 @@ Background element (currently a `span`) used to place animated GIFs when needed
 
 <MemberHeading id="animatedbgb" depth="3" name="$animatedBgB" sig="$animatedBgB: external:jQuery" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1246" sourceLabel="Activity.js:1246" />
+<MemberMeta sourceHref="/source/activity-js/#L1263" sourceLabel="Activity.js:1263" />
 
 _Inherited from `module:Activity.ActivityPanel#$animatedBgB`_
 
@@ -1096,7 +1096,7 @@ Additional background element for animated GIFs, used in associations
 
 <MemberHeading id="solved" depth="3" name="solved" sig="solved: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1251" sourceLabel="Activity.js:1251" />
+<MemberMeta sourceHref="/source/activity-js/#L1268" sourceLabel="Activity.js:1268" />
 
 _Inherited from `module:Activity.ActivityPanel#solved`_
 
@@ -1106,7 +1106,7 @@ _Inherited from `module:Activity.ActivityPanel#solved`_
 
 <MemberHeading id="bgimage" depth="3" name="bgImage" sig="bgImage: external:HTMLImageElement" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1256" sourceLabel="Activity.js:1256" />
+<MemberMeta sourceHref="/source/activity-js/#L1273" sourceLabel="Activity.js:1273" />
 
 _Inherited from `module:Activity.ActivityPanel#bgImage`_
 
@@ -1116,7 +1116,7 @@ The realized image used as a background
 
 <MemberHeading id="playing" depth="3" name="playing" sig="playing: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1261" sourceLabel="Activity.js:1261" />
+<MemberMeta sourceHref="/source/activity-js/#L1278" sourceLabel="Activity.js:1278" />
 
 _Inherited from `module:Activity.ActivityPanel#playing`_
 
@@ -1126,7 +1126,7 @@ _Inherited from `module:Activity.ActivityPanel#playing`_
 
 <MemberHeading id="firstrun" depth="3" name="firstRun" sig="firstRun: boolean" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1266" sourceLabel="Activity.js:1266" />
+<MemberMeta sourceHref="/source/activity-js/#L1283" sourceLabel="Activity.js:1283" />
 
 _Inherited from `module:Activity.ActivityPanel#firstRun`_
 
@@ -1136,7 +1136,7 @@ _Inherited from `module:Activity.ActivityPanel#firstRun`_
 
 <MemberHeading id="currentitem" depth="3" name="currentItem" sig="currentItem: number" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1271" sourceLabel="Activity.js:1271" />
+<MemberMeta sourceHref="/source/activity-js/#L1288" sourceLabel="Activity.js:1288" />
 
 _Inherited from `module:Activity.ActivityPanel#currentItem`_
 
@@ -1146,7 +1146,7 @@ Currently selected item. Used in some types of activities.
 
 <MemberHeading id="bc" depth="3" name="bc" sig="bc: module:boxes/BoxConnector.BoxConnector" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1276" sourceLabel="Activity.js:1276" />
+<MemberMeta sourceHref="/source/activity-js/#L1293" sourceLabel="Activity.js:1293" />
 
 _Inherited from `module:Activity.ActivityPanel#bc`_
 
@@ -1156,7 +1156,7 @@ The object used to connect cells and other elements in some types of activity
 
 <MemberHeading id="ps" depth="3" name="ps" sig="ps: module:JClicPlayer.JClicPlayer" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1282" sourceLabel="Activity.js:1282" />
+<MemberMeta sourceHref="/source/activity-js/#L1299" sourceLabel="Activity.js:1299" />
 
 _Inherited from `module:Activity.ActivityPanel#ps`_
 
@@ -1167,7 +1167,7 @@ The PlayStation used to realize media objects and communicate with the player se
 
 <MemberHeading id="minimumsize" depth="3" name="minimumSize" sig="minimumSize: module:AWT.Dimension" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1287" sourceLabel="Activity.js:1287" />
+<MemberMeta sourceHref="/source/activity-js/#L1304" sourceLabel="Activity.js:1304" />
 
 _Inherited from `module:Activity.ActivityPanel#minimumSize`_
 
@@ -1177,7 +1177,7 @@ The minimum size of this kind of ActivityPanel
 
 <MemberHeading id="preferredsize" depth="3" name="preferredSize" sig="preferredSize: module:AWT.Dimension" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1292" sourceLabel="Activity.js:1292" />
+<MemberMeta sourceHref="/source/activity-js/#L1309" sourceLabel="Activity.js:1309" />
 
 _Inherited from `module:Activity.ActivityPanel#preferredSize`_
 
@@ -1187,7 +1187,7 @@ The preferred size of this kind of ActivityPanel
 
 <MemberHeading id="events" depth="3" name="events" sig="events: Array.<string>" />
 
-<MemberMeta sourceHref="/source/activity-js/#L1299" sourceLabel="Activity.js:1299" />
+<MemberMeta sourceHref="/source/activity-js/#L1316" sourceLabel="Activity.js:1316" />
 
 _Inherited from `module:Activity.ActivityPanel#events`_
 

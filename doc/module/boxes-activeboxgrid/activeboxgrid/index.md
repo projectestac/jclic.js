@@ -457,7 +457,7 @@ _Inherited from `module:boxes/ActiveBoxBag.ActiveBoxBag#buildAccessibleElements`
 Builds a group of hidden `buton` elements that will act as a accessible objects associated\
 to the canvas area of this ActiveBoxBag.\
 The buttons will only be created when `CanvasRenderingContext2D` has a method named `addHitRegion`.\
-See https\://developer.mozilla.org/en-US/docs/Web/API/Canvas\_API/Tutorial/Hit\_regions\_and\_accessibility\
+See https\://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility\
 for more information and supported browsers.
 
 **Parameters**

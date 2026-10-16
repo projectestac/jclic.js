@@ -2,14 +2,14 @@
 title: media/AudioBuffer
 kind: module
 longname: module:media/AudioBuffer
-description: "File : media/EventSoundsElement.js Created : 01/04/2015 By : Francesc Busquets francesc@gmail.com JClic.js An HTML5 player of JClic activities https://projectestac.github.io/jclic.js"
+description: "File : media/AudioBuffer.js Created : 01/04/2015 By : Francesc Busquets francesc@gmail.com JClic.js An HTML5 player of JClic activities https://projectestac.github.io/jclic.js"
 ---
 
 # media/AudioBuffer
 
 <SourceLink href="/source/media/audiobuffer-js/#L32" label="AudioBuffer.js:32" />
 
-File : media/EventSoundsElement.js\
+File : media/AudioBuffer.js\
 Created : 01/04/2015\
 By : Francesc Busquets [francesc@gmail.com](mailto:francesc@gmail.com)
 
