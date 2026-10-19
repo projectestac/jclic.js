@@ -1,4 +1,10 @@
+### v2.3.4 (not yet released)
+#### Improvements
+- Updated peer dependencies
+- Improve documentation
+
 ### v2.3.2 (2026-10-15)
+#### Improvements
 - Updated peer dependencies
 - `eventSoundsPlayer` is a new member of `Activity` and `ProjectSettings`, implementing the real management of event sounds. The `eventSounds` members remain, but only as a store of custom event sounds configuration, both as project and activity levels.
 

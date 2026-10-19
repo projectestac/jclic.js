@@ -2,7 +2,7 @@
   "name": "jclic",
   "title": "JClic.js",
   "description": "HTML5 player for JClic activities",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "type": "module",
   "files": [
     "dist-node"
@@ -65,11 +65,11 @@
     "jszip-utils": "0.1.0"
   },
   "devDependencies": {
-    "@eslint/css": "^2.0.0",
+    "@eslint/css": "^2.0.1",
     "@eslint/js": "^10.0.1",
     "@hainenber/po2json": "^1.1.0",
     "clean-jsdoc-theme": "^5.2.0",
-    "eslint": "^10.12.0",
+    "eslint": "^10.13.0",
     "fs-extra": "^11.4.1",
     "globals": "^17.13.0",
     "jsdoc": "^4.0.5",
