@@ -86,18 +86,6 @@ export class WordSearch extends Activity {
 
 Object.assign(WordSearch.prototype, {
   /**
-   * String array containing all the valid clues.
-   * @name module:activities/textGrid/WordSearch.WordSearch#clues
-   * @type {string[]} */
-  clues: null,
-  /**
-   * Array of integers containing __for each clue__ the index
-   * of an associated {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} located on the secondary {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag}.
-   * This associated element is optional.
-   * @name module:activities/textGrid/WordSearch.WordSearch#clueItems
-   * @type {number[]} */
-  clueItems: null,
-  /**
    * Objects that indicate if box grids A and B must be shuffled.
    * (defaults to _false_ in WordSearch activities)
    * @name module:activities/textGrid/WordSearch.WordSearch#shuffleA

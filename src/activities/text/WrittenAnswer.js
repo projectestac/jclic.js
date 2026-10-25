@@ -207,7 +207,8 @@ export class WrittenAnswerPanel extends ActivityPanel {
       });
 
       this.$textField = $('<input/>', { type: 'text', size: 200 })
-        .css(abcB.style.getCSS())
+        // .css(abcB.style.getCSS())
+        .css(abcB?.getBoxBaseResolve?.()?.getCSS() || {})
         .css({
           position: 'absolute', top: 0, left: 0,
           border: 0, padding: 0, margin: 0,

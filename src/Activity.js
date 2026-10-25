@@ -871,6 +871,18 @@ Object.assign(Activity.prototype, {
    * @name module:Activity.Activity#numericContent
    * @type {boolean} */
   numericContent: false,
+  /**
+   * String array containing all the valid clues in word search.
+   * @name module:activities/textGrid/WordSearch.WordSearch#clues
+   * @type {string[]} */
+  clues: [],
+  /**
+   * Array of integers containing __for each clue__ the index
+   * of an associated {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} located on the secondary {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag}.
+   * This associated element is optional.
+   * @name module:activities/textGrid/WordSearch.WordSearch#clueItems
+   * @type {number[]} */
+  clueItems: [],
 });
 
 /**

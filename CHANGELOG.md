@@ -1,7 +1,13 @@
 ### v2.3.4 (not yet released)
+#### Breaking changes
+- Declarations of `clues` and `clueItems` moved from `WordSearch` to `Activity`.
+
 #### Improvements
 - Updated peer dependencies
 - Improve documentation
+
+#### Bug fixes
+- Avoid direct call to `getCSS` in `ActiveBagContent` objects without defined `style`.
 
 ### v2.3.2 (2026-10-15)
 #### Improvements
