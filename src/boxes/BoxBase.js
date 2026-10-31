@@ -69,7 +69,8 @@ export class BoxBase {
           this[name] = getBoolean(val, false);
           break;
         case 'margin':
-          this[name] = Number(val);
+        case 'textMargin':
+          this.textMargin = Number(val);
           break;
         case 'borderStroke':
           this.borderStroke = new Stroke(Number(val));
@@ -113,7 +114,7 @@ export class BoxBase {
    */
   getAttributes() {
     return getAttr(this, [
-      'shadow', 'transparent', 'margin',
+      'shadow', 'transparent', 'textMargin',
       'borderStroke', 'markerStroke', // AWT.Stroke
       'font', // AWT.Font
       'bgGradient', // AWT.Gradient
@@ -133,7 +134,7 @@ export class BoxBase {
    */
   setAttributes(data) {
     return setAttr(this, data, [
-      'shadow', 'transparent', 'margin',
+      'shadow', 'transparent', 'textMargin',
       { key: 'borderStroke', fn: Stroke },
       { key: 'markerStroke', fn: Stroke },
       { key: 'font', fn: Font },
