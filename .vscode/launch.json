@@ -15,12 +15,11 @@
       "name": "Launch Chrome against localhost",
       "type": "chrome",
       "request": "launch",
-      "url": "http://localhost:9001/index.html",
-      "webRoot": "${workspaceFolder}",
-      "runtimeExecutable": "/usr/bin/chromium-browser",
-      "runtimeArgs": [
-        "--incognito"
-      ]
+      "url": "http://localhost:8000",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${webRoot}/*"
+      },
     },
     {
       "name": "Attach to Chrome",
