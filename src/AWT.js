@@ -443,12 +443,56 @@ export class Gradient {
    * @returns {module:AWT.Gradient}
    */
   getGradient(ctx, rect) {
+
+    // Get the rotation angle in radians
+    let rotation = this.angle * Math.PI / 180;
+
+    // When `true`, the final 'x' coordinates will be mirrored on the central 'y' axis
+    let symmetric = false;
+
+    // Project the rotation angle to the first quadrant:
+    if (rotation > Math.PI)
+      rotation -= Math.PI;
+    if (rotation > (Math.PI / 2)) {
+      rotation = Math.PI - rotation;
+      symmetric = true;
+    }
+
     const
-      p2 = rect.getOppositeVertex(),
-      gradient = ctx.createLinearGradient(rect.pos.x, rect.pos.y, p2.x, p2.y),
-      step = 1 / Math.max(this.cycles, 1);
+      // The central point of the rectangle:
+      cx = rect.pos.x + rect.dim.width / 2,
+      cy = rect.pos.y + rect.dim.height / 2,
+      // Length of the diagonal line from the central point to the upper right vertex:
+      d = Math.sqrt(Math.pow(rect.dim.width / 2, 2) + Math.pow(rect.dim.height / 2, 2)),
+      // Angle of the diagonal of the rectangle relative to the x-axis
+      alpha = Math.atan2(rect.dim.height / 2, rect.dim.width / 2),
+      // Complementary angle between the diagonal and the expected 'rotation'
+      beta = rotation - alpha,
+      // Half the length of the distance between the gradient points
+      r = d * Math.cos(beta);
+
+    let
+      // Coordinates of the ending point of the gradient
+      x1 = cx + r * Math.cos(rotation),
+      y1 = cy - r * Math.sin(rotation),
+      // Coordinates of the starting point of the gradient
+      x0 = cx - r * Math.cos(rotation),
+      y0 = cy + r * Math.sin(rotation);
+
+    // Apply symmetry to the x values, if needed
+    if (symmetric) {
+      x1 = 2 * cx - x1;
+      x0 = 2 * cx - x0;
+    }
+
+    // Build the linear gradient
+    const gradient = ctx.createLinearGradient(x0, y0, x1, y1);
+    // Adjust the number of steps
+    const step = 1 / Math.max(this.cycles, 1);
+    // Add color stops
     for (let i = 0; i <= this.cycles; i++)
       gradient.addColorStop(i * step, i % 2 ? this.c1 : this.c2);
+
     return gradient;
   }
 

@@ -3,6 +3,7 @@
 - Declarations of `clues` and `clueItems` moved from `WordSearch` to `Activity`.
 
 #### Improvements
+- The `angle` attribute of `Gradient` is now taken into account when drawing gradients.
 - Updated peer dependencies
 - Improve documentation
 
