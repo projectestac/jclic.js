@@ -9,6 +9,7 @@
 
 #### Bug fixes
 - Avoid direct call to `getCSS` in `ActiveBagContent` objects without defined `style`.
+- The `description` field of activities is now included in JSON exports.
 
 ### v2.3.2 (2026-10-15)
 #### Improvements

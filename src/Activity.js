@@ -116,7 +116,6 @@ export class Activity {
         /* falls through */
         case 'code':
         case 'type':
-        case 'description':
           this[name] = val;
           break;
 
@@ -247,6 +246,11 @@ export class Activity {
                 break;
             }
           });
+          break;
+
+        case 'description':
+          this.description = '';
+          $node.children('p').each((_n, child) => { this.description += `${child.textContent}\n\n`; });
           break;
 
         case 'messages':
