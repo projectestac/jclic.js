@@ -870,7 +870,7 @@ Object.assign(Activity.prototype, {
   menuElements: null,
   /**
    * This activity uses numeric expressions, so text literals should be
-   * converted to numbers for comparisions, taking in account the
+   * converted to numbers for comparisons, taking in account the
    * number format of the current locale (dot or comma as decimal separator)
    * @name module:Activity.Activity#numericContent
    * @type {boolean} */

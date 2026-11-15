@@ -501,7 +501,7 @@ export class Gradient {
    * @returns {string} - A string ready to be used as a value for the `linear-gradient` CSS attribute
    */
   getCss() {
-    let result = `linear-gradient(${(this.angle + 90)}deg, ${this.c1}, ${this.c2}`;
+    let result = `linear-gradient(${(90 - this.angle )}deg, ${this.c1}, ${this.c2}`;
     for (let i = 1; i < this.cycles; i++)
       result = `${result}, ${i % 2 > 0 ? this.c1 : this.c2}`;
     return `${result})`;
