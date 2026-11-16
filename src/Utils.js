@@ -741,7 +741,7 @@ export function getAttr(obj, keys = null) {
  * @returns {any}
  */
 export function getValue(value) {
-  return value.getAttributes ?
+  return (value !== null && value.getAttributes) ?
     value.getAttributes() :
     value instanceof Array ?
       value.map(e => getValue(e)) :
@@ -1186,13 +1186,15 @@ export function attrForEach(attributes, callback) {
  * @returns {object[]}       - Array of children having the searched attribute
  */
 export function findParentsWithChild(obj, childName, _result = []) {
-  if (obj[childName])
-    _result.push(obj);
-  else
-    Object.values(obj).forEach(val => {
-      if (typeof val === 'object')
-        findParentsWithChild(val, childName, _result);
-    });
+  if (obj !== null) {
+    if (childName in obj)
+      _result.push(obj);
+    else
+      Object.values(obj).forEach(val => {
+        if (typeof val === 'object' && val !== null)
+          findParentsWithChild(val, childName, _result);
+      });
+  }
   return _result;
 };
 
