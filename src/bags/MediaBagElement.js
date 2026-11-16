@@ -269,6 +269,7 @@ export class MediaBagElement {
       this.getFullPathPromise()
         .then(fullPath => {
           let format, css;
+          const crossOrigin = ps.options.crossOrigin || null;
           switch (this.type) {
             case 'font':
               format = this.ext === 'ttf' ? 'truetype' : this.ext === 'otf' ? 'embedded-opentype' : this.ext;
@@ -280,12 +281,16 @@ export class MediaBagElement {
 
             case 'image':
               this.data = new Image();
+              if (crossOrigin)
+                this.data.crossOrigin = crossOrigin;
               this.data.addEventListener('load', () => { this._onReady.call(this); }, { once: true });
               this.data.src = fullPath;
               break;
 
             case 'video':
               this.data = document.createElement(this.type);
+              if (crossOrigin)
+                this.data.crossOrigin = crossOrigin;
               this.data.addEventListener('canplay', () => { this._onReady.call(this); }, { once: true });
               this.data.src = fullPath;
               this.data.load();
@@ -309,6 +314,8 @@ export class MediaBagElement {
                   log('trace', `Loading static player #${level} with new audio: ${fullPath}`);
                   this.data = audioPlayer;
                   this.ready = false;
+                  if (crossOrigin)
+                    audioPlayer.crossOrigin = crossOrigin;
                   audioPlayer.addEventListener('canplay', () => { this._onReady.call(this); }, { once: true });
                   audioPlayer.src = fullPath;
                   audioPlayer.load();

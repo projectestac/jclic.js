@@ -4,6 +4,7 @@
 
 #### Improvements
 - The `angle` attribute of `Gradient` is now taken into account when drawing gradients.
+- Added the optional [crossOrigin](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/crossOrigin) attribute in JClicPlayer `options` param to avoid tainted canvas errors in some contexts.
 - Updated peer dependencies
 - Improve documentation
 
