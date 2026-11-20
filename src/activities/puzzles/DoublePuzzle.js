@@ -292,7 +292,7 @@ export class DoublePuzzlePanel extends ActivityPanel {
       let up = false;
       switch (event.type) {
         case 'touchcancel':
-          // Canvel movement
+          // Cancel movement
           if (this.bc.active)
             this.bc.end();
           break;
@@ -392,12 +392,12 @@ export class DoublePuzzlePanel extends ActivityPanel {
 
 Object.assign(DoublePuzzlePanel.prototype, {
   /**
-   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
+   * The {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
    * @name module:activities/puzzles/DoublePuzzle.DoublePuzzlePanel#bgA
    * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgA: null,
   /**
-   * The secondary {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag}, initially empty.
+   * The secondary {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag}, initially empty.
    * @name module:activities/puzzles/DoublePuzzle.DoublePuzzlePanel#bgB
    * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgB: null,

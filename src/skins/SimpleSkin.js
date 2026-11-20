@@ -47,7 +47,7 @@ export class SimpleSkin extends DefaultSkin {
   /**
    * SimpleSkin constructor
    * @param {module:JClicPlayer.JClicPlayer} ps - The PlayStation (currently a {@link module:JClicPlayer.JClicPlayer JClicPlayer}) used to load and
-   * realize the media objects meeded tot build the Skin.
+   * realize the media objects needed tot build the Skin.
    * @param {string} [name] - The skin class name
    * @param {object} [options] - Optional parameter with additional options
    */
@@ -63,7 +63,7 @@ export class SimpleSkin extends DefaultSkin {
 
   /**
    * Returns the CSS styles used by this skin. This method should be called only from
-   * the `Skin` constructor, and overridded by subclasses if needed.
+   * the `Skin` constructor, and overridden by subclasses if needed.
    * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
    * @returns {string}
    */

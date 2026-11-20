@@ -202,7 +202,7 @@ export class ActiveBox extends AbstractBox {
 
   /**
    *
-   * Exhanges the content of this ActiveBox with another one
+   * Exchanges the content of this ActiveBox with another one
    * @param {module:boxes/ActiveBox.ActiveBox} bx - The ActiveBox with which to exchange the content.
    */
   exchangeContent(bx) {
@@ -396,7 +396,7 @@ export class ActiveBox extends AbstractBox {
   }
 
   /**
-   * Draws the content of this Activebox on the specified canvas context.
+   * Draws the content of this ActiveBox on the specified canvas context.
    * @override
    * @param {external:CanvasRenderingContext2D} ctx - The canvas rendering context used to draw the
    * box content.
@@ -489,7 +489,7 @@ export class ActiveBox extends AbstractBox {
           prx = [0, imgRect.pos.x, imgRect.pos.x + imgRect.dim.width, pWidth],
           pry = [0, imgRect.pos.y, imgRect.pos.y + imgRect.dim.height, pHeight],
           rr = [
-            // Calc four rectangles inside BoxBag, sourronding imgRect
+            // Calc four rectangles inside BoxBag, surrounding imgRect
             // Top rectangle:
             new Rectangle(prx[0], pry[0], prx[3], pry[1]),
             // Bottom rectangle:
@@ -651,7 +651,7 @@ export class ActiveBox extends AbstractBox {
     if (typeof rect === 'number')
       // arguments are co-ordinates and size
       rect = new Rectangle(rect, y, w, h);
-    // Rectangle comparision
+    // Rectangle comparison
     if (this.equals(rect))
       return;
     super.setBounds(rect);
@@ -699,7 +699,7 @@ export class ActiveBox extends AbstractBox {
   }
 
   /**
-   * Builds a hidden `buton` that will act as a accessible element associated to the canvas area
+   * Builds a hidden `button` that will act as a accessible element associated to the canvas area
    * of this ActiveBox.
    * The button will be created only when `CanvasRenderingContext2D` has a method named `addHitRegion`.
    * See https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility
@@ -728,7 +728,7 @@ export class ActiveBox extends AbstractBox {
         .on('click', ev => {
           // Check if event was produced by a mouse click
           if (ev.originalEvent && (ev.originalEvent.pageX !== 0 || ev.originalEvent.pageY !== 0)) {
-            // Mouse clicks should be processed odirectly by the canvas, so ignore this accessible event
+            // Mouse clicks should be processed directly by the canvas, so ignore this accessible event
             return true;
           }
           log('debug', `Click on accessible element: ${this.toString()}`);

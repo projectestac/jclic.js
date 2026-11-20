@@ -320,7 +320,7 @@ export class WordSearchPanel extends ActivityPanel {
 
       switch (event.type) {
         case 'touchcancel':
-          // Canvel movement
+          // Cancel movement
           if (this.bc.active)
             this.bc.end();
           break;
@@ -415,7 +415,7 @@ Object.assign(WordSearchPanel.prototype, {
    * @type {module:boxes/TextGrid.TextGrid} */
   grid: null,
   /**
-   * An optional {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} used to display information associated with the hidden words.
+   * An optional {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} used to display information associated with the hidden words.
    * @name module:activities/textGrid/WordSearch.WordSearchPanel#bgAlt
    * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgAlt: null,

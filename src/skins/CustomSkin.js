@@ -116,19 +116,19 @@ export class CustomSkin extends Skin {
   }
 
   /**
-   * Computes the CSS styles used by this skin in thre moodes: main, half ant twoThirds.
+   * Computes the CSS styles used by this skin in three modes: main, half ant twoThirds.
    * The resulting strings will be stored in `cssVariants`
    * @returns {string}
    */
   _computeStyleSheets() {
     const
-      maxw = this.options.dimension.preferredSize.width,
-      maxh = this.options.dimension.preferredSize.height;
+      maxW = this.options.dimension.preferredSize.width,
+      maxH = this.options.dimension.preferredSize.height;
 
-    this.twoThirdsMedia = { width: maxw, height: maxh };
+    this.twoThirdsMedia = { width: maxW, height: maxH };
     this.halfMedia = {
-      width: Math.round(2 * maxw / 3),
-      height: Math.round(2 * maxh / 3)
+      width: Math.round(2 * maxW / 3),
+      height: Math.round(2 * maxH / 3)
     };
 
     // Panels:
@@ -336,7 +336,7 @@ export class CustomSkin extends Skin {
 
   /**
    * Returns the CSS styles used by this skin. This method should be called only from
-   * the `Skin` constructor, and overridded by subclasses if needed.
+   * the `Skin` constructor, and overridden by subclasses if needed.
    * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
    * @override
    * @returns {string}
@@ -348,7 +348,7 @@ export class CustomSkin extends Skin {
   }
 
   /**
-   * Sets/unsets the 'wait' state
+   * Set/Unset the 'wait' state
    * @override
    * @param {boolean} status - Whether to set or unset the wait status. When `undefined`, the
    * `waitCursorCount` member is evaluated to decide if the wait state should be activated or deactivated.
@@ -382,7 +382,7 @@ Object.assign(CustomSkin.prototype, {
 .ID .JClicBtn:focus {outline:0;}\
 .ID .JClicCounter {font-family:Roboto,sans-serif;text-align:center;}',
   /**
-   * Specifc styles (`default`, `half` and `twoThirds`) computed at run-time,
+   * Specific styles (`default`, `half` and `twoThirds`) computed at run-time,
    * based on the provided XML file
    * @name module:skins/CustomSkin.CustomSkin#cssVariants
    * @type {object} */

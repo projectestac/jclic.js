@@ -141,7 +141,7 @@ Object.assign(Counter.prototype, {
    * @type {number} */
   MAX_DISPLAY_VALUE: 999,
   /**
-   * An optional Counter used as a subtractor to display the current value.
+   * An optional Counter used as a subtraction to display the current value.
    * Useful to display `errors` subtracting `score` from `actions`.
    * @name module:skins/Counter.Counter#displayDiffFrom
    * @type {module:skins/Counter.Counter}

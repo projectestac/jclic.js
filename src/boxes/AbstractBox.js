@@ -37,7 +37,7 @@ import BoxBase from './BoxBase.js';
  * (by default an {@link module:AWT.Rectangle}) with some special properties that determine how it must
  * be drawn on screen.
  *
- * Some types of boxes can act as containers for other boxes, establishing a hierarchy of dependences.
+ * Some types of boxes can act as containers for other boxes, establishing a hierarchy of dependencies.
  * @abstract
  * @extends module:AWT.Rectangle
  */
@@ -187,7 +187,7 @@ export class AbstractBox extends Rectangle {
     if (typeof rect === 'number')
       // arguments are co-ordinates and size
       rect = new Rectangle(rect, y, w, h);
-    // Rectangle comparision
+    // Rectangle comparison
     if (this.equals(rect))
       return;
 
@@ -248,7 +248,7 @@ export class AbstractBox extends Rectangle {
   }
 
   /**
-   * Sets/unsets a border to this box
+   * Set/Unset a border to this box
    * @param {boolean} newVal - `true` to set a border.
    */
   setBorder(newVal) {
@@ -385,7 +385,7 @@ export class AbstractBox extends Rectangle {
 
   /**
    *
-   * Sets or unsets the input focus to this box.
+   * Set/Unset the input focus to this box.
    * @param {boolean} newVal
    */
   setFocused(newVal) {

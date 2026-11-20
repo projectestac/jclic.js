@@ -55,7 +55,7 @@ export * from './activities';
  * within them. Each player loads the JClic project file specified in the `data-project` attribute of
  * the `div` tag.
  *
- * The `div` elements must preferabily be empty. Inner content may become overlapped by objects
+ * The `div` elements must preferably be empty. Inner content may become overlapped by objects
  * created by the JClic player.
  *
  * This method exports the global variable `window.JClicObject`, useful when other scripts

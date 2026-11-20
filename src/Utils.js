@@ -157,7 +157,7 @@
 */
 
 /**
- * Type of MIDI instrument used by Soundfont Player
+ * Type of MIDI instrument used by Sound Font Player
  * @external Instrument
  * @see {@link https://github.com/danigb/soundfont-player}
  */
@@ -711,7 +711,7 @@ export function normalizeObject(obj) {
  * this method is returned instead of the crude object.
  * @param {object} obj - The object to be processed
  * @param {string[]} [keys] - An optional array of keys to be included in the resulting object.
- * When null or not set, all keys of `obj` are included. Keys can include a default value separed by '|'.
+ * When null or not set, all keys of `obj` are included. Keys can include a default value separated by '|'.
  * Attributes with default value will be excluded from the resulting object.
  * @returns {object}
  */
@@ -1171,7 +1171,7 @@ export function appendStylesheetAtHead(href, ps) {
  * @param {external:NamedNodeMap} attributes - The [Element.attributes](https://developer.mozilla.org/en-US/docs/Web/API/Element/attributes)
  * object to be traversed
  * @param {function} callback - The function to be called for each [Attr](https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap)
- * object. It should take two parametres: `name` and `value`
+ * object. It should take two parameters: `name` and `value`
  */
 export function attrForEach(attributes, callback) {
   for (let i = 0; i < attributes.length; i++)
@@ -1181,7 +1181,7 @@ export function attrForEach(attributes, callback) {
 /**
  * Recursive traversal of all nodes of the given object looking for children having the `childName` attribute
  * WARNING: Don't call this method on objects with circular dependencies!
- * @param {object} obj       - The object to be analized
+ * @param {object} obj       - The object to be analyzed
  * @param {string} childName - Name of the attribute to search for
  * @returns {object[]}       - Array of children having the searched attribute
  */
@@ -1411,7 +1411,7 @@ export const settings = {
   TOUCH_DEVICE: false,
   // Amount of time (in milliseconds) to wait before a media resource is loaded
   LOAD_TIMEOUT: 10000,
-  // Number of points to be calculated as polygon vertexs when simplifying bezier curves
+  // Number of points to be calculated as polygon vertices when simplifying bezier curves
   BEZIER_POINTS: 4,
   // Check if canvas accessibility features are enabled
   // See: http://codepen.io/francesc/pen/amwvRp

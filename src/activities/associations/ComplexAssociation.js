@@ -176,7 +176,7 @@ export class ComplexAssociationPanel extends SimpleAssociationPanel {
 
       switch (event.type) {
         case 'touchcancel':
-          // Canvel movement
+          // Cancel movement
           if (this.bc.active)
             this.bc.end();
           break;

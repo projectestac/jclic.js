@@ -260,7 +260,7 @@ Object.assign(PlayerHistory.prototype, {
   player: null,
   /**
    * This is the main member of the class. PlayerHistory puts and retrieves
-   * on it information about the proects and activities done by the current user.
+   * on it information about the projects and activities done by the current user.
    * @name module:PlayerHistory.PlayerHistory#sequenceStack
    * @type {module:PlayerHistory.PlayerHistory#HistoryElement[]} */
   sequenceStack: [],

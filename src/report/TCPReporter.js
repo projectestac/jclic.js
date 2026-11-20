@@ -257,7 +257,7 @@ export class TCPReporter extends Reporter {
   /**
    * Closes this reporting system
    * @override
-   * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished, or _null_ if not active.
+   * @returns {external:Promise} - A promise to be fulfilled when all pending tasks are finished, or _null_ if not active.
    */
   end() {
     this.reportActivity(true);
@@ -266,7 +266,7 @@ export class TCPReporter extends Reporter {
 
   /**
    * Performs a transaction on the remote server
-   * @param {external:jQuery} $xml - The XML element to be transmited, wrapped into a jQuery object
+   * @param {external:jQuery} $xml - The XML element to be transmitted, wrapped into a jQuery object
    * @returns {external:jqXHR} - The {@link external:jqXHR} obtained as a result of a call to `$.ajax`.
    * This object should be treated as a Promise or
    * as a JQuery {@link https://api.jquery.com/category/deferred-object|Deferred} object.
@@ -386,7 +386,7 @@ export class TCPReporter extends Reporter {
   /**
    * Stops the reporting system, usually as a result of repeated errors or because the player
    * shuts down.
-   * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished.
+   * @returns {external:Promise} - A promise to be fulfilled when all pending tasks are finished.
    */
   stopReporting() {
     let result = null;

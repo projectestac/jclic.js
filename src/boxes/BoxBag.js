@@ -304,7 +304,7 @@ export class BoxBag extends AbstractBox {
       bx.setParent(this);
       bx.isBackground = true;
     }
-    // Add the `backgroundbox` rectangle to the global BoxBag rectangle
+    // Add the `backgroundBox` rectangle to the global BoxBag rectangle
     Rectangle.prototype.add.call(this, bx);
     this.preferredBounds.setBounds(this.getBounds());
   }

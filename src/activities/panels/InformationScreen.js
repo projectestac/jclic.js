@@ -239,7 +239,7 @@ export class InformationScreenPanel extends ActivityPanel {
 
 Object.assign(InformationScreenPanel.prototype, {
   /**
-   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed.
+   * The {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed.
    * @name module:activities/panels/InformationScreen.InformationScreenPanel#bg
    * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bg: null,

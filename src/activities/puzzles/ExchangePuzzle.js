@@ -268,7 +268,7 @@ class ExchangePuzzlePanel extends ActivityPanel {
 
       switch (event.type) {
         case 'touchcancel':
-          // Canvel movement
+          // Cancel movement
           if (this.bc.active)
             this.bc.end();
           break;
@@ -348,7 +348,7 @@ class ExchangePuzzlePanel extends ActivityPanel {
 
 Object.assign(ExchangePuzzlePanel.prototype, {
   /**
-   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the panel.
+   * The {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the panel.
    * @name module:activities/puzzles/ExchangePuzzle.ExchangePuzzlePanel#bg
    * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bg: null,

@@ -52,7 +52,7 @@ export class Encryption {
   static Decrypt(txt) {
     if (txt === null || txt.length === 0)
       return null;
-    const s = Encryption.decodify(txt);
+    const s = Encryption.decode(txt);
     return s === Encryption.BLANK ? '' : s;
   }
 
@@ -94,7 +94,7 @@ export class Encryption {
    * @param {string} cA - (was char[])
    * @returns {string}
    */
-  static decodifyZerosField(cA) {
+  static decodeZerosField(cA) {
     let
       sb = '',
       num = Number.parseInt(cA[0], 32),
@@ -123,7 +123,7 @@ export class Encryption {
    * @returns {string} (was StringBuilder)
    */
   static decompressZeros(cA) {
-    cA = Encryption.decodifyZerosField(cA);
+    cA = Encryption.decodeZerosField(cA);
     let
       numBytesZeros = Number.parseInt(cA[0], 32),
       iniNoZeros = numBytesZeros * 2 + 1,
@@ -151,7 +151,7 @@ export class Encryption {
    * @param {string} sb1 - (was StringBuilder)
    * @returns {string}
    */
-  static decodifyFromHex(sb1) {
+  static decodeFromHex(sb1) {
     let sb = '', j = 0;
     for (let i = 0; j < sb1.length; i++) {
       const c = Encryption.hexCharArrayToChar(sb1, j);
@@ -165,7 +165,7 @@ export class Encryption {
    * @param {string} s
    * @returns {string} (was char[])
    */
-  static unchangeOrder(s) {
+  static unChangeOrder(s) {
     let m = 0, n = s.length - 1;
     const cA = [];
     for (let p = 0; p < s.length; p++)
@@ -192,9 +192,9 @@ export class Encryption {
    * @param {string} word
    * @returns {string}
    */
-  static decodify(word) {
+  static decode(word) {
     try {
-      return Encryption.decodifyFromHex(Encryption.decompressZeros(Encryption.unchangeOrder(word)));
+      return Encryption.decodeFromHex(Encryption.decompressZeros(Encryption.unChangeOrder(word)));
     } catch (_ex) { //The supplied word was not codified using this system
       return '';
     }

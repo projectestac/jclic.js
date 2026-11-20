@@ -88,7 +88,7 @@ export class JClicPlayer extends Container {
       .css({ width: '100%', height: '100%' })
       .appendTo(this.$topDiv);
 
-    // Intitialize other elements
+    // Initialize other elements
     this.localFS = location && location.protocol === 'file:';
     this.$div = $('<div/>', { class: 'JClicPlayer' });
     this.project = new JClicProject();
@@ -254,7 +254,7 @@ export class JClicPlayer extends Container {
 
   /**
    * Executes miscellaneous finalization routines.
-   * @returns {external:Promise} - A promise to be fullfilled when all pending tasks are finished.
+   * @returns {external:Promise} - A promise to be fulfilled when all pending tasks are finished.
    */
   end() {
     let result = null;
@@ -1183,7 +1183,7 @@ Object.assign(JClicPlayer.prototype, {
    * @type {external:jQuery} */
   $mainContainer: null,
   /**
-   * Flag indicatig that this player has switched to full screen at least once
+   * Flag indicating that this player has switched to full screen at least once
    * @name module:JClicPlayer.JClicPlayer#fullScreenChecked
    * @type {boolean} */
   fullScreenChecked: false,

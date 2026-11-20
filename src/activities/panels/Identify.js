@@ -333,7 +333,7 @@ export class IdentifyPanel extends ActivityPanel {
 
 Object.assign(IdentifyPanel.prototype, {
   /**
-   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed on the panel.
+   * The {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed on the panel.
    * @name module:activities/panels/Identify.IdentifyPanel#bg
    * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bg: null,

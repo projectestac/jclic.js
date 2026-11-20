@@ -109,8 +109,8 @@ export class BoxBase {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, [
@@ -372,7 +372,7 @@ Object.assign(BoxBase.prototype, {
    * @type {boolean} */
   transparent: false,
   /**
-   * Wheter the cell's background should be painted or not. This property has no effect on
+   * Whether the cell's background should be painted or not. This property has no effect on
    * hosted components.
    * @name module:boxes/BoxBase.BoxBase#dontFill
    * @type {boolean} */

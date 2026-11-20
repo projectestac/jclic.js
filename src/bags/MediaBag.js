@@ -65,8 +65,8 @@ export class MediaBag {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return Object.keys(this.elements).map(k => this.elements[k].getAttributes());

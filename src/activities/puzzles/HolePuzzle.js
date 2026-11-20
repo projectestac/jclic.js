@@ -323,7 +323,7 @@ export class HolePuzzlePanel extends ActivityPanel {
 
 Object.assign(HolePuzzlePanel.prototype, {
   /**
-   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the panel.
+   * The {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the panel.
    * @name module:activities/puzzles/HolePuzzle.HolePuzzlePanel#bg
    * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bg: null,

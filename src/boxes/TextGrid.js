@@ -73,7 +73,7 @@ export class TextGrid extends AbstractBox {
    * @param {number} x - `X` coordinate of the upper left corner of this grid
    * @param {number} y - `Y` coordinate of the upper left corner of this grid
    * @param {number} ncw - Number of columns of the grid
-   * @param {number} nch - Nomber of rows of the grid
+   * @param {number} nch - Number of rows of the grid
    * @param {number} cellW - Width of the cells
    * @param {number} cellH - Height of the cells
    * @param {boolean} border - When `true`, a border must be drawn between the cells
@@ -178,7 +178,7 @@ export class TextGrid extends AbstractBox {
   }
 
   /**
-   * Sets or unsets the `locked` properties (black cell) to a specific cell.
+   * Set or unset the `locked` properties (black cell) to a specific cell.
    * @param {number} px - The logical 'X' coordinate of the cell
    * @param {number} py - The logical 'Y' coordinate of the cell
    * @param {boolean} locked - When true, the `locked` attribute will be on.
@@ -197,7 +197,7 @@ export class TextGrid extends AbstractBox {
 
   /**
    * For a specific cell located at column `rx` and row `ry`, finds the number of words delimited
-   * by wildchars located behind its current position and in the same row and column. Used in
+   * by wildcards located behind its current position and in the same row and column. Used in
    * {@link module:activities/textGrid/CrossWord.CrossWord CrossWord} activities to find the definition for a specific cell.
    *
    * The result is returned as 'x' and 'y' properties of a logical point.
@@ -428,7 +428,7 @@ export class TextGrid extends AbstractBox {
 
   /**
    * Counts the number of coincidences between the `answers` array and the current content of this grid
-   * @param {boolean} checkCase - Make comparisions case-sensitive
+   * @param {boolean} checkCase - Make comparisons case-sensitive
    * @returns {number}
    */
   countCoincidences(checkCase) {
@@ -445,7 +445,7 @@ export class TextGrid extends AbstractBox {
    * Checks if a specific cell is equivalent to the content of `answers` at its position
    * @param {number} px - X coordinate
    * @param {number} py - Y coordinate
-   * @param {boolean} checkCase - Make comparisions case-sensitive
+   * @param {boolean} checkCase - Make comparisons case-sensitive
    * @returns {boolean}
    */
   isCellOk(px, py, checkCase) {
@@ -567,7 +567,7 @@ export class TextGrid extends AbstractBox {
   }
 
   /**
-   * Sets or unsets a specifi attrobut to a cell.
+   * Set or unset a specific attribute to a cell.
    * @param {number} px - The 'X' coordinate of the cell
    * @param {number} py - The 'Y' coordinate of the cell
    * @param {number} attribute - The binary flag representing this attribute. See {@link module:boxes/TextGrid.TextGrid.flags}.
@@ -629,9 +629,9 @@ export class TextGrid extends AbstractBox {
 
     const
       style = this.getBoxBaseResolve(),
-      strk = isMarked ? style.markerStroke : style.borderStroke;
+      stroke = isMarked ? style.markerStroke : style.borderStroke;
 
-    return this.getCellRect(px, py).grow(strk.lineWidth, strk.lineWidth);
+    return this.getCellRect(px, py).grow(stroke.lineWidth, stroke.lineWidth);
   }
 
   /**

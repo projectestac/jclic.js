@@ -289,7 +289,7 @@ export class MemoryGamePanel extends ActivityPanel {
       let up = false;
       switch (event.type) {
         case 'touchcancel':
-          // Canvel movement
+          // Cancel movement
           if (this.bc.active)
             this.bc.end();
           break;
@@ -397,7 +397,7 @@ export class MemoryGamePanel extends ActivityPanel {
 
 Object.assign(MemoryGamePanel.prototype, {
   /**
-   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed.
+   * The {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} containing the information to be displayed.
    * @name module:activities/memory/MemoryGame.MemoryGamePanel#bg
    * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bg: null,

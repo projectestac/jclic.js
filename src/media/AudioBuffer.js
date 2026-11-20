@@ -95,12 +95,12 @@ export class AudioBuffer {
 
           this.mediaRecorder.onstart = () => {
             log('debug', 'Recording audio started');
-            this.visualFeedbak(true, $div);
+            this.visualFeedback(true, $div);
           };
 
           this.mediaRecorder.onstop = () => {
             log('debug', 'Recording audio finished');
-            this.visualFeedbak(false, $div);
+            this.visualFeedback(false, $div);
 
             if (this.timeoutID) {
               window.clearTimeout(this.timeoutID);
@@ -135,7 +135,7 @@ export class AudioBuffer {
         })
         .catch(err => {
           log('error', err.toString());
-          this.visualFeedbak(false, $div);
+          this.visualFeedback(false, $div);
         });
     }
   }
@@ -147,7 +147,7 @@ export class AudioBuffer {
    * @param {boolean} enabled - Flag indicating if the visual feedback should be active or inactive
    * @param {external:jQuery} [$div] - Optional `div` element where the recording is performed, as a jQuery ref.
    */
-  visualFeedbak(enabled, $div) {
+  visualFeedback(enabled, $div) {
     if ($div)
       $div.css('cursor', enabled ? 'progress' : 'inherit');
   }
@@ -163,7 +163,7 @@ export class AudioBuffer {
 
 Object.assign(AudioBuffer.prototype, {
   /**
-   * AudioBuffer is enabled only in browsers with `navigator.MediaDevices.getuserMedia`
+   * AudioBuffer is enabled only in browsers with `navigator.MediaDevices.getUserMedia`
    * @name module:media/AudioBuffer.AudioBuffer#enabled
    * @type {boolean}
    */

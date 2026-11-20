@@ -297,7 +297,7 @@ export class Skin extends Container {
 
   /**
    * Returns the CSS styles used by this skin. This method should be called only from
-   * the `Skin` constructor, and overridded by subclasses if needed.
+   * the `Skin` constructor, and overridden by subclasses if needed.
    * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
    * @returns {string}
    */
@@ -385,7 +385,7 @@ export class Skin extends Container {
   }
 
   /**
-   * Sets/unsets the 'wait' state
+   * Set/Unset the 'wait' state
    * @param {boolean} status - Whether to set or unset the wait status. When `undefined`, the
    * `waitCursorCount` member is evaluated to decide if the wait state should be activated or deactivated.
    */
@@ -666,7 +666,7 @@ export class Skin extends Container {
 
         // Replace existing canvas if size has changed
         if (this.$msgBoxDivCanvas === null ||
-          this.msgBox.dim.widht !== msgWidth ||
+          this.msgBox.dim.width !== msgWidth ||
           this.msgBox.dim.height !== msgHeight) {
           this.$msgBoxDivCanvas = $(`<canvas width="${msgWidth}" height="${msgHeight}"/>`);
           this.msgBox.setBounds(new Rectangle(0, 0, msgWidth + 1, msgHeight));
@@ -688,7 +688,7 @@ export class Skin extends Container {
   }
 
   /**
-   * Sets or unsets the player in fullscreen mode, when allowed, using the
+   * Set or unset the player in fullscreen mode, when allowed, using the
    * {@link https://github.com/sindresorhus/screenfull.js|screenfull.js} library.
    * @param {boolean} status - Whether to set or unset the player in fullscreen mode. When `null`
    * or `undefined`, the status toggles between fullscreen and windowed modes.

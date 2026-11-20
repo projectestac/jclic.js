@@ -366,7 +366,7 @@ export class SimpleAssociationPanel extends ActivityPanel {
 
       switch (event.type) {
         case 'touchcancel':
-          // Canvel movement
+          // Cancel movement
           if (this.bc.active)
             this.bc.end();
           break;
@@ -488,12 +488,12 @@ export class SimpleAssociationPanel extends ActivityPanel {
 
 Object.assign(SimpleAssociationPanel.prototype, {
   /**
-   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
+   * The {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `primary` panel
    * @name module:activities/associations/SimpleAssociation.SimpleAssociationPanel#bgA
    * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgA: null,
   /**
-   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `secondary` panel
+   * The {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} object containing the information to be displayed in the `secondary` panel
    * @name module:activities/associations/SimpleAssociation.SimpleAssociationPanel#bgB
    * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgB: null,

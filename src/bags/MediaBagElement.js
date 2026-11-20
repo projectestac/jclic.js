@@ -131,8 +131,8 @@ export class MediaBagElement {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, ['name', 'file', 'animated']);
@@ -198,11 +198,11 @@ export class MediaBagElement {
       for (let i = 0, len = length - 3, frames = 0; i < len && frames < 2; ++i) {
         if (arr[i] === 0x00 && arr[i + 1] === 0x21 && arr[i + 2] === 0xF9) {
           const
-            blocklength = arr[i + 3],
-            afterblock = i + 4 + blocklength;
-          if (afterblock + 1 < length &&
-            arr[afterblock] === 0x00 &&
-            (arr[afterblock + 1] === 0x2C || arr[afterblock + 1] === 0x21)) {
+            blockLength = arr[i + 3],
+            afterBlock = i + 4 + blockLength;
+          if (afterBlock + 1 < length &&
+            arr[afterBlock] === 0x00 &&
+            (arr[afterBlock + 1] === 0x2C || arr[afterBlock + 1] === 0x21)) {
             if (++frames > 1) {
               this.animated = true;
               log('debug', `Animated GIF detected: ${this.file}`);

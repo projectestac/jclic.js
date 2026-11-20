@@ -46,7 +46,7 @@ const TOUCH_TEST_EVENT = 'touchstart';
 
 /**
  * Activity is the abstract base class of JClic activities. It defines also the inner class
- * {@link module:Activity.ActivityPanel ActivityPanel}, wich is responsible for user interaction with the activity
+ * {@link module:Activity.ActivityPanel ActivityPanel}, which is responsible for user interaction with the activity
  * content.
  * Activities should extend both `Activity` and `ActivityPanel` classes in order to become fully
  * operative.
@@ -274,7 +274,7 @@ export class Activity {
           cellSet = new ActiveBagContent().setProperties($node, this.project.mediaBag);
           // Valid ids:
           // - Panel activities: 'primary', 'secondary', solvedPrimary'
-          // - Textpanel activities: 'acrossClues', 'downClues', 'answers'
+          // - TextPanel activities: 'acrossClues', 'downClues', 'answers'
           this.abc[cellSet.id] = cellSet;
           break;
 
@@ -381,8 +381,8 @@ export class Activity {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, [
@@ -464,7 +464,7 @@ export class Activity {
   }
 
   /**
-   * Initialises the {@link module:automation/AutoContentProvider.AutoContentProvider AutoContentProvider}, when defined.
+   * Initialize the {@link module:automation/AutoContentProvider.AutoContentProvider AutoContentProvider}, when defined.
    */
   initAutoContentProvider() {
     if (this.acp !== null)
@@ -725,12 +725,12 @@ Object.assign(Activity.prototype, {
    * @type {module:media/EventSounds.EventSounds} */
   eventSoundsPlayer: null,
   /**
-   * Wheter the activity must be solved in a specific order or not.
+   * Whether the activity must be solved in a specific order or not.
    * @name module:Activity.Activity#useOrder
    * @type {boolean} */
   useOrder: false,
   /**
-   * Wheter the cells of the activity will be dragged across the screen.
+   * Whether the cells of the activity will be dragged across the screen.
    * When `false`, a line will be painted to link elements.
    * @name module:Activity.Activity#dragCells
    * @type {boolean} */
@@ -882,7 +882,7 @@ Object.assign(Activity.prototype, {
   clues: [],
   /**
    * Array of integers containing __for each clue__ the index
-   * of an associated {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} located on the secondary {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag}.
+   * of an associated {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} located on the secondary {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag}.
    * This associated element is optional.
    * @name module:activities/textGrid/WordSearch.WordSearch#clueItems
    * @type {number[]} */
@@ -1029,14 +1029,14 @@ export class ActivityPanel extends Container {
    * initialization process.
    */
   activityReady() {
-    // To be overrided by subclasses
+    // To be overridden by subclasses
   }
 
   /**
    * Displays help about the activity
    */
   showHelp() {
-    // To be overrided by subclasses
+    // To be overridden by subclasses
   }
 
   /**
@@ -1142,7 +1142,7 @@ export class ActivityPanel extends Container {
    *  Forces the ending of the activity.
    */
   forceFinishActivity() {
-    // to be overrided by subclasses
+    // to be overridden by subclasses
   }
 
   /**

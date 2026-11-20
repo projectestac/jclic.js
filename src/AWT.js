@@ -63,7 +63,7 @@ export class Font {
    * substitution list, replacing the `family` attribute and loading the alternative font when needed.
    * @param {external:jQuery} $tree - The xml element to be processed
    * @param {object} [options] - Optional param that can contain a `fontSubstitutions` attribute with
-   * a substition table to be added to {@link module:AWT.Font.SUBSTITUTIONS SUBSTITUTIONS}
+   * a substitution table to be added to {@link module:AWT.Font.SUBSTITUTIONS SUBSTITUTIONS}
    */
   static checkTree($tree, options) {
     let substitutions = Font.SUBSTITUTIONS;
@@ -155,8 +155,8 @@ export class Font {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, ['family|Arial', 'size|17', 'bold|0', 'italic|0', 'variant']);
@@ -254,13 +254,13 @@ export class Font {
   /**
    * The {@link https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics TextMetrics} object used
    * by {@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D CanvasRenderingContext2D}
-   * does not provide a `heigth` value for rendered text.
+   * does not provide a `height` value for rendered text.
    * This {@link http://stackoverflow.com/questions/1134586/how-can-you-find-the-height-of-text-on-an-html-canvas stackoverflow question}
    * has an excellent response by Daniel Earwicker explaining how to measure the
    * vertical dimension of rendered text using a `span` element.
-   * The code has been slighty adapted to deal with Font objects.
+   * The code has been slightly adapted to deal with Font objects.
    *
-   * _Warning_: Do not call this method direcly. Use {@link module:AWT.Font#getHeight getHeight()} or {@link module:AWT.Font#getMetrics getMetrics()} instead
+   * _Warning_: Do not call this method directly. Use {@link module:AWT.Font#getHeight getHeight()} or {@link module:AWT.Font#getMetrics getMetrics()} instead
    *
    * @returns {module:AWT.Font}
    */
@@ -417,8 +417,8 @@ export class Gradient {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, [
@@ -567,8 +567,8 @@ export class Stroke {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, [
@@ -623,7 +623,7 @@ Object.assign(Stroke.prototype, {
 });
 
 /**
- * Contains the `x` andy `y` coordinates of a point, and provides some useful methods.
+ * Contains the `x` and `y` coordinates of a point, and provides some useful methods.
  */
 export class Point {
   /**
@@ -656,8 +656,8 @@ export class Point {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, ['x', 'y']);
@@ -784,8 +784,8 @@ export class Dimension {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, ['width', 'height']);
@@ -1071,9 +1071,9 @@ Object.assign(Shape.prototype, {
  * new Rectangle(pos, dim)
  * // Another Rectangle, to be cloned:
  * new Rectangle(rect)
- * // Two Point objects containing the coordinates of upper-left and lower-right vertexs:
+ * // Two Point objects containing the coordinates of upper-left and lower-right vertices:
  * new Rectangle(p0, p1)
- * // An array of four numbers with the coordinates of the same vertexs:
+ * // An array of four numbers with the coordinates of the same vertices:
  * new Rectangle([x0, y0, x1, y1])
  * // Four single numbers, meaning the same coordinates as above:
  * new Rectangle(x0, y0, x1, y1)
@@ -1259,7 +1259,7 @@ export class Rectangle extends Shape {
   }
 
   /**
-   * Gets a string with the co-ordinates of the upper-left and lower-right vertexs of this rectangle,
+   * Gets a string with the co-ordinates of the upper-left and lower-right vertices of this rectangle,
    * (with values rounded to int)
    * @returns {string}
    */
@@ -1270,8 +1270,8 @@ export class Rectangle extends Shape {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, ['type', 'pos', 'dim']);
@@ -1509,7 +1509,7 @@ export class Path extends Shape {
 
   //
   // Inherits the documentation of `equals` in Shape
-  // TODO: Implement comparision of complex paths
+  // TODO: Implement comparison of complex paths
   equals(_p) {
     return false;
   }
@@ -1576,8 +1576,8 @@ export class Path extends Shape {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return {
@@ -1618,7 +1618,7 @@ Object.assign(Path.prototype, {
    * @type {module:AWT.Rectangle} */
   enclosing: new Rectangle(),
   /**
-   * Set of vertexs of a polygon close to the real path of this shape
+   * Set of vertices of a polygon close to the real path of this shape
    * @name module:AWT.Path#enclosingPoints
    * @type {module:AWT.Point[]} */
   enclosingPoints: [],
@@ -1642,7 +1642,7 @@ export class PathStroke {
       if (points[0] instanceof Point)
         this.points = points.map(p => new Point(p));
       // otherwise assume that 'points' contains just numbers
-      // to be readed in pairs of x and y co-ordinates
+      // to be read in pairs of x and y co-ordinates
       else {
         this.points = [];
         for (let i = 0; i < points.length; i += 2)
@@ -1768,7 +1768,7 @@ export class PathStroke {
   }
 
   /**
-   * Gets the set of points that will be included as a vertexs on the owner's shape
+   * Gets the set of points that will be included as a vertices on the owner's shape
    * enclosing polygon.
    * @param {module:AWT.Point} from - The starting point for this stroke
    * @returns {module:AWT.Point[]}
@@ -1795,8 +1795,8 @@ export class PathStroke {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return `${this.type}:${this.points ? this.points.map(p => `${fx(p.x)},${fx(p.y)}`).join(',') : ''}`;
@@ -2062,7 +2062,7 @@ export class Container extends Rectangle {
    * Container.
    */
   updateContent(_dirtyRegion) {
-    // To be overrided by subclasses. Here does nothing.
+    // To be overridden by subclasses. Here does nothing.
     return this;
   }
 }

@@ -363,7 +363,7 @@ export class Reporter {
 
   /**
    * Closes this reporting system
-   * @returns {external:Promise} - A Promise object to be fullfilled when all pending tasks are finished.
+   * @returns {external:Promise} - A Promise object to be fulfilled when all pending tasks are finished.
    */
   end() {
     log('debug', 'Basic Reporter ending');
@@ -459,7 +459,7 @@ export class Reporter {
    * @param {string} type - Type of action (`click`, `write`, `move`, `select`...)
    * @param {string}+ source - Description of the object on which the action is done.
    * @param {string}+ dest - Description of the object reporter acts as a target of the action (usually in pairings)
-   * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwhise
+   * @param {boolean} ok - `true` if the action was OK, `false`, `null` or `undefined` otherwise
    */
   newAction(type, source, dest, ok) {
     if (this.currentSession) {

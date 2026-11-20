@@ -385,7 +385,7 @@ export class WrittenAnswerPanel extends ActivityPanel {
 
   /**
    * Updates the currently selected cell, evaluating the answer written by the user on the text field.
-   * @param {number} i - Index into the {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} of the cell to make active
+   * @param {number} i - Index into the {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} of the cell to make active
    * @param {function[]} delayedActions - If set, store the the action in this array for future execution
    */
   setCurrentCell(i, delayedActions = null) {
@@ -529,12 +529,12 @@ Object.assign(WrittenAnswerPanel.prototype, {
    * @type {boolean[]} */
   invAssCheck: null,
   /**
-   * The {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} object containing the questions
+   * The {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} object containing the questions
    * @name module:activities/text/WrittenAnswer.WrittenAnswerPanel#bgA
    * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgA: null,
   /**
-   * An optional {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} with content displayed as cells are solved.
+   * An optional {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} with content displayed as cells are solved.
    * @name module:activities/text/WrittenAnswer.WrittenAnswerPanel#bgB
    * @type {module:boxes/ActiveBoxBag.ActiveBoxBag} */
   bgB: null,

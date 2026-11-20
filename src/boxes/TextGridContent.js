@@ -97,8 +97,8 @@ export class TextGridContent {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, [
@@ -195,13 +195,13 @@ Object.assign(TextGridContent.prototype, {
    * @type {module:boxes/BoxBase.BoxBase} */
   style: null,
   /**
-   * An array of String objects textning the chars of cells. One string per row, one character of
+   * An array of String objects texting the chars of cells. One string per row, one character of
    * this string per cell.
    * @name module:boxes/TextGridContent.TextGridContent#text
    * @type {string[]} */
   text: null,
   /**
-   * The letter used as wildcardtext
+   * The letter used as wildcard text
    * @name module:boxes/TextGridContent.TextGridContent#wild
    * @type {string} */
   wild: '*',

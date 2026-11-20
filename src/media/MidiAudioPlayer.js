@@ -46,11 +46,11 @@ export class MidiAudioPlayer {
   /**
    * MidiAudioPlayer constructor
    * @param {external:ArrayBuffer} data - The MIDI file content, in ArrayBuffer format
-   * @param {object} [options={}] - Optional params related to the type of soundfont used. Valid options inside this object are:<br>
-   * - `MIDISoundFontObject`: An object containing the full soundfont data. When this param is provided, no other one will be used.
-   * - `MIDISoundFontBase`: The URL used as base for the current collection of MIDI soundfonts. Defaults to `https://clic.xtec.cat/dist/jclic.js/soundfonts/MusyngKite`
-   * - `MIDISoundFontName`: The MIDI instrument name. Defaults to `acoustic_grand_piano`. See [MIDI.js Soundfonts](https://github.com/gleitz/midi-js-soundfonts) for full lists of MIDI instrument names.
-   * - `MIDISoundFontExtension`: An extension to be added to `MIDISoundFontName` in order to build the full file name of the soundfont JS file. Defaults to `-mp3.js`
+   * @param {object} [options={}] - Optional params related to the type of sound font used. Valid options inside this object are:<br>
+   * - `MIDISoundFontObject`: An object containing the full sound font data. When this param is provided, no other one will be used.
+   * - `MIDISoundFontBase`: The URL used as base for the current collection of MIDI sound fonts. Defaults to `https://clic.xtec.cat/dist/jclic.js/soundfonts/MusyngKite`
+   * - `MIDISoundFontName`: The MIDI instrument name. Defaults to `acoustic_grand_piano`. See [MIDI.js Sound Fonts](https://github.com/gleitz/midi-js-soundfonts) for full lists of MIDI instrument names.
+   * - `MIDISoundFontExtension`: An extension to be added to `MIDISoundFontName` in order to build the full file name of the sound font JS file. Defaults to `-mp3.js`
    */
   constructor(data, options = {}) {
     const AudioContext = window && (window.AudioContext || window.webkitAudioContext);
@@ -65,10 +65,10 @@ export class MidiAudioPlayer {
   }
 
   /**
-   * Initializes the soundfont instrument, loading data from GitHub
+   * Initializes the sound font instrument, loading data from GitHub
    * NOTE: This will not work when off-line!
-   * TODO: Provided a basic, simple, static soundfont
-   * @param {object} options - Optional param with options related to the MIDI soundfont. See details in `constructor` description.
+   * TODO: Provided a basic, simple, static sound font
+   * @param {object} options - Optional param with options related to the MIDI sound font. See details in `constructor` description.
    * @param {external:AudioContext} audioContext - The AudioContext object (see: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext)
    */
   static prepareInstrument(options = {}, audioContext) {
@@ -80,11 +80,11 @@ export class MidiAudioPlayer {
         options.MIDISoundFontObject || MidiAudioPlayer.MIDISoundFontObject ||
         `${options.MIDISoundFontBase || MidiAudioPlayer.MIDISoundFontBase}/${options.MIDISoundFontName || MidiAudioPlayer.MIDISoundFontName}${options.MIDISoundFontExtension || MidiAudioPlayer.MIDISoundFontExtension}`)
         .then(instrument => {
-          log('info', 'MIDI soundfont instrument loaded');
+          log('info', 'MIDI sound font instrument loaded');
           MidiAudioPlayer.instrument = instrument;
         })
         .catch(err => {
-          log('error', `Error loading soundfont base instrument: ${err}`);
+          log('error', `Error loading sound font base instrument: ${err}`);
         });
     }
   }
@@ -154,7 +154,7 @@ export class MidiAudioPlayer {
       // Set main volume
       else if (ev.name === 'Controller Change' && ev.number === 7)
         this.mainVolume = ev.value / 127;
-      // Process 'Note on' messages. Max gain set to 2.0 for better results with the used soundfont
+      // Process 'Note on' messages. Max gain set to 2.0 for better results with the used sound font
       else if (ev.name === 'Note on' && ev.velocity > 0)
         this.startedNotes[ev.noteNumber] = MidiAudioPlayer.instrument.play(ev.noteName, MidiAudioPlayer.audioContext.currentTime, { gain: 2 * (this.mainVolume * ev.velocity / 100) });
       // Process 'Note off' messages
@@ -215,15 +215,15 @@ MidiAudioPlayer.instrument = null;
 MidiAudioPlayer.loadingInstrument = false;
 
 /**
- * An object containing the full soundfont data used by {@link module:media/MidiAudioPlayer.MidiAudioPlayer#instrument instrument}
- * When this member is set, no other settings related to the sounfFont will be used.
+ * An object containing the full sound font data used by {@link module:media/MidiAudioPlayer.MidiAudioPlayer#instrument instrument}
+ * When this member is set, no other settings related to the sound font will be used.
  * This value can be overwritten by the global parameter `MIDISoundFontObject`
  * @type {object}
  */
 MidiAudioPlayer.MIDISoundFontObject = null;
 
 /**
- * The URL used as base for the current collection of MIDI soundfonts.
+ * The URL used as base for the current collection of MIDI sound fonts.
  * This value can be overwritten by the global parameter `MIDISoundFontBase`
  * @type {string}
  */
@@ -236,13 +236,13 @@ MidiAudioPlayer.MIDISoundFontBase = 'https://clic.xtec.cat/dist/jclic.js/soundfo
 /**
  * The MIDI instrument name.
  * This value can be overwritten by the global parameter `MIDISoundFontName`
- * See [MIDI.js Soundfonts](https://github.com/gleitz/midi-js-soundfonts) for full lists of MIDI instrument names.
+ * See [MIDI.js Sound Fonts](https://github.com/gleitz/midi-js-soundfonts) for full lists of MIDI instrument names.
  * @type {string}
  */
 MidiAudioPlayer.MIDISoundFontName = 'acoustic_grand_piano';
 
 /**
- * An extension to be added to `MIDISoundFontName` in order to build the full file name of the soundfont JS file.
+ * An extension to be added to `MIDISoundFontName` in order to build the full file name of the sound font JS file.
  * Current valid options are `-mp3.js` and `-ogg.js`
  * This value can be overwritten by the global parameter `MIDISoundFontExtension`
  * @type {string}

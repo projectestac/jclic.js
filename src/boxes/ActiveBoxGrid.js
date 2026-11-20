@@ -35,7 +35,7 @@ import { Rectangle, Dimension, Point } from '../AWT.js';
 import { settings, roundTo } from '../Utils.js';
 
 /**
- * This class extends {@link module:boxes/ActiveBoxbag.ActiveBoxBag ActiveBoxBag} with constructors that take an argument of type
+ * This class extends {@link module:boxes/ActiveBoxBag.ActiveBoxBag ActiveBoxBag} with constructors that take an argument of type
  * {@link module:shapers/Shaper.Shaper Shaper} used to build all its {@link module:boxes/ActiveBox.ActiveBox ActiveBox}components. It also maintains information
  * about the number of "rows" and "columns", useful to compute valid (integer) values when
  * resizing or moving its components.

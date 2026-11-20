@@ -54,8 +54,8 @@ export class AlignType {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, ['h|center', 'v|center']);
@@ -169,8 +169,8 @@ export class ActiveBoxContent {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, [
@@ -419,7 +419,7 @@ Object.assign(ActiveBoxContent.prototype, {
    * @typedef ActiveBoxContent~alignType
    * @type {object}
    * @property {string} h - Valid values are: `left`, `middle`, `right`
-   * @property {string} v - Valud values are: `top`, `middle`, `bottom` */
+   * @property {string} v - Valid values are: `top`, `middle`, `bottom` */
   /**
    * The horizontal and vertical alignment of the image inside the cell.
    * @name module:boxes/ActiveBoxContent.ActiveBoxContent#imgAlign

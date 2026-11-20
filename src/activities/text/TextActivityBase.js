@@ -312,7 +312,7 @@ export class TextActivityBasePanel extends ActivityPanel {
     }
 
     // Place popups below its target baseline
-    popupSpans.forEach(pspan => pspan.span.css({ 'margin-top': pspan.p.css('font-size') }));
+    popupSpans.forEach(pSpan => pSpan.span.css({ 'margin-top': pSpan.p.css('font-size') }));
 
     // Init Evaluator
     if (this.act.ev)
@@ -455,7 +455,7 @@ export class TextActivityBasePanel extends ActivityPanel {
 
   /**
    * @param {external:jQuery} $popup - The popup to display, or _null _ to just hide the current popup
-   * @param {number} maxTime - The maximum time to mantain the popup on screen, in seconds
+   * @param {number} maxTime - The maximum time to maintain the popup on screen, in seconds
    * @param {number} waitTime - When set, indicates the number of seconds to wait before show the popup
    */
   showPopup($popup, maxTime, waitTime) {
@@ -546,8 +546,8 @@ Object.assign(TextActivityBasePanel.prototype, {
    * @type {boolean} */
   spanText: false,
   /**
-   * When true, text spanning will be done at char level: each single letter will be a clickacle span.
-   * Used only in activities of type "itentify letters"
+   * When true, text spanning will be done at char level: each single letter will be a clickable span.
+   * Used only in activities of type "identify letters"
    * @name module:activities/text/TextActivityBase.TextActivityBasePanel#spanChars
    * @type {boolean} */
   spanChars: false,

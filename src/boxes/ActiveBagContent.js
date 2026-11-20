@@ -161,8 +161,8 @@ export class ActiveBagContent {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     const fields = [
@@ -402,7 +402,7 @@ export class ActiveBagContent {
 
   /**
    *
-   * Cheks if the `id` values of all {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects are -1 and, if true,
+   * Checks if the `id` values of all {@link module:boxes/ActiveBoxContent.ActiveBoxContent ActiveBoxContent} objects are -1 and, if true,
    * sets new ids to them, with values between 0 and `maxId`
    * @param {number} maxId - The maximum value of identifiers
    */

@@ -53,7 +53,7 @@ export class GreenSkin extends DefaultSkin {
 
   /**
    * Returns the CSS styles used by this skin. This method should be called only from
-   * the `Skin` constructor, and overridded by subclasses if needed.
+   * the `Skin` constructor, and overridden by subclasses if needed.
    * @param {string} media - A specific media size. Possible values are: 'default', 'half' and 'twoThirds'
    * @returns {string}
    */

@@ -161,7 +161,7 @@ export class SCORM {
     try {
       result = this.API[this.prefix + 'Commit']('');
     } catch (ex) {
-      log('error', `Error commiting data to the SCORM API: ${ex.message}`);
+      log('error', `Error committing data to the SCORM API: ${ex.message}`);
     }
     return result;
   }

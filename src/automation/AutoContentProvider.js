@@ -78,11 +78,11 @@ export class AutoContentProvider {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
-    // To be overrided!
+    // To be overridden!
     return getAttr(this, ['className']);
   }
 
@@ -142,7 +142,7 @@ export class AutoContentProvider {
 Object.assign(AutoContentProvider.prototype, {
   /**
    * This AutoContentProvider manages numeric expressions, so text literals should be
-   * converted to numbers for comparisions, taking in account the
+   * converted to numbers for comparisons, taking in account the
    * number format of the current locale (dot or comma as decimal separator)
    * @name module:automation/AutoContentProvider.AutoContentProvider#numericContent
    * @type {boolean} */

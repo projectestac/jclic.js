@@ -115,8 +115,8 @@ export class Evaluator {
   /**
    * Gets a object with the basic attributes needed to rebuild this instance excluding functions,
    * parent references, constants and also attributes retaining the default value.
-   * The resulting object is commonly usued to serialize elements in JSON format.
-   * @returns {object} - The resulting object, with minimal attrributes
+   * The resulting object is commonly used to serialize elements in JSON format.
+   * @returns {object} - The resulting object, with minimal attributes
    */
   getAttributes() {
     return getAttr(this, [
@@ -216,7 +216,7 @@ Object.assign(Evaluator.prototype, {
   collator: null,
   /**
    * Whether uppercase and lowercase expressions must be considered equivalent or not.
-   * @name module:activities/text/Evaluator.Evaluator#checkcase
+   * @name module:activities/text/Evaluator.Evaluator#checkCase
    * @type {boolean} */
   checkCase: false,
 });
@@ -238,7 +238,7 @@ export class BasicEvaluator extends Evaluator {
   /**
    * Initializes the {@link module:activities/text/Evaluator.Evaluator#collator collator}.
    * @override
-   * @param {string[]} locales - An array of valid locales to be used by the Inlt.Collator object
+   * @param {string[]} locales - An array of valid locales to be used by the Intl.Collator object
    */
   init(locales) {
     // Call `init` method on ancestor
@@ -432,7 +432,7 @@ export class ComplexEvaluator extends BasicEvaluator {
       is = 0,
       iok = 0,
       lastIs = 0,
-      lastiok = true,
+      lastIok = true,
       result = true;
 
     if (ls === 0 || lok === 0 || src === null || ok === null)
@@ -440,21 +440,21 @@ export class ComplexEvaluator extends BasicEvaluator {
 
     for (; is < ls; is++, iok++) {
       const chs = src.charAt(is);
-      const chok = (iok >= 0 && iok < lok) ? ok.charAt(iok) : 0;
+      const chOk = (iok >= 0 && iok < lok) ? ok.charAt(iok) : 0;
       lastIs = is;
-      if (this.collator.compare(chs, chok) === 0) {
+      if (this.collator.compare(chs, chOk) === 0) {
         attr[is] = 0;
-        lastiok = true;
+        lastIok = true;
       } else {
         result = false;
         attr[is] = 1;
-        if (!iterate && lastiok && chok !== 0 && this.checkSteps > 0 && this.checkScope > 0) {
+        if (!iterate && lastIok && chOk !== 0 && this.checkSteps > 0 && this.checkScope > 0) {
           const
-            lbloc = 2 * this.checkSteps + 1,
-            itcoinc = [];
+            lBlock = 2 * this.checkSteps + 1,
+            itCoincide = [];
           let i = 0, j = 0;
-          for (; j < lbloc; j++) {
-            itcoinc[j] = 0;
+          for (; j < lBlock; j++) {
+            itCoincide[j] = 0;
             i = iok + Math.floor((j + 1) / 2) * ((j & 1) !== 0 ? 1 : -1);
             if (i >= lok)
               continue;
@@ -467,19 +467,19 @@ export class ComplexEvaluator extends BasicEvaluator {
               lok2 = Math.min(lok - iok2, this.checkScope),
               flags2 = Array(src.length - is2).fill(0),
               result2 = this.compareSegment(src.substring(is2), ls2, ok.substring(iok2), lok2, flags2, true);
-            itcoinc[j] = this.countFlagsOk(flags2);
+            itCoincide[j] = this.countFlagsOk(flags2);
             if (result2)
               break;
           }
-          if (j === lbloc) {
-            let jmax = this.checkSteps;
-            for (j = 0; j < lbloc; j++)
-              if (itcoinc[j] > itcoinc[jmax])
-                jmax = j;
-            i = iok + Math.floor((jmax + 1) / 2) * ((jmax & 1) !== 0 ? 1 : -1);
+          if (j === lBlock) {
+            let jMax = this.checkSteps;
+            for (j = 0; j < lBlock; j++)
+              if (itCoincide[j] > itCoincide[jMax])
+                jMax = j;
+            i = iok + Math.floor((jMax + 1) / 2) * ((jMax & 1) !== 0 ? 1 : -1);
           }
           iok = i;
-          lastiok = false;
+          lastIok = false;
         }
       }
     }
@@ -504,7 +504,7 @@ Object.assign(ComplexEvaluator.prototype, {
    * @type {number} */
   checkSteps: 3,
   /**
-   * When an eror is detected in the analyzed expression, this variable indicates the number of
+   * When an error is detected in the analyzed expression, this variable indicates the number of
    * characters the checking pointer will be moved forward and back looking for a coincident
    * expression.
    *
